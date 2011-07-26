@@ -7,6 +7,7 @@
 
 #include "NXFileH5Implementation.hpp"
 
+namespace pni{
 namespace nx{
 namespace h5{
 
@@ -69,6 +70,7 @@ void NXFileH5Implementation::create(const char *n,bool overwrite){
 }
 
 //end of namespace
+}
 }
 }
 

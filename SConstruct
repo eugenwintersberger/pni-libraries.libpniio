@@ -44,5 +44,7 @@ else:
     
 Export("build_env")
 
+
 SConscript(["src/SConscript"])
+SConscript(["test/SConscript"])
 

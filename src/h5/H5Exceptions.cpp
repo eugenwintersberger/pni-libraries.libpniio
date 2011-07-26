@@ -9,6 +9,7 @@
 
 #include "H5Exceptions.hpp"
 
+namespace pni{
 namespace nx{
 namespace h5{
 
@@ -141,6 +142,7 @@ std::ostream &operator<<(std::ostream &o,const H5AttributeException &e){
 }
 
 //end of namespace
+}
 }
 }
 

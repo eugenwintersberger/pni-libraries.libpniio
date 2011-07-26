@@ -16,6 +16,7 @@
 
 using namespace pni::utils;
 
+namespace pni{
 namespace nx{
 namespace h5{
 
@@ -37,8 +38,9 @@ public:
 	//! assignment operator
 	NXFieldH5Implementation &operator=(const NXFieldH5Implementation &o);
 
-	virtual pni::utils::UInt32 getRank();
-	virtual pni::utils::UInt32 getDimension(pni::utils::UInt32 i);
+	virtual UInt32 getRank();
+	virtual UInt32 getDimension(UInt32 i);
+	virtual UInt64 getSize();
 
 	//! write scalar data to a field
 	virtual void write(pni::utils::ScalarObject &s);
@@ -64,6 +66,6 @@ public:
 //end of namespace
 }
 }
-
+}
 
 #endif /* NXFIELDH5IMPLEMENTATION_HPP_ */

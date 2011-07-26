@@ -10,6 +10,7 @@
 
 #include <pni/utils/PNITypes.hpp>
 
+namespace pni{
 namespace nx{
 namespace h5{
 
@@ -76,6 +77,7 @@ public:
 };
 
 //end of namespace
+}
 }
 }
 

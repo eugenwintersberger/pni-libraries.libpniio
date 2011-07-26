@@ -1,0 +1,15 @@
+Import("build_env")
+
+test_env = build_env.Clone()
+
+test_env.Append(LIBPATH=["../src/"])
+test_env.Append(LIBS=["pniutils","pninx","cppunit","plplotcxxd"])
+test_env.Append(CPPPATH=["../src/"])
+
+sources_list = ["pninxtest.cpp"]
+sources_list.extend(["NXFileTest.cpp"])
+
+pninx_test = test_env.Program("pninxtest",sources_list)
+
+test_env.Alias("test",[pninx_test])
+test_env.Alias("all",[pninx_test])

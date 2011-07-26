@@ -18,6 +18,7 @@
 
 using namespace pni::utils;
 
+namespace pni{
 namespace nx{
 
 template<typename Imp>
@@ -365,6 +366,7 @@ void NXGroup<Imp>::close(){
 }
 
 //end of namespace
+}
 }
 
 

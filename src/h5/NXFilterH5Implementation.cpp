@@ -7,8 +7,8 @@
 
 #include "NXFilterH5Implementation.hpp"
 
+namespace pni{
 namespace nx {
-
 namespace h5 {
 
 NXFilterH5Implementation::NXFilterH5Implementation() {
@@ -20,6 +20,7 @@ NXFilterH5Implementation::~NXFilterH5Implementation() {
 	// TODO Auto-generated destructor stub
 }
 
+//end of namespace
 }
-
+}
 }

@@ -16,6 +16,7 @@
 #include <pni/utils/ScalarObject.hpp>
 #include <pni/utils/Scalar.hpp>
 
+namespace pni{
 namespace nx{
 
 
@@ -146,7 +147,7 @@ void NXObject<Imp>::getAttribute(const pni::utils::String &n,pni::utils::ScalarO
 
 //end of namespace
 }
-
+}
 
 
 #endif /* NXOBJECT_HPP_ */

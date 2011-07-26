@@ -15,6 +15,7 @@
 #include "NXObject.hpp"
 #include "NXGroup.hpp"
 
+namespace pni{
 namespace nx{
 
 //!
@@ -139,6 +140,7 @@ template<typename Imp> void NXFile<Imp>::close(){
 }
 
 //end of namespace
+}
 }
 
 #endif /* NXFILE_HPP_ */

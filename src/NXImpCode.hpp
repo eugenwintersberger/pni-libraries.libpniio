@@ -8,8 +8,10 @@
 #ifndef NXIMPCODE_HPP_
 #define NXIMPCODE_HPP_
 
+namespace pni{
 namespace nx{
 enum ImpCodes {HDF5,XML};
+}
 }
 
 

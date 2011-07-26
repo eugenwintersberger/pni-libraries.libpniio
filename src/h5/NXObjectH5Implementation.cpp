@@ -9,6 +9,7 @@
 #include "H5TypeFactory.hpp"
 #include "H5Exceptions.hpp"
 
+namespace pni{
 namespace nx{
 namespace h5{
 
@@ -403,4 +404,4 @@ void NXObjectH5Implementation::getAttribute(const char *n,String &s){
 //end of namespace
 }
 }
-
+}

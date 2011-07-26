@@ -8,6 +8,7 @@
 #include "NXFieldH5Implementation.hpp"
 #include "H5Exceptions.hpp"
 
+namespace pni{
 namespace nx{
 namespace h5{
 
@@ -191,17 +192,22 @@ void NXFieldH5Implementation::read(pni::utils::String &s){
 	}
 }
 
-pni::utils::UInt32 NXFieldH5Implementation::getRank(){
-
+UInt32 NXFieldH5Implementation::getRank(){
+	return 0;
 
 
 }
 
-pni::utils::UInt32 NXFieldH5Implementation::getDimension(pni::utils::UInt32 i){
+UInt32 NXFieldH5Implementation::getDimension(UInt32 i){
+	return 0;
+}
+
+UInt64 NXFieldH5Implementation::getSize(){
 	return 0;
 }
 
 
 //end of namespace
+}
 }
 }

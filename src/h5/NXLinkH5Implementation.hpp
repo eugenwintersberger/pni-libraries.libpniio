@@ -8,8 +8,8 @@
 #ifndef NXLINKH5IMPLEMENTATION_HPP_
 #define NXLINKH5IMPLEMENTATION_HPP_
 
+namespace pni{
 namespace nx {
-
 namespace h5 {
 
 class NXLinkH5Implementation {
@@ -18,8 +18,10 @@ public:
 	virtual ~NXLinkH5Implementation();
 };
 
-}
 
+//end of namespace
+}
+}
 }
 
 #endif /* NXLINKH5IMPLEMENTATION_HPP_ */

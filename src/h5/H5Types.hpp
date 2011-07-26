@@ -7,6 +7,7 @@ extern "C"{
 
 #include <boost/shared_ptr.hpp>
 
+namespace pni{
 namespace nx{
 namespace h5{
 
@@ -15,6 +16,7 @@ typedef boost::shared_ptr<hid_t> hidsptr;  //!< define a shared pointer for HDF5
 
 
 //end of namespace
+}
 }
 }
 

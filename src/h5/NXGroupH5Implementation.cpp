@@ -12,6 +12,7 @@ extern "C"{
 #include "NXGroupH5Implementation.hpp"
 #include "H5TypeFactory.hpp"
 
+namespace pni{
 namespace nx{
 namespace h5{
 
@@ -81,17 +82,15 @@ void NXGroupH5Implementation::openGroup(const char *n,
 	imp._id = H5Gopen2(_id,n,H5P_DEFAULT);
 
 }
-void NXGroupH5Implementation::createField(const char *n,
-		                                  pni::utils::PNITypeID tid,
-		                                  const pni::utils::ArrayShape &s,
+void NXGroupH5Implementation::createField(const char *n, PNITypeID tid,
+		                                  const ArrayShape &s,
 										  NXFieldH5Implementation &imp){
 
 	createField(n,tid,s.getRank(),s.getDimensions(),imp);
 }
 
-void NXGroupH5Implementation::createField(const char *n,
-		                                  pni::utils::PNITypeID tid,
-		                                  const pni::utils::ArrayShape::sptr s,
+void NXGroupH5Implementation::createField(const char *n, PNITypeID tid,
+		                                  const ArrayShape::sptr s,
 		                                  NXFieldH5Implementation &imp){
 
 	createField(n,tid,s->getRank(),s->getDimensions(),imp);
@@ -113,16 +112,13 @@ void NXGroupH5Implementation::openField(const char *n,
 
 }
 
-void NXGroupH5Implementation::createField(const char *n,
-		                                  pni::utils::PNITypeID tid,
-		                                  pni::utils::UInt32 rank,
-			                              const pni::utils::UInt32 *dims,
+void NXGroupH5Implementation::createField(const char *n, PNITypeID tid,
+		                                  UInt32 rank, const UInt32 *dims,
 			                              NXFieldH5Implementation &imp){
-	H5TypeFactory tfab;
 	hsize_t *ldims;
 
 	imp._pid = _id;
-	imp._type_id = tfab.createTypeFromID(tid);
+	imp._type_id = H5TFactory.createTypeFromID(tid);
 
 	ldims = (hsize_t *)malloc(sizeof(hsize_t)*rank);
 	for(pni::utils::UInt64 i=0;i<rank;i++) ldims[i] = dims[i];
@@ -135,27 +131,21 @@ void NXGroupH5Implementation::createField(const char *n,
 	free(ldims);
 }
 
-void NXGroupH5Implementation::createField(const char *n,
-		                                  pni::utils::PNITypeID tid,
+void NXGroupH5Implementation::createField(const char *n, PNITypeID tid,
 		                                  NXFieldH5Implementation &imp){
-	H5TypeFactory tfab;
-
 	imp._pid = _id;
 
-	imp._type_id = tfab.createTypeFromID(tid);
+	imp._type_id = H5TFactory.createTypeFromID(tid);
 	imp._space_id = H5Screate(H5S_SCALAR);
 	imp._id = H5Dcreate2(_id,n,imp._type_id,imp._space_id,H5P_DEFAULT,
 			             H5P_DEFAULT,H5P_DEFAULT);
 	imp._name = pni::utils::String(n);
 }
 
-void NXGroupH5Implementation::createStringField(const char *n,
-		                                        pni::utils::UInt64 size,
+void NXGroupH5Implementation::createStringField(const char *n, UInt64 size,
 		                                        NXFieldH5Implementation &imp){
-	H5TypeFactory tfab;
-
 	imp._pid = _id;
-	imp._type_id = tfab.createStringType(size);
+	imp._type_id = H5TFactory.createStringType(size);
 	imp._space_id = H5Screate(H5S_SCALAR);
 	imp._id = H5Dcreate2(_id,n,imp._type_id,imp._space_id,H5P_DEFAULT,
 			             H5P_DEFAULT,H5P_DEFAULT);
@@ -169,5 +159,6 @@ void NXGroupH5Implementation::close(){
 }
 
 //end of namespace
+}
 }
 }

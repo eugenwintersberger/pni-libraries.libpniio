@@ -7,7 +7,8 @@
 
 #include "NXObject.hpp"
 
-
+namespace pni{
 namespace nx{
 
+}
 }

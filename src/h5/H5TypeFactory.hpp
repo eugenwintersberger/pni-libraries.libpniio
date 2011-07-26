@@ -15,6 +15,9 @@ extern "C"{
 #include <pni/utils/PNITypes.hpp>
 #include <pni/utils/NumericObject.hpp>
 
+using namespace pni::utils;
+
+namespace pni{
 namespace nx{
 namespace h5{
 
@@ -24,18 +27,18 @@ private:
 	//from this class we would need a singleton - should be available only
 	//once at runtime - most probably as a global object.
 	typedef struct {
-		pni::utils::Float32 r;
-		pni::utils::Float32 i;
+		Float32 r;
+		Float32 i;
 
 	} _struct_complex_32;  //!< C structure for a 32Bit complex type
 	typedef struct {
-		pni::utils::Float64 r;
-		pni::utils::Float64 i;
+		Float64 r;
+		Float64 i;
 	} _struct_complex_64;  //!< C structure for a 64Bit complex type
 
 	typedef struct {
-		pni::utils::Float128 r;
-		pni::utils::Float128 i;
+		Float128 r;
+		Float128 i;
 	} _struct_complex_128; //!< C structure for a 128Bit complex type
 
 	hid_t _int8_type;    //!< handler to a 8Bit signed integer type
@@ -67,15 +70,15 @@ public:
 	//! get an already existing type object
 	template<typename T> hid_t getType() const;
 	//! create a type from an existing NumericObject
-	hid_t createTypeFromObject(const pni::utils::NumericObject::sptr o);
+	hid_t createTypeFromObject(const NumericObject::sptr o);
 	//! get the type from an existing NumericObject
-	hid_t getTypeFromObject(const pni::utils::NumericObject::sptr o);
+	hid_t getTypeFromObject(const NumericObject::sptr o);
 
 	//! get a type according to the type id
-	hid_t getTypeFromID(pni::utils::PNITypeID id);
+	hid_t getTypeFromID(PNITypeID id);
 	//! create a new type according to its type id
-	hid_t createTypeFromID(pni::utils::PNITypeID id);
-	hid_t createStringType(pni::utils::UInt64 size);
+	hid_t createTypeFromID(PNITypeID id);
+	hid_t createStringType(UInt64 size);
 };
 
 static H5TypeFactory H5TFactory;
@@ -83,7 +86,7 @@ static H5TypeFactory H5TFactory;
 //end of namespace
 }
 }
-
+}
 
 
 #endif /* H5TYPEFACTORY_HPP_ */

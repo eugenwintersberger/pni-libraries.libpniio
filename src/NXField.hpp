@@ -17,6 +17,7 @@
 
 #include "NXObject.hpp"
 
+namespace pni{
 namespace nx{
 
 template<typename Imp>
@@ -190,6 +191,7 @@ void NXField<Imp>::close(){
 
 
 //end of namespace
+}
 }
 
 #endif /* NXFIELD_HPP_ */

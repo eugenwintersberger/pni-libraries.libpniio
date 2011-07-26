@@ -15,6 +15,7 @@ extern "C"{
 #include "NXObjectH5Implementation.hpp"
 #include "NXGroupH5Implementation.hpp"
 
+namespace pni{
 namespace nx{
 namespace h5{
 
@@ -39,6 +40,6 @@ public:
 //end of namespace
 }
 }
-
+}
 
 #endif /* NXFILEH5IMPLEMENTATION_HPP_ */

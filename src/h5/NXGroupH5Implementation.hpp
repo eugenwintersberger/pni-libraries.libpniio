@@ -14,6 +14,9 @@
 #include "NXObjectH5Implementation.hpp"
 #include "NXFieldH5Implementation.hpp"
 
+using namespace pni::utils;
+
+namespace pni{
 namespace nx{
 namespace h5{
 
@@ -34,27 +37,24 @@ public:
 	NXGroupH5Implementation &operator=(const NXGroupH5Implementation &o);
 
 	//! create a group
-	virtual void createGroup(const char *n,NXGroupH5Implementation &imp);
+	virtual void createGroup(const char *n, NXGroupH5Implementation &imp);
 	//! open a group
-	virtual void openGroup(const char *n,NXGroupH5Implementation &imp);
+	virtual void openGroup(const char *n, NXGroupH5Implementation &imp);
 	//! create a field
-	virtual void createField(const char *n,pni::utils::PNITypeID tid,
-			                 const pni::utils::ArrayShape &s,
+	virtual void createField(const char *n, PNITypeID tid, const ArrayShape &s,
 			                 NXFieldH5Implementation &imp);
 	//! create a field
-	virtual void createField(const char *n,pni::utils::PNITypeID tid,
-			                 const pni::utils::ArrayShape::sptr s,
+	virtual void createField(const char *n,PNITypeID tid,
+			                 const ArrayShape::sptr s,
 			                 NXFieldH5Implementation &imp);
 	//! create a field
-	virtual void createField(const char *n,pni::utils::PNITypeID tid,
-			                 pni::utils::UInt32 rank,
-			                 const pni::utils::UInt32 *dims,
-			                 NXFieldH5Implementation &imp);
+	virtual void createField(const char *n, PNITypeID tid, UInt32 rank,
+			                 const UInt32 *dims, NXFieldH5Implementation &imp);
 	//! method to create a field for a single scalar value
-	virtual void createField(const char *n,pni::utils::PNITypeID,
+	virtual void createField(const char *n,PNITypeID,
 			                 NXFieldH5Implementation &imp);
 	//! create a field to store string data
-	virtual void createStringField(const char *n,pni::utils::UInt64 size,
+	virtual void createStringField(const char *n,UInt64 size,
 			                       NXFieldH5Implementation &imp);
 	//! open an existing field
 	virtual void openField(const char *n,NXFieldH5Implementation &imp);
@@ -66,6 +66,7 @@ public:
 
 
 //end of namespace
+}
 }
 }
 

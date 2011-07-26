@@ -15,6 +15,7 @@
 #include "h5/NXGroupH5Implementation.hpp"
 #include "h5/NXFieldH5Implementation.hpp"
 
+namespace pni{
 namespace nx{
 template<ImpCodes c>
 class NXImpMap{
@@ -34,6 +35,7 @@ public:
 	typedef nx::h5::NXFieldH5Implementation FieldImplementation;
 };
 
+}
 }
 
 
