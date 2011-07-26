@@ -1,0 +1,13 @@
+from os import path
+
+Import("build_env")
+
+src_list = ["NXFileH5Implementation.cpp",
+            "H5TypeFactory.cpp","NXObjectH5Implementation.cpp",
+            "NXGroupH5Implementation.cpp",
+            "NXFieldH5Implementation.cpp",
+            "H5Exceptions.cpp"]
+            
+shared_objects = build_env.SharedObject(src_list)
+static_objects = build_env.StaticObject(src_list)
+Return("shared_objects static_objects")
