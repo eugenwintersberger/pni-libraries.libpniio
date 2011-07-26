@@ -15,6 +15,8 @@
 #include "NXObject.hpp"
 #include "NXGroup.hpp"
 
+using namespace pni::utils;
+
 namespace pni{
 namespace nx{
 
@@ -31,8 +33,8 @@ private:
 protected:
 	bool _read_only;    //!< open the file in read only mode (default is appending)
 	bool _overwrite;    //!< create a new file even if one with the same name already exists
-	pni::utils::UInt64 _split_size; //!< size of a file for splitting
-	pni::utils::String _fname;  //!< name of the file
+	UInt64 _split_size; //!< size of a file for splitting
+	String _fname;      //!< name of the file
 public:
 	typedef boost::shared_ptr<NXFile > sptr; //! shared pointer to a file object
 	//! default constructor
@@ -40,7 +42,7 @@ public:
 	virtual ~NXFile();
 
 	//! set the name of the file
-	virtual void setFileName(const pni::utils::String &n);
+	virtual void setFileName(const String &n);
 	//! get the name of the file
 	virtual pni::utils::String getFileName() const;
 
@@ -59,7 +61,7 @@ public:
 	virtual void unsetOverwrite();
 
 	//! set the split size
-	virtual void setSplitSize(pni::utils::UInt64 ssize);
+	virtual void setSplitSize(UInt64 ssize);
 	//! get the split size
 	virtual pni::utils::UInt64 getSplitSize() const;
 
@@ -79,18 +81,19 @@ public:
 };
 
 template<typename Imp> NXFile<Imp>::NXFile():NXGroup<Imp>() {
-	// TODO Auto-generated constructor stub
+	_read_only = true;
+	_overwrite = false;
 
 }
 
 template<typename Imp> NXFile<Imp>::~NXFile() {
 }
 
-template<typename Imp> void NXFile<Imp>::setFileName(const pni::utils::String &n){
+template<typename Imp> void NXFile<Imp>::setFileName(const String &n){
 	_fname = n;
 }
 
-template<typename Imp> pni::utils::String NXFile<Imp>::getFileName() const{
+template<typename Imp> String NXFile<Imp>::getFileName() const{
 	return _fname;
 }
 
@@ -118,11 +121,11 @@ template<typename Imp> void NXFile<Imp>::unsetOverwrite(){
 	_overwrite = false;
 }
 
-template<typename Imp> void NXFile<Imp>::setSplitSize(pni::utils::UInt64 ssize){
+template<typename Imp> void NXFile<Imp>::setSplitSize(UInt64 ssize){
 	_split_size = ssize;
 }
 
-template<typename Imp>  pni::utils::UInt64 NXFile<Imp>::getSplitSize() const{
+template<typename Imp>  UInt64 NXFile<Imp>::getSplitSize() const{
 	return _split_size;
 }
 

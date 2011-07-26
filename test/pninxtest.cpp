@@ -12,6 +12,8 @@
 #include<cppunit/ui/text/TextTestRunner.h>
 #include<cppunit/extensions/TestFactoryRegistry.h>
 
+#include "nx.hpp"
+
 
 int main(int argc,char **argv){
     //setup the test runner

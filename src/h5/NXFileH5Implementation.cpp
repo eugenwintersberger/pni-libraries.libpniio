@@ -6,6 +6,7 @@
  */
 
 #include "NXFileH5Implementation.hpp"
+#include "H5Exceptions.hpp"
 
 namespace pni{
 namespace nx{
@@ -43,6 +44,8 @@ void NXFileH5Implementation::close(){
 }
 
 void NXFileH5Implementation::open(const char *n,bool readonly){
+	static String ExIssuer = "void NXFileH5Implementation::open(const char *n,bool readonly)";
+	String ExDescription;
 	//should first add a check here if the file is realy in HDF5 format
 
 	//open the file in the appropriate mode
@@ -57,15 +60,24 @@ void NXFileH5Implementation::open(const char *n,bool readonly){
 }
 
 void NXFileH5Implementation::create(const char *n,bool overwrite){
+	static String ExIssuer="void NXFileH5Implementation::create(const char *n,bool overwrite)";
+	String ExDescription;
+
 	if(overwrite){
 		_id = H5Fcreate(n,H5F_ACC_TRUNC,_create_plist,_acc_plist);
 	}else{
 		_id = H5Fcreate(n,H5F_ACC_EXCL,_create_plist,_acc_plist);
 	}
-
-	//set the _pid to the root group
-
 	//check here for errors
+
+	if (_id < 0){
+		//have to handle here the HDF5 error stack
+		H5FileException e;
+		e.setIssuer(ExIssuer);
+		ExDescription = "Error opening file "+String(n)+"!";
+		e.setDescription(ExDescription);
+		throw e;
+	}
 
 }
 

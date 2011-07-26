@@ -76,6 +76,15 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const H5AttributeException &e);
 };
 
+class H5FileException:public H5Exception{
+public:
+	H5FileException();
+	H5FileException(const String &i,const String &d);
+	virtual ~H5FileException();
+
+	friend std::ostream &operator<<(std::ostream &o,const H5FileException &e);
+};
+
 //end of namespace
 }
 }

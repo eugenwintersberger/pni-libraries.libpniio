@@ -141,6 +141,22 @@ std::ostream &operator<<(std::ostream &o,const H5AttributeException &e){
 	return o;
 }
 
+H5FileException::H5FileException():H5Exception("H5FileException"){
+}
+
+H5FileException::H5FileException(const String &i,const String &d):H5Exception("H5FileException",i,d){
+}
+
+H5FileException::~H5FileException(){
+}
+
+std::ostream &operator<<(std::ostream &o,const H5FileException &e){
+	o<<e._name<<" from "<<e._issuer<<std::endl;
+	o<<e._description;
+
+	return o;
+}
+
 //end of namespace
 }
 }

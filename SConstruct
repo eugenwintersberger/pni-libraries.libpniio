@@ -19,7 +19,7 @@ var.Add("MAINTAINER_MAIL","e-mail of the package maintainer","eugen.wintersberge
 env = Environment(variables=var,tools=['default','packaging','textfile'])
 
 #set some linker flags
-env.Append(LINKFLAGS=["-Wl,-h"+env["LIBPREFIX"]+env["LIBNAME"]+env["SHLIBSUFFIX"]+"."+env["SOVERSION"]])
+
 env.Append(LIBS=["hdf5"])
 
 #set the proper compiler - this should be changed to something 
@@ -42,7 +42,11 @@ if debug:
 else:
     build_env.Append(CXXFLAGS=["-O2"])
     
+test_build_env = build_env.Clone()
+build_env.Append(LINKFLAGS=["-Wl,-h"+env["LIBPREFIX"]+env["LIBNAME"]+env["SHLIBSUFFIX"]+"."+env["SOVERSION"]]) 
+    
 Export("build_env")
+Export("test_build_env")
 
 
 SConscript(["src/SConscript"])

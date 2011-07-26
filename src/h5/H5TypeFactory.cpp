@@ -12,6 +12,7 @@ namespace nx{
 namespace h5{
 
 
+
 template<> hid_t H5TypeFactory::createType<Int8>() const {
 	return H5Tcopy(_int8_type);
 }

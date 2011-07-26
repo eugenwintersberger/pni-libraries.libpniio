@@ -168,7 +168,7 @@ public:
 	//! an external link (link to an object in another file) is created.
 	//! \param t target path
 	//! \param n name of the link
-	virtual void createLink(const String &t,const String &n);
+	virtual void createLink(const String &t,const String &n){}
 
 	//! close the group object
 	virtual void close();

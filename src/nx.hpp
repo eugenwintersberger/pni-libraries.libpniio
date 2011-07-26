@@ -16,6 +16,8 @@
 //#include "NXFileXMLImplementation.hpp"
 #include "h5/NXGroupH5Implementation.hpp"
 #include "h5/NXFieldH5Implementation.hpp"
+#include "h5/H5TypeFactory.hpp"
+#include "h5/H5Exceptions.hpp"
 
 namespace pni{
 namespace nx{
@@ -25,6 +27,10 @@ typedef nx::NXObject<NXObjectH5Implementation> NXObject;
 typedef nx::NXFile<NXFileH5Implementation> NXFile;
 typedef nx::NXGroup<NXGroupH5Implementation> NXGroup;
 typedef nx::NXField<NXFieldH5Implementation> NXField;
+
+
+
+
 }
 }
 }
