@@ -16,6 +16,7 @@ class NXFileTest: public CppUnit::TestFixture {
 	CPPUNIT_TEST_SUITE(NXFileTest);
 	CPPUNIT_TEST(testCreation);
 	CPPUNIT_TEST(testOpen);
+	CPPUNIT_TEST(testAttributes);
 	CPPUNIT_TEST_SUITE_END();
 private:
 	String _fname1;
@@ -27,6 +28,7 @@ public:
 	//testing basic file functionality
 	void testCreation();
 	void testOpen();
+	void testAttributes();
 
 
 };

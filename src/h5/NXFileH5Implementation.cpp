@@ -14,7 +14,9 @@ namespace h5{
 
 
 NXFileH5Implementation::NXFileH5Implementation() {
+	H5METHOD_EXCEPTION_SETUP("NXFileH5Implementation::NXFileH5Implementation()");
 	H5open();
+	H5Eset_auto1(NULL,NULL);
 	_id = 0;
 	_pid = 0;
 	//create property lists for file creation an access
@@ -44,9 +46,7 @@ void NXFileH5Implementation::close(){
 }
 
 void NXFileH5Implementation::open(const char *n,bool readonly){
-	static String ExIssuer = "void NXFileH5Implementation::open(const char *n,bool readonly)";
-	String ExDescription;
-	//should first add a check here if the file is realy in HDF5 format
+	H5METHOD_EXCEPTION_SETUP("void NXFileH5Implementation::open(const char *n,bool readonly)");
 
 	//open the file in the appropriate mode
 	if(readonly){
@@ -56,12 +56,15 @@ void NXFileH5Implementation::open(const char *n,bool readonly){
 	}
 	//now we have to set the _id to the root group
 
+	if ( _id < 0){
+		H5METHOD_EXCEPTION_THROW(H5FileException,"Error opening file "+String(n)+"!");
+	}
+
 
 }
 
 void NXFileH5Implementation::create(const char *n,bool overwrite){
-	static String ExIssuer="void NXFileH5Implementation::create(const char *n,bool overwrite)";
-	String ExDescription;
+	H5METHOD_EXCEPTION_SETUP("void NXFileH5Implementation::create(const char *n,bool overwrite)");
 
 	if(overwrite){
 		_id = H5Fcreate(n,H5F_ACC_TRUNC,_create_plist,_acc_plist);
@@ -71,13 +74,9 @@ void NXFileH5Implementation::create(const char *n,bool overwrite){
 	//check here for errors
 
 	if (_id < 0){
-		//have to handle here the HDF5 error stack
-		H5FileException e;
-		e.setIssuer(ExIssuer);
-		ExDescription = "Error opening file "+String(n)+"!";
-		e.setDescription(ExDescription);
-		throw e;
+		H5METHOD_EXCEPTION_THROW(H5FileException,"Error create file "+String(n)+"!");
 	}
+
 
 }
 

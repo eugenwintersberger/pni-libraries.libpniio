@@ -221,6 +221,8 @@
 					</target>
 				</buildTargets>
 			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 		</cconfiguration>
 		<cconfiguration id="photran.managedbuild.toolchain.gnu.fortran.exe.debug.1032391296.2018133470">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="photran.managedbuild.toolchain.gnu.fortran.exe.debug.1032391296.2018133470" moduleId="org.eclipse.cdt.core.settings" name="Release">
@@ -440,6 +442,8 @@
 					</target>
 				</buildTargets>
 			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">

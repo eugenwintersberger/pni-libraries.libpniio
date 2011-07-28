@@ -17,18 +17,25 @@ H5Exception::H5Exception(){
 	_name.clear();
 	_issuer.clear();
 	_description.clear();
+
+	_h5estack = H5ErrorStack();
+
 }
 
 H5Exception::H5Exception(const String &n){
 	_name = n;
 	_issuer.clear();
 	_description.clear();
+
+	_h5estack = H5ErrorStack();
 }
 
 H5Exception::H5Exception(const String &n,const String &i,const String &d){
 	_name = n;
 	_issuer = i;
 	_description = d;
+
+	_h5estack = H5ErrorStack();
 }
 
 H5Exception::~H5Exception(){
@@ -136,7 +143,8 @@ H5AttributeException::~H5AttributeException(){
 
 std::ostream &operator<<(std::ostream &o,const H5AttributeException &e){
 	o<<e._name<<" from "+e._issuer<<std::endl;
-	o<<e._description;
+	o<<e._description<<std::endl;
+	o<<e._h5estack<<std::endl;
 
 	return o;
 }

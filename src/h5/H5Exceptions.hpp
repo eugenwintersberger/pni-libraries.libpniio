@@ -9,6 +9,11 @@
 #define H5EXCEPTIONS_HPP_
 
 #include <pni/utils/PNITypes.hpp>
+extern "C"{
+#include <hdf5.h>
+}
+
+#include "H5ErrorStack.hpp"
 
 namespace pni{
 namespace nx{
@@ -16,11 +21,26 @@ namespace h5{
 
 using namespace pni::utils;
 
+#define H5METHOD_EXCEPTION_SETUP(issuer) \
+	static String ExIssuer = (issuer);\
+	String ExDescription
+
+#define H5METHOD_EXCEPTION_THROW(extype,exdesc)\
+	extype e;\
+	ExDescription = (exdesc);\
+	e.setName(ExIssuer);\
+	e.setDescription(ExDescription);\
+	std::cerr<<e<<std::endl;\
+	std::cerr<<"in line: "<<__LINE__<<" of file "<<__FILE__<<std::endl;\
+	throw e;
+
 class H5Exception{
 protected:
 	String _name;
 	String _issuer;
 	String _description;
+
+	H5ErrorStack _h5estack;
 public:
 	H5Exception();
 	H5Exception(const String &n);
