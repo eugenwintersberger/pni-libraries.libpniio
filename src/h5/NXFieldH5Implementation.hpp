@@ -43,18 +43,18 @@ public:
 	virtual UInt64 getSize();
 
 	//! write scalar data to a field
-	virtual void write(pni::utils::ScalarObject &s);
+	virtual void write(ScalarObject &s);
 	//! write array data to a field
-	virtual void write(pni::utils::ArrayObject &s);
+	virtual void write(ArrayObject &s);
 	//! write a string to a field
-	virtual void write(pni::utils::String &s);
+	virtual void write(String &s);
 
 	//! read a scalar object from a field
-	virtual void read(pni::utils::ScalarObject &s);
+	virtual void read(ScalarObject &s);
 	//! read array data from a field
-	virtual void read(pni::utils::ArrayObject &s);
+	virtual void read(ArrayObject &s);
 	//! read a string from a field
-	virtual void read(pni::utils::String &s);
+	virtual void read(String &s);
 
 	//! close the data field
 	virtual void close();

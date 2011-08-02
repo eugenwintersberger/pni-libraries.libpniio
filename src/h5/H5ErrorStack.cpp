@@ -2,7 +2,7 @@
  * H5ErrorStack.cpp
  *
  *  Created on: Jul 28, 2011
- *      Author: eugen
+ *      Author: Eugen Wintersberger
  */
 
 #include "H5ErrorStack.hpp"
@@ -13,45 +13,64 @@ namespace pni {
 namespace nx {
 namespace h5 {
 
+
 herr_t _error_walker(unsigned n,const H5E_error2_t *eptr,void *client_data){
 	H5ErrorStack *stack = (H5ErrorStack *)client_data;
 
+	H5Error h5e;
+	if(eptr->file_name!=NULL) h5e.setFileName(String(eptr->file_name));
+	if(eptr->func_name!=NULL) h5e.setFuncName(String(eptr->func_name));
+	if(eptr->desc != NULL) h5e.setDescription(String(eptr->desc));
+	h5e.setMinorNumber(eptr->min_num);
+	h5e.setMajorNumber(eptr->maj_num);
+	h5e.setClassId(eptr->cls_id);
+	stack->appendError(h5e);
 
-	std::cout<<n<<" "<<eptr->cls_id<<" "<<eptr->maj_num<<" "<<eptr->min_num<<std::endl;
 	return 0;
 }
 
 H5ErrorStack::H5ErrorStack() {
-	hid_t i;
-	char *buffer;
-	H5E_type_t msg_type;
-	ssize_t bsize;
 
+}
+
+void H5ErrorStack::getStack(){
 	_stack_id = H5Eget_current_stack();
-	_num_errors = H5Eget_num(_stack_id);
+	H5Ewalk2(_stack_id,H5E_WALK_DOWNWARD,_error_walker,(void *)this);
+}
 
-	buffer = new char[H5ERROR_MESSAGE_MAX_BUFFER];
+H5ErrorStack::H5ErrorStack(const H5ErrorStack &s){
+	_stack_id = s._stack_id;
+	_errors = std::vector<H5Error>(s._errors);
+}
 
-	H5Ewalk2(_stack_id,H5E_WALK_UPWARD,_error_walker,(void *)this);
+H5ErrorStack &H5ErrorStack::operator=(const H5ErrorStack &s){
+	if(this != &s){
+		_stack_id = s._stack_id;
+		_errors = std::vector<H5Error>(s._errors);
+	}
 
-	delete [] buffer;
-
+	return *this;
 }
 
 H5ErrorStack::~H5ErrorStack() {
-	// TODO Auto-generated destructor stub
+	_errors.clear();
+	H5Eclear2(_stack_id);
+	H5Eclose_stack(_stack_id);
+}
+
+void H5ErrorStack::appendError(const H5Error &e){
+	_errors.push_back(e);
 }
 
 
-
 std::ostream &operator<<(std::ostream &o,const H5ErrorStack &s){
-	std::vector<String>::const_iterator iter;
+	std::vector<H5Error>::const_iterator iter;
 
-	o<<"HDF5 Error ("<<s._num_errors<<" error messages):"<<std::endl;
-	H5Eprint2(s._stack_id,stdout);
-	//for(iter = s._major_messages.begin();iter != s._major_messages.end();iter++){
-	//	o<<*iter<<std::endl;
-	//}
+	o<<"HDF5 Errors ("<<s.getNumberOfErrors()<<" error records):"<<std::endl;
+
+	for(iter=s._errors.begin();iter!=s._errors.end();iter++){
+		o<<*iter<<std::endl;
+	}
 
 	return o;
 }

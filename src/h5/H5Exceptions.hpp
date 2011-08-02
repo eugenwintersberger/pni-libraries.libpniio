@@ -25,13 +25,16 @@ using namespace pni::utils;
 	static String ExIssuer = (issuer);\
 	String ExDescription
 
-#define H5METHOD_EXCEPTION_THROW(extype,exdesc)\
+#define H5METHOD_EXCEPTION_INIT(extype,exdesc)\
 	extype e;\
 	ExDescription = (exdesc);\
 	e.setName(ExIssuer);\
-	e.setDescription(ExDescription);\
+	e.setDescription(ExDescription);
+
+
+#define H5METHOD_EXCEPTION_THROW()\
 	std::cerr<<e<<std::endl;\
-	std::cerr<<"in line: "<<__LINE__<<" of file "<<__FILE__<<std::endl;\
+	std::cerr<<"in line: "<<__LINE__<<" of file "<<__FILE__<<std::endl<<std::endl;\
 	throw e;
 
 class H5Exception{

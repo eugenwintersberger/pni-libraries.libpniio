@@ -100,14 +100,17 @@ void NXFileTest::testAttributes(){
 	//creat attributes to read data to
 	String read_str_attr;
 	Float64Scalar read_scalar_attr;
+	Int16Array read_array_attr;
 
 	//read data
 	f.getAttribute("StringAttribute",read_str_attr);
 	f.getAttribute("FloatScalarAttribute",read_scalar_attr);
+	f.getAttribute("ArrayAttribute",read_array_attr);
 
 	//check if values are the same
 	CPPUNIT_ASSERT(write_str_attr == read_str_attr);
 	CPPUNIT_ASSERT(read_scalar_attr == read_scalar_attr);
+	CPPUNIT_ASSERT(read_array_attr == write_array_attr);
 
 }
 

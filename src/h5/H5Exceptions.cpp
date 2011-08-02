@@ -18,7 +18,9 @@ H5Exception::H5Exception(){
 	_issuer.clear();
 	_description.clear();
 
-	_h5estack = H5ErrorStack();
+	_h5estack.getStack();
+	//std::cerr<<"printing error stack ..."<<std::endl;
+	//std::cerr<<_h5estack<<std::endl;
 
 }
 
@@ -27,7 +29,9 @@ H5Exception::H5Exception(const String &n){
 	_issuer.clear();
 	_description.clear();
 
-	_h5estack = H5ErrorStack();
+	_h5estack.getStack();
+	//std::cerr<<"printing error stack ..."<<std::endl;
+	//std::cerr<<_h5estack<<std::endl;
 }
 
 H5Exception::H5Exception(const String &n,const String &i,const String &d){
@@ -35,7 +39,9 @@ H5Exception::H5Exception(const String &n,const String &i,const String &d){
 	_issuer = i;
 	_description = d;
 
-	_h5estack = H5ErrorStack();
+	_h5estack.getStack();
+	//std::cerr<<"printing error stack ..."<<std::endl;
+	//std::cerr<<_h5estack<<std::endl;
 }
 
 H5Exception::~H5Exception(){
@@ -89,7 +95,8 @@ H5DataTypeException::~H5DataTypeException(){
 
 std::ostream &operator<<(std::ostream &o,const H5DataTypeException &e){
 	o<<e._name<<" from "+e._issuer<<std::endl;
-	o<<e._description;
+	o<<e._description<<std::endl;
+	o<<e._h5estack<<std::endl;
 
 	return o;
 }
@@ -107,7 +114,8 @@ H5DataSetException::~H5DataSetException()
 
 std::ostream &operator<<(std::ostream &o,const H5DataSetException &e){
 	o<<e._name<<" from "+e._issuer<<std::endl;
-	o<<e._description;
+	o<<e._description<<std::endl;
+	o<<e._h5estack<<std::endl;
 
 	return o;
 }
@@ -125,7 +133,8 @@ H5DataSpaceException::~H5DataSpaceException(){
 
 std::ostream &operator<<(std::ostream &o,const H5DataSpaceException &e){
 	o<<e._name<<" from "+e._issuer<<std::endl;
-	o<<e._description;
+	o<<e._description<<std::endl;
+	o<<e._h5estack<<std::endl;
 
 	return o;
 }
@@ -160,7 +169,8 @@ H5FileException::~H5FileException(){
 
 std::ostream &operator<<(std::ostream &o,const H5FileException &e){
 	o<<e._name<<" from "<<e._issuer<<std::endl;
-	o<<e._description;
+	o<<e._description<<std::endl;
+	o<<e._h5estack<<std::endl;
 
 	return o;
 }

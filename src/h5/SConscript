@@ -7,7 +7,7 @@ src_list = ["NXFileH5Implementation.cpp",
             "NXGroupH5Implementation.cpp",
             "NXFieldH5Implementation.cpp",
             "H5Exceptions.cpp",
-            "H5ErrorStack.cpp"]
+            "H5ErrorStack.cpp","H5Error.cpp"]
             
 shared_objects = build_env.SharedObject(src_list)
 static_objects = build_env.StaticObject(src_list)

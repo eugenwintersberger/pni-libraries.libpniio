@@ -19,7 +19,7 @@
 namespace pni{
 namespace nx{
 
-
+using namespace pni::utils;
 
 template<typename Imp>
 class NXObject {
@@ -83,9 +83,9 @@ template<typename Imp> NXObject<Imp> &NXObject<Imp>::operator=(const NXObject &o
 template<typename Imp> NXObject<Imp>::~NXObject() {
 }
 
-template<typename Imp> pni::utils::String NXObject<Imp>::getName() const{
+template<typename Imp> String NXObject<Imp>::getName() const{
 	//here we need obviously a better solution
-	return pni::utils::String("NIX");
+	return String("NIX");
 }
 
 template<typename Imp>
@@ -94,54 +94,54 @@ void NXObject<Imp>::setImplementation(const Imp &i){
 }
 
 template<typename Imp>
-void NXObject<Imp>::setAttribute(const pni::utils::String &n,pni::utils::ArrayObject &a){
+void NXObject<Imp>::setAttribute(const String &n,ArrayObject &a){
 	_imp.setAttribute(n.c_str(),a);
 }
 
 template<typename Imp>
-void NXObject<Imp>::setAttribute(const pni::utils::String &n,pni::utils::ArrayObject::sptr a){
+void NXObject<Imp>::setAttribute(const String &n,ArrayObject::sptr a){
 	setAttribute(n,*a);
 }
 
 
 template<typename Imp>
-void NXObject<Imp>::setAttribute(const pni::utils::String &n,pni::utils::ScalarObject &s){
+void NXObject<Imp>::setAttribute(const String &n,ScalarObject &s){
 	_imp.setAttribute(n.c_str(),s);
 }
 
 template<typename Imp>
-void NXObject<Imp>::setAttribute(const pni::utils::String &n,pni::utils::ScalarObject::sptr s){
+void NXObject<Imp>::setAttribute(const String &n,ScalarObject::sptr s){
 	setAttribute(n,*s);
 }
 
 template<typename Imp>
-void NXObject<Imp>::setAttribute(const pni::utils::String &n,const pni::utils::String &s){
+void NXObject<Imp>::setAttribute(const String &n,const String &s){
 	_imp.setAttribute(n.c_str(),s);
 }
 
 template<typename Imp>
-void NXObject<Imp>::getAttribute(const pni::utils::String &n,pni::utils::String &s){
+void NXObject<Imp>::getAttribute(const String &n,String &s){
 	_imp.getAttribute(n.c_str(),s);
 }
 
 template<typename Imp>
-void NXObject<Imp>::getAttribute(const pni::utils::String &n,pni::utils::ArrayObject &a){
+void NXObject<Imp>::getAttribute(const String &n,ArrayObject &a){
 	_imp.getAttribute(n.c_str(),a);
 }
 
 template<typename Imp>
-void NXObject<Imp>::getAttribute(const pni::utils::String &n,pni::utils::ArrayObject::sptr a){
+void NXObject<Imp>::getAttribute(const String &n,ArrayObject::sptr a){
 	_imp.getAttribute(n.c_str(),*a);
 
 }
 
 template<typename Imp>
-void NXObject<Imp>::getAttribute(const pni::utils::String &n,pni::utils::ScalarObject &s){
+void NXObject<Imp>::getAttribute(const String &n,ScalarObject &s){
 	_imp.getAttribute(n.c_str(),s);
 }
 
 template<typename Imp>
-void NXObject<Imp>::getAttribute(const pni::utils::String &n,pni::utils::ScalarObject::sptr s){
+void NXObject<Imp>::getAttribute(const String &n,ScalarObject::sptr s){
 	_imp.getAttribute(n.c_str(),*s);
 }
 

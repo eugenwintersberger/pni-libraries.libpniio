@@ -16,7 +16,7 @@ namespace h5{
 NXFileH5Implementation::NXFileH5Implementation() {
 	H5METHOD_EXCEPTION_SETUP("NXFileH5Implementation::NXFileH5Implementation()");
 	H5open();
-	H5Eset_auto1(NULL,NULL);
+	H5Eset_auto2(H5E_DEFAULT,0,NULL);
 	_id = 0;
 	_pid = 0;
 	//create property lists for file creation an access
@@ -57,7 +57,8 @@ void NXFileH5Implementation::open(const char *n,bool readonly){
 	//now we have to set the _id to the root group
 
 	if ( _id < 0){
-		H5METHOD_EXCEPTION_THROW(H5FileException,"Error opening file "+String(n)+"!");
+		H5METHOD_EXCEPTION_INIT(H5FileException,"Error opening file "+String(n)+"!");
+		H5METHOD_EXCEPTION_THROW();
 	}
 
 
@@ -74,7 +75,8 @@ void NXFileH5Implementation::create(const char *n,bool overwrite){
 	//check here for errors
 
 	if (_id < 0){
-		H5METHOD_EXCEPTION_THROW(H5FileException,"Error create file "+String(n)+"!");
+		H5METHOD_EXCEPTION_INIT(H5FileException,"Error create file "+String(n)+"!");
+		H5METHOD_EXCEPTION_THROW();
 	}
 
 
