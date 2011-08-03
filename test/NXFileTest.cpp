@@ -106,11 +106,15 @@ void NXFileTest::testAttributes(){
 	f.getAttribute("StringAttribute",read_str_attr);
 	f.getAttribute("FloatScalarAttribute",read_scalar_attr);
 	f.getAttribute("ArrayAttribute",read_array_attr);
-
+	for(UInt32 i=0;i<read_array_attr.getShape()->getSize();i++){
+			std::cout<<read_array_attr[i]<<" = "<<write_array_attr[i]<<std::endl;
+	}
 	//check if values are the same
 	CPPUNIT_ASSERT(write_str_attr == read_str_attr);
 	CPPUNIT_ASSERT(read_scalar_attr == read_scalar_attr);
 	CPPUNIT_ASSERT(read_array_attr == write_array_attr);
+
+
 
 }
 

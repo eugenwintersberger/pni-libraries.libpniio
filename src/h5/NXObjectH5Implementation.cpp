@@ -8,6 +8,7 @@
 #include "NXObjectH5Implementation.hpp"
 #include "H5TypeFactory.hpp"
 #include "H5Exceptions.hpp"
+#include "H5Utilities.hpp"
 
 namespace pni{
 namespace nx{
@@ -55,22 +56,12 @@ void NXObjectH5Implementation::setAttribute(const char *n,ArrayObject &a){
 	hid_t tid;   //id of the data type
 	hid_t setid; //id of the data set
 	ArrayShape &s = *(a.getShape());
-	hsize_t *dims = NULL;
 
 	//determine the data type of the array object
 	tid = H5TFactory.getTypeFromID(a.getTypeID());
 
 	//create the dataspace
-	dims = new hsize_t[s.getRank()];
-	for(UInt64 i=0;i<s.getRank();i++) dims[i] = s.getDimension(i);
-	setid = H5Screate_simple(s.getRank(),dims,NULL);
-	//check here for errors
-	if(setid<0){
-		H5METHOD_EXCEPTION_INIT(H5DataSpaceException,"Error creating simple data space for array attribute ["+String(n)+"]!");
-		H5METHOD_EXCEPTION_THROW();
-	}
-	delete [] dims;
-
+	H5Utilities::ArrayShape2DataSpace(s,setid);
 
 	//create the attribute and check for errors
 	aid = H5Acreate2(_id,n,tid,setid,H5P_DEFAULT,H5P_DEFAULT);
@@ -171,14 +162,12 @@ void NXObjectH5Implementation::setAttribute(const char *n,const String &s){
 
 void NXObjectH5Implementation::getAttribute(const char *n,ArrayObject &a){
 	H5METHOD_EXCEPTION_SETUP("void NXObjectH5Implementation::getAttribute(const char *n,ArrayObject &a)");
-	ArrayShape::sptr s = a.getShape();
-	BufferObject::sptr b = a.getBuffer();
+	ArrayShape temp_shape;
+
 
 	hid_t atid = 0;
 	hid_t asid = 0;
 	hid_t aid  = 0;
-	hsize_t *dims=NULL;
-	int rank;
 
 	aid = H5Aopen(_id,n,H5P_DEFAULT);
 	if(aid<0){
@@ -200,19 +189,14 @@ void NXObjectH5Implementation::getAttribute(const char *n,ArrayObject &a){
 		H5METHOD_EXCEPTION_THROW();
 	}
 
-	//now we have to identify the shape parameters of the dataspace
-	rank = H5Sget_simple_extent_dims(asid,dims,NULL);
-	//should do some error checking here
-
-	//set rank and dimensions for the array shape object
-	s->setRank(rank);
-	for(Int64 i=0;i<rank;i++) s->setDimension(i,dims[i]);
-
-	//now allocate memory for the buffer
-	b->resize(s->getSize());
+	H5Utilities::DataSpace2ArrayShape(asid,temp_shape);
+	if((!a.getShape())||(temp_shape != *(a.getShape()))){
+		a.setShape(temp_shape);
+		a.Allocate();
+	}
 
 	//copy data to the array buffer
-	if((H5Aread(aid,atid,b->getVoidPtr()))<0){
+	if((H5Aread(aid,atid,a.getBuffer()->getVoidPtr()))<0){
 		H5METHOD_EXCEPTION_INIT(H5DataSetException,"Error reading data from array attribute ["+String(n)+"]!");
 		H5Tclose(atid);
 		H5Sclose(asid);

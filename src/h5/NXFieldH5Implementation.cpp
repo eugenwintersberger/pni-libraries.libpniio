@@ -174,19 +174,21 @@ void NXFieldH5Implementation::read(String &s){
 	}
 }
 
-UInt32 NXFieldH5Implementation::getRank(){
+UInt32 NXFieldH5Implementation::getRank() const{
 	return H5Sget_simple_extent_ndims(_space_id);
 }
 
-UInt32 NXFieldH5Implementation::getDimension(UInt32 i){
+UInt32 NXFieldH5Implementation::getDimension(UInt32 i)const {
+	H5METHOD_EXCEPTION_SETUP("UInt32 NXFieldH5Implementation::getDimension(UInt32 i)");
 	ssize_t rank = H5Sget_simple_extent_ndims(_space_id);
 	UInt32 dim;
 
 	if(i>=rank){
-		//raise an index error here
+		H5METHOD_EXCEPTION_INIT(H5DataSpaceException,"Dimension index out of bounds!");
+		H5METHOD_EXCEPTION_THROW();
 	}
 
-	hisze_t *dims = new hsize_t[rank];
+	hsize_t *dims = new hsize_t[rank];
 	H5Sget_simple_extent_dims(_space_id,dims,NULL);
 
 	dim = dims[i];
@@ -195,7 +197,25 @@ UInt32 NXFieldH5Implementation::getDimension(UInt32 i){
 	return dim;
 }
 
-UInt64 NXFieldH5Implementation::getSize(){
+UInt32 *NXFieldH5Implementation::getDimensions()const {
+	H5METHOD_EXCEPTION_SETUP("UInt32 NXFieldH5Implementation::getDimension(UInt32 i)");
+	ssize_t rank = H5Sget_simple_extent_ndims(_space_id);
+	UInt32 *retdims;
+
+
+	hsize_t *dims = new hsize_t[rank];
+	retdims = new UInt32[rank];
+	H5Sget_simple_extent_dims(_space_id,dims,NULL);
+
+	//copy dimensions to the ouput buffer
+	for(UInt32 i=0;i<rank;i++) retdims[i] = (UInt32)dims[i];
+
+	delete [] dims;
+
+	return retdims;
+}
+
+UInt64 NXFieldH5Implementation::getSize() const{
 	return 0;
 }
 

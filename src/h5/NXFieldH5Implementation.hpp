@@ -38,9 +38,10 @@ public:
 	//! assignment operator
 	NXFieldH5Implementation &operator=(const NXFieldH5Implementation &o);
 
-	virtual UInt32 getRank();
-	virtual UInt32 getDimension(UInt32 i);
-	virtual UInt64 getSize();
+	virtual UInt32 getRank() const;
+	virtual UInt32 getDimension(UInt32 i) const;
+	virtual UInt32* getDimensions() const;
+	virtual UInt64 getSize() const;
 
 	//! write scalar data to a field
 	virtual void write(ScalarObject &s);
