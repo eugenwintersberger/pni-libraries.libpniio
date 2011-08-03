@@ -76,14 +76,13 @@ void NXFileTest::testAttributes(){
 	Float64Scalar write_scalar_attr = 100;
 	ArrayShape shape;
 	Int16Array write_array_attr;
-	Buffer<Int16> buffer;
+	Complex64Scalar write_cmplx_scalar = Complex64(1,-2);
 
 	shape.setRank(2);
 	shape.setDimension(0,3);
 	shape.setDimension(1,3);
 	write_array_attr.setShape(shape);
-	buffer.allocate(shape.getSize());
-	write_array_attr.setBuffer(buffer);
+	write_array_attr.Allocate();
 	write_array_attr(0,0) = 1; write_array_attr(0,1) = 2; write_array_attr(0,2) = 3;
 	write_array_attr(1,0) = 4; write_array_attr(1,1) = 5; write_array_attr(1,2) = 6;
 	write_array_attr(2,0) = 7; write_array_attr(2,1) = 8; write_array_attr(2,2) = 9;
@@ -91,6 +90,7 @@ void NXFileTest::testAttributes(){
 	//write attribute data
 	f.setAttribute("StringAttribute",write_str_attr);
 	f.setAttribute("FloatScalarAttribute",write_scalar_attr);
+	f.setAttribute("IndexOfRefraction",write_cmplx_scalar);
 	f.setAttribute("ArrayAttribute",write_array_attr);
 
 	//close and reopen the file
@@ -101,20 +101,22 @@ void NXFileTest::testAttributes(){
 	String read_str_attr;
 	Float64Scalar read_scalar_attr;
 	Int16Array read_array_attr;
+	Complex64Scalar read_cmplx_scalar;
 
 	//read data
 	f.getAttribute("StringAttribute",read_str_attr);
 	f.getAttribute("FloatScalarAttribute",read_scalar_attr);
 	f.getAttribute("ArrayAttribute",read_array_attr);
-	for(UInt32 i=0;i<read_array_attr.getShape()->getSize();i++){
-			std::cout<<read_array_attr[i]<<" = "<<write_array_attr[i]<<std::endl;
-	}
+	f.getAttribute("IndexOfRefraction",read_cmplx_scalar);
+
 	//check if values are the same
 	CPPUNIT_ASSERT(write_str_attr == read_str_attr);
 	CPPUNIT_ASSERT(read_scalar_attr == read_scalar_attr);
 	CPPUNIT_ASSERT(read_array_attr == write_array_attr);
+	CPPUNIT_ASSERT(write_cmplx_scalar == read_cmplx_scalar);
+}
 
-
+void NXFileTest::testAttributeExceptions(){
 
 }
 

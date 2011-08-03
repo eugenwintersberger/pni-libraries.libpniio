@@ -50,9 +50,61 @@ NXObjectH5Implementation &NXObjectH5Implementation::operator=(const NXObjectH5Im
 	return *this;
 }
 
+void NXObjectH5Implementation::_create_and_write_attribute(hid_t pid,const char *n,
+		                       hid_t type_id,hid_t space_id,void *ptr){
+	H5METHOD_EXCEPTION_SETUP("void NXObjectH5Implementation::"
+			                 "_create_and_write_attribute(hid_t pid,char *n,"
+			                 "hid_t type_id,hid_t space_id,void *ptr)");
+	hid_t aid; //attribute handler
+
+	//create the attribute and check for errors
+	aid = H5Acreate2(pid,n,type_id,space_id,H5P_DEFAULT,H5P_DEFAULT);
+	if(aid<0){
+		H5METHOD_EXCEPTION_INIT(H5AttributeException,"Error creating array attribute ["+String(n)+"]!");
+		H5Sclose(space_id);
+		H5METHOD_EXCEPTION_THROW();
+	}
+
+	//write data and check for errors
+	if((H5Awrite(aid,type_id,ptr))<0){
+		H5METHOD_EXCEPTION_INIT(H5AttributeException,"Error writing data to array attribute ["+String(n)+"]!");
+		H5Aclose(aid);
+		H5Sclose(space_id);
+		H5METHOD_EXCEPTION_THROW();
+	}
+
+	H5Aclose(aid);
+
+}
+
+void NXObjectH5Implementation::_open_attribute(hid_t pid,const char *n,
+		                       hid_t &attr_id,hid_t &type_id,hid_t &space_id){
+	H5METHOD_EXCEPTION_SETUP("void NXObjectH5Implementation::"
+							 "_open_attribute(hid_t pid,const char *n,"
+							 "hid_t &attr_id,hid_t &type_id,hid_t &space_id)");
+	attr_id = H5Aopen(_id,n,H5P_DEFAULT);
+	if(attr_id<0){
+		H5METHOD_EXCEPTION_INIT(H5AttributeException,"Error opening array attribute ["+String(n)+"]!");
+		H5METHOD_EXCEPTION_THROW();
+	}
+
+	space_id= H5Aget_space(attr_id);
+	if(space_id<0){
+		H5METHOD_EXCEPTION_INIT(H5DataSpaceException,"Error opening data-space for array attribute ["+String(n)+"]!");
+		H5Aclose(attr_id);
+		H5METHOD_EXCEPTION_THROW();
+	}
+	type_id = H5Aget_type(attr_id);
+	if(type_id<0){
+		H5METHOD_EXCEPTION_INIT(H5DataTypeException,"Error opening data-type for array attribute ["+String(n)+"]!");
+		H5Sclose(space_id);
+		H5Aclose(attr_id);
+		H5METHOD_EXCEPTION_THROW();
+	}
+}
+
 void NXObjectH5Implementation::setAttribute(const char *n,ArrayObject &a){
 	H5METHOD_EXCEPTION_SETUP("void NXObjectH5Implementation::setAttribute(const char *n,ArrayObject &a)");
-	hid_t aid;   //id of the attribute object
 	hid_t tid;   //id of the data type
 	hid_t setid; //id of the data set
 	ArrayShape &s = *(a.getShape());
@@ -63,30 +115,15 @@ void NXObjectH5Implementation::setAttribute(const char *n,ArrayObject &a){
 	//create the dataspace
 	H5Utilities::ArrayShape2DataSpace(s,setid);
 
-	//create the attribute and check for errors
-	aid = H5Acreate2(_id,n,tid,setid,H5P_DEFAULT,H5P_DEFAULT);
-	if(aid<0){
-		H5METHOD_EXCEPTION_INIT(H5AttributeException,"Error creating array attribute ["+String(n)+"]!");
-		H5Sclose(setid);
-		H5METHOD_EXCEPTION_THROW();
-	}
-
-	//write data and check for errors
-	if((H5Awrite(aid,tid,a.getBuffer()->getVoidPtr()))<0){
-		H5METHOD_EXCEPTION_INIT(H5AttributeException,"Error writing data to array attribute ["+String(n)+"]!");
-		H5Aclose(aid);
-		H5Sclose(setid);
-		H5METHOD_EXCEPTION_THROW();
-	}
+	//create the attribute and write the data
+	_create_and_write_attribute(_id,n,tid,setid,a.getBuffer()->getVoidPtr());
 
 	//close everything except the data type
-	H5Aclose(aid);
 	H5Sclose(setid);
 }
 
 void NXObjectH5Implementation::setAttribute(const char *n,ScalarObject &d){
 	H5METHOD_EXCEPTION_SETUP("void NXObjectH5Implementation::setAttribute(const char *n,ScalarObject &a)");
-	hid_t aid;   //id of the attribute object
 	hid_t tid;   //id of the data type
 	hid_t setid; //id of the data set
 
@@ -100,32 +137,16 @@ void NXObjectH5Implementation::setAttribute(const char *n,ScalarObject &d){
 		H5METHOD_EXCEPTION_THROW();
 	}
 
-	//create the attribute
-	aid = H5Acreate2(_id, n, tid, setid, H5P_DEFAULT,H5P_DEFAULT);
-	if(aid<0){
-		H5METHOD_EXCEPTION_INIT(H5AttributeException,"Error creating scalar attribute ["+String(n)+"]!");
-		H5Sclose(setid);
-		H5METHOD_EXCEPTION_THROW();
-	}
-
-	//have to write the data
-	if((H5Awrite(aid, tid, d.getVoidPtr()))<0){
-		H5METHOD_EXCEPTION_INIT(H5AttributeException,"Error writting data to scalar attribute ["+String(n)+"]!");
-		H5Aclose(aid);
-		H5Sclose(setid);
-		H5METHOD_EXCEPTION_THROW();
-
-	}
+	//create and write attribute data
+	_create_and_write_attribute(_id,n,tid,setid,d.getVoidPtr());
 
 	//close everything except the data type
-	H5Aclose(aid);
 	H5Sclose(setid);
 }
 
 
 void NXObjectH5Implementation::setAttribute(const char *n,const String &s){
 	H5METHOD_EXCEPTION_SETUP("void NXObjectH5Implementation::setAttribute(const char *n,String &s)");
-	hid_t aid;   //id of the attribute object
 	hid_t tid;   //id of the data type
 	hid_t setid; //id of the data set
 
@@ -139,24 +160,10 @@ void NXObjectH5Implementation::setAttribute(const char *n,const String &s){
 		H5METHOD_EXCEPTION_THROW();
 	}
 
-	//create the attribute
-	aid = H5Acreate2(_id, n, tid, setid, H5P_DEFAULT, H5P_DEFAULT);
-	if (aid < 0) {
-		H5METHOD_EXCEPTION_INIT(H5AttributeException,"Error creating string attribute ["+String(n)+"]!");
-		H5Sclose(setid);
-		H5METHOD_EXCEPTION_THROW();
-	}
-
-	//have to write the data
-	if ((H5Awrite(aid, tid, s.c_str())) < 0) {
-		H5METHOD_EXCEPTION_INIT(H5AttributeException,"Error writing data to string attribute ["+String(n)+"]!");
-		H5Aclose(aid);
-		H5Sclose(setid);
-		H5METHOD_EXCEPTION_THROW();
-	}
+	//create and write the attribute data
+	_create_and_write_attribute(_id,n,tid,setid,(void *)s.c_str());
 
 	//close everything except the data type
-	H5Aclose(aid);
 	H5Sclose(setid);
 }
 
@@ -169,25 +176,8 @@ void NXObjectH5Implementation::getAttribute(const char *n,ArrayObject &a){
 	hid_t asid = 0;
 	hid_t aid  = 0;
 
-	aid = H5Aopen(_id,n,H5P_DEFAULT);
-	if(aid<0){
-		H5METHOD_EXCEPTION_INIT(H5AttributeException,"Error opening array attribute ["+String(n)+"]!");
-		H5METHOD_EXCEPTION_THROW();
-	}
-
-	asid = H5Aget_space(aid);
-	if(asid<0){
-		H5METHOD_EXCEPTION_INIT(H5DataSpaceException,"Error opening data-space for array attribute ["+String(n)+"]!");
-		H5Aclose(aid);
-		H5METHOD_EXCEPTION_THROW();
-	}
-	atid = H5Aget_type(aid);
-	if(atid<0){
-		H5METHOD_EXCEPTION_INIT(H5DataTypeException,"Error opening data-type for array attribute ["+String(n)+"]!");
-		H5Tclose(atid);
-		H5Aclose(aid);
-		H5METHOD_EXCEPTION_THROW();
-	}
+	_open_attribute(_id,n,aid,atid,asid);
+	//need to do some error checking here
 
 	H5Utilities::DataSpace2ArrayShape(asid,temp_shape);
 	if((!a.getShape())||(temp_shape != *(a.getShape()))){
@@ -217,34 +207,8 @@ void NXObjectH5Implementation::getAttribute(const char *n,ScalarObject &s){
 	hid_t asid = 0;
 	hid_t aid  = 0;
 
-	aid = H5Aopen(_id,n,H5P_DEFAULT);
-	if(aid<0){
-		H5METHOD_EXCEPTION_INIT(H5AttributeException,"Error opening scalar attribute ["+String(n)+"]!");
-		H5METHOD_EXCEPTION_THROW();
-	}
-
-	asid = H5Aget_space(aid);
-	if(asid<0){
-		H5METHOD_EXCEPTION_INIT(H5DataSpaceException,"Error opening data-space for scalar attribute ["+String(n)+"]!");
-		H5Aclose(aid);
-		H5METHOD_EXCEPTION_THROW();
-	}
-	if(!H5Sis_simple(asid)){
-		H5METHOD_EXCEPTION_INIT(H5DataSpaceException,"Dataspace of scalar attribute ["+String(n)+"] is of array type!");
-		//close space and attribute
-		H5Sclose(asid);
-		H5Aclose(aid);
-		H5METHOD_EXCEPTION_THROW();
-	}
-
-	atid = H5Aget_type(aid);
-	if(atid<0){
-		H5METHOD_EXCEPTION_INIT(H5DataTypeException,"Error opening data type for scalar attribute ["+String(n)+"]!");
-		//close dataspace and data type
-		H5Tclose(atid);
-		H5Sclose(asid);
-		H5METHOD_EXCEPTION_THROW();
-	}
+	_open_attribute(_id,n,aid,atid,asid);
+	//need to do some error checking here
 
 	//copy data to the array buffer
 	if((H5Aread(aid,atid,s.getVoidPtr()))<0){
@@ -270,34 +234,8 @@ void NXObjectH5Implementation::getAttribute(const char *n,String &s){
 	hid_t asid = 0;
 	hid_t aid  = 0;
 
-	aid = H5Aopen(_id,n,H5P_DEFAULT);
-	if(aid<0){
-		H5METHOD_EXCEPTION_INIT(H5AttributeException,"Error opening string attribute ["+String(n)+"]!");
-	}
-
-	//fetch dataspace and datatype
-	atid = H5Aget_type(aid);
-	if(atid<0){
-		H5METHOD_EXCEPTION_INIT(H5DataTypeException,"Error opening data type for string attribute ["+String(n)+"]!");
-		H5Aclose(aid);
-		H5METHOD_EXCEPTION_THROW();
-	}
-
-	if(H5Tget_class(atid)!=H5T_STRING){
-		H5METHOD_EXCEPTION_INIT(H5DataTypeException,"Data type of attribute ["+String(n)+"] is not of string type!");
-		//close attribute and type object
-		H5Aclose(aid);
-		H5Tclose(atid);
-		H5METHOD_EXCEPTION_THROW();
-	}
-
-	asid = H5Aget_space(aid);
-	if(asid<0){
-		H5METHOD_EXCEPTION_INIT(H5DataSpaceException,"Error opening data-space for string attribute ["+String(n)+"]!");
-		H5Tclose(atid);
-		H5Aclose(aid);
-		H5METHOD_EXCEPTION_THROW();
-	}
+	_open_attribute(_id,n,aid,atid,asid);
+	//need to do some error checking here
 
 	//now we need to find out how much memory to allocate
 	s.resize(H5Tget_size(atid));

@@ -14,6 +14,7 @@ extern "C"{
 }
 
 #include "H5ErrorStack.hpp"
+#include "../NXException.hpp"
 
 namespace pni{
 namespace nx{
@@ -37,27 +38,16 @@ using namespace pni::utils;
 	std::cerr<<"in line: "<<__LINE__<<" of file "<<__FILE__<<std::endl<<std::endl;\
 	throw e;
 
-class H5Exception{
+class H5Exception:public pni::nx::NXException{
 protected:
-	String _name;
-	String _issuer;
-	String _description;
-
 	H5ErrorStack _h5estack;
+	std::ostream &print(std::ostream &) const;
 public:
 	H5Exception();
 	H5Exception(const String &n);
 	H5Exception(const String &n,const String &i,const String &d);
+	H5Exception(const H5Exception &e);
 	virtual ~H5Exception();
-
-	virtual void setName(const String &n);
-	virtual String getName() const;
-
-	virtual void setIssuer(const String &i);
-	virtual String getIssuer() const;
-
-	virtual void setDescription(const String &d);
-	virtual String getDescription() const;
 
 	friend std::ostream &operator<<(std::ostream &o,const H5Exception &e);
 
