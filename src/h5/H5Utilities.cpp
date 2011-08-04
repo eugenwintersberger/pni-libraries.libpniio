@@ -14,7 +14,7 @@ namespace h5 {
 
 
 void H5Utilities::ArrayShape2DataSpace(const ArrayShape &s,hid_t &dspace){
-	H5METHOD_EXCEPTION_SETUP("void H5Utilities::ArrayShape2DataSpace(const ArrayShape &s,hid_t &dspace)");
+	EXCEPTION_SETUP("void H5Utilities::ArrayShape2DataSpace(const ArrayShape &s,hid_t &dspace)");
 	hsize_t *dims = NULL;
 
 	//get the rank of the array
@@ -29,8 +29,8 @@ void H5Utilities::ArrayShape2DataSpace(const ArrayShape &s,hid_t &dspace){
 
 	dspace = H5Screate_simple(rank,dims,NULL);
 	if(dspace<0){
-		H5METHOD_EXCEPTION_INIT(H5DataSpaceException,"Cannot create HDF5 dataspace!");
-		H5METHOD_EXCEPTION_THROW();
+		EXCEPTION_INIT(H5DataSpaceError,"Cannot create HDF5 dataspace!");
+		EXCEPTION_THROW();
 	}
 
 	if(dims != NULL) delete [] dims;
@@ -38,23 +38,23 @@ void H5Utilities::ArrayShape2DataSpace(const ArrayShape &s,hid_t &dspace){
 }
 
 void H5Utilities::DataSpace2ArrayShape(const hid_t &dspace,ArrayShape &s){
-	H5METHOD_EXCEPTION_SETUP("void H5Utilities::DataSpace2ArrayShape(const hid_t &dspace,ArrayShape &s)");
+	EXCEPTION_SETUP("void H5Utilities::DataSpace2ArrayShape(const hid_t &dspace,ArrayShape &s)");
 	UInt32 rank;
 	hsize_t *dims;
 	UInt32 *sdims;
 
 	rank = H5Sget_simple_extent_ndims(dspace);
 	if(rank < 0){
-		H5METHOD_EXCEPTION_INIT(H5DataSpaceException,"Cannot obtain data-space rank!");
-		H5METHOD_EXCEPTION_THROW();
+		EXCEPTION_INIT(H5DataSpaceError,"Cannot obtain data-space rank!");
+		EXCEPTION_THROW();
 	}
 
 	dims = new hsize_t[rank];
 	sdims = new UInt32[rank];
 	rank = H5Sget_simple_extent_dims(dspace,dims,NULL);
 	if(rank < 0){
-		H5METHOD_EXCEPTION_INIT(H5DataSpaceException,"Cannot obtain data-space dimensions!");
-		H5METHOD_EXCEPTION_THROW();
+		EXCEPTION_INIT(H5DataSpaceError,"Cannot obtain data-space dimensions!");
+		EXCEPTION_THROW();
 	}
 
 	for(UInt32 i=0;i<rank;i++) sdims[i] = dims[i];

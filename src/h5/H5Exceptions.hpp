@@ -9,12 +9,13 @@
 #define H5EXCEPTIONS_HPP_
 
 #include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Exceptions.hpp>
 extern "C"{
 #include <hdf5.h>
 }
 
 #include "H5ErrorStack.hpp"
-#include "../NXException.hpp"
+
 
 namespace pni{
 namespace nx{
@@ -22,23 +23,7 @@ namespace h5{
 
 using namespace pni::utils;
 
-#define H5METHOD_EXCEPTION_SETUP(issuer) \
-	static String ExIssuer = (issuer);\
-	String ExDescription
-
-#define H5METHOD_EXCEPTION_INIT(extype,exdesc)\
-	extype e;\
-	ExDescription = (exdesc);\
-	e.setName(ExIssuer);\
-	e.setDescription(ExDescription);
-
-
-#define H5METHOD_EXCEPTION_THROW()\
-	std::cerr<<e<<std::endl;\
-	std::cerr<<"in line: "<<__LINE__<<" of file "<<__FILE__<<std::endl<<std::endl;\
-	throw e;
-
-class H5Exception:public pni::nx::NXException{
+class H5Exception:public Exception{
 protected:
 	H5ErrorStack _h5estack;
 	std::ostream &print(std::ostream &) const;
@@ -53,49 +38,58 @@ public:
 
 };
 
-class H5DataTypeException:public H5Exception{
+class H5DataTypeError:public H5Exception{
 public:
-	H5DataTypeException();
-	H5DataTypeException(const String &i,const String &d);
-	virtual ~H5DataTypeException();
+	H5DataTypeError();
+	H5DataTypeError(const String &i,const String &d);
+	virtual ~H5DataTypeError();
 
-	friend std::ostream &operator<<(std::ostream &o,const H5DataTypeException &e);
+	friend std::ostream &operator<<(std::ostream &o,const H5DataTypeError &e);
 };
 
-class H5DataSetException:public H5Exception{
+class H5DataSetError:public H5Exception{
 public:
-	H5DataSetException();
-	H5DataSetException(const String &i,const String &d);
-	virtual ~H5DataSetException();
+	H5DataSetError();
+	H5DataSetError(const String &i,const String &d);
+	virtual ~H5DataSetError();
 
-	friend std::ostream &operator<<(std::ostream &o,const H5DataSetException &e);
+	friend std::ostream &operator<<(std::ostream &o,const H5DataSetError &e);
 };
 
-class H5DataSpaceException:public H5Exception{
+class H5DataSpaceError:public H5Exception{
 public:
-	H5DataSpaceException();
-	H5DataSpaceException(const String &i,const String &d);
-	virtual ~H5DataSpaceException();
+	H5DataSpaceError();
+	H5DataSpaceError(const String &i,const String &d);
+	virtual ~H5DataSpaceError();
 
-	friend std::ostream &operator<<(std::ostream &o,const H5DataSpaceException &e);
+	friend std::ostream &operator<<(std::ostream &o,const H5DataSpaceError &e);
 };
 
-class H5AttributeException:public H5Exception{
+class H5AttributeError:public H5Exception{
 public:
-	H5AttributeException();
-	H5AttributeException(const String &i,const String &d);
-	virtual ~H5AttributeException();
+	H5AttributeError();
+	H5AttributeError(const String &i,const String &d);
+	virtual ~H5AttributeError();
 
-	friend std::ostream &operator<<(std::ostream &o,const H5AttributeException &e);
+	friend std::ostream &operator<<(std::ostream &o,const H5AttributeError &e);
 };
 
-class H5FileException:public H5Exception{
+class H5FileError:public H5Exception{
 public:
-	H5FileException();
-	H5FileException(const String &i,const String &d);
-	virtual ~H5FileException();
+	H5FileError();
+	H5FileError(const String &i,const String &d);
+	virtual ~H5FileError();
 
-	friend std::ostream &operator<<(std::ostream &o,const H5FileException &e);
+	friend std::ostream &operator<<(std::ostream &o,const H5FileError &e);
+};
+
+class H5GroupError:public H5Exception{
+public:
+	H5GroupError();
+	H5GroupError(const String &i,const String &d);
+	virtual ~H5GroupError();
+
+	friend std::ostream &operator<<(std::ostream &o,const H5GroupError &e);
 };
 
 //end of namespace

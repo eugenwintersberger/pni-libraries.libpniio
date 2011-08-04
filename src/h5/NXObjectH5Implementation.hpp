@@ -29,8 +29,10 @@ using namespace pni::utils;
 
 class NXObjectH5Implementation {
 private:
-	void _create_and_write_attribute(hid_t pid,const char *n,hid_t type_id,hid_t space_id,void *ptr);
-	void _open_attribute(hid_t pid,const char *n,hid_t &attr_id,hid_t &type_id,hid_t &space_id);
+	void _create_and_write_attribute(hid_t pid,const char *n,hid_t type_id,
+			                         hid_t space_id,void *ptr);
+	void _open_attribute(hid_t pid,const char *n,hid_t &attr_id,hid_t &type_id,
+			             hid_t &space_id);
 protected:
 	hid_t  _id;    //!< ID of the object this class referes too
 	hid_t  _pid;   //!< ID of the parent object owning this object

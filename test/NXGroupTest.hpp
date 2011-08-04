@@ -1,7 +1,14 @@
-//testing class for ArrayShape objects
+/*
+ * NXGroupTest.hpp
+ *
+ *  Created on: Aug 4, 2011
+ *      Author: eugen
+ */
 
-#ifndef __LIBPNIUTILS_ARRAYSHAPE_HPP__
-#define __LIBPNIUTILS_ARRAYSHAPE_HPP__
+#ifndef NXGROUPTEST_HPP_
+#define NXGROUPTEST_HPP_
+
+#include "nx.hpp"
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
@@ -12,16 +19,16 @@ using namespace pni::utils;
 using namespace pni::nx::h5;
 using namespace boost::filesystem;
 
-class NXFileTest: public CppUnit::TestFixture {
-	CPPUNIT_TEST_SUITE(NXFileTest);
+class NXGroupTest: public CppUnit::TestFixture  {
+	CPPUNIT_TEST_SUITE(NXGroupTest);
 	CPPUNIT_TEST(testCreation);
 	CPPUNIT_TEST(testOpen);
 	CPPUNIT_TEST(testAttributes);
 	CPPUNIT_TEST(testAttributeExceptions);
 	CPPUNIT_TEST_SUITE_END();
 private:
-	String _fname1;
-	String _fname2;
+	String _fname;
+	NXFile _f;
 
 	String          _write_str_attr;
 	Float64Scalar   _write_scalar_attr;
@@ -35,14 +42,10 @@ private:
 public:
 	void setUp();
 	void tearDown();
-
-	//testing basic file functionality
 	void testCreation();
 	void testOpen();
 	void testAttributes();
 	void testAttributeExceptions();
-
-
 };
 
-#endif
+#endif /* NXGROUPTEST_HPP_ */

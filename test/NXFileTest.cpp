@@ -10,6 +10,25 @@ CPPUNIT_TEST_SUITE_REGISTRATION(NXFileTest);
 void NXFileTest::setUp(){
 	_fname1 = "test.1.h5";
 	_fname2 = "test.2.h5";
+
+	_write_str_attr = "hello world";
+	_write_scalar_attr = 100;
+	_shape = ArrayShape();
+	_shape.setRank(2);
+	_shape.setDimension(0,3);
+	_shape.setDimension(1,3);
+
+	_write_array_attr = Int16Array();
+	_write_array_attr.setShape(_shape);
+	_write_array_attr.Allocate();
+	_write_array_attr(0,0) = 1; _write_array_attr(0,1) = 2; _write_array_attr(0,2) = 3;
+	_write_array_attr(1,0) = 4; _write_array_attr(1,1) = 5; _write_array_attr(1,2) = 6;
+	_write_array_attr(2,0) = 7; _write_array_attr(2,1) = 8; _write_array_attr(2,2) = 9;
+
+	_write_cmplx_scalar = Complex64(1,-2);
+
+	_read_array_attr = Int16Array();
+
 }
 
 void NXFileTest::tearDown(){
@@ -30,7 +49,7 @@ void NXFileTest::testCreation(){
 	f.close();
 
 	//recreating the file should cause an error
-	CPPUNIT_ASSERT_THROW(f.create(),H5FileException); //here we except an error
+	CPPUNIT_ASSERT_THROW(f.create(),H5FileError); //here we except an error
 
 	//now if we set overwrite
 	f.setOverwrite();
@@ -55,7 +74,7 @@ void NXFileTest::testOpen(){
 
 	//try to open a file which does not exist
 	f.setFileName(_fname2);
-	CPPUNIT_ASSERT_THROW(f.open(),H5FileException);
+	CPPUNIT_ASSERT_THROW(f.open(),H5FileError);
 
 	f.create();
 	f.close();
@@ -71,53 +90,57 @@ void NXFileTest::testAttributes(){
 	f.setOverwrite();
 	f.create();
 
-	//create attribute data
-	String write_str_attr = "hello world";
-	Float64Scalar write_scalar_attr = 100;
-	ArrayShape shape;
-	Int16Array write_array_attr;
-	Complex64Scalar write_cmplx_scalar = Complex64(1,-2);
-
-	shape.setRank(2);
-	shape.setDimension(0,3);
-	shape.setDimension(1,3);
-	write_array_attr.setShape(shape);
-	write_array_attr.Allocate();
-	write_array_attr(0,0) = 1; write_array_attr(0,1) = 2; write_array_attr(0,2) = 3;
-	write_array_attr(1,0) = 4; write_array_attr(1,1) = 5; write_array_attr(1,2) = 6;
-	write_array_attr(2,0) = 7; write_array_attr(2,1) = 8; write_array_attr(2,2) = 9;
-
 	//write attribute data
-	f.setAttribute("StringAttribute",write_str_attr);
-	f.setAttribute("FloatScalarAttribute",write_scalar_attr);
-	f.setAttribute("IndexOfRefraction",write_cmplx_scalar);
-	f.setAttribute("ArrayAttribute",write_array_attr);
+	f.setAttribute("StringAttribute",_write_str_attr);
+	f.setAttribute("FloatScalarAttribute",_write_scalar_attr);
+	f.setAttribute("IndexOfRefraction",_write_cmplx_scalar);
+	f.setAttribute("ArrayAttribute",_write_array_attr);
 
 	//close and reopen the file
 	f.close();
 	f.open();
 
-	//creat attributes to read data to
-	String read_str_attr;
-	Float64Scalar read_scalar_attr;
-	Int16Array read_array_attr;
-	Complex64Scalar read_cmplx_scalar;
 
 	//read data
-	f.getAttribute("StringAttribute",read_str_attr);
-	f.getAttribute("FloatScalarAttribute",read_scalar_attr);
-	f.getAttribute("ArrayAttribute",read_array_attr);
-	f.getAttribute("IndexOfRefraction",read_cmplx_scalar);
+	f.getAttribute("StringAttribute",_read_str_attr);
+	f.getAttribute("FloatScalarAttribute",_read_scalar_attr);
+	f.getAttribute("ArrayAttribute",_read_array_attr);
+	f.getAttribute("IndexOfRefraction",_read_cmplx_scalar);
 
 	//check if values are the same
-	CPPUNIT_ASSERT(write_str_attr == read_str_attr);
-	CPPUNIT_ASSERT(read_scalar_attr == read_scalar_attr);
-	CPPUNIT_ASSERT(read_array_attr == write_array_attr);
-	CPPUNIT_ASSERT(write_cmplx_scalar == read_cmplx_scalar);
+	CPPUNIT_ASSERT(_write_str_attr == _read_str_attr);
+	CPPUNIT_ASSERT(_read_scalar_attr == _read_scalar_attr);
+	CPPUNIT_ASSERT(_read_array_attr == _write_array_attr);
+	CPPUNIT_ASSERT(_write_cmplx_scalar == _read_cmplx_scalar);
 }
 
 void NXFileTest::testAttributeExceptions(){
+	NXFile f;
 
+	//create a new file
+	f.setFileName(_fname1);
+	f.setOverwrite();
+	f.create();
+
+	//write attribute data
+	f.setAttribute("StringAttribute",_write_str_attr);
+	f.setAttribute("FloatScalarAttribute",_write_scalar_attr);
+	f.setAttribute("IndexOfRefraction",_write_cmplx_scalar);
+	f.setAttribute("ArrayAttribute",_write_array_attr);
+
+	//trying to overwrite attributes
+	CPPUNIT_ASSERT_THROW(f.setAttribute("StringAttribute",_write_str_attr),H5AttributeError);
+	CPPUNIT_ASSERT_THROW(f.setAttribute("FloatScalarAttribute",_write_scalar_attr),H5AttributeError);
+	CPPUNIT_ASSERT_THROW(f.setAttribute("IndexOfRefraction",_write_cmplx_scalar),H5AttributeError);
+	CPPUNIT_ASSERT_THROW(f.setAttribute("ArrayAttribute",_write_array_attr),H5AttributeError);
+
+	//trying to read attributes that do not exist
+	CPPUNIT_ASSERT_THROW(f.getAttribute("StringAttribute_not",_read_str_attr),H5AttributeError);
+	CPPUNIT_ASSERT_THROW(f.getAttribute("FloatScalarAttribute_not",_read_scalar_attr),H5AttributeError);
+	CPPUNIT_ASSERT_THROW(f.getAttribute("ArrayAttribute_not",_read_array_attr),H5AttributeError);
+	CPPUNIT_ASSERT_THROW(f.getAttribute("IndexOfRefraction_not",_read_cmplx_scalar),H5AttributeError);
+
+	f.close();
 }
 
 

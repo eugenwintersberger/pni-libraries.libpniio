@@ -14,7 +14,7 @@ namespace h5{
 
 
 NXFileH5Implementation::NXFileH5Implementation() {
-	H5METHOD_EXCEPTION_SETUP("NXFileH5Implementation::NXFileH5Implementation()");
+	EXCEPTION_SETUP("NXFileH5Implementation::NXFileH5Implementation()");
 	H5open();
 	H5Eset_auto2(H5E_DEFAULT,0,NULL);
 	_id = 0;
@@ -46,7 +46,7 @@ void NXFileH5Implementation::close(){
 }
 
 void NXFileH5Implementation::open(const char *n,bool readonly){
-	H5METHOD_EXCEPTION_SETUP("void NXFileH5Implementation::open(const char *n,bool readonly)");
+	EXCEPTION_SETUP("void NXFileH5Implementation::open(const char *n,bool readonly)");
 
 	//open the file in the appropriate mode
 	if(readonly){
@@ -57,15 +57,15 @@ void NXFileH5Implementation::open(const char *n,bool readonly){
 	//now we have to set the _id to the root group
 
 	if ( _id < 0){
-		H5METHOD_EXCEPTION_INIT(H5FileException,"Error opening file "+String(n)+"!");
-		H5METHOD_EXCEPTION_THROW();
+		EXCEPTION_INIT(H5FileError,"Error opening file "+String(n)+"!");
+		EXCEPTION_THROW();
 	}
 
 
 }
 
 void NXFileH5Implementation::create(const char *n,bool overwrite){
-	H5METHOD_EXCEPTION_SETUP("void NXFileH5Implementation::create(const char *n,bool overwrite)");
+	EXCEPTION_SETUP("void NXFileH5Implementation::create(const char *n,bool overwrite)");
 
 	if(overwrite){
 		_id = H5Fcreate(n,H5F_ACC_TRUNC,_create_plist,_acc_plist);
@@ -75,8 +75,8 @@ void NXFileH5Implementation::create(const char *n,bool overwrite){
 	//check here for errors
 
 	if (_id < 0){
-		H5METHOD_EXCEPTION_INIT(H5FileException,"Error create file "+String(n)+"!");
-		H5METHOD_EXCEPTION_THROW();
+		EXCEPTION_INIT(H5FileError,"Error create file "+String(n)+"!");
+		EXCEPTION_THROW();
 	}
 
 

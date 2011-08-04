@@ -21,15 +21,15 @@ NXFieldH5Implementation::NXFieldH5Implementation() {
 }
 
 NXFieldH5Implementation::NXFieldH5Implementation(const NXFieldH5Implementation &i){
-	H5METHOD_EXCEPTION_SETUP("NXFieldH5Implementation::NXFieldH5Implementation"
+	EXCEPTION_SETUP("NXFieldH5Implementation::NXFieldH5Implementation"
 			                 "(const NXFieldH5Implementation &i)");
 
 	if(i._id != 0){
 		_id = H5Dopen2(i._pid,i._name.c_str(),H5P_DEFAULT);
 		if(_id<0){
-			H5METHOD_EXCEPTION_INIT(H5DataSetException,"Error opening data-set "
+			EXCEPTION_INIT(H5DataSetError,"Error opening data-set "
 					                "["+i._name+"] in copy constructor!");
-			H5METHOD_EXCEPTION_THROW();
+			EXCEPTION_THROW();
 		}
 	}else{
 		_id = 0;
@@ -39,18 +39,18 @@ NXFieldH5Implementation::NXFieldH5Implementation(const NXFieldH5Implementation &
 	_pid = i._pid;
 	_space_id = H5Scopy(i._space_id);
 	if(_space_id<0){
-		H5METHOD_EXCEPTION_INIT(H5DataSpaceException,"Error copying data-space "
+		EXCEPTION_INIT(H5DataSpaceError,"Error copying data-space "
 				                "for data-set ["+i._name+"] in copy constructor!");
 		H5Dclose(_id);
-		H5METHOD_EXCEPTION_THROW();
+		EXCEPTION_THROW();
 	}
 	_type_id = H5Tcopy(i._type_id);
 	if(_type_id < 0){
-		H5METHOD_EXCEPTION_INIT(H5DataTypeException,"Error copying data-type "
+		EXCEPTION_INIT(H5DataTypeError,"Error copying data-type "
 				               "for data-set ["+i._name+"] in copy constructor!");
 		H5Dclose(_id);
 		H5Sclose(_space_id);
-		H5METHOD_EXCEPTION_THROW();
+		EXCEPTION_THROW();
 	}
 }
 
@@ -61,9 +61,8 @@ NXFieldH5Implementation::~NXFieldH5Implementation() {
 }
 
 NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXFieldH5Implementation &o){
-	H5METHOD_EXCEPTION_SETUP("NXFieldH5Implementation &NXFieldH5"
-						     "Implementation::operator="
-							 "(const NXFieldH5Implementation &o)");
+	EXCEPTION_SETUP("NXFieldH5Implementation &NXFieldH5Implementation::operator="
+					"(const NXFieldH5Implementation &o)");
 
 	if ( this != &o ){
 		_pid = o._pid;
@@ -71,26 +70,26 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXFieldH5Imple
 
 		_id = H5Dopen2(o._pid,o._name.c_str(),H5P_DEFAULT);
 		if(_id < 0){
-			H5METHOD_EXCEPTION_INIT(H5DataSetException,"Error opening data-set "
+			EXCEPTION_INIT(H5DataSetError,"Error opening data-set "
 					                "["+o._name+"] in assignment operator!");
-			H5METHOD_EXCEPTION_THROW();
+			EXCEPTION_THROW();
 		}
 		_space_id = H5Scopy(o._space_id);
 		if(_space_id < 0){
-			H5METHOD_EXCEPTION_INIT(H5DataSpaceException,"Error copying "
+			EXCEPTION_INIT(H5DataSpaceError,"Error copying "
 									"data-space for data-set ["+o._name+"] in "
 									"assignment operator!");
 			H5Dclose(_id);
-			H5METHOD_EXCEPTION_THROW();
+			EXCEPTION_THROW();
 		}
 		_type_id = H5Tcopy(o._type_id);
 		if(_type_id < 0){
-			H5METHOD_EXCEPTION_INIT(H5DataTypeException,"Error copying data-type "
+			EXCEPTION_INIT(H5DataTypeError,"Error copying data-type "
 					                "for data-set ["+o._name+"] in assignment "
 					                "operator!");
 			H5Sclose(_space_id);
 			H5Dclose(_id);
-			H5METHOD_EXCEPTION_THROW();
+			EXCEPTION_THROW();
 		}
 	}
 
@@ -104,63 +103,63 @@ void NXFieldH5Implementation::close(){
 }
 
 void NXFieldH5Implementation::write(ScalarObject &s){
-	H5METHOD_EXCEPTION_SETUP("void NXFieldH5Implementation::write(ScalarObject &s)");
+	EXCEPTION_SETUP("void NXFieldH5Implementation::write(ScalarObject &s)");
 	herr_t err;
 
 	err = H5Dwrite(_id,_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,s.getVoidPtr());
 	if(err<0){
-		H5METHOD_EXCEPTION_INIT(H5DataSetException,"Error writing data to field "
+		EXCEPTION_INIT(H5DataSetError,"Error writing data to field "
 				                                   "["+_name+"]!");
-		H5METHOD_EXCEPTION_THROW();
+		EXCEPTION_THROW();
 	}
 }
 
 void NXFieldH5Implementation::write(ArrayObject &s){
-	H5METHOD_EXCEPTION_SETUP("void NXFieldH5Implementation::write(ArrayObject &s)");
+	EXCEPTION_SETUP("void NXFieldH5Implementation::write(ArrayObject &s)");
 	herr_t err;
 
 	err = H5Dwrite(_id,_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,s.getBuffer()->getVoidPtr());
 	if(err<0){
-		H5METHOD_EXCEPTION_INIT(H5DataSetException,"Error writing data to field ["+_name+"]!");
-		H5METHOD_EXCEPTION_THROW();
+		EXCEPTION_INIT(H5DataSetError,"Error writing data to field ["+_name+"]!");
+		EXCEPTION_THROW();
 	}
 }
 
 void NXFieldH5Implementation::write(String &s){
-	H5METHOD_EXCEPTION_SETUP("void NXFieldH5Implementation::write(pni::utils::String &s)");
+	EXCEPTION_SETUP("void NXFieldH5Implementation::write(pni::utils::String &s)");
 	herr_t err;
 
 	err = H5Dwrite(_id,_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,s.c_str());
 	if(err<0){
-		H5METHOD_EXCEPTION_INIT(H5DataSetException,"Error writing data to field ["+_name+"]!");
-		H5METHOD_EXCEPTION_THROW();
+		EXCEPTION_INIT(H5DataSetError,"Error writing data to field ["+_name+"]!");
+		EXCEPTION_THROW();
 	}
 }
 
 void NXFieldH5Implementation::read(ScalarObject &s){
-	H5METHOD_EXCEPTION_SETUP("void NXFieldH5Implementation::read(ScalarObject &s)");
+	EXCEPTION_SETUP("void NXFieldH5Implementation::read(ScalarObject &s)");
 	herr_t err;
 
 	err = H5Dread(_id,_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,s.getVoidPtr());
 	if(err<0){
-		H5METHOD_EXCEPTION_INIT(H5DataSetException,"Error reading data from field ["+_name+"]!");
-		H5METHOD_EXCEPTION_THROW();
+		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+_name+"]!");
+		EXCEPTION_THROW();
 	}
 }
 
 void NXFieldH5Implementation::read(ArrayObject &s){
-	H5METHOD_EXCEPTION_SETUP("void NXFieldH5Implementation::read(ArrayObject &s)");
+	EXCEPTION_SETUP("void NXFieldH5Implementation::read(ArrayObject &s)");
 	herr_t err;
 
 	err = H5Dread(_id,_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,s.getBuffer()->getVoidPtr());
 	if(err<0){
-		H5METHOD_EXCEPTION_INIT(H5DataSetException,"Error reading data from field ["+_name+"]!");
-		H5METHOD_EXCEPTION_THROW();
+		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+_name+"]!");
+		EXCEPTION_THROW();
 	}
 }
 
 void NXFieldH5Implementation::read(String &s){
-	H5METHOD_EXCEPTION_SETUP("void NXFieldH5Implementation::read(String &s)");
+	EXCEPTION_SETUP("void NXFieldH5Implementation::read(String &s)");
 	herr_t err;
 
 	//clear previous string data and resize the string buffer
@@ -169,8 +168,8 @@ void NXFieldH5Implementation::read(String &s){
 
 	err = H5Dread(_id,_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,(void *)s.c_str());
 	if(err<0){
-		H5METHOD_EXCEPTION_INIT(H5DataSetException,"Error reading data from field ["+_name+"]!");
-		H5METHOD_EXCEPTION_THROW();
+		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+_name+"]!");
+		EXCEPTION_THROW();
 	}
 }
 
@@ -179,13 +178,13 @@ UInt32 NXFieldH5Implementation::getRank() const{
 }
 
 UInt32 NXFieldH5Implementation::getDimension(UInt32 i)const {
-	H5METHOD_EXCEPTION_SETUP("UInt32 NXFieldH5Implementation::getDimension(UInt32 i)");
+	EXCEPTION_SETUP("UInt32 NXFieldH5Implementation::getDimension(UInt32 i)");
 	ssize_t rank = H5Sget_simple_extent_ndims(_space_id);
 	UInt32 dim;
 
 	if(i>=rank){
-		H5METHOD_EXCEPTION_INIT(H5DataSpaceException,"Dimension index out of bounds!");
-		H5METHOD_EXCEPTION_THROW();
+		EXCEPTION_INIT(H5DataSpaceError,"Dimension index out of bounds!");
+		EXCEPTION_THROW();
 	}
 
 	hsize_t *dims = new hsize_t[rank];
@@ -198,7 +197,7 @@ UInt32 NXFieldH5Implementation::getDimension(UInt32 i)const {
 }
 
 UInt32 *NXFieldH5Implementation::getDimensions()const {
-	H5METHOD_EXCEPTION_SETUP("UInt32 NXFieldH5Implementation::getDimension(UInt32 i)");
+	EXCEPTION_SETUP("UInt32 NXFieldH5Implementation::getDimension(UInt32 i)");
 	ssize_t rank = H5Sget_simple_extent_ndims(_space_id);
 	UInt32 *retdims;
 

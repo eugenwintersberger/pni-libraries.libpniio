@@ -6,9 +6,14 @@ src_list = ["NXFileH5Implementation.cpp",
             "H5TypeFactory.cpp","NXObjectH5Implementation.cpp",
             "NXGroupH5Implementation.cpp",
             "NXFieldH5Implementation.cpp",
-            "H5Exceptions.cpp",
+            "H5Exceptions.cpp","H5LibrarySetup.cpp",
             "H5ErrorStack.cpp","H5Error.cpp","H5Utilities.cpp"]
             
 shared_objects = build_env.SharedObject(src_list)
 static_objects = build_env.StaticObject(src_list)
+(filter_shared_objects,filter_static_objects) = SConscript("filters/SConscript")
+shared_objects.extend(filter_shared_objects)
+static_objects.extend(filter_static_objects)
+
+
 Return("shared_objects static_objects")
