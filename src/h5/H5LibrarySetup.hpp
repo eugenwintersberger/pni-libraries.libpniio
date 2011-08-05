@@ -36,7 +36,7 @@ public:
 	UInt32 getReleaseNumber() const;
 };
 
-
+//global setup of the library - should be implemented as a singleton in future
 static H5LibrarySetup H5Setup;
 
 

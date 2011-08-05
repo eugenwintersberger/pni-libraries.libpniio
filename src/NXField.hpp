@@ -16,6 +16,9 @@
 #include <pni/utils/Array.hpp>
 
 #include "NXObject.hpp"
+#include "NXExceptions.hpp"
+
+using namespace pni::utils;
 
 namespace pni{
 namespace nx{
@@ -31,14 +34,40 @@ public:
 	NXField &operator=(const NXField<Imp> &);
 
 	//inquery of a field
-	pni::utils::UInt32 getRank();
+	UInt32 getRank() const{
+		return this->_imp.getRank();
+	}
 
 	//! get dimension of a field
-	pni::utils::UInt32 getDimension(pni::utils::UInt32 i);
+	UInt32 getDimension(UInt32 i) const {
+		return this->_imp.getDimension(i);
+	}
+
+	//! get all dimensions
+	UInt32 *getDimensions() const {
+		return this->_imp.getDimensions();
+	}
 
 	//need a function here to get an array rank from a field
-	virtual void getArrayShapeFromField(pni::utils::ArrayShape &s){
+	virtual void getShape(ArrayShape &s) const{
+		UInt32 *dims;
+		s.setRank(this->_imp.getRank());
+		dims = this->_imp.getDimensions();
+		s.setDimensions(dims);
+		delete [] dims;
+	}
 
+	//get the type ID
+	virtual PNITypeID getTypeID() const {
+		return this->_imp.getTypeID();
+	}
+
+	virtual UInt64 getSize() const {
+		return this->_imp.getSize();
+	}
+
+	virtual String getName() const {
+		return this->_imp.getName();
 	}
 
 	//need something like a selection object to fetch only the data needed
@@ -47,26 +76,20 @@ public:
 	}
 
 	//need methods to access data stored in the field
-	void write(pni::utils::ArrayObject::sptr a);
-	void write(pni::utils::ArrayObject &a);
-	void write(pni::utils::ScalarObject::sptr s);
-	void write(pni::utils::ScalarObject &s);
-	void write(pni::utils::String &s);
-	template<typename T> void write(typename pni::utils::Array<T>::sptr a);
-	template<typename T> void write(pni::utils::Array<T> &a);
-	template<typename T> void write(typename pni::utils::Scalar<T>::sptr s);
-	template<typename T> void write(pni::utils::Scalar<T> &s);
+	void write(ArrayObject::sptr a);
+	void write(ArrayObject &a);
+	void write(ScalarObject &s);
+	void write(ScalarObject::sptr s);
+	void write(String &s);
+	void write(const void *ptr);
 
 	//need methods to write data to the field
-	void read(pni::utils::ArrayObject::sptr a);
-	void read(pni::utils::ArrayObject &a);
-	void read(pni::utils::ScalarObject::sptr s);
-	void read(pni::utils::ScalarObject &s);
-	void read(pni::utils::String &s);
-	template<typename T> void read(typename pni::utils::Array<T>::sptr a);
-	template<typename T> void read(pni::utils::Array<T> &a);
-	template<typename T> void read(typename pni::utils::Scalar<T>::sptr s);
-	template<typename T> void read(pni::utils::Scalar<T> &s);
+	void read(ArrayObject::sptr a) const;
+	void read(ArrayObject &a) const;
+	void read(ScalarObject::sptr s) const;
+	void read(ScalarObject &s) const;
+	void read(String &s) const;
+	void read(void *ptr) const;
 
 	void close();
 
@@ -98,94 +121,175 @@ NXField<Imp> &NXField<Imp>::operator=(const NXField<Imp> &o){
 	return *this;
 }
 
-template<typename Imp>
-void NXField<Imp>::write(pni::utils::ArrayObject &a){
-	this->_imp.write(a);
+
+template<typename Imp> void NXField<Imp>::write(ArrayObject &a){
+	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::write(pni::utils::ArrayObject &a)");
+	ArrayShape s;
+	getShape(s);
+
+	if(!(this->_imp.isArray())){
+		EXCEPTION_INIT(NXFieldError,"Field ["+getName()+"] is not of array type!");
+		EXCEPTION_THROW();
+	}
+
+	//check the data type of the object and the field
+	if(a.getTypeID()!=this->_imp.getTypeID()){
+		EXCEPTION_INIT(TypeError,"Array and field type do not match!");
+		EXCEPTION_THROW();
+	}
+
+	//have to do here some checking
+	if(*(a.getShape())!=s){
+		EXCEPTION_INIT(ShapeMissmatchError,"Array and field shape do not match!");
+		EXCEPTION_THROW();
+	}
+
+	try{
+		this->_imp.write(a.getBuffer()->getVoidPtr());
+	}catch(...){
+		EXCEPTION_INIT(NXFieldError,"Error writing array data to field ["+getName()+"]!");
+		EXCEPTION_THROW();
+	}
 }
 
-template<typename Imp>
-void NXField<Imp>::write(pni::utils::ArrayObject::sptr a){
-	pni::utils::ArrayObject &data = *a;
-	write(data);
+template<typename Imp> void NXField<Imp>::write(ArrayObject::sptr a){
+	write(*a);
 }
 
-template<typename Imp>
-void NXField<Imp>::write(pni::utils::ScalarObject &s){
-	this->_imp.write(s);
+template<typename Imp> void NXField<Imp>::write(ScalarObject &s){
+	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::write(ScalarObject &s)");
+
+	if(!(this->_imp.isScalar())){
+		EXCEPTION_INIT(NXFieldError,"Field ["+this->_imp.getName()+"] is not a scalar field!");
+		EXCEPTION_THROW();
+	}
+
+	if(s.getTypeID()!=this->_imp.getTypeID()){
+		EXCEPTION_INIT(TypeError,"Scalar and field type do not match!");
+		EXCEPTION_THROW();
+	}
+
+	try{
+		this->_imp.write(s.getVoidPtr());
+	}catch(...){
+		EXCEPTION_INIT(NXFieldError,"Error writing data to scalar field ["+getName()+"]!");
+		EXCEPTION_THROW();
+	}
 }
 
-template<typename Imp>
-void NXField<Imp>::write(pni::utils::String &s){
-	this->_imp.write(s);
+template<typename Imp> void NXField<Imp>::write(ScalarObject::sptr s){
+	write(*s);
 }
 
-template<typename Imp>
-template<typename T> void NXField<Imp>::write(typename pni::utils::Array<T>::sptr a){
-	write(boost::dynamic_pointer_cast<pni::utils::ArrayObject>(a));
+template<typename Imp> void NXField<Imp>::write(String &s){
+	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::write(pni::utils::String &s)");
+
+	if(!this->_imp.isString()){
+		EXCEPTION_INIT(NXFieldError,"Field ["+getName()+"] is not of string type!");
+		EXCEPTION_THROW();
+	}
+
+	//check if the size fits
+	if((this->_imp.getSize())!=s.size()){
+		EXCEPTION_INIT(SizeMissmatchError,"Size of input string and string field do not match!");
+		EXCEPTION_THROW();
+	}
+
+	try{
+		this->_imp.write((void *)s.c_str());
+	}catch(...){
+		EXCEPTION_INIT(NXFieldError,"Error writing string data to field ["+getName()+"]!");
+		EXCEPTION_THROW();
+	}
 }
 
-template<typename Imp>
-template<typename T> void NXField<Imp>::write(pni::utils::Array<T> &a){
-	write((pni::utils::ArrayObject &)a);
-}
 
-template<typename Imp>
-void NXField<Imp>::write(pni::utils::ScalarObject::sptr s){
-	pni::utils::ScalarObject &data = *s;
-	write(data);
-}
 
-template<typename Imp>
-void NXField<Imp>::read(pni::utils::ArrayObject::sptr a){
+template<typename Imp> void NXField<Imp>::read(ArrayObject::sptr a) const{
 	read(*a);
 }
-template<typename Imp>
-void NXField<Imp>::read(pni::utils::ArrayObject &a){
-	this->_imp.read(a);
+template<typename Imp> void NXField<Imp>::read(ArrayObject &a) const{
+	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::read(ArrayObject &a) const");
+
+	if(!(this->_imp.isArray())){
+		EXCEPTION_INIT(NXFieldError,"Field ["+this->_imp.getName()+"] is not of array type!");
+		EXCEPTION_THROW();
+	}
+
+	if(a.getTypeID() != this->_imp.getTypeID()){
+		EXCEPTION_INIT(TypeError,"Type of field ["+this->_imp.getName()+"] does not match target type!");
+		EXCEPTION_THROW();
+	}
+
+	//get the shape of the field to read
+	ArrayShape s;
+	this->_imp.getShape(s);
+
+	//the shape of the target array and that of the field
+	if(a.getShape()){
+		if(s != *(a.getShape())){
+			a.setShape(s);
+			a.Allocate();
+		}
+	}else{
+		a.setShape(s);
+		a.Allocate();
+	}
+
+	try{
+		this->_imp.read(a.getBuffer()->getVoidPtr());
+	}catch(...){
+		EXCEPTION_INIT(NXFieldError,"Cannot read array data from field ["+this->_imp.getName()+"]!");
+		EXCEPTION_THROW();
+	}
 }
 
-template<typename Imp>
-void NXField<Imp>::read(pni::utils::ScalarObject::sptr s){
+template<typename Imp> void NXField<Imp>::read(ScalarObject::sptr s) const{
 	read(*s);
 }
 
-template<typename Imp>
-void NXField<Imp>::read(pni::utils::ScalarObject &s){
-	this->_imp.read(s);
+template<typename Imp> void NXField<Imp>::read(ScalarObject &s) const{
+	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::read(ScalarObject &s) const");
+
+	if(!(this->_imp.isScalar())){
+		EXCEPTION_INIT(NXFieldError,"Field ["+getName()+"] is not of type scalar!");
+		EXCEPTION_THROW();
+	}
+
+	if(s.getTypeID() != this->_imp.getTypeID()){
+		EXCEPTION_INIT(TypeError,"Field ["+getName()+"] and target scalar are of different type!");
+		EXCEPTION_THROW();
+	}
+
+	try{
+		this->_imp.read(s.getVoidPtr());
+	}catch(...){
+		EXCEPTION_INIT(NXFieldError,"Scalar data cannot be read from field ["+getName()+"]!");
+		EXCEPTION_THROW();
+	}
 }
 
-template<typename Imp>
-void NXField<Imp>::read(pni::utils::String &s){
-	this->_imp.read(s);
+template<typename Imp> void NXField<Imp>::read(String &s) const{
+	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::read(String &s) const");
+
+	if(!(this->_imp.isString())){
+		EXCEPTION_INIT(NXFieldError,"Field ["+getName()+"] is not of type string!");
+		EXCEPTION_THROW();
+	}
+
+	s.clear();
+	s.resize(this->_imp.getSize());
+
+	try{
+		this->_imp.read((void *)s.c_str());
+	}catch(...){
+		EXCEPTION_INIT(NXFieldError,"Error reading string data from field ["+getName()+"]!");
+		EXCEPTION_THROW();
+	}
 }
 
 
-template<typename Imp>
-template<typename T>
-void NXField<Imp>::read(typename pni::utils::Array<T>::sptr a){
-	read(boost::dynamic_pointer_cast<pni::utils::ArrayObject>(a));
-}
-
-template<typename Imp>
-template<typename T>
-void NXField<Imp>::read(pni::utils::Array<T> &a){
-	read((pni::utils::ArrayObject &)a);
-}
-
-template<typename Imp>
-template<typename T>
-void NXField<Imp>::read(typename pni::utils::Scalar<T>::sptr s){
-	read(boost::dynamic_pointer_cast<pni::utils::ScalarObject>(s));
-}
-
-template<typename Imp>
-template<typename T>
-void NXField<Imp>::read(pni::utils::Scalar<T> &s){
-	read((pni::utils::ScalarObject &)s);
-}
-
-template<typename Imp>
-void NXField<Imp>::close(){
+template<typename Imp> void NXField<Imp>::close(){
 	this->_imp.close();
 }
 

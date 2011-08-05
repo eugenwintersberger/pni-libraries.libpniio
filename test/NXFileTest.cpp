@@ -2,7 +2,7 @@
 
 #include<cppunit/extensions/HelperMacros.h>
 
-#include "nx.hpp"
+#include "NX.hpp"
 #include "NXFileTest.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(NXFileTest);

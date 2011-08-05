@@ -9,7 +9,7 @@
 
 #include<cppunit/extensions/HelperMacros.h>
 
-#include "nx.hpp"
+#include "NX.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(NXGroupTest);
 
@@ -60,6 +60,17 @@ void NXGroupTest::testCreation(){
 }
 
 void NXGroupTest::testOpen(){
+	NXGroup g1,g2;
+
+	g1 = *_f.createGroup("/directory1/data");
+
+	g2 = *_f.openGroup("/directory1");
+
+	CPPUNIT_ASSERT_THROW(_f.openGroup("directory2"),H5GroupError);
+	CPPUNIT_ASSERT_NO_THROW(_f.openGroup("directory1/data"));
+
+	g1.close();
+	g2.close();
 
 }
 

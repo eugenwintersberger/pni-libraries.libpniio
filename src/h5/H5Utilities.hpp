@@ -31,6 +31,7 @@ public:
 
 	static void ArrayShape2DataSpace(const ArrayShape &s,hid_t &dspace);
 	static void DataSpace2ArrayShape(const hid_t &dspace,ArrayShape &s);
+	static PNITypeID H5Type2PNITypeCode(const hid_t tid);
 };
 
 static H5Utilities H5Utils;

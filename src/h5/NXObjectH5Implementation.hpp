@@ -64,6 +64,8 @@ public:
 	//! read attribute data to a String object
 	void getAttribute(const char *n,String &s);
 
+	String getName() const { return _name; }
+
 };
 
 

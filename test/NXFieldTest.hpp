@@ -1,12 +1,12 @@
 /*
- * NXGroupTest.hpp
+ * NXFieldTest.hpp
  *
- *  Created on: Aug 4, 2011
+ *  Created on: Aug 5, 2011
  *      Author: eugen
  */
 
-#ifndef NXGROUPTEST_HPP_
-#define NXGROUPTEST_HPP_
+#ifndef NXFIELDTEST_HPP_
+#define NXFIELDTEST_HPP_
 
 #include "NX.hpp"
 
@@ -19,10 +19,15 @@ using namespace pni::utils;
 using namespace pni::nx::h5;
 using namespace boost::filesystem;
 
-class NXGroupTest: public CppUnit::TestFixture  {
-	CPPUNIT_TEST_SUITE(NXGroupTest);
+
+class NXFieldTest: public CppUnit::TestFixture {
+	CPPUNIT_TEST_SUITE(NXFieldTest);
 	CPPUNIT_TEST(testCreation);
 	CPPUNIT_TEST(testOpen);
+	CPPUNIT_TEST(testReadData);
+	CPPUNIT_TEST(testReadDataExceptions);
+	CPPUNIT_TEST(testWriteData);
+	CPPUNIT_TEST(testWriteDataExceptions);
 	CPPUNIT_TEST(testAttributes);
 	CPPUNIT_TEST(testAttributeExceptions);
 	CPPUNIT_TEST_SUITE_END();
@@ -39,13 +44,25 @@ private:
 	Float64Scalar   _read_scalar_attr;
 	Int16Array      _read_array_attr;
 	Complex64Scalar _read_cmplx_scalar;
+
+	Float64Array _f64_data_array_write;
+	Float64Array _f64_data_array_read;
+	Complex64Array _c64_data_array_write;
+	Complex64Array _c64_data_array_read;
+	ArrayShape _data_shape;
 public:
 	void setUp();
 	void tearDown();
+
 	void testCreation();
 	void testOpen();
+	void testReadData();
+	void testReadDataExceptions();
+	void testWriteData();
+	void testWriteDataExceptions();
 	void testAttributes();
 	void testAttributeExceptions();
+
 };
 
-#endif /* NXGROUPTEST_HPP_ */
+#endif /* NXFIELDTEST_HPP_ */

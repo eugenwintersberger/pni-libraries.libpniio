@@ -2,7 +2,7 @@ from os import path
 
 Import("build_env")
 
-src_list = ["NXObject.cpp","NXGroup.cpp","NXField.cpp"]
+src_list = ["NXObject.cpp","NXGroup.cpp","NXField.cpp","NXExceptions.cpp"]
 
 #compile sources
 shared_objects = build_env.SharedObject(src_list)

@@ -23,8 +23,15 @@ namespace h5{
 
 NXGroupH5Implementation::NXGroupH5Implementation()
                         :NXObjectH5Implementation(){
+	EXCEPTION_SETUP("NXGroupH5Implementation::NXGroupH5Implementation()"
+			        ":NXObjectH5Implementation()");
 	_id = 0;
 	_gcreate_plist = H5Pcreate(H5P_LINK_CREATE);
+	if(_gcreate_plist<0){
+		EXCEPTION_INIT(H5PropertyListError,"Cannot create group creation property list!");
+		EXCEPTION_THROW();
+	}
+	//create intermediate groups if neccessary
 	H5Pset_create_intermediate_group(_gcreate_plist,1);
 }
 

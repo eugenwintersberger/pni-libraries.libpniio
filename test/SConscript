@@ -7,7 +7,7 @@ test_env.Append(LIBS=["pniutils","pninx","cppunit","plplotcxxd","boost_filesyste
 test_env.Append(CPPPATH=["../src/"])
 
 sources_list = ["pninxtest.cpp"]
-sources_list.extend(["NXFileTest.cpp","NXGroupTest.cpp"])
+sources_list.extend(["NXFileTest.cpp","NXGroupTest.cpp","NXFieldTest.cpp"])
 
 pninx_test = test_env.Program("pninxtest",sources_list)
 

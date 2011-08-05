@@ -92,6 +92,15 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const H5GroupError &e);
 };
 
+class H5PropertyListError:public H5Exception{
+public:
+	H5PropertyListError();
+	H5PropertyListError(const String &i,const String &d);
+	virtual ~H5PropertyListError();
+
+	friend std::ostream &operator<<(std::ostream &o,const H5PropertyListError &e);
+};
+
 //end of namespace
 }
 }

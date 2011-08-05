@@ -7,6 +7,7 @@
 
 #include "H5Utilities.hpp"
 #include "H5Exceptions.hpp"
+#include "H5TypeFactory.hpp"
 
 namespace pni {
 namespace nx {
@@ -64,6 +65,25 @@ void H5Utilities::DataSpace2ArrayShape(const hid_t &dspace,ArrayShape &s){
 	//free memory
 	if(dims != NULL) delete [] dims;
 	if(sdims != NULL) delete [] sdims;
+}
+
+PNITypeID H5Utilities::H5Type2PNITypeCode(hid_t tid){
+	if(H5Tequal(H5TFactory.getTypeFromID(INT8),tid)) return INT8;
+	if(H5Tequal(H5TFactory.getTypeFromID(UINT8),tid)) return UINT8;
+	if(H5Tequal(H5TFactory.getTypeFromID(INT16),tid)) return INT16;
+	if(H5Tequal(H5TFactory.getTypeFromID(UINT16),tid)) return UINT16;
+	if(H5Tequal(H5TFactory.getTypeFromID(INT32),tid)) return INT32;
+	if(H5Tequal(H5TFactory.getTypeFromID(UINT32),tid)) return UINT32;
+	if(H5Tequal(H5TFactory.getTypeFromID(INT64),tid)) return INT64;
+	if(H5Tequal(H5TFactory.getTypeFromID(UINT64),tid)) return UINT64;
+	if(H5Tequal(H5TFactory.getTypeFromID(FLOAT32),tid)) return FLOAT32;
+	if(H5Tequal(H5TFactory.getTypeFromID(FLOAT64),tid)) return FLOAT64;
+	if(H5Tequal(H5TFactory.getTypeFromID(FLOAT128),tid)) return FLOAT128;
+	if(H5Tequal(H5TFactory.getTypeFromID(COMPLEX32),tid)) return COMPLEX32;
+	if(H5Tequal(H5TFactory.getTypeFromID(COMPLEX64),tid)) return COMPLEX64;
+	if(H5Tequal(H5TFactory.getTypeFromID(COMPLEX128),tid)) return COMPLEX128;
+
+	return NONE;
 }
 
 //end of namespace

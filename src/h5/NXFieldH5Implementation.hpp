@@ -42,20 +42,17 @@ public:
 	virtual UInt32 getDimension(UInt32 i) const;
 	virtual UInt32* getDimensions() const;
 	virtual UInt64 getSize() const;
+	virtual void getShape(ArrayShape &s) const;
+	virtual PNITypeID getTypeID() const;
+	virtual bool isScalar() const;
+	virtual bool isArray() const;
+	virtual bool isString() const;
 
-	//! write scalar data to a field
-	virtual void write(ScalarObject &s);
-	//! write array data to a field
-	virtual void write(ArrayObject &s);
-	//! write a string to a field
-	virtual void write(String &s);
+	//! write data from a void pointer
+	virtual void write(const void *ptr);
 
-	//! read a scalar object from a field
-	virtual void read(ScalarObject &s);
-	//! read array data from a field
-	virtual void read(ArrayObject &s);
-	//! read a string from a field
-	virtual void read(String &s);
+	//! read data to a void pointer
+	virtual void read(void *ptr) const;
 
 	//! close the data field
 	virtual void close();

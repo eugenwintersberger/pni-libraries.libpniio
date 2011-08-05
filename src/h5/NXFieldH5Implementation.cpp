@@ -7,6 +7,7 @@
 
 #include "NXFieldH5Implementation.hpp"
 #include "H5Exceptions.hpp"
+#include "H5Utilities.hpp"
 
 namespace pni{
 namespace nx{
@@ -102,76 +103,30 @@ void NXFieldH5Implementation::close(){
 	if(H5Iis_valid(_type_id)) H5Tclose(_type_id);
 }
 
-void NXFieldH5Implementation::write(ScalarObject &s){
-	EXCEPTION_SETUP("void NXFieldH5Implementation::write(ScalarObject &s)");
+void NXFieldH5Implementation::write(const void *ptr){
+	EXCEPTION_SETUP("void NXFieldH5Implementation::write(const void *ptr)");
 	herr_t err;
 
-	err = H5Dwrite(_id,_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,s.getVoidPtr());
+	err = H5Dwrite(_id,_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,ptr);
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error writing data to field "
-				                                   "["+_name+"]!");
+												   "["+_name+"]!");
 		EXCEPTION_THROW();
 	}
 }
 
-void NXFieldH5Implementation::write(ArrayObject &s){
-	EXCEPTION_SETUP("void NXFieldH5Implementation::write(ArrayObject &s)");
+
+void NXFieldH5Implementation::read(void *ptr) const{
+	EXCEPTION_SETUP("void NXFieldH5Implementation::read(void *ptr)");
 	herr_t err;
 
-	err = H5Dwrite(_id,_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,s.getBuffer()->getVoidPtr());
-	if(err<0){
-		EXCEPTION_INIT(H5DataSetError,"Error writing data to field ["+_name+"]!");
-		EXCEPTION_THROW();
-	}
-}
-
-void NXFieldH5Implementation::write(String &s){
-	EXCEPTION_SETUP("void NXFieldH5Implementation::write(pni::utils::String &s)");
-	herr_t err;
-
-	err = H5Dwrite(_id,_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,s.c_str());
-	if(err<0){
-		EXCEPTION_INIT(H5DataSetError,"Error writing data to field ["+_name+"]!");
-		EXCEPTION_THROW();
-	}
-}
-
-void NXFieldH5Implementation::read(ScalarObject &s){
-	EXCEPTION_SETUP("void NXFieldH5Implementation::read(ScalarObject &s)");
-	herr_t err;
-
-	err = H5Dread(_id,_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,s.getVoidPtr());
+	err = H5Dread(_id,_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,ptr);
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+_name+"]!");
 		EXCEPTION_THROW();
 	}
 }
 
-void NXFieldH5Implementation::read(ArrayObject &s){
-	EXCEPTION_SETUP("void NXFieldH5Implementation::read(ArrayObject &s)");
-	herr_t err;
-
-	err = H5Dread(_id,_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,s.getBuffer()->getVoidPtr());
-	if(err<0){
-		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+_name+"]!");
-		EXCEPTION_THROW();
-	}
-}
-
-void NXFieldH5Implementation::read(String &s){
-	EXCEPTION_SETUP("void NXFieldH5Implementation::read(String &s)");
-	herr_t err;
-
-	//clear previous string data and resize the string buffer
-	s.clear();
-	s.resize(H5Tget_size(_type_id));
-
-	err = H5Dread(_id,_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,(void *)s.c_str());
-	if(err<0){
-		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+_name+"]!");
-		EXCEPTION_THROW();
-	}
-}
 
 UInt32 NXFieldH5Implementation::getRank() const{
 	return H5Sget_simple_extent_ndims(_space_id);
@@ -188,6 +143,10 @@ UInt32 NXFieldH5Implementation::getDimension(UInt32 i)const {
 	}
 
 	hsize_t *dims = new hsize_t[rank];
+	if(dims==NULL){
+		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for dimensions buffer!");
+		EXCEPTION_THROW();
+	}
 	H5Sget_simple_extent_dims(_space_id,dims,NULL);
 
 	dim = dims[i];
@@ -203,7 +162,16 @@ UInt32 *NXFieldH5Implementation::getDimensions()const {
 
 
 	hsize_t *dims = new hsize_t[rank];
+	if(dims == NULL){
+		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for dimensions buffer!");
+		EXCEPTION_THROW();
+	}
 	retdims = new UInt32[rank];
+	if(retdims == NULL){
+		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for output buffer!");
+		if(dims != NULL) delete [] dims;
+		EXCEPTION_THROW();
+	}
 	H5Sget_simple_extent_dims(_space_id,dims,NULL);
 
 	//copy dimensions to the ouput buffer
@@ -214,7 +182,46 @@ UInt32 *NXFieldH5Implementation::getDimensions()const {
 	return retdims;
 }
 
+void NXFieldH5Implementation::getShape(ArrayShape &s) const{
+	H5Utilities::DataSpace2ArrayShape(_space_id,s);
+}
+
+PNITypeID NXFieldH5Implementation::getTypeID() const {
+	return H5Utilities::H5Type2PNITypeCode(_type_id);
+}
+
+bool NXFieldH5Implementation::isScalar() const {
+	if((H5Sget_simple_extent_type(_space_id)==H5S_SCALAR)
+				&&(H5Tget_class(_type_id)!=H5T_STRING)){
+			return true;
+		}
+		return false;
+}
+
+bool NXFieldH5Implementation::isArray() const {
+	if(H5Sget_simple_extent_type(_space_id)==H5S_SIMPLE) return true;
+
+	return false;
+}
+
+bool NXFieldH5Implementation::isString() const {
+	if((H5Sget_simple_extent_type(_space_id)==H5S_SCALAR)
+			&&(H5Tget_class(_type_id)==H5T_STRING)){
+		return true;
+	}
+	return false;
+
+}
+
 UInt64 NXFieldH5Implementation::getSize() const{
+	if(isArray()){
+		return (UInt64)H5Sget_simple_extent_npoints(_space_id);
+	}else if (isString()){
+		return H5Tget_size(_type_id);
+	}else if (isScalar()){
+		return 1;
+	}
+
 	return 0;
 }
 
