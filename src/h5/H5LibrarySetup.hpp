@@ -26,6 +26,8 @@ private:
 	UInt32 _minor_version_number;
 	UInt32 _release_number;
 
+	bool _verbose;
+
 public:
 	H5LibrarySetup();
 	virtual ~H5LibrarySetup();
@@ -34,6 +36,8 @@ public:
 	UInt32 getMajorVersionNumber() const;
 	UInt32 getMinorVersionNumber() const;
 	UInt32 getReleaseNumber() const;
+	void setVerbose(bool f) { _verbose = f; }
+	bool isVerbose() const { return _verbose; }
 };
 
 //global setup of the library - should be implemented as a singleton in future

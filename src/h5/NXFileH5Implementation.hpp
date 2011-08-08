@@ -22,6 +22,8 @@ namespace h5{
 
 //! HDF5 implementation of a file
 class NXFileH5Implementation:public NXGroupH5Implementation {
+private:
+	NXFileH5Implementation(const NXFileH5Implementation &){}
 protected:
 	hid_t _create_plist; //!< property list for file creation
 	hid_t _acc_plist;    //!< property list for file access
@@ -34,6 +36,7 @@ public:
 	void open(const char *n,bool overwrite);
 	void create(const char *n,bool overwrite);
 	void close();
+	void flush();
 };
 
 

@@ -20,7 +20,7 @@ void NXFileTest::setUp(){
 
 	_write_array_attr = Int16Array();
 	_write_array_attr.setShape(_shape);
-	_write_array_attr.Allocate();
+	_write_array_attr.allocate();
 	_write_array_attr(0,0) = 1; _write_array_attr(0,1) = 2; _write_array_attr(0,2) = 3;
 	_write_array_attr(1,0) = 4; _write_array_attr(1,1) = 5; _write_array_attr(1,2) = 6;
 	_write_array_attr(2,0) = 7; _write_array_attr(2,1) = 8; _write_array_attr(2,2) = 9;

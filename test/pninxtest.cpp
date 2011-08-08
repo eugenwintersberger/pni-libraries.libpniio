@@ -16,6 +16,8 @@
 
 
 int main(int argc,char **argv){
+
+	pni::nx::h5::H5Setup.setVerbose(false);
     //setup the test runner
     CppUnit::TextTestRunner runner;
     CppUnit::TextTestProgressListener progress;

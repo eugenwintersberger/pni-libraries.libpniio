@@ -37,30 +37,26 @@ public:
 		return _imp;
 	}
 	void setImplementation(const Imp &i);
-	virtual pni::utils::String getName() const;
+	virtual String getName() const;
 
 	//here comes a bunch of methods to handle attributes
 
-	virtual void setAttribute(const pni::utils::String &n,pni::utils::ArrayObject &a);
-	virtual void setAttribute(const pni::utils::String &n,pni::utils::ArrayObject::sptr a);
+	virtual void setAttribute(const String &n,ArrayObject &a);
+	virtual void setAttribute(const String &n,ArrayObject::sptr a);
 
-	virtual void setAttribute(const pni::utils::String &n,pni::utils::ScalarObject &s);
-	virtual void setAttribute(const pni::utils::String &n,pni::utils::ScalarObject::sptr s);
+	virtual void setAttribute(const String &n,ScalarObject &s);
+	virtual void setAttribute(const String &n,ScalarObject::sptr s);
 
-	virtual void setAttribute(const pni::utils::String &n,const pni::utils::String &s);
-
-
-	virtual void getAttribute(const pni::utils::String &n,pni::utils::ArrayObject &a);
-	virtual void getAttribute(const pni::utils::String &n,pni::utils::ArrayObject::sptr a);
-
-	virtual void getAttribute(const pni::utils::String &n,pni::utils::ScalarObject &s);
-	virtual void getAttribute(const pni::utils::String &n,pni::utils::ScalarObject::sptr s);
-
-	virtual void getAttribute(const pni::utils::String &n,pni::utils::String &s);
+	virtual void setAttribute(const String &n,const String &s);
 
 
+	virtual void getAttribute(const String &n,ArrayObject &a);
+	virtual void getAttribute(const String &n,ArrayObject::sptr a);
 
+	virtual void getAttribute(const String &n,ScalarObject &s);
+	virtual void getAttribute(const String &n,ScalarObject::sptr s);
 
+	virtual void getAttribute(const String &n,String &s);
 
 };
 
@@ -85,7 +81,7 @@ template<typename Imp> NXObject<Imp>::~NXObject() {
 
 template<typename Imp> String NXObject<Imp>::getName() const{
 	//here we need obviously a better solution
-	return String("NIX");
+	return _imp.getName();
 }
 
 template<typename Imp>

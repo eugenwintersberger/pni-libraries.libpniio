@@ -77,6 +77,8 @@ public:
 	//! closes the file
 	virtual void close();
 
+	virtual void flush();
+
 
 };
 
@@ -140,6 +142,11 @@ template<typename Imp> void NXFile<Imp>::open(){
 
 template<typename Imp> void NXFile<Imp>::close(){
 	this->_imp.close();
+}
+
+
+template<typename Imp> void NXFile<Imp>::flush(){
+	this->_imp.flush();
 }
 
 //end of namespace

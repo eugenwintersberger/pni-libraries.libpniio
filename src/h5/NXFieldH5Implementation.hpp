@@ -23,20 +23,34 @@ namespace h5{
 class NXGroupH5Implementation;
 
 class NXFieldH5Implementation : public NXObjectH5Implementation{
+private:
+	//! copy constructor
+	NXFieldH5Implementation(const NXFieldH5Implementation &){}
 protected:
-	hid_t _type_id;	  //!< ID of the data type
-	hid_t _space_id;  //!< ID of the data space
+	hid_t _type_id;	       //!< ID of the data type
+	hid_t _space_id;       //!< ID of the data space
+	hid_t _creation_plist; //!< ID creation property list
 public:
 	typedef boost::shared_ptr<NXFieldH5Implementation> sptr;
 	//! default constructor
 	NXFieldH5Implementation();
-	//! copy constructor
-	NXFieldH5Implementation(const NXFieldH5Implementation &);
 	//! default destructor
 	virtual ~NXFieldH5Implementation();
 
 	//! assignment operator
 	NXFieldH5Implementation &operator=(const NXFieldH5Implementation &o);
+
+	//setup chunk for the array
+	void setChunkedLayout();
+	void setChunkSize(int rank,hsize_t *dims);
+
+	//setup the dataspace
+	void setDataSpace(UInt32 rank,const UInt32 *dims);
+	void setDataSpace();
+
+	//setup the data type
+	void setDataType(PNITypeID id);
+	void setDataType(const String &n);
 
 	virtual UInt32 getRank() const;
 	virtual UInt32 getDimension(UInt32 i) const;
@@ -56,6 +70,12 @@ public:
 
 	//! close the data field
 	virtual void close();
+
+	//! create a field implementation
+	virtual void create(const String &n);
+
+	//! open a field implementation
+	virtual void open(const String &n);
 
 	friend class NXGroupH5Implementation;
 };

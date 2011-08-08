@@ -15,6 +15,7 @@
 #include "NXObject.hpp"
 #include "NXImpMap.hpp"
 #include "NXField.hpp"
+//#include "NXFilter.hpp"
 
 using namespace pni::utils;
 
@@ -32,6 +33,10 @@ public:
 	//! default constructor
 	NXGroup();
 	//! copy constructor
+
+	//! The copy constructor is doing exactly the
+	//! same as the assignment operator. Thus it can be used to assign
+	//! an object directly at its construction.
 	NXGroup(const NXGroup &);
 	//! destructor
 	virtual ~NXGroup();
@@ -205,7 +210,7 @@ NXGroup<Imp> &NXGroup<Imp>::operator=(const NXGroup<Imp> &g){
 //==============methods for creating and opening groups========================
 template<typename Imp>
 typename NXGroup<typename NXGroup<Imp>::GImp>::sptr
-NXGroup<Imp>::createGroup(const pni::utils::String &n) {
+NXGroup<Imp>::createGroup(const String &n) {
 
 	typename NXGroup<GImp>::sptr ptr;
 	ptr = typename NXGroup<GImp>::sptr(new NXGroup<GImp> ());
@@ -218,7 +223,7 @@ NXGroup<Imp>::createGroup(const pni::utils::String &n) {
 
 template<typename Imp>
 typename NXGroup<typename NXGroup<Imp>::GImp >::sptr
-NXGroup<Imp>::openGroup(const pni::utils::String &n){
+NXGroup<Imp>::openGroup(const String &n){
 
 	typename NXGroup<GImp>::sptr ptr ;
 	ptr = typename NXGroup<GImp>::sptr(new NXGroup<GImp>());
@@ -233,9 +238,8 @@ NXGroup<Imp>::openGroup(const pni::utils::String &n){
 //================Methods for opening and creating fields======================
 template<typename Imp>
 typename NXField<typename NXGroup<Imp>::FImp >::sptr
-NXGroup<Imp>::createField(const pni::utils::String &n,pni::utils::PNITypeID tid,
-				          pni::utils::UInt32 rank,
-				          const pni::utils::UInt32 dims[]){
+NXGroup<Imp>::createField(const String &n,PNITypeID tid,UInt32 rank,
+				          const UInt32 dims[]){
 
 	typename NXField<FImp>::sptr ptr;
 	ptr = typename NXField<FImp>::sptr(new NXField<FImp>());
@@ -247,32 +251,29 @@ NXGroup<Imp>::createField(const pni::utils::String &n,pni::utils::PNITypeID tid,
 
 template<typename Imp>
 typename NXField<typename NXGroup<Imp>::FImp >::sptr
-NXGroup<Imp>::createField(const pni::utils::String &n,pni::utils::PNITypeID tid,
-		                  const pni::utils::ArrayShape::sptr s){
+NXGroup<Imp>::createField(const String &n,PNITypeID tid,const ArrayShape::sptr s){
 
 	return createField(n,tid,s->getRank(),s->getDimensions());
 }
 
 template<typename Imp>
 typename NXField<typename NXGroup<Imp>::FImp >::sptr
-NXGroup<Imp>::createField(const pni::utils::String &n,pni::utils::PNITypeID tid,
-		                  const pni::utils::ArrayShape &s){
+NXGroup<Imp>::createField(const String &n,PNITypeID tid,
+		                  const ArrayShape &s){
 
 	return createField(n,tid,s.getRank(),s.getDimensions());
 }
 
 template<typename Imp>
 typename NXField<typename NXGroup<Imp>::FImp >::sptr
-NXGroup<Imp>::createField(const pni::utils::String &n,
-		                  pni::utils::ArrayObject &a){
+NXGroup<Imp>::createField(const String &n,ArrayObject &a){
 
 	return createField(n,a.getTypeID(),a.getShape());
 }
 
 template<typename Imp>
 typename NXField<typename NXGroup<Imp>::FImp >::sptr
-NXGroup<Imp>::createField(const pni::utils::String &n,
-		                  pni::utils::ArrayObject::sptr a){
+NXGroup<Imp>::createField(const String &n,ArrayObject::sptr a){
 
 	return createField(n,a->getTypeID(),a->getShape());
 }
@@ -280,16 +281,15 @@ NXGroup<Imp>::createField(const pni::utils::String &n,
 template<typename Imp>
 template<typename T>
 typename NXField<typename NXGroup<Imp>::FImp >::sptr
-NXGroup<Imp>::createField(pni::utils::String &n,pni::utils::Array<T> &a){
+NXGroup<Imp>::createField(String &n,Array<T> &a){
 
-	return createField(n,(pni::utils::ArrayObject &)a);
+	return createField(n,(ArrayObject &)a);
 }
 
 template<typename Imp>
 template<typename T>
 typename NXField<typename NXGroup<Imp>::FImp >::sptr
-NXGroup<Imp>::createField(pni::utils::String &n,
-		                  typename pni::utils::Array<T>::sptr a){
+NXGroup<Imp>::createField(String &n,typename Array<T>::sptr a){
 
 	return createField(n,boost::dynamic_pointer_cast<pni::utils::ArrayObject>(a));
 }
@@ -297,7 +297,7 @@ NXGroup<Imp>::createField(pni::utils::String &n,
 
 template<typename Imp>
 typename NXField<typename NXGroup<Imp>::FImp >::sptr
-NXGroup<Imp>::openField(const pni::utils::String &n){
+NXGroup<Imp>::openField(const String &n){
 	typename NXField<FImp>::sptr ptr;
 	ptr = typename NXField<FImp>::sptr(new NXField<FImp>());
 
@@ -308,7 +308,7 @@ NXGroup<Imp>::openField(const pni::utils::String &n){
 
 template<typename Imp>
 typename NXField<typename NXGroup<Imp>::FImp >::sptr
-NXGroup<Imp>::createField(const pni::utils::String &n,pni::utils::PNITypeID tid){
+NXGroup<Imp>::createField(const String &n,PNITypeID tid){
 	typename NXField<FImp>::sptr ptr;
 	ptr = typename NXField<FImp>::sptr(new NXField<FImp>());
 	this->_imp.createField(n.c_str(),tid,ptr->getImplementation());
@@ -318,14 +318,13 @@ NXGroup<Imp>::createField(const pni::utils::String &n,pni::utils::PNITypeID tid)
 
 template<typename Imp>
 typename NXField<typename NXGroup<Imp>::FImp >::sptr
-NXGroup<Imp>::createField(const pni::utils::String &n,pni::utils::ScalarObject &s){
+NXGroup<Imp>::createField(const String &n,ScalarObject &s){
 	return createField(n.c_str(),s.getTypeID());
 }
 
 template<typename Imp>
 typename NXField<typename NXGroup<Imp>::FImp >::sptr
-NXGroup<Imp>::createField(const pni::utils::String &n,
-		                  pni::utils::ScalarObject::sptr s){
+NXGroup<Imp>::createField(const String &n,ScalarObject::sptr s){
 
 	return createField(n.c_str(),s->getTypeID());
 }
@@ -333,24 +332,22 @@ NXGroup<Imp>::createField(const pni::utils::String &n,
 template<typename Imp>
 template<typename T>
 typename NXField<typename NXGroup<Imp>::FImp >::sptr
-NXGroup<Imp>::createField(const pni::utils::String &n,pni::utils::Scalar<T> &s){
+NXGroup<Imp>::createField(const String &n,Scalar<T> &s){
 
-	return createField(n.c_str(),(pni::utils::ScalarObject &)s);
+	return createField(n.c_str(),(ScalarObject &)s);
 
 }
 
 template<typename Imp>
 template<typename T>
 typename NXField<typename NXGroup<Imp>::FImp >::sptr
-NXGroup<Imp>::createField(const pni::utils::String &n,
-		                  typename pni::utils::Scalar<T>::sptr s){
-	return createField(n.c_str(),boost::dynamic_pointer_cast<pni::utils::ScalarObject>(s));
+NXGroup<Imp>::createField(const String &n, typename Scalar<T>::sptr s){
+	return createField(n.c_str(),boost::dynamic_pointer_cast<ScalarObject>(s));
 }
 
 template<typename Imp>
 typename NXField<typename NXGroup<Imp>::FImp >::sptr
-NXGroup<Imp>::createField(const pni::utils::String &n,
-		                  const pni::utils::String &s){
+NXGroup<Imp>::createField(const String &n,const String &s){
 
 	typename NXField<FImp>::sptr ptr;
 	ptr = typename NXField<FImp>::sptr(new NXField<FImp>());

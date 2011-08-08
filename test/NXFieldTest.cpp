@@ -31,7 +31,7 @@ void NXFieldTest::setUp(){
 
 	_write_array_attr = Int16Array();
 	_write_array_attr.setShape(_shape);
-	_write_array_attr.Allocate();
+	_write_array_attr.allocate();
 	_write_array_attr(0,0) = 1; _write_array_attr(0,1) = 2; _write_array_attr(0,2) = 3;
 	_write_array_attr(1,0) = 4; _write_array_attr(1,1) = 5; _write_array_attr(1,2) = 6;
 	_write_array_attr(2,0) = 7; _write_array_attr(2,1) = 8; _write_array_attr(2,2) = 9;
@@ -47,7 +47,7 @@ void NXFieldTest::setUp(){
 
 	_f64_data_array_write = Float64Array();
 	_f64_data_array_write.setShape(_data_shape);
-	_f64_data_array_write.Allocate();
+	_f64_data_array_write.allocate();
 }
 
 void NXFieldTest::tearDown(){
@@ -65,12 +65,12 @@ void NXFieldTest::testCreation(){
 	dims[0] = 1024;
 	dims[1] = 2048;
 	_f64_data_array_read = Float64Array(_data_shape);
-	_f64_data_array_read.Allocate();
+	_f64_data_array_read.allocate();
 
 	//creating data fields for saving arrays
-	dset = *_f.createField("field_1",FLOAT64,2,dims);
-	dset = *_f.createField("field_2",COMPLEX128,_data_shape);
-	dset = *_f.createField("field_3",_f64_data_array_read);
+	CPPUNIT_ASSERT_NO_THROW(dset = *_f.createField("field_1",FLOAT64,2,dims));
+	CPPUNIT_ASSERT_NO_THROW(dset = *_f.createField("field_2",COMPLEX128,_data_shape));
+	CPPUNIT_ASSERT_NO_THROW(dset = *_f.createField("field_3",_f64_data_array_read));
 
 	//creating data fields for saving scalars
 	dset = *_f.createField("field_4",COMPLEX64);
@@ -106,9 +106,9 @@ void NXFieldTest::testOpen(){
 
 	_f.createField("field",COMPLEX128,_data_shape);
 	_f.createGroup("data");
-	dset = *_f.openField("field");
+	CPPUNIT_ASSERT_NO_THROW(_f.openField("field"));
 	CPPUNIT_ASSERT_NO_THROW(_f.createField("data/field_2",FLOAT32,_data_shape));
-	dset = *_f.openField("/data/field_2");
+	CPPUNIT_ASSERT_NO_THROW(_f.openField("/data/field_2"));
 
 }
 

@@ -22,14 +22,16 @@ namespace h5{
 
 
 class NXGroupH5Implementation:public NXObjectH5Implementation {
+private:
+	//! copy constructor
+	NXGroupH5Implementation(const NXGroupH5Implementation &o){}
 protected:
 	hid_t _gcreate_plist;
 public:
 	typedef boost::shared_ptr<NXGroupH5Implementation> sptr;
 	//! default constructor
 	NXGroupH5Implementation();
-	//! copy constructor
-	NXGroupH5Implementation(const NXGroupH5Implementation &o);
+
 	//! default destructor
 	virtual ~NXGroupH5Implementation();
 
@@ -59,6 +61,9 @@ public:
 	//! open an existing field
 	virtual void openField(const char *n,NXFieldH5Implementation &imp);
 	void close();
+
+	virtual void create(const String &name);
+	virtual void open(const String &name);
 
 };
 

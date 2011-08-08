@@ -17,24 +17,11 @@ namespace h5{
 using namespace pni::utils;
 
 NXObjectH5Implementation::NXObjectH5Implementation() {
-	// TODO Auto-generated constructor stub
-
-}
-
-//implementation of the copy constructor
-NXObjectH5Implementation::NXObjectH5Implementation(const NXObjectH5Implementation &o){
-	//basic problem - what happens if the object that holds the
-	//handler (_id) to a particular HDF5 object goes out of scope or becomes
-	//destroyed for any other reason?
-
-	//what one has to do here is simply open a new handler to the object
-	//refered to by o.
-
-	//DO NOTHING HERE - MUST BE IMPLEMENTED BY THE CONCRETE CLASSES
+	_id = 0;
+	_pid = 0;
 }
 
 NXObjectH5Implementation::~NXObjectH5Implementation() {
-	_name.clear();
 }
 
 NXObjectH5Implementation &NXObjectH5Implementation::operator=(const NXObjectH5Implementation &o){
@@ -202,7 +189,7 @@ void NXObjectH5Implementation::getAttribute(const char *n,ArrayObject &a){
 	H5Utilities::DataSpace2ArrayShape(asid,temp_shape);
 	if((!a.getShape())||(temp_shape != *(a.getShape()))){
 		a.setShape(temp_shape);
-		a.Allocate();
+		a.allocate();
 	}
 
 	//copy data to the array buffer
@@ -244,7 +231,7 @@ void NXObjectH5Implementation::getAttribute(const char *n,ScalarObject &s){
 		EXCEPTION_THROW();
 	}
 
-	s.setName(_name);
+	s.setName(String(n));
 
 	//close everything
 	H5Tclose(atid);
@@ -281,6 +268,34 @@ void NXObjectH5Implementation::getAttribute(const char *n,String &s){
 	H5Tclose(atid);
 	H5Sclose(asid);
 }
+
+String NXObjectH5Implementation::getName() const{
+	if(H5Iis_valid(_id)){
+		//if the object has already been created return this value
+		hsize_t bsize;
+		String name;
+
+		bsize = H5Iget_name(_id,NULL,1)+1;
+		name.clear();
+		name.resize(bsize);
+		H5Iget_name(_id,(char*)name.c_str(),bsize);
+		return name;
+	}
+
+	return String("");
+}
+
+void NXObjectH5Implementation::setParent(hid_t id){
+	if(H5Iis_valid(id)){
+		_pid = id;
+	}
+	//maybe I should raise an exception here
+}
+
+hid_t NXObjectH5Implementation::getParent() const{
+	return _pid;
+}
+
 
 
 

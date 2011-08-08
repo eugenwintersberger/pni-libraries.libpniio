@@ -33,17 +33,18 @@ private:
 			                         hid_t space_id,void *ptr);
 	void _open_attribute(hid_t pid,const char *n,hid_t &attr_id,hid_t &type_id,
 			             hid_t &space_id);
+	//! copy constructor
+	NXObjectH5Implementation(const NXObjectH5Implementation &o){}
 protected:
 	hid_t  _id;    //!< ID of the object this class referes too
 	hid_t  _pid;   //!< ID of the parent object owning this object
-	String _name;  //!< the name of the object
+	//String _name;  //!< the name of the object
 public:
 	typedef boost::shared_ptr<NXObjectH5Implementation> sptr;
 	static const ImpCodes IMPCODE = HDF5;
 	//! default constructor
 	NXObjectH5Implementation();
-	//! copy constructor
-	NXObjectH5Implementation(const NXObjectH5Implementation &o);
+
 	//! destructor
 	virtual ~NXObjectH5Implementation();
 
@@ -64,8 +65,14 @@ public:
 	//! read attribute data to a String object
 	void getAttribute(const char *n,String &s);
 
-	String getName() const { return _name; }
+	virtual String getName() const;
+	virtual void setParent(hid_t id);
+	virtual hid_t getParent() const;
+	virtual void create(const String &n){
+	}
+	virtual void open(const String &n){
 
+	}
 };
 
 

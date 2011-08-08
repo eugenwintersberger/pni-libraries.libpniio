@@ -13,51 +13,17 @@ namespace pni{
 namespace nx{
 namespace h5{
 
-using namespace nx::h5;
+using namespace pni::nx::h5;
 
 NXFieldH5Implementation::NXFieldH5Implementation() {
 	_id = 0;
 	_space_id = 0;
 	_type_id = 0;
-}
-
-NXFieldH5Implementation::NXFieldH5Implementation(const NXFieldH5Implementation &i){
-	EXCEPTION_SETUP("NXFieldH5Implementation::NXFieldH5Implementation"
-			                 "(const NXFieldH5Implementation &i)");
-
-	if(i._id != 0){
-		_id = H5Dopen2(i._pid,i._name.c_str(),H5P_DEFAULT);
-		if(_id<0){
-			EXCEPTION_INIT(H5DataSetError,"Error opening data-set "
-					                "["+i._name+"] in copy constructor!");
-			EXCEPTION_THROW();
-		}
-	}else{
-		_id = 0;
-	}
-
-	_name = i._name;
-	_pid = i._pid;
-	_space_id = H5Scopy(i._space_id);
-	if(_space_id<0){
-		EXCEPTION_INIT(H5DataSpaceError,"Error copying data-space "
-				                "for data-set ["+i._name+"] in copy constructor!");
-		H5Dclose(_id);
-		EXCEPTION_THROW();
-	}
-	_type_id = H5Tcopy(i._type_id);
-	if(_type_id < 0){
-		EXCEPTION_INIT(H5DataTypeError,"Error copying data-type "
-				               "for data-set ["+i._name+"] in copy constructor!");
-		H5Dclose(_id);
-		H5Sclose(_space_id);
-		EXCEPTION_THROW();
-	}
+	_creation_plist = H5Pcreate(H5P_DATASET_CREATE);
 }
 
 NXFieldH5Implementation::~NXFieldH5Implementation() {
 	_pid = 0;
-	_name.clear();
 	close();
 }
 
@@ -66,30 +32,18 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXFieldH5Imple
 					"(const NXFieldH5Implementation &o)");
 
 	if ( this != &o ){
-		_pid = o._pid;
-		_name = o._name;
-
-		_id = H5Dopen2(o._pid,o._name.c_str(),H5P_DEFAULT);
-		if(_id < 0){
-			EXCEPTION_INIT(H5DataSetError,"Error opening data-set "
-					                "["+o._name+"] in assignment operator!");
-			EXCEPTION_THROW();
-		}
-		_space_id = H5Scopy(o._space_id);
-		if(_space_id < 0){
-			EXCEPTION_INIT(H5DataSpaceError,"Error copying "
-									"data-space for data-set ["+o._name+"] in "
-									"assignment operator!");
-			H5Dclose(_id);
-			EXCEPTION_THROW();
-		}
-		_type_id = H5Tcopy(o._type_id);
-		if(_type_id < 0){
-			EXCEPTION_INIT(H5DataTypeError,"Error copying data-type "
-					                "for data-set ["+o._name+"] in assignment "
-					                "operator!");
-			H5Sclose(_space_id);
-			H5Dclose(_id);
+		//if the parent of the
+		if(H5Iis_valid(o.getParent())){
+			setParent(o.getParent());
+			try{
+				open(o.getName());
+			}catch(...){
+				EXCEPTION_INIT(H5DataSetError,"Cannot open data-set ["+o.getName()+
+						       "during assignment!");
+				EXCEPTION_THROW();
+			}
+		}else{
+			EXCEPTION_INIT(H5DataSetError,"Parent ID is not a valid HDF5 object!");
 			EXCEPTION_THROW();
 		}
 	}
@@ -97,10 +51,81 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXFieldH5Imple
 	return *this;
 }
 
+void NXFieldH5Implementation::create(const String &n){
+	EXCEPTION_SETUP("void NXFieldH5Implementation::create(const String &n)");
+
+	if(H5Iis_valid(_pid)){
+		_id = H5Dcreate2(_pid,n.c_str(),_type_id,_space_id,H5P_DEFAULT,_creation_plist,H5P_DEFAULT);
+		if(_id < 0){
+			EXCEPTION_INIT(H5DataSetError,"Error creating data-set ["+n+"]!");
+			EXCEPTION_THROW();
+		}
+	}
+}
+
+void NXFieldH5Implementation::open(const String &n){
+	EXCEPTION_SETUP("void NXFieldH5Implementation::open(const String &n)");
+
+	if(H5Iis_valid(_pid)){
+		_id = H5Dopen2(_pid,(char *)n.c_str(),H5P_DEFAULT);
+		if(_id < 0){
+			EXCEPTION_INIT(H5DataSetError,"Cannot open data-set ["+n+"]!");
+			EXCEPTION_THROW();
+		}
+
+		//now try to get all other information we need
+		_space_id = H5Dget_space(_id);
+		if(_space_id < 0){
+			EXCEPTION_INIT(H5DataSpaceError,"Cannot obtain data-space from "
+					       "data-set ["+n+"]!");
+			EXCEPTION_THROW();
+		}
+
+		_type_id = H5Dget_type(_id);
+		if(_type_id < 0){
+			EXCEPTION_INIT(H5DataTypeError,"Cannot obtain data-type from "
+					       "data-set ["+n+"]!");
+			EXCEPTION_THROW();
+		}
+		_creation_plist = H5Dget_create_plist(_id);
+		if(_creation_plist<0){
+			EXCEPTION_INIT(H5PropertyListError,"Cannot obtain creation property "
+					       "list fom data-set ["+n+"]!");
+			EXCEPTION_THROW();
+		}
+	}else{
+		EXCEPTION_INIT(H5DataSetError,"Parent ID is not a valid HDF5 object!");
+		EXCEPTION_THROW();
+	}
+}
+
+void NXFieldH5Implementation::setChunkedLayout(){
+	EXCEPTION_SETUP("void NXFieldH5Implementation::setChunkedLayout()");
+
+	if(!H5Iis_valid(_id)){
+		if((H5Pset_layout(_creation_plist,H5D_CHUNKED))<0){
+			EXCEPTION_INIT(H5PropertyListError,"Cannot set field layout to chunked!");
+			EXCEPTION_THROW();
+		}
+	}
+}
+
+void NXFieldH5Implementation::setChunkSize(int rank,hsize_t *dims){
+	EXCEPTION_SETUP("void NXFieldH5Implementation::setChunkSize(int rank,hsize_t *dims)");
+
+	if(!H5Iis_valid(_id)){
+		if((H5Pset_chunk(_creation_plist,rank,dims))<0){
+			EXCEPTION_INIT(H5PropertyListError,"Cannot set chunk size!");
+			EXCEPTION_THROW();
+		}
+	}
+}
+
 void NXFieldH5Implementation::close(){
 	if(H5Iis_valid(_id)) H5Dclose(_id);
 	if(H5Iis_valid(_space_id)) H5Sclose(_space_id);
 	if(H5Iis_valid(_type_id)) H5Tclose(_type_id);
+	if(H5Iis_valid(_creation_plist)) H5Pclose(_creation_plist);
 }
 
 void NXFieldH5Implementation::write(const void *ptr){
@@ -110,7 +135,7 @@ void NXFieldH5Implementation::write(const void *ptr){
 	err = H5Dwrite(_id,_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,ptr);
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error writing data to field "
-												   "["+_name+"]!");
+												   "["+getName()+"]!");
 		EXCEPTION_THROW();
 	}
 }
@@ -122,19 +147,26 @@ void NXFieldH5Implementation::read(void *ptr) const{
 
 	err = H5Dread(_id,_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,ptr);
 	if(err<0){
-		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+_name+"]!");
+		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+getName()+"]!");
 		EXCEPTION_THROW();
 	}
 }
 
 
 UInt32 NXFieldH5Implementation::getRank() const{
-	return H5Sget_simple_extent_ndims(_space_id);
+	EXCEPTION_SETUP("UInt32 NXFieldH5Implementation::getRank() const");
+
+	if(H5Iis_valid(_space_id)){
+		return H5Sget_simple_extent_ndims(_space_id);
+	}else{
+		EXCEPTION_INIT(H5DataSpaceError,"Cannot obtain rank from data-space!");
+		EXCEPTION_THROW();
+	}
 }
 
 UInt32 NXFieldH5Implementation::getDimension(UInt32 i)const {
 	EXCEPTION_SETUP("UInt32 NXFieldH5Implementation::getDimension(UInt32 i)");
-	ssize_t rank = H5Sget_simple_extent_ndims(_space_id);
+	ssize_t rank = getRank();
 	UInt32 dim;
 
 	if(i>=rank){
@@ -223,6 +255,49 @@ UInt64 NXFieldH5Implementation::getSize() const{
 	}
 
 	return 0;
+}
+
+void NXFieldH5Implementation::setDataSpace(UInt32 rank,const UInt32 *dims){
+	EXCEPTION_SETUP("void NXFieldH5Implementation::setDataSpace(int rank,hsize_t *dims)");
+
+	int r = rank;
+	hsize_t *d = new hsize_t[rank];
+	for(UInt32 i = 0;i<rank;i++) d[i] = dims[i];
+
+	if(H5Iis_valid(_space_id)) H5Tclose(_space_id);
+	_space_id = H5Screate_simple(r,d,NULL);
+	if(_space_id < 0){
+		EXCEPTION_INIT(H5DataSpaceError,"Cannot create simple data-space!");
+		EXCEPTION_THROW();
+	}
+
+	delete [] d;
+
+}
+
+void NXFieldH5Implementation::setDataSpace(){
+	EXCEPTION_SETUP("void NXFieldH5Implementation::setDataSpace()");
+
+	if(H5Iis_valid(_space_id)) H5Tclose(_space_id);
+	if((H5Screate(H5S_SCALAR))<0){
+		EXCEPTION_INIT(H5DataSpaceError,"Cannot create scalar data space!");
+		EXCEPTION_THROW();
+	}
+}
+
+void NXFieldH5Implementation::setDataType(PNITypeID tid){
+	EXCEPTION_SETUP("void NXFieldH5Implementation::setDataType(hid_t type_id)");
+
+	if(H5Iis_valid(_type_id)) H5Tclose(_type_id);
+	_type_id = H5TFactory.getTypeFromID(tid);
+	if(_type_id < 0){
+		EXCEPTION_INIT(H5DataTypeError,"Data type is not a valid HDF5 data type!");
+		EXCEPTION_THROW();
+	}
+}
+
+void NXFieldH5Implementation::setDataType(const String &n){
+	_type_id = H5TFactory.createStringType(n.size());
 }
 
 

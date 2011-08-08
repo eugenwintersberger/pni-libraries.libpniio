@@ -25,13 +25,14 @@ namespace nx{
 
 template<typename Imp>
 class NXField:public NXObject<Imp> {
+private:
+	NXField(const NXField<Imp> &);
 public:
 	typedef boost::shared_ptr<NXField<Imp> > sptr;
 	NXField();
-	NXField(const NXField<Imp> &);
 	virtual ~NXField();
 
-	NXField &operator=(const NXField<Imp> &);
+	NXField<Imp> &operator=(const NXField<Imp> &);
 
 	//inquery of a field
 	UInt32 getRank() const{
@@ -229,11 +230,11 @@ template<typename Imp> void NXField<Imp>::read(ArrayObject &a) const{
 	if(a.getShape()){
 		if(s != *(a.getShape())){
 			a.setShape(s);
-			a.Allocate();
+			a.allocate();
 		}
 	}else{
 		a.setShape(s);
-		a.Allocate();
+		a.allocate();
 	}
 
 	try{

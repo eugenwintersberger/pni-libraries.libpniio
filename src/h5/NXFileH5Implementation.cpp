@@ -78,8 +78,10 @@ void NXFileH5Implementation::create(const char *n,bool overwrite){
 		EXCEPTION_INIT(H5FileError,"Error create file "+String(n)+"!");
 		EXCEPTION_THROW();
 	}
+}
 
-
+void NXFileH5Implementation::flush(){
+	H5Fflush(_id,H5F_SCOPE_LOCAL);
 }
 
 //end of namespace

@@ -18,6 +18,7 @@
 #include "h5/NXFieldH5Implementation.hpp"
 #include "h5/H5TypeFactory.hpp"
 #include "h5/H5Exceptions.hpp"
+#include "h5/H5LibrarySetup.hpp"
 
 namespace pni{
 namespace nx{
