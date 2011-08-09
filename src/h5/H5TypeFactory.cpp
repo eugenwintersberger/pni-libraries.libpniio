@@ -157,7 +157,9 @@ hid_t H5TypeFactory::createStringType(UInt64 size){
 	H5Tset_strpad(tid,H5T_STR_NULLTERM);
 	H5Tset_cset(tid,H5T_CSET_UTF8);
 
-	return tid;
+	if(H5Iis_valid(tid)) return tid;
+
+	return -1;
 
 }
 
@@ -221,7 +223,7 @@ hid_t H5TypeFactory::createTypeFromObject(const NumericObject::sptr o){
 		std::cerr<<"Cannot map PNI Type to HDF5 type!"<<std::endl;
 		//raise an exception here
 	}
-	return 0;
+	return -1;
 }
 
 hid_t H5TypeFactory::getTypeFromObject(const NumericObject::sptr o){
@@ -245,7 +247,7 @@ hid_t H5TypeFactory::getTypeFromObject(const NumericObject::sptr o){
 		std::cerr<<"Cannot map PNI Type to HDF5 type!"<<std::endl;
 		//raise an exception here
 	}
-	return 0;
+	return -1;
 }
 
 hid_t H5TypeFactory::getTypeFromID(PNITypeID id){
@@ -268,7 +270,7 @@ hid_t H5TypeFactory::getTypeFromID(PNITypeID id){
 		std::cerr << "Cannot map PNI Type to HDF5 type!" << std::endl;
 		//raise an exception here
 	}
-	return 0;
+	return -1;
 }
 
 hid_t H5TypeFactory::createTypeFromID(PNITypeID id){
@@ -291,7 +293,7 @@ hid_t H5TypeFactory::createTypeFromID(PNITypeID id){
 		std::cerr << "Cannot map PNI Type to HDF5 type!" << std::endl;
 		//raise an exception here
 	}
-	return 0;
+	return -1;
 }
 
 //end of namespace

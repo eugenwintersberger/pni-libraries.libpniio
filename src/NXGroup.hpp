@@ -90,35 +90,15 @@ public:
 	//! ArrayObject object.
 	//! \param n name of the field
 	//! \param a shared pointer to the ArrayObject object
-	typename NXField<FImp>::sptr createField(const String &n,
-			                                 ArrayObject::sptr a);
-	//! create a field for array data from an Array<T> template
+	typename NXField<FImp>::sptr createField(const String &n,ArrayObject::sptr a);
 
-	//! Create a data field from a reference to a specialization of the
-	//! Array<T> template. All parameters relevant for field creation are
-	//! derived from the Array<T> instance.
-	//! \param n name of the array
-	//! \param a array to the Array<T> instance
-	template<typename T> typename NXField<FImp>::sptr createField(String &n,
-			                                                      Array<T> &a);
-
-	//! create a field for array data from an Array<T> template
-
-	//! Create a data field from a shared pointer to a specialization of the
-	//! Array<T> template. All relevant information for the field creation is
-	//! derived from the Array<T> object.
-	//! \param n name of the field
-	//! \param a shared pointer to the Array<T> instance
-	template<typename T> typename NXField<FImp>::sptr
-	createField(String &n,typename Array<T>::sptr a);
 
 	//! create a field for scalar data - simplest approach
 
 	//! A data field for a single scalar datum will be created.
 	//! \param n name of the data field
 	//! \param tid ID of the PNI type for the field
-	typename NXField<FImp>::sptr
-	createField(const String &n,PNITypeID tid);
+	typename NXField<FImp>::sptr createField(const String &n,PNITypeID tid);
 	//! create a field for scalar data from ScalarObject
 
 	//! A reference to an instance of ScalarObject is used to derive all
@@ -132,32 +112,14 @@ public:
 	//! parameters for data field creation.
 	//! \param n name of the data field
 	//! \param s shared pointer ot the instance of ScalarObject
-	typename NXField<FImp>::sptr createField(const String &n,
-			                                 ScalarObject::sptr s);
-	//! create a field for scalar data from Scalar<T>
-
-	//! Create a data field for a single scalar datum using a reference to a
-	//! specialization of the Scalar<T> template.
-	//! \param n name of the data field
-	//! \parma s reference to the specialization of Scalar<T>
-	template<typename T> typename NXField<FImp>::sptr
-	createField(const String &n,Scalar<T> &s);
-	//! create a field for scalar data from Scalar<T>
-
-	//! Create a data field for a single scalar datum using a shared pointer
-	//! to a specialization of the Scalar<T> template.
-	//! \param n name of the data field
-	//! \param s shared pointer to the specialization of Scalar<T>
-	template<typename T> typename NXField<FImp>::sptr
-	createField(const String &n,typename Scalar<T>::sptr s);
+	typename NXField<FImp>::sptr createField(const String &n,ScalarObject::sptr s);
 
 	//! create a field for string data
 
 	//! Create a field for String data encoded in UTF8.
 	//! \param n name of the field
 	//! \param s string for which the field should be created
-	typename NXField<FImp>::sptr
-	createField(const String &n,const String &s);
+	typename NXField<FImp>::sptr createField(const String &n,const String &s);
 
 	//! open a field object
 	typename NXField<FImp>::sptr openField(const String &n);
@@ -186,13 +148,11 @@ template<typename Imp>
 NXGroup<Imp>::NXGroup(){
 }
 
-template<typename Imp>
-NXGroup<Imp>::NXGroup(const NXGroup &g){
+template<typename Imp> NXGroup<Imp>::NXGroup(const NXGroup &g){
 	this->_imp = g._imp;
 }
 
-template<typename Imp>
-NXGroup<Imp>::~NXGroup(){
+template<typename Imp> NXGroup<Imp>::~NXGroup(){
 	close();
 }
 
@@ -278,22 +238,6 @@ NXGroup<Imp>::createField(const String &n,ArrayObject::sptr a){
 	return createField(n,a->getTypeID(),a->getShape());
 }
 
-template<typename Imp>
-template<typename T>
-typename NXField<typename NXGroup<Imp>::FImp >::sptr
-NXGroup<Imp>::createField(String &n,Array<T> &a){
-
-	return createField(n,(ArrayObject &)a);
-}
-
-template<typename Imp>
-template<typename T>
-typename NXField<typename NXGroup<Imp>::FImp >::sptr
-NXGroup<Imp>::createField(String &n,typename Array<T>::sptr a){
-
-	return createField(n,boost::dynamic_pointer_cast<pni::utils::ArrayObject>(a));
-}
-
 
 template<typename Imp>
 typename NXField<typename NXGroup<Imp>::FImp >::sptr
@@ -329,21 +273,6 @@ NXGroup<Imp>::createField(const String &n,ScalarObject::sptr s){
 	return createField(n.c_str(),s->getTypeID());
 }
 
-template<typename Imp>
-template<typename T>
-typename NXField<typename NXGroup<Imp>::FImp >::sptr
-NXGroup<Imp>::createField(const String &n,Scalar<T> &s){
-
-	return createField(n.c_str(),(ScalarObject &)s);
-
-}
-
-template<typename Imp>
-template<typename T>
-typename NXField<typename NXGroup<Imp>::FImp >::sptr
-NXGroup<Imp>::createField(const String &n, typename Scalar<T>::sptr s){
-	return createField(n.c_str(),boost::dynamic_pointer_cast<ScalarObject>(s));
-}
 
 template<typename Imp>
 typename NXField<typename NXGroup<Imp>::FImp >::sptr

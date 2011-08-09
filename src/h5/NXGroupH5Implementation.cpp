@@ -16,6 +16,8 @@ extern "C"{
 #include "NXGroupH5Implementation.hpp"
 #include "H5TypeFactory.hpp"
 
+#include "../NX.hpp"
+
 namespace pni{
 namespace nx{
 namespace h5{
@@ -157,10 +159,21 @@ void NXGroupH5Implementation::createField(const char *n, PNITypeID tid,
 			        "PNITypeID tid,UInt32 rank, const UInt32 *dims,"
 			        "NXFieldH5Implementation &imp)");
 
-	imp.setParent(_id);
-	imp.setDataSpace(rank,dims);
-	imp.setDataType(tid);
-	imp.create(String(n));
+	NXLZFFilter f;
+
+	try{
+		imp.setParent(_id);
+		imp.setDataSpace(rank,dims);
+		imp.setDataType(tid);
+		imp.setChunkedLayout();
+		imp.setChunkSize(rank,dims);
+		imp.setShuffle();
+		imp.setFilter(f);
+		imp.create(String(n));
+	}catch(...){
+		EXCEPTION_INIT(H5DataSetError,"Error creating array data-set ["+String(n)+"]");
+		EXCEPTION_THROW();
+	}
 }
 
 void NXGroupH5Implementation::createField(const char *n, PNITypeID tid,
@@ -168,10 +181,15 @@ void NXGroupH5Implementation::createField(const char *n, PNITypeID tid,
 	EXCEPTION_SETUP("void NXGroupH5Implementation::createField(const char *n, "
 			        "PNITypeID tid,NXFieldH5Implementation &imp)");
 
-	imp.setParent(_id);
-	imp.setDataSpace();
-	imp.setDataType(tid);
-	imp.create(String(n));
+	try{
+		imp.setParent(_id);
+		imp.setDataSpace();
+		imp.setDataType(tid);
+		imp.create(String(n));
+	}catch(...){
+		EXCEPTION_INIT(H5DataSetError,"Error creating scalar data-set ["+String(n)+"]!");
+		EXCEPTION_THROW();
+	}
 }
 
 void NXGroupH5Implementation::createStringField(const char *n, UInt64 size,
@@ -179,26 +197,15 @@ void NXGroupH5Implementation::createStringField(const char *n, UInt64 size,
 	EXCEPTION_SETUP("void NXGroupH5Implementation::createStringField("
 			        "const char *n, UInt64 size,NXFieldH5Implementation &imp)");
 
-	imp._type_id = H5TFactory.createStringType(size);
-
-	imp._space_id = H5Screate(H5S_SCALAR);
-	if(imp._space_id<0){
-		EXCEPTION_INIT(H5DataSpaceError,"Cannot create data space for field ["+String(n)+"]!");
-		H5Tclose(imp._type_id);
+	try{
+		imp.setParent(_id);
+		imp.setDataSpace();
+		imp.setDataType(size);
+		imp.create(String(n));
+	}catch(...){
+		EXCEPTION_INIT(H5DataSetError,"Error creating string data-set ["+String(n)+"]!");
 		EXCEPTION_THROW();
 	}
-
-	imp._id = H5Dcreate2(_id,n,imp._type_id,imp._space_id,H5P_DEFAULT,
-			             H5P_DEFAULT,H5P_DEFAULT);
-	if(imp._id<0){
-		EXCEPTION_INIT(H5DataSetError,"Cannot create data set for fiel ["+String(n)+"]!");
-		H5Tclose(imp._type_id);
-		H5Sclose(imp._space_id);
-		EXCEPTION_THROW();
-	}
-
-	imp._pid = _id;
-
 }
 
 

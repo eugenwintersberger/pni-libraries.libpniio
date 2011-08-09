@@ -73,8 +73,8 @@ void NXFieldTest::testCreation(){
 	CPPUNIT_ASSERT_NO_THROW(dset = *_f.createField("field_3",_f64_data_array_read));
 
 	//creating data fields for saving scalars
-	dset = *_f.createField("field_4",COMPLEX64);
-	dset = *_f.createField("field_5",_write_cmplx_scalar);
+	CPPUNIT_ASSERT_NO_THROW(dset = *_f.createField("field_4",COMPLEX64));
+	CPPUNIT_ASSERT_NO_THROW(dset = *_f.createField("field_5",_write_cmplx_scalar));
 
 	//creating data fields for saving strings
 	String str = "hello world!";

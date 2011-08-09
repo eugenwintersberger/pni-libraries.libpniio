@@ -18,7 +18,8 @@ namespace pni{
 namespace nx{
 
 
-class NXFilter{
+template<typename Imp>
+class NXFilter:public Imp{
 public:
 	NXFilter();
 	NXFilter(const NXFilter &f);
@@ -27,18 +28,21 @@ public:
 	NXFilter &operator=(const NXFilter &f);
 };
 
-NXFilter::NXFilter(){
+template<typename Imp> NXFilter<Imp>::NXFilter():Imp(){
+}
+
+template<typename Imp> NXFilter<Imp>::NXFilter(const NXFilter &o){
+}
+
+template<typename Imp> NXFilter<Imp>::~NXFilter(){
 
 }
 
-NXFilter::NXFilter(const NXFilter &o){
-}
+template<typename Imp>
+NXFilter<Imp> &NXFilter<Imp>::operator=(const NXFilter<Imp> &f){
+	if ( this != &f){
 
-NXFilter::~NXFilter(){
-
-}
-
-NXFilter &NXFilter::operator=(const NXFilter &f){
+	}
 
 	return *this;
 }

@@ -11,6 +11,7 @@
 #include "NXFile.hpp"
 //#include "NXObject.hpp"
 #include "NXGroup.hpp"
+#include "NXFilter.hpp"
 #include "h5/NXFileH5Implementation.hpp"
 //#include "NXObjectH5Implementation.hpp"
 //#include "NXFileXMLImplementation.hpp"
@@ -19,6 +20,7 @@
 #include "h5/H5TypeFactory.hpp"
 #include "h5/H5Exceptions.hpp"
 #include "h5/H5LibrarySetup.hpp"
+#include "h5/H5Filter.hpp"
 
 namespace pni{
 namespace nx{
@@ -28,9 +30,7 @@ typedef nx::NXObject<NXObjectH5Implementation> NXObject;
 typedef nx::NXFile<NXFileH5Implementation> NXFile;
 typedef nx::NXGroup<NXGroupH5Implementation> NXGroup;
 typedef nx::NXField<NXFieldH5Implementation> NXField;
-
-
-
+typedef nx::NXFilter<H5Filter> NXLZFFilter;
 
 }
 }

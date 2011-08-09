@@ -110,15 +110,28 @@ void NXFieldH5Implementation::setChunkedLayout(){
 	}
 }
 
-void NXFieldH5Implementation::setChunkSize(int rank,hsize_t *dims){
+void NXFieldH5Implementation::setChunkSize(UInt32 rank,const UInt32 *dims){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::setChunkSize(int rank,hsize_t *dims)");
 
+	int r = (int)rank;
+	hsize_t *d = NULL;
+
+	d = new hsize_t[rank];
+	if(d == NULL){
+		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for chunk dimensions!");
+		EXCEPTION_THROW();
+	}
+	for(UInt32 i=0;i<rank;i++) d[i] = dims[i];
+
 	if(!H5Iis_valid(_id)){
-		if((H5Pset_chunk(_creation_plist,rank,dims))<0){
+		if((H5Pset_chunk(_creation_plist,r,d))<0){
 			EXCEPTION_INIT(H5PropertyListError,"Cannot set chunk size!");
+			if(d != NULL) delete [] d;
 			EXCEPTION_THROW();
 		}
 	}
+
+	if(d!=NULL) delete [] d;
 }
 
 void NXFieldH5Implementation::close(){
@@ -265,6 +278,7 @@ void NXFieldH5Implementation::setDataSpace(UInt32 rank,const UInt32 *dims){
 	for(UInt32 i = 0;i<rank;i++) d[i] = dims[i];
 
 	if(H5Iis_valid(_space_id)) H5Tclose(_space_id);
+
 	_space_id = H5Screate_simple(r,d,NULL);
 	if(_space_id < 0){
 		EXCEPTION_INIT(H5DataSpaceError,"Cannot create simple data-space!");
@@ -279,7 +293,9 @@ void NXFieldH5Implementation::setDataSpace(){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::setDataSpace()");
 
 	if(H5Iis_valid(_space_id)) H5Tclose(_space_id);
-	if((H5Screate(H5S_SCALAR))<0){
+
+	_space_id =H5Screate(H5S_SCALAR);
+	if(_space_id<0){
 		EXCEPTION_INIT(H5DataSpaceError,"Cannot create scalar data space!");
 		EXCEPTION_THROW();
 	}
@@ -288,16 +304,28 @@ void NXFieldH5Implementation::setDataSpace(){
 void NXFieldH5Implementation::setDataType(PNITypeID tid){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::setDataType(hid_t type_id)");
 
+	//close the type object if it already exists
 	if(H5Iis_valid(_type_id)) H5Tclose(_type_id);
-	_type_id = H5TFactory.getTypeFromID(tid);
+
+	_type_id = H5TFactory.createTypeFromID(tid);
 	if(_type_id < 0){
-		EXCEPTION_INIT(H5DataTypeError,"Data type is not a valid HDF5 data type!");
+		EXCEPTION_INIT(H5DataTypeError,"Type creation failed!");
 		EXCEPTION_THROW();
 	}
 }
 
-void NXFieldH5Implementation::setDataType(const String &n){
-	_type_id = H5TFactory.createStringType(n.size());
+void NXFieldH5Implementation::setDataType(UInt64 size){
+	EXCEPTION_SETUP("void NXFieldH5Implementation::setDataType(const String &n)");
+
+	//close the type object if it already exists
+	if(H5Iis_valid(_type_id)) H5Tclose(_type_id);
+
+	_type_id = H5TFactory.createStringType(size);
+
+	if(_type_id < 0){
+		EXCEPTION_INIT(H5DataTypeError,"Type creation failed!");
+		EXCEPTION_THROW();
+	}
 }
 
 

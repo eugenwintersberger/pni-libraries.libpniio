@@ -13,8 +13,10 @@
 
 #include "NXObjectH5Implementation.hpp"
 #include "H5TypeFactory.hpp"
+#include "../NXFilter.hpp"
 
 using namespace pni::utils;
+
 
 namespace pni{
 namespace nx{
@@ -42,7 +44,7 @@ public:
 
 	//setup chunk for the array
 	void setChunkedLayout();
-	void setChunkSize(int rank,hsize_t *dims);
+	void setChunkSize(UInt32 rank,const UInt32 *dims);
 
 	//setup the dataspace
 	void setDataSpace(UInt32 rank,const UInt32 *dims);
@@ -50,7 +52,15 @@ public:
 
 	//setup the data type
 	void setDataType(PNITypeID id);
-	void setDataType(const String &n);
+	void setDataType(UInt64 size);
+
+	template<typename Imp> void setFilter(pni::nx::NXFilter<Imp> &f){
+		f.setup(_creation_plist);
+	}
+
+	void setShuffle(){
+		H5Pset_shuffle(_creation_plist);
+	}
 
 	virtual UInt32 getRank() const;
 	virtual UInt32 getDimension(UInt32 i) const;
