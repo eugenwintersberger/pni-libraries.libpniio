@@ -14,11 +14,12 @@
 CPPUNIT_TEST_SUITE_REGISTRATION(NXGroupTest);
 
 void NXGroupTest::setUp(){
-	_fname = "test.1.h5";
+	_fname = "test.group.h5";
 
+	_f.close();
 	_f.setFileName(_fname);
 	_f.setOverwrite();
-	_f.create();
+	CPPUNIT_ASSERT_NO_THROW(_f.create());
 
 
 	_write_str_attr = "hello world";
@@ -42,29 +43,30 @@ void NXGroupTest::setUp(){
 }
 
 void NXGroupTest::tearDown(){
+	//close the file
+	std::cerr<<"0000000000000000000 CLOSING FILE 00000000000000000000000!"<<std::endl;
 	_f.close();
-	//after finishing the tests we need to remove all created files
-	path path1(_fname);
-
-	if(exists(path1)) remove_all(path1);
 }
 
 void NXGroupTest::testCreation(){
 	NXGroup g;
 
-	g = *_f.createGroup("/hello/world");
-	g = *_f.createGroup("/directory_1");
-
+	std::cerr<<"create first group"<<std::endl;
+	g = _f.createGroup("/hello/world");
+	g.close();
+	std::cerr<<"creating second group"<<std::endl;
+	g = _f.createGroup("/directory_1");
 
 	g.close();
+
 }
 
 void NXGroupTest::testOpen(){
 	NXGroup g1,g2;
 
-	g1 = *_f.createGroup("/directory1/data");
+	g1 = _f.createGroup("/directory1/data");
 
-	g2 = *_f.openGroup("/directory1");
+	g2 = _f.openGroup("/directory1");
 
 	CPPUNIT_ASSERT_THROW(_f.openGroup("directory2"),H5GroupError);
 	CPPUNIT_ASSERT_NO_THROW(_f.openGroup("directory1/data"));
@@ -77,7 +79,7 @@ void NXGroupTest::testOpen(){
 void NXGroupTest::testAttributes(){
 	NXGroup g;
 
-	g = *_f.createGroup("/Hello/world1");
+	g = _f.createGroup("/Hello/world1");
 
 	//write attribute data
 	g.setAttribute("StringAttribute",_write_str_attr);
@@ -102,7 +104,7 @@ void NXGroupTest::testAttributes(){
 void NXGroupTest::testAttributeExceptions(){
 	NXGroup g;
 
-	g = *_f.createGroup("/hello/world");
+	g = _f.createGroup("/hello/world");
 
 	//write attribute data
 	g.setAttribute("StringAttribute",_write_str_attr);
@@ -123,5 +125,22 @@ void NXGroupTest::testAttributeExceptions(){
 	CPPUNIT_ASSERT_THROW(g.getAttribute("IndexOfRefraction_not",_read_cmplx_scalar),H5AttributeError);
 
 	g.close();
+}
+
+void NXGroupTest::testInternalLinks(){
+	NXGroup g;
+	NXField f,fr;
+
+	//create a group and some data
+	g = _f.createGroup("/group1");
+	f = _f.createField("field_1",_write_array_attr);
+	f.write(_write_array_attr);
+
+	//create a link from /field_1 to /group1/field_1_link
+	CPPUNIT_ASSERT_NO_THROW(_f.createLink("field_1","/group1/field_1_link"));
+	CPPUNIT_ASSERT_NO_THROW(fr = g.openField("field_1_link"));
+	CPPUNIT_ASSERT_NO_THROW(fr.read(_read_array_attr));
+	CPPUNIT_ASSERT_NO_THROW(_read_array_attr == _write_array_attr);
+
 }
 

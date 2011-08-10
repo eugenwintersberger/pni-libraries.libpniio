@@ -5,7 +5,7 @@
 #include "NX.hpp"
 #include "NXFileTest.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(NXFileTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(NXFileTest);
 
 void NXFileTest::setUp(){
 	_fname1 = "test.1.h5";
@@ -65,6 +65,7 @@ void NXFileTest::testOpen(){
 
 	f.setFileName(_fname1);
 	f.setOverwrite();
+	f.unsetReadOnly();
 	f.create();
 	f.close();
 
@@ -79,6 +80,7 @@ void NXFileTest::testOpen(){
 	f.create();
 	f.close();
 	CPPUNIT_ASSERT_NO_THROW(f.open());
+	f.close();
 
 }
 
@@ -112,6 +114,7 @@ void NXFileTest::testAttributes(){
 	CPPUNIT_ASSERT(_read_scalar_attr == _read_scalar_attr);
 	CPPUNIT_ASSERT(_read_array_attr == _write_array_attr);
 	CPPUNIT_ASSERT(_write_cmplx_scalar == _read_cmplx_scalar);
+	f.close();
 }
 
 void NXFileTest::testAttributeExceptions(){

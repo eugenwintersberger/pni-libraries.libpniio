@@ -149,6 +149,22 @@ std::ostream &operator<<(std::ostream &o,const H5PropertyListError &e){
 	return e.print(o);
 }
 
+H5FilterError::H5FilterError():H5Exception("H5FilterError"){
+
+}
+
+H5FilterError::H5FilterError(const String &i,const String &d)
+			  :H5Exception("H5FilterError",i,d){
+}
+
+H5FilterError::~H5FilterError(){
+
+}
+
+std::ostream &operator<<(std::ostream &o,const H5FilterError &e){
+	return e.print(o);
+}
+
 //end of namespace
 }
 }

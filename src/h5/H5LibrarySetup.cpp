@@ -15,6 +15,7 @@ namespace h5 {
 
 H5LibrarySetup::H5LibrarySetup() {
 	H5open();
+	H5Eset_auto2(H5E_DEFAULT,0,NULL);
 	H5get_libversion(&_major_version_number,&_minor_version_number,&_release_number);
 
 	//register custom filters to the library

@@ -7,7 +7,7 @@
 
 #include <pni/utils/Exceptions.hpp>
 
-#include "filters/lzf_filter.h"
+
 #include "H5Filter.hpp"
 
 namespace pni {
@@ -37,7 +37,6 @@ H5Filter &H5Filter::operator=(const H5Filter &f){
 }
 
 void H5Filter::setup(hid_t id){
-	H5Pset_filter(id, H5PY_FILTER_LZF, H5Z_FLAG_OPTIONAL, 0, NULL);
 }
 
 

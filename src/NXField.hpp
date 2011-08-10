@@ -26,10 +26,11 @@ namespace nx{
 template<typename Imp>
 class NXField:public NXObject<Imp> {
 private:
-	NXField(const NXField<Imp> &);
+
 public:
 	typedef boost::shared_ptr<NXField<Imp> > sptr;
 	NXField();
+	NXField(const NXField<Imp> &);
 	virtual ~NXField();
 
 	NXField<Imp> &operator=(const NXField<Imp> &);
@@ -104,18 +105,16 @@ NXField<Imp>::NXField() {
 
 }
 
-template<typename Imp>
-NXField<Imp>::NXField(const NXField<Imp> &o){
+template<typename Imp> NXField<Imp>::NXField(const NXField<Imp> &o){
 	this->_imp = o._imp;
 }
 
-template<typename Imp>
-NXField<Imp>::~NXField() {
+template<typename Imp> NXField<Imp>::~NXField() {
 	// TODO Auto-generated destructor stub
+	close();
 }
 
-template<typename Imp>
-NXField<Imp> &NXField<Imp>::operator=(const NXField<Imp> &o){
+template<typename Imp> NXField<Imp> &NXField<Imp>::operator=(const NXField<Imp> &o){
 	if( this != &o){
 		this->_imp = o._imp;
 	}

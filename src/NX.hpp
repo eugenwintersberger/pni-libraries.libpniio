@@ -21,16 +21,19 @@
 #include "h5/H5Exceptions.hpp"
 #include "h5/H5LibrarySetup.hpp"
 #include "h5/H5Filter.hpp"
+#include "h5/H5LZFFilter.hpp"
+#include "h5/H5DeflateFilter.hpp"
 
 namespace pni{
 namespace nx{
 namespace h5{
 
-typedef nx::NXObject<NXObjectH5Implementation> NXObject;
-typedef nx::NXFile<NXFileH5Implementation> NXFile;
-typedef nx::NXGroup<NXGroupH5Implementation> NXGroup;
-typedef nx::NXField<NXFieldH5Implementation> NXField;
-typedef nx::NXFilter<H5Filter> NXLZFFilter;
+typedef pni::nx::NXObject<NXObjectH5Implementation> NXObject;
+typedef pni::nx::NXFile<NXFileH5Implementation> NXFile;
+typedef pni::nx::NXGroup<NXGroupH5Implementation> NXGroup;
+typedef pni::nx::NXField<NXFieldH5Implementation> NXField;
+typedef pni::nx::NXFilter<H5LZFFilter> NXLZFFilter;
+typedef pni::nx::NXFilter<H5DeflateFilter> NXDeflateFilter;
 
 }
 }

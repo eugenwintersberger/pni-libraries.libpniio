@@ -10,9 +10,12 @@
 
 #include <pni/utils/PNITypes.hpp>
 #include <pni/utils/ArrayShape.hpp>
+#include <pni/utils/Exceptions.hpp>
 
 #include "NXObjectH5Implementation.hpp"
 #include "NXFieldH5Implementation.hpp"
+#include "H5Exceptions.hpp"
+#include "../NXFilter.hpp"
 
 using namespace pni::utils;
 
@@ -38,35 +41,59 @@ public:
 	//! assignment operator
 	NXGroupH5Implementation &operator=(const NXGroupH5Implementation &o);
 
-	//! create a group
+	//! create a new group below this group
 	virtual void createGroup(const char *n, NXGroupH5Implementation &imp);
-	//! open a group
+	//! open a new group belonging to this group
 	virtual void openGroup(const char *n, NXGroupH5Implementation &imp);
 	//! create a field
-	virtual void createField(const char *n, PNITypeID tid, const ArrayShape &s,
-			                 NXFieldH5Implementation &imp);
+
 	//! create a field
-	virtual void createField(const char *n,PNITypeID tid,
-			                 const ArrayShape::sptr s,
-			                 NXFieldH5Implementation &imp);
-	//! create a field
-	virtual void createField(const char *n, PNITypeID tid, UInt32 rank,
-			                 const UInt32 *dims, NXFieldH5Implementation &imp);
+	void createField(const char *n, PNITypeID tid, UInt32 rank,
+			         const UInt32 *dims, NXFieldH5Implementation &imp);
+	template<typename Filter>
+	void createField(const char *n, PNITypeID tid, UInt32 rank,
+				     const UInt32 *dims, NXFieldH5Implementation &imp,
+				     pni::nx::NXFilter<Filter> &f);
 	//! method to create a field for a single scalar value
-	virtual void createField(const char *n,PNITypeID,
-			                 NXFieldH5Implementation &imp);
+	void createField(const char *n,PNITypeID,NXFieldH5Implementation &imp);
 	//! create a field to store string data
-	virtual void createStringField(const char *n,UInt64 size,
-			                       NXFieldH5Implementation &imp);
+	void createField(const char *n,UInt64 size,NXFieldH5Implementation &imp);
 	//! open an existing field
 	virtual void openField(const char *n,NXFieldH5Implementation &imp);
-	void close();
+	virtual void createLink(const String &s,const String &d);
+	//close a group implementation object
+	virtual void close();
 
+	//create a group implementation object
 	virtual void create(const String &name);
+	//open a group implementation object
 	virtual void open(const String &name);
 
 };
 
+template<typename Filter>
+void NXGroupH5Implementation::createField(const char *n, PNITypeID tid,
+		                                  UInt32 rank, const UInt32 *dims,
+			                              NXFieldH5Implementation &imp,
+			                              pni::nx::NXFilter<Filter> &f){
+	EXCEPTION_SETUP("void NXGroupH5Implementation::createField(const char *n, "
+			        "PNITypeID tid,UInt32 rank, const UInt32 *dims,"
+			        "NXFieldH5Implementation &imp)");
+
+	try{
+		imp.setParent(_id);
+		imp.setDataSpace(rank,dims);
+		imp.setDataType(tid);
+		imp.setChunkedLayout();
+		imp.setChunkSize(rank,dims);
+		imp.setShuffle();
+		imp.setFilter(f);
+		imp.create(String(n));
+	}catch(...){
+		EXCEPTION_INIT(H5DataSetError,"Error creating array data-set ["+String(n)+"]");
+		EXCEPTION_THROW();
+	}
+}
 
 
 

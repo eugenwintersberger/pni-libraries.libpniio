@@ -63,7 +63,7 @@ public:
 	//! set the split size
 	virtual void setSplitSize(UInt64 ssize);
 	//! get the split size
-	virtual pni::utils::UInt64 getSplitSize() const;
+	virtual UInt64 getSplitSize() const;
 
 	//! create a new file
 
@@ -89,6 +89,7 @@ template<typename Imp> NXFile<Imp>::NXFile():NXGroup<Imp>() {
 }
 
 template<typename Imp> NXFile<Imp>::~NXFile() {
+	this->_imp.close();
 }
 
 template<typename Imp> void NXFile<Imp>::setFileName(const String &n){
@@ -131,6 +132,7 @@ template<typename Imp>  UInt64 NXFile<Imp>::getSplitSize() const{
 	return _split_size;
 }
 
+//create a new Nexus file
 template<typename Imp> void NXFile<Imp>::create(){
 	this->_imp.create(_fname.c_str(),_overwrite);
 }

@@ -24,18 +24,19 @@ namespace h5{
 class NXFileH5Implementation:public NXGroupH5Implementation {
 private:
 	NXFileH5Implementation(const NXFileH5Implementation &){}
+	NXFileH5Implementation &operator=(const NXFileH5Implementation &){
+		return *this;
+	}
 protected:
 	hid_t _create_plist; //!< property list for file creation
 	hid_t _acc_plist;    //!< property list for file access
-	//hid_t _fid;           //!< ID of the file
-
 public:
 	NXFileH5Implementation();
 	virtual ~NXFileH5Implementation();
 
-	void open(const char *n,bool overwrite);
-	void create(const char *n,bool overwrite);
-	void close();
+	virtual void open(const char *n,bool overwrite);
+	virtual void create(const char *n,bool overwrite);
+	virtual void close();
 	void flush();
 };
 

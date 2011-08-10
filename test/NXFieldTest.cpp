@@ -12,7 +12,7 @@
 #include "NX.hpp"
 #include "NXExceptions.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(NXFieldTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(NXFieldTest);
 
 void NXFieldTest::setUp(){
 	_fname = "test.1.h5";
@@ -59,7 +59,7 @@ void NXFieldTest::tearDown(){
 }
 
 void NXFieldTest::testCreation(){
-	NXGroup g = *_f.createGroup("data");
+	NXGroup g = _f.createGroup("data");
 	NXField dset;
 	UInt32 dims[2];
 	dims[0] = 1024;
@@ -68,32 +68,32 @@ void NXFieldTest::testCreation(){
 	_f64_data_array_read.allocate();
 
 	//creating data fields for saving arrays
-	CPPUNIT_ASSERT_NO_THROW(dset = *_f.createField("field_1",FLOAT64,2,dims));
-	CPPUNIT_ASSERT_NO_THROW(dset = *_f.createField("field_2",COMPLEX128,_data_shape));
-	CPPUNIT_ASSERT_NO_THROW(dset = *_f.createField("field_3",_f64_data_array_read));
+	CPPUNIT_ASSERT_NO_THROW(dset = _f.createField("field_1",FLOAT64,2,dims));
+	CPPUNIT_ASSERT_NO_THROW(dset = _f.createField("field_2",COMPLEX128,_data_shape));
+	CPPUNIT_ASSERT_NO_THROW(dset = _f.createField("field_3",_f64_data_array_read));
 
 	//creating data fields for saving scalars
-	CPPUNIT_ASSERT_NO_THROW(dset = *_f.createField("field_4",COMPLEX64));
-	CPPUNIT_ASSERT_NO_THROW(dset = *_f.createField("field_5",_write_cmplx_scalar));
+	CPPUNIT_ASSERT_NO_THROW(dset = _f.createField("field_4",COMPLEX64));
+	CPPUNIT_ASSERT_NO_THROW(dset = _f.createField("field_5",_write_cmplx_scalar));
 
 	//creating data fields for saving strings
 	String str = "hello world!";
-	dset = *_f.createField("field_6",str);
+	dset = _f.createField("field_6",str);
 
 
 	//try now everything with a group as a generating object
 
 	//creating data fields for saving arrays
-	dset = *g.createField("field_1",FLOAT64,2,dims);
-	dset = *g.createField("field_2",COMPLEX128,_data_shape);
-	dset = *g.createField("field_3",_f64_data_array_read);
+	dset = g.createField("field_1",FLOAT64,2,dims);
+	dset = g.createField("field_2",COMPLEX128,_data_shape);
+	dset = g.createField("field_3",_f64_data_array_read);
 
 	//creating data fields for saving scalars
-	dset = *g.createField("field_4",COMPLEX64);
-	dset = *g.createField("field_5",_write_cmplx_scalar);
+	dset = g.createField("field_4",COMPLEX64);
+	dset = g.createField("field_5",_write_cmplx_scalar);
 
 	//creating data fields for saving strings
-	dset = *g.createField("field_6",str);
+	dset = g.createField("field_6",str);
 	CPPUNIT_ASSERT_THROW(g.createField("subdir/field_1",str),H5DataSetError);
 
 
@@ -120,24 +120,24 @@ void NXFieldTest::testWriteData(){
 
 	_f64_data_array_write = 1.2;
 	//creating data fields for saving arrays
-	dset = *_f.createField("field_1",FLOAT64,2,dims);
+	dset = _f.createField("field_1",FLOAT64,2,dims);
 	dset.write(_f64_data_array_write);
 
-	dset = *_f.createField("field_2",FLOAT64,_data_shape);
+	dset = _f.createField("field_2",FLOAT64,_data_shape);
 	_f64_data_array_write = 2.234e-12;
 	dset.write(_f64_data_array_write);
 
-	dset = *_f.createField("field_3",_f64_data_array_write);
+	dset = _f.createField("field_3",_f64_data_array_write);
 	_f64_data_array_write = 2.451e+12;
 	dset.write(_f64_data_array_write);
 
 	//writing scalar data
-	dset = *_f.createField("field_4",_write_cmplx_scalar);
+	dset = _f.createField("field_4",_write_cmplx_scalar);
 	dset.write(_write_cmplx_scalar);
 
 	//write string data
 	String s = "hello world this is a text";
-	dset = *_f.createField("field_5",s);
+	dset = _f.createField("field_5",s);
 	dset.write(s);
 }
 
@@ -151,10 +151,10 @@ void NXFieldTest::testWriteDataExceptions(){
 	_f64_data_array_write = 1.2;
 	//-------------------testing exceptions for array data---------------------
 	//creating data fields for saving arrays
-	dset = *_f.createField("field_1",INT64,2,dims);
+	dset = _f.createField("field_1",INT64,2,dims);
 	CPPUNIT_ASSERT_THROW(dset.write(_f64_data_array_write),TypeError);
 
-	dset = *_f.createField("field_2",FLOAT64,2,dims);
+	dset = _f.createField("field_2",FLOAT64,2,dims);
 	CPPUNIT_ASSERT_THROW(dset.write(_f64_data_array_write),ShapeMissmatchError);
 	CPPUNIT_ASSERT_THROW(dset.write(s),pni::nx::NXFieldError);
 	CPPUNIT_ASSERT_THROW(dset.write(_write_cmplx_scalar),pni::nx::NXFieldError);
@@ -162,13 +162,13 @@ void NXFieldTest::testWriteDataExceptions(){
 
 
 	//------------------testing exceptions for scalar data---------------------
-	dset = *_f.createField("field_3",FLOAT64);
+	dset = _f.createField("field_3",FLOAT64);
 	CPPUNIT_ASSERT_THROW(dset.write(_write_cmplx_scalar),TypeError);
 	CPPUNIT_ASSERT_THROW(dset.write(_f64_data_array_write),pni::nx::NXFieldError);
 	CPPUNIT_ASSERT_THROW(dset.write(s),pni::nx::NXFieldError);
 
 	//-------------------testing exceptions for string data--------------------
-	dset = *_f.createField("field_4",s);
+	dset = _f.createField("field_4",s);
 	CPPUNIT_ASSERT_THROW(dset.write(_write_cmplx_scalar),pni::nx::NXFieldError);
 	CPPUNIT_ASSERT_THROW(dset.write(_f64_data_array_write),pni::nx::NXFieldError);
 	String s2 = "hello";
@@ -185,7 +185,7 @@ void NXFieldTest::testReadData(){
 
 	_f64_data_array_write = 1.2;
 	//creating data fields for saving arrays
-	dset = *_f.createField("field_1",FLOAT64,2,dims);
+	dset = _f.createField("field_1",FLOAT64,2,dims);
 	dset.write(_f64_data_array_write);
 
 	Float64Array reader;
@@ -194,14 +194,14 @@ void NXFieldTest::testReadData(){
 	CPPUNIT_ASSERT_NO_THROW(dset.read(reader2));
 
 	//writing scalar data
-	dset = *_f.createField("field_2",_write_cmplx_scalar);
+	dset = _f.createField("field_2",_write_cmplx_scalar);
 	dset.write(_write_cmplx_scalar);
 	Complex64Scalar scalar;
 	CPPUNIT_ASSERT_NO_THROW(dset.read(scalar));
 
 	//write string data
 	s = "hello world this is a text";
-	dset = *_f.createField("field_3",s);
+	dset = _f.createField("field_3",s);
 	String s2;
 	dset.write(s);
 	CPPUNIT_ASSERT_NO_THROW(dset.read(s2));
@@ -217,7 +217,7 @@ void NXFieldTest::testReadDataExceptions(){
 
 	_f64_data_array_write = 1.2;
 	//creating data fields for saving arrays
-	dset = *_f.createField("field_1",FLOAT64,2,dims);
+	dset = _f.createField("field_1",FLOAT64,2,dims);
 	dset.write(_f64_data_array_write);
 
 	Int64Array reader;
@@ -225,7 +225,7 @@ void NXFieldTest::testReadDataExceptions(){
 	CPPUNIT_ASSERT_THROW(dset.read(s),pni::nx::NXFieldError);
 
 	//writing scalar data
-	dset = *_f.createField("field_2",_write_cmplx_scalar);
+	dset = _f.createField("field_2",_write_cmplx_scalar);
 	dset.write(_write_cmplx_scalar);
 	Int64Scalar scalar;
 	CPPUNIT_ASSERT_THROW(dset.read(scalar),TypeError);
@@ -233,7 +233,7 @@ void NXFieldTest::testReadDataExceptions(){
 
 	//write string data
 	s = "hello world this is a text";
-	dset = *_f.createField("field_3",s);
+	dset = _f.createField("field_3",s);
 	dset.write(s);
 	CPPUNIT_ASSERT_THROW(dset.read(_f64_data_array_write),pni::nx::NXFieldError);
 }
@@ -241,7 +241,7 @@ void NXFieldTest::testReadDataExceptions(){
 void NXFieldTest::testAttributes(){
 	NXField f;
 
-	f = *_f.createField("data",FLOAT64,_data_shape);
+	f = _f.createField("data",FLOAT64,_data_shape);
 
 	//write attribute data
 	f.setAttribute("StringAttribute",_write_str_attr);
@@ -268,7 +268,7 @@ void NXFieldTest::testAttributes(){
 void NXFieldTest::testAttributeExceptions(){
 	NXField f;
 
-	f = *_f.createField("data",FLOAT32,_data_shape);
+	f = _f.createField("data",FLOAT32,_data_shape);
 
 	//write attribute data
 	f.setAttribute("StringAttribute",_write_str_attr);

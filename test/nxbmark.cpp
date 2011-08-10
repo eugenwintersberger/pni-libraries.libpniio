@@ -28,6 +28,10 @@ int main(int argc,char **argv){
 	UInt64 i,runs;
 	String fname;
 	std::ostringstream fnstream;
+	NXLZFFilter lzf;
+	NXDeflateFilter deflate;
+
+	deflate.setCompressionRate(5);
 
 	ArrayShape s;
 	Int32Array a;
@@ -47,7 +51,7 @@ int main(int argc,char **argv){
 	runs = 500;
 	for(i=0;i<runs;i++){
 		fnstream<<"run_"<<i;
-		d = *f.createField(fnstream.str(),a);
+		d = f.createField(fnstream.str(),a,deflate);
 		d.write(a);
 		d.close();
 		fnstream.seekp(0);

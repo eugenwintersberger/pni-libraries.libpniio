@@ -101,6 +101,15 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const H5PropertyListError &e);
 };
 
+class H5FilterError:public H5Exception{
+public:
+	H5FilterError();
+	H5FilterError(const String &i,const String &d);
+	virtual ~H5FilterError();
+
+	friend std::ostream &operator<<(std::ostream &o,const H5FilterError &e);
+};
+
 //end of namespace
 }
 }

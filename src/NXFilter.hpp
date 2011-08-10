@@ -18,28 +18,29 @@ namespace pni{
 namespace nx{
 
 
-template<typename Imp>
-class NXFilter:public Imp{
+template<typename Filter>
+class NXFilter:public Filter{
 public:
 	NXFilter();
-	NXFilter(const NXFilter &f);
+	NXFilter(const NXFilter<Filter> &f);
 	virtual ~NXFilter();
 
-	NXFilter &operator=(const NXFilter &f);
+	NXFilter<Filter> &operator=(const NXFilter<Filter> &f);
 };
 
-template<typename Imp> NXFilter<Imp>::NXFilter():Imp(){
+template<typename Filter> NXFilter<Filter>::NXFilter():Filter(){
 }
 
-template<typename Imp> NXFilter<Imp>::NXFilter(const NXFilter &o){
+template<typename Filter> NXFilter<Filter>::NXFilter(const NXFilter<Filter> &o){
+	Filter::Filter(o);
 }
 
-template<typename Imp> NXFilter<Imp>::~NXFilter(){
+template<typename Filter> NXFilter<Filter>::~NXFilter(){
 
 }
 
-template<typename Imp>
-NXFilter<Imp> &NXFilter<Imp>::operator=(const NXFilter<Imp> &f){
+template<typename Filter>
+NXFilter<Filter> &NXFilter<Filter>::operator=(const NXFilter<Filter> &f){
 	if ( this != &f){
 
 	}
