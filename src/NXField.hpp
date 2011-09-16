@@ -52,11 +52,8 @@ public:
 
 	//need a function here to get an array rank from a field
 	virtual void getShape(ArrayShape &s) const{
-		UInt32 *dims;
 		s.setRank(this->_imp.getRank());
-		dims = this->_imp.getDimensions();
-		s.setDimensions(dims);
-		delete [] dims;
+		for(UInt64 i=0;i<s.getRank();i++) s.setDimension(i,this->_imp.getDimension(i));
 	}
 
 	//get the type ID
@@ -139,13 +136,13 @@ template<typename Imp> void NXField<Imp>::write(ArrayObject &a){
 	}
 
 	//have to do here some checking
-	if(*(a.getShape())!=s){
+	if(a.getShape()!=s){
 		EXCEPTION_INIT(ShapeMissmatchError,"Array and field shape do not match!");
 		EXCEPTION_THROW();
 	}
 
 	try{
-		this->_imp.write(a.getBuffer()->getVoidPtr());
+		this->_imp.write(a.getBuffer().getVoidPtr());
 	}catch(...){
 		EXCEPTION_INIT(NXFieldError,"Error writing array data to field ["+getName()+"]!");
 		EXCEPTION_THROW();
@@ -227,7 +224,7 @@ template<typename Imp> void NXField<Imp>::read(ArrayObject &a) const{
 
 	//the shape of the target array and that of the field
 	if(a.getShape()){
-		if(s != *(a.getShape())){
+		if(s != a.getShape()){
 			a.setShape(s);
 			a.allocate();
 		}
@@ -237,7 +234,7 @@ template<typename Imp> void NXField<Imp>::read(ArrayObject &a) const{
 	}
 
 	try{
-		this->_imp.read(a.getBuffer()->getVoidPtr());
+		this->_imp.read(a.getBuffer().getVoidPtr());
 	}catch(...){
 		EXCEPTION_INIT(NXFieldError,"Cannot read array data from field ["+this->_imp.getName()+"]!");
 		EXCEPTION_THROW();

@@ -10,6 +10,8 @@
 #include "H5Exceptions.hpp"
 #include "H5Utilities.hpp"
 
+#include <pni/utils/Exceptions.hpp>
+
 namespace pni{
 namespace nx{
 namespace h5{
@@ -94,7 +96,7 @@ void NXObjectH5Implementation::setAttribute(const char *n,ArrayObject &a){
 	EXCEPTION_SETUP("void NXObjectH5Implementation::setAttribute(const char *n,ArrayObject &a)");
 	hid_t tid;   //id of the data type
 	hid_t setid; //id of the data set
-	ArrayShape &s = *(a.getShape());
+	const ArrayShape &s = a.getShape();
 
 	//determine the data type of the array object
 	tid = H5TFactory.getTypeFromID(a.getTypeID());
@@ -104,7 +106,7 @@ void NXObjectH5Implementation::setAttribute(const char *n,ArrayObject &a){
 
 	//create the attribute and write the data
 	try{
-		_create_and_write_attribute(_id,n,tid,setid,a.getBuffer()->getVoidPtr());
+		_create_and_write_attribute(_id,n,tid,setid,a.getBuffer().getVoidPtr());
 	}catch(...){
 		EXCEPTION_INIT(H5AttributeError,"Cannot create and write attribute "+String(n)+"!");
 		EXCEPTION_THROW();

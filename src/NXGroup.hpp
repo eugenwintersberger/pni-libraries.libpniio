@@ -72,20 +72,7 @@ public:
 	NXField<FImp> createField(const String &n, PNITypeID tid,
 				                       const ArrayShape &s,
 				                       NXFilter<Filter> &f);
-	//! create a field for array data with ArrayShape
 
-	//! Create a data field using a shared pointer to an ArrayShape object
-	//! (this is
-	//! what is returned by ArrayObject::getShape() method.
-	//! \param n name of the field as String object
-	//! \param tid PNI type code of the data type
-	//! \param s shared pointer ot a ArrayShape object
-	NXField<FImp> createField(const String &n, PNITypeID tid,
-			                    	     const ArrayShape::sptr s);
-
-	template<typename Filter>
-	NXField<FImp> createField(const String &n, PNITypeID tid,const ArrayShape::sptr s,
-				              NXFilter<Filter> &f);
 
 	//! create a field for array data from an ArrayObject
 
@@ -237,25 +224,11 @@ NXField<typename NXGroup<Imp>::FImp > NXGroup<Imp>::createField(const String &n,
 
 template<typename Imp>
 NXField<typename NXGroup<Imp>::FImp >
-NXGroup<Imp>::createField(const String &n,PNITypeID tid,const ArrayShape::sptr s){
-
-	return createField(n,tid,s->getRank(),s->getDimensions());
-}
-
-template<typename Imp>
-template<typename Filter>
-NXField<typename NXGroup<Imp>::FImp >
-NXGroup<Imp>::createField(const String &n,PNITypeID tid,const ArrayShape::sptr s,
-						  NXFilter<Filter> &f){
-
-	return createField(n,tid,s->getRank(),s->getDimensions(),f);
-}
-
-template<typename Imp>
-NXField<typename NXGroup<Imp>::FImp >
 NXGroup<Imp>::createField(const String &n,PNITypeID tid,const ArrayShape &s){
+	UInt64 dims[s.getRank()];
+	for(UInt64 i=0;i<s.getRank();i++) dims[i] = s[i];
 
-	return createField(n,tid,s.getRank(),s.getDimensions());
+	return createField(n,tid,s.getRank(),dims);
 }
 
 template<typename Imp>
@@ -263,8 +236,11 @@ template<typename Filter>
 NXField<typename NXGroup<Imp>::FImp >
 NXGroup<Imp>::createField(const String &n,PNITypeID tid,
 		                  const ArrayShape &s,NXFilter<Filter> &f){
+	UInt64 dims[s.getRank()];
 
-	return createField(n,tid,s.getRank(),s.getDimensions(),f);
+	for(UInt32 i=0;i<s.getRank();i++) dims[i] = s[i];
+
+	return createField(n,tid,s.getRank(),dims,f);
 }
 
 template<typename Imp>
