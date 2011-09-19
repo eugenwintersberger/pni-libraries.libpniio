@@ -32,6 +32,11 @@ protected:
 	hid_t _type_id;	       //!< ID of the data type
 	hid_t _space_id;       //!< ID of the data space
 	hid_t _creation_plist; //!< ID creation property list
+
+	//some member attributes for selections
+	hsize_t *_offset;
+	hsize_t *_stride;
+	hsize_t *_count;
 public:
 	typedef boost::shared_ptr<NXFieldH5Implementation> sptr;
 	//! default constructor
@@ -45,13 +50,18 @@ public:
 	//setup chunk for the array
 	void setChunkedLayout();
 	void setChunkSize(UInt32 rank,const UInt32 *dims);
+	void setChunkSize(const ArrayShape &s);
 
 	//setup the dataspace
 	void setDataSpace(UInt32 rank,const UInt32 *dims);
+	//set array data space
+	void setDataSpace(const ArrayShape &s);
+	//set scalar data space
 	void setDataSpace();
 
-	//setup the data type
+	//setup the data type for PNITypes
 	void setDataType(PNITypeID id);
+	//setup the data type for strings
 	void setDataType(UInt64 size);
 
 	template<typename Imp> void setFilter(pni::nx::NXFilter<Imp> &f){
@@ -61,6 +71,9 @@ public:
 	void setShuffle(){
 		H5Pset_shuffle(_creation_plist);
 	}
+
+	void setSelection(const Selection &s);
+	void resetSelection();
 
 	virtual UInt32 getRank() const;
 	virtual UInt32 getDimension(UInt32 i) const;

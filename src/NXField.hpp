@@ -76,7 +76,9 @@ public:
 
 	//need methods to access data stored in the field
 	void write(ArrayObject::sptr a);
+	void write(ArrayObject::sptr a,const Selection &s);
 	void write(ArrayObject &a);
+	void write(ArrayObject &a,const Selection &s);
 	void write(ScalarObject &s);
 	void write(ScalarObject::sptr s);
 	void write(String &s);
@@ -84,7 +86,9 @@ public:
 
 	//need methods to write data to the field
 	void read(ArrayObject::sptr a) const;
+	void read(ArrayObject::sptr a,const Selection &s);
 	void read(ArrayObject &a) const;
+	void read(ArrayObject &a,const Selection &s);
 	void read(ScalarObject::sptr s) const;
 	void read(ScalarObject &s) const;
 	void read(String &s) const;

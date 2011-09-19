@@ -30,6 +30,7 @@ private:
 	NXFile(const NXFile &o){}
 	// nor can it be assigned
 	NXFile &operator=(const NXFile &){return *this;}
+	void _set_nexus_attributes();
 protected:
 	bool _read_only;    //!< open the file in read only mode (default is appending)
 	bool _overwrite;    //!< create a new file even if one with the same name already exists
@@ -44,7 +45,7 @@ public:
 	//! set the name of the file
 	virtual void setFileName(const String &n);
 	//! get the name of the file
-	virtual pni::utils::String getFileName() const;
+	virtual String getFileName() const;
 
 	//! returns true if the file is in read only mode
 	virtual bool isReadOnly() const;
@@ -76,9 +77,12 @@ public:
 	virtual void open();
 	//! closes the file
 	virtual void close();
-
+	//! flush the file
 	virtual void flush();
 
+	//===================Nexus specific functions==============================
+	void createNXentry(const String n);
+	void openNXentry(const String n);
 
 };
 

@@ -165,6 +165,10 @@ std::ostream &operator<<(std::ostream &o,const H5FilterError &e){
 	return e.print(o);
 }
 
+std::ostream &operator<<(std::ostream &o,const H5ObjectError &e){
+	return e.print(o);
+}
+
 //end of namespace
 }
 }

@@ -20,12 +20,21 @@ extern "C" {
 
 #include "H5TypeFactory.hpp"
 #include "../NXImpCode.hpp"
+#include "../NXTypes.hpp"
 
 namespace pni{
 namespace nx{
 namespace h5{
 
+
 using namespace pni::utils;
+//! \ingroup HDF5 Implementation
+//! \brief Implementation of an NXObject
+
+//! This object basically implements the basic functionality of an NXObject.
+//! You can
+//! - set and get attributes
+//! - and obtain the name of an object
 
 class NXObjectH5Implementation {
 private:
@@ -35,10 +44,18 @@ private:
 			             hid_t &space_id);
 	//! copy constructor
 	NXObjectH5Implementation(const NXObjectH5Implementation &o){}
+
+	hid_t  _id;    //!< handler of the object this class referes too
 protected:
-	hid_t  _id;    //!< ID of the object this class referes too
-	hid_t  _pid;   //!< ID of the parent object owning this object
-	//String _name;  //!< the name of the object
+	hid_t getId(){
+		return _id;
+	}
+
+	void setId(hid_t id){
+		if(H5Iis_valid(_id)) H5Idec_ref(_id);
+		_id = id;
+	}
+
 public:
 	typedef boost::shared_ptr<NXObjectH5Implementation> sptr;
 	static const ImpCodes IMPCODE = HDF5;
@@ -65,14 +82,16 @@ public:
 	//! read attribute data to a String object
 	void getAttribute(const char *n,String &s);
 
+	//! get object name
 	virtual String getName() const;
-	virtual void setParent(hid_t id);
-	virtual hid_t getParent() const;
-	virtual void create(const String &n){
-	}
-	virtual void open(const String &n){
-
-	}
+	//! open a child object
+	virtual void open(const String &n,NXObjectH5Implementation &o);
+	//! close the object
+	virtual void close();
+	//! check if open
+	virtual bool isOpen() const;
+	//! return the object class
+	virtual pni::nx::NXObjectClass getObjectClass() const;
 };
 
 

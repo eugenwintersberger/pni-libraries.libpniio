@@ -28,8 +28,6 @@ class NXGroupH5Implementation:public NXObjectH5Implementation {
 private:
 	//! copy constructor
 	NXGroupH5Implementation(const NXGroupH5Implementation &o){}
-protected:
-	hid_t _gcreate_plist;
 public:
 	typedef boost::shared_ptr<NXGroupH5Implementation> sptr;
 	//! default constructor
@@ -63,11 +61,6 @@ public:
 	virtual void createLink(const String &s,const String &d);
 	//close a group implementation object
 	virtual void close();
-
-	//create a group implementation object
-	virtual void create(const String &name);
-	//open a group implementation object
-	virtual void open(const String &name);
 
 };
 

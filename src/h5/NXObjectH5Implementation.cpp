@@ -20,24 +20,32 @@ using namespace pni::utils;
 
 NXObjectH5Implementation::NXObjectH5Implementation() {
 	_id = 0;
-	_pid = 0;
 }
 
 NXObjectH5Implementation::~NXObjectH5Implementation() {
+	//close the handler to the object
+	close();
 }
 
 NXObjectH5Implementation &NXObjectH5Implementation::operator=(const NXObjectH5Implementation &o){
-	//the situation is here slightly different from that of the copy constructor
-	//Here we have two existing objects.
+	EXCEPTION_SETUP("NXObjectH5Implementation &NXObjectH5Implementation::operator=(const NXObjectH5Implementation &o)");
 
 	if(this != &o){
-		//do nothing here.
-
-		//MUST BE IMPLEMENTED BY THE CONCRETE CLASSES
+		if(H5Iis_valid(o._id)){
+			//o has a valid id
+			if(H5Iis_valid(_id)) H5Oclose(_id);
+			_id = o._id;
+			H5Iinc_ref(_id); //increment the reference counter to that ID
+		}else{
+			//o has no valid id
+			if(H5Iis_valid(_id)) H5Oclose(_id);
+			_id = o._id;
+		}
 	}
 
 	return *this;
 }
+
 
 void NXObjectH5Implementation::_create_and_write_attribute(hid_t pid,const char *n,
 		                       hid_t type_id,hid_t space_id,const void *ptr){
@@ -287,15 +295,56 @@ String NXObjectH5Implementation::getName() const{
 	return String("");
 }
 
-void NXObjectH5Implementation::setParent(hid_t id){
-	if(H5Iis_valid(id)){
-		_pid = id;
+pni::nx::NXObjectClass NXObjectH5Implementation::getObjectClass() const{
+	if(H5Iis_valid(_id)){
+		switch(H5Iget_type(_id)){
+		case H5I_FILE: return NXFILE;
+		case H5I_GROUP: return NXGROUP;
+		case H5I_DATASET: return NXFIELD;
+		default: return NXNONE;
+		}
 	}
-	//maybe I should raise an exception here
+
+	return NXNONE;
 }
 
-hid_t NXObjectH5Implementation::getParent() const{
-	return _pid;
+void NXObjectH5Implementation::open(const String &n,NXObjectH5Implementation &o){
+	EXCEPTION_SETUP("void NXObjectH5Implementation::open(const String &n,NXObjectH5Implementation &o)");
+
+	if(!isOpen()){
+		EXCEPTION_INIT(H5ObjectError,"Cannot open object - parent is not open!");
+		EXCEPTION_THROW();
+	}
+
+	if( (getObjectClass() == NXGROUP) || (getObjectClass() == NXFILE) ){
+		//check if the object exists
+
+		if(!H5Lexists(_id,(const char *)n.c_str(),H5P_DEFAULT)){
+			EXCEPTION_INIT(H5ObjectError,"Cannot open object "+n+" -  does not exist!");
+			EXCEPTION_THROW();
+		}
+
+		//have to close the existing object
+		if(o.isOpen()) o.close();
+
+		//open the new object
+		o._id = H5Oopen(_id,n.c_str(),H5P_DEFAULT);
+		if(o._id<0){
+			EXCEPTION_INIT(H5ObjectError,"Error opening object "+n+"!");
+			EXCEPTION_THROW();
+		}
+	}else{
+		EXCEPTION_INIT(H5ObjectError,"Object is not of file or group type!");
+		EXCEPTION_THROW();
+	}
+}
+
+bool NXObjectH5Implementation::isOpen() const {
+	if(H5Iis_valid(_id)) return true;
+}
+
+void NXObjectH5Implementation::close(){
+	if(H5Iis_valid(_id)) H5Oclose(_id);
 }
 
 

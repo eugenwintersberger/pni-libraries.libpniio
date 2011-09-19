@@ -27,9 +27,6 @@ NXGroupH5Implementation::NXGroupH5Implementation()
                         :NXObjectH5Implementation(){
 	EXCEPTION_SETUP("NXGroupH5Implementation::NXGroupH5Implementation()"
 			        ":NXObjectH5Implementation()");
-	_gcreate_plist = 0;
-	_id = 0;
-
 }
 
 NXGroupH5Implementation::~NXGroupH5Implementation() {
@@ -45,22 +42,7 @@ NXGroupH5Implementation::operator=(const NXGroupH5Implementation &o){
 					"NXGroupH5Implementation &o)");
 	if (this != &o){
 		//here we have somehow the same problem as with the copy constructor
-
-		if(H5Iis_valid(o._id)){
-			setParent(o.getParent());
-			try{
-				open(o.getName());
-			}catch(H5GroupError &e){
-				EXCEPTION_INIT(H5GroupError,"Error opening group ["+o.getName()
-						+"] during assignment!");
-				EXCEPTION_THROW();
-			}
-			_gcreate_plist = H5Gget_create_plist(_id);
-			//_name = o._name;
-		}else{
-			_id = 0;
-			_pid = 0;
-		}
+		(NXObjectH5Implementation &)(*this) = (NXObjectH5Implementation &)o;
 	}
 
 	return *this;
@@ -70,61 +52,48 @@ void NXGroupH5Implementation::createGroup(const char *n,
 		NXGroupH5Implementation &imp) {
 	EXCEPTION_SETUP("void NXGroupH5Implementation::createGroup(const char *n,"
 					"NXGroupH5Implementation &imp)");
-	//we have to create a new r
-	imp.setParent(_id);
-	//imp._name = String(n);
 
-	try{
-		imp.create(String(n));
-	}catch(H5GroupError &e){
-		EXCEPTION_INIT(H5GroupError,"Cannot create group ["+String(n)+"]!");
-		EXCEPTION_THROW();
-	}
-}
+	hid_t id = 0;
+	hid_t plist = 0;
 
-void NXGroupH5Implementation::create(const String &n){
-	EXCEPTION_SETUP("void NXGroupH5Implementation::create(const String &n)");
-
-	_gcreate_plist = H5Pcreate(H5P_LINK_CREATE);
-	if(_gcreate_plist<0){
+	//create the property list for the group
+	plist = H5Pcreate(H5P_LINK_CREATE);
+	if(plist<0){
 		EXCEPTION_INIT(H5PropertyListError,"Cannot create group creation property list!");
 		EXCEPTION_THROW();
 	}
 	//create intermediate groups if neccessary
-	H5Pset_create_intermediate_group(_gcreate_plist,1);
+	H5Pset_create_intermediate_group(plist,1);
 
-	_id = H5Gcreate2(_pid, n.c_str(), _gcreate_plist, H5P_DEFAULT, H5P_DEFAULT);
-	if(_id<0){
-		EXCEPTION_INIT(H5GroupError,"Cannot create group "+n+"!");
+	//create the group object in the file
+	id = H5Gcreate2(getId(),n,plist, H5P_DEFAULT, H5P_DEFAULT);
+	if(id<0){
+		EXCEPTION_INIT(H5GroupError,"Cannot create group "+String(n)+"!");
 		EXCEPTION_THROW();
 	}
+
+	//assemble the implementation object
+	imp.setId(id);
+
+	//close the property list
+	H5Pclose(plist);
 }
+
 
 void NXGroupH5Implementation::openGroup(const char *n,
 		                                NXGroupH5Implementation &imp){
 	EXCEPTION_SETUP("void NXGroupH5Implementation::openGroup(const char *n,"
 			        "NXGroupH5Implementation &imp)");
-	imp.setParent(_id);
-	//imp._name = String(n);
-	try{
-		imp.open(String(n));
-	}catch(H5GroupError &e){
-		EXCEPTION_INIT(H5GroupError,"Cannot open group ["+String(n)+"]!");
-		EXCEPTION_THROW();
-	}
 
-}
-
-void NXGroupH5Implementation::open(const String &n){
-	EXCEPTION_SETUP("void NXGroupH5Implementation::open(const String &n)");
-
-	_id = H5Gopen2(_pid,(char *)n.c_str(),H5P_DEFAULT);
-	if(_id<0){
+	hid_t id = 0;
+	id = H5Gopen2(getId(),n,H5P_DEFAULT);
+	if(id<0){
 		EXCEPTION_INIT(H5GroupError,"Cannot open group ["+n+"]!");
 		EXCEPTION_THROW();
 	}
-}
 
+	imp.setId(id);
+}
 
 void NXGroupH5Implementation::openField(const char *n,
 		                                NXFieldH5Implementation &imp){
@@ -194,11 +163,6 @@ void NXGroupH5Implementation::createField(const char *n, UInt64 size,
 	}
 }
 
-
-void NXGroupH5Implementation::close(){
-	if(H5Iis_valid(_gcreate_plist)) H5Pclose(_gcreate_plist);
-	if(H5Iis_valid(_id)) H5Gclose(_id);
-}
 
 void NXGroupH5Implementation::createLink(const String &s,const String &d){
 	String source_file;

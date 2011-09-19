@@ -110,6 +110,22 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const H5FilterError &e);
 };
 
+class H5ObjectError:public H5Exception{
+public:
+	H5ObjectError():H5Exception("H5ObjectError"){
+
+	}
+	H5ObjectError(const String &i,const String &d):H5Exception("H5ObjectError",i,d){
+
+	}
+
+	virtual ~H5ObjectError(){
+
+	}
+
+	friend std::ostream &operator<<(std::ostream &o,const H5ObjectError &e);
+};
+
 //end of namespace
 }
 }
