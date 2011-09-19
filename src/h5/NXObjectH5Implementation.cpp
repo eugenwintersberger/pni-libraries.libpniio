@@ -341,10 +341,18 @@ void NXObjectH5Implementation::open(const String &n,NXObjectH5Implementation &o)
 
 bool NXObjectH5Implementation::isOpen() const {
 	if(H5Iis_valid(_id)) return true;
+	return false;
 }
 
 void NXObjectH5Implementation::close(){
 	if(H5Iis_valid(_id)) H5Oclose(_id);
+}
+
+void NXObjectH5Implementation::create(const String &n,const NXObjectH5Implementation &o){
+	EXCEPTION_SETUP("void NXObjectH5Implementation::create(const String &n,const NXObjectH5Implementation &o)");
+
+	EXCEPTION_INIT(NotImplementedError,"Object creation is not supported by this class!");
+	EXCEPTION_THROW();
 }
 
 

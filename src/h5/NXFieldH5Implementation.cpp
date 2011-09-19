@@ -18,6 +18,8 @@ using namespace pni::nx::h5;
 NXFieldH5Implementation::NXFieldH5Implementation():NXObjectH5Implementation() {
 	_space_id = 0;
 	_type_id = 0;
+	//we can always create a new property list which will be used as a central
+	//storage for all kind of options.
 	_creation_plist = H5Pcreate(H5P_DATASET_CREATE);
 
 	_offset = NULL;
@@ -27,6 +29,10 @@ NXFieldH5Implementation::NXFieldH5Implementation():NXObjectH5Implementation() {
 
 NXFieldH5Implementation::~NXFieldH5Implementation() {
 	close();
+}
+
+void NXFieldH5Implementation::create(const String &n,const NXObjectH5Implementation &o){
+
 }
 
 NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXFieldH5Implementation &o){
@@ -60,46 +66,21 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXFieldH5Imple
 						       "list fom data-set ["+getName()+"]!");
 				EXCEPTION_THROW();
 			}
+		}else{
+			_space_id = 0;
+			_type_id = 0;
+			_creation_plist = o._creation_plist;
 		}
 	}
 
 	return *this;
 }
 
-void NXFieldH5Implementation::open(const String &n){
+void NXFieldH5Implementation::open(const String &n,NXObjectH5Implementation &imp){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::open(const String &n)");
 
-	if(H5Iis_valid(_pid)){
-		_id = H5Dopen2(_pid,(char *)n.c_str(),H5P_DEFAULT);
-		if(_id < 0){
-			EXCEPTION_INIT(H5DataSetError,"Cannot open data-set ["+n+"]!");
-			EXCEPTION_THROW();
-		}
-
-		//now try to get all other information we need
-		_space_id = H5Dget_space(_id);
-		if(_space_id < 0){
-			EXCEPTION_INIT(H5DataSpaceError,"Cannot obtain data-space from "
-					       "data-set ["+n+"]!");
-			EXCEPTION_THROW();
-		}
-
-		_type_id = H5Dget_type(_id);
-		if(_type_id < 0){
-			EXCEPTION_INIT(H5DataTypeError,"Cannot obtain data-type from "
-					       "data-set ["+n+"]!");
-			EXCEPTION_THROW();
-		}
-		_creation_plist = H5Dget_create_plist(_id);
-		if(_creation_plist<0){
-			EXCEPTION_INIT(H5PropertyListError,"Cannot obtain creation property "
-					       "list fom data-set ["+n+"]!");
-			EXCEPTION_THROW();
-		}
-	}else{
-		EXCEPTION_INIT(H5DataSetError,"Parent ID is not a valid HDF5 object!");
-		EXCEPTION_THROW();
-	}
+	EXCEPTION_INIT(NotImplementedError,"You cannot open another object from a field object! ");
+	EXCEPTION_THROW();
 }
 
 void NXFieldH5Implementation::setChunkedLayout(){

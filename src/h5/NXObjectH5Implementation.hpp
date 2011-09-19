@@ -47,14 +47,20 @@ private:
 
 	hid_t  _id;    //!< handler of the object this class referes too
 protected:
-	hid_t getId(){
+	inline hid_t getId(){
 		return _id;
 	}
 
-	void setId(hid_t id){
+	inline void setId(hid_t id){
 		if(H5Iis_valid(_id)) H5Idec_ref(_id);
 		_id = id;
 	}
+
+	//! create an object
+
+	//! \param n name of the object
+	//! \param o parent object
+	virtual void create(const String &n,const NXObjectH5Implementation &o);
 
 public:
 	typedef boost::shared_ptr<NXObjectH5Implementation> sptr;
@@ -92,6 +98,7 @@ public:
 	virtual bool isOpen() const;
 	//! return the object class
 	virtual pni::nx::NXObjectClass getObjectClass() const;
+
 };
 
 

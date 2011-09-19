@@ -28,6 +28,8 @@ class NXGroupH5Implementation:public NXObjectH5Implementation {
 private:
 	//! copy constructor
 	NXGroupH5Implementation(const NXGroupH5Implementation &o){}
+protected:
+	virtual void create(const String &n,const NXObjectH5Implementation &o);
 public:
 	typedef boost::shared_ptr<NXGroupH5Implementation> sptr;
 	//! default constructor

@@ -24,6 +24,15 @@ namespace h5{
 
 class NXGroupH5Implementation;
 
+//! \ingroup HDF5 implementation
+//! \brief HDF5 implementation of a NXField object
+
+//! This class provides an interface to an HDF5 dataset structure.
+//! While a group object can be easily constructed during instantiation,
+//! a data set object cannot. There are a lot of things that must be set up
+//! at runtime before object construction is finished.
+
+
 class NXFieldH5Implementation : public NXObjectH5Implementation{
 private:
 	//! copy constructor
@@ -33,10 +42,16 @@ protected:
 	hid_t _space_id;       //!< ID of the data space
 	hid_t _creation_plist; //!< ID creation property list
 
+	//the following tow data spaces are required to make use
+	//of selections
+	hid_t _mem_space; //!< data space in memory
+	hid_t _dsk_space; //!< data space on disk
+
 	//some member attributes for selections
 	hsize_t *_offset;
 	hsize_t *_stride;
 	hsize_t *_count;
+	virtual void create(const String &n,const NXObjectH5Implementation &o);
 public:
 	typedef boost::shared_ptr<NXFieldH5Implementation> sptr;
 	//! default constructor
@@ -98,7 +113,7 @@ public:
 	virtual void create(const String &n);
 
 	//! open a field implementation
-	virtual void open(const String &n);
+	virtual void open(const String &n,NXObjectH5Implementation &imp);
 
 	friend class NXGroupH5Implementation;
 };
