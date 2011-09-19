@@ -55,10 +55,10 @@ public:
 	//! \param rank number of dimensions of the field
 	//! \param dims number of points along each dimension
 	NXField<FImp> createField(const String &n, PNITypeID tid,
-				                       UInt32 rank, const UInt32 dims[]);
+				                       UInt32 rank, const UInt32 *dims);
 	template<typename Filter>
 	NXField<FImp> createField(const String &n, PNITypeID tid,
-            				           UInt32 rank, const UInt32 dims[],
+            				           UInt32 rank, const UInt32 *dims,
             						   NXFilter<Filter> &f);
 	//! create a field for array data using an ArrayShape
 
@@ -202,7 +202,7 @@ NXGroup<typename NXGroup<Imp>::GImp > NXGroup<Imp>::openGroup(const String &n){
 //================Methods for opening and creating fields======================
 template<typename Imp>
 NXField<typename NXGroup<Imp>::FImp > NXGroup<Imp>::createField(const String &n,
-									  PNITypeID tid,UInt32 rank, const UInt32 dims[]){
+									  PNITypeID tid,UInt32 rank, const UInt32 *dims){
 
 	NXField<FImp> field;
 
@@ -214,7 +214,7 @@ NXField<typename NXGroup<Imp>::FImp > NXGroup<Imp>::createField(const String &n,
 template<typename Imp>
 template<typename Filter>
 NXField<typename NXGroup<Imp>::FImp > NXGroup<Imp>::createField(const String &n,
-							          PNITypeID tid,UInt32 rank, const UInt32 dims[],NXFilter<Filter> &f){
+							          PNITypeID tid,UInt32 rank, const UInt32 *dims,NXFilter<Filter> &f){
 
 	NXField<FImp> field;
 	this->_imp.createField(n.c_str(),tid,rank,dims,field.getImplementation(),f);
@@ -225,10 +225,12 @@ NXField<typename NXGroup<Imp>::FImp > NXGroup<Imp>::createField(const String &n,
 template<typename Imp>
 NXField<typename NXGroup<Imp>::FImp >
 NXGroup<Imp>::createField(const String &n,PNITypeID tid,const ArrayShape &s){
-	UInt64 dims[s.getRank()];
+	UInt32 *dims;
+	dims = new UInt32[s.getRank()];
 	for(UInt64 i=0;i<s.getRank();i++) dims[i] = s[i];
 
 	return createField(n,tid,s.getRank(),dims);
+	delete [] dims;
 }
 
 template<typename Imp>
@@ -236,11 +238,14 @@ template<typename Filter>
 NXField<typename NXGroup<Imp>::FImp >
 NXGroup<Imp>::createField(const String &n,PNITypeID tid,
 		                  const ArrayShape &s,NXFilter<Filter> &f){
-	UInt64 dims[s.getRank()];
+	UInt32 *dims;
 
+	dims = new UInt32[s.getRank()];
 	for(UInt32 i=0;i<s.getRank();i++) dims[i] = s[i];
 
 	return createField(n,tid,s.getRank(),dims,f);
+
+	delete [] dims;
 }
 
 template<typename Imp>

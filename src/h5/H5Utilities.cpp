@@ -5,6 +5,7 @@
  *      Author: eugen
  */
 
+
 #include "H5Utilities.hpp"
 #include "H5Exceptions.hpp"
 #include "H5TypeFactory.hpp"
@@ -42,7 +43,6 @@ void H5Utilities::DataSpace2ArrayShape(const hid_t &dspace,ArrayShape &s){
 	EXCEPTION_SETUP("void H5Utilities::DataSpace2ArrayShape(const hid_t &dspace,ArrayShape &s)");
 	UInt32 rank;
 	hsize_t *dims;
-	UInt32 *sdims;
 
 	rank = H5Sget_simple_extent_ndims(dspace);
 	if(rank < 0){
@@ -51,20 +51,17 @@ void H5Utilities::DataSpace2ArrayShape(const hid_t &dspace,ArrayShape &s){
 	}
 
 	dims = new hsize_t[rank];
-	sdims = new UInt32[rank];
 	rank = H5Sget_simple_extent_dims(dspace,dims,NULL);
 	if(rank < 0){
 		EXCEPTION_INIT(H5DataSpaceError,"Cannot obtain data-space dimensions!");
 		EXCEPTION_THROW();
 	}
 
-	for(UInt32 i=0;i<rank;i++) sdims[i] = dims[i];
-
-	s = ArrayShape(rank,sdims);
+	s.setRank(rank);
+	for(UInt32 i=0;i<rank;i++) s.setDimension(i,(UInt32)dims[i]);
 
 	//free memory
 	if(dims != NULL) delete [] dims;
-	if(sdims != NULL) delete [] sdims;
 }
 
 PNITypeID H5Utilities::H5Type2PNITypeCode(hid_t tid){

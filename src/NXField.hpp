@@ -223,7 +223,7 @@ template<typename Imp> void NXField<Imp>::read(ArrayObject &a) const{
 	this->_imp.getShape(s);
 
 	//the shape of the target array and that of the field
-	if(a.getShape()){
+	if(a.getShape().getRank()!=0){
 		if(s != a.getShape()){
 			a.setShape(s);
 			a.allocate();
@@ -234,7 +234,7 @@ template<typename Imp> void NXField<Imp>::read(ArrayObject &a) const{
 	}
 
 	try{
-		this->_imp.read(a.getBuffer().getVoidPtr());
+		this->_imp.read((void *)a.getBuffer().getVoidPtr());
 	}catch(...){
 		EXCEPTION_INIT(NXFieldError,"Cannot read array data from field ["+this->_imp.getName()+"]!");
 		EXCEPTION_THROW();

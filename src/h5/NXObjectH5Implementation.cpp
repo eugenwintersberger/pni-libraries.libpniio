@@ -40,7 +40,7 @@ NXObjectH5Implementation &NXObjectH5Implementation::operator=(const NXObjectH5Im
 }
 
 void NXObjectH5Implementation::_create_and_write_attribute(hid_t pid,const char *n,
-		                       hid_t type_id,hid_t space_id,void *ptr){
+		                       hid_t type_id,hid_t space_id,const void *ptr){
 	EXCEPTION_SETUP("void NXObjectH5Implementation::"
 			          "_create_and_write_attribute(hid_t pid,char *n,"
 			          "hid_t type_id,hid_t space_id,void *ptr)");
@@ -189,13 +189,13 @@ void NXObjectH5Implementation::getAttribute(const char *n,ArrayObject &a){
 	//need to do some error checking here
 
 	H5Utilities::DataSpace2ArrayShape(asid,temp_shape);
-	if((!a.getShape())||(temp_shape != *(a.getShape()))){
+	if((a.getShape().getSize()==0)||(temp_shape != a.getShape())){
 		a.setShape(temp_shape);
 		a.allocate();
 	}
 
 	//copy data to the array buffer
-	if((H5Aread(aid,atid,a.getBuffer()->getVoidPtr()))<0){
+	if((H5Aread(aid,atid,(void *)a.getBuffer().getVoidPtr()))<0){
 		EXCEPTION_INIT(H5DataSetError,"Error reading data from array attribute ["+String(n)+"]!");
 		H5Tclose(atid);
 		H5Sclose(asid);

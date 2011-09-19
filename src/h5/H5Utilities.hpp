@@ -10,6 +10,7 @@
 
 #include <pni/utils/ArrayShape.hpp>
 #include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Exceptions.hpp>
 
 extern "C"{
 #include <hdf5.h>

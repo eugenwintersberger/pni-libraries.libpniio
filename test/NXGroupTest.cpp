@@ -15,7 +15,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(NXGroupTest);
 
 void NXGroupTest::setUp(){
 	_fname = "test.group.h5";
-
+	Index i;
 	_f.close();
 	_f.setFileName(_fname);
 	_f.setOverwrite();
@@ -30,11 +30,18 @@ void NXGroupTest::setUp(){
 	_shape.setDimension(1,3);
 
 	_write_array_attr = Int16Array();
+	i.setRank(_shape.getRank());
 	_write_array_attr.setShape(_shape);
 	_write_array_attr.allocate();
-	_write_array_attr(0,0) = 1; _write_array_attr(0,1) = 2; _write_array_attr(0,2) = 3;
-	_write_array_attr(1,0) = 4; _write_array_attr(1,1) = 5; _write_array_attr(1,2) = 6;
-	_write_array_attr(2,0) = 7; _write_array_attr(2,1) = 8; _write_array_attr(2,2) = 9;
+	i[0] = 0; i[1] = 0; _write_array_attr(i) = 1;
+	i[0] = 0; i[1] = 1; _write_array_attr(i) = 2;
+	i[0] = 0; i[1] = 2; _write_array_attr(i) = 3;
+	i[0] = 1; i[1] = 0; _write_array_attr(i) = 4;
+	i[0] = 1; i[1] = 1; _write_array_attr(i) = 5;
+	i[0] = 1; i[1] = 2; _write_array_attr(i) = 6;
+	i[0] = 2; i[1] = 0; _write_array_attr(i) = 7;
+	i[0] = 2; i[1] = 1; _write_array_attr(i) = 8;
+	i[0] = 2; i[1] = 2; _write_array_attr(i) = 9;
 
 	_write_cmplx_scalar = Complex64(1,-2);
 

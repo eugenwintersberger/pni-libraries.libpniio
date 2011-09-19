@@ -9,6 +9,7 @@
 #define NXFIELDTEST_HPP_
 
 #include "NX.hpp"
+#include <pni/utils/Index.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>

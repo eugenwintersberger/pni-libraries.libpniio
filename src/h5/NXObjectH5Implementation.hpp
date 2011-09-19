@@ -30,7 +30,7 @@ using namespace pni::utils;
 class NXObjectH5Implementation {
 private:
 	void _create_and_write_attribute(hid_t pid,const char *n,hid_t type_id,
-			                         hid_t space_id,void *ptr);
+			                         hid_t space_id,const void *ptr);
 	void _open_attribute(hid_t pid,const char *n,hid_t &attr_id,hid_t &type_id,
 			             hid_t &space_id);
 	//! copy constructor
