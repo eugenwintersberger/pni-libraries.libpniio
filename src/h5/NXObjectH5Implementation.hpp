@@ -46,22 +46,6 @@ private:
 	NXObjectH5Implementation(const NXObjectH5Implementation &o){}
 
 	hid_t  _id;    //!< handler of the object this class referes too
-protected:
-	inline hid_t getId(){
-		return _id;
-	}
-
-	inline void setId(hid_t id){
-		if(H5Iis_valid(_id)) H5Idec_ref(_id);
-		_id = id;
-	}
-
-	//! create an object
-
-	//! \param n name of the object
-	//! \param o parent object
-	virtual void create(const String &n,const NXObjectH5Implementation &o);
-
 public:
 	typedef boost::shared_ptr<NXObjectH5Implementation> sptr;
 	static const ImpCodes IMPCODE = HDF5;
@@ -88,6 +72,10 @@ public:
 	//! read attribute data to a String object
 	void getAttribute(const char *n,String &s);
 
+	//! get object path
+	virtual String getPath() const;
+	//! get object path base
+	virtual String getBase() const;
 	//! get object name
 	virtual String getName() const;
 	//! open a child object
@@ -99,6 +87,25 @@ public:
 	//! return the object class
 	virtual pni::nx::NXObjectClass getObjectClass() const;
 
+	//! get object ID
+	inline hid_t getId() const{
+		return _id;
+	}
+
+	//! set object ID
+	inline void setId(hid_t id){
+		if(H5Iis_valid(_id)) H5Idec_ref(_id);
+		_id = id;
+	}
+
+	//! create an object
+
+	//! \param n name of the object
+	//! \param o parent object
+	virtual void create(const String &n,const NXObjectH5Implementation &o);
+
+	virtual void createLink(const NXObjectH5Implementation &pos,const String &n);
+	virtual void createLink(const String &path);
 };
 
 
@@ -107,19 +114,6 @@ public:
 }
 }
 
-
-/*
-template<typename T> void NXObjectH5Implementation::setAttribute(const char *n,typename T::sptr d){
-	//raise an exception that this method is not implemented for this data type
-	std::cerr<<"Service not supported for this data type in HDF5 implementation!"<<std::endl;
-}*/
-
-
-/*
-template<typename T> typename T::sptr getAttribute(const char *n){
-	//raise an exception that this method is not implemented for this data type
-	std::cerr<<"Service not supported for this data type in HDF5 implementation!"<<std::endl;
-}*/
 
 
 

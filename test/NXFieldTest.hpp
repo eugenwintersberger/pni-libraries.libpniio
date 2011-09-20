@@ -31,6 +31,7 @@ class NXFieldTest: public CppUnit::TestFixture {
 	CPPUNIT_TEST(testWriteDataExceptions);
 	CPPUNIT_TEST(testAttributes);
 	CPPUNIT_TEST(testAttributeExceptions);
+	CPPUNIT_TEST(testLinks);
 	CPPUNIT_TEST_SUITE_END();
 private:
 	String _fname;
@@ -63,6 +64,7 @@ public:
 	void testWriteDataExceptions();
 	void testAttributes();
 	void testAttributeExceptions();
+	void testLinks();
 
 };
 

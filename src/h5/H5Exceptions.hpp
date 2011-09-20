@@ -126,6 +126,23 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const H5ObjectError &e);
 };
 
+class H5LinkError:public H5Exception{
+public:
+	H5LinkError():H5Exception("H5LinkError"){
+
+	}
+	H5LinkError(const String &i,const String &d):H5Exception("H5LinkError",i,d){
+
+	}
+
+	virtual ~H5LinkError(){
+
+	}
+
+	friend std::ostream &operator<<(std::ostream &o,const H5LinkError &e);
+};
+
+
 //end of namespace
 }
 }

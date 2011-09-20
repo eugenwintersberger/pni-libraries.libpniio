@@ -52,7 +52,7 @@ void NXGroupH5Implementation::create(const String &n,const NXObjectH5Implementat
 	H5Pset_create_intermediate_group(plist,1);
 
 	//create the group object in the file
-	id = H5Gcreate2(getId(),n,plist, H5P_DEFAULT, H5P_DEFAULT);
+	id = H5Gcreate2(pid,n.c_str(),plist, H5P_DEFAULT, H5P_DEFAULT);
 	if(id<0){
 		EXCEPTION_INIT(H5GroupError,"Cannot create group "+String(n)+"!");
 		EXCEPTION_THROW();
@@ -100,7 +100,7 @@ void NXGroupH5Implementation::openGroup(const char *n,
 	hid_t id = 0;
 	id = H5Gopen2(getId(),n,H5P_DEFAULT);
 	if(id<0){
-		EXCEPTION_INIT(H5GroupError,"Cannot open group ["+n+"]!");
+		EXCEPTION_INIT(H5GroupError,"Cannot open group ["+String(n)+"]!");
 		EXCEPTION_THROW();
 	}
 
@@ -112,15 +112,12 @@ void NXGroupH5Implementation::openField(const char *n,
 	EXCEPTION_SETUP("void NXGroupH5Implementation::openField(const char *n,"
 			        "NXFieldH5Implementation &imp)");
 
-	imp._id = H5Dopen(_id,n);
-	if(imp._id<0){
-		EXCEPTION_INIT(H5DataSetError,"Error opening field ["+String(n)+"]!");
+	try{
+		imp.open(n,*this);
+	}catch(...){
+		EXCEPTION_INIT(H5DataSetError,"Cannot open dataset "+String(n)+"!");
 		EXCEPTION_THROW();
 	}
-	//fetch all other informatoin
-	imp._type_id = H5Dget_type(imp._id);
-	imp._space_id = H5Dget_space(imp._id);
-	imp._creation_plist = H5Dget_create_plist(imp._id);
 }
 
 //create a field for array data
@@ -174,6 +171,7 @@ void NXGroupH5Implementation::createField(const char *n, UInt64 size,
 }
 
 
+/*
 void NXGroupH5Implementation::createLink(const String &s,const String &d){
 	String source_file;
 	String source_path;
@@ -192,12 +190,12 @@ void NXGroupH5Implementation::createLink(const String &s,const String &d){
 
 	if(source_file.empty()){
 		//create an internal link
-		H5Lcreate_soft((const char *)source_path.c_str(),_id,(const char *)d.c_str(),_gcreate_plist,H5P_DEFAULT);
+		//H5Lcreate_soft((const char *)source_path.c_str(),_id,(const char *)d.c_str(),_gcreate_plist,H5P_DEFAULT);
 	}else{
 		//create an external link
 
 	}
-}
+}*/
 
 //end of namespace
 }

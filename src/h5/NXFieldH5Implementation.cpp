@@ -15,6 +15,7 @@ namespace h5{
 
 using namespace pni::nx::h5;
 
+//------------------------------------------------------------------------------
 NXFieldH5Implementation::NXFieldH5Implementation():NXObjectH5Implementation() {
 	_space_id = 0;
 	_type_id = 0;
@@ -23,18 +24,62 @@ NXFieldH5Implementation::NXFieldH5Implementation():NXObjectH5Implementation() {
 	_creation_plist = H5Pcreate(H5P_DATASET_CREATE);
 
 	_offset = NULL;
-	_stride = NULL;
 	_count = NULL;
 }
 
+//------------------------------------------------------------------------------
 NXFieldH5Implementation::~NXFieldH5Implementation() {
 	close();
+	_free_selection_buffers();
 }
 
+//------------------------------------------------------------------------------
 void NXFieldH5Implementation::create(const String &n,const NXObjectH5Implementation &o){
+	EXCEPTION_SETUP("void NXFieldH5Implementation::create(const String &n,const NXObjectH5Implementation &o)");
 
+	hid_t pid = o.getId();
+	hid_t id;
+
+	id = H5Dcreate2(pid,n.c_str(),_type_id,_space_id,H5P_DEFAULT,_creation_plist,H5P_DEFAULT);
+	if(id<0){
+		EXCEPTION_INIT(H5DataSetError,"Creation of dataset "+String(n)+"failed!");
+		EXCEPTION_THROW();
+	}
+
+	setId(id);
+
+	_allocate_selection_buffers(getRank());
 }
 
+//------------------------------------------------------------------------------
+void NXFieldH5Implementation::_allocate_selection_buffers(UInt32 n){
+	EXCEPTION_SETUP("void NXFieldH5Implementation::_allocate_selection_buffers(UInt32 n)");
+	_free_selection_buffers();
+
+	_offset = new hsize_t[n];
+	if(_offset == NULL){
+		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for offset buffer!");
+		EXCEPTION_THROW();
+	}
+
+	_count = new hsize_t[n];
+	if(_count == NULL){
+		_free_selection_buffers();
+		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for count buffer!");
+		EXCEPTION_THROW();
+	}
+}
+
+//------------------------------------------------------------------------------
+void NXFieldH5Implementation::_free_selection_buffers(){
+	if(_offset == NULL) delete [] _offset;
+	if(_count == NULL) delete [] _count;
+
+	_offset = NULL;
+	_count = NULL;
+}
+
+//------------------------------------------------------------------------------
 NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXFieldH5Implementation &o){
 	EXCEPTION_SETUP("NXFieldH5Implementation &NXFieldH5Implementation::operator="
 					"(const NXFieldH5Implementation &o)");
@@ -60,7 +105,7 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXFieldH5Imple
 			}
 
 			//get the creation property list
-			_creation_plist = H5Dget_create_plist(getId()));
+			_creation_plist = H5Dget_create_plist(getId());
 			if(_creation_plist<0){
 				EXCEPTION_INIT(H5PropertyListError,"Cannot obtain creation property "
 						       "list fom data-set ["+getName()+"]!");
@@ -76,13 +121,28 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXFieldH5Imple
 	return *this;
 }
 
+//------------------------------------------------------------------------------
 void NXFieldH5Implementation::open(const String &n,NXObjectH5Implementation &imp){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::open(const String &n)");
 
-	EXCEPTION_INIT(NotImplementedError,"You cannot open another object from a field object! ");
-	EXCEPTION_THROW();
+	hid_t pid = imp.getId();
+	hid_t id;
+	id = H5Dopen(pid,n.c_str());
+	if(id<0){
+		EXCEPTION_INIT(H5DataSetError,"Error opening field ["+String(n)+"]!");
+		EXCEPTION_THROW();
+	}
+
+	if(isOpen()) close();
+	setId(id);
+
+	//fetch all other informatoin
+	_type_id = H5Dget_type(id);
+	_space_id = H5Dget_space(id);
+	_creation_plist = H5Dget_create_plist(id);
 }
 
+//------------------------------------------------------------------------------
 void NXFieldH5Implementation::setChunkedLayout(){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::setChunkedLayout()");
 
@@ -95,6 +155,7 @@ void NXFieldH5Implementation::setChunkedLayout(){
 	}
 }
 
+//------------------------------------------------------------------------------
 void NXFieldH5Implementation::setChunkSize(UInt32 rank,const UInt32 *dims){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::setChunkSize(int rank,hsize_t *dims)");
 
@@ -119,6 +180,7 @@ void NXFieldH5Implementation::setChunkSize(UInt32 rank,const UInt32 *dims){
 	if(d!=NULL) delete [] d;
 }
 
+//------------------------------------------------------------------------------
 void NXFieldH5Implementation::setChunkSize(const ArrayShape &s){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::setChunkSize(const ArrayShape &s)");
 
@@ -144,6 +206,7 @@ void NXFieldH5Implementation::setChunkSize(const ArrayShape &s){
 	if(d!=NULL) delete [] d;
 }
 
+//------------------------------------------------------------------------------
 void NXFieldH5Implementation::close(){
 	if(H5Iis_valid(_space_id)) H5Sclose(_space_id);
 	if(H5Iis_valid(_type_id)) H5Tclose(_type_id);
@@ -151,11 +214,12 @@ void NXFieldH5Implementation::close(){
 	NXObjectH5Implementation::close();
 }
 
+//------------------------------------------------------------------------------
 void NXFieldH5Implementation::write(const void *ptr){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::write(const void *ptr)");
 	herr_t err;
 
-	err = H5Dwrite(_id,_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,ptr);
+	err = H5Dwrite(getId(),_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,ptr);
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error writing data to field "
 												   "["+getName()+"]!");
@@ -163,30 +227,31 @@ void NXFieldH5Implementation::write(const void *ptr){
 	}
 }
 
-
+//------------------------------------------------------------------------------
 void NXFieldH5Implementation::read(void *ptr) const{
 	EXCEPTION_SETUP("void NXFieldH5Implementation::read(void *ptr)");
 	herr_t err;
 
-	err = H5Dread(_id,_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,ptr);
+	err = H5Dread(getId(),_type_id,H5S_ALL,H5S_ALL,H5P_DEFAULT,ptr);
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+getName()+"]!");
 		EXCEPTION_THROW();
 	}
 }
 
-
+//------------------------------------------------------------------------------
 UInt32 NXFieldH5Implementation::getRank() const{
 	EXCEPTION_SETUP("UInt32 NXFieldH5Implementation::getRank() const");
 
 	if(H5Iis_valid(_space_id)){
 		return H5Sget_simple_extent_ndims(_space_id);
 	}else{
-		EXCEPTION_INIT(H5DataSpaceError,"Cannot obtain rank from data-space!");
+		EXCEPTION_INIT(H5DataSpaceError,"Cannot obtain rank from data-space of field ["+getName()+"!");
 		EXCEPTION_THROW();
 	}
 }
 
+//------------------------------------------------------------------------------
 UInt32 NXFieldH5Implementation::getDimension(UInt32 i)const {
 	EXCEPTION_SETUP("UInt32 NXFieldH5Implementation::getDimension(UInt32 i)");
 	ssize_t rank = getRank();
@@ -210,6 +275,7 @@ UInt32 NXFieldH5Implementation::getDimension(UInt32 i)const {
 	return dim;
 }
 
+//------------------------------------------------------------------------------
 UInt32 *NXFieldH5Implementation::getDimensions()const {
 	EXCEPTION_SETUP("UInt32 NXFieldH5Implementation::getDimension(UInt32 i)");
 	ssize_t rank = H5Sget_simple_extent_ndims(_space_id);
@@ -237,14 +303,17 @@ UInt32 *NXFieldH5Implementation::getDimensions()const {
 	return retdims;
 }
 
+//------------------------------------------------------------------------------
 void NXFieldH5Implementation::getShape(ArrayShape &s) const{
 	H5Utilities::DataSpace2ArrayShape(_space_id,s);
 }
 
+//------------------------------------------------------------------------------
 PNITypeID NXFieldH5Implementation::getTypeID() const {
 	return H5Utilities::H5Type2PNITypeCode(_type_id);
 }
 
+//------------------------------------------------------------------------------
 bool NXFieldH5Implementation::isScalar() const {
 	if((H5Sget_simple_extent_type(_space_id)==H5S_SCALAR)
 				&&(H5Tget_class(_type_id)!=H5T_STRING)){
@@ -253,12 +322,14 @@ bool NXFieldH5Implementation::isScalar() const {
 		return false;
 }
 
+//------------------------------------------------------------------------------
 bool NXFieldH5Implementation::isArray() const {
 	if(H5Sget_simple_extent_type(_space_id)==H5S_SIMPLE) return true;
 
 	return false;
 }
 
+//------------------------------------------------------------------------------
 bool NXFieldH5Implementation::isString() const {
 	if((H5Sget_simple_extent_type(_space_id)==H5S_SCALAR)
 			&&(H5Tget_class(_type_id)==H5T_STRING)){
@@ -268,6 +339,7 @@ bool NXFieldH5Implementation::isString() const {
 
 }
 
+//------------------------------------------------------------------------------
 UInt64 NXFieldH5Implementation::getSize() const{
 	if(isArray()){
 		return (UInt64)H5Sget_simple_extent_npoints(_space_id);
@@ -280,6 +352,7 @@ UInt64 NXFieldH5Implementation::getSize() const{
 	return 0;
 }
 
+//------------------------------------------------------------------------------
 void NXFieldH5Implementation::setDataSpace(UInt32 rank,const UInt32 *dims){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::setDataSpace(int rank,hsize_t *dims)");
 
@@ -299,6 +372,7 @@ void NXFieldH5Implementation::setDataSpace(UInt32 rank,const UInt32 *dims){
 
 }
 
+//------------------------------------------------------------------------------
 void NXFieldH5Implementation::setDataSpace(const ArrayShape &s){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::setDataSpace(const ArrayShape &s)");
 
@@ -321,6 +395,7 @@ void NXFieldH5Implementation::setDataSpace(const ArrayShape &s){
 	if(d!=NULL) delete [] d;
 }
 
+//------------------------------------------------------------------------------
 void NXFieldH5Implementation::setDataSpace(){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::setDataSpace()");
 
@@ -333,6 +408,7 @@ void NXFieldH5Implementation::setDataSpace(){
 	}
 }
 
+//------------------------------------------------------------------------------
 void NXFieldH5Implementation::setDataType(PNITypeID tid){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::setDataType(hid_t type_id)");
 
@@ -346,6 +422,7 @@ void NXFieldH5Implementation::setDataType(PNITypeID tid){
 	}
 }
 
+//------------------------------------------------------------------------------
 void NXFieldH5Implementation::setDataType(UInt64 size){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::setDataType(const String &n)");
 
@@ -360,6 +437,7 @@ void NXFieldH5Implementation::setDataType(UInt64 size){
 	}
 }
 
+//------------------------------------------------------------------------------
 void NXFieldH5Implementation::setSelection(const Selection &s){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::setSelection(const Selection &s)");
 
@@ -371,6 +449,7 @@ void NXFieldH5Implementation::setSelection(const Selection &s){
 
 }
 
+//------------------------------------------------------------------------------
 void NXFieldH5Implementation::resetSelection(){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::resetSelection()");
 

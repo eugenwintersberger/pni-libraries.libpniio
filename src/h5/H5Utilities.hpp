@@ -30,8 +30,20 @@ public:
 	H5Utilities(){}
 	virtual ~H5Utilities(){}
 
+	//! data space from array shape
+
+	//! Create an HDF5 data space from an ArrayShape object.
+	//! \param s ArrayShape object
+	//! \param dspace data space id
 	static void ArrayShape2DataSpace(const ArrayShape &s,hid_t &dspace);
+	//! ArrayShape from data space
+
+	//! Creates an ArraySpace object from an existing HDF5 data space.
+	//! \param dspace data space id
+	//! \param s ArrayShape object
 	static void DataSpace2ArrayShape(const hid_t &dspace,ArrayShape &s);
+	static void DataSpace2Selection(const hid_t &dspace,Selection &s);
+	static void Selection2DataSpace(const Selection &s,hid_t &dspace);
 	static PNITypeID H5Type2PNITypeCode(const hid_t tid);
 };
 

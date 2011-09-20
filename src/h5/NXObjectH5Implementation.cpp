@@ -12,33 +12,44 @@
 
 #include <pni/utils/Exceptions.hpp>
 
+#include <string>
+#include <iostream>
+
 namespace pni{
 namespace nx{
 namespace h5{
 
 using namespace pni::utils;
 
+//------------------------------------------------------------------------------
 NXObjectH5Implementation::NXObjectH5Implementation() {
 	_id = 0;
 }
 
+//------------------------------------------------------------------------------
 NXObjectH5Implementation::~NXObjectH5Implementation() {
 	//close the handler to the object
 	close();
 }
 
+//------------------------------------------------------------------------------
 NXObjectH5Implementation &NXObjectH5Implementation::operator=(const NXObjectH5Implementation &o){
-	EXCEPTION_SETUP("NXObjectH5Implementation &NXObjectH5Implementation::operator=(const NXObjectH5Implementation &o)");
+	EXCEPTION_SETUP("NXObjectH5Implementation &NXObjectH5Implementation"
+					"::operator=(const NXObjectH5Implementation &o)");
 
 	if(this != &o){
-		if(H5Iis_valid(o._id)){
-			//o has a valid id
-			if(H5Iis_valid(_id)) H5Oclose(_id);
+		if(H5Iis_valid(o._id)){//o has a valid id
+
+			//if the lhs object is a valid object we must close it first
+			if(H5Iis_valid(_id)) H5Idec_ref(_id);
+
+			//copy the new object id an increment the reference counter
 			_id = o._id;
 			H5Iinc_ref(_id); //increment the reference counter to that ID
-		}else{
-			//o has no valid id
-			if(H5Iis_valid(_id)) H5Oclose(_id);
+
+		}else{  //o has no valid id
+			//if the lhs object is a valid object we must close it first
+			if(H5Iis_valid(_id)) H5Idec_ref(_id);
 			_id = o._id;
 		}
 	}
@@ -46,7 +57,7 @@ NXObjectH5Implementation &NXObjectH5Implementation::operator=(const NXObjectH5Im
 	return *this;
 }
 
-
+//------------------------------------------------------------------------------
 void NXObjectH5Implementation::_create_and_write_attribute(hid_t pid,const char *n,
 		                       hid_t type_id,hid_t space_id,const void *ptr){
 	EXCEPTION_SETUP("void NXObjectH5Implementation::"
@@ -74,6 +85,7 @@ void NXObjectH5Implementation::_create_and_write_attribute(hid_t pid,const char 
 
 }
 
+//------------------------------------------------------------------------------
 void NXObjectH5Implementation::_open_attribute(hid_t pid,const char *n,
 		                       hid_t &attr_id,hid_t &type_id,hid_t &space_id){
 	EXCEPTION_SETUP("void NXObjectH5Implementation::"
@@ -100,6 +112,7 @@ void NXObjectH5Implementation::_open_attribute(hid_t pid,const char *n,
 	}
 }
 
+//------------------------------------------------------------------------------
 void NXObjectH5Implementation::setAttribute(const char *n,ArrayObject &a){
 	EXCEPTION_SETUP("void NXObjectH5Implementation::setAttribute(const char *n,ArrayObject &a)");
 	hid_t tid;   //id of the data type
@@ -124,6 +137,7 @@ void NXObjectH5Implementation::setAttribute(const char *n,ArrayObject &a){
 	H5Sclose(setid);
 }
 
+//------------------------------------------------------------------------------
 void NXObjectH5Implementation::setAttribute(const char *n,ScalarObject &d){
 	EXCEPTION_SETUP("void NXObjectH5Implementation::setAttribute(const char *n,ScalarObject &a)");
 	hid_t tid;   //id of the data type
@@ -151,7 +165,7 @@ void NXObjectH5Implementation::setAttribute(const char *n,ScalarObject &d){
 	H5Sclose(setid);
 }
 
-
+//------------------------------------------------------------------------------
 void NXObjectH5Implementation::setAttribute(const char *n,const String &s){
 	EXCEPTION_SETUP("void NXObjectH5Implementation::setAttribute(const char *n,String &s)");
 	hid_t tid;   //id of the data type
@@ -179,6 +193,7 @@ void NXObjectH5Implementation::setAttribute(const char *n,const String &s){
 	H5Sclose(setid);
 }
 
+//------------------------------------------------------------------------------
 void NXObjectH5Implementation::getAttribute(const char *n,ArrayObject &a){
 	EXCEPTION_SETUP("void NXObjectH5Implementation::getAttribute(const char *n,ArrayObject &a)");
 	ArrayShape temp_shape;
@@ -218,6 +233,7 @@ void NXObjectH5Implementation::getAttribute(const char *n,ArrayObject &a){
 
 }
 
+//------------------------------------------------------------------------------
 void NXObjectH5Implementation::getAttribute(const char *n,ScalarObject &s){
 	EXCEPTION_SETUP("void NXObjectH5Implementation::getAttribute(const char *n,ScalarObject &a)");
 	hid_t atid = 0;
@@ -249,6 +265,7 @@ void NXObjectH5Implementation::getAttribute(const char *n,ScalarObject &s){
 	H5Aclose(aid);
 }
 
+//------------------------------------------------------------------------------
 void NXObjectH5Implementation::getAttribute(const char *n,String &s){
 	EXCEPTION_SETUP("void NXObjectH5Implementation::getAttribute(const char *n,String &s)");
 	hid_t atid = 0;
@@ -279,22 +296,59 @@ void NXObjectH5Implementation::getAttribute(const char *n,String &s){
 	H5Sclose(asid);
 }
 
-String NXObjectH5Implementation::getName() const{
+//------------------------------------------------------------------------------
+String NXObjectH5Implementation::getPath() const{
+	EXCEPTION_SETUP("String NXObjectH5Implementation::getName() const");
+	char *buffer = NULL;
+
 	if(H5Iis_valid(_id)){
 		//if the object has already been created return this value
 		hsize_t bsize;
-		String name;
-
 		bsize = H5Iget_name(_id,NULL,1)+1;
-		name.clear();
-		name.resize(bsize);
-		H5Iget_name(_id,(char*)name.c_str(),bsize);
+		buffer = new char[bsize];
+		if(buffer == NULL){
+			EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate buffer for object name!");
+			EXCEPTION_THROW();
+		}
+
+		H5Iget_name(_id,buffer,bsize);
+		String name(buffer);
+		if(buffer != NULL) delete [] buffer;
 		return name;
 	}
 
 	return String("");
 }
 
+//------------------------------------------------------------------------------
+String NXObjectH5Implementation::getBase() const {
+	String p(getPath());
+
+	size_t lpos = p.find_last_of("/");
+	String base = "";
+	if(lpos != p.npos){
+		base = String(p,0,lpos+1);
+	}
+
+	return base;
+}
+
+//------------------------------------------------------------------------------
+String NXObjectH5Implementation::getName() const {
+	String p = getPath();
+
+	//need to extract the the name information from the path
+	size_t lpos = p.find_last_of("/");
+	String name = "";
+	if(lpos != p.npos){
+		name = String(p,lpos+1,p.size()-lpos+1);
+	}
+
+	return name;
+
+}
+
+//------------------------------------------------------------------------------
 pni::nx::NXObjectClass NXObjectH5Implementation::getObjectClass() const{
 	if(H5Iis_valid(_id)){
 		switch(H5Iget_type(_id)){
@@ -308,6 +362,7 @@ pni::nx::NXObjectClass NXObjectH5Implementation::getObjectClass() const{
 	return NXNONE;
 }
 
+//------------------------------------------------------------------------------
 void NXObjectH5Implementation::open(const String &n,NXObjectH5Implementation &o){
 	EXCEPTION_SETUP("void NXObjectH5Implementation::open(const String &n,NXObjectH5Implementation &o)");
 
@@ -339,21 +394,72 @@ void NXObjectH5Implementation::open(const String &n,NXObjectH5Implementation &o)
 	}
 }
 
+//------------------------------------------------------------------------------
 bool NXObjectH5Implementation::isOpen() const {
 	if(H5Iis_valid(_id)) return true;
 	return false;
 }
 
+//------------------------------------------------------------------------------
 void NXObjectH5Implementation::close(){
 	if(H5Iis_valid(_id)) H5Oclose(_id);
+	_id = 0;
 }
 
+//------------------------------------------------------------------------------
+void NXObjectH5Implementation::createLink(const NXObjectH5Implementation &pos,const String &n){
+	EXCEPTION_SETUP("void NXObjectH5Implementation::createLink(const NXObjectH5Implementation &pos,const String &n)");
+
+	hid_t loc_id = pos.getId();
+
+	//check if the location is a valid HDF5 object
+	if(!H5Iis_valid(loc_id)){
+		EXCEPTION_INIT(H5ObjectError,"Link location is not a valid HDF5 location!");
+		EXCEPTION_THROW();
+	}
+
+	//need to check if this object is open
+	if(!isOpen()){
+		EXCEPTION_INIT(H5ObjectError,"Link target is not open!");
+		EXCEPTION_THROW();
+	}
+
+	herr_t err = H5Lcreate_soft(getPath().c_str(),loc_id,n.c_str(),H5P_DEFAULT,H5P_DEFAULT);
+	if(err < 0){
+		EXCEPTION_INIT(H5LinkError,"Could not establish link from "+getPath()+" to "+pos.getPath()+"["+n+"]!");
+		EXCEPTION_THROW();
+	}
+
+}
+
+//------------------------------------------------------------------------------
+void NXObjectH5Implementation::createLink(const String &path){
+	EXCEPTION_SETUP("void NXObjectH5Implementation::createLink(const String &pos)");
+
+	hid_t id = getId();
+
+	if(!isOpen()){
+		EXCEPTION_INIT(H5ObjectError,"Link target is not open!");
+		EXCEPTION_THROW();
+	}
+
+	herr_t err = H5Lcreate_soft(getPath().c_str(),id,path.c_str(),H5P_DEFAULT,H5P_DEFAULT);
+	if(err < 0){
+		EXCEPTION_INIT(H5LinkError,"Coult not create symbolic link from "+getPath()+" to "+path+"!");
+		EXCEPTION_THROW();
+	}
+
+}
+
+
+//------------------------------------------------------------------------------
 void NXObjectH5Implementation::create(const String &n,const NXObjectH5Implementation &o){
 	EXCEPTION_SETUP("void NXObjectH5Implementation::create(const String &n,const NXObjectH5Implementation &o)");
 
 	EXCEPTION_INIT(NotImplementedError,"Object creation is not supported by this class!");
 	EXCEPTION_THROW();
 }
+
 
 
 

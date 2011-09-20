@@ -25,8 +25,6 @@ namespace nx{
 
 template<typename Imp>
 class NXField:public NXObject<Imp> {
-private:
-
 public:
 	typedef boost::shared_ptr<NXField<Imp> > sptr;
 	NXField();

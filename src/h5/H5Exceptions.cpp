@@ -169,6 +169,9 @@ std::ostream &operator<<(std::ostream &o,const H5ObjectError &e){
 	return e.print(o);
 }
 
+std::ostream &operator<<(std::ostream &o,const H5LinkError &e){
+	return e.print(o);
+}
 //end of namespace
 }
 }

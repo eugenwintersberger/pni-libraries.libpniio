@@ -45,12 +45,12 @@ protected:
 	//the following tow data spaces are required to make use
 	//of selections
 	hid_t _mem_space; //!< data space in memory
-	hid_t _dsk_space; //!< data space on disk
-
-	//some member attributes for selections
 	hsize_t *_offset;
-	hsize_t *_stride;
 	hsize_t *_count;
+
+	void _allocate_selection_buffers(UInt32 n);
+	void _free_selection_buffers();
+
 	virtual void create(const String &n,const NXObjectH5Implementation &o);
 public:
 	typedef boost::shared_ptr<NXFieldH5Implementation> sptr;
@@ -108,9 +108,6 @@ public:
 
 	//! close the data field
 	virtual void close();
-
-	//! create a field implementation
-	virtual void create(const String &n);
 
 	//! open a field implementation
 	virtual void open(const String &n,NXObjectH5Implementation &imp);

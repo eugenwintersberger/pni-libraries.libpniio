@@ -23,9 +23,9 @@ class NXGroupTest: public CppUnit::TestFixture  {
 	CPPUNIT_TEST_SUITE(NXGroupTest);
 	CPPUNIT_TEST(testCreation);
 	CPPUNIT_TEST(testOpen);
-	//CPPUNIT_TEST(testAttributes);
-	//CPPUNIT_TEST(testAttributeExceptions);
-	//CPPUNIT_TEST(testInternalLinks);
+	CPPUNIT_TEST(testAttributes);
+	CPPUNIT_TEST(testAttributeExceptions);
+	CPPUNIT_TEST(testInternalLinks);
 	CPPUNIT_TEST_SUITE_END();
 private:
 	String _fname;

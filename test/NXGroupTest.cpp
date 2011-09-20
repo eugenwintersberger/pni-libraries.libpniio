@@ -58,12 +58,9 @@ void NXGroupTest::tearDown(){
 void NXGroupTest::testCreation(){
 	NXGroup g;
 
-	std::cerr<<"create first group"<<std::endl;
 	g = _f.createGroup("/hello/world");
 	g.close();
-	std::cerr<<"creating second group"<<std::endl;
 	g = _f.createGroup("/directory_1");
-
 	g.close();
 
 }
@@ -135,19 +132,29 @@ void NXGroupTest::testAttributeExceptions(){
 }
 
 void NXGroupTest::testInternalLinks(){
-	NXGroup g;
+	NXGroup g1,g2;
 	NXField f,fr;
 
 	//create a group and some data
-	g = _f.createGroup("/group1");
-	f = _f.createField("field_1",_write_array_attr);
-	f.write(_write_array_attr);
+	CPPUNIT_ASSERT_NO_THROW(g1 = _f.createGroup("/group1"));
+	CPPUNIT_ASSERT_NO_THROW(g2 = _f.createGroup("/group2/detector/data"));
 
-	//create a link from /field_1 to /group1/field_1_link
-	CPPUNIT_ASSERT_NO_THROW(_f.createLink("field_1","/group1/field_1_link"));
-	CPPUNIT_ASSERT_NO_THROW(fr = g.openField("field_1_link"));
-	CPPUNIT_ASSERT_NO_THROW(fr.read(_read_array_attr));
-	CPPUNIT_ASSERT_NO_THROW(_read_array_attr == _write_array_attr);
+	CPPUNIT_ASSERT(g1.getPath() == "/group1");
+	CPPUNIT_ASSERT(g1.getBase() == "/");
+	CPPUNIT_ASSERT(g1.getName() == "group1");
+
+	CPPUNIT_ASSERT(g2.getPath() == "/group2/detector/data");
+	CPPUNIT_ASSERT(g2.getBase() == "/group2/detector/");
+	CPPUNIT_ASSERT(g2.getName() == "data");
+
+	CPPUNIT_ASSERT_NO_THROW(g2.createLink(g1));
+	CPPUNIT_ASSERT_NO_THROW(g2.createLink(g1,"detdata"));
+
+	//link now g1 into g2
+	CPPUNIT_ASSERT_NO_THROW(g1.createLink("/group2/detector/g1_link"));
+
+	g1 = _f.openGroup("/group2/detector/data");
+	g1.createLink("/mydata");
 
 }
 

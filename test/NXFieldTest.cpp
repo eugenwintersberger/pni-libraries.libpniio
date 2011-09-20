@@ -15,7 +15,7 @@
 CPPUNIT_TEST_SUITE_REGISTRATION(NXFieldTest);
 
 void NXFieldTest::setUp(){
-	_fname = "test.1.h5";
+	_fname = "test.field.h5";
 	Index i;
 	_f.setFileName(_fname);
 	_f.setOverwrite();
@@ -59,10 +59,6 @@ void NXFieldTest::setUp(){
 
 void NXFieldTest::tearDown(){
 	_f.close();
-	//after finishing the tests we need to remove all created files
-	path path1(_fname);
-
-	if(exists(path1)) remove_all(path1);
 }
 
 void NXFieldTest::testCreation(){
@@ -75,6 +71,7 @@ void NXFieldTest::testCreation(){
 	_f64_data_array_read.allocate();
 
 	//creating data fields for saving arrays
+	//_f.createField("field_1",FLOAT64,2,dims);
 	CPPUNIT_ASSERT_NO_THROW(dset = _f.createField("field_1",FLOAT64,2,dims));
 	CPPUNIT_ASSERT_NO_THROW(dset = _f.createField("field_2",COMPLEX128,_data_shape));
 	CPPUNIT_ASSERT_NO_THROW(dset = _f.createField("field_3",_f64_data_array_read));
@@ -192,8 +189,9 @@ void NXFieldTest::testReadData(){
 
 	_f64_data_array_write = 1.2;
 	//creating data fields for saving arrays
-	dset = _f.createField("field_1",FLOAT64,2,dims);
+	CPPUNIT_ASSERT_NO_THROW(dset = _f.createField("field_1",FLOAT64,2,dims));
 	dset.write(_f64_data_array_write);
+	CPPUNIT_ASSERT_NO_THROW(dset.write(_f64_data_array_write));
 
 	Float64Array reader;
 	CPPUNIT_ASSERT_NO_THROW(dset.read(reader));
@@ -204,8 +202,8 @@ void NXFieldTest::testReadData(){
 	CPPUNIT_ASSERT_NO_THROW(dset.read(reader2));
 
 	//writing scalar data
-	dset = _f.createField("field_2",_write_cmplx_scalar);
-	dset.write(_write_cmplx_scalar);
+	CPPUNIT_ASSERT_NO_THROW(dset = _f.createField("field_2",_write_cmplx_scalar));
+	CPPUNIT_ASSERT_NO_THROW(dset.write(_write_cmplx_scalar));
 	Complex64Scalar scalar;
 	CPPUNIT_ASSERT_NO_THROW(dset.read(scalar));
 
@@ -299,4 +297,23 @@ void NXFieldTest::testAttributeExceptions(){
 	CPPUNIT_ASSERT_THROW(f.getAttribute("IndexOfRefraction_not",_read_cmplx_scalar),H5AttributeError);
 
 	f.close();
+}
+
+void NXFieldTest::testLinks(){
+	UInt32 dims[2] = { 1024,2048};
+	NXField f1,f2;
+	NXGroup g1,g2;
+
+	g1 = _f.createGroup("/data1");
+	g2 = _f.createGroup("/data2");
+
+	f1 = g1.createField("det1",UINT32,2,dims);
+	f2 = g2.createField("det2",FLOAT32,2,dims);
+
+	f1.createLink(g2,"original_data");
+	f2.createLink(g1,"corrected_data");
+	f1.createLink(g2);
+	f2.createLink(g1);
+
+
 }

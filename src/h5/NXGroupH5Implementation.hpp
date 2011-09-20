@@ -60,9 +60,6 @@ public:
 	void createField(const char *n,UInt64 size,NXFieldH5Implementation &imp);
 	//! open an existing field
 	virtual void openField(const char *n,NXFieldH5Implementation &imp);
-	virtual void createLink(const String &s,const String &d);
-	//close a group implementation object
-	virtual void close();
 
 };
 
@@ -76,14 +73,13 @@ void NXGroupH5Implementation::createField(const char *n, PNITypeID tid,
 			        "NXFieldH5Implementation &imp)");
 
 	try{
-		imp.setParent(_id);
 		imp.setDataSpace(rank,dims);
 		imp.setDataType(tid);
 		imp.setChunkedLayout();
 		imp.setChunkSize(rank,dims);
 		imp.setShuffle();
 		imp.setFilter(f);
-		imp.create(String(n));
+		imp.create(String(n),*this);
 	}catch(...){
 		EXCEPTION_INIT(H5DataSetError,"Error creating array data-set ["+String(n)+"]");
 		EXCEPTION_THROW();

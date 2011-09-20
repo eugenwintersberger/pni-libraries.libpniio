@@ -131,18 +131,6 @@ public:
 	//! open an arbitrary object
 	NXObject<OImp> open(const String &n);
 
-	//! create a link below this node
-
-	//! Create a symbolic link below this node. The first argument of the
-	//! method describes the target. Two target forms are allowed:
-	//! t="/path/to/target" in which case a link to an internal object
-	//! object is created and t="file:/path/to/target" in which case
-	//! an external link (link to an object in another file) is created.
-	//! \param t target path
-	//! \param n name of the link
-	virtual void createLink(const String &s,const String &d){
-		this->_imp.createLink(s,d);
-	}
 
 	//! close the group object
 	virtual void close();
@@ -150,7 +138,7 @@ public:
 
 };
 
-//================================constructors and destructors=================
+//========================constructors and destructors==========================
 template<typename Imp>
 NXGroup<Imp>::NXGroup(){
 }
@@ -160,7 +148,6 @@ template<typename Imp> NXGroup<Imp>::NXGroup(const NXGroup &g){
 }
 
 template<typename Imp> NXGroup<Imp>::~NXGroup(){
-	std::cerr<<"calling Group destructor of "<<this->_imp.getName()<<std::endl;
 	close();
 }
 
