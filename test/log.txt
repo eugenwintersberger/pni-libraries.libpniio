@@ -1,0 +1,185 @@
+..FILENAME: /
+calling Group destructor of 
+FF..void NXFileH5Implementation::open(const char *n,bool readonly) from 
+Error opening file test.2.h5 in read/write mode!
+HDF5 Errors (5 error records):
+HDF5 - Error in: H5Fopen (../../../src/H5F.c)
+unable to open file: File accessability -- Unable to open file
+
+HDF5 - Error in: H5F_open (../../../src/H5F.c)
+unable to open file: File accessability -- Unable to open file
+
+HDF5 - Error in: H5FD_open (../../../src/H5FD.c)
+open failed: Virtual File Layer -- Unable to initialize object
+
+HDF5 - Error in: H5FD_sec2_open (../../../src/H5FDsec2.c)
+unable to open file: File accessability -- Unable to open file
+
+HDF5 - Error in: H5FD_sec2_open (../../../src/H5FDsec2.c)
+No such file or directory: Internal error (too specific to document in detail) -- System error message
+
+
+in line: 69 of file src/h5/NXFileH5Implementation.cpp
+
+calling Group destructor of 
+..calling Group destructor of 
+..void NXObjectH5Implementation::_create_and_write_attribute(hid_t pid,char *n,hid_t type_id,hid_t space_id,void *ptr) from 
+Error creating array attribute [StringAttribute]!
+HDF5 Errors (2 error records):
+HDF5 - Error in: H5Acreate2 (../../../src/H5A.c)
+unable to create attribute: Attribute -- Unable to initialize object
+
+HDF5 - Error in: H5A_create (../../../src/H5A.c)
+attribute already exists: Attribute -- Object already exists
+
+
+in line: 62 of file src/h5/NXObjectH5Implementation.cpp
+
+void NXObjectH5Implementation::setAttribute(const char *n,String &s) from 
+Cannot create and write attribute StringAttribute!
+HDF5 Errors (0 error records):
+
+in line: 175 of file src/h5/NXObjectH5Implementation.cpp
+
+void NXObjectH5Implementation::_create_and_write_attribute(hid_t pid,char *n,hid_t type_id,hid_t space_id,void *ptr) from 
+Error creating array attribute [FloatScalarAttribute]!
+HDF5 Errors (2 error records):
+HDF5 - Error in: H5Acreate2 (../../../src/H5A.c)
+unable to create attribute: Attribute -- Unable to initialize object
+
+HDF5 - Error in: H5A_create (../../../src/H5A.c)
+attribute already exists: Attribute -- Object already exists
+
+
+in line: 62 of file src/h5/NXObjectH5Implementation.cpp
+
+void NXObjectH5Implementation::setAttribute(const char *n,ScalarObject &a) from 
+Cannot create and write attribute FloatScalarAttribute!
+HDF5 Errors (0 error records):
+
+in line: 147 of file src/h5/NXObjectH5Implementation.cpp
+
+void NXObjectH5Implementation::_create_and_write_attribute(hid_t pid,char *n,hid_t type_id,hid_t space_id,void *ptr) from 
+Error creating array attribute [IndexOfRefraction]!
+HDF5 Errors (2 error records):
+HDF5 - Error in: H5Acreate2 (../../../src/H5A.c)
+unable to create attribute: Attribute -- Unable to initialize object
+
+HDF5 - Error in: H5A_create (../../../src/H5A.c)
+attribute already exists: Attribute -- Object already exists
+
+
+in line: 62 of file src/h5/NXObjectH5Implementation.cpp
+
+void NXObjectH5Implementation::setAttribute(const char *n,ScalarObject &a) from 
+Cannot create and write attribute IndexOfRefraction!
+HDF5 Errors (0 error records):
+
+in line: 147 of file src/h5/NXObjectH5Implementation.cpp
+
+void NXObjectH5Implementation::_create_and_write_attribute(hid_t pid,char *n,hid_t type_id,hid_t space_id,void *ptr) from 
+Error creating array attribute [ArrayAttribute]!
+HDF5 Errors (2 error records):
+HDF5 - Error in: H5Acreate2 (../../../src/H5A.c)
+unable to create attribute: Attribute -- Unable to initialize object
+
+HDF5 - Error in: H5A_create (../../../src/H5A.c)
+attribute already exists: Attribute -- Object already exists
+
+
+in line: 62 of file src/h5/NXObjectH5Implementation.cpp
+
+void NXObjectH5Implementation::setAttribute(const char *n,ArrayObject &a) from 
+Cannot create and write attribute ArrayAttribute!
+HDF5 Errors (0 error records):
+
+in line: 120 of file src/h5/NXObjectH5Implementation.cpp
+
+void NXObjectH5Implementation::_open_attribute(hid_t pid,const char *n,hid_t &attr_id,hid_t &type_id,hid_t &space_id) from 
+Error opening array attribute [StringAttribute_not]!
+HDF5 Errors (2 error records):
+HDF5 - Error in: H5Aopen (../../../src/H5A.c)
+unable to load attribute info from object header: Attribute -- Unable to initialize object
+
+HDF5 - Error in: H5O_attr_open_by_name (../../../src/H5Oattribute.c)
+can't locate attribute: Attribute -- Object not found
+
+
+in line: 85 of file src/h5/NXObjectH5Implementation.cpp
+
+void NXObjectH5Implementation::getAttribute(const char *n,String &s) from 
+Error opening attribute StringAttribute_not for reading!
+HDF5 Errors (0 error records):
+
+in line: 262 of file src/h5/NXObjectH5Implementation.cpp
+
+void NXObjectH5Implementation::_open_attribute(hid_t pid,const char *n,hid_t &attr_id,hid_t &type_id,hid_t &space_id) from 
+Error opening array attribute [FloatScalarAttribute_not]!
+HDF5 Errors (2 error records):
+HDF5 - Error in: H5Aopen (../../../src/H5A.c)
+unable to load attribute info from object header: Attribute -- Unable to initialize object
+
+HDF5 - Error in: H5O_attr_open_by_name (../../../src/H5Oattribute.c)
+can't locate attribute: Attribute -- Object not found
+
+
+in line: 85 of file src/h5/NXObjectH5Implementation.cpp
+
+void NXObjectH5Implementation::getAttribute(const char *n,ScalarObject &a) from 
+Error opening attribute FloatScalarAttribute_not for reading!
+HDF5 Errors (0 error records):
+
+in line: 231 of file src/h5/NXObjectH5Implementation.cpp
+
+void NXObjectH5Implementation::_open_attribute(hid_t pid,const char *n,hid_t &attr_id,hid_t &type_id,hid_t &space_id) from 
+Error opening array attribute [ArrayAttribute_not]!
+HDF5 Errors (2 error records):
+HDF5 - Error in: H5Aopen (../../../src/H5A.c)
+unable to load attribute info from object header: Attribute -- Unable to initialize object
+
+HDF5 - Error in: H5O_attr_open_by_name (../../../src/H5Oattribute.c)
+can't locate attribute: Attribute -- Object not found
+
+
+in line: 85 of file src/h5/NXObjectH5Implementation.cpp
+
+void NXObjectH5Implementation::getAttribute(const char *n,ArrayObject &a) from 
+Error opening attribute ArrayAttribute_not for reading!
+HDF5 Errors (0 error records):
+
+in line: 195 of file src/h5/NXObjectH5Implementation.cpp
+
+void NXObjectH5Implementation::_open_attribute(hid_t pid,const char *n,hid_t &attr_id,hid_t &type_id,hid_t &space_id) from 
+Error opening array attribute [IndexOfRefraction_not]!
+HDF5 Errors (2 error records):
+HDF5 - Error in: H5Aopen (../../../src/H5A.c)
+unable to load attribute info from object header: Attribute -- Unable to initialize object
+
+HDF5 - Error in: H5O_attr_open_by_name (../../../src/H5Oattribute.c)
+can't locate attribute: Attribute -- Object not found
+
+
+in line: 85 of file src/h5/NXObjectH5Implementation.cpp
+
+void NXObjectH5Implementation::getAttribute(const char *n,ScalarObject &a) from 
+Error opening attribute IndexOfRefraction_not for reading!
+HDF5 Errors (0 error records):
+
+in line: 231 of file src/h5/NXObjectH5Implementation.cpp
+
+calling Group destructor of 
+
+
+
+
+!!!FAILURES!!!
+Test Results:
+Run:  4   Failures: 1   Errors: 0
+
+
+1) test: NXFileTest::testCreation (F) line: 58 test/NXFileTest.cpp
+assertion failed
+- Expression: f.getName()==_fname1
+
+
+done!

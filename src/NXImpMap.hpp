@@ -14,6 +14,7 @@
 #include "h5/NXFileH5Implementation.hpp"
 #include "h5/NXGroupH5Implementation.hpp"
 #include "h5/NXFieldH5Implementation.hpp"
+#include "h5/NXSelectionH5Implementation.hpp"
 
 namespace pni{
 namespace nx{
@@ -24,6 +25,7 @@ public:
 	typedef void GroupImplementation;
 	typedef void FileImplementatoin;
 	typedef void FieldImplementation;
+	typedef void SelectionImplementation;
 
 };
 
@@ -33,6 +35,7 @@ public:
 	typedef nx::h5::NXFileH5Implementation FileImplementation;
 	typedef nx::h5::NXGroupH5Implementation GroupImplementation;
 	typedef nx::h5::NXFieldH5Implementation FieldImplementation;
+	typedef nx::h5::NXSelectionH5Implementation SelectionImplementation;
 };
 
 }

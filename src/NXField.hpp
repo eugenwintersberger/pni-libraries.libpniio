@@ -17,6 +17,7 @@
 
 #include "NXObject.hpp"
 #include "NXExceptions.hpp"
+#include "NXSelection.hpp"
 
 using namespace pni::utils;
 
@@ -25,6 +26,9 @@ namespace nx{
 
 template<typename Imp>
 class NXField:public NXObject<Imp> {
+private:
+	ArrayObject *_iobuffer;
+	NXSelection<typename NXImpMap<Imp::IMPCODE>::SelectionImplementation > *_selection;
 public:
 	typedef boost::shared_ptr<NXField<Imp> > sptr;
 	NXField();
@@ -68,15 +72,19 @@ public:
 	}
 
 	//need something like a selection object to fetch only the data needed
-	virtual void setSelection(){
+	virtual void registerSelection(const NXSelection<typename NXImpMap<Imp::IMPCODE>::SelectionImplementation > &s){
+		this->_imp.registerSelection(s);
+	}
 
+	void resetSelection(){
+		this->_imp.resetSelection();
 	}
 
 	//need methods to access data stored in the field
 	void write(ArrayObject::sptr a);
-	void write(ArrayObject::sptr a,const Selection &s);
+	void write(ArrayObject::sptr a,const NXSelection<typename NXImpMap<Imp::IMPCODE>::SelectionImplementation > &s);
 	void write(ArrayObject &a);
-	void write(ArrayObject &a,const Selection &s);
+	void write(ArrayObject &a,const NXSelection<typename NXImpMap<Imp::IMPCODE>::SelectionImplementation > &s);
 	void write(ScalarObject &s);
 	void write(ScalarObject::sptr s);
 	void write(String &s);
@@ -84,9 +92,9 @@ public:
 
 	//need methods to write data to the field
 	void read(ArrayObject::sptr a) const;
-	void read(ArrayObject::sptr a,const Selection &s);
+	void read(ArrayObject::sptr a,const NXSelection<typename NXImpMap<Imp::IMPCODE>::SelectionImplementation > &s);
 	void read(ArrayObject &a) const;
-	void read(ArrayObject &a,const Selection &s);
+	void read(ArrayObject &a,const NXSelection<typename  NXImpMap<Imp::IMPCODE>::SelectionImplementation > &s);
 	void read(ScalarObject::sptr s) const;
 	void read(ScalarObject &s) const;
 	void read(String &s) const;
@@ -151,6 +159,41 @@ template<typename Imp> void NXField<Imp>::write(ArrayObject &a){
 	}
 }
 
+template<typename Imp>
+void NXField<Imp>::write(ArrayObject &a,const NXSelection<typename NXImpMap<Imp::IMPCODE>::SelectionImplementation > &s){
+	EXCEPTION_SETUP("template<typename Imp> template<typename SImp> void NXField<Imp>::write(ArrayObject &a,const NXSelection<SImp> &s)");
+
+	if(!(this->_imp.isArray())){
+		EXCEPTION_INIT(NXFieldError,"Field ["+getName()+"] is not of array type!");
+		EXCEPTION_THROW();
+	}
+
+	//check the data type of the object and the field
+	if(a.getTypeID()!=this->_imp.getTypeID()){
+		EXCEPTION_INIT(TypeError,"Array and field type do not match!");
+		EXCEPTION_THROW();
+	}
+
+	//have to do here some checking
+	if(a.getShape()!=s.getMemShape()){
+		EXCEPTION_INIT(ShapeMissmatchError,"Array and field shape do not match!");
+		EXCEPTION_THROW();
+	}
+
+	this->_imp.setSelection(s);
+	try{
+		this->_imp.write(a.getBuffer().getVoidPtr());
+	}catch(...){
+		EXCEPTION_INIT(NXFieldError,"Error writing array data to field ["+getName()+"]!");
+		EXCEPTION_THROW();
+	}
+}
+
+template<typename Imp>
+void NXField<Imp>::write(ArrayObject::sptr a,const NXSelection<typename NXImpMap<Imp::IMPCODE>::SelectionImplementation > &s){
+	write(*a,s);
+}
+
 template<typename Imp> void NXField<Imp>::write(ArrayObject::sptr a){
 	write(*a);
 }
@@ -207,6 +250,7 @@ template<typename Imp> void NXField<Imp>::write(String &s){
 template<typename Imp> void NXField<Imp>::read(ArrayObject::sptr a) const{
 	read(*a);
 }
+
 template<typename Imp> void NXField<Imp>::read(ArrayObject &a) const{
 	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::read(ArrayObject &a) const");
 
@@ -241,6 +285,49 @@ template<typename Imp> void NXField<Imp>::read(ArrayObject &a) const{
 		EXCEPTION_INIT(NXFieldError,"Cannot read array data from field ["+this->_imp.getName()+"]!");
 		EXCEPTION_THROW();
 	}
+}
+
+template<typename Imp>
+void NXField<Imp>::read(ArrayObject &a,const NXSelection<typename NXImpMap<Imp::IMPCODE>::SelectionImplementation > &s){
+	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::read(ArrayObject &a) const");
+
+	if(!(this->_imp.isArray())){
+		EXCEPTION_INIT(NXFieldError,"Field ["+this->_imp.getName()+"] is not of array type!");
+		EXCEPTION_THROW();
+	}
+
+	if(a.getTypeID() != this->_imp.getTypeID()){
+		EXCEPTION_INIT(TypeError,"Type of field ["+this->_imp.getName()+"] does not match target type!");
+		EXCEPTION_THROW();
+	}
+
+	//get the shape of the field to read
+	ArrayShape smem = s.getMemShape();
+
+	//the shape of the target array and that of the field
+	if(a.getShape().getRank()!=0){
+		if(smem != a.getShape()){
+			a.setShape(smem);
+			a.allocate();
+		}
+	}else{
+		a.setShape(smem);
+		a.allocate();
+	}
+
+	this->_imp.setSelection(s);
+
+	try{
+		this->_imp.read((void *)a.getBuffer().getVoidPtr());
+	}catch(...){
+		EXCEPTION_INIT(NXFieldError,"Cannot read array data from field ["+this->_imp.getName()+"]!");
+		EXCEPTION_THROW();
+	}
+}
+
+template<typename Imp>
+void NXField<Imp>::read(ArrayObject::sptr a,const NXSelection<typename NXImpMap<Imp::IMPCODE>::SelectionImplementation > &s){
+	read(*a,s);
 }
 
 template<typename Imp> void NXField<Imp>::read(ScalarObject::sptr s) const{

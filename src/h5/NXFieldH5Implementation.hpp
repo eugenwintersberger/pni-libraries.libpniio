@@ -14,6 +14,7 @@
 #include "NXObjectH5Implementation.hpp"
 #include "H5TypeFactory.hpp"
 #include "../NXFilter.hpp"
+#include "../NXSelection.hpp"
 
 using namespace pni::utils;
 
@@ -45,11 +46,6 @@ protected:
 	//the following tow data spaces are required to make use
 	//of selections
 	hid_t _mem_space; //!< data space in memory
-	hsize_t *_offset;
-	hsize_t *_count;
-
-	void _allocate_selection_buffers(UInt32 n);
-	void _free_selection_buffers();
 
 	virtual void create(const String &n,const NXObjectH5Implementation &o);
 public:
@@ -87,7 +83,11 @@ public:
 		H5Pset_shuffle(_creation_plist);
 	}
 
-	void setSelection(const Selection &s);
+	//register a selection at the field
+	template<typename Imp> void registerSelection(const pni::nx::NXSelection<Imp> &s);
+	//set a selection (update)
+	template<typename Imp> void setSelection(const pni::nx::NXSelection<Imp> &s);
+	//reset the selection
 	void resetSelection();
 
 	virtual UInt32 getRank() const;
@@ -115,6 +115,29 @@ public:
 	friend class NXGroupH5Implementation;
 };
 
+template<typename Imp>
+void NXFieldH5Implementation::registerSelection(const pni::nx::NXSelection<Imp> &s){
+	EXCEPTION_SETUP("template<typename Imp> void NXFieldH5Implementation::registerSelection(const pni::nx::NXSelection<Imp> &s)");
+
+	if(s.getDiskRank() == 0){
+		//raise some error here
+	}
+
+	if(H5Iis_valid(_mem_space)) H5Sclose(_mem_space);
+
+	_mem_space = s.getMemSpace();
+}
+
+
+
+
+template<typename Imp>
+void NXFieldH5Implementation::setSelection(const pni::nx::NXSelection<Imp> &s){
+	EXCEPTION_SETUP("template<typename Imp> void NXFieldH5Implementation::setSelection(const pni::nx::NXSelection<Imp> &s)");
+
+	H5Sselect_hyperslab(_space_id,H5S_SELECT_SET,s.getOffset(),NULL,s.getCount(),NULL);
+
+}
 
 //end of namespace
 }

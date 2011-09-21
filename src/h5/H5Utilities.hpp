@@ -11,6 +11,7 @@
 #include <pni/utils/ArrayShape.hpp>
 #include <pni/utils/PNITypes.hpp>
 #include <pni/utils/Exceptions.hpp>
+#include <pni/utils/Selection.hpp>
 
 extern "C"{
 #include <hdf5.h>
@@ -42,7 +43,12 @@ public:
 	//! \param dspace data space id
 	//! \param s ArrayShape object
 	static void DataSpace2ArrayShape(const hid_t &dspace,ArrayShape &s);
+	//! Selection from dataspace
+
+	//! Creates a selection that is appropriate for a given data space.
+	//! This means that the buffers of the selection are allocated properly.
 	static void DataSpace2Selection(const hid_t &dspace,Selection &s);
+
 	static void Selection2DataSpace(const Selection &s,hid_t &dspace);
 	static PNITypeID H5Type2PNITypeCode(const hid_t tid);
 };

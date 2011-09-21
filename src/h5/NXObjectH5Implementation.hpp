@@ -46,6 +46,8 @@ private:
 	NXObjectH5Implementation(const NXObjectH5Implementation &o){}
 
 	hid_t  _id;    //!< handler of the object this class referes too
+protected:
+
 public:
 	typedef boost::shared_ptr<NXObjectH5Implementation> sptr;
 	static const ImpCodes IMPCODE = HDF5;
