@@ -18,7 +18,7 @@ void NXGroupTest::setUp(){
 	Index i;
 	_f.close();
 	_f.setFileName(_fname);
-	_f.setOverwrite();
+	_f.setOverwrite(true);
 	CPPUNIT_ASSERT_NO_THROW(_f.create());
 
 

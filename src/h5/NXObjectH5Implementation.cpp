@@ -115,15 +115,15 @@ void NXObjectH5Implementation::_open_attribute(hid_t pid,const char *n,
 //------------------------------------------------------------------------------
 void NXObjectH5Implementation::setAttribute(const char *n,ArrayObject &a){
 	EXCEPTION_SETUP("void NXObjectH5Implementation::setAttribute(const char *n,ArrayObject &a)");
-	hid_t tid;   //id of the data type
-	hid_t setid; //id of the data set
+	hid_t tid = 0;   //id of the data type
+	hid_t setid = 0; //id of the data set
 	const ArrayShape &s = a.getShape();
 
 	//determine the data type of the array object
 	tid = H5TFactory.getTypeFromID(a.getTypeID());
 
 	//create the dataspace
-	H5Utilities::ArrayShape2DataSpace(s,setid);
+	H5Utilities::ArrayShape2DataSpace(a.getShape(),setid);
 
 	//create the attribute and write the data
 	try{
@@ -140,8 +140,8 @@ void NXObjectH5Implementation::setAttribute(const char *n,ArrayObject &a){
 //------------------------------------------------------------------------------
 void NXObjectH5Implementation::setAttribute(const char *n,ScalarObject &d){
 	EXCEPTION_SETUP("void NXObjectH5Implementation::setAttribute(const char *n,ScalarObject &a)");
-	hid_t tid;   //id of the data type
-	hid_t setid; //id of the data set
+	hid_t tid = 0;   //id of the data type
+	hid_t setid = 0; //id of the data set
 
 	//determine the data type of the array object
 	tid = H5TFactory.getTypeFromID(d.getTypeID());

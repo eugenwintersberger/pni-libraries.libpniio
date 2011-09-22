@@ -45,7 +45,7 @@ int main(int argc,char **argv){
 	a = 1;
 
 	f.setFileName("bmark.h5");
-	f.setOverwrite();
+	f.setOverwrite(true);
 	f.create();
 
 	runs = 500;

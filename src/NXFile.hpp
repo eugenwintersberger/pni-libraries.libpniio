@@ -50,16 +50,12 @@ public:
 	//! returns true if the file is in read only mode
 	virtual bool isReadOnly() const;
 	//! set file to read only
-	virtual void setReadOnly();
-	//! set file to append mode (write access)
-	virtual void unsetReadOnly();
+	virtual void setReadOnly(bool v);
 
 	//! return true if existing file will be overwritten
-	virtual bool isOverrite() const;
+	virtual bool isOverwrite() const;
 	//! set file to overwrite mode
-	virtual void setOverwrite();
-	//! unset file from overwrite
-	virtual void unsetOverwrite();
+	virtual void setOverwrite(bool v);
 
 	//! set the split size
 	virtual void setSplitSize(UInt64 ssize);
@@ -108,25 +104,19 @@ template<typename Imp> bool NXFile<Imp>::isReadOnly() const{
 	return _read_only;
 }
 
-template<typename Imp> void NXFile<Imp>::setReadOnly(){
-	_read_only = true;
+template<typename Imp> void NXFile<Imp>::setReadOnly(bool v){
+	_read_only = v;
 }
 
-template<typename Imp> void NXFile<Imp>::unsetReadOnly(){
-	_read_only = false;
-}
 
-template<typename Imp> bool NXFile<Imp>::isOverrite() const{
+template<typename Imp> bool NXFile<Imp>::isOverwrite() const{
 	return _overwrite;
 }
 
-template<typename Imp> void NXFile<Imp>::setOverwrite(){
-	_overwrite = true;
+template<typename Imp> void NXFile<Imp>::setOverwrite(bool v){
+	_overwrite = v;
 }
 
-template<typename Imp> void NXFile<Imp>::unsetOverwrite(){
-	_overwrite = false;
-}
 
 template<typename Imp> void NXFile<Imp>::setSplitSize(UInt64 ssize){
 	_split_size = ssize;

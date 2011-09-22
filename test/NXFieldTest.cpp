@@ -18,7 +18,7 @@ void NXFieldTest::setUp(){
 	_fname = "test.field.h5";
 	Index i;
 	_f.setFileName(_fname);
-	_f.setOverwrite();
+	_f.setOverwrite(true);
 	_f.create();
 
 
@@ -150,7 +150,6 @@ void NXFieldTest::testSelection(){
 	ArrayShape sdisk(3);
 	ArrayShape sframe(2);
 
-
 	//setup shape for the data on disk
 	sdisk.setDimension(0,100);
 	sdisk.setDimension(1,1024);sdisk.setDimension(2,512);
@@ -174,7 +173,7 @@ void NXFieldTest::testSelection(){
 
 	for(UInt32 i=0;i<sdisk.getDimension(0);i++){
 		ain = i;
-		CPPUNIT_ASSERT_NO_THROW(data.write(ain,sel));
+		data.write(ain);
 		sel.incOffset(0);
 	}
 
@@ -182,7 +181,53 @@ void NXFieldTest::testSelection(){
 	sel.setOffset(0,0);
 	for(UInt32 i=0;i<sdisk.getDimension(0);i++){
 		ain = i;
-		CPPUNIT_ASSERT_NO_THROW(data.read(aout,sel));
+		data.read(aout);
+		sel.incOffset(0);
+		CPPUNIT_ASSERT(ain == aout);
+	}
+
+
+}
+
+void NXFieldTest::testSelectionFast(){
+	NXSelection sel;
+	ArrayShape sdisk(3);
+	ArrayShape sframe(2);
+
+	//setup shape for the data on disk
+	sdisk.setDimension(0,100);
+	sdisk.setDimension(1,1024);sdisk.setDimension(2,512);
+
+	//setup the shape for a single frame
+	sframe.setDimension(0,1024); sframe.setDimension(1,512);
+
+	//setup the selection object
+	sel.setDiskRank(sdisk.getRank());
+	sel.setOffset(0,0); sel.setOffset(1,0); sel.setOffset(2,0);
+	sel.setCount(0,1); sel.setCount(1,1024); sel.setCount(2,512);
+
+	CPPUNIT_ASSERT(sel.getMemShape().getRank() == sframe.getRank());
+	CPPUNIT_ASSERT(sel.getMemShape() == sframe);
+
+	Int32Array ain(sframe);
+	Int32Array aout(sframe);
+
+	NXField data = _f.createField("data",INT32,sdisk);
+	CPPUNIT_ASSERT_NO_THROW(data.registerSelection(sel));
+	CPPUNIT_ASSERT_NO_THROW(data.registerDataObject(ain));
+
+	for(UInt32 i=0;i<sdisk.getDimension(0);i++){
+		ain = i;
+		data.write();
+		sel.incOffset(0);
+	}
+
+	//read data back
+	sel.setOffset(0,0);
+	data.registerDataObject(aout);
+	for(UInt32 i=0;i<sdisk.getDimension(0);i++){
+		ain = i;
+		data.read();
 		sel.incOffset(0);
 		CPPUNIT_ASSERT(ain == aout);
 	}
@@ -238,7 +283,7 @@ void NXFieldTest::testReadData(){
 	dset.write(_f64_data_array_write);
 	CPPUNIT_ASSERT_NO_THROW(dset.write(_f64_data_array_write));
 
-	Float64Array reader;
+	Float64Array reader(dset.getShape());
 	CPPUNIT_ASSERT_NO_THROW(dset.read(reader));
 	ArrayShape shape(2);
 	shape.setDimension(0,dims[0]);

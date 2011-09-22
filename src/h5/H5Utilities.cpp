@@ -22,11 +22,16 @@ void H5Utilities::ArrayShape2DataSpace(const ArrayShape &s,hid_t &dspace){
 	//get the rank of the array
 	UInt32 rank = s.getRank();
 	if(rank == 0){
-		//do some error handling here
+		EXCEPTION_INIT(SizeMissmatchError,"Cannot create a dataspace from a rank 0 shape!");
+		EXCEPTION_THROW();
 	}
 
 	//set the dimension array
 	dims = new hsize_t[rank];
+	if(dims==NULL){
+		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for data space dimensions!");
+		EXCEPTION_THROW();
+	}
 	for(UInt32 i=0;i<rank;i++) dims[i] = s.getDimension(i);
 
 	dspace = H5Screate_simple(rank,dims,NULL);
@@ -42,7 +47,7 @@ void H5Utilities::ArrayShape2DataSpace(const ArrayShape &s,hid_t &dspace){
 void H5Utilities::DataSpace2ArrayShape(const hid_t &dspace,ArrayShape &s){
 	EXCEPTION_SETUP("void H5Utilities::DataSpace2ArrayShape(const hid_t &dspace,ArrayShape &s)");
 	UInt32 rank;
-	hsize_t *dims;
+	hsize_t *dims = NULL;
 
 	rank = H5Sget_simple_extent_ndims(dspace);
 	if(rank < 0){
@@ -51,6 +56,10 @@ void H5Utilities::DataSpace2ArrayShape(const hid_t &dspace,ArrayShape &s){
 	}
 
 	dims = new hsize_t[rank];
+	if(dims == NULL){
+		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for data-space dimension buffer!");
+		EXCEPTION_THROW();
+	}
 	rank = H5Sget_simple_extent_dims(dspace,dims,NULL);
 	if(rank < 0){
 		EXCEPTION_INIT(H5DataSpaceError,"Cannot obtain data-space dimensions!");

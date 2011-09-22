@@ -44,7 +44,7 @@ void NXFileH5Implementation::open(const char *n,bool readonly){
 
 	//check if the file is a valid HDF5 file
 	if(!H5Fis_hdf5(n)){
-		EXCEPTION_INIT(H5FileError,"File ["+String(n)+" is not an HDF5 file!");
+		EXCEPTION_INIT(H5FileError,"File ["+String(n)+"] is not an HDF5 file!");
 		EXCEPTION_THROW();
 	}
 

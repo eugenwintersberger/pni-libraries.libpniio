@@ -8,8 +8,8 @@
 CPPUNIT_TEST_SUITE_REGISTRATION(NXFileTest);
 
 void NXFileTest::setUp(){
-	_fname1 = "test.1.h5";
-	_fname2 = "test.2.h5";
+	_fname1 = "test.file-1.h5";
+	_fname2 = "test.file-2.h5";
 	Index i;
 
 	_write_str_attr = "hello world";
@@ -41,10 +41,8 @@ void NXFileTest::setUp(){
 
 void NXFileTest::tearDown(){
 	//after finishing the tests we need to remove all created files
-	path path1(_fname1);
 	path path2(_fname2);
 
-	if(exists(path1)) remove_all(path1);
 	if(exists(path2)) remove_all(path2);
 }
 
@@ -52,15 +50,17 @@ void NXFileTest::testCreation(){
 	NXFile f;
 
 	//initially create the file
-	f.setFileName(_fname1);
-	f.create();
-	f.close();
+	CPPUNIT_ASSERT_NO_THROW(f.setFileName(_fname1));
+	CPPUNIT_ASSERT_NO_THROW(f.setOverwrite(true));
+	CPPUNIT_ASSERT_NO_THROW(f.create());
+	CPPUNIT_ASSERT_NO_THROW(f.close());
 
 	//recreating the file should cause an error
+	f.setOverwrite(false);
 	CPPUNIT_ASSERT_THROW(f.create(),H5FileError); //here we except an error
 
 	//now if we set overwrite
-	f.setOverwrite();
+	f.setOverwrite(true);
 	//everything should work fine
 	CPPUNIT_ASSERT_NO_THROW(f.create());
 
@@ -72,8 +72,8 @@ void NXFileTest::testOpen(){
 	NXFile f;
 
 	f.setFileName(_fname1);
-	f.setOverwrite();
-	f.unsetReadOnly();
+	f.setOverwrite(true);
+	f.setReadOnly(false);
 	f.create();
 	f.close();
 
@@ -97,7 +97,7 @@ void NXFileTest::testAttributes(){
 
 	//create a new file
 	f.setFileName(_fname1);
-	f.setOverwrite();
+	f.setOverwrite(true);
 	f.create();
 
 	//write attribute data
@@ -130,7 +130,7 @@ void NXFileTest::testAttributeExceptions(){
 
 	//create a new file
 	f.setFileName(_fname1);
-	f.setOverwrite();
+	f.setOverwrite(true);
 	f.create();
 
 	//write attribute data
