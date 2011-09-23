@@ -108,6 +108,7 @@ public:
 
 	virtual void createLink(const NXObjectH5Implementation &pos,const String &n);
 	virtual void createLink(const String &path);
+
 };
 
 

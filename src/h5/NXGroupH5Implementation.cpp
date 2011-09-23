@@ -23,12 +23,14 @@ namespace nx{
 namespace h5{
 
 
+//------------------------------------------------------------------------------
 NXGroupH5Implementation::NXGroupH5Implementation()
                         :NXObjectH5Implementation(){
 	EXCEPTION_SETUP("NXGroupH5Implementation::NXGroupH5Implementation()"
 			        ":NXObjectH5Implementation()");
 }
 
+//------------------------------------------------------------------------------
 NXGroupH5Implementation::~NXGroupH5Implementation() {
 	//close a Group if it is no longer needed
 	//clearly the parent ID must not be closed since it might be hold
@@ -36,6 +38,7 @@ NXGroupH5Implementation::~NXGroupH5Implementation() {
 	close();
 }
 
+//------------------------------------------------------------------------------
 void NXGroupH5Implementation::create(const String &n,const NXObjectH5Implementation &o){
 	EXCEPTION_SETUP("void NXGroupH5Implementation::create(const String &n,const NXObjectH5Implementation &o)");
 
@@ -66,6 +69,7 @@ void NXGroupH5Implementation::create(const String &n,const NXObjectH5Implementat
 
 }
 
+//------------------------------------------------------------------------------
 NXGroupH5Implementation &
 NXGroupH5Implementation::operator=(const NXGroupH5Implementation &o){
 	EXCEPTION_SETUP("NXGroupH5Implementation::operator=(const "
@@ -78,6 +82,7 @@ NXGroupH5Implementation::operator=(const NXGroupH5Implementation &o){
 	return *this;
 }
 
+//------------------------------------------------------------------------------
 void NXGroupH5Implementation::createGroup(const char *n,
 		NXGroupH5Implementation &imp) {
 	EXCEPTION_SETUP("void NXGroupH5Implementation::createGroup(const char *n,"
@@ -91,7 +96,7 @@ void NXGroupH5Implementation::createGroup(const char *n,
 	}
 }
 
-
+//------------------------------------------------------------------------------
 void NXGroupH5Implementation::openGroup(const char *n,
 		                                NXGroupH5Implementation &imp){
 	EXCEPTION_SETUP("void NXGroupH5Implementation::openGroup(const char *n,"
@@ -107,6 +112,7 @@ void NXGroupH5Implementation::openGroup(const char *n,
 	imp.setId(id);
 }
 
+//------------------------------------------------------------------------------
 void NXGroupH5Implementation::openField(const char *n,
 		                                NXFieldH5Implementation &imp){
 	EXCEPTION_SETUP("void NXGroupH5Implementation::openField(const char *n,"
@@ -120,6 +126,7 @@ void NXGroupH5Implementation::openField(const char *n,
 	}
 }
 
+//------------------------------------------------------------------------------
 //create a field for array data
 void NXGroupH5Implementation::createField(const char *n, PNITypeID tid,
 		                                  UInt32 rank, const UInt32 *dims,
@@ -138,8 +145,7 @@ void NXGroupH5Implementation::createField(const char *n, PNITypeID tid,
 	}
 }
 
-
-
+//------------------------------------------------------------------------------
 void NXGroupH5Implementation::createField(const char *n, PNITypeID tid,
 		                                  NXFieldH5Implementation &imp){
 	EXCEPTION_SETUP("void NXGroupH5Implementation::createField(const char *n, "
@@ -155,6 +161,7 @@ void NXGroupH5Implementation::createField(const char *n, PNITypeID tid,
 	}
 }
 
+//------------------------------------------------------------------------------
 void NXGroupH5Implementation::createField(const char *n, UInt64 size,
 		                                  NXFieldH5Implementation &imp){
 	EXCEPTION_SETUP("void NXGroupH5Implementation::createStringField("
@@ -170,32 +177,33 @@ void NXGroupH5Implementation::createField(const char *n, UInt64 size,
 	}
 }
 
+//------------------------------------------------------------------------------
+void NXGroupH5Implementation::remove(const String &n){
+	EXCEPTION_SETUP("void NXGroupH5Implementation::remove(const String &n)");
+	herr_t retval;
 
-/*
-void NXGroupH5Implementation::createLink(const String &s,const String &d){
-	String source_file;
-	String source_path;
+	retval = H5Ldelete(getId(),n.c_str(),H5P_DEFAULT);
+	if(retval < 0){
+		EXCEPTION_INIT(H5GroupError,"Cannot delete object ["+n+"] from group ["+getName()+"]!");
+		EXCEPTION_THROW();
+	}
+}
 
-	//we first need to check for external or internal links - only the
-	//source must contain an external path file:/path/to/object
-	size_t spos = s.find_first_of(":");
-	if(spos == String::npos){
-		//the source path is not an external location
-		source_file.clear();
-		source_path = s;
-	}else{
-		source_file = String(s,0,spos);
-		source_path = String(s,spos+1,(s.size()-spos-1));
+bool NXGroupH5Implementation::exists(const String &n) const {
+	EXCEPTION_SETUP("bool NXGroupH5Implementation::exists(const String &n) const");
+
+	htri_t retval;
+
+	retval = H5Lexists(getId(),n.c_str(),H5P_DEFAULT);
+	if(retval<0) {
+		EXCEPTION_INIT(H5GroupError,"Cannot check existance of objec ["+n+"]!");
+		EXCEPTION_THROW();
 	}
 
-	if(source_file.empty()){
-		//create an internal link
-		//H5Lcreate_soft((const char *)source_path.c_str(),_id,(const char *)d.c_str(),_gcreate_plist,H5P_DEFAULT);
-	}else{
-		//create an external link
+	return retval;
+}
 
-	}
-}*/
+
 
 //end of namespace
 }

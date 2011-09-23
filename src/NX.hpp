@@ -13,8 +13,6 @@
 #include "NXGroup.hpp"
 #include "NXFilter.hpp"
 #include "h5/NXFileH5Implementation.hpp"
-//#include "NXObjectH5Implementation.hpp"
-//#include "NXFileXMLImplementation.hpp"
 #include "h5/NXGroupH5Implementation.hpp"
 #include "h5/NXFieldH5Implementation.hpp"
 #include "h5/H5TypeFactory.hpp"

@@ -61,6 +61,9 @@ public:
 	//! open an existing field
 	virtual void openField(const char *n,NXFieldH5Implementation &imp);
 
+	virtual void remove(const String &n);
+	virtual bool exists(const String &n) const;
+
 };
 
 template<typename Filter>

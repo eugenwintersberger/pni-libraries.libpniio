@@ -135,6 +135,10 @@ public:
 	//! close the group object
 	virtual void close();
 
+	virtual bool exists(const String &n) const{
+		return this->_imp.exists(n);
+	}
+
 
 };
 

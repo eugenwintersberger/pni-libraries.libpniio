@@ -1,0 +1,2 @@
+admin_guide = PDF("admin-guide.tex")
+Return("admin_guide")

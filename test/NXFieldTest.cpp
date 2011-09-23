@@ -375,10 +375,10 @@ void NXFieldTest::testAttributeExceptions(){
 	f.setAttribute("ArrayAttribute",_write_array_attr);
 
 	//trying to overwrite attributes
-	CPPUNIT_ASSERT_THROW(f.setAttribute("StringAttribute",_write_str_attr),H5AttributeError);
-	CPPUNIT_ASSERT_THROW(f.setAttribute("FloatScalarAttribute",_write_scalar_attr),H5AttributeError);
-	CPPUNIT_ASSERT_THROW(f.setAttribute("IndexOfRefraction",_write_cmplx_scalar),H5AttributeError);
-	CPPUNIT_ASSERT_THROW(f.setAttribute("ArrayAttribute",_write_array_attr),H5AttributeError);
+	CPPUNIT_ASSERT_NO_THROW(f.setAttribute("StringAttribute",_write_str_attr));
+	CPPUNIT_ASSERT_NO_THROW(f.setAttribute("FloatScalarAttribute",_write_scalar_attr));
+	CPPUNIT_ASSERT_NO_THROW(f.setAttribute("IndexOfRefraction",_write_cmplx_scalar));
+	CPPUNIT_ASSERT_NO_THROW(f.setAttribute("ArrayAttribute",_write_array_attr));
 
 	//trying to read attributes that do not exist
 	CPPUNIT_ASSERT_THROW(f.getAttribute("StringAttribute_not",_read_str_attr),H5AttributeError);

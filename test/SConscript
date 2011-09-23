@@ -8,6 +8,8 @@ test_env.Append(CPPPATH=["../src/"])
 
 sources_list = ["pninxtest.cpp"]
 sources_list.extend(["NXFileTest.cpp","NXGroupTest.cpp","NXFieldTest.cpp"])
+#sources_list.extend(["base_classes/NXrootTest.cpp"])
+
 
 pninx_test = test_env.Program("pninxtest",sources_list)
 pninx_bmark = test_env.Program("nxbmark","nxbmark.cpp")

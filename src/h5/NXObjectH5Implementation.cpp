@@ -64,6 +64,17 @@ void NXObjectH5Implementation::_create_and_write_attribute(hid_t pid,const char 
 			          "_create_and_write_attribute(hid_t pid,char *n,"
 			          "hid_t type_id,hid_t space_id,void *ptr)");
 	hid_t aid; //attribute handler
+	htri_t retval;
+
+	//remove attribute if it already exists
+	retval = H5Aexists(pid,n);
+
+	if(retval>0){
+		H5Adelete(pid,n); //delete the attribute if it allready exists
+	}else if(retval < 0){
+		EXCEPTION_INIT(H5AttributeError,"Existence check of attribute ["+String(n)+"] failed!");
+		EXCEPTION_THROW();
+	}
 
 	//create the attribute and check for errors
 	aid = H5Acreate2(pid,n,type_id,space_id,H5P_DEFAULT,H5P_DEFAULT);
@@ -459,6 +470,7 @@ void NXObjectH5Implementation::create(const String &n,const NXObjectH5Implementa
 	EXCEPTION_INIT(NotImplementedError,"Object creation is not supported by this class!");
 	EXCEPTION_THROW();
 }
+
 
 
 
