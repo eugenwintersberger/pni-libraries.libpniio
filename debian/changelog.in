@@ -1,0 +1,5 @@
+libpninx (@VERSION@) unstable; urgency=low
+                   
+  * Initial Release.
+ -- @MAINTAINER@ <@MAINTAINER_MAIL@>  Tue, 24 May 2011 11:15:08 +0200
+ 

@@ -1,0 +1,29 @@
+Source: @SOURCE@
+Priority: extra
+Maintainer: @MAINTAINER@ <@MAINTAINER_MAIL@>
+Build-Depends: debhelper (>= 7.0.50~)
+Standards-Version: 3.9.1
+Section: libs
+Homepage: http://www.eugen-wintersberger.desy.de/libpninx
+
+Package: @PKGNAMEROOT@-dev
+Section: libdevel
+Architecture: any
+Depends: @PKGNAMEROOT@ (= ${binary:Version})
+Description: PNI Nexus library - developer package
+ Provides header files and static libraries necessary to write code 
+ using the PNI Nexus library.
+
+Package: @PKGNAMEROOT@
+Section: libs
+Architecture: any
+Depends: @PKGNAMEROOT@ (=${binary:Version}),${shlibs:Depends}, ${misc:Depends}
+Description: PNI Nexus library
+ PNI Nexus libray.
+
+Package: @PKGNAMEROOT@-doc
+Section: doc
+Architecture: any
+Depends:
+Description: PNI Nexus library - documentation
+ Documentation for the PNI Nexus library.

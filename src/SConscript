@@ -8,56 +8,40 @@ src_list = ["NXExceptions.cpp"]
 shared_objects = build_env.SharedObject(src_list)
 static_objects = build_env.StaticObject(src_list)
 
+#get code for the HDF5 implementation
 (h5_shared_objects,h5_static_objects) = build_env.SConscript("h5/SConscript")
 shared_objects.append(h5_shared_objects)
 static_objects.append(h5_static_objects)
 
-#(bc_shared_objects,bc_static_objects) = build_env.SConscript("base_classes/SConscript")
-#shared_objects.append(bc_shared_objects)
-#static_objects.append(bc_static_objects)
+#create base classes
+(bc_shared_objects,bc_static_objects) = build_env.SConscript("base_classes/SConscript")
+shared_objects.append(bc_shared_objects)
+static_objects.append(bc_static_objects)
 
-#build the shared library
-lib_suffix = build_env["SHLIBSUFFIX"]+"."+build_env["SOVERSION"]+"."\
-             +build_env["VERSION"]
+#link the shared library
+lib_suffix = build_env["SHLIBSUFFIX"]+"."+build_env["SOVERSION"]+"."+build_env["VERSION"]
 temp_shared_library = build_env.SharedLibrary(build_env["LIBNAME"],
                                               shared_objects,
                                               so_version=build_env["SOVERSION"],
                                               SHLIBSUFFIX=lib_suffix+"noperm")
-shared_library = build_env.Command(
-                 build_env["LIBPREFIX"]+build_env["LIBNAME"]+lib_suffix,
-                 temp_shared_library[0],
+                       
+shared_library = build_env.Command("$LIBFULLNAME",temp_shared_library[0],
                  [  Move("$TARGET","$SOURCE"),
                     Chmod("$TARGET",0644)])
-outfile1 = build_env["LIBPREFIX"]+build_env["LIBNAME"]+build_env["SHLIBSUFFIX"]
-shared_library_link = build_env.Command(outfile1,shared_library,
-                      "cd src; ln -s ${SOURCE.file} ${TARGET.file}")
-outfile2 = build_env["LIBPREFIX"]+build_env["LIBNAME"]+build_env["SHLIBSUFFIX"]+"."+build_env["SOVERSION"]
-shared_library_so = build_env.Command(outfile2,shared_library,
-                    "cd src; ln -s ${SOURCE.file} ${TARGET.file}")
+shared_library_link = build_env.Command("$LIBLINKNAME",shared_library,
+                      "cd src; ln -sf ${SOURCE.file} ${TARGET.file}")
+shared_library_so = build_env.Command("$LIBSONAME",shared_library,
+                    "cd src; ln -sf ${SOURCE.file} ${TARGET.file}")
                     
 #build the static library                    
 static_library = build_env.StaticLibrary(build_env["LIBNAME"],static_objects)
 
 #------------------------Package config file creation--------------------------
-fname = build_env["LIBNAME"]+".pc"
+pkg_config_file = build_env.Substfile(source=["pninx.pc.in"],
+				 SUBST_DICT={"@PREFIX@":"$PREFIX","@LIBNAME@":"$LIBNAME",
+				             "@VERSION@":"$VERSION"})
 
-#build the pkg-config file
-pkg_source = ["prefix = %s" %(build_env["PREFIX"]),
-              "exec_prefix = ${prefix}",
-              "includedir = ${prefix}/include/pni/nx",
-              "libdir = ${prefix}/lib","",
-              "Name: %s" %(build_env["LIBNAME"]),
-              "Description: PNI Nexus library",
-              "Version: %s" %(build_env["VERSION"]),
-              "Cflags: -I${includedir}",
-              "Libs: -L${libdir} -l%s" %(build_env["LIBNAME"])]
-
-pkg_config_file = build_env.Textfile(target=build_env["LIBNAME"],
-                                     source=pkg_source,
-                                     TEXTFILESUFFIX=".pc")
-
-
-#-------------------------some build targets -----------------------------------
+#-------------------------some alias targets -----------------------------------
 build_env.Alias("all",[temp_shared_library,shared_library,static_library,
                        pkg_config_file,shared_library_link,shared_library_so])
                        
@@ -68,20 +52,19 @@ build_env.Alias("library",[temp_shared_library,shared_library,static_library,
 lib_inst_path = path.join(build_env["PREFIX"],"lib")
 hdr_inst_path = path.join(build_env["PREFIX"],"include/pni/nx")
 
-shared_library_install = build_env.Install(lib_inst_path,[shared_library,shared_library_link,shared_library_so])
+shared_library_install = build_env.Install(lib_inst_path,[shared_library])
+shared_library_link_install = build_env.Command("${SOURCE.dir}/$LIBLINKNAME",shared_library_install,
+             "cd ${TARGET.dir}; ln -sf ${SOURCE.file} ${TARGET.file}")
+shared_library_so_install = build_env.Command("${SOURCE.dir}/$LIBSONAME",shared_library_install,
+             "cd ${TARGET.dir}; ln -sf ${SOURCE.file} ${TARGET.file}")
+
+
 static_library_install = build_env.Install(lib_inst_path,[static_library])
 
-#after installing the shared library we need to create some links to the shared library file
-#on Unix systems
-#lib_name = str(shared_library[0])
-#inst_path = path.dirname(str(shared_library_install[0]))
-#outfile = build_env["LIBPREFIX"]+build_env["LIBNAME"]+build_env["SHLIBSUFFIX"]+"."+build_env["SOVERSION"]
-#shlink1 = build_env.Command(outfile,lib_name,"cd "+inst_path+"; ln -s ${SOURCE.file} ${TARGET.file}")
-#outfile = build_env["LIBPREFIX"]+build_env["LIBNAME"]+build_env["SHLIBSUFFIX"]
-#shlink2 = build_env.Command(outfile,lib_name,"cd "+inst_path+"; ln -s ${SOURCE.file} ${TARGET.file}")
 
 pkgc_inst = build_env.Install(path.join(lib_inst_path,"pkgconfig"),[pkg_config_file])
 incpniutils_inst = build_env.Install(hdr_inst_path,Glob("*.hpp"))
 
 build_env.Alias("install",[shared_library_install,static_library_install,
+                           shared_library_link_install,shared_library_so_install,
                            incpniutils_inst,pkgc_inst])
