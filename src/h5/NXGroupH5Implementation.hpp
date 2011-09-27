@@ -75,11 +75,17 @@ void NXGroupH5Implementation::createField(const char *n, PNITypeID tid,
 			        "PNITypeID tid,UInt32 rank, const UInt32 *dims,"
 			        "NXFieldH5Implementation &imp)");
 
+	UInt32 *cdims = NULL;
+	UInt32 crank = rank;
+	cdims = new UInt32[crank];
+	cdims[0] = 1;
+	for(UInt32 i=1;i<crank;i++) cdims[i] = dims[i];
+
 	try{
 		imp.setDataSpace(rank,dims);
 		imp.setDataType(tid);
 		imp.setChunkedLayout();
-		imp.setChunkSize(rank,dims);
+		imp.setChunkSize(crank,cdims);
 		imp.setShuffle();
 		imp.setFilter(f);
 		imp.create(String(n),*this);
@@ -87,6 +93,8 @@ void NXGroupH5Implementation::createField(const char *n, PNITypeID tid,
 		EXCEPTION_INIT(H5DataSetError,"Error creating array data-set ["+String(n)+"]");
 		EXCEPTION_THROW();
 	}
+
+	delete [] cdims;
 }
 
 
