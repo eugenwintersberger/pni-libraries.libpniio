@@ -129,13 +129,13 @@ void NXGroupH5Implementation::openField(const char *n,
 //------------------------------------------------------------------------------
 //create a field for array data
 void NXGroupH5Implementation::createField(const char *n, PNITypeID tid,
-		                                  UInt32 rank, const UInt32 *dims,
+		                                  const ArrayShape &s,
 			                              NXFieldH5Implementation &imp){
 	EXCEPTION_SETUP("void NXGroupH5Implementation::createField(const char *n, "
 			        "PNITypeID tid,UInt32 rank, const UInt32 *dims,"
 			        "NXFieldH5Implementation &imp)");
 
-	imp.setDataSpace(rank,dims);
+	imp.setDataSpace(s);
 	imp.setDataType(tid);
 	try{
 		imp.create(String(n),*this);
@@ -189,18 +189,62 @@ void NXGroupH5Implementation::remove(const String &n){
 	}
 }
 
+//------------------------------------------------------------------------------
 bool NXGroupH5Implementation::exists(const String &n) const {
 	EXCEPTION_SETUP("bool NXGroupH5Implementation::exists(const String &n) const");
 
 	htri_t retval;
+	std::vector<String> plist;
+	std::vector<String>::iterator iter;
+	size_t spos1,spos2;
+	String path;
+	bool is_abs = false;
 
-	retval = H5Lexists(getId(),n.c_str(),H5P_DEFAULT);
-	if(retval<0) {
-		EXCEPTION_INIT(H5GroupError,"Cannot check existance of objec ["+n+"]!");
-		EXCEPTION_THROW();
+	//remove a trailing slash
+	if(n[n.size()-1]=='/'){
+		path = n.substr(0,n.size()-1);
+	}else{
+		path = n;
 	}
 
-	return retval;
+	if(n[0] == '/') is_abs = true;
+
+	//have to split the string
+	spos1 = path.find_first_of("/");
+	if(spos1 != n.npos){
+		if(spos1 != 0) plist.push_back(path.substr(0,spos1));
+
+		do{
+			spos2 = path.find_first_of("/",spos1+1);
+			plist.push_back(path.substr(spos1+1,(spos2-spos1)-1));
+			spos1 = spos2;
+		}while(spos2 != path.npos);
+	}else{
+		plist.push_back(path);
+	}
+
+	//clear the path
+	path.clear();
+	if(is_abs) path += "/";
+
+	for(iter = plist.begin(); iter != plist.end(); ++iter){
+		path += *iter;
+
+		//do check
+		std::cout<<path<<std::endl;
+		retval = H5Lexists(getId(),path.c_str(),H5P_DEFAULT);
+		if(retval<0) {
+			EXCEPTION_INIT(H5GroupError,"Cannot check existance of objec ["+n+"]!");
+			EXCEPTION_THROW();
+		}
+
+		if(!retval) return false;
+
+		//append a trailing /
+		path += "/";
+	}
+
+	return true;
 }
 
 

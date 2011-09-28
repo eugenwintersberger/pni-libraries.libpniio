@@ -12,7 +12,7 @@
 #include "NX.hpp"
 #include "NXExceptions.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(NXFieldTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(NXFieldTest);
 
 void NXFieldTest::setUp(){
 	_fname = "test.field.h5";
@@ -64,15 +64,15 @@ void NXFieldTest::tearDown(){
 void NXFieldTest::testCreation(){
 	NXGroup g = _f.createGroup("data");
 	NXField dset;
-	UInt32 dims[2];
-	dims[0] = 1024;
-	dims[1] = 2048;
+	ArrayShape dshape(2);
+	dshape.setDimension(0,1024);
+	dshape.setDimension(1,2048);
 	_f64_data_array_read = Float64Array(_data_shape);
 	_f64_data_array_read.allocate();
 
 	//creating data fields for saving arrays
 	//_f.createField("field_1",FLOAT64,2,dims);
-	CPPUNIT_ASSERT_NO_THROW(dset = _f.createField("field_1",FLOAT64,2,dims));
+	CPPUNIT_ASSERT_NO_THROW(dset = _f.createField("field_1",FLOAT64,dshape));
 	CPPUNIT_ASSERT_NO_THROW(dset = _f.createField("field_2",COMPLEX128,_data_shape));
 	CPPUNIT_ASSERT_NO_THROW(dset = _f.createField("field_3",_f64_data_array_read));
 
@@ -88,7 +88,7 @@ void NXFieldTest::testCreation(){
 	//try now everything with a group as a generating object
 
 	//creating data fields for saving arrays
-	dset = g.createField("field_1",FLOAT64,2,dims);
+	dset = g.createField("field_1",FLOAT64,dshape);
 	dset = g.createField("field_2",COMPLEX128,_data_shape);
 	dset = g.createField("field_3",_f64_data_array_read);
 
@@ -118,13 +118,13 @@ void NXFieldTest::testOpen(){
 
 void NXFieldTest::testWriteData(){
 	NXField dset;
-	UInt32 dims[2];
-	dims[0] = 1024;
-	dims[1] = 2048;
+	ArrayShape dshape(2);
+	dshape.setDimension(0,1024);
+	dshape.setDimension(1,2048);
 
 	_f64_data_array_write = 1.2;
 	//creating data fields for saving arrays
-	dset = _f.createField("field_1",FLOAT64,2,dims);
+	dset = _f.createField("field_1",FLOAT64,dshape);
 	dset.write(_f64_data_array_write);
 
 	dset = _f.createField("field_2",FLOAT64,_data_shape);
@@ -237,18 +237,18 @@ void NXFieldTest::testSelectionFast(){
 
 void NXFieldTest::testWriteDataExceptions(){
 	NXField dset;
-	UInt32 dims[2];
-	dims[0] = 512;
-	dims[1] = 2048;
+	ArrayShape shape(2);
+	shape.setDimension(0,512);
+	shape.setDimension(1,2048);
 	String s = "hello world this is a text";
 
 	_f64_data_array_write = 1.2;
 	//-------------------testing exceptions for array data---------------------
 	//creating data fields for saving arrays
-	dset = _f.createField("field_1",INT64,2,dims);
+	dset = _f.createField("field_1",INT64,shape);
 	CPPUNIT_ASSERT_THROW(dset.write(_f64_data_array_write),TypeError);
 
-	dset = _f.createField("field_2",FLOAT64,2,dims);
+	dset = _f.createField("field_2",FLOAT64,shape);
 	CPPUNIT_ASSERT_THROW(dset.write(_f64_data_array_write),ShapeMissmatchError);
 	CPPUNIT_ASSERT_THROW(dset.write(s),pni::nx::NXFieldError);
 	CPPUNIT_ASSERT_THROW(dset.write(_write_cmplx_scalar),pni::nx::NXFieldError);
@@ -272,22 +272,20 @@ void NXFieldTest::testWriteDataExceptions(){
 
 void NXFieldTest::testReadData(){
 	NXField dset;
-	UInt32 dims[2];
-	dims[0] = 1024;
-	dims[1] = 2048;
+	ArrayShape dshape(2);
+	dshape.setDimension(0,1024);
+	dshape.setDimension(1,2048);
 	String s;
 
 	_f64_data_array_write = 1.2;
 	//creating data fields for saving arrays
-	CPPUNIT_ASSERT_NO_THROW(dset = _f.createField("field_1",FLOAT64,2,dims));
+	CPPUNIT_ASSERT_NO_THROW(dset = _f.createField("field_1",FLOAT64,dshape));
 	dset.write(_f64_data_array_write);
 	CPPUNIT_ASSERT_NO_THROW(dset.write(_f64_data_array_write));
 
 	Float64Array reader(dset.getShape());
 	CPPUNIT_ASSERT_NO_THROW(dset.read(reader));
-	ArrayShape shape(2);
-	shape.setDimension(0,dims[0]);
-	shape.setDimension(1,dims[1]);
+	ArrayShape shape(dshape);
 	Float64Array reader2(shape);
 	CPPUNIT_ASSERT_NO_THROW(dset.read(reader2));
 
@@ -308,14 +306,14 @@ void NXFieldTest::testReadData(){
 
 void NXFieldTest::testReadDataExceptions(){
 	NXField dset;
-	UInt32 dims[2];
-	dims[0] = 1024;
-	dims[1] = 2048;
+	ArrayShape shape(2);
+	shape.setDimension(0,1024);
+	shape.setDimension(1,2048);
 	String s;
 
 	_f64_data_array_write = 1.2;
 	//creating data fields for saving arrays
-	dset = _f.createField("field_1",FLOAT64,2,dims);
+	dset = _f.createField("field_1",FLOAT64,shape);
 	dset.write(_f64_data_array_write);
 
 	Int64Array reader;
@@ -390,15 +388,17 @@ void NXFieldTest::testAttributeExceptions(){
 }
 
 void NXFieldTest::testLinks(){
-	UInt32 dims[2] = { 1024,2048};
+	ArrayShape s(2);
+	s.setDimension(0,1024);
+	s.setDimension(1,2048);
 	NXField f1,f2;
 	NXGroup g1,g2;
 
 	g1 = _f.createGroup("/data1");
 	g2 = _f.createGroup("/data2");
 
-	f1 = g1.createField("det1",UINT32,2,dims);
-	f2 = g2.createField("det2",FLOAT32,2,dims);
+	f1 = g1.createField("det1",UINT32,s);
+	f2 = g2.createField("det2",FLOAT32,s);
 
 	f1.createLink(g2,"original_data");
 	f2.createLink(g1,"corrected_data");

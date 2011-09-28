@@ -158,3 +158,29 @@ void NXGroupTest::testInternalLinks(){
 
 }
 
+void NXGroupTest::testExistence(){
+	NXGroup g1,g2;
+	NXField f;
+
+	g1 = _f.createGroup("/scan_1/instrument");
+	g1 = _f.createGroup("/scan_2/instrument/detector");
+
+	g1 = _f.openGroup("scan_1");
+	CPPUNIT_ASSERT(g1.exists("instrument"));
+	CPPUNIT_ASSERT(g1.exists("/scan_2"));
+	CPPUNIT_ASSERT(!g1.exists("/instrument"));
+	g2 = _f.openGroup("scan_2");
+	CPPUNIT_ASSERT(g2.exists("instrument/detector/"));
+	CPPUNIT_ASSERT(!g2.exists("/instrument/detector/data"));
+
+	CPPUNIT_ASSERT(_f.exists("scan_1"));
+	CPPUNIT_ASSERT(_f.exists("/scan_1/instrument"));
+	CPPUNIT_ASSERT(_f.exists("scan_2/instrument/detector"));
+}
+
+void NXGroupTest::testRemove(){
+	NXGroup g1;
+	NXField f;
+
+}
+

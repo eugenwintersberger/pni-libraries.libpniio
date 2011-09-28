@@ -5,7 +5,7 @@
 #include "NX.hpp"
 #include "NXFileTest.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(NXFileTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(NXFileTest);
 
 void NXFileTest::setUp(){
 	_fname1 = "test.file-1.h5";
@@ -153,5 +153,7 @@ void NXFileTest::testAttributeExceptions(){
 
 	f.close();
 }
+
+
 
 

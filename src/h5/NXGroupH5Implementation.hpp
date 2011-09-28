@@ -48,11 +48,9 @@ public:
 	//! create a field
 
 	//! create a field
-	void createField(const char *n, PNITypeID tid, UInt32 rank,
-			         const UInt32 *dims, NXFieldH5Implementation &imp);
+	void createField(const char *n, PNITypeID tid,const ArrayShape &s, NXFieldH5Implementation &imp);
 	template<typename Filter>
-	void createField(const char *n, PNITypeID tid, UInt32 rank,
-				     const UInt32 *dims, NXFieldH5Implementation &imp,
+	void createField(const char *n, PNITypeID tid,const ArrayShape &s, NXFieldH5Implementation &imp,
 				     pni::nx::NXFilter<Filter> &f);
 	//! method to create a field for a single scalar value
 	void createField(const char *n,PNITypeID,NXFieldH5Implementation &imp);
@@ -68,24 +66,16 @@ public:
 
 template<typename Filter>
 void NXGroupH5Implementation::createField(const char *n, PNITypeID tid,
-		                                  UInt32 rank, const UInt32 *dims,
+		                                  const ArrayShape &s,
 			                              NXFieldH5Implementation &imp,
 			                              pni::nx::NXFilter<Filter> &f){
 	EXCEPTION_SETUP("void NXGroupH5Implementation::createField(const char *n, "
 			        "PNITypeID tid,UInt32 rank, const UInt32 *dims,"
 			        "NXFieldH5Implementation &imp)");
 
-	UInt32 *cdims = NULL;
-	UInt32 crank = rank;
-	cdims = new UInt32[crank];
-	cdims[0] = 1;
-	for(UInt32 i=1;i<crank;i++) cdims[i] = dims[i];
-
 	try{
-		imp.setDataSpace(rank,dims);
+		imp.setDataSpace(s);
 		imp.setDataType(tid);
-		imp.setChunkedLayout();
-		imp.setChunkSize(crank,cdims);
 		imp.setShuffle();
 		imp.setFilter(f);
 		imp.create(String(n),*this);
@@ -94,9 +84,7 @@ void NXGroupH5Implementation::createField(const char *n, PNITypeID tid,
 		EXCEPTION_THROW();
 	}
 
-	delete [] cdims;
 }
-
 
 
 //end of namespace

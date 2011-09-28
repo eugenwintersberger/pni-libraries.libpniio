@@ -26,6 +26,9 @@ public:
 	virtual ~NXFilter();
 
 	NXFilter<Filter> &operator=(const NXFilter<Filter> &f);
+
+	const ArrayShape &getChunkShape() const;
+	void setChunkShape(const ArrayShape &s);
 };
 
 template<typename Filter> NXFilter<Filter>::NXFilter():Filter(){
@@ -47,6 +50,7 @@ NXFilter<Filter> &NXFilter<Filter>::operator=(const NXFilter<Filter> &f){
 
 	return *this;
 }
+
 
 
 

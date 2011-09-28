@@ -49,28 +49,34 @@ void H5Utilities::DataSpace2ArrayShape(const hid_t &dspace,ArrayShape &s){
 	UInt32 rank;
 	hsize_t *dims = NULL;
 
-	rank = H5Sget_simple_extent_ndims(dspace);
-	if(rank < 0){
-		EXCEPTION_INIT(H5DataSpaceError,"Cannot obtain data-space rank!");
-		EXCEPTION_THROW();
-	}
+	//need to check if the data space is simple (if not do nothing)
+	if(!H5Sis_simple(dspace)){
+		s.setRank(0);
+	}else{
 
-	dims = new hsize_t[rank];
-	if(dims == NULL){
-		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for data-space dimension buffer!");
-		EXCEPTION_THROW();
-	}
-	rank = H5Sget_simple_extent_dims(dspace,dims,NULL);
-	if(rank < 0){
-		EXCEPTION_INIT(H5DataSpaceError,"Cannot obtain data-space dimensions!");
-		EXCEPTION_THROW();
-	}
+		rank = H5Sget_simple_extent_ndims(dspace);
+		if(rank < 0){
+			EXCEPTION_INIT(H5DataSpaceError,"Cannot obtain data-space rank!");
+			EXCEPTION_THROW();
+		}
 
-	s.setRank(rank);
-	for(UInt32 i=0;i<rank;i++) s.setDimension(i,(UInt32)dims[i]);
+		dims = new hsize_t[rank];
+		if(dims == NULL){
+			EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for data-space dimension buffer!");
+			EXCEPTION_THROW();
+		}
+		rank = H5Sget_simple_extent_dims(dspace,dims,NULL);
+		if(rank < 0){
+			EXCEPTION_INIT(H5DataSpaceError,"Cannot obtain data-space dimensions!");
+			EXCEPTION_THROW();
+		}
 
-	//free memory
-	if(dims != NULL) delete [] dims;
+		s.setRank(rank);
+		for(UInt32 i=0;i<rank;i++) s.setDimension(i,(UInt32)dims[i]);
+
+		//free memory
+		if(dims != NULL) delete [] dims;
+	}
 }
 
 PNITypeID H5Utilities::H5Type2PNITypeCode(hid_t tid){

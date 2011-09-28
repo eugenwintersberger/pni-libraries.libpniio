@@ -47,19 +47,6 @@ public:
 	virtual NXGroup<GImp> createGroup(const String &n);
 	virtual NXGroup<GImp> openGroup(const String &n);
 
-	//! create a field for array data - most basic approach
-
-	//! This is the most basic approach to define field.
-	//! \param n name of the field
-	//! \param tid PNI type code of the data type
-	//! \param rank number of dimensions of the field
-	//! \param dims number of points along each dimension
-	NXField<FImp> createField(const String &n, PNITypeID tid,
-				                       UInt32 rank, const UInt32 *dims);
-	template<typename Filter>
-	NXField<FImp> createField(const String &n, PNITypeID tid,
-            				           UInt32 rank, const UInt32 *dims,
-            						   NXFilter<Filter> &f);
 	//! create a field for array data using an ArrayShape
 
 	//! Here a reference to an ArrayShape object is used to create a data field
@@ -72,7 +59,6 @@ public:
 	NXField<FImp> createField(const String &n, PNITypeID tid,
 				                       const ArrayShape &s,
 				                       NXFilter<Filter> &f);
-
 
 	//! create a field for array data from an ArrayObject
 
@@ -191,37 +177,14 @@ NXGroup<typename NXGroup<Imp>::GImp > NXGroup<Imp>::openGroup(const String &n){
 
 
 //================Methods for opening and creating fields======================
-template<typename Imp>
-NXField<typename NXGroup<Imp>::FImp > NXGroup<Imp>::createField(const String &n,
-									  PNITypeID tid,UInt32 rank, const UInt32 *dims){
-
-	NXField<FImp> field;
-
-	this->_imp.createField(n.c_str(),tid,rank,dims,field.getImplementation());
-	return field;
-}
-
-
-template<typename Imp>
-template<typename Filter>
-NXField<typename NXGroup<Imp>::FImp > NXGroup<Imp>::createField(const String &n,
-							          PNITypeID tid,UInt32 rank, const UInt32 *dims,NXFilter<Filter> &f){
-
-	NXField<FImp> field;
-	this->_imp.createField(n.c_str(),tid,rank,dims,field.getImplementation(),f);
-	return field;
-}
-
 
 template<typename Imp>
 NXField<typename NXGroup<Imp>::FImp >
 NXGroup<Imp>::createField(const String &n,PNITypeID tid,const ArrayShape &s){
-	UInt32 *dims;
-	dims = new UInt32[s.getRank()];
-	for(UInt64 i=0;i<s.getRank();i++) dims[i] = s[i];
+	NXField<FImp> field;
+	this->_imp.createField(n.c_str(),tid,s,field.getImplementation());
 
-	return createField(n,tid,s.getRank(),dims);
-	delete [] dims;
+	return field;
 }
 
 template<typename Imp>
@@ -229,14 +192,11 @@ template<typename Filter>
 NXField<typename NXGroup<Imp>::FImp >
 NXGroup<Imp>::createField(const String &n,PNITypeID tid,
 		                  const ArrayShape &s,NXFilter<Filter> &f){
-	UInt32 *dims;
+	NXField<FImp> field;
 
-	dims = new UInt32[s.getRank()];
-	for(UInt32 i=0;i<s.getRank();i++) dims[i] = s[i];
+	this->_imp.createField(n.c_str(),tid,s,field.getImplementation(),f);
 
-	return createField(n,tid,s.getRank(),dims,f);
-
-	delete [] dims;
+	return field;
 }
 
 template<typename Imp>

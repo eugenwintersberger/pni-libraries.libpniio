@@ -17,17 +17,21 @@ using namespace pni::nx::h5;
 
 //------------------------------------------------------------------------------
 NXFieldH5Implementation::NXFieldH5Implementation():NXObjectH5Implementation() {
+	EXCEPTION_SETUP("NXFieldH5Implementation::NXFieldH5Implementation():NXObjectH5Implementation()");
 	_space_id = 0;
 	_type_id = 0;
 	_mem_space = 0;
 	//we can always create a new property list which will be used as a central
 	//storage for all kind of options.
 	_creation_plist = H5Pcreate(H5P_DATASET_CREATE);
+	_lcreate_plist = H5Pcreate(H5P_LINK_CREATE);
+	H5Pset_create_intermediate_group(_lcreate_plist,1);
 }
 
 //------------------------------------------------------------------------------
 NXFieldH5Implementation::~NXFieldH5Implementation() {
 	close();
+	_space_shape.setRank(0);
 }
 
 //------------------------------------------------------------------------------
@@ -63,6 +67,7 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXFieldH5Imple
 				EXCEPTION_THROW();
 			}
 			_mem_space = H5Scopy(_space_id);
+			H5Utilities::DataSpace2ArrayShape(_space_id,_space_shape);
 
 			//get the data type
 			_type_id = H5Dget_type(getId());
@@ -83,6 +88,8 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXFieldH5Imple
 			_space_id = 0;
 			_type_id = 0;
 			_creation_plist = o._creation_plist;
+			_space_shape.setRank(0);
+			_mem_space = 0;
 		}
 	}
 
@@ -108,71 +115,10 @@ void NXFieldH5Implementation::open(const String &n,NXObjectH5Implementation &imp
 	_type_id = H5Dget_type(id);
 	_space_id = H5Dget_space(id);
 	_mem_space = H5Scopy(_space_id);
+	H5Utilities::DataSpace2ArrayShape(_space_id,_space_shape);
 	_creation_plist = H5Dget_create_plist(id);
-}
-
-//------------------------------------------------------------------------------
-void NXFieldH5Implementation::setChunkedLayout(){
-	EXCEPTION_SETUP("void NXFieldH5Implementation::setChunkedLayout()");
-
-
-	if((!isOpen())&&(H5Iis_valid(_creation_plist))){
-		if((H5Pset_layout(_creation_plist,H5D_CHUNKED))<0){
-			EXCEPTION_INIT(H5PropertyListError,"Cannot set field layout to chunked!");
-			EXCEPTION_THROW();
-		}
-	}
-}
-
-//------------------------------------------------------------------------------
-void NXFieldH5Implementation::setChunkSize(UInt32 rank,const UInt32 *dims){
-	EXCEPTION_SETUP("void NXFieldH5Implementation::setChunkSize(int rank,hsize_t *dims)");
-
-	int r = (int)rank;
-	hsize_t *d = NULL;
-
-	d = new hsize_t[rank];
-	if(d == NULL){
-		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for chunk dimensions!");
-		EXCEPTION_THROW();
-	}
-	for(UInt32 i=0;i<rank;i++) d[i] = dims[i];
-
-	if(!(isOpen())&&(H5Iis_valid(_creation_plist))){
-		if((H5Pset_chunk(_creation_plist,r,d))<0){
-			EXCEPTION_INIT(H5PropertyListError,"Cannot set chunk size!");
-			if(d != NULL) delete [] d;
-			EXCEPTION_THROW();
-		}
-	}
-
-	if(d!=NULL) delete [] d;
-}
-
-//------------------------------------------------------------------------------
-void NXFieldH5Implementation::setChunkSize(const ArrayShape &s){
-	EXCEPTION_SETUP("void NXFieldH5Implementation::setChunkSize(const ArrayShape &s)");
-
-	int r = 0;
-	hsize_t *d = NULL;
-
-	r = s.getRank();
-	d = new hsize_t[r];
-	if(d == NULL){
-		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for chunk dimensions!");
-		EXCEPTION_THROW();
-	}
-
-	for(UInt32 i=0;i<s.getRank();i++) d[i] = s.getDimension(i);
-
-	if(!(isOpen()) && (H5Iis_valid(_creation_plist))){
-		if((H5Pset_chunk(_creation_plist,r,d))<0){
-			EXCEPTION_INIT(H5PropertyListError,"Cannot set chunk size!");
-			EXCEPTION_THROW();
-		}
-	}
-
-	if(d!=NULL) delete [] d;
+	_lcreate_plist = H5Pcreate(H5P_LINK_CREATE);
+	H5Pset_create_intermediate_group(_lcreate_plist,1);
 }
 
 //------------------------------------------------------------------------------
@@ -180,7 +126,9 @@ void NXFieldH5Implementation::close(){
 	if(H5Iis_valid(_space_id)) H5Sclose(_space_id);
 	if(H5Iis_valid(_type_id)) H5Tclose(_type_id);
 	if(H5Iis_valid(_creation_plist)) H5Pclose(_creation_plist);
+	if(H5Iis_valid(_lcreate_plist)) H5Pclose(_lcreate_plist);
 	NXObjectH5Implementation::close();
+	_space_shape.setRank(0);
 }
 
 //------------------------------------------------------------------------------
@@ -212,69 +160,26 @@ void NXFieldH5Implementation::read(void *ptr) const{
 UInt32 NXFieldH5Implementation::getRank() const{
 	EXCEPTION_SETUP("UInt32 NXFieldH5Implementation::getRank() const");
 
-	if(H5Iis_valid(_space_id)){
-		return H5Sget_simple_extent_ndims(_space_id);
-	}else{
-		EXCEPTION_INIT(H5DataSpaceError,"Cannot obtain rank from data-space of field ["+getName()+"!");
-		EXCEPTION_THROW();
-	}
+	return _space_shape.getRank();
 }
 
 //------------------------------------------------------------------------------
 UInt32 NXFieldH5Implementation::getDimension(UInt32 i)const {
 	EXCEPTION_SETUP("UInt32 NXFieldH5Implementation::getDimension(UInt32 i)");
-	ssize_t rank = getRank();
-	UInt32 dim;
+	UInt32 dim=0;
 
-	if(i>=rank){
-		EXCEPTION_INIT(H5DataSpaceError,"Dimension index out of bounds!");
-		EXCEPTION_THROW();
-	}
-
-	hsize_t *dims = new hsize_t[rank];
-	if(dims==NULL){
-		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for dimensions buffer!");
-		EXCEPTION_THROW();
-	}
-	H5Sget_simple_extent_dims(_space_id,dims,NULL);
-
-	dim = dims[i];
-	delete [] dims;
+	dim =  _space_shape.getDimension(i);
 
 	return dim;
 }
 
 //------------------------------------------------------------------------------
-UInt32 *NXFieldH5Implementation::getDimensions()const {
-	EXCEPTION_SETUP("UInt32 NXFieldH5Implementation::getDimension(UInt32 i)");
-	ssize_t rank = H5Sget_simple_extent_ndims(_space_id);
-	UInt32 *retdims;
-
-
-	hsize_t *dims = new hsize_t[rank];
-	if(dims == NULL){
-		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for dimensions buffer!");
-		EXCEPTION_THROW();
-	}
-	retdims = new UInt32[rank];
-	if(retdims == NULL){
-		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for output buffer!");
-		if(dims != NULL) delete [] dims;
-		EXCEPTION_THROW();
-	}
-	H5Sget_simple_extent_dims(_space_id,dims,NULL);
-
-	//copy dimensions to the ouput buffer
-	for(UInt32 i=0;i<rank;i++) retdims[i] = (UInt32)dims[i];
-
-	delete [] dims;
-
-	return retdims;
+void NXFieldH5Implementation::getShape(ArrayShape &s) const{
+	s = _space_shape;
 }
 
-//------------------------------------------------------------------------------
-void NXFieldH5Implementation::getShape(ArrayShape &s) const{
-	H5Utilities::DataSpace2ArrayShape(_space_id,s);
+const ArrayShape &NXFieldH5Implementation::getShape() const {
+	return _space_shape;
 }
 
 //------------------------------------------------------------------------------
@@ -322,49 +227,54 @@ UInt64 NXFieldH5Implementation::getSize() const{
 }
 
 //------------------------------------------------------------------------------
-void NXFieldH5Implementation::setDataSpace(UInt32 rank,const UInt32 *dims){
-	EXCEPTION_SETUP("void NXFieldH5Implementation::setDataSpace(int rank,hsize_t *dims)");
-
-	int r = rank;
-	hsize_t *d = new hsize_t[rank];
-	for(UInt32 i = 0;i<rank;i++) d[i] = dims[i];
-
-	if(H5Iis_valid(_space_id)) H5Tclose(_space_id);
-
-	_space_id = H5Screate_simple(r,d,NULL);
-	if(_space_id < 0){
-		EXCEPTION_INIT(H5DataSpaceError,"Cannot create simple data-space!");
-		EXCEPTION_THROW();
-	}
-
-	delete [] d;
-
-	if(H5Iis_valid(_mem_space)) H5Sclose(_mem_space);
-	_mem_space = H5Scopy(_space_id);
-
-}
-
-//------------------------------------------------------------------------------
 void NXFieldH5Implementation::setDataSpace(const ArrayShape &s){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::setDataSpace(const ArrayShape &s)");
 
 	int r = s.getRank();
-	hsize_t *d = NULL;
+	hsize_t *d = NULL;   //actual dimensions
 	d = new hsize_t[r];
 	if(d == NULL){
 		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for data space dimensions!");
 		EXCEPTION_THROW();
 	}
 
+	hsize_t *md = NULL; //maximum dimensions
+	md = new hsize_t[r];
+	if(d == NULL){
+		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for data space maximum dimensions!");
+		EXCEPTION_THROW();
+	}
+
+	for(UInt32 i=0;i<r;i++){
+		d[i] = s.getDimension(i);
+		md[i] = d[i];
+	}
+	//set the first dimension to unlimited
+	md[0] = H5S_UNLIMITED;
+
 	if(H5Iis_valid(_space_id)) H5Tclose(_space_id);
 
-	_space_id = H5Screate_simple(r,d,NULL);
+	_space_id = H5Screate_simple(r,d,md);
 	if(_space_id < 0){
 		EXCEPTION_INIT(H5DataSpaceError,"Cannot create simple data-space!");
 		EXCEPTION_THROW();
 	}
 
+	//finally we need to set the chunk size
+
+	if((H5Pset_layout(_creation_plist,H5D_CHUNKED))<0){
+		EXCEPTION_INIT(H5PropertyListError,"Cannot set field layout to chunked!");
+		EXCEPTION_THROW();
+	}
+
+	d[0] = 1;
+	if((H5Pset_chunk(_creation_plist,r,d))<0){
+		EXCEPTION_INIT(H5PropertyListError,"Cannot set chunk size!");
+		EXCEPTION_THROW();
+	}
+
 	if(d!=NULL) delete [] d;
+	if(md!=NULL) delete [] md;
 
 	if(H5Iis_valid(_mem_space)) H5Sclose(_mem_space);
 	_mem_space = H5Tcopy(_space_id);
@@ -424,6 +334,10 @@ void NXFieldH5Implementation::resetSelection(){
 
 	//reset the selection from the data space of the field
 	H5Sselect_none(_space_id);
+}
+
+void NXFieldH5Implementation::resize(const UInt64 &i){
+
 }
 
 

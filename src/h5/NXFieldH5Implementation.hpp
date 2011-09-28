@@ -42,10 +42,14 @@ protected:
 	hid_t _type_id;	       //!< ID of the data type
 	hid_t _space_id;       //!< ID of the data space
 	hid_t _creation_plist; //!< ID creation property list
+	hid_t _lcreate_plist;  //!< ID link creation property list
 
 	//the following tow data spaces are required to make use
 	//of selections
 	hid_t _mem_space; //!< data space in memory
+
+	//array shape object that is equal to the data space
+	ArrayShape _space_shape;
 
 	virtual void create(const String &n,const NXObjectH5Implementation &o);
 public:
@@ -58,13 +62,6 @@ public:
 	//! assignment operator
 	NXFieldH5Implementation &operator=(const NXFieldH5Implementation &o);
 
-	//setup chunk for the array
-	void setChunkedLayout();
-	void setChunkSize(UInt32 rank,const UInt32 *dims);
-	void setChunkSize(const ArrayShape &s);
-
-	//setup the dataspace
-	void setDataSpace(UInt32 rank,const UInt32 *dims);
 	//set array data space
 	void setDataSpace(const ArrayShape &s);
 	//set scalar data space
@@ -92,9 +89,9 @@ public:
 
 	virtual UInt32 getRank() const;
 	virtual UInt32 getDimension(UInt32 i) const;
-	virtual UInt32* getDimensions() const;
 	virtual UInt64 getSize() const;
 	virtual void getShape(ArrayShape &s) const;
+	virtual const ArrayShape &getShape() const;
 	virtual PNITypeID getTypeID() const;
 	virtual bool isScalar() const;
 	virtual bool isArray() const;
@@ -111,6 +108,8 @@ public:
 
 	//! open a field implementation
 	virtual void open(const String &n,NXObjectH5Implementation &imp);
+
+	virtual void resize(const UInt64 &i);
 
 	friend class NXGroupH5Implementation;
 };
