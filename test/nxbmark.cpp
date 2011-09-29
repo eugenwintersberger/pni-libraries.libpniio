@@ -44,14 +44,15 @@ int main(int argc,char **argv){
 	a.allocate();
 	a = 1;
 
-	f.setFileName("bmark.h5");
+	f.setFileName("bmark_%i.h5");
 	f.setOverwrite(true);
+	f.setSplitSize(1000);
 	f.create();
 
 	runs = 500;
 	for(i=0;i<runs;i++){
 		fnstream<<"run_"<<i;
-		d = f.createField(fnstream.str(),a,deflate);
+		d = f.createField(fnstream.str(),a);
 		d.write(a);
 		d.close();
 		fnstream.seekp(0);

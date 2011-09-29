@@ -325,7 +325,7 @@ void NXFieldH5Implementation::setDataType(UInt64 size){
 	}
 }
 
-
+//------------------------------------------------------------------------------
 void NXFieldH5Implementation::resetSelection(){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::resetSelection()");
 
@@ -336,8 +336,50 @@ void NXFieldH5Implementation::resetSelection(){
 	H5Sselect_none(_space_id);
 }
 
-void NXFieldH5Implementation::resize(const UInt64 &i){
+//------------------------------------------------------------------------------
+void NXFieldH5Implementation::resize(const UInt64 &n){
+	EXCEPTION_SETUP("void NXFieldH5Implementation::resize(const UInt64 &i)");
+	hsize_t *sbuf = NULL;
 
+	sbuf = new hsize_t[getRank()];
+	if(sbuf == NULL){
+		EXCEPTION_INIT(MemoryAllocationError,"Allocation for size buffer failed!");
+		EXCEPTION_THROW();
+	}
+
+	for(UInt64 i=0;i<getRank();i++){
+		sbuf[i] = _space_shape.getDimension(i);
+	}
+
+	//set new size
+	sbuf[0] = n;
+
+	//extend the dataset
+	if(H5Dset_extent(getId(),sbuf)<0){
+		EXCEPTION_INIT(H5DataSetError,"Resizing of dataset ["+getName()+"] failed!");
+		EXCEPTION_THROW();
+	}
+
+	if(sbuf != NULL) delete [] sbuf;
+
+	//need to fetch a new data space and modify the memory space if necessary
+	//IN GENERAL ONE SHOULD CHECK IF THE EXTEND OF THE DATA SPACE IS NOT
+	//ADOPTED AUTOMATICALLYS
+	if(H5Sextent_equal(_space_id,_mem_space)){
+		//if the data space of the set and the memory space are equal we have to
+		//make a copy
+		H5Sclose(_space_id);
+		H5Sclose(_mem_space);
+		_space_id = H5Dget_space(getId());
+		_mem_space = H5Scopy(_space_id);
+	}else{
+		//only the data space on disk will be modified.
+		H5Sclose(_space_id);
+		_space_id = H5Dget_space(getId());
+	}
+
+	//create a new shape object
+	H5Utilities::DataSpace2ArrayShape(_space_id,_space_shape);
 }
 
 

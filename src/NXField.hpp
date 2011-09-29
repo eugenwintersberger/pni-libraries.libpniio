@@ -100,6 +100,10 @@ public:
 
 	void close();
 
+	void resize(const UInt64 &i){
+		this->_imp.resize(i);
+	}
+
 
 
 };

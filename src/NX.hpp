@@ -23,6 +23,8 @@
 #include "h5/H5DeflateFilter.hpp"
 #include "h5/NXSelectionH5Implementation.hpp"
 
+#include "utils/Record.hpp"
+
 namespace pni{
 namespace nx{
 namespace h5{
@@ -34,7 +36,7 @@ typedef pni::nx::NXField<NXFieldH5Implementation> NXField;
 typedef pni::nx::NXFilter<H5LZFFilter> NXLZFFilter;
 typedef pni::nx::NXFilter<H5DeflateFilter> NXDeflateFilter;
 typedef pni::nx::NXSelection<NXSelectionH5Implementation> NXSelection;
-
+typedef pni::nx::Record<NXField> Record;
 }
 }
 }

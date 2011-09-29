@@ -26,5 +26,9 @@ std::ostream &operator<<(std::ostream &o,const NXdetectorError &e){
 	return e.print(o);
 }
 
+std::ostream &operator<<(std::ostream &o,const NXnoteError &e){
+	return e.print(o);
+}
+
 } /* namespace nx */
 } /* namespace pni */

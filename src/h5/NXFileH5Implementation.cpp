@@ -74,7 +74,7 @@ void NXFileH5Implementation::open(const char *n,bool readonly){
 
 }
 
-void NXFileH5Implementation::create(const char *n,bool overwrite){
+void NXFileH5Implementation::create(const char *n,bool overwrite,UInt64 ssize){
 	EXCEPTION_SETUP("void NXFileH5Implementation::create(const char *n,bool overwrite)");
 	hid_t id;
 
@@ -90,6 +90,11 @@ void NXFileH5Implementation::create(const char *n,bool overwrite){
 		EXCEPTION_INIT(H5PropertyListError,"Cannot create file access property list for file ["+String(n)+"]!");
 		close();
 		EXCEPTION_THROW();
+	}
+
+	if(ssize > 0){
+		//enable splitting
+		H5Pset_fapl_family(acc_plist,ssize*1024*1024,H5P_DEFAULT);
 	}
 
 	if(overwrite){

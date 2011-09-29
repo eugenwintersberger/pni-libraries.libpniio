@@ -125,6 +125,10 @@ public:
 		return this->_imp.exists(n);
 	}
 
+	virtual void remove(const String &n){
+		this->_imp.remove(n);
+	}
+
 
 };
 

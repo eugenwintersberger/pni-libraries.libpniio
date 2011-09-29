@@ -85,6 +85,7 @@ public:
 template<typename Imp> NXFile<Imp>::NXFile():NXGroup<Imp>() {
 	_read_only = true;
 	_overwrite = false;
+	_split_size = 0;
 
 }
 
@@ -128,12 +129,19 @@ template<typename Imp>  UInt64 NXFile<Imp>::getSplitSize() const{
 
 //create a new Nexus file
 template<typename Imp> void NXFile<Imp>::create(){
-	this->_imp.create(_fname.c_str(),_overwrite);
+	this->_imp.create(_fname.c_str(),_overwrite,_split_size);
+
+	//set the proper attributes after file creation
+
 }
 	//! open an NeXus file
 
 template<typename Imp> void NXFile<Imp>::open(){
 	this->_imp.open(_fname.c_str(),_read_only);
+
+	if(!_read_only){
+		//if the file was not opened read only update the time stamp
+	}
 }
 
 template<typename Imp> void NXFile<Imp>::close(){

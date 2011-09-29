@@ -51,6 +51,15 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const NXdetectorError &e);
 };
 
+class NXnoteError:public Exception{
+public:
+	NXnoteError():Exception("NXnoteError"){}
+	NXnoteError(const String &i,const String &d):Exception("NXnoteError",i,d){}
+	virtual NXnoteError() {}
+
+	friend std::ostream &operator<<(std::ostream &o,const NXnoteError &e);
+};
+
 
 } /* namespace nx */
 } /* namespace pni */
