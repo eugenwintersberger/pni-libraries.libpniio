@@ -74,7 +74,26 @@ void NXrootTest::testAttributes(){
 	CPPUNIT_ASSERT_NO_THROW(f.open());
 	CPPUNIT_ASSERT_NO_THROW(f.close());
 
+}
 
+void NXrootTest::testEntry(){
+	NXroot f;
+	NXentry e;
+
+	//create a new file
+	CPPUNIT_ASSERT_NO_THROW(f.setFileName("NXroot.h5"));
+	CPPUNIT_ASSERT_NO_THROW(f.setOverwrite(true));
+	CPPUNIT_ASSERT_NO_THROW(f.create());
+
+	e = f.createEntry("scan_1");
+	CPPUNIT_ASSERT_NO_THROW(e = f.createEntry("scan_1"));
+	CPPUNIT_ASSERT_NO_THROW(e.close());
+	CPPUNIT_ASSERT_NO_THROW(e = f.openEntry("scan_1"));
+	CPPUNIT_ASSERT_NO_THROW(e.close());
+
+	NXentry e2;
+	CPPUNIT_ASSERT_NO_THROW(e2 = f.createEntry("scan_2"));
+	CPPUNIT_ASSERT_NO_THROW(e = f.openEntry("scan_2"));
 
 }
 

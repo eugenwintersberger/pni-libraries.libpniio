@@ -19,6 +19,7 @@ class NXrootTest:public CppUnit::TestFixture {
 	CPPUNIT_TEST(testCreation);
 	CPPUNIT_TEST(testOpen);
 	CPPUNIT_TEST(testAttributes);
+	CPPUNIT_TEST(testEntry);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -27,6 +28,7 @@ public:
 	void testCreation();
 	void testOpen();
 	void testAttributes();
+	void testEntry();
 
 };
 

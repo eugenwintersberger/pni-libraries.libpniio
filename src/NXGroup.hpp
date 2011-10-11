@@ -42,7 +42,7 @@ public:
 	virtual ~NXGroup();
 
 	//! assignment operator
-	NXGroup &operator=(const NXGroup &);
+	NXGroup<Imp> &operator=(const NXGroup<Imp> &);
 
 	virtual NXGroup<GImp> createGroup(const String &n);
 	virtual NXGroup<GImp> openGroup(const String &n);

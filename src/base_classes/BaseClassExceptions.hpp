@@ -28,7 +28,7 @@ class NXentryError:public Exception{
 public:
 	NXentryError():Exception("NXentryError"){}
 	NXentryError(const String &i,const String &d):Exception("NXentryError",i,d){}
-	virtual ~NXentryError();
+	virtual ~NXentryError(){}
 
 	friend std::ostream &operator<<(std::ostream &o,const NXentryError &e);
 };
@@ -55,7 +55,7 @@ class NXnoteError:public Exception{
 public:
 	NXnoteError():Exception("NXnoteError"){}
 	NXnoteError(const String &i,const String &d):Exception("NXnoteError",i,d){}
-	virtual NXnoteError() {}
+	virtual ~NXnoteError() {}
 
 	friend std::ostream &operator<<(std::ostream &o,const NXnoteError &e);
 };

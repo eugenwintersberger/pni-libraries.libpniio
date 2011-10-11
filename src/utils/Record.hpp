@@ -26,8 +26,8 @@ namespace nx {
 template<typename FieldImp> class Record {
 private:
 	typedef std::map<String,FieldImp > RecordMap;
-	typedef RecordMap::iterator RecordIterator;
-	typedef RecordMap::const_iterator RecordConstIterator;
+	typedef typename RecordMap::iterator RecordIterator;
+	typedef typename RecordMap::const_iterator RecordConstIterator;
 
 	RecordMap _record;
 public:

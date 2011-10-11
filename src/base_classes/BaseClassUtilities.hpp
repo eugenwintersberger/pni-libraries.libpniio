@@ -9,6 +9,7 @@
 #define BASECLASSUTILITIES_HPP_
 
 #include <pni/utils/PNITypes.hpp>
+#include "../NXField.hpp"
 #include "BaseClassExceptions.hpp"
 
 using namespace pni::utils;
@@ -16,28 +17,26 @@ using namespace pni::utils;
 namespace pni{
 namespace nx{
 
-
-
-template<typename Imp> inline void setField(Imp &obj,const String &n,const String &v){
+template<typename Object> inline void setField(Object &obj,const String &n,const String &v){
 	EXCEPTION_SETUP("template<typename Imp> void setField(Imp &obj,const String &n,const String &v)");
-	typename Imp::FImp f;
+	NXField<typename Object::FImp> f;
 
 	try{
 		if(obj.exists(n)) obj.remove(n);
 
 		f = obj.createField(n,v);
-		f.write(n);
+		f.write((String &)n);
 		f.close();
 	}catch(...){
-		EXCEPTION_INIT(NXentryError,"Cannot write field ["+n+"]!");
+		EXCEPTION_INIT(pni::nx::NXentryError,"Cannot write field ["+n+"]!");
 		EXCEPTION_THROW();
 	}
 }
 
 
-template<typename Imp> inline void setField(Imp &obj,const String &n,const ArrayObject &v){
+template<typename Object> inline void setField(Object &obj,const String &n,const ArrayObject &v){
 	EXCEPTION_SETUP("template<typename Imp> void setField(Imp &obj, const String &n,const ArrayObject &v)");
-	typename Imp::FImp f;
+	NXField<typename Object::FImp> f;
 
 	try{
 		if(obj.exists(n)) obj.remove(n);
@@ -52,9 +51,9 @@ template<typename Imp> inline void setField(Imp &obj,const String &n,const Array
 
 }
 
-template<typename Imp> inline void setField(Imp &obj,const String &n,const ScalarObject &v){
+template<typename Object> inline void setField(Object &obj,const String &n,const ScalarObject &v){
 	EXCEPTION_SETUP("template<typename Imp> void setField(Imp &obj,const String &n,const ScalarObject &v)");
-	typename Imp::FImp f;
+	NXField<typename Object::FImp> f;
 
 	try{
 		if(obj.exists(n)) obj.remove(n);
@@ -69,14 +68,14 @@ template<typename Imp> inline void setField(Imp &obj,const String &n,const Scala
 
 }
 
-template<typename Imp> inline void getField(Imp &obj,const String &n,String &v) const{
+template<typename Object> inline void getField(Object &obj,const String &n,String &v){
 	EXCEPTION_SETUP("template<typename Imp> void getField(Imp &obj,const String &n,String &v)");
 	if(!obj.exists(n)){
 		EXCEPTION_INIT(NXentryError,"Cannot open field ["+n+"]!");
 		EXCEPTION_THROW();
 	}
 
-	typename Imp::FImp f;
+	NXField<typename Object::FImp> f;
 	try{
 		f = obj.openField(n);
 		f.read(v);
@@ -88,14 +87,14 @@ template<typename Imp> inline void getField(Imp &obj,const String &n,String &v) 
 
 }
 
-template<typename Imp> inline void getField(Imp &obj,const String &n,ArrayObject &v) const{
+template<typename Object> inline void getField(const Object &obj,const String &n,ArrayObject &v){
 	EXCEPTION_SETUP("template<typename Imp> void getField(Imp &obj,const String &n,ArrayObject &v)");
 	if(!obj.exists(n)){
 		EXCEPTION_INIT(NXentryError,"Cannot open field ["+n+"]!");
 		EXCEPTION_THROW();
 	}
 
-	typename Imp::FImp f;
+	NXField<typename Object::FImp> f;
 	try{
 		f = obj.openField(n);
 		f.read(v);
@@ -106,7 +105,7 @@ template<typename Imp> inline void getField(Imp &obj,const String &n,ArrayObject
 	}
 }
 
-template<typename Imp> inline void getField(Imp &obj,const String &n,ScalarObject &v) const{
+template<typename Object> inline void getField(const Object &obj,const String &n,ScalarObject &v){
 	EXCEPTION_SETUP("template<typename Imp> void getField(Imp &obj,const String &n,ScalarObject &v)");
 
 	if(!obj.exists(n)){
@@ -114,7 +113,7 @@ template<typename Imp> inline void getField(Imp &obj,const String &n,ScalarObjec
 		EXCEPTION_THROW();
 	}
 
-	typename Imp::FImp f;
+	NXField<typename Object::FImp> f;
 	try{
 		f = obj.openField(n);
 		f.read(v);

@@ -9,7 +9,9 @@
 #define NXENTRY_HPP_
 
 #include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Exceptions.hpp>
 
+#include "../NXField.hpp"
 #include "BaseClassExceptions.hpp"
 #include "BaseClassUtilities.hpp"
 
@@ -21,10 +23,13 @@ namespace pni{
 namespace nx{
 
 
-template<typename Imp> class NXentry:public Imp{
+template<typename Base> class NXentry:public Base{
 public:
-	NXentry():Imp(){}
+	NXentry():Base(){}
 	virtual ~NXentry(){}
+
+	NXentry(const NXentry<Base> &o):Base(o){}
+
 
 	virtual inline void setTitle(const String &n);
 	virtual inline String getTitle() const;
@@ -40,9 +45,10 @@ public:
 
 	virtual void setDefinition(const String &d,const String &v,const String &url);
 	virtual String getDefinition() const;
-	virtual String getDefinitionVersion() const;
-	virtual String getDefinitionURL() const;
+	virtual String getDefinitionVersion();
+	virtual String getDefinitionURL();
 
+	/*
 	virtual void setDefinitionLocal(const String &d,const String &v,const String &url);
 	virtual String getDefinitionLocal() const;
 	virtual String getDefinitionLocalVersion() const ;
@@ -56,127 +62,128 @@ public:
 
 	template<typename T> void setDuration(const Scalar<T> &);
 	template<typename T> Scalar<T> getDuration() const;
-
+	*/
 };
 
+
 //------------------------------------------------------------------------------
-template<typename Imp> void NXentry<Imp>::setTitle(const String &n){
+template<typename Base> void NXentry<Base>::setTitle(const String &n){
 	EXCEPTION_SETUP("template<typename Imp> void NXentry<Imp>::setTitle(const String &n)");
 	try{
 		setField(*this,"title",n);
 	}catch(...){
-		EXCEPTION_INIT(NXentryError,"Cannot write title field for NXentry ["+Imp::getName()+"]!");
+		EXCEPTION_INIT(NXentryError,"Cannot write title field for NXentry ["+Base::getName()+"]!");
 		EXCEPTION_THROW();
 	}
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> String NXentry<Imp>::getTitle() const{
+template<typename Base> String NXentry<Base>::getTitle() const{
 	EXCEPTION_SETUP("template<typename Imp> String NXentry<Imp>::getTitle() const");
 	String s;
 	try{
-		getField(*this,"title",s);
+		getField((NXentry<Base> &)(*this),"title",s);
 	}catch(...){
-		EXCEPTION_INIT(NXentryError,"Cannot read title from NXentry ["+Imp::getName()+"]");
+		EXCEPTION_INIT(NXentryError,"Cannot read title from NXentry ["+Base::getName()+"]");
 		EXCEPTION_THROW();
 	}
 	return s;
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> String NXentry<Imp>::getExperimentIdentifier() const {
+template<typename Base> String NXentry<Base>::getExperimentIdentifier() const {
 	EXCEPTION_SETUP("template<typename Imp> String NXentry<Imp>::getExperimentIdentifier() const");
 	String s;
 	try{
-		getField(*this,"experiment_identfier",s);
+		getField((NXentry<Base> &)(*this),"experiment_identfier",s);
 	}catch(...){
-		EXCEPTION_INIT(NXentryError,"Cannot read experiment identifier from NXentry ["+Imp::getName()+"]!");
+		EXCEPTION_INIT(NXentryError,"Cannot read experiment identifier from NXentry ["+Base::getName()+"]!");
 		EXCEPTION_THROW();
 	}
 	return s;
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> void NXentry<Imp>::setExperimentIdentifier(const String &n){
+template<typename Base> void NXentry<Base>::setExperimentIdentifier(const String &n){
 	EXCEPTION_SETUP("template<typename Imp> void NXentry<Imp>::setExperimentIdentifier(const String &n)");
 	try{
-		setField(*this,"experiment_identifier",s);
+		setField(*this,"experiment_identifier",n);
 	}catch(...){
-		EXCEPTION_INIT(NXentryError,"Cannot write experiment identifier for NXentry ["+Imp::getName()+"]!");
+		EXCEPTION_INIT(NXentryError,"Cannot write experiment identifier for NXentry ["+Base::getName()+"]!");
 		EXCEPTION_THROW();
 	}
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> void NXentry<Imp>::setCollectionIdentifier(const String &n){
+template<typename Base> void NXentry<Base>::setCollectionIdentifier(const String &n){
 	EXCEPTION_SETUP("template<typename Imp> void NXentry<Imp>::setCollectionIdentifier(const String &n)");
 	try{
 		setField(*this,"collection_identifier",n);
 	}catch(...){
-		EXCEPTION_INIT(NXentryError,"Cannot write collection identifier for NXentry ["+Imp::getName()+"]!");
+		EXCEPTION_INIT(NXentryError,"Cannot write collection identifier for NXentry ["+Base::getName()+"]!");
 		EXCEPTION_THROW();
 	}
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> String NXentry<Imp>::getCollectionIdentifier() const{
+template<typename Base> String NXentry<Base>::getCollectionIdentifier() const{
 	EXCEPTION_SETUP("template<typename Imp> String NXentry<Imp>::getCollectionIdentifier() const");
 	String s;
 	try{
-		getField(*this,"collection_identifier",s);
+		getField((NXentry<Base> &)(*this),"collection_identifier",s);
 	}catch(...){
-		EXCEPTION_INIT(NXentryError,"Cannot read collection identifier for NXentry ["+Imp::getName()+"]!");
+		EXCEPTION_INIT(NXentryError,"Cannot read collection identifier for NXentry ["+Base::getName()+"]!");
 		EXCEPTION_THROW();
 	}
 	return s;
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> void NXentry<Imp>::setCollectionDescription(const String &n){
+template<typename Base> void NXentry<Base>::setCollectionDescription(const String &n){
 	EXCEPTION_SETUP("template<typename Imp> void NXentry<Imp>::setCollectionDescription(const String &n)");
 	try{
 		setField(*this,"collection_description",n);
 	}catch(...){
-		EXCEPTION_INIT(NXentryError,"Cannot write collection description for NXentry ["+Imp::getName()+"]!");
+		EXCEPTION_INIT(NXentryError,"Cannot write collection description for NXentry ["+Base::getName()+"]!");
 		EXCEPTION_THROW();
 	}
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> String NXentry<Imp>::getCollectionDescription() const{
+template<typename Base> String NXentry<Base>::getCollectionDescription() const{
 	EXCEPTION_SETUP("template<typename Imp> String NXentry<Imp>::getCollectionDescription() const");
 	String s;
 	try{
-		getField(*this,"collection_description",s);
+		getField((NXentry<Base> &)(*this),"collection_description",s);
 	}catch(...){
-		EXCEPTION_INIT(NXentryError,"Cannot read collection description for NXentry  ["+Imp::getName()+"]!");
+		EXCEPTION_INIT(NXentryError,"Cannot read collection description for NXentry  ["+Base::getName()+"]!");
 		EXCEPTION_THROW();
 	}
 	return s;
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> void NXentry<Imp>::setDefinition(const String &d,const String &v,const String &url){
+template<typename Base> void NXentry<Base>::setDefinition(const String &d,const String &v,const String &url){
 	EXCEPTION_SETUP("template<typename Imp> void NXentry<Imp>::setDefinition(const String &d,const String &v,const String &url)");
 	try{
 		setField(*this,"definition",d);
 	}catch(...){
-		EXCEPTION_INIT(NXentryError,"Cannot write definition for NXentry ["+Imp::getName()+"]!");
+		EXCEPTION_INIT(NXentryError,"Cannot write definition for NXentry ["+Base::getName()+"]!");
 		EXCEPTION_THROW();
 	}
 
-	typename imp::FImp f;
-	f = openField("definition");
+	NXField<typename Base::FImp> f;
+	f = Base::openField("definition");
 	try{
 		f.setAttribute("version",v);
 	}catch(...){
-		EXCEPTION_INIT(NXentryError,"Cannot write version attribute the definition of NXentry ["+Imp::getName()+"]!");
+		EXCEPTION_INIT(NXentryError,"Cannot write version attribute the definition of NXentry ["+Base::getName()+"]!");
 		EXCEPTION_THROW();
 	}
 	try{
 		f.setAttribute("URL",url);
 	}catch(...){
-		EXCEPTION_INIT(NXentryError;"Cannot write URL attribute of the definition of NXentry ["+Imp::getName()+"]!");
+		EXCEPTION_INIT(NXentryError,"Cannot write URL attribute of the definition of NXentry ["+Base::getName()+"]!");
 		EXCEPTION_THROW();
 	}
 
@@ -184,45 +191,45 @@ template<typename Imp> void NXentry<Imp>::setDefinition(const String &d,const St
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> String NXentry<Imp>::getDefinition() const {
+template<typename Base> String NXentry<Base>::getDefinition() const {
 	EXCEPTION_SETUP("template<typename Imp> String NXentry<Imp>::getDefinition() const ");
 	String s;
 	try{
-		getField(*this,"definition",s);
+		getField((NXentry<Base> &)(*this),"definition",s);
 	}catch(...){
-		EXCEPTION_INIT(NXentryError,"Cannot read definition of NXentry ["+Imp::getName()+"]!");
+		EXCEPTION_INIT(NXentryError,"Cannot read definition of NXentry ["+Base::getName()+"]!");
 		EXCEPTION_THROW();
 	}
 	return s;
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> String NXentry<Imp>::getDefinitionVersion() const {
+template<typename Base> String NXentry<Base>::getDefinitionVersion(){
 	EXCEPTION_SETUP("String NXentry<Imp>::getDefinitionVersion() const");
-	typename Imp::FImp f;
+	NXField<typename Base::FImp> f;
 	String s;
 	try{
-		f = Imp::openField("definition");
-		s = f.getAttribute("version");
+		f = Base::openField("definition");
+		f.getAttribute("version",s);
 	}catch(...){
-		EXCEPTION_INIT(NXentryError,"Cannot retrieve the version of the NXDL definition of NXentry ["+Imp::getName()+"!");
-		EXCEPTION_TRHOW();
+		EXCEPTION_INIT(NXentryError,"Cannot retrieve the version of the NXDL definition of NXentry ["+Base::getName()+"!");
+		EXCEPTION_THROW();
 	}
 
 	return s;
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> String NXentry<Imp>::getDefinitionURL() const {
+template<typename Base> String NXentry<Base>::getDefinitionURL(){
 	EXCEPTION_SETUP("template<typename Imp> String NXentry<Imp>::getDefinitionURL() const");
-	typename Imp::FImp f;
+	NXField<typename Base::FImp> f;
 	String s;
 
 	try{
-		f = Imp::openField("definition");
-		s = f.getAttribute("URL");
+		f = Base::openField("definition");
+		f.getAttribute("URL",s);
 	}catch(...){
-		EXCEPTION_INIT(NXentryError,"Cannot retrieve the URL of the NXDL definition of NXentry ["+Imp::getName()+"]!");
+		EXCEPTION_INIT(NXentryError,"Cannot retrieve the URL of the NXDL definition of NXentry ["+Base::getName()+"]!");
 		EXCEPTION_THROW();
 	}
 

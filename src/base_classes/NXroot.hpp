@@ -9,6 +9,7 @@
 #define NXROOT_HPP_
 
 #include "../NXFile.hpp"
+#include "../NXGroup.hpp"
 #include "../NXExceptions.hpp"
 #include "BaseClassExceptions.hpp"
 #include "NXentry.hpp"
@@ -18,49 +19,49 @@ namespace pni{
 namespace nx{
 
 
-template<typename Imp> class NXroot:private Imp{
+template<typename Base> class NXroot:private Base{
 private:
-	NXroot(const NXroot<Imp> &):Imp(){};
-	NXroot<Imp> &operator=(const NXroot<Imp> &o){ return *this;}
+	NXroot(const NXroot<Base> &):Base(){};
+	NXroot<Base> &operator=(const NXroot<Base> &o){ return *this;}
 public:
-	NXroot():Imp(){}
+	NXroot():Base(){}
 	virtual ~NXroot(){close();}
 
 	virtual void setFileName(const String &n){
-		Imp::setFileName(n);
+		Base::setFileName(n);
 	}
 
 	virtual String getFileName() const {
-		return Imp::getFileName();
+		return Base::getFileName();
 	}
 
 	virtual void setOverwrite(const bool &v){
-		Imp::setOverwrite(v);
+		Base::setOverwrite(v);
 	}
 
 	virtual void setReadOnly(const bool &v){
-		Imp::setReadOnly(v);
+		Base::setReadOnly(v);
 	}
 
 	virtual void create(){
 		EXCEPTION_SETUP("template<typename Imp> NXroot<Imp>::create()");
 
 		try{
-			Imp::create();
+			Base::create();
 
 			//have to set here some default attributes
-			Imp::setAttribute("NX_class","NXroot");
-			Imp::setAttribute("NeXus_version","4.2.3");
-			Imp::setAttribute("HDF5_version","1.8.7");
-			Imp::setAttribute("creator","DESY");
+			Base::setAttribute("NX_class","NXroot");
+			Base::setAttribute("NeXus_version","4.2.3"); //this needs to be fixed
+			Base::setAttribute("HDF5_version","1.8.7");  //this needs to be fixed
+			Base::setAttribute("creator","DESY");        //this needs configuration
 
 			//have to set the time
 			std::time_t time;
 			std::time(&time);
 			String tstr = String(std::ctime(&time));
 
-			Imp::setAttribute("file_time",tstr);
-			Imp::setAttribute("file_update_time",tstr);
+			Base::setAttribute("file_time",tstr);
+			Base::setAttribute("file_update_time",tstr);
 
 		}catch(...){
 			EXCEPTION_INIT(NXrootError,"Creation of root object ["+getFileName()+"] failed!");
@@ -72,14 +73,14 @@ public:
 		EXCEPTION_SETUP("template<typename Imp> NXroot<Imp>::open()");
 
 		try{
-			Imp::open();
+			Base::open();
 
-			if(!Imp::isReadOnly()){
+			if(!Base::isReadOnly()){
 				//if the file is not read only we have to adopt an attribute
 				std::time_t time;
 				std::time(&time);
 				String tstr = std::ctime(&time);
-				Imp::setAttribute("file_update_time",tstr);
+				Base::setAttribute("file_update_time",tstr);
 			}
 
 		}catch(...){
@@ -89,35 +90,35 @@ public:
 	}
 
 	virtual void close(){
-		Imp::close();
+		Base::close();
 	}
 
 	virtual String getFileTime(){
 		String s;
-		Imp::getAttribute("file_time",s);
+		Base::getAttribute("file_time",s);
 		return s;
 	}
 
 	virtual String getFileUpdateTime(){
 		String s;
-		Imp::getAttribute("file_update_time",s);
+		Base::getAttribute("file_update_time",s);
 		return s;
 	}
 
 
-	NXentry<typename Imp::GImp> createEntry(const String &n){
-		NXentry<typename Imp::GImp> e;
+	NXentry<NXGroup<typename Base::GImp> > createEntry(const String &n){
+		NXentry<NXGroup<typename Base::GImp> > e;
 
-		e = Imp::createGroup(n);
+		(NXGroup<typename Base::GImp>)e = Base::createGroup(n);
 		e.setAttribute("NX_class","NXentry");
 
 		return e;
 	}
 
-	NXentry<typename Imp::GImp> openEntry(const String &n){
-		NXentry<typename Imp::GImp> e;
+	NXentry<NXGroup<typename Base::GImp> > openEntry(const String &n){
+		NXentry<NXGroup<typename Base::GImp> > e;
 
-		e = Imp::openGroup(n);
+		(NXGroup<typename Base::GImp>)e = Base::openGroup(n);
 
 		return e;
 	}
