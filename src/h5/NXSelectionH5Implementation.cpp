@@ -159,15 +159,10 @@ ArrayShape NXSelectionH5Implementation::getMemShape() const{
 	return s;
 }
 
-//------------------------------------------------------------------------------
-const hsize_t *NXSelectionH5Implementation::getOffset() const{
-	EXCEPTION_SETUP("const hsize_t *NXSelectionH5Implementation::getOffset() const");
 
-	return _offset;
-}
 
 //------------------------------------------------------------------------------
-hsize_t NXSelectionH5Implementation::getOffset(const UInt32 &i) const{
+UInt32 NXSelectionH5Implementation::getOffset(const UInt32 &i) const{
 	EXCEPTION_SETUP("hsize_t NXSelectionH5Implementation::getOffset(const UInt32 &i) const");
 
 	if(i>=_drank){
@@ -175,7 +170,7 @@ hsize_t NXSelectionH5Implementation::getOffset(const UInt32 &i) const{
 		EXCEPTION_THROW();
 	}
 
-	return _offset[i];
+	return (UInt32)_offset[i];
 }
 
 //------------------------------------------------------------------------------
@@ -201,14 +196,7 @@ void NXSelectionH5Implementation::decOffset(const UInt32 &i){
 }
 
 //------------------------------------------------------------------------------
-const hsize_t *NXSelectionH5Implementation::getCount() const{
-	EXCEPTION_SETUP("const hsize_t *NXSelectionH5Implementation::getCount() const");
-
-	return _count;
-}
-
-//------------------------------------------------------------------------------
-hsize_t NXSelectionH5Implementation::getCount(const UInt32 &i) const{
+UInt32 NXSelectionH5Implementation::getCount(const UInt32 &i) const{
 	EXCEPTION_SETUP("hsize_t NXSelectionH5Implementation::getCount(const UInt32 &i) const");
 
 	if(i>=_drank){
@@ -216,7 +204,7 @@ hsize_t NXSelectionH5Implementation::getCount(const UInt32 &i) const{
 		EXCEPTION_THROW();
 	}
 
-	return _count[i];
+	return (UInt32)_count[i];
 }
 
 //------------------------------------------------------------------------------
@@ -233,14 +221,7 @@ void NXSelectionH5Implementation::setCount(const UInt32 i,const UInt32 &v){
 }
 
 //------------------------------------------------------------------------------
-const hsize_t *NXSelectionH5Implementation::getStride() const{
-	EXCEPTION_SETUP("const hsize_t *NXSelectionH5Implementation::getStride() const");
-
-	return _stride;
-}
-
-//------------------------------------------------------------------------------
-hsize_t NXSelectionH5Implementation::getStride(const UInt32 &i) const{
+UInt32 NXSelectionH5Implementation::getStride(const UInt32 &i) const{
 	EXCEPTION_SETUP("hsize_t NXSelectionH5Implementation::getStride(const UInt32 &i) const");
 
 	if(i>=_drank){
@@ -248,7 +229,7 @@ hsize_t NXSelectionH5Implementation::getStride(const UInt32 &i) const{
 		EXCEPTION_THROW();
 	}
 
-	return _stride[i];
+	return (UInt32)_stride[i];
 }
 
 //------------------------------------------------------------------------------
@@ -263,14 +244,8 @@ void NXSelectionH5Implementation::setStride(const UInt32 &i,const UInt32 &v){
 	_stride[i] = v;
 }
 
-//------------------------------------------------------------------------------
-const hsize_t *NXSelectionH5Implementation::getBlock() const{
-	EXCEPTION_SETUP("const hsize_t *NXSelectionH5Implementation::getBlock() const");
-	return _block;
-}
-
 //-----------------------------------------------------------------------------
-hsize_t NXSelectionH5Implementation::getBlock(const UInt32 &i) const{
+UInt32 NXSelectionH5Implementation::getBlock(const UInt32 &i) const{
 	EXCEPTION_SETUP("hsize_t NXSelectionH5Implementation::getBlock(const UInt32 &i) const");
 
 	if(i>=_drank){
@@ -278,7 +253,7 @@ hsize_t NXSelectionH5Implementation::getBlock(const UInt32 &i) const{
 		EXCEPTION_THROW();
 	}
 
-	return _block[i];
+	return (UInt32)_block[i];
 }
 
 //------------------------------------------------------------------------------
@@ -291,23 +266,6 @@ void NXSelectionH5Implementation::setBlock(const UInt32 &i,const UInt32 &v){
 	}
 
 	_block[i] = v;
-}
-
-//------------------------------------------------------------------------------
-hid_t NXSelectionH5Implementation::getMemSpace() const{
-	EXCEPTION_SETUP("hid_t NXSelectionH5Implementation::getMemSpace()");
-
-	ArrayShape s = getMemShape();
-
-	hid_t id=0;
-	try{
-		H5Utilities::ArrayShape2DataSpace(s,id);
-	}catch(...){
-		EXCEPTION_INIT(H5DataSpaceError,"Creation of memory data space failed!");
-		EXCEPTION_THROW();
-	}
-
-	return id;
 }
 
 

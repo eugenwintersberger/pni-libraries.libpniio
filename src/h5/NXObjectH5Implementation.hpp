@@ -39,40 +39,49 @@ using namespace pni::utils;
 class NXObjectH5Implementation {
 private:
 	void _create_and_write_attribute(hid_t pid,const char *n,hid_t type_id,
-			                         hid_t space_id,const void *ptr);
-	void _open_attribute(hid_t pid,const char *n,hid_t &attr_id,hid_t &type_id,
-			             hid_t &space_id);
-	//! copy constructor
-	NXObjectH5Implementation(const NXObjectH5Implementation &o){}
+			                         hid_t space_id,const void *ptr) const;
+	void _open_attribute(const hid_t &pid,const char *n,hid_t &attr_id,
+			             hid_t &type_id,hid_t &space_id) const;
 
 	hid_t  _id;    //!< handler of the object this class referes too
 protected:
-
+	//! copy constructor - HDF5 objects cannot be copied.
+	//! The reason is farily simple: a copy would be like creating a new
+	//! version of the object with the same name which is obviously not possible.
+	NXObjectH5Implementation(const NXObjectH5Implementation &o){}
+	//has no default constructor - object can be constructed only from a
+	//factory.
+	NXObjectH5Implementation();
 public:
 	typedef boost::shared_ptr<NXObjectH5Implementation> sptr;
 	static const ImpCodes IMPCODE = HDF5;
 	//! default constructor
-	NXObjectH5Implementation();
 
 	//! destructor
 	virtual ~NXObjectH5Implementation();
 
 	//! assignment operator
+
+	//! HDF5 objects can be assigned to each other - the basic idea is that
+	//! the new object holds a reference to an already existing object.
 	NXObjectH5Implementation &operator=(const NXObjectH5Implementation &o);
 
+	//move here all char * arguments to String in order to
+	//make the interfaces more homogeneous
+
 	//! write attribute data from an ArrayObject
-	void setAttribute(const char *n,ArrayObject &a);
+	void setAttribute(const String &n,const ArrayObject &a) const;
 	//! write attribute data from a ScalarObject
-	void setAttribute(const char *n,ScalarObject &s);
+	void setAttribute(const String &n,const ScalarObject &s) const;
 	//! write attribute data from a String object
-	void setAttribute(const char *n,const String &);
+	void setAttribute(const String &n,const String &) const;
 
 	//! read attribute data to an ArrayObject
-	void getAttribute(const char *n,ArrayObject &a);
+	void getAttribute(const String &n,ArrayObject &a) const;
 	//! read attribute data to a ScalarObject
-	void getAttribute(const char *n,ScalarObject &s);
+	void getAttribute(const String &n,ScalarObject &s) const;
 	//! read attribute data to a String object
-	void getAttribute(const char *n,String &s);
+	void getAttribute(const String &n,String &s) const;
 
 	//! get object path
 	virtual String getPath() const;
@@ -80,8 +89,6 @@ public:
 	virtual String getBase() const;
 	//! get object name
 	virtual String getName() const;
-	//! open a child object
-	virtual void open(const String &n,NXObjectH5Implementation &o);
 	//! close the object
 	virtual void close();
 	//! check if open
@@ -90,24 +97,29 @@ public:
 	virtual pni::nx::NXObjectClass getObjectClass() const;
 
 	//! get object ID
+	//should be moved to protected and thus not exposed to the public
+	//interface of the class
 	inline hid_t getId() const{
 		return _id;
 	}
 
 	//! set object ID
+	//should be moved to protected and thus not be exposed to the public
+	//interface of the class
 	inline void setId(hid_t id){
+		//if the object has already a valid ID we need to decrement the
+		//reference counter on this object - the object will be destroyed
+		//if its reference counter approaches 0
 		if(H5Iis_valid(_id)) H5Idec_ref(_id);
+
+		//set _id to its new value
+		//we need to check if we maybe must increment the reference counter
+		//of the object refered to by id
 		_id = id;
 	}
 
-	//! create an object
-
-	//! \param n name of the object
-	//! \param o parent object
-	virtual void create(const String &n,const NXObjectH5Implementation &o);
-
-	virtual void createLink(const NXObjectH5Implementation &pos,const String &n);
-	virtual void createLink(const String &path);
+	virtual void createLink(const NXObjectH5Implementation &pos,const String &n) const;
+	virtual void createLink(const String &path) const;
 
 };
 

@@ -2,7 +2,7 @@ from os import path
 
 Import("build_env")
 
-src_list = ["NXExceptions.cpp"]
+src_list = ["NXExceptions.cpp","NXDateTime.cpp"]
 
 #compile sources
 shared_objects = build_env.SharedObject(src_list)
@@ -14,9 +14,9 @@ shared_objects.append(h5_shared_objects)
 static_objects.append(h5_static_objects)
 
 #create base classes
-(bc_shared_objects,bc_static_objects) = build_env.SConscript("base_classes/SConscript")
-shared_objects.append(bc_shared_objects)
-static_objects.append(bc_static_objects)
+#(bc_shared_objects,bc_static_objects) = build_env.SConscript("base_classes/SConscript")
+#shared_objects.append(bc_shared_objects)
+#static_objects.append(bc_static_objects)
 
 #link the shared library
 lib_suffix = build_env["SHLIBSUFFIX"]+"."+build_env["SOVERSION"]+"."+build_env["VERSION"]

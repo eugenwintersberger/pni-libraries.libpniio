@@ -3,12 +3,13 @@ Import("test_build_env")
 test_env = test_build_env.Clone()
 
 test_env.Append(LIBPATH=["../src/"])
-test_env.Append(LIBS=["pniutils","pninx","cppunit","plplotcxxd","boost_filesystem"])
+test_env.Append(LIBS=["pniutils","pninx","cppunit","plplotcxxd","boost_filesystem","boost_system"])
 test_env.Append(CPPPATH=["../src/"])
 
 sources_list = ["pninxtest.cpp"]
 sources_list.extend(["NXFileTest.cpp","NXGroupTest.cpp","NXFieldTest.cpp"])
-sources_list.extend(["base_classes/NXrootTest.cpp"])
+#sources_list.extend(["base_classes/NXrootTest.cpp"])
+#sources_list.extend(["base_classes/NXentryTest.cpp"])
 
 
 pninx_test = test_env.Program("pninxtest",sources_list)

@@ -52,8 +52,9 @@ int main(int argc,char **argv){
 	runs = 500;
 	for(i=0;i<runs;i++){
 		fnstream<<"run_"<<i;
-		d = f.createField(fnstream.str(),a);
-		d.write(a);
+		a.setName(fnstream.str());
+		d = f.createNumericField(a);
+		d.append(a);
 		d.close();
 		fnstream.seekp(0);
 		f.flush();

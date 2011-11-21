@@ -1,0 +1,5 @@
+env = Environment()
+
+env.Append(LIBS=["pninx","pniutils"])
+env.Append(CXXFLAGS=["-O2","-std=c++0x"])
+d4 = env.Program("d4.cpp")

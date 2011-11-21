@@ -37,7 +37,7 @@ public:
 	virtual void open(const char *n,bool overwrite);
 	virtual void create(const char *n,bool overwrite,UInt64 ssize);
 	virtual void close();
-	virtual void flush();
+	virtual void flush() const;
 };
 
 

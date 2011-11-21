@@ -1,5 +1,5 @@
 /*
- * Declaration of Nexus specific types.
+ * Declaration of Nexus base class NXattenuator template.
  *
  * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
  *
@@ -19,19 +19,49 @@
  * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  *
- * Declaration of Nexus specific types.
+ * Declaration of Nexus base class NXattenuator template
  *
- * Created on: Sep 19, 2011
+ * Created on: Oct 17, 2011
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#ifndef NXTYPES_HPP_
-#define NXTYPES_HPP_
+#ifndef NXATTENUATOR_HPP_
+#define NXATTENUATOR_HPP_
+
+#include<iostream>
+#include<vector>
+#include<map>
+
+#include <pni/utils/PNITypes.hpp>
+#include "../NXField.hpp"
+#include "NXFieldRestriction.hpp"
+#include "NXStandardGroup.hpp"
 
 namespace pni{
 namespace nx{
 
-enum NXObjectClass {NXNONE,NXFIELD,NXGROUP,NXFILE};
+
+enum class AttenuatorStatus{
+	in,out,moving;
+};
+
+
+template<typename Base> class NXattenuator:public Base{
+public:
+
+	NXattenuator():Base(){
+		Base::_standard_fields.insert("distance");
+		Base::_standard_fields.insert("thickness");
+		Base::_standard_fields.insert("scattering_cross_section");
+		Base::_standard_fields.insert("absorption_cross_section");
+		Base::_standard_fields.insert("attenuator_transmission");
+		Base::_standard_fields.insert("status");
+	}
+
+	virtual ~NXattenuator(){}
+
+
+};
 
 
 
@@ -40,4 +70,5 @@ enum NXObjectClass {NXNONE,NXFIELD,NXGROUP,NXFILE};
 }
 
 
-#endif /* NXTYPES_HPP_ */
+
+#endif /* NXATTENUATOR_HPP_ */

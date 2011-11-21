@@ -8,6 +8,8 @@
 #include "NXFileH5Implementation.hpp"
 #include "H5Exceptions.hpp"
 
+#include <sstream>
+
 namespace pni{
 namespace nx{
 namespace h5{
@@ -114,9 +116,18 @@ void NXFileH5Implementation::create(const char *n,bool overwrite,UInt64 ssize){
 	}
 
 	setId(id);
+
+	//in the end we need to set the HDF5 version to the correct
+	//value
+	unsigned major,minor,rel;
+	H5get_libversion(&major,&minor,&rel);
+	std::ostringstream vstring;
+	vstring<<major<<"."<<minor<<"."<<rel;
+
+	this->setAttribute("HDF5_version",String(vstring.str()));
 }
 
-void NXFileH5Implementation::flush(){
+void NXFileH5Implementation::flush() const{
 	H5Fflush(getId(),H5F_SCOPE_LOCAL);
 }
 

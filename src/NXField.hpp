@@ -1,8 +1,28 @@
 /*
- * NXField.hpp
+ * Declaration of the NXfield template
  *
- *  Created on: Jul 3, 2011
- *      Author: eugen
+ * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpninx.
+ *
+ * libpninx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpninx is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
+ *
+ * Declaration of the NXfield template
+ *
+ * Created on: Jul 3, 2011
+ *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
 #ifndef NXFIELD_HPP_
@@ -25,15 +45,26 @@ using namespace pni::utils;
 namespace pni{
 namespace nx{
 
+//need to do some trick here to get the stream operators overloaded
+template<typename Imp> class NXField;
+template<typename Imp> NXField<Imp> &operator<<(NXField<Imp> &o,const ScalarObject &s);
+template<typename Imp> NXField<Imp> &operator<<(NXField<Imp> &o,const ArrayObject &a);
+template<typename Imp> NXField<Imp> &operator<<(NXField<Imp> &o,const String &s);
+template<typename Imp> NXField<Imp> &operator>>(NXField<Imp> &o,ScalarObject &s);
+template<typename Imp> NXField<Imp> &operator>>(NXField<Imp> &o,ArrayObject &s);
+template<typename Imp> NXField<Imp> &operator>>(NXField<Imp> &o,String &s);
+
 template<typename Imp>
 class NXField:public NXObject<Imp> {
 private:
-	NumericObject *_iobuffer;
-	const NXSelection<typename NXImpMap<Imp::IMPCODE>::SelectionImplementation > *_selection;
+	UInt64 _read_stream_pos;
+
+
 protected:
-	void write(const void *ptr);
-	void read(void *ptr) const;
+	//void write(const void *ptr) const;
+	//void read(void *ptr) const;
 public:
+	typedef NXSelection<typename NXImpMap<Imp::IMPCODE>::SelectionImplementation > Selection;
 	typedef boost::shared_ptr<NXField<Imp> > sptr;
 	NXField();
 	NXField(const NXField<Imp> &);
@@ -43,421 +74,262 @@ public:
 
 	//inquery of a field
 	UInt32 getRank() const{
-		return this->_imp.getRank();
+		return this->getImplementation().getRank();
 	}
 
 	//! get dimension of a field
 	UInt32 getDimension(UInt32 i) const {
-		return this->_imp.getDimension(i);
-	}
-
-	//! get all dimensions
-	UInt32 *getDimensions() const {
-		return this->_imp.getDimensions();
+		return this->getImplementation().getDimension(i);
 	}
 
 	//need a function here to get an array rank from a field
-	virtual ArrayShape getShape() const{
-		ArrayShape s(this->_imp.getRank());
-		for(UInt64 i=0;i<s.getRank();i++) s.setDimension(i,this->_imp.getDimension(i));
+	virtual const ArrayShape &getShape() const{
+		return this->getImplementation().getShape();
+	}
 
-		return s;
+	virtual const ArrayShape &getElementShape() const {
+		return this->getImplementation().getElementShape();
+	}
+
+	virtual UInt32 getElementRank() const {
+		return this->getImplementation().getElementRank();
 	}
 
 	//get the type ID
 	virtual PNITypeID getTypeID() const {
-		return this->_imp.getTypeID();
+		return this->getImplementation().getTypeID();
 	}
 
 	virtual UInt64 getSize() const {
-		return this->_imp.getSize();
+		return this->getImplementation().getSize();
 	}
 
 	virtual String getName() const {
-		return this->_imp.getName();
+		return this->getImplementation().getName();
 	}
 
-	virtual void registerDataObject(ArrayObject &o);
-	virtual void registerDataObject(ScalarObject &o);
-	virtual void resetDataObject();
-
-	//need something like a selection object to fetch only the data needed
-	virtual void registerSelection(NXSelection<typename NXImpMap<Imp::IMPCODE>::SelectionImplementation > &s);
-
-	void resetSelection();
-
 	//need methods to access data stored in the field
-	void write(ArrayObject &a);
-	void write(ScalarObject &s);
-	void write(String &s);
-	void write();
+	void append(const ArrayObject &a);
+	void append(const ScalarObject &s);
+	void append(const String &s);
 
-	//need methods to write data to the field
-	void read(ArrayObject &a);
-	void read(ScalarObject &s);
-	void read(String &s) const;
-	void read();
+	void insert(const UInt64 &i,const ArrayObject &s);
+	void insert(const UInt64 &i,const ScalarObject &s);
+	void insert(const UInt64 &i,const String &s);
+
+	void get(const UInt64 &i,ArrayObject &a);
+	void get(const UInt64 &i,ScalarObject &s);
+	void get(const UInt64 &i,String &s);
+
 
 	void close();
 
-	void resize(const UInt64 &i){
-		this->_imp.resize(i);
+	void resetReadStreamPosition() {
+		_read_stream_pos = 0;
 	}
 
+	friend NXField<Imp> &operator<< <> (NXField<Imp> &o,const ScalarObject &s);
+	friend NXField<Imp> &operator<< <> (NXField<Imp> &o,const ArrayObject &a);
+	friend NXField<Imp> &operator<< <> (NXField<Imp> &o,const String &s);
 
+	friend NXField<Imp> &operator>> <> (NXField<Imp> &o,ScalarObject &s);
+	friend NXField<Imp> &operator>> <> (NXField<Imp> &o,ArrayObject &s);
+	friend NXField<Imp> &operator>> <> (NXField<Imp> &o,String &s);
 
 };
 
 //--------------constructors and destructors------------------------------------
 
 template<typename Imp> NXField<Imp>::NXField() {
-	// TODO Auto-generated constructor stub
-	_iobuffer = NULL;
-	_selection = NULL;
-
+	_read_stream_pos = 0;
 }
 
 template<typename Imp> NXField<Imp>::NXField(const NXField<Imp> &o){
-	this->_imp = o._imp;
-
-	_iobuffer = NULL;
-	_selection = NULL;
+	this->setImplementation(o.getImplementation());
+	_read_stream_pos = 0;
 }
 
 template<typename Imp> NXField<Imp>::~NXField() {
 	// TODO Auto-generated destructor stub
 	close();
-	_iobuffer = NULL;
-	_selection = NULL;
+	_read_stream_pos = 0;
 }
 
 //------------------------------operators---------------------------------------
 template<typename Imp> NXField<Imp> &NXField<Imp>::operator=(const NXField<Imp> &o){
 	if( this != &o){
-		this->_imp = o._imp;
-
-		_iobuffer = o._iobuffer;
-		_selection = o._selection;
+		this->setImplementation(o.getImplementation());
+		_read_stream_pos = 0;
 	}
 	return *this;
 }
 
 //--------------------------write operations------------------------------------
-template<typename Imp> void NXField<Imp>::write(ArrayObject &a){
-	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::write(pni::utils::ArrayObject &a)");
-	ArrayShape s = getShape();
+template<typename Imp> void NXField<Imp>::append(const ArrayObject &a){
+	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::append(const ArrayObject &a)");
 
-	//an array must always be stored to an array type field
-	if(!(this->_imp.isArray())){
-		EXCEPTION_INIT(NXFieldError,"Field ["+getName()+"] is not of array type!");
-		EXCEPTION_THROW();
-	}
-
-	//check the data type of the object and the field
-	if(a.getTypeID()!=this->_imp.getTypeID()){
-		EXCEPTION_INIT(TypeError,"Array and field type do not match!");
-		EXCEPTION_THROW();
-	}
-
-	//check if the array is allocated
 	if(!a.isAllocated()){
-		EXCEPTION_INIT(MemoryAccessError,"Array ["+a.getName()+"] seems to be not allocated!");
+		EXCEPTION_INIT(NXFieldError,"Array not allocated - cannot append!");
 		EXCEPTION_THROW();
 	}
 
-	//have to do some shape checking here
-	if(_selection != NULL){
-		//if a selection is present the shape of the array must match the
-		//shape of the selection in memory.
-		if(a.getShape() != _selection->getMemShape()){
-			EXCEPTION_INIT(ShapeMissmatchError,"Array and selection shape do not match!");
-			EXCEPTION_THROW();
-		}
-	}else{
-		//if no selection object is set the shape of the array must match the
-		//shape of the entire field
-		if(a.getShape()!=s){
-			EXCEPTION_INIT(ShapeMissmatchError,"Array and field shape do not match!");
-			EXCEPTION_THROW();
-		}
-	}
-
-	//if a selection object is registered we have to reapply it to the
-	//data set
-	if(_selection != NULL) this->_imp.setSelection(*_selection);
-
-	//try to write data
-	try{
-		this->_imp.write(a.getVoidPtr());
-	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Error writing array data to field ["+getName()+"]!");
-		EXCEPTION_THROW();
-	}
-}
-
-
-template<typename Imp> void NXField<Imp>::write(ScalarObject &s){
-	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::write(ScalarObject &s)");
-
-	if((this->_imp.isArray())&&(_selection != NULL)){
-		if(_selection->getMemShape().getSize() != 1){
-			EXCEPTION_INIT(ShapeMissmatchError,"If a scalar should be written to an array the selection size must be 1!");
-			EXCEPTION_THROW();
-		}
-	}else{
-		//if the field is an array and no selection is set we have to
-		//raise an exception
-		if(!(this->_imp.isScalar())){
-			EXCEPTION_INIT(NXFieldError,"Field ["+this->_imp.getName()+"] is not a scalar field!");
-			EXCEPTION_THROW();
-		}
-	}
-
-	//check the data type - this we have to do in any case
-	if(s.getTypeID()!=this->_imp.getTypeID()){
-		EXCEPTION_INIT(TypeError,"Scalar and field type do not match!");
-		EXCEPTION_THROW();
-	}
-
-	if(_selection != NULL) this->_imp.setSelection(*_selection);
-
-	try{
-		this->_imp.write(s.getVoidPtr());
-	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Error writing data to scalar field ["+getName()+"]!");
-		EXCEPTION_THROW();
-	}
-}
-
-
-template<typename Imp> void NXField<Imp>::write(String &s){
-	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::write(pni::utils::String &s)");
-
-	if(!this->_imp.isString()){
-		EXCEPTION_INIT(NXFieldError,"Field ["+getName()+"] is not of string type!");
-		EXCEPTION_THROW();
-	}
-
-	//check if the size fits
-	if((this->_imp.getSize())!=s.size()){
-		EXCEPTION_INIT(SizeMissmatchError,"Size of input string and string field do not match!");
+	if(a.getShape() != getElementShape()){
+		EXCEPTION_INIT(ShapeMissmatchError,"Element shape and array shape do not match!");
 		EXCEPTION_THROW();
 	}
 
 	try{
-		this->_imp.write((void *)s.c_str());
+		this->getImplementation().append(a);
 	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Error writing string data to field ["+getName()+"]!");
+		EXCEPTION_INIT(NXFieldError,"Cannot append data to field ["+getName()+"]!");
 		EXCEPTION_THROW();
 	}
 }
 
-template<typename Imp> void NXField<Imp>::write(){
-	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::write()");
+template<typename Imp> void NXField<Imp>::append(const ScalarObject &s){
+	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::append(const ScalarObject &s)");
 
-	if(!((_selection != NULL)&&(_iobuffer != NULL))){
-		EXCEPTION_INIT(NXFieldError,"No selection or buffer registered at field ["+getName()+"]!");
+	if(!this->getImplementation().isScalar()){
+		EXCEPTION_INIT(NXFieldError,"Data field is not for scalar data!");
 		EXCEPTION_THROW();
 	}
-
-	this->_imp.setSelection(*_selection);
 
 	try{
-		this->_imp.write(_iobuffer->getVoidPtr());
+		this->getImplementation().append(s);
 	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Error writing data to field ["+getName()+"]!");
+		EXCEPTION_INIT(NXFieldError,"Cannot append data to field ["+getName()+"]!");
 		EXCEPTION_THROW();
 	}
 }
 
-template<typename Imp> void NXField<Imp>::read(){
-	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::write()");
-
-	if(!((_selection != NULL)&&(_iobuffer != NULL))){
-		EXCEPTION_INIT(NXFieldError,"No selection or buffer registered at field ["+getName()+"]!");
+template<typename Imp> void NXField<Imp>::append(const String &s){
+	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::append(const String &s)");
+	if(!this->getImplementation().isString()){
+		EXCEPTION_INIT(NXFieldError,"Data field is not a string field!");
 		EXCEPTION_THROW();
 	}
-
-	this->_imp.setSelection(*_selection);
 
 	try{
-		this->_imp.read(_iobuffer->getVoidPtr());
+		this->getImplementation().append(s);
 	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Error writing data to field ["+getName()+"]!");
+		EXCEPTION_INIT(NXFieldError,"Cannot append string data to field ["+getName()+"]!");
 		EXCEPTION_THROW();
 	}
 }
 
-//----------------------read operations-----------------------------------------
-template<typename Imp> void NXField<Imp>::read(ArrayObject &a){
-	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::read(ArrayObject &a) const");
+template<typename Imp> void NXField<Imp>::insert(const UInt64 &i,const ArrayObject &a){
+	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::insert(const UInt64 &i,const ArrayObject &a)");
 
-	//arrays can only be read from array fields
-	if(!(this->_imp.isArray())){
-		EXCEPTION_INIT(NXFieldError,"Field ["+this->_imp.getName()+"] is not of array type!");
+}
+
+template<typename Imp> void NXField<Imp>::insert(const UInt64 &i,const ScalarObject &a){
+	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::insert(const UInt64 &i,const ScalarObject &a)");
+
+}
+
+template<typename Imp> void NXField<Imp>::insert(const UInt64 &i,const String &s){
+	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::insert(const UInt64 &i,const String &s)");
+
+}
+
+template<typename Imp> void NXField<Imp>::get(const UInt64 &i,ArrayObject &a){
+	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::get(const UInt64 &i,ArrayObject &a)");
+
+	if(!this->getImplementation().isArray()){
+		EXCEPTION_INIT(NXFieldError,"Data field is not an array!");
 		EXCEPTION_THROW();
 	}
-
-	//check the type
-	if(a.getTypeID() != this->_imp.getTypeID()){
-		EXCEPTION_INIT(TypeError,"Type of field ["+this->_imp.getName()+"] does not match target type!");
-		EXCEPTION_THROW();
-	}
-
-	//have to check if the array is allocated
-	if(!a.isAllocated()){
-		EXCEPTION_INIT(MemoryAccessError,"Array ["+a.getName()+"] seems to be not allocated!");
-		EXCEPTION_THROW();
-	}
-
-	//check the shape of the array
-	if(_selection != NULL){
-		//if a selection object is associated with this field the shape of the
-		//array must match the memory shape of the selection.
-		if(a.getShape()!=_selection->getMemShape()){
-			EXCEPTION_INIT(ShapeMissmatchError,"Shapes of field ["+getName()+"] and the selection of array ["+a.getName()+"] do not match!");
-			EXCEPTION_THROW();
-		}
-	}else{
-		//if there is no selection
-		ArrayShape fs;
-		this->_imp.getShape(fs);
-		if(a.getShape()!=fs){
-			EXCEPTION_INIT(ShapeMissmatchError,"Shapes of field ["+getName()+"] and array ["+a.getName()+"] do not match!");
-			EXCEPTION_THROW();
-		}
-	}
-
-	if(_selection != NULL) this->_imp.setSelection(*_selection);
 
 	try{
-		this->_imp.read((void *)a.getBuffer().getVoidPtr());
+		this->getImplementation().get(i,a);
 	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Cannot read array data from field ["+this->_imp.getName()+"]!");
+		EXCEPTION_INIT(NXFieldError,"Cannot read array data from field ["+getName()+"]!");
 		EXCEPTION_THROW();
 	}
 }
 
-
-template<typename Imp> void NXField<Imp>::read(ScalarObject &s){
-	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::read(ScalarObject &s) const");
-
-	//check the shape
-	if((this->_imp.isArray())&&(_selection != NULL)){
-		if(_selection->getMemShape().getSize() != 1){
-			EXCEPTION_INIT(ShapeMissmatchError,"If a scalar should be written to an array the selection size must be 1!");
-			EXCEPTION_THROW();
-		}
-	}else{
-		//if the field is an array and no selection is set we have to
-		//raise an exception
-		if(!(this->_imp.isScalar())){
-			EXCEPTION_INIT(NXFieldError,"Field ["+this->_imp.getName()+"] is not a scalar field!");
-			EXCEPTION_THROW();
-		}
-	}
-
-	//check data type
-	if(s.getTypeID() != this->_imp.getTypeID()){
-		EXCEPTION_INIT(TypeError,"Field ["+getName()+"] and target scalar are of different type!");
+template<typename Imp> void NXField<Imp>::get(const UInt64 &i,ScalarObject &a){
+	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::get(const UInt64 &i,ScalarObject &a)");
+	if(!this->getImplementation().isScalar()){
+		EXCEPTION_INIT(NXFieldError,"Data field is not scalar!");
 		EXCEPTION_THROW();
 	}
-
-	//set the selection if necessary
-	if(_selection != NULL) this->_imp.setSelection(*_selection);
 
 	try{
-		this->_imp.read(s.getVoidPtr());
+		this->getImplementation().get(i,a);
 	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Scalar data cannot be read from field ["+getName()+"]!");
+		EXCEPTION_INIT(NXFieldError,"Cannot read scalar data from field ["+getName()+"]!");
 		EXCEPTION_THROW();
 	}
 }
 
-template<typename Imp> void NXField<Imp>::read(String &s) const{
-	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::read(String &s) const");
+template<typename Imp> void NXField<Imp>::get(const UInt64 &i,String &s){
+	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::get(const UInt64 &i,String &s)");
 
-	if(!(this->_imp.isString())){
-		EXCEPTION_INIT(NXFieldError,"Field ["+getName()+"] is not of type string!");
+	if(!this->getImplementation().isString()){
+		EXCEPTION_INIT(NXFieldError,"Data field is not a string array!");
 		EXCEPTION_THROW();
 	}
-
-	s.clear();
-	s.resize(this->_imp.getSize());
 
 	try{
-		this->_imp.read((void *)s.c_str());
+		this->getImplementation().get(i,s);
 	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Error reading string data from field ["+getName()+"]!");
+		EXCEPTION_INIT(NXFieldError,"Cannot fetch string data from field ["+getName()+"]!");
 		EXCEPTION_THROW();
 	}
+
 }
+
+
+//----------------------stream operators---------------------------------------
+template<typename Imp>
+NXField<Imp> &operator<<(NXField<Imp> &o,const ScalarObject &s){
+	o.append(s);
+	return o;
+}
+
+template<typename Imp>
+NXField<Imp> &operator<<(NXField<Imp> &o,const ArrayObject &a){
+	o.append(a);
+	return o;
+}
+
+template<typename Imp>
+NXField<Imp> &operator<<(NXField<Imp> &o,const String &s){
+	o.append(s);
+	return o;
+}
+
+template<typename Imp>
+NXField<Imp> &operator>>(NXField<Imp> &o,ScalarObject &s){
+	o.get(o._read_stream_pos,s);
+	o._read_stream_pos++;
+	return o;
+}
+
+template<typename Imp>
+NXField<Imp> &operator>>(NXField<Imp> &o,ArrayObject &a){
+	o.get(o._read_stream_pos,a);
+	o._read_stream_pos++;
+	return o;
+}
+
+template<typename Imp>
+NXField<Imp> &operator>>(NXField<Imp> &o,String &s){
+	o.get(o._read_stream_pos,s);
+	o._read_stream_pos++;
+	return o;
+}
+
+
+
 
 //------------------convienance methods-----------------------------------------
 template<typename Imp> void NXField<Imp>::close(){
-	this->_imp.close();
-}
-
-template<typename Imp> void NXField<Imp>::registerDataObject(ArrayObject &o){
-	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::registerDataObject(NumericObject &o)");
-
-	//first check the data type
-	if(o.getTypeID() != getTypeID()){
-		EXCEPTION_INIT(TypeError,"Type of data object ["+o.getName()+"] and field ["+getName()+"] have different type!");
-		EXCEPTION_THROW();
-	}
-
-	if(_selection != NULL){
-		//there already exists a selection object we have to check the shape
-		if(_selection->getMemShape() != o.getShape()){
-			EXCEPTION_INIT(ShapeMissmatchError,"Shapes of array and selection object to not match!");
-			EXCEPTION_THROW();
-		}
-
-	}
-	_iobuffer = &o;
-
-}
-
-template<typename Imp> void NXField<Imp>::registerDataObject(ScalarObject &o){
-	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::registerDataObject(ScalarObject &o)");
-
-	if(o.getTypeID() != getTypeID()){
-		EXCEPTION_INIT(TypeError,"Type of data object ["+o.getName()+"] and field ["+getName()+"] have different type!");
-		EXCEPTION_THROW();
-	}
-
-	if(_selection != NULL){
-		//if there exists already a selection object
-		if(_selection->getMemShape().getSize() != 1){
-			EXCEPTION_INIT(ShapeMissmatchError,"To store a scalar in an array object requires a selection of size 1!");
-			EXCEPTION_THROW();
-		}
-	}
-
-	_iobuffer = &o;
-}
-
-template<typename Imp> void NXField<Imp>::resetDataObject(){
-	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::resetDataObject() const");
-	_iobuffer = NULL;
-
-}
-
-	//need something like a selection object to fetch only the data needed
-template<typename Imp>
-void NXField<Imp>::registerSelection(NXSelection<typename NXImpMap<Imp::IMPCODE>::SelectionImplementation > &s){
-	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::registerSelection(const NXSelection<typename NXImpMap<Imp::IMPCODE>::SelectionImplementation > &s)");
-	this->_imp.registerSelection(s);
-	_selection = &s;
-
+	this->getImplementation().close();
 }
 
 
-template<typename Imp> void NXField<Imp>::resetSelection(){
-		this->_imp.resetSelection();
-		_selection = NULL;
-}
 
 //end of namespace
 }

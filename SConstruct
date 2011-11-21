@@ -1,6 +1,8 @@
 import os.path as path
 import os
 
+#made here a small comment - should be only in the branch
+
 debug = ARGUMENTS.get("DEBUG",0)
 
 var = Variables('BuildConfig.py')
@@ -62,7 +64,7 @@ env.Append(LIBS=["hdf5"])
 env.Replace(CXX = env["CXX"])
 
 #set default compiler flags
-env.Append(CXXFLAGS = ["-Wall"])
+env.Append(CXXFLAGS = ["-Wall","-std=c++0x"])
 #set paths for Boost and HDF5
 env.Append(LIBPATH=path.join(env["BOOSTPREFIX"],"lib"))
 env.Append(CPPPATH=path.join(env["BOOSTPREFIX"],"include"))

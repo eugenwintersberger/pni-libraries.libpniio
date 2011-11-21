@@ -25,15 +25,17 @@ class NXFieldTest: public CppUnit::TestFixture {
 	CPPUNIT_TEST_SUITE(NXFieldTest);
 	CPPUNIT_TEST(testCreation);
 	CPPUNIT_TEST(testOpen);
-	CPPUNIT_TEST(testReadData);
-	CPPUNIT_TEST(testReadDataExceptions);
-	CPPUNIT_TEST(testWriteData);
-	CPPUNIT_TEST(testWriteDataExceptions);
+	CPPUNIT_TEST(testGetData);
+	//CPPUNIT_TEST(testGetDataExceptions);
+	CPPUNIT_TEST(testAppendData);
+	CPPUNIT_TEST(testStreamIO);
+	//CPPUNIT_TEST(testAppendDataExceptions);
+	//CPPUNIT_TEST(testInsertData);
+	//CPPUNIT_TEST(testInsertDataExceptions);
 	CPPUNIT_TEST(testAttributes);
 	CPPUNIT_TEST(testAttributeExceptions);
 	CPPUNIT_TEST(testLinks);
-	CPPUNIT_TEST(testSelection);
-	CPPUNIT_TEST(testSelectionFast);
+
 	CPPUNIT_TEST_SUITE_END();
 private:
 	String _fname;
@@ -60,16 +62,16 @@ public:
 
 	void testCreation();
 	void testOpen();
-	void testReadData();
-	void testReadDataExceptions();
-	void testWriteData();
-	void testWriteDataExceptions();
+	void testGetData();
+	void testGetDataExceptions();
+	void testAppendData();
+	void testAppendDataExceptions();
+	void testInsertData();
+	void testInsertDataExceptions();
 	void testAttributes();
 	void testAttributeExceptions();
 	void testLinks();
-	void testSelection();
-	void testSelectionFast();
-
+	void testStreamIO();
 };
 
 #endif /* NXFIELDTEST_HPP_ */

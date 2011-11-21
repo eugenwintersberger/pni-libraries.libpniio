@@ -59,6 +59,7 @@ private:
 
 	//! private method to create the complex types
 	template<typename T> hid_t _create_complex_type();
+	hid_t _create_string_type();
 public:
 	//! default constructor
 	H5TypeFactory();
@@ -70,15 +71,14 @@ public:
 	//! get an already existing type object
 	template<typename T> hid_t getType() const;
 	//! create a type from an existing NumericObject
-	hid_t createTypeFromObject(const NumericObject::sptr o);
+	hid_t createTypeFromObject(const NumericObject &o);
 	//! get the type from an existing NumericObject
-	hid_t getTypeFromObject(const NumericObject::sptr o);
+	hid_t getTypeFromObject(const NumericObject &o);
 
 	//! get a type according to the type id
 	hid_t getTypeFromID(PNITypeID id);
 	//! create a new type according to its type id
 	hid_t createTypeFromID(PNITypeID id);
-	hid_t createStringType(UInt64 size);
 };
 
 static H5TypeFactory H5TFactory;

@@ -9,12 +9,14 @@
 #define NXFIELDH5IMPLEMENTATION_HPP_
 
 #include <pni/utils/PNITypes.hpp>
+#include <pni/utils/NumericObject.hpp>
 
 
 #include "NXObjectH5Implementation.hpp"
 #include "H5TypeFactory.hpp"
 #include "../NXFilter.hpp"
 #include "../NXSelection.hpp"
+
 
 using namespace pni::utils;
 
@@ -28,30 +30,34 @@ class NXGroupH5Implementation;
 //! \ingroup HDF5 implementation
 //! \brief HDF5 implementation of a NXField object
 
-//! This class provides an interface to an HDF5 dataset structure.
-//! While a group object can be easily constructed during instantiation,
-//! a data set object cannot. There are a lot of things that must be set up
-//! at runtime before object construction is finished.
+//! A dataset can be treated as a standard STL container where the
+//! first dimension runs over the element index.
+//! If data of a rank r should be stored a dataset of rank r+1
+//! is created where the first dimension if of size H5S_UNLIMITED and
+//! thus can be extended along this dimension arbitrarily.
 
 
 class NXFieldH5Implementation : public NXObjectH5Implementation{
 private:
 	//! copy constructor
 	NXFieldH5Implementation(const NXFieldH5Implementation &){}
+	void _get_dataset_parameters(hid_t id);
+	void _increment_growth_dimension();
 protected:
+	//parameters of the total dataset
 	hid_t _type_id;	       //!< ID of the data type
 	hid_t _space_id;       //!< ID of the data space
-	hid_t _creation_plist; //!< ID creation property list
-	hid_t _lcreate_plist;  //!< ID link creation property list
+	ArrayShape _space_shape;    //!< shape of the total dataset
 
-	//the following tow data spaces are required to make use
-	//of selections
-	hid_t _mem_space; //!< data space in memory
+	//the object should act like a container - this we need a default
+	//selection to read and write elements to this container
+	hid_t _elem_mem_space; //!< memory data space of the container elements
+	hsize_t *_elem_offset;   //!< container offset
+	hsize_t *_elem_count;    //!< size of the container elements
+	ArrayShape _elem_shape; //!< shape of the element
 
-	//array shape object that is equal to the data space
-	ArrayShape _space_shape;
-
-	virtual void create(const String &n,const NXObjectH5Implementation &o);
+	//resize buffer
+	hsize_t *_resize_buffer; //!< an internal buffer for resizing the array
 public:
 	typedef boost::shared_ptr<NXFieldH5Implementation> sptr;
 	//! default constructor
@@ -62,81 +68,49 @@ public:
 	//! assignment operator
 	NXFieldH5Implementation &operator=(const NXFieldH5Implementation &o);
 
-	//set array data space
-	void setDataSpace(const ArrayShape &s);
-	//set scalar data space
-	void setDataSpace();
-
-	//setup the data type for PNITypes
-	void setDataType(PNITypeID id);
-	//setup the data type for strings
-	void setDataType(UInt64 size);
-
-	template<typename Imp> void setFilter(pni::nx::NXFilter<Imp> &f){
-		f.setup(_creation_plist);
-	}
-
-	void setShuffle(){
-		H5Pset_shuffle(_creation_plist);
-	}
-
-	//register a selection at the field
-	template<typename Imp> void registerSelection(const pni::nx::NXSelection<Imp> &s);
-	//set a selection (update)
-	template<typename Imp> void setSelection(const pni::nx::NXSelection<Imp> &s);
-	//reset the selection
-	void resetSelection();
-
+	//! total field rank
 	virtual UInt32 getRank() const;
+	//! total field dimensions
 	virtual UInt32 getDimension(UInt32 i) const;
+	//! total field number of elements
 	virtual UInt64 getSize() const;
-	virtual void getShape(ArrayShape &s) const;
+	//! total field shape
 	virtual const ArrayShape &getShape() const;
+
+	//! rank of field element
+	virtual UInt32 getElementRank() const;
+	//! dimension of field element
+	virtual UInt32 getElementDimension(UInt32 i) const;
+	//! number of elements in element
+	virtual UInt64 getElementSize() const;
+	//! element shape
+	virtual const ArrayShape &getElementShape() const;
+
+
 	virtual PNITypeID getTypeID() const;
 	virtual bool isScalar() const;
 	virtual bool isArray() const;
 	virtual bool isString() const;
 
-	//! write data from a void pointer
-	virtual void write(const void *ptr);
+	virtual void append(const NumericObject &o);
+	virtual void append(const String &s);
 
-	//! read data to a void pointer
-	virtual void read(void *ptr) const;
+	virtual void insert(const UInt64 &i,const NumericObject &a);
+	virtual void insert(const UInt64 &i,const String &s);
+
+	virtual void get(const UInt64 &i,NumericObject &s);
+	virtual void get(const UInt64 &i,String &s);
+
 
 	//! close the data field
 	virtual void close();
 
-	//! open a field implementation
-	virtual void open(const String &n,NXObjectH5Implementation &imp);
 
-	virtual void resize(const UInt64 &i);
+	virtual void setId(const hid_t &id);
 
 	friend class NXGroupH5Implementation;
 };
 
-template<typename Imp>
-void NXFieldH5Implementation::registerSelection(const pni::nx::NXSelection<Imp> &s){
-	EXCEPTION_SETUP("template<typename Imp> void NXFieldH5Implementation::registerSelection(const pni::nx::NXSelection<Imp> &s)");
-
-	if(s.getDiskRank() == 0){
-		//raise some error here
-	}
-
-	if(H5Iis_valid(_mem_space)) H5Sclose(_mem_space);
-
-	_mem_space = s.getMemSpace();
-}
-
-
-
-
-template<typename Imp>
-void NXFieldH5Implementation::setSelection(const pni::nx::NXSelection<Imp> &s){
-	EXCEPTION_SETUP("template<typename Imp> void NXFieldH5Implementation::setSelection(const pni::nx::NXSelection<Imp> &s)");
-
-	H5Sselect_hyperslab(_space_id,H5S_SELECT_SET,s.getOffset(),NULL,s.getCount(),NULL);
-
-}
 
 //end of namespace
 }

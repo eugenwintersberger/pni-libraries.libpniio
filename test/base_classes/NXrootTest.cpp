@@ -85,7 +85,6 @@ void NXrootTest::testEntry(){
 	CPPUNIT_ASSERT_NO_THROW(f.setOverwrite(true));
 	CPPUNIT_ASSERT_NO_THROW(f.create());
 
-	e = f.createEntry("scan_1");
 	CPPUNIT_ASSERT_NO_THROW(e = f.createEntry("scan_1"));
 	CPPUNIT_ASSERT_NO_THROW(e.close());
 	CPPUNIT_ASSERT_NO_THROW(e = f.openEntry("scan_1"));

@@ -5,7 +5,7 @@
 #include "NX.hpp"
 #include "NXFileTest.hpp"
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(NXFileTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(NXFileTest);
 
 void NXFileTest::setUp(){
 	_fname1 = "test.file-1.h5";
@@ -47,6 +47,7 @@ void NXFileTest::tearDown(){
 }
 
 void NXFileTest::testCreation(){
+	std::cerr<<"NXFileTest::testCreation ---------------------------------------"<<std::endl;
 	NXFile f;
 
 	//initially create the file
@@ -69,30 +70,32 @@ void NXFileTest::testCreation(){
 }
 
 void NXFileTest::testOpen(){
+	std::cerr<<"NXFileTest::testOpen ---------------------------------------"<<std::endl;
 	NXFile f;
 
-	f.setFileName(_fname1);
-	f.setOverwrite(true);
-	f.setReadOnly(false);
-	f.create();
-	f.close();
+	CPPUNIT_ASSERT_NO_THROW(f.setFileName(_fname1));
+	CPPUNIT_ASSERT_NO_THROW(f.setOverwrite(true));
+	CPPUNIT_ASSERT_NO_THROW(f.setReadOnly(false));
+	CPPUNIT_ASSERT_NO_THROW(f.create());
+	CPPUNIT_ASSERT_NO_THROW(f.close());
 
 	CPPUNIT_ASSERT_NO_THROW(f.open());
 
-	f.close();
+	CPPUNIT_ASSERT_NO_THROW(f.close());
 
 	//try to open a file which does not exist
-	f.setFileName(_fname2);
+	CPPUNIT_ASSERT_NO_THROW(f.setFileName(_fname2));
 	CPPUNIT_ASSERT_THROW(f.open(),H5FileError);
 
-	f.create();
-	f.close();
+	CPPUNIT_ASSERT_NO_THROW(f.create());
+	CPPUNIT_ASSERT_NO_THROW(f.close());
 	CPPUNIT_ASSERT_NO_THROW(f.open());
-	f.close();
+	CPPUNIT_ASSERT_NO_THROW(f.close());
 
 }
 
 void NXFileTest::testAttributes(){
+	std::cerr<<"NXFileTest::testAttributes ---------------------------------------"<<std::endl;
 	NXFile f;
 
 	//create a new file
@@ -126,6 +129,7 @@ void NXFileTest::testAttributes(){
 }
 
 void NXFileTest::testAttributeExceptions(){
+	std::cerr<<"NXFileTest::testAttributeExceptions ---------------------------------------"<<std::endl;
 	NXFile f;
 
 	//create a new file

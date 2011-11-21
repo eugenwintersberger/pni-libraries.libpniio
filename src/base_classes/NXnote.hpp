@@ -1,8 +1,28 @@
 /*
- * NXnote.hpp
+ * Declaration of Nexus base class NXnote template
  *
- *  Created on: Sep 29, 2011
- *      Author: eugen
+ * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpninx.
+ *
+ * libpninx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpninx is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
+ *
+ * Declaration of Nexus base class NXnote template
+ *
+ * Created on: Sep 29, 2011
+ *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
 #include <pni/utils/PNITypes.hpp>
@@ -18,34 +38,34 @@ using namespace pni::utils;
 namespace pni{
 namespace nx{
 
-template<typename Imp> class NXnote:private Imp{
+template<typename Base> class NXnote:private Base{
 public:
-	NXnote():Imp(){}
+	NXnote():Base(){}
 	virtual ~NXnote(){}
 
-	virtual inline void setAuthor(const String &n);
-	virtual inline String getAuthor() const;
+	virtual inline void author(const String &n) const;
+	virtual inline String author() const;
 
-	virtual inline void setDate(const String &n);
-	virtual inline String getDate() const;
+	virtual inline void date(const String &n) const;
+	virtual inline String date() const;
 
-	virtual inline void setType(const String &n);
-	virtual inline String getType(const String &n);
+	virtual inline void type(const String &n) const;
+	virtual inline String type() const;
 
-	virtual inline void setFileName(const String &n);
-	virtual inline String getFileName() const;
+	virtual inline void file_name(const String &n) const;
+	virtual inline String file_name() const;
 
-	virtual inline void setDescription(const String &n);
-	virtual inline String getDescription() const;
+	virtual inline void description(const String &n) const;
+	virtual inline String description() const;
 
-	virtual inline void setData();
-	virtual inline void getData() const;
+	virtual inline void data(const String &s) const;
+	virtual inline void data(String &s) const;
 
 };
 
 //------------------------------------------------------------------------------
-template<typename Imp> void NXnote<Imp>::setAuthor(const String &n){
-	EXCEPTION_SETUP("template<typename Imp> void NXnote<Imp>::setAuthor(const String &n)");
+template<typename Base> void NXnote<Base>::author(const String &n) const{
+	EXCEPTION_SETUP("template<typename Imp> void NXnote<Imp>::author(const String &n) const");
 	try{
 		setField(*this,"author",n);
 	}catch(...){
@@ -55,8 +75,8 @@ template<typename Imp> void NXnote<Imp>::setAuthor(const String &n){
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> inline String NXnote<Imp>::getAuthor() const{
-	EXCEPTION_SETUP("template<typename Imp> inline String NXnote<Imp>::getAuthor() const");
+template<typename Base> inline String NXnote<Base>::author() const{
+	EXCEPTION_SETUP("template<typename Imp> inline String NXnote<Imp>::author() const");
 	String s;
 	try{
 		getField(*this,"author",s);
@@ -68,8 +88,8 @@ template<typename Imp> inline String NXnote<Imp>::getAuthor() const{
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> inline void NXnote<Imp>::setDate(const String &n){
-	EXCEPTION_SETUP("template<typename Imp> inline void NXnote<Imp>::setDate(const String &n)");
+template<typename Base> inline void NXnote<Base>::date(const String &n) const{
+	EXCEPTION_SETUP("template<typename Imp> inline void NXnote<Imp>::date(const String &n) const");
 	//here we should check the date format
 
 	try{
@@ -81,8 +101,8 @@ template<typename Imp> inline void NXnote<Imp>::setDate(const String &n){
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> inline String NXnote<Imp>::getDate() const{
-	EXCEPTION_SETUP("template<typename Imp> inline String NXnote<Imp>::getDate() const");
+template<typename Base> inline String NXnote<Base>::date() const{
+	EXCEPTION_SETUP("template<typename Imp> inline String NXnote<Imp>::date() const");
 	String s;
 
 	try{
@@ -96,8 +116,8 @@ template<typename Imp> inline String NXnote<Imp>::getDate() const{
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> inline void NXnote<Imp>::setType(const String &n){
-	EXCEPTION_SETUP("template<typename Imp> inline void NXnote<Imp>::setType(const String &n)");
+template<typename Base> inline void NXnote<Base>::type(const String &n) const{
+	EXCEPTION_SETUP("template<typename Imp> inline void NXnote<Imp>::type(const String &n) const");
 	//here we should check if n is a valid mime type
 
 	try{
@@ -109,8 +129,8 @@ template<typename Imp> inline void NXnote<Imp>::setType(const String &n){
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> inline String NXnote<Imp>::getType(const String &n){
-	EXCEPTION_SETUP("template<typename Imp> inline void NXnote<Imp>::getType(const String &n)");
+template<typename Base> inline String NXnote<Base>::type() const{
+	EXCEPTION_SETUP("template<typename Imp> inline void NXnote<Imp>::type(const String &n) const");
 	String s;
 
 	try{
@@ -123,8 +143,8 @@ template<typename Imp> inline String NXnote<Imp>::getType(const String &n){
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> inline void NXnote<Imp>::setFileName(const String &n){
-	EXCEPTION_SETUP("template<typename Imp> inline void NXnote<Imp>::setFileName(const String &n)");
+template<typename Base> inline void NXnote<Base>::file_name(const String &n) const{
+	EXCEPTION_SETUP("template<typename Imp> inline void NXnote<Imp>::file_name(const String &n) const");
 
 	try{
 		setField(*this,"file_name",n);
@@ -135,8 +155,8 @@ template<typename Imp> inline void NXnote<Imp>::setFileName(const String &n){
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> inline String NXnote<Imp>::getFileName() const{
-	EXCEPTION_SETUP("template<typename Imp> inline String NXnote<Imp>::getFileName() const");
+template<typename Base> inline String NXnote<Base>::file_name() const{
+	EXCEPTION_SETUP("template<typename Imp> inline String NXnote<Imp>::file_name() const");
 	String s;
 
 	try{
@@ -150,8 +170,8 @@ template<typename Imp> inline String NXnote<Imp>::getFileName() const{
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> inline void NXnote<Imp>::setDescription(const String &n){
-	EXCEPTION_SETUP("template<typename Imp> inline void NXnote<Imp>::setDescription(const String &n)");
+template<typename Base> inline void NXnote<Base>::description(const String &n) const{
+	EXCEPTION_SETUP("template<typename Imp> inline void NXnote<Imp>::description(const String &n) const");
 	try{
 		setField(*this,"description",n);
 	}catch(...){
@@ -162,8 +182,8 @@ template<typename Imp> inline void NXnote<Imp>::setDescription(const String &n){
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> inline String NXnote<Imp>::getDescription() const{
-	EXCEPTION_SETUP("template<typename Imp> inline String NXnote<Imp>::getDescription() const");
+template<typename Base> inline String NXnote<Base>::description() const{
+	EXCEPTION_SETUP("template<typename Imp> inline String NXnote<Imp>::description() const");
 	String s;
 
 	try{
@@ -176,13 +196,14 @@ template<typename Imp> inline String NXnote<Imp>::getDescription() const{
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> inline void NXnote<Imp>::setData(){
+template<typename Base> inline void NXnote<Base>::data(const String &s) const{
+	EXCEPTION_SETUP("template<typename Base> inline void NXnote<Base>::data(const String &s) const");
 
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> inline void NXnote<Imp>::getData() const{
-
+template<typename Base> inline void NXnote<Base>::data(String &s) const{
+	EXCEPTION_SETUP("template<typename Base> inline void NXnote<Base>::data(String &s) const");
 }
 
 }

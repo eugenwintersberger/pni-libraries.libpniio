@@ -21,6 +21,9 @@
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="photran.managedbuild.target.gnu.platform.exe.debug.1115400032" name="Debug Platform" osList="solaris,linux,hpux,aix,qnx" superClass="photran.managedbuild.target.gnu.platform.exe.debug"/>
 							<builder arguments="DEBUG=1" command="scons" id="photran.managedbuild.target.gnu.builder.exe.debug.2065270945" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="photran.managedbuild.target.gnu.builder.exe.debug"/>
 							<tool id="photran.managedbuild.tool.gnu.c.compiler.exe.debug.1515890164" name="GCC C Compiler" superClass="photran.managedbuild.tool.gnu.c.compiler.exe.debug">
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1876389961" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="nullptr=0"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.881993539" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="photran.managedbuild.tool.gnu.fortran.compiler.exe.debug.1148491422" name="GNU Fortran Compiler" superClass="photran.managedbuild.tool.gnu.fortran.compiler.exe.debug">
@@ -61,6 +64,9 @@
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="photran.managedbuild.target.gnu.platform.exe.debug.492045502" name="Debug Platform" osList="solaris,linux,hpux,aix,qnx" superClass="photran.managedbuild.target.gnu.platform.exe.debug"/>
 							<builder command="scons" id="photran.managedbuild.target.gnu.builder.exe.debug.908629490" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="photran.managedbuild.target.gnu.builder.exe.debug"/>
 							<tool id="photran.managedbuild.tool.gnu.c.compiler.exe.debug.1890708834" name="GCC C Compiler" superClass="photran.managedbuild.tool.gnu.c.compiler.exe.debug">
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.2087104563" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="nullptr=0"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1372167101" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="photran.managedbuild.tool.gnu.fortran.compiler.exe.debug.345497516" name="GNU Fortran Compiler" superClass="photran.managedbuild.tool.gnu.fortran.compiler.exe.debug">

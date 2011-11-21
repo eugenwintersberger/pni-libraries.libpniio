@@ -1,5 +1,5 @@
 /*
- * Declaration of Nexus specific types.
+ * Declaration of Nexus base class NXsource template
  *
  * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
  *
@@ -19,20 +19,26 @@
  * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  *
- * Declaration of Nexus specific types.
+ * Declaration of Nexus base class NXsource template
  *
- * Created on: Sep 19, 2011
+ * Created on: Oct 17, 2011
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#ifndef NXTYPES_HPP_
-#define NXTYPES_HPP_
+#ifndef NXSOURCE_HPP_
+#define NXSOURCE_HPP_
 
 namespace pni{
 namespace nx{
 
-enum NXObjectClass {NXNONE,NXFIELD,NXGROUP,NXFILE};
 
+template<typename Base> class NXsource:private Base{
+public:
+	NXsource():Base(){}
+	virtual ~NXsource(){}
+
+
+};
 
 
 //end of namespace
@@ -40,4 +46,5 @@ enum NXObjectClass {NXNONE,NXFIELD,NXGROUP,NXFILE};
 }
 
 
-#endif /* NXTYPES_HPP_ */
+
+#endif /* NXSOURCE_HPP_ */

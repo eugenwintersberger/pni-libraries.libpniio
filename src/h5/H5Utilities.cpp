@@ -17,30 +17,33 @@ namespace h5 {
 
 void H5Utilities::ArrayShape2DataSpace(const ArrayShape &s,hid_t &dspace){
 	EXCEPTION_SETUP("void H5Utilities::ArrayShape2DataSpace(const ArrayShape &s,hid_t &dspace)");
-	hsize_t *dims = NULL;
+	hsize_t *dims = nullptr;
 
 	//get the rank of the array
 	UInt32 rank = s.getRank();
 	if(rank == 0){
-		EXCEPTION_INIT(SizeMissmatchError,"Cannot create a dataspace from a rank 0 shape!");
-		EXCEPTION_THROW();
-	}
+		//in the case of a rank=0 array shape we create a data space
+		//for a single number
+		hsize_t dims[] = {1};
+		dspace = H5Screate_simple(1,dims,dims);
+	}else{
 
-	//set the dimension array
-	dims = new hsize_t[rank];
-	if(dims==NULL){
-		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for data space dimensions!");
-		EXCEPTION_THROW();
-	}
-	for(UInt32 i=0;i<rank;i++) dims[i] = s.getDimension(i);
+		//set the dimension array
+		dims = new hsize_t[rank];
+		if(!dims){
+			EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for data space dimensions!");
+			EXCEPTION_THROW();
+		}
+		for(UInt32 i=0;i<rank;i++) dims[i] = s.getDimension(i);
 
-	dspace = H5Screate_simple(rank,dims,NULL);
-	if(dspace<0){
-		EXCEPTION_INIT(H5DataSpaceError,"Cannot create HDF5 dataspace!");
-		EXCEPTION_THROW();
-	}
+		dspace = H5Screate_simple(rank,dims,NULL);
+		if(dspace<0){
+			EXCEPTION_INIT(H5DataSpaceError,"Cannot create HDF5 dataspace!");
+			EXCEPTION_THROW();
+		}
 
-	if(dims != NULL) delete [] dims;
+		if(dims != NULL) delete [] dims;
+	}
 
 }
 
@@ -80,22 +83,22 @@ void H5Utilities::DataSpace2ArrayShape(const hid_t &dspace,ArrayShape &s){
 }
 
 PNITypeID H5Utilities::H5Type2PNITypeCode(hid_t tid){
-	if(H5Tequal(H5TFactory.getTypeFromID(INT8),tid)) return INT8;
-	if(H5Tequal(H5TFactory.getTypeFromID(UINT8),tid)) return UINT8;
-	if(H5Tequal(H5TFactory.getTypeFromID(INT16),tid)) return INT16;
-	if(H5Tequal(H5TFactory.getTypeFromID(UINT16),tid)) return UINT16;
-	if(H5Tequal(H5TFactory.getTypeFromID(INT32),tid)) return INT32;
-	if(H5Tequal(H5TFactory.getTypeFromID(UINT32),tid)) return UINT32;
-	if(H5Tequal(H5TFactory.getTypeFromID(INT64),tid)) return INT64;
-	if(H5Tequal(H5TFactory.getTypeFromID(UINT64),tid)) return UINT64;
-	if(H5Tequal(H5TFactory.getTypeFromID(FLOAT32),tid)) return FLOAT32;
-	if(H5Tequal(H5TFactory.getTypeFromID(FLOAT64),tid)) return FLOAT64;
-	if(H5Tequal(H5TFactory.getTypeFromID(FLOAT128),tid)) return FLOAT128;
-	if(H5Tequal(H5TFactory.getTypeFromID(COMPLEX32),tid)) return COMPLEX32;
-	if(H5Tequal(H5TFactory.getTypeFromID(COMPLEX64),tid)) return COMPLEX64;
-	if(H5Tequal(H5TFactory.getTypeFromID(COMPLEX128),tid)) return COMPLEX128;
+	if(H5Tequal(H5TFactory.getTypeFromID(PNITypeID::INT8),tid)) return PNITypeID::INT8;
+	if(H5Tequal(H5TFactory.getTypeFromID(PNITypeID::UINT8),tid)) return PNITypeID::UINT8;
+	if(H5Tequal(H5TFactory.getTypeFromID(PNITypeID::INT16),tid)) return PNITypeID::INT16;
+	if(H5Tequal(H5TFactory.getTypeFromID(PNITypeID::UINT16),tid)) return PNITypeID::UINT16;
+	if(H5Tequal(H5TFactory.getTypeFromID(PNITypeID::INT32),tid)) return PNITypeID::INT32;
+	if(H5Tequal(H5TFactory.getTypeFromID(PNITypeID::UINT32),tid)) return PNITypeID::UINT32;
+	if(H5Tequal(H5TFactory.getTypeFromID(PNITypeID::INT64),tid)) return PNITypeID::INT64;
+	if(H5Tequal(H5TFactory.getTypeFromID(PNITypeID::UINT64),tid)) return PNITypeID::UINT64;
+	if(H5Tequal(H5TFactory.getTypeFromID(PNITypeID::FLOAT32),tid)) return PNITypeID::FLOAT32;
+	if(H5Tequal(H5TFactory.getTypeFromID(PNITypeID::FLOAT64),tid)) return PNITypeID::FLOAT64;
+	if(H5Tequal(H5TFactory.getTypeFromID(PNITypeID::FLOAT128),tid)) return PNITypeID::FLOAT128;
+	if(H5Tequal(H5TFactory.getTypeFromID(PNITypeID::COMPLEX32),tid)) return PNITypeID::COMPLEX32;
+	if(H5Tequal(H5TFactory.getTypeFromID(PNITypeID::COMPLEX64),tid)) return PNITypeID::COMPLEX64;
+	if(H5Tequal(H5TFactory.getTypeFromID(PNITypeID::COMPLEX128),tid)) return PNITypeID::COMPLEX128;
 
-	return NONE;
+	return PNITypeID::NONE;
 }
 
 //end of namespace
