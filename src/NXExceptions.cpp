@@ -72,6 +72,7 @@ std::ostream &operator<<(std::ostream &o,const NXGroupError &e){
 	return e.print(o);
 }
 
+
 //end of namespace
 }
 }

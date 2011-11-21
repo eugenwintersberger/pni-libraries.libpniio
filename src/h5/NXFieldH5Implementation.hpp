@@ -40,7 +40,7 @@ class NXGroupH5Implementation;
 class NXFieldH5Implementation : public NXObjectH5Implementation{
 private:
 	//! copy constructor
-	NXFieldH5Implementation(const NXFieldH5Implementation &){}
+
 	void _get_dataset_parameters(hid_t id);
 	void _increment_growth_dimension();
 protected:
@@ -62,11 +62,17 @@ public:
 	typedef boost::shared_ptr<NXFieldH5Implementation> sptr;
 	//! default constructor
 	NXFieldH5Implementation();
+	//! copy constructor
+	NXFieldH5Implementation(const NXFieldH5Implementation &);
+	//! move constructor
+	NXFieldH5Implementation(NXFieldH5Implementation &&o);
 	//! default destructor
 	virtual ~NXFieldH5Implementation();
 
-	//! assignment operator
+	//! copy assignment operator
 	NXFieldH5Implementation &operator=(const NXFieldH5Implementation &o);
+	//! move assignment operator
+	NXFieldH5Implementation &operator=(NXFieldH5Implementation &&o);
 
 	//! total field rank
 	virtual UInt32 getRank() const;

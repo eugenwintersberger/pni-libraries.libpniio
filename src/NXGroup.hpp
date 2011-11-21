@@ -59,11 +59,15 @@ public:
 	//! same as the assignment operator. Thus it can be used to assign
 	//! an object directly at its construction.
 	NXGroup(const NXGroup<Imp> &);
+	//! move constructor
+	NXGroup(NXGroup<Imp> &&o);
 	//! destructor
 	virtual ~NXGroup();
 
 	//! assignment operator
 	NXGroup<Imp> &operator=(const NXGroup<Imp> &);
+	//! move assignment
+	NXGroup<Imp> &operator=(NXGroup<Imp> &&o);
 
 	virtual NXGroup<GImp> createGroup(const String &n) const;
 	virtual NXGroup<GImp> createGroup(const String &n,const String &type) const;
@@ -142,9 +146,15 @@ template<typename Imp>
 NXGroup<Imp>::NXGroup():NXObject<Imp>(){
 }
 
-template<typename Imp> NXGroup<Imp>::NXGroup(const NXGroup &g){
+template<typename Imp> NXGroup<Imp>::NXGroup(const NXGroup &g)
+		:NXObject<Imp>(g){
 	EXCEPTION_SETUP("template<typename Imp> NXGroup<Imp>::NXGroup(const NXGroup &g)");
-	this->setImplementation(g.getImplementation());
+}
+
+template<typename Imp> NXGroup<Imp>::NXGroup(NXGroup<Imp> &&g){
+	EXCEPTION_SETUP("template<typename Imp> NXGroup<Imp>::NXGroup(NXGroup<Imp> &&g)");
+
+	*this = std::move(g);
 }
 
 template<typename Imp> NXGroup<Imp>::~NXGroup(){
@@ -157,6 +167,16 @@ template<typename Imp> NXGroup<Imp> &NXGroup<Imp>::operator=(const NXGroup<Imp> 
 	EXCEPTION_SETUP("template<typename Imp> NXGroup<Imp> &NXGroup<Imp>::operator=(const NXGroup<Imp> &g)");
 	if( this != &g){
 		this->setImplementation(g.getImplementation());
+	}
+
+	return *this;
+}
+
+template<typename Imp> NXGroup<Imp> &NXGroup<Imp>::operator=(NXGroup<Imp> &&o){
+	EXCEPTION_SETUP("template<typename Imp> NXGroup<Imp> &NXGroup<Imp>::operator=(NXGroup<Imp> &&o)");
+
+	if(this != &o){
+		(NXObject<Imp> &)(*this) = std::move((NXObject<Imp> &)o);
 	}
 
 	return *this;
@@ -258,7 +278,7 @@ NXGroup<Imp>::createNumericField(const String &n,PNITypeID tid,
 	NXField<FImp> field;
 
 	try{
-		field.setImplementation(this->_imp.createNumericField(n.c_str(),tid,s,f));
+		field.setImplementation(std::move(this->_imp.createNumericField(n.c_str(),tid,s,f)));
 		field.setAttribute("unit",unit);
 		field.setAttribute("description",desc);
 	}catch(...){

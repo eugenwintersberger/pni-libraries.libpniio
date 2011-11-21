@@ -21,13 +21,14 @@ using namespace boost::filesystem;
 
 class NXGroupTest: public CppUnit::TestFixture  {
 	CPPUNIT_TEST_SUITE(NXGroupTest);
-	//CPPUNIT_TEST(testCreation);
-	//CPPUNIT_TEST(testOpen);
-	//CPPUNIT_TEST(testAttributes);
-	//CPPUNIT_TEST(testAttributeExceptions);
-	//CPPUNIT_TEST(testInternalLinks);
+	CPPUNIT_TEST(testCreation);
+	CPPUNIT_TEST(testOpen);
+	CPPUNIT_TEST(testAttributes);
+	CPPUNIT_TEST(testAttributeExceptions);
+	CPPUNIT_TEST(testInternalLinks);
 	CPPUNIT_TEST(testExistence);
 	CPPUNIT_TEST(testRemove);
+	CPPUNIT_TEST(testAssignment);
 	CPPUNIT_TEST_SUITE_END();
 private:
 	String _fname;
@@ -52,6 +53,7 @@ public:
 	void testInternalLinks();
 	void testExistence();
 	void testRemove();
+	void testAssignment();
 };
 
 #endif /* NXGROUPTEST_HPP_ */

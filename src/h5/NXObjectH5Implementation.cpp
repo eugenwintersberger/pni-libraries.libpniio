@@ -22,36 +22,85 @@ namespace h5{
 using namespace pni::utils;
 
 //------------------------------------------------------------------------------
+//Implementation of the default constructor
 NXObjectH5Implementation::NXObjectH5Implementation() {
 	_id = 0;
 }
 
 //------------------------------------------------------------------------------
+//Implementation of the destructor
 NXObjectH5Implementation::~NXObjectH5Implementation() {
 	//close the handler to the object
 	close();
 }
 
 //------------------------------------------------------------------------------
+//Implementation of the copy constructor
+NXObjectH5Implementation::NXObjectH5Implementation(const NXObjectH5Implementation &o){
+	EXCEPTION_SETUP("NXObjectH5Implementation::NXObjectH5Implementation(const NXObjectH5Implementation &o)");
+
+	//the object we want to use as a template must be a valid object
+	if(!H5Iis_valid(o._id)){
+		EXCEPTION_INIT(H5ObjectError,"RHS object not a valid HDF5 object!");
+		EXCEPTION_THROW();
+	}
+
+	//assign ID values and increment reference counter on this id
+	_id = o._id;
+	H5Iinc_ref(_id);
+}
+
+//------------------------------------------------------------------------------
+//Implementation of the move constructor
+NXObjectH5Implementation::NXObjectH5Implementation(NXObjectH5Implementation &&o){
+	EXCEPTION_SETUP("NXObjectH5Implementation::NXObjectH5Implementation(NXObjectH5Implementation &&o)");
+
+	//implement the move constructor in terms of move assignment
+	*this = std::move(o);
+}
+
+//------------------------------------------------------------------------------
+//Implementation of the copy assignment operator
 NXObjectH5Implementation &NXObjectH5Implementation::operator=(const NXObjectH5Implementation &o){
 	EXCEPTION_SETUP("NXObjectH5Implementation &NXObjectH5Implementation"
 					"::operator=(const NXObjectH5Implementation &o)");
 
 	if(this != &o){
-		if(H5Iis_valid(o._id)){//o has a valid id
-
-			//if the lhs object is a valid object we must close it first
-			if(H5Iis_valid(_id)) H5Idec_ref(_id);
-
-			//copy the new object id an increment the reference counter
-			_id = o._id;
-			H5Iinc_ref(_id); //increment the reference counter to that ID
-
+		if(!H5Iis_valid(o._id)){
+			EXCEPTION_INIT(H5ObjectError,"RHS object is not a valid HDF5 object!");
+			EXCEPTION_THROW();
 		}else{  //o has no valid id
 			//if the lhs object is a valid object we must close it first
-			if(H5Iis_valid(_id)) H5Idec_ref(_id);
+			if(H5Iis_valid(_id)) H5Oclose(_id);
+			//copy the IDs
 			_id = o._id;
+			//increment the reference counter - we have now two objects
+			//pointing on the same HDF5 object
+			H5Iinc_ref(_id);
 		}
+	}
+
+	return *this;
+}
+
+//-----------------------------------------------------------------------------
+//Implementation of the move assignment operator
+NXObjectH5Implementation &NXObjectH5Implementation::operator=(NXObjectH5Implementation &&o){
+	EXCEPTION_SETUP("NXObjectH5Implementation &NXObjectH5Implementation::operator=(NXObjectH5Implementation &&o)");
+
+	if(this != &o){
+		//check if RHS is valid
+		if(!H5Iis_valid(o._id)){
+			EXCEPTION_INIT(H5ObjectError,"RHS object is not a valid HDF5 object!");
+			EXCEPTION_THROW();
+		}
+
+		//close this instance of the object
+		if(H5Iis_valid(_id)) H5Oclose(_id);
+
+		//copy the object id
+		_id = o._id;
+		o._id = 0;
 	}
 
 	return *this;

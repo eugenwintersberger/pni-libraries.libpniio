@@ -5,6 +5,9 @@
  *      Author: eugen
  */
 
+
+#include <map>
+#include <vector>
 #include "NXFieldTest.hpp"
 
 #include<cppunit/extensions/HelperMacros.h>
@@ -77,44 +80,70 @@ void NXFieldTest::testCreation(){
 	ArrayShape dshape(2);
 	dshape.setDimension(0,NX);
 	dshape.setDimension(1,NY);
-	_f64_data_array_read = Float64Array(_data_shape);
-	_f64_data_array_read.allocate();
-	_f64_data_array_read.setName("array");
-	_f64_data_array_read.setUnit("a.u.");
-	_f64_data_array_read.setDescription("a read buffer");
+	Float64Array array(dshape);
+	Int64Scalar scalar("scalar","nm","a testing scalar");
+	array.allocate();
+	array.setName("array");
+	array.setUnit("a.u.");
+	array.setDescription("a read buffer");
+	ArrayShape sshape(1);
+	sshape.setDimension(0,0);
 
 	//creating data fields for saving arrays
-	//_f.createField("field_1",FLOAT64,2,dims);
-	CPPUNIT_ASSERT_NO_THROW(dset = _f.createNumericField("field_1",PNITypeID::FLOAT64,dshape,"a.u.","data"));
-	CPPUNIT_ASSERT_NO_THROW(dset = _f.createNumericField("field_2",PNITypeID::COMPLEX128,_data_shape,"a.u","data"));
-	CPPUNIT_ASSERT_NO_THROW(dset = _f.createNumericField(_f64_data_array_read));
 
-	//creating data fields for saving scalars
-	CPPUNIT_ASSERT_NO_THROW(dset = _f.createNumericField("field_4",PNITypeID::COMPLEX64,"a.u.","data"));
-	CPPUNIT_ASSERT_NO_THROW(dset = _f.createNumericField(_write_cmplx_scalar));
+	//classic array construction using a constructor
+	NXField f1 = _f.createNumericField(array);
+	CPPUNIT_ASSERT(f1.getElementShape() == array.getShape());
+	CPPUNIT_ASSERT(f1.getTypeID() == array.getTypeID());
 
-	//creating data fields for saving strings
-	String str = "hello world!";
-	dset = _f.createStringField("field_6");
+	NXField f2 = _f.createNumericField("field_1",PNITypeID::UINT64,dshape,"a.u","data");
+	CPPUNIT_ASSERT(f2.getElementShape() == dshape);
+	CPPUNIT_ASSERT(f2.getTypeID() == PNITypeID::UINT64);
 
+	//classic scalar construction
+	NXField f3 = _f.createNumericField(scalar);
+	CPPUNIT_ASSERT(f3.getTypeID() == PNITypeID::INT64);
+	CPPUNIT_ASSERT(f3.getElementShape() == sshape);
 
-	//try now everything with a group as a generating object
-
-	//creating data fields for saving arrays
-	dset = g.createNumericField("field_1",PNITypeID::FLOAT64,dshape,"a.u.","data");
-	dset = g.createNumericField("field_2",PNITypeID::COMPLEX128,_data_shape,"a.u.","data");
-	dset = g.createNumericField(_f64_data_array_read);
-
-	//creating data fields for saving scalars
-	dset = g.createNumericField("field_4",PNITypeID::COMPLEX64,"a.u.","data");
-	dset = g.createNumericField(_write_cmplx_scalar);
-
-	//creating data fields for saving strings
-	dset = g.createStringField("field_6");
-	//CPPUNIT_ASSERT_THROW(g.createField("subdir/field_1",str),H5DataSetError);
-
+	//create a string field
+	NXField f4 = _f.createStringField("teststring");
+	CPPUNIT_ASSERT(f4.getTypeID() == PNITypeID::STRING);
+	CPPUNIT_ASSERT(f4.getElementShape() == sshape);
 
 	g.close();
+}
+
+void NXFieldTest::testAssignment(){
+	std::cerr<<"NXFieldTest::testAssignment ---------------------------------------"<<std::endl;
+
+	NXField f2;
+	Float64Array array(_f64_data_array_read);
+
+	NXField f1 = _f.createNumericField(array);
+
+
+	CPPUNIT_ASSERT(f1.getElementShape() == array.getShape());
+
+	CPPUNIT_ASSERT_NO_THROW(f1 = _f.createNumericField(_write_cmplx_scalar));
+	CPPUNIT_ASSERT_NO_THROW(f2 = f1);
+	CPPUNIT_ASSERT(f2.isOpen());
+	CPPUNIT_ASSERT(f1.isOpen());
+	CPPUNIT_ASSERT(f2.getShape() == f1.getShape());
+
+
+
+	NXField &f3 = f1;
+	CPPUNIT_ASSERT(f3.getName() == f1.getName());
+
+	//check move assignment
+	NXField f4;
+	f4  = std::move(f1);
+	CPPUNIT_ASSERT(f4.isOpen());
+	CPPUNIT_ASSERT(!f1.isOpen());
+
+	NXField f5 = std::move(f2);
+	CPPUNIT_ASSERT(f5.isOpen());
+	CPPUNIT_ASSERT(!f2.isOpen());
 }
 
 void NXFieldTest::testOpen(){
@@ -206,9 +235,11 @@ void NXFieldTest::testAppendData(){
 
 	_f64_data_array_write = 1.2;
 	//creating data fields for saving arrays
-	CPPUNIT_ASSERT_NO_THROW(dset = _f.createNumericField("field_1",PNITypeID::FLOAT64,_data_shape,"a.z.","data"));
-	CPPUNIT_ASSERT_NO_THROW(dset.append(_f64_data_array_write));
+	dset = _f.createNumericField("field_1",PNITypeID::FLOAT64,_data_shape,"a.z.","data");
+	//CPPUNIT_ASSERT_NO_THROW(dset = _f.createNumericField("field_1",PNITypeID::FLOAT64,_data_shape,"a.z.","data"));
 	_f64_data_array_write = 1.3;
+	CPPUNIT_ASSERT(dset.isOpen());
+
 	CPPUNIT_ASSERT_NO_THROW(dset.append(_f64_data_array_write));
 	_f64_data_array_write = 1.4;
 	CPPUNIT_ASSERT_NO_THROW(dset.append(_f64_data_array_write));
@@ -277,6 +308,7 @@ void NXFieldTest::testAppendDataExceptions(){
 }
 
 void NXFieldTest::testStreamIO(){
+	std::cerr<<"NXFieldTest::testStreamIO ---------------------------------------"<<std::endl;
 	NXField dset;
 	Float64 data[4]={0.1,0.45,-1.234,110.342};
 	Float64Scalar scalar("scalar","m","a testing scalar");
@@ -307,6 +339,7 @@ void NXFieldTest::testStreamIO(){
 	}
 
 	dset = _f.openField(scalar.getName());
+	std::cout<<dset.getShape().getDimension(0)<<std::endl;
 	for(UInt64 i=0;i<4;i++){
 		CPPUNIT_ASSERT_NO_THROW(dset>>scalar);
 		CPPUNIT_ASSERT(scalar == data[i]);
@@ -394,6 +427,14 @@ void NXFieldTest::testLinks(){
 	f2.createLink(g1,"corrected_data");
 	f1.createLink(g2);
 	f2.createLink(g1);
+}
 
+void NXFieldTest::testMap(){
+	std::cerr<<"NXFieldTest::testMap ---------------------------------------"<<std::endl;
+	typedef std::map<String,NXField> FieldMap;
 
+	FieldMap map;
+	NXField f = _f.createNumericField("test1",PNITypeID::UINT32,"nm","testing field 1");
+	CPPUNIT_ASSERT(f.isOpen());
+	map["test1"] = f;
 }

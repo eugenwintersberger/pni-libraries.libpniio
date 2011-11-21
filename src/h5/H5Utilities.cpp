@@ -98,6 +98,10 @@ PNITypeID H5Utilities::H5Type2PNITypeCode(hid_t tid){
 	if(H5Tequal(H5TFactory.getTypeFromID(PNITypeID::COMPLEX64),tid)) return PNITypeID::COMPLEX64;
 	if(H5Tequal(H5TFactory.getTypeFromID(PNITypeID::COMPLEX128),tid)) return PNITypeID::COMPLEX128;
 
+	if(H5Tis_variable_str(tid)){
+		return PNITypeID::STRING;
+	}
+
 	return PNITypeID::NONE;
 }
 

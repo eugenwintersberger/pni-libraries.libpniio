@@ -20,6 +20,7 @@ namespace h5{
 using namespace pni::nx::h5;
 
 //------------------------------------------------------------------------------
+//Implementation of the default constructor
 NXFieldH5Implementation::NXFieldH5Implementation():NXObjectH5Implementation() {
 	EXCEPTION_SETUP("NXFieldH5Implementation::NXFieldH5Implementation():NXObjectH5Implementation()");
 	_space_id = 0;
@@ -31,9 +32,29 @@ NXFieldH5Implementation::NXFieldH5Implementation():NXObjectH5Implementation() {
 }
 
 //------------------------------------------------------------------------------
+//Implementation of the copy constructor
+NXFieldH5Implementation::NXFieldH5Implementation(const NXFieldH5Implementation &o)
+                        :NXObjectH5Implementation(o){
+	_space_id = 0;
+	_type_id = 0;
+	_elem_mem_space = 0;
+	_elem_offset = nullptr;
+	_elem_count = nullptr;
+	_resize_buffer = nullptr;
+
+	_get_dataset_parameters(getId());
+}
+
+//------------------------------------------------------------------------------
+//Implementation of the move constructor
+NXFieldH5Implementation::NXFieldH5Implementation(NXFieldH5Implementation &&o){
+	//express move constructor in terms of move assignment
+	*this = std::move(o);
+}
+
+//------------------------------------------------------------------------------
 NXFieldH5Implementation::~NXFieldH5Implementation() {
 	close();
-	_elem_shape.setRank(0);
 }
 
 //------------------------------------------------------------------------------
@@ -63,15 +84,12 @@ void NXFieldH5Implementation::_get_dataset_parameters(hid_t id){
 
 	//allocate memory for the offset and counts buffer of the local
 	//element selection
-	if(_elem_offset){
-		delete [] _elem_offset;
-		_elem_offset = nullptr;
-	}
+	if(_elem_offset) delete [] _elem_offset;
+	_elem_offset = nullptr;
 
-	if(_elem_count){
-		delete [] _elem_count;
-		_elem_count = nullptr;
-	}
+	if(_elem_count) delete [] _elem_count;
+	_elem_count = nullptr;
+
 	_elem_count = new hsize_t[_space_shape.getRank()];
 	if(!_elem_count){
 		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate [count] buffer for element selection!");
@@ -134,6 +152,7 @@ void NXFieldH5Implementation::setId(const hid_t &id){
 	NXObjectH5Implementation::setId(id);
 
 	//--------------now we have to do some additional stuff---------------------
+	//this se have to check if this is now really correct
 	_get_dataset_parameters(id);
 
 }
@@ -146,6 +165,49 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXFieldH5Imple
 	if ( this != &o ){
 		(NXObjectH5Implementation &)(*this) = (NXObjectH5Implementation &)o;
 		_get_dataset_parameters(o.getId());
+	}
+
+	return *this;
+}
+
+//------------------------------------------------------------------------------
+//Implementation of move assignment
+NXFieldH5Implementation &NXFieldH5Implementation::operator=(NXFieldH5Implementation &&o){
+	EXCEPTION_SETUP("NXFieldH5Implementation &NXFieldH5Implementation::operator=(NXFieldH5Implementation &&o)");
+
+	if(this != &o){
+		(NXObjectH5Implementation &)(*this) = std::move((NXObjectH5Implementation &)o);
+		//_get_dataset_parameters(getId());
+
+
+		//copy everything from the original object
+		_elem_offset = o._elem_offset;
+		o._elem_offset = nullptr;
+
+		_elem_count = o._elem_count;
+		o._elem_count = nullptr;
+
+		_resize_buffer = o._resize_buffer;
+		o._resize_buffer = nullptr;
+
+		_space_id = o._space_id;
+		o._space_id = 0;
+
+		_type_id = o._type_id;
+		o._type_id = 0;
+
+		_elem_mem_space = o._elem_mem_space;
+		o._elem_mem_space = 0;
+
+		_elem_shape = o._elem_shape;
+		_space_shape = o._elem_shape;
+		std::cout<<o._space_shape<<std::endl;
+		std::cout<<_space_shape<<std::endl;
+		std::cout<<o._elem_shape<<std::endl;
+		std::cout<<_elem_shape<<std::endl;
+		o._space_shape.setRank(0);
+		o._elem_shape.setRank(0);
+
 	}
 
 	return *this;

@@ -67,10 +67,17 @@ public:
 	typedef NXSelection<typename NXImpMap<Imp::IMPCODE>::SelectionImplementation > Selection;
 	typedef boost::shared_ptr<NXField<Imp> > sptr;
 	NXField();
+	//! copy constructor
 	NXField(const NXField<Imp> &);
+	//! move constructor
+	NXField(NXField<Imp> &&o);
 	virtual ~NXField();
 
+	//! copy assignment
 	NXField<Imp> &operator=(const NXField<Imp> &);
+
+	//! move assignment
+	NXField<Imp> &operator=(NXField<Imp> &&o);
 
 	//inquery of a field
 	UInt32 getRank() const{
@@ -140,13 +147,32 @@ public:
 
 //--------------constructors and destructors------------------------------------
 
-template<typename Imp> NXField<Imp>::NXField() {
+template<typename Imp> NXField<Imp>::NXField():NXObject<Imp>() {
 	_read_stream_pos = 0;
 }
 
-template<typename Imp> NXField<Imp>::NXField(const NXField<Imp> &o){
-	this->setImplementation(o.getImplementation());
-	_read_stream_pos = 0;
+template<typename Imp> NXField<Imp>::NXField(const NXField<Imp> &o)
+		:NXObject<Imp>(o){
+	EXCEPTION_SETUP("template<typename Imp> NXField<Imp>::NXField(const NXField<Imp> &o)");
+	try{
+		//this->setImplementation(o.getImplementation());
+		_read_stream_pos = 0;
+	}catch(...){
+		EXCEPTION_INIT(NXFieldError,"Error in copy constructor for NXField!");
+		EXCEPTION_THROW();
+	}
+}
+
+template<typename Imp> NXField<Imp>::NXField(NXField<Imp> &&o){
+	EXCEPTION_SETUP("template<typename Imp> NXField<Imp>::NXField(NXField<Imp> &&o)");
+	try{
+		//express the move constructor in terms of move assignment
+		 *this = std::move(o);
+		_read_stream_pos = 0;
+	}catch(...){
+		EXCEPTION_INIT(NXFieldError,"Error in move constructor for NXField!");
+		EXCEPTION_THROW();
+	}
 }
 
 template<typename Imp> NXField<Imp>::~NXField() {
@@ -157,10 +183,36 @@ template<typename Imp> NXField<Imp>::~NXField() {
 
 //------------------------------operators---------------------------------------
 template<typename Imp> NXField<Imp> &NXField<Imp>::operator=(const NXField<Imp> &o){
+	EXCEPTION_SETUP("template<typename Imp> NXField<Imp> &NXField<Imp>::operator=(const NXField<Imp> &o)");
+
 	if( this != &o){
-		this->setImplementation(o.getImplementation());
-		_read_stream_pos = 0;
+		try{
+			(NXObject<Imp> &)(*this) = (NXObject<Imp> &)o;
+			//this->setImplementation(o.getImplementation());
+			_read_stream_pos = 0;
+		}catch(...){
+			EXCEPTION_INIT(NXFieldError,"Error in copy assignment of NXField!");
+			EXCEPTION_THROW();
+		}
 	}
+	return *this;
+}
+
+template<typename Imp> NXField<Imp> &NXField<Imp>::operator=(NXField<Imp> &&o){
+	EXCEPTION_SETUP("template<typename Imp> NXField<Imp> &NXField<Imp>::operator=(NXField<Imp> &&o)");
+
+	if(this != &o){
+		try{
+			//move assignment of the base class
+			(NXObject<Imp> &)(*this) = std::move((NXObject<Imp> &)o);
+			//this->setImplementation(std::move(o.getImplementation()));
+			_read_stream_pos = 0;
+		}catch(...){
+			EXCEPTION_INIT(NXFieldError,"Error in move assignment of NXField!");
+			EXCEPTION_THROW();
+		}
+	}
+
 	return *this;
 }
 

@@ -45,26 +45,28 @@ private:
 
 	hid_t  _id;    //!< handler of the object this class referes too
 protected:
-	//! copy constructor - HDF5 objects cannot be copied.
-	//! The reason is farily simple: a copy would be like creating a new
-	//! version of the object with the same name which is obviously not possible.
-	NXObjectH5Implementation(const NXObjectH5Implementation &o){}
-	//has no default constructor - object can be constructed only from a
-	//factory.
+	//! default constructor
 	NXObjectH5Implementation();
 public:
 	typedef boost::shared_ptr<NXObjectH5Implementation> sptr;
 	static const ImpCodes IMPCODE = HDF5;
-	//! default constructor
 
 	//! destructor
 	virtual ~NXObjectH5Implementation();
 
-	//! assignment operator
+	//! copy constructor
+	NXObjectH5Implementation(const NXObjectH5Implementation &);
+	//! move constructor
+	NXObjectH5Implementation(NXObjectH5Implementation &&o);
+
+	//! copy assignment operator
 
 	//! HDF5 objects can be assigned to each other - the basic idea is that
 	//! the new object holds a reference to an already existing object.
 	NXObjectH5Implementation &operator=(const NXObjectH5Implementation &o);
+
+	//! move assignment operator
+	NXObjectH5Implementation &operator=(NXObjectH5Implementation &&o);
 
 	//move here all char * arguments to String in order to
 	//make the interfaces more homogeneous

@@ -26,18 +26,23 @@ namespace h5{
 
 class NXGroupH5Implementation:public NXObjectH5Implementation {
 private:
-	//! copy constructor
-	NXGroupH5Implementation(const NXGroupH5Implementation &o){}
+
 public:
 	typedef boost::shared_ptr<NXGroupH5Implementation> sptr;
 	//! default constructor
 	NXGroupH5Implementation();
+	//! copy constructor
+	NXGroupH5Implementation(const NXGroupH5Implementation &o);
+	//! move constructor
+	NXGroupH5Implementation(NXGroupH5Implementation &&o);
 
 	//! default destructor
 	virtual ~NXGroupH5Implementation();
 
-	//! assignment operator
+	//! copy assignment operator
 	NXGroupH5Implementation &operator=(const NXGroupH5Implementation &o);
+	//! move assignment operator
+	NXGroupH5Implementation &operator=(NXGroupH5Implementation &&o);
 
 	//! create a new group below this group
 	virtual NXGroupH5Implementation createGroup(const String &n) const;

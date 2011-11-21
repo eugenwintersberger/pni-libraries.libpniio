@@ -24,10 +24,25 @@ namespace h5{
 
 
 //------------------------------------------------------------------------------
+//Implementation of the default constructor
 NXGroupH5Implementation::NXGroupH5Implementation()
                         :NXObjectH5Implementation(){
 	EXCEPTION_SETUP("NXGroupH5Implementation::NXGroupH5Implementation()"
 			        ":NXObjectH5Implementation()");
+}
+
+//------------------------------------------------------------------------------
+//Implementation of the copy constructor
+NXGroupH5Implementation::NXGroupH5Implementation(const NXGroupH5Implementation &o)
+                        :NXObjectH5Implementation(o){
+
+}
+
+//------------------------------------------------------------------------------
+//Implementation of the move constructor
+NXGroupH5Implementation::NXGroupH5Implementation(NXGroupH5Implementation &&o)
+                        :NXObjectH5Implementation(std::move(o)){
+
 }
 
 //------------------------------------------------------------------------------
@@ -40,6 +55,7 @@ NXGroupH5Implementation::~NXGroupH5Implementation() {
 
 
 //------------------------------------------------------------------------------
+//Implementation of the copy assignment operator
 NXGroupH5Implementation &
 NXGroupH5Implementation::operator=(const NXGroupH5Implementation &o){
 	EXCEPTION_SETUP("NXGroupH5Implementation::operator=(const "
@@ -49,6 +65,16 @@ NXGroupH5Implementation::operator=(const NXGroupH5Implementation &o){
 		(NXObjectH5Implementation &)(*this) = (NXObjectH5Implementation &)o;
 	}
 
+	return *this;
+}
+
+//------------------------------------------------------------------------------
+//Implementation of the move assignment operator
+NXGroupH5Implementation &NXGroupH5Implementation::operator=(NXGroupH5Implementation &&o){
+	EXCEPTION_SETUP("NXGroupH5Implementation &NXGroupH5Implementation::operator=(NXGroupH5Implementation &&o)");
+	if(this != &o){
+		(NXObjectH5Implementation &)(*this) = std::move((NXObjectH5Implementation &)o);
+	}
 	return *this;
 }
 

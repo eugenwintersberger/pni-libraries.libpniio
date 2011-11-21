@@ -61,7 +61,18 @@ void NXGroupTest::testCreation(){
 	g = _f.createGroup("/hello/world");
 	g.close();
 	g = _f.createGroup("/directory_1");
-	g.close();
+
+
+	//test copy constructor
+	NXGroup g1(g);
+	CPPUNIT_ASSERT(g1.isOpen());
+	CPPUNIT_ASSERT(g.isOpen());
+	CPPUNIT_ASSERT(g1.getName() == g.getName());
+
+	//test move constructor
+	NXGroup g2 = std::move(g1);
+	CPPUNIT_ASSERT(!g1.isOpen());
+	CPPUNIT_ASSERT(g2.isOpen());
 
 }
 
@@ -72,7 +83,7 @@ void NXGroupTest::testOpen(){
 
 	g2 = _f.openGroup("/directory1");
 
-	CPPUNIT_ASSERT_THROW(_f.openGroup("directory2"),H5GroupError);
+	CPPUNIT_ASSERT_THROW(_f.openGroup("directory2"),pni::nx::NXGroupError);
 	CPPUNIT_ASSERT_NO_THROW(_f.openGroup("directory1/data"));
 
 	g1.close();
@@ -181,6 +192,19 @@ void NXGroupTest::testExistence(){
 void NXGroupTest::testRemove(){
 	NXGroup g1;
 	NXField f;
+}
 
+void NXGroupTest::testAssignment(){
+	NXGroup g1,g2;
+
+	CPPUNIT_ASSERT_NO_THROW(g1 = _f.createGroup("test1"));
+	CPPUNIT_ASSERT_NO_THROW(g2 = g1);
+	CPPUNIT_ASSERT(g1.isOpen());
+	CPPUNIT_ASSERT(g2.isOpen());
+
+	NXGroup g3;
+	CPPUNIT_ASSERT_NO_THROW(g3 = std::move(g2));
+	CPPUNIT_ASSERT(g3.isOpen());
+	CPPUNIT_ASSERT(!g2.isOpen());
 }
 

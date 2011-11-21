@@ -63,6 +63,7 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const NXGroupError &e);
 };
 
+
 //end of namespace
 }
 }

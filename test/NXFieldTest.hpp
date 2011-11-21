@@ -25,16 +25,18 @@ class NXFieldTest: public CppUnit::TestFixture {
 	CPPUNIT_TEST_SUITE(NXFieldTest);
 	CPPUNIT_TEST(testCreation);
 	CPPUNIT_TEST(testOpen);
-	CPPUNIT_TEST(testGetData);
+	//CPPUNIT_TEST(testGetData);
 	//CPPUNIT_TEST(testGetDataExceptions);
-	CPPUNIT_TEST(testAppendData);
-	CPPUNIT_TEST(testStreamIO);
+	//CPPUNIT_TEST(testAppendData);
+	//CPPUNIT_TEST(testStreamIO);
 	//CPPUNIT_TEST(testAppendDataExceptions);
 	//CPPUNIT_TEST(testInsertData);
 	//CPPUNIT_TEST(testInsertDataExceptions);
 	CPPUNIT_TEST(testAttributes);
 	CPPUNIT_TEST(testAttributeExceptions);
 	CPPUNIT_TEST(testLinks);
+	//CPPUNIT_TEST(testMap);
+	CPPUNIT_TEST(testAssignment);
 
 	CPPUNIT_TEST_SUITE_END();
 private:
@@ -72,6 +74,8 @@ public:
 	void testAttributeExceptions();
 	void testLinks();
 	void testStreamIO();
+	void testMap();
+	void testAssignment();
 };
 
 #endif /* NXFIELDTEST_HPP_ */

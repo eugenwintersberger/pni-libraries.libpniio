@@ -61,11 +61,16 @@ public:
 	NXObject();
 	//! copy constructor
 	NXObject(const NXObject &o);
+	//! move constructor
+	NXObject(NXObject<Imp> &&o);
 	//! destructor
 	virtual ~NXObject();
 
-	//! assignment operator
-	NXObject<Imp> &operator=(const NXObject &o);
+	//! copy assignment operator
+	NXObject<Imp> &operator=(const NXObject<Imp> &o);
+
+	//! move assignment operator
+	NXObject<Imp> &operator=(NXObject<Imp> &&o);
 
 
 	//! retrieve objects path
@@ -163,6 +168,11 @@ public:
 	//! Set the implementation of an object
 	//! \param i reference to an implementation
 	void setImplementation(const Imp &i);
+	void setImplementation(Imp &&i);
+
+	bool isOpen() const {
+		return _imp.isOpen();
+	}
 
 };
 
@@ -172,13 +182,27 @@ template<typename Imp> NXObject<Imp>::NXObject() {
 
 }
 
-template<typename Imp> NXObject<Imp>::NXObject(const NXObject &o){
-	_imp = Imp(o._imp);
+template<typename Imp> NXObject<Imp>::NXObject(const NXObject<Imp> &o){
+	this->_imp = Imp(o._imp);
 }
 
-template<typename Imp> NXObject<Imp> &NXObject<Imp>::operator=(const NXObject &o){
+template<typename Imp> NXObject<Imp>::NXObject(NXObject<Imp> &&o){
+	//express the move constructor in terms of move assignment
+	*this = std::move(o);
+}
+
+template<typename Imp> NXObject<Imp> &NXObject<Imp>::operator=(const NXObject<Imp> &o){
 	if(this != &o){
-		_imp = o._imp;
+		this->_imp = o._imp;
+	}
+
+	return *this;
+}
+
+template<typename Imp> NXObject<Imp> &NXObject<Imp>::operator=(NXObject<Imp> &&o){
+	if(this != &o){
+		//we only move the implementation here from one object to the other
+		this->_imp = std::move(o._imp);
 	}
 
 	return *this;
@@ -205,6 +229,10 @@ template<typename Imp> String NXObject<Imp>::getPath() const {
 
 template<typename Imp> void NXObject<Imp>::setImplementation(const Imp &i){
 	_imp = i;
+}
+
+template<typename Imp> void NXObject<Imp>::setImplementation(Imp &&i){
+	_imp = std::move(i);
 }
 
 template<typename Imp> Imp &NXObject<Imp>::getImplementation(){
