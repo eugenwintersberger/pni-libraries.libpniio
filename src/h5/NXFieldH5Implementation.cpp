@@ -200,11 +200,11 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(NXFieldH5Implementat
 		o._elem_mem_space = 0;
 
 		_elem_shape = o._elem_shape;
-		_space_shape = o._elem_shape;
-		std::cout<<o._space_shape<<std::endl;
-		std::cout<<_space_shape<<std::endl;
-		std::cout<<o._elem_shape<<std::endl;
-		std::cout<<_elem_shape<<std::endl;
+		_space_shape = o._space_shape;
+		//std::cout<<o._space_shape<<std::endl;
+		//std::cout<<_space_shape<<std::endl;
+		//std::cout<<o._elem_shape<<std::endl;
+		//std::cout<<_elem_shape<<std::endl;
 		o._space_shape.setRank(0);
 		o._elem_shape.setRank(0);
 

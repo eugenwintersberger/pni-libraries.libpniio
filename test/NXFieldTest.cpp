@@ -86,64 +86,130 @@ void NXFieldTest::testCreation(){
 	array.setName("array");
 	array.setUnit("a.u.");
 	array.setDescription("a read buffer");
-	ArrayShape sshape(1);
+	ArrayShape eshape(0); //element shape for scalar values
+	ArrayShape sshape(1);  //array shape for scalar values (total container)
 	sshape.setDimension(0,0);
+
+	//shape of an array container after creation
+	ArrayShape cshape(3);
+	cshape.setDimension(0,0);
+	cshape.setDimension(1,dshape.getDimension(0));
+	cshape.setDimension(2,dshape.getDimension(1));
+
 
 	//creating data fields for saving arrays
 
 	//classic array construction using a constructor
 	NXField f1 = _f.createNumericField(array);
 	CPPUNIT_ASSERT(f1.getElementShape() == array.getShape());
+	CPPUNIT_ASSERT(f1.getShape() == cshape);
 	CPPUNIT_ASSERT(f1.getTypeID() == array.getTypeID());
+	CPPUNIT_ASSERT(f1.isOpen());
 
 	NXField f2 = _f.createNumericField("field_1",PNITypeID::UINT64,dshape,"a.u","data");
 	CPPUNIT_ASSERT(f2.getElementShape() == dshape);
+	CPPUNIT_ASSERT(f2.getShape() == cshape);
 	CPPUNIT_ASSERT(f2.getTypeID() == PNITypeID::UINT64);
+	CPPUNIT_ASSERT(f2.isOpen());
 
 	//classic scalar construction
 	NXField f3 = _f.createNumericField(scalar);
 	CPPUNIT_ASSERT(f3.getTypeID() == PNITypeID::INT64);
-	CPPUNIT_ASSERT(f3.getElementShape() == sshape);
+	CPPUNIT_ASSERT(f3.getElementShape() == eshape);
+	CPPUNIT_ASSERT(f3.getShape() == sshape);
+	CPPUNIT_ASSERT(f3.isOpen());
+
+	//classic scalar construction
+	NXField f5 = _f.createNumericField("scalar_2",PNITypeID::INT32,"m","distance to something");
+	CPPUNIT_ASSERT(f5.getTypeID() == PNITypeID::INT32);
+	CPPUNIT_ASSERT(f5.getElementShape() == eshape);
+	CPPUNIT_ASSERT(f5.getShape() == sshape);
+	CPPUNIT_ASSERT(f5.isOpen());
 
 	//create a string field
 	NXField f4 = _f.createStringField("teststring");
 	CPPUNIT_ASSERT(f4.getTypeID() == PNITypeID::STRING);
-	CPPUNIT_ASSERT(f4.getElementShape() == sshape);
+	CPPUNIT_ASSERT(f4.getShape() == sshape);
+	CPPUNIT_ASSERT(f4.getElementShape() == eshape);
+	CPPUNIT_ASSERT(f4.isOpen());
+
+	//testing copy constructor on scalar array
+	NXField f6(f5);
+	CPPUNIT_ASSERT(f6.getTypeID()==f5.getTypeID());
+	CPPUNIT_ASSERT(f6.getShape() == f5.getShape());
+	CPPUNIT_ASSERT(f6.getElementShape() == f5.getElementShape());
+	CPPUNIT_ASSERT(f6.isOpen());
+	CPPUNIT_ASSERT(f5.isOpen());
+
+	//testing copy constructor on array array
+	NXField f7(f1);
+	CPPUNIT_ASSERT(f7.getTypeID()==f1.getTypeID());
+	CPPUNIT_ASSERT(f7.getShape() == f1.getShape());
+	CPPUNIT_ASSERT(f7.getElementShape() == f1.getElementShape());
+	CPPUNIT_ASSERT(f7.isOpen());
+	CPPUNIT_ASSERT(f1.isOpen());
+
+	//testing copy constructor on string array
+	NXField f8(f4);
+	CPPUNIT_ASSERT(f8.getTypeID()==f4.getTypeID());
+	CPPUNIT_ASSERT(f8.getShape() == f4.getShape());
+	CPPUNIT_ASSERT(f8.getElementShape() == f4.getElementShape());
+	CPPUNIT_ASSERT(f8.isOpen());
+	CPPUNIT_ASSERT(f4.isOpen());
+
+	//testing move constructor on scalar array
+	NXField f9 = std::move(f5);
+	CPPUNIT_ASSERT(f9.getTypeID()==f6.getTypeID());
+	CPPUNIT_ASSERT(f9.getShape() == f6.getShape());
+	CPPUNIT_ASSERT(f9.getElementShape() == f6.getElementShape());
+	CPPUNIT_ASSERT(f9.isOpen());
+	CPPUNIT_ASSERT(!f5.isOpen());
+
+	//testing move constructor on array array
+	NXField f10 = std::move(f1);
+	CPPUNIT_ASSERT(f10.getTypeID()==f7.getTypeID());
+	CPPUNIT_ASSERT(f10.getShape() == f7.getShape());
+	CPPUNIT_ASSERT(f10.getElementShape() == f7.getElementShape());
+	CPPUNIT_ASSERT(f10.isOpen());
+	CPPUNIT_ASSERT(!f1.isOpen());
+
+	//testing move constructor on string array
+	NXField f11 = std::move(f4);
+	CPPUNIT_ASSERT(f11.getTypeID()==f8.getTypeID());
+	CPPUNIT_ASSERT(f11.getShape() == f8.getShape());
+	CPPUNIT_ASSERT(f11.getElementShape() == f8.getElementShape());
+	CPPUNIT_ASSERT(f11.isOpen());
+	CPPUNIT_ASSERT(!f4.isOpen());
 
 	g.close();
 }
 
 void NXFieldTest::testAssignment(){
 	std::cerr<<"NXFieldTest::testAssignment ---------------------------------------"<<std::endl;
-
 	NXField f2;
-	Float64Array array(_f64_data_array_read);
+	ArrayShape dshape(2);
+	dshape.setDimension(0,NX);
+	dshape.setDimension(1,NY);
+	Float64Array array(dshape);
+	array.setName("testdata");
+	array.setDescription("a simple testing array");
+	array.setUnit("nm");
+
 
 	NXField f1 = _f.createNumericField(array);
-
-
 	CPPUNIT_ASSERT(f1.getElementShape() == array.getShape());
+	CPPUNIT_ASSERT(f1.getTypeID() == array.getTypeID());
 
-	CPPUNIT_ASSERT_NO_THROW(f1 = _f.createNumericField(_write_cmplx_scalar));
 	CPPUNIT_ASSERT_NO_THROW(f2 = f1);
+	CPPUNIT_ASSERT(f2.getShape() == f1.getShape());
+	CPPUNIT_ASSERT(f2.getTypeID() == f1.getTypeID());
 	CPPUNIT_ASSERT(f2.isOpen());
 	CPPUNIT_ASSERT(f1.isOpen());
-	CPPUNIT_ASSERT(f2.getShape() == f1.getShape());
 
-
-
-	NXField &f3 = f1;
-	CPPUNIT_ASSERT(f3.getName() == f1.getName());
-
-	//check move assignment
-	NXField f4;
-	f4  = std::move(f1);
-	CPPUNIT_ASSERT(f4.isOpen());
+	NXField f3;
+	CPPUNIT_ASSERT_NO_THROW(f3 = std::move(f1));
 	CPPUNIT_ASSERT(!f1.isOpen());
-
-	NXField f5 = std::move(f2);
-	CPPUNIT_ASSERT(f5.isOpen());
-	CPPUNIT_ASSERT(!f2.isOpen());
+	CPPUNIT_ASSERT(f3.isOpen());
 }
 
 void NXFieldTest::testOpen(){
@@ -168,55 +234,38 @@ void NXFieldTest::testInsertDataExceptions(){
 }
 
 void NXFieldTest::testGetData(){
-	NXField dset;
+	std::cerr<<"NXFieldTest::testGetData ---------------------------------------"<<std::endl;
+	NXField sfield,afield,rfield;
 	ArrayShape dshape(2);
 	dshape.setDimension(0,NX);
 	dshape.setDimension(1,NY);
+	Float64Array array(dshape);
+	Float64 tdata[] = {1.2,1.3,1.4};
+	Float64Scalar scalar("scalar","nm","a testing scalar");
+
+	array.setName("array");
+	array.setDescription("a testing array");
+	array.setUnit("m");
 
 	//write data to disk
-	testAppendData();
+	sfield = _f.createNumericField(array);
+	afield = _f.createNumericField(scalar);
+	for(UInt64 i=0;i<3;i++){
+		array = tdata[i];
+		scalar = tdata[i];
+		sfield.append(array);
+		afield.append(scalar);
+	}
 
 	//read data
-	CPPUNIT_ASSERT_NO_THROW(dset = _f.openField("field_1"));
-	for(UInt64 i=0;i<dset.getDimension(0);i++){
-		Float64 value;
-		switch(i){
-		case 0: value = 1.2; break;
-		case 1: value = 1.3; break;
-		case 2: value = 1.4; break;
-		default:
-			value = 0.; break;
-		}
-		CPPUNIT_ASSERT_NO_THROW(dset.get(i,_f64_data_array_write));
-		for(UInt64 i=0;i<_f64_data_array_write.getShape().getSize();i++){
-				CPPUNIT_ASSERT(_f64_data_array_write[i] == value);
+	CPPUNIT_ASSERT_NO_THROW(rfield = _f.openField(array.getName()));
+	for(UInt64 i=0;i<rfield.getDimension(0);i++){
+		CPPUNIT_ASSERT_NO_THROW(rfield.get(i,array));
+		for(UInt64 j=0;j<array.getShape().getSize();j++){
+
+				CPPUNIT_ASSERT(array[j] == tdata[i]);
 		}
 	}
-
-	//read data from complex scalar
-	CPPUNIT_ASSERT_NO_THROW(dset = _f.openField(_write_cmplx_scalar.getName()));
-	for(UInt64 i=0;i<dset.getDimension(0);i++){
-		Complex64 value;
-		switch(i){
-		case 0: value = Complex64(1,2); break;
-		case 1: value = Complex64(3,4); break;
-		case 2: value = Complex64(5,6); break;
-		case 3: value = Complex64(7,8); break;
-		default:
-			value = Complex64(0,0); break;
-		}
-		CPPUNIT_ASSERT_NO_THROW(dset.get(i,_write_cmplx_scalar));
-		std::cout<<i<<" : "<<_write_cmplx_scalar<<std::endl;
-		CPPUNIT_ASSERT(_write_cmplx_scalar == value);
-	}
-
-	//read string data - this is important
-	CPPUNIT_ASSERT_NO_THROW(dset = _f.openField("field_5"));
-	String s;
-	CPPUNIT_ASSERT_NO_THROW(dset.get(0,s));
-	CPPUNIT_ASSERT(s == "hello world this is a text");
-	CPPUNIT_ASSERT_NO_THROW(dset.get(1,s));
-	CPPUNIT_ASSERT(s == "another text");
 
 }
 
@@ -433,8 +482,11 @@ void NXFieldTest::testMap(){
 	std::cerr<<"NXFieldTest::testMap ---------------------------------------"<<std::endl;
 	typedef std::map<String,NXField> FieldMap;
 
-	FieldMap map;
-	NXField f = _f.createNumericField("test1",PNITypeID::UINT32,"nm","testing field 1");
-	CPPUNIT_ASSERT(f.isOpen());
-	map["test1"] = f;
+	FieldMap fmap;
+	CPPUNIT_ASSERT_NO_THROW(fmap.insert(FieldMap::value_type("test1",_f.createNumericField("test1",PNITypeID::UINT32,"nm","testing field 1"))));
+	CPPUNIT_ASSERT(!fmap.empty());
+	CPPUNIT_ASSERT(fmap["test1"].isOpen());
+	CPPUNIT_ASSERT_NO_THROW(fmap["test2"] = _f.createNumericField("test2",PNITypeID::UINT32,"nm","testing field 1"));
+	CPPUNIT_ASSERT(fmap["test2"].isOpen());
+
 }

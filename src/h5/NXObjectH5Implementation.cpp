@@ -66,6 +66,7 @@ NXObjectH5Implementation &NXObjectH5Implementation::operator=(const NXObjectH5Im
 					"::operator=(const NXObjectH5Implementation &o)");
 
 	if(this != &o){
+		/*
 		if(!H5Iis_valid(o._id)){
 			EXCEPTION_INIT(H5ObjectError,"RHS object is not a valid HDF5 object!");
 			EXCEPTION_THROW();
@@ -77,7 +78,10 @@ NXObjectH5Implementation &NXObjectH5Implementation::operator=(const NXObjectH5Im
 			//increment the reference counter - we have now two objects
 			//pointing on the same HDF5 object
 			H5Iinc_ref(_id);
-		}
+		}*/
+		if(H5Iis_valid(_id)) H5Oclose(_id);
+		_id = o._id;
+		H5Iinc_ref(_id);
 	}
 
 	return *this;
@@ -90,10 +94,11 @@ NXObjectH5Implementation &NXObjectH5Implementation::operator=(NXObjectH5Implemen
 
 	if(this != &o){
 		//check if RHS is valid
+		/*
 		if(!H5Iis_valid(o._id)){
 			EXCEPTION_INIT(H5ObjectError,"RHS object is not a valid HDF5 object!");
 			EXCEPTION_THROW();
-		}
+		}*/
 
 		//close this instance of the object
 		if(H5Iis_valid(_id)) H5Oclose(_id);
