@@ -176,9 +176,9 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(NXFieldH5Implementat
 	EXCEPTION_SETUP("NXFieldH5Implementation &NXFieldH5Implementation::operator=(NXFieldH5Implementation &&o)");
 
 	if(this != &o){
+		//use move assignment of the Object implementation to move the objects
+		//id
 		(NXObjectH5Implementation &)(*this) = std::move((NXObjectH5Implementation &)o);
-		//_get_dataset_parameters(getId());
-
 
 		//copy everything from the original object
 		_elem_offset = o._elem_offset;
@@ -201,10 +201,7 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(NXFieldH5Implementat
 
 		_elem_shape = o._elem_shape;
 		_space_shape = o._space_shape;
-		//std::cout<<o._space_shape<<std::endl;
-		//std::cout<<_space_shape<<std::endl;
-		//std::cout<<o._elem_shape<<std::endl;
-		//std::cout<<_elem_shape<<std::endl;
+
 		o._space_shape.setRank(0);
 		o._elem_shape.setRank(0);
 
@@ -244,7 +241,7 @@ void NXFieldH5Implementation::append(const NumericObject &o){
 	_increment_growth_dimension();
 
 	//set the offset for the selection to the last index in the container
-	_elem_offset[0] = getDimension(0)-1;
+	_elem_offset[0] = getShape().getDimension(0)-1;
 
 	//set the selection and write data
 	H5Sselect_hyperslab(_space_id,H5S_SELECT_SET,_elem_offset,NULL,_elem_count,NULL);
@@ -264,7 +261,7 @@ void NXFieldH5Implementation::append(const String &s){
 	elem_type = H5Dget_type(getId());
 	//extend field along growth dimension
 	_increment_growth_dimension();
-	_elem_offset[0] = getDimension(0)-1;
+	_elem_offset[0] = getShape().getDimension(0)-1;
 
 	const char *ptr = s.c_str();
 
@@ -280,7 +277,7 @@ void NXFieldH5Implementation::insert(const UInt64 &i,const NumericObject &o){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::insert(const UInt64 &i,const NumericObject &o)");
 	herr_t err = 0;
 
-	if(i>=getDimension(0)){
+	if(i>=getShape().getDimension(0)){
 		EXCEPTION_INIT(IndexError,"Element index exceeds than growth dimension!");
 		EXCEPTION_THROW();
 	}
@@ -306,7 +303,7 @@ void NXFieldH5Implementation::insert(const UInt64 &i,const String &s){
 void NXFieldH5Implementation::get(const UInt64 &i,NumericObject &o){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::get(const UInt64 &i,NumericObject &o)");
 
-	if(i>=getDimension(0)){
+	if(i>=getShape().getDimension(0)){
 		EXCEPTION_INIT(IndexError,"Element index exceeds container size!");
 		EXCEPTION_THROW();
 	}
@@ -329,7 +326,7 @@ void NXFieldH5Implementation::get(const UInt64 &i,NumericObject &o){
 void NXFieldH5Implementation::get(const UInt64 &i,String &s){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::get(const UInt64 &i,String &s)");
 
-	if(i>=getDimension(0)){
+	if(i>=getShape().getDimension(0)){
 		EXCEPTION_INIT(IndexError,"Element index exceeds container size!");
 		EXCEPTION_THROW();
 	}
@@ -364,51 +361,9 @@ void NXFieldH5Implementation::get(const UInt64 &i,String &s){
 }
 
 //------------------------------------------------------------------------------
-UInt32 NXFieldH5Implementation::getRank() const{
-	EXCEPTION_SETUP("UInt32 NXFieldH5Implementation::getRank() const");
-
-	return _space_shape.getRank();
-}
-
-//------------------------------------------------------------------------------
-UInt32 NXFieldH5Implementation::getDimension(UInt32 i)const {
-	EXCEPTION_SETUP("UInt32 NXFieldH5Implementation::getDimension(UInt32 i)");
-	UInt32 dim=0;
-
-	dim =  _space_shape.getDimension(i);
-
-	return dim;
-}
-
-//------------------------------------------------------------------------------
 
 const ArrayShape &NXFieldH5Implementation::getShape() const {
 	return _space_shape;
-}
-
-//------------------------------------------------------------------------------
-UInt32 NXFieldH5Implementation::getElementRank() const {
-	return _elem_shape.getRank();
-}
-
-//------------------------------------------------------------------------------
-UInt32 NXFieldH5Implementation::getElementDimension(UInt32 i) const{
-	EXCEPTION_SETUP("UInt32 NXFieldH5Implementation::getElementDimension(UInt32 i) const");
-	UInt32 d=0;
-
-	try{
-		d = _elem_shape.getDimension(i);
-	}catch(...){
-		EXCEPTION_INIT(IndexError,"Error obtaining element dimension!");
-		EXCEPTION_THROW();
-	}
-
-	return d;
-}
-
-//------------------------------------------------------------------------------
-UInt64 NXFieldH5Implementation::getElementSize() const{
-	return _elem_shape.getSize();
 }
 
 //------------------------------------------------------------------------------
@@ -445,19 +400,6 @@ bool NXFieldH5Implementation::isString() const {
 	}
 	return false;
 
-}
-
-//------------------------------------------------------------------------------
-UInt64 NXFieldH5Implementation::getSize() const{
-	if(isArray()){
-		return (UInt64)H5Sget_simple_extent_npoints(_space_id);
-	}else if (isString()){
-		return H5Tget_size(_type_id);
-	}else if (isScalar()){
-		return 1;
-	}
-
-	return 0;
 }
 
 

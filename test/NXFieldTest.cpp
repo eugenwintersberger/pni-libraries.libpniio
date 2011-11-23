@@ -259,7 +259,7 @@ void NXFieldTest::testGetData(){
 
 	//read data
 	CPPUNIT_ASSERT_NO_THROW(rfield = _f.openField(array.getName()));
-	for(UInt64 i=0;i<rfield.getDimension(0);i++){
+	for(UInt64 i=0;i<rfield.getShape().getDimension(0);i++){
 		CPPUNIT_ASSERT_NO_THROW(rfield.get(i,array));
 		for(UInt64 j=0;j<array.getShape().getSize();j++){
 

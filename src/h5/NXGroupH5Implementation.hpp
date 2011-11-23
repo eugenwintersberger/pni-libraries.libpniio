@@ -62,6 +62,7 @@ public:
 	NXFieldH5Implementation createStringField(const String &n,const UInt64 &size) const;
 	//! create a field to store binary data
 	NXFieldH5Implementation createBinaryField(const String &n,const UInt64 &nbytes);
+
 	//! open an existing field
 	virtual NXFieldH5Implementation openField(const String &n) const;
 

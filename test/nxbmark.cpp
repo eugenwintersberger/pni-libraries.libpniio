@@ -27,12 +27,6 @@ int main(int argc,char **argv){
 	NXField d;
 	UInt64 i,runs;
 	String fname;
-	std::ostringstream fnstream;
-	NXLZFFilter lzf;
-	NXDeflateFilter deflate;
-
-	deflate.setCompressionRate(5);
-
 	ArrayShape s;
 	Int32Array a;
 
@@ -43,20 +37,19 @@ int main(int argc,char **argv){
 	a.setShape(s);
 	a.allocate();
 	a = 1;
+	a.setName("data");
+	a.setUnit("a.u.");
+	a.setDescription("testing data");
 
-	f.setFileName("bmark_%i.h5");
-	f.setOverwrite(true);
-	f.setSplitSize(1000);
+	f.setFileName("bmark.h5");
+	f.setOverwrite(true);	;
 	f.create();
+
+	d = f.createNumericField(a);
 
 	runs = 500;
 	for(i=0;i<runs;i++){
-		fnstream<<"run_"<<i;
-		a.setName(fnstream.str());
-		d = f.createNumericField(a);
-		d.append(a);
-		d.close();
-		fnstream.seekp(0);
+		d<<a;
 		f.flush();
 	}
 

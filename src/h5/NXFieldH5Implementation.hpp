@@ -2,7 +2,7 @@
  * NXFieldH5Implementation.hpp
  *
  *  Created on: Jul 3, 2011
- *      Author: eugen
+ *      Author: Eugen Wintersberger
  */
 
 #ifndef NXFIELDH5IMPLEMENTATION_HPP_
@@ -45,21 +45,22 @@ private:
 	void _increment_growth_dimension();
 protected:
 	//parameters of the total dataset
-	hid_t _type_id;	       //!< ID of the data type
-	hid_t _space_id;       //!< ID of the data space
-	ArrayShape _space_shape;    //!< shape of the total dataset
+	hid_t _type_id;	          //!< ID of the data type
+	hid_t _space_id;          //!< ID of the data space
+	ArrayShape _space_shape;  //!< shape of the total dataset
 
 	//the object should act like a container - this we need a default
 	//selection to read and write elements to this container
-	hid_t _elem_mem_space; //!< memory data space of the container elements
+	hid_t _elem_mem_space;   //!< memory data space of the container elements
 	hsize_t *_elem_offset;   //!< container offset
 	hsize_t *_elem_count;    //!< size of the container elements
-	ArrayShape _elem_shape; //!< shape of the element
+	ArrayShape _elem_shape;  //!< shape of the element
 
 	//resize buffer
 	hsize_t *_resize_buffer; //!< an internal buffer for resizing the array
 public:
-	typedef boost::shared_ptr<NXFieldH5Implementation> sptr;
+	//! a shared pointer to a field object
+	//typedef boost::shared_ptr<NXFieldH5Implementation> sptr;
 	//! default constructor
 	NXFieldH5Implementation();
 	//! copy constructor
@@ -74,44 +75,42 @@ public:
 	//! move assignment operator
 	NXFieldH5Implementation &operator=(NXFieldH5Implementation &&o);
 
-	//! total field rank
-	virtual UInt32 getRank() const;
-	//! total field dimensions
-	virtual UInt32 getDimension(UInt32 i) const;
-	//! total field number of elements
-	virtual UInt64 getSize() const;
-	//! total field shape
+	//! get the total shape of the container
 	virtual const ArrayShape &getShape() const;
 
-	//! rank of field element
-	virtual UInt32 getElementRank() const;
-	//! dimension of field element
-	virtual UInt32 getElementDimension(UInt32 i) const;
-	//! number of elements in element
-	virtual UInt64 getElementSize() const;
 	//! element shape
 	virtual const ArrayShape &getElementShape() const;
 
-
+	//! return the type ID of the field
 	virtual PNITypeID getTypeID() const;
+
+	//! true if scalar field
 	virtual bool isScalar() const;
+	//! true if array field
 	virtual bool isArray() const;
+	//! true if a string field
 	virtual bool isString() const;
 
+	//! append a numeric object
 	virtual void append(const NumericObject &o);
+	//! append a string
 	virtual void append(const String &s);
 
+	//! insert a numeric object
 	virtual void insert(const UInt64 &i,const NumericObject &a);
+	//! insert a string object
 	virtual void insert(const UInt64 &i,const String &s);
 
+	//! get a numeric object
 	virtual void get(const UInt64 &i,NumericObject &s);
+	//! get a string object
 	virtual void get(const UInt64 &i,String &s);
 
 
 	//! close the data field
 	virtual void close();
 
-
+	//! set HDF5 object ID
 	virtual void setId(const hid_t &id);
 
 	friend class NXGroupH5Implementation;

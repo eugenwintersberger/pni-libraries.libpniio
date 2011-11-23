@@ -1,0 +1,17 @@
+Todo list for libpninx
+=======================
+
+
+
+
+
+
+23.11.2010:
+----------
+-> add support for uninterpreted binary data
+-> add selection object for partial io
+-> documentation unfinished
+-> add example program
+-> add python interface
+-> complete licensing
+-> implement iterator

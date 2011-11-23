@@ -79,17 +79,9 @@ public:
 	//! move assignment
 	NXField<Imp> &operator=(NXField<Imp> &&o);
 
-	//inquery of a field
-	UInt32 getRank() const{
-		return this->getImplementation().getRank();
-	}
 
-	//! get dimension of a field
-	UInt32 getDimension(UInt32 i) const {
-		return this->getImplementation().getDimension(i);
-	}
 
-	//need a function here to get an array rank from a field
+	//! return the total shape of the field
 	virtual const ArrayShape &getShape() const{
 		return this->getImplementation().getShape();
 	}
@@ -98,37 +90,43 @@ public:
 		return this->getImplementation().getElementShape();
 	}
 
-	virtual UInt32 getElementRank() const {
-		return this->getImplementation().getElementRank();
-	}
-
-	//get the type ID
+	//!get the type ID
 	virtual PNITypeID getTypeID() const {
 		return this->getImplementation().getTypeID();
 	}
 
-	virtual UInt64 getSize() const {
-		return this->getImplementation().getSize();
-	}
-
+	//! get the field name
 	virtual String getName() const {
 		return this->getImplementation().getName();
 	}
 
-	//need methods to access data stored in the field
+	//! append an array object to the field
 	void append(const ArrayObject &a);
+	//! append a scalar object ot the field
 	void append(const ScalarObject &s);
+	//! append a string obect to the field
 	void append(const String &s);
 
+	//! insert an array object
 	void insert(const UInt64 &i,const ArrayObject &s);
+	//! insert a scalar object
 	void insert(const UInt64 &i,const ScalarObject &s);
+	//! insert a string object
 	void insert(const UInt64 &i,const String &s);
 
+	//! get an array object
 	void get(const UInt64 &i,ArrayObject &a);
+	//! read the entire data into a single arrayy
+	void get(ArrayObject &a);
+	//! get a scalar object
 	void get(const UInt64 &i,ScalarObject &s);
+
+	void get(ScalarObject &s);
+	//! get a string object
 	void get(const UInt64 &i,String &s);
 
 
+	//! close the field
 	void close();
 
 	void resetReadStreamPosition() {
