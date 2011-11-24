@@ -1,0 +1,23 @@
+%%
+{\tt NXFile} is the root for all data structures. 
+Fortunately this class is also the simplest among the three {\tt NX} classes.
+{\tt NXFile} is a descandent of {\tt NXGroup}, thus it exposes the full 
+interface of {\tt NXGroup}. Since this will be the treated in the next 
+section we will consider here only the file specific methods. 
+
+For this purpose let's have a look on a simple example that already shows
+everything we need to know in order to handle files. 
+\lstinputlisting{../examples/c++/nxfile_ex1.cpp}
+Lines 11-14 show the basic code sequence to create a new file. Setting 
+overwrite to true (line 12) discardes an already existing file with the
+same name. By default this option is not set in order to prevent a user 
+from accidentaly overwritting existing files.
+Once a file is opened or created any subsequent call to {\tt create()}, {\tt
+setReadOnly} {\tt setOverwrite()}, or {\tt open()} will raise an  {\tt
+NXFileError} exception.
+The reason is that you must not change these attributes of the class 
+while a file is open. First close the file object by invoking the 
+{\tt close()} method. 
+
+Once a file is created you may want to invoke its current status. 
+This is shown in the next listing.

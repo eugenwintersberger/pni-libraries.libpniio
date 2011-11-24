@@ -1,13 +1,9 @@
 Todo list for libpninx
 =======================
 
-
-
-
-
-
 23.11.2010:
 ----------
+-> implement locks to make the library thread-safe!!!!
 -> add support for uninterpreted binary data
 -> add selection object for partial io
 -> documentation unfinished
@@ -15,3 +11,4 @@ Todo list for libpninx
 -> add python interface
 -> complete licensing
 -> implement iterator
+-> implement caching to improve IO performance

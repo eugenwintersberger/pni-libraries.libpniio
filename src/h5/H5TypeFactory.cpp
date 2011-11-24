@@ -199,21 +199,21 @@ H5TypeFactory::H5TypeFactory() {
 
 H5TypeFactory::~H5TypeFactory() {
 	//close all data types
-	H5Tclose(_int8_type);
-	H5Tclose(_uint8_type);
-	H5Tclose(_int16_type);
-	H5Tclose(_uint16_type);
-	H5Tclose(_int32_type);
-	H5Tclose(_uint32_type);
-	H5Tclose(_int64_type);
-	H5Tclose(_uint64_type);
-	H5Tclose(_float32_type);
-	H5Tclose(_float64_type);
-	H5Tclose(_float128_type);
-	H5Tclose(_complex32_type);
-	H5Tclose(_complex64_type);
-	H5Tclose(_complex128_type);
-	H5Tclose(_string_type);
+	if(H5Iis_valid(_int8_type)) H5Tclose(_int8_type);
+	if(H5Iis_valid(_uint8_type)) H5Tclose(_uint8_type);
+	if(H5Iis_valid(_int16_type)) H5Tclose(_int16_type);
+	if(H5Iis_valid(_uint16_type)) H5Tclose(_uint16_type);
+	if(H5Iis_valid(_int32_type)) H5Tclose(_int32_type);
+	if(H5Iis_valid(_uint32_type)) H5Tclose(_uint32_type);
+	if(H5Iis_valid(_int64_type)) H5Tclose(_int64_type);
+	if(H5Iis_valid(_uint64_type)) H5Tclose(_uint64_type);
+	if(H5Iis_valid(_float32_type)) H5Tclose(_float32_type);
+	if(H5Iis_valid(_float64_type)) H5Tclose(_float64_type);
+	if(H5Iis_valid(_float128_type)) H5Tclose(_float128_type);
+	if(H5Iis_valid(_complex32_type)) H5Tclose(_complex32_type);
+	if(H5Iis_valid(_complex64_type)) H5Tclose(_complex64_type);
+	if(H5Iis_valid(_complex128_type)) H5Tclose(_complex128_type);
+	if(H5Iis_valid(_string_type)) H5Tclose(_string_type);
 }
 
 hid_t H5TypeFactory::createTypeFromObject(const NumericObject &o){

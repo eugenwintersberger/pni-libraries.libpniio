@@ -3,6 +3,7 @@
 #include<cppunit/extensions/HelperMacros.h>
 
 #include "NX.hpp"
+#include "NXExceptions.hpp"
 #include "NXFileTest.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(NXFileTest);
@@ -64,6 +65,12 @@ void NXFileTest::testCreation(){
 	f.setOverwrite(true);
 	//everything should work fine
 	CPPUNIT_ASSERT_NO_THROW(f.create());
+	//check if all exceptions are thrown correctly on an already opened file
+	CPPUNIT_ASSERT_THROW(f.setOverwrite(false),pni::nx::NXFileError);
+	CPPUNIT_ASSERT_THROW(f.setReadOnly(false),pni::nx::NXFileError);
+	CPPUNIT_ASSERT_THROW(f.setSplitSize(100),pni::nx::NXFileError);
+	CPPUNIT_ASSERT_THROW(f.open(),pni::nx::NXFileError);
+	CPPUNIT_ASSERT_THROW(f.create(),pni::nx::NXFileError);
 
 	f.close();
 
@@ -80,6 +87,12 @@ void NXFileTest::testOpen(){
 	CPPUNIT_ASSERT_NO_THROW(f.close());
 
 	CPPUNIT_ASSERT_NO_THROW(f.open());
+	//check if all exceptions are thrown correctly on an already opened file
+	CPPUNIT_ASSERT_THROW(f.setOverwrite(false),pni::nx::NXFileError);
+	CPPUNIT_ASSERT_THROW(f.setReadOnly(false),pni::nx::NXFileError);
+	CPPUNIT_ASSERT_THROW(f.setSplitSize(100),pni::nx::NXFileError);
+	CPPUNIT_ASSERT_THROW(f.open(),pni::nx::NXFileError);
+	CPPUNIT_ASSERT_THROW(f.create(),pni::nx::NXFileError);
 
 	CPPUNIT_ASSERT_NO_THROW(f.close());
 

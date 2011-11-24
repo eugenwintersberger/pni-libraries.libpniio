@@ -57,7 +57,7 @@ if env["PKGNAMEROOT"] == "":
 
 #set some linker flags
 
-env.Append(LIBS=["hdf5"])
+env.Append(LIBS=["hdf5","pniutils"])
 
 #set the proper compiler - this should be changed to something 
 #more general - independent of the underlying operating system
@@ -66,10 +66,12 @@ env.Replace(CXX = env["CXX"])
 #set default compiler flags
 env.Append(CXXFLAGS = ["-Wall","-std=c++0x"])
 #set paths for Boost and HDF5
-env.Append(LIBPATH=path.join(env["BOOSTPREFIX"],"lib"))
-env.Append(CPPPATH=path.join(env["BOOSTPREFIX"],"include"))
-env.Append(LIBPATH=path.join(env["HDF5PREFIX"],"lib"))
-env.Append(CPPPATH=path.join(env["HDF5PREFIX"],"include"))
+
+env.Append(LIBPATH=[path.join(env["HDF5PREFIX"],"lib")])
+env.Append(CPPPATH=[path.join(env["HDF5PREFIX"],"include")])
+env.Append(LIBPATH=[path.join(env["BOOSTPREFIX"],"lib")])
+env.Append(CPPPATH=[path.join(env["BOOSTPREFIX"],"include")])
+
 
 
 build_env = env.Clone()

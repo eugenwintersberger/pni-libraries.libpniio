@@ -54,18 +54,21 @@ template<typename Imp> NXField<Imp> &operator>>(NXField<Imp> &o,ScalarObject &s)
 template<typename Imp> NXField<Imp> &operator>>(NXField<Imp> &o,ArrayObject &s);
 template<typename Imp> NXField<Imp> &operator>>(NXField<Imp> &o,String &s);
 
+//! Nexus datafield
+
+//! NXField is the basic data holding object in a Nexus file. You cannot create
+//! an instance of this object directly rather you have to use one of the
+//! factory methods provided by NXGroup.
+//! NXField behaves like a container for data object which for the time being
+//! can be either strings, Scalars, or Array objects.
 template<typename Imp>
 class NXField:public NXObject<Imp> {
 private:
 	UInt64 _read_stream_pos;
-
-
-protected:
-	//void write(const void *ptr) const;
-	//void read(void *ptr) const;
 public:
 	typedef NXSelection<typename NXImpMap<Imp::IMPCODE>::SelectionImplementation > Selection;
 	typedef boost::shared_ptr<NXField<Imp> > sptr;
+	//! default constructor
 	NXField();
 	//! copy constructor
 	NXField(const NXField<Imp> &);
@@ -81,21 +84,35 @@ public:
 
 
 
-	//! return the total shape of the field
+	//! total field shape
+
+	//! Return the total shape of the field. The rank if this
+	//! shape is the rank of the object stored +1. The method returns
+	//! a constant reference to the fields' shape. So you cannot alter
+	//! this object.
+	//! \return ArrayShape& reference to the shape object
 	virtual const ArrayShape &getShape() const{
 		return this->getImplementation().getShape();
 	}
 
+	//! shape of a single element
+
+	//! Return the shape of a single element stored in the container.
 	virtual const ArrayShape &getElementShape() const {
 		return this->getImplementation().getElementShape();
 	}
 
-	//!get the type ID
+	//! get the type ID
+
+	//! Return the ID of the data type stored in the field.
+	//! \return data type ID
 	virtual PNITypeID getTypeID() const {
 		return this->getImplementation().getTypeID();
 	}
 
 	//! get the field name
+
+	//! Return the name of the field.
 	virtual String getName() const {
 		return this->getImplementation().getName();
 	}
@@ -129,6 +146,10 @@ public:
 	//! close the field
 	void close();
 
+	//! reset read stream position
+
+	//! Reset the stream position for reading. This can be used
+	//! to re-read data using stream IO.
 	void resetReadStreamPosition() {
 		_read_stream_pos = 0;
 	}

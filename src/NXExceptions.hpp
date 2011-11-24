@@ -63,6 +63,15 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const NXGroupError &e);
 };
 
+class NXFileError:public Exception {
+public:
+	NXFileError();
+	NXFileError(const String &i,const String &d);
+	virtual ~NXFileError();
+
+	friend std::ostream &operator<<(std::ostream &,const NXFileError &e);
+};
+
 
 //end of namespace
 }

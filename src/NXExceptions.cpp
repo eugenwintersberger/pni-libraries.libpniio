@@ -72,6 +72,25 @@ std::ostream &operator<<(std::ostream &o,const NXGroupError &e){
 	return e.print(o);
 }
 
+NXFileError::NXFileError():Exception("NXFileError"){
+
+}
+
+NXFileError::NXFileError(const String &i,const String &d)
+:Exception("NXFileError",i,d){
+
+}
+
+NXFileError::~NXFileError(){
+
+}
+
+std::ostream &operator<<(std::ostream &o,const NXFileError &e){
+	return e.print(o);
+}
+
+
+
 
 //end of namespace
 }
