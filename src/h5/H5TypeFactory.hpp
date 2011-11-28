@@ -1,8 +1,25 @@
 /*
+ * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpninx.
+ *
+ * libpninx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpninx is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
  * H5TypeFactory.hpp
  *
  *  Created on: Jun 27, 2011
- *      Author: eugen
+ *      Author: Eugen Wintersberger
  */
 
 #ifndef H5TYPEFACTORY_HPP_
@@ -21,7 +38,15 @@ namespace pni{
 namespace nx{
 namespace h5{
 
+//! \ingroup HDF5-Implementation
+//! \brief type factory
 
+//! This class provides HDF5 type objects for all data-types supported by the 
+//! library. The aim of this class is that types are only created once and 
+//! afterwards are copied if needed. A user can request either a const reference 
+//! to an existing type or obtain a new copy of this type. 
+//! In both cases the type must not be created from scratch but is rather copied 
+//! from its prototype.
 class H5TypeFactory {
 private:
 	//from this class we would need a singleton - should be available only
@@ -59,6 +84,7 @@ private:
 
 	//! private method to create the complex types
 	template<typename T> hid_t _create_complex_type();
+	//! private method for string type creation
 	hid_t _create_string_type();
 public:
 	//! default constructor
@@ -66,9 +92,16 @@ public:
 	//! destructor
 	virtual ~H5TypeFactory();
 
-	//! create a new type (based on an existing one)
+	//! create a new type 
+
+	//! Return a new copy of the requested type.
+	//! \return ID to a new HDF5 type object
 	template<typename T> hid_t createType() const;
-	//! get an already existing type object
+	//! get a type reference
+
+	//! Returns a reference to an existing instance of the 
+	//! requested type.
+	//! \return ID to an existing HDF5 type object
 	template<typename T> hid_t getType() const;
 	//! create a type from an existing NumericObject
 	hid_t createTypeFromObject(const NumericObject &o);
@@ -81,6 +114,7 @@ public:
 	hid_t createTypeFromID(PNITypeID id);
 };
 
+//! static and global instance of H5TypeFactory
 static H5TypeFactory H5TFactory;
 
 //end of namespace
