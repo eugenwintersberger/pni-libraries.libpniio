@@ -59,7 +59,7 @@ void NXFileTest::testCreation(){
 
 	//recreating the file should cause an error
 	f.setOverwrite(false);
-	CPPUNIT_ASSERT_THROW(f.create(),H5FileError); //here we except an error
+	CPPUNIT_ASSERT_THROW(f.create(),pni::nx::NXFileError); //here we except an error
 
 	//now if we set overwrite
 	f.setOverwrite(true);
@@ -98,7 +98,7 @@ void NXFileTest::testOpen(){
 
 	//try to open a file which does not exist
 	CPPUNIT_ASSERT_NO_THROW(f.setFileName(_fname2));
-	CPPUNIT_ASSERT_THROW(f.open(),H5FileError);
+	CPPUNIT_ASSERT_THROW(f.open(),pni::nx::NXFileError);
 
 	CPPUNIT_ASSERT_NO_THROW(f.create());
 	CPPUNIT_ASSERT_NO_THROW(f.close());

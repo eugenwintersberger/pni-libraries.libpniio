@@ -1,8 +1,25 @@
 /*
+ * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpninx.
+ *
+ * libpninx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpninx is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
  * NXObjectH5Implementation.cpp
  *
  *  Created on: Jul 1, 2011
- *      Author: eugen
+ *      Author: Eugen Wintersberger
  */
 
 #include "NXObjectH5Implementation.hpp"
@@ -37,7 +54,8 @@ NXObjectH5Implementation::~NXObjectH5Implementation() {
 //------------------------------------------------------------------------------
 //Implementation of the copy constructor
 NXObjectH5Implementation::NXObjectH5Implementation(const NXObjectH5Implementation &o){
-	EXCEPTION_SETUP("NXObjectH5Implementation::NXObjectH5Implementation(const NXObjectH5Implementation &o)");
+	EXCEPTION_SETUP("NXObjectH5Implementation::NXObjectH5Implementation"
+					"(const NXObjectH5Implementation &o)");
 
 	//the object we want to use as a template must be a valid object
 	if(!H5Iis_valid(o._id)){
@@ -53,7 +71,8 @@ NXObjectH5Implementation::NXObjectH5Implementation(const NXObjectH5Implementatio
 //------------------------------------------------------------------------------
 //Implementation of the move constructor
 NXObjectH5Implementation::NXObjectH5Implementation(NXObjectH5Implementation &&o){
-	EXCEPTION_SETUP("NXObjectH5Implementation::NXObjectH5Implementation(NXObjectH5Implementation &&o)");
+	EXCEPTION_SETUP("NXObjectH5Implementation::NXObjectH5Implementation"
+					"(NXObjectH5Implementation &&o)");
 
 	//implement the move constructor in terms of move assignment
 	*this = std::move(o);
@@ -66,19 +85,6 @@ NXObjectH5Implementation &NXObjectH5Implementation::operator=(const NXObjectH5Im
 					"::operator=(const NXObjectH5Implementation &o)");
 
 	if(this != &o){
-		/*
-		if(!H5Iis_valid(o._id)){
-			EXCEPTION_INIT(H5ObjectError,"RHS object is not a valid HDF5 object!");
-			EXCEPTION_THROW();
-		}else{  //o has no valid id
-			//if the lhs object is a valid object we must close it first
-			if(H5Iis_valid(_id)) H5Oclose(_id);
-			//copy the IDs
-			_id = o._id;
-			//increment the reference counter - we have now two objects
-			//pointing on the same HDF5 object
-			H5Iinc_ref(_id);
-		}*/
 		if(H5Iis_valid(_id)) H5Oclose(_id);
 		_id = o._id;
 		H5Iinc_ref(_id);
@@ -90,16 +96,10 @@ NXObjectH5Implementation &NXObjectH5Implementation::operator=(const NXObjectH5Im
 //-----------------------------------------------------------------------------
 //Implementation of the move assignment operator
 NXObjectH5Implementation &NXObjectH5Implementation::operator=(NXObjectH5Implementation &&o){
-	EXCEPTION_SETUP("NXObjectH5Implementation &NXObjectH5Implementation::operator=(NXObjectH5Implementation &&o)");
+	EXCEPTION_SETUP("NXObjectH5Implementation &NXObjectH5Implementation::"
+					"operator=(NXObjectH5Implementation &&o)");
 
 	if(this != &o){
-		//check if RHS is valid
-		/*
-		if(!H5Iis_valid(o._id)){
-			EXCEPTION_INIT(H5ObjectError,"RHS object is not a valid HDF5 object!");
-			EXCEPTION_THROW();
-		}*/
-
 		//close this instance of the object
 		if(H5Iis_valid(_id)) H5Oclose(_id);
 
@@ -124,7 +124,7 @@ void NXObjectH5Implementation::_create_and_write_attribute(hid_t pid,const char 
 	retval = H5Aexists(pid,n);
 
 	if(retval>0){
-		H5Adelete(pid,n); //delete the attribute if it allready exists
+		H5Adelete(pid,n); //delete the attribute if it already exists
 	}else if(retval < 0){
 		EXCEPTION_INIT(H5AttributeError,"Existence check of attribute ["+String(n)+"] failed!");
 		EXCEPTION_THROW();
@@ -183,7 +183,11 @@ void NXObjectH5Implementation::setAttribute(const String &n,const ArrayObject &a
 	hid_t tid = 0;   //id of the data type
 	hid_t setid = 0; //id of the data set
 
-	//determine the data type of the array object
+	if(!a.isAllocated()){
+		EXCEPTION_INIT(H5AttributeError,"ArrayObject not allocated!");
+		EXCEPTION_THROW();
+	}
+
 	tid = H5TFactory.getTypeFromID(a.getTypeID());
 
 	//create the dataspace
@@ -365,21 +369,21 @@ void NXObjectH5Implementation::getAttribute(const String &n,String &s) const{
 //------------------------------------------------------------------------------
 String NXObjectH5Implementation::getPath() const{
 	EXCEPTION_SETUP("String NXObjectH5Implementation::getName() const");
-	char *buffer = NULL;
+	char *buffer = nullptr;
 
 	if(H5Iis_valid(_id)){
 		//if the object has already been created return this value
 		hsize_t bsize;
 		bsize = H5Iget_name(_id,NULL,1)+1;
 		buffer = new char[bsize];
-		if(buffer == NULL){
+		if(!buffer){
 			EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate buffer for object name!");
 			EXCEPTION_THROW();
 		}
 
 		H5Iget_name(_id,buffer,bsize);
 		String name(buffer);
-		if(buffer != NULL) delete [] buffer;
+		if(buffer) delete [] buffer;
 		return name;
 	}
 
@@ -441,8 +445,10 @@ void NXObjectH5Implementation::close(){
 }
 
 //------------------------------------------------------------------------------
-void NXObjectH5Implementation::createLink(const NXObjectH5Implementation &pos,const String &n) const{
-	EXCEPTION_SETUP("void NXObjectH5Implementation::createLink(const NXObjectH5Implementation &pos,const String &n)");
+void NXObjectH5Implementation::createLink(const NXObjectH5Implementation &pos,
+									      const String &n) const{
+	EXCEPTION_SETUP("void NXObjectH5Implementation::createLink"
+					"(const NXObjectH5Implementation &pos,const String &n)");
 
 	hid_t loc_id = pos.getId();
 
@@ -460,7 +466,8 @@ void NXObjectH5Implementation::createLink(const NXObjectH5Implementation &pos,co
 
 	herr_t err = H5Lcreate_soft(getPath().c_str(),loc_id,n.c_str(),H5P_DEFAULT,H5P_DEFAULT);
 	if(err < 0){
-		EXCEPTION_INIT(H5LinkError,"Could not establish link from "+getPath()+" to "+pos.getPath()+"["+n+"]!");
+		EXCEPTION_INIT(H5LinkError,"Could not establish link from "+
+					   getPath()+" to "+pos.getPath()+"["+n+"]!");
 		EXCEPTION_THROW();
 	}
 
@@ -479,7 +486,8 @@ void NXObjectH5Implementation::createLink(const String &path) const{
 
 	herr_t err = H5Lcreate_soft(getPath().c_str(),id,path.c_str(),H5P_DEFAULT,H5P_DEFAULT);
 	if(err < 0){
-		EXCEPTION_INIT(H5LinkError,"Coult not create symbolic link from "+getPath()+" to "+path+"!");
+		EXCEPTION_INIT(H5LinkError,"Coult not create symbolic link from "+
+					   getPath()+" to "+path+"!");
 		EXCEPTION_THROW();
 	}
 

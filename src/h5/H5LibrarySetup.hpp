@@ -1,4 +1,21 @@
 /*
+ * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpninx.
+ *
+ * libpninx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpninx is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
  * H5LibrarySetup.hpp
  *
  *  Created on: Aug 4, 2011
@@ -20,21 +37,48 @@ namespace pni {
 namespace nx {
 namespace h5 {
 
+//! \ingroup HDF5-Implementation
+
+//! \brief HDF5 library setup
+
+//! This class holds information about the linked HDF5 library used for
+//! linking the project.
 class H5LibrarySetup {
 private:
-	UInt32 _major_version_number;
-	UInt32 _minor_version_number;
-	UInt32 _release_number;
+	UInt32 _major_version_number; //!< major version number of the HDF5 library
+	UInt32 _minor_version_number; //!< minor version number of the HDF5 library
+	UInt32 _release_number;       //!< release version of the HDF5 library
 
 	bool _verbose;
 
 public:
+	//! default constructor
 	H5LibrarySetup();
+	//! destructor
 	virtual ~H5LibrarySetup();
 
+	//! get version string
+
+	//! Returns the full HDF5 library version as a string of the form
+	//! <major number>.<minor number>.<release number>.
+	//! \return version string
 	String getVersionString() const;
+	//! get major number
+
+	//! Returns the major version number of the HDF5 library as unsigned
+	//! integer.
+	//! \return major version number
 	UInt32 getMajorVersionNumber() const;
+	//! get minor number
+
+	//! Returns the minor version number of the HDF5 library as unsigned
+	//! integer
+	//! \return minor version number
 	UInt32 getMinorVersionNumber() const;
+	//! get release number
+
+	//! Returns the release version of the HDF5 library as unsigned integer.
+	//! \return release version number
 	UInt32 getReleaseNumber() const;
 	void setVerbose(bool f) { _verbose = f; }
 	bool isVerbose() const { return _verbose; }

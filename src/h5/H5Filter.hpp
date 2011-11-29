@@ -58,7 +58,7 @@ public:
 	//! This method applies the filter to a particular 
 	//! dataset which is given by _id. This method 
 	//! must be overridden by all descendants of this class.
-	void setup(hid_t _id);
+	void setup(hid_t _id) const;
 };
 
 

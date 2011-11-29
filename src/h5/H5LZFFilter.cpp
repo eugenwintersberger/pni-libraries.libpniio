@@ -56,7 +56,7 @@ H5LZFFilter &H5LZFFilter::operator=(const H5LZFFilter &o){
 }
 
 //----------------------------------------------------------------------------
-void H5LZFFilter::setup(hid_t id){
+void H5LZFFilter::setup(hid_t id) const{
 	H5Pset_filter(id, H5PY_FILTER_LZF, H5Z_FLAG_OPTIONAL, 0, NULL);
 }
 

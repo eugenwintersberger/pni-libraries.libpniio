@@ -74,6 +74,7 @@ public:
 	NXField(const NXField<Imp> &);
 	//! move constructor
 	NXField(NXField<Imp> &&o);
+	NXField(Imp &&o):NXObject<Imp>(std::move(o)){}
 	virtual ~NXField();
 
 	//! copy assignment

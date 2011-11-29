@@ -222,7 +222,13 @@ template<typename Imp> void NXFile<Imp>::create(){
 		EXCEPTION_INIT(NXFileError,"File is already open - call close() first!");
 		EXCEPTION_THROW();
 	}
-	this->getImplementation().create(_fname.c_str(),_overwrite,_split_size);
+
+	try{
+		this->getImplementation().create(_fname.c_str(),_overwrite,_split_size);
+	}catch(...){
+		EXCEPTION_INIT(NXFileError,"Error creating file "+_fname+"!");
+		EXCEPTION_THROW();
+	}
 
 	//set here nexus specific attributes
 	try{
@@ -247,7 +253,12 @@ template<typename Imp> void NXFile<Imp>::open(){
 		EXCEPTION_THROW();
 	}
 
-	this->getImplementation().open(_fname.c_str(),_read_only);
+	try{
+		this->getImplementation().open(_fname.c_str(),_read_only);
+	}catch(...){
+		EXCEPTION_INIT(NXFileError,"Error opening file "+_fname+"!");
+		EXCEPTION_THROW();
+	}
 
 
 }

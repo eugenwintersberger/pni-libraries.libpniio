@@ -27,6 +27,8 @@ extern "C"{
 #include <hdf5.h>
 }
 
+#include "H5ErrorStack.hpp"
+
 
 namespace pni{
 namespace nx{
@@ -157,7 +159,7 @@ void H5Error::setMinorNumber(hid_t v){
 	if(buffer_size > 0){
 		//memory allocation
 		ptr = new char[buffer_size+1];
-		if(ptr){
+		if(!ptr){
 			EXCEPTION_INIT(MemoryAllocationError,"Memory allocation failed!");
 			EXCEPTION_THROW();
 		}

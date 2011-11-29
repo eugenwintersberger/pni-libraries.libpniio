@@ -14,8 +14,6 @@
 
 #include "NXObjectH5Implementation.hpp"
 #include "H5TypeFactory.hpp"
-#include "../NXFilter.hpp"
-#include "../NXSelection.hpp"
 
 
 using namespace pni::utils;

@@ -58,7 +58,7 @@ H5Filter &H5Filter::operator=(const H5Filter &f){
 }
 
 //----------------------------------------------------------------------------
-void H5Filter::setup(hid_t id){
+void H5Filter::setup(hid_t id) const{
 }
 
 

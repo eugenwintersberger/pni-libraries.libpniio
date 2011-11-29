@@ -52,7 +52,7 @@ public:
 	H5DeflateFilter &operator=(const H5DeflateFilter &o);
 	
 	//! setup the filter
-	virtual void setup(hid_t id);
+	virtual void setup(hid_t id) const;
 	
 	//! get compression rate
 	virtual UInt32 getCompressionRate() const;

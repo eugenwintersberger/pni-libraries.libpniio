@@ -51,11 +51,11 @@ public:
 
 template<> class NXImpMap<HDF5>{
 public:
-	typedef nx::h5::NXObjectH5Implementation ObjectImplementation;
-	typedef nx::h5::NXFileH5Implementation FileImplementation;
-	typedef nx::h5::NXGroupH5Implementation GroupImplementation;
-	typedef nx::h5::NXFieldH5Implementation FieldImplementation;
-	typedef nx::h5::NXSelectionH5Implementation SelectionImplementation;
+	typedef pni::nx::h5::NXObjectH5Implementation ObjectImplementation;
+	typedef pni::nx::h5::NXFileH5Implementation FileImplementation;
+	typedef pni::nx::h5::NXGroupH5Implementation GroupImplementation;
+	typedef pni::nx::h5::NXFieldH5Implementation FieldImplementation;
+	typedef pni::nx::h5::NXSelectionH5Implementation SelectionImplementation;
 };
 
 }

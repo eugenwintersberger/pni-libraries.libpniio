@@ -66,6 +66,7 @@ private:
 		Float128 i;
 	} _struct_complex_128; //!< C structure for a 128Bit complex type
 
+	//type prototypes used for type creation
 	hid_t _int8_type;    //!< handler to a 8Bit signed integer type
 	hid_t _uint8_type;   //!< handler to a 8Bit unsigned integer type
 	hid_t _int16_type;   //!< handler to a 16Bit signed integer type
@@ -102,16 +103,34 @@ public:
 	//! Returns a reference to an existing instance of the 
 	//! requested type.
 	//! \return ID to an existing HDF5 type object
-	template<typename T> hid_t getType() const;
-	//! create a type from an existing NumericObject
-	hid_t createTypeFromObject(const NumericObject &o);
-	//! get the type from an existing NumericObject
-	hid_t getTypeFromObject(const NumericObject &o);
+	template<typename T> const hid_t &getType() const;
+	//! create a type from NumericObject
 
-	//! get a type according to the type id
-	hid_t getTypeFromID(PNITypeID id);
-	//! create a new type according to its type id
-	hid_t createTypeFromID(PNITypeID id);
+	//! Create an HDF5 type from an instance of an NumericObject.
+	//! If the type code of the object is unknown an exception will be
+	//! thrown.
+	//! \throws H5DataTypeError if unknown type-code
+	//! \return HDF5 type ID
+	hid_t createTypeFromObject(const NumericObject &o) const;
+	//! get the type from NumericObject
+
+	//! Retrun the type of an existing instance of a NumericObject.
+	//! \throws H5DataTypeError if unknown type-code
+	//! \return HDF5 type ID
+	const hid_t &getTypeFromObject(const NumericObject &o) const;
+
+	//! get type from type ID
+
+	//! Get a reference from a type determined by its TypeID.
+	//! \throws H5DataTypeError if ID is unknown
+	//! \return reference to type
+	const hid_t &getTypeFromID(PNITypeID id) const;
+	//! create a new type from type ID
+
+	//! Create a new type determined by its TypeID.
+	//! \throws H5DataTypeError if ID is unkown
+	//! \return new HDF5 type object
+	hid_t createTypeFromID(PNITypeID id) const;
 };
 
 //! static and global instance of H5TypeFactory

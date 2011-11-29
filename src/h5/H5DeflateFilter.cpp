@@ -53,7 +53,7 @@ H5DeflateFilter &H5DeflateFilter::operator=(const H5DeflateFilter &o){
 }
 
 //-----------------------------------------------------------------------------
-void H5DeflateFilter::setup(hid_t id){
+void H5DeflateFilter::setup(hid_t id) const{
 	EXCEPTION_SETUP("void H5DeflateFilter::setup(hid_t id)");
 
 	if((H5Pset_deflate(id,_comp_rate))<0){

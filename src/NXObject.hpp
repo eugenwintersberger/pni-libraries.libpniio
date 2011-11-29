@@ -36,6 +36,8 @@
 #include <pni/utils/ScalarObject.hpp>
 #include <pni/utils/Scalar.hpp>
 
+#include "NXImpMap.hpp"
+
 namespace pni{
 namespace nx{
 
@@ -54,8 +56,25 @@ class NXObject {
 private:
 	Imp _imp;	//!< implementation object
 protected:
+	//! get implementation reference
 
+	//! Returns a reference to the actual implementation of an object.
+	//! \return reference to implementation
+	Imp &getImplementation();
+
+
+	//! set implementation object
+
+	//! Set the implementation of an object
+	//! \param i reference to an implementation
+	void setImplementation(const Imp &i);
+	void setImplementation(Imp &&i);
 public:
+	//some type definitions
+	typedef typename NXImpMap<Imp::IMPCODE>::ObjectImplementation ObjectImp;
+	typedef typename NXImpMap<Imp::IMPCODE>::FieldImplementation FieldImp;
+	typedef typename NXImpMap<Imp::IMPCODE>::GroupImplementation GroupImp;
+	typedef typename NXImpMap<Imp::IMPCODE>::FileImplementation FileImp;
 	typedef boost::shared_ptr<NXObject<Imp> > sptr;
 	//! default constructor
 	NXObject();
@@ -63,6 +82,9 @@ public:
 	NXObject(const NXObject &o);
 	//! move constructor
 	NXObject(NXObject<Imp> &&o);
+	NXObject(Imp &&i){
+		_imp = std::move(i);
+	}
 	//! destructor
 	virtual ~NXObject();
 
@@ -140,35 +162,22 @@ public:
 	//! A link will be created to this object under pos with name n.
 	//! \param pos position of the link
 	//! \param n name of the link
-	template<typename ImpL> void createLink(NXObject<ImpL> &pos,const String &n) const;
+	template<typename ImpL> void createLink(const NXObject<ImpL> &pos,const String &n) const;
 	//! link this object under pos
 
 	//! A link to this object will be created under pos using the same
 	//! name for the link.
 	//! \param pos position of the link
-	template<typename ImpL> void createLink(NXObject<ImpL> &pos) const;
+	template<typename ImpL> void createLink(const NXObject<ImpL> &pos) const;
 
 	//! link this object under a path
 	virtual void createLink(const String &path) const;
 	virtual void createLink(const String &path,const String &n) const;
 
 
-	//! get implementation reference
-
-	//! Returns a reference to the actual implementation of an object.
-	//! \return reference to implementation
-	Imp &getImplementation();
-
 	//! get implementation const reference
 
 	const Imp &getImplementation() const;
-
-	//! set implementation object
-
-	//! Set the implementation of an object
-	//! \param i reference to an implementation
-	void setImplementation(const Imp &i);
-	void setImplementation(Imp &&i);
 
 	bool isOpen() const {
 		return _imp.isOpen();
@@ -278,13 +287,13 @@ void NXObject<Imp>::getAttribute(const String &n,ScalarObject &s) const{
 //================methods for handling links====================================
 template<typename Imp>
 template<typename ImpL>
-void NXObject<Imp>::createLink(NXObject<ImpL> &pos,const String &n) const{
+void NXObject<Imp>::createLink(const NXObject<ImpL> &pos,const String &n) const{
 	_imp.createLink(pos.getImplementation(),n);
 }
 
 template<typename Imp>
 template<typename ImpL>
-void NXObject<Imp>::createLink(NXObject<ImpL> &pos) const{
+void NXObject<Imp>::createLink(const NXObject<ImpL> &pos) const{
 	_imp.createLink(pos.getImplementation(),getName());
 }
 

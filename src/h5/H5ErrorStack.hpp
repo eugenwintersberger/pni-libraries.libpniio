@@ -46,8 +46,8 @@ extern "C" herr_t _error_walker(unsigned n,const H5E_error2_t *eptr,void *client
 
 using namespace pni::utils;
 
-//! \ingroup Exceptions
-//! HDF5 error record
+//! \ingroup HDF5-Implementation
+//! \brief HDF5 error record
 
 //! This class describes an HDF5 error record. Such a record consists basically
 //! of a class id (which is HDF5 for all HDF5 library functions),
@@ -127,8 +127,8 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const H5Error &e);
 };
 
-//! \ingroup Exceptions
-//! HDF5 error stack
+//! \ingroup HDF5-Implementation
+//! \brief HDF5 error stack
 
 //! Class HDF5ErrorStack provides a simple object oriented interface to the
 //! HDF5 error stack.

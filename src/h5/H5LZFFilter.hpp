@@ -56,7 +56,7 @@ public:
 	H5LZFFilter &operator=(const H5LZFFilter &o);
 	
 	//! setup filter
-	virtual void setup(hid_t id);
+	virtual void setup(hid_t id) const;
 };
 
 
