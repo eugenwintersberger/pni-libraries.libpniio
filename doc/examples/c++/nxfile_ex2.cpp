@@ -13,9 +13,15 @@ int main(int argc,char **argv){
 	file.create();    //create the file
 
 	String fname = file.getFileName();
-	if(file.isOverwrite()) std::cout<<"File "+fname+" is in overwrite mode!"<<std::endl;
-	if(file.isReadOnly()) std::cout<<"File "+fname+" is read-only!"<<std::endl;
-	if(file.isOpen()) std::cout<<"File "+fname+"is open!"<<std::endl;
+	if(file.isOverwrite()){
+		std::cout<<"File "+fname+" is in overwrite mode!"<<std::endl;
+	}
+	if(file.isReadOnly()){
+		std::cout<<"File "+fname+" is read-only!"<<std::endl;
+	}
+	if(file.isOpen()){
+		std::cout<<"File "+fname+"is open!"<<std::endl;
+	}
 
 	file.close();
 	return 0;

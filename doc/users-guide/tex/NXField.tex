@@ -1,0 +1,23 @@
+%%%NXField documentation
+
+In the Nexus world the payload (your real data) is stored in fields which 
+are represented in this library by objects of class {\tt NXField}.
+Like groups, fields cannot be instantiated by their constructor but are 
+rather created using factory methods provided by all classes derived 
+from  {\tt NXGroup}. One word of caution: a prerequisit for understanding 
+this section is a fundamental knowledge of the data objects provided 
+by {\tt libpniutils}. If you are not please consult the {\tt libpniutils}
+users guide first.
+One can distinguish between two basic types of fields: string-fields
+and numeric-fields. The former hold string data while the later 
+holds numbers.   
+
+\subsection{Creating fields}
+
+The first step to use fields is to create them. Field creation for 
+string and numeric fields is shown in this next example. 
+\lstinputlisting{../examples/c++/nxfield_ex1.cpp}
+
+
+
+\subsection{Reading and writing data}

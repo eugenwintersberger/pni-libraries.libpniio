@@ -3,6 +3,8 @@
 \documentclass[a4paper,twoside]{book}
 \usepackage{a4wide,amsmath,graphics}
 \usepackage{listings}
+\usepackage{float}
+\usepackage{hyperref}
 \author{Eugen Wintersberger}
 \title{{\Huge libpninx\\ Users guide}}
 
@@ -13,6 +15,35 @@
 \lstset{captionpos=b,frame=lines,float=tb}
 \lstset{floatplacement=tb}
 \lstset{basicstyle=\small}
+\lstset{tabsize=2}
+
+%%%setup for hyperref
+\hypersetup{pdftitle=libpninx Users Guide,
+                pdfborder=0 0 0,
+                colorlinks=false}
+
+%%define some custom commands
+\newcommand{\pninx}{{\tt libpninx}}
+\newcommand{\nxfield}{{\tt NXField}}
+\newcommand{\nxobject}{{\tt NXObject}}
+\newcommand{\nxfile}{{\tt NXFile}}
+\newcommand{\nxgroup}{{\tt NXGroup}}
+
+%%%setup custom chapter header 
+\floatstyle{ruled}
+\newfloat{mylistings}{htb}{lop}[chapter]
+
+\makeatletter
+\renewcommand{\@makechapterhead}[1]{%
+\vspace*{50 pt}%
+{\setlength{\parindent}{0pt} \raggedright \normalfont
+\bfseries\Huge
+\ifnum \value{secnumdepth}>1 
+   \if@mainmatter\thechapter.\ \fi%
+\fi
+#1\par\nobreak\vspace{40 pt}}}
+\makeatother
+%%------------------------------------------
 
 \begin{document}
 \maketitle
@@ -28,5 +59,10 @@
 
 \chapter{Library configuration}
 TO BE WRITTEN
+
+\newpage
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{ieeetr}
+\bibliography{users-guide}
 
 \end{document}

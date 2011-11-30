@@ -11,7 +11,7 @@ int main(int argc,char **argv){
 	shape.setDimension(0,1024);
 	shape.setDimension(1,512);
 
-	UInt16Array data(shape);
+	UInt16Array data(shape,"detector1","cps","first detector");
 	data = 1;
 
 	//create the file
@@ -22,26 +22,28 @@ int main(int argc,char **argv){
 	file.setOverwrite(true);
 	file.create();
 
-
-	//create an field that holds an array
-	data.setName("detector");
-	data.setUnit("cps");
-	data.setDescription("a testing detector");
+	//create groups where data shall be stored
+	file.createGroup("motors");
+	group = file.createGroup("detectors");
 
 	//automatic from memory object
-	field = file.createNumericField(data);
+	field = group.createNumericField(data);
 
 	//manually
-	field = file.createNumericField("detector2",PNITypeID::UINT32,shape,
-								    "cps","a second testing detector");
+	field = group.createNumericField("detector2",
+				  PNITypeID::UINT32,shape,
+				  "cps","a second testing detector");
 
+	group = file.openGroup("motors");
+	//creating scalar fields
+	Float32Scalar motor("omega","degree","motor omega of goniometer");
+	motor = 1.2;
+	field = group.createNumericField(motor);
+	field = group.createNumericField("tth",PNITypeID::FLOAT32,"degree",
+			"motor tth of goniometer");
 
-
-
-
-
-
-
+	//creating a string field
+	field = file.createStringField("comments");
 
 	file.close();
 

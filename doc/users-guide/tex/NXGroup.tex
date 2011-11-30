@@ -1,0 +1,27 @@
+%%%documentation for NXGroup
+
+Although residing below {\tt NXFile} in an files' object hierarchy, {\tt
+NXGroup} is most probably the most powerful object of the three basic 
+objects. 
+Indeed {\tt NXFile} is a descandent of this class and provides all its
+features in addition to the file specific methods shown in
+section~\ref{section:nxfile}. Groups are containers to hold {\tt NXField}
+objects or other groups. The next example shows how to create group objects.
+\lstinputlisting{../examples/c++/nxgroup_ex1.cpp}
+As one can see from this example, an {\tt NXFile} objects behaves pretty 
+much like a group object. In lines 15 and 16 a group is created 
+using a file and a group object. You cannot create a valid group object
+using its constructor. Instead you have to use the {\tt createGroup} methods
+provided by {\tt NXGroup}/{\tt NXFile}.
+In Nexus groups usually have a type (class). The type of a group is 
+stored in a string attribute name {\tt NX\_class} of the group object. 
+To make life easier you can pass the type of a group directly at 
+group direction to the {\tt createGroup} method as shown in line 17. 
+Not existing intermediate groups are created automatically as can be 
+seen in line 18.
+Groups can be opened using the {\tt openGroup} method (see lines 21 and 22).
+That's basically everything you need to know about groups for now.
+Lets continue with the really interesting data holding object - {\tt NXField}. 
+
+
+

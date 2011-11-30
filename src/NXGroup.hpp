@@ -287,8 +287,8 @@ NXGroup<Imp>::createNumericField(const String &n,PNITypeID tid,
 
 	try{
 		field.setImplementation(std::move(this->_imp.createNumericField(n.c_str(),tid,s,f)));
-		field.setAttribute("unit",unit);
-		field.setAttribute("description",desc);
+		field.setAttribute("units",unit);
+		field.setAttribute("long_name",desc);
 	}catch(...){
 		EXCEPTION_INIT(NXGroupError,"Error creating array field ["+n+"] below grou ["+this->getName()+"]!");
 		EXCEPTION_THROW();
@@ -365,8 +365,8 @@ NXGroup<Imp>::createNumericField(const String &n,PNITypeID tid,const String &uni
 
 	try{
 		field = FieldType(std::move(this->getImplementation().createNumericField(n,tid)));
-		field.setAttribute("unit",unit);
-		field.setAttribute("description",desc);
+		field.setAttribute("units",unit);
+		field.setAttribute("long_name",desc);
 	}catch(...){
 		EXCEPTION_INIT(NXGroupError,"Cannot create scalar field ["+n+"] below group ["+this->getName()+"]!");
 		EXCEPTION_THROW();

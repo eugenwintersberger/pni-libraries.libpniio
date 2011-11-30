@@ -21,10 +21,6 @@ int main(int argc,char **argv){
 	group = file.openGroup("data1");
 	group = group.openGroup("dir");
 
-	//using attributes
-	group.setAttribute("strattr","Hell world");
-
-
 	return 0;
 }
 
