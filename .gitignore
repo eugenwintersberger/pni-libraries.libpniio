@@ -7,7 +7,6 @@
 *.aux
 *.fls
 *.log
-*.pdf
 *.toc
 *.bbl
 *.blg
