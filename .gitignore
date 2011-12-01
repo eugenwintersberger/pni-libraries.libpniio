@@ -1,0 +1,15 @@
+*.o
+*.os
+*.so
+*.a
+*.swp
+*.dblite
+*.aux
+*.fls
+*.log
+*.pdf
+*.toc
+*.bbl
+*.blg
+*.out
+*.so.*
