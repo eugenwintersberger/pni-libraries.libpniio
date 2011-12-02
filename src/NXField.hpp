@@ -119,27 +119,54 @@ public:
 	}
 
 	//! append an array object to the field
+
+	//! Append data from an ArrayObject to the field. There are several
+	//! conditions that must be satisfied in order to
+	//! .) the array must be allocated
+	//! .) the shape of the array must match the element shape of the field
+	//! .) the data type must be convertible to that of the field
+	//! .) the array object and the field must have the same physical units
+	//! If one of this conditions is not satisfied an exception will
+	//! be thrown.
+	//! The data will be attached to the end of the field.
+	//! \param a array object from which data will be appended
 	void append(const ArrayObject &a);
 	//! append a scalar object ot the field
+
+	//! In order for this operation to succeed the following conditions
+	//! must be satisfied
+	//! .) the scalar object and the field must have the same physical units
+	//! .) the data type of the scalar object and that of the field must be convertible
+	//! If one of this conditions is not satisfied an exception will be thrown.
 	void append(const ScalarObject &s);
 	//! append a string obect to the field
+
+	//! The onyl condition for this operation to succeed is that the
+	//! field is of string type.
 	void append(const String &s);
 
-	//! insert an array object
-	void insert(const UInt64 &i,const ArrayObject &s);
-	//! insert a scalar object
-	void insert(const UInt64 &i,const ScalarObject &s);
-	//! insert a string object
-	void insert(const UInt64 &i,const String &s);
+	//! set an array object
+	void set(const UInt64 &i,const ArrayObject &s);
+	//! set a scalar object
+	void set(const UInt64 &i,const ScalarObject &s);
+	//! set a string object
+	void set(const UInt64 &i,const String &s);
 
 	//! get an array object
+
+	//!
+	//!
 	void get(const UInt64 &i,ArrayObject &a);
-	//! read the entire data into a single arrayy
+	//! read the entire data into a single array
+
+	//! Reads a single scalar from the field
 	void get(ArrayObject &a);
 	//! get a scalar object
 	void get(const UInt64 &i,ScalarObject &s);
-
+	//! get a single scalar
 	void get(ScalarObject &s);
+	//alternative with move assignment
+	//ScalarObject &&get();
 	//! get a string object
 	void get(const UInt64 &i,String &s);
 
@@ -250,6 +277,13 @@ template<typename Imp> void NXField<Imp>::append(const ArrayObject &a){
 		EXCEPTION_THROW();
 	}
 
+	//check if the unit fits
+	String unit = getAttribute("units");
+	if(a.getUnit() != unit){
+		EXCEPTION_INIT(NXFieldError,"Units do not match!");
+		EXCEPTION_THROW();
+	}
+
 	try{
 		this->getImplementation().append(a);
 	}catch(...){
@@ -266,6 +300,13 @@ template<typename Imp> void NXField<Imp>::append(const ScalarObject &s){
 		EXCEPTION_THROW();
 	}
 
+	//check units
+	String unit = getAttribute("units");
+	if(a.getUnit() != unit){
+		EXCEPTION_INIT(NXFieldError,"Units do not match!");
+		EXCEPTION_THROW();
+	}
+
 	try{
 		this->getImplementation().append(s);
 	}catch(...){
@@ -274,6 +315,7 @@ template<typename Imp> void NXField<Imp>::append(const ScalarObject &s){
 	}
 }
 
+//------------------------------------------------------------------------------
 template<typename Imp> void NXField<Imp>::append(const String &s){
 	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::append(const String &s)");
 	if(!this->getImplementation().isString()){
@@ -289,17 +331,60 @@ template<typename Imp> void NXField<Imp>::append(const String &s){
 	}
 }
 
-template<typename Imp> void NXField<Imp>::insert(const UInt64 &i,const ArrayObject &a){
+//------------------------------------------------------------------------------
+template<typename Imp> void NXField<Imp>::set(const UInt64 &i,const ArrayObject &a){
 	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::insert(const UInt64 &i,const ArrayObject &a)");
 
+	//check if the field is of appropriate type
+	if(!this->getImplementation().isArray()){
+		EXCEPTION_INIT(NXFieldError,"Datafield is not an Array field!");
+		EXCEPTION_THROW();
+	}
+
+	//check if the array is allocated
+	if(!a.isAllocated()){
+		EXCEPTION_INIT(NXFieldError,"Array not allocated - cannot write data!");
+		EXCEPTION_THROW();
+	}
+
+	//check the shape
+	if(a.getShape() != this->getElementShape()){
+		EXCEPTION_INIT(ShapeMissmatchError,"Array shape does not match element shape!");
+		EXCEPTION_THROW();
+	}
+
+	//check the unit
+	String unit = this->getAttribute("units");
+	if(a.getUnit() != unit){
+		EXCEPTION_INIT(NXFieldError,"Units do not match!");
+		EXCEPTION_THROW();
+	}
+
+	//here comes the real writing operation
+
 }
 
-template<typename Imp> void NXField<Imp>::insert(const UInt64 &i,const ScalarObject &a){
+//------------------------------------------------------------------------------
+template<typename Imp> void NXField<Imp>::set(const UInt64 &i,const ScalarObject &a){
 	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::insert(const UInt64 &i,const ScalarObject &a)");
 
+	if(!this->getImplementation().isScalar()){
+		EXCEPTION_INIT(NXFieldError,"Field is not a scalar field!");
+		EXCEPTION_THROW();
+	}
+
+	//check unit
+	String unit = this->getAttribute("units");
+	if(a.getUnit()!=unit){
+		EXCEPTION_INIT(NXFieldError,"Units do not match!");
+		EXCEPTION_THROW();
+	}
+
+	//here comes the real writing operation
+
 }
 
-template<typename Imp> void NXField<Imp>::insert(const UInt64 &i,const String &s){
+template<typename Imp> void NXField<Imp>::set(const UInt64 &i,const String &s){
 	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::insert(const UInt64 &i,const String &s)");
 
 }

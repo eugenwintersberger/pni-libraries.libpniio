@@ -260,8 +260,8 @@ NXGroup<Imp>::createNumericField(const String &n,PNITypeID tid,const ArrayShape 
 	NXField<typename NXObject<Imp>::FieldImp > field;
 	try{
 		field = NXField<typename NXObject<Imp>::FieldImp >(this->getImplementation().createNumericField(n,tid,s));
-		field.setAttribute("unit",unit);
-		field.setAttribute("description",desc);
+		field.setAttribute("units",unit);
+		field.setAttribute("long_name",desc);
 	}catch(...){
 		EXCEPTION_INIT(NXGroupError,"Error creating array field ["+n+"] below group ["+this->getName()+"]!");
 		EXCEPTION_THROW();
