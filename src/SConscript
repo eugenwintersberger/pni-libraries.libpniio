@@ -1,7 +1,7 @@
 from os import path
 
 Import("build_env")
-
+build_env.Append(LIBS=["pniutils"])
 src_list = ["NXExceptions.cpp","NXDateTime.cpp"]
 
 #compile sources

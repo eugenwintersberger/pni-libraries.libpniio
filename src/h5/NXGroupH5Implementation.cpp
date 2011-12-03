@@ -38,12 +38,7 @@ NXGroupH5Implementation::NXGroupH5Implementation(const NXGroupH5Implementation &
 
 }
 
-//------------------------------------------------------------------------------
-//Implementation of the move constructor
-NXGroupH5Implementation::NXGroupH5Implementation(NXGroupH5Implementation &&o)
-                        :NXObjectH5Implementation(std::move(o)){
 
-}
 
 //------------------------------------------------------------------------------
 NXGroupH5Implementation::~NXGroupH5Implementation() {
@@ -53,6 +48,11 @@ NXGroupH5Implementation::~NXGroupH5Implementation() {
 	close();
 }
 
+//------------------------------------------------------------------------------
+//Implementation of the move constructor
+NXGroupH5Implementation::NXGroupH5Implementation(NXGroupH5Implementation &&o){
+	*this = std::move(o);
+}
 
 //------------------------------------------------------------------------------
 //Implementation of the copy assignment operator

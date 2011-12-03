@@ -95,13 +95,21 @@ public:
 class NXFileError:public Exception {
 public:
 	//! default constructor
-	NXFileError();
+	NXFileError():Exception("NXFileError"){
+
+	}
 	//! constructor
-	NXFileError(const String &i,const String &d);
+	NXFileError(const String &i,const String &d):Exception("NXFileError",i,d){
+
+	}
 	//! destructor
-	virtual ~NXFileError();
+	virtual ~NXFileError(){
+
+	}
 	//! output operator
-	friend std::ostream &operator<<(std::ostream &,const NXFileError &e);
+	friend std::ostream &operator<<(std::ostream &o,const NXFileError &e){
+		return e.print(o);
+	}
 };
 
 

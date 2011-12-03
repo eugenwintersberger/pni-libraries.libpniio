@@ -57,7 +57,7 @@ if env["PKGNAMEROOT"] == "":
 
 #set some linker flags
 
-env.Append(LIBS=["hdf5","pniutils"])
+env.Append(LIBS=["hdf5"])
 
 #set the proper compiler - this should be changed to something 
 #more general - independent of the underlying operating system
