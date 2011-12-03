@@ -28,13 +28,34 @@ namespace pni {
 namespace nx {
 namespace h5 {
 
-NXBinaryFieldH5Implementation::NXBinaryFieldH5Implementation() {
-	// TODO Auto-generated constructor stub
+NXBinaryFieldH5Implementation::NXBinaryFieldH5Implementation()
+:NXFieldH5Implementation(){
 
 }
 
 NXBinaryFieldH5Implementation::~NXBinaryFieldH5Implementation() {
-	// TODO Auto-generated destructor stub
+
+}
+
+//------------------------------------------------------------------------------
+size_t NXBinaryFieldH5Implementation::size() const{
+	EXCEPTION_SETUP("size_t NXBinaryFieldH5Implementation::size() const");
+	hid_t dataset = getId();
+
+}
+
+//------------------------------------------------------------------------------
+void NXBinaryFieldH5Implementation::append(const Buffer<Binary> &b){
+	EXCEPTION_SETUP("void NXBinaryFieldH5Implementation::append(const Buffer<Binary> &b)");
+
+	if(!b.isAllocated()){
+		//raise an exception if the buffer is not allocated
+	}
+
+	hid_t dataset = getId(); //get the dataset ID
+
+
+
 }
 
 } /* namespace h5 */

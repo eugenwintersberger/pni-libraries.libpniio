@@ -296,8 +296,8 @@ template<typename Imp> void NXField<Imp>::append(const ArrayObject &a){
 template<typename Imp> void NXField<Imp>::append(const ScalarObject &s){
 	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::append(const ScalarObject &s)");
 
-	if(!this->getImplementation().isScalar()){
-		EXCEPTION_INIT(NXFieldError,"Data field is not for scalar data!");
+	if(getElementShape().getRank()!=0){
+		EXCEPTION_INIT(NXFieldError,"Object rank does not match!");
 		EXCEPTION_THROW();
 	}
 
@@ -320,10 +320,6 @@ template<typename Imp> void NXField<Imp>::append(const ScalarObject &s){
 //------------------------------------------------------------------------------
 template<typename Imp> void NXField<Imp>::append(const String &s){
 	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::append(const String &s)");
-	if(!this->getImplementation().isString()){
-		EXCEPTION_INIT(NXFieldError,"Data field is not a string field!");
-		EXCEPTION_THROW();
-	}
 
 	try{
 		this->getImplementation().append(s);
@@ -336,12 +332,6 @@ template<typename Imp> void NXField<Imp>::append(const String &s){
 //------------------------------------------------------------------------------
 template<typename Imp> void NXField<Imp>::set(const UInt64 &i,const ArrayObject &a){
 	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::insert(const UInt64 &i,const ArrayObject &a)");
-
-	//check if the field is of appropriate type
-	if(!this->getImplementation().isArray()){
-		EXCEPTION_INIT(NXFieldError,"Datafield is not an Array field!");
-		EXCEPTION_THROW();
-	}
 
 	//check if the array is allocated
 	if(!a.isAllocated()){
@@ -370,11 +360,6 @@ template<typename Imp> void NXField<Imp>::set(const UInt64 &i,const ArrayObject 
 template<typename Imp> void NXField<Imp>::set(const UInt64 &i,const ScalarObject &a){
 	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::insert(const UInt64 &i,const ScalarObject &a)");
 
-	if(!this->getImplementation().isScalar()){
-		EXCEPTION_INIT(NXFieldError,"Field is not a scalar field!");
-		EXCEPTION_THROW();
-	}
-
 	//check unit
 	String unit = this->getAttribute("units");
 	if(a.getUnit()!=unit){
@@ -394,11 +379,6 @@ template<typename Imp> void NXField<Imp>::set(const UInt64 &i,const String &s){
 template<typename Imp> void NXField<Imp>::get(const UInt64 &i,ArrayObject &a){
 	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::get(const UInt64 &i,ArrayObject &a)");
 
-	if(!this->getImplementation().isArray()){
-		EXCEPTION_INIT(NXFieldError,"Data field is not an array!");
-		EXCEPTION_THROW();
-	}
-
 	try{
 		this->getImplementation().get(i,a);
 	}catch(...){
@@ -409,10 +389,6 @@ template<typename Imp> void NXField<Imp>::get(const UInt64 &i,ArrayObject &a){
 
 template<typename Imp> void NXField<Imp>::get(const UInt64 &i,ScalarObject &a){
 	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::get(const UInt64 &i,ScalarObject &a)");
-	if(!this->getImplementation().isScalar()){
-		EXCEPTION_INIT(NXFieldError,"Data field is not scalar!");
-		EXCEPTION_THROW();
-	}
 
 	try{
 		this->getImplementation().get(i,a);
@@ -424,11 +400,6 @@ template<typename Imp> void NXField<Imp>::get(const UInt64 &i,ScalarObject &a){
 
 template<typename Imp> void NXField<Imp>::get(const UInt64 &i,String &s){
 	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::get(const UInt64 &i,String &s)");
-
-	if(!this->getImplementation().isString()){
-		EXCEPTION_INIT(NXFieldError,"Data field is not a string array!");
-		EXCEPTION_THROW();
-	}
 
 	try{
 		this->getImplementation().get(i,s);

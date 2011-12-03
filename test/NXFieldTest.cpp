@@ -284,11 +284,12 @@ void NXFieldTest::testAppendData(){
 
 	_f64_data_array_write = 1.2;
 	//creating data fields for saving arrays
-	dset = _f.createNumericField("field_1",PNITypeID::FLOAT64,_data_shape,"a.z.","data");
+	dset = _f.createNumericField("field_1",PNITypeID::FLOAT64,_data_shape,"a.u.","data");
 	//CPPUNIT_ASSERT_NO_THROW(dset = _f.createNumericField("field_1",PNITypeID::FLOAT64,_data_shape,"a.z.","data"));
 	_f64_data_array_write = 1.3;
 	CPPUNIT_ASSERT(dset.isOpen());
 
+	_f64_data_array_write.setUnit("a.u.");
 	CPPUNIT_ASSERT_NO_THROW(dset.append(_f64_data_array_write));
 	_f64_data_array_write = 1.4;
 	CPPUNIT_ASSERT_NO_THROW(dset.append(_f64_data_array_write));
@@ -338,21 +339,13 @@ void NXFieldTest::testAppendDataExceptions(){
 
 	dset = _f.createNumericField("field_2",PNITypeID::FLOAT64,shape,"a.u.","data");
 	CPPUNIT_ASSERT_THROW(dset.append(_f64_data_array_write),ShapeMissmatchError);
-	CPPUNIT_ASSERT_THROW(dset.append(s),pni::nx::NXFieldError);
-	CPPUNIT_ASSERT_THROW(dset.append(_write_cmplx_scalar),pni::nx::NXFieldError);
-	CPPUNIT_ASSERT_THROW(dset.append(s),pni::nx::NXFieldError);
-
 
 	//------------------testing exceptions for scalar data---------------------
 	dset = _f.createNumericField("field_3",PNITypeID::FLOAT64,"a.u.","data");
 	CPPUNIT_ASSERT_THROW(dset.append(_write_cmplx_scalar),pni::nx::NXFieldError);
-	CPPUNIT_ASSERT_THROW(dset.append(_f64_data_array_write),ShapeMissmatchError);
-	CPPUNIT_ASSERT_THROW(dset.append(s),pni::nx::NXFieldError);
 
 	//-------------------testing exceptions for string data--------------------
 	dset = _f.createStringField("field_4");
-	CPPUNIT_ASSERT_THROW(dset.append(_write_cmplx_scalar),pni::nx::NXFieldError);
-	CPPUNIT_ASSERT_THROW(dset.append(_f64_data_array_write),ShapeMissmatchError);
 
 }
 

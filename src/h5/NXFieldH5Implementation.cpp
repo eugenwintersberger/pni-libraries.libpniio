@@ -20,29 +20,68 @@ namespace h5{
 using namespace pni::nx::h5;
 
 //------------------------------------------------------------------------------
+//allocate the buffers
+void NXFieldH5Implementation::_allocate_buffers(size_t frank){
+	EXCEPTION_SETUP("void NXFieldH5Implementation::_allocate_buffers()");
+	//free buffers if necessary
+	_free_buffers();
+
+	_offset = new hsize_t[frank];
+	if(!_offset){
+		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate offset buffer!");
+		EXCEPTION_THROW();
+	}
+
+	_count  = new hsize_t[frank];
+	if(!_count){
+		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate count buffer!");
+		_free_buffers();
+		EXCEPTION_THROW();
+	}
+
+	_resize = new hsize_t[frank];
+	if(!_resize){
+		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate resize buffer!");
+		_free_buffers();
+		EXCEPTION_THROW();
+	}
+}
+
+//------------------------------------------------------------------------------
+void NXFieldH5Implementation::_free_buffers(){
+	if(_offset) delete [] _offset;
+	if(_count) delete [] _count;
+	if(_resize) delete [] _resize;
+
+	_offset = nullptr;
+	_count = nullptr;
+	_resize = nullptr;
+}
+
+//------------------------------------------------------------------------------
 //Implementation of the default constructor
 NXFieldH5Implementation::NXFieldH5Implementation():NXObjectH5Implementation() {
 	EXCEPTION_SETUP("NXFieldH5Implementation::NXFieldH5Implementation():NXObjectH5Implementation()");
-	_space_id = 0;
-	_type_id = 0;
-	_elem_offset = nullptr;
-	_elem_count = nullptr;
-	_resize_buffer = nullptr;
-	_elem_mem_space = 0;
+	_type = 0;
+	_filespace = 0;
+	_elemspace = 0;
+	_offset = nullptr;
+	_count = nullptr;
+	_resize = nullptr;
 }
 
 //------------------------------------------------------------------------------
 //Implementation of the copy constructor
 NXFieldH5Implementation::NXFieldH5Implementation(const NXFieldH5Implementation &o)
                         :NXObjectH5Implementation(o){
-	_space_id = 0;
-	_type_id = 0;
-	_elem_mem_space = 0;
-	_elem_offset = nullptr;
-	_elem_count = nullptr;
-	_resize_buffer = nullptr;
+	_type = 0;
+	_filespace = 0;
+	_elemspace = 0;
+	_offset = nullptr;
+	_count = nullptr;
+	_resize = nullptr;
 
-	_get_dataset_parameters(getId());
+	_get_dataset_objects(getId());
 }
 
 //------------------------------------------------------------------------------
@@ -58,91 +97,77 @@ NXFieldH5Implementation::~NXFieldH5Implementation() {
 }
 
 //------------------------------------------------------------------------------
-void NXFieldH5Implementation::_get_dataset_parameters(hid_t id){
+void NXFieldH5Implementation::_get_dataset_objects(hid_t id){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::_get_dataset_parameters(hid_t id)");
 
-	//obtain the data space of the total data set
-	_space_id = H5Dget_space(getId());
-	if(_space_id < 0){
+	hid_t dataset = getId();
+
+	//obtain the data space of the dataset on the file
+	_filespace = H5Dget_space(dataset);
+	if(_filespace < 0){
 		EXCEPTION_INIT(H5DataSpaceError,"Cannot obtain data-space from "
 				       "data-set ["+getName()+"]!");
 		EXCEPTION_THROW();
 	}
-	H5Utilities::DataSpace2ArrayShape(_space_id,_space_shape);
+
+	//construct the shape object for the file
+	H5Utilities::DataSpace2ArrayShape(_filespace,_fileshape);
 
 	//obtain the data type of the object
-	_type_id = H5Dget_type(getId());
-	if(_type_id < 0){
+	_type = H5Dget_type(dataset);
+	if(_type < 0){
 		EXCEPTION_INIT(H5DataTypeError,"Cannot obtain data-type from "
 				       "data-set ["+getName()+"]!");
 		EXCEPTION_THROW();
 	}
 
 	//now we have to set up the element parameters
-	_elem_shape.setRank(_space_shape.getRank()-1);
-	for(UInt64 i=1;i<_space_shape.getRank();i++) _elem_shape.setDimension(i-1,_space_shape.getDimension(i));
+	_elemshape.setRank(_fileshape.getRank()-1);
+	for(UInt64 i=1;i<_fileshape.getRank();i++){
+		_elemshape.setDimension(i-1,_fileshape.getDimension(i));
+	}
+
 
 	//allocate memory for the offset and counts buffer of the local
 	//element selection
-	if(_elem_offset) delete [] _elem_offset;
-	_elem_offset = nullptr;
-
-	if(_elem_count) delete [] _elem_count;
-	_elem_count = nullptr;
-
-	_elem_count = new hsize_t[_space_shape.getRank()];
-	if(!_elem_count){
-		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate [count] buffer for element selection!");
-		EXCEPTION_THROW();
-	}
-
-	_elem_offset = new hsize_t[_space_shape.getRank()];
-	if(!_elem_offset){
-		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate [offset] buffer for element selection!");
-		EXCEPTION_THROW();
-	}
+	_allocate_buffers(_fileshape.getRank());
 
 	//need to set the appropriate values
-	_elem_count[0] = 1;
-	for(unsigned int i=0;i<_elem_shape.getRank();i++) _elem_count[i+1] = _elem_shape.getDimension(i);
-	for(unsigned int i=0;i<_space_shape.getRank();i++) _elem_offset[i] = 0;
-
-	//finally wee need the memory space for a selection
-
-	H5Utilities::ArrayShape2DataSpace(_elem_shape,_elem_mem_space);
-
-
-	//setting up the resize buffer
-	if(_resize_buffer) delete [] _resize_buffer;
-	_resize_buffer = nullptr;
-	_resize_buffer = new hsize_t [_space_shape.getRank()];
-	if(!_resize_buffer){
-		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate resize buffer!");
-		EXCEPTION_THROW();
+	_count[0] = 1;
+	for(UInt64 i=0;i<_fileshape.getRank();i++){
+		if(i==0){
+			_count[i] = 1;
+		}else{
+			_count[i] = _elemshape.getDimension(i-1);
+		}
+		_offset[i] = 0;
+		_resize[i] = _fileshape.getDimension(i);
 	}
 
-	for(UInt32 i=0;i<_space_shape.getRank();i++) _resize_buffer[i] = _space_shape.getDimension(i);
-
+	//finally wee need the memory space for a selection
+	H5Utilities::ArrayShape2DataSpace(_elemshape,_elemspace);
 }
 
 //------------------------------------------------------------------------------
-void NXFieldH5Implementation::_increment_growth_dimension(){
+void NXFieldH5Implementation::_resize_dataset(size_t increment){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::_increment_growth_dimension()");
 
-	//resize the dataset by one
-	_resize_buffer[0]++;
+	hid_t dataset = getId();  //fetch dataset id
+
+	_resize[0] += increment;  //inrement the resize buffer
+
 	//extend the dataset
-	if(H5Dset_extent(getId(),_resize_buffer)<0){
+	if(H5Dset_extent(dataset,_resize)<0){
 		EXCEPTION_INIT(H5DataSetError,"Resizing of dataset ["+getName()+"] failed!");
 		EXCEPTION_THROW();
 	}
 
 	//this has no influence on the member size so we can leave this
 	//unchanged
-	H5Sclose(_space_id);
-	_space_id = H5Dget_space(getId());
+	H5Sclose(_filespace);
+	_filespace = H5Dget_space(getId());
 
-	_space_shape.setDimension(0,_space_shape.getDimension(0)+1);
+	_fileshape.setDimension(0,_fileshape.getDimension(0)+increment);
 }
 
 //------------------------------------------------------------------------------
@@ -153,7 +178,7 @@ void NXFieldH5Implementation::setId(const hid_t &id){
 
 	//--------------now we have to do some additional stuff---------------------
 	//this se have to check if this is now really correct
-	_get_dataset_parameters(id);
+	_get_dataset_objects(id);
 
 }
 
@@ -164,7 +189,7 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXFieldH5Imple
 
 	if ( this != &o ){
 		(NXObjectH5Implementation &)(*this) = (NXObjectH5Implementation &)o;
-		_get_dataset_parameters(o.getId());
+		_get_dataset_objects(o.getId());
 	}
 
 	return *this;
@@ -181,29 +206,29 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(NXFieldH5Implementat
 		(NXObjectH5Implementation &)(*this) = std::move((NXObjectH5Implementation &)o);
 
 		//copy everything from the original object
-		_elem_offset = o._elem_offset;
-		o._elem_offset = nullptr;
+		_offset = o._offset;
+		o._offset = nullptr;
 
-		_elem_count = o._elem_count;
-		o._elem_count = nullptr;
+		_count = o._count;
+		o._count = nullptr;
 
-		_resize_buffer = o._resize_buffer;
-		o._resize_buffer = nullptr;
+		_resize = o._resize;
+		o._resize = nullptr;
 
-		_space_id = o._space_id;
-		o._space_id = 0;
+		_filespace = o._filespace;
+		o._filespace = 0;
 
-		_type_id = o._type_id;
-		o._type_id = 0;
+		_type = o._type;
+		o._type = 0;
 
-		_elem_mem_space = o._elem_mem_space;
-		o._elem_mem_space = 0;
+		_elemspace = o._elemspace;
+		o._elemspace = 0;
 
-		_elem_shape = o._elem_shape;
-		_space_shape = o._space_shape;
+		_elemshape = o._elemshape;
+		_fileshape = o._fileshape;
 
-		o._space_shape.setRank(0);
-		o._elem_shape.setRank(0);
+		o._fileshape.setRank(0);
+		o._elemshape.setRank(0);
 
 	}
 
@@ -212,20 +237,15 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(NXFieldH5Implementat
 
 //------------------------------------------------------------------------------
 void NXFieldH5Implementation::close(){
-	if(H5Iis_valid(_space_id)) H5Sclose(_space_id);
-	if(H5Iis_valid(_type_id)) H5Tclose(_type_id);
-	if(H5Iis_valid(_elem_mem_space)) H5Sclose(_elem_mem_space);
+	if(H5Iis_valid(_filespace)) H5Sclose(_filespace);
+	if(H5Iis_valid(_type)) H5Tclose(_type);
+	if(H5Iis_valid(_elemspace)) H5Sclose(_elemspace);
 
-	if(_elem_offset) delete [] _elem_offset;
-	_elem_offset = nullptr;
-	if(_elem_count) delete [] _elem_count;
-	_elem_count = nullptr;
-	if(_resize_buffer) delete [] _resize_buffer;
-	_resize_buffer = nullptr;
+	_free_buffers();
 
 	NXObjectH5Implementation::close();
-	_space_shape.setRank(0);
-	_elem_shape.setRank(0);
+	_fileshape.setRank(0);
+	_elemshape.setRank(0);
 }
 
 //------------------------------------------------------------------------------
@@ -238,14 +258,14 @@ void NXFieldH5Implementation::append(const NumericObject &o){
 	elem_type = H5TFactory.getTypeFromID(o.getTypeID());
 
 	//increment the field along its growth dimension
-	_increment_growth_dimension();
+	_resize_dataset(1);
 
 	//set the offset for the selection to the last index in the container
-	_elem_offset[0] = getShape().getDimension(0)-1;
+	_offset[0] = getShape().getDimension(0)-1;
 
 	//set the selection and write data
-	H5Sselect_hyperslab(_space_id,H5S_SELECT_SET,_elem_offset,NULL,_elem_count,NULL);
-	err = H5Dwrite(getId(),elem_type,_elem_mem_space,_space_id,H5P_DEFAULT,o.getVoidPtr());
+	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
+	err = H5Dwrite(getId(),elem_type,_elemspace,_filespace,H5P_DEFAULT,o.getVoidPtr());
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error writing data to field ["+getName()+"]!");
 		EXCEPTION_THROW();
@@ -260,13 +280,13 @@ void NXFieldH5Implementation::append(const String &s){
 
 	elem_type = H5Dget_type(getId());
 	//extend field along growth dimension
-	_increment_growth_dimension();
-	_elem_offset[0] = getShape().getDimension(0)-1;
+	_resize_dataset(1);
+	_offset[0] = getShape().getDimension(0)-1;
 
 	const char *ptr = s.c_str();
 
-	H5Sselect_hyperslab(_space_id,H5S_SELECT_SET,_elem_offset,NULL,_elem_count,NULL);
-	err = H5Dwrite(getId(),elem_type,_elem_mem_space,_space_id,H5P_DEFAULT,&ptr);
+	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
+	err = H5Dwrite(getId(),elem_type,_elemspace,_filespace,H5P_DEFAULT,&ptr);
 	if(err<0){
 
 	}
@@ -283,11 +303,11 @@ void NXFieldH5Implementation::insert(const UInt64 &i,const NumericObject &o){
 	}
 
 	hid_t elem_type = H5TFactory.getTypeFromID(o.getTypeID());
-	_elem_offset[0] = i;
+	_offset[0] = i;
 
 	//set the selection and write data
-	H5Sselect_hyperslab(_space_id,H5S_SELECT_SET,_elem_offset,NULL,_elem_count,NULL);
-	err = H5Dwrite(getId(),elem_type,_elem_mem_space,_space_id,H5P_DEFAULT,o.getVoidPtr());
+	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
+	err = H5Dwrite(getId(),elem_type,_elemspace,_filespace,H5P_DEFAULT,o.getVoidPtr());
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error writing data to field ["+getName()+"]!");
 		EXCEPTION_THROW();
@@ -309,12 +329,12 @@ void NXFieldH5Implementation::get(const UInt64 &i,NumericObject &o){
 	}
 
 	hid_t elem_type = H5TFactory.getTypeFromID(o.getTypeID());
-	_elem_offset[0] = i;
+	_offset[0] = i;
 	herr_t err = 0;
 
 	//set the selection and write data
-	H5Sselect_hyperslab(_space_id,H5S_SELECT_SET,_elem_offset,NULL,_elem_count,NULL);
-	err = H5Dread(getId(),elem_type,_elem_mem_space,_space_id,H5P_DEFAULT,o.getVoidPtr());
+	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
+	err = H5Dread(getId(),elem_type,_elemspace,_filespace,H5P_DEFAULT,o.getVoidPtr());
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+getName()+"]!");
 		EXCEPTION_THROW();
@@ -332,17 +352,17 @@ void NXFieldH5Implementation::get(const UInt64 &i,String &s){
 	}
 
 	hid_t elem_type = H5Dget_type(getId());
-	_elem_offset[0] = i;
+	_offset[0] = i;
 	herr_t err = 0;
 	hid_t xfer_plist = H5Pcreate(H5P_DATASET_XFER);
 
 	//select data element
-	H5Sselect_hyperslab(_space_id,H5S_SELECT_SET,_elem_offset,NULL,_elem_count,NULL);
+	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
 
 	//need to determine the amount of memory required to store the data
 	char *ptr = nullptr;
 
-	err = H5Dread(getId(),elem_type,_elem_mem_space,_space_id,xfer_plist,&ptr);
+	err = H5Dread(getId(),elem_type,_elemspace,_filespace,xfer_plist,&ptr);
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+getName()+"]!");
 		EXCEPTION_THROW();
@@ -350,57 +370,32 @@ void NXFieldH5Implementation::get(const UInt64 &i,String &s){
 
 	//reset selection - this is needed in order to make H5Dvlen_reclaim
 	//work without producing segmentation faults
-	H5Sselect_none(_space_id);
+	H5Sselect_none(_filespace);
 
 	//copy content of the pointer to the string object
 	s = String(ptr);
 
 	//reclaim memory from HDF5 library.
-	H5Dvlen_reclaim(elem_type,_space_id,xfer_plist,&ptr);
+	H5Dvlen_reclaim(elem_type,_filespace,xfer_plist,&ptr);
 
 }
 
 //------------------------------------------------------------------------------
 
 const ArrayShape &NXFieldH5Implementation::getShape() const {
-	return _space_shape;
+	return _fileshape;
 }
 
 //------------------------------------------------------------------------------
 const ArrayShape &NXFieldH5Implementation::getElementShape() const{
-	return _elem_shape;
+	return _elemshape;
 }
 
 //------------------------------------------------------------------------------
 PNITypeID NXFieldH5Implementation::getTypeID() const {
-	return H5Utilities::H5Type2PNITypeCode(_type_id);
+	return H5Utilities::H5Type2PNITypeCode(_type);
 }
 
-//------------------------------------------------------------------------------
-bool NXFieldH5Implementation::isScalar() const {
-	if((H5Sget_simple_extent_type(_space_id)==H5S_SIMPLE)&&
-			(_space_shape.getRank()==1)
-				&&(H5Tget_class(_type_id)!=H5T_STRING)){
-			return true;
-	}
-	return false;
-}
-
-//------------------------------------------------------------------------------
-bool NXFieldH5Implementation::isArray() const {
-	if((H5Sget_simple_extent_type(_space_id)==H5S_SIMPLE)&&(_space_shape.getRank()>1)) return true;
-
-	return false;
-}
-
-//------------------------------------------------------------------------------
-bool NXFieldH5Implementation::isString() const {
-	if(H5Tget_class(_type_id)==H5T_STRING){
-		return true;
-	}
-	return false;
-
-}
 
 
 //end of namespace

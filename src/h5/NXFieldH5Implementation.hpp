@@ -39,23 +39,25 @@ class NXFieldH5Implementation : public NXObjectH5Implementation{
 private:
 	//! copy constructor
 
-	void _get_dataset_parameters(hid_t id);
-	void _increment_growth_dimension();
+	void _get_dataset_objects(hid_t id);
+	void _resize_dataset(size_t increment);
+	void _allocate_buffers(size_t frank);
+	void _free_buffers();
 protected:
 	//parameters of the total dataset
-	hid_t _type_id;	          //!< ID of the data type
-	hid_t _space_id;          //!< ID of the data space
-	ArrayShape _space_shape;  //!< shape of the total dataset
+	hid_t _type;	          //!< ID of the data type
+	hid_t _filespace;          //!< ID of the data space
+	ArrayShape _fileshape;  //!< shape of the total dataset
 
 	//the object should act like a container - this we need a default
 	//selection to read and write elements to this container
-	hid_t _elem_mem_space;   //!< memory data space of the container elements
-	hsize_t *_elem_offset;   //!< container offset
-	hsize_t *_elem_count;    //!< size of the container elements
-	ArrayShape _elem_shape;  //!< shape of the element
+	hid_t _elemspace;   //!< memory data space of the container elements
+	hsize_t *_offset;   //!< container offset
+	hsize_t *_count;    //!< size of the container elements
+	ArrayShape _elemshape;  //!< shape of the element
 
 	//resize buffer
-	hsize_t *_resize_buffer; //!< an internal buffer for resizing the array
+	hsize_t *_resize; //!< an internal buffer for resizing the array
 public:
 	//! a shared pointer to a field object
 	//typedef boost::shared_ptr<NXFieldH5Implementation> sptr;
@@ -82,12 +84,6 @@ public:
 	//! return the type ID of the field
 	virtual PNITypeID getTypeID() const;
 
-	//! true if scalar field
-	virtual bool isScalar() const;
-	//! true if array field
-	virtual bool isArray() const;
-	//! true if a string field
-	virtual bool isString() const;
 
 	//! append a numeric object
 	virtual void append(const NumericObject &o);

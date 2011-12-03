@@ -25,6 +25,11 @@
 #ifndef NXBINARYFIELDH5IMPLEMENTATION_HPP_
 #define NXBINARYFIELDH5IMPLEMENTATION_HPP_
 
+#include <pni/utils/Buffer.hpp>
+#include <pni/utils/PNITypes.hpp>
+
+using namespace pni::utils;
+
 #include "NXFieldH5Implementation.hpp"
 
 namespace pni {
@@ -54,6 +59,44 @@ public:
 	NXBinaryFieldH5Implementation &operator=(const NXFieldH5Implementation &o);
 	//! move conversion assignment
 	NXBinaryFieldH5Implementation &operator=(NXFieldH5Implementation &&o);
+
+	//! number of bytes in the buffer
+	virtual size_t size() const;
+
+	//! close the field
+	virtual void close(){
+
+	}
+
+	//! append binary buffer
+
+	//! The number of bytes to write is determined by the size of the buffer.
+	virtual void append(const Buffer<Binary> &b);
+
+	//! set binary buffer
+
+	//! Write a binary buffer at a particular position. The number of
+	//! bytes to write is determined by the size of the buffer.
+	virtual void set(size_t pos,const Buffer<Binary> &b){
+
+	}
+
+	//! get binary buffer
+	virtual void get(size_t pos,Buffer<Binary> &o){
+
+	}
+
+	//! get binary buffer
+
+	//! Read the entire field. The buffer must be allocated for the appropriate
+	//! size.
+	virtual void get(Buffer<Binary> &o){
+
+	}
+
+
+
+
 };
 
 } /* namespace h5 */
