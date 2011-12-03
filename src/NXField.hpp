@@ -278,7 +278,8 @@ template<typename Imp> void NXField<Imp>::append(const ArrayObject &a){
 	}
 
 	//check if the unit fits
-	String unit = getAttribute("units");
+	String unit;
+	this->getAttribute("units",unit);
 	if(a.getUnit() != unit){
 		EXCEPTION_INIT(NXFieldError,"Units do not match!");
 		EXCEPTION_THROW();
@@ -301,8 +302,9 @@ template<typename Imp> void NXField<Imp>::append(const ScalarObject &s){
 	}
 
 	//check units
-	String unit = getAttribute("units");
-	if(a.getUnit() != unit){
+	String unit;
+	this->getAttribute("units",unit);
+	if(s.getUnit() != unit){
 		EXCEPTION_INIT(NXFieldError,"Units do not match!");
 		EXCEPTION_THROW();
 	}
