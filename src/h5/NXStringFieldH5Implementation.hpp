@@ -35,10 +35,14 @@ class NXStringFieldH5Implementation:public NXFieldH5Implementation {
 public:
 	//! default constructor
 	NXStringFieldH5Implementation();
-	//! copy conversion assignment
+	//! copy conversion constructor
 	NXStringFieldH5Implementation(const NXFieldH5Implementation &o);
-	//! move conversion assignment
+	//! copy conversion constructor
+	NXStringFieldH5Implementation(const NXObjectH5Implementation &o);
+	//! move conversion constructor
 	NXStringFieldH5Implementation(NXFieldH5Implementation &&o);
+	//! move conversion constructor
+	NXStringFieldH5Implementation(NXObjectH5Implementation &&o);
 	//! copy constructor
 	NXStringFieldH5Implementation(const NXStringFieldH5Implementation &o);
 	//! move constructor
@@ -52,11 +56,15 @@ public:
 	NXStringFieldH5Implementation &operator=(NXStringFieldH5Implementation &&o);
 	//! copy conversion assignment
 	NXStringFieldH5Implementation &operator=(const NXFieldH5Implementation &o);
+	//! copy conversion assignment
+	NXStringFieldH5Implementation &operator=(const NXObjectH5Implementation &o);
 	//! move conversion assignment
 	NXStringFieldH5Implementation &operator=(NXFieldH5Implementation &&o);
+	//! move conversion assignment
+	NXStringFieldH5Implementation &operator=(NXObjectH5Implementation &&o);
 
 	//! get number of strings
-	virtual UInt64 size();
+	virtual UInt64 size() const;
 
 	//! append a string
 	virtual void append(const String &o);
