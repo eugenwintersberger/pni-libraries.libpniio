@@ -81,11 +81,15 @@ void NXGroupTest::testOpen(){
 
 	g1 = _f.createGroup("/directory1/data");
 
-	g2 = _f.openGroup("/directory1");
-	//NXGroup g = g2.open("data");
+	g2 = _f.open("/directory1");
+	NXGroup g = g2.open("data");
+	NXGroup g3;
+	g3 = g2.open("data");
 
-	CPPUNIT_ASSERT_THROW(_f.openGroup("directory2"),pni::nx::NXGroupError);
-	CPPUNIT_ASSERT_NO_THROW(_f.openGroup("directory1/data"));
+	NXGroup g4 = _f.open("/directory1/data");
+
+	CPPUNIT_ASSERT_THROW(_f.open("directory2"),pni::nx::NXGroupError);
+	CPPUNIT_ASSERT_NO_THROW(_f.open("directory1/data"));
 
 	g1.close();
 	g2.close();
@@ -165,7 +169,7 @@ void NXGroupTest::testInternalLinks(){
 	//link now g1 into g2
 	CPPUNIT_ASSERT_NO_THROW(g1.createLink("/group2/detector/g1_link"));
 
-	g1 = _f.openGroup("/group2/detector/data");
+	g1 = _f.open("/group2/detector/data");
 	g1.createLink("/mydata");
 
 }
@@ -177,11 +181,11 @@ void NXGroupTest::testExistence(){
 	g1 = _f.createGroup("/scan_1/instrument");
 	g1 = _f.createGroup("/scan_2/instrument/detector");
 
-	g1 = _f.openGroup("scan_1");
+	g1 = _f.open("scan_1");
 	CPPUNIT_ASSERT(g1.exists("instrument"));
 	CPPUNIT_ASSERT(g1.exists("/scan_2"));
 	CPPUNIT_ASSERT(!g1.exists("/instrument"));
-	g2 = _f.openGroup("scan_2");
+	g2 = _f.open("scan_2");
 	CPPUNIT_ASSERT(g2.exists("instrument/detector/"));
 	CPPUNIT_ASSERT(!g2.exists("/instrument/detector/data"));
 

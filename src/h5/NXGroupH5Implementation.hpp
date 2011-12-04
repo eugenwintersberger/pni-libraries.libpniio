@@ -46,8 +46,12 @@ public:
 
 	//! copy assignment operator
 	NXGroupH5Implementation &operator=(const NXGroupH5Implementation &o);
+	//! copy conversion assignment
+	NXGroupH5Implementation &operator=(const NXObjectH5Implementation &o);
 	//! move assignment operator
 	NXGroupH5Implementation &operator=(NXGroupH5Implementation &&o);
+	//! move conversion assignment
+	NXGroupH5Implementation &operator=(NXObjectH5Implementation &&o);
 
 	//! create a new group below this group
 	virtual NXGroupH5Implementation createGroup(const String &n) const;

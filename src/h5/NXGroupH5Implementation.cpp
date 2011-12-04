@@ -93,6 +93,26 @@ NXGroupH5Implementation &NXGroupH5Implementation::operator=(NXGroupH5Implementat
 }
 
 //------------------------------------------------------------------------------
+//Implementation of the copy conversion assignment operator
+NXGroupH5Implementation &NXGroupH5Implementation::operator=(const NXObjectH5Implementation &o){
+	if(this != &o){
+		(NXObjectH5Implementation &)(*this) = o;
+	}
+	return *this;
+}
+
+//------------------------------------------------------------------------------
+//implementation of the move conversion assignment operator
+NXGroupH5Implementation &NXGroupH5Implementation::operator=(NXObjectH5Implementation &&o){
+	if(this != &o){
+		(NXObjectH5Implementation &)(*this) = std::move(o);
+	}
+	return *this;
+}
+
+
+//=====================Implementation of object creation methods================
+//------------------------------------------------------------------------------
 NXGroupH5Implementation NXGroupH5Implementation::createGroup(const String &n) const{
 	EXCEPTION_SETUP("void NXGroupH5Implementation::createGroup(const char *n,"
 					"NXGroupH5Implementation &imp)");

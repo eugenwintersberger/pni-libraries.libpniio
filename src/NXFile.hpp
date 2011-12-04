@@ -134,6 +134,10 @@ public:
 	//! flush the file
 	virtual void flush() const;
 
+	virtual NXObject<typename NXObject<Imp>::ObjectImp> open(const String &n){
+		return NXGroup<Imp>::open(n);
+	}
+
 };
 
 //-----------------------------------------------------------------------------

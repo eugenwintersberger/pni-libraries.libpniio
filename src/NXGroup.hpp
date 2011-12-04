@@ -68,14 +68,17 @@ public:
 	//! destructor
 	virtual ~NXGroup();
 
-	//! assignment operator
+	//! copy assignment operator
 	NXGroup<Imp> &operator=(const NXGroup<Imp> &);
-	//! move assignment
+	//! copy assignment conversion operator
+	NXGroup<Imp> &operator=(const NXObject<typename NXObject<Imp>::ObjectImp > &o);
+	//! move assignment operator
 	NXGroup<Imp> &operator=(NXGroup<Imp> &&o);
+	//! move assignment conversion operator
+	NXGroup<Imp> &operator=(NXObject<typename NXObject<Imp>::ObjectImp > &&o);
 
 	virtual NXGroup<typename NXObject<Imp>::GroupImp> createGroup(const String &n) const;
 	virtual NXGroup<typename NXObject<Imp>::GroupImp> createGroup(const String &n,const String &type) const;
-	virtual NXGroup<typename NXObject<Imp>::GroupImp> openGroup(const String &n) const;
 
 	//! create a field for array data using an ArrayShape
 
@@ -133,7 +136,7 @@ public:
 	//! open a field object
 	NXField<typename NXObject<Imp>::FieldImp> openField(const String &n) const;
 	//! open an arbitrary object
-	NXObject<typename NXObject<Imp>::ObjectImp> open(const String &n);
+	virtual NXObject<typename NXObject<Imp>::ObjectImp> open(const String &n);
 
 
 	//! close the group object
@@ -175,14 +178,14 @@ template<typename Imp> NXGroup<Imp>::NXGroup(NXGroup<Imp> &&g){
 //implementation of copy conversion constructor
 template<typename Imp>
 NXGroup<Imp>::NXGroup(const NXObject<typename NXObject<Imp>::ObjectImp > &o)
-:NXObject<Imp>(o){
+:NXObject<Imp>((NXObject<Imp> &)o){
 }
 
 //------------------------------------------------------------------------------
 //implementationof move conversion constructor
 template<typename Imp>
 NXGroup<Imp>::NXGroup(NXObject<typename NXObject<Imp>::ObjectImp > &&o):
-NXObject<Imp>(std::move(o)){
+NXObject<Imp>(std::move((NXObject<Imp> &&)o)){
 
 }
 
@@ -192,7 +195,7 @@ template<typename Imp> NXGroup<Imp>::~NXGroup(){
 }
 
 //======================================variants of the assignment operator====
-
+//implementation of the copy assignment operator
 template<typename Imp> NXGroup<Imp> &NXGroup<Imp>::operator=(const NXGroup<Imp> &g){
 	EXCEPTION_SETUP("template<typename Imp> NXGroup<Imp> &NXGroup<Imp>::operator=(const NXGroup<Imp> &g)");
 	if( this != &g){
@@ -203,6 +206,17 @@ template<typename Imp> NXGroup<Imp> &NXGroup<Imp>::operator=(const NXGroup<Imp> 
 }
 
 //------------------------------------------------------------------------------
+//implementation of the copy conversion assignment operator
+template<typename Imp>
+NXGroup<Imp> &NXGroup<Imp>::operator=(const NXObject<typename NXObject<Imp>::ObjectImp > &o){
+	if(this != &o){
+		(NXObject<Imp> &)(*this) = (NXObject<Imp> &)o;
+	}
+	return *this;
+}
+
+//------------------------------------------------------------------------------
+//implementation of the move assignment operator
 template<typename Imp> NXGroup<Imp> &NXGroup<Imp>::operator=(NXGroup<Imp> &&o){
 	EXCEPTION_SETUP("template<typename Imp> NXGroup<Imp> &NXGroup<Imp>::operator=(NXGroup<Imp> &&o)");
 
@@ -212,6 +226,19 @@ template<typename Imp> NXGroup<Imp> &NXGroup<Imp>::operator=(NXGroup<Imp> &&o){
 
 	return *this;
 }
+
+//------------------------------------------------------------------------------
+//implementation of the move assignment conversion operator
+//implementation of the copy conversion assignment operator
+template<typename Imp>
+NXGroup<Imp> &NXGroup<Imp>::operator=(NXObject<typename NXObject<Imp>::ObjectImp > &&o){
+
+	(NXObject<Imp> &)(*this) = std::move((NXObject<Imp> &&)o);
+
+	return *this;
+}
+
+
 
 //==============methods for creating and opening groups========================
 template<typename Imp>
@@ -252,25 +279,6 @@ NXGroup<typename NXObject<Imp>::GroupImp > NXGroup<Imp>::createGroup(const Strin
 
 	return group;
 }
-
-//------------------------------------------------------------------------------
-template<typename Imp>
-NXGroup<typename NXObject<Imp>::GroupImp > NXGroup<Imp>::openGroup(const String &n) const{
-	EXCEPTION_SETUP("template<typename Imp> NXGroup<typename NXGroup<Imp>::GImp > NXGroup<Imp>::openGroup(const String &n) const");
-
-	NXGroup<typename NXObject<Imp>::GroupImp > group ;
-
-	//open a group
-	try{
-		group = NXGroup<typename NXObject<Imp>::GroupImp>(this->getImplementation().openGroup(n));
-	}catch(...){
-		EXCEPTION_INIT(NXGroupError,"Error opening group ["+n+" from group ["+this->getName()+"]!");
-		EXCEPTION_THROW();
-	}
-
-	return group;
-}
-
 
 //================Methods for opening and creating fields======================
 
@@ -445,9 +453,16 @@ void NXGroup<Imp>::close(){
 //------------------------------------------------------------------------------
 template<typename Imp>
 NXObject<typename NXObject<Imp>::ObjectImp> NXGroup<Imp>::open(const String &n){
+	EXCEPTION_SETUP("template<typename Imp> NXObject<typename NXObject<Imp>::ObjectImp> NXGroup<Imp>::open(const String &n)");
 	typedef NXObject<typename NXObject<Imp>::ObjectImp > ObjectType;
+	ObjectType o;
 
-	ObjectType o(std::move(this->getImplementation().open(n)));
+	try{
+		o = ObjectType(std::move(this->getImplementation().open(n)));
+	}catch(...){
+		EXCEPTION_INIT(NXGroupError,"Cannot open object!");
+		EXCEPTION_THROW();
+	}
 	return o;
 }
 

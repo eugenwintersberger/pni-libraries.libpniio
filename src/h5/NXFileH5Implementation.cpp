@@ -15,14 +15,33 @@ namespace nx{
 namespace h5{
 
 
+//=================Implementation fo constructors an destructors================
+//implementation of the default constructor
 NXFileH5Implementation::NXFileH5Implementation() :NXGroupH5Implementation(){
 	EXCEPTION_SETUP("NXFileH5Implementation::NXFileH5Implementation()");
 }
 
+//------------------------------------------------------------------------------
+//implementation of the move constructor
+NXFileH5Implementation::NXFileH5Implementation(NXFileH5Implementation &&o)
+:NXGroupH5Implementation(std::move(o)){
+
+}
+
+//------------------------------------------------------------------------------
+//implementation of the destructor
 NXFileH5Implementation::~NXFileH5Implementation() {
 	close();
 }
 
+//=================Implementation of assignment operators=======================
+NXFileH5Implementation &NXFileH5Implementation::operator=(NXFileH5Implementation &&o){
+	(NXGroupH5Implementation &)(*this) = std::move((NXGroupH5Implementation &)o);
+	return *this;
+}
+
+
+//=============Implementation of file specific methods==========================
 void NXFileH5Implementation::close(){
 	//check for open objects in the file
 

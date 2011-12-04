@@ -31,9 +31,19 @@ protected:
 	hid_t _create_plist; //!< property list for file creation
 	hid_t _acc_plist;    //!< property list for file access
 public:
+	//! default constructor
 	NXFileH5Implementation();
+	//! move constructor
+	NXFileH5Implementation(NXFileH5Implementation &&o);
+	//! destructor
 	virtual ~NXFileH5Implementation();
 
+	//! move assignment
+	NXFileH5Implementation &operator=(NXFileH5Implementation &&o);
+
+	virtual NXObjectH5Implementation open(const String &n){
+		return NXGroupH5Implementation::open(n);
+	}
 	virtual void open(const char *n,bool overwrite);
 	virtual void create(const char *n,bool overwrite,UInt64 ssize);
 	virtual void close();

@@ -67,13 +67,21 @@ public:
 	NXFieldH5Implementation(const NXFieldH5Implementation &);
 	//! move constructor
 	NXFieldH5Implementation(NXFieldH5Implementation &&o);
+	//! copy conversion constructor
+	NXFieldH5Implementation(const NXObjectH5Implementation &o);
+	//! move conversion constructor
+	NXFieldH5Implementation(NXObjectH5Implementation &&o);
 	//! default destructor
 	virtual ~NXFieldH5Implementation();
 
 	//! copy assignment operator
 	NXFieldH5Implementation &operator=(const NXFieldH5Implementation &o);
+	//! copy conversion assignment operator
+	NXFieldH5Implementation &operator=(const NXObjectH5Implementation &o);
 	//! move assignment operator
 	NXFieldH5Implementation &operator=(NXFieldH5Implementation &&o);
+	//! move conversion assignment operator
+	NXFieldH5Implementation &operator=(NXObjectH5Implementation &&o);
 
 	//! get the total shape of the container
 	virtual const ArrayShape &getShape() const;

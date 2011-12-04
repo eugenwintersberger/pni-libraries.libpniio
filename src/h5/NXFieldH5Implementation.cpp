@@ -19,7 +19,7 @@ namespace h5{
 
 using namespace pni::nx::h5;
 
-//------------------------------------------------------------------------------
+//============Implementation of private methods=================================
 //allocate the buffers
 void NXFieldH5Implementation::_allocate_buffers(size_t frank){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::_allocate_buffers()");
@@ -56,44 +56,6 @@ void NXFieldH5Implementation::_free_buffers(){
 	_offset = nullptr;
 	_count = nullptr;
 	_resize = nullptr;
-}
-
-//------------------------------------------------------------------------------
-//Implementation of the default constructor
-NXFieldH5Implementation::NXFieldH5Implementation():NXObjectH5Implementation() {
-	EXCEPTION_SETUP("NXFieldH5Implementation::NXFieldH5Implementation():NXObjectH5Implementation()");
-	_type = 0;
-	_filespace = 0;
-	_elemspace = 0;
-	_offset = nullptr;
-	_count = nullptr;
-	_resize = nullptr;
-}
-
-//------------------------------------------------------------------------------
-//Implementation of the copy constructor
-NXFieldH5Implementation::NXFieldH5Implementation(const NXFieldH5Implementation &o)
-                        :NXObjectH5Implementation(o){
-	_type = 0;
-	_filespace = 0;
-	_elemspace = 0;
-	_offset = nullptr;
-	_count = nullptr;
-	_resize = nullptr;
-
-	_get_dataset_objects(getId());
-}
-
-//------------------------------------------------------------------------------
-//Implementation of the move constructor
-NXFieldH5Implementation::NXFieldH5Implementation(NXFieldH5Implementation &&o){
-	//express move constructor in terms of move assignment
-	*this = std::move(o);
-}
-
-//------------------------------------------------------------------------------
-NXFieldH5Implementation::~NXFieldH5Implementation() {
-	close();
 }
 
 //------------------------------------------------------------------------------
@@ -148,7 +110,7 @@ void NXFieldH5Implementation::_get_dataset_objects(hid_t id){
 	H5Utilities::ArrayShape2DataSpace(_elemshape,_elemspace);
 }
 
-//------------------------------------------------------------------------------
+//============Implementation of protected methods===============================
 void NXFieldH5Implementation::_resize_dataset(size_t increment){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::_increment_growth_dimension()");
 
@@ -170,19 +132,70 @@ void NXFieldH5Implementation::_resize_dataset(size_t increment){
 	_fileshape.setDimension(0,_fileshape.getDimension(0)+increment);
 }
 
-//------------------------------------------------------------------------------
-void NXFieldH5Implementation::setId(const hid_t &id){
-	EXCEPTION_SETUP("void NXFieldH5Implementation::setId(const hid_t &id)");
-	//first set the ID using the base class implementation
-	NXObjectH5Implementation::setId(id);
 
-	//--------------now we have to do some additional stuff---------------------
-	//this se have to check if this is now really correct
-	_get_dataset_objects(id);
-
+//============Implementation of constructors and destructors====================
+//Implementation of the default constructor
+NXFieldH5Implementation::NXFieldH5Implementation():NXObjectH5Implementation() {
+	EXCEPTION_SETUP("NXFieldH5Implementation::NXFieldH5Implementation():NXObjectH5Implementation()");
+	_type = 0;
+	_filespace = 0;
+	_elemspace = 0;
+	_offset = nullptr;
+	_count = nullptr;
+	_resize = nullptr;
 }
 
 //------------------------------------------------------------------------------
+//Implementation of the copy constructor
+NXFieldH5Implementation::NXFieldH5Implementation(const NXFieldH5Implementation &o)
+                        :NXObjectH5Implementation(o){
+	_type = 0;
+	_filespace = 0;
+	_elemspace = 0;
+	_offset = nullptr;
+	_count = nullptr;
+	_resize = nullptr;
+
+	_get_dataset_objects(getId());
+}
+
+//------------------------------------------------------------------------------
+//Implementation of the copy conversion operator
+NXFieldH5Implementation::NXFieldH5Implementation(const NXObjectH5Implementation &o)
+:NXObjectH5Implementation(){
+	_type = 0;
+	_filespace = 0;
+	_elemspace = 0;
+	_offset = nullptr;
+	_count = nullptr;
+	_resize = nullptr;
+
+	_get_dataset_objects(getId());
+}
+
+//------------------------------------------------------------------------------
+//Implementation of the move constructor
+NXFieldH5Implementation::NXFieldH5Implementation(NXFieldH5Implementation &&o){
+	//express move constructor in terms of move assignment
+	*this = std::move(o);
+}
+
+//------------------------------------------------------------------------------
+//Implementation of the move conversion constructor
+NXFieldH5Implementation::NXFieldH5Implementation(NXObjectH5Implementation &&o){
+	*this = std::move(o);
+}
+
+//------------------------------------------------------------------------------
+NXFieldH5Implementation::~NXFieldH5Implementation() {
+	close();
+}
+
+
+
+
+//============Implementation of assignment operators============================
+//Implementation of copy assignment
 NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXFieldH5Implementation &o){
 	EXCEPTION_SETUP("NXFieldH5Implementation &NXFieldH5Implementation::operator="
 					"(const NXFieldH5Implementation &o)");
@@ -192,6 +205,16 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXFieldH5Imple
 		_get_dataset_objects(o.getId());
 	}
 
+	return *this;
+}
+
+//------------------------------------------------------------------------------
+//Implementation of the copy conversion assignment
+NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXObjectH5Implementation &o){
+	if(this != &o){
+		(NXObjectH5Implementation &)(*this) = o;
+		_get_dataset_objects(getId());
+	}
 	return *this;
 }
 
@@ -234,6 +257,22 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(NXFieldH5Implementat
 
 	return *this;
 }
+
+//------------------------------------------------------------------------------
+//Implementation of move conversion assignment
+NXFieldH5Implementation &NXFieldH5Implementation::operator=(NXObjectH5Implementation &&o){
+	if(this != &o){
+		(NXObjectH5Implementation &)(*this) = std::move(o);
+
+		//the source object has no other attributes - we can now simple
+		//fetch the additional information
+		_get_dataset_objects(getId());
+	}
+
+	return *this;
+}
+
+//================Implementation of general purpose methods=====================
 
 //------------------------------------------------------------------------------
 void NXFieldH5Implementation::close(){
@@ -330,6 +369,18 @@ const ArrayShape &NXFieldH5Implementation::getElementShape() const{
 //------------------------------------------------------------------------------
 PNITypeID NXFieldH5Implementation::getTypeID() const {
 	return H5Utilities::H5Type2PNITypeCode(_type);
+}
+
+//------------------------------------------------------------------------------
+void NXFieldH5Implementation::setId(const hid_t &id){
+	EXCEPTION_SETUP("void NXFieldH5Implementation::setId(const hid_t &id)");
+	//first set the ID using the base class implementation
+	NXObjectH5Implementation::setId(id);
+
+	//--------------now we have to do some additional stuff---------------------
+	//this se have to check if this is now really correct
+	_get_dataset_objects(id);
+
 }
 
 
