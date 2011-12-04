@@ -27,18 +27,20 @@ class NXNumericFieldTest:public CppUnit::TestFixture {
 	CPPUNIT_TEST(testAppend);
 	CPPUNIT_TEST(testGetIndividual);
 	CPPUNIT_TEST(testGetAll);
+	//CPPUNIT_TEST(testOpen);
 	CPPUNIT_TEST_SUITE_END();
 private:
 	NXFile file;
 	static const UInt64 n=10;
 	UInt16 testdata[10];
-	static const UInt64 nx=100;
-	static const UInt64 ny=124;
+	static const UInt64 nx=2;
+	static const UInt64 ny=3;
 public:
 	void setUp();
 	void tearDown();
 	void testCreation();
 	void testAssignment();
+	void testOpen();
 	void testAppend();
 	void testGetIndividual();
 	void testGetAll();

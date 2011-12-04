@@ -71,13 +71,21 @@ public:
 	//! move constructor
 	NXField(NXField<Imp> &&o);
 	NXField(Imp &&o):NXObject<Imp>(std::move(o)){}
+	//! copy conversion constructor
+	NXField(const NXObject<typename NXObject<Imp>::ObjectImp > &o);
+	//! move conversion constructor
+	NXField(NXObject<typename NXObject<Imp>::ObjectImp > &&o);
 	virtual ~NXField();
 
 	//! copy assignment
 	NXField<Imp> &operator=(const NXField<Imp> &);
+	//! copy conversion assignment
+	NXField<Imp> &operator=(const NXObject<typename NXObject<Imp>::ObjectImp > &o);
 
 	//! move assignment
 	NXField<Imp> &operator=(NXField<Imp> &&o);
+	//! move conversion assignment
+	NXField<Imp> &operator=(NXObject<typename NXObject<Imp>::ObjectImp > &&o);
 
 
 
@@ -143,12 +151,14 @@ public:
 
 };
 
-//--------------constructors and destructors------------------------------------
-
+//========Implementation of constructors and destructors========================
+//implementation of the default constructor
 template<typename Imp> NXField<Imp>::NXField():NXObject<Imp>() {
 	_read_stream_pos = 0;
 }
 
+//------------------------------------------------------------------------------
+//implementation of the copy constructor
 template<typename Imp> NXField<Imp>::NXField(const NXField<Imp> &o)
 		:NXObject<Imp>(o){
 	EXCEPTION_SETUP("template<typename Imp> NXField<Imp>::NXField(const NXField<Imp> &o)");
@@ -161,6 +171,8 @@ template<typename Imp> NXField<Imp>::NXField(const NXField<Imp> &o)
 	}
 }
 
+//------------------------------------------------------------------------------
+//implementation of the move constructor
 template<typename Imp> NXField<Imp>::NXField(NXField<Imp> &&o){
 	EXCEPTION_SETUP("template<typename Imp> NXField<Imp>::NXField(NXField<Imp> &&o)");
 	try{
@@ -173,13 +185,32 @@ template<typename Imp> NXField<Imp>::NXField(NXField<Imp> &&o){
 	}
 }
 
+//------------------------------------------------------------------------------
+//implementation of the copy conversion constructor
+template<typename Imp>
+NXField<Imp>::NXField(const NXObject<typename NXObject<Imp>::ObjectImp > &o):
+NXObject<Imp>((NXObject<Imp> &)o){
+
+}
+
+//------------------------------------------------------------------------------
+//implementation of the move conversion constructor
+template<typename Imp>
+NXField<Imp>::NXField(NXObject<typename NXObject<Imp>::ObjectImp > &&o)
+:NXObject<Imp>(std::move((NXObject<Imp> &&)o)){
+
+}
+
+//------------------------------------------------------------------------------
+//implementation of the destructor
 template<typename Imp> NXField<Imp>::~NXField() {
 	// TODO Auto-generated destructor stub
 	close();
 	_read_stream_pos = 0;
 }
 
-//------------------------------operators---------------------------------------
+//==================Implementation of the assignment operators==================
+//copy assignment operator
 template<typename Imp> NXField<Imp> &NXField<Imp>::operator=(const NXField<Imp> &o){
 	EXCEPTION_SETUP("template<typename Imp> NXField<Imp> &NXField<Imp>::operator=(const NXField<Imp> &o)");
 
@@ -196,6 +227,8 @@ template<typename Imp> NXField<Imp> &NXField<Imp>::operator=(const NXField<Imp> 
 	return *this;
 }
 
+//------------------------------------------------------------------------------
+//move assignment operator
 template<typename Imp> NXField<Imp> &NXField<Imp>::operator=(NXField<Imp> &&o){
 	EXCEPTION_SETUP("template<typename Imp> NXField<Imp> &NXField<Imp>::operator=(NXField<Imp> &&o)");
 
@@ -214,6 +247,22 @@ template<typename Imp> NXField<Imp> &NXField<Imp>::operator=(NXField<Imp> &&o){
 	return *this;
 }
 
+//------------------------------------------------------------------------------
+//copy conversion assignment operator
+template<typename Imp>
+NXField<Imp> &NXField<Imp>::operator=(const NXObject<typename NXObject<Imp>::ObjectImp > &o){
+
+	(NXObject<Imp> &)(*this) = (NXObject<Imp> &)o;
+	return *this;
+}
+
+//------------------------------------------------------------------------------
+//move conversion assignment operator
+template<typename Imp>
+NXField<Imp> &NXField<Imp>::operator=(NXObject<typename NXObject<Imp>::ObjectImp > &&o){
+	(NXObject<Imp> &)(*this) = std::move((NXObject<Imp> &&)o);
+	return *this;
+}
 
 //------------------------------------------------------------------------------
 template<typename Imp> void NXField<Imp>::append(const String &s){

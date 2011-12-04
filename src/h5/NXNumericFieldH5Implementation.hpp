@@ -39,8 +39,12 @@ public:
 	NXNumericFieldH5Implementation();
 	//! copy conversion constructor
 	NXNumericFieldH5Implementation(const NXFieldH5Implementation &o);
+	//! copy conversion constructor
+	NXNumericFieldH5Implementation(const NXObjectH5Implementation &o);
 	//! move conversion constructor
 	NXNumericFieldH5Implementation(NXFieldH5Implementation &&o);
+	//! move conversion constructor
+	NXNumericFieldH5Implementation(NXObjectH5Implementation &&o);
 	//! copy constructor
 	NXNumericFieldH5Implementation(const NXNumericFieldH5Implementation &o);
 	//! move constructor;
@@ -56,6 +60,10 @@ public:
 	NXNumericFieldH5Implementation &operator=(const NXFieldH5Implementation &o);
 	//! move conversion assignment
 	NXNumericFieldH5Implementation &operator=(NXFieldH5Implementation &&o);
+	//! copy conversion assignment
+	NXNumericFieldH5Implementation &operator=(const NXObjectH5Implementation &o);
+	//! move conversion assignment
+	NXNumericFieldH5Implementation &operator=(NXObjectH5Implementation &&o);
 
 	//! get the type ID
 

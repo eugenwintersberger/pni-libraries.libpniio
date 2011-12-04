@@ -62,9 +62,25 @@ NXFieldH5Implementation(o){
 }
 
 //------------------------------------------------------------------------------
-//implementation of the copy move constructor
+//implementation of the copy conversion constructor
+NXNumericFieldH5Implementation::
+NXNumericFieldH5Implementation(const NXObjectH5Implementation &o):
+NXFieldH5Implementation(o){
+
+}
+
+//------------------------------------------------------------------------------
+//implementation of the copy conversion constructor
 NXNumericFieldH5Implementation::
 NXNumericFieldH5Implementation(NXFieldH5Implementation &&o):
+NXFieldH5Implementation(std::move(o)){
+
+}
+
+//------------------------------------------------------------------------------
+//implementation of the move conversion constructor
+NXNumericFieldH5Implementation::
+NXNumericFieldH5Implementation(NXObjectH5Implementation &&o):
 NXFieldH5Implementation(std::move(o)){
 
 }
@@ -103,6 +119,22 @@ NXNumericFieldH5Implementation::operator=(const NXFieldH5Implementation &o){
 //implementation of move conversion assignment
 NXNumericFieldH5Implementation &
 NXNumericFieldH5Implementation::operator=(NXFieldH5Implementation &&o){
+	(NXFieldH5Implementation &)(*this) = std::move(o);
+	return *this;
+}
+
+//------------------------------------------------------------------------------
+//implementation of copy conversion assignment
+NXNumericFieldH5Implementation &
+NXNumericFieldH5Implementation::operator=(const NXObjectH5Implementation &o){
+	(NXFieldH5Implementation &)(*this) = o;
+	return *this;
+}
+
+//------------------------------------------------------------------------------
+//implementation of move conversion assignment
+NXNumericFieldH5Implementation &
+NXNumericFieldH5Implementation::operator=(NXObjectH5Implementation &&o){
 	(NXFieldH5Implementation &)(*this) = std::move(o);
 	return *this;
 }

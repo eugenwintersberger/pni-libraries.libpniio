@@ -51,19 +51,29 @@ public:
 	NXNumericField();
 	//! conversion copy constructor
 	NXNumericField(const NXField<Imp> &o);
+	//! conversion copy constructor
+	NXNumericField(const NXObject<typename NXObject<Imp>::ObjectImp > &o);
 	//! copy constructor
 	NXNumericField(const NXNumericField<Imp> &o);
 	//! move constructor
 	NXNumericField(NXNumericField<Imp> &&o);
 	//! conversion move constructor
 	NXNumericField(NXField<Imp> &&o);
+	//! conversion move constructor
+	NXNumericField(NXObject<typename NXObject<Imp>::ObjectImp > &&o);
+	//! construct from implementation
+	NXNumericField(Imp &&o):NXField<Imp>(std::move(o)){}
 	//! destructor
 	virtual ~NXNumericField();
 
 	//!copy assignment
 	NXNumericField<Imp> &operator=(const NXNumericField<Imp> &o);
+	//! copy conversion assignment
+	NXNumericField<Imp> &operator=(const NXObject<typename NXObject<Imp>::ObjectImp > &o);
 	//! move assignment
 	NXNumericField<Imp> &operator=(NXNumericField<Imp> &&o);
+	//! move conversion operator
+	NXNumericField<Imp> &operator=(NXObject<typename NXObject<Imp>::ObjectImp > &&o);
 
 	//!append array
 	void append(const ArrayObject &a);
@@ -123,6 +133,14 @@ NXNumericField<Imp>::NXNumericField(const NXField<Imp> &o)
 }
 
 //-----------------------------------------------------------------------------
+//implementation of conversion copy constructor
+template<typename Imp>
+NXNumericField<Imp>::NXNumericField(const NXObject<typename NXObject<Imp>::ObjectImp > &o)
+:NXField<Imp>(o){
+
+}
+
+//-----------------------------------------------------------------------------
 //implementation of the move constructor
 template<typename Imp>
 NXNumericField<Imp>::NXNumericField(NXNumericField<Imp> &&o)
@@ -134,6 +152,14 @@ NXNumericField<Imp>::NXNumericField(NXNumericField<Imp> &&o)
 //implementation of the move conversion constructor
 template<typename Imp>
 NXNumericField<Imp>::NXNumericField(NXField<Imp> &&o)
+:NXField<Imp>(std::move(o)){
+
+}
+
+//-----------------------------------------------------------------------------
+//implementation of the move conversion constructor
+template<typename Imp>
+NXNumericField<Imp>::NXNumericField(NXObject<typename NXObject<Imp>::ObjectImp > &&o)
 :NXField<Imp>(std::move(o)){
 
 }
@@ -157,6 +183,22 @@ NXNumericField<Imp>::operator=(const NXNumericField<Imp> &o){
 template<typename Imp> NXNumericField<Imp> &
 NXNumericField<Imp>::operator=(NXNumericField<Imp> &&o){
 	(NXField<Imp> &)(*this) = std::move((NXField<Imp> &)o);
+	return *this;
+}
+
+//-----------------------------------------------------------------------------
+//implementatoin of the conversion copy assignment
+template<typename Imp> NXNumericField<Imp> &
+NXNumericField<Imp>::operator=(const NXObject<typename NXObject<Imp>::ObjectImp > &o){
+	(NXField<Imp> &)(*this) = o;
+	return *this;
+}
+
+//------------------------------------------------------------------------------
+//implementation of the conversion move assignment
+template<typename Imp> NXNumericField<Imp> &
+NXNumericField<Imp>::operator=(NXObject<typename NXObject<Imp>::ObjectImp > &&o){
+	(NXField<Imp> &)(*this) = std::move(o);
 	return *this;
 }
 

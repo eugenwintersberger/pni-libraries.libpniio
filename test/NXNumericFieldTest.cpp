@@ -69,6 +69,18 @@ void NXNumericFieldTest::testCreation(){
 }
 
 //------------------------------------------------------------------------------
+void NXNumericFieldTest::testOpen(){
+	std::cout<<"NXNumericFieldTest::testOpen()--------------------------------";
+	std::cout<<std::endl;
+	file.createNumericField("data1",PNITypeID::UINT32,"cps","test data");
+
+	NXNumericField f1 = file.open("data1");
+
+	NXNumericField f2;
+	f2 = file.open("data1");
+}
+
+//------------------------------------------------------------------------------
 void NXNumericFieldTest::testAssignment(){
 	std::cout<<"NXNumericFieldTest::testAssignment()--------------------------";
 	std::cout<<std::endl;
@@ -117,10 +129,10 @@ void NXNumericFieldTest::testAppend(){
 	CPPUNIT_ASSERT_THROW(field1.append(tarray),pni::nx::NXFieldError);
 	tarray.setUnit("cps");
 	Index index(3);
-	for(index[0]=0;index[0]>6;index[0]++){
+	for(index[0]=0;index[0]<6;index[0]++){
 		for(index[1]=0;index[1]<nx;index[1]++){
 			for(index[2]=0;index[2]<ny;index[2]++){
-				tarray(index) = testdata[index[0]+6];
+				tarray(index) = testdata[index[0]+4];
 			}
 		}
 	}
@@ -155,11 +167,35 @@ void NXNumericFieldTest::testGetAll(){
 
 	//write data
 	testAppend();
+	String unit;
 
 	Float32Array array;
 	UInt32Array scalar;
 
-	NXNumericField field1;
+	NXNumericField field1 = file.open("detector");
+	array.setShape(field1.getShape());
+	field1.getAttribute("units",unit);
+	array.setUnit(unit);
+	array.allocate();
+	CPPUNIT_ASSERT_NO_THROW(field1.get(array));
+	Index index(3);
+	for(index[0] = 0;index[0] < array.getShape().getDimension(0);index[0]++){
+		for(index[1] = 0;index[1] < array.getShape().getDimension(1);index[1]++){
+			for(index[2]=0;index[2] < array.getShape().getDimension(2);index[2]++){
+				CPPUNIT_ASSERT(array(index) == testdata[index[0]]);
+			}
+		}
+	}
+
+	field1 = file.open("scalar");
+	array.reset();
+	array.setShape(field1.getShape()); array.allocate();
+	field1.getAttribute("units",unit);
+	CPPUNIT_ASSERT_NO_THROW(field1.get(array));
+	index.setRank(1);
+	for(index[0] = 0; index[0] < array.getShape().getDimension(0);index[0]++){
+		CPPUNIT_ASSERT(array(index) == testdata[index[0]]);
+	}
 
 
 
