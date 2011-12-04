@@ -27,7 +27,8 @@ class NXNumericFieldTest:public CppUnit::TestFixture {
 	CPPUNIT_TEST(testAppend);
 	CPPUNIT_TEST(testGetIndividual);
 	CPPUNIT_TEST(testGetAll);
-	//CPPUNIT_TEST(testOpen);
+	CPPUNIT_TEST(testOpen);
+	CPPUNIT_TEST(testSet);
 	CPPUNIT_TEST_SUITE_END();
 private:
 	NXFile file;
@@ -35,6 +36,7 @@ private:
 	UInt16 testdata[10];
 	static const UInt64 nx=2;
 	static const UInt64 ny=3;
+	ArrayShape fshape;
 public:
 	void setUp();
 	void tearDown();
@@ -44,6 +46,7 @@ public:
 	void testAppend();
 	void testGetIndividual();
 	void testGetAll();
+	void testSet();
 
 };
 

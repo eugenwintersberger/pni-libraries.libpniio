@@ -55,8 +55,7 @@ public:
 
 	//! create a new group below this group
 	virtual NXGroupH5Implementation createGroup(const String &n) const;
-	//! open a new group belonging to this group
-	virtual NXGroupH5Implementation openGroup(const String &n) const;
+
 	//! create a field
 
 	//! create a field
@@ -70,9 +69,6 @@ public:
 	NXFieldH5Implementation createStringField(const String &n,const UInt64 &size) const;
 	//! create a field to store binary data
 	NXFieldH5Implementation createBinaryField(const String &n,const UInt64 &nbytes);
-
-	//! open an existing field
-	virtual NXFieldH5Implementation openField(const String &n) const;
 
 	//! open an existing object
 	virtual NXObjectH5Implementation open(const String &n) const;

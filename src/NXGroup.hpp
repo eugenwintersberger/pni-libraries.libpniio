@@ -133,8 +133,6 @@ public:
 	//! \param s string for which the field should be created
 	NXField<typename NXObject<Imp>::FieldImp> createStringField(const String &n) const;
 
-	//! open a field object
-	NXField<typename NXObject<Imp>::FieldImp> openField(const String &n) const;
 	//! open an arbitrary object
 	virtual NXObject<typename NXObject<Imp>::ObjectImp> open(const String &n);
 
@@ -365,24 +363,6 @@ NXGroup<Imp>::createNumericField(const ArrayObject &a,NXFilter<Filter> &f) const
 		field = createNumericField(a.getName(),a.getTypeID(),a.getShape(),a.getUnit(),a.getDescription(),f);
 	}catch(...){
 		EXCEPTION_INIT(NXGroupError,"Error creating array field ["+a.getName()+"] below group ["+this->getName()+"]!");
-		EXCEPTION_THROW();
-	}
-
-	return field;
-}
-
-
-//------------------------------------------------------------------------------
-template<typename Imp>
-NXField<typename NXObject<Imp>::FieldImp > NXGroup<Imp>::openField(const String &n) const{
-	EXCEPTION_SETUP("template<typename Imp> NXField<typename NXGroup<Imp>::FImp > NXGroup<Imp>::openField(const String &n) const");
-	typedef NXField<typename NXObject<Imp>::FieldImp > FieldType;
-	FieldType field;
-
-	try{
-		field = FieldType(std::move(this->getImplementation().openField(n)));
-	}catch(...){
-		EXCEPTION_INIT(NXGroupError,"Error opening field ["+n+"] in group ["+this->getName()+"]!");
 		EXCEPTION_THROW();
 	}
 

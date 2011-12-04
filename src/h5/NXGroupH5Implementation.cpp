@@ -148,50 +148,6 @@ NXGroupH5Implementation NXGroupH5Implementation::createGroup(const String &n) co
 }
 
 //------------------------------------------------------------------------------
-NXGroupH5Implementation NXGroupH5Implementation::openGroup(const String &n) const{
-	EXCEPTION_SETUP("void NXGroupH5Implementation::openGroup(const char *n,"
-			        "NXGroupH5Implementation &imp)");
-	hid_t pid = getId();
-	NXGroupH5Implementation group;
-	hid_t id = 0;
-
-	id = H5Gopen2(pid,n.c_str(),H5P_DEFAULT);
-	if(id<0){
-		EXCEPTION_INIT(H5GroupError,"Cannot open group ["+String(n)+"]!");
-		EXCEPTION_THROW();
-	}
-
-	group.setId(id);
-	return group;
-}
-
-//------------------------------------------------------------------------------
-NXFieldH5Implementation NXGroupH5Implementation::openField(const String &n) const{
-	EXCEPTION_SETUP("NXFieldH5Implementation NXGroupH5Implementation::openField(const String &n) const");
-
-	NXFieldH5Implementation field;
-	hid_t pid = getId(); //retrieve the ID of the parent object
-	hid_t id;
-
-	//check if the object exists
-	if(!exists(n)){
-		EXCEPTION_INIT(H5GroupError,"Dataset with name "+n+" does not exist!");
-		EXCEPTION_THROW();
-	}
-
-	//open the dataset
-	id = H5Dopen2(pid,n.c_str(),H5P_DEFAULT);
-	if(id<0){
-		EXCEPTION_INIT(H5DataSetError,"Error creating the dataset "+n+"below gropu "+getName()+"!");
-		EXCEPTION_THROW();
-	}
-
-	field.setId(id);
-
-	return field;
-}
-
-//------------------------------------------------------------------------------
 //create a field for array data
 NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const String &n, PNITypeID tid,const ArrayShape &s) const{
 	EXCEPTION_SETUP("NXFieldH5Implementation NXGroupH5Implementation::createField(const String &n, PNITypeID tid,const ArrayShape &s)");

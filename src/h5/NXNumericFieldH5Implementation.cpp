@@ -196,7 +196,7 @@ void NXNumericFieldH5Implementation::set(const UInt64 &i,const NumericObject &o,
 
 	//resize the array if i is exceeds the bounds
 	if(i>=getShape().getDimension(0)){
-		_resize_dataset(i-getShape().getDimension(0));
+		_resize_dataset(1+i-getShape().getDimension(0));
 	}
 
 	//set offset
@@ -204,7 +204,7 @@ void NXNumericFieldH5Implementation::set(const UInt64 &i,const NumericObject &o,
 
 	if(block){
 		ArrayObject &array = (ArrayObject &)o;
-		_resize_dataset(array.getShape().getDimension(0));
+		_resize_dataset(array.getShape().getDimension(0)-1);
 		H5Utilities::ArrayShape2DataSpace(array.getShape(),memspace);
 		_count[0] = array.getShape().getDimension(0);
 	}else{
@@ -250,7 +250,7 @@ void NXNumericFieldH5Implementation::get(const UInt64 &i,NumericObject &o,bool b
 
 	if(block){
 		ArrayObject &array = (ArrayObject &)o;
-		if((i+array.getShape().getDimension(0))>=getShape().getDimension(0)){
+		if((i+array.getShape().getDimension(0))>getShape().getDimension(0)){
 			EXCEPTION_INIT(IndexError,"Index + block size exceeds container size!");
 			EXCEPTION_THROW();
 		}

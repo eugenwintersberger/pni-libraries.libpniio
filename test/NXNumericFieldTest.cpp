@@ -22,6 +22,10 @@ void NXNumericFieldTest::setUp(){
 	file.create();
 
 	for(UInt64 i=0;i<n;i++) testdata[i] = i+1;
+
+	fshape.setRank(2);
+	fshape.setDimension(0,nx);
+	fshape.setDimension(1,ny);
 }
 
 //------------------------------------------------------------------------------
@@ -157,6 +161,40 @@ void NXNumericFieldTest::testAppend(){
 
 //------------------------------------------------------------------------------
 void NXNumericFieldTest::testGetIndividual(){
+	std::cout<<"NXNumericFieldTest::testGetIndividual()-----------------------";
+	std::cout<<std::endl;
+
+	//write data
+	testAppend();
+	String unit;
+
+	NXNumericField field1 = file.open("scalar");
+	Float32Array array(field1.getShape());
+	field1.getAttribute("units",unit);
+	array.setUnit(unit);
+
+	CPPUNIT_ASSERT_NO_THROW(field1.get(0,array));
+	Index index(1);
+	for(index[0] = 0; index[0] < array.getShape().getDimension(0); index[0]++){
+		CPPUNIT_ASSERT(array(index)==testdata[index[0]]);
+	}
+	CPPUNIT_ASSERT_THROW(field1.get(1,array),pni::nx::NXFieldError);
+
+	ArrayShape shape(field1.getShape());
+	shape.setDimension(0,4);
+	array.reset(); array.setShape(shape); array.allocate();
+	CPPUNIT_ASSERT_NO_THROW(field1.get(2,array));
+	for(index[0] = 0; index[0] < array.getShape().getDimension(0); index[0]++){
+		CPPUNIT_ASSERT(array(index) == testdata[index[0]+2]);
+	}
+
+	CPPUNIT_ASSERT_THROW(field1.get(8,array),pni::nx::NXFieldError);
+
+	Float32Scalar scalar("scalar",unit);
+	for(UInt32 i=0;i<field1.getShape().getDimension(0);i++){
+		CPPUNIT_ASSERT_NO_THROW(field1.get(i,scalar));
+		CPPUNIT_ASSERT(scalar == testdata[i]);
+	}
 
 }
 
@@ -197,6 +235,56 @@ void NXNumericFieldTest::testGetAll(){
 		CPPUNIT_ASSERT(array(index) == testdata[index[0]]);
 	}
 
+
+	//check some exceptions
+	ArrayShape shape(field1.getShape());
+	shape.setDimension(0,shape[0]+1);
+	array.reset(); array.setShape(shape); array.allocate();
+	CPPUNIT_ASSERT_THROW(field1.get(array),ShapeMissmatchError);
+
+}
+
+//-----------------------------------------------------------------------------
+void NXNumericFieldTest::testSet(){
+	std::cout<<"NXNumericFieldTest::testSet()---------------------------------";
+	std::cout<<std::endl;
+
+	//need to create a field
+	NXNumericField field = file.createNumericField("data",PNITypeID::FLOAT32,"m","testing data");
+
+	ArrayShape shape = field.getShape();
+	shape.setDimension(0,10);
+	Float64Array array(shape);
+	array.setUnit("m");
+	for(UInt32 i=0;i<shape.getDimension(0);i++){
+		array[i] = i;
+	}
+
+	CPPUNIT_ASSERT_NO_THROW(field.set(2,array));
+	CPPUNIT_ASSERT(field.getShape().getDimension(0)==12);
+
+	Float32Scalar scalar("data","m","testing data");
+	scalar = 10;
+	CPPUNIT_ASSERT_NO_THROW(field.set(1,scalar));
+	CPPUNIT_ASSERT_NO_THROW(field.set(20,scalar));
+
+	//writing array data
+	shape.setRank(3);
+	shape.setDimension(0,10);
+	shape.setDimension(1,nx);
+	shape.setDimension(2,ny);
+	array.reset(); array.setShape(shape); array.allocate();
+	Float32Array farray(fshape,"detector","cps","a detector");
+	array.setUnit(farray.getUnit());
+
+	CPPUNIT_ASSERT_NO_THROW(field = file.createNumericField(farray));
+	for(UInt32 i=0;i<4;i++){
+		farray = i;
+		CPPUNIT_ASSERT_NO_THROW(field.set(i,farray));
+	}
+
+	array = 10;
+	CPPUNIT_ASSERT_NO_THROW(field.set(5,array));
 
 
 
