@@ -47,11 +47,7 @@ namespace nx{
 
 //need to do some trick here to get the stream operators overloaded
 template<typename Imp> class NXField;
-template<typename Imp> NXField<Imp> &operator<<(NXField<Imp> &o,const ScalarObject &s);
-template<typename Imp> NXField<Imp> &operator<<(NXField<Imp> &o,const ArrayObject &a);
 template<typename Imp> NXField<Imp> &operator<<(NXField<Imp> &o,const String &s);
-template<typename Imp> NXField<Imp> &operator>>(NXField<Imp> &o,ScalarObject &s);
-template<typename Imp> NXField<Imp> &operator>>(NXField<Imp> &o,ArrayObject &s);
 template<typename Imp> NXField<Imp> &operator>>(NXField<Imp> &o,String &s);
 
 //! Nexus datafield
@@ -118,55 +114,15 @@ public:
 		return this->getImplementation().getName();
 	}
 
-	//! append an array object to the field
-
-	//! Append data from an ArrayObject to the field. There are several
-	//! conditions that must be satisfied in order to
-	//! .) the array must be allocated
-	//! .) the shape of the array must match the element shape of the field
-	//! .) the data type must be convertible to that of the field
-	//! .) the array object and the field must have the same physical units
-	//! If one of this conditions is not satisfied an exception will
-	//! be thrown.
-	//! The data will be attached to the end of the field.
-	//! \param a array object from which data will be appended
-	void append(const ArrayObject &a);
-	//! append a scalar object ot the field
-
-	//! In order for this operation to succeed the following conditions
-	//! must be satisfied
-	//! .) the scalar object and the field must have the same physical units
-	//! .) the data type of the scalar object and that of the field must be convertible
-	//! If one of this conditions is not satisfied an exception will be thrown.
-	void append(const ScalarObject &s);
 	//! append a string obect to the field
 
 	//! The onyl condition for this operation to succeed is that the
 	//! field is of string type.
 	void append(const String &s);
 
-	//! set an array object
-	void set(const UInt64 &i,const ArrayObject &s);
-	//! set a scalar object
-	void set(const UInt64 &i,const ScalarObject &s);
 	//! set a string object
 	void set(const UInt64 &i,const String &s);
 
-	//! get an array object
-
-	//!
-	//!
-	void get(const UInt64 &i,ArrayObject &a);
-	//! read the entire data into a single array
-
-	//! Reads a single scalar from the field
-	void get(ArrayObject &a);
-	//! get a scalar object
-	void get(const UInt64 &i,ScalarObject &s);
-	//! get a single scalar
-	void get(ScalarObject &s);
-	//alternative with move assignment
-	//ScalarObject &&get();
 	//! get a string object
 	void get(const UInt64 &i,String &s);
 
@@ -182,12 +138,7 @@ public:
 		_read_stream_pos = 0;
 	}
 
-	friend NXField<Imp> &operator<< <> (NXField<Imp> &o,const ScalarObject &s);
-	friend NXField<Imp> &operator<< <> (NXField<Imp> &o,const ArrayObject &a);
 	friend NXField<Imp> &operator<< <> (NXField<Imp> &o,const String &s);
-
-	friend NXField<Imp> &operator>> <> (NXField<Imp> &o,ScalarObject &s);
-	friend NXField<Imp> &operator>> <> (NXField<Imp> &o,ArrayObject &s);
 	friend NXField<Imp> &operator>> <> (NXField<Imp> &o,String &s);
 
 };
@@ -263,59 +214,6 @@ template<typename Imp> NXField<Imp> &NXField<Imp>::operator=(NXField<Imp> &&o){
 	return *this;
 }
 
-//--------------------------write operations------------------------------------
-template<typename Imp> void NXField<Imp>::append(const ArrayObject &a){
-	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::append(const ArrayObject &a)");
-
-	if(!a.isAllocated()){
-		EXCEPTION_INIT(NXFieldError,"Array not allocated - cannot append!");
-		EXCEPTION_THROW();
-	}
-
-	if(a.getShape() != getElementShape()){
-		EXCEPTION_INIT(ShapeMissmatchError,"Element shape and array shape do not match!");
-		EXCEPTION_THROW();
-	}
-
-	//check if the unit fits
-	String unit;
-	this->getAttribute("units",unit);
-	if(a.getUnit() != unit){
-		EXCEPTION_INIT(NXFieldError,"Units do not match!");
-		EXCEPTION_THROW();
-	}
-
-	try{
-		this->getImplementation().append(a);
-	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Cannot append data to field ["+getName()+"]!");
-		EXCEPTION_THROW();
-	}
-}
-
-template<typename Imp> void NXField<Imp>::append(const ScalarObject &s){
-	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::append(const ScalarObject &s)");
-
-	if(getElementShape().getRank()!=0){
-		EXCEPTION_INIT(NXFieldError,"Object rank does not match!");
-		EXCEPTION_THROW();
-	}
-
-	//check units
-	String unit;
-	this->getAttribute("units",unit);
-	if(s.getUnit() != unit){
-		EXCEPTION_INIT(NXFieldError,"Units do not match!");
-		EXCEPTION_THROW();
-	}
-
-	try{
-		this->getImplementation().append(s);
-	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Cannot append data to field ["+getName()+"]!");
-		EXCEPTION_THROW();
-	}
-}
 
 //------------------------------------------------------------------------------
 template<typename Imp> void NXField<Imp>::append(const String &s){
@@ -329,74 +227,13 @@ template<typename Imp> void NXField<Imp>::append(const String &s){
 	}
 }
 
-//------------------------------------------------------------------------------
-template<typename Imp> void NXField<Imp>::set(const UInt64 &i,const ArrayObject &a){
-	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::insert(const UInt64 &i,const ArrayObject &a)");
 
-	//check if the array is allocated
-	if(!a.isAllocated()){
-		EXCEPTION_INIT(NXFieldError,"Array not allocated - cannot write data!");
-		EXCEPTION_THROW();
-	}
-
-	//check the shape
-	if(a.getShape() != this->getElementShape()){
-		EXCEPTION_INIT(ShapeMissmatchError,"Array shape does not match element shape!");
-		EXCEPTION_THROW();
-	}
-
-	//check the unit
-	String unit = this->getAttribute("units");
-	if(a.getUnit() != unit){
-		EXCEPTION_INIT(NXFieldError,"Units do not match!");
-		EXCEPTION_THROW();
-	}
-
-	//here comes the real writing operation
-
-}
-
-//------------------------------------------------------------------------------
-template<typename Imp> void NXField<Imp>::set(const UInt64 &i,const ScalarObject &a){
-	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::insert(const UInt64 &i,const ScalarObject &a)");
-
-	//check unit
-	String unit = this->getAttribute("units");
-	if(a.getUnit()!=unit){
-		EXCEPTION_INIT(NXFieldError,"Units do not match!");
-		EXCEPTION_THROW();
-	}
-
-	//here comes the real writing operation
-
-}
 
 template<typename Imp> void NXField<Imp>::set(const UInt64 &i,const String &s){
 	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::insert(const UInt64 &i,const String &s)");
 
 }
 
-template<typename Imp> void NXField<Imp>::get(const UInt64 &i,ArrayObject &a){
-	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::get(const UInt64 &i,ArrayObject &a)");
-
-	try{
-		this->getImplementation().get(i,a);
-	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Cannot read array data from field ["+getName()+"]!");
-		EXCEPTION_THROW();
-	}
-}
-
-template<typename Imp> void NXField<Imp>::get(const UInt64 &i,ScalarObject &a){
-	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::get(const UInt64 &i,ScalarObject &a)");
-
-	try{
-		this->getImplementation().get(i,a);
-	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Cannot read scalar data from field ["+getName()+"]!");
-		EXCEPTION_THROW();
-	}
-}
 
 template<typename Imp> void NXField<Imp>::get(const UInt64 &i,String &s){
 	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::get(const UInt64 &i,String &s)");
@@ -412,35 +249,10 @@ template<typename Imp> void NXField<Imp>::get(const UInt64 &i,String &s){
 
 
 //----------------------stream operators---------------------------------------
-template<typename Imp>
-NXField<Imp> &operator<<(NXField<Imp> &o,const ScalarObject &s){
-	o.append(s);
-	return o;
-}
-
-template<typename Imp>
-NXField<Imp> &operator<<(NXField<Imp> &o,const ArrayObject &a){
-	o.append(a);
-	return o;
-}
 
 template<typename Imp>
 NXField<Imp> &operator<<(NXField<Imp> &o,const String &s){
 	o.append(s);
-	return o;
-}
-
-template<typename Imp>
-NXField<Imp> &operator>>(NXField<Imp> &o,ScalarObject &s){
-	o.get(o._read_stream_pos,s);
-	o._read_stream_pos++;
-	return o;
-}
-
-template<typename Imp>
-NXField<Imp> &operator>>(NXField<Imp> &o,ArrayObject &a){
-	o.get(o._read_stream_pos,a);
-	o._read_stream_pos++;
 	return o;
 }
 

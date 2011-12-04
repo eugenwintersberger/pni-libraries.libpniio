@@ -70,8 +70,7 @@ private:
 
 	hid_t  _id;    //!< handler of the object this class referes too
 protected:
-	//! default constructor
-	NXObjectH5Implementation();
+
 	//! get object ID
 	//should be moved to protected and thus not exposed to the public
 	//interface of the class
@@ -96,7 +95,11 @@ protected:
 public:
 	typedef boost::shared_ptr<NXObjectH5Implementation> sptr;
 	static const ImpCodes IMPCODE = HDF5;
-
+	//! default constructor
+	NXObjectH5Implementation();
+	NXObjectH5Implementation(hid_t id){
+		setId(id);
+	}
 	//! destructor
 	virtual ~NXObjectH5Implementation();
 

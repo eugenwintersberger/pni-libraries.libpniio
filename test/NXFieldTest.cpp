@@ -15,7 +15,7 @@
 #include "NX.hpp"
 #include "NXExceptions.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(NXFieldTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(NXFieldTest);
 
 #define NX 128
 #define NY 256

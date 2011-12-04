@@ -14,6 +14,7 @@
 
 #include "NXObjectH5Implementation.hpp"
 #include "NXFieldH5Implementation.hpp"
+#include "NXNumericFieldH5Implementation.hpp"
 #include "H5Filter.hpp"
 #include "H5Exceptions.hpp"
 
@@ -33,6 +34,10 @@ public:
 	NXGroupH5Implementation();
 	//! copy constructor
 	NXGroupH5Implementation(const NXGroupH5Implementation &o);
+	//! copy conversion constructor
+	NXGroupH5Implementation(const NXObjectH5Implementation &o);
+	//! move conversion constructor
+	NXGroupH5Implementation(NXObjectH5Implementation &&o);
 	//! move constructor
 	NXGroupH5Implementation(NXGroupH5Implementation &&o);
 
@@ -51,12 +56,12 @@ public:
 	//! create a field
 
 	//! create a field
-	NXFieldH5Implementation createNumericField(const String &n, PNITypeID tid,const ArrayShape &s) const;
+	NXNumericFieldH5Implementation createNumericField(const String &n, PNITypeID tid,const ArrayShape &s) const;
 
-	NXFieldH5Implementation createNumericField(const String &n, PNITypeID tid,const ArrayShape &s,const H5Filter &f) const;
+	NXNumericFieldH5Implementation createNumericField(const String &n, PNITypeID tid,const ArrayShape &s,const H5Filter &f) const;
 
 	//! method to create a field for a single scalar value
-	NXFieldH5Implementation createNumericField(const String &n,PNITypeID) const;
+	NXNumericFieldH5Implementation createNumericField(const String &n,PNITypeID) const;
 	//! create a field to store string data
 	NXFieldH5Implementation createStringField(const String &n,const UInt64 &size) const;
 	//! create a field to store binary data
@@ -64,6 +69,9 @@ public:
 
 	//! open an existing field
 	virtual NXFieldH5Implementation openField(const String &n) const;
+
+	//! open an existing object
+	virtual NXObjectH5Implementation open(const String &n) const;
 
 	//! remove an object from the HDF5 tree
 	virtual void remove(const String &n) const;

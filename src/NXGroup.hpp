@@ -35,6 +35,7 @@
 #include "NXObject.hpp"
 #include "NXImpMap.hpp"
 #include "NXField.hpp"
+#include "NXNumericField.hpp"
 #include "NXFilter.hpp"
 #include "NXExceptions.hpp"
 
@@ -47,9 +48,6 @@ template<typename Imp>
 class NXGroup:public NXObject<Imp> {
 protected:
 public:
-	//typedef typename NXImpMap<Imp::IMPCODE>::ObjectImplementation OImp;
-	//typedef typename NXImpMap<Imp::IMPCODE>::GroupImplementation GImp;
-	//typedef typename NXImpMap<Imp::IMPCODE>::FieldImplementation FImp;
 	typedef boost::shared_ptr<NXGroup<Imp> > sptr;
 	//! default constructor
 	NXGroup();
@@ -59,6 +57,11 @@ public:
 	//! same as the assignment operator. Thus it can be used to assign
 	//! an object directly at its construction.
 	NXGroup(const NXGroup<Imp> &);
+
+	//! copy conversion constructor
+	NXGroup(const NXObject<typename NXObject<Imp>::ObjectImp > &o);
+	//! move conversion constructor
+	NXGroup(NXObject<typename NXObject<Imp>::ObjectImp > &&o);
 	//! move constructor
 	NXGroup(NXGroup<Imp> &&o);
 	NXGroup(Imp &&i):NXObject<Imp>(std::move(i)){}
@@ -80,14 +83,14 @@ public:
 	//! \param n name of the field as String object
 	//! \param tid PNI type code of the data type
 	//! \param s reference to an ArrayShape object
-	NXField<typename NXObject<Imp>::FieldImp> createNumericField(const String &n, PNITypeID tid,
-			 	 	 	 	  const ArrayShape &s,const String &unit,
-			 	 	 	 	  const String &desc) const;
+	NXNumericField<typename NXObject<Imp>::NumericFieldImp>
+	createNumericField(const String &n, PNITypeID tid,const ArrayShape &s,
+					   const String &unit,const String &desc) const;
 	template<typename Filter>
-	NXField<typename NXObject<Imp>::FieldImp > createNumericField(const String &n, PNITypeID tid,
-				              const ArrayShape &s,const String &unit,
-				              const String &desc,
-				              NXFilter<Filter> &f) const;
+	NXNumericField<typename NXObject<Imp>::NumericFieldImp >
+	createNumericField(const String &n, PNITypeID tid,const ArrayShape &s,
+					   const String &unit,const String &desc,
+				       NXFilter<Filter> &f) const;
 
 	//! create a field for array data from an ArrayObject
 
@@ -96,9 +99,11 @@ public:
 	//! field are derived from the ArrayObject object.
 	//! \param n name of the field
 	//! \param a reference to the ArrayObject instance
-	NXField<typename NXObject<Imp>::FieldImp> createNumericField(const ArrayObject &a) const;
+	NXNumericField<typename NXObject<Imp>::NumericFieldImp>
+	createNumericField(const ArrayObject &a) const;
 	template<typename Filter>
-	NXField<typename NXObject<Imp>::FieldImp> createNumericField(const ArrayObject &a,NXFilter<Filter> &f) const;
+	NXNumericField<typename NXObject<Imp>::NumericFieldImp>
+	createNumericField(const ArrayObject &a,NXFilter<Filter> &f) const;
 
 
 	//! create a field for scalar data - simplest approach
@@ -106,14 +111,17 @@ public:
 	//! A data field for a single scalar datum will be created.
 	//! \param n name of the data field
 	//! \param tid ID of the PNI type for the field
-	NXField<typename NXObject<Imp>::FieldImp> createNumericField(const String &n,PNITypeID tid,const String &unit,const String &desc) const;
+	NXNumericField<typename NXObject<Imp>::NumericFieldImp>
+	createNumericField(const String &n,PNITypeID tid,const String &unit,
+					   const String &desc) const;
 	//! create a field for scalar data from ScalarObject
 
 	//! A reference to an instance of ScalarObject is used to derive all
 	//! parameters for data field creation.
 	//! \param n name of the data field
 	//! \parma s reference to the ScalarObject instance
-	NXField<typename NXObject<Imp>::FieldImp> createNumericField(const ScalarObject &s) const;
+	NXNumericField<typename NXObject<Imp>::NumericFieldImp>
+	createNumericField(const ScalarObject &s) const;
 
 	//! create a field for string data
 
@@ -143,21 +151,39 @@ public:
 };
 
 //========================constructors and destructors==========================
+//implementation of default constructor
 template<typename Imp>
 NXGroup<Imp>::NXGroup():NXObject<Imp>(){
 }
 
 //------------------------------------------------------------------------------
+//implementation of copy constructor
 template<typename Imp> NXGroup<Imp>::NXGroup(const NXGroup &g)
 		:NXObject<Imp>(g){
 	EXCEPTION_SETUP("template<typename Imp> NXGroup<Imp>::NXGroup(const NXGroup &g)");
 }
 
 //------------------------------------------------------------------------------
+//implementation of move constructor
 template<typename Imp> NXGroup<Imp>::NXGroup(NXGroup<Imp> &&g){
 	EXCEPTION_SETUP("template<typename Imp> NXGroup<Imp>::NXGroup(NXGroup<Imp> &&g)");
 
 	*this = std::move(g);
+}
+
+//------------------------------------------------------------------------------
+//implementation of copy conversion constructor
+template<typename Imp>
+NXGroup<Imp>::NXGroup(const NXObject<typename NXObject<Imp>::ObjectImp > &o)
+:NXObject<Imp>(o){
+}
+
+//------------------------------------------------------------------------------
+//implementationof move conversion constructor
+template<typename Imp>
+NXGroup<Imp>::NXGroup(NXObject<typename NXObject<Imp>::ObjectImp > &&o):
+NXObject<Imp>(std::move(o)){
+
 }
 
 //------------------------------------------------------------------------------
@@ -249,17 +275,18 @@ NXGroup<typename NXObject<Imp>::GroupImp > NXGroup<Imp>::openGroup(const String 
 //================Methods for opening and creating fields======================
 
 template<typename Imp>
-NXField<typename NXObject<Imp>::FieldImp >
+NXNumericField<typename NXObject<Imp>::NumericFieldImp >
 NXGroup<Imp>::createNumericField(const String &n,PNITypeID tid,const ArrayShape &s,
 		                  const String &unit,const String &desc) const{
 	EXCEPTION_SETUP("template<typename Imp> NXField<typename NXGroup<Imp>::FImp >"
 					"NXGroup<Imp>::createNumericField(const String &n,"
 					"PNITypeID tid,const ArrayShape &s,const String &unit,"
 					"const String &desc) const");
+	typedef NXNumericField<typename NXObject<Imp>::NumericFieldImp > FieldType;
 
-	NXField<typename NXObject<Imp>::FieldImp > field;
+	FieldType field;
 	try{
-		field = NXField<typename NXObject<Imp>::FieldImp >(this->getImplementation().createNumericField(n,tid,s));
+		field = FieldType(this->getImplementation().createNumericField(n,tid,s));
 		field.setAttribute("units",unit);
 		field.setAttribute("long_name",desc);
 	}catch(...){
@@ -273,7 +300,7 @@ NXGroup<Imp>::createNumericField(const String &n,PNITypeID tid,const ArrayShape 
 //------------------------------------------------------------------------------
 template<typename Imp>
 template<typename Filter>
-NXField<typename NXObject<Imp>::FieldImp >
+NXNumericField<typename NXObject<Imp>::NumericFieldImp >
 NXGroup<Imp>::createNumericField(const String &n,PNITypeID tid,
 		                  const ArrayShape &s,const String &unit,const String &desc,
 		                  NXFilter<Filter> &f) const{
@@ -282,8 +309,8 @@ NXGroup<Imp>::createNumericField(const String &n,PNITypeID tid,
 					"NXGroup<Imp>::createNumericField(const String &n,"
 					"PNITypeID tid,const ArrayShape &s,const String &unit,"
 					"const String &desc,NXFilter<Filter> &f) const");
-
-	NXField<typename NXObject<Imp>::FieldImp > field;
+	typedef NXNumericField<typename NXObject<Imp>::NumericFieldImp > FieldType;
+	FieldType field;
 
 	try{
 		field.setImplementation(std::move(this->_imp.createNumericField(n.c_str(),tid,s,f)));
@@ -299,12 +326,12 @@ NXGroup<Imp>::createNumericField(const String &n,PNITypeID tid,
 
 //------------------------------------------------------------------------------
 template<typename Imp>
-NXField<typename NXObject<Imp>::FieldImp >
+NXNumericField<typename NXObject<Imp>::NumericFieldImp >
 NXGroup<Imp>::createNumericField(const ArrayObject &a) const{
 	EXCEPTION_SETUP("template<typename Imp> NXField<typename NXGroup<Imp>::FImp >"
 					" NXGroup<Imp>::createNumericField(const ArrayObject &a) const");
 
-	NXField<typename NXObject<Imp>::FieldImp > field;
+	NXNumericField<typename NXObject<Imp>::NumericFieldImp > field;
 	try{
 		field = createNumericField(a.getName(),a.getTypeID(),a.getShape(),a.getUnit(),a.getDescription());
 	}catch(...){
@@ -318,14 +345,14 @@ NXGroup<Imp>::createNumericField(const ArrayObject &a) const{
 //------------------------------------------------------------------------------
 template<typename Imp>
 template<typename Filter>
-NXField<typename NXObject<Imp>::FieldImp >
+NXNumericField<typename NXObject<Imp>::NumericFieldImp >
 NXGroup<Imp>::createNumericField(const ArrayObject &a,NXFilter<Filter> &f) const{
 	EXCEPTION_SETUP("template<typename Imp> template<typename Filter>"
 					" NXField<typename NXGroup<Imp>::FImp > "
 					"NXGroup<Imp>::createNumericField(const ArrayObject &a,"
 					"NXFilter<Filter> &f) const");
 
-	NXField<typename NXObject<Imp>::FieldImp > field;
+	NXNumericField<typename NXObject<Imp>::NumericFieldImp > field;
 	try{
 		field = createNumericField(a.getName(),a.getTypeID(),a.getShape(),a.getUnit(),a.getDescription(),f);
 	}catch(...){
@@ -355,12 +382,12 @@ NXField<typename NXObject<Imp>::FieldImp > NXGroup<Imp>::openField(const String 
 }
 
 //------------------------------------------------------------------------------
-template<typename Imp> NXField<typename NXObject<Imp>::FieldImp >
+template<typename Imp> NXNumericField<typename NXObject<Imp>::NumericFieldImp >
 NXGroup<Imp>::createNumericField(const String &n,PNITypeID tid,const String &unit,const String &desc) const{
 	EXCEPTION_SETUP("template<typename Imp> NXField<typename NXGroup<Imp>::FImp > "
 					"NXGroup<Imp>::createNumericField(const String &n,"
 					"PNITypeID tid,const String &unit,const String &desc) const");
-	typedef NXField<typename NXObject<Imp>::FieldImp > FieldType;
+	typedef NXNumericField<typename NXObject<Imp>::NumericFieldImp > FieldType;
 	FieldType field;
 
 	try{
@@ -377,10 +404,10 @@ NXGroup<Imp>::createNumericField(const String &n,PNITypeID tid,const String &uni
 
 //------------------------------------------------------------------------------
 template<typename Imp>
-NXField<typename NXObject<Imp>::FieldImp > NXGroup<Imp>::createNumericField(const ScalarObject &s) const{
+NXNumericField<typename NXObject<Imp>::NumericFieldImp > NXGroup<Imp>::createNumericField(const ScalarObject &s) const{
 	EXCEPTION_SETUP("template<typename Imp> NXField<typename NXGroup<Imp>::FImp > "
 					"NXGroup<Imp>::createNumericField(const ScalarObject &s) const");
-	NXField<typename NXObject<Imp>::FieldImp > field;
+	NXNumericField<typename NXObject<Imp>::NumericFieldImp > field;
 
 	try{
 		field =createNumericField(s.getName(),s.getTypeID(),s.getUnit(),s.getDescription());
@@ -413,6 +440,15 @@ NXField<typename NXObject<Imp>::FieldImp > NXGroup<Imp>::createStringField(const
 template<typename Imp>
 void NXGroup<Imp>::close(){
 	this->getImplementation().close();
+}
+
+//------------------------------------------------------------------------------
+template<typename Imp>
+NXObject<typename NXObject<Imp>::ObjectImp> NXGroup<Imp>::open(const String &n){
+	typedef NXObject<typename NXObject<Imp>::ObjectImp > ObjectType;
+
+	ObjectType o(std::move(this->getImplementation().open(n)));
+	return o;
 }
 
 //end of namespace

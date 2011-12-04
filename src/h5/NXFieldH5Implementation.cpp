@@ -248,29 +248,7 @@ void NXFieldH5Implementation::close(){
 	_elemshape.setRank(0);
 }
 
-//------------------------------------------------------------------------------
-void NXFieldH5Implementation::append(const NumericObject &o){
-	EXCEPTION_SETUP("void NXFieldH5Implementation::append(const ScalarObject &s)");
-	herr_t err;
-	hid_t elem_type;
 
-	//get the appropriate memory type
-	elem_type = H5TFactory.getTypeFromID(o.getTypeID());
-
-	//increment the field along its growth dimension
-	_resize_dataset(1);
-
-	//set the offset for the selection to the last index in the container
-	_offset[0] = getShape().getDimension(0)-1;
-
-	//set the selection and write data
-	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
-	err = H5Dwrite(getId(),elem_type,_elemspace,_filespace,H5P_DEFAULT,o.getVoidPtr());
-	if(err<0){
-		EXCEPTION_INIT(H5DataSetError,"Error writing data to field ["+getName()+"]!");
-		EXCEPTION_THROW();
-	}
-}
 
 //------------------------------------------------------------------------------
 void NXFieldH5Implementation::append(const String &s){
@@ -292,55 +270,13 @@ void NXFieldH5Implementation::append(const String &s){
 	}
 }
 
-//------------------------------------------------------------------------------
-void NXFieldH5Implementation::insert(const UInt64 &i,const NumericObject &o){
-	EXCEPTION_SETUP("void NXFieldH5Implementation::insert(const UInt64 &i,const NumericObject &o)");
-	herr_t err = 0;
-
-	if(i>=getShape().getDimension(0)){
-		EXCEPTION_INIT(IndexError,"Element index exceeds than growth dimension!");
-		EXCEPTION_THROW();
-	}
-
-	hid_t elem_type = H5TFactory.getTypeFromID(o.getTypeID());
-	_offset[0] = i;
-
-	//set the selection and write data
-	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
-	err = H5Dwrite(getId(),elem_type,_elemspace,_filespace,H5P_DEFAULT,o.getVoidPtr());
-	if(err<0){
-		EXCEPTION_INIT(H5DataSetError,"Error writing data to field ["+getName()+"]!");
-		EXCEPTION_THROW();
-	}
-}
 
 //------------------------------------------------------------------------------
 void NXFieldH5Implementation::insert(const UInt64 &i,const String &s){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::insert(const UInt64 &i,const String &s)");
 }
 
-//------------------------------------------------------------------------------
-void NXFieldH5Implementation::get(const UInt64 &i,NumericObject &o){
-	EXCEPTION_SETUP("void NXFieldH5Implementation::get(const UInt64 &i,NumericObject &o)");
 
-	if(i>=getShape().getDimension(0)){
-		EXCEPTION_INIT(IndexError,"Element index exceeds container size!");
-		EXCEPTION_THROW();
-	}
-
-	hid_t elem_type = H5TFactory.getTypeFromID(o.getTypeID());
-	_offset[0] = i;
-	herr_t err = 0;
-
-	//set the selection and write data
-	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
-	err = H5Dread(getId(),elem_type,_elemspace,_filespace,H5P_DEFAULT,o.getVoidPtr());
-	if(err<0){
-		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+getName()+"]!");
-		EXCEPTION_THROW();
-	}
-
-}
 
 //------------------------------------------------------------------------------
 void NXFieldH5Implementation::get(const UInt64 &i,String &s){

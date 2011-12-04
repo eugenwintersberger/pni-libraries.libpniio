@@ -40,10 +40,10 @@ private:
 	//! copy constructor
 
 	void _get_dataset_objects(hid_t id);
-	void _resize_dataset(size_t increment);
 	void _allocate_buffers(size_t frank);
 	void _free_buffers();
 protected:
+	void _resize_dataset(size_t increment);
 	//parameters of the total dataset
 	hid_t _type;	          //!< ID of the data type
 	hid_t _filespace;          //!< ID of the data space
@@ -84,19 +84,13 @@ public:
 	//! return the type ID of the field
 	virtual PNITypeID getTypeID() const;
 
-
-	//! append a numeric object
-	virtual void append(const NumericObject &o);
 	//! append a string
 	virtual void append(const String &s);
 
-	//! insert a numeric object
-	virtual void insert(const UInt64 &i,const NumericObject &a);
+
 	//! insert a string object
 	virtual void insert(const UInt64 &i,const String &s);
 
-	//! get a numeric object
-	virtual void get(const UInt64 &i,NumericObject &s);
 	//! get a string object
 	virtual void get(const UInt64 &i,String &s);
 

@@ -32,6 +32,8 @@ namespace nx {
 namespace h5 {
 
 class NXNumericFieldH5Implementation:public NXFieldH5Implementation {
+private:
+
 public:
 	//! default constructor
 	NXNumericFieldH5Implementation();
@@ -55,37 +57,27 @@ public:
 	//! move conversion assignment
 	NXNumericFieldH5Implementation &operator=(NXFieldH5Implementation &&o);
 
-	//! get total shape
-
-	//! Get the total shape of the array.
-	//! \return shape object for the total dataset
-	virtual const ArrayShape &getShape() const;
-	//! get element shape
-
-	//! Get the shape of the elements stored in the field.
-	//! \return shape object for a single element
-	virtual const ArrayShape &getElementShape() const;
-
 	//! get the type ID
 
 	//! Returns the ID of the type used.
 	//! \return type ID
-	virtual PNITypeID getTypeID() const;
+	//virtual PNITypeID getTypeID() const;
 
 	//! append data
-	virtual void append(const NumericObject &o);
+	virtual void append(const NumericObject &o,bool block);
+
 
 	//! set an element
-	virtual void set(const UInt64 &i,const NumericObject &d);
+	virtual void set(const UInt64 &i,const NumericObject &o,bool block);
 
 	//! get an element
-	virtual void get(const UInt64 &i,const NumericObject &d);
+	virtual void get(const UInt64 &i,NumericObject &o,bool block);
 
 	//! get an element
 
 	//! A move semantics is used in order to avoid performance propblems for
 	//! arrays.
-	virtual NumericObject &&get(const UInt64 &i);
+	//virtual NumericObject &&get(const UInt64 &i);
 
 	//! get total data
 
@@ -100,7 +92,7 @@ public:
 	//! The object is created directly by the method and returned using a
 	//! move construction in order to avoid performance problems.
 	//! \return data object
-	virtual NumericObject &&get();
+	//virtual NumericObject &&get();
 
 
 };

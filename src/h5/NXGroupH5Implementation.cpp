@@ -23,7 +23,7 @@ namespace nx{
 namespace h5{
 
 
-//------------------------------------------------------------------------------
+//=============Implementation of constructors and destructor====================
 //Implementation of the default constructor
 NXGroupH5Implementation::NXGroupH5Implementation()
                         :NXObjectH5Implementation(){
@@ -38,7 +38,25 @@ NXGroupH5Implementation::NXGroupH5Implementation(const NXGroupH5Implementation &
 
 }
 
+//------------------------------------------------------------------------------
+//Implementation of the move constructor
+NXGroupH5Implementation::NXGroupH5Implementation(NXGroupH5Implementation &&o){
+	*this = std::move(o);
+}
 
+//------------------------------------------------------------------------------
+//implementation of copy conversion constructor
+NXGroupH5Implementation::NXGroupH5Implementation(const NXObjectH5Implementation &o)
+:NXObjectH5Implementation(o){
+
+}
+
+//------------------------------------------------------------------------------
+//implementation of move conversion operator
+NXGroupH5Implementation::NXGroupH5Implementation(NXObjectH5Implementation &&o)
+:NXObjectH5Implementation(std::move(o)){
+
+}
 
 //------------------------------------------------------------------------------
 NXGroupH5Implementation::~NXGroupH5Implementation() {
@@ -48,13 +66,9 @@ NXGroupH5Implementation::~NXGroupH5Implementation() {
 	close();
 }
 
-//------------------------------------------------------------------------------
-//Implementation of the move constructor
-NXGroupH5Implementation::NXGroupH5Implementation(NXGroupH5Implementation &&o){
-	*this = std::move(o);
-}
 
-//------------------------------------------------------------------------------
+
+//=================Implementation of assignment operations======================
 //Implementation of the copy assignment operator
 NXGroupH5Implementation &
 NXGroupH5Implementation::operator=(const NXGroupH5Implementation &o){
@@ -159,10 +173,10 @@ NXFieldH5Implementation NXGroupH5Implementation::openField(const String &n) cons
 
 //------------------------------------------------------------------------------
 //create a field for array data
-NXFieldH5Implementation NXGroupH5Implementation::createNumericField(const String &n, PNITypeID tid,const ArrayShape &s) const{
+NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const String &n, PNITypeID tid,const ArrayShape &s) const{
 	EXCEPTION_SETUP("NXFieldH5Implementation NXGroupH5Implementation::createField(const String &n, PNITypeID tid,const ArrayShape &s)");
 
-	NXFieldH5Implementation field;
+	NXNumericFieldH5Implementation field;
 	hid_t pid = getId();
 	hid_t id;
 
@@ -243,13 +257,13 @@ NXFieldH5Implementation NXGroupH5Implementation::createNumericField(const String
 }
 
 //-----------------------------------------------------------------------------
-NXFieldH5Implementation NXGroupH5Implementation::createNumericField(const String &n, PNITypeID tid,
+NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const String &n, PNITypeID tid,
 		                                  const ArrayShape &s,const H5Filter &f) const{
 	EXCEPTION_SETUP("void NXGroupH5Implementation::createField(const char *n, "
 			        "PNITypeID tid,UInt32 rank, const UInt32 *dims,"
 			        "NXFieldH5Implementation &imp)");
 
-	NXFieldH5Implementation field;
+	NXNumericFieldH5Implementation field;
 	hid_t pid = getId();
 	hid_t id = 0;
 	//create the data type
@@ -331,10 +345,10 @@ NXFieldH5Implementation NXGroupH5Implementation::createNumericField(const String
 }
 
 //------------------------------------------------------------------------------
-NXFieldH5Implementation NXGroupH5Implementation::createNumericField(const String &n, PNITypeID tid) const{
+NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const String &n, PNITypeID tid) const{
 	EXCEPTION_SETUP("NXFieldH5Implementation NXGroupH5Implementation::createField(const String &n, PNITypeID tid)");
 
-	NXFieldH5Implementation field;
+	NXNumericFieldH5Implementation field;
 	hid_t id = 0;
 	hid_t pid = getId();
 	hsize_t dims[1];
@@ -499,6 +513,22 @@ bool NXGroupH5Implementation::exists(const String &n) const {
 	}
 
 	return true;
+}
+
+//------------------------------------------------------------------------------
+NXObjectH5Implementation NXGroupH5Implementation::open(const String &n) const{
+	EXCEPTION_SETUP("NXObjectH5Implementation &&NXGroupH5Implementation::open(const String &n) const");
+	hid_t oid;
+
+	oid = H5Oopen(getId(),n.c_str(),H5P_DEFAULT);
+	if(oid<0){
+		EXCEPTION_INIT(H5ObjectError,"Error opening object ["+n+"] from group ["+getName()+"]!");
+		EXCEPTION_THROW();
+	}
+
+	NXObjectH5Implementation o(oid);
+	return o;
+
 }
 
 

@@ -73,15 +73,19 @@ public:
 	//some type definitions
 	typedef typename NXImpMap<Imp::IMPCODE>::ObjectImplementation ObjectImp;
 	typedef typename NXImpMap<Imp::IMPCODE>::FieldImplementation FieldImp;
+	typedef typename NXImpMap<Imp::IMPCODE>::NumericFieldImplementation NumericFieldImp;
 	typedef typename NXImpMap<Imp::IMPCODE>::GroupImplementation GroupImp;
 	typedef typename NXImpMap<Imp::IMPCODE>::FileImplementation FileImp;
 	typedef boost::shared_ptr<NXObject<Imp> > sptr;
 	//! default constructor
 	NXObject();
 	//! copy constructor
-	NXObject(const NXObject &o);
+	NXObject(const NXObject<Imp> &o);
+	//template<typename PImp> NXObject(const NXObject<PImp> &o);
 	//! move constructor
 	NXObject(NXObject<Imp> &&o);
+	//template<typename PImp> NXObject(NXObject<PImp> &&o);
+
 	NXObject(Imp &&i){
 		_imp = std::move(i);
 	}
@@ -187,19 +191,50 @@ public:
 
 
 //===================constructors and destructor================================
+//implementation of the default constructor
 template<typename Imp> NXObject<Imp>::NXObject() {
 
 }
 
+//------------------------------------------------------------------------------
+//implementation of the copy constructor
+/*
+template<typename Imp>
+template<typename PImp>
+NXObject<Imp>::NXObject(const NXObject<PImp> &o){
+	this->_imp = PImp(o._imp);
+}
+*/
+//------------------------------------------------------------------------------
+//implementation of the copy constructor
 template<typename Imp> NXObject<Imp>::NXObject(const NXObject<Imp> &o){
 	this->_imp = Imp(o._imp);
 }
 
-template<typename Imp> NXObject<Imp>::NXObject(NXObject<Imp> &&o){
+//------------------------------------------------------------------------------
+//implementation of the move constructor
+/*
+template<typename Imp>
+template<typename PImp>
+NXObject<Imp>::NXObject(NXObject<PImp> &&o){
 	//express the move constructor in terms of move assignment
 	*this = std::move(o);
 }
+*/
 
+//------------------------------------------------------------------------------
+//implementation of the move constructor
+template<typename Imp> NXObject<Imp>::NXObject(NXObject<Imp> &&o){
+	*this = std::move(o);
+}
+
+//-----------------------------------------------------------------------------
+//implementation of the destructor
+template<typename Imp> NXObject<Imp>::~NXObject() {
+}
+
+
+//====================Implementation of assignment operators===================
 template<typename Imp> NXObject<Imp> &NXObject<Imp>::operator=(const NXObject<Imp> &o){
 	if(this != &o){
 		this->_imp = o._imp;
@@ -215,9 +250,6 @@ template<typename Imp> NXObject<Imp> &NXObject<Imp>::operator=(NXObject<Imp> &&o
 	}
 
 	return *this;
-}
-
-template<typename Imp> NXObject<Imp>::~NXObject() {
 }
 
 //==========methods for obtaining the name and position of the object===========

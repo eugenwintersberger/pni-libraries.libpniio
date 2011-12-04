@@ -82,6 +82,7 @@ void NXGroupTest::testOpen(){
 	g1 = _f.createGroup("/directory1/data");
 
 	g2 = _f.openGroup("/directory1");
+	//NXGroup g = g2.open("data");
 
 	CPPUNIT_ASSERT_THROW(_f.openGroup("directory2"),pni::nx::NXGroupError);
 	CPPUNIT_ASSERT_NO_THROW(_f.openGroup("directory1/data"));
