@@ -92,16 +92,6 @@ public:
 	//! return the type ID of the field
 	virtual PNITypeID getTypeID() const;
 
-	//! append a string
-	virtual void append(const String &s);
-
-
-	//! insert a string object
-	virtual void insert(const UInt64 &i,const String &s);
-
-	//! get a string object
-	virtual void get(const UInt64 &i,String &s);
-
 
 	//! close the data field
 	virtual void close();

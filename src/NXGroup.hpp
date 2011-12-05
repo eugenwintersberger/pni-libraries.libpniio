@@ -36,6 +36,7 @@
 #include "NXImpMap.hpp"
 #include "NXField.hpp"
 #include "NXNumericField.hpp"
+#include "NXStringField.hpp"
 #include "NXFilter.hpp"
 #include "NXExceptions.hpp"
 
@@ -131,7 +132,7 @@ public:
 	//! Create a field for String data encoded in UTF8.
 	//! \param n name of the field
 	//! \param s string for which the field should be created
-	NXField<typename NXObject<Imp>::FieldImp> createStringField(const String &n) const;
+	NXStringField<typename NXObject<Imp>::StringFieldImp> createStringField(const String &n) const;
 
 	//! open an arbitrary object
 	virtual NXObject<typename NXObject<Imp>::ObjectImp> open(const String &n);
@@ -323,7 +324,7 @@ NXGroup<Imp>::createNumericField(const String &n,PNITypeID tid,
 		field.setAttribute("units",unit);
 		field.setAttribute("long_name",desc);
 	}catch(...){
-		EXCEPTION_INIT(NXGroupError,"Error creating array field ["+n+"] below grou ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXGroupError,"Error creating array field ["+n+"] below group ["+this->getName()+"]!");
 		EXCEPTION_THROW();
 	}
 
@@ -408,14 +409,14 @@ NXNumericField<typename NXObject<Imp>::NumericFieldImp > NXGroup<Imp>::createNum
 
 //------------------------------------------------------------------------------
 template<typename Imp>
-NXField<typename NXObject<Imp>::FieldImp > NXGroup<Imp>::createStringField(const String &n) const{
+NXStringField<typename NXObject<Imp>::StringFieldImp > NXGroup<Imp>::createStringField(const String &n) const{
 	EXCEPTION_SETUP("template<typename Imp> NXField<typename NXGroup<Imp>::FImp > NXGroup<Imp>::createStringField(const String &n,const String &s) const");
 
-	typedef NXField<typename NXObject<Imp>::FieldImp > FieldType;
+	typedef NXStringField<typename NXObject<Imp>::StringFieldImp > FieldType;
 	FieldType field;
 
 	try{
-		field = FieldType(std::move(this->getImplementation().createStringField(n,0)));
+		field = FieldType(std::move(this->getImplementation().createStringField(n)));
 	}catch(...){
 		EXCEPTION_INIT(NXGroupError,"Error creating string field ["+n+"] below group ["+this->getName()+"]!");
 		EXCEPTION_THROW();

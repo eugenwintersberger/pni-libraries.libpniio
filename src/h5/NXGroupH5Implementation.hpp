@@ -15,6 +15,7 @@
 #include "NXObjectH5Implementation.hpp"
 #include "NXFieldH5Implementation.hpp"
 #include "NXNumericFieldH5Implementation.hpp"
+#include "NXStringFieldH5Implementation.hpp"
 #include "H5Filter.hpp"
 #include "H5Exceptions.hpp"
 
@@ -66,7 +67,7 @@ public:
 	//! method to create a field for a single scalar value
 	NXNumericFieldH5Implementation createNumericField(const String &n,PNITypeID) const;
 	//! create a field to store string data
-	NXFieldH5Implementation createStringField(const String &n,const UInt64 &size) const;
+	NXStringFieldH5Implementation createStringField(const String &n) const;
 	//! create a field to store binary data
 	NXFieldH5Implementation createBinaryField(const String &n,const UInt64 &nbytes);
 

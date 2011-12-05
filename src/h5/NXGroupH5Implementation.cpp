@@ -367,11 +367,11 @@ NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const
 }
 
 //------------------------------------------------------------------------------
-NXFieldH5Implementation NXGroupH5Implementation::createStringField(const String &n,const UInt64 &size) const{
+NXStringFieldH5Implementation NXGroupH5Implementation::createStringField(const String &n) const{
 	EXCEPTION_SETUP("void NXGroupH5Implementation::createStringField("
 			        "const char *n, UInt64 size,NXFieldH5Implementation &imp)");
 
-	NXFieldH5Implementation field;
+	NXStringFieldH5Implementation field;
 	hid_t pid = getId();
 	hid_t id = 0;
 

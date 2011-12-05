@@ -45,6 +45,7 @@
 #include "h5/NXSelectionH5Implementation.hpp"
 
 #include "h5/NXNumericFieldH5Implementation.hpp"
+#include "h5/NXStringFieldH5Implementation.hpp"
 
 //#include "utils/Record.hpp"
 
@@ -57,6 +58,7 @@ typedef pni::nx::NXFile<NXFileH5Implementation> NXFile;
 typedef pni::nx::NXGroup<NXGroupH5Implementation> NXGroup;
 typedef pni::nx::NXField<NXFieldH5Implementation> NXField;
 typedef pni::nx::NXNumericField<NXNumericFieldH5Implementation> NXNumericField;
+typedef pni::nx::NXStringField<NXStringFieldH5Implementation> NXStringField;
 
 typedef pni::nx::NXFilter<H5LZFFilter> NXLZFFilter;
 typedef pni::nx::NXFilter<H5DeflateFilter> NXDeflateFilter;

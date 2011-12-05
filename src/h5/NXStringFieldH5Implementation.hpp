@@ -73,10 +73,10 @@ public:
 	virtual void set(const UInt64 &i,const String &o);
 
 	//! get a string
-	virtual void get(const UInt64 &i,const String &o);
+	virtual void get(const UInt64 &i,String &o);
 
 	//! get a string
-	virtual String &&get(const UInt64 &i);
+	virtual String get(const UInt64 &i);
 
 	//! get all strings
 
@@ -84,7 +84,7 @@ public:
 	//! sep.
 	//! \param sep separator character
 	//! \return all strings stored separated by sep
-	virtual String &&get(const char &sep);
+	virtual String get(const char &sep);
 
 };
 
