@@ -157,6 +157,10 @@ PNITypeID H5Utilities::H5Type2PNITypeCode(hid_t tid){
 		return PNITypeID::STRING;
 	}
 
+	if(H5Tequal(H5TFactory.getTypeFromID(PNITypeID::BINARY),tid)){
+		return PNITypeID::BINARY;
+	}
+
 	//if no type fits return NONE
 	return PNITypeID::NONE;
 }

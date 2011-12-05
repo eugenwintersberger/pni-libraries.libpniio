@@ -82,6 +82,7 @@ private:
 	hid_t _complex64_type;   //!< handler to a 64Bit IEEE complex type
 	hid_t _complex128_type;  //!< handler to a 128Bit IEEE complex type
 	hid_t _string_type;      //!< type to handle Strings in HDF5
+	hid_t _binary_type;      //!< handler to a binary type
 
 	//! private method to create the complex types
 	template<typename T> hid_t _create_complex_type();
@@ -104,6 +105,11 @@ public:
 	//! requested type.
 	//! \return ID to an existing HDF5 type object
 	template<typename T> const hid_t &getType() const;
+	//! get a binary type
+	hid_t createBinaryType() const;
+	//! get a binary type reference
+	const hid_t &getBinaryType() const;
+
 	//! create a type from NumericObject
 
 	//! Create an HDF5 type from an instance of an NumericObject.

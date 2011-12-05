@@ -422,6 +422,61 @@ NXStringFieldH5Implementation NXGroupH5Implementation::createStringField(const S
 }
 
 //------------------------------------------------------------------------------
+NXBinaryFieldH5Implementation
+NXGroupH5Implementation::createBinaryField(const String &n) const{
+	EXCEPTION_SETUP("NXBinaryFieldH5Implementation NXGroupH5Implementation::"
+					"createBinaryField(const String &n)");
+
+	NXBinaryFieldH5Implementation field;
+	hid_t pid = getId();
+	hid_t id = 0;
+
+	//create the data type
+	hid_t type_id = H5TFactory.createTypeFromID(PNITypeID::BINARY);
+	H5Tset_size(type_id,H5T_VARIABLE);
+
+	//H5Tset_size(type_id,size);
+	if(type_id < 0){
+		EXCEPTION_INIT(H5DataTypeError,"Type creation failed!");
+		EXCEPTION_THROW();
+	}
+
+	//create the data space
+	hsize_t cdims[1] =  {0};
+	hsize_t mdims[1] = {H5S_UNLIMITED};
+
+	//hid_t space_id =H5Screate(H5S_SCALAR);
+	hid_t space_id = H5Screate_simple(1,cdims,mdims);
+	if(space_id<0){
+		EXCEPTION_INIT(H5DataSpaceError,"Cannot create scalar data space!");
+		EXCEPTION_THROW();
+	}
+
+	//create the link creation property list
+	hid_t lcreate_plist = H5Pcreate(H5P_LINK_CREATE);
+	H5Pset_create_intermediate_group(lcreate_plist,1);
+	hid_t dcreate_plist = H5Pcreate(H5P_DATASET_CREATE);
+	H5Pset_layout(dcreate_plist,H5D_CHUNKED);
+	cdims[0] = 1;
+	H5Pset_chunk(dcreate_plist,1,cdims);
+
+	//create the data set
+	id = H5Dcreate2(pid,n.c_str(),type_id,space_id,lcreate_plist,dcreate_plist,H5P_DEFAULT);
+	if(id<0){
+		EXCEPTION_INIT(H5DataSetError,"Creation of data set ["+n+"] below group ["+getName()+"] failed!");
+		EXCEPTION_THROW();
+	}
+
+	//close all intermediate objects
+	H5Tclose(type_id);
+	H5Sclose(space_id);
+	H5Pclose(lcreate_plist);
+
+	field.setId(id);
+	return field;
+}
+
+//------------------------------------------------------------------------------
 void NXGroupH5Implementation::remove(const String &n) const{
 	EXCEPTION_SETUP("void NXGroupH5Implementation::remove(const String &n)");
 	herr_t retval;

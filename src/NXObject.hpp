@@ -75,6 +75,7 @@ public:
 	typedef typename NXImpMap<Imp::IMPCODE>::FieldImplementation FieldImp;
 	typedef typename NXImpMap<Imp::IMPCODE>::NumericFieldImplementation NumericFieldImp;
 	typedef typename NXImpMap<Imp::IMPCODE>::StringFieldImplementation StringFieldImp;
+	typedef typename NXImpMap<Imp::IMPCODE>::BinaryFieldImplementation BinaryFieldImp;
 	typedef typename NXImpMap<Imp::IMPCODE>::GroupImplementation GroupImp;
 	typedef typename NXImpMap<Imp::IMPCODE>::FileImplementation FileImp;
 	typedef boost::shared_ptr<NXObject<Imp> > sptr;

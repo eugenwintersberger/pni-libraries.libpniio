@@ -37,6 +37,7 @@
 #include "h5/NXSelectionH5Implementation.hpp"
 #include "h5/NXNumericFieldH5Implementation.hpp"
 #include "h5/NXStringFieldH5Implementation.hpp"
+#include "h5/NXBinaryFieldH5Implementation.hpp"
 
 namespace pni{
 namespace nx{
@@ -48,6 +49,7 @@ public:
 	typedef void FileImplementatoin;
 	typedef void NumericFieldImplementation;
 	typedef void StringFieldImplementation;
+	typedef void BinaryFieldImplementation;
 	typedef void FieldImplementation;
 	typedef void SelectionImplementation;
 
@@ -62,6 +64,7 @@ public:
 	typedef pni::nx::h5::NXSelectionH5Implementation SelectionImplementation;
 	typedef pni::nx::h5::NXNumericFieldH5Implementation NumericFieldImplementation;
 	typedef pni::nx::h5::NXStringFieldH5Implementation StringFieldImplementation;
+	typedef pni::nx::h5::NXBinaryFieldH5Implementation BinaryFieldImplementation;
 };
 
 }

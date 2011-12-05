@@ -70,7 +70,7 @@ public:
 	//! create a field to store string data
 	NXStringFieldH5Implementation createStringField(const String &n) const;
 	//! create a field to store binary data
-	NXBinaryFieldH5Implementation createBinaryField(const String &n);
+	NXBinaryFieldH5Implementation createBinaryField(const String &n) const;
 
 	//! open an existing object
 	virtual NXObjectH5Implementation open(const String &n) const;

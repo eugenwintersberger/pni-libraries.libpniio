@@ -183,6 +183,16 @@ template<> hid_t H5TypeFactory::createType<String>() const {
 }
 
 //------------------------------------------------------------------------------
+hid_t H5TypeFactory::createBinaryType() const {
+	return H5Tcopy(_binary_type);
+}
+
+//------------------------------------------------------------------------------
+const hid_t &H5TypeFactory::getBinaryType() const {
+	return _binary_type;
+}
+
+//------------------------------------------------------------------------------
 template<> hid_t H5TypeFactory::_create_complex_type<Complex32>(){
 	hid_t tid = H5Tcreate(H5T_COMPOUND,sizeof(_struct_complex_32));
 	H5Tinsert(tid,"r",HOFFSET(_struct_complex_32,r),getType<Float32>());
@@ -238,6 +248,8 @@ H5TypeFactory::H5TypeFactory() {
 	_float64_type = H5Tcopy(H5T_NATIVE_DOUBLE);
 	_float128_type = H5Tcopy(H5T_NATIVE_LDOUBLE);
 
+	_binary_type = H5Tcreate(H5T_OPAQUE,1);
+
 	//creating the complex data types (this is a little more complex)
 	_complex32_type = _create_complex_type<Complex32>();
 	_complex64_type = _create_complex_type<Complex64>();
@@ -266,6 +278,7 @@ H5TypeFactory::~H5TypeFactory() {
 	if(H5Iis_valid(_complex64_type)) H5Tclose(_complex64_type);
 	if(H5Iis_valid(_complex128_type)) H5Tclose(_complex128_type);
 	if(H5Iis_valid(_string_type)) H5Tclose(_string_type);
+	if(H5Iis_valid(_binary_type)) H5Tclose(_binary_type);
 }
 
 //------------------------------------------------------------------------------
@@ -301,6 +314,7 @@ const hid_t &H5TypeFactory::getTypeFromID(PNITypeID id) const{
 	case PNITypeID::COMPLEX64:	 return getType<Complex64> ();
 	case PNITypeID::COMPLEX128: return getType<Complex128> ();
 	case PNITypeID::STRING: return getType<String> ();
+	case PNITypeID::BINARY: return getBinaryType();
 	default:
 		EXCEPTION_INIT(H5DataTypeError,"Unknown type ID!");
 		EXCEPTION_THROW();
@@ -327,6 +341,7 @@ hid_t H5TypeFactory::createTypeFromID(PNITypeID id) const{
 	case PNITypeID::COMPLEX64:  return createType<Complex64> ();
 	case PNITypeID::COMPLEX128: return createType<Complex128> ();
 	case PNITypeID::STRING: return createType<String>();
+	case PNITypeID::BINARY: return createBinaryType();
 	default:
 		EXCEPTION_INIT(H5DataTypeError,"Unknown type ID!");
 		EXCEPTION_THROW();

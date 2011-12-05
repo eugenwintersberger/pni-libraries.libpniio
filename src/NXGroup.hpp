@@ -37,6 +37,7 @@
 #include "NXField.hpp"
 #include "NXNumericField.hpp"
 #include "NXStringField.hpp"
+#include "NXBinaryField.hpp"
 #include "NXFilter.hpp"
 #include "NXExceptions.hpp"
 
@@ -133,6 +134,9 @@ public:
 	//! \param n name of the field
 	//! \param s string for which the field should be created
 	NXStringField<typename NXObject<Imp>::StringFieldImp> createStringField(const String &n) const;
+
+	//! create a binary field
+	NXBinaryField<typename NXObject<Imp>::BinaryFieldImp > createBinaryField(const String &n) const;
 
 	//! open an arbitrary object
 	virtual NXObject<typename NXObject<Imp>::ObjectImp> open(const String &n);
@@ -419,6 +423,28 @@ NXStringField<typename NXObject<Imp>::StringFieldImp > NXGroup<Imp>::createStrin
 		field = FieldType(std::move(this->getImplementation().createStringField(n)));
 	}catch(...){
 		EXCEPTION_INIT(NXGroupError,"Error creating string field ["+n+"] below group ["+this->getName()+"]!");
+		EXCEPTION_THROW();
+	}
+
+	return field;
+}
+
+//------------------------------------------------------------------------------
+//implementation of create a binary field
+template<typename Imp>
+NXBinaryField<typename NXObject<Imp>::BinaryFieldImp >
+NXGroup<Imp>::createBinaryField(const String &n) const{
+	EXCEPTION_SETUP("template<typename Imp> "
+					"NXBinaryField<typename NXObject<Imp>::BinaryFieldImp > "
+					"NXGroup<Imp>::createBinaryField(const String &n) const");
+
+	typedef NXBinaryField<typename NXObject<Imp>::BinaryFieldImp > FieldType;
+	FieldType field;
+
+	try{
+		field = FieldType(std::move(this->getImplementation().createBinaryField(n)));
+	}catch(...){
+		EXCEPTION_INIT(NXGroupError,"Error creating binary field ["+n+"] below gruop ["+this->getName()+"]!");
 		EXCEPTION_THROW();
 	}
 

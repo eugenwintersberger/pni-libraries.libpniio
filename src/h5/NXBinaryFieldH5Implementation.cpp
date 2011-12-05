@@ -23,6 +23,7 @@
  */
 
 #include "NXBinaryFieldH5Implementation.hpp"
+#include "H5Exceptions.hpp"
 
 namespace pni {
 namespace nx {
@@ -226,6 +227,29 @@ size_t NXBinaryFieldH5Implementation::size() const{
 void NXBinaryFieldH5Implementation::append(const Buffer<Binary> &b){
 	EXCEPTION_SETUP("void NXBinaryFieldH5Implementation::"
 					"append(const Buffer<Binary> &b)");
+
+	herr_t err;
+
+	//extend field along growth dimension
+	_offset[0] = getShape().getDimension(0);
+	_count[0] = b.getSize();
+	_resize_dataset(b.getSize());
+
+	hsize_t dims[] = {b.getSize()};
+	hid_t elem_space = H5Screate_simple(1,dims,NULL);
+	if(elem_space<0){
+		EXCEPTION_INIT(H5DataSpaceError,"Cannot create data space!");
+		EXCEPTION_THROW();
+	}
+
+	hid_t type = H5Dget_type(getId());
+
+	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
+	err = H5Dwrite(getId(),type,elem_space,_filespace,H5P_DEFAULT,(void*)b.getVoidPtr());
+	if(err<0){
+		EXCEPTION_INIT(H5DataSetError,"Error writing data!");
+		EXCEPTION_THROW();
+	}
 }
 
 //------------------------------------------------------------------------------
@@ -233,23 +257,81 @@ void NXBinaryFieldH5Implementation::append(const Buffer<Binary> &b){
 void NXBinaryFieldH5Implementation::set(size_t pos,const Buffer<Binary> &b){
 	EXCEPTION_SETUP("void NXBinaryFieldH5Implementation::"
 					"set(size_t pos,const Buffer<Binary> &b)");
+
+	herr_t err;
+
+	//extend field along growth dimension
+	if(pos>=getShape().getDimension(0)){
+		_resize_dataset(1+pos+b.getSize()-getShape().getDimension(0));
+	}
+	_offset[0] = pos;
+	_count[0] = b.getSize();
+
+	hsize_t dims[] = {b.getSize()};
+	hid_t elem_space = H5Screate_simple(1,dims,NULL);
+	hid_t type = H5Dget_type(getId());
+
+	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
+	err = H5Dwrite(getId(),type,elem_space,_filespace,H5P_DEFAULT,b.getVoidPtr());
+	if(err<0){
+		EXCEPTION_INIT(H5DataSetError,"Error writing data!");
+		EXCEPTION_THROW();
+	}
+
 }
 
 //------------------------------------------------------------------------------
 //implementation of get binary buffer
-void NXBinaryFieldH5Implementation::get(size_t pos,Buffer<Binary> &o){
+void NXBinaryFieldH5Implementation::get(size_t pos,Buffer<Binary> &b){
 	EXCEPTION_SETUP("void NXBinaryFieldH5Implementation::"
-					"get(size_t pos,Buffer<Binary> &o)");
+					"get(size_t pos,Buffer<Binary> &b)");
+
+	if((pos+b.getSize())>getShape().getDimension(0)){
+		EXCEPTION_INIT(IndexError,"Element + buffer size exceed field size!");
+		EXCEPTION_THROW();
+	}
+
+	herr_t err;
+
+	_offset[0] = pos;
+	_count[0] = b.getSize();
+
+	hsize_t dims[] = {b.getSize()};
+	hid_t elem_space = H5Screate_simple(1,dims,NULL);
+	hid_t type = H5Dget_type(getId());
+
+	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
+	err = H5Dread(getId(),type,elem_space,_filespace,H5P_DEFAULT,b.getVoidPtr());
+	if(err<0){
+		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+getName()+"]!");
+		EXCEPTION_THROW();
+	}
 
 }
 
 //------------------------------------------------------------------------------
 //implementation of get binary buffer
-void NXBinaryFieldH5Implementation::get(Buffer<Binary> &o){
+void NXBinaryFieldH5Implementation::get(Buffer<Binary> &b){
 	EXCEPTION_SETUP("void NXBinaryFieldH5Implementation::"
 					"get(Buffer<Binary> &o)");
-}
 
+	if(b.getSize()!=getShape().getDimension(0)){
+		EXCEPTION_INIT(ShapeMissmatchError,"Buffer and field have different size!");
+		EXCEPTION_THROW();
+	}
+
+	herr_t err;
+
+	//clear all selections
+	H5Sselect_none(_filespace);
+	hid_t type = H5Dget_type(getId());
+
+	err = H5Dread(getId(),type,H5S_ALL,H5S_ALL,H5P_DEFAULT,b.getVoidPtr());
+	if(err < 0){
+		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+getName()+"]!");
+		EXCEPTION_THROW();
+	}
+}
 
 } /* namespace h5 */
 } /* namespace nx */
