@@ -19,35 +19,30 @@ section~\ref{section:nxfield_design} should be read by all users of \pninx.
 %%%----------------------------------------------------------------------------
 \begin{figure}[tb]
 \centering
-\begin{minipage}[c]{0.5\linewidth}
-\centering
 \resizebox{\linewidth}{!}{\includegraphics{pics/class_inheritance.pdf}}
-\end{minipage}
-\hfill
-\begin{minipage}[c]{0.49\linewidth}
 \caption{{\small\label{fig:class_inheritance}
 Inheritance relations between the major objects provided by \pninx.
 \nxobject\ is the root of the class tree but will hardly be used. 
 The class important to a developer are the three classes derived from 
 \nxobject: \nxfield, \nxgroup, and \nxfile.
 }}
-\end{minipage}
 \end{figure}
 %%%----------------------------------------------------------------------------
-In order to remain simple to use \pninx\ exposes only four classes to the 
-user where only three are needed in real world applications in order to 
-read and write data. 
-Figure~\ref{fig:class_inheritance} shows the inheritance tree of the 
-exposed classes. The top-level object is \nxobject. This class 
-collates all methods common to each object in the tree. However, you hardly 
-ever use \nxobject\ in your code. The only classes relevant for users
-are
+To keep the API simple, only a few classes are exposed. These classes and their 
+relationship among each other are depicted in Fig.~\ref{fig:class_inheritance}. 
+The top-level class is \nxobject. It provides the common functionality 
+of every object within the API. \nxfield\ and \nxgroup\ divide the classes 
+available in two groups: the former class is the base for all data holding
+objects while the latter is the fundamental container class. 
+\nxgroup\ corresponds with some extensions to a group in an HDF5 file or to 
+a directory in a file-system (if you like this picture more). 
+
 \begin{description}
 \item[\nxgroup] the standard container to hold all kinds of objects
 \item[\nxfield] the data holding objects
 \item[\nxfile] object representing a data file.
 \end{description}
-\nxfile is a descandent of \nxgroup\ as can be seen in
+\nxfile is a descendant of \nxgroup\ as can be seen in
 Fig.~\ref{fig:class_inheritance}. Thus it posses all the functionality that 
 \nxgroup\ has aside from those methods necessary for file handling. 
 \pninx\ uses HDF5 to write data to disk. However, you do not have to know 
@@ -76,7 +71,7 @@ When an \nxfield\ object is newly instantiated it represents an empty container.
 Writing data to disk means nothing else than appending data to the container. 
 To read data form disk means to fetch data from the container.
 The size (number of elements) of the container is limited by the amount of 
-free space on the storage device on which the file is writen.
+free space on the storage device on which the file is written.
 \nxfield\ mimics up to some point the behavior of the container objects
 provided by the C++ standard library. So you will find methods like 
 {\tt get()}, {\tt set()}, {\tt append()} and so on. 
@@ -148,7 +143,7 @@ manner. Each entry represents a line in the text-file.}}
 \end{figure}
 %%%-----------------------------------------------------------------------------
 As usually strings are slightly different from everything else. 
-This is also true for \pninx\ as shwon in Fig.~\ref{fig:container_string}.
+This is also true for \pninx\ as shown in Fig.~\ref{fig:container_string}.
 In the container view each element stores an individual string. The strings 
 can have different length. 
 As for numeric data one can either read individual strings or all strings 
