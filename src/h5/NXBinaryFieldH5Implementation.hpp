@@ -44,6 +44,10 @@ public:
 	NXBinaryFieldH5Implementation(const NXFieldH5Implementation &o);
 	//! move conversion constructor
 	NXBinaryFieldH5Implementation(NXFieldH5Implementation &&o);
+	//! copy conversion constructor
+	NXBinaryFieldH5Implementation(const NXObjectH5Implementation &o);
+	//! move conversion constructor
+	NXBinaryFieldH5Implementation(NXObjectH5Implementation &&o);
 	//! copy constructor
 	NXBinaryFieldH5Implementation(const NXBinaryFieldH5Implementation &o);
 	//! move constructor
@@ -59,14 +63,14 @@ public:
 	NXBinaryFieldH5Implementation &operator=(const NXFieldH5Implementation &o);
 	//! move conversion assignment
 	NXBinaryFieldH5Implementation &operator=(NXFieldH5Implementation &&o);
+	//! copy conversion assignment
+	NXBinaryFieldH5Implementation &operator=(const NXObjectH5Implementation &o);
+	//! move conversion assignment
+	NXBinaryFieldH5Implementation &operator=(NXObjectH5Implementation &&o);
+
 
 	//! number of bytes in the buffer
 	virtual size_t size() const;
-
-	//! close the field
-	virtual void close(){
-
-	}
 
 	//! append binary buffer
 
@@ -77,22 +81,16 @@ public:
 
 	//! Write a binary buffer at a particular position. The number of
 	//! bytes to write is determined by the size of the buffer.
-	virtual void set(size_t pos,const Buffer<Binary> &b){
-
-	}
+	virtual void set(size_t pos,const Buffer<Binary> &b);
 
 	//! get binary buffer
-	virtual void get(size_t pos,Buffer<Binary> &o){
-
-	}
+	virtual void get(size_t pos,Buffer<Binary> &o);
 
 	//! get binary buffer
 
 	//! Read the entire field. The buffer must be allocated for the appropriate
 	//! size.
-	virtual void get(Buffer<Binary> &o){
-
-	}
+	virtual void get(Buffer<Binary> &o);
 
 
 

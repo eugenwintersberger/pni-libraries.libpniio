@@ -61,6 +61,14 @@ template<typename Imp>
 class NXField:public NXObject<Imp> {
 private:
 	UInt64 _read_stream_pos;
+protected:
+	void _increment_read_stream_pos(){
+		_read_stream_pos++;
+	}
+
+	UInt64 _get_read_stream_pos(){
+		return _read_stream_pos;
+	}
 public:
 	typedef NXSelection<typename NXImpMap<Imp::IMPCODE>::SelectionImplementation > Selection;
 	typedef boost::shared_ptr<NXField<Imp> > sptr;
@@ -142,9 +150,11 @@ public:
 
 	//! Reset the stream position for reading. This can be used
 	//! to re-read data using stream IO.
-	void resetReadStreamPosition() {
+	void resetreadstream() {
 		_read_stream_pos = 0;
 	}
+
+
 
 	friend NXField<Imp> &operator<< <> (NXField<Imp> &o,const String &s);
 	friend NXField<Imp> &operator>> <> (NXField<Imp> &o,String &s);

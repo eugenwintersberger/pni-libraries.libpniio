@@ -16,6 +16,7 @@
 #include "NXFieldH5Implementation.hpp"
 #include "NXNumericFieldH5Implementation.hpp"
 #include "NXStringFieldH5Implementation.hpp"
+#include "NXBinaryFieldH5Implementation.hpp"
 #include "H5Filter.hpp"
 #include "H5Exceptions.hpp"
 
@@ -69,7 +70,7 @@ public:
 	//! create a field to store string data
 	NXStringFieldH5Implementation createStringField(const String &n) const;
 	//! create a field to store binary data
-	NXFieldH5Implementation createBinaryField(const String &n,const UInt64 &nbytes);
+	NXBinaryFieldH5Implementation createBinaryField(const String &n);
 
 	//! open an existing object
 	virtual NXObjectH5Implementation open(const String &n) const;

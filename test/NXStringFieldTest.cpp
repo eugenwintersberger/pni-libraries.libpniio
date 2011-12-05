@@ -128,13 +128,71 @@ void NXStringFieldTest::testGetAll(){
 		total += s+sep;
 		write.append(s);
 	}
-	std::cout<<total<<std::endl;
+	//remove trailing "\n"
+	total = String(total,0,total.size()-1);
 
 
 	NXStringField read = file.open("text");
-	std::cout<<"start with reading"<<std::endl;
 	String text;
 	text = read.get(sep);
 	CPPUNIT_ASSERT(total == text);
+
+}
+
+//------------------------------------------------------------------------------
+void NXStringFieldTest::testSet(){
+	std::cout<<"NXStringFieldTest::testSet()----------------------------------";
+	std::cout<<std::endl;
+
+	NXStringField field = file.createStringField("text");
+
+	//write data
+	CPPUNIT_ASSERT_NO_THROW(field.set(2,strdata[2]));
+	CPPUNIT_ASSERT_NO_THROW(field.set(1,strdata[1]));
+	CPPUNIT_ASSERT_NO_THROW(field.set(0,strdata[0]));
+
+	//read back data
+	CPPUNIT_ASSERT(field.get(0ul) == strdata[0]);
+	CPPUNIT_ASSERT(field.get(1ul) == strdata[1]);
+	CPPUNIT_ASSERT(field.get(2ul) == strdata[2]);
+
+
+}
+
+//------------------------------------------------------------------------------
+void NXStringFieldTest::testStreamRead(){
+	std::cout<<"NXStringFieldTest::testStreamRead()---------------------------";
+	std::cout<<std::endl;
+
+	NXStringField field = file.createStringField("text");
+	field<<strdata[0];
+	field<<strdata[1];
+	field<<strdata[2];
+
+	//read back
+	//read back data
+	CPPUNIT_ASSERT(field.get(0ul) == strdata[0]);
+	CPPUNIT_ASSERT(field.get(1ul) == strdata[1]);
+	CPPUNIT_ASSERT(field.get(2ul) == strdata[2]);
+
+
+}
+
+//------------------------------------------------------------------------------
+void NXStringFieldTest::testStreamWrite(){
+	std::cout<<"NXStringFieldTest::testStreamWrite()--------------------------";
+	std::cout<<std::endl;
+
+	NXStringField field = file.createStringField("text");
+
+	//write data
+	CPPUNIT_ASSERT_NO_THROW(field.set(2,strdata[2]));
+	CPPUNIT_ASSERT_NO_THROW(field.set(1,strdata[1]));
+	CPPUNIT_ASSERT_NO_THROW(field.set(0,strdata[0]));
+
+	String s;
+	field>>s; CPPUNIT_ASSERT(s==strdata[0]);
+	field>>s; CPPUNIT_ASSERT(s==strdata[1]);
+	field>>s; CPPUNIT_ASSERT(s==strdata[2]);
 
 }

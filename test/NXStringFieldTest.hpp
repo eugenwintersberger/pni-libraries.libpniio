@@ -27,6 +27,9 @@ class NXStringFieldTest:public CppUnit::TestFixture {
 	CPPUNIT_TEST(testAppend);
 	CPPUNIT_TEST(testGetIndividual);
 	CPPUNIT_TEST(testGetAll);
+	CPPUNIT_TEST(testSet);
+	CPPUNIT_TEST(testStreamWrite);
+	CPPUNIT_TEST(testStreamRead);
 	CPPUNIT_TEST_SUITE_END();
 private:
 	NXFile file;
@@ -42,6 +45,9 @@ public:
 	void testAppend();
 	void testGetIndividual();
 	void testGetAll();
+	void testSet();
+	void testStreamRead();
+	void testStreamWrite();
 
 
 };

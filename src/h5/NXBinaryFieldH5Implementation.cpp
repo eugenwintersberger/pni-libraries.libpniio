@@ -28,35 +28,228 @@ namespace pni {
 namespace nx {
 namespace h5 {
 
-NXBinaryFieldH5Implementation::NXBinaryFieldH5Implementation()
-:NXFieldH5Implementation(){
+//=============Implementation of constructors and destructor====================
+//implementation of default constructor
+NXBinaryFieldH5Implementation::NXBinaryFieldH5Implementation():
+	NXFieldH5Implementation(){
 
 }
 
-NXBinaryFieldH5Implementation::~NXBinaryFieldH5Implementation() {
+//------------------------------------------------------------------------------
+//implementation of copy conversion constructor
+NXBinaryFieldH5Implementation::
+NXBinaryFieldH5Implementation(const NXFieldH5Implementation &o):
+NXFieldH5Implementation(o){
+	EXCEPTION_SETUP("NXBinaryFieldH5Implementation::"
+					"NXBinaryFieldH5Implementation"
+					"(const NXFieldH5Implementation &o)");
+
+	if(getTypeID() != PNITypeID::BINARY){
+		EXCEPTION_INIT(TypeError,"Field is not a binary field!");
+		EXCEPTION_THROW();
+	}
+}
+
+//------------------------------------------------------------------------------
+//implementation of copy move conversion constructor
+NXBinaryFieldH5Implementation::
+NXBinaryFieldH5Implementation(NXFieldH5Implementation &&o):
+NXFieldH5Implementation(std::move(o)){
+	EXCEPTION_SETUP("NXBinaryFieldH5Implementation::"
+					"NXBinaryFieldH5Implementation"
+					"(NXFieldH5Implementation &&o)");
+
+	if(getTypeID() != PNITypeID::BINARY){
+		EXCEPTION_INIT(TypeError,"Field is not a binary field!");
+		EXCEPTION_THROW();
+	}
+}
+
+//------------------------------------------------------------------------------
+//implementation of copy conversion constructor
+NXBinaryFieldH5Implementation::
+NXBinaryFieldH5Implementation(const NXObjectH5Implementation &o):
+NXFieldH5Implementation(o){
+	EXCEPTION_SETUP("NXBinaryFieldH5Implementation::"
+					"NXBinaryFieldH5Implementation"
+					"(const NXObjectH5Implementation &o)");
+
+	if(getTypeID() != PNITypeID::BINARY){
+		EXCEPTION_INIT(TypeError,"Object is not a binary field!");
+		EXCEPTION_THROW();
+	}
 
 }
 
+//------------------------------------------------------------------------------
+//implementation of copy move conversion constructor
+NXBinaryFieldH5Implementation::
+NXBinaryFieldH5Implementation(NXObjectH5Implementation &&o):
+NXFieldH5Implementation(std::move(o)){
+	EXCEPTION_SETUP("NXBinaryFieldH5Implementation::"
+					"NXBinaryFieldH5Implementation"
+					"(NXObjectH5Implementation &&o)");
+
+	if(getTypeID() != PNITypeID::BINARY){
+		EXCEPTION_INIT(TypeError,"Object is not a binary field!");
+		EXCEPTION_THROW();
+	}
+}
+
+//------------------------------------------------------------------------------
+//implementation of copy constructor
+NXBinaryFieldH5Implementation::
+NXBinaryFieldH5Implementation(const NXBinaryFieldH5Implementation &o):
+NXFieldH5Implementation(o){
+
+}
+
+//------------------------------------------------------------------------------
+//! move constructor
+NXBinaryFieldH5Implementation::
+NXBinaryFieldH5Implementation(NXBinaryFieldH5Implementation &&o):
+NXFieldH5Implementation(std::move(o)){
+
+}
+
+//------------------------------------------------------------------------------
+//implementation of the destructor
+NXBinaryFieldH5Implementation::~NXBinaryFieldH5Implementation(){
+
+}
+
+//=================Implementation of assignment operators=======================
+//implementation of copy assignment operator
+NXBinaryFieldH5Implementation &
+NXBinaryFieldH5Implementation::operator=(const NXBinaryFieldH5Implementation &o){
+	EXCEPTION_SETUP("NXBinaryFieldH5Implementation &"
+					"NXBinaryFieldH5Implementation::operator="
+					"(const NXBinaryFieldH5Implementation &o)");
+
+	(NXFieldH5Implementation &)(*this) = (NXFieldH5Implementation &)o;
+	return *this;
+}
+
+//------------------------------------------------------------------------------
+//implementation of move assignment operator
+NXBinaryFieldH5Implementation &
+NXBinaryFieldH5Implementation::operator=(NXBinaryFieldH5Implementation &&o){
+	EXCEPTION_SETUP("NXBinaryFieldH5Implementation &"
+					"NXBinaryFieldH5Implementation::operator="
+					"(NXBinaryFieldH5Implementation &&o)");
+
+	(NXFieldH5Implementation &)(*this) = std::move((NXFieldH5Implementation &&)o);
+	return *this;
+}
+
+//------------------------------------------------------------------------------
+//implementation of the copy conversion assignment
+NXBinaryFieldH5Implementation &
+NXBinaryFieldH5Implementation::operator=(const NXFieldH5Implementation &o){
+	EXCEPTION_SETUP("NXBinaryFieldH5Implementation &"
+					"NXBinaryFieldH5Implementation::operator="
+					"(const NXFieldH5Implementation &o)");
+
+	if(o.getTypeID() != PNITypeID::BINARY){
+		EXCEPTION_INIT(TypeError,"Field is not a binary field!");
+		EXCEPTION_THROW();
+	}
+
+	(NXFieldH5Implementation &)(*this) = o;
+	return *this;
+}
+
+//------------------------------------------------------------------------------
+//implementation of the move conversion assignment
+NXBinaryFieldH5Implementation &
+NXBinaryFieldH5Implementation::operator=(NXFieldH5Implementation &&o){
+	EXCEPTION_SETUP("NXBinaryFieldH5Implementation &"
+					"NXBinaryFieldH5Implementation::operator="
+					"(NXFieldH5Implementation &&o)");
+
+	if(o.getTypeID() != PNITypeID::BINARY){
+		EXCEPTION_INIT(TypeError,"Field is not a binary field!");
+		EXCEPTION_THROW();
+	}
+
+	(NXFieldH5Implementation &)(*this) = std::move(o);
+	return *this;
+}
+
+//------------------------------------------------------------------------------
+//implementation of the copy conversion assignment
+NXBinaryFieldH5Implementation &
+NXBinaryFieldH5Implementation::operator=(const NXObjectH5Implementation &o){
+	EXCEPTION_SETUP("NXBinaryFieldH5Implementation &"
+					"NXBinaryFieldH5Implementation::operator="
+					"(const NXObjectH5Implementation &o)");
+
+	(NXFieldH5Implementation &)(*this) = o;
+	if(getTypeID() != PNITypeID::BINARY){
+		EXCEPTION_INIT(TypeError,"Object is not a binary field!");
+		EXCEPTION_THROW();
+	}
+
+	return *this;
+}
+
+//------------------------------------------------------------------------------
+//implementation of the move conversion assignment
+NXBinaryFieldH5Implementation &
+NXBinaryFieldH5Implementation::operator=(NXObjectH5Implementation &&o){
+	EXCEPTION_SETUP("NXBinaryFieldH5Implementation &"
+					"NXBinaryFieldH5Implementation::operator="
+					"(NXObjectH5Implementation &&o)");
+
+	(NXFieldH5Implementation &)(*this) = std::move(o);
+	if(getTypeID() != PNITypeID::BINARY){
+		EXCEPTION_INIT(TypeError,"Object is not a binary field!");
+		EXCEPTION_THROW();
+	}
+
+	return *this;
+}
+
+
+//=================Implementation of IO methods=================================
 //------------------------------------------------------------------------------
 size_t NXBinaryFieldH5Implementation::size() const{
 	EXCEPTION_SETUP("size_t NXBinaryFieldH5Implementation::size() const");
-	hid_t dataset = getId();
+
+	return getShape().getDimension(0);
 
 }
 
 //------------------------------------------------------------------------------
+//implementation of append binary buffer
+
 void NXBinaryFieldH5Implementation::append(const Buffer<Binary> &b){
-	EXCEPTION_SETUP("void NXBinaryFieldH5Implementation::append(const Buffer<Binary> &b)");
+	EXCEPTION_SETUP("void NXBinaryFieldH5Implementation::"
+					"append(const Buffer<Binary> &b)");
+}
 
-	if(!b.isAllocated()){
-		//raise an exception if the buffer is not allocated
-	}
+//------------------------------------------------------------------------------
+//implementation of set binary buffer
+void NXBinaryFieldH5Implementation::set(size_t pos,const Buffer<Binary> &b){
+	EXCEPTION_SETUP("void NXBinaryFieldH5Implementation::"
+					"set(size_t pos,const Buffer<Binary> &b)");
+}
 
-	hid_t dataset = getId(); //get the dataset ID
-
-
+//------------------------------------------------------------------------------
+//implementation of get binary buffer
+void NXBinaryFieldH5Implementation::get(size_t pos,Buffer<Binary> &o){
+	EXCEPTION_SETUP("void NXBinaryFieldH5Implementation::"
+					"get(size_t pos,Buffer<Binary> &o)");
 
 }
+
+//------------------------------------------------------------------------------
+//implementation of get binary buffer
+void NXBinaryFieldH5Implementation::get(Buffer<Binary> &o){
+	EXCEPTION_SETUP("void NXBinaryFieldH5Implementation::"
+					"get(Buffer<Binary> &o)");
+}
+
 
 } /* namespace h5 */
 } /* namespace nx */

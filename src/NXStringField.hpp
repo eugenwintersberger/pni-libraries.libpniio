@@ -235,12 +235,14 @@ template<typename Imp> String NXStringField<Imp>::get(const UInt64 &i){
 
 //------------------------------------------------------------------------------
 template<typename Imp> String NXStringField<Imp>::get(const char &sep){
-	EXCEPTION_SETUP("template<typename Imp> String NXStringField<Imp>::get(const char &sep)");
+	EXCEPTION_SETUP("template<typename Imp> String NXStringField<Imp>::"
+					"get(const char &sep)");
 	String s;
 	try{
 		s= this->getImplementation().get(sep);
 	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Error reaeding string from field ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXFieldError,"Error reaeding string from field ["
+					  +this->getName()+"]!");
 		EXCEPTION_THROW();
 	}
 
@@ -250,7 +252,8 @@ template<typename Imp> String NXStringField<Imp>::get(const char &sep){
 //------------------------------------------------------------------------------
 //! set data
 template<typename Imp> void NXStringField<Imp>::set(const UInt64 &i,const String &s){
-	EXCEPTION_SETUP("template<typename Imp> void NXStringField<Imp>::set(const UInt64 &i,const String &s)");
+	EXCEPTION_SETUP("template<typename Imp> void NXStringField<Imp>::"
+					"set(const UInt64 &i,const String &s)");
 
 	try{
 		this->getImplementation().set(i,s);
@@ -270,8 +273,8 @@ NXStringField<Imp> &operator<<(NXStringField<Imp> &o,const String &s){
 //------------------------------------------------------------------------------
 template<typename Imp>
 NXStringField<Imp> &operator>>(NXStringField<Imp> &o,String &s){
-	o.get(o._read_stream_pos,s);
-	o._read_stream_pos++;
+	o.get(o._get_read_stream_pos(),s);
+	o._increment_read_stream_pos();
 	return o;
 }
 
