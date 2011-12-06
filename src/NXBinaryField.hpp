@@ -70,6 +70,11 @@ public:
 	//! move conversion operator
 	NXBinaryField<Imp> &operator=(NXObject<typename NXObject<Imp>::ObjectImp > &&o);
 
+    //!return the size of the binary field
+    UInt64 size() const{
+        return this->getShape().getSize();
+    }
+
 	//!append array
 	void append(const Buffer<Binary> &s);
 
