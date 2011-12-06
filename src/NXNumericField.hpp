@@ -90,6 +90,10 @@ public:
 	void set(const UInt64 &i,const ArrayObject &o);
 	void set(const UInt64 &i,const ScalarObject &o);
 
+    UInt32 size() const{
+        return this->getShape().getDimension(0);
+    }
+
 	friend NXNumericField<Imp> &operator<< <> (NXNumericField<Imp> &o,const ScalarObject &s);
 	friend NXNumericField<Imp> &operator<< <> (NXNumericField<Imp> &o,const ArrayObject &a);
 
