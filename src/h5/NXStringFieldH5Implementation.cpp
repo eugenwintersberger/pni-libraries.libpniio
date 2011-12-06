@@ -327,7 +327,11 @@ void NXStringFieldH5Implementation::get(const UInt64 &i,String &o){
 	H5Sselect_none(_filespace);
 
 	//copy content of the pointer to the string object
-	o = String(ptr);
+    try{
+	    o = String(ptr);
+    }catch(...){
+        o = "";
+    }
 
 	//reclaim memory from HDF5 library.
 	H5Dvlen_reclaim(elem_type,_filespace,xfer_plist,&ptr);

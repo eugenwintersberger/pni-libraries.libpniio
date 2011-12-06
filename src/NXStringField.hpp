@@ -72,6 +72,9 @@ public:
 	//!append array
 	void append(const String &s);
 
+    //!number of strings
+    UInt64 size() const;
+
 	//!get data
 	void get(const UInt64 &i,String &o);
 	String get(const UInt64 &i);
@@ -261,6 +264,11 @@ template<typename Imp> void NXStringField<Imp>::set(const UInt64 &i,const String
 		EXCEPTION_INIT(NXFieldError,"Cannot write data!");
 		EXCEPTION_THROW();
 	}
+}
+
+//-----------------------------------------------------------------------------
+template<typename Imp> UInt64 NXStringField<Imp>::size() const{
+    return this->getShape().getDimension(0);
 }
 
 //=============Implementation of stream operators==============================
