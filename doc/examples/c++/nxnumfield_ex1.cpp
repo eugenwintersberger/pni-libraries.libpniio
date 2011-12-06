@@ -16,7 +16,6 @@ int main(int argc,char **argv){
 
 	//create the file
 	NXFile file;
-	NXField field;
 	NXGroup group;
 	file.setFileName("nxfield_ex1.h5");
 	file.setOverwrite(true);
@@ -27,23 +26,20 @@ int main(int argc,char **argv){
 	group = file.createGroup("detectors");
 
 	//automatic from memory object
-	field = group.createNumericField(data);
+	NXNumericField field = group.createNumericField(data);
 
 	//manually
 	field = group.createNumericField("detector2",
 				  PNITypeID::UINT32,shape,
 				  "cps","a second testing detector");
 
-	group = file.openGroup("motors");
+	group = file.open("motors");
 	//creating scalar fields
 	Float32Scalar motor("omega","degree","motor omega of goniometer");
 	motor = 1.2;
 	field = group.createNumericField(motor);
 	field = group.createNumericField("tth",PNITypeID::FLOAT32,"degree",
 			"motor tth of goniometer");
-
-	//creating a string field
-	field = file.createStringField("comments");
 
 	file.close();
 

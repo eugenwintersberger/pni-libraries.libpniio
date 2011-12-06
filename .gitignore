@@ -12,3 +12,6 @@
 *.blg
 *.out
 *.so.*
+*.deb
+*.changes
+

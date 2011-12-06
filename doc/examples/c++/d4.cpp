@@ -70,7 +70,8 @@ NXField &D4File::operator[](const String &key){
 
 void D4File::_setup_storage_ring(){
 	NXGroup doris;
-	NXField f;
+	NXNumericField nf;
+    NXStringField sf;
 	Float32Scalar emittance_x(410,"emittance_x","nm-rad","emittance in horizontal direction");
 	Float32Scalar emittance_y(12,"emittance_y","nm-rad","emittance in vertical direction");
 	Float32Scalar energy(4.45,"energy","GeV","positron energy");
@@ -78,17 +79,17 @@ void D4File::_setup_storage_ring(){
 
 
 	doris = _instrument.createGroup("DORIS","NXsource");
-	f = doris.createNumericField("distance",PNITypeID::FLOAT32,"m","distance to DORIS");
-	f<<Float32Scalar(40.);
-	f = doris.createStringField("name"); f<<"DORIS";
-	f = doris.createStringField("type"); f<<"Synchrotron X-ray Source";
-	f = doris.createStringField("probe"); f<<"positron";
-	f = doris.createNumericField(emittance_x); f<<emittance_x;
-	f = doris.createNumericField(emittance_y); f<<emittance_y;
-	f = doris.createNumericField(energy); f<<energy;
+	nf = doris.createNumericField("distance",PNITypeID::FLOAT32,"m","distance to DORIS");
+	nf<<Float32Scalar(40.);
+	sf = doris.createStringField("name"); sf<<"DORIS";
+	sf = doris.createStringField("type"); sf<<"Synchrotron X-ray Source";
+	sf = doris.createStringField("probe"); sf<<"positron";
+	nf = doris.createNumericField(emittance_x); nf<<emittance_x;
+	nf = doris.createNumericField(emittance_y); nf<<emittance_y;
+	nf = doris.createNumericField(energy); nf<<energy;
 
 	//doris current might be written during scan
-	_record["doris_current"] = doris.createNumericField(current);
+	//_record["doris_current"] = doris.createNumericField(current);
 }
 
 void D4File::_setup_bending_magnet(){
@@ -115,7 +116,7 @@ int main(int argc,char **argv){
 
 	//run experiment
 	for(UInt64 i=0;i<100;i++){
-		file["doris_current"]<<Float32Scalar(140-i*0.1,"current","mA");
+		//file["doris_current"]<<Float32Scalar(140-i*0.1,"current","mA");
 	}
 
 

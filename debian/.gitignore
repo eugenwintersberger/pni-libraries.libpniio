@@ -8,3 +8,10 @@
 /libpninx0-doc.install
 /compat
 /libpninx0-dev.dirs
+/files
+/*.substvars
+/*.debhelper
+/libpninx*-dev
+/libpninx*-doc
+/tmp
+/libpninx*/

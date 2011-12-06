@@ -18,8 +18,8 @@ int main(int argc,char **argv){
 	group = file.createGroup("data3/detector/data","NXdata");
 
 	//open existing groups
-	group = file.openGroup("data1");
-	group = group.openGroup("dir");
+	group = file.open("data1");
+	group = group.open("dir");
 
 	return 0;
 }
