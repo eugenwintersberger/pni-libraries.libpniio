@@ -95,7 +95,12 @@ void NXStringFieldTest::testAppend(){
 	std::cout<<std::endl;
 
 	NXStringField field = file.createStringField("text");
+#ifdef OLD_CXX
+    for(auto iter=strdata.begin();iter!=strdata.end();iter++){
+        String s = *iter;
+#else
 	for(String &s: strdata ){
+#endif
 		CPPUNIT_ASSERT_NO_THROW(field.append(s));
 	}
 
@@ -124,7 +129,12 @@ void NXStringFieldTest::testGetAll(){
 
 	char sep = '\n';
 	String total;
+#ifdef OLD_CXX
+    for(auto iter=strdata.begin();iter!=strdata.end();iter++){
+        String s = *iter;
+#else
 	for(String &s: strdata){
+#endif
 		total += s+sep;
 		write.append(s);
 	}

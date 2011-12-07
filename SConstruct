@@ -1,5 +1,6 @@
 import os.path as path
 import os
+import subprocess
 
 #made here a small comment - should be only in the branch
 
@@ -28,6 +29,19 @@ var.Add("PKGNAMEROOT","root package name (actually only used for Debian packages
 
 #create the build environment
 env = Environment(variables=var,tools=['default','packaging','textfile'])
+
+cxx_version = subprocess.check_output([env['CXX'],'-dumpversion'])
+(major,minor,release) = cxx_version.split(".")
+cxx_version = int(major+minor)
+print cxx_version
+
+if cxx_version < 44:
+    print "compiler version not supported!"
+    sys.exit()
+elif cxx_version<=45:
+    env.Append(CXXFLAGS=["-Dnullptr=NULL","-DOLD_CXX"])
+else:
+    pass
 
 #create library names
 if os.name == "posix":
