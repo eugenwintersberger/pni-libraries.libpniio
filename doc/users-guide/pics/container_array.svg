@@ -9,7 +9,7 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="858.02759"
+   width="922.02759"
    height="564.90875"
    id="svg5539"
    version="1.1"
@@ -238,9 +238,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.6732933"
-     inkscape:cx="428.48181"
-     inkscape:cy="282.44937"
+     inkscape:zoom="2.3663941"
+     inkscape:cx="346.02741"
+     inkscape:cy="332.59363"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -270,7 +270,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -278,7 +278,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-15.425373,-16.943836)">
+     transform="translate(48.574627,-16.943836)">
     <g
        id="g6155-1-4"
        transform="translate(12.629912,248.03148)">
@@ -312,35 +312,35 @@
            sodipodi:role="line">2</tspan></text>
     </g>
     <g
-       transform="translate(-192.8819,-42.519687)"
+       transform="translate(-256.8819,-42.519687)"
        id="g3841-53">
       <rect
          ry="3.5433073"
          y="65.322815"
          x="214.14174"
-         height="46.062992"
-         width="194.8819"
+         height="46.062988"
+         width="320.14978"
          id="rect2991-3-74"
          style="fill:#707070;fill-opacity:1;stroke:#000000;stroke-opacity:1;filter:url(#filter3837-7)" />
       <rect
          ry="3.5433073"
          y="60.236198"
          x="209.05511"
-         height="46.062992"
-         width="194.8819"
+         height="46.062996"
+         width="321.69312"
          id="rect2991-8"
          style="fill:#fff590;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
       <text
          sodipodi:linespacing="125%"
          id="text2987-00"
          y="95.669266"
-         x="228.59842"
+         x="210.59842"
          style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
            y="95.669266"
-           x="228.59842"
+           x="210.59842"
            id="tspan2989-1"
-           sodipodi:role="line">NXField</tspan></text>
+           sodipodi:role="line">NXNumericField</tspan></text>
     </g>
     <g
        id="g6155"
@@ -634,17 +634,17 @@
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="368.50394"
-       y="60.236198"
+       x="380.38602"
+       y="68.073059"
        id="text7700"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan7702"
-         x="368.50394"
-         y="60.236198">container</tspan><tspan
+         x="380.38602"
+         y="68.073059">element</tspan><tspan
          sodipodi:role="line"
-         x="368.50394"
-         y="110.2362"
+         x="380.38602"
+         y="118.07306"
          id="tspan7704">view</tspan></text>
     <text
        xml:space="preserve"

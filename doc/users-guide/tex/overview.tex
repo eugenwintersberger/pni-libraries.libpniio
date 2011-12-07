@@ -14,6 +14,30 @@ are highly encouraged to read this chapter as it provides a lot of useful
 information about the philosophy behind certain objects. In particular 
 section~\ref{section:nxfield_design} should be read by all users of \pninx. 
 
+\section{Nexus and HDF5}
+
+There is some confusion about how Nexus and HDF5 are related to each other. 
+Mostly by people which know neither the one nor the other. 
+So I will give an attempt to bring a bit light into this miracle. 
+HDF5 is a binary file format which is primarily used to store numerical data. 
+Each HDF5 file consist of primarily two kinds of objects: groups and datasets. 
+The idea behind HDF5 is quite similar to that of a file system: the groups 
+act like directories holding other groups and datasets while the datasets 
+can be considered as files. In it simplest form a dataset can be treated as a 
+multidimensional array of numbers of a particular data type. 
+If you are familiar with the arrays provided by the {\tt numpy} package 
+for Python you can directly map the anatomy of such an array to an HDF5 dataset. 
+A {\tt numpy} array consist of a shape object which is simply a tuple holding 
+the number of elements along each dimension and a data type (integer, float, or
+whatever you have decided to store in the array). In HDF5 the shape is 
+called data-space and the data type - well - is the data-type. 
+
+Attributes can be attached to groups and datasets in an HDF5 file. One  can
+imagine attributes as kind of tags that can be stuck on an object. 
+Attributes by them self can be strings, arrays or whatever other data you might 
+can think of. 
+
+
 \section{Classes and implementation}\label{section:classes_implementation}
 
 %%%----------------------------------------------------------------------------
@@ -58,28 +82,34 @@ The bridge pattern is not implemented as shown in \cite{book:gof} but rather
 by using a template approach as shown  in \cite{book:alexandrescu}.
 Hence the code remains free of pointers which makes it much more readable. 
 Furthermore it should be mentioned that the \pninx\ heavily relies on features 
-provided by the C++11 standard. Thus, an actuall compiler is required to 
-build the library.
+provided by the C++11 standard. Thus, an actual compiler is required to 
+build the library (for {\tt gcc} a version larger or equal $4.4$ is required).
  
 
 \section{A closer view on \nxfield}\label{section:nxfield_design}
-\nxfield\ is most probably the most important object in the \pninx-universe. 
-Objects of type \nxfield\ are used to read from and write data to the file. 
-From the point of C++, \nxfield\ can be considered a container like 
+The classes derived form \nxfield\ are most probably the most important 
+objects in the \pninx-universe as they are used to read from and write data to 
+the file. From the point of C++, \nxfield\ can be considered a container like 
 {\tt std::vector<>} or {\tt std::list<>}.
 When an \nxfield\ object is newly instantiated it represents an empty container. 
 Writing data to disk means nothing else than appending data to the container. 
 To read data form disk means to fetch data from the container.
 The size (number of elements) of the container is limited by the amount of 
 free space on the storage device on which the file is written.
-\nxfield\ mimics up to some point the behavior of the container objects
-provided by the C++ standard library. So you will find methods like 
-{\tt get()}, {\tt set()}, {\tt append()} and so on. 
-There are basically three kinds of objects that can be stored in this container
+This means that you do not know the number of elements you want to write 
+at the time of instantiating these objects. 
+All classes derived form \nxfield\ mimic the behavior of a C++ container 
+class in some or the other way.  So you will find methods like 
+{\tt get()}, {\tt set()}, {\tt append()} and so on. However, some flavors
+of these method may behave slightly unexpected. The reason for this is that 
+unlike for a classical container there are tow points of how we can look 
+on the data stored in such a container (this is in particular true for 
+numeric data). 
+There are basically three kinds of objects that can be stored in these container
 \begin{enumerate}
-  \item numerical data
-  \item strings
-  \item and binary uninterpreted data.
+  \item numerical data (\nxnumericfield)
+  \item strings (\nxstringfield)
+  \item and binary uninterpreted data (\nxbinaryfield)
 \end{enumerate}
 \nxfield\ can handle all different kinds of data which keeps the number of 
 classes in the library small. However, there is a price one has to pay 

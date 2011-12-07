@@ -9,8 +9,8 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="539.68011"
-   height="522.58392"
+   width="599.85333"
+   height="523.25525"
    id="svg5539"
    version="1.1"
    inkscape:version="0.48.2 r9819"
@@ -236,6 +236,19 @@
        is_visible="true"
        nr_x="15"
        nr_y="15" />
+    <filter
+       color-interpolation-filters="sRGB"
+       inkscape:collect="always"
+       id="filter3837-7-3"
+       x="-0.027447272"
+       width="1.0548944"
+       y="-0.11612308"
+       height="1.2322462">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="2.2287402"
+         id="feGaussianBlur3839-3-0" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -245,8 +258,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.9198512"
-     inkscape:cx="229.46171"
-     inkscape:cy="219.68562"
+     inkscape:cx="289.63494"
+     inkscape:cy="323.86039"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -284,7 +297,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-15.425373,-16.943836)">
+     transform="translate(44.747857,-16.272543)">
     <g
        id="g6155-1-4"
        transform="translate(12.629912,248.03148)">
@@ -318,37 +331,6 @@
            sodipodi:role="line">2</tspan></text>
     </g>
     <g
-       transform="translate(-192.8819,-42.519687)"
-       id="g3841-53">
-      <rect
-         ry="3.5433073"
-         y="65.322815"
-         x="214.14174"
-         height="46.062992"
-         width="194.8819"
-         id="rect2991-3-74"
-         style="fill:#707070;fill-opacity:1;stroke:#000000;stroke-opacity:1;filter:url(#filter3837-7)" />
-      <rect
-         ry="3.5433073"
-         y="60.236198"
-         x="209.05511"
-         height="46.062992"
-         width="194.8819"
-         id="rect2991-8"
-         style="fill:#fff590;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
-      <text
-         sodipodi:linespacing="125%"
-         id="text2987-00"
-         y="95.669266"
-         x="228.59842"
-         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-         xml:space="preserve"><tspan
-           y="95.669266"
-           x="228.59842"
-           id="tspan2989-1"
-           sodipodi:role="line">NXField</tspan></text>
-    </g>
-    <g
        id="g6155"
        transform="translate(13.716537,14.173227)">
       <rect
@@ -379,6 +361,37 @@
            x="86.58268"
            id="tspan6103"
            sodipodi:role="line">0</tspan></text>
+    </g>
+    <g
+       transform="translate(-253.05513,-43.19098)"
+       id="g3841-53">
+      <rect
+         ry="3.5433073"
+         y="65.322815"
+         x="214.14174"
+         height="46.062988"
+         width="320.14978"
+         id="rect2991-3-74"
+         style="fill:#707070;fill-opacity:1;stroke:#000000;stroke-opacity:1;filter:url(#filter3837-7-3)" />
+      <rect
+         ry="3.5433073"
+         y="60.236198"
+         x="209.05511"
+         height="46.062996"
+         width="321.69312"
+         id="rect2991-8"
+         style="fill:#fff590;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text2987-00"
+         y="95.669266"
+         x="210.59842"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           y="95.669266"
+           x="210.59842"
+           id="tspan2989-1"
+           sodipodi:role="line">NXNumericField</tspan></text>
     </g>
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
@@ -494,7 +507,7 @@
          sodipodi:role="line"
          x="272.83466"
          y="124.01572"
-         id="tspan7704">container-view</tspan></text>
+         id="tspan7704">element-view</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
