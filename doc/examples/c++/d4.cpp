@@ -17,6 +17,8 @@ using namespace pni::utils;
 #define FNAME "d4_test.h5"
 #define SAMPLE "JJ0815"
 
+#include "NXHelper.hpp"
+
 typedef std::map<String,NXField> Record;
 
 class D4File{
@@ -80,7 +82,7 @@ void D4File::_setup_storage_ring(){
 
 	doris = _instrument.createGroup("DORIS","NXsource");
 	nf = doris.createNumericField("distance",PNITypeID::FLOAT32,"m","distance to DORIS");
-	nf<<Float32Scalar(40.);
+	nf<<Float32Scalar(40.,"distance","m","distance to DORIS");
 	sf = doris.createStringField("name"); sf<<"DORIS";
 	sf = doris.createStringField("type"); sf<<"Synchrotron X-ray Source";
 	sf = doris.createStringField("probe"); sf<<"positron";
@@ -100,12 +102,39 @@ void D4File::setup_scan(const String &scan_name){
 	NXGroup g;
 
 	_entry = _file.createGroup(scan_name,"NXentry");
-	_instrument = _entry.createGroup("D4","NXinstrument");
-	_sample = _entry.createGroup(_sample_name,"NXsample");
+	_instrument = _entry.createGroup("instrument","NXinstrument");
+	_sample = _entry.createGroup("sample","NXsample");
+    _entry.createGroup("control","NXmonitor");
+
 
 	//setup the basic system
 	_setup_storage_ring();
 	_setup_bending_magnet();
+
+    //create all the slits available at the beamline
+    NXHelper::createNXslit(_instrument,"Slit1","mm","slit after bending magnet");
+    g = NXHelper::createNXslit(_instrument,"Slit2","mm","slit in front of sample");
+    //slit 2 resides on a tower with a tilt
+    NXHelper::createNXpositioner(g,"R1","mm","R1","angle first flight tube");
+    NXHelper::createNXpositioner(g,"Z1","mm","Z1","height first flight tube");
+
+    NXHelper::createNXslit(_instrument,"Slit3","mm","slit after sample");
+    NXHelper::createNXslit(_instrument,"Slit4","mm","slit in front of detector");
+
+    //right after the first slit we have a mirror 
+    //that must be taken into account
+
+
+    //add motors to sample
+    NXHelper::createNXpositioner(_sample,"XS","mm","XS","sample x-translation");
+    NXHelper::createNXpositioner(_sample,"YS","mm","YS","sample y-translation");
+    NXHelper::createNXpositioner(_sample,"GUS","mm","GUS","upper cradle");
+    NXHelper::createNXpositioner(_sample,"GLS","mm","GLS","lower cradle");
+    NXHelper::createNXpositioner(_sample,"OMA","mm","OMA","sample rotation");
+    NXHelper::createNXpositioner(_sample,"OMS","degree","OMS","angle of incidence");
+    
+    
+
 }
 
 int main(int argc,char **argv){
