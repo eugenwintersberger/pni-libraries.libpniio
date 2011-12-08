@@ -1,6 +1,7 @@
 import os.path as path
 import os
 import subprocess
+import platform
 
 #made here a small comment - should be only in the branch
 
@@ -30,11 +31,19 @@ var.Add("PKGNAMEROOT","root package name (actually only used for Debian packages
 #create the build environment
 env = Environment(variables=var,tools=['default','packaging','textfile'])
 
-cxx_version = subprocess.check_output([env['CXX'],'-dumpversion'])
+#Acquire some information about the machine on which the code is built
+#get the compiler version
+cxx_version = subprocess.Popen([os.getenv('CXX'), "-dumpversion"], 
+                               stdout=subprocess.PIPE).communicate()[0]
 (major,minor,release) = cxx_version.split(".")
 cxx_version = int(major+minor)
-print cxx_version
 
+#get the machine architecture
+this_platform = platform.machine()
+
+
+#for GCC versions 4.4 and 4.5 some extra defines are required in order
+#to work correctly with C++11 language extensions.
 if cxx_version < 44:
     print "compiler version not supported!"
     sys.exit()
@@ -58,7 +67,14 @@ elif os.name == "nt":
 
 #create installation paths
 env.Append(INCINSTPATH = path.join(env["PREFIX"],"include/pni/nx"))
-env.Append(LIBINSTPATH = path.join(env["PREFIX"],"lib"))
+if this_platform =="x86_64":
+    #here should be lib64 according to Hannes for 64Bit scientific Linux 
+    #systems. This might cause a problem with Debian. 
+    #Lets have a look what FHS says about this issue!
+    #I leave this to lib for now to not break builds on other systems.
+    env.Append(LIBINSTPATH = path.join(env["PREFIX"],"lib"))
+else:
+    env.Append(LIBINSTPATH = path.join(env["PREFIX"],"lib"))
 
 if env["DOCDIR"] == "":
     #set default documentation directory for installation
