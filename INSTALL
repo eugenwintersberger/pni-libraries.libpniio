@@ -15,8 +15,9 @@ Library dependencies:
 -> HDF5
 
 libpninx relies on C++11 standard so you need a compliant compiler. 
-The code is developed with gcc-4.6. Backports will be provided in future 
-to make builds possible for gcc-4.4 and gcc-4.5.
+The code is developed with gcc-4.6. gcc-4.5 works too. There is a compiler bug
+in gcc 4.4.0 which messed up some of the binary operators for strongly typed 
+enums. Thus the code does not work with gcc 4.4.0 for the moment.
 
 
 2.) Build and installation

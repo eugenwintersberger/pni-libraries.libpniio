@@ -33,7 +33,7 @@ env = Environment(variables=var,tools=['default','packaging','textfile'])
 
 #Acquire some information about the machine on which the code is built
 #get the compiler version
-cxx_version = subprocess.Popen([os.getenv('CXX'), "-dumpversion"], 
+cxx_version = subprocess.Popen([env['CXX'], "-dumpversion"], 
                                stdout=subprocess.PIPE).communicate()[0]
 (major,minor,release) = cxx_version.split(".")
 cxx_version = int(major+minor)
