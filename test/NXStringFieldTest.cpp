@@ -65,7 +65,7 @@ void NXStringFieldTest::testOpen(){
 	NXStringField f1 = file.open("text1");
 	f1 = file.open("text2");
 
-	file.createNumericField("data",PNITypeID::UINT32,"cps","numeric test data");
+	file.createNumericField("data",TypeID::UINT32,"cps","numeric test data");
 	CPPUNIT_ASSERT_THROW(f1 = std::move(file.open("data")),pni::nx::NXFieldError);
 }
 

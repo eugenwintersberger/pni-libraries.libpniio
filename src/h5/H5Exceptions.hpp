@@ -25,7 +25,7 @@
 #ifndef H5EXCEPTIONS_HPP_
 #define H5EXCEPTIONS_HPP_
 
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 #include <pni/utils/Exceptions.hpp>
 extern "C"{
 #include <hdf5.h>

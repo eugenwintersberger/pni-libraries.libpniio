@@ -183,19 +183,19 @@ void NXObjectH5Implementation::setAttribute(const String &n,const ArrayObject &a
 	hid_t tid = 0;   //id of the data type
 	hid_t setid = 0; //id of the data set
 
-	if(!a.isAllocated()){
+	if(!a.is_allocated()){
 		EXCEPTION_INIT(H5AttributeError,"ArrayObject not allocated!");
 		EXCEPTION_THROW();
 	}
 
-	tid = H5TFactory.getTypeFromID(a.getTypeID());
+	tid = H5TFactory.getTypeFromID(a.type_id());
 
 	//create the dataspace
-	H5Utilities::ArrayShape2DataSpace(a.getShape(),setid);
+	H5Utilities::Shape2DataSpace(a.shape(),setid);
 
 	//create the attribute and write the data
 	try{
-		_create_and_write_attribute(_id,n.c_str(),tid,setid,a.getBuffer().getVoidPtr());
+		_create_and_write_attribute(_id,n.c_str(),tid,setid,a.buffer().void_ptr());
 	}catch(...){
 		EXCEPTION_INIT(H5AttributeError,"Cannot create and write attribute "+n+"!");
 		EXCEPTION_THROW();
@@ -212,7 +212,7 @@ void NXObjectH5Implementation::setAttribute(const String &n,const ScalarObject &
 	hid_t setid = 0; //id of the data set
 
 	//determine the data type of the array object
-	tid = H5TFactory.getTypeFromID(d.getTypeID());
+	tid = H5TFactory.getTypeFromID(d.type_id());
 
 	//create the dataspace
 	setid = H5Screate(H5S_SCALAR);
@@ -223,7 +223,7 @@ void NXObjectH5Implementation::setAttribute(const String &n,const ScalarObject &
 
 	//create and write attribute data
 	try{
-		_create_and_write_attribute(_id,n.c_str(),tid,setid,d.getVoidPtr());
+		_create_and_write_attribute(_id,n.c_str(),tid,setid,d.void_ptr());
 	}catch(...){
 		EXCEPTION_INIT(H5AttributeError,"Cannot create and write attribute "+n+"!");
 		EXCEPTION_THROW();
@@ -240,7 +240,7 @@ void NXObjectH5Implementation::setAttribute(const String &n,const String &s) con
 	hid_t setid; //id of the data set
 
 	//determine the data type of the array object
-	tid = H5TFactory.createTypeFromID(PNITypeID::STRING);
+	tid = H5TFactory.createTypeFromID(TypeID::STRING);
 	//need to set the size of the string type
 	H5Tset_size(tid,s.size());
 
@@ -266,7 +266,7 @@ void NXObjectH5Implementation::setAttribute(const String &n,const String &s) con
 //------------------------------------------------------------------------------
 void NXObjectH5Implementation::getAttribute(const String &n,ArrayObject &a) const{
 	EXCEPTION_SETUP("void NXObjectH5Implementation::getAttribute(const char *n,ArrayObject &a)");
-	ArrayShape temp_shape;
+	Shape temp_shape;
 
 
 	hid_t atid = 0;
@@ -281,14 +281,14 @@ void NXObjectH5Implementation::getAttribute(const String &n,ArrayObject &a) cons
 	}
 	//need to do some error checking here
 
-	H5Utilities::DataSpace2ArrayShape(asid,temp_shape);
-	if((a.getShape().getSize()==0)||(temp_shape != a.getShape())){
-		a.setShape(temp_shape);
+	H5Utilities::DataSpace2Shape(asid,temp_shape);
+	if((a.shape().size()==0)||(temp_shape != a.shape())){
+		a.shape(temp_shape);
 		a.allocate();
 	}
 
 	//copy data to the array buffer
-	if((H5Aread(aid,atid,(void *)a.getBuffer().getVoidPtr()))<0){
+	if((H5Aread(aid,atid,(void *)a.buffer().void_ptr()))<0){
 		EXCEPTION_INIT(H5DataSetError,"Error reading data from array attribute ["+String(n)+"]!");
 		H5Tclose(atid);
 		H5Sclose(asid);
@@ -318,7 +318,7 @@ void NXObjectH5Implementation::getAttribute(const String &n,ScalarObject &s) con
 	}
 
 	//copy data to the array buffer
-	if((H5Aread(aid,atid,s.getVoidPtr()))<0){
+	if((H5Aread(aid,atid,s.void_ptr()))<0){
 		EXCEPTION_INIT(H5AttributeError,"Error reading data from scalar attribute ["+n+"]!");
 		//close data-space, attribute, and data-type
 		H5Tclose(atid);
@@ -327,7 +327,7 @@ void NXObjectH5Implementation::getAttribute(const String &n,ScalarObject &s) con
 		EXCEPTION_THROW();
 	}
 
-	s.setName(n);
+	s.name(n);
 
 	//close everything
 	H5Tclose(atid);

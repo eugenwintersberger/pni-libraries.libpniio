@@ -73,7 +73,7 @@ void NXFieldH5Implementation::_get_dataset_objects(hid_t id){
 	}
 
 	//construct the shape object for the file
-	H5Utilities::DataSpace2ArrayShape(_filespace,_fileshape);
+	H5Utilities::DataSpace2Shape(_filespace,_fileshape);
 
 	//obtain the data type of the object
 	_type = H5Dget_type(dataset);
@@ -84,30 +84,30 @@ void NXFieldH5Implementation::_get_dataset_objects(hid_t id){
 	}
 
 	//now we have to set up the element parameters
-	_elemshape.setRank(_fileshape.getRank()-1);
-	for(UInt64 i=1;i<_fileshape.getRank();i++){
-		_elemshape.setDimension(i-1,_fileshape.getDimension(i));
+	_elemshape.rank(_fileshape.rank()-1);
+	for(size_t i=1;i<_fileshape.rank();i++){
+		_elemshape.dim(i-1,_fileshape.dim(i));
 	}
 
 
 	//allocate memory for the offset and counts buffer of the local
 	//element selection
-	_allocate_buffers(_fileshape.getRank());
+	_allocate_buffers(_fileshape.rank());
 
 	//need to set the appropriate values
 	_count[0] = 1;
-	for(UInt64 i=0;i<_fileshape.getRank();i++){
+	for(size_t i=0;i<_fileshape.rank();i++){
 		if(i==0){
 			_count[i] = 1;
 		}else{
-			_count[i] = _elemshape.getDimension(i-1);
+			_count[i] = _elemshape.dim(i-1);
 		}
 		_offset[i] = 0;
-		_resize[i] = _fileshape.getDimension(i);
+		_resize[i] = _fileshape.dim(i);
 	}
 
 	//finally wee need the memory space for a selection
-	H5Utilities::ArrayShape2DataSpace(_elemshape,_elemspace);
+	H5Utilities::Shape2DataSpace(_elemshape,_elemspace);
 }
 
 //============Implementation of protected methods===============================
@@ -129,7 +129,7 @@ void NXFieldH5Implementation::_resize_dataset(size_t increment){
 	H5Sclose(_filespace);
 	_filespace = H5Dget_space(getId());
 
-	_fileshape.setDimension(0,_fileshape.getDimension(0)+increment);
+	_fileshape.dim(0,_fileshape.dim(0)+increment);
 }
 
 
@@ -250,8 +250,8 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(NXFieldH5Implementat
 		_elemshape = o._elemshape;
 		_fileshape = o._fileshape;
 
-		o._fileshape.setRank(0);
-		o._elemshape.setRank(0);
+		o._fileshape.rank(0);
+		o._elemshape.rank(0);
 
 	}
 
@@ -283,23 +283,23 @@ void NXFieldH5Implementation::close(){
 	_free_buffers();
 
 	NXObjectH5Implementation::close();
-	_fileshape.setRank(0);
-	_elemshape.setRank(0);
+	_fileshape.rank(0);
+	_elemshape.rank(0);
 }
 
 //------------------------------------------------------------------------------
 
-const ArrayShape &NXFieldH5Implementation::getShape() const {
+const Shape &NXFieldH5Implementation::getShape() const {
 	return _fileshape;
 }
 
 //------------------------------------------------------------------------------
-const ArrayShape &NXFieldH5Implementation::getElementShape() const{
+const Shape &NXFieldH5Implementation::getElementShape() const{
 	return _elemshape;
 }
 
 //------------------------------------------------------------------------------
-PNITypeID NXFieldH5Implementation::getTypeID() const {
+TypeID NXFieldH5Implementation::getTypeID() const {
 	return H5Utilities::H5Type2PNITypeCode(_type);
 }
 

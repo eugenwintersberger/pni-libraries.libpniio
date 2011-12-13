@@ -44,9 +44,9 @@ H5Exception::H5Exception(const String &n,const String &i,const String &d)
 }
 
 H5Exception::H5Exception(const H5Exception &e){
-	setName(e.getName());
-	setIssuer(e.getIssuer());
-	setDescription(e.getDescription());
+	name(e.name());
+	issuer(e.issuer());
+	description(e.description());
 
 	_h5estack = e._h5estack;
 }
@@ -55,8 +55,8 @@ H5Exception::~H5Exception(){
 }
 
 std::ostream &H5Exception::print(std::ostream &o) const{
-	o<<getName()<<" from "+getIssuer()<<std::endl;
-	o<<getDescription()<<std::endl;
+	o<<name()<<" from "+issuer()<<std::endl;
+	o<<description()<<std::endl;
 	o<<_h5estack;
 
 	return o;

@@ -285,36 +285,36 @@ H5TypeFactory::~H5TypeFactory() {
 hid_t H5TypeFactory::createTypeFromObject(const NumericObject &o) const{
 	EXCEPTION_SETUP("hid_t H5TypeFactory::createTypeFromObject(const NumericObject &o)");
 
-	return createTypeFromID(o.getTypeID());
+	return createTypeFromID(o.type_id());
 }
 
 //------------------------------------------------------------------------------
 const hid_t &H5TypeFactory::getTypeFromObject(const NumericObject &o)const {
 	EXCEPTION_SETUP("hid_t H5TypeFactory::getTypeFromObject(const NumericObject &o)");
 
-	return getTypeFromID(o.getTypeID());
+	return getTypeFromID(o.type_id());
 }
 
 //------------------------------------------------------------------------------
-const hid_t &H5TypeFactory::getTypeFromID(PNITypeID id) const{
+const hid_t &H5TypeFactory::getTypeFromID(TypeID id) const{
 	EXCEPTION_SETUP("hid_t H5TypeFactory::getTypeFromID(PNITypeID id)");
 	switch (id) {
-	case PNITypeID::UINT8: return getType<UInt8> ();
-	case PNITypeID::INT8:  return getType<Int8> ();
-	case PNITypeID::INT16: return getType<Int16> ();
-	case PNITypeID::UINT16: return getType<UInt16> ();
-	case PNITypeID::INT32:  return getType<Int32> ();
-	case PNITypeID::UINT32: return getType<UInt32> ();
-	case PNITypeID::INT64:  return getType<Int64> ();
-	case PNITypeID::UINT64: return getType<UInt64> ();
-	case PNITypeID::FLOAT32: return getType<Float32> ();
-	case PNITypeID::FLOAT64: return getType<Float64> ();
-	case PNITypeID::FLOAT128:  return getType<Float128> ();
-	case PNITypeID::COMPLEX32:  return getType<Complex32> ();
-	case PNITypeID::COMPLEX64:	 return getType<Complex64> ();
-	case PNITypeID::COMPLEX128: return getType<Complex128> ();
-	case PNITypeID::STRING: return getType<String> ();
-	case PNITypeID::BINARY: return getBinaryType();
+	case TypeID::UINT8: return getType<UInt8> ();
+	case TypeID::INT8:  return getType<Int8> ();
+	case TypeID::INT16: return getType<Int16> ();
+	case TypeID::UINT16: return getType<UInt16> ();
+	case TypeID::INT32:  return getType<Int32> ();
+	case TypeID::UINT32: return getType<UInt32> ();
+	case TypeID::INT64:  return getType<Int64> ();
+	case TypeID::UINT64: return getType<UInt64> ();
+	case TypeID::FLOAT32: return getType<Float32> ();
+	case TypeID::FLOAT64: return getType<Float64> ();
+	case TypeID::FLOAT128:  return getType<Float128> ();
+	case TypeID::COMPLEX32:  return getType<Complex32> ();
+	case TypeID::COMPLEX64:	 return getType<Complex64> ();
+	case TypeID::COMPLEX128: return getType<Complex128> ();
+	case TypeID::STRING: return getType<String> ();
+	case TypeID::BINARY: return getBinaryType();
 	default:
 		EXCEPTION_INIT(H5DataTypeError,"Unknown type ID!");
 		EXCEPTION_THROW();
@@ -323,25 +323,25 @@ const hid_t &H5TypeFactory::getTypeFromID(PNITypeID id) const{
 }
 
 //------------------------------------------------------------------------------
-hid_t H5TypeFactory::createTypeFromID(PNITypeID id) const{
+hid_t H5TypeFactory::createTypeFromID(TypeID id) const{
 	EXCEPTION_SETUP("hid_t H5TypeFactory::createTypeFromID(PNITypeID id)");
 	switch (id) {
-	case PNITypeID::UINT8:      return createType<UInt8> ();
-	case PNITypeID::INT8:       return createType<Int8> ();
-	case PNITypeID::INT16:      return createType<Int16> ();
-	case PNITypeID::UINT16:     return createType<UInt16> ();
-	case PNITypeID::INT32:      return createType<Int32> ();
-	case PNITypeID::UINT32:     return createType<UInt32> ();
-	case PNITypeID::INT64:      return createType<Int64> ();
-	case PNITypeID::UINT64:     return createType<UInt64> ();
-	case PNITypeID::FLOAT32:    return createType<Float32> ();
-	case PNITypeID::FLOAT64:    return createType<Float64> ();
-	case PNITypeID::FLOAT128:   return createType<Float128> ();
-	case PNITypeID::COMPLEX32:  return createType<Complex32> ();
-	case PNITypeID::COMPLEX64:  return createType<Complex64> ();
-	case PNITypeID::COMPLEX128: return createType<Complex128> ();
-	case PNITypeID::STRING: return createType<String>();
-	case PNITypeID::BINARY: return createBinaryType();
+	case TypeID::UINT8:      return createType<UInt8> ();
+	case TypeID::INT8:       return createType<Int8> ();
+	case TypeID::INT16:      return createType<Int16> ();
+	case TypeID::UINT16:     return createType<UInt16> ();
+	case TypeID::INT32:      return createType<Int32> ();
+	case TypeID::UINT32:     return createType<UInt32> ();
+	case TypeID::INT64:      return createType<Int64> ();
+	case TypeID::UINT64:     return createType<UInt64> ();
+	case TypeID::FLOAT32:    return createType<Float32> ();
+	case TypeID::FLOAT64:    return createType<Float64> ();
+	case TypeID::FLOAT128:   return createType<Float128> ();
+	case TypeID::COMPLEX32:  return createType<Complex32> ();
+	case TypeID::COMPLEX64:  return createType<Complex64> ();
+	case TypeID::COMPLEX128: return createType<Complex128> ();
+	case TypeID::STRING: return createType<String>();
+	case TypeID::BINARY: return createBinaryType();
 	default:
 		EXCEPTION_INIT(H5DataTypeError,"Unknown type ID!");
 		EXCEPTION_THROW();

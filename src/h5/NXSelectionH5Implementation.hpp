@@ -8,8 +8,8 @@
 #ifndef NXSELECTIONH5IMPLEMENTATION_HPP_
 #define NXSELECTIONH5IMPLEMENTATION_HPP_
 
-#include<pni/utils/PNITypes.hpp>
-#include<pni/utils/ArrayShape.hpp>
+#include<pni/utils/Types.hpp>
+#include<pni/utils/Shape.hpp>
 
 using namespace pni::utils;
 
@@ -26,9 +26,9 @@ private:
 	UInt32 _drank;     //!< rank of the data on disk
 	UInt32 _mrank;     //!< rank of the data in memory
 
-	ArrayShape _mem_shape;  //!< shape of the selection in memory
-	hid_t _mem_space;       //!< memory data space belonging to this selection
-	hid_t _dataset_id;      //!< ID of the dataset the selection is attached to
+	Shape _mem_shape;  //!< shape of the selection in memory
+	hid_t _mem_space;  //!< memory data space belonging to this selection
+	hid_t _dataset_id; //!< ID of the dataset the selection is attached to
 
 	void _compute_mem_rank();
 	void _allocate_buffers(UInt32 n);
@@ -51,7 +51,7 @@ public:
 	virtual void setDiskRank(const UInt32 &i);
 
 	virtual UInt32 getMemRank() const;
-	virtual ArrayShape getMemShape() const;
+	virtual Shape getMemShape() const;
 
 
 	virtual UInt32 getOffset(const UInt32 &i) const;

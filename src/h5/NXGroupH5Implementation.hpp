@@ -8,8 +8,8 @@
 #ifndef NXGROUPH5IMPLEMENTATION_HPP_
 #define NXGROUPH5IMPLEMENTATION_HPP_
 
-#include <pni/utils/PNITypes.hpp>
-#include <pni/utils/ArrayShape.hpp>
+#include <pni/utils/Types.hpp>
+#include <pni/utils/Shape.hpp>
 #include <pni/utils/Exceptions.hpp>
 
 #include "NXObjectH5Implementation.hpp"
@@ -61,12 +61,12 @@ public:
 	//! create a field
 
 	//! create a field
-	NXNumericFieldH5Implementation createNumericField(const String &n, PNITypeID tid,const ArrayShape &s) const;
+	NXNumericFieldH5Implementation createNumericField(const String &n, TypeID tid,const Shape &s) const;
 
-	NXNumericFieldH5Implementation createNumericField(const String &n, PNITypeID tid,const ArrayShape &s,const H5Filter &f) const;
+	NXNumericFieldH5Implementation createNumericField(const String &n, TypeID tid,const Shape &s,const H5Filter &f) const;
 
 	//! method to create a field for a single scalar value
-	NXNumericFieldH5Implementation createNumericField(const String &n,PNITypeID) const;
+	NXNumericFieldH5Implementation createNumericField(const String &n,TypeID) const;
 	//! create a field to store string data
 	NXStringFieldH5Implementation createStringField(const String &n) const;
 	//! create a field to store binary data

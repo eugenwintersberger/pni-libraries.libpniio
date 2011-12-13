@@ -10,7 +10,7 @@
 
 #include "NX.hpp"
 #include <pni/utils/Buffer.hpp>
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>

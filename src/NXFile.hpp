@@ -27,7 +27,7 @@
 
 
 #include <boost/shared_ptr.hpp>
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 
 
 #ifndef NXFILE_HPP_

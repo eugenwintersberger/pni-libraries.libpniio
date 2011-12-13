@@ -26,7 +26,7 @@
 #define NXDATETIME_HPP_
 
 #include<ctime>
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 
 using namespace pni::utils;
 

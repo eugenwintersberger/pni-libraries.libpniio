@@ -149,7 +149,7 @@ NXGroupH5Implementation NXGroupH5Implementation::createGroup(const String &n) co
 
 //------------------------------------------------------------------------------
 //create a field for array data
-NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const String &n, PNITypeID tid,const ArrayShape &s) const{
+NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const String &n, TypeID tid,const Shape &s) const{
 	EXCEPTION_SETUP("NXFieldH5Implementation NXGroupH5Implementation::createField(const String &n, PNITypeID tid,const ArrayShape &s)");
 
 	NXNumericFieldH5Implementation field;
@@ -165,18 +165,18 @@ NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const
 
 	//create the data space
 	hsize_t *dims=nullptr,*mdims=nullptr,*cdims=nullptr;
-	dims = new hsize_t[s.getRank()+1];
+	dims = new hsize_t[s.rank()+1];
 	if(!dims){
 		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for data set dimensions!");
 		EXCEPTION_THROW();
 	}
-	mdims = new hsize_t[s.getRank()+1];
+	mdims = new hsize_t[s.rank()+1];
 	if(!mdims){
 		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for data set max. dimensions!");
 		if(dims) delete [] dims;
 		EXCEPTION_THROW();
 	}
-	cdims = new hsize_t[s.getRank()+1];
+	cdims = new hsize_t[s.rank()+1];
 	if(!cdims){
 		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for data set chunk dimensions!");
 		if(dims) delete [] dims;
@@ -189,13 +189,13 @@ NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const
 	cdims[0] = 1;
 	mdims[0] = H5S_UNLIMITED;
 	//now add all others
-	for(UInt32 i=0;i<s.getRank();i++){
-		dims[i+1] = s.getDimension(i);
-		cdims[i+1] = s.getDimension(i);
-		mdims[i+1] = s.getDimension(i);
+	for(UInt32 i=0;i<s.rank();i++){
+		dims[i+1] = s.dim(i);
+		cdims[i+1] = s.dim(i);
+		mdims[i+1] = s.dim(i);
 	}
 
-	hid_t space_id = H5Screate_simple(s.getRank()+1,dims,mdims);
+	hid_t space_id = H5Screate_simple(s.rank()+1,dims,mdims);
 	if(space_id<0){
 		EXCEPTION_INIT(H5DataSpaceError,"Cannot create data space!");
 		EXCEPTION_THROW();
@@ -206,7 +206,7 @@ NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const
 	hid_t lcreate_plist = H5Pcreate(H5P_LINK_CREATE);
 	H5Pset_create_intermediate_group(lcreate_plist,1);
 	H5Pset_layout(creation_plist,H5D_CHUNKED);
-	H5Pset_chunk(creation_plist,s.getRank()+1,cdims);
+	H5Pset_chunk(creation_plist,s.rank()+1,cdims);
 
 	//create the dataset
 	id = H5Dcreate2(pid,n.c_str(),type_id,space_id,lcreate_plist,creation_plist,H5P_DEFAULT);
@@ -233,8 +233,8 @@ NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const
 }
 
 //-----------------------------------------------------------------------------
-NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const String &n, PNITypeID tid,
-		                                  const ArrayShape &s,const H5Filter &f) const{
+NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const String &n, TypeID tid,
+		                                  const Shape &s,const H5Filter &f) const{
 	EXCEPTION_SETUP("void NXGroupH5Implementation::createField(const char *n, "
 			        "PNITypeID tid,UInt32 rank, const UInt32 *dims,"
 			        "NXFieldH5Implementation &imp)");
@@ -251,18 +251,18 @@ NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const
 
 	//create the data space
 	hsize_t *dims=NULL,*mdims=NULL,*cdims=NULL;
-	dims = new hsize_t[s.getRank()];
+	dims = new hsize_t[s.rank()];
 	if(dims == NULL){
 		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for data set dimensions!");
 		EXCEPTION_THROW();
 	}
-	mdims = new hsize_t[s.getRank()];
+	mdims = new hsize_t[s.rank()];
 	if(mdims == NULL){
 		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for data set max. dimensions!");
 		if(dims != NULL) delete [] dims;
 		EXCEPTION_THROW();
 	}
-	cdims = new hsize_t[s.getRank()];
+	cdims = new hsize_t[s.rank()];
 	if(cdims == NULL){
 		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate memory for data set chunk dimensions!");
 		if(dims != NULL) delete [] dims;
@@ -270,16 +270,16 @@ NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const
 		EXCEPTION_THROW();
 	}
 
-	for(UInt32 i=0;i<s.getRank();i++){
-		dims[i] = s.getDimension(i);
-		cdims[i] = s.getDimension(i);
-		mdims[i] = s.getDimension(i);
+	for(size_t i=0;i<s.rank();i++){
+		dims[i] = s.dim(i);
+		cdims[i] = s.dim(i);
+		mdims[i] = s.dim(i);
 	}
 	//modify some of the dimension arrays
 	cdims[0] = 1;
 	mdims[0] = H5S_UNLIMITED;
 
-	hid_t space_id = H5Screate_simple(s.getRank(),dims,mdims);
+	hid_t space_id = H5Screate_simple(s.rank(),dims,mdims);
 	if(space_id<0){
 		EXCEPTION_INIT(H5DataSpaceError,"Cannot create data space!");
 		EXCEPTION_THROW();
@@ -291,7 +291,7 @@ NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const
 	H5Pset_create_intermediate_group(lcreate_plist,1);
 	H5Pset_shuffle(creation_plist);
 	H5Pset_layout(creation_plist,H5D_CHUNKED);
-	H5Pset_chunk(creation_plist,s.getRank(),cdims);
+	H5Pset_chunk(creation_plist,s.rank(),cdims);
 
 	//here we need to add filter code
 	f.setup(creation_plist);
@@ -321,7 +321,7 @@ NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const
 }
 
 //------------------------------------------------------------------------------
-NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const String &n, PNITypeID tid) const{
+NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const String &n, TypeID tid) const{
 	EXCEPTION_SETUP("NXFieldH5Implementation NXGroupH5Implementation::createField(const String &n, PNITypeID tid)");
 
 	NXNumericFieldH5Implementation field;
@@ -376,7 +376,7 @@ NXStringFieldH5Implementation NXGroupH5Implementation::createStringField(const S
 	hid_t id = 0;
 
 	//create the data type
-	hid_t type_id = H5TFactory.createTypeFromID(PNITypeID::STRING);
+	hid_t type_id = H5TFactory.createTypeFromID(TypeID::STRING);
 	H5Tset_size(type_id,H5T_VARIABLE);
 
 	//H5Tset_size(type_id,size);
@@ -432,7 +432,7 @@ NXGroupH5Implementation::createBinaryField(const String &n) const{
 	hid_t id = 0;
 
 	//create the data type
-	hid_t type_id = H5TFactory.createTypeFromID(PNITypeID::BINARY);
+	hid_t type_id = H5TFactory.createTypeFromID(TypeID::BINARY);
 	H5Tset_size(type_id,H5T_VARIABLE);
 
 	//H5Tset_size(type_id,size);

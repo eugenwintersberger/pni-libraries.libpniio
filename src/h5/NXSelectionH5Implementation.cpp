@@ -144,13 +144,13 @@ UInt32 NXSelectionH5Implementation::getMemRank() const {
 }
 
 //------------------------------------------------------------------------------
-ArrayShape NXSelectionH5Implementation::getMemShape() const{
-	ArrayShape s(getMemRank());
+Shape NXSelectionH5Implementation::getMemShape() const{
+	Shape s(getMemRank());
 
-	if(s.getRank()!=0){
-		for(UInt32 i=0,r=0;i<getDiskRank();i++){
+	if(s.rank()!=0){
+		for(size_t i=0,r=0;i<getDiskRank();i++){
 			if(getCount(i) != 1){
-				s.setDimension(r,getCount(i));
+				s.dim(r,getCount(i));
 				r++;
 			}
 		}

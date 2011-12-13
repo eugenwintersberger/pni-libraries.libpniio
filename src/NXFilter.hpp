@@ -28,7 +28,7 @@
 #ifndef NXFILTER_HPP_
 #define NXFILTER_HPP_
 
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 
 #include "NXObject.hpp"
 
@@ -47,8 +47,8 @@ public:
 
 	NXFilter<Filter> &operator=(const NXFilter<Filter> &f);
 
-	const ArrayShape &getChunkShape() const;
-	void setChunkShape(const ArrayShape &s);
+	const Shape &getChunkShape() const;
+	void setChunkShape(const Shape &s);
 };
 
 template<typename Filter> NXFilter<Filter>::NXFilter():Filter(){

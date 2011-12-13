@@ -36,7 +36,7 @@ private:
 
 	String          _write_str_attr;
 	Float64Scalar   _write_scalar_attr;
-	ArrayShape      _shape;
+	Shape 	        _shape;
 	Int16Array      _write_array_attr;
 	Complex64Scalar _write_cmplx_scalar;
 	String          _read_str_attr;

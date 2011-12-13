@@ -25,7 +25,7 @@
 #ifndef NXBINARYFIELD_HPP_
 #define NXBINARYFIELD_HPP_
 
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 #include <pni/utils/Buffer.hpp>
 
 #include "NXField.hpp"

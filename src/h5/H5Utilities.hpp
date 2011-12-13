@@ -25,8 +25,8 @@
 #ifndef H5UTILITIES_HPP_
 #define H5UTILITIES_HPP_
 
-#include <pni/utils/ArrayShape.hpp>
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Shape.hpp>
+#include <pni/utils/Types.hpp>
 #include <pni/utils/Exceptions.hpp>
 #include <pni/utils/Selection.hpp>
 
@@ -64,7 +64,7 @@ public:
 	//! \throws H5DataSpaceError if data space creation fails
 	//! \param s ArrayShape object
 	//! \param dspace data space id
-	static void ArrayShape2DataSpace(const ArrayShape &s,hid_t &dspace);
+	static void Shape2DataSpace(const Shape &s,hid_t &dspace);
 	//! ArrayShape from data space
 
 	//! Creates an ArraySpace object from an existing HDF5 data space.
@@ -74,7 +74,7 @@ public:
 	//! \throws MemoryAllocationError if temporary buffer allocation fails
 	//! \param dspace data space id
 	//! \param s ArrayShape object
-	static void DataSpace2ArrayShape(const hid_t &dspace,ArrayShape &s);
+	static void DataSpace2Shape(const hid_t &dspace,Shape &s);
 	//! Selection from dataspace
 
 	//! Creates a selection that is appropriate for a given data space.
@@ -90,7 +90,7 @@ public:
 	//! PNITypeID::NONE is returned.
 	//! \param tid HDF5 type object
 	//! \return PNI type ID
-	static PNITypeID H5Type2PNITypeCode(const hid_t tid);
+	static TypeID H5Type2PNITypeCode(const hid_t tid);
 };
 
 static H5Utilities H5Utils;

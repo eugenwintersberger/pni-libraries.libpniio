@@ -29,7 +29,7 @@ extern "C"{
 #include <hdf5.h>
 }
 
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 #include <pni/utils/NumericObject.hpp>
 
 using namespace pni::utils;
@@ -130,13 +130,13 @@ public:
 	//! Get a reference from a type determined by its TypeID.
 	//! \throws H5DataTypeError if ID is unknown
 	//! \return reference to type
-	const hid_t &getTypeFromID(PNITypeID id) const;
+	const hid_t &getTypeFromID(TypeID id) const;
 	//! create a new type from type ID
 
 	//! Create a new type determined by its TypeID.
 	//! \throws H5DataTypeError if ID is unkown
 	//! \return new HDF5 type object
-	hid_t createTypeFromID(PNITypeID id) const;
+	hid_t createTypeFromID(TypeID id) const;
 };
 
 //! static and global instance of H5TypeFactory

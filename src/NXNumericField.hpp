@@ -27,7 +27,7 @@
 
 #include <pni/utils/Array.hpp>
 #include <pni/utils/Scalar.hpp>
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 
 #include "NXField.hpp"
 
@@ -108,7 +108,7 @@ template<typename Imp>
 bool NXNumericField<Imp>::_check_unit(const NumericObject &o) const{
 	String fieldunit;
 	this->getAttribute("units",fieldunit);
-	if(o.getUnit() == fieldunit) return true;
+	if(o.unit() == fieldunit) return true;
 
 	return false;
 }
@@ -213,7 +213,7 @@ void NXNumericField<Imp>::append(const ArrayObject &o){
 					"append(const ArrayObject &o)");
 
 	//raise an exception if the array is not allocated
-	if(!o.isAllocated()){
+	if(!o.is_allocated()){
 		EXCEPTION_INIT(NXFieldError,"Array not allocated!");
 		EXCEPTION_THROW();
 	}
@@ -224,10 +224,10 @@ void NXNumericField<Imp>::append(const ArrayObject &o){
 		EXCEPTION_THROW();
 	}
 
-	if(this->getShape().getRank()==o.getShape().getRank()){
+	if(this->getShape().rank()==o.shape().rank()){
 		//array and field have the same rank
 
-		if((this->getElementShape().getRank()==0) && (o.getShape().getRank()==1)){
+		if((this->getElementShape().rank()==0) && (o.shape().rank()==1)){
 			//an array will be appended as a block to a field that was
 			//originally created for scalar values
 
@@ -241,8 +241,8 @@ void NXNumericField<Imp>::append(const ArrayObject &o){
 		}
 
 		//array block
-		for(UInt64 i=1;i<o.getShape().getRank();i++){
-			if(this->getShape().getDimension(i)!=o.getShape().getDimension(i)){
+		for(UInt64 i=1;i<o.shape().rank();i++){
+			if(this->getShape().dim(i)!=o.shape().dim(i)){
 				EXCEPTION_INIT(ShapeMissmatchError,"Field and array shape do not match!");
 				EXCEPTION_THROW();
 			}
@@ -259,7 +259,7 @@ void NXNumericField<Imp>::append(const ArrayObject &o){
 
 
 	//the array is an element of the field
-	if(this->getElementShape()==o.getShape()){
+	if(this->getElementShape()==o.shape()){
 		try{
 			this->getImplementation().append(o,false);
 		}catch(...){
@@ -276,7 +276,7 @@ void NXNumericField<Imp>::append(const ScalarObject &o){
 	EXCEPTION_SETUP("template<typename Imp> void NXNumericField<Imp>::"
 					"append(const ScalarObject &o)");
 
-	if(this->getElementShape().getRank()!=0){
+	if(this->getElementShape().rank()!=0){
 		EXCEPTION_INIT(NXFieldError,"Object rank does not match!");
 		EXCEPTION_THROW();
 	}
@@ -303,7 +303,7 @@ void NXNumericField<Imp>::get(const UInt64 &index,ArrayObject &o){
 	EXCEPTION_SETUP("template<typename Imp> void NXNumericField<Imp>::"
 					"get(const UInt64 &i,ArrayObject &o)");
 
-	if(!o.isAllocated()){
+	if(!o.is_allocated()){
 		EXCEPTION_INIT(NXFieldError,"Array not allocated!");
 		EXCEPTION_THROW();
 	}
@@ -313,10 +313,10 @@ void NXNumericField<Imp>::get(const UInt64 &index,ArrayObject &o){
 		EXCEPTION_THROW();
 	}
 
-	if(this->getShape().getRank()==o.getShape().getRank()){
+	if(this->getShape().rank()==o.shape().rank()){
 		//array and field have the same rank
 
-		if((this->getElementShape().getRank()==0) && (o.getShape().getRank()==1)){
+		if((this->getElementShape().rank()==0) && (o.shape().rank()==1)){
 			//an array will be appended as a block to a field that was
 			//originally created for scalar values
 
@@ -330,8 +330,8 @@ void NXNumericField<Imp>::get(const UInt64 &index,ArrayObject &o){
 		}
 
 		//array block
-		for(UInt64 i=1;i<o.getShape().getRank();i++){
-			if(this->getShape().getDimension(i)!=o.getShape().getDimension(i)){
+		for(size_t i=1;i<o.shape().rank();i++){
+			if(this->getShape().dim(i)!=o.shape().dim(i)){
 				EXCEPTION_INIT(ShapeMissmatchError,"Field and array shape do not match!");
 				EXCEPTION_THROW();
 			}
@@ -348,7 +348,7 @@ void NXNumericField<Imp>::get(const UInt64 &index,ArrayObject &o){
 
 
 	//the array is an element of the field
-	if(this->getElementShape()==o.getShape()){
+	if(this->getElementShape()==o.shape()){
 		try{
 			this->getImplementation().get(index,o,false);
 		}catch(...){
@@ -386,7 +386,7 @@ template<typename Imp> void NXNumericField<Imp>::get(ArrayObject &o){
 	EXCEPTION_SETUP("template<typename Imp> void NXNumericField<Imp>::"
 					"get(ArrayObject &o)");
 
-	if(!o.isAllocated()){
+	if(!o.is_allocated()){
 		EXCEPTION_INIT(NXFieldError,"Array is not allocated!");
 		EXCEPTION_THROW();
 	}
@@ -396,7 +396,7 @@ template<typename Imp> void NXNumericField<Imp>::get(ArrayObject &o){
 		EXCEPTION_THROW();
 	}
 
-	if(this->getShape()!=o.getShape()){
+	if(this->getShape()!=o.shape()){
 		EXCEPTION_INIT(ShapeMissmatchError,"Field and array shape do not match!");
 		EXCEPTION_THROW();
 	}
@@ -441,7 +441,7 @@ void NXNumericField<Imp>::set(const UInt64 &index,const ArrayObject &o){
 	EXCEPTION_SETUP("template<typename Imp> void NXNumericField<Imp>::"
 					"set(const UInt64 &i,const ArrayObject &o)");
 
-	if(!o.isAllocated()){
+	if(!o.is_allocated()){
 		EXCEPTION_INIT(NXFieldError,"Array not allocated!");
 		EXCEPTION_THROW();
 	}
@@ -451,10 +451,10 @@ void NXNumericField<Imp>::set(const UInt64 &index,const ArrayObject &o){
 		EXCEPTION_THROW();
 	}
 
-	if(this->getShape().getRank()==o.getShape().getRank()){
+	if(this->getShape().rank()==o.shape().rank()){
 		//array and field have the same rank
 
-		if((this->getElementShape().getRank()==0) && (o.getShape().getRank()==1)){
+		if((this->getElementShape().rank()==0) && (o.shape().rank()==1)){
 			//an array will be appended as a block to a field that was
 			//originally created for scalar values
 
@@ -468,8 +468,8 @@ void NXNumericField<Imp>::set(const UInt64 &index,const ArrayObject &o){
 		}
 
 		//array block
-		for(UInt64 i=1;i<o.getShape().getRank();i++){
-			if(this->getShape().getDimension(i)!=o.getShape().getDimension(i)){
+		for(size_t i=1;i<o.shape().rank();i++){
+			if(this->getShape().dim(i)!=o.shape().dim(i)){
 				EXCEPTION_INIT(ShapeMissmatchError,"Field and array shape do not match!");
 				EXCEPTION_THROW();
 			}
@@ -486,7 +486,7 @@ void NXNumericField<Imp>::set(const UInt64 &index,const ArrayObject &o){
 
 
 	//the array is an element of the field
-	if(this->getElementShape()==o.getShape()){
+	if(this->getElementShape()==o.shape()){
 		try{
 			this->getImplementation().set(index,o,false);
 		}catch(...){

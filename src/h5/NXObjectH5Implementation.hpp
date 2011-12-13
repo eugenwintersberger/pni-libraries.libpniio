@@ -29,7 +29,7 @@ extern "C" {
 #include <hdf5.h>
 }
 
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 #include <pni/utils/Scalar.hpp>
 #include <pni/utils/ScalarObject.hpp>
 #include <pni/utils/ArrayObject.hpp>

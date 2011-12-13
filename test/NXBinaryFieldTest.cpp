@@ -64,7 +64,7 @@ void NXBinaryFieldTest::testOpen(){
 	NXBinaryField f1 = file.open("text1");
 	f1 = file.open("text2");
 
-	file.createNumericField("data",PNITypeID::UINT32,"cps","numeric test data");
+	file.createNumericField("data",TypeID::UINT32,"cps","numeric test data");
 	CPPUNIT_ASSERT_THROW(f1 = std::move(file.open("data")),pni::nx::NXFieldError);
 }
 
@@ -94,7 +94,7 @@ void NXBinaryFieldTest::testAppend(){
 	std::cout<<std::endl;
 
 	Buffer<Binary> buffer(10);
-	for(UInt64 i=0;i<buffer.getSize();i++) buffer[i] = testdata[i];
+	for(UInt64 i=0;i<buffer.size();i++) buffer[i] = testdata[i];
 
 	NXBinaryField field = file.createBinaryField("bindump");
 
@@ -107,7 +107,7 @@ void NXBinaryFieldTest::testGetAll(){
 	std::cout<<std::endl;
 
 	Buffer<Binary> writeb(10),readb(10);
-	for(UInt64 i=0;i<writeb.getSize();i++) writeb[i] = testdata[i];
+	for(size_t i=0;i<writeb.size();i++) writeb[i] = testdata[i];
 
 	NXBinaryField field = file.createBinaryField("bindump");
 	CPPUNIT_ASSERT_NO_THROW(field.append(writeb));
@@ -115,7 +115,7 @@ void NXBinaryFieldTest::testGetAll(){
 	//readback data
 	CPPUNIT_ASSERT_NO_THROW(field.get(readb));
 
-	for(UInt64 i=0;i<readb.getSize();i++){
+	for(size_t i=0;i<readb.size();i++){
 		CPPUNIT_ASSERT(readb[i] == testdata[i]);
 	}
 
@@ -127,14 +127,14 @@ void NXBinaryFieldTest::testGet(){
 	std::cout<<std::endl;
 
 	Buffer<Binary> writeb(10), readb(3);
-	for(UInt64 i=0;i<writeb.getSize();i++) writeb[i] = testdata[i];
+	for(size_t i=0;i<writeb.size();i++) writeb[i] = testdata[i];
 
 	NXBinaryField field = file.createBinaryField("bindump");
 	CPPUNIT_ASSERT_NO_THROW(field.append(writeb));
 
 	//partial read back
 	CPPUNIT_ASSERT_NO_THROW(field.get(2,readb));
-	for(UInt64 i=0;i<readb.getSize();i++) CPPUNIT_ASSERT(readb[i] == testdata[i+2]);
+	for(size_t i=0;i<readb.size();i++) CPPUNIT_ASSERT(readb[i] == testdata[i+2]);
 
 	//throw an exception
 	CPPUNIT_ASSERT_THROW(field.get(100,readb),pni::nx::NXFieldError);
@@ -147,14 +147,14 @@ void NXBinaryFieldTest::testSet(){
 	std::cout<<std::endl;
 
 	Buffer<Binary> writeb(10),readb(10);
-	for(UInt64 i=0;i<writeb.getSize();i++) writeb[i] = testdata[i];
+	for(size_t i=0;i<writeb.size();i++) writeb[i] = testdata[i];
 
 	NXBinaryField field = file.createBinaryField("bindump");
 	CPPUNIT_ASSERT_NO_THROW(field.set(5,writeb));
 
 	//readback data
 	CPPUNIT_ASSERT_NO_THROW(field.get(5,readb));
-	for(UInt64 i=0;i<readb.getSize();i++) CPPUNIT_ASSERT(readb[i] == testdata[i]);
+	for(size_t i=0;i<readb.size();i++) CPPUNIT_ASSERT(readb[i] == testdata[i]);
 
 }
 
@@ -164,7 +164,7 @@ void NXBinaryFieldTest::testStreamIO(){
 	std::cout<<std::endl;
 
 	Buffer<Binary> writeb(10),readb(10);
-	for(UInt64 i=0;i<writeb.getSize();i++) writeb[i] = testdata[i];
+	for(size_t i=0;i<writeb.size();i++) writeb[i] = testdata[i];
 
 	NXBinaryField field = file.createBinaryField("bindump");
 

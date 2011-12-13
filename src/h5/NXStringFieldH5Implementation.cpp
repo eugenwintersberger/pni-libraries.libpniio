@@ -46,7 +46,7 @@ NXFieldH5Implementation(o){
 					"(const NXFieldH5Implementation &o)");
 
 	//have to check here if the data type is correct
-	if(getTypeID() != PNITypeID::STRING){
+	if(getTypeID() != TypeID::STRING){
 		close();
 		EXCEPTION_INIT(TypeError,"Data field is not a string field!");
 		EXCEPTION_THROW();
@@ -64,7 +64,7 @@ NXFieldH5Implementation(o){
 					"(const NXObjectH5Implementation &o)");
 
 	//have to check here if the data type is correct
-	if(getTypeID() != PNITypeID::STRING){
+	if(getTypeID() != TypeID::STRING){
 		close();
 		EXCEPTION_INIT(TypeError,"Object is not a not a string field!");
 		EXCEPTION_THROW();
@@ -82,7 +82,7 @@ NXFieldH5Implementation(std::move(o)){
 
 	std::cout<<"Calling move conversion constructor!"<<std::endl;
 	//have to check if the data type is correct for a string field
-	if(getTypeID() != PNITypeID::STRING){
+	if(getTypeID() != TypeID::STRING){
 		close();
 		EXCEPTION_INIT(TypeError,"Field is not a string field!");
 		EXCEPTION_THROW();
@@ -99,7 +99,7 @@ NXFieldH5Implementation(std::move(o)){
 					"(NXObjectH5Implementation &&o)");
 
 	//have to check here if the data type is correct
-	if(getTypeID() != PNITypeID::STRING){
+	if(getTypeID() != TypeID::STRING){
 		close();
 		EXCEPTION_INIT(TypeError,"Object is not a not a string field!");
 		EXCEPTION_THROW();
@@ -118,7 +118,7 @@ NXFieldH5Implementation(o){
 
 
 	//have to check if the data type is correct for a string field
-	if(getTypeID() != PNITypeID::STRING){
+	if(getTypeID() != TypeID::STRING){
 		close();
 		EXCEPTION_INIT(TypeError,"Field is not a string field!");
 		EXCEPTION_THROW();
@@ -137,7 +137,7 @@ NXFieldH5Implementation(std::move(o)){
 					"(NXStringFieldH5Implementation &&o)");
 
 	//have to check if the data type is correct for a string field
-	if(getTypeID() != PNITypeID::STRING){
+	if(getTypeID() != TypeID::STRING){
 		close();
 		EXCEPTION_INIT(TypeError,"Field is not a string field!");
 		EXCEPTION_THROW();
@@ -183,7 +183,7 @@ NXStringFieldH5Implementation::operator=(const NXFieldH5Implementation &o){
 					"NXStringFieldH5Implementation::operator="
 					"(const NXFieldH5Implementation &o)");
 
-	if(o.getTypeID() != PNITypeID::STRING){
+	if(o.getTypeID() != TypeID::STRING){
 		EXCEPTION_INIT(TypeError,"Field is not a string field!");
 		EXCEPTION_THROW();
 	}
@@ -202,7 +202,7 @@ NXStringFieldH5Implementation::operator=(const NXObjectH5Implementation &o){
 					"(const NXObjectH5Implementation &o)");
 
 	(NXFieldH5Implementation &)(*this) = o;
-	if(getTypeID() != PNITypeID::STRING){
+	if(getTypeID() != TypeID::STRING){
 		EXCEPTION_INIT(TypeError,"Object is not a string field!");
 		EXCEPTION_THROW();
 	}
@@ -217,7 +217,7 @@ NXStringFieldH5Implementation::operator=(NXFieldH5Implementation &&o){
 					"NXStringFieldH5Implementation::operator="
 					"(NXFieldH5Implementation &&o)");
 
-	if(o.getTypeID() != PNITypeID::STRING){
+	if(o.getTypeID() != TypeID::STRING){
 		EXCEPTION_INIT(TypeError,"Field is not a string field!");
 		EXCEPTION_THROW();
 	}
@@ -235,7 +235,7 @@ NXStringFieldH5Implementation::operator=(NXObjectH5Implementation &&o){
 					"(NXObjectH5Implementation &&o)");
 
 	(NXFieldH5Implementation &)(*this) = std::move(o);
-	if(getTypeID() != PNITypeID::STRING){
+	if(getTypeID() != TypeID::STRING){
 		EXCEPTION_INIT(TypeError,"Object is not a string field!");
 		EXCEPTION_THROW();
 	}
@@ -245,7 +245,7 @@ NXStringFieldH5Implementation::operator=(NXObjectH5Implementation &&o){
 //================Implementation of IO functions================================
 //get number of strings
 UInt64 NXStringFieldH5Implementation::size() const{
-	return getShape().getDimension(0);
+	return getShape().dim(0);
 }
 
 //------------------------------------------------------------------------------
@@ -258,7 +258,7 @@ void NXStringFieldH5Implementation::append(const String &o){
 	elem_type = H5Dget_type(getId());
 	//extend field along growth dimension
 	_resize_dataset(1);
-	_offset[0] = getShape().getDimension(0)-1;
+	_offset[0] = getShape().dim(0)-1;
 
 	const char *ptr = o.c_str();
 
@@ -279,8 +279,8 @@ void NXStringFieldH5Implementation::set(const UInt64 &i,const String &o){
 
 	elem_type = H5Dget_type(getId());
 	//extend field along growth dimension
-	if(i>=getShape().getDimension(0)){
-		_resize_dataset(1+i-getShape().getDimension(0));
+	if(i>=getShape().dim(0)){
+		_resize_dataset(1+i-getShape().dim(0));
 	}
 	_offset[0] = i;
 
@@ -300,7 +300,7 @@ void NXStringFieldH5Implementation::set(const UInt64 &i,const String &o){
 void NXStringFieldH5Implementation::get(const UInt64 &i,String &o){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::get(const UInt64 &i,String &s)");
 
-	if(i>=getShape().getDimension(0)){
+	if(i>=getShape().dim(0)){
 		EXCEPTION_INIT(IndexError,"Element index exceeds container size!");
 		EXCEPTION_THROW();
 	}

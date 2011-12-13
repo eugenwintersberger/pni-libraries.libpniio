@@ -28,10 +28,10 @@
 #ifndef NXFIELD_HPP_
 #define NXFIELD_HPP_
 
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 #include <pni/utils/ScalarObject.hpp>
 #include <pni/utils/Scalar.hpp>
-#include <pni/utils/ArrayShape.hpp>
+#include <pni/utils/Shape.hpp>
 #include <pni/utils/ArrayObject.hpp>
 #include <pni/utils/Array.hpp>
 #include <pni/utils/NumericObject.hpp>
@@ -104,14 +104,14 @@ public:
 	//! a constant reference to the fields' shape. So you cannot alter
 	//! this object.
 	//! \return ArrayShape& reference to the shape object
-	virtual const ArrayShape &getShape() const{
+	virtual const Shape &getShape() const{
 		return this->getImplementation().getShape();
 	}
 
 	//! shape of a single element
 
 	//! Return the shape of a single element stored in the container.
-	virtual const ArrayShape &getElementShape() const {
+	virtual const Shape &getElementShape() const {
 		return this->getImplementation().getElementShape();
 	}
 
@@ -119,7 +119,7 @@ public:
 
 	//! Return the ID of the data type stored in the field.
 	//! \return data type ID
-	virtual PNITypeID getTypeID() const {
+	virtual TypeID getTypeID() const {
 		return this->getImplementation().getTypeID();
 	}
 

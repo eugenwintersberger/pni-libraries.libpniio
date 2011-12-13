@@ -149,15 +149,15 @@ void NXNumericFieldH5Implementation::append(const NumericObject &o,bool block){
 	hid_t elem_type;
 
 	//get the appropriate memory type
-	elem_type = H5TFactory.getTypeFromID(o.getTypeID());
+	elem_type = H5TFactory.getTypeFromID(o.type_id());
 
 	//set the offset for the selection to the last index in the container
-	_offset[0] = getShape().getDimension(0);
+	_offset[0] = getShape().dim(0);
 
 	if(block){
 		ArrayObject &array = (ArrayObject &)o;
-		H5Utilities::ArrayShape2DataSpace(array.getShape(),memspace);
-		_count[0] = array.getShape().getDimension(0);
+		H5Utilities::Shape2DataSpace(array.shape(),memspace);
+		_count[0] = array.shape().dim(0);
 		_resize_dataset(_count[0]);
 	}else{
 		//if we append only a single element
@@ -168,7 +168,7 @@ void NXNumericFieldH5Implementation::append(const NumericObject &o,bool block){
 
 	//set the selection and write data
 	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
-	err = H5Dwrite(getId(),elem_type,memspace,_filespace,H5P_DEFAULT,o.getVoidPtr());
+	err = H5Dwrite(getId(),elem_type,memspace,_filespace,H5P_DEFAULT,o.void_ptr());
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error writing data to field ["+getName()+"]!");
 		EXCEPTION_THROW();
@@ -192,11 +192,11 @@ void NXNumericFieldH5Implementation::set(const UInt64 &i,const NumericObject &o,
 	hid_t elem_type;
 
 	//get the appropriate memory type
-	elem_type = H5TFactory.getTypeFromID(o.getTypeID());
+	elem_type = H5TFactory.getTypeFromID(o.type_id());
 
 	//resize the array if i is exceeds the bounds
-	if(i>=getShape().getDimension(0)){
-		_resize_dataset(1+i-getShape().getDimension(0));
+	if(i>=getShape().dim(0)){
+		_resize_dataset(1+i-getShape().dim(0));
 	}
 
 	//set offset
@@ -204,9 +204,9 @@ void NXNumericFieldH5Implementation::set(const UInt64 &i,const NumericObject &o,
 
 	if(block){
 		ArrayObject &array = (ArrayObject &)o;
-		_resize_dataset(array.getShape().getDimension(0)-1);
-		H5Utilities::ArrayShape2DataSpace(array.getShape(),memspace);
-		_count[0] = array.getShape().getDimension(0);
+		_resize_dataset(array.shape().dim(0)-1);
+		H5Utilities::Shape2DataSpace(array.shape(),memspace);
+		_count[0] = array.shape().dim(0);
 	}else{
 		_count[0] = 1;
 		memspace = _elemspace;
@@ -214,7 +214,7 @@ void NXNumericFieldH5Implementation::set(const UInt64 &i,const NumericObject &o,
 
 	//set the selection and write data
 	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
-	err = H5Dwrite(dataset,elem_type,memspace,_filespace,H5P_DEFAULT,o.getVoidPtr());
+	err = H5Dwrite(dataset,elem_type,memspace,_filespace,H5P_DEFAULT,o.void_ptr());
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error writing data to field ["+getName()+"]!");
 		EXCEPTION_THROW();
@@ -232,7 +232,7 @@ void NXNumericFieldH5Implementation::get(const UInt64 &i,NumericObject &o,bool b
 	EXCEPTION_SETUP("void NXNumericFieldH5Implementation::"
 					"get(const UInt64 &i,const NumericObject &d,bool block)");
 
-	if(i>=getShape().getDimension(0)){
+	if(i>=getShape().dim(0)){
 		EXCEPTION_INIT(IndexError,"Element index exceeds container size!");
 		EXCEPTION_THROW();
 	}
@@ -243,19 +243,19 @@ void NXNumericFieldH5Implementation::get(const UInt64 &i,NumericObject &o,bool b
 	hid_t elem_type;
 
 	//get the appropriate memory type
-	elem_type = H5TFactory.getTypeFromID(o.getTypeID());
+	elem_type = H5TFactory.getTypeFromID(o.type_id());
 
 	//set the offset for the selection to the last index in the container
 	_offset[0] = i;
 
 	if(block){
 		ArrayObject &array = (ArrayObject &)o;
-		if((i+array.getShape().getDimension(0))>getShape().getDimension(0)){
+		if((i+array.shape().dim(0))>getShape().dim(0)){
 			EXCEPTION_INIT(IndexError,"Index + block size exceeds container size!");
 			EXCEPTION_THROW();
 		}
-		H5Utilities::ArrayShape2DataSpace(array.getShape(),memspace);
-		_count[0] = array.getShape().getDimension(0);
+		H5Utilities::Shape2DataSpace(array.shape(),memspace);
+		_count[0] = array.shape().dim(0);
 	}else{
 		memspace = _elemspace;
 		_count[0] = 1;
@@ -263,7 +263,7 @@ void NXNumericFieldH5Implementation::get(const UInt64 &i,NumericObject &o,bool b
 
 	//setup the selection
 	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
-	err = H5Dread(dataset,elem_type,memspace,_filespace,H5P_DEFAULT,o.getVoidPtr());
+	err = H5Dread(dataset,elem_type,memspace,_filespace,H5P_DEFAULT,o.void_ptr());
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+getName()+"]!");
 		EXCEPTION_THROW();
@@ -283,13 +283,13 @@ void NXNumericFieldH5Implementation::get(NumericObject &o){
 	hid_t elem_type;
 
 	//get the appropriate memory type
-	elem_type = H5TFactory.getTypeFromID(o.getTypeID());
+	elem_type = H5TFactory.getTypeFromID(o.type_id());
 
 	//clear all selection
 	H5Sselect_none(_filespace);
 
 	//read the data
-	err = H5Dread(dataset,elem_type,H5S_ALL,H5S_ALL,H5P_DEFAULT,o.getVoidPtr());
+	err = H5Dread(dataset,elem_type,H5S_ALL,H5S_ALL,H5P_DEFAULT,o.void_ptr());
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+getName()+"]!");
 		EXCEPTION_THROW();

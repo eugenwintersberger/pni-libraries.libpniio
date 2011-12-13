@@ -24,14 +24,14 @@ void NXGroupTest::setUp(){
 
 	_write_str_attr = "hello world";
 	_write_scalar_attr = 100;
-	_shape = ArrayShape();
-	_shape.setRank(2);
-	_shape.setDimension(0,3);
-	_shape.setDimension(1,3);
+	_shape = Shape();
+	_shape.rank(2);
+	_shape.dim(0,3);
+	_shape.dim(1,3);
 
 	_write_array_attr = Int16Array();
-	i.setRank(_shape.getRank());
-	_write_array_attr.setShape(_shape);
+	i.rank(_shape.rank());
+	_write_array_attr.shape(_shape);
 	_write_array_attr.allocate();
 	i[0] = 0; i[1] = 0; _write_array_attr(i) = 1;
 	i[0] = 0; i[1] = 1; _write_array_attr(i) = 2;

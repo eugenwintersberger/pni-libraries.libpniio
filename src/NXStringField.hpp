@@ -25,7 +25,7 @@
 #ifndef NXSTRINGFIELD_HPP_
 #define NXSTRINGFIELD_HPP_
 
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 
 #include "NXField.hpp"
 

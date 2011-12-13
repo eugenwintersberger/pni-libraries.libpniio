@@ -26,7 +26,7 @@
 #define NXBINARYFIELDH5IMPLEMENTATION_HPP_
 
 #include <pni/utils/Buffer.hpp>
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 
 using namespace pni::utils;
 

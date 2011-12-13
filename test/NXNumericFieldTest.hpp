@@ -34,9 +34,9 @@ private:
 	NXFile file;
 	static const UInt64 n=10;
 	UInt16 testdata[10];
-	static const UInt64 nx=2;
-	static const UInt64 ny=3;
-	ArrayShape fshape;
+	Shape  fshape;
+	size_t nx;
+	size_t ny;
 public:
 	void setUp();
 	void tearDown();

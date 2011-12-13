@@ -28,7 +28,7 @@
 #ifndef NXSELECTION_HPP_
 #define NXSELECTION_HPP_
 
-#include<pni/utils/PNITypes.hpp>
+#include<pni/utils/Types.hpp>
 #include<pni/utils/ArrayObject.hpp>
 
 using namespace pni::utils;

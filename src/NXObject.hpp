@@ -30,7 +30,7 @@
 
 #include <iostream>
 
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 #include <pni/utils/ArrayObject.hpp>
 #include <pni/utils/Array.hpp>
 #include <pni/utils/ScalarObject.hpp>

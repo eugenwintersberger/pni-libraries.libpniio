@@ -34,7 +34,7 @@ extern "C"{
 #include <iostream>
 #include <vector>
 
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 #include <pni/utils/Exceptions.hpp>
 
 namespace pni {

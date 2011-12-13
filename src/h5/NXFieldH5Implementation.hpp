@@ -8,7 +8,7 @@
 #ifndef NXFIELDH5IMPLEMENTATION_HPP_
 #define NXFIELDH5IMPLEMENTATION_HPP_
 
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 #include <pni/utils/NumericObject.hpp>
 
 
@@ -47,14 +47,14 @@ protected:
 	//parameters of the total dataset
 	hid_t _type;	          //!< ID of the data type
 	hid_t _filespace;          //!< ID of the data space
-	ArrayShape _fileshape;  //!< shape of the total dataset
+	Shape _fileshape;  //!< shape of the total dataset
 
 	//the object should act like a container - this we need a default
 	//selection to read and write elements to this container
 	hid_t _elemspace;   //!< memory data space of the container elements
 	hsize_t *_offset;   //!< container offset
 	hsize_t *_count;    //!< size of the container elements
-	ArrayShape _elemshape;  //!< shape of the element
+	Shape _elemshape;  //!< shape of the element
 
 	//resize buffer
 	hsize_t *_resize; //!< an internal buffer for resizing the array
@@ -84,13 +84,13 @@ public:
 	NXFieldH5Implementation &operator=(NXObjectH5Implementation &&o);
 
 	//! get the total shape of the container
-	virtual const ArrayShape &getShape() const;
+	virtual const Shape &getShape() const;
 
 	//! element shape
-	virtual const ArrayShape &getElementShape() const;
+	virtual const Shape &getElementShape() const;
 
 	//! return the type ID of the field
-	virtual PNITypeID getTypeID() const;
+	virtual TypeID getTypeID() const;
 
 
 	//! close the data field
