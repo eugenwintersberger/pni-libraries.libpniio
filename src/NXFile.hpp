@@ -58,7 +58,7 @@ private:
 protected:
 	bool _read_only;    //!< open the file in read only mode (default is appending)
 	bool _overwrite;    //!< create a new file even if one with the same name already exists
-	UInt64 _split_size; //!< size of a file for splitting
+	size_t _split_size; //!< size of a file for splitting
 	String _fname;      //!< name of the file
 public:
 	typedef boost::shared_ptr<NXFile > sptr; //! shared pointer to a file object
@@ -72,18 +72,18 @@ public:
 	//! is open an exception is thrown.
 	//! \throws NXFileError if called on an open file
 	//! \param n name of the file
-	virtual void setFileName(const String &n);
+	virtual void filename(const String &n);
 	//! get filename
 
 	//! Get the name of the file object.
 	//! \return filename as String
-	virtual String getFileName() const;
+	virtual String filename() const;
 
 	//! get read/write state
 
 	//! Returns the read/write state of the file.
 	//! \return true of in read-only mode, false otherwise
-	virtual bool isReadOnly() const;
+	virtual bool read_only() const;
 	//! set read/write state
 
 	//! set/unset read only mode
@@ -93,17 +93,17 @@ public:
 	//! will be thrown.
 	//! \throws NXFileError if invoked on an open file
 	//! \param v true for read-only, false append mode
-	virtual void setReadOnly(bool v);
+	virtual void read_only(bool v);
 
 	//! return true if existing file will be overwritten
-	virtual bool isOverwrite() const;
+	virtual bool overwrite() const;
 	//! set file to overwrite mode
 
 	//! Set a file to override mode. Must be called on a closed file otherwise
 	//! an exception will be thrown
 	//! \throws NXFileError if called on an open file
 	//! \param v true for overwrite, false if not
-	virtual void setOverwrite(bool v);
+	virtual void overwrite(bool v);
 
 	//! set the split size
 
@@ -111,11 +111,11 @@ public:
 	//! on an open file object otherwise an exception will be thrown.
 	//! \throws NXFileError if called on an open file
 	//! \param ssize split size in bytes
-	virtual void setSplitSize(UInt64 ssize);
+	virtual void split_size(size_t ssize);
 	//! get the split size
 
 	//! \return split size in bytes
-	virtual UInt64 getSplitSize() const;
+	virtual size_t split_size() const;
 
 	//! create a new file
 
@@ -154,8 +154,8 @@ template<typename Imp> NXFile<Imp>::~NXFile() {
 }
 
 //-----------------------------------------------------------------------------
-template<typename Imp> void NXFile<Imp>::setFileName(const String &n){
-	EXCEPTION_SETUP("template<typename Imp> void NXFile<Imp>::setFileName(const String &n)");
+template<typename Imp> void NXFile<Imp>::filename(const String &n){
+	EXCEPTION_SETUP("template<typename Imp> void NXFile<Imp>::filename(const String &n)");
 
 	if(this->is_open()){
 		EXCEPTION_INIT(NXFileError,"File already open - call close() first!");
@@ -165,18 +165,18 @@ template<typename Imp> void NXFile<Imp>::setFileName(const String &n){
 }
 
 //-----------------------------------------------------------------------------
-template<typename Imp> String NXFile<Imp>::getFileName() const{
+template<typename Imp> String NXFile<Imp>::filename() const{
 	return _fname;
 }
 
 //-----------------------------------------------------------------------------
-template<typename Imp> bool NXFile<Imp>::isReadOnly() const{
+template<typename Imp> bool NXFile<Imp>::read_only() const{
 	return _read_only;
 }
 
 //-----------------------------------------------------------------------------
-template<typename Imp> void NXFile<Imp>::setReadOnly(bool v){
-	EXCEPTION_SETUP("template<typename Imp> void NXFile<Imp>::setReadOnly(bool v)");
+template<typename Imp> void NXFile<Imp>::read_only(bool v){
+	EXCEPTION_SETUP("template<typename Imp> void NXFile<Imp>::read_only(bool v)");
 
 	if(this->is_open()){
 		EXCEPTION_INIT(NXFileError,"File already open - call close() first!");
@@ -187,13 +187,13 @@ template<typename Imp> void NXFile<Imp>::setReadOnly(bool v){
 }
 
 //-----------------------------------------------------------------------------
-template<typename Imp> bool NXFile<Imp>::isOverwrite() const{
+template<typename Imp> bool NXFile<Imp>::overwrite() const{
 	return _overwrite;
 }
 
 //-----------------------------------------------------------------------------
-template<typename Imp> void NXFile<Imp>::setOverwrite(bool v){
-	EXCEPTION_SETUP("template<typename Imp> void NXFile<Imp>::setOverwrite(bool v)");
+template<typename Imp> void NXFile<Imp>::overwrite(bool v){
+	EXCEPTION_SETUP("template<typename Imp> void NXFile<Imp>::overwrite(bool v)");
 
 	if(this->is_open()){
 		EXCEPTION_INIT(NXFileError,"File already open - call close() first!");
@@ -203,8 +203,8 @@ template<typename Imp> void NXFile<Imp>::setOverwrite(bool v){
 }
 
 //-----------------------------------------------------------------------------
-template<typename Imp> void NXFile<Imp>::setSplitSize(UInt64 ssize){
-	EXCEPTION_SETUP("template<typename Imp> void NXFile<Imp>::setSplitSize(UInt64 ssize)");
+template<typename Imp> void NXFile<Imp>::split_size(size_t ssize){
+	EXCEPTION_SETUP("template<typename Imp> void NXFile<Imp>::split_size(size_t ssize)");
 	if(this->is_open()){
 		EXCEPTION_INIT(NXFileError,"File already open - call close() first!");
 		EXCEPTION_THROW();
@@ -213,7 +213,7 @@ template<typename Imp> void NXFile<Imp>::setSplitSize(UInt64 ssize){
 }
 
 //-----------------------------------------------------------------------------
-template<typename Imp>  UInt64 NXFile<Imp>::getSplitSize() const{
+template<typename Imp>  size_t NXFile<Imp>::split_size() const{
 	return _split_size;
 }
 
@@ -237,7 +237,7 @@ template<typename Imp> void NXFile<Imp>::create(){
 	//set here nexus specific attributes
 	try{
 		this->set_attr("NX_class","NXroot");
-		this->set_attr("NXfile_name",getFileName());
+		this->set_attr("NXfile_name",this->filename());
 		this->set_attr("NeXus_version","2.4.3"); //should not be hardcoded
 		this->set_attr("creator","DESY");   //should not be hardcoded
 		this->set_attr("file_time",NXDateTime::getDateTimeStr());
@@ -273,7 +273,7 @@ template<typename Imp> void NXFile<Imp>::close(){
 	//simply do nothing
 	if(this->is_open()){
 		//set last modification time stamp
-		if(!isReadOnly()) this->set_attr("file_update_time",NXDateTime::getDateTimeStr());
+		if(!this->read_only()) this->set_attr("file_update_time",NXDateTime::getDateTimeStr());
 
 		this->flush();
 		this->implementation().close();

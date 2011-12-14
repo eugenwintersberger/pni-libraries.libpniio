@@ -1,3 +1,24 @@
+/*
+ * Declaration of Nexus object template.
+ *
+ * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpninx.
+ *
+ * libpninx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpninx is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************/
+
 //implementation of the arrayshape test
 
 #include<cppunit/extensions/HelperMacros.h>
@@ -8,6 +29,7 @@
 
 CPPUNIT_TEST_SUITE_REGISTRATION(NXFileTest);
 
+//------------------------------------------------------------------------------
 void NXFileTest::setUp(){
 	_fname1 = "test.file-1.h5";
 	_fname2 = "test.file-2.h5";
@@ -40,6 +62,7 @@ void NXFileTest::setUp(){
 
 }
 
+//------------------------------------------------------------------------------
 void NXFileTest::tearDown(){
 	//after finishing the tests we need to remove all created files
 	path path2(_fname2);
@@ -47,28 +70,30 @@ void NXFileTest::tearDown(){
 	if(exists(path2)) remove_all(path2);
 }
 
+//------------------------------------------------------------------------------
 void NXFileTest::testCreation(){
-	std::cerr<<"NXFileTest::testCreation ---------------------------------------"<<std::endl;
+	std::cout<<"void NXFileTest::testCreation()-------------------------------";
+	std::cout<<std::endl;
 	NXFile f;
 
 	//initially create the file
-	CPPUNIT_ASSERT_NO_THROW(f.setFileName(_fname1));
-	CPPUNIT_ASSERT_NO_THROW(f.setOverwrite(true));
+	CPPUNIT_ASSERT_NO_THROW(f.filename(_fname1));
+	CPPUNIT_ASSERT_NO_THROW(f.overwrite(true));
 	CPPUNIT_ASSERT_NO_THROW(f.create());
 	CPPUNIT_ASSERT_NO_THROW(f.close());
 
 	//recreating the file should cause an error
-	f.setOverwrite(false);
+	f.overwrite(false);
 	CPPUNIT_ASSERT_THROW(f.create(),pni::nx::NXFileError); //here we except an error
 
 	//now if we set overwrite
-	f.setOverwrite(true);
+	f.overwrite(true);
 	//everything should work fine
 	CPPUNIT_ASSERT_NO_THROW(f.create());
 	//check if all exceptions are thrown correctly on an already opened file
-	CPPUNIT_ASSERT_THROW(f.setOverwrite(false),pni::nx::NXFileError);
-	CPPUNIT_ASSERT_THROW(f.setReadOnly(false),pni::nx::NXFileError);
-	CPPUNIT_ASSERT_THROW(f.setSplitSize(100),pni::nx::NXFileError);
+	CPPUNIT_ASSERT_THROW(f.overwrite(false),pni::nx::NXFileError);
+	CPPUNIT_ASSERT_THROW(f.read_only(false),pni::nx::NXFileError);
+	CPPUNIT_ASSERT_THROW(f.split_size(100),pni::nx::NXFileError);
 	CPPUNIT_ASSERT_THROW(f.open(),pni::nx::NXFileError);
 	CPPUNIT_ASSERT_THROW(f.create(),pni::nx::NXFileError);
 
@@ -76,28 +101,30 @@ void NXFileTest::testCreation(){
 
 }
 
+//------------------------------------------------------------------------------
 void NXFileTest::testOpen(){
-	std::cerr<<"NXFileTest::testOpen ---------------------------------------"<<std::endl;
+	std::cout<<"void NXFileTest::testOpen()-----------------------------------";
+	std::cout<<std::endl;
 	NXFile f;
 
-	CPPUNIT_ASSERT_NO_THROW(f.setFileName(_fname1));
-	CPPUNIT_ASSERT_NO_THROW(f.setOverwrite(true));
-	CPPUNIT_ASSERT_NO_THROW(f.setReadOnly(false));
+	CPPUNIT_ASSERT_NO_THROW(f.filename(_fname1));
+	CPPUNIT_ASSERT_NO_THROW(f.overwrite(true));
+	CPPUNIT_ASSERT_NO_THROW(f.read_only(false));
 	CPPUNIT_ASSERT_NO_THROW(f.create());
 	CPPUNIT_ASSERT_NO_THROW(f.close());
 
 	CPPUNIT_ASSERT_NO_THROW(f.open());
 	//check if all exceptions are thrown correctly on an already opened file
-	CPPUNIT_ASSERT_THROW(f.setOverwrite(false),pni::nx::NXFileError);
-	CPPUNIT_ASSERT_THROW(f.setReadOnly(false),pni::nx::NXFileError);
-	CPPUNIT_ASSERT_THROW(f.setSplitSize(100),pni::nx::NXFileError);
+	CPPUNIT_ASSERT_THROW(f.overwrite(false),pni::nx::NXFileError);
+	CPPUNIT_ASSERT_THROW(f.read_only(false),pni::nx::NXFileError);
+	CPPUNIT_ASSERT_THROW(f.split_size(100),pni::nx::NXFileError);
 	CPPUNIT_ASSERT_THROW(f.open(),pni::nx::NXFileError);
 	CPPUNIT_ASSERT_THROW(f.create(),pni::nx::NXFileError);
 
 	CPPUNIT_ASSERT_NO_THROW(f.close());
 
 	//try to open a file which does not exist
-	CPPUNIT_ASSERT_NO_THROW(f.setFileName(_fname2));
+	CPPUNIT_ASSERT_NO_THROW(f.filename(_fname2));
 	CPPUNIT_ASSERT_THROW(f.open(),pni::nx::NXFileError);
 
 	CPPUNIT_ASSERT_NO_THROW(f.create());
@@ -107,13 +134,15 @@ void NXFileTest::testOpen(){
 
 }
 
+//------------------------------------------------------------------------------
 void NXFileTest::testAttributes(){
-	std::cerr<<"NXFileTest::testAttributes ---------------------------------------"<<std::endl;
+	std::cout<<"void NXFileTest::testAttributes()-----------------------------";
+	std::cout<<std::endl;
 	NXFile f;
 
 	//create a new file
-	f.setFileName(_fname1);
-	f.setOverwrite(true);
+	f.filename(_fname1);
+	f.overwrite(true);
 	f.create();
 
 	//write attribute data
@@ -141,13 +170,15 @@ void NXFileTest::testAttributes(){
 	f.close();
 }
 
+//------------------------------------------------------------------------------
 void NXFileTest::testAttributeExceptions(){
-	std::cerr<<"NXFileTest::testAttributeExceptions ---------------------------------------"<<std::endl;
+	std::cout<<"void NXFileTest::testAttributeExceptions()--------------------";
+	std::cout<<std::endl;
 	NXFile f;
 
 	//create a new file
-	f.setFileName(_fname1);
-	f.setOverwrite(true);
+	f.filename(_fname1);
+	f.overwrite(true);
 	f.create();
 
 	//write attribute data

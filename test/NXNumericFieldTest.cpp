@@ -1,8 +1,27 @@
 /*
+ * Declaration of Nexus object template.
+ *
+ * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpninx.
+ *
+ * libpninx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpninx is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
  * NXNumericFieldTest.cpp
  *
  *  Created on: Dec 3, 2011
- *      Author: eugen
+ *      Author: Eugen Wintersberger
  */
 
 #include "NXNumericFieldTest.hpp"
@@ -16,9 +35,9 @@ CPPUNIT_TEST_SUITE_REGISTRATION(NXNumericFieldTest);
 
 //------------------------------------------------------------------------------
 void NXNumericFieldTest::setUp(){
-	file.setFileName("NXNumericFieldTest.h5");
-	file.setOverwrite(true);
-	file.setReadOnly(false);
+	file.filename("NXNumericFieldTest.h5");
+	file.overwrite(true);
+	file.read_only(false);
 	file.create();
 
 	for(size_t i=0;i<n;i++) testdata[i] = i+1;
@@ -121,7 +140,7 @@ void NXNumericFieldTest::testAppend(){
 
 	NXNumericField field1 = file.create_numericfield(earray);
 	//append single elements
-	for(UInt32 i=0;i<4;i++){
+	for(size_t i=0;i<4;i++){
 		earray = testdata[i];
 		field1.append(earray);
 	}
@@ -147,7 +166,7 @@ void NXNumericFieldTest::testAppend(){
 	//check for scalar numeric field
 	UInt16Scalar scalar("scalar","cps","a scalar counter");
 	field1 = file.create_numericfield(scalar);
-	for(UInt32 i=0; i<5;i++){
+	for(size_t i=0; i<5;i++){
 		scalar = testdata[i];
 		field1.append(scalar);
 	}
@@ -280,7 +299,7 @@ void NXNumericFieldTest::testSet(){
 	array.unit(farray.unit());
 
 	CPPUNIT_ASSERT_NO_THROW(field = file.create_numericfield(farray));
-	for(UInt32 i=0;i<4;i++){
+	for(size_t i=0;i<4;i++){
 		farray = i;
 		CPPUNIT_ASSERT_NO_THROW(field.set(i,farray));
 	}

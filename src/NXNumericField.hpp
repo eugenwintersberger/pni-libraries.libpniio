@@ -241,7 +241,7 @@ void NXNumericField<Imp>::append(const ArrayObject &o){
 		}
 
 		//array block
-		for(UInt64 i=1;i<o.shape().rank();i++){
+		for(size_t i=1;i<o.shape().rank();i++){
 			if(this->shape().dim(i)!=o.shape().dim(i)){
 				EXCEPTION_INIT(ShapeMissmatchError,"Field and array shape do not match!");
 				EXCEPTION_THROW();

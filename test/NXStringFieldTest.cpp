@@ -1,4 +1,23 @@
 /*
+ * Declaration of Nexus object template.
+ *
+ * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpninx.
+ *
+ * libpninx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpninx is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
  * NXStringFieldTest.cpp
  *
  *  Created on: Dec 5, 2011
@@ -16,9 +35,9 @@ CPPUNIT_TEST_SUITE_REGISTRATION(NXStringFieldTest);
 
 //------------------------------------------------------------------------------
 void NXStringFieldTest::setUp(){
-	file.setFileName("NXStringFieldTest.h5");
-	file.setOverwrite(true);
-	file.setReadOnly(false);
+	file.filename("NXStringFieldTest.h5");
+	file.overwrite(true);
+	file.read_only(false);
 	file.create();
 
 	strdata.push_back(String("Hello"));

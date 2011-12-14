@@ -72,7 +72,7 @@ public:
 
     //!return the size of the binary field
     size_t size() const{
-        return this->getShape().getSize();
+        return this->shape().size();
     }
 
 	//!append array

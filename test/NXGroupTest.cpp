@@ -1,8 +1,27 @@
 /*
+ * Declaration of Nexus object template.
+ *
+ * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpninx.
+ *
+ * libpninx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpninx is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
  * NXGroupTest.cpp
  *
  *  Created on: Aug 4, 2011
- *      Author: eugen
+ *      Author: Eugen Wintersberger
  */
 
 #include "NXGroupTest.hpp"
@@ -18,8 +37,8 @@ void NXGroupTest::setUp(){
 	_fname = "test.group.h5";
 	Index i;
 	_f.close();
-	_f.setFileName(_fname);
-	_f.setOverwrite(true);
+	_f.filename(_fname);
+	_f.overwrite(true);
 	CPPUNIT_ASSERT_NO_THROW(_f.create());
 
 

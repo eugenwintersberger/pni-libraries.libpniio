@@ -1,4 +1,23 @@
 /*
+ * Declaration of Nexus object template.
+ *
+ * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpninx.
+ *
+ * libpninx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpninx is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
  * NXBinaryFieldTest.cpp
  *
  *  Created on: Dec 5, 2011
@@ -16,9 +35,9 @@ CPPUNIT_TEST_SUITE_REGISTRATION(NXBinaryFieldTest);
 
 //------------------------------------------------------------------------------
 void NXBinaryFieldTest::setUp(){
-	file.setFileName("NXBinaryFieldTest.h5");
-	file.setOverwrite(true);
-	file.setReadOnly(false);
+	file.filename("NXBinaryFieldTest.h5");
+	file.overwrite(true);
+	file.read_only(false);
 	file.create();
 	testdata[0] = 10; testdata[1] = 12; testdata[2] = 100;
 	testdata[3] = 2;  testdata[4] = 200; testdata[5] = 201;
@@ -94,7 +113,7 @@ void NXBinaryFieldTest::testAppend(){
 	std::cout<<std::endl;
 
 	Buffer<Binary> buffer(10);
-	for(UInt64 i=0;i<buffer.size();i++) buffer[i] = testdata[i];
+	for(size_t i=0;i<buffer.size();i++) buffer[i] = testdata[i];
 
 	NXBinaryField field = file.create_binaryfield("bindump");
 
