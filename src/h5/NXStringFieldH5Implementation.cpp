@@ -262,7 +262,7 @@ void NXStringFieldH5Implementation::append(const String &o){
 
 	const char *ptr = o.c_str();
 
-	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
+	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset.ptr(),NULL,_count.ptr(),NULL);
 	err = H5Dwrite(get_id(),elem_type,_elemspace,_filespace,H5P_DEFAULT,&ptr);
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error writing data!");
@@ -286,7 +286,7 @@ void NXStringFieldH5Implementation::set(const size_t &i,const String &o){
 
 	const char *ptr = o.c_str();
 
-	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
+	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset.ptr(),NULL,_count.ptr(),NULL);
 	err = H5Dwrite(get_id(),elem_type,_elemspace,_filespace,H5P_DEFAULT,&ptr);
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error writing data!");
@@ -311,7 +311,7 @@ void NXStringFieldH5Implementation::get(const size_t &i,String &o){
 	hid_t xfer_plist = H5Pcreate(H5P_DATASET_XFER);
 
 	//select data element
-	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
+	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset.ptr(),NULL,_count.ptr(),NULL);
 
 	//need to determine the amount of memory required to store the data
 	char *ptr = nullptr;
@@ -354,12 +354,12 @@ String NXStringFieldH5Implementation::get(const char &sep){
 	EXCEPTION_SETUP("String &&NXStringFieldH5Implementation::get(const char &sep)");
 	String total;
 
-	for(UInt64 i=0;i<size();i++){
+	for(size_t i=0;i<size();i++){
 		total += get(i);
 		if(i!= size()-1) total += sep;
 	}
 
-	return std::move(total);
+	return total;
 }
 
 

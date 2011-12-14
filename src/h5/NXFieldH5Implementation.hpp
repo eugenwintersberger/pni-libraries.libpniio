@@ -53,12 +53,12 @@ protected:
 	//the object should act like a container - this we need a default
 	//selection to read and write elements to this container
 	hid_t _elemspace;   //!< memory data space of the container elements
-	hsize_t *_offset;   //!< container offset
-	hsize_t *_count;    //!< size of the container elements
+	Buffer<hsize_t> _offset;   //!< container offset
+	Buffer<hsize_t> _count;    //!< size of the container elements
 	Shape _elemshape;  //!< shape of the element
 
 	//resize buffer
-	hsize_t *_resize; //!< an internal buffer for resizing the array
+	Buffer<hsize_t> _resize; //!< an internal buffer for resizing the array
 public:
 	//! a shared pointer to a field object
 	//typedef boost::shared_ptr<NXFieldH5Implementation> sptr;

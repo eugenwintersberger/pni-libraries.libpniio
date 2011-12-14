@@ -244,7 +244,7 @@ void NXBinaryFieldH5Implementation::append(const Buffer<Binary> &b){
 
 	hid_t type = H5Dget_type(get_id());
 
-	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
+	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset.ptr(),NULL,_count.ptr(),NULL);
 	err = H5Dwrite(get_id(),type,elem_space,_filespace,H5P_DEFAULT,(void*)b.void_ptr());
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error writing data!");
@@ -271,7 +271,7 @@ void NXBinaryFieldH5Implementation::set(size_t pos,const Buffer<Binary> &b){
 	hid_t elem_space = H5Screate_simple(1,dims,NULL);
 	hid_t type = H5Dget_type(get_id());
 
-	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
+	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset.ptr(),NULL,_count.ptr(),NULL);
 	err = H5Dwrite(get_id(),type,elem_space,_filespace,H5P_DEFAULT,b.void_ptr());
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error writing data!");
@@ -300,7 +300,7 @@ void NXBinaryFieldH5Implementation::get(size_t pos,Buffer<Binary> &b){
 	hid_t elem_space = H5Screate_simple(1,dims,NULL);
 	hid_t type = H5Dget_type(get_id());
 
-	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
+	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset.ptr(),NULL,_count.ptr(),NULL);
 	err = H5Dread(get_id(),type,elem_space,_filespace,H5P_DEFAULT,b.void_ptr());
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+name()+"]!");

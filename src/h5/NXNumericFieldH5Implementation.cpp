@@ -167,7 +167,7 @@ void NXNumericFieldH5Implementation::append(const NumericObject &o,bool block){
 	}
 
 	//set the selection and write data
-	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
+	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset.ptr(),NULL,_count.ptr(),NULL);
 	err = H5Dwrite(get_id(),elem_type,memspace,_filespace,H5P_DEFAULT,o.void_ptr());
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error writing data to field ["+name()+"]!");
@@ -213,7 +213,7 @@ void NXNumericFieldH5Implementation::set(const size_t &i,const NumericObject &o,
 	}
 
 	//set the selection and write data
-	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
+	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset.ptr(),NULL,_count.ptr(),NULL);
 	err = H5Dwrite(dataset,elem_type,memspace,_filespace,H5P_DEFAULT,o.void_ptr());
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error writing data to field ["+name()+"]!");
@@ -262,7 +262,7 @@ void NXNumericFieldH5Implementation::get(const size_t &i,NumericObject &o,bool b
 	}
 
 	//setup the selection
-	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
+	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset.ptr(),NULL,_count.ptr(),NULL);
 	err = H5Dread(dataset,elem_type,memspace,_filespace,H5P_DEFAULT,o.void_ptr());
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+name()+"]!");

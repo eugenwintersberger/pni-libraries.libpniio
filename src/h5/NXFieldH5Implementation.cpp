@@ -20,43 +20,6 @@ namespace h5{
 using namespace pni::nx::h5;
 
 //============Implementation of private methods=================================
-//allocate the buffers
-void NXFieldH5Implementation::_allocate_buffers(size_t frank){
-	EXCEPTION_SETUP("void NXFieldH5Implementation::_allocate_buffers()");
-	//free buffers if necessary
-	_free_buffers();
-
-	_offset = new hsize_t[frank];
-	if(!_offset){
-		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate offset buffer!");
-		EXCEPTION_THROW();
-	}
-
-	_count  = new hsize_t[frank];
-	if(!_count){
-		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate count buffer!");
-		_free_buffers();
-		EXCEPTION_THROW();
-	}
-
-	_resize = new hsize_t[frank];
-	if(!_resize){
-		EXCEPTION_INIT(MemoryAllocationError,"Cannot allocate resize buffer!");
-		_free_buffers();
-		EXCEPTION_THROW();
-	}
-}
-
-//------------------------------------------------------------------------------
-void NXFieldH5Implementation::_free_buffers(){
-	if(_offset) delete [] _offset;
-	if(_count) delete [] _count;
-	if(_resize) delete [] _resize;
-
-	_offset = nullptr;
-	_count = nullptr;
-	_resize = nullptr;
-}
 
 //------------------------------------------------------------------------------
 void NXFieldH5Implementation::_get_dataset_objects(hid_t id){
@@ -92,7 +55,9 @@ void NXFieldH5Implementation::_get_dataset_objects(hid_t id){
 
 	//allocate memory for the offset and counts buffer of the local
 	//element selection
-	_allocate_buffers(_fileshape.rank());
+	_count.allocate(_fileshape.rank());
+	_offset.allocate(_fileshape.rank());
+	_resize.allocate(_fileshape.rank());
 
 	//need to set the appropriate values
 	_count[0] = 1;
@@ -119,7 +84,7 @@ void NXFieldH5Implementation::_resize_dataset(size_t increment){
 	_resize[0] += increment;  //inrement the resize buffer
 
 	//extend the dataset
-	if(H5Dset_extent(dataset,_resize)<0){
+	if(H5Dset_extent(dataset,_resize.ptr())<0){
 		EXCEPTION_INIT(H5DataSetError,"Resizing of dataset ["+name()+"] failed!");
 		EXCEPTION_THROW();
 	}
@@ -140,9 +105,6 @@ NXFieldH5Implementation::NXFieldH5Implementation():NXObjectH5Implementation() {
 	_type = 0;
 	_filespace = 0;
 	_elemspace = 0;
-	_offset = nullptr;
-	_count = nullptr;
-	_resize = nullptr;
 }
 
 //------------------------------------------------------------------------------
@@ -152,9 +114,6 @@ NXFieldH5Implementation::NXFieldH5Implementation(const NXFieldH5Implementation &
 	_type = 0;
 	_filespace = 0;
 	_elemspace = 0;
-	_offset = nullptr;
-	_count = nullptr;
-	_resize = nullptr;
 
 	_get_dataset_objects(get_id());
 }
@@ -166,9 +125,6 @@ NXFieldH5Implementation::NXFieldH5Implementation(const NXObjectH5Implementation 
 	_type = 0;
 	_filespace = 0;
 	_elemspace = 0;
-	_offset = nullptr;
-	_count = nullptr;
-	_resize = nullptr;
 
 	_get_dataset_objects(get_id());
 }
@@ -229,14 +185,9 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(NXFieldH5Implementat
 		(NXObjectH5Implementation &)(*this) = std::move((NXObjectH5Implementation &)o);
 
 		//copy everything from the original object
-		_offset = o._offset;
-		o._offset = nullptr;
-
-		_count = o._count;
-		o._count = nullptr;
-
-		_resize = o._resize;
-		o._resize = nullptr;
+		_offset = std::move(o._offset);
+		_count = std::move(o._count);
+		_resize = std::move(o._resize);
 
 		_filespace = o._filespace;
 		o._filespace = 0;
@@ -247,11 +198,8 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(NXFieldH5Implementat
 		_elemspace = o._elemspace;
 		o._elemspace = 0;
 
-		_elemshape = o._elemshape;
-		_fileshape = o._fileshape;
-
-		o._fileshape.rank(0);
-		o._elemshape.rank(0);
+		_elemshape = std::move(o._elemshape);
+		_fileshape = std::move(o._fileshape);
 
 	}
 
@@ -280,7 +228,9 @@ void NXFieldH5Implementation::close(){
 	if(H5Iis_valid(_type)) H5Tclose(_type);
 	if(H5Iis_valid(_elemspace)) H5Sclose(_elemspace);
 
-	_free_buffers();
+	_count.free();
+	_offset.free();
+	_resize.free();
 
 	NXObjectH5Implementation::close();
 	_fileshape.rank(0);
