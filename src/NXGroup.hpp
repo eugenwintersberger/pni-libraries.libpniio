@@ -251,7 +251,7 @@ NXGroup<typename NXObject<Imp>::GroupImp> NXGroup<Imp>::createGroup(const String
 	NXGroup<typename NXObject<Imp>::GroupImp> group;
 
 	try{
-		group = NXGroup<typename NXObject<Imp>::GroupImp >(this->getImplementation().createGroup(n));
+		group = NXGroup<typename NXObject<Imp>::GroupImp >(this->getImplementation().create_group(n));
 	}catch(...){
 		EXCEPTION_INIT(NXGroupError,"Error creating group ["+n+"] below group ["+this->getName()+"]!");
 		EXCEPTION_THROW();
@@ -271,7 +271,7 @@ NXGroup<typename NXObject<Imp>::GroupImp > NXGroup<Imp>::createGroup(const Strin
 
 	//create the group
 	try{
-		group = NXGroup<typename NXObject<Imp>::GroupImp>(this->getImplementation().createGroup(n));
+		group = NXGroup<typename NXObject<Imp>::GroupImp>(this->getImplementation().create_group(n));
 	}catch(...){
 		EXCEPTION_INIT(NXGroupError,"Error creating group ["+n+"] below group ["+this->getName()+"]!");
 		EXCEPTION_THROW();
@@ -297,7 +297,7 @@ NXGroup<Imp>::createNumericField(const String &n,TypeID tid,const Shape &s,
 
 	FieldType field;
 	try{
-		field = FieldType(this->getImplementation().createNumericField(n,tid,s));
+		field = FieldType(this->getImplementation().create_numericfield(n,tid,s));
 		field.setAttribute("units",unit);
 		field.setAttribute("long_name",desc);
 	}catch(...){
@@ -384,7 +384,7 @@ NXGroup<Imp>::createNumericField(const String &n,TypeID tid,const String &unit,c
 	FieldType field;
 
 	try{
-		field = FieldType(std::move(this->getImplementation().createNumericField(n,tid)));
+		field = FieldType(std::move(this->getImplementation().create_numericfield(n,tid)));
 		field.setAttribute("units",unit);
 		field.setAttribute("long_name",desc);
 	}catch(...){
@@ -420,7 +420,7 @@ NXStringField<typename NXObject<Imp>::StringFieldImp > NXGroup<Imp>::createStrin
 	FieldType field;
 
 	try{
-		field = FieldType(std::move(this->getImplementation().createStringField(n)));
+		field = FieldType(std::move(this->getImplementation().create_stringfield(n)));
 	}catch(...){
 		EXCEPTION_INIT(NXGroupError,"Error creating string field ["+n+"] below group ["+this->getName()+"]!");
 		EXCEPTION_THROW();
@@ -442,7 +442,7 @@ NXGroup<Imp>::createBinaryField(const String &n) const{
 	FieldType field;
 
 	try{
-		field = FieldType(std::move(this->getImplementation().createBinaryField(n)));
+		field = FieldType(std::move(this->getImplementation().create_binaryfield(n)));
 	}catch(...){
 		EXCEPTION_INIT(NXGroupError,"Error creating binary field ["+n+"] below gruop ["+this->getName()+"]!");
 		EXCEPTION_THROW();

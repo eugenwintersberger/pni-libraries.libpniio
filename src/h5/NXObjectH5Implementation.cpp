@@ -178,7 +178,7 @@ void NXObjectH5Implementation::_open_attribute(const hid_t &pid,const char *n,
 }
 
 //------------------------------------------------------------------------------
-void NXObjectH5Implementation::setAttribute(const String &n,const ArrayObject &a) const{
+void NXObjectH5Implementation::set_attr(const String &n,const ArrayObject &a) const{
 	EXCEPTION_SETUP("void NXObjectH5Implementation::setAttribute(const char *n,ArrayObject &a)");
 	hid_t tid = 0;   //id of the data type
 	hid_t setid = 0; //id of the data set
@@ -188,10 +188,10 @@ void NXObjectH5Implementation::setAttribute(const String &n,const ArrayObject &a
 		EXCEPTION_THROW();
 	}
 
-	tid = H5TFactory.getTypeFromID(a.type_id());
+	tid = H5TFactory.get_type_from_id(a.type_id());
 
 	//create the dataspace
-	H5Utilities::Shape2DataSpace(a.shape(),setid);
+	H5Utilities::shape_to_dataspace(a.shape(),setid);
 
 	//create the attribute and write the data
 	try{
@@ -206,13 +206,13 @@ void NXObjectH5Implementation::setAttribute(const String &n,const ArrayObject &a
 }
 
 //------------------------------------------------------------------------------
-void NXObjectH5Implementation::setAttribute(const String &n,const ScalarObject &d) const{
+void NXObjectH5Implementation::set_attr(const String &n,const ScalarObject &d) const{
 	EXCEPTION_SETUP("void NXObjectH5Implementation::setAttribute(const char *n,ScalarObject &a)");
 	hid_t tid = 0;   //id of the data type
 	hid_t setid = 0; //id of the data set
 
 	//determine the data type of the array object
-	tid = H5TFactory.getTypeFromID(d.type_id());
+	tid = H5TFactory.get_type_from_id(d.type_id());
 
 	//create the dataspace
 	setid = H5Screate(H5S_SCALAR);
@@ -234,13 +234,13 @@ void NXObjectH5Implementation::setAttribute(const String &n,const ScalarObject &
 }
 
 //------------------------------------------------------------------------------
-void NXObjectH5Implementation::setAttribute(const String &n,const String &s) const{
+void NXObjectH5Implementation::set_attr(const String &n,const String &s) const{
 	EXCEPTION_SETUP("void NXObjectH5Implementation::setAttribute(const char *n,String &s)");
 	hid_t tid;   //id of the data type
 	hid_t setid; //id of the data set
 
 	//determine the data type of the array object
-	tid = H5TFactory.createTypeFromID(TypeID::STRING);
+	tid = H5TFactory.create_type_from_id(TypeID::STRING);
 	//need to set the size of the string type
 	H5Tset_size(tid,s.size());
 
@@ -264,7 +264,7 @@ void NXObjectH5Implementation::setAttribute(const String &n,const String &s) con
 }
 
 //------------------------------------------------------------------------------
-void NXObjectH5Implementation::getAttribute(const String &n,ArrayObject &a) const{
+void NXObjectH5Implementation::get_attr(const String &n,ArrayObject &a) const{
 	EXCEPTION_SETUP("void NXObjectH5Implementation::getAttribute(const char *n,ArrayObject &a)");
 	Shape temp_shape;
 
@@ -281,7 +281,7 @@ void NXObjectH5Implementation::getAttribute(const String &n,ArrayObject &a) cons
 	}
 	//need to do some error checking here
 
-	H5Utilities::DataSpace2Shape(asid,temp_shape);
+	H5Utilities::dataspace_to_shape(asid,temp_shape);
 	if((a.shape().size()==0)||(temp_shape != a.shape())){
 		a.shape(temp_shape);
 		a.allocate();
@@ -304,7 +304,7 @@ void NXObjectH5Implementation::getAttribute(const String &n,ArrayObject &a) cons
 }
 
 //------------------------------------------------------------------------------
-void NXObjectH5Implementation::getAttribute(const String &n,ScalarObject &s) const{
+void NXObjectH5Implementation::get_attr(const String &n,ScalarObject &s) const{
 	EXCEPTION_SETUP("void NXObjectH5Implementation::getAttribute(const char *n,ScalarObject &a)");
 	hid_t atid = 0;
 	hid_t asid = 0;
@@ -336,7 +336,7 @@ void NXObjectH5Implementation::getAttribute(const String &n,ScalarObject &s) con
 }
 
 //------------------------------------------------------------------------------
-void NXObjectH5Implementation::getAttribute(const String &n,String &s) const{
+void NXObjectH5Implementation::get_attr(const String &n,String &s) const{
 	EXCEPTION_SETUP("void NXObjectH5Implementation::getAttribute(const char *n,String &s)");
 	hid_t atid = 0;
 	hid_t asid = 0;
@@ -367,7 +367,7 @@ void NXObjectH5Implementation::getAttribute(const String &n,String &s) const{
 }
 
 //------------------------------------------------------------------------------
-String NXObjectH5Implementation::getPath() const{
+String NXObjectH5Implementation::path() const{
 	EXCEPTION_SETUP("String NXObjectH5Implementation::getName() const");
 	char *buffer = nullptr;
 
@@ -391,8 +391,8 @@ String NXObjectH5Implementation::getPath() const{
 }
 
 //------------------------------------------------------------------------------
-String NXObjectH5Implementation::getBase() const {
-	String p(getPath());
+String NXObjectH5Implementation::base() const {
+	String p(path());
 
 	size_t lpos = p.find_last_of("/");
 	String base = "";
@@ -404,8 +404,8 @@ String NXObjectH5Implementation::getBase() const {
 }
 
 //------------------------------------------------------------------------------
-String NXObjectH5Implementation::getName() const {
-	String p = getPath();
+String NXObjectH5Implementation::name() const {
+	String p = path();
 
 	//need to extract the the name information from the path
 	size_t lpos = p.find_last_of("/");
@@ -419,7 +419,7 @@ String NXObjectH5Implementation::getName() const {
 }
 
 //------------------------------------------------------------------------------
-pni::nx::NXObjectClass NXObjectH5Implementation::getObjectClass() const{
+pni::nx::NXObjectClass NXObjectH5Implementation::object_class() const{
 	if(H5Iis_valid(_id)){
 		switch(H5Iget_type(_id)){
 		case H5I_FILE: return NXFILE;
@@ -433,7 +433,7 @@ pni::nx::NXObjectClass NXObjectH5Implementation::getObjectClass() const{
 }
 
 //------------------------------------------------------------------------------
-bool NXObjectH5Implementation::isOpen() const {
+bool NXObjectH5Implementation::is_open() const {
 	if(H5Iis_valid(_id)) return true;
 	return false;
 }
@@ -445,12 +445,12 @@ void NXObjectH5Implementation::close(){
 }
 
 //------------------------------------------------------------------------------
-void NXObjectH5Implementation::createLink(const NXObjectH5Implementation &pos,
+void NXObjectH5Implementation::link(const NXObjectH5Implementation &pos,
 									      const String &n) const{
 	EXCEPTION_SETUP("void NXObjectH5Implementation::createLink"
 					"(const NXObjectH5Implementation &pos,const String &n)");
 
-	hid_t loc_id = pos.getId();
+	hid_t loc_id = pos.get_id();
 
 	//check if the location is a valid HDF5 object
 	if(!H5Iis_valid(loc_id)){
@@ -459,35 +459,35 @@ void NXObjectH5Implementation::createLink(const NXObjectH5Implementation &pos,
 	}
 
 	//need to check if this object is open
-	if(!isOpen()){
+	if(!is_open()){
 		EXCEPTION_INIT(H5ObjectError,"Link target is not open!");
 		EXCEPTION_THROW();
 	}
 
-	herr_t err = H5Lcreate_soft(getPath().c_str(),loc_id,n.c_str(),H5P_DEFAULT,H5P_DEFAULT);
+	herr_t err = H5Lcreate_soft(path().c_str(),loc_id,n.c_str(),H5P_DEFAULT,H5P_DEFAULT);
 	if(err < 0){
 		EXCEPTION_INIT(H5LinkError,"Could not establish link from "+
-					   getPath()+" to "+pos.getPath()+"["+n+"]!");
+					   path()+" to "+pos.path()+"["+n+"]!");
 		EXCEPTION_THROW();
 	}
 
 }
 
 //------------------------------------------------------------------------------
-void NXObjectH5Implementation::createLink(const String &path) const{
+void NXObjectH5Implementation::link(const String &p) const{
 	EXCEPTION_SETUP("void NXObjectH5Implementation::createLink(const String &pos)");
 
-	hid_t id = getId();
+	hid_t id = get_id();
 
-	if(!isOpen()){
+	if(!is_open()){
 		EXCEPTION_INIT(H5ObjectError,"Link target is not open!");
 		EXCEPTION_THROW();
 	}
 
-	herr_t err = H5Lcreate_soft(getPath().c_str(),id,path.c_str(),H5P_DEFAULT,H5P_DEFAULT);
+	herr_t err = H5Lcreate_soft(path().c_str(),id,p.c_str(),H5P_DEFAULT,H5P_DEFAULT);
 	if(err < 0){
 		EXCEPTION_INIT(H5LinkError,"Coult not create symbolic link from "+
-					   getPath()+" to "+path+"!");
+					   path()+" to "+p+"!");
 		EXCEPTION_THROW();
 	}
 

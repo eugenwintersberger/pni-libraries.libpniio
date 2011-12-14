@@ -45,7 +45,7 @@ NXFileH5Implementation &NXFileH5Implementation::operator=(NXFileH5Implementation
 void NXFileH5Implementation::close(){
 	//check for open objects in the file
 
-	hid_t id = getId();
+	hid_t id = get_id();
 
 	if(H5Iis_valid(id)){
 		//std::cerr<<"Open files:      "<<H5Fget_obj_count(_id,H5F_OBJ_FILE)<<std::endl;
@@ -91,7 +91,7 @@ void NXFileH5Implementation::open(const char *n,bool readonly){
 		}
 	}
 
-	setId(id);
+	set_id(id);
 
 }
 
@@ -134,7 +134,7 @@ void NXFileH5Implementation::create(const char *n,bool overwrite,UInt64 ssize){
 		}
 	}
 
-	setId(id);
+	set_id(id);
 
 	//in the end we need to set the HDF5 version to the correct
 	//value
@@ -143,11 +143,11 @@ void NXFileH5Implementation::create(const char *n,bool overwrite,UInt64 ssize){
 	std::ostringstream vstring;
 	vstring<<major<<"."<<minor<<"."<<rel;
 
-	this->setAttribute("HDF5_version",String(vstring.str()));
+	this->set_attr("HDF5_version",String(vstring.str()));
 }
 
 void NXFileH5Implementation::flush() const{
-	H5Fflush(getId(),H5F_SCOPE_LOCAL);
+	H5Fflush(get_id(),H5F_SCOPE_LOCAL);
 }
 
 //end of namespace

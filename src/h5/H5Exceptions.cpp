@@ -31,16 +31,16 @@ namespace nx{
 namespace h5{
 
 H5Exception::H5Exception():Exception(){
-	_h5estack.getStack();
+	_h5estack.fill();
 }
 
 H5Exception::H5Exception(const String &n):Exception(n){
-	_h5estack.getStack();
+	_h5estack.fill();
 }
 
 H5Exception::H5Exception(const String &n,const String &i,const String &d)
 			:Exception(n,i,d){
-	_h5estack.getStack();
+	_h5estack.fill();
 }
 
 H5Exception::H5Exception(const H5Exception &e){

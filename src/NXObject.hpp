@@ -186,7 +186,7 @@ public:
 	const Imp &getImplementation() const;
 
 	bool isOpen() const {
-		return _imp.isOpen();
+		return _imp.is_open();
 	}
 
 };
@@ -259,15 +259,15 @@ template<typename PImp> NXObject<Imp> &NXObject<Imp>::operator=(NXObject<PImp> &
 //==========methods for obtaining the name and position of the object===========
 template<typename Imp> String NXObject<Imp>::getName() const{
 	//here we need obviously a better solution
-	return _imp.getName();
+	return _imp.name();
 }
 
 template<typename Imp> String NXObject<Imp>::getBase() const {
-	return _imp.getBase();
+	return _imp.base();
 }
 
 template<typename Imp> String NXObject<Imp>::getPath() const {
-	return _imp.getPath();
+	return _imp.path();
 }
 
 //============methods for handling the implementation object====================
@@ -291,32 +291,32 @@ template<typename Imp> const Imp &NXObject<Imp>::getImplementation() const{
 //==============methods for handling object attributes==========================
 template<typename Imp>
 void NXObject<Imp>::setAttribute(const String &n,const ArrayObject &a) const{
-	_imp.setAttribute(n.c_str(),a);
+	_imp.set_attr(n.c_str(),a);
 }
 
 template<typename Imp>
 void NXObject<Imp>::setAttribute(const String &n,const ScalarObject &s) const{
-	_imp.setAttribute(n,s);
+	_imp.set_attr(n,s);
 }
 
 template<typename Imp>
 void NXObject<Imp>::setAttribute(const String &n,const String &s) const{
-	_imp.setAttribute(n,s);
+	_imp.set_attr(n,s);
 }
 
 template<typename Imp>
 void NXObject<Imp>::getAttribute(const String &n,String &s) const{
-	_imp.getAttribute(n,s);
+	_imp.get_attr(n,s);
 }
 
 template<typename Imp>
 void NXObject<Imp>::getAttribute(const String &n,ArrayObject &a) const{
-	_imp.getAttribute(n,a);
+	_imp.get_attr(n,a);
 }
 
 template<typename Imp>
 void NXObject<Imp>::getAttribute(const String &n,ScalarObject &s) const{
-	_imp.getAttribute(n,s);
+	_imp.get_attr(n,s);
 }
 
 
@@ -324,18 +324,18 @@ void NXObject<Imp>::getAttribute(const String &n,ScalarObject &s) const{
 template<typename Imp>
 template<typename ImpL>
 void NXObject<Imp>::createLink(const NXObject<ImpL> &pos,const String &n) const{
-	_imp.createLink(pos.getImplementation(),n);
+	_imp.link(pos.getImplementation(),n);
 }
 
 template<typename Imp>
 template<typename ImpL>
 void NXObject<Imp>::createLink(const NXObject<ImpL> &pos) const{
-	_imp.createLink(pos.getImplementation(),getName());
+	_imp.link(pos.getImplementation(),getName());
 }
 
 template<typename Imp>
 void NXObject<Imp>::createLink(const String &path) const{
-	_imp.createLink(path);
+	_imp.link(path);
 }
 
 template<typename Imp>
@@ -347,7 +347,7 @@ void NXObject<Imp>::createLink(const String &path,const String &n) const{
 		totpath += path;
 	}
 	totpath += n;
-	_imp.createLink(totpath);
+	_imp.link(totpath);
 }
 
 //end of namespace

@@ -75,12 +75,12 @@ H5Error &H5Error::operator=(const H5Error &e){
 }
 
 //----------------------------------------------------------------------------
-hid_t H5Error::getClassId() const{
+hid_t H5Error::class_id() const{
 	return _class_id;
 }
 
 //----------------------------------------------------------------------------
-void H5Error::setClassId(hid_t id){
+void H5Error::class_id(hid_t id){
 	EXCEPTION_SETUP("void H5Error::setClassId(hid_t id)");
 	char *ptr = nullptr;
 	size_t buffer_size = 0;
@@ -105,12 +105,12 @@ void H5Error::setClassId(hid_t id){
 }
 
 //----------------------------------------------------------------------------
-hid_t H5Error::getMajorNumber() const{
+hid_t H5Error::major_number() const{
 	return _major_number;
 }
 
 //----------------------------------------------------------------------------
-void H5Error::setMajorNumber(hid_t v){
+void H5Error::major_number(hid_t v){
 	EXCEPTION_SETUP("void H5Error::setMajorNumber(hid_t v)");
 	char *ptr = nullptr;
 	size_t buffer_size = 0;
@@ -140,12 +140,12 @@ void H5Error::setMajorNumber(hid_t v){
 }
 
 //----------------------------------------------------------------------------
-hid_t H5Error::getMinorNumber() const{
+hid_t H5Error::minor_number() const{
 	return _minor_number;
 }
 
 //----------------------------------------------------------------------------
-void H5Error::setMinorNumber(hid_t v){
+void H5Error::minor_number(hid_t v){
 	EXCEPTION_SETUP("void H5Error::setMinorNumber(hid_t v)");
 	char *ptr = nullptr;
 	size_t buffer_size = 0;
@@ -175,44 +175,44 @@ void H5Error::setMinorNumber(hid_t v){
 }
 
 //----------------------------------------------------------------------------
-String H5Error::getFileName() const{
+String H5Error::file_name() const{
 	return _file_name;
 }
 
 //----------------------------------------------------------------------------
-void H5Error::setFileName(const String &n){
+void H5Error::file_name(const String &n){
 	_file_name = n;
 }
 
 //----------------------------------------------------------------------------
-String H5Error::getFuncName() const{
+String H5Error::func_name() const{
 	return _func_name;
 }
 
 //----------------------------------------------------------------------------
-void H5Error::setFuncName(const String &n){
+void H5Error::func_name(const String &n){
 	_func_name = n;
 }
 
 //----------------------------------------------------------------------------
-String H5Error::getDescription() const{
+String H5Error::description() const{
 	return _description;
 }
 
 //----------------------------------------------------------------------------
-void H5Error::setDescription(const String &n){
+void H5Error::description(const String &n){
 	_description = n;
 }
 
 
 //----------------------------------------------------------------------------
-String H5Error::getMajorMessage() const{
+String H5Error::major_message() const{
 	return _major_message;
 }
 
 
 //----------------------------------------------------------------------------
-String H5Error::getMinorMessage() const{
+String H5Error::minor_message() const{
 	return _minor_message;
 }
 

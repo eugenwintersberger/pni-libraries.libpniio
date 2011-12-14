@@ -55,9 +55,9 @@ public:
 	virtual void setup(hid_t id) const;
 	
 	//! get compression rate
-	virtual UInt32 getCompressionRate() const;
+	virtual UInt32 compression_rate() const;
 	//! set compression rate
-	virtual void setCompressionRate(UInt32 r);
+	virtual void compression_rate(UInt32 r);
 
 
 };

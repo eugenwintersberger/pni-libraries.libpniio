@@ -98,17 +98,17 @@ public:
 
 	//! Return a new copy of the requested type.
 	//! \return ID to a new HDF5 type object
-	template<typename T> hid_t createType() const;
+	template<typename T> hid_t create_type() const;
 	//! get a type reference
 
 	//! Returns a reference to an existing instance of the 
 	//! requested type.
 	//! \return ID to an existing HDF5 type object
-	template<typename T> const hid_t &getType() const;
+	template<typename T> const hid_t &get_type() const;
 	//! get a binary type
-	hid_t createBinaryType() const;
+	hid_t create_binary_type() const;
 	//! get a binary type reference
-	const hid_t &getBinaryType() const;
+	const hid_t &get_binary_type() const;
 
 	//! create a type from NumericObject
 
@@ -117,26 +117,26 @@ public:
 	//! thrown.
 	//! \throws H5DataTypeError if unknown type-code
 	//! \return HDF5 type ID
-	hid_t createTypeFromObject(const NumericObject &o) const;
+	hid_t create_type_from_object(const NumericObject &o) const;
 	//! get the type from NumericObject
 
 	//! Retrun the type of an existing instance of a NumericObject.
 	//! \throws H5DataTypeError if unknown type-code
 	//! \return HDF5 type ID
-	const hid_t &getTypeFromObject(const NumericObject &o) const;
+	const hid_t &get_type_from_object(const NumericObject &o) const;
 
 	//! get type from type ID
 
 	//! Get a reference from a type determined by its TypeID.
 	//! \throws H5DataTypeError if ID is unknown
 	//! \return reference to type
-	const hid_t &getTypeFromID(TypeID id) const;
+	const hid_t &get_type_from_id(TypeID id) const;
 	//! create a new type from type ID
 
 	//! Create a new type determined by its TypeID.
 	//! \throws H5DataTypeError if ID is unkown
 	//! \return new HDF5 type object
-	hid_t createTypeFromID(TypeID id) const;
+	hid_t create_type_from_id(TypeID id) const;
 };
 
 //! static and global instance of H5TypeFactory

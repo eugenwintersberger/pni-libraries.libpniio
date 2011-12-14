@@ -45,7 +45,7 @@ NXFieldH5Implementation(o){
 					"NXBinaryFieldH5Implementation"
 					"(const NXFieldH5Implementation &o)");
 
-	if(getTypeID() != TypeID::BINARY){
+	if(type_id() != TypeID::BINARY){
 		EXCEPTION_INIT(TypeError,"Field is not a binary field!");
 		EXCEPTION_THROW();
 	}
@@ -60,7 +60,7 @@ NXFieldH5Implementation(std::move(o)){
 					"NXBinaryFieldH5Implementation"
 					"(NXFieldH5Implementation &&o)");
 
-	if(getTypeID() != TypeID::BINARY){
+	if(type_id() != TypeID::BINARY){
 		EXCEPTION_INIT(TypeError,"Field is not a binary field!");
 		EXCEPTION_THROW();
 	}
@@ -75,7 +75,7 @@ NXFieldH5Implementation(o){
 					"NXBinaryFieldH5Implementation"
 					"(const NXObjectH5Implementation &o)");
 
-	if(getTypeID() != TypeID::BINARY){
+	if(type_id() != TypeID::BINARY){
 		EXCEPTION_INIT(TypeError,"Object is not a binary field!");
 		EXCEPTION_THROW();
 	}
@@ -91,7 +91,7 @@ NXFieldH5Implementation(std::move(o)){
 					"NXBinaryFieldH5Implementation"
 					"(NXObjectH5Implementation &&o)");
 
-	if(getTypeID() != TypeID::BINARY){
+	if(type_id() != TypeID::BINARY){
 		EXCEPTION_INIT(TypeError,"Object is not a binary field!");
 		EXCEPTION_THROW();
 	}
@@ -151,7 +151,7 @@ NXBinaryFieldH5Implementation::operator=(const NXFieldH5Implementation &o){
 					"NXBinaryFieldH5Implementation::operator="
 					"(const NXFieldH5Implementation &o)");
 
-	if(o.getTypeID() != TypeID::BINARY){
+	if(o.type_id() != TypeID::BINARY){
 		EXCEPTION_INIT(TypeError,"Field is not a binary field!");
 		EXCEPTION_THROW();
 	}
@@ -168,7 +168,7 @@ NXBinaryFieldH5Implementation::operator=(NXFieldH5Implementation &&o){
 					"NXBinaryFieldH5Implementation::operator="
 					"(NXFieldH5Implementation &&o)");
 
-	if(o.getTypeID() != TypeID::BINARY){
+	if(o.type_id() != TypeID::BINARY){
 		EXCEPTION_INIT(TypeError,"Field is not a binary field!");
 		EXCEPTION_THROW();
 	}
@@ -186,7 +186,7 @@ NXBinaryFieldH5Implementation::operator=(const NXObjectH5Implementation &o){
 					"(const NXObjectH5Implementation &o)");
 
 	(NXFieldH5Implementation &)(*this) = o;
-	if(getTypeID() != TypeID::BINARY){
+	if(type_id() != TypeID::BINARY){
 		EXCEPTION_INIT(TypeError,"Object is not a binary field!");
 		EXCEPTION_THROW();
 	}
@@ -203,7 +203,7 @@ NXBinaryFieldH5Implementation::operator=(NXObjectH5Implementation &&o){
 					"(NXObjectH5Implementation &&o)");
 
 	(NXFieldH5Implementation &)(*this) = std::move(o);
-	if(getTypeID() != TypeID::BINARY){
+	if(type_id() != TypeID::BINARY){
 		EXCEPTION_INIT(TypeError,"Object is not a binary field!");
 		EXCEPTION_THROW();
 	}
@@ -217,7 +217,7 @@ NXBinaryFieldH5Implementation::operator=(NXObjectH5Implementation &&o){
 size_t NXBinaryFieldH5Implementation::size() const{
 	EXCEPTION_SETUP("size_t NXBinaryFieldH5Implementation::size() const");
 
-	return getShape().dim(0);
+	return shape().dim(0);
 
 }
 
@@ -231,7 +231,7 @@ void NXBinaryFieldH5Implementation::append(const Buffer<Binary> &b){
 	herr_t err;
 
 	//extend field along growth dimension
-	_offset[0] = getShape().dim(0);
+	_offset[0] = shape().dim(0);
 	_count[0] = b.size();
 	_resize_dataset(b.size());
 
@@ -242,10 +242,10 @@ void NXBinaryFieldH5Implementation::append(const Buffer<Binary> &b){
 		EXCEPTION_THROW();
 	}
 
-	hid_t type = H5Dget_type(getId());
+	hid_t type = H5Dget_type(get_id());
 
 	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
-	err = H5Dwrite(getId(),type,elem_space,_filespace,H5P_DEFAULT,(void*)b.void_ptr());
+	err = H5Dwrite(get_id(),type,elem_space,_filespace,H5P_DEFAULT,(void*)b.void_ptr());
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error writing data!");
 		EXCEPTION_THROW();
@@ -261,18 +261,18 @@ void NXBinaryFieldH5Implementation::set(size_t pos,const Buffer<Binary> &b){
 	herr_t err;
 
 	//extend field along growth dimension
-	if(pos>=getShape().dim(0)){
-		_resize_dataset(1+pos+b.size()-getShape().dim(0));
+	if(pos>=shape().dim(0)){
+		_resize_dataset(1+pos+b.size()-shape().dim(0));
 	}
 	_offset[0] = pos;
 	_count[0] = b.size();
 
 	hsize_t dims[] = {b.size()};
 	hid_t elem_space = H5Screate_simple(1,dims,NULL);
-	hid_t type = H5Dget_type(getId());
+	hid_t type = H5Dget_type(get_id());
 
 	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
-	err = H5Dwrite(getId(),type,elem_space,_filespace,H5P_DEFAULT,b.void_ptr());
+	err = H5Dwrite(get_id(),type,elem_space,_filespace,H5P_DEFAULT,b.void_ptr());
 	if(err<0){
 		EXCEPTION_INIT(H5DataSetError,"Error writing data!");
 		EXCEPTION_THROW();
@@ -286,7 +286,7 @@ void NXBinaryFieldH5Implementation::get(size_t pos,Buffer<Binary> &b){
 	EXCEPTION_SETUP("void NXBinaryFieldH5Implementation::"
 					"get(size_t pos,Buffer<Binary> &b)");
 
-	if((pos+b.size())>getShape().dim(0)){
+	if((pos+b.size())>shape().dim(0)){
 		EXCEPTION_INIT(IndexError,"Element + buffer size exceed field size!");
 		EXCEPTION_THROW();
 	}
@@ -298,12 +298,12 @@ void NXBinaryFieldH5Implementation::get(size_t pos,Buffer<Binary> &b){
 
 	hsize_t dims[] = {b.size()};
 	hid_t elem_space = H5Screate_simple(1,dims,NULL);
-	hid_t type = H5Dget_type(getId());
+	hid_t type = H5Dget_type(get_id());
 
 	H5Sselect_hyperslab(_filespace,H5S_SELECT_SET,_offset,NULL,_count,NULL);
-	err = H5Dread(getId(),type,elem_space,_filespace,H5P_DEFAULT,b.void_ptr());
+	err = H5Dread(get_id(),type,elem_space,_filespace,H5P_DEFAULT,b.void_ptr());
 	if(err<0){
-		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+getName()+"]!");
+		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+name()+"]!");
 		EXCEPTION_THROW();
 	}
 
@@ -315,7 +315,7 @@ void NXBinaryFieldH5Implementation::get(Buffer<Binary> &b){
 	EXCEPTION_SETUP("void NXBinaryFieldH5Implementation::"
 					"get(Buffer<Binary> &o)");
 
-	if(b.size()!=getShape().dim(0)){
+	if(b.size()!=shape().dim(0)){
 		EXCEPTION_INIT(ShapeMissmatchError,"Buffer and field have different size!");
 		EXCEPTION_THROW();
 	}
@@ -324,11 +324,11 @@ void NXBinaryFieldH5Implementation::get(Buffer<Binary> &b){
 
 	//clear all selections
 	H5Sselect_none(_filespace);
-	hid_t type = H5Dget_type(getId());
+	hid_t type = H5Dget_type(get_id());
 
-	err = H5Dread(getId(),type,H5S_ALL,H5S_ALL,H5P_DEFAULT,b.void_ptr());
+	err = H5Dread(get_id(),type,H5S_ALL,H5S_ALL,H5P_DEFAULT,b.void_ptr());
 	if(err < 0){
-		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+getName()+"]!");
+		EXCEPTION_INIT(H5DataSetError,"Error reading data from field ["+name()+"]!");
 		EXCEPTION_THROW();
 	}
 }

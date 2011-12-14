@@ -82,7 +82,7 @@ public:
 	
 	//! Get the error class ID
 	//! \return error class ID
-	hid_t getClassId() const;
+	hid_t class_id() const;
 	
 	//! set class ID
 	
@@ -91,37 +91,37 @@ public:
 	//! thrown.
 	//! \throws MemoryAllocationError if buffer allocation fails
 	//! \param id object ID
-	void setClassId(hid_t id);
+	void class_id(hid_t id);
 	
 	//! get major number
-	hid_t getMajorNumber() const;
+	hid_t major_number() const;
 	//! set major number
-	void setMajorNumber(hid_t v);
+	void major_number(hid_t v);
 
 	//! get minor number
-	hid_t getMinorNumber() const;
+	hid_t minor_number() const;
 	//! set minor number
-	void setMinorNumber(hid_t v);
+	void minor_number(hid_t v);
 
 	//! get file name
-	String getFileName() const;
+	String file_name() const;
 	//! get file name
-	void setFileName(const String &n);
+	void file_name(const String &n);
 
 	//! get function name
-	String getFuncName() const;
+	String func_name() const;
 	//! set function name
-	void setFuncName(const String &n);
+	void func_name(const String &n);
 
 	//! get description
-	String getDescription() const;
+	String description() const;
 	//! set description
-	void setDescription(const String &n);
+	void description(const String &n);
 	
 	//! get major message
-	String getMajorMessage() const;
+	String major_message() const;
 	//! get minor message
-	String getMinorMessage() const;
+	String minor_message() const;
 	
 	//! ouput stream operator
 	friend std::ostream &operator<<(std::ostream &o,const H5Error &e);
@@ -151,7 +151,7 @@ public:
 
 	//! Returns the total number of HDF5 errors in the stack.
 	//! \return number of errors
-	ssize_t getNumberOfErrors() const{
+	ssize_t number_of_errors() const{
 		return _errors.size();
 	}
 
@@ -159,13 +159,13 @@ public:
 
 	//! Reads error messages from the current HDF5 error stack 
 	//! and add them to the stack.	
-	void getStack();
+	void fill();
 
 	//! append error
 
 	//! Appends a single error to the stack.
 	//! \param e HDF5 error record
-	void appendError(const H5Error &e);
+	void append(const H5Error &e);
 
 	//! ostream operator
 	friend std::ostream &operator<<(std::ostream &o,const H5ErrorStack &s);

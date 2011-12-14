@@ -62,26 +62,26 @@ public:
 	//! Returns the full HDF5 library version as a string of the form
 	//! <major number>.<minor number>.<release number>.
 	//! \return version string
-	String getVersionString() const;
+	String version_string() const;
 	//! get major number
 
 	//! Returns the major version number of the HDF5 library as unsigned
 	//! integer.
 	//! \return major version number
-	UInt32 getMajorVersionNumber() const;
+	UInt32 major_number() const;
 	//! get minor number
 
 	//! Returns the minor version number of the HDF5 library as unsigned
 	//! integer
 	//! \return minor version number
-	UInt32 getMinorVersionNumber() const;
+	UInt32 minor_number() const;
 	//! get release number
 
 	//! Returns the release version of the HDF5 library as unsigned integer.
 	//! \return release version number
-	UInt32 getReleaseNumber() const;
-	void setVerbose(bool f) { _verbose = f; }
-	bool isVerbose() const { return _verbose; }
+	UInt32 release_number() const;
+	void verbose(bool f) { _verbose = f; }
+	bool is_verbose() const { return _verbose; }
 };
 
 //global setup of the library - should be implemented as a singleton in future

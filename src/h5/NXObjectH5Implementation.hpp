@@ -74,14 +74,14 @@ protected:
 	//! get object ID
 	//should be moved to protected and thus not exposed to the public
 	//interface of the class
-	inline hid_t getId() const{
+	inline hid_t get_id() const{
 		return _id;
 	}
 
 	//! set object ID
 	//should be moved to protected and thus not be exposed to the public
 	//interface of the class
-	inline void setId(hid_t id){
+	inline void set_id(hid_t id){
 		//if the object has already a valid ID we need to decrement the
 		//reference counter on this object - the object will be destroyed
 		//if its reference counter approaches 0
@@ -98,7 +98,7 @@ public:
 	//! default constructor
 	NXObjectH5Implementation();
 	NXObjectH5Implementation(hid_t id){
-		setId(id);
+		set_id(id);
 	}
 	//! destructor
 	virtual ~NXObjectH5Implementation();
@@ -125,7 +125,7 @@ public:
 	//! \throws TypeError if data type creation failed
 	//! \param n attribute name
 	//! \param a attribute value
-	void setAttribute(const String &n,const ArrayObject &a) const;
+	void set_attr(const String &n,const ArrayObject &a) const;
 	//! write attribute from ScalarObject
 
 	//! Write an attribute of type ScalarObject. The unit and description
@@ -135,22 +135,22 @@ public:
 	//! \throws H5DataSetError if data-set creation failed
 	//! \param n attribute name
 	//! \param s attribute value
-	void setAttribute(const String &n,const ScalarObject &s) const;
+	void set_attr(const String &n,const ScalarObject &s) const;
 	//! write attribute data from a String object
-	void setAttribute(const String &n,const String &) const;
+	void set_attr(const String &n,const String &) const;
 
 	//! read attribute data to an ArrayObject
-	void getAttribute(const String &n,ArrayObject &a) const;
+	void get_attr(const String &n,ArrayObject &a) const;
 	//! read attribute data to a ScalarObject
-	void getAttribute(const String &n,ScalarObject &s) const;
+	void get_attr(const String &n,ScalarObject &s) const;
 	//! read attribute data to a String object
-	void getAttribute(const String &n,String &s) const;
+	void get_attr(const String &n,String &s) const;
 
 	//! get object path
 
 	//! Returns the path of the object within the HDF5 tree.
 	//! \return full path of the object
-	virtual String getPath() const;
+	virtual String path() const;
 	//! get object path base
 
 	//! Returns the base name of an object. The base name is the path of an
@@ -158,14 +158,14 @@ public:
 	//! So if an object has the path /scan/detector/data the base name
 	//! would be /scan/detector.
 	//! \return base name of the object
-	virtual String getBase() const;
+	virtual String base() const;
 	//! get object name
 
 	//! The name of an object is the last entity of the full path.
 	//! If an object has the full path /scan/detector/data the name would be
 	//! data.
 	//! \return object name
-	virtual String getName() const;
+	virtual String name() const;
 	//! close the object
 	virtual void close();
 	//! check if open
@@ -174,9 +174,9 @@ public:
 	//! whether or not an object can be used for read or write data or
 	//! as a root object for other objects.
 	//! \return true if open, false otherwise
-	virtual bool isOpen() const;
+	virtual bool is_open() const;
 	//! return the object class
-	virtual pni::nx::NXObjectClass getObjectClass() const;
+	virtual pni::nx::NXObjectClass object_class() const;
 
 	//! create link to this object
 
@@ -185,14 +185,14 @@ public:
 	//! \throws H5LinkError if linking failed
 	//! \param pos parent object for the link
 	//! \param name name of the link below its parent object
-	virtual void createLink(const NXObjectH5Implementation &pos,const String &n) const;
+	virtual void link(const NXObjectH5Implementation &pos,const String &n) const;
 	//! create link to this object
 
 	//! Creates a link to this object specified by path.
 	//! \throws H5ObjectError if this object is not open
 	//! \throws H5LinkError if link creation failed.
 	//! \param path path of the link
-	virtual void createLink(const String &path) const;
+	virtual void link(const String &path) const;
 
 };
 

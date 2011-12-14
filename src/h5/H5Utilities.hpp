@@ -64,7 +64,7 @@ public:
 	//! \throws H5DataSpaceError if data space creation fails
 	//! \param s ArrayShape object
 	//! \param dspace data space id
-	static void Shape2DataSpace(const Shape &s,hid_t &dspace);
+	static void shape_to_dataspace(const Shape &s,hid_t &dspace);
 	//! ArrayShape from data space
 
 	//! Creates an ArraySpace object from an existing HDF5 data space.
@@ -74,14 +74,14 @@ public:
 	//! \throws MemoryAllocationError if temporary buffer allocation fails
 	//! \param dspace data space id
 	//! \param s ArrayShape object
-	static void DataSpace2Shape(const hid_t &dspace,Shape &s);
+	static void dataspace_to_shape(const hid_t &dspace,Shape &s);
 	//! Selection from dataspace
 
 	//! Creates a selection that is appropriate for a given data space.
 	//! This means that the buffers of the selection are allocated properly.
-	static void DataSpace2Selection(const hid_t &dspace,Selection &s);
+	static void dataspace_to_selection(const hid_t &dspace,Selection &s);
 
-	static void Selection2DataSpace(const Selection &s,hid_t &dspace);
+	static void selection_to_dataspace(const Selection &s,hid_t &dspace);
 
 	//! convert HDF5 data type
 
@@ -90,7 +90,7 @@ public:
 	//! PNITypeID::NONE is returned.
 	//! \param tid HDF5 type object
 	//! \return PNI type ID
-	static TypeID H5Type2PNITypeCode(const hid_t tid);
+	static TypeID h5type_to_pni_type_id(const hid_t tid);
 };
 
 static H5Utilities H5Utils;

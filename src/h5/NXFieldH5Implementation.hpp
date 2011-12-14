@@ -10,6 +10,7 @@
 
 #include <pni/utils/Types.hpp>
 #include <pni/utils/NumericObject.hpp>
+#include <pni/utils/Buffer.hpp>
 
 
 #include "NXObjectH5Implementation.hpp"
@@ -84,20 +85,20 @@ public:
 	NXFieldH5Implementation &operator=(NXObjectH5Implementation &&o);
 
 	//! get the total shape of the container
-	virtual const Shape &getShape() const;
+	virtual const Shape &shape() const;
 
 	//! element shape
-	virtual const Shape &getElementShape() const;
+	virtual const Shape &element_shape() const;
 
 	//! return the type ID of the field
-	virtual TypeID getTypeID() const;
+	virtual TypeID type_id() const;
 
 
 	//! close the data field
 	virtual void close();
 
 	//! set HDF5 object ID
-	virtual void setId(const hid_t &id);
+	virtual void id(const hid_t &id);
 
 	friend class NXGroupH5Implementation;
 };

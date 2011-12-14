@@ -32,7 +32,7 @@ namespace nx {
 namespace h5 {
 
 //------------------------------------------------------------------------------
-void H5Utilities::Shape2DataSpace(const Shape &s,hid_t &dspace){
+void H5Utilities::shape_to_dataspace(const Shape &s,hid_t &dspace){
 	EXCEPTION_SETUP("void H5Utilities::ArrayShape2DataSpace("
 				    "const ArrayShape &s,hid_t &dspace)");
 	hsize_t *dims = nullptr;
@@ -67,7 +67,7 @@ void H5Utilities::Shape2DataSpace(const Shape &s,hid_t &dspace){
 }
 
 //------------------------------------------------------------------------------
-void H5Utilities::DataSpace2Shape(const hid_t &dspace,Shape &s){
+void H5Utilities::dataspace_to_shape(const hid_t &dspace,Shape &s){
 	EXCEPTION_SETUP("void H5Utilities::DataSpace2ArrayShape"
 					"(const hid_t &dspace,ArrayShape &s)");
 	UInt32 rank;
@@ -109,47 +109,47 @@ void H5Utilities::DataSpace2Shape(const hid_t &dspace,Shape &s){
 }
 
 //------------------------------------------------------------------------------
-TypeID H5Utilities::H5Type2PNITypeCode(hid_t tid){
-	if(H5Tequal(H5TFactory.getTypeFromID(TypeID::INT8),tid)){
+TypeID H5Utilities::h5type_to_pni_type_id(hid_t tid){
+	if(H5Tequal(H5TFactory.get_type_from_id(TypeID::INT8),tid)){
 		return TypeID::INT8;
 	}
-	if(H5Tequal(H5TFactory.getTypeFromID(TypeID::UINT8),tid)){
+	if(H5Tequal(H5TFactory.get_type_from_id(TypeID::UINT8),tid)){
 		return TypeID::UINT8;
 	}
-	if(H5Tequal(H5TFactory.getTypeFromID(TypeID::INT16),tid)){
+	if(H5Tequal(H5TFactory.get_type_from_id(TypeID::INT16),tid)){
 		return TypeID::INT16;
 	}
-	if(H5Tequal(H5TFactory.getTypeFromID(TypeID::UINT16),tid)){
+	if(H5Tequal(H5TFactory.get_type_from_id(TypeID::UINT16),tid)){
 		return TypeID::UINT16;
 	}
-	if(H5Tequal(H5TFactory.getTypeFromID(TypeID::INT32),tid)){
+	if(H5Tequal(H5TFactory.get_type_from_id(TypeID::INT32),tid)){
 		return TypeID::INT32;
 	}
-	if(H5Tequal(H5TFactory.getTypeFromID(TypeID::UINT32),tid)){
+	if(H5Tequal(H5TFactory.get_type_from_id(TypeID::UINT32),tid)){
 		return TypeID::UINT32;
 	}
-	if(H5Tequal(H5TFactory.getTypeFromID(TypeID::INT64),tid)){
+	if(H5Tequal(H5TFactory.get_type_from_id(TypeID::INT64),tid)){
 		return TypeID::INT64;
 	}
-	if(H5Tequal(H5TFactory.getTypeFromID(TypeID::UINT64),tid)){
+	if(H5Tequal(H5TFactory.get_type_from_id(TypeID::UINT64),tid)){
 		return TypeID::UINT64;
 	}
-	if(H5Tequal(H5TFactory.getTypeFromID(TypeID::FLOAT32),tid)){
+	if(H5Tequal(H5TFactory.get_type_from_id(TypeID::FLOAT32),tid)){
 		return TypeID::FLOAT32;
 	}
-	if(H5Tequal(H5TFactory.getTypeFromID(TypeID::FLOAT64),tid)){
+	if(H5Tequal(H5TFactory.get_type_from_id(TypeID::FLOAT64),tid)){
 		return TypeID::FLOAT64;
 	}
-	if(H5Tequal(H5TFactory.getTypeFromID(TypeID::FLOAT128),tid)){
+	if(H5Tequal(H5TFactory.get_type_from_id(TypeID::FLOAT128),tid)){
 		return TypeID::FLOAT128;
 	}
-	if(H5Tequal(H5TFactory.getTypeFromID(TypeID::COMPLEX32),tid)){
+	if(H5Tequal(H5TFactory.get_type_from_id(TypeID::COMPLEX32),tid)){
 		return TypeID::COMPLEX32;
 	}
-	if(H5Tequal(H5TFactory.getTypeFromID(TypeID::COMPLEX64),tid)){
+	if(H5Tequal(H5TFactory.get_type_from_id(TypeID::COMPLEX64),tid)){
 		return TypeID::COMPLEX64;
 	}
-	if(H5Tequal(H5TFactory.getTypeFromID(TypeID::COMPLEX128),tid)){
+	if(H5Tequal(H5TFactory.get_type_from_id(TypeID::COMPLEX128),tid)){
 		return TypeID::COMPLEX128;
 	}
 
@@ -157,7 +157,7 @@ TypeID H5Utilities::H5Type2PNITypeCode(hid_t tid){
 		return TypeID::STRING;
 	}
 
-	if(H5Tequal(H5TFactory.getTypeFromID(TypeID::BINARY),tid)){
+	if(H5Tequal(H5TFactory.get_type_from_id(TypeID::BINARY),tid)){
 		return TypeID::BINARY;
 	}
 

@@ -63,12 +63,12 @@ void H5DeflateFilter::setup(hid_t id) const{
 }
 
 //-----------------------------------------------------------------------------
-UInt32 H5DeflateFilter::getCompressionRate() const{
+UInt32 H5DeflateFilter::compression_rate() const{
 	return _comp_rate;
 }
 
 //-----------------------------------------------------------------------------
-void H5DeflateFilter::setCompressionRate(UInt32 r){
+void H5DeflateFilter::compression_rate(UInt32 r){
 	EXCEPTION_SETUP("void H5DeflateFilter::setCompressionRate(UInt32 r)");
 
 	if(r<=9){

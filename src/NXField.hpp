@@ -105,14 +105,14 @@ public:
 	//! this object.
 	//! \return ArrayShape& reference to the shape object
 	virtual const Shape &getShape() const{
-		return this->getImplementation().getShape();
+		return this->getImplementation().shape();
 	}
 
 	//! shape of a single element
 
 	//! Return the shape of a single element stored in the container.
 	virtual const Shape &getElementShape() const {
-		return this->getImplementation().getElementShape();
+		return this->getImplementation().element_shape();
 	}
 
 	//! get the type ID
@@ -120,14 +120,14 @@ public:
 	//! Return the ID of the data type stored in the field.
 	//! \return data type ID
 	virtual TypeID getTypeID() const {
-		return this->getImplementation().getTypeID();
+		return this->getImplementation().type_id();
 	}
 
 	//! get the field name
 
 	//! Return the name of the field.
 	virtual String getName() const {
-		return this->getImplementation().getName();
+		return this->getImplementation().name();
 	}
 
 	//! append a string obect to the field

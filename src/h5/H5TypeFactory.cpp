@@ -33,170 +33,170 @@ namespace h5{
 
 
 //------------------------------------------------------------------------------
-template<> hid_t H5TypeFactory::createType<Int8>() const {
+template<> hid_t H5TypeFactory::create_type<Int8>() const {
 	return H5Tcopy(_int8_type);
 }
 
 //------------------------------------------------------------------------------
-template<> const hid_t &H5TypeFactory::getType<Int8>() const {
+template<> const hid_t &H5TypeFactory::get_type<Int8>() const {
 	return _int8_type;
 }
 
 //------------------------------------------------------------------------------
-template<> hid_t H5TypeFactory::createType<UInt8>() const {
+template<> hid_t H5TypeFactory::create_type<UInt8>() const {
 	return H5Tcopy(_uint8_type);
 }
 
 //------------------------------------------------------------------------------
-template<> const hid_t &H5TypeFactory::getType<UInt8>() const {
+template<> const hid_t &H5TypeFactory::get_type<UInt8>() const {
 	return _uint8_type;
 }
 
 //------------------------------------------------------------------------------
-template<> hid_t H5TypeFactory::createType<Int16>() const {
+template<> hid_t H5TypeFactory::create_type<Int16>() const {
 	return H5Tcopy(_int16_type);
 }
 
 //------------------------------------------------------------------------------
-template<> const hid_t &H5TypeFactory::getType<Int16>() const {
+template<> const hid_t &H5TypeFactory::get_type<Int16>() const {
 	return _int16_type;
 }
 
 //------------------------------------------------------------------------------
-template<> hid_t H5TypeFactory::createType<UInt16>() const {
+template<> hid_t H5TypeFactory::create_type<UInt16>() const {
 	return H5Tcopy(_uint16_type);
 }
 
 //------------------------------------------------------------------------------
-template<> const hid_t &H5TypeFactory::getType<UInt16>() const {
+template<> const hid_t &H5TypeFactory::get_type<UInt16>() const {
 	return _uint16_type;
 }
 
 //------------------------------------------------------------------------------
-template<> hid_t H5TypeFactory::createType<Int32>() const {
+template<> hid_t H5TypeFactory::create_type<Int32>() const {
 	return H5Tcopy(_int32_type);
 }
 
 //------------------------------------------------------------------------------
-template<> const hid_t &H5TypeFactory::getType<Int32>() const {
+template<> const hid_t &H5TypeFactory::get_type<Int32>() const {
 	return _int32_type;
 }
 
 //------------------------------------------------------------------------------
-template<> hid_t H5TypeFactory::createType<UInt32>() const {
+template<> hid_t H5TypeFactory::create_type<UInt32>() const {
 	return H5Tcopy(_uint32_type);
 }
 
 //------------------------------------------------------------------------------
-template<> const hid_t &H5TypeFactory::getType<UInt32>() const {
+template<> const hid_t &H5TypeFactory::get_type<UInt32>() const {
 	return _uint32_type;
 }
 
 //------------------------------------------------------------------------------
-template<> hid_t H5TypeFactory::createType<Int64>() const {
+template<> hid_t H5TypeFactory::create_type<Int64>() const {
 	return H5Tcopy(_int64_type);
 }
 
 //------------------------------------------------------------------------------
-template<> const hid_t &H5TypeFactory::getType<Int64>() const {
+template<> const hid_t &H5TypeFactory::get_type<Int64>() const {
 	return _int64_type;
 }
 
 //------------------------------------------------------------------------------
-template<> hid_t H5TypeFactory::createType<UInt64>() const {
+template<> hid_t H5TypeFactory::create_type<UInt64>() const {
 	return H5Tcopy(_uint64_type);
 }
 
 //------------------------------------------------------------------------------
-template<> const hid_t &H5TypeFactory::getType<UInt64>() const {
+template<> const hid_t &H5TypeFactory::get_type<UInt64>() const {
 	return _uint64_type;
 }
 
 //------------------------------------------------------------------------------
-template<> hid_t H5TypeFactory::createType<Float32>() const{
+template<> hid_t H5TypeFactory::create_type<Float32>() const{
 	return H5Tcopy(_float32_type);
 }
 
 //------------------------------------------------------------------------------
-template<> const hid_t &H5TypeFactory::getType<Float32>() const {
+template<> const hid_t &H5TypeFactory::get_type<Float32>() const {
 	return _float32_type;
 }
 
 //------------------------------------------------------------------------------
-template<> hid_t H5TypeFactory::createType<Float64>() const {
+template<> hid_t H5TypeFactory::create_type<Float64>() const {
 	return H5Tcopy(_float64_type);
 }
 
 //------------------------------------------------------------------------------
-template<> const hid_t &H5TypeFactory::getType<Float64>() const {
+template<> const hid_t &H5TypeFactory::get_type<Float64>() const {
 	return _float64_type;
 }
 
 //------------------------------------------------------------------------------
-template<> hid_t H5TypeFactory::createType<Float128>() const {
+template<> hid_t H5TypeFactory::create_type<Float128>() const {
 	return H5Tcopy(_float128_type);
 }
 
 //------------------------------------------------------------------------------
-template<> const hid_t &H5TypeFactory::getType<Float128>() const {
+template<> const hid_t &H5TypeFactory::get_type<Float128>() const {
 	return _float128_type;
 }
 
 //------------------------------------------------------------------------------
-template<> hid_t H5TypeFactory::createType<Complex32>() const {
+template<> hid_t H5TypeFactory::create_type<Complex32>() const {
 	return H5Tcopy(_complex32_type);
 }
 
 //------------------------------------------------------------------------------
-template<> const hid_t &H5TypeFactory::getType<Complex32>() const {
+template<> const hid_t &H5TypeFactory::get_type<Complex32>() const {
 	return _complex32_type;
 }
 
 //------------------------------------------------------------------------------
-template<> hid_t H5TypeFactory::createType<Complex64>() const {
+template<> hid_t H5TypeFactory::create_type<Complex64>() const {
 	return H5Tcopy(_complex64_type);
 }
 
 //------------------------------------------------------------------------------
-template<> const hid_t &H5TypeFactory::getType<Complex64>() const {
+template<> const hid_t &H5TypeFactory::get_type<Complex64>() const {
 	return _complex64_type;
 }
 
 //------------------------------------------------------------------------------
-template<> hid_t H5TypeFactory::createType<Complex128>() const {
+template<> hid_t H5TypeFactory::create_type<Complex128>() const {
 	return H5Tcopy(_complex128_type);
 }
 
 //------------------------------------------------------------------------------
-template<> const hid_t &H5TypeFactory::getType<Complex128>() const {
+template<> const hid_t &H5TypeFactory::get_type<Complex128>() const {
 	return _complex128_type;
 }
 
 //------------------------------------------------------------------------------
-template<> const hid_t &H5TypeFactory::getType<String>() const {
+template<> const hid_t &H5TypeFactory::get_type<String>() const {
 	return _string_type;
 }
 
 //------------------------------------------------------------------------------
-template<> hid_t H5TypeFactory::createType<String>() const {
+template<> hid_t H5TypeFactory::create_type<String>() const {
 	return H5Tcopy(_string_type);
 }
 
 //------------------------------------------------------------------------------
-hid_t H5TypeFactory::createBinaryType() const {
+hid_t H5TypeFactory::create_binary_type() const {
 	return H5Tcopy(_binary_type);
 }
 
 //------------------------------------------------------------------------------
-const hid_t &H5TypeFactory::getBinaryType() const {
+const hid_t &H5TypeFactory::get_binary_type() const {
 	return _binary_type;
 }
 
 //------------------------------------------------------------------------------
 template<> hid_t H5TypeFactory::_create_complex_type<Complex32>(){
 	hid_t tid = H5Tcreate(H5T_COMPOUND,sizeof(_struct_complex_32));
-	H5Tinsert(tid,"r",HOFFSET(_struct_complex_32,r),getType<Float32>());
-	H5Tinsert(tid,"i",HOFFSET(_struct_complex_32,i),getType<Float32>());
+	H5Tinsert(tid,"r",HOFFSET(_struct_complex_32,r),get_type<Float32>());
+	H5Tinsert(tid,"i",HOFFSET(_struct_complex_32,i),get_type<Float32>());
 
 	return tid;
 }
@@ -204,8 +204,8 @@ template<> hid_t H5TypeFactory::_create_complex_type<Complex32>(){
 //------------------------------------------------------------------------------
 template<> hid_t H5TypeFactory::_create_complex_type<Complex64>(){
 	hid_t tid = H5Tcreate(H5T_COMPOUND,sizeof(_struct_complex_64));
-	H5Tinsert(tid,"r",HOFFSET(_struct_complex_64,r),getType<Float64>());
-	H5Tinsert(tid,"i",HOFFSET(_struct_complex_64,i),getType<Float64>());
+	H5Tinsert(tid,"r",HOFFSET(_struct_complex_64,r),get_type<Float64>());
+	H5Tinsert(tid,"i",HOFFSET(_struct_complex_64,i),get_type<Float64>());
 
 	return tid;
 }
@@ -213,8 +213,8 @@ template<> hid_t H5TypeFactory::_create_complex_type<Complex64>(){
 //------------------------------------------------------------------------------
 template<> hid_t H5TypeFactory::_create_complex_type<Complex128>(){
 	hid_t tid = H5Tcreate(H5T_COMPOUND,sizeof(_struct_complex_128));
-	H5Tinsert(tid,"r",HOFFSET(_struct_complex_128,r),getType<Float128>());
-	H5Tinsert(tid,"i",HOFFSET(_struct_complex_128,i),getType<Float128>());
+	H5Tinsert(tid,"r",HOFFSET(_struct_complex_128,r),get_type<Float128>());
+	H5Tinsert(tid,"i",HOFFSET(_struct_complex_128,i),get_type<Float128>());
 	return tid;
 }
 
@@ -282,39 +282,39 @@ H5TypeFactory::~H5TypeFactory() {
 }
 
 //------------------------------------------------------------------------------
-hid_t H5TypeFactory::createTypeFromObject(const NumericObject &o) const{
+hid_t H5TypeFactory::create_type_from_object(const NumericObject &o) const{
 	EXCEPTION_SETUP("hid_t H5TypeFactory::createTypeFromObject(const NumericObject &o)");
 
-	return createTypeFromID(o.type_id());
+	return create_type_from_id(o.type_id());
 }
 
 //------------------------------------------------------------------------------
-const hid_t &H5TypeFactory::getTypeFromObject(const NumericObject &o)const {
+const hid_t &H5TypeFactory::get_type_from_object(const NumericObject &o)const {
 	EXCEPTION_SETUP("hid_t H5TypeFactory::getTypeFromObject(const NumericObject &o)");
 
-	return getTypeFromID(o.type_id());
+	return get_type_from_id(o.type_id());
 }
 
 //------------------------------------------------------------------------------
-const hid_t &H5TypeFactory::getTypeFromID(TypeID id) const{
+const hid_t &H5TypeFactory::get_type_from_id(TypeID id) const{
 	EXCEPTION_SETUP("hid_t H5TypeFactory::getTypeFromID(PNITypeID id)");
 	switch (id) {
-	case TypeID::UINT8: return getType<UInt8> ();
-	case TypeID::INT8:  return getType<Int8> ();
-	case TypeID::INT16: return getType<Int16> ();
-	case TypeID::UINT16: return getType<UInt16> ();
-	case TypeID::INT32:  return getType<Int32> ();
-	case TypeID::UINT32: return getType<UInt32> ();
-	case TypeID::INT64:  return getType<Int64> ();
-	case TypeID::UINT64: return getType<UInt64> ();
-	case TypeID::FLOAT32: return getType<Float32> ();
-	case TypeID::FLOAT64: return getType<Float64> ();
-	case TypeID::FLOAT128:  return getType<Float128> ();
-	case TypeID::COMPLEX32:  return getType<Complex32> ();
-	case TypeID::COMPLEX64:	 return getType<Complex64> ();
-	case TypeID::COMPLEX128: return getType<Complex128> ();
-	case TypeID::STRING: return getType<String> ();
-	case TypeID::BINARY: return getBinaryType();
+	case TypeID::UINT8: return get_type<UInt8> ();
+	case TypeID::INT8:  return get_type<Int8> ();
+	case TypeID::INT16: return get_type<Int16> ();
+	case TypeID::UINT16: return get_type<UInt16> ();
+	case TypeID::INT32:  return get_type<Int32> ();
+	case TypeID::UINT32: return get_type<UInt32> ();
+	case TypeID::INT64:  return get_type<Int64> ();
+	case TypeID::UINT64: return get_type<UInt64> ();
+	case TypeID::FLOAT32: return get_type<Float32> ();
+	case TypeID::FLOAT64: return get_type<Float64> ();
+	case TypeID::FLOAT128:  return get_type<Float128> ();
+	case TypeID::COMPLEX32:  return get_type<Complex32> ();
+	case TypeID::COMPLEX64:	 return get_type<Complex64> ();
+	case TypeID::COMPLEX128: return get_type<Complex128> ();
+	case TypeID::STRING: return get_type<String> ();
+	case TypeID::BINARY: return get_binary_type();
 	default:
 		EXCEPTION_INIT(H5DataTypeError,"Unknown type ID!");
 		EXCEPTION_THROW();
@@ -323,25 +323,25 @@ const hid_t &H5TypeFactory::getTypeFromID(TypeID id) const{
 }
 
 //------------------------------------------------------------------------------
-hid_t H5TypeFactory::createTypeFromID(TypeID id) const{
+hid_t H5TypeFactory::create_type_from_id(TypeID id) const{
 	EXCEPTION_SETUP("hid_t H5TypeFactory::createTypeFromID(PNITypeID id)");
 	switch (id) {
-	case TypeID::UINT8:      return createType<UInt8> ();
-	case TypeID::INT8:       return createType<Int8> ();
-	case TypeID::INT16:      return createType<Int16> ();
-	case TypeID::UINT16:     return createType<UInt16> ();
-	case TypeID::INT32:      return createType<Int32> ();
-	case TypeID::UINT32:     return createType<UInt32> ();
-	case TypeID::INT64:      return createType<Int64> ();
-	case TypeID::UINT64:     return createType<UInt64> ();
-	case TypeID::FLOAT32:    return createType<Float32> ();
-	case TypeID::FLOAT64:    return createType<Float64> ();
-	case TypeID::FLOAT128:   return createType<Float128> ();
-	case TypeID::COMPLEX32:  return createType<Complex32> ();
-	case TypeID::COMPLEX64:  return createType<Complex64> ();
-	case TypeID::COMPLEX128: return createType<Complex128> ();
-	case TypeID::STRING: return createType<String>();
-	case TypeID::BINARY: return createBinaryType();
+	case TypeID::UINT8:      return create_type<UInt8> ();
+	case TypeID::INT8:       return create_type<Int8> ();
+	case TypeID::INT16:      return create_type<Int16> ();
+	case TypeID::UINT16:     return create_type<UInt16> ();
+	case TypeID::INT32:      return create_type<Int32> ();
+	case TypeID::UINT32:     return create_type<UInt32> ();
+	case TypeID::INT64:      return create_type<Int64> ();
+	case TypeID::UINT64:     return create_type<UInt64> ();
+	case TypeID::FLOAT32:    return create_type<Float32> ();
+	case TypeID::FLOAT64:    return create_type<Float64> ();
+	case TypeID::FLOAT128:   return create_type<Float128> ();
+	case TypeID::COMPLEX32:  return create_type<Complex32> ();
+	case TypeID::COMPLEX64:  return create_type<Complex64> ();
+	case TypeID::COMPLEX128: return create_type<Complex128> ();
+	case TypeID::STRING: return create_type<String>();
+	case TypeID::BINARY: return create_binary_type();
 	default:
 		EXCEPTION_INIT(H5DataTypeError,"Unknown type ID!");
 		EXCEPTION_THROW();

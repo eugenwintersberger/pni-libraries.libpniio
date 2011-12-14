@@ -113,13 +113,13 @@ NXGroupH5Implementation &NXGroupH5Implementation::operator=(NXObjectH5Implementa
 
 //=====================Implementation of object creation methods================
 //------------------------------------------------------------------------------
-NXGroupH5Implementation NXGroupH5Implementation::createGroup(const String &n) const{
+NXGroupH5Implementation NXGroupH5Implementation::create_group(const String &n) const{
 	EXCEPTION_SETUP("void NXGroupH5Implementation::createGroup(const char *n,"
 					"NXGroupH5Implementation &imp)");
 
 	NXGroupH5Implementation group;
 
-	hid_t pid = getId();  //obtain the parent ID
+	hid_t pid = get_id();  //obtain the parent ID
 	hid_t id = 0;           //id of the newly created group
 
 	//create the property list for the group
@@ -139,7 +139,7 @@ NXGroupH5Implementation NXGroupH5Implementation::createGroup(const String &n) co
 	}
 
 	//assemble the implementation object
-	group.setId(id);
+	group.set_id(id);
 
 	//close the property list
 	H5Pclose(plist);
@@ -149,15 +149,15 @@ NXGroupH5Implementation NXGroupH5Implementation::createGroup(const String &n) co
 
 //------------------------------------------------------------------------------
 //create a field for array data
-NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const String &n, TypeID tid,const Shape &s) const{
+NXNumericFieldH5Implementation NXGroupH5Implementation::create_numericfield(const String &n, TypeID tid,const Shape &s) const{
 	EXCEPTION_SETUP("NXFieldH5Implementation NXGroupH5Implementation::createField(const String &n, PNITypeID tid,const ArrayShape &s)");
 
 	NXNumericFieldH5Implementation field;
-	hid_t pid = getId();
+	hid_t pid = get_id();
 	hid_t id;
 
 	//create the data type
-	hid_t type_id = H5TFactory.createTypeFromID(tid);
+	hid_t type_id = H5TFactory.create_type_from_id(tid);
 	if(type_id < 0){
 		EXCEPTION_INIT(H5DataTypeError,"Type creation failed!");
 		EXCEPTION_THROW();
@@ -222,7 +222,7 @@ NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const
 	H5Sclose(space_id);
 
 	//set the id of the new object
-	field.setId(id);
+	field.id(id);
 
 	//free memory
 	if(dims) delete [] dims;
@@ -233,17 +233,17 @@ NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const
 }
 
 //-----------------------------------------------------------------------------
-NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const String &n, TypeID tid,
+NXNumericFieldH5Implementation NXGroupH5Implementation::create_numericfield(const String &n, TypeID tid,
 		                                  const Shape &s,const H5Filter &f) const{
 	EXCEPTION_SETUP("void NXGroupH5Implementation::createField(const char *n, "
 			        "PNITypeID tid,UInt32 rank, const UInt32 *dims,"
 			        "NXFieldH5Implementation &imp)");
 
 	NXNumericFieldH5Implementation field;
-	hid_t pid = getId();
+	hid_t pid = get_id();
 	hid_t id = 0;
 	//create the data type
-	hid_t type_id = H5TFactory.createTypeFromID(tid);
+	hid_t type_id = H5TFactory.create_type_from_id(tid);
 	if(type_id < 0){
 		EXCEPTION_INIT(H5DataTypeError,"Type creation failed!");
 		EXCEPTION_THROW();
@@ -309,7 +309,7 @@ NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const
 	H5Sclose(space_id);
 
 	//set the id of the new object
-	field.setId(id);
+	field.id(id);
 
 	//free memory
 	if(dims != NULL) delete [] dims;
@@ -321,17 +321,17 @@ NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const
 }
 
 //------------------------------------------------------------------------------
-NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const String &n, TypeID tid) const{
+NXNumericFieldH5Implementation NXGroupH5Implementation::create_numericfield(const String &n, TypeID tid) const{
 	EXCEPTION_SETUP("NXFieldH5Implementation NXGroupH5Implementation::createField(const String &n, PNITypeID tid)");
 
 	NXNumericFieldH5Implementation field;
 	hid_t id = 0;
-	hid_t pid = getId();
+	hid_t pid = get_id();
 	hsize_t dims[1];
 	hsize_t mdims[1];
 
 	//create the data type
-	hid_t type_id = H5TFactory.createTypeFromID(tid);
+	hid_t type_id = H5TFactory.create_type_from_id(tid);
 	if(type_id < 0){
 		EXCEPTION_INIT(H5DataTypeError,"Type creation failed!");
 		EXCEPTION_THROW();
@@ -356,27 +356,27 @@ NXNumericFieldH5Implementation NXGroupH5Implementation::createNumericField(const
 	//create the data set
 	id = H5Dcreate2(pid,n.c_str(),type_id,space_id,lcreate_plist,creation_plist,H5P_DEFAULT);
 	if(id<0){
-		EXCEPTION_INIT(H5DataSetError,"Creation of data set ["+n+"] below group ["+getName()+"] failed!");
+		EXCEPTION_INIT(H5DataSetError,"Creation of data set ["+n+"] below group ["+name()+"] failed!");
 		EXCEPTION_THROW();
 	}
 
 	//set the id of the data space object
-	field.setId(id);
+	field.id(id);
 
 	return field;
 }
 
 //------------------------------------------------------------------------------
-NXStringFieldH5Implementation NXGroupH5Implementation::createStringField(const String &n) const{
+NXStringFieldH5Implementation NXGroupH5Implementation::create_stringfield(const String &n) const{
 	EXCEPTION_SETUP("void NXGroupH5Implementation::createStringField("
 			        "const char *n, UInt64 size,NXFieldH5Implementation &imp)");
 
 	NXStringFieldH5Implementation field;
-	hid_t pid = getId();
+	hid_t pid = get_id();
 	hid_t id = 0;
 
 	//create the data type
-	hid_t type_id = H5TFactory.createTypeFromID(TypeID::STRING);
+	hid_t type_id = H5TFactory.create_type_from_id(TypeID::STRING);
 	H5Tset_size(type_id,H5T_VARIABLE);
 
 	//H5Tset_size(type_id,size);
@@ -407,7 +407,7 @@ NXStringFieldH5Implementation NXGroupH5Implementation::createStringField(const S
 	//create the data set
 	id = H5Dcreate2(pid,n.c_str(),type_id,space_id,lcreate_plist,dcreate_plist,H5P_DEFAULT);
 	if(id<0){
-		EXCEPTION_INIT(H5DataSetError,"Creation of data set ["+n+"] below group ["+getName()+"] failed!");
+		EXCEPTION_INIT(H5DataSetError,"Creation of data set ["+n+"] below group ["+name()+"] failed!");
 		EXCEPTION_THROW();
 	}
 
@@ -416,23 +416,23 @@ NXStringFieldH5Implementation NXGroupH5Implementation::createStringField(const S
 	H5Sclose(space_id);
 	H5Pclose(lcreate_plist);
 
-	field.setId(id);
+	field.id(id);
 
 	return field;
 }
 
 //------------------------------------------------------------------------------
 NXBinaryFieldH5Implementation
-NXGroupH5Implementation::createBinaryField(const String &n) const{
+NXGroupH5Implementation::create_binaryfield(const String &n) const{
 	EXCEPTION_SETUP("NXBinaryFieldH5Implementation NXGroupH5Implementation::"
 					"createBinaryField(const String &n)");
 
 	NXBinaryFieldH5Implementation field;
-	hid_t pid = getId();
+	hid_t pid = get_id();
 	hid_t id = 0;
 
 	//create the data type
-	hid_t type_id = H5TFactory.createTypeFromID(TypeID::BINARY);
+	hid_t type_id = H5TFactory.create_type_from_id(TypeID::BINARY);
 	H5Tset_size(type_id,H5T_VARIABLE);
 
 	//H5Tset_size(type_id,size);
@@ -463,7 +463,7 @@ NXGroupH5Implementation::createBinaryField(const String &n) const{
 	//create the data set
 	id = H5Dcreate2(pid,n.c_str(),type_id,space_id,lcreate_plist,dcreate_plist,H5P_DEFAULT);
 	if(id<0){
-		EXCEPTION_INIT(H5DataSetError,"Creation of data set ["+n+"] below group ["+getName()+"] failed!");
+		EXCEPTION_INIT(H5DataSetError,"Creation of data set ["+n+"] below group ["+name()+"] failed!");
 		EXCEPTION_THROW();
 	}
 
@@ -472,7 +472,7 @@ NXGroupH5Implementation::createBinaryField(const String &n) const{
 	H5Sclose(space_id);
 	H5Pclose(lcreate_plist);
 
-	field.setId(id);
+	field.id(id);
 	return field;
 }
 
@@ -481,9 +481,9 @@ void NXGroupH5Implementation::remove(const String &n) const{
 	EXCEPTION_SETUP("void NXGroupH5Implementation::remove(const String &n)");
 	herr_t retval;
 
-	retval = H5Ldelete(getId(),n.c_str(),H5P_DEFAULT);
+	retval = H5Ldelete(get_id(),n.c_str(),H5P_DEFAULT);
 	if(retval < 0){
-		EXCEPTION_INIT(H5GroupError,"Cannot delete object ["+n+"] from group ["+getName()+"]!");
+		EXCEPTION_INIT(H5GroupError,"Cannot delete object ["+n+"] from group ["+name()+"]!");
 		EXCEPTION_THROW();
 	}
 }
@@ -531,7 +531,7 @@ bool NXGroupH5Implementation::exists(const String &n) const {
 
 		//do check
 		//std::cout<<path<<std::endl;
-		retval = H5Lexists(getId(),path.c_str(),H5P_DEFAULT);
+		retval = H5Lexists(get_id(),path.c_str(),H5P_DEFAULT);
 		if(retval<0) {
 			EXCEPTION_INIT(H5GroupError,"Cannot check existance of objec ["+n+"]!");
 			EXCEPTION_THROW();
@@ -551,9 +551,9 @@ NXObjectH5Implementation NXGroupH5Implementation::open(const String &n) const{
 	EXCEPTION_SETUP("NXObjectH5Implementation &&NXGroupH5Implementation::open(const String &n) const");
 	hid_t oid;
 
-	oid = H5Oopen(getId(),n.c_str(),H5P_DEFAULT);
+	oid = H5Oopen(get_id(),n.c_str(),H5P_DEFAULT);
 	if(oid<0){
-		EXCEPTION_INIT(H5ObjectError,"Error opening object ["+n+"] from group ["+getName()+"]!");
+		EXCEPTION_INIT(H5ObjectError,"Error opening object ["+n+"] from group ["+name()+"]!");
 		EXCEPTION_THROW();
 	}
 

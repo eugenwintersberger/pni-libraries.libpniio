@@ -76,10 +76,10 @@ public:
 
 
 	//! set an element
-	virtual void set(const UInt64 &i,const NumericObject &o,bool block);
+	virtual void set(const size_t &i,const NumericObject &o,bool block);
 
 	//! get an element
-	virtual void get(const UInt64 &i,NumericObject &o,bool block);
+	virtual void get(const size_t &i,NumericObject &o,bool block);
 
 	//! get an element
 

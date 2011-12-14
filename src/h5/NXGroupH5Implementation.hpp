@@ -56,21 +56,21 @@ public:
 	NXGroupH5Implementation &operator=(NXObjectH5Implementation &&o);
 
 	//! create a new group below this group
-	virtual NXGroupH5Implementation createGroup(const String &n) const;
+	virtual NXGroupH5Implementation create_group(const String &n) const;
 
 	//! create a field
 
 	//! create a field
-	NXNumericFieldH5Implementation createNumericField(const String &n, TypeID tid,const Shape &s) const;
+	NXNumericFieldH5Implementation create_numericfield(const String &n, TypeID tid,const Shape &s) const;
 
-	NXNumericFieldH5Implementation createNumericField(const String &n, TypeID tid,const Shape &s,const H5Filter &f) const;
+	NXNumericFieldH5Implementation create_numericfield(const String &n, TypeID tid,const Shape &s,const H5Filter &f) const;
 
 	//! method to create a field for a single scalar value
-	NXNumericFieldH5Implementation createNumericField(const String &n,TypeID) const;
+	NXNumericFieldH5Implementation create_numericfield(const String &n,TypeID) const;
 	//! create a field to store string data
-	NXStringFieldH5Implementation createStringField(const String &n) const;
+	NXStringFieldH5Implementation create_stringfield(const String &n) const;
 	//! create a field to store binary data
-	NXBinaryFieldH5Implementation createBinaryField(const String &n) const;
+	NXBinaryFieldH5Implementation create_binaryfield(const String &n) const;
 
 	//! open an existing object
 	virtual NXObjectH5Implementation open(const String &n) const;

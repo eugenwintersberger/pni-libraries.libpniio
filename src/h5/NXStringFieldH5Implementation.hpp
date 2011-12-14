@@ -70,13 +70,13 @@ public:
 	virtual void append(const String &o);
 
 	//! set a string
-	virtual void set(const UInt64 &i,const String &o);
+	virtual void set(const size_t &i,const String &o);
 
 	//! get a string
-	virtual void get(const UInt64 &i,String &o);
+	virtual void get(const size_t &i,String &o);
 
 	//! get a string
-	virtual String get(const UInt64 &i);
+	virtual String get(const size_t &i);
 
 	//! get all strings
 

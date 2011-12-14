@@ -49,24 +49,24 @@ H5LibrarySetup::~H5LibrarySetup() {
 }
 
 //------------------------------------------------------------------------------
-String H5LibrarySetup::getVersionString() const{
+String H5LibrarySetup::version_string() const{
 	String vstr;
 
 	return vstr;
 }
 
 //------------------------------------------------------------------------------
-UInt32 H5LibrarySetup::getMajorVersionNumber() const{
+UInt32 H5LibrarySetup::major_number() const{
 	return _major_version_number;
 }
 
 //------------------------------------------------------------------------------
-UInt32 H5LibrarySetup::getMinorVersionNumber() const{
+UInt32 H5LibrarySetup::minor_number() const{
 	return _minor_version_number;
 }
 
 //------------------------------------------------------------------------------
-UInt32 H5LibrarySetup::getReleaseNumber() const{
+UInt32 H5LibrarySetup::release_number() const{
 	return _release_number;
 }
 

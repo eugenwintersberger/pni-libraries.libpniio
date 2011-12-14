@@ -62,24 +62,24 @@ void NXFieldH5Implementation::_free_buffers(){
 void NXFieldH5Implementation::_get_dataset_objects(hid_t id){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::_get_dataset_parameters(hid_t id)");
 
-	hid_t dataset = getId();
+	hid_t dataset = get_id();
 
 	//obtain the data space of the dataset on the file
 	_filespace = H5Dget_space(dataset);
 	if(_filespace < 0){
 		EXCEPTION_INIT(H5DataSpaceError,"Cannot obtain data-space from "
-				       "data-set ["+getName()+"]!");
+				       "data-set ["+name()+"]!");
 		EXCEPTION_THROW();
 	}
 
 	//construct the shape object for the file
-	H5Utilities::DataSpace2Shape(_filespace,_fileshape);
+	H5Utilities::dataspace_to_shape(_filespace,_fileshape);
 
 	//obtain the data type of the object
 	_type = H5Dget_type(dataset);
 	if(_type < 0){
 		EXCEPTION_INIT(H5DataTypeError,"Cannot obtain data-type from "
-				       "data-set ["+getName()+"]!");
+				       "data-set ["+name()+"]!");
 		EXCEPTION_THROW();
 	}
 
@@ -107,27 +107,27 @@ void NXFieldH5Implementation::_get_dataset_objects(hid_t id){
 	}
 
 	//finally wee need the memory space for a selection
-	H5Utilities::Shape2DataSpace(_elemshape,_elemspace);
+	H5Utilities::shape_to_dataspace(_elemshape,_elemspace);
 }
 
 //============Implementation of protected methods===============================
 void NXFieldH5Implementation::_resize_dataset(size_t increment){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::_increment_growth_dimension()");
 
-	hid_t dataset = getId();  //fetch dataset id
+	hid_t dataset = get_id();  //fetch dataset id
 
 	_resize[0] += increment;  //inrement the resize buffer
 
 	//extend the dataset
 	if(H5Dset_extent(dataset,_resize)<0){
-		EXCEPTION_INIT(H5DataSetError,"Resizing of dataset ["+getName()+"] failed!");
+		EXCEPTION_INIT(H5DataSetError,"Resizing of dataset ["+name()+"] failed!");
 		EXCEPTION_THROW();
 	}
 
 	//this has no influence on the member size so we can leave this
 	//unchanged
 	H5Sclose(_filespace);
-	_filespace = H5Dget_space(getId());
+	_filespace = H5Dget_space(get_id());
 
 	_fileshape.dim(0,_fileshape.dim(0)+increment);
 }
@@ -156,7 +156,7 @@ NXFieldH5Implementation::NXFieldH5Implementation(const NXFieldH5Implementation &
 	_count = nullptr;
 	_resize = nullptr;
 
-	_get_dataset_objects(getId());
+	_get_dataset_objects(get_id());
 }
 
 //------------------------------------------------------------------------------
@@ -170,7 +170,7 @@ NXFieldH5Implementation::NXFieldH5Implementation(const NXObjectH5Implementation 
 	_count = nullptr;
 	_resize = nullptr;
 
-	_get_dataset_objects(getId());
+	_get_dataset_objects(get_id());
 }
 
 //------------------------------------------------------------------------------
@@ -202,7 +202,7 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXFieldH5Imple
 
 	if ( this != &o ){
 		(NXObjectH5Implementation &)(*this) = (NXObjectH5Implementation &)o;
-		_get_dataset_objects(o.getId());
+		_get_dataset_objects(o.get_id());
 	}
 
 	return *this;
@@ -213,7 +213,7 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXFieldH5Imple
 NXFieldH5Implementation &NXFieldH5Implementation::operator=(const NXObjectH5Implementation &o){
 	if(this != &o){
 		(NXObjectH5Implementation &)(*this) = o;
-		_get_dataset_objects(getId());
+		_get_dataset_objects(get_id());
 	}
 	return *this;
 }
@@ -266,7 +266,7 @@ NXFieldH5Implementation &NXFieldH5Implementation::operator=(NXObjectH5Implementa
 
 		//the source object has no other attributes - we can now simple
 		//fetch the additional information
-		_get_dataset_objects(getId());
+		_get_dataset_objects(get_id());
 	}
 
 	return *this;
@@ -289,25 +289,25 @@ void NXFieldH5Implementation::close(){
 
 //------------------------------------------------------------------------------
 
-const Shape &NXFieldH5Implementation::getShape() const {
+const Shape &NXFieldH5Implementation::shape() const {
 	return _fileshape;
 }
 
 //------------------------------------------------------------------------------
-const Shape &NXFieldH5Implementation::getElementShape() const{
+const Shape &NXFieldH5Implementation::element_shape() const{
 	return _elemshape;
 }
 
 //------------------------------------------------------------------------------
-TypeID NXFieldH5Implementation::getTypeID() const {
-	return H5Utilities::H5Type2PNITypeCode(_type);
+TypeID NXFieldH5Implementation::type_id() const {
+	return H5Utilities::h5type_to_pni_type_id(_type);
 }
 
 //------------------------------------------------------------------------------
-void NXFieldH5Implementation::setId(const hid_t &id){
+void NXFieldH5Implementation::id(const hid_t &id){
 	EXCEPTION_SETUP("void NXFieldH5Implementation::setId(const hid_t &id)");
 	//first set the ID using the base class implementation
-	NXObjectH5Implementation::setId(id);
+	NXObjectH5Implementation::set_id(id);
 
 	//--------------now we have to do some additional stuff---------------------
 	//this se have to check if this is now really correct
