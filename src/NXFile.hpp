@@ -157,7 +157,7 @@ template<typename Imp> NXFile<Imp>::~NXFile() {
 template<typename Imp> void NXFile<Imp>::setFileName(const String &n){
 	EXCEPTION_SETUP("template<typename Imp> void NXFile<Imp>::setFileName(const String &n)");
 
-	if(this->isOpen()){
+	if(this->is_open()){
 		EXCEPTION_INIT(NXFileError,"File already open - call close() first!");
 		EXCEPTION_THROW();
 	}
@@ -178,7 +178,7 @@ template<typename Imp> bool NXFile<Imp>::isReadOnly() const{
 template<typename Imp> void NXFile<Imp>::setReadOnly(bool v){
 	EXCEPTION_SETUP("template<typename Imp> void NXFile<Imp>::setReadOnly(bool v)");
 
-	if(this->isOpen()){
+	if(this->is_open()){
 		EXCEPTION_INIT(NXFileError,"File already open - call close() first!");
 		EXCEPTION_THROW();
 	}
@@ -195,7 +195,7 @@ template<typename Imp> bool NXFile<Imp>::isOverwrite() const{
 template<typename Imp> void NXFile<Imp>::setOverwrite(bool v){
 	EXCEPTION_SETUP("template<typename Imp> void NXFile<Imp>::setOverwrite(bool v)");
 
-	if(this->isOpen()){
+	if(this->is_open()){
 		EXCEPTION_INIT(NXFileError,"File already open - call close() first!");
 		EXCEPTION_THROW();
 	}
@@ -205,7 +205,7 @@ template<typename Imp> void NXFile<Imp>::setOverwrite(bool v){
 //-----------------------------------------------------------------------------
 template<typename Imp> void NXFile<Imp>::setSplitSize(UInt64 ssize){
 	EXCEPTION_SETUP("template<typename Imp> void NXFile<Imp>::setSplitSize(UInt64 ssize)");
-	if(this->isOpen()){
+	if(this->is_open()){
 		EXCEPTION_INIT(NXFileError,"File already open - call close() first!");
 		EXCEPTION_THROW();
 	}
@@ -221,14 +221,14 @@ template<typename Imp>  UInt64 NXFile<Imp>::getSplitSize() const{
 template<typename Imp> void NXFile<Imp>::create(){
 	EXCEPTION_SETUP("template<typename Imp> void NXFile<Imp>::create()");
 
-	if(this->isOpen()){
+	if(this->is_open()){
 		//raise an exception if the file is already open
 		EXCEPTION_INIT(NXFileError,"File is already open - call close() first!");
 		EXCEPTION_THROW();
 	}
 
 	try{
-		this->getImplementation().create(_fname.c_str(),_overwrite,_split_size);
+		this->implementation().create(_fname.c_str(),_overwrite,_split_size);
 	}catch(...){
 		EXCEPTION_INIT(NXFileError,"Error creating file "+_fname+"!");
 		EXCEPTION_THROW();
@@ -236,12 +236,12 @@ template<typename Imp> void NXFile<Imp>::create(){
 
 	//set here nexus specific attributes
 	try{
-		this->setAttribute("NX_class","NXroot");
-		this->setAttribute("NXfile_name",getFileName());
-		this->setAttribute("NeXus_version","2.4.3"); //should not be hardcoded
-		this->setAttribute("creator","DESY");   //should not be hardcoded
-		this->setAttribute("file_time",NXDateTime::getDateTimeStr());
-		this->setAttribute("file_update_time",NXDateTime::getDateTimeStr());
+		this->set_attr("NX_class","NXroot");
+		this->set_attr("NXfile_name",getFileName());
+		this->set_attr("NeXus_version","2.4.3"); //should not be hardcoded
+		this->set_attr("creator","DESY");   //should not be hardcoded
+		this->set_attr("file_time",NXDateTime::getDateTimeStr());
+		this->set_attr("file_update_time",NXDateTime::getDateTimeStr());
 	}catch(...){
 		EXCEPTION_INIT(NXFileError,"Error writing Nexus attributes!");
 		EXCEPTION_THROW();
@@ -252,13 +252,13 @@ template<typename Imp> void NXFile<Imp>::create(){
 //------------------------------------------------------------------------------
 template<typename Imp> void NXFile<Imp>::open(){
 	EXCEPTION_SETUP("template<typename Imp> void NXFile<Imp>::open()");
-	if(this->isOpen()){
+	if(this->is_open()){
 		EXCEPTION_INIT(NXFileError,"File already open - call close() first!");
 		EXCEPTION_THROW();
 	}
 
 	try{
-		this->getImplementation().open(_fname.c_str(),_read_only);
+		this->implementation().open(_fname.c_str(),_read_only);
 	}catch(...){
 		EXCEPTION_INIT(NXFileError,"Error opening file "+_fname+"!");
 		EXCEPTION_THROW();
@@ -271,20 +271,20 @@ template<typename Imp> void NXFile<Imp>::open(){
 template<typename Imp> void NXFile<Imp>::close(){
 	//if close is called on an already closed or never opened file
 	//simply do nothing
-	if(this->isOpen()){
+	if(this->is_open()){
 		//set last modification time stamp
-		if(!isReadOnly()) this->setAttribute("file_update_time",NXDateTime::getDateTimeStr());
+		if(!isReadOnly()) this->set_attr("file_update_time",NXDateTime::getDateTimeStr());
 
 		this->flush();
-		this->getImplementation().close();
+		this->implementation().close();
 	}
 }
 
 //------------------------------------------------------------------------------
 template<typename Imp> void NXFile<Imp>::flush() const{
 	//flush makes only sense if the file is open
-	if(this->isOpen()){
-		this->getImplementation().flush();
+	if(this->is_open()){
+		this->implementation().flush();
 	}
 }
 

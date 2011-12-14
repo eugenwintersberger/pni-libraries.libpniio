@@ -104,30 +104,30 @@ public:
 	//! a constant reference to the fields' shape. So you cannot alter
 	//! this object.
 	//! \return ArrayShape& reference to the shape object
-	virtual const Shape &getShape() const{
-		return this->getImplementation().shape();
+	virtual const Shape &shape() const{
+		return this->implementation().shape();
 	}
 
 	//! shape of a single element
 
 	//! Return the shape of a single element stored in the container.
-	virtual const Shape &getElementShape() const {
-		return this->getImplementation().element_shape();
+	virtual const Shape &element_shape() const {
+		return this->implementation().element_shape();
 	}
 
 	//! get the type ID
 
 	//! Return the ID of the data type stored in the field.
 	//! \return data type ID
-	virtual TypeID getTypeID() const {
-		return this->getImplementation().type_id();
+	virtual TypeID type_id() const {
+		return this->implementation().type_id();
 	}
 
 	//! get the field name
 
 	//! Return the name of the field.
-	virtual String getName() const {
-		return this->getImplementation().name();
+	virtual String name() const {
+		return this->implementation().name();
 	}
 
 	//! append a string obect to the field
@@ -279,9 +279,9 @@ template<typename Imp> void NXField<Imp>::append(const String &s){
 	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::append(const String &s)");
 
 	try{
-		this->getImplementation().append(s);
+		this->implementation().append(s);
 	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Cannot append string data to field ["+getName()+"]!");
+		EXCEPTION_INIT(NXFieldError,"Cannot append string data to field ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 }
@@ -298,9 +298,9 @@ template<typename Imp> void NXField<Imp>::get(const UInt64 &i,String &s){
 	EXCEPTION_SETUP("template<typename Imp> void NXField<Imp>::get(const UInt64 &i,String &s)");
 
 	try{
-		this->getImplementation().get(i,s);
+		this->implementation().get(i,s);
 	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Cannot fetch string data from field ["+getName()+"]!");
+		EXCEPTION_INIT(NXFieldError,"Cannot fetch string data from field ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 
@@ -327,7 +327,7 @@ NXField<Imp> &operator>>(NXField<Imp> &o,String &s){
 
 //------------------convienance methods-----------------------------------------
 template<typename Imp> void NXField<Imp>::close(){
-	this->getImplementation().close();
+	this->implementation().close();
 }
 
 

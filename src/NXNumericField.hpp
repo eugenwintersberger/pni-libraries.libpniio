@@ -81,17 +81,17 @@ public:
 	void append(const ScalarObject &a);
 
 	//!get data
-	void get(const UInt64 &i,ArrayObject &o);
-	void get(const UInt64 &i,ScalarObject &o);
+	void get(const size_t &i,ArrayObject &o);
+	void get(const size_t &i,ScalarObject &o);
 	void get(ArrayObject &o);
 	void get(ScalarObject &o);
 
 	//! set data
-	void set(const UInt64 &i,const ArrayObject &o);
-	void set(const UInt64 &i,const ScalarObject &o);
+	void set(const size_t &i,const ArrayObject &o);
+	void set(const size_t &i,const ScalarObject &o);
 
-    UInt32 size() const{
-        return this->getShape().getDimension(0);
+    size_t size() const{
+        return this->shape().dim(0);
     }
 
 	friend NXNumericField<Imp> &operator<< <> (NXNumericField<Imp> &o,const ScalarObject &s);
@@ -107,7 +107,7 @@ public:
 template<typename Imp>
 bool NXNumericField<Imp>::_check_unit(const NumericObject &o) const{
 	String fieldunit;
-	this->getAttribute("units",fieldunit);
+	this->get_attr("units",fieldunit);
 	if(o.unit() == fieldunit) return true;
 
 	return false;
@@ -224,15 +224,15 @@ void NXNumericField<Imp>::append(const ArrayObject &o){
 		EXCEPTION_THROW();
 	}
 
-	if(this->getShape().rank()==o.shape().rank()){
+	if(this->shape().rank()==o.shape().rank()){
 		//array and field have the same rank
 
-		if((this->getElementShape().rank()==0) && (o.shape().rank()==1)){
+		if((this->element_shape().rank()==0) && (o.shape().rank()==1)){
 			//an array will be appended as a block to a field that was
 			//originally created for scalar values
 
 			try{
-				this->getImplementation().append(o,true);
+				this->implementation().append(o,true);
 			}catch(...){
 				EXCEPTION_INIT(NXFieldError,"Error writing data!");
 				EXCEPTION_THROW();
@@ -242,14 +242,14 @@ void NXNumericField<Imp>::append(const ArrayObject &o){
 
 		//array block
 		for(UInt64 i=1;i<o.shape().rank();i++){
-			if(this->getShape().dim(i)!=o.shape().dim(i)){
+			if(this->shape().dim(i)!=o.shape().dim(i)){
 				EXCEPTION_INIT(ShapeMissmatchError,"Field and array shape do not match!");
 				EXCEPTION_THROW();
 			}
 		}
 
 		try{
-			this->getImplementation().append(o,true);
+			this->implementation().append(o,true);
 		}catch(...){
 			EXCEPTION_INIT(NXFieldError,"Error writing data!");
 			EXCEPTION_THROW();
@@ -259,9 +259,9 @@ void NXNumericField<Imp>::append(const ArrayObject &o){
 
 
 	//the array is an element of the field
-	if(this->getElementShape()==o.shape()){
+	if(this->element_shape()==o.shape()){
 		try{
-			this->getImplementation().append(o,false);
+			this->implementation().append(o,false);
 		}catch(...){
 			EXCEPTION_INIT(NXFieldError,"Error writing data!");
 			EXCEPTION_THROW();
@@ -276,7 +276,7 @@ void NXNumericField<Imp>::append(const ScalarObject &o){
 	EXCEPTION_SETUP("template<typename Imp> void NXNumericField<Imp>::"
 					"append(const ScalarObject &o)");
 
-	if(this->getElementShape().rank()!=0){
+	if(this->element_shape().rank()!=0){
 		EXCEPTION_INIT(NXFieldError,"Object rank does not match!");
 		EXCEPTION_THROW();
 	}
@@ -288,9 +288,9 @@ void NXNumericField<Imp>::append(const ScalarObject &o){
 	}
 
 	try{
-		this->getImplementation().append(o,false);
+		this->implementation().append(o,false);
 	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Cannot append data to field ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXFieldError,"Cannot append data to field ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 
@@ -299,7 +299,7 @@ void NXNumericField<Imp>::append(const ScalarObject &o){
 //------------------------------------------------------------------------------
 //implementation of array get
 template<typename Imp>
-void NXNumericField<Imp>::get(const UInt64 &index,ArrayObject &o){
+void NXNumericField<Imp>::get(const size_t &index,ArrayObject &o){
 	EXCEPTION_SETUP("template<typename Imp> void NXNumericField<Imp>::"
 					"get(const UInt64 &i,ArrayObject &o)");
 
@@ -313,15 +313,15 @@ void NXNumericField<Imp>::get(const UInt64 &index,ArrayObject &o){
 		EXCEPTION_THROW();
 	}
 
-	if(this->getShape().rank()==o.shape().rank()){
+	if(this->shape().rank()==o.shape().rank()){
 		//array and field have the same rank
 
-		if((this->getElementShape().rank()==0) && (o.shape().rank()==1)){
+		if((this->element_shape().rank()==0) && (o.shape().rank()==1)){
 			//an array will be appended as a block to a field that was
 			//originally created for scalar values
 
 			try{
-				this->getImplementation().get(index,o,true);
+				this->implementation().get(index,o,true);
 			}catch(...){
 				EXCEPTION_INIT(NXFieldError,"Error writing data!");
 				EXCEPTION_THROW();
@@ -331,14 +331,14 @@ void NXNumericField<Imp>::get(const UInt64 &index,ArrayObject &o){
 
 		//array block
 		for(size_t i=1;i<o.shape().rank();i++){
-			if(this->getShape().dim(i)!=o.shape().dim(i)){
+			if(this->shape().dim(i)!=o.shape().dim(i)){
 				EXCEPTION_INIT(ShapeMissmatchError,"Field and array shape do not match!");
 				EXCEPTION_THROW();
 			}
 		}
 
 		try{
-			this->getImplementation().get(index,o,true);
+			this->implementation().get(index,o,true);
 		}catch(...){
 			EXCEPTION_INIT(NXFieldError,"Error writing data!");
 			EXCEPTION_THROW();
@@ -348,9 +348,9 @@ void NXNumericField<Imp>::get(const UInt64 &index,ArrayObject &o){
 
 
 	//the array is an element of the field
-	if(this->getElementShape()==o.shape()){
+	if(this->element_shape()==o.shape()){
 		try{
-			this->getImplementation().get(index,o,false);
+			this->implementation().get(index,o,false);
 		}catch(...){
 			EXCEPTION_INIT(NXFieldError,"Error reading data!");
 			EXCEPTION_THROW();
@@ -362,7 +362,7 @@ void NXNumericField<Imp>::get(const UInt64 &index,ArrayObject &o){
 //------------------------------------------------------------------------------
 //implementation of scalar get
 template<typename Imp>
-void NXNumericField<Imp>::get(const UInt64 &i,ScalarObject &o){
+void NXNumericField<Imp>::get(const size_t &i,ScalarObject &o){
 	EXCEPTION_SETUP("template<typename Imp> void NXNumericField<Imp>::"
 					"get(const UInt64 &i,ScalarObject &o)");
 
@@ -372,7 +372,7 @@ void NXNumericField<Imp>::get(const UInt64 &i,ScalarObject &o){
 	}
 
 	try{
-		this->getImplementation().get(i,o,false);
+		this->implementation().get(i,o,false);
 	}catch(...){
 		EXCEPTION_INIT(NXFieldError,"Cannot read data!");
 		EXCEPTION_THROW();
@@ -396,13 +396,13 @@ template<typename Imp> void NXNumericField<Imp>::get(ArrayObject &o){
 		EXCEPTION_THROW();
 	}
 
-	if(this->getShape()!=o.shape()){
+	if(this->shape()!=o.shape()){
 		EXCEPTION_INIT(ShapeMissmatchError,"Field and array shape do not match!");
 		EXCEPTION_THROW();
 	}
 
 	try{
-		this->getImplementation().get(o);
+		this->implementation().get(o);
 	}catch(...){
 		EXCEPTION_INIT(NXFieldError,"Error reading data!");
 		EXCEPTION_THROW();
@@ -420,14 +420,14 @@ template<typename Imp> void NXNumericField<Imp>::get(ScalarObject &o){
 		EXCEPTION_THROW();
 	}
 
-	if((this->getShape().getRank()!=1)||
-	   (this->getShape().getDimension(0)!=1)){
+	if((this->getShape().rank()!=1)||
+	   (this->getShape().dim(0)!=1)){
 		EXCEPTION_INIT(NXFieldError,"Fields holds more than one value!");
 		EXCEPTION_THROW();
 	}
 
 	try{
-		this->getImplementation().get(o);
+		this->implementation().get(o);
 	}catch(...){
 		EXCEPTION_INIT(NXFieldError,"Error reading data!");
 		EXCEPTION_THROW();
@@ -437,7 +437,7 @@ template<typename Imp> void NXNumericField<Imp>::get(ScalarObject &o){
 //------------------------------------------------------------------------------
 //implementation of array set
 template<typename Imp>
-void NXNumericField<Imp>::set(const UInt64 &index,const ArrayObject &o){
+void NXNumericField<Imp>::set(const size_t &index,const ArrayObject &o){
 	EXCEPTION_SETUP("template<typename Imp> void NXNumericField<Imp>::"
 					"set(const UInt64 &i,const ArrayObject &o)");
 
@@ -451,15 +451,15 @@ void NXNumericField<Imp>::set(const UInt64 &index,const ArrayObject &o){
 		EXCEPTION_THROW();
 	}
 
-	if(this->getShape().rank()==o.shape().rank()){
+	if(this->shape().rank()==o.shape().rank()){
 		//array and field have the same rank
 
-		if((this->getElementShape().rank()==0) && (o.shape().rank()==1)){
+		if((this->element_shape().rank()==0) && (o.shape().rank()==1)){
 			//an array will be appended as a block to a field that was
 			//originally created for scalar values
 
 			try{
-				this->getImplementation().set(index,o,true);
+				this->implementation().set(index,o,true);
 			}catch(...){
 				EXCEPTION_INIT(NXFieldError,"Error writing data!");
 				EXCEPTION_THROW();
@@ -469,14 +469,14 @@ void NXNumericField<Imp>::set(const UInt64 &index,const ArrayObject &o){
 
 		//array block
 		for(size_t i=1;i<o.shape().rank();i++){
-			if(this->getShape().dim(i)!=o.shape().dim(i)){
+			if(this->shape().dim(i)!=o.shape().dim(i)){
 				EXCEPTION_INIT(ShapeMissmatchError,"Field and array shape do not match!");
 				EXCEPTION_THROW();
 			}
 		}
 
 		try{
-			this->getImplementation().set(index,o,true);
+			this->implementation().set(index,o,true);
 		}catch(...){
 			EXCEPTION_INIT(NXFieldError,"Error writing data!");
 			EXCEPTION_THROW();
@@ -486,9 +486,9 @@ void NXNumericField<Imp>::set(const UInt64 &index,const ArrayObject &o){
 
 
 	//the array is an element of the field
-	if(this->getElementShape()==o.shape()){
+	if(this->element_shape()==o.shape()){
 		try{
-			this->getImplementation().set(index,o,false);
+			this->implementation().set(index,o,false);
 		}catch(...){
 			EXCEPTION_INIT(NXFieldError,"Error reading data!");
 			EXCEPTION_THROW();
@@ -503,7 +503,7 @@ void NXNumericField<Imp>::set(const UInt64 &index,const ArrayObject &o){
 //------------------------------------------------------------------------------
 //implemenation of scalar set
 template<typename Imp>
-void NXNumericField<Imp>::set(const UInt64 &i,const ScalarObject &o){
+void NXNumericField<Imp>::set(const size_t &i,const ScalarObject &o){
 	EXCEPTION_SETUP("template<typename Imp> void NXNumericField<Imp>::"
 					"set(const UInt64 &i,const ScalarObject &o)");
 
@@ -513,7 +513,7 @@ void NXNumericField<Imp>::set(const UInt64 &i,const ScalarObject &o){
 	}
 
 	try{
-		this->getImplementation().set(i,o,false);
+		this->implementation().set(i,o,false);
 	}catch(...){
 		EXCEPTION_INIT(NXFieldError,"Error writing data!");
 		EXCEPTION_THROW();

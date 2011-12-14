@@ -42,35 +42,35 @@ void NXNumericFieldTest::testCreation(){
 
 	NXNumericField field;
 
-	CPPUNIT_ASSERT_NO_THROW(field = file.createNumericField("test1",
+	CPPUNIT_ASSERT_NO_THROW(field = file.create_numericfield("test1",
 							TypeID::UINT16,"cps","scalar counter"));
-	CPPUNIT_ASSERT(field.isOpen());
+	CPPUNIT_ASSERT(field.is_open());
 
 	Shape shape(2);
 	shape.dim(0,100);
 	shape.dim(1,123);
 
-	CPPUNIT_ASSERT_NO_THROW(field = file.createNumericField("test2",
+	CPPUNIT_ASSERT_NO_THROW(field = file.create_numericfield("test2",
 							TypeID::FLOAT32,shape,"cps","array detector"));
-	CPPUNIT_ASSERT(field.isOpen());
+	CPPUNIT_ASSERT(field.is_open());
 
 	Float32Scalar scalar("scalar","m","a scalar");
 	Complex128Array array(shape,"array","nm","AFM image");
 
-	CPPUNIT_ASSERT_NO_THROW(field = file.createNumericField(scalar));
-	CPPUNIT_ASSERT(field.isOpen());
-	CPPUNIT_ASSERT_NO_THROW(field = file.createNumericField(array));
-	CPPUNIT_ASSERT(field.isOpen());
+	CPPUNIT_ASSERT_NO_THROW(field = file.create_numericfield(scalar));
+	CPPUNIT_ASSERT(field.is_open());
+	CPPUNIT_ASSERT_NO_THROW(field = file.create_numericfield(array));
+	CPPUNIT_ASSERT(field.is_open());
 
 	//check copy construction
 	NXNumericField field2(field);
-	CPPUNIT_ASSERT(field2.isOpen());
-	CPPUNIT_ASSERT(field.isOpen());
+	CPPUNIT_ASSERT(field2.is_open());
+	CPPUNIT_ASSERT(field.is_open());
 
 	//check move construction
 	NXNumericField field3 = std::move(field);
-	CPPUNIT_ASSERT(field3.isOpen());
-	CPPUNIT_ASSERT(!field.isOpen());
+	CPPUNIT_ASSERT(field3.is_open());
+	CPPUNIT_ASSERT(!field.is_open());
 
 }
 
@@ -78,7 +78,7 @@ void NXNumericFieldTest::testCreation(){
 void NXNumericFieldTest::testOpen(){
 	std::cout<<"NXNumericFieldTest::testOpen()--------------------------------";
 	std::cout<<std::endl;
-	file.createNumericField("data1",TypeID::UINT32,"cps","test data");
+	file.create_numericfield("data1",TypeID::UINT32,"cps","test data");
 
 	NXNumericField f1 = file.open("data1");
 
@@ -91,22 +91,22 @@ void NXNumericFieldTest::testAssignment(){
 	std::cout<<"NXNumericFieldTest::testAssignment()--------------------------";
 	std::cout<<std::endl;
 
-	NXNumericField field = file.createNumericField("test1",TypeID::UINT16,
+	NXNumericField field = file.create_numericfield("test1",TypeID::UINT16,
 							"cps","scalar field");
-	CPPUNIT_ASSERT(field.isOpen());
+	CPPUNIT_ASSERT(field.is_open());
 
 	NXNumericField field2;
 
 	//testing copy assignment
 	CPPUNIT_ASSERT_NO_THROW(field2 = field);
-	CPPUNIT_ASSERT(field2.isOpen());
-	CPPUNIT_ASSERT(field.isOpen());
+	CPPUNIT_ASSERT(field2.is_open());
+	CPPUNIT_ASSERT(field.is_open());
 
 	//move assignment
 	NXNumericField field3;
 	CPPUNIT_ASSERT_NO_THROW(field3 = std::move(field));
-	CPPUNIT_ASSERT(field3.isOpen());
-	CPPUNIT_ASSERT(!field.isOpen());
+	CPPUNIT_ASSERT(field3.is_open());
+	CPPUNIT_ASSERT(!field.is_open());
 }
 
 //------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ void NXNumericFieldTest::testAppend(){
 	shape.dim(1,ny);
 	Float32Array earray(shape,"detector","cps","an area detector");
 
-	NXNumericField field1 = file.createNumericField(earray);
+	NXNumericField field1 = file.create_numericfield(earray);
 	//append single elements
 	for(UInt32 i=0;i<4;i++){
 		earray = testdata[i];
@@ -146,7 +146,7 @@ void NXNumericFieldTest::testAppend(){
 
 	//check for scalar numeric field
 	UInt16Scalar scalar("scalar","cps","a scalar counter");
-	field1 = file.createNumericField(scalar);
+	field1 = file.create_numericfield(scalar);
 	for(UInt32 i=0; i<5;i++){
 		scalar = testdata[i];
 		field1.append(scalar);
@@ -171,8 +171,8 @@ void NXNumericFieldTest::testGetIndividual(){
 	String unit;
 
 	NXNumericField field1 = file.open("scalar");
-	Float32Array array(field1.getShape());
-	field1.getAttribute("units",unit);
+	Float32Array array(field1.shape());
+	field1.get_attr("units",unit);
 	array.unit(unit);
 
 	CPPUNIT_ASSERT_NO_THROW(field1.get(0,array));
@@ -182,7 +182,7 @@ void NXNumericFieldTest::testGetIndividual(){
 	}
 	CPPUNIT_ASSERT_THROW(field1.get(1,array),pni::nx::NXFieldError);
 
-	Shape shape(field1.getShape());
+	Shape shape(field1.shape());
 	shape.dim(0,4);
 	array.reset(); array.shape(shape); array.allocate();
 	CPPUNIT_ASSERT_NO_THROW(field1.get(2,array));
@@ -193,7 +193,7 @@ void NXNumericFieldTest::testGetIndividual(){
 	CPPUNIT_ASSERT_THROW(field1.get(8,array),pni::nx::NXFieldError);
 
 	Float32Scalar scalar("scalar",unit);
-	for(size_t i=0;i<field1.getShape().dim(0);i++){
+	for(size_t i=0;i<field1.shape().dim(0);i++){
 		CPPUNIT_ASSERT_NO_THROW(field1.get(i,scalar));
 		CPPUNIT_ASSERT(scalar == testdata[i]);
 	}
@@ -213,8 +213,8 @@ void NXNumericFieldTest::testGetAll(){
 	UInt32Array scalar;
 
 	NXNumericField field1 = file.open("detector");
-	array.shape(field1.getShape());
-	field1.getAttribute("units",unit);
+	array.shape(field1.shape());
+	field1.get_attr("units",unit);
 	array.unit(unit);
 	array.allocate();
 	CPPUNIT_ASSERT_NO_THROW(field1.get(array));
@@ -229,8 +229,8 @@ void NXNumericFieldTest::testGetAll(){
 
 	field1 = file.open("scalar");
 	array.reset();
-	array.shape(field1.getShape()); array.allocate();
-	field1.getAttribute("units",unit);
+	array.shape(field1.shape()); array.allocate();
+	field1.get_attr("units",unit);
 	CPPUNIT_ASSERT_NO_THROW(field1.get(array));
 	index.rank(1);
 	for(index[0] = 0; index[0] < array.shape().dim(0);index[0]++){
@@ -239,7 +239,7 @@ void NXNumericFieldTest::testGetAll(){
 
 
 	//check some exceptions
-	Shape shape(field1.getShape());
+	Shape shape(field1.shape());
 	shape.dim(0,shape[0]+1);
 	array.reset(); array.shape(shape); array.allocate();
 	CPPUNIT_ASSERT_THROW(field1.get(array),ShapeMissmatchError);
@@ -252,9 +252,9 @@ void NXNumericFieldTest::testSet(){
 	std::cout<<std::endl;
 
 	//need to create a field
-	NXNumericField field = file.createNumericField("data",TypeID::FLOAT32,"m","testing data");
+	NXNumericField field = file.create_numericfield("data",TypeID::FLOAT32,"m","testing data");
 
-	Shape shape = field.getShape();
+	Shape shape = field.shape();
 	shape.dim(0,10);
 	Float64Array array(shape);
 	array.unit("m");
@@ -263,7 +263,7 @@ void NXNumericFieldTest::testSet(){
 	}
 
 	CPPUNIT_ASSERT_NO_THROW(field.set(2,array));
-	CPPUNIT_ASSERT(field.getShape().dim(0)==12);
+	CPPUNIT_ASSERT(field.shape().dim(0)==12);
 
 	Float32Scalar scalar("data","m","testing data");
 	scalar = 10;
@@ -279,7 +279,7 @@ void NXNumericFieldTest::testSet(){
 	Float32Array farray(fshape,"detector","cps","a detector");
 	array.unit(farray.unit());
 
-	CPPUNIT_ASSERT_NO_THROW(field = file.createNumericField(farray));
+	CPPUNIT_ASSERT_NO_THROW(field = file.create_numericfield(farray));
 	for(UInt32 i=0;i<4;i++){
 		farray = i;
 		CPPUNIT_ASSERT_NO_THROW(field.set(i,farray));

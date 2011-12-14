@@ -60,15 +60,15 @@ protected:
 
 	//! Returns a reference to the actual implementation of an object.
 	//! \return reference to implementation
-	Imp &getImplementation();
+	Imp &implementation();
 
 
 	//! set implementation object
 
 	//! Set the implementation of an object
 	//! \param i reference to an implementation
-	void setImplementation(const Imp &i);
-	void setImplementation(Imp &&i);
+	void implementation(const Imp &i);
+	void implementation(Imp &&i);
 public:
 	//some type definitions
 	typedef typename NXImpMap<Imp::IMPCODE>::ObjectImplementation ObjectImp;
@@ -105,7 +105,7 @@ public:
 
 	//! This method returns the absolute path to this object.
 	//! \return objects absolute path
-	virtual String getPath() const;
+	virtual String path() const;
 
 	//! retrieve objects base path
 
@@ -113,7 +113,7 @@ public:
 	//! if the path to an object is /scan_1/detector/data this method
 	//! will return /scan_1/detector.
 	//! \return base part of the absolute path
-	virtual String getBase() const;
+	virtual String base() const;
 
 	//! retrieve an objects name
 
@@ -121,26 +121,26 @@ public:
 	//! If the path would be /scan_1/detector/data this method would
 	//! return data.
 	//! \return name of the object
-	virtual String getName() const;
+	virtual String name() const;
 
 	//! write Array attribute
 
 	//! Write an array attribute.
 	//! \param n name of the attribute
 	//! \param a reference to the array object
-	virtual void setAttribute(const String &n,const ArrayObject &a) const;
+	virtual void set_attr(const String &n,const ArrayObject &a) const;
 	//! write scalar attribute
 
 	//! Write a Scalar object as an attribute to a Nexus object.
 	//! \param n name of the attribute
 	//! \param s reference to the scalar object
-	virtual void setAttribute(const String &n,const ScalarObject &s) const;
+	virtual void set_attr(const String &n,const ScalarObject &s) const;
 	//! write string attribute
 
 	//! Write a string attribute
 	//! \param n name of the attribute
 	//! \param s String to write as attribute
-	virtual void setAttribute(const String &n,const String &s) const;
+	virtual void set_attr(const String &n,const String &s) const;
 
 	//! read Array attribute
 
@@ -148,44 +148,44 @@ public:
 	//! in an array object.
 	//! \param n name of the attribute
 	//! \param a reference to the array object
-	virtual void getAttribute(const String &n,ArrayObject &a) const;
+	virtual void get_attr(const String &n,ArrayObject &a) const;
 	//! read scalar attribute
 
 	//! Read a scalar attribute from an object an store its content in a
 	//! scalar attribute.
 	//! \param n name of the attribute
 	//! \param s reference to the scalar object
-	virtual void getAttribute(const String &n,ScalarObject &s) const;
+	virtual void get_attr(const String &n,ScalarObject &s) const;
 	//! read string attribute
 
 	//! Read a string attribute from an object and store it to a string object.
 	//! \param n name of the attribute
 	//! \param s string where to store the data
-	virtual void getAttribute(const String &n,String &s) const;
+	virtual void get_attr(const String &n,String &s) const;
 
 	//! link this object under pos
 
 	//! A link will be created to this object under pos with name n.
 	//! \param pos position of the link
 	//! \param n name of the link
-	template<typename ImpL> void createLink(const NXObject<ImpL> &pos,const String &n) const;
+	template<typename ImpL> void link(const NXObject<ImpL> &pos,const String &n) const;
 	//! link this object under pos
 
 	//! A link to this object will be created under pos using the same
 	//! name for the link.
 	//! \param pos position of the link
-	template<typename ImpL> void createLink(const NXObject<ImpL> &pos) const;
+	template<typename ImpL> void link(const NXObject<ImpL> &pos) const;
 
 	//! link this object under a path
-	virtual void createLink(const String &path) const;
-	virtual void createLink(const String &path,const String &n) const;
+	virtual void link(const String &path) const;
+	virtual void link(const String &path,const String &n) const;
 
 
 	//! get implementation const reference
 
-	const Imp &getImplementation() const;
+	const Imp &implementation() const;
 
-	bool isOpen() const {
+	bool is_open() const {
 		return _imp.is_open();
 	}
 
@@ -204,7 +204,7 @@ template<typename Imp> NXObject<Imp>::NXObject() {
 template<typename Imp>
 template<typename PImp>
 NXObject<Imp>::NXObject(const NXObject<PImp> &o){
-	this->_imp = o.getImplementation();
+	this->_imp = o.implementation();
 }
 
 //------------------------------------------------------------------------------
@@ -257,65 +257,65 @@ template<typename PImp> NXObject<Imp> &NXObject<Imp>::operator=(NXObject<PImp> &
 }
 
 //==========methods for obtaining the name and position of the object===========
-template<typename Imp> String NXObject<Imp>::getName() const{
+template<typename Imp> String NXObject<Imp>::name() const{
 	//here we need obviously a better solution
 	return _imp.name();
 }
 
-template<typename Imp> String NXObject<Imp>::getBase() const {
+template<typename Imp> String NXObject<Imp>::base() const {
 	return _imp.base();
 }
 
-template<typename Imp> String NXObject<Imp>::getPath() const {
+template<typename Imp> String NXObject<Imp>::path() const {
 	return _imp.path();
 }
 
 //============methods for handling the implementation object====================
 
-template<typename Imp> void NXObject<Imp>::setImplementation(const Imp &i){
+template<typename Imp> void NXObject<Imp>::implementation(const Imp &i){
 	_imp = i;
 }
 
-template<typename Imp> void NXObject<Imp>::setImplementation(Imp &&i){
+template<typename Imp> void NXObject<Imp>::implementation(Imp &&i){
 	_imp = std::move(i);
 }
 
-template<typename Imp> Imp &NXObject<Imp>::getImplementation(){
+template<typename Imp> Imp &NXObject<Imp>::implementation(){
 	return _imp;
 }
 
-template<typename Imp> const Imp &NXObject<Imp>::getImplementation() const{
+template<typename Imp> const Imp &NXObject<Imp>::implementation() const{
 	return _imp;
 }
 
 //==============methods for handling object attributes==========================
 template<typename Imp>
-void NXObject<Imp>::setAttribute(const String &n,const ArrayObject &a) const{
+void NXObject<Imp>::set_attr(const String &n,const ArrayObject &a) const{
 	_imp.set_attr(n.c_str(),a);
 }
 
 template<typename Imp>
-void NXObject<Imp>::setAttribute(const String &n,const ScalarObject &s) const{
+void NXObject<Imp>::set_attr(const String &n,const ScalarObject &s) const{
 	_imp.set_attr(n,s);
 }
 
 template<typename Imp>
-void NXObject<Imp>::setAttribute(const String &n,const String &s) const{
+void NXObject<Imp>::set_attr(const String &n,const String &s) const{
 	_imp.set_attr(n,s);
 }
 
 template<typename Imp>
-void NXObject<Imp>::getAttribute(const String &n,String &s) const{
+void NXObject<Imp>::get_attr(const String &n,String &s) const{
 	_imp.get_attr(n,s);
 }
 
 template<typename Imp>
-void NXObject<Imp>::getAttribute(const String &n,ArrayObject &a) const{
+void NXObject<Imp>::get_attr(const String &n,ArrayObject &a) const{
 	_imp.get_attr(n,a);
 }
 
 template<typename Imp>
-void NXObject<Imp>::getAttribute(const String &n,ScalarObject &s) const{
+void NXObject<Imp>::get_attr(const String &n,ScalarObject &s) const{
 	_imp.get_attr(n,s);
 }
 
@@ -323,23 +323,23 @@ void NXObject<Imp>::getAttribute(const String &n,ScalarObject &s) const{
 //================methods for handling links====================================
 template<typename Imp>
 template<typename ImpL>
-void NXObject<Imp>::createLink(const NXObject<ImpL> &pos,const String &n) const{
-	_imp.link(pos.getImplementation(),n);
+void NXObject<Imp>::link(const NXObject<ImpL> &pos,const String &n) const{
+	_imp.link(pos.implementation(),n);
 }
 
 template<typename Imp>
 template<typename ImpL>
-void NXObject<Imp>::createLink(const NXObject<ImpL> &pos) const{
-	_imp.link(pos.getImplementation(),getName());
+void NXObject<Imp>::link(const NXObject<ImpL> &pos) const{
+	_imp.link(pos.implementation(),name());
 }
 
 template<typename Imp>
-void NXObject<Imp>::createLink(const String &path) const{
+void NXObject<Imp>::link(const String &path) const{
 	_imp.link(path);
 }
 
 template<typename Imp>
-void NXObject<Imp>::createLink(const String &path,const String &n) const{
+void NXObject<Imp>::link(const String &path,const String &n) const{
 	String totpath = "";
 	if(path[path.size()]!='/'){
 		totpath += path+"/";

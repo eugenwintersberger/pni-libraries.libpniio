@@ -117,10 +117,10 @@ void NXFileTest::testAttributes(){
 	f.create();
 
 	//write attribute data
-	f.setAttribute("StringAttribute",_write_str_attr);
-	f.setAttribute("FloatScalarAttribute",_write_scalar_attr);
-	f.setAttribute("IndexOfRefraction",_write_cmplx_scalar);
-	f.setAttribute("ArrayAttribute",_write_array_attr);
+	f.set_attr("StringAttribute",_write_str_attr);
+	f.set_attr("FloatScalarAttribute",_write_scalar_attr);
+	f.set_attr("IndexOfRefraction",_write_cmplx_scalar);
+	f.set_attr("ArrayAttribute",_write_array_attr);
 
 	//close and reopen the file
 	f.close();
@@ -128,10 +128,10 @@ void NXFileTest::testAttributes(){
 
 
 	//read data
-	f.getAttribute("StringAttribute",_read_str_attr);
-	f.getAttribute("FloatScalarAttribute",_read_scalar_attr);
-	f.getAttribute("ArrayAttribute",_read_array_attr);
-	f.getAttribute("IndexOfRefraction",_read_cmplx_scalar);
+	f.get_attr("StringAttribute",_read_str_attr);
+	f.get_attr("FloatScalarAttribute",_read_scalar_attr);
+	f.get_attr("ArrayAttribute",_read_array_attr);
+	f.get_attr("IndexOfRefraction",_read_cmplx_scalar);
 
 	//check if values are the same
 	CPPUNIT_ASSERT(_write_str_attr == _read_str_attr);
@@ -151,22 +151,22 @@ void NXFileTest::testAttributeExceptions(){
 	f.create();
 
 	//write attribute data
-	f.setAttribute("StringAttribute",_write_str_attr);
-	f.setAttribute("FloatScalarAttribute",_write_scalar_attr);
-	f.setAttribute("IndexOfRefraction",_write_cmplx_scalar);
-	f.setAttribute("ArrayAttribute",_write_array_attr);
+	f.set_attr("StringAttribute",_write_str_attr);
+	f.set_attr("FloatScalarAttribute",_write_scalar_attr);
+	f.set_attr("IndexOfRefraction",_write_cmplx_scalar);
+	f.set_attr("ArrayAttribute",_write_array_attr);
 
 	//it is possible to overwrite attributes
-	CPPUNIT_ASSERT_NO_THROW(f.setAttribute("StringAttribute",_write_str_attr));
-	CPPUNIT_ASSERT_NO_THROW(f.setAttribute("FloatScalarAttribute",_write_scalar_attr));
-	CPPUNIT_ASSERT_NO_THROW(f.setAttribute("IndexOfRefraction",_write_cmplx_scalar));
-	CPPUNIT_ASSERT_NO_THROW(f.setAttribute("ArrayAttribute",_write_array_attr));
+	CPPUNIT_ASSERT_NO_THROW(f.set_attr("StringAttribute",_write_str_attr));
+	CPPUNIT_ASSERT_NO_THROW(f.set_attr("FloatScalarAttribute",_write_scalar_attr));
+	CPPUNIT_ASSERT_NO_THROW(f.set_attr("IndexOfRefraction",_write_cmplx_scalar));
+	CPPUNIT_ASSERT_NO_THROW(f.set_attr("ArrayAttribute",_write_array_attr));
 
 	//trying to read attributes that do not exist
-	CPPUNIT_ASSERT_THROW(f.getAttribute("StringAttribute_not",_read_str_attr),H5AttributeError);
-	CPPUNIT_ASSERT_THROW(f.getAttribute("FloatScalarAttribute_not",_read_scalar_attr),H5AttributeError);
-	CPPUNIT_ASSERT_THROW(f.getAttribute("ArrayAttribute_not",_read_array_attr),H5AttributeError);
-	CPPUNIT_ASSERT_THROW(f.getAttribute("IndexOfRefraction_not",_read_cmplx_scalar),H5AttributeError);
+	CPPUNIT_ASSERT_THROW(f.get_attr("StringAttribute_not",_read_str_attr),H5AttributeError);
+	CPPUNIT_ASSERT_THROW(f.get_attr("FloatScalarAttribute_not",_read_scalar_attr),H5AttributeError);
+	CPPUNIT_ASSERT_THROW(f.get_attr("ArrayAttribute_not",_read_array_attr),H5AttributeError);
+	CPPUNIT_ASSERT_THROW(f.get_attr("IndexOfRefraction_not",_read_cmplx_scalar),H5AttributeError);
 
 	f.close();
 }

@@ -39,18 +39,18 @@ void NXBinaryFieldTest::testCreation(){
 	NXBinaryField field;  //default constructor
 
 	//standard construction
-	NXBinaryField f2 = file.createBinaryField("text");
-	CPPUNIT_ASSERT(f2.isOpen());
+	NXBinaryField f2 = file.create_binaryfield("text");
+	CPPUNIT_ASSERT(f2.is_open());
 
 	//copy construction
 	NXBinaryField f3(f2);
-	CPPUNIT_ASSERT(f2.isOpen());
-	CPPUNIT_ASSERT(f3.isOpen());
+	CPPUNIT_ASSERT(f2.is_open());
+	CPPUNIT_ASSERT(f3.is_open());
 
 	//move construction
 	NXBinaryField f4 = std::move(f2);
-	CPPUNIT_ASSERT(f4.isOpen());
-	CPPUNIT_ASSERT(!f2.isOpen());
+	CPPUNIT_ASSERT(f4.is_open());
+	CPPUNIT_ASSERT(!f2.is_open());
 }
 
 //------------------------------------------------------------------------------
@@ -58,13 +58,13 @@ void NXBinaryFieldTest::testOpen(){
 	std::cout<<"NXBinaryFieldTest::testOpen()---------------------------------";
 	std::cout<<std::endl;
 
-	file.createBinaryField("text1");
-	file.createBinaryField("text2");
+	file.create_binaryfield("text1");
+	file.create_binaryfield("text2");
 
 	NXBinaryField f1 = file.open("text1");
 	f1 = file.open("text2");
 
-	file.createNumericField("data",TypeID::UINT32,"cps","numeric test data");
+	file.create_numericfield("data",TypeID::UINT32,"cps","numeric test data");
 	CPPUNIT_ASSERT_THROW(f1 = std::move(file.open("data")),pni::nx::NXFieldError);
 }
 
@@ -74,18 +74,18 @@ void NXBinaryFieldTest::testAssignment(){
 	std::cout<<std::endl;
 
 	NXBinaryField f;
-	CPPUNIT_ASSERT_NO_THROW(f = file.createBinaryField("text1"));
-	CPPUNIT_ASSERT(f.isOpen());
+	CPPUNIT_ASSERT_NO_THROW(f = file.create_binaryfield("text1"));
+	CPPUNIT_ASSERT(f.is_open());
 
 	NXBinaryField f2;
 	CPPUNIT_ASSERT_NO_THROW(f2 = f);
-	CPPUNIT_ASSERT(f2.isOpen());
-	CPPUNIT_ASSERT(f.isOpen());
+	CPPUNIT_ASSERT(f2.is_open());
+	CPPUNIT_ASSERT(f.is_open());
 
 	NXBinaryField f3;
 	CPPUNIT_ASSERT_NO_THROW(f3 = std::move(f));
-	CPPUNIT_ASSERT(f3.isOpen());
-	CPPUNIT_ASSERT(!f.isOpen());
+	CPPUNIT_ASSERT(f3.is_open());
+	CPPUNIT_ASSERT(!f.is_open());
 }
 
 //------------------------------------------------------------------------------
@@ -96,7 +96,7 @@ void NXBinaryFieldTest::testAppend(){
 	Buffer<Binary> buffer(10);
 	for(UInt64 i=0;i<buffer.size();i++) buffer[i] = testdata[i];
 
-	NXBinaryField field = file.createBinaryField("bindump");
+	NXBinaryField field = file.create_binaryfield("bindump");
 
 	CPPUNIT_ASSERT_NO_THROW(field.append(buffer));
 }
@@ -109,7 +109,7 @@ void NXBinaryFieldTest::testGetAll(){
 	Buffer<Binary> writeb(10),readb(10);
 	for(size_t i=0;i<writeb.size();i++) writeb[i] = testdata[i];
 
-	NXBinaryField field = file.createBinaryField("bindump");
+	NXBinaryField field = file.create_binaryfield("bindump");
 	CPPUNIT_ASSERT_NO_THROW(field.append(writeb));
 
 	//readback data
@@ -129,7 +129,7 @@ void NXBinaryFieldTest::testGet(){
 	Buffer<Binary> writeb(10), readb(3);
 	for(size_t i=0;i<writeb.size();i++) writeb[i] = testdata[i];
 
-	NXBinaryField field = file.createBinaryField("bindump");
+	NXBinaryField field = file.create_binaryfield("bindump");
 	CPPUNIT_ASSERT_NO_THROW(field.append(writeb));
 
 	//partial read back
@@ -149,7 +149,7 @@ void NXBinaryFieldTest::testSet(){
 	Buffer<Binary> writeb(10),readb(10);
 	for(size_t i=0;i<writeb.size();i++) writeb[i] = testdata[i];
 
-	NXBinaryField field = file.createBinaryField("bindump");
+	NXBinaryField field = file.create_binaryfield("bindump");
 	CPPUNIT_ASSERT_NO_THROW(field.set(5,writeb));
 
 	//readback data
@@ -166,7 +166,7 @@ void NXBinaryFieldTest::testStreamIO(){
 	Buffer<Binary> writeb(10),readb(10);
 	for(size_t i=0;i<writeb.size();i++) writeb[i] = testdata[i];
 
-	NXBinaryField field = file.createBinaryField("bindump");
+	NXBinaryField field = file.create_binaryfield("bindump");
 
 	CPPUNIT_ASSERT_NO_THROW(field<<writeb);
 	CPPUNIT_ASSERT_NO_THROW(field<<writeb);

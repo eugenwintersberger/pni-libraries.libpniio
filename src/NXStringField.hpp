@@ -73,15 +73,15 @@ public:
 	void append(const String &s);
 
     //!number of strings
-    UInt64 size() const;
+    size_t size() const;
 
 	//!get data
-	void get(const UInt64 &i,String &o);
-	String get(const UInt64 &i);
+	void get(const size_t &i,String &o);
+	String get(const size_t &i);
 	String get(const char &sep);
 
 	//! set data
-	void set(const UInt64 &i,const String &s);
+	void set(const size_t &i,const String &s);
 
 
 	friend NXStringField<Imp> &operator<< <> (NXStringField<Imp> &o,const String &s);
@@ -200,37 +200,37 @@ template<typename Imp> void NXStringField<Imp>::append(const String &s){
 	EXCEPTION_SETUP("template<typename Imp> void NXStringField<Imp>::append(const String &s)");
 
 	try{
-		this->getImplementation().append(s);
+		this->implementation().append(s);
 	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Error writing string to field ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXFieldError,"Error writing string to field ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 }
 
 //------------------------------------------------------------------------------
 //implementation of get string
-template<typename Imp> void NXStringField<Imp>::get(const UInt64 &i,String &s){
+template<typename Imp> void NXStringField<Imp>::get(const size_t &i,String &s){
 	EXCEPTION_SETUP("template<typename Imp> void NXStringField<Imp>::get(const UInt64 &i,String &s)");
 
 	try{
-		this->getImplementation().get(i,s);
+		this->implementation().get(i,s);
 	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Error reading string data from field ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXFieldError,"Error reading string data from field ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 }
 
 //------------------------------------------------------------------------------
 //implementation of get string
-template<typename Imp> String NXStringField<Imp>::get(const UInt64 &i){
+template<typename Imp> String NXStringField<Imp>::get(const size_t &i){
 	EXCEPTION_SETUP("template<typename Imp> String &&NXStringField<Imp>::"
 					"get(const UInt64 &i)");
 	String s;
 
 	try{
-		s = this->getImplementation().get(i);
+		s = this->implementation().get(i);
 	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Error reading string from field ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXFieldError,"Error reading string from field ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 	return s;
@@ -242,10 +242,10 @@ template<typename Imp> String NXStringField<Imp>::get(const char &sep){
 					"get(const char &sep)");
 	String s;
 	try{
-		s= this->getImplementation().get(sep);
+		s= this->implementation().get(sep);
 	}catch(...){
 		EXCEPTION_INIT(NXFieldError,"Error reaeding string from field ["
-					  +this->getName()+"]!");
+					  +this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 
@@ -254,12 +254,12 @@ template<typename Imp> String NXStringField<Imp>::get(const char &sep){
 
 //------------------------------------------------------------------------------
 //! set data
-template<typename Imp> void NXStringField<Imp>::set(const UInt64 &i,const String &s){
+template<typename Imp> void NXStringField<Imp>::set(const size_t &i,const String &s){
 	EXCEPTION_SETUP("template<typename Imp> void NXStringField<Imp>::"
 					"set(const UInt64 &i,const String &s)");
 
 	try{
-		this->getImplementation().set(i,s);
+		this->implementation().set(i,s);
 	}catch(...){
 		EXCEPTION_INIT(NXFieldError,"Cannot write data!");
 		EXCEPTION_THROW();
@@ -267,8 +267,8 @@ template<typename Imp> void NXStringField<Imp>::set(const UInt64 &i,const String
 }
 
 //-----------------------------------------------------------------------------
-template<typename Imp> UInt64 NXStringField<Imp>::size() const{
-    return this->getShape().getDimension(0);
+template<typename Imp> size_t NXStringField<Imp>::size() const{
+    return this->shape().dim(0);
 }
 
 //=============Implementation of stream operators==============================

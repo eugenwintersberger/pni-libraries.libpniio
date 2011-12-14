@@ -79,8 +79,8 @@ public:
 	//! move assignment conversion operator
 	NXGroup<Imp> &operator=(NXObject<typename NXObject<Imp>::ObjectImp > &&o);
 
-	virtual NXGroup<typename NXObject<Imp>::GroupImp> createGroup(const String &n) const;
-	virtual NXGroup<typename NXObject<Imp>::GroupImp> createGroup(const String &n,const String &type) const;
+	virtual NXGroup<typename NXObject<Imp>::GroupImp> create_group(const String &n) const;
+	virtual NXGroup<typename NXObject<Imp>::GroupImp> create_group(const String &n,const String &type) const;
 
 	//! create a field for array data using an ArrayShape
 
@@ -89,11 +89,11 @@ public:
 	//! \param tid PNI type code of the data type
 	//! \param s reference to an ArrayShape object
 	NXNumericField<typename NXObject<Imp>::NumericFieldImp>
-	createNumericField(const String &n, TypeID tid,const Shape &s,
+	create_numericfield(const String &n, TypeID tid,const Shape &s,
 					   const String &unit,const String &desc) const;
 	template<typename Filter>
 	NXNumericField<typename NXObject<Imp>::NumericFieldImp >
-	createNumericField(const String &n, TypeID tid,const Shape &s,
+	create_numericfield(const String &n, TypeID tid,const Shape &s,
 					   const String &unit,const String &desc,
 				       NXFilter<Filter> &f) const;
 
@@ -105,10 +105,10 @@ public:
 	//! \param n name of the field
 	//! \param a reference to the ArrayObject instance
 	NXNumericField<typename NXObject<Imp>::NumericFieldImp>
-	createNumericField(const ArrayObject &a) const;
+	create_numericfield(const ArrayObject &a) const;
 	template<typename Filter>
 	NXNumericField<typename NXObject<Imp>::NumericFieldImp>
-	createNumericField(const ArrayObject &a,NXFilter<Filter> &f) const;
+	create_numericfield(const ArrayObject &a,NXFilter<Filter> &f) const;
 
 
 	//! create a field for scalar data - simplest approach
@@ -117,7 +117,7 @@ public:
 	//! \param n name of the data field
 	//! \param tid ID of the PNI type for the field
 	NXNumericField<typename NXObject<Imp>::NumericFieldImp>
-	createNumericField(const String &n,TypeID tid,const String &unit,
+	create_numericfield(const String &n,TypeID tid,const String &unit,
 					   const String &desc) const;
 	//! create a field for scalar data from ScalarObject
 
@@ -126,17 +126,17 @@ public:
 	//! \param n name of the data field
 	//! \parma s reference to the ScalarObject instance
 	NXNumericField<typename NXObject<Imp>::NumericFieldImp>
-	createNumericField(const ScalarObject &s) const;
+	create_numericfield(const ScalarObject &s) const;
 
 	//! create a field for string data
 
 	//! Create a field for String data encoded in UTF8.
 	//! \param n name of the field
 	//! \param s string for which the field should be created
-	NXStringField<typename NXObject<Imp>::StringFieldImp> createStringField(const String &n) const;
+	NXStringField<typename NXObject<Imp>::StringFieldImp> create_stringfield(const String &n) const;
 
 	//! create a binary field
-	NXBinaryField<typename NXObject<Imp>::BinaryFieldImp > createBinaryField(const String &n) const;
+	NXBinaryField<typename NXObject<Imp>::BinaryFieldImp > create_binaryfield(const String &n) const;
 
 	//! open an arbitrary object
 	virtual NXObject<typename NXObject<Imp>::ObjectImp> open(const String &n);
@@ -146,11 +146,11 @@ public:
 	virtual void close();
 
 	virtual bool exists(const String &n) const{
-		return this->getImplementation().exists(n);
+		return this->implementation().exists(n);
 	}
 
 	virtual void remove(const String &n) const{
-		this->getImplementation().remove(n);
+		this->implementation().remove(n);
 	}
 
 
@@ -245,15 +245,15 @@ NXGroup<Imp> &NXGroup<Imp>::operator=(NXObject<typename NXObject<Imp>::ObjectImp
 
 //==============methods for creating and opening groups========================
 template<typename Imp>
-NXGroup<typename NXObject<Imp>::GroupImp> NXGroup<Imp>::createGroup(const String &n) const{
+NXGroup<typename NXObject<Imp>::GroupImp> NXGroup<Imp>::create_group(const String &n) const{
 	EXCEPTION_SETUP("template<typename Imp> NXGroup<typename NXGroup<Imp>::GImp> NXGroup<Imp>::createGroup(const String &n) const");
 
 	NXGroup<typename NXObject<Imp>::GroupImp> group;
 
 	try{
-		group = NXGroup<typename NXObject<Imp>::GroupImp >(this->getImplementation().create_group(n));
+		group = NXGroup<typename NXObject<Imp>::GroupImp >(this->implementation().create_group(n));
 	}catch(...){
-		EXCEPTION_INIT(NXGroupError,"Error creating group ["+n+"] below group ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXGroupError,"Error creating group ["+n+"] below group ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 	return group;
@@ -261,7 +261,7 @@ NXGroup<typename NXObject<Imp>::GroupImp> NXGroup<Imp>::createGroup(const String
 
 //------------------------------------------------------------------------------
 template<typename Imp>
-NXGroup<typename NXObject<Imp>::GroupImp > NXGroup<Imp>::createGroup(const String &n,const String &type) const{
+NXGroup<typename NXObject<Imp>::GroupImp > NXGroup<Imp>::create_group(const String &n,const String &type) const{
 	EXCEPTION_SETUP("template<typename Imp> NXGroup<typename NXGroup<Imp>::GImp > NXGroup<Imp>::createGroup(const String &n) const");
 
 	NXGroup<typename NXObject<Imp>::GroupImp > group;
@@ -271,14 +271,14 @@ NXGroup<typename NXObject<Imp>::GroupImp > NXGroup<Imp>::createGroup(const Strin
 
 	//create the group
 	try{
-		group = NXGroup<typename NXObject<Imp>::GroupImp>(this->getImplementation().create_group(n));
+		group = NXGroup<typename NXObject<Imp>::GroupImp>(this->implementation().create_group(n));
 	}catch(...){
-		EXCEPTION_INIT(NXGroupError,"Error creating group ["+n+"] below group ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXGroupError,"Error creating group ["+n+"] below group ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 
 	//here we have to set the group type
-	group.setAttribute("NX_class",type);
+	group.set_attr("NX_class",type);
 
 	return group;
 }
@@ -287,7 +287,7 @@ NXGroup<typename NXObject<Imp>::GroupImp > NXGroup<Imp>::createGroup(const Strin
 
 template<typename Imp>
 NXNumericField<typename NXObject<Imp>::NumericFieldImp >
-NXGroup<Imp>::createNumericField(const String &n,TypeID tid,const Shape &s,
+NXGroup<Imp>::create_numericfield(const String &n,TypeID tid,const Shape &s,
 		                  const String &unit,const String &desc) const{
 	EXCEPTION_SETUP("template<typename Imp> NXField<typename NXGroup<Imp>::FImp >"
 					"NXGroup<Imp>::createNumericField(const String &n,"
@@ -297,11 +297,11 @@ NXGroup<Imp>::createNumericField(const String &n,TypeID tid,const Shape &s,
 
 	FieldType field;
 	try{
-		field = FieldType(this->getImplementation().create_numericfield(n,tid,s));
-		field.setAttribute("units",unit);
-		field.setAttribute("long_name",desc);
+		field = FieldType(this->implementation().create_numericfield(n,tid,s));
+		field.set_attr("units",unit);
+		field.set_attr("long_name",desc);
 	}catch(...){
-		EXCEPTION_INIT(NXGroupError,"Error creating array field ["+n+"] below group ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXGroupError,"Error creating array field ["+n+"] below group ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 
@@ -312,7 +312,7 @@ NXGroup<Imp>::createNumericField(const String &n,TypeID tid,const Shape &s,
 template<typename Imp>
 template<typename Filter>
 NXNumericField<typename NXObject<Imp>::NumericFieldImp >
-NXGroup<Imp>::createNumericField(const String &n,TypeID tid,
+NXGroup<Imp>::create_numericfield(const String &n,TypeID tid,
 		                  const Shape &s,const String &unit,const String &desc,
 		                  NXFilter<Filter> &f) const{
 	EXCEPTION_SETUP("template<typename Imp> template<typename Filter>"
@@ -324,11 +324,11 @@ NXGroup<Imp>::createNumericField(const String &n,TypeID tid,
 	FieldType field;
 
 	try{
-		field.setImplementation(std::move(this->_imp.createNumericField(n.c_str(),tid,s,f)));
+		field.implementation(std::move(this->_imp.createNumericField(n.c_str(),tid,s,f)));
 		field.setAttribute("units",unit);
 		field.setAttribute("long_name",desc);
 	}catch(...){
-		EXCEPTION_INIT(NXGroupError,"Error creating array field ["+n+"] below group ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXGroupError,"Error creating array field ["+n+"] below group ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 
@@ -338,15 +338,15 @@ NXGroup<Imp>::createNumericField(const String &n,TypeID tid,
 //------------------------------------------------------------------------------
 template<typename Imp>
 NXNumericField<typename NXObject<Imp>::NumericFieldImp >
-NXGroup<Imp>::createNumericField(const ArrayObject &a) const{
+NXGroup<Imp>::create_numericfield(const ArrayObject &a) const{
 	EXCEPTION_SETUP("template<typename Imp> NXField<typename NXGroup<Imp>::FImp >"
 					" NXGroup<Imp>::createNumericField(const ArrayObject &a) const");
 
 	NXNumericField<typename NXObject<Imp>::NumericFieldImp > field;
 	try{
-		field = createNumericField(a.name(),a.type_id(),a.shape(),a.unit(),a.description());
+		field = this->create_numericfield(a.name(),a.type_id(),a.shape(),a.unit(),a.description());
 	}catch(...){
-		EXCEPTION_INIT(NXGroupError,"Error creating array object ["+a.name()+"] below group ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXGroupError,"Error creating array object ["+a.name()+"] below group ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 
@@ -357,7 +357,7 @@ NXGroup<Imp>::createNumericField(const ArrayObject &a) const{
 template<typename Imp>
 template<typename Filter>
 NXNumericField<typename NXObject<Imp>::NumericFieldImp >
-NXGroup<Imp>::createNumericField(const ArrayObject &a,NXFilter<Filter> &f) const{
+NXGroup<Imp>::create_numericfield(const ArrayObject &a,NXFilter<Filter> &f) const{
 	EXCEPTION_SETUP("template<typename Imp> template<typename Filter>"
 					" NXField<typename NXGroup<Imp>::FImp > "
 					"NXGroup<Imp>::createNumericField(const ArrayObject &a,"
@@ -365,9 +365,9 @@ NXGroup<Imp>::createNumericField(const ArrayObject &a,NXFilter<Filter> &f) const
 
 	NXNumericField<typename NXObject<Imp>::NumericFieldImp > field;
 	try{
-		field = createNumericField(a.name(),a.type_id(),a.shape(),a.unit(),a.description(),f);
+		field = this->create_numericfield(a.name(),a.type_id(),a.shape(),a.unit(),a.description(),f);
 	}catch(...){
-		EXCEPTION_INIT(NXGroupError,"Error creating array field ["+a.name()+"] below group ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXGroupError,"Error creating array field ["+a.name()+"] below group ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 
@@ -376,7 +376,7 @@ NXGroup<Imp>::createNumericField(const ArrayObject &a,NXFilter<Filter> &f) const
 
 //------------------------------------------------------------------------------
 template<typename Imp> NXNumericField<typename NXObject<Imp>::NumericFieldImp >
-NXGroup<Imp>::createNumericField(const String &n,TypeID tid,const String &unit,const String &desc) const{
+NXGroup<Imp>::create_numericfield(const String &n,TypeID tid,const String &unit,const String &desc) const{
 	EXCEPTION_SETUP("template<typename Imp> NXField<typename NXGroup<Imp>::FImp > "
 					"NXGroup<Imp>::createNumericField(const String &n,"
 					"PNITypeID tid,const String &unit,const String &desc) const");
@@ -384,11 +384,11 @@ NXGroup<Imp>::createNumericField(const String &n,TypeID tid,const String &unit,c
 	FieldType field;
 
 	try{
-		field = FieldType(std::move(this->getImplementation().create_numericfield(n,tid)));
-		field.setAttribute("units",unit);
-		field.setAttribute("long_name",desc);
+		field = FieldType(std::move(this->implementation().create_numericfield(n,tid)));
+		field.set_attr("units",unit);
+		field.set_attr("long_name",desc);
 	}catch(...){
-		EXCEPTION_INIT(NXGroupError,"Cannot create scalar field ["+n+"] below group ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXGroupError,"Cannot create scalar field ["+n+"] below group ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 
@@ -397,15 +397,15 @@ NXGroup<Imp>::createNumericField(const String &n,TypeID tid,const String &unit,c
 
 //------------------------------------------------------------------------------
 template<typename Imp>
-NXNumericField<typename NXObject<Imp>::NumericFieldImp > NXGroup<Imp>::createNumericField(const ScalarObject &s) const{
+NXNumericField<typename NXObject<Imp>::NumericFieldImp > NXGroup<Imp>::create_numericfield(const ScalarObject &s) const{
 	EXCEPTION_SETUP("template<typename Imp> NXField<typename NXGroup<Imp>::FImp > "
 					"NXGroup<Imp>::createNumericField(const ScalarObject &s) const");
 	NXNumericField<typename NXObject<Imp>::NumericFieldImp > field;
 
 	try{
-		field =createNumericField(s.name(),s.type_id(),s.unit(),s.description());
+		field =this->create_numericfield(s.name(),s.type_id(),s.unit(),s.description());
 	}catch(...){
-		EXCEPTION_INIT(NXGroupError,"Cannot create scalar field ["+s.name()+"] below group ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXGroupError,"Cannot create scalar field ["+s.name()+"] below group ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 	return field;
@@ -413,16 +413,16 @@ NXNumericField<typename NXObject<Imp>::NumericFieldImp > NXGroup<Imp>::createNum
 
 //------------------------------------------------------------------------------
 template<typename Imp>
-NXStringField<typename NXObject<Imp>::StringFieldImp > NXGroup<Imp>::createStringField(const String &n) const{
+NXStringField<typename NXObject<Imp>::StringFieldImp > NXGroup<Imp>::create_stringfield(const String &n) const{
 	EXCEPTION_SETUP("template<typename Imp> NXField<typename NXGroup<Imp>::FImp > NXGroup<Imp>::createStringField(const String &n,const String &s) const");
 
 	typedef NXStringField<typename NXObject<Imp>::StringFieldImp > FieldType;
 	FieldType field;
 
 	try{
-		field = FieldType(std::move(this->getImplementation().create_stringfield(n)));
+		field = FieldType(std::move(this->implementation().create_stringfield(n)));
 	}catch(...){
-		EXCEPTION_INIT(NXGroupError,"Error creating string field ["+n+"] below group ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXGroupError,"Error creating string field ["+n+"] below group ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 
@@ -433,7 +433,7 @@ NXStringField<typename NXObject<Imp>::StringFieldImp > NXGroup<Imp>::createStrin
 //implementation of create a binary field
 template<typename Imp>
 NXBinaryField<typename NXObject<Imp>::BinaryFieldImp >
-NXGroup<Imp>::createBinaryField(const String &n) const{
+NXGroup<Imp>::create_binaryfield(const String &n) const{
 	EXCEPTION_SETUP("template<typename Imp> "
 					"NXBinaryField<typename NXObject<Imp>::BinaryFieldImp > "
 					"NXGroup<Imp>::createBinaryField(const String &n) const");
@@ -442,9 +442,9 @@ NXGroup<Imp>::createBinaryField(const String &n) const{
 	FieldType field;
 
 	try{
-		field = FieldType(std::move(this->getImplementation().create_binaryfield(n)));
+		field = FieldType(std::move(this->implementation().create_binaryfield(n)));
 	}catch(...){
-		EXCEPTION_INIT(NXGroupError,"Error creating binary field ["+n+"] below gruop ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXGroupError,"Error creating binary field ["+n+"] below gruop ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 
@@ -454,7 +454,7 @@ NXGroup<Imp>::createBinaryField(const String &n) const{
 //------------------------------------------------------------------------------
 template<typename Imp>
 void NXGroup<Imp>::close(){
-	this->getImplementation().close();
+	this->implementation().close();
 }
 
 //------------------------------------------------------------------------------
@@ -465,7 +465,7 @@ NXObject<typename NXObject<Imp>::ObjectImp> NXGroup<Imp>::open(const String &n){
 	ObjectType o;
 
 	try{
-		o = ObjectType(std::move(this->getImplementation().open(n)));
+		o = ObjectType(std::move(this->implementation().open(n)));
 	}catch(...){
 		EXCEPTION_INIT(NXGroupError,"Cannot open object!");
 		EXCEPTION_THROW();

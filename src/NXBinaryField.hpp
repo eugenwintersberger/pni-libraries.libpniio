@@ -71,7 +71,7 @@ public:
 	NXBinaryField<Imp> &operator=(NXObject<typename NXObject<Imp>::ObjectImp > &&o);
 
     //!return the size of the binary field
-    UInt64 size() const{
+    size_t size() const{
         return this->getShape().getSize();
     }
 
@@ -206,7 +206,7 @@ void NXBinaryField<Imp>::append(const Buffer<Binary> &b){
 					"append(const Buffer<Binary> &s)");
 
 	try{
-		this->getImplementation().append(b);
+		this->implementation().append(b);
 	}catch(...){
 		EXCEPTION_INIT(NXFieldError,"Cannot append data to binary field!");
 		EXCEPTION_THROW();
@@ -221,9 +221,9 @@ void NXBinaryField<Imp>::get(const UInt64 &i,Buffer<Binary> &o){
 					"get(const UInt64 &i,Buffer<Binary> &o)");
 
 	try{
-		this->getImplementation().get(i,o);
+		this->implementation().get(i,o);
 	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Cannot get data from binary field ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXFieldError,"Cannot get data from binary field ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 }
@@ -235,9 +235,9 @@ template<typename Imp> void NXBinaryField<Imp>::get(Buffer<Binary> &b){
 					"get(Buffer<Binary> &b)");
 
 	try{
-		this->getImplementation().get(b);
+		this->implementation().get(b);
 	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Error reading data from binary field ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXFieldError,"Error reading data from binary field ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 
@@ -251,9 +251,9 @@ void NXBinaryField<Imp>::set(const UInt64 &i,const Buffer<Binary> &b){
 					"set(const UInt64 &i,const Buffer<Binary> &s)");
 
 	try{
-		this->getImplementation().set(i,b);
+		this->implementation().set(i,b);
 	}catch(...){
-		EXCEPTION_INIT(NXFieldError,"Error reading data from binary field ["+this->getName()+"]!");
+		EXCEPTION_INIT(NXFieldError,"Error reading data from binary field ["+this->name()+"]!");
 		EXCEPTION_THROW();
 	}
 }

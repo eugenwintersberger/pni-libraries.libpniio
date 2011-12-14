@@ -40,18 +40,18 @@ void NXStringFieldTest::testCreation(){
 	NXStringField field;  //default constructor
 
 	//standard construction
-	NXStringField f2 = file.createStringField("text");
-	CPPUNIT_ASSERT(f2.isOpen());
+	NXStringField f2 = file.create_stringfield("text");
+	CPPUNIT_ASSERT(f2.is_open());
 
 	//copy construction
 	NXStringField f3(f2);
-	CPPUNIT_ASSERT(f2.isOpen());
-	CPPUNIT_ASSERT(f3.isOpen());
+	CPPUNIT_ASSERT(f2.is_open());
+	CPPUNIT_ASSERT(f3.is_open());
 
 	//move construction
 	NXStringField f4 = std::move(f2);
-	CPPUNIT_ASSERT(f4.isOpen());
-	CPPUNIT_ASSERT(!f2.isOpen());
+	CPPUNIT_ASSERT(f4.is_open());
+	CPPUNIT_ASSERT(!f2.is_open());
 }
 
 //------------------------------------------------------------------------------
@@ -59,13 +59,13 @@ void NXStringFieldTest::testOpen(){
 	std::cout<<"NXStringFieldTest::testOpen()---------------------------------";
 	std::cout<<std::endl;
 
-	file.createStringField("text1");
-	file.createStringField("text2");
+	file.create_stringfield("text1");
+	file.create_stringfield("text2");
 
 	NXStringField f1 = file.open("text1");
 	f1 = file.open("text2");
 
-	file.createNumericField("data",TypeID::UINT32,"cps","numeric test data");
+	file.create_numericfield("data",TypeID::UINT32,"cps","numeric test data");
 	CPPUNIT_ASSERT_THROW(f1 = std::move(file.open("data")),pni::nx::NXFieldError);
 }
 
@@ -75,18 +75,18 @@ void NXStringFieldTest::testAssignment(){
 	std::cout<<std::endl;
 
 	NXStringField f;
-	CPPUNIT_ASSERT_NO_THROW(f = file.createStringField("text1"));
-	CPPUNIT_ASSERT(f.isOpen());
+	CPPUNIT_ASSERT_NO_THROW(f = file.create_stringfield("text1"));
+	CPPUNIT_ASSERT(f.is_open());
 
 	NXStringField f2;
 	CPPUNIT_ASSERT_NO_THROW(f2 = f);
-	CPPUNIT_ASSERT(f2.isOpen());
-	CPPUNIT_ASSERT(f.isOpen());
+	CPPUNIT_ASSERT(f2.is_open());
+	CPPUNIT_ASSERT(f.is_open());
 
 	NXStringField f3;
 	CPPUNIT_ASSERT_NO_THROW(f3 = std::move(f));
-	CPPUNIT_ASSERT(f3.isOpen());
-	CPPUNIT_ASSERT(!f.isOpen());
+	CPPUNIT_ASSERT(f3.is_open());
+	CPPUNIT_ASSERT(!f.is_open());
 }
 
 //------------------------------------------------------------------------------
@@ -94,7 +94,7 @@ void NXStringFieldTest::testAppend(){
 	std::cout<<"NXStringFieldTest::testAppend()-------------------------------";
 	std::cout<<std::endl;
 
-	NXStringField field = file.createStringField("text");
+	NXStringField field = file.create_stringfield("text");
 #ifdef OLD_CXX
     for(auto iter=strdata.begin();iter!=strdata.end();iter++){
         String s = *iter;
@@ -125,7 +125,7 @@ void NXStringFieldTest::testGetIndividual(){
 void NXStringFieldTest::testGetAll(){
 	std::cout<<"NXStringFieldTest::testGetAll()-------------------------------";
 	std::cout<<std::endl;
-	NXStringField write = file.createStringField("text");
+	NXStringField write = file.create_stringfield("text");
 
 	char sep = '\n';
 	String total;
@@ -154,7 +154,7 @@ void NXStringFieldTest::testSet(){
 	std::cout<<"NXStringFieldTest::testSet()----------------------------------";
 	std::cout<<std::endl;
 
-	NXStringField field = file.createStringField("text");
+	NXStringField field = file.create_stringfield("text");
 
 	//write data
 	CPPUNIT_ASSERT_NO_THROW(field.set(2,strdata[2]));
@@ -174,7 +174,7 @@ void NXStringFieldTest::testStreamRead(){
 	std::cout<<"NXStringFieldTest::testStreamRead()---------------------------";
 	std::cout<<std::endl;
 
-	NXStringField field = file.createStringField("text");
+	NXStringField field = file.create_stringfield("text");
 	field<<strdata[0];
 	field<<strdata[1];
 	field<<strdata[2];
@@ -193,7 +193,7 @@ void NXStringFieldTest::testStreamWrite(){
 	std::cout<<"NXStringFieldTest::testStreamWrite()--------------------------";
 	std::cout<<std::endl;
 
-	NXStringField field = file.createStringField("text");
+	NXStringField field = file.create_stringfield("text");
 
 	//write data
 	CPPUNIT_ASSERT_NO_THROW(field.set(2,strdata[2]));
