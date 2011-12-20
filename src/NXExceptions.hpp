@@ -47,7 +47,7 @@ public:
 	//! constructor
 	NXFieldError(const String &i,const String &d);
 	//! destructor
-	virtual ~NXFieldError();
+	virtual ~NXFieldError() throw();
 	
 	//! output operator
 	friend std::ostream &operator<<(std::ostream &o,const NXFieldError &e);
@@ -64,7 +64,7 @@ public:
 	//! constructor
 	NXAttributeError(const String &i,const String &d);
 	//! destructor
-	virtual ~NXAttributeError();
+	virtual ~NXAttributeError() throw();
 	
 	//! output operator
 	friend std::ostream &operator<<(std::ostream &o,const NXAttributeError &e);
@@ -81,7 +81,7 @@ public:
 	//! constructor
 	NXGroupError(const String &i,const String &d);
 	//! destructor
-	virtual ~NXGroupError();
+	virtual ~NXGroupError() throw();
 	//! output operator
 	friend std::ostream &operator<<(std::ostream &o,const NXGroupError &e);
 };
@@ -101,7 +101,7 @@ public:
 
 	}
 	//! destructor
-	virtual ~NXFileError(){
+	virtual ~NXFileError() throw() {
 
 	}
 	//! output operator

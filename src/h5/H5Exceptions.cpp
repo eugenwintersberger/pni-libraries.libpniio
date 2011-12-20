@@ -51,7 +51,7 @@ H5Exception::H5Exception(const H5Exception &e){
 	_h5estack = e._h5estack;
 }
 
-H5Exception::~H5Exception(){
+H5Exception::~H5Exception() throw() {
 }
 
 std::ostream &H5Exception::print(std::ostream &o) const{
@@ -74,7 +74,7 @@ H5DataTypeError::H5DataTypeError(const String &i,const String &d):
 	H5Exception("H5DataTypeError",i,d){
 }
 
-H5DataTypeError::~H5DataTypeError(){
+H5DataTypeError::~H5DataTypeError() throw(){
 
 }
 
@@ -89,8 +89,7 @@ H5DataSetError::H5DataSetError(const String &i,const String &d)
 :H5Exception("H5DataTypeError",i,d){
 }
 
-H5DataSetError::~H5DataSetError()
-{
+H5DataSetError::~H5DataSetError() throw(){
 }
 
 std::ostream &operator<<(std::ostream &o,const H5DataSetError &e){
@@ -104,7 +103,7 @@ H5DataSpaceError::H5DataSpaceError(const String &i,const String &d):H5Exception(
 
 }
 
-H5DataSpaceError::~H5DataSpaceError(){
+H5DataSpaceError::~H5DataSpaceError() throw(){
 
 }
 
@@ -119,7 +118,7 @@ H5AttributeError::H5AttributeError(const String &i,const String &d):H5Exception(
 
 }
 
-H5AttributeError::~H5AttributeError(){
+H5AttributeError::~H5AttributeError() throw(){
 
 }
 
@@ -133,7 +132,7 @@ H5FileError::H5FileError():H5Exception("H5FileError"){
 H5FileError::H5FileError(const String &i,const String &d):H5Exception("H5FileError",i,d){
 }
 
-H5FileError::~H5FileError(){
+H5FileError::~H5FileError() throw(){
 }
 
 std::ostream &operator<<(std::ostream &o,const H5FileError &e){
@@ -146,7 +145,7 @@ H5GroupError::H5GroupError():H5Exception("H5GroupError"){
 H5GroupError::H5GroupError(const String &i,const String &d):H5Exception("H5GroupError",i,d){
 }
 
-H5GroupError::~H5GroupError(){
+H5GroupError::~H5GroupError() throw(){
 }
 
 std::ostream &operator<<(std::ostream &o,const H5GroupError &e){
@@ -159,7 +158,7 @@ H5PropertyListError::H5PropertyListError():H5Exception("H5PropertyListError"){
 H5PropertyListError::H5PropertyListError(const String &i,const String &d):H5Exception("H5PropertyListError",i,d){
 }
 
-H5PropertyListError::~H5PropertyListError(){
+H5PropertyListError::~H5PropertyListError() throw(){
 }
 
 std::ostream &operator<<(std::ostream &o,const H5PropertyListError &e){
@@ -174,7 +173,7 @@ H5FilterError::H5FilterError(const String &i,const String &d)
 			  :H5Exception("H5FilterError",i,d){
 }
 
-H5FilterError::~H5FilterError(){
+H5FilterError::~H5FilterError() throw(){
 
 }
 

@@ -40,7 +40,7 @@ NXFieldError::NXFieldError(const String &i,const String &d)
 }
 
 //------------------------------------------------------------------------------
-NXFieldError::~NXFieldError(){
+NXFieldError::~NXFieldError() throw() {
 }
 
 //------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ NXAttributeError::NXAttributeError(const String &i,const String &d)
 }
 
 //------------------------------------------------------------------------------
-NXAttributeError::~NXAttributeError(){
+NXAttributeError::~NXAttributeError() throw() {
 }
 
 //------------------------------------------------------------------------------
@@ -76,7 +76,7 @@ NXGroupError::NXGroupError(const String &i,const String &d)
 }
 
 //------------------------------------------------------------------------------
-NXGroupError::~NXGroupError(){
+NXGroupError::~NXGroupError() throw() {
 }
 
 //------------------------------------------------------------------------------

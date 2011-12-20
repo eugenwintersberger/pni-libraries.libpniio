@@ -66,7 +66,7 @@ public:
 	//! copy constructor
 	H5Exception(const H5Exception &e);
 	//! destructor
-	virtual ~H5Exception();
+	virtual ~H5Exception() throw();
 
 	//! output operator
 	friend std::ostream &operator<<(std::ostream &o,const H5Exception &e);
@@ -88,7 +88,7 @@ public:
 	//! \param d exception description
 	H5DataTypeError(const String &i,const String &d);
 	//! destructor
-	virtual ~H5DataTypeError();
+	virtual ~H5DataTypeError() throw();
 
 	//! output operator
 	friend std::ostream &operator<<(std::ostream &o,const H5DataTypeError &e);
@@ -109,7 +109,7 @@ public:
 	//! \param d exception description
 	H5DataSetError(const String &i,const String &d);
 	//! default destructor
-	virtual ~H5DataSetError();
+	virtual ~H5DataSetError() throw();
 
 	//! output operator
 	friend std::ostream &operator<<(std::ostream &o,const H5DataSetError &e);
@@ -129,7 +129,7 @@ public:
 	//! \param d description of the exception
 	H5DataSpaceError(const String &i,const String &d);
 	//! destructor
-	virtual ~H5DataSpaceError();
+	virtual ~H5DataSpaceError() throw();
 
 	//! output operator
 	friend std::ostream &operator<<(std::ostream &o,const H5DataSpaceError &e);
@@ -149,7 +149,7 @@ public:
 	//! \param d description of the error
 	H5AttributeError(const String &i,const String &d);
 	//! destructor
-	virtual ~H5AttributeError();
+	virtual ~H5AttributeError() throw();
 
 	//! output operator
 	friend std::ostream &operator<<(std::ostream &o,const H5AttributeError &e);
@@ -169,7 +169,7 @@ public:
 	//! \param d description of the error
 	H5FileError(const String &i,const String &d);
 	//! destructor
-	virtual ~H5FileError();
+	virtual ~H5FileError() throw();
 
 	//! output operator
 	friend std::ostream &operator<<(std::ostream &o,const H5FileError &e);
@@ -189,7 +189,7 @@ public:
 	//! \param d description of the error
 	H5GroupError(const String &i,const String &d);
 	//! destructor
-	virtual ~H5GroupError();
+	virtual ~H5GroupError() throw();
 
 	//! output operator
 	friend std::ostream &operator<<(std::ostream &o,const H5GroupError &e);
@@ -210,7 +210,7 @@ public:
 	//! \param d description of the error
 	H5PropertyListError(const String &i,const String &d);
 	//! destructor
-	virtual ~H5PropertyListError();
+	virtual ~H5PropertyListError() throw();
 
 	//! output operator
 	friend std::ostream &operator<<(std::ostream &o,const H5PropertyListError &e);
@@ -230,7 +230,7 @@ public:
 	//! \param d description of the error
 	H5FilterError(const String &i,const String &d);
 	//! destructor
-	virtual ~H5FilterError();
+	virtual ~H5FilterError() throw();
 
 	//! output operator
 	friend std::ostream &operator<<(std::ostream &o,const H5FilterError &e);
@@ -254,7 +254,7 @@ public:
 
 	}
 	//! destructor
-	virtual ~H5ObjectError(){
+	virtual ~H5ObjectError() throw(){
 
 	}
 	//! output operator
@@ -279,7 +279,7 @@ public:
 
 	}
 	//! destructor
-	virtual ~H5LinkError(){
+	virtual ~H5LinkError() throw(){
 
 	}
 	//! output operator
