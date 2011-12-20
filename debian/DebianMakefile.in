@@ -1,0 +1,12 @@
+#makefile for building debian packages
+
+SCONS=scons
+
+clean:
+	$(SCONS) -c all
+
+all:
+	$(SCONS) all
+
+install:
+	$(SCONS) PREFIX=@PREFIX@ --install-sandbox=$(DESTDIR) install CXX=$(CXX)

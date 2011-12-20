@@ -1,47 +1,53 @@
-libpninx (0.0.1) testing; urgency=low
+libpninx (0.1.0) testing; urgency=low
+
+  * Completely redesigned the debian packaging system.
+
+ -- Eugen Wintersberger <eugen.wintersberger@desy.de>  Tue, 20 Dec 2011 12:31:12 -0100
+
+libpninx (0.1.0) testing; urgency=low
 
   * Fixed exception problem (appeard due to changes in libpniutils).
 
  -- Eugen Wintersberger <eugen.wintersberger@desy.de>  Tue, 20 Dec 2011 11:46:27 -0100
 
-libpninx (0.0.1) testing; urgency=low
+libpninx (0.1.0) testing; urgency=low
 
   * Reorganized API documentation.
 
  -- Eugen Wintersberger <eugen.wintersberger@desy.de>  Tue, 20 Dec 2011 11:05:35 -0100
 
-libpninx (0.0.1) testing; urgency=low
+libpninx (0.1.0) testing; urgency=low
 
   * Added Python modules for scons from libpniutils to libpninx.
 
  -- Eugen Wintersberger <eugen.wintersberger@desy.de>  Tue, 20 Dec 2011 10:04:47 -0100
 
-libpninx (0.0.1) testing; urgency=low
+libpninx (0.1.0) testing; urgency=low
 
   * Fixed the NXFile interface. Added license notes to the test sources.
 
  -- Eugen Wintersberger <eugen.wintersberger@desy.de>  Wed, 14 Dec 2011 14:28:19 -0100
 
-libpninx (0.0.1) testing; urgency=low
+libpninx (0.1.0) testing; urgency=low
 
   * Changed interface of NX objects.
 
  -- Eugen Wintersberger <eugen.wintersberger@desy.de>  Wed, 14 Dec 2011 13:28:32 -0100
 
-libpninx (0.0.1) testing; urgency=low
+libpninx (0.1.0) testing; urgency=low
 
   * Use the Buffer<T> template in the field implementations instead of raw
     pointers.
 
  -- Eugen Wintersberger <eugen.wintersberger@desy.de>  Wed, 14 Dec 2011 12:12:37 -0100
 
-libpninx (0.0.1) testing; urgency=low
+libpninx (0.1.0) testing; urgency=low
 
   * Refactured interface of the HDF5 implementation.
 
  -- Eugen Wintersberger <eugen.wintersberger@desy.de>  Wed, 14 Dec 2011 12:01:25 -0100
 
-libpninx (0.0.1) testing; urgency=low
+libpninx (0.1.0) testing; urgency=low
 
   * Adopted code to new libpniutils interface. All unit tests pass.
     There is a strange behavior in NXNumericTest: static const size_t

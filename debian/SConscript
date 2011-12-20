@@ -1,6 +1,7 @@
 Import("build_env")
 
 from smod import DebChangelogFile
+import platform
 
 debian_dict = {"@SOURCE@":"$LIBPREFIX$LIBNAME","@MAINTAINER@":"$MAINTAINER",
                "@MAINTAINER_MAIL@":"$MAINTAINER_MAIL",
@@ -11,14 +12,6 @@ debian_dict = {"@SOURCE@":"$LIBPREFIX$LIBNAME","@MAINTAINER@":"$MAINTAINER",
 #-------------------------create control file-----------------------------------
                   
 control_file = build_env.Substfile(["control.in"],SUBST_DICT=debian_dict)
-build_env.Clean(control_file,"tmp")
-build_env.Clean(control_file,Glob("*.log"))
-build_env.Clean(control_file,Glob("*.substvars"))
-build_env.Clean(control_file,Glob("*.debhelper"))
-build_env.Clean(control_file,"${PKGNAME}")
-build_env.Clean(control_file,"${PKGNAME}-dev")
-build_env.Clean(control_file,"${PKGNAME}-doc")
-
 
 changelog = DebChangelogFile("../","v0.0.1")
 changelog.version=build_env["VERSION"]
@@ -57,6 +50,34 @@ doc_pkg_install = build_env.Substfile(target="${PKGNAME}-doc",
                                      SUBST_DICT=debian_dict,
                                      SUBSTFILESUFFIX=".install")
 
-debian = build_env.Alias("debian",[control_file,compat_file,lib_pkg_dirs,lib_pkg_install,
-                          dev_pkg_dirs,dev_pkg_install,
-                          doc_pkg_dirs,doc_pkg_install,changelog_file,rules_file])
+debian_makefile = build_env.Substfile(target="../Makefile",source="DebianMakefile.in",
+                                      SUBST_DICT={"@PREFIX@":"$PREFIX"},
+                                      SUBSTFILESUFFIX="")                                    
+
+debian_config = [control_file,compat_file,lib_pkg_dirs,lib_pkg_install,
+                 dev_pkg_dirs,dev_pkg_install,doc_pkg_dirs,doc_pkg_install,
+                 changelog_file,rules_file,debian_makefile]
+                 
+architecture_map = {"x86_64":"amd64","amd64":"amd64","i386":"i386","x86":"i386"}
+                          
+#generate package names
+arch = architecture_map[platform.machine()]
+pkg_list = []
+pkg_list += build_env.subst("$PKGNAME")+"-dev_"+build_env.subst("$VERSION")+"_"+arch+".deb"
+pkg_list += build_env.subst("$PKGNAME")+"-doc_"+build_env.subst("$VERSION")+"_"+arch+".deb"
+pkg_list += build_env.subst("$PKGNAME")+"_"+build_env.subst("$VERSION")+"_"+arch+".deb"
+
+debian_packages = build_env.Command(pkg_list,debian_config,"dpkg-buildpackage -uc -us -b")
+debian = build_env.Alias("debian",[debian_packages])
+
+build_env.Clean(debian,"tmp")
+build_env.Clean(debian,Glob("*.log"))
+build_env.Clean(debian,Glob("*.substvars"))
+build_env.Clean(debian,Glob("*.debhelper"))
+build_env.Clean(debian,"${PKGNAME}")
+build_env.Clean(debian,"${PKGNAME}-dev")
+build_env.Clean(debian,"${PKGNAME}-doc")
+build_env.Clean(debian,"files")
+
+                        
+ 

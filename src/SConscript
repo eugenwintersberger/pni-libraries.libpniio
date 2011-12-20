@@ -43,10 +43,10 @@ pkg_config_file = build_env.Substfile(source=["pninx.pc.in"],
 
 #-------------------------some alias targets -----------------------------------
 build_env.Alias("all",[temp_shared_library,shared_library,static_library,
-                       pkg_config_file,shared_library_link,shared_library_so])
+                       shared_library_link,shared_library_so])
                        
 build_env.Alias("library",[temp_shared_library,shared_library,static_library,
-                           pkg_config_file,shared_library_link,shared_library_so])
+                           shared_library_link,shared_library_so])
                            
 #--------------------------Installation targets--------------------------------
 lib_inst_path = path.join(build_env["PREFIX"],"lib")
