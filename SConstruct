@@ -1,7 +1,9 @@
 import os.path as path
 import os
-import subprocess
-import platform
+from smod import ProgramVersion
+from smod import GCCVersionParser
+from smod import CheckProgram
+from smod import LibFileNames
 
 #made here a small comment - should be only in the branch
 
@@ -30,51 +32,28 @@ var.Add("PKGNAME","package name (actually only used for Debian packages)","")
 
 #create the build environment
 env = Environment(variables=var,tools=['default','packaging','textfile'])
+env.Replace(CXX = env["CXX"])
 
-#Acquire some information about the machine on which the code is built
-#get the compiler version
-cxx_version = subprocess.Popen([env['CXX'], "-dumpversion"], 
-                               stdout=subprocess.PIPE).communicate()[0]
-(major,minor,release) = cxx_version.split(".")
-cxx_version = int(major+minor)
-
-#get the machine architecture
-this_platform = platform.machine()
-
-
+#check if the compiler version is ok and set definies if necessary
+gcc_version = GCCVersionParser().parse(prog=env["CXX"])
 #for GCC versions 4.4 and 4.5 some extra defines are required in order
 #to work correctly with C++11 language extensions.
-if cxx_version < 44:
+if gcc_version < ProgramVersion(4,4,0):
     print "compiler version not supported!"
     sys.exit()
-elif cxx_version<=45:
+elif gcc_version <= ProgramVersion(4,6,0):
     env.Append(CXXFLAGS=["-Dnullptr=NULL","-DOLD_CXX"])
 else:
     pass
-
-#create library names
-if os.name == "posix":
-    env.Append(LIBFULLNAME = env["LIBPREFIX"]+env["LIBNAME"]+env["SHLIBSUFFIX"]+"."
-                             +env["SOVERSION"]+"."+env["VERSION"])
-    env.Append(LIBSONAME = env["LIBPREFIX"]+env["LIBNAME"]+env["SHLIBSUFFIX"]+"."+
-                             env["SOVERSION"])
-    env.Append(LIBLINKNAME = env["LIBPREFIX"]+env["LIBNAME"]+env["SHLIBSUFFIX"])
-elif os.name == "nt":
-    env.Append(LIBFULLNAME = env["LIBPREFIX"]+env["LIBNAME"]+"."+env["SOVERSION"]+
-                             "."+env["VERSION"]+env["SHLIBSUFFIX"])
-    env.Append(LIBSONAME = env["LIBPREFIX"]+env["LIBNAME"]+"."+env["SOVERSION"]+env["SHLIBSUFFIX"])
-    env.Append(LIBLINKNAME = env["LIBPREFIX"]+env["LIBNAME"]+env["SHLIBSUFFIX"])
+            
+libname = LibFileNames(env["LIBNAME"],env["VERSION"],env["SOVERSION"])
+env.Append(LIBFULLNAME = libname.full_name(env))
+env.Append(LIBSONAME   = libname.so_name(env))
+env.Append(LIBLINKNAME = libname.link_name(env))
 
 #create installation paths
 env.Append(INCINSTPATH = path.join(env["PREFIX"],"include/pni/nx"))
-if this_platform =="x86_64":
-    #here should be lib64 according to Hannes for 64Bit scientific Linux 
-    #systems. This might cause a problem with Debian. 
-    #Lets have a look what FHS says about this issue!
-    #I leave this to lib for now to not break builds on other systems.
-    env.Append(LIBINSTPATH = path.join(env["PREFIX"],"lib"))
-else:
-    env.Append(LIBINSTPATH = path.join(env["PREFIX"],"lib"))
+env.Append(LIBINSTPATH = path.join(env["PREFIX"],"lib"))
 
 if env["DOCDIR"] == "":
     #set default documentation directory for installation
@@ -102,8 +81,87 @@ env.Append(CPPPATH=[path.join(env["HDF5PREFIX"],"include")])
 env.Append(LIBPATH=[path.join(env["BOOSTPREFIX"],"lib")])
 env.Append(CPPPATH=[path.join(env["BOOSTPREFIX"],"include")])
 
+#Once all parameters are set we can start with system configuration
+#-------------------------------------------------------------------------------
+#start with configuration
+conf = Configure(env,custom_tests = {"CheckProgram":CheckProgram})
+
+#check available programs
+if not conf.CheckProgram("pdflatex -v"):
+    print "pdflatex not installed!"
+    Exit(1)
+    
+if not conf.CheckProgram("dot -V"):
+    print "graphviz not installed!"
+    Exit(1)
+    
+if not conf.CheckProgram("perl -v"):
+    print "perl not installed!"
+    Exit(1)
+
+#check for header files
+if not conf.CheckCXXHeader("boost/numeric/conversion/cast.hpp"):
+    print "BOOST header file cast.hpp does not exist!"
+    Exit(1)
+    
+if not conf.CheckCXXHeader("boost/shared_ptr.hpp"):
+    print "BOOST header shared_ptr.hpp does not exist!"
+    Exit(1)
+    
+if not conf.CheckCXXHeader("boost/static_assert.hpp"):
+    print "BOOST header static_assert.hpp does not exist!"
+    Exit(1)
+    
+if not conf.CheckCXXHeader("cppunit/TestFixture.h"):
+    print "CPPUNIT header TestFixture.h does not exist!"
+    Exit(1)
+    
+if not conf.CheckCXXHeader("cppunit/TestRunner.h"):
+    print "CPPUNIT header TestRunner.h does not exist!"
+    Exit(1)
+    
+if not conf.CheckCXXHeader("cppunit/extensions/HelperMacros.h"):
+    print "CPPUNIT header HelperMacros.h does not exist!"
+    Exit(1)
+    
+if not conf.CheckCXXHeader("cppunit/TestCaller.h"):
+    print "CPPUNIT header TestCaller.h does not exist!"
+    Exit(1)
+    
+if not conf.CheckCXXHeader("cppunit/TestResult.h"):
+    print "CPPUNIT header TestResult.h does not exist!"
+    Exit(1)
+    
+if not conf.CheckCXXHeader("cppunit/TextTestProgressListener.h"):
+    print "CPPUNIT header TextTestProgressListener.h does not exist!"
+    Exit(1)
+    
+if not conf.CheckCXXHeader("cppunit/ui/text/TextTestRunner.h"):
+    print "CPPUNIT header TextTestRunner.h does not exist!"
+    Exit(1)
+    
+if not conf.CheckCHeader("hdf5.h"):
+    print "HDF5 header files are not installed!"
+    Exit(1)
+    
+#check for libraries
+if not conf.CheckLib("hdf5"):
+    print "HDF5 libraries not installed!"
+    Exit(1)
+
+    
+if not conf.CheckLib("cppunit"):
+    print "CPPUNIT unit test libraray is not installed!"
+    Exit(1)
+    
+    
+env = conf.Finish()
 
 
+
+#-------------------------------------------------------------------------------
+
+#setup the different build environments
 build_env = env.Clone()
 
 if debug:
@@ -112,7 +170,7 @@ else:
     build_env.Append(CXXFLAGS=["-O2"])
     
 test_build_env = build_env.Clone()
-build_env.Append(LINKFLAGS=["-Wl,-h"+env["LIBPREFIX"]+env["LIBNAME"]+env["SHLIBSUFFIX"]+"."+env["SOVERSION"]]) 
+build_env.Append(LINKFLAGS=["-Wl,-h"+libname.so_name(env)]) 
     
 Export("build_env")
 Export("test_build_env")
@@ -122,4 +180,8 @@ SConscript(["src/SConscript"])
 SConscript(["test/SConscript"])
 SConscript(["debian/SConscript"])
 SConscript(["doc/SConscript"])
+
+#set default target this is important otherwise we get a problem with the 
+#debian build (which will be executed too)
+Default("all")
 

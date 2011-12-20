@@ -1,5 +1,12 @@
 libpninx (0.1.0) testing; urgency=low
 
+  * Modified build system so that debian packages can now simply be built
+    with "scons debian".
+
+ -- Eugen Wintersberger <eugen.wintersberger@desy.de>  Tue, 20 Dec 2011 13:50:08 -0100
+
+libpninx (0.1.0) testing; urgency=low
+
   * Completely redesigned the debian packaging system.
 
  -- Eugen Wintersberger <eugen.wintersberger@desy.de>  Tue, 20 Dec 2011 12:31:12 -0100
