@@ -31,6 +31,8 @@ namespace pni {
 namespace nx {
 namespace h5 {
 
+//! \ingroup nxh5_classes
+//! \brie NXNumericField HDF5 implementation
 class NXNumericFieldH5Implementation:public NXFieldH5Implementation {
 private:
 

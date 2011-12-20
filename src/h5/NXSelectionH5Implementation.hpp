@@ -17,6 +17,8 @@ namespace pni {
 namespace nx {
 namespace h5 {
 
+//! \cond NO_API_DOC
+
 class NXSelectionH5Implementation {
 private:
 	hsize_t *_offset;  //!< offset buffer
@@ -69,6 +71,8 @@ public:
 	virtual UInt32 getBlock(const UInt32 &i) const;
 	virtual void setBlock(const UInt32 &i,const UInt32 &v);
 };
+
+//! \endcond
 
 } /* namespace h5 */
 } /* namespace nx */

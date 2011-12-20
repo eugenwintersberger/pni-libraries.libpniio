@@ -39,7 +39,7 @@ namespace pni {
 namespace nx {
 namespace h5 {
 
-//! \ingroup HDF5-Implementation
+//! \ingroup nxh5_classes
 //! \brief LZF filter implementation
 
 //! Implementation of the LZF filter for HDF5.

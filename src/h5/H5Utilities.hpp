@@ -40,8 +40,7 @@ namespace pni {
 namespace nx {
 namespace h5 {
 
-//! \ingroup HDF5-Implementation
-
+//! \ingroup nxh5_classes
 //! \brief HDF5 utility class
 
 //! Provides static methods to convert between HDF5 objects and PNI objects.

@@ -19,8 +19,8 @@ namespace pni{
 namespace nx{
 namespace h5{
 
-
-//! HDF5 implementation of a file
+//! \ingroup nxh5_classes
+//! \brief HDF5 implementation of a file
 class NXFileH5Implementation:public NXGroupH5Implementation {
 private:
 	NXFileH5Implementation(const NXFileH5Implementation &){}

@@ -36,7 +36,8 @@ namespace nx {
 #define DATETIME_FORMAT "%Y-%m-%dT%H:%M:%S%z"
 #define DATETIME_MAX_LENGTH 1024
 
-//! Nexus compliant date-time string
+//! \ingroup util_classes
+//! \brief date time factory
 
 //! NXDateTime provides static methods to create date-time strings
 //! which are compliant to the Nexus standard.

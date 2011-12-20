@@ -37,31 +37,40 @@ using namespace pni::utils;
 namespace pni{
 namespace nx{
 
-
+//! \ingroup util_classes
+//! \brief Filter object
 template<typename Filter>
 class NXFilter:public Filter{
 public:
+	//! constructor
 	NXFilter();
+	//! copy constructor
 	NXFilter(const NXFilter<Filter> &f);
+	//! destructor
 	virtual ~NXFilter();
 
+	//! copy assignment operator
 	NXFilter<Filter> &operator=(const NXFilter<Filter> &f);
 
 	const Shape &getChunkShape() const;
 	void setChunkShape(const Shape &s);
 };
 
+//-----------------------------------------------------------------------------
 template<typename Filter> NXFilter<Filter>::NXFilter():Filter(){
 }
 
+//-----------------------------------------------------------------------------
 template<typename Filter> NXFilter<Filter>::NXFilter(const NXFilter<Filter> &o){
 	Filter::Filter(o);
 }
 
+//-----------------------------------------------------------------------------
 template<typename Filter> NXFilter<Filter>::~NXFilter(){
 
 }
 
+//-----------------------------------------------------------------------------
 template<typename Filter>
 NXFilter<Filter> &NXFilter<Filter>::operator=(const NXFilter<Filter> &f){
 	if ( this != &f){

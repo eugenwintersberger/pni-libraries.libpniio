@@ -37,7 +37,8 @@ template<typename Imp> class NXStringField;
 template<typename Imp> NXStringField<Imp> &operator<<(NXStringField<Imp> &o,const String &s);
 template<typename Imp> NXStringField<Imp> &operator>>(NXStringField<Imp> &o,String &s);
 
-
+//! \ingroup nexus_lowlevel
+//! \brief NXfield for strings
 template<typename Imp>
 class NXStringField:public NXField<Imp>{
 public:

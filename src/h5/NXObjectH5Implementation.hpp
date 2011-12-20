@@ -45,7 +45,7 @@ namespace h5{
 
 
 using namespace pni::utils;
-//! \ingroup HDF5-Implementation
+//! \ingroup nxh5_classes
 //! \brief Implementation of an NXObject
 
 //! This object basically implements the basic functionality of an NXObject.

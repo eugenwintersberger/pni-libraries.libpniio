@@ -38,7 +38,8 @@ template<typename Imp> class NXBinaryField;
 template<typename Imp> NXBinaryField<Imp> &operator<<(NXBinaryField<Imp> &o,const Buffer<Binary> &b);
 template<typename Imp> NXBinaryField<Imp> &operator>>(NXBinaryField<Imp> &o,Buffer<Binary> &s);
 
-
+//! \ingroup nexus_lowlevel
+//! \brief NXfield for binary data
 template<typename Imp>
 class NXBinaryField:public NXField<Imp>{
 public:

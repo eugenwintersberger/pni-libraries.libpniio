@@ -31,6 +31,8 @@ namespace pni {
 namespace nx {
 namespace h5 {
 
+//! \ingroup nxh5_classes
+//! \brief NXStringField HDF5 implementation
 class NXStringFieldH5Implementation:public NXFieldH5Implementation {
 public:
 	//! default constructor

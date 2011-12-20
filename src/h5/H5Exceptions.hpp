@@ -39,8 +39,8 @@ namespace nx{
 namespace h5{
 
 using namespace pni::utils;
-//! \ingroup HDF5-Implementation
 
+//! \ingroup nxh5_classes error_classes
 //! \brief HDF5 exceptions base class
 
 //! Base class for all HDF5 related exceptions. The class is a descendant
@@ -73,8 +73,7 @@ public:
 
 };
 
-//! \ingroup HDF5-Implementation
-
+//! \ingroup nxh5_classes error_classes
 //! \brief data-type error
 
 //! Exception is thrown in cases where errors concerning HDF5 data-type objects
@@ -95,7 +94,7 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const H5DataTypeError &e);
 };
 
-//! \ingroup HDF5-Implementation
+//! \ingroup nxh5_classes error_classes
 //! \brief dataset error
 
 //! Exception thrown in situations where errors concering an HDF5 data-set
@@ -116,7 +115,7 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const H5DataSetError &e);
 };
 
-//! \ingroup HDF5-Implementation
+//! \ingroup nxh5_classes error_classes
 //! \brief data-space error
 
 //! Exception thrown in error situations involving HDF5 data-spaces.
@@ -136,7 +135,7 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const H5DataSpaceError &e);
 };
 
-//! \ingroup HDF5-Implementation
+//! \ingroup nxh5_classes error_classes
 //! \brief attribute error
 
 //! Exception thrown in situations where errors occur involving HDF5 attributes.
@@ -156,7 +155,7 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const H5AttributeError &e);
 };
 
-//! \ingroup HDF5-Implementation
+//! \ingroup nxh5_classes error_classes
 //! \brief file error
 
 //! Exception thrown in situations where error occur involving HDF5 file objects.
@@ -176,7 +175,7 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const H5FileError &e);
 };
 
-//! \ingroup HDF5-Implementation
+//! \ingroup nxh5_classes error_classes
 //! \brief group error
 
 //! Exception thrown in situations where errors occur involving HDF5 group objects.
@@ -196,7 +195,7 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const H5GroupError &e);
 };
 
-//! \ingroup HDF5-Implementation
+//! \ingroup nxh5_classes error_classes
 //! \brief property list error
 
 //! Exception thrown in situations where errors occur involving HDF5 property
@@ -217,7 +216,7 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const H5PropertyListError &e);
 };
 
-//! \ingroup HDF5-Implementation
+//! \ingroup nxh5_classes error_classes
 //! \brief filter error
 
 //! Exception thrown for errors involving HDF5 filters.
@@ -237,7 +236,7 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const H5FilterError &e);
 };
 
-//! \ingroup HDF5-Implementation
+//! \ingroup nxh5_classes error_classes
 //! \brief object error
 
 //! Exception thrown in all cases where HDF5 objects in general are involved.
@@ -262,7 +261,7 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const H5ObjectError &e);
 };
 
-//! \ingroup HDF5-Implementation
+//! \ingroup nxh5_classes error_classes
 //! \brief link error
 
 //! Exception thrown in all cases where errors occur during link creation.

@@ -38,7 +38,7 @@ namespace pni{
 namespace nx{
 namespace h5{
 
-//! \ingroup HDF5-Implementation
+//! \ingroup nxh5_classes
 //! \brief type factory
 
 //! This class provides HDF5 type objects for all data-types supported by the 

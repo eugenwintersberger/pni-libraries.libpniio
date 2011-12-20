@@ -46,6 +46,8 @@ using namespace pni::utils;
 namespace pni{
 namespace nx{
 
+//! \ingroup nexus_lowlevel
+//! \brief NXgroup object
 template<typename Imp>
 class NXGroup:public NXObject<Imp> {
 protected:

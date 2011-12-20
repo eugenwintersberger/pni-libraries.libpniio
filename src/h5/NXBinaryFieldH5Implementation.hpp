@@ -36,6 +36,8 @@ namespace pni {
 namespace nx {
 namespace h5 {
 
+//! \ingroup nxh5_classes
+//! \brief NXBinaryField HDF5 implementation
 class NXBinaryFieldH5Implementation:public NXFieldH5Implementation {
 public:
 	//! default constructor

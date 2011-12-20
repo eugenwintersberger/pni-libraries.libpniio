@@ -37,7 +37,7 @@ namespace pni {
 namespace nx {
 namespace h5 {
 
-//! \ingroup HDF5-Implementation
+//! \ingroup nxh5_classes
 //! \brief HDF5 filter base class
 
 //! Base class for all HDF5 compression filter implementations.

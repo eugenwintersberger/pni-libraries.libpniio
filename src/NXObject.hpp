@@ -43,7 +43,7 @@ namespace nx{
 
 using namespace pni::utils;
 
-//! \ingroup Nexus objects
+//! \ingroup nexus_lowlevel
 //! \brief base class for all Nexus objects in the library.
 
 //! This class provides functionality common to all Nexus objects.

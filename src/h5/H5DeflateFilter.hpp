@@ -31,9 +31,7 @@ namespace pni {
 namespace nx {
 namespace h5 {
 
-//! \defgroup HDF5-Implementation
-
-//! \ingroup HDF5-Implementation
+//! \ingroup nxh5_classes
 //! HDF5 deflate filter
 
 //! Implementation of the deflate (ZLIB) filter for HDF5.

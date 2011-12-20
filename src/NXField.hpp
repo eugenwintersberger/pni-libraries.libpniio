@@ -50,7 +50,8 @@ template<typename Imp> class NXField;
 template<typename Imp> NXField<Imp> &operator<<(NXField<Imp> &o,const String &s);
 template<typename Imp> NXField<Imp> &operator>>(NXField<Imp> &o,String &s);
 
-//! Nexus datafield
+//! \ingroup nexus_lowlevel
+//! \brief NXfield base class
 
 //! NXField is the basic data holding object in a Nexus file. You cannot create
 //! an instance of this object directly rather you have to use one of the

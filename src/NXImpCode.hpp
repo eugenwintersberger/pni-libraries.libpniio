@@ -30,7 +30,11 @@
 
 namespace pni{
 namespace nx{
-enum ImpCodes {HDF5,XML};
+
+//! \ingroup util_classes
+//! \brief implementation codes
+enum ImpCodes {HDF5 //!< HDF5 implementation code
+				};
 }
 }
 

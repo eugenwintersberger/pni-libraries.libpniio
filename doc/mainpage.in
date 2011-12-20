@@ -1,0 +1,30 @@
+/*! \mainpage libpninx @VERSION@ documentation
+
+Libpninx is a C++ implementation of the Nexus file format. 
+This document contains is the API documentation of the library.  
+ 
+*/
+
+/*! \defgroup nexus_lowlevel Nexus low level objects
+    This classes implement the basic components from which each nexus object
+    is created. 
+*/
+
+/*! \defgroup util_classes Nexus utility classes
+    General purpose utiltiy classes used throughout the code to make 
+    life easier.
+*/
+
+/*! \defgroup error_classes Nexus exception classes
+    Exceptions related to the library.
+*/
+
+/*! \defgroup nxh5_classes HDF5 implementation classes
+    HDF5 implementation of the Nexus file format. This module describes the 
+    implementation classes which are used to instantiate the low level 
+    class templates.
+*/
+
+
+
+

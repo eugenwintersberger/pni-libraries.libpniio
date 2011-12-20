@@ -36,10 +36,8 @@ using namespace pni::utils;
 namespace pni{
 namespace nx{
 
-//! \defgroup Exceptions
-
-//! \ingroup Exceptions
-//! field exception
+//! \ingroup error_classes
+//! \brief field exception
 
 //! Raised if an error occured in one of the NXField methods.
 class NXFieldError:public Exception{
@@ -55,8 +53,8 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const NXFieldError &e);
 };
 
-//! \ingroup Exceptions
-//! Attribute Error
+//! \ingroup error_classes
+//! \brief Attribute Error
 
 //! Raised in cases where reading or writing an attribute failed.
 class NXAttributeError:public Exception{
@@ -72,8 +70,8 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const NXAttributeError &e);
 };
 
-//! \ingroup Exceptions
-//! Group Error
+//! \ingroup error_classes
+//! \brief Group Error
 
 //! Error in case of group operations.
 class NXGroupError:public Exception{
@@ -88,8 +86,8 @@ public:
 	friend std::ostream &operator<<(std::ostream &o,const NXGroupError &e);
 };
 
-//! \ingroup Exceptions
-//! File Error
+//! \ingroup error_classes
+//! \brief File Error
 
 //! File exception class.
 class NXFileError:public Exception {

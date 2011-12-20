@@ -26,7 +26,8 @@ namespace pni{
 namespace nx{
 namespace h5{
 
-
+//! \ingroup nxh5_classes
+//! \brief NXgroup HDF5 implementation
 class NXGroupH5Implementation:public NXObjectH5Implementation {
 private:
 

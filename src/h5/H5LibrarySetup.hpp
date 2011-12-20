@@ -37,8 +37,7 @@ namespace pni {
 namespace nx {
 namespace h5 {
 
-//! \ingroup HDF5-Implementation
-
+//! \ingroup nxh5_classes
 //! \brief HDF5 library setup
 
 //! This class holds information about the linked HDF5 library used for

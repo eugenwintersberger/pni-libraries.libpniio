@@ -41,7 +41,8 @@ template<typename Imp> NXNumericField<Imp> &operator<<(NXNumericField<Imp> &o,co
 template<typename Imp> NXNumericField<Imp> &operator>>(NXNumericField<Imp> &o,ScalarObject &s);
 template<typename Imp> NXNumericField<Imp> &operator>>(NXNumericField<Imp> &o,ArrayObject &s);
 
-
+//! \ingroup nexus_lowlevel
+//! \brief NXfield for numeric data
 template<typename Imp>
 class NXNumericField:public NXField<Imp>{
 private:

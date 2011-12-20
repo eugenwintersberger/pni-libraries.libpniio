@@ -26,7 +26,7 @@ namespace h5{
 
 class NXGroupH5Implementation;
 
-//! \ingroup HDF5 implementation
+//! \ingroup nxh5_classes
 //! \brief HDF5 implementation of a NXField object
 
 //! A dataset can be treated as a standard STL container where the
@@ -34,8 +34,6 @@ class NXGroupH5Implementation;
 //! If data of a rank r should be stored a dataset of rank r+1
 //! is created where the first dimension if of size H5S_UNLIMITED and
 //! thus can be extended along this dimension arbitrarily.
-
-
 class NXFieldH5Implementation : public NXObjectH5Implementation{
 private:
 	//! copy constructor

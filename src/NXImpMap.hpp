@@ -41,6 +41,12 @@
 
 namespace pni{
 namespace nx{
+
+//! \ingroup util_classes
+//! \brief implementation map
+
+//! For each backend a particular class must be provided to implement one
+//! of the low level nexus objects.
 template<ImpCodes c>
 class NXImpMap{
 public:
@@ -55,6 +61,7 @@ public:
 
 };
 
+//! \cond NO_API_DOC
 template<> class NXImpMap<HDF5>{
 public:
 	typedef pni::nx::h5::NXObjectH5Implementation ObjectImplementation;
@@ -66,6 +73,7 @@ public:
 	typedef pni::nx::h5::NXStringFieldH5Implementation StringFieldImplementation;
 	typedef pni::nx::h5::NXBinaryFieldH5Implementation BinaryFieldImplementation;
 };
+//! \endcond
 
 }
 }

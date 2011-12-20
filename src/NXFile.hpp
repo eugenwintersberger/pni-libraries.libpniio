@@ -42,7 +42,7 @@ using namespace pni::utils;
 namespace pni{
 namespace nx{
 
-//! \ingroup Low level objects
+//! \ingroup nexus_lowlevel
 //! \brief File object
 
 //! NXFile represents a file for reading and writing data too. It is
