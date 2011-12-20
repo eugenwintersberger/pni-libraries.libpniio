@@ -1,59 +1,62 @@
 Import("build_env")
 
-#create rules file
-rules_source = ["","%:","\tdh $@",""]
+from smod import DebChangelogFile
 
-#substitution dictionary for Debian packages
-debian_dict={"@SOURCE@":"$LIBPREFIX$LIBNAME","@MAINTAINER@":"$MAINTAINER",
-              "@MAINTAINER_MAIL@":"$MAINTAINER_MAIL",
-              "@PKGNAMEROOT@":"$PKGNAMEROOT","@VERSION@":"$VERSION"}
+debian_dict = {"@SOURCE@":"$LIBPREFIX$LIBNAME","@MAINTAINER@":"$MAINTAINER",
+               "@MAINTAINER_MAIL@":"$MAINTAINER_MAIL",
+               "@PKGNAME@":"$PKGNAME","@VERSION@":"$VERSION",
+               "@LIBINSTPATH@":"$LIBINSTPATH","@INCINSTPATH@":"$INCINSTPATH",
+               "@DOCDIR@":"$DOCDIR"}
+               
+#-------------------------create control file-----------------------------------
                   
-#----------------------general purpose files for debhelper----------------------                  
-#create control file                  
 control_file = build_env.Substfile(["control.in"],SUBST_DICT=debian_dict)
-build_env.NoClean(control_file)
+build_env.Clean(control_file,"tmp")
+build_env.Clean(control_file,Glob("*.log"))
+build_env.Clean(control_file,Glob("*.substvars"))
+build_env.Clean(control_file,Glob("*.debhelper"))
+build_env.Clean(control_file,"${PKGNAME}")
+build_env.Clean(control_file,"${PKGNAME}-dev")
+build_env.Clean(control_file,"${PKGNAME}-doc")
 
-#changelog file
-changelog_file = build_env.Substfile(["changelog.in"],SUBST_DICT=debian_dict)                                  
-build_env.NoClean(changelog_file)
 
-#creating rules file
-rules_file = build_env.Textfile(target="rules",source=rules_source,
-                                TEXTFILESUFFIX="")
-build_env.NoClean(rules_file)
+changelog = DebChangelogFile("../","v0.0.1")
+changelog.version=build_env["VERSION"]
+changelog.pkg_name = build_env["LIBPREFIX"]+build_env["LIBNAME"]
+changelog.urgency = "low"
+changelog.distribution = "testing"
+changelog.create("changelog.in")
+changelog_file = build_env.Substfile(["changelog.in"])                                  
 
-#create compat file
+rules_file = build_env.Substfile(["rules.in"])
+
 compat_file = build_env.Substfile(["compat.in"])
-build_env.NoClean(compat_file)
 
-#-----------------create package specific packages------------------------------
-lib_pkg_dirs = build_env.Textfile(target="${PKGNAMEROOT}",
-               source=["${LIBINSTPATH}"],TEXTFILESUFFIX=".dirs")
-build_env.NoClean(lib_pkg_dirs)
-lib_pkg_install = build_env.Textfile(target="${PKGNAMEROOT}",
-                  source=["${LIBINSTPATH}/lib*.so.*"],TEXTFILESUFFIX=".install")
-build_env.NoClean(lib_pkg_install)
+lib_pkg_dirs = build_env.Substfile(target="${PKGNAME}",
+                source=["libpninx.dirs.in"],SUBST_DICT=debian_dict,
+                SUBSTFILESUFFIX=".dirs")
 
-dev_pkg_dirs = build_env.Textfile(target="${PKGNAMEROOT}-dev",
-               source=["${LIBINSTPATH}","${INCINSTPATH}"],
-               TEXTFILESUFFIX=".dirs")
-build_env.NoClean(dev_pkg_dirs)
-dev_pkg_install = build_env.Textfile(target="${PKGNAMEROOT}-dev",
-                  source=["${INCINSTPATH}/*",
-                          "${LIBINSTPATH}/lib*.a","usr/lib/lib*.so",
-                          "${LIBINSTPATH}/pkgconfig/*"],
-                  TEXTFILESUFFIX=".install")
-build_env.NoClean(dev_pkg_install)                                                               
+lib_pkg_install = build_env.Substfile(target="${PKGNAME}",
+                  source=["libpninx.install.in"],SUBST_DICT=debian_dict,
+                  SUBSTFILESUFFIX=".install")
 
-doc_pkg_dirs = build_env.Textfile(target="${PKGNAMEROOT}-doc",
-                                  source=["${DOCDIR}"],TEXTFILESUFFIX=".dirs")
-build_env.NoClean(doc_pkg_dirs)                                                                      
-doc_pkg_install = build_env.Textfile(target="${PKGNAMEROOT}-doc",
-                                     source=["${DOCDIR}/*"],
-                                     TEXTFILESUFFIX=".install")
-build_env.NoClean(doc_pkg_install)
+dev_pkg_dirs = build_env.Substfile(target="${PKGNAME}-dev",
+               source = ["libpninx-dev.dirs.in"],
+               SUBST_DICT=debian_dict,SUBSTFILESUFFIX=".dirs")
 
-#--------------gather everything under a single alias target--------------------
-build_env.Alias("debian",[control_file,compat_file,lib_pkg_dirs,lib_pkg_install,
+dev_pkg_install = build_env.Substfile(target="${PKGNAME}-dev",
+                  source=["libpninx-dev.install.in"],SUBST_DICT=debian_dict,
+                  SUBSTFILESUFFIX=".install")
+
+doc_pkg_dirs = build_env.Substfile(target="${PKGNAME}-doc",
+                                  source=["libpninx-doc.dirs.in"],
+                                  SUBST_DICT=debian_dict,SUBSTFILESUFFIX=".dirs")
+
+doc_pkg_install = build_env.Substfile(target="${PKGNAME}-doc",
+                                     source=["libpninx-doc.install.in"],
+                                     SUBST_DICT=debian_dict,
+                                     SUBSTFILESUFFIX=".install")
+
+debian = build_env.Alias("debian",[control_file,compat_file,lib_pkg_dirs,lib_pkg_install,
                           dev_pkg_dirs,dev_pkg_install,
                           doc_pkg_dirs,doc_pkg_install,changelog_file,rules_file])

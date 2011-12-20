@@ -24,7 +24,7 @@ var.Add("LIBLINKNAME","name of the library used for linking","")
 var.Add("LIBFULLNAME","full name of the library binary","")
 var.Add("INCINSTPATH","installation path for header files","")
 var.Add("LIBINSTPATH","library installation path","")
-var.Add("PKGNAMEROOT","root package name (actually only used for Debian packages)","")
+var.Add("PKGNAME","package name (actually only used for Debian packages)","")
 
 #need now to create the proper library suffix
 
@@ -82,8 +82,8 @@ if env["DOCDIR"] == "":
                                   env["LIBPREFIX"]+env["LIBNAME"]
                                   +env["SOVERSION"]+"-doc"))
 
-if env["PKGNAMEROOT"] == "":
-    env.Append(PKGNAMEROOT = env["LIBPREFIX"]+env["LIBNAME"]+env["SOVERSION"])
+if env["PKGNAME"] == "":
+    env.Append(PKGNAME = env["LIBPREFIX"]+env["LIBNAME"]+env["SOVERSION"])
 
 #set some linker flags
 

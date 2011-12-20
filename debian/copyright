@@ -1,6 +1,6 @@
 Format: http://dep.debian.net/deps/dep5
 Upstream-Name: libpninx
-Source: http://www.eugen-wintersberger.desy.de/libpninx
+Source: http://www.eugen-wintersberger.desy.de/pniutils
 
 Files: *
 Copyright: 2011 Eugen Wintersberger <eugen.wintersberger@desy.de>
