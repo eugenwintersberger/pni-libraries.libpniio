@@ -1,6 +1,7 @@
 #load python modules
 import os.path as path
 import os
+import platform
 from smod import ProgramVersion
 from smod import GCCVersionParser
 from smod import CheckProgram
@@ -11,7 +12,7 @@ from smod import LibFileNames
 debug = ARGUMENTS.get("DEBUG",0)
 
 var = Variables('BuildConfig.py')
-var.Add(PathVariable("PREFIX","set installation prefix","/usr/local"))
+var.Add(PathVariable("PREFIX","set installation prefix","/usr"))
 var.Add(PathVariable("BOOSTPREFIX","set the installation prefix for boost","/usr"))
 var.Add(PathVariable("HDF5PREFIX","set the installation prefix for HDF5","/usr"))
 var.Add("VERSION","library version","0.0.0")
@@ -54,7 +55,10 @@ env.Append(LIBLINKNAME = libname.link_name(env))
 
 #create installation paths
 env.Append(INCINSTPATH = path.join(env["PREFIX"],"include/pni/nx"))
-env.Append(LIBINSTPATH = path.join(env["PREFIX"],"lib"))
+if platform.machine()=="x86_64":
+    env.Append(LIBINSTPATH = path.join(env["PREFIX"],"lib64"))
+else:
+    env.Append(LIBINSTPATH = path.join(env["PREFIX"],"lib"))
 
 if env["DOCDIR"] == "":
     #set default documentation directory for installation

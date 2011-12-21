@@ -49,20 +49,19 @@ build_env.Alias("library",[temp_shared_library,shared_library,static_library,
                            shared_library_link,shared_library_so])
                            
 #--------------------------Installation targets--------------------------------
-lib_inst_path = path.join(build_env["PREFIX"],"lib")
 hdr_inst_path = path.join(build_env["PREFIX"],"include/pni/nx")
 
-shared_library_install = build_env.Install(lib_inst_path,[shared_library])
+shared_library_install = build_env.Install("$LIBINSTPATH",[shared_library])
 shared_library_link_install = build_env.Command("${SOURCE.dir}/$LIBLINKNAME",shared_library_install,
              "cd ${TARGET.dir}; ln -sf ${SOURCE.file} ${TARGET.file}")
 shared_library_so_install = build_env.Command("${SOURCE.dir}/$LIBSONAME",shared_library_install,
              "cd ${TARGET.dir}; ln -sf ${SOURCE.file} ${TARGET.file}")
 
 
-static_library_install = build_env.Install(lib_inst_path,[static_library])
+static_library_install = build_env.Install("$LIBINSTPATH",[static_library])
 
 
-pkgc_inst = build_env.Install(path.join(lib_inst_path,"pkgconfig"),[pkg_config_file])
+pkgc_inst = build_env.Install(path.join(build_env["LIBINSTPATH"],"pkgconfig"),[pkg_config_file])
 incpniutils_inst = build_env.Install(hdr_inst_path,Glob("*.hpp"))
 
 build_env.Alias("install",[shared_library_install,static_library_install,
