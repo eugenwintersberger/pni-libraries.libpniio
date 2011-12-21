@@ -7,25 +7,27 @@ Installation instructions
 Required software to build libpninx:
 -> scons 
 -> doxygen
--> latex
+-> latex (pdflatex)
 
 Library dependencies:
 -> libpniutils
 -> boost
 -> HDF5
+-> cppunit
 
 libpninx relies on C++11 standard so you need a compliant compiler. 
 The code is developed with gcc-4.6. gcc-4.5 works too. There is a compiler bug
 in gcc 4.4.0 which messed up some of the binary operators for strongly typed 
-enums. Thus the code does not work with gcc 4.4.0 for the moment.
+enums. Thus the code does not work with gcc 4.4.0 for the moment. Any higher
+release of gcc (4.4.1 or higher) should work.
 
 
 2.) Build and installation
     ----------------------
 
-2.1.) Building and installation under Linux
-      -------------------------------------
-          
+2.1.) Building on Linux
+      -----------------
+
 If everything is installed under standard locations you only need to run 
 scons in the root directory of the source directory.
 
@@ -43,24 +45,44 @@ using the CXX variable
 
 $> scons CXX=/usr/local/bin/gcc-4.6
 
-To install the library use 
-
-$> scons install
-
-where the software will be installed under standard location /usr. 
-To change the installation prefix use
-
-$> scons PREFIX=/opt/pninx install
-
-It might be interesting to build only the documentation in order to 
-get familiar with libpninx before starting the installation. In this case 
-simply run
+To build only the documentation (which resides under the doc directory 
+in the source tree simply type
 
 $> scons doc
 
-Documentation will reside under ./doc in the root directory of the source 
-distribution. For further information about installation and build 
-process see the administrators guide which can be found in ./doc/admin-guide.
+To cleanup the source directory use 
+
+$> scons -c; scons -c debian
+
+
+2.1.) Installation on Linux
+      ---------------------
+
+For the installation you have basically two possibilities: you can either
+install the libraries directly from the source tree to your system, or, if you
+use a Debian system (or any derived system like Ubuntu) you can build an
+appropriate package for installation.
+
+To install directly from the sources you simply type 
+
+$> scons install
+
+in the root directory of the code tree. In this case the scons tries to install
+the software under the default prefix /usr. This implies that you need root
+permissions to install.
+To install libpninx under a different location use
+
+$> scons PREFIX=/opt/pninx install
+
+If you want to build a debian package type 
+
+$> scons debian
+
+After the run you will find the packages one level above the source tree. 
+For a new debian package run you first need to clean the 
+debian build directory with 
+
+$> scons -c debian
 
 
 2.2.) Build and installation on Windows
