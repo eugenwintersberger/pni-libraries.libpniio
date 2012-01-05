@@ -14,6 +14,7 @@ Library dependencies:
 -> boost
 -> HDF5
 -> cppunit
+-> GIT python bindings (http://gitorious.org/projects/git-python/)
 
 libpninx relies on C++11 standard so you need a compliant compiler. 
 The code is developed with gcc-4.6. gcc-4.5 works too. There is a compiler bug
