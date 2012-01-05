@@ -175,16 +175,19 @@ else:
     build_env.Append(CXXFLAGS=["-O2"])
     
 test_build_env = build_env.Clone()
+python_build_env = build_env.Clone()
 build_env.Append(LINKFLAGS=["-Wl,-h"+libname.so_name(env)]) 
     
 Export("build_env")
 Export("test_build_env")
+Export("python_build_env")
 
 
 SConscript(["src/SConscript"])
 SConscript(["test/SConscript"])
 SConscript(["debian/SConscript"])
 SConscript(["doc/SConscript"])
+SConscript(["python/SConscript"])
 
 #set default target this is important otherwise we get a problem with the 
 #debian build (which will be executed too)
