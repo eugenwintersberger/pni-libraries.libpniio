@@ -19,8 +19,20 @@ using namespace pni::nx::h5;
 using namespace boost::python;
 
 void wrap_nxobject();
+void wrap_nxgroup();
+void wrap_nxfile();
+void wrap_nxfield();
+void wrap_nxnumericfield();
+void wrap_nxstringfield();
+void wrap_nxbinaryfield();
 
 BOOST_PYTHON_MODULE(pniutils)
 {
     wrap_nxobject();
+    wrap_nxgroup();
+    wrap_nxfile();
+    wrap_nxfield();
+    wrap_nxnumericfield();
+    wrap_nxstringfield();
+    wrap_nxbinaryfield();
 }

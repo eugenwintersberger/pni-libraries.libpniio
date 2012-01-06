@@ -421,8 +421,8 @@ template<typename Imp> void NXNumericField<Imp>::get(ScalarObject &o){
 		EXCEPTION_THROW();
 	}
 
-	if((this->getShape().rank()!=1)||
-	   (this->getShape().dim(0)!=1)){
+	if((this->shape().rank()!=1)||
+	   (this->shape().dim(0)!=1)){
 		EXCEPTION_INIT(NXFieldError,"Fields holds more than one value!");
 		EXCEPTION_THROW();
 	}

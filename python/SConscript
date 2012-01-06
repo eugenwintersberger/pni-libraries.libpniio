@@ -12,7 +12,10 @@ python_version = python_version.replace(".","")
 python_build_env.Append(LIBS=["boost_python","boost_python-py"+python_version])
 python_build_env.Append(CPPPATH=[sysconfig.get_python_inc()])
 
-python_sources = ["NXObject.cpp","nx.cpp"]
+python_sources = ["NXObject.cpp","NXFilter.cpp","NXGroup.cpp",
+                  "NXFile.cpp","NXField.cpp","NXNumericField.cpp",
+                  "NXStringField.cpp","NXBinaryField.cpp",
+                  "nx.cpp"]
 
 module = python_build_env.SharedLibrary("pni/nx/h5/nxh5",python_sources,SHLIBPREFIX="")
 python_build_env.Alias("python",[module])
