@@ -4,9 +4,12 @@ SCONS=scons
 
 clean:
 	$(SCONS) -c all
+	$(SCONS) -c python
 
 all:
 	$(SCONS) all
+	$(SCONS) python
 
 install:
 	$(SCONS) PREFIX=@PREFIX@ --install-sandbox=$(DESTDIR) install CXX=$(CXX)
+

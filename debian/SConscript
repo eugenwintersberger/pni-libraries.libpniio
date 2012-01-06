@@ -50,13 +50,23 @@ doc_pkg_install = build_env.Substfile(target="${PKGNAME}-doc",
                                      SUBST_DICT=debian_dict,
                                      SUBSTFILESUFFIX=".install")
 
+py_pkg_dirs = build_env.Substfile(target="${PKGNAME}-python",
+                                  source=["libpninx-python.dirs.in"],
+                                  SUBST_DICT=debian_dict,SUBSTFILESUFFIX=".dirs")
+
+py_pkg_install = build_env.Substfile(target="${PKGNAME}-python",
+                                     source=["libpninx-python.install.in"],
+                                     SUBST_DICT=debian_dict,
+                                     SUBSTFILESUFFIX=".install")
+
+
 debian_makefile = build_env.Substfile(target="../Makefile",source="DebianMakefile.in",
                                       SUBST_DICT={"@PREFIX@":"$PREFIX"},
                                       SUBSTFILESUFFIX="")                                    
 
 debian_config = [control_file,compat_file,lib_pkg_dirs,lib_pkg_install,
                  dev_pkg_dirs,dev_pkg_install,doc_pkg_dirs,doc_pkg_install,
-                 changelog_file,rules_file,debian_makefile]
+                 changelog_file,rules_file,debian_makefile,py_pkg_dirs,py_pkg_install]
                  
 architecture_map = {"x86_64":"amd64","amd64":"amd64","i386":"i386","x86":"i386"}
                           
@@ -77,6 +87,7 @@ build_env.Clean(debian,Glob("*.debhelper"))
 build_env.Clean(debian,"${PKGNAME}")
 build_env.Clean(debian,"${PKGNAME}-dev")
 build_env.Clean(debian,"${PKGNAME}-doc")
+build_env.Clean(debian,"${PKGNAME}-python")
 build_env.Clean(debian,"files")
 
                         

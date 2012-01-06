@@ -1,7 +1,7 @@
 Source: @SOURCE@
 Priority: extra
 Maintainer: @MAINTAINER@ <@MAINTAINER_MAIL@>
-Build-Depends: debhelper (>= 7.0.50~)
+Build-Depends: debhelper (>= 7.0.50~), python-support (>= 0.90)
 Standards-Version: 3.9.1
 Section: libs
 Homepage: http://www.eugen-wintersberger.desy.de/pniutils
@@ -28,3 +28,10 @@ Architecture: any
 Depends:
 Description: PNI Nexus library - documentation
  Documentation for the PNI Nexus library.
+
+Package: @PKGNAME@-python
+Section: python
+Architecture: any
+Depends: @PKGNAME@ (=${binary:Version}),${shlibs:Depends}, ${misc:Depends},python (>=2.6),${python:Depends}
+Description: PNI Nexus libraray - python bindings
+ Python bindings for the PNI Nexus library.
