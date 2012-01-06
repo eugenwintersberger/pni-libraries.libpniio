@@ -80,13 +80,13 @@ public:
 	void append(const Buffer<Binary> &s);
 
 	//!get data
-	void get(const UInt64 &i,Buffer<Binary> &o);
+	void get(const size_t &i,Buffer<Binary> &o);
 	void get(Buffer<Binary> &o);
 	//String get(const UInt64 &i);
 	//String get(const char &sep);
 
 	//! set data
-	void set(const UInt64 &i,const Buffer<Binary> &s);
+	void set(const size_t &i,const Buffer<Binary> &s);
 
 
 	friend NXBinaryField<Imp> &operator<< <> (NXBinaryField<Imp> &o,const Buffer<Binary> &s);
@@ -217,7 +217,7 @@ void NXBinaryField<Imp>::append(const Buffer<Binary> &b){
 //------------------------------------------------------------------------------
 //implementation of get data
 template<typename Imp>
-void NXBinaryField<Imp>::get(const UInt64 &i,Buffer<Binary> &o){
+void NXBinaryField<Imp>::get(const size_t &i,Buffer<Binary> &o){
 	EXCEPTION_SETUP("template<typename Imp> void NXBinaryField<Imp>::"
 					"get(const UInt64 &i,Buffer<Binary> &o)");
 
@@ -247,7 +247,7 @@ template<typename Imp> void NXBinaryField<Imp>::get(Buffer<Binary> &b){
 //------------------------------------------------------------------------------
 //implementation of set data
 template<typename Imp>
-void NXBinaryField<Imp>::set(const UInt64 &i,const Buffer<Binary> &b){
+void NXBinaryField<Imp>::set(const size_t &i,const Buffer<Binary> &b){
 	EXCEPTION_SETUP("template<typename Imp> void NXBinaryField<Imp>::"
 					"set(const UInt64 &i,const Buffer<Binary> &s)");
 
@@ -259,10 +259,13 @@ void NXBinaryField<Imp>::set(const UInt64 &i,const Buffer<Binary> &b){
 	}
 }
 
+//------------------------------------------------------------------------------
 template<typename Imp> NXBinaryField<Imp> &operator<<(NXBinaryField<Imp> &o,const Buffer<Binary> &b){
 	o.append(b);
 	return o;
 }
+
+//------------------------------------------------------------------------------
 template<typename Imp> NXBinaryField<Imp> &operator>>(NXBinaryField<Imp> &o,Buffer<Binary> &s){
 	o.get(o._get_read_stream_pos(),s);
 	o._increment_read_stream_pos();
