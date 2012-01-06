@@ -91,6 +91,14 @@ void NXNumericFieldTest::testCreation(){
 	CPPUNIT_ASSERT(field3.is_open());
 	CPPUNIT_ASSERT(!field.is_open());
 
+    //create fields with filters
+    NXLZFFilter lzf;
+    NXDeflateFilter deflate;
+    
+    deflate.compression_rate(9);
+    field = file.create_numericfield("test_defalte",
+            TypeID::UINT16,shape,"cps","scalar counter",deflate);
+
 }
 
 //------------------------------------------------------------------------------

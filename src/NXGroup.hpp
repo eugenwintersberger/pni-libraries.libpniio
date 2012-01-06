@@ -326,9 +326,9 @@ NXGroup<Imp>::create_numericfield(const String &n,TypeID tid,
 	FieldType field;
 
 	try{
-		field.implementation(std::move(this->_imp.createNumericField(n.c_str(),tid,s,f)));
-		field.setAttribute("units",unit);
-		field.setAttribute("long_name",desc);
+        field = FieldType(this->implementation().create_numericfield(n,tid,s,f));
+		field.set_attr("units",unit);
+		field.set_attr("long_name",desc);
 	}catch(...){
 		EXCEPTION_INIT(NXGroupError,"Error creating array field ["+n+"] below group ["+this->name()+"]!");
 		EXCEPTION_THROW();

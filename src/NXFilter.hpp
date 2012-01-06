@@ -61,8 +61,8 @@ template<typename Filter> NXFilter<Filter>::NXFilter():Filter(){
 }
 
 //-----------------------------------------------------------------------------
-template<typename Filter> NXFilter<Filter>::NXFilter(const NXFilter<Filter> &o){
-	Filter::Filter(o);
+template<typename Filter> NXFilter<Filter>::NXFilter(const NXFilter<Filter> &o)
+    :Filter(o){
 }
 
 //-----------------------------------------------------------------------------
