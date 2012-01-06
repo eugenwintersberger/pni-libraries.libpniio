@@ -56,7 +56,7 @@ env.Append(LIBLINKNAME = libname.link_name(env))
 #create installation paths
 env.Append(INCINSTPATH = path.join(env["PREFIX"],"include/pni/nx"))
 if platform.machine()=="x86_64":
-    env.Append(LIBINSTPATH = path.join(env["PREFIX"],"lib64"))
+    env.Append(LIBINSTPATH = path.join(env["PREFIX"],"lib"))
 else:
     env.Append(LIBINSTPATH = path.join(env["PREFIX"],"lib"))
 

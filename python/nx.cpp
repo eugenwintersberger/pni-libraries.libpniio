@@ -26,7 +26,7 @@ void wrap_nxnumericfield();
 void wrap_nxstringfield();
 void wrap_nxbinaryfield();
 
-BOOST_PYTHON_MODULE(pniutils)
+BOOST_PYTHON_MODULE(nxh5)
 {
     wrap_nxobject();
     wrap_nxgroup();

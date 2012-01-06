@@ -25,6 +25,7 @@ using namespace pni::nx::h5;
 void wrap_filter(){
     class_<NXLZFFilter>("NXLZFFilter")
         .def(init<>())
+        .def("setup",&NXLZFFilter::setup)
         ;
 
     void (NXDeflateFilter::*set_compression)(UInt32) =
@@ -34,5 +35,6 @@ void wrap_filter(){
     class_<NXDeflateFilter>("NXDeflateFilter")
         .def(init<>())
         .add_property("rate",get_compression,set_compression)
+        .def("setup",&NXDeflateFilter::setup)
         ;
 }

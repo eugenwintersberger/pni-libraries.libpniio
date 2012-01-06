@@ -13,6 +13,7 @@
 *.out
 *.so.*
 *.deb
+*.pyc
 *.changes
 .sconf_temp
 Makefile

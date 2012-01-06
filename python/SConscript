@@ -5,6 +5,8 @@ Import("python_build_env")
 
 
 python_build_env.Append(LIBS=["pniutils"])
+python_build_env.Prepend(LIBS=["pninx"])
+python_build_env.Prepend(LIBPATH=["../src"])
 
 python_version = sysconfig.get_python_version()
 python_version = python_version.replace(".","")
@@ -34,7 +36,7 @@ python_install_path = "$LIBINSTPATH"+"/python"+\
                       sysconfig.get_python_version()+\
                       "/"+subpath
 
-python_install = python_build_env.Install(python_install_path,"pni")
-Depends(python_install,module)
-python_build_env.Alias("install",[python_install])
+#python_install = python_build_env.Install(python_install_path,"pni")
+#Depends(python_install,module)
+#python_build_env.Alias("install",[python_install])
 

@@ -26,7 +26,7 @@ using namespace pni::nx::h5;
 using namespace boost::python;
 
 void wrap_nxfield(){
-    class_<NXBinaryField,bases<NXField> >("NXField")
+    class_<NXField,bases<NXObject> >("NXField")
         .def(init<>())
         .add_property("shape",make_function(&NXField::shape,return_internal_reference<1>()))
         .add_property("element_shape",make_function(&NXField::element_shape,return_internal_reference<1>()))
