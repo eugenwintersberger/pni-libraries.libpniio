@@ -2,7 +2,7 @@ Import("test_build_env")
 
 test_env = test_build_env.Clone()
 
-test_env.Append(LIBPATH=["../src/"])
+test_env.Prepend(LIBPATH=["../src/"])
 test_env.Append(LIBS=["pninx","pniutils","cppunit","plplotcxxd","boost_filesystem","boost_system"])
 test_env.Append(CPPPATH=["../src/"])
 
