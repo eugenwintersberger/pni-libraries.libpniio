@@ -14,78 +14,30 @@
 #include <pni/utils/ArrayObject.hpp>
 #include <pni/utils/ScalarObject.hpp>
 
-#include "../src/NX.hpp"
+#include "../src/NXObject.hpp"
+#include "../src/h5/NXObjectH5Implementation.hpp"
+#include "../src/h5/NXGroupH5Implementation.hpp"
+#include "../src/h5/NXFileH5Implementation.hpp"
+#include "../src/h5/NXFieldH5Implementation.hpp"
+#include "../src/h5/NXNumericFieldH5Implementation.hpp"
+#include "../src/h5/NXStringFieldH5Implementation.hpp"
+#include "../src/h5/NXBinaryFieldH5Implementation.hpp"
+
+#include "NXObject.hpp"
 
 using namespace pni::utils;
 using namespace pni::nx::h5;
 using namespace boost::python;
 
-#define NXOBJECT_WRAPPER(name,imp_type) \
-    void (NXObject<imp_type>::*get_string_attribute)(const String &,String &) const
-        = &NXObject::get_attr;
-    void (NXObject::*set_string_attribute)(const String &,const String &) const
-        = &NXObject::set_attr;
-    void (NXObject::*get_scalar_attribute)(const String &,ScalarObject &) const
-        = &NXObject::get_attr;
-    void (NXObject::*set_scalar_attribute)(const String &,const ScalarObject &)
-        const = &NXObject::set_attr;
-    void (NXObject::*get_array_attribute)(const String &,ArrayObject &) const =
-        &NXObject::get_attr;
-    void (NXObject::*set_array_attribute)(const String &,const ArrayObject &)
-        const = &NXObject::set_attr;
-
-    void (NXObject::*link_this)(const String &) const = &NXObject::link;
-    void (NXObject::*link_this_name)(const String &,const String &) const =
-        &NXObject::link;
-	class_<NXObject>("NXObject")
-			.def(init<>())
-            .def("is_open",&NXObject::is_open)
-            .add_property("path",&NXObject::path)
-            .add_property("name",&NXObject::name)
-            .add_property("base",&NXObject::base)
-            .def("set_attr",set_string_attribute)
-            .def("get_attr",get_string_attribute)
-            .def("set_attr",set_scalar_attribute)
-            .def("get_attr",get_scalar_attribute)
-            .def("set_attr",set_array_attribute)
-            .def("get_attr",get_array_attribute)
-            .def("link",link_this)
-            .def("link",link_this_name)
-			;
-
 void wrap_nxobject(){
+    NXOBJECT_WRAPPER(NXObject_NXObject,NXObjectH5Implementation);
 	//===================Wrapping NumericObject=================================
-    void (NXObject::*get_string_attribute)(const String &,String &) const
-        = &NXObject::get_attr;
-    void (NXObject::*set_string_attribute)(const String &,const String &) const
-        = &NXObject::set_attr;
-    void (NXObject::*get_scalar_attribute)(const String &,ScalarObject &) const
-        = &NXObject::get_attr;
-    void (NXObject::*set_scalar_attribute)(const String &,const ScalarObject &)
-        const = &NXObject::set_attr;
-    void (NXObject::*get_array_attribute)(const String &,ArrayObject &) const =
-        &NXObject::get_attr;
-    void (NXObject::*set_array_attribute)(const String &,const ArrayObject &)
-        const = &NXObject::set_attr;
-
-    void (NXObject::*link_this)(const String &) const = &NXObject::link;
-    void (NXObject::*link_this_name)(const String &,const String &) const =
-        &NXObject::link;
-	class_<NXObject>("NXObject")
-			.def(init<>())
-            .def("is_open",&NXObject::is_open)
-            .add_property("path",&NXObject::path)
-            .add_property("name",&NXObject::name)
-            .add_property("base",&NXObject::base)
-            .def("set_attr",set_string_attribute)
-            .def("get_attr",get_string_attribute)
-            .def("set_attr",set_scalar_attribute)
-            .def("get_attr",get_scalar_attribute)
-            .def("set_attr",set_array_attribute)
-            .def("get_attr",get_array_attribute)
-            .def("link",link_this)
-            .def("link",link_this_name)
-			;
+    NXOBJECT_WRAPPER(NXObject_NXGroup,NXGroupH5Implementation);
+    NXOBJECT_WRAPPER(NXObject_NXField,NXFieldH5Implementation);
+    NXOBJECT_WRAPPER(NXObject_NXNumericField,NXNumericFieldH5Implementation);
+    NXOBJECT_WRAPPER(NXObject_NXStringField,NXStringFieldH5Implementation);
+    NXOBJECT_WRAPPER(NXObject_NXBinaryField,NXBinaryFieldH5Implementation);
+    NXOBJECT_WRAPPERNOCOP(NXObject_NXFile,NXFileH5Implementation);
 }
 
 
