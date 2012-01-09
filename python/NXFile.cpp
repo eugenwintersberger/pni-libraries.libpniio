@@ -42,6 +42,7 @@ void wrap_nxfile(){
 
     void (NXFile::*file_open)() = &NXFile::open;
     NXObject (NXFile::*object_open)(const String &) = &NXFile::open;
+
     class_<NXFile,bases<NXGroup>,boost::noncopyable >("NXFile")
         .def(init<>())
         .add_property("filename",get_filename,set_filename)

@@ -5,3 +5,6 @@ from nxh5 import NXField
 from nxh5 import NXNumericField
 from nxh5 import NXStringField
 from nxh5 import NXBinaryField
+
+
+#need to tweak the NXObject
