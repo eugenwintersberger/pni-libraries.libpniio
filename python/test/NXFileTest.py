@@ -42,10 +42,13 @@ class NXFileTest(unittest.TestCase):
     def test_attributes(self):
         s = "a string attribute"
         self.gf.set_attr("text","a string attribute")
+        g = self.gf.create_group("data")
+        print "createed group", g
 
         s = Float32Scalar("sca","a.u.","a test scalar")
+        s.value = 100.
         self.gf.set_attr("sca",s)
 
-        a = Array(name="det",shape=(10,5),dtype="uint16")
-        self.gf.set_attr("det",a)
+        a = Array(shape=(10,5),dtype="uint16")
+        #self.gf.set_attr("det",a)
 

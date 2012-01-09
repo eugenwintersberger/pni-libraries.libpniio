@@ -1,5 +1,5 @@
-from nxh5 import NXObject
-from nxh5 import NXGroup
+from nxh5 import NXObject_NXObject as NXObject
+from nxh5 import NXGroup_NXGroup as NXGroup
 from nxh5 import NXFile
 from nxh5 import NXField
 from nxh5 import NXNumericField
