@@ -36,6 +36,7 @@ extern "C" {
 #include <pni/utils/Array.hpp>
 
 #include "H5TypeFactory.hpp"
+#include "H5Exceptions.hpp"
 #include "../NXImpCode.hpp"
 #include "../NXTypes.hpp"
 
@@ -146,6 +147,11 @@ public:
 	//! read attribute data to a String object
 	void get_attr(const String &n,String &s) const;
 
+    //! template to write attribute
+    template<typename T> void attribute(const String &n,const T &value);
+    //! template to read attribute
+    template<typename T> T attribute(const String &n);
+
 	//! get object path
 
 	//! Returns the path of the object within the HDF5 tree.
@@ -195,6 +201,131 @@ public:
 	virtual void link(const String &path) const;
 
 };
+
+//default function to obtain the address of an object
+//This needs to be specialized for several special data types.
+template<typename T> void *get_object_data_ptr(const T &value){
+    return (void *)(&value);
+}
+
+//default function template to obtain the data type
+template<typename T> hid_t get_object_datatype(const T &value){
+    return H5TFactory.create_type<T>();
+}
+
+//default function to obtain the data space of an object
+template<typename T> hid_t get_object_dataspace(const T &value){
+    hid_t space_id;
+    //in the default case we return a scalar data space
+    
+    space_id = H5Screate(H5S_SCALAR);
+     
+    return space_id;
+}
+
+//default reading routine - here we assume that the return 
+//type is plain old data.
+template<typename T> T read_attribute_data(hid_t id)
+{
+    EXCEPTION_SETUP("template<typename T> T "
+                    "read_attribute_data(hid_t id)");
+    hid_t space_id = 0;
+    hid_t type_id  = 0;
+    T value;
+
+    //fetch everything we need from the attribute
+    space_id = H5Aget_space(id);
+    //check if the data space is scalar (a requirement for 
+    //reading data to a POD variable
+    if(H5Sis_simple(space_id)!=0){
+        EXCEPTION_INIT(H5AttributeError,"Attribute is not scalar!");
+        EXCEPTION_THROW();
+    }
+
+    type_id  = H5TFactory.create_type<T>(); //set the memory type
+
+    herr_t err;
+    err = H5Aread(id,type_id,(void *)(&value));
+    if(err<0){
+        //a possible source of error could be that the data types are
+        //not convertible
+        EXCEPTION_INIT(H5AttributeError,"Error reading attribute!");
+        EXCEPTION_THROW();
+    }
+
+    return value;
+}
+
+//-----------------------------------------------------------------------------
+//! template to write attribute
+template<typename T> void NXObjectH5Implementation::attribute(const String &n,
+                                                    const T &value)
+{
+    EXCEPTION_SETUP("template<typename T> void NXObjectH5Implementation::"
+                    "attribute(const String &n,const T &value)");
+    htri_t retval;
+
+    //delete the attribute if it exists
+    retval = H5Aexists(_id,n.c_str());
+    if(retval>0){
+        H5Adelete(_id,n.c_str());
+    }else if(retval<0){
+        EXCEPTION_INIT(H5AttributeError,
+                    "Existence check of attribute ["+n+"]failed!");
+        EXCEPTION_THROW();
+    }
+
+    //now we have to determine the data type and dataspace from 
+    //the object passed
+    hid_t type_id = get_object_datatype(value);
+    hid_t space_id = get_object_dataspace(value);
+    void *ptr = get_object_data_ptr(value);
+
+    //with this we can now write the attribute to the file
+
+	//create the attribute and check for errors
+	hid_t aid = H5Acreate2(_id,n.c_str(),type_id,space_id,
+                           H5P_DEFAULT,H5P_DEFAULT);
+	if(aid<0){
+		EXCEPTION_INIT(H5AttributeError,
+                "Error creating array attribute ["+n+"]!");
+        H5Tclose(type_id);
+		H5Sclose(space_id);
+		EXCEPTION_THROW();
+	}
+
+	//write data and check for errors
+	if((H5Awrite(aid,type_id,ptr))<0){
+		EXCEPTION_INIT(H5AttributeError,
+                "Error writing data to array attribute ["+n+"]!");
+		H5Aclose(aid);
+        H5Tclose(type_id);
+		H5Sclose(space_id);
+		EXCEPTION_THROW();
+	}
+
+	H5Aclose(aid);
+}
+
+//-----------------------------------------------------------------------------
+//! template to read attribute
+template<typename T> T NXObjectH5Implementation::attribute(const String &n)
+{
+    EXCEPTION_SETUP("template<typename T> T NXObjectH5Implementation::"
+                    "attribute(const String &n)");
+    //the first thing we have to check is whether or not the attribute 
+    //exists and if not raise an exception
+    htri_t retval;
+
+    //delete the attribute if it exists
+    retval = H5Aexists(_id,n.c_str());
+    if(retval<=0){
+        EXCEPTION_INIT(H5AttributeError,"Attribute ["+n+"] does not exist!");
+        EXCEPTION_THROW();
+    }
+    
+    
+}
 
 
 //end of namespace

@@ -37,6 +37,42 @@ namespace nx{
 namespace h5{
 
 using namespace pni::utils;
+//=======================Specialization of function templates===================
+template<> void *get_object_data_ptr(const NumericObject &value){
+    return (void *)(value.void_ptr());
+}
+
+//------------------------------------------------------------------------------
+template<> void *get_object_data_ptr(const String &value){
+    return (void *)(value.c_str());
+}
+
+//------------------------------------------------------------------------------
+template<> hid_t get_object_datatype(const NumericObject &value){
+    return H5TFactory.create_type_from_object(value);
+}
+
+//------------------------------------------------------------------------------
+template<> hid_t get_object_datatype(const String &value){
+	hid_t tid = H5TFactory.create_type_from_id(TypeID::STRING);
+	//need to set the size of the string type
+	H5Tset_size(tid,value.size());
+
+    return tid;
+}
+
+//------------------------------------------------------------------------------
+template<> hid_t get_object_dataspace(const ArrayObject &value){
+    hid_t dspace;
+    H5Utils.shape_to_dataspace(value.shape(),dspace);
+
+    return dspace;
+}
+
+
+//------------------------------------------------------------------------------
+template<> Float32Array read_attribute_data(hid_t id){
+}
 
 //------------------------------------------------------------------------------
 //Implementation of the default constructor

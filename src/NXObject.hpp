@@ -142,6 +142,7 @@ public:
 	//! \param s String to write as attribute
 	virtual void set_attr(const String &n,const String &s) const;
 
+
 	//! read Array attribute
 
 	//! Read an array attribute from an object and store its content

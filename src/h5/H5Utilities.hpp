@@ -92,6 +92,7 @@ public:
 	static TypeID h5type_to_pni_type_id(const hid_t tid);
 };
 
+
 static H5Utilities H5Utils;
 
 //end of namespace
