@@ -105,6 +105,43 @@ namespace pni{
             TypeID H5Attribute::type_id() const{
                 return _dtype.type_id();
             }
+            
+            //-----------------------------------------------------------------
+            //implementation of write from String
+            void H5Attribute::write(const String &s) const{
+                EXCEPTION_SETUP("void H5Attribute::write(const String &s) "
+                        "const");
+
+                H5Datatype mem_type = H5Datatype::create<String>();
+                herr_t err = H5Awrite(id(),mem_type.id(),s.c_str());
+                if(err < 0){
+                    EXCEPTION_INIT(H5AttributeError,
+                            "Error writing attribute data");
+                    EXCEPTION_THROW();
+                }
+            }
+
+            //-----------------------------------------------------------------
+            //implementation to read to string
+            void H5Attribute::read(String &s) const{
+                EXCEPTION_SETUP("void H5Attribute::read(String &s) const");
+                
+                s.resize(_dspace.shape().size());
+                H5Datatype mem_type = H5Datatype::create<String>();
+                herr_t err = H5Aread(id(),mem_type.id(),(void *)s.c_str());
+                if(err<0){
+                    EXCEPTION_INIT(H5AttributeError,
+                            "Error writing attribute!");
+                    EXCEPTION_THROW();
+                }
+            }
+           
+            //-----------------------------------------------------------------
+            String H5Attribute::read() const{
+                String s;
+                this->read(s);
+                return s;
+            }
 
         //end of namespace
         }
