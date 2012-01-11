@@ -148,6 +148,72 @@ namespace pni{
                 
             }
 
+            H5Datatype::H5Datatype(const hid_t &tid):H5Object(tid){
+            }
+
+            template<> H5Datatype H5Datatype::create<UInt8>(){
+                return H5Datatype(H5Tcopy(H5T_NATIVE_UCHAR));
+            }
+
+            template<> H5Datatype H5Datatype::create<Int8>(){
+                return H5Datatype(H5Tcopy(H5T_NATIVE_CHAR));
+            }
+
+            template<> H5Datatype H5Datatype::create<UInt16>(){
+                return H5Datatype(H5Tcopy(H5T_NATIVE_USHORT));
+            }
+
+            template<> H5Datatype H5Datatype::create<Int16>(){
+                return H5Datatype(H5Tcopy(H5T_NATIVE_SHORT));
+            }
+
+            template<> H5Datatype H5Datatype::create<UInt32>(){
+                return H5Datatype(H5Tcopy(H5T_NATIVE_UINT));
+            }
+
+            template<> H5Datatype H5Datatype::create<Int32>(){
+                return H5Datatype(H5Tcopy(H5T_NATIVE_INT));
+            }
+
+            template<> H5Datatype H5Datatype::create<UInt64>(){
+                return H5Datatype(H5Tcopy(H5T_NATIVE_ULONG));
+            }
+
+            template<> H5Datatype H5Datatype::create<Int64>(){
+                return H5Datatype(H5Tcopy(H5T_NATIVE_LONG));
+            }
+
+            template<> H5Datatype H5Datatype::create<Float32>(){
+                return H5Datatype(H5Tcopy(H5T_NATIVE_FLOAT));
+            }
+
+            template<> H5Datatype H5Datatype::create<Float64>(){
+                return H5Datatype(H5Tcopy(H5T_NATIVE_DOUBLE));
+            }
+
+            template<> H5Datatype H5Datatype::create<Float128>(){
+                return H5Datatype(H5Tcopy(H5T_NATIVE_LDOUBLE));
+            }
+
+            template<> H5Datatype H5Datatype::create<Complex32>(){
+                return H5Datatype(_create_complex_type<Complex32>());
+            }
+
+            template<> H5Datatype H5Datatype::create<Complex64>(){
+                return H5Datatype(_create_complex_type<Complex64>());
+            }
+
+            template<> H5Datatype H5Datatype::create<Complex128>(){
+                return H5Datatype(_create_complex_type<Complex128>());
+            }
+
+            template<> H5Datatype H5Datatype::create<String>(){
+                return H5Datatype(_create_string_type());
+            }
+
+            H5Datatype::~H5Datatype(){
+            }
+
 
             //=============Assignment operator=================================
             
@@ -228,7 +294,6 @@ namespace pni{
                 EXCEPTION_SETUP("bool operator=="
                         "(const H5Datatype &a,const H5Datatype &b)");
 
-
                 htri_t res = H5Tequal(a.id(),b.id());
                 if(res > 0) return true;
                 if(res == 0) return false;
@@ -242,11 +307,9 @@ namespace pni{
 
             //! inequality 
             bool operator!=(const H5Datatype &a,const H5Datatype &b){
-                
                 if(a==b) return false;
 
                 return true;
-
             }
 
         //end of namespace

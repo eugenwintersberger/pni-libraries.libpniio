@@ -60,10 +60,10 @@ namespace pni{
                     } _struct_complex_128; //!< C structure for a 128Bit complex type
                     
                     //create a string type 
-	                hid_t _create_string_type();
+	                static hid_t _create_string_type();
 
                     //! private method to create the complex types
-                    template<typename T> hid_t _create_complex_type();
+                    template<typename T> static hid_t _create_complex_type();
                 public:
                     //======================Constructors and destructors=======
                     //! default constructor
@@ -78,8 +78,13 @@ namespace pni{
                     H5Datatype(H5Object &&o);
                     //! constructor from TypeID
                     H5Datatype(const TypeID &tid);
+                    //! constructor form HDF5 id
+                    H5Datatype(const hid_t &tid);
                     //! destructor
                     virtual ~H5Datatype();
+
+                    //=============factory methods=============================
+                    template<typename T> static H5Datatype create();
 
 
                     //==========Assignment operators===========================

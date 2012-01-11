@@ -40,9 +40,9 @@ namespace pni{
                 private:
                     hid_t _id; //!< ID of the object
                 protected:
+                    H5Object(const hid_t &id);
                     //an HDF5 object cannot be created by itself - this 
                     //must be done by some other instance.
-                    H5Object(const hid_t &id);
                     void id(const hid_t &oid){
                         _id = oid;
                     }

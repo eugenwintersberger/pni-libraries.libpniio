@@ -61,6 +61,10 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
+            H5NamedObject::H5NamedObject(const hid_t &id):H5Object(id){
+            }
+
+            //-----------------------------------------------------------------
             H5NamedObject::~H5NamedObject(){
 
             }

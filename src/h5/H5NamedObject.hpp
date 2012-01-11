@@ -36,6 +36,8 @@ namespace pni{
         namespace h5{
             
             class H5NamedObject:public H5Object{
+                protected:
+                    H5NamedObject(const hid_t &id);
                 public:
                     //==============constructors and destructors===============
                     H5NamedObject();

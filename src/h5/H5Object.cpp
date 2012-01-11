@@ -88,7 +88,7 @@ namespace pni{
            
             //=============basic manipulation methods==========================
             bool H5Object::is_valid() const {
-                if(H5Iis_valid(_id)) return true;
+                if(H5Iis_valid(_id)>0) return true;
 
                 return false;
             }

@@ -43,40 +43,61 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
+            //implementation of the copy constructor
             H5Dataspace::H5Dataspace(const H5Dataspace &o):H5Object(o){
+                _maxdims = o._maxdims;
+                _dims  = o._dims;
                 _shape = o._shape;
             }
 
             //-----------------------------------------------------------------
-            H5Dataspace::H5Dataspace(H5Dataspace &&o):
-                H5Object(std::move(o)){
-                    _shape = std::move(o._shape);
+            //implementation of the move conversion constructor
+            H5Dataspace::H5Dataspace(const H5Object &o):H5Object(o){
+                //now we have to set the shape object
+                if(!is_scalar()){
+                    _dims.allocate(rank());
+                    _maxdims.allocate(rank());
+                    H5Sget_simple_extent_dims(id(),_dims.ptr(),_maxdims.ptr());
+                }
+                __set_shape_object();
             }
 
             //-----------------------------------------------------------------
-            H5Dataspace::H5Dataspace(const Shape &s,const Shape &maxshape,
-                                     int extdim){
-                EXCEPTION_SETUP("H5Dataspace::H5Dataspace(const Shape &s,"
-                        "const Shape &maxshape, int extdim)");
-                hid_t sid = 0;
-                Buffer<hsize_t> dims;
-                Buffer<hsize_t> maxdims;
-                
-                dims.allocate(s.rank());
+            //implementation of the move constructor
+            H5Dataspace::H5Dataspace(H5Dataspace &&o):
+                H5Object(std::move(o)){
+                _maxdims = std::move(o._maxdims);
+                _dims = std::move(o._dims);
+                _shape = std::move(o._shape);
+            }
 
-                for(size_t i=0;i<s.rank();i++) dims[i] = s[i];
-
-                if((maxshape.rank()!=0)&&(maxshape.rank()==s.rank())){
-                    maxdims.allocate(s.rank());
-                    for(size_t i=0;i<s.rank();i++) maxdims[i] = maxshape[i];
-                }else{
-                    EXCEPTION_INIT(ShapeMissmatchError,"Rank of Shape and max."
-                            "Shape do not match!");
-                    EXCEPTION_THROW();
+            //-----------------------------------------------------------------
+            //implementation of the move conversion constructor
+            H5Dataspace::H5Dataspace(H5Object &&o):H5Object(std::move(o)){
+                if(!is_scalar()){
+                    _dims.allocate(rank());
+                    _maxdims.allocate(rank());
+                    H5Sget_simple_extent_dims(id(),_dims.ptr(),_maxdims.ptr());
                 }
+                __set_shape_object();
+            }
 
+            //-----------------------------------------------------------------
+            H5Dataspace::H5Dataspace(const Shape &s,int extdim){
+                EXCEPTION_SETUP("H5Dataspace::H5Dataspace(const Shape &s,"
+                        "int extdim)");
+                hid_t sid = 0;
                 
-                sid = H5Screate_simple(s.rank(),dims.ptr(),maxdims.ptr());
+                _dims.allocate(s.rank());
+                _maxdims.allocate(s.rank());
+
+                for(size_t i=0;i<s.rank();i++){
+                    _dims[i] = s[i];
+                    _maxdims[i] = s[i]; 
+                }
+                _maxdims[extdim] = H5S_UNLIMITED;
+                
+                sid = H5Screate_simple(s.rank(),_dims.ptr(),_maxdims.ptr());
                 if(sid<0){
                     EXCEPTION_INIT(H5DataSpaceError,"Cannot create HDF5 dataspace!");
                     EXCEPTION_THROW();
@@ -85,12 +106,23 @@ namespace pni{
                 H5Object::id(sid);
                 __set_shape_object();
             }
+
+            //-----------------------------------------------------------------
+            H5Dataspace::H5Dataspace(const hid_t &id):H5Object(id){
+                if(!is_scalar()){
+                    _dims.allocate(rank());
+                    _maxdims.allocate(rank());
+                    H5Sget_simple_extent_dims(id(),_dims.ptr(),_maxdims.ptr());
+                }
+                __set_shape_object();
+            }
     
             //-----------------------------------------------------------------
             H5Dataspace::~H5Dataspace(){
             }
 
             //===================Assignment operators==========================
+            //implementation of the copy assignment operator
             H5Dataspace &H5Dataspace::operator=(const H5Dataspace &o){
                 if(this != &o){
                     (H5Object &)(*this) = (H5Object &)o;
@@ -101,6 +133,17 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
+            //implementation of the copy conversion assignment operator
+            H5Dataspace &H5Dataspace::operator=(const H5Object &o){
+                if(this != &o){
+                    (H5Object &)(*this) = o;
+                    __set_shape_object();
+                }
+                return *this;
+            }
+
+            //-----------------------------------------------------------------
+            //implementation of the move assignment operator
             H5Dataspace &H5Dataspace::operator=(H5Dataspace &&o){
                 if(this != &o){
                     (H5Object &)(*this) = std::move((H5Object &&)o);
@@ -110,12 +153,22 @@ namespace pni{
                 return *this;
             }
 
+            //-----------------------------------------------------------------
+            //implementation of the move conversion operator
+            H5Dataspace &H5Dataspace::operator=(H5Object &&o){
+                if(this != &o){
+                    (H5Object &)(*this) = std::move(o);
+                    __set_shape_object();
+                }
+                return *this;
+            }
+
             //===================Other methods=================================
             //implementation of is_scalar
             bool H5Dataspace::is_scalar() const {
-                if(H5Sis_simple(id())) return false;
-
-                return true;
+                H5S_class_t type = H5Sget_simple_extent_type(id());
+                if(type == H5S_SCALAR) return true;
+                return false;
             }
 
             const Shape &H5Dataspace::shape() const {
@@ -123,7 +176,7 @@ namespace pni{
             }
 
             size_t H5Dataspace::rank() const {
-                return _shape.rank();
+                return H5Sget_simple_extent_ndims(id());
             }
 
             size_t H5Dataspace::dim(size_t i) const {
@@ -131,7 +184,7 @@ namespace pni{
             }
 
             size_t H5Dataspace::size() const {
-                return _shape.size();
+                return H5Sget_simple_extent_npoints(id());
             }
 
             size_t H5Dataspace::operator[](size_t i) const {
@@ -144,17 +197,17 @@ namespace pni{
             void H5Dataspace::__set_shape_object(){
                 EXCEPTION_SETUP("Shape H5Dataspace::shape() const");
 
-	            UInt32 rank;
+                UInt32 rank;
 	            Buffer<hsize_t> dims;
+		        
+                //obtain the rank of the data space
+		        rank = H5Sget_simple_extent_ndims(id());
 
                 if(is_scalar()){
                     _shape=Shape(0);
                     return;
                 }
 
-
-		        //obtain the rank of the data space
-		        rank = H5Sget_simple_extent_ndims(id());
                 if(rank < 0){
                     EXCEPTION_INIT(H5DataSpaceError,"Cannot obtain data-space rank!");
                     EXCEPTION_THROW();
