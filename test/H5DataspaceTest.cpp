@@ -29,10 +29,47 @@ void H5DataspaceTest::test_creation(){
     CPPUNIT_ASSERT(!s2.is_scalar());
     CPPUNIT_ASSERT(s2.rank() == s.rank());
 
+    //check copy process
+    H5Dataspace s3 = s2;
+    CPPUNIT_ASSERT(s3.is_valid());
+    CPPUNIT_ASSERT(s2.is_valid());
+    CPPUNIT_ASSERT(!s3.is_scalar());
+    CPPUNIT_ASSERT(!s2.is_scalar());
+    CPPUNIT_ASSERT(s2.shape() == s3.shape());
+    
+    
+    //check move constructor
+    H5Dataspace s4 = std::move(s2);
+    CPPUNIT_ASSERT(s4.is_valid());
+    CPPUNIT_ASSERT(!s2.is_valid());
+    CPPUNIT_ASSERT(s4.shape() == s3.shape());
+    
 
 }
 
 void H5DataspaceTest::test_assignment(){
+    std::cout<<"void H5Dataspace::test_assignment()---------------------------";
+    std::cout<<std::endl;
+
+    H5Dataspace s1;
+
+    Shape s(3);
+    s.dim(0,10);s.dim(1,3);s.dim(2,45);
+
+    //copy assignment
+    s1 = H5Dataspace(s);
+    CPPUNIT_ASSERT(s1.is_valid());
+    CPPUNIT_ASSERT(!s1.is_scalar());
+    CPPUNIT_ASSERT(s1.shape() == s);
+
+    //move assignment
+    H5Dataspace s2;
+
+    s2 = std::move(s1);
+    CPPUNIT_ASSERT(s2.is_valid());
+    CPPUNIT_ASSERT(!s1.is_valid());
+    CPPUNIT_ASSERT(!s2.is_scalar());
+    CPPUNIT_ASSERT(s2.shape() == s);
 
 }
 

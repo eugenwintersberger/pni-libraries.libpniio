@@ -41,11 +41,12 @@ namespace pni{
                     Shape _shape; //!< shape object describing the dataspace
 
                     Buffer<hsize_t> _maxdims; //!< maximum number of elements dimensions
-                    Buffer<hsiye_t> _dims;    //!< number of elements 
+                    Buffer<hsize_t> _dims;    //!< number of elements 
 
                     //a private method to compute the shape object describing
                     //the dataspace
                     void __set_shape_object();
+                    void __set_buffers();
                 public:
                     //! default constructor
 
