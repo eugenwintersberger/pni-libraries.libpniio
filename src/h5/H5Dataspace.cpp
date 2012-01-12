@@ -194,7 +194,7 @@ namespace pni{
 		        
                 //obtain the rank of the data space
                 if(is_scalar()){
-                    _shape=Shape(0);
+                    _shape=Shape();
                     return;
                 }
 

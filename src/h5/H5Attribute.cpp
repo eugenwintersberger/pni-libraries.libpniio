@@ -35,6 +35,8 @@ namespace pni{
                 hid_t dspace_id = 0;
                 hid_t dtype_id = 0;
 
+                //obtain the IDs of the dataspace and the datatype used 
+                //to create the attribute.
                 dspace_id = H5Aget_space(id());
                 dtype_id  = H5Aget_type(id());
 
@@ -75,6 +77,7 @@ namespace pni{
             H5Attribute::~H5Attribute(){
                 _dspace.close();
                 _dtype.close();
+                H5Object::close();
             }
 
             //===============implementation of assignment operators============

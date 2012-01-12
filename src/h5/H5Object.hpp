@@ -35,7 +35,16 @@ extern "C"{
 namespace pni{
     namespace nx{
         namespace h5{
+            //! \brief basic HDF5 object
 
+            //! Each HDF5 object can be addressed by an unique ID. 
+            //! This class is a wrapper around such an ID and provides basic
+            //! inquery methods valid for all HDF5 objects.
+            //! The class is inteded as a base class for other HDF5 objects 
+            //! and thus cannot construct a valid HDF5 object by itself.
+            //! 
+            //! Each HDF5 ID has an id refernce counter. This reference counter
+            //! can become important if objects are copied. 
             class H5Object{
                 private:
                     hid_t _id; //!< ID of the object
@@ -47,27 +56,61 @@ namespace pni{
                         _id = oid;
                     }
                 public:
-                    //=============constructors and destructors============================
+                    //=============constructors and destructors================
+                    //! default constructor
                     H5Object();
+                    //! copy constructor
+
+                    //! Increments the ID reference counter for the ID wrapped
+                    //! by this instance of H5Object.
                     H5Object(const H5Object &o);
+                    //! move constructor
+
+                    //! Unlike for the copy constructor this constructor does 
+                    //! not incluence and IDs reference counter since the 
+                    //! ID of the original object is set to 0.
                     H5Object(H5Object &&o);
+                    //! destructor
                     virtual ~H5Object();
 
 
-                    //=============assignment operators====================================
+                    //=============assignment operators========================
                     //!copy assignment operator
+                    
+                    //! Like the copy constructor this operator increments the 
+                    //! IDs reference counter.
                     H5Object &operator=(const H5Object &o);
 
                     //!move assignment operator
+
+                    //! Like the move constructor this operator has no influence
+                    //! on the value of the IDs reference counter.
                     H5Object &operator=(H5Object &&o);
 
 
                     //================basic object maniuplation=================
-                    void close();
-                    bool is_valid() const;
-                    const hid_t &id() const;
+                    //! close the object
+                    virtual void close();
+                    //! check validity 
 
-                    H5ObjectType type() const;
+                    //! This method returns true of the object refers to a valid 
+                    //! HDF5 object. In other words this means that the object 
+                    //! is valid and available. For a file object this would
+                    //! mean that the file is open.
+                    //! \returns true if valid HDF5 object
+                    virtual bool is_valid() const;
+                    //! return HDF5 id
+
+                    //! Returns the HDF5 ID of the object. The ID is returned as 
+                    //! a const reference and thus cannot be altered.
+                    //! \return HDF5 ID
+                    virtual const hid_t &id() const;
+                    //! return the HDF5 type
+
+                    //! Returns the HDF5 type of the object which can be used to 
+                    //! identify the kind of object one is dealing with.
+                    //! \return HDF type
+                    virtual H5ObjectType type() const;
             };
 
 

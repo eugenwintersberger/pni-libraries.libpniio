@@ -112,7 +112,7 @@ namespace pni{
 
                 //need to extract the the name information from the path
                 size_t lpos = p.find_last_of("/");
-                String name = "";
+                String name = p;
                 if(lpos != p.npos){
                     name = String(p,lpos+1,p.size()-lpos+1);
                 }
@@ -148,6 +148,7 @@ namespace pni{
 
                     H5Iget_name(id(),buffer.ptr(),bsize);
                     String name(buffer.ptr());
+                    std::cout<<name<<std::endl;
                     return name;
                 }
 

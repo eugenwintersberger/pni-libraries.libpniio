@@ -37,7 +37,9 @@ namespace pni{
     namespace nx{
         namespace h5{
             
-            
+            //! \brief HDF5 type wrapper
+
+            //! The class wraps around an HDF5 type object. 
             class H5Datatype:public H5Object{
                 private: 
                     hid_t __get_type_from_id(const TypeID &tid);
@@ -84,6 +86,12 @@ namespace pni{
                     virtual ~H5Datatype();
 
                     //=============factory methods=============================
+                    //! creation template
+
+                    //! Use this static template method to create a type from 
+                    //! an existing PNI type. This is particularly useful 
+                    //! if you want to create a type independant from its
+                    //! TypeID.
                     template<typename T> static H5Datatype create();
 
 
@@ -106,8 +114,6 @@ namespace pni{
                     friend bool operator==(const H5Datatype &a,const H5Datatype &b);
                     //! inequality 
                     friend bool operator!=(const H5Datatype &a,const H5Datatype &b);
-
-
             };
 
 

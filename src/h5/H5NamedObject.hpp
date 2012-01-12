@@ -35,6 +35,12 @@ namespace pni{
     namespace nx{
         namespace h5{
             
+            //! \brief base class for named objects
+
+            //! Named objects are those objects in an HDF5 file that can be 
+            //! accessed by a path or which have a name (this includes Files 
+            //! and attributes). This class is used as a base class for 
+            //! such objects.
             class H5NamedObject:public H5Object{
                 protected:
                     H5NamedObject(const hid_t &id);

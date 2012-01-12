@@ -31,7 +31,7 @@
 
 using namespace pni::utils;
 
-#include "H5Object.hpp"
+#include "H5AttributeObject.hpp"
 #include "H5Datatype.hpp"
 #include "H5Dataspace.hpp"
 #include "H5Group.hpp"
@@ -42,23 +42,38 @@ namespace pni{
         namespace h5{
             
 
-            class H5Dataset:public H5NamedObject{
+            class H5Dataset:public H5AttributeObject{
+                private:
+                    H5Dataspace _space;
+                    H5Datatype  _type;
                 public:
                     //===================Constructors and destructors==========
+                    //! default constructor
                     H5Dataset();
+                    //! copy constructor
                     H5Dataset(const H5Dataset &o);
+                    //! copy conversion constructor
+                    H5Dataset(const H5Object &o);
+                    //! move constructor
                     H5Dataset(H5Dataset &&o);
-                    H5Dataset(const String &n, const H5Group &g,
-                            const H5Datatype &t,const H5Dataspace &s);
+                    //! move conversion constructor
+                    H5Dataset(H5Object &&o);
+                    //! constructor 
+                    H5Dataset(const String &n, const H5Group &g,const TypeID &t,
+                              const Shape &s,const Shape &cs=Shape(0));
+                    //! construction for a simple 
                     virtual ~H5Dataset();
 
 
                     //=================assignment operators====================
                     //! copy assignment operator
                     H5Dataset &operator=(const H5Dataset &o);
-
+                    //! copy conversion assignment
+                    H5Dataset &operator=(const H5Object &o);
                     //! move assignment operator
                     H5Dataset &operator=(H5Dataset &&o);
+                    //! move conversion assignment
+                    H5Dataset &operator=(H5Object &&o);
 
 
             };

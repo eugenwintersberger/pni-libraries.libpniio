@@ -31,31 +31,52 @@
 
 using namespace pni::utils;
 
-#include "NamedObject.hpp"
+#include "H5AttributeObject.hpp"
+
 
 namespace pni{
     namespace nx{
         namespace h5{
             
-            class H5Group:public H5NamedObject{
+            class H5Dataset;
+            
+            class H5Group:public H5AttributeObject{
                 public:
                     //==========constructors and destructors===================
+                    //! default constructor
                     H5Group();
-                    H5Group(const H5NamedObject &o);
-                    H5Group(H5NamedObject &&o);
+                    //! copy constructor
+                    H5Group(const H5Group &o);
+                    //! copy conversion constructor
+                    H5Group(const H5Object &o);
+                    //! move constructor
+                    H5Group(H5Group &&o);
+                    //! move conversion constructor
+                    H5Group(H5Object &&o);
+                    //! standard constructor
                     H5Group(const String &name,const H5Group &p);
                     virtual ~H5Group();
 
                     //===========assignment operators==========================
+                    //! copy assignment
                     H5Group &operator=(const H5Group &o);
+                    //! copy conversion assignment
+                    H5Group &operator=(const H5Object &o);
+                    //! move assignment
                     H5Group &operator=(H5Group &&o);
+                    //! move conversion assignment
+                    H5Group &operator=(H5Object &&o);
 
                     //=============creating objects============================
-                    H5Dataset create_dataset(const String &n,const TypeId &tid,
+                    //!create a multidimensional dataset
+                    H5Dataset dataset(const String &n,const TypeID &tid,
                             const Shape &s,const Shape &ChunkShape=Shape(0));
-                    H5Dataset create_dataset(const String &n,const H5Datatype &tid,
-                            const H5Dataspace &s,
-                            const Shape &ChunkShape = Shape(0));
+
+                    //! create a scalar dataset
+                    H5Dataset dataset(const String &n,const TypeID &tid);
+
+                    //! create group
+                    H5Group group(const String &n);
                     
                     //=============methods to open objects=====================
                     H5Object open(const String &n);
@@ -71,7 +92,5 @@ namespace pni{
         }
     }
 }
-
-
 
 #endif

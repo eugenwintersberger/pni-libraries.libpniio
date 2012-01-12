@@ -88,6 +88,7 @@ namespace pni{
                     //! move assignment operator
                     H5Attribute &operator=(H5Attribute &&o);
 
+
                     //=============reading and writting data===================
                     //! write from a buffer
                     template<typename T,template<typename> class BT> 
