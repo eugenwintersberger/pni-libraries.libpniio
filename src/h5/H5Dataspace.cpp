@@ -185,6 +185,10 @@ namespace pni{
                 return _shape.dim(i);
             }
 
+            void H5Dataspace::close(){
+                if(is_valid()) H5Sclose(id());
+            }
+
 
             //====================private methods==============================
             //implementation of the shape method

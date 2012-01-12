@@ -124,6 +124,7 @@ namespace pni{
                     //============attribute inquery methods====================
                     const Shape &shape() const;
                     TypeID type_id() const;
+                    virtual void close();
 
 
             };

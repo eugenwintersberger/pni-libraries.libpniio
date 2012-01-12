@@ -84,6 +84,9 @@ namespace pni{
                 }
 
                 H5Object::id(gid);
+                //destroy property lists
+                H5Pclose(cr_pl);
+                H5Pclose(link_pl);
             }
 
             //-----------------------------------------------------------------

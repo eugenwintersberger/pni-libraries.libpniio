@@ -51,9 +51,19 @@ namespace pni{
                     std::cerr<<"Open groups:     "<<H5Fget_obj_count(id(),H5F_OBJ_GROUP)<<std::endl;
                     std::cerr<<"Open data type:  "<<H5Fget_obj_count(id(),H5F_OBJ_DATATYPE)<<std::endl;
                     std::cerr<<"Open attributes: "<<H5Fget_obj_count(id(),H5F_OBJ_ATTR)<<std::endl;
+
+
+                    hid_t oid;
+                    char name[1024];
+                    H5Fget_obj_ids(id(),H5F_OBJ_ATTR,1,&oid);
+                    //obtain name of the object
+                    H5Aget_name(oid,1024,name);
+                    std::cout<<name<<std::endl;
+
                     H5Fflush(id(),H5F_SCOPE_GLOBAL);
+                    H5Fclose(id());
                 }
-                H5Object::close();
+
             }
             
             //-----------------------------------------------------------------
@@ -94,6 +104,9 @@ namespace pni{
                         EXCEPTION_THROW();
                     }
                 }
+
+                //close property lists
+                H5Pclose(acc_plist);
 
                 id(fid);
 

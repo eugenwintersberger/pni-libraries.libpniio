@@ -108,6 +108,8 @@ namespace pni{
                     //==========some inquery methods===========================
                     TypeID type_id() const;
 
+                    virtual void close();
+
 
                     //!==========comparison operators==========================
                     //! equality comparison

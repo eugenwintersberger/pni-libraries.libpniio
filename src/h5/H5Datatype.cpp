@@ -212,6 +212,7 @@ namespace pni{
             }
 
             H5Datatype::~H5Datatype(){
+
             }
 
 
@@ -284,6 +285,11 @@ namespace pni{
                 if(H5Datatype(TypeID::BINARY) == *this) return TypeID::BINARY;
                 if(H5Datatype(TypeID::STRING) == *this) return TypeID::STRING;
                 
+            }
+
+            //-----------------------------------------------------------------
+            void H5Datatype::close(){
+                if(is_valid()) H5Tclose(id());
             }
 
 

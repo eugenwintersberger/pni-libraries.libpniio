@@ -108,6 +108,10 @@ namespace pni{
             TypeID H5Attribute::type_id() const{
                 return _dtype.type_id();
             }
+
+            void H5Attribute::close(){
+                if(is_valid()) H5Aclose(id());
+            }
             
             //-----------------------------------------------------------------
             //implementation of write from String

@@ -123,7 +123,9 @@ namespace pni{
                 }
 
                 H5Object::id(did);
-                //construction done
+                //construction done - close property lists
+                H5Pclose(lpl);
+                H5Pclose(cpl);
             }
 
             //-----------------------------------------------------------------

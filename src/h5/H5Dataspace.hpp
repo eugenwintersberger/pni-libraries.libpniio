@@ -101,6 +101,8 @@ namespace pni{
                     void resize(const Shape &s,int extdim=0);
                     void resize(const Shape &s,const Shape &ms,int extdim=0);
 
+                    virtual void close();
+
             };
 
         }
