@@ -61,6 +61,8 @@ namespace pni{
                     //! constructor 
                     H5Dataset(const String &n, const H5Group &g,const TypeID &t,
                               const Shape &s,const Shape &cs=Shape(0));
+                    //! construct from an object ID
+                    H5Dataset(const hid_t &oid);
                     //! construction for a simple 
                     virtual ~H5Dataset();
 

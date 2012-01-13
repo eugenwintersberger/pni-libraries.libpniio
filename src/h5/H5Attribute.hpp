@@ -66,8 +66,55 @@ namespace pni{
                     void __set_space_type();
 
                     //read and write data from typed pointer
-                    template<typename T> void __read_to_ptr(T *ptr);
-                    template<typename T> void __write_from_ptr(const T *ptr);
+                    template<typename T> void __read_to_ptr(T *ptr) const;
+                    template<typename T> void __write_from_ptr(const T *ptr)
+                        const;
+
+                    //---------methods to create objects from the attribute----
+                    //! create a plain old data or string object
+                    template<typename T> 
+                        void __create_object(T &object) const{
+                        //there is nothing we need to do here 
+                    }
+
+                    //! create a buffer object
+                    template<typename T> 
+                        void __create_object(Buffer<T> &object) const{
+                        //allocate memory to hold all the data 
+                        object.allocate(_dspace.shape().size());
+                    }
+
+                    //! create a scalar object
+                    template<typename T>
+                        void __create_object(Scalar<T> &object) const{
+                        EXCEPTION_SETUP("template<typename T> void"
+                                " __create_object(Scalar<T> &object) const");
+
+                        if(!_dspace.is_scalar()){
+                            EXCEPTION_INIT(ShapeMissmatchError,
+                                    "Attribute is not scalar!");
+                            EXCEPTION_THROW();
+                        }
+                        
+                        object = Scalar<T>("NONE","NONE","NONE");
+                    }
+
+                    //! create an array object
+                    template<typename T,template<typename> class BT>
+                        void __create_object(Array<T,BT> &object) const{
+                        EXCEPTION_SETUP("template<typename T,template<typename>"
+                                "class BT> void __create_object(Array<T,BT> "
+                                "&object) const");
+
+                        if(_dspace.is_scalar()){
+                            EXCEPTION_INIT(ShapeMissmatchError,
+                                    "Attribute is scalar!");
+                            EXCEPTION_THROW();
+                        }
+                        object =
+                            Array<T,BT>(_dspace.shape(),"NONE","NONE","NONE");
+                    }
+
                 public:
                     //================constructors and destructors=============
                     //! default constructor
@@ -98,6 +145,7 @@ namespace pni{
                     //! write from Array<T> 
                     template<typename T,template<typename> class BT >
                         void write(const Array<T,BT> &o) const;
+                    template<typename T> void write(const T &value) const;
                     //! write from String
                     void write(const String &s) const;
 
@@ -109,17 +157,14 @@ namespace pni{
                         void read(Array<T,BT> &a) const;
                     //! read to Scalar<T>
                     template<typename T> void read(Scalar<T> &s) const;
+                    //! read to plain old data or string
+                    template<typename T> void read(T &value) const;
                     //! read to string
+                    
+                    //! read without argument
+                    template<typename OBJ> OBJ read() const;
                     void read(String &s) const;
 
-                    //! read to Array<T>
-                    template<typename T,template<typename> class BT>
-                        Array<T,BT> read() const;
-                    //! read to pointer
-                    template<typename T,template<typename> class BT> BT<T>
-                        read() const;
-                    template<typename T> Scalar<T> read() const;
-                    String read() const;
 
                     //============attribute inquery methods====================
                     const Shape &shape() const;
@@ -131,12 +176,20 @@ namespace pni{
 
             //===============private template declarations=====================
 
-            template<typename T> void H5Attribute::__read_to_ptr(T *ptr){
+            template<typename T> void H5Attribute::__read_to_ptr(T *ptr) const{
+                EXCEPTION_SETUP("template<typename T> void H5Attribute::"
+                        "__read_to_ptr(T *ptr) const");
 
+                H5Datatype mem_type = H5Datatype::create<T>();
+                herr_t err = H5Aread(id(),mem_type.id(),(void *)ptr);
+                if(err < 0){
+                    EXCEPTION_INIT(H5AttributeError,"Error reading attribute!");
+                    EXCEPTION_THROW();
+                }
             } 
             
             template<typename T> 
-                void H5Attribute::__write_from_ptr(const T *ptr){
+                void H5Attribute::__write_from_ptr(const T *ptr) const {
                 EXCEPTION_SETUP("template<typename T>  void H5Attribute::"
                         "__write_from_ptr(const T *ptr)");
 
@@ -148,7 +201,19 @@ namespace pni{
                 }
             }
 
-            //=============template declarations===============================
+            //=======templates for writing attribute data======================
+            template<typename T> void H5Attribute::write(const T &value) const{
+                EXCEPTION_SETUP("template<typename T> void H5Attribute::"
+                        "write(const T &value) const");
+
+                if(!_dspace.is_scalar()){
+                    EXCEPTION_INIT(ShapeMissmatchError,"Attribute is not scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                __write_from_ptr(&value);
+            }
+
             template<typename T,template<typename> class BT> 
             void H5Attribute::write(const BT<T> buffer) const{
                 EXCEPTION_SETUP("template<typename T,template<typename> class"
@@ -211,7 +276,27 @@ namespace pni{
             }
 
 
+            //======templates for reading attribute data=======================
+            //! 
+            template<typename OBJ> OBJ H5Attribute::read() const{
+                OBJ object;
+                __create_object(object);
+                read(object);
+                return object;
+            }
+
             //-----------------------------------------------------------------
+            template<typename T> void H5Attribute::read(T &value) const {
+                EXCEPTION_SETUP("template<typename T> void H5Attribute::"
+                        "read(T &value) const");
+                if(!_dspace.is_scalar()){
+                    EXCEPTION_INIT(ShapeMissmatchError,"Attribute not scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                __read_to_ptr(&value);
+            }
+            
             //implementation of read to pointer
             template<typename T,template<typename> class BT> 
                 void H5Attribute::read(BT<T> buffer) const{
@@ -271,33 +356,6 @@ namespace pni{
             }
             
             
-            //-----------------------------------------------------------------
-            //! read to Array<T>
-            template<typename T,template<typename> class BT>
-                Array<T,BT> H5Attribute::read() const{
-                Array<T,BT> a(this->_dspace.shape(),"","","");
-
-                this->read(a);
-
-                return a;
-            }
-
-
-            //! read to pointer
-            template<typename T,template<typename> class BT> BT<T>
-                H5Attribute::read() const{
-                BT<T> buffer(_dspace.size());
-
-                this->read(buffer);
-                return buffer;
-            }
-
-            template<typename T> Scalar<T> H5Attribute::read() const{
-                Scalar<T> s("NON","NON","NON");
-
-                this->read(s);
-                return s;
-            }
 
         //end of namespace
         }

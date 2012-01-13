@@ -119,8 +119,11 @@ namespace pni{
                 EXCEPTION_SETUP("void H5Attribute::write(const String &s) "
                         "const");
 
-                H5Datatype mem_type = H5Datatype::create<String>();
-                herr_t err = H5Awrite(id(),mem_type.id(),s.c_str());
+                const char *ptr = s.c_str();
+
+                hid_t element_type = H5Aget_type(id()); 
+
+                herr_t err = H5Awrite(id(),element_type,&ptr);
                 if(err < 0){
                     EXCEPTION_INIT(H5AttributeError,
                             "Error writing attribute data");
@@ -133,22 +136,24 @@ namespace pni{
             void H5Attribute::read(String &s) const{
                 EXCEPTION_SETUP("void H5Attribute::read(String &s) const");
                 
-                s.resize(_dspace.shape().size());
-                H5Datatype mem_type = H5Datatype::create<String>();
-                herr_t err = H5Aread(id(),mem_type.id(),(void *)s.c_str());
+                hid_t element_type = H5Aget_type(id());
+
+                char *ptr = nullptr;
+
+                herr_t err = H5Aread(id(),element_type,&ptr);
                 if(err<0){
                     EXCEPTION_INIT(H5AttributeError,
                             "Error writing attribute!");
                     EXCEPTION_THROW();
                 }
+
+                if(ptr){
+                    s = String(ptr);
+                }else{
+                    s = "";
+                }
             }
            
-            //-----------------------------------------------------------------
-            String H5Attribute::read() const{
-                String s;
-                this->read(s);
-                return s;
-            }
 
         //end of namespace
         }

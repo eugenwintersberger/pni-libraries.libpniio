@@ -113,6 +113,8 @@ namespace pni{
                 tid = H5Tcopy(H5T_C_S1);
                 H5Tset_strpad(tid,H5T_STR_NULLTERM);
                 H5Tset_cset(tid,H5T_CSET_UTF8);
+                //always use variable strings 
+	            H5Tset_size(tid,H5T_VARIABLE);
 
                 if(H5Iis_valid(tid)<=0){
                     EXCEPTION_INIT(H5DataTypeError,"Cannot create string type!");

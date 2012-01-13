@@ -40,6 +40,8 @@ namespace pni{
         namespace h5{
         
             class H5AttributeObject:public H5NamedObject{
+                protected:
+                    H5AttributeObject(const hid_t &oid);
                 public:
                     //===========constructors and destructors==================
                     H5AttributeObject();

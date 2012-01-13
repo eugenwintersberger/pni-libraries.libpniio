@@ -45,6 +45,7 @@ namespace pni{
             void H5File::close(){
                 //check for open objects in the file
                 if(is_valid()){
+                    /*
                     std::cerr<<"File: "<<name()<<std::endl;
                     std::cerr<<"Open files:      "<<H5Fget_obj_count(id(),H5F_OBJ_FILE)<<std::endl;
                     std::cerr<<"Open data sets:  "<<H5Fget_obj_count(id(),H5F_OBJ_DATASET)<<std::endl;
@@ -59,7 +60,7 @@ namespace pni{
                     //obtain name of the object
                     H5Aget_name(oid,1024,name);
                     std::cout<<name<<std::endl;
-
+                    */
                     H5Fflush(id(),H5F_SCOPE_GLOBAL);
                     H5Fclose(id());
                 }

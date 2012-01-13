@@ -129,6 +129,13 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
+            //implement construction from an object id
+            H5Dataset::H5Dataset(const hid_t &oid):H5AttributeObject(oid){
+                _space = H5Dataspace(H5Dget_space(id()));
+                _type  = H5Datatype(H5Dget_type(id()));
+            }
+
+            //-----------------------------------------------------------------
             //implementation of the default destructor 
             H5Dataset::~H5Dataset(){
                 _space.close();

@@ -55,6 +55,9 @@ namespace pni{
                     H5Group(H5Object &&o);
                     //! standard constructor
                     H5Group(const String &name,const H5Group &p);
+                    //! construct from object ID
+                    H5Group(const hid_t &oid);
+                    //! destructor
                     virtual ~H5Group();
 
                     //===========assignment operators==========================
@@ -70,17 +73,18 @@ namespace pni{
                     //=============creating objects============================
                     //!create a multidimensional dataset
                     H5Dataset dataset(const String &n,const TypeID &tid,
-                            const Shape &s,const Shape &ChunkShape=Shape(0));
+                            const Shape &s,const Shape &ChunkShape=Shape(0))
+                        const;
 
                     //! create a scalar dataset
-                    H5Dataset dataset(const String &n,const TypeID &tid);
+                    H5Dataset dataset(const String &n,const TypeID &tid) const;
 
                     //! create group
-                    H5Group group(const String &n);
+                    H5Group group(const String &n) const;
                     
                     //=============methods to open objects=====================
-                    H5Object open(const String &n);
-                    H5Object operator[](const String &n);
+                    H5Object open(const String &n) const;
+                    H5Object operator[](const String &n) const;
 
                     //==============misc methods===============================
                     void remove(const String &n);

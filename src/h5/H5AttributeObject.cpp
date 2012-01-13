@@ -52,6 +52,10 @@ namespace pni{
                 H5NamedObject(std::move(o)){
             }
 
+            H5AttributeObject::H5AttributeObject(const hid_t&oid):
+                H5NamedObject(oid){
+            }
+
             H5AttributeObject::~H5AttributeObject(){
             }
 

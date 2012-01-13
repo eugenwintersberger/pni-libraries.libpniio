@@ -45,7 +45,13 @@ namespace pni{
             //-----------------------------------------------------------------
             //implementation of the copy conversion constructor
             H5Group::H5Group(const H5Object &o):H5AttributeObject(o){
+                EXCEPTION_SETUP("H5Group::H5Group(const H5Object &o)");
 
+                if(type()!=H5ObjectType::GROUP){
+                    EXCEPTION_INIT(H5GroupError,"Object is not a "
+                            "group object!");
+                    EXCEPTION_THROW();
+                }
             }
 
             //-----------------------------------------------------------------
@@ -56,7 +62,13 @@ namespace pni{
             //-----------------------------------------------------------------
             //implementation of the conversion move constructor
             H5Group::H5Group(H5Object &&o):H5AttributeObject(std::move(o)){
+                EXCEPTION_SETUP("H5Group::H5Group(H5Object &&o)");
 
+                if(type() != H5ObjectType::GROUP){
+                    EXCEPTION_INIT(H5GroupError,
+                            "Object is not a group object!");
+                    EXCEPTION_THROW();
+                }
             }
 
             //-----------------------------------------------------------------
@@ -90,6 +102,11 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
+            //implementation of the constructor for the offset
+            H5Group::H5Group(const hid_t &oid):H5AttributeObject(oid){
+            }
+
+            //-----------------------------------------------------------------
             //implemenation of the destructor
             H5Group::~H5Group(){
             }
@@ -106,7 +123,19 @@ namespace pni{
             //-----------------------------------------------------------------
             //implementation of copy conversion assignment
             H5Group &H5Group::operator=(const H5Object &o){
+                EXCEPTION_SETUP("H5Group &H5Group::operator="
+                        "(const H5Object &o)");
+
+                if(o.type() != H5ObjectType::GROUP){
+                    EXCEPTION_INIT(H5GroupError,"Object is not a "
+                            "group object!");
+                    EXCEPTION_THROW();
+                }
+
                 if(this != &o){
+                    
+
+
                     (H5AttributeObject &)(*this) = o;
                 }
                 return *this;
@@ -125,6 +154,14 @@ namespace pni{
             //-----------------------------------------------------------------
             //implementation of move conversion assignment
             H5Group &H5Group::operator=(H5Object &&o){
+                EXCEPTION_SETUP("H5Group &H5Group::operator=(H5Object &&o)");
+
+                if(o.type() != H5ObjectType::GROUP){
+                    EXCEPTION_INIT(H5GroupError,"Object is not a group"
+                            "object!");
+                    EXCEPTION_THROW();
+                }
+
                 if(this != &o){
                     (H5AttributeObject &)(*this) = std::move(o);
                 }
@@ -134,18 +171,17 @@ namespace pni{
             //=======implemenation of object creating methods==================
             //!create a multidimensional dataset
             H5Dataset H5Group::dataset(const String &n,const TypeID &tid,
-                    const Shape &s,const Shape &ChunkShape){
+                    const Shape &s,const Shape &ChunkShape) const{
                 EXCEPTION_SETUP("H5Dataset H5Group::dataset(const String &n,"
                         "const TypeId &tid,const Shape &s,const Shape "
                         "&ChunkShape=Shape(0))");
 
                 return H5Dataset(n,*this,tid,s,ChunkShape);
-
-
             }
 
+            //-----------------------------------------------------------------
             //! create a scalar dataset
-            H5Dataset H5Group::dataset(const String &n,const TypeID &tid){
+            H5Dataset H5Group::dataset(const String &n,const TypeID &tid) const{
                 EXCEPTION_SETUP("H5Dataset H5Group::dataset(const String &n,"
                         "const TypeId &tid)");
                 Shape s(1);
@@ -156,17 +192,38 @@ namespace pni{
                 return H5Dataset(n,*this,tid,s,cs);
             }
 
-
+            //-----------------------------------------------------------------
             //! create group
-            H5Group H5Group::group(const String &n){
+            H5Group H5Group::group(const String &n) const{
                 return H5Group(n,*this);
             }
 
             //-----------------------------------------------------------------
-            H5Object H5Group::open(const String &n){
-                return H5Object();
+            H5Object H5Group::open(const String &n) const{
+                EXCEPTION_SETUP("H5Object H5Group::open(const String &n)");
+                
+                hid_t oid = H5Oopen(id(),n.c_str(),H5P_DEFAULT);
+                if(oid<0){
+                    EXCEPTION_INIT(H5ObjectError,
+                            "Error opening object ["+n+"]!");
+                    EXCEPTION_THROW();
+                }
+
+                //determine the object type
+                switch(H5Iget_type(oid)){
+                    case H5I_GROUP: 
+                        return H5Group(oid);
+                    case H5I_DATASET:
+                        return H5Dataset(oid);
+                    default:
+                        return H5Object();
+                }
             }
 
+            //-----------------------------------------------------------------
+            H5Object H5Group::operator[](const String &n) const{
+                return this->open(n);
+            }
 
         //end of namespace
         }

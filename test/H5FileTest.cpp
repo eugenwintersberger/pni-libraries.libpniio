@@ -59,5 +59,4 @@ void H5FileTest::test_inquery(){
     std::cout<<"void H5FileTest::test_inquery()------------------------------";
     std::cout<<std::endl;
 
-
 }
