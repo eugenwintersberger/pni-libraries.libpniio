@@ -21,6 +21,7 @@ class H5DataspaceTest:public CppUnit::TestFixture{
         CPPUNIT_TEST(test_creation); 
         CPPUNIT_TEST(test_assignment);
         CPPUNIT_TEST(test_inquery);
+        CPPUNIT_TEST(test_resize);
         CPPUNIT_TEST_SUITE_END();
     public:
         void setUp();
@@ -28,6 +29,7 @@ class H5DataspaceTest:public CppUnit::TestFixture{
         void test_creation();
         void test_assignment();
         void test_inquery();
+        void test_resize();
     
 };
 

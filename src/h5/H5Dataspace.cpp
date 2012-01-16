@@ -39,7 +39,6 @@ namespace pni{
             H5Dataspace::H5Dataspace(){
                 hid_t sid = H5Screate(H5S_SCALAR);
                 H5Object::id(sid);
-                _shape.rank(0);
             }
 
             //-----------------------------------------------------------------
@@ -47,7 +46,6 @@ namespace pni{
             H5Dataspace::H5Dataspace(const H5Dataspace &o):H5Object(o){
                 _maxdims = o._maxdims;
                 _dims  = o._dims;
-                _shape = o._shape;
             }
 
             //-----------------------------------------------------------------
@@ -55,7 +53,6 @@ namespace pni{
             H5Dataspace::H5Dataspace(const H5Object &o):H5Object(o){
                 //now we have to set the shape object
                 __set_buffers();
-                __set_shape_object();
             }
 
             //-----------------------------------------------------------------
@@ -64,45 +61,54 @@ namespace pni{
                 H5Object(std::move(o)){
                 _maxdims = std::move(o._maxdims);
                 _dims = std::move(o._dims);
-                _shape = std::move(o._shape);
             }
 
             //-----------------------------------------------------------------
             //implementation of the move conversion constructor
             H5Dataspace::H5Dataspace(H5Object &&o):H5Object(std::move(o)){
                 __set_buffers();
-                __set_shape_object();
             }
 
+
             //-----------------------------------------------------------------
-            H5Dataspace::H5Dataspace(const Shape &s,int extdim){
+            H5Dataspace::H5Dataspace(const Shape &s){
                 EXCEPTION_SETUP("H5Dataspace::H5Dataspace(const Shape &s,"
                         "int extdim)");
-                hid_t sid = 0;
                 
                 _dims.allocate(s.rank());
                 _maxdims.allocate(s.rank());
 
-                for(size_t i=0;i<s.rank();i++){
-                    _dims[i] = s[i];
-                    _maxdims[i] = s[i]; 
-                }
-                _maxdims[extdim] = H5S_UNLIMITED;
-                
-                sid = H5Screate_simple(s.rank(),_dims.ptr(),_maxdims.ptr());
-                if(sid<0){
-                    EXCEPTION_INIT(H5DataSpaceError,"Cannot create HDF5 dataspace!");
+                _maxdims = H5S_UNLIMITED;
+                for(size_t i=0;i<s.rank();i++) _dims[i] = s[i];
+
+                __create_dataspace();    
+            }
+
+            //-----------------------------------------------------------------
+            H5Dataspace::H5Dataspace(const Shape &s,const Shape &ms){
+                EXCEPTION_SETUP("H5Dataspace::H5Dataspace(const Shape &s,"
+                        "const Shape &ms)");
+
+                if(s.rank() != ms.rank()){
+                    EXCEPTION_INIT(ShapeMissmatchError,"Initial shape and "
+                            "maximum shape have different rank");
                     EXCEPTION_THROW();
                 }
 
-                H5Object::id(sid);
-                __set_shape_object();
+                _dims.allocate(s.rank());
+                _maxdims.allocate(ms.rank());
+
+                for(size_t i=0;i<s.rank();i++){
+                    _dims[i] = s[i];
+                    _maxdims[i] = ms[i];
+                }
+
+                __create_dataspace();
             }
 
             //-----------------------------------------------------------------
             H5Dataspace::H5Dataspace(const hid_t &tid):H5Object(tid){
                 __set_buffers();
-                __set_shape_object();
             }
     
             //-----------------------------------------------------------------
@@ -116,7 +122,6 @@ namespace pni{
                     (H5Object &)(*this) = (H5Object &)o;
                     _dims  = o._dims;
                     _maxdims = o._maxdims;
-                    _shape = o._shape;
                 }
 
                 return *this;
@@ -128,7 +133,6 @@ namespace pni{
                 if(this != &o){
                     (H5Object &)(*this) = o;
                     __set_buffers();
-                    __set_shape_object();
                 }
                 return *this;
             }
@@ -140,7 +144,6 @@ namespace pni{
                     (H5Object &)(*this) = std::move((H5Object &&)o);
                     _dims  = std::move(o._dims);
                     _maxdims = std::move(o._maxdims);
-                    _shape = std::move(o._shape);
                 }
 
                 return *this;
@@ -152,7 +155,6 @@ namespace pni{
                 if(this != &o){
                     (H5Object &)(*this) = std::move(o);
                     __set_buffers();
-                    __set_shape_object();
                 }
                 return *this;
             }
@@ -165,49 +167,93 @@ namespace pni{
                 return false;
             }
 
-            const Shape &H5Dataspace::shape() const {
-                return _shape;
+            //-----------------------------------------------------------------
+            Shape H5Dataspace::shape() const {
+                if(is_scalar()) return Shape();
+
+                Shape s(rank());
+                for(size_t i=0;i<rank();i++) s.dim(i,_dims[i]);
+
+                return s;
             }
 
+            //-----------------------------------------------------------------
+            Shape H5Dataspace::maxshape() const {
+                if(is_scalar()) return Shape();
+
+                Shape s(rank());
+
+                for(size_t i=0;i<rank();i++) s.dim(i,_maxdims[i]);
+
+                return s;
+            }
+
+            //-----------------------------------------------------------------
             size_t H5Dataspace::rank() const {
                 return H5Sget_simple_extent_ndims(id());
             }
 
+            //-----------------------------------------------------------------
             size_t H5Dataspace::dim(size_t i) const {
-                return _shape.dim(i);
+                return _dims[i];
             }
 
+            //-----------------------------------------------------------------
+            size_t H5Dataspace::max_dim(size_t i) const {
+                return _maxdims[i];
+            }
+
+            //-----------------------------------------------------------------
             size_t H5Dataspace::size() const {
                 return H5Sget_simple_extent_npoints(id());
             }
 
+            //-----------------------------------------------------------------
             size_t H5Dataspace::operator[](size_t i) const {
-                return _shape.dim(i);
+                return _dims[i];
             }
 
+            //-----------------------------------------------------------------
             void H5Dataspace::close(){
                 if(is_valid()) H5Sclose(id());
             }
 
+            //-----------------------------------------------------------------
+            void H5Dataspace::resize(const Shape &s){
+                EXCEPTION_SETUP("void H5Datspace::resize(const Shape &s)");
+                
+                _dims.allocate(s.rank());
+                _maxdims.allocate(s.rank());
 
-            //====================private methods==============================
-            //implementation of the shape method
-            void H5Dataspace::__set_shape_object(){
-                EXCEPTION_SETUP("Shape H5Dataspace::shape() const");
+                _maxdims = H5S_UNLIMITED;
+                for(size_t i=0;i<s.rank();i++) _dims[i] = s[i];
 
-		        
-                //obtain the rank of the data space
-                if(is_scalar()){
-                    _shape=Shape();
-                    return;
+                __create_dataspace();
+            }
+
+            //-----------------------------------------------------------------
+            void H5Dataspace::resize(const Shape &s,const Shape &ms){
+                EXCEPTION_SETUP("void H5Dataspace::resize(const Shape &s,"
+                        "const Shape &ms)");
+
+                if(s.rank() != ms.rank()){
+                    EXCEPTION_INIT(ShapeMissmatchError,"Shape and Max. Shape"
+                            " are not of same rank!");
+                    EXCEPTION_THROW();
                 }
 
-                _shape.rank(rank());
-                
+                _dims.allocate(s.rank());
+                _maxdims.allocate(ms.rank());
+                for(size_t i=0;i<s.rank();i++){
+                    _dims[i] = s[i];
+                    _maxdims[i] = ms[i];
+                }
 
-                for(size_t i=0;i<rank();i++) _shape.dim(i,(size_t)_dims[i]);
-
+                __create_dataspace();
             }
+
+
+            //====================private methods==============================
 
             //implementation of the buffer allocation routine
             void H5Dataspace::__set_buffers(){
@@ -216,6 +262,18 @@ namespace pni{
                     _dims.allocate(rank());
                     H5Sget_simple_extent_dims(id(),_dims.ptr(),_maxdims.ptr());
                 }
+            }
+
+            void H5Dataspace::__create_dataspace(){
+                EXCEPTION_SETUP("void H5Dataspace::__create_dataspace()");
+
+                hid_t sid = H5Screate_simple(_dims.size(),_dims.ptr(),_maxdims.ptr());
+                if(sid<0){
+                    EXCEPTION_INIT(H5DataSpaceError,"Cannot create HDF5 dataspace!");
+                    EXCEPTION_THROW();
+                }
+
+                H5Object::id(sid);
             }
 
         

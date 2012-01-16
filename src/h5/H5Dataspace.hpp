@@ -38,14 +38,13 @@ namespace pni{
             
             class H5Dataspace:public H5Object{
                 private:
-                    Shape _shape; //!< shape object describing the dataspace
 
                     Buffer<hsize_t> _maxdims; //!< maximum number of elements dimensions
                     Buffer<hsize_t> _dims;    //!< number of elements 
 
                     //a private method to compute the shape object describing
                     //the dataspace
-                    void __set_shape_object();
+                    void __create_dataspace();
                     void __set_buffers();
                 public:
                     //! default constructor
@@ -63,10 +62,16 @@ namespace pni{
                     //! shape constructor
 
                     //! Constructs a dataspace according to the shape
-                    //! object passed to the constructor.
+                    //! object passed to the constructor. The dimension
+                    //! are unlimited along each dimension.
                     //! \param s shape object determining the shape
-                    H5Dataspace(const Shape &s,int extdim=0);
-                    H5Dataspace(const Shape &s,const Shape &ms,int extdim=0);
+                    H5Dataspace(const Shape &s);
+                    //! fixed size datasset
+                    
+                    //! Creates a dataspace of fixed size. 
+                    //! \param s initial shape
+                    //! \param mx maximum shape
+                    H5Dataspace(const Shape &s,const Shape &ms);
                     //! create object from HDF5 id
 
                     //! Constructor creating an object directly from its HDF5
@@ -86,21 +91,69 @@ namespace pni{
                     H5Dataspace &operator=(H5Object &&o);
 
                     //! obtain current shape
-                    const Shape &shape() const;
+                    Shape shape() const;
+
+                    //! obtain the maximum shape
+                    Shape maxshape() const;
+
                     //! rank of dataset
+
+                    //! Returns the rank (the number of dimensions) of the
+                    //! dataset.
+                    //! \return number of dimension
                     size_t rank() const;
-                    //! dimension of the dataset
+                    //! number of elements
+
+                    //! Returns the number of elements along dimension i.
+                    //! \throws IndexError if i exceeds the dataspace rank
+                    //! \param i dimension index
+                    //! \return number of elements along i
                     size_t dim(size_t i) const;
-                    //! number of elements 
+
+                    //! max.elements along dimension
+
+                    //! Returns the maximum number of dimension along 
+                    //! dimension i.
+                    //! \param i index of dimension
+                    //! \return maximum number of elements along dimension i
+                    size_t max_dim(size_t i) const;
+
+                    //! total number of elements
+
+                    //! Returns the total number of elemenets that can be
+                    //! stored in the dataspace.
+                    //! \return total number of elements
                     size_t size() const;
+                    //! number of elements
+                    
+                    //! Returns the number of elements along dimension i.
+                    //! \throws IndexError if i exceeds dataspace rank
+                    //! \param i dimension index
+                    //! \return number of elements along i
                     size_t operator[](size_t i) const;
+
                     //! true if scalar dataset
+
+                    //! Returns true if the dataspace is scalar. 
                     bool is_scalar() const;
 
                     //! resize dataset
-                    void resize(const Shape &s,int extdim=0);
-                    void resize(const Shape &s,const Shape &ms,int extdim=0);
 
+                    //! Resizes the dataspace to a new shape determined by 
+                    //! s. In this case all maximum dimension are set the 
+                    //! unlimited.
+                    //! \param s new dataspace shape
+                    void resize(const Shape &s);
+                    //! resize dataset
+
+                    //! Resizes the dataspace to a simple dataspace with 
+                    //! initial shape s and maximum shape ms. In this 
+                    //! case the datspace is of fixed size. 
+                    //! \param s initial shape of the dataspace
+                    //! \param ms maximum shape of the dataspace
+                    void resize(const Shape &s,const Shape &ms);
+
+                    //! close the dataspace
                     virtual void close();
 
             };

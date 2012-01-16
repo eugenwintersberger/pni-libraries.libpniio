@@ -43,7 +43,17 @@ void H5DataspaceTest::test_creation(){
     CPPUNIT_ASSERT(s4.is_valid());
     CPPUNIT_ASSERT(!s2.is_valid());
     CPPUNIT_ASSERT(s4.shape() == s3.shape());
-    
+
+
+    Shape ms(s.rank());
+    for(size_t i=0; i<ms.rank(); i++) ms.dim(i,100);
+    H5Dataspace s6(s,ms);
+    CPPUNIT_ASSERT(s6.is_valid());
+    CPPUNIT_ASSERT(!s6.is_scalar());
+    for(size_t i=0;i<s6.rank();i++){
+        CPPUNIT_ASSERT(s6.dim(i) == s[i]);
+        CPPUNIT_ASSERT(s6.max_dim(i) == ms[i]);
+    }
 
 }
 
@@ -74,5 +84,26 @@ void H5DataspaceTest::test_assignment(){
 }
 
 void H5DataspaceTest::test_inquery(){
+    Shape s(2);
+    s.dim(1,100); s.dim(0,50);
+    H5Dataspace s1(s);
+
+    CPPUNIT_ASSERT(s1.shape() == s);
+    CPPUNIT_ASSERT(s1.rank() == 2);
+    CPPUNIT_ASSERT(!s1.is_scalar());
+    CPPUNIT_ASSERT(s1.is_valid());
+    CPPUNIT_ASSERT(s.size() == 50*100);
+
+}
+
+void H5DataspaceTest::test_resize(){
+    H5Dataspace space;
+    CPPUNIT_ASSERT(space.is_scalar());
+    
+    Shape s(3); s.dim(0,10); s.dim(1,4); s.dim(2,17);
+    Shape ms(s);
+    CPPUNIT_ASSERT_NO_THROW(space.resize(s));
+    CPPUNIT_ASSERT(!space.is_scalar());
+    CPPUNIT_ASSERT(space.shape() == s);
 
 }

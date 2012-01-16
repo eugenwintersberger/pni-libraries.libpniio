@@ -143,6 +143,124 @@ namespace pni{
             }
 
             //=========implementation of the assignment operators==============
+            //implementation of the  copy assignment operator
+            H5Dataset &H5Dataset::operator=(const H5Dataset &o){
+                if(this != &o){
+                    (H5AttributeObject &)(*this) = (H5AttributeObject &)o;
+                    _space = o._space;
+                    _type  = o._type;
+                }
+                return *this;
+            }
+
+            //-----------------------------------------------------------------
+            //implementation of the  copy conversion assignment
+            H5Dataset &H5Dataset::operator=(const H5Object &o){
+                EXCEPTION_SETUP("H5Dataset &H5Dataset::operator="
+                        "(const H5Object &o)");
+                if(o.type()!=H5ObjectType::DATASET){
+                    EXCEPTION_INIT(H5DataSetError,"Object is not a dataset!");
+                    EXCEPTION_THROW();
+                }
+
+                if(this != &o){
+                    (H5Object &)(*this) = o;
+                    _space = H5Dataspace(H5Dget_space(o.id()));
+                    _type  = H5Datatype(H5Dget_type(o.id()));
+                }
+                return *this;
+            }
+
+            //-----------------------------------------------------------------
+            //implementation of the  move assignment operator
+            H5Dataset &H5Dataset::operator=(H5Dataset &&o){
+                if(this != &o){
+                    (H5AttributeObject &)(*this) = std::move((H5AttributeObject
+                                &)o);
+                    _space = std::move(o._space);
+                    _type  = std::move(o._type);
+                }
+                return *this;
+            }
+
+            //-----------------------------------------------------------------
+            //! move conversion assignment
+            H5Dataset &H5Dataset::operator=(H5Object &&o){
+                EXCEPTION_SETUP("H5Dataset &H5Dataset::operator="
+                        "(H5Object &&o)");
+                if(o.type() != H5ObjectType::DATASET){
+                    EXCEPTION_INIT(H5DataSetError,"Object is not a dataset!");
+                    EXCEPTION_THROW();
+                }
+
+                if(this != &o){
+                    (H5Object &)(*this) = std::move(o);
+                    _space = H5Dataspace(H5Dget_space(id()));
+                    _type  = H5Datatype(H5Dget_type(id()));
+                }
+                return *this;
+            }
+
+            //=========implementation of inquery methods========================
+            void H5Dataset::resize(const Shape &s){
+                EXCEPTION_SETUP("void H5Dataset::resize(const Shape &s)");
+
+                if(s.rank() != _space.rank()){
+                    EXCEPTION_INIT(ShapeMissmatchError,"New datatype does not"
+                           " have the same rank!");
+                    EXCEPTION_THROW();
+                }
+                Buffer<hsize_t> b(s.rank());
+                for(size_t i=0;i<s.rank();i++) b[i] = s[i];
+
+                herr_t err = H5Dset_extent(id(),b.ptr());
+                if(err < 0){
+                    EXCEPTION_INIT(H5DataSetError, "Error resizing the dataset!");
+                    EXCEPTION_THROW();
+                }
+
+                //re-fetch data space
+                _space = H5Dataspace(H5Dget_type(id()));
+            }
+
+            //-----------------------------------------------------------------
+            void H5Dataset::extend(const size_t &e,const size_t &n){
+                EXCEPTION_SETUP("void H5Dataset::extend(const size_t &e,"
+                        "const size_t &n)");
+
+                Buffer<hsize_t> b(_space.rank());
+                for(size_t i=0;i<_space.rank();i++) b[i] = _space[i];
+                b[e] += n;
+
+                herr_t err = H5Dset_extent(id(),b.ptr());
+                if(err < 0){
+                    EXCEPTION_INIT(H5DataSetError,"Dataset resizing failed!");
+                    EXCEPTION_THROW();
+                }
+
+                //re-fetch the new dataspace
+                _space = H5Dataspace(H5Dget_space(id()));
+            }
+
+            //------------------------------------------------------------------
+            size_t H5Dataset::size() const{
+                return _space.size();
+            }
+
+            //------------------------------------------------------------------
+            Shape H5Dataset::shape() const {
+                return _space.shape();
+            }
+
+            //-----------------------------------------------------------------
+            size_t H5Dataset::dim(const size_t &i) const{
+                return _space.dim(i);
+            }
+
+            //------------------------------------------------------------------
+            TypeID H5Dataset::type_id() const{
+                return _type.type_id();
+            }
 
 
         //end of namespace
