@@ -1,7 +1,6 @@
 
-#ifndef __H5GROUPTEST_HPP__
-#define __H5GROUPTEST_HPP__
-
+#ifndef __H5DATASETTEST_HPP__
+#define __H5DATASETTEST_HPP__
 
 extern "C"{
 #include <hdf5.h>
@@ -15,27 +14,28 @@ extern "C"{
 
 #include "../src/h5/H5File.hpp"
 #include "../src/h5/H5Group.hpp"
+#include "../src/h5/H5Dataset.hpp"
 
 using namespace pni::utils;
 using namespace pni::nx::h5;
 
-class H5GroupTest:public CppUnit::TestFixture{
-        CPPUNIT_TEST_SUITE(H5GroupTest);
+class H5DatasetTest:public CppUnit::TestFixture{
+        CPPUNIT_TEST_SUITE(H5DatasetTest);
         CPPUNIT_TEST(test_creation); 
         CPPUNIT_TEST(test_assignment);
-        CPPUNIT_TEST(test_openobjects);
-        CPPUNIT_TEST(test_attributes);
+        CPPUNIT_TEST(test_inquery);
+        CPPUNIT_TEST(test_resize);
         CPPUNIT_TEST_SUITE_END();
     private:
-        H5File file;
+        H5File _file;
+        H5Group _group;
     public:
         void setUp();
         void tearDown();
         void test_creation();
         void test_assignment();
-        void test_openobjects();
-        void test_attributes();
-    
+        void test_inquery();
+        void test_resize();
 };
 
 #endif

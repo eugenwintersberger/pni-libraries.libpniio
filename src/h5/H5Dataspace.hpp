@@ -35,7 +35,10 @@ using namespace pni::utils;
 namespace pni{
     namespace nx {
         namespace h5 {
-            
+            //! \brief dataspace object
+
+            //! This class encapsulates an HDF5 dataspace. A dataspace describes
+            //! the organization of dataelements within a dataset. 
             class H5Dataspace:public H5Object{
                 private:
 
@@ -49,7 +52,9 @@ namespace pni{
                 public:
                     //! default constructor
 
-                    //! By default a scalar dataspace is constructed.
+                    //! By default a scalar dataspace is constructed. This 
+                    //! constructor can always be used in order to store a
+                    //! scalar value.
                     H5Dataspace();
                     //! copy constructor
                     H5Dataspace(const H5Dataspace &o);

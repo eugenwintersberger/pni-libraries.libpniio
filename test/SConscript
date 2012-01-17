@@ -12,7 +12,7 @@ sources_list.extend(["NXStringFieldTest.cpp","NXBinaryFieldTest.cpp"])
 #sources_list.extend(["base_classes/NXrootTest.cpp"])
 #sources_list.extend(["base_classes/NXentryTest.cpp"])
 sources_list.extend(["H5DataspaceTest.cpp","H5DatatypeTest.cpp"])
-sources_list.extend(["H5FileTest.cpp","H5GroupTest.cpp"])
+sources_list.extend(["H5FileTest.cpp","H5GroupTest.cpp","H5DatasetTest.cpp"])
 
 
 pninx_test = test_env.Program("pninxtest",sources_list)

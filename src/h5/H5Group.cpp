@@ -168,35 +168,6 @@ namespace pni{
                 return *this;
             }
 
-            //=======implemenation of object creating methods==================
-            //!create a multidimensional dataset
-            H5Dataset H5Group::dataset(const String &n,const TypeID &tid,
-                    const Shape &s,const Shape &ChunkShape) const{
-                EXCEPTION_SETUP("H5Dataset H5Group::dataset(const String &n,"
-                        "const TypeId &tid,const Shape &s,const Shape "
-                        "&ChunkShape=Shape(0))");
-
-                return H5Dataset(n,*this,tid,s,ChunkShape);
-            }
-
-            //-----------------------------------------------------------------
-            //! create a scalar dataset
-            H5Dataset H5Group::dataset(const String &n,const TypeID &tid) const{
-                EXCEPTION_SETUP("H5Dataset H5Group::dataset(const String &n,"
-                        "const TypeId &tid)");
-                Shape s(1);
-                s.dim(0,0);
-                Shape cs(1);
-                s.dim(0,1);
-
-                return H5Dataset(n,*this,tid,s,cs);
-            }
-
-            //-----------------------------------------------------------------
-            //! create group
-            H5Group H5Group::group(const String &n) const{
-                return H5Group(n,*this);
-            }
 
             //-----------------------------------------------------------------
             H5Object H5Group::open(const String &n) const{

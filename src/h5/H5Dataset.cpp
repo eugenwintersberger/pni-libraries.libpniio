@@ -86,6 +86,38 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
+            //implementation of the constructor for a contigous array
+            H5Dataset::H5Dataset(const String &n,const H5Group &g,
+                    const TypeID &tid,const Shape &s){
+                EXCEPTION_SETUP("H5Dataset::H5Dataset(const String &n,"
+                        "const H5Group &g, const TypeID &tid,const Shape &s)");
+
+                //create datatype and data space
+                _type = H5Datatype(tid);
+                _space = H5Dataspace(s,s);
+
+                //create link creation property list
+                hid_t lpl = H5Pcreate(H5P_LINK_CREATE);
+                H5Pset_create_intermediate_group(lpl,1);
+
+                //create the datase
+                hid_t did = H5Dcreate2(g.id(),n.c_str(),_type.id(),_space.id(),
+                        lpl,H5P_DEFAULT,H5P_DEFAULT);
+                if(did<0){
+                    String estr = "Cannot create dataset ["+n+
+                        "] below ["+path()+"]!";
+                    EXCEPTION_INIT(H5DataSetError,estr);
+                    EXCEPTION_THROW();
+                }
+
+                //set id
+                H5Object::id(did);
+
+                //close property list
+                H5Pclose(lpl);
+            }
+
+            //-----------------------------------------------------------------
             //! constructor 
             H5Dataset::H5Dataset(const String &n, const H5Group &g, const TypeID &tid,
                     const Shape &s,const Shape &cs){
@@ -117,7 +149,7 @@ namespace pni{
                         lpl,cpl,H5P_DEFAULT);
                 if(did<0){
                     String estr = "Cannot create dataset ["+n+
-                        "] below ["+path()+"!";
+                        "] below ["+g.path()+"]!";
                     EXCEPTION_INIT(H5DataSetError,estr);
                     EXCEPTION_THROW();
                 }
@@ -126,6 +158,35 @@ namespace pni{
                 //construction done - close property lists
                 H5Pclose(lpl);
                 H5Pclose(cpl);
+            }
+
+            //-----------------------------------------------------------------
+            H5Dataset::H5Dataset(const String &n,const H5Group &p,
+                                 const TypeID &tid){
+                EXCEPTION_SETUP("H5Dataset::H5Dataset(const String &n,"
+                        "const H5Group &p,const TypeID &tid)");
+
+                //create datatype and dataset
+                _type = H5Datatype(tid);
+                _space = H5Dataspace();
+
+                //create link creation property list
+                hid_t lpl = H5Pcreate(H5P_LINK_CREATE);
+                H5Pset_create_intermediate_group(lpl,1);
+
+                //create the datase
+                hid_t did = H5Dcreate2(p.id(),n.c_str(),_type.id(),_space.id(),
+                        lpl,H5P_DEFAULT,H5P_DEFAULT);
+                if(did<0){
+                    String estr = "Cannot create dataset ["+n+
+                        "] below ["+p.path()+"]!";
+                    EXCEPTION_INIT(H5DataSetError,estr);
+                    EXCEPTION_THROW();
+                }
+
+                H5Object::id(did);
+                //construction done - close property lists
+                H5Pclose(lpl);
             }
 
             //-----------------------------------------------------------------
@@ -218,9 +279,9 @@ namespace pni{
                     EXCEPTION_INIT(H5DataSetError, "Error resizing the dataset!");
                     EXCEPTION_THROW();
                 }
-
+                
                 //re-fetch data space
-                _space = H5Dataspace(H5Dget_type(id()));
+                _space = H5Dataspace(H5Dget_space(id()));
             }
 
             //-----------------------------------------------------------------

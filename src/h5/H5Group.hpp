@@ -70,18 +70,6 @@ namespace pni{
                     //! move conversion assignment
                     H5Group &operator=(H5Object &&o);
 
-                    //=============creating objects============================
-                    //!create a multidimensional dataset
-                    H5Dataset dataset(const String &n,const TypeID &tid,
-                            const Shape &s,const Shape &ChunkShape=Shape(0))
-                        const;
-
-                    //! create a scalar dataset
-                    H5Dataset dataset(const String &n,const TypeID &tid) const;
-
-                    //! create group
-                    H5Group group(const String &n) const;
-                    
                     //=============methods to open objects=====================
                     H5Object open(const String &n) const;
                     H5Object operator[](const String &n) const;

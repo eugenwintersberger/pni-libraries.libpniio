@@ -43,7 +43,9 @@ namespace pni{
     namespace nx{
         namespace h5{
             
+            //! \brief dataset object
 
+            //! Datasets are the essential data holding objects in HDF5.
             class H5Dataset:public H5AttributeObject{
                 private:
                     H5Dataspace _space; //!< local dataspace of the dataset
@@ -63,9 +65,34 @@ namespace pni{
                     H5Dataset(H5Dataset &&o);
                     //! move conversion constructor
                     H5Dataset(H5Object &&o);
-                    //! constructor 
+                    //! constructor - contiguous dataset
+    
+                    //! Creates a contiguous array of shape s. The result is 
+                    //! most probably the simplest form of a dataset. 
+                    //! Such a dataset cannot be resized. The shape of the 
+                    //! dataspace is determined by the argument s which is 
+                    //! the intial as well as the maximum size of the dataspace.
+                    //! \param n name of the dataset
+                    //! \param g parent group
+                    //! \param t id of the data type
+                    //! \param s shape of the dataset
                     H5Dataset(const String &n, const H5Group &g,const TypeID &t,
-                              const Shape &s,const Shape &cs=Shape(0));
+                              const Shape &s);
+                    //! constructor - chunked dataset
+                    
+                    //! Constructor for a chunked dataset. Unlike contiguous
+                    //! datasets chunked datasets can be resized. Its content 
+                    //! is subdivided into several chunks. Furthermore chunked 
+                    //! datasets can be compressed. Where the compression
+                    //! algorithm is applied ot invidual chunks not on the 
+                    //! entire dataset.
+                    //! \param n dataset name
+                    //! \param g parent group
+                    //! \param t ID of the data type
+                    //! \param s shape of the dataset
+                    //! \param cs chunk shape
+                    H5Dataset(const String &n,const H5Group &g,const TypeID &t,
+                              const Shape &s,const Shape &cs);
                     //! constructor for a scalar object
                     H5Dataset(const String &n, const H5Group &g,
                             const TypeID &t);

@@ -23,6 +23,7 @@ void H5GroupTest::test_creation(){
     //create directly using the constructor
     H5Group g1("group1",file);
     CPPUNIT_ASSERT(g1.is_valid());
+    CPPUNIT_ASSERT(g1.name()=="group1");
 
     //create a group from another group
     H5Group g2("group12",g1);
@@ -62,23 +63,12 @@ void H5GroupTest::test_assignment(){
 
 }
 
-void H5GroupTest::test_objectcreation(){
-    std::cout<<"void H5GroupTest::test_objectcreation()-----------------------";
-    std::cout<<std::endl;
-    
-    H5Group g = file.group("group1");
-    CPPUNIT_ASSERT(g.is_valid());
-
-    H5Group g2 = file.group("/group2/test/directory");
-    CPPUNIT_ASSERT(g2.is_valid());
-
-}
 
 void H5GroupTest::test_openobjects(){
     std::cout<<"void H5GroupTest::test_openobjects()--------------------------";
     std::cout<<std::endl;
         
-    H5Group g = file.group("/test/data/detector");
+    H5Group g("/test/data/detector",file);
     H5Group det;
 
     det = file.open("/test/data/detector");
@@ -97,7 +87,7 @@ void H5GroupTest::test_openobjects(){
 void H5GroupTest::test_attributes(){
     std::cout<<"void H5GroupTest::test_attributes()---------------------------";
     std::cout<<std::endl;
-    H5Group g = file.group("data");
+    H5Group g("data",file);
 
     //-----------------read and write a string attribute-----------------------
     String comment = "hello world";
