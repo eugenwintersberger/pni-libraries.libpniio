@@ -27,6 +27,12 @@
 #ifndef __H5SELECTION_HPP__
 #define __H5SELECTION_HPP__
 
+#include <pni/utils/Buffer.hpp>
+
+using namespace pni::utils;
+
+#include "H5Dataspace.hpp"
+
 
 namespace pni{
     namespace nx{
@@ -37,6 +43,7 @@ namespace pni{
                     H5Dataspace _sspace; //!< dataspace describing the selection
                     Buffer<size_t> _offset; //!< selection offset
                     Buffer<size_t> _stride; //!< selection stride
+                    Buffer<size_t> _counts; //!< number of elements along each dimension
                 public:
                     //============constructors and destructor==================
                     //! default constructor
@@ -63,6 +70,20 @@ namespace pni{
                     Shape shape() const;
                     void shape(const Shape &s);
                     const H5Dataspace &space() const;
+
+                    //set offset values
+                    size_t &offset(size_t i);
+                    size_t offset(size_t i) const;
+                    void offset(size_t i,...) const;
+                    
+                    size_t &stride(size_t i);
+                    size_t stride(size_t i) const;
+                    void stride(size_t i,...) const;
+
+                    size_t &count(size_t i);
+                    size_t count(size_t i) const;
+                    void count(size_t i,...) const;
+
             };
 
         //end of namespace

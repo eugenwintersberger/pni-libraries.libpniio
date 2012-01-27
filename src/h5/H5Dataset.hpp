@@ -53,6 +53,8 @@ namespace pni{
 
                     //---------some private IO templates----------------------
                     template<typename T> void __write(const T *ptr);
+                    template<typename T> void __write(const H5Selection &s,
+                                                      const T *ptr);
                 public:
                     //===================Constructors and destructors==========
                     //! default constructor
@@ -161,21 +163,43 @@ namespace pni{
                         void read(Scalar<T> &data);
 
                     //===============writing data methods======================
+                    //! write a single value
+
+                    //! This method writes a single value of a particular type
+                    //! reading the data from variable value. This method 
+                    //! works only if the dataspace of the dataset is scalar. 
+                    //! \throws ShapeMissmatchError if the dataspace is not scalar
+                    //! \param value data source
                     template<typename T>
                         void write(const T &value);
+
+                    //! write a single value with selection
+
+                    //! write a single value at the location specified by 
+                    //! selection. 
                     template<typename T>
                         void write(const H5Selection &s,const T &value);
+
+                    //! write a buffer 
                     template<typename T,template<typename> class BT>
                         void write(const BT<T> &buffer);
+
+                    //! write a buffer with selection
                     template<typename T,template<typename> class BT>
                         void write(const H5Selection &s,const BT<T> &buffer);
+                    //! write an array
                     template<typename T,template<typename> class BT>
                         void write(const Array<T,BT> &array);
+
+                    //! write an array with selection
                     template<typename T,template<typename> class BT>
                         void write(const H5Selection &s,const Array<T,BT>
                                 &array);
+
+                    //! write a scalar
                     template<typename T> 
                         void write(const Scalar<T> &scalar);
+                    //! write a scalar with selection
                     template<typename T>
                         void write(const H5Selection &s,const Scalar<T>
                                 &scalar);
@@ -183,12 +207,15 @@ namespace pni{
 
             };
             //==========implementation of private IO methods===================
+            //write template for a simple pointer
             template<typename T>
                 void H5Dataset::__write(const T *ptr){
                 EXCEPTION_SETUP("template<typename T> void H5Dataset::"
                         "__wite(const T *ptr)");
 
+                //select the proper memory data type
                 H5Datatype mem_type = H5Datatype::create<T>();
+                //write data to disk
                 herr_t err = H5Dwrite(id(),mem_type.id(),H5S_ALL,H5S_ALL,
                                       H5P_DEFAULT,(const void *)ptr);
                 if(err<0){
@@ -197,6 +224,19 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
             }
+
+            //-----------------------------------------------------------------
+            //write template for a simple pointer with a selection
+            template<typename T>
+                void H5Dataset::__write(const H5Selection &s,const T *ptr){
+                EXCEPTION_SETUP("template<typename T> void H5Dataset::__write"
+                        "(const H5Selection &s,const T *ptr)");
+
+                //select the proper memory data type
+                H5Datatype mem_type = H5Datatype::create<T>();
+                
+            
+            } 
 
             //=============implementation of writing templates=================
             template<typename T>
@@ -218,9 +258,15 @@ namespace pni{
                 EXCEPTION_SETUP("template<tyename T> void H5Dataset::"
                         "write(const H5Selection &s,const T &value)");
                 
-                if(!s.space().is_scalar()){
-                    
+                //here we have to check that the selection referes to 
+                //a single value only
+                if(s.size()!=1){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Selection is not scalar!");
+                    EXCEPTION_THROW();
                 }
+
+                
                 
             }
 

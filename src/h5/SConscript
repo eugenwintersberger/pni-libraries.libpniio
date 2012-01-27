@@ -16,7 +16,7 @@ src_list = ["NXFileH5Implementation.cpp",
             "H5Object.cpp","H5Dataspace.cpp",
             "H5Datatype.cpp","H5NamedObject.cpp","H5Attribute.cpp",
             "H5AttributeObject.cpp","H5Group.cpp","H5Dataset.cpp",
-            "H5File.cpp"]
+            "H5File.cpp","H5Selection.cpp"]
             
 shared_objects = build_env.SharedObject(src_list)
 static_objects = build_env.StaticObject(src_list)
