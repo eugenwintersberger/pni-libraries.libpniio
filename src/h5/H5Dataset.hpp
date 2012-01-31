@@ -151,8 +151,7 @@ namespace pni{
 
 
                     //===============reading data methods======================
-                    template<typename T> 
-                        void read(T &value);
+                    template<typename T> void read(T &value);
                     template<typename T> 
                         void read(const H5Selection &s,T&value);
                     template<typename T,template<typename> class BT> 
@@ -162,6 +161,10 @@ namespace pni{
                     template<typename T> 
                         void read(Scalar<T> &data);
 
+                    template<typename Object> Object read() const;
+                    template<typename Object> 
+                        Object read(const H5Selection &s) const;
+
                     //===============writing data methods======================
                     //! write a single value
 
@@ -169,37 +172,83 @@ namespace pni{
                     //! reading the data from variable value. This method 
                     //! works only if the dataspace of the dataset is scalar. 
                     //! \throws ShapeMissmatchError if the dataspace is not scalar
+                    //! \throws H5DataSetError in case of other errors
                     //! \param value data source
-                    template<typename T>
-                        void write(const T &value);
+                    template<typename T> void write(const T &value);
 
                     //! write a single value with selection
 
                     //! write a single value at the location specified by 
-                    //! selection. 
+                    //! selection. To use a selection the dataset must not
+                    //! be scalar. 
+                    //! \throws ShapeMissmatchError if the dataset is scalar
+                    //! \throws H5DataSetError in cases of other errors
+                    //! \param s selection object
+                    //! \param value object from which to read data
                     template<typename T>
                         void write(const H5Selection &s,const T &value);
 
                     //! write a buffer 
+
+                    //! Write the content of a memory buffer to the dataset.
+                    //! The dataset must not be scalar. In order to succeed
+                    //! the size of the buffer must match the size of the 
+                    //! dataset.
+                    //! \throws SizeMissmatchError sizes do not match
+                    //! \throws H5DataSetError in cases of other errors
+                    //! \param buffer reference to the buffer
                     template<typename T,template<typename> class BT>
                         void write(const BT<T> &buffer);
 
                     //! write a buffer with selection
+
+                    //! Writes teh content of a memory buffer to the dataset
+                    //! in the region defined by the selection s. 
+                    //! For this purpose the size of the selection must match
+                    //! the size of the buffer.
+                    //! \throws SizeMissmatchBuffer selection and buffer sizes do not match
+                    //! \throws H5DataSetError in case of other errors
+                    //! \param s selection object
+                    //! \param buffer reference to the buffer object
                     template<typename T,template<typename> class BT>
                         void write(const H5Selection &s,const BT<T> &buffer);
+
                     //! write an array
+
+                    //! Write an array to the dataset. In order to succeed
+                    //! The shape of the array must match the shape of the 
+                    //! dataset. In addtion the dataset must not be scalar.
+                    //! \throws ShapeMissmatchError if array and dataset shape do not match
+                    //! \throws H5DataSetError in case of other errors
+                    //! \param array array to write to disk
                     template<typename T,template<typename> class BT>
                         void write(const Array<T,BT> &array);
 
                     //! write an array with selection
+
+                    //! 
                     template<typename T,template<typename> class BT>
-                        void write(const H5Selection &s,const Array<T,BT>
-                                &array);
+                        void write(const H5Selection &s,const Array<T,BT> &array);
 
                     //! write a scalar
+
+                    //! Write a single scalar object to disk. This can only 
+                    //! succeed if the dataset is a scalar.
+                    //! \throws ShapeMissmatchError if not a scalar dataset
+                    //! \throws H5DataSetError in case of all other errors
+                    //! \param scalar scalar object to write to disk
                     template<typename T> 
                         void write(const Scalar<T> &scalar);
+
                     //! write a scalar with selection
+
+                    //! Write a scalar value in the region defined by the
+                    //! selection. In order to succeed the dataset must not be 
+                    //! scalar. 
+                    //! \throws ShapeMissmatchError if the dataset is scalar
+                    //! \throws H5DataSetError in case of all other errors
+                    //! \param s selection object
+                    //! \param scalar the scalar object which to write to disk
                     template<typename T>
                         void write(const H5Selection &s,const Scalar<T>
                                 &scalar);
@@ -211,7 +260,7 @@ namespace pni{
             template<typename T>
                 void H5Dataset::__write(const T *ptr){
                 EXCEPTION_SETUP("template<typename T> void H5Dataset::"
-                        "__wite(const T *ptr)");
+                        "__write(const T *ptr)");
 
                 //select the proper memory data type
                 H5Datatype mem_type = H5Datatype::create<T>();
@@ -231,10 +280,31 @@ namespace pni{
                 void H5Dataset::__write(const H5Selection &s,const T *ptr){
                 EXCEPTION_SETUP("template<typename T> void H5Dataset::__write"
                         "(const H5Selection &s,const T *ptr)");
-
+                herr_t err;
                 //select the proper memory data type
                 H5Datatype mem_type = H5Datatype::create<T>();
                 
+                //set selection to the file datasets original dataset
+                err = H5Sselect_hyperslab(_space.id(),H5S_SELECT_SET,
+                        s.offset().ptr(),s.stride().ptr(),
+                        s.count().ptr(),NULL);
+                if(err < 0){
+                    EXCEPTION_INIT(H5DataSetError,
+                            "Error applying selection!");
+                    EXCEPTION_THROW();
+                }
+
+                //write data to disk
+                err = H5Dwrite(id(),mem_type.id(),s.space().id(),
+                        _space.id(),H5P_DEFAULT,(const void *)ptr);
+                if(err < 0){
+                    EXCEPTION_INIT(H5DataSetError,
+                            "Error writing data to dataset!");
+                    EXCEPTION_THROW();
+                }
+
+                //remove selection from the dataspace
+                H5Sselect_none(_space.id());
             
             } 
 
@@ -266,7 +336,7 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
 
-                
+                __write(s,&value); 
                 
             }
 
@@ -287,7 +357,7 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
 
-                __wite(buffer.ptr());
+                __write(buffer.ptr());
             }
 
             //-----------------------------------------------------------------
@@ -303,6 +373,21 @@ namespace pni{
                 }
 
                 __write(scalar.ptr());
+            }
+
+            //-----------------------------------------------------------------
+            template<typename T>
+                void H5Dataset::write(const H5Selection &s,const Scalar<T> &scalar){
+                EXCEPTION_SETUP("template<typename T> void H5Dataset::"
+                        "write(const H5Selection &s,const Scalar<T> &scalar)");
+
+                if(_space.is_scalar()){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Dataset is scalar - cannot be used with selections!");
+                    EXCEPTION_THROW();
+                }
+
+                __write(s,scalar.ptr());
             }
             
             //-----------------------------------------------------------------
@@ -326,6 +411,29 @@ namespace pni{
                 __write(array.ptr());
             }
 
+            //-----------------------------------------------------------------
+            template<typename T,template<typename> class BT>
+                void H5Dataset::write(const H5Selection &s,const Array<T,BT> &array){
+                EXCEPTION_SETUP("template<typename T,template<typename> "
+                        "class BT> void H5Dataset::write(const H5Selection &s,"
+                        "const Array<T,BT> &array)");
+
+                //the dataset must not be scalar
+                if(_space.is_scalar()){
+                    EXCEPTION_INIT(ShapeMissmatchError,"Dataset is scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                //the size of the array must be equal to the size of the 
+                //selection
+                if(s.size() != array.shape().size()){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Selection and array size do not match!");
+                    EXCEPTION_THROW();
+                }
+
+                __write(s,array.ptr());
+            }
         
         //end of namespace
         }

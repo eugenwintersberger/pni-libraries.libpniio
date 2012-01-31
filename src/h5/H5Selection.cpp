@@ -31,6 +31,15 @@
 namespace pni{
     namespace nx{
         namespace h5{
+            //==========Implementation of private methods=======================
+            void H5Selection::__update_shape(){
+                for(size_t i=0;i<_shape.rank();i++) _shape.dim(i,_counts[i]);
+            }
+
+            void H5Selection::__update_dataspace(){
+                _sspace = H5Dataspace(_shape);
+            }
+
             //==============Implementation of constructors and destructors======
             //implementation of the default constructor
             H5Selection::H5Selection(){
@@ -44,6 +53,7 @@ namespace pni{
                 _offset = o._offset;
                 _stride = o._stride;
                 _counts = o._counts;
+                _shape  = o._shape;
             }
 
             //------------------------------------------------------------------
@@ -53,6 +63,7 @@ namespace pni{
                 _offset = std::move(o._offset);
                 _stride = std::move(o._stride);
                 _counts = std::move(o._counts);
+                _shape  = std::move(o._shape);
             }
 
             //------------------------------------------------------------------
@@ -67,11 +78,36 @@ namespace pni{
                 _stride = 1;
                 _counts = 0;
 
+                _shape.rank(r);
+                __update_shape();
+                __update_dataspace();
+            }
+            
+            //------------------------------------------------------------------
+            //implementation of the shape constructor
+            H5Selection::H5Selection(const Shape &s,size_t offset,size_t stride){
+                _sspace = H5Dataspace(s);
+                _offset.allocate(s.rank());
+                _stride.allocate(s.rank());
+                _counts.allocate(s.rank());
+
+                //set offset and stride
+                _offset = offset;
+                _stride = stride;
+                for(size_t i=0;i<s.rank();i++) _counts[i] = s[i];
+
+                _shape = s;
+                __update_shape();
+                __update_dataspace();
             }
 
             //------------------------------------------------------------------
             //implementation of the destructor
             H5Selection::~H5Selection(){
+                _sspace.close();
+                _offset.free();
+                _stride.free();
+                _counts.free();
             }
 
             //==============Implementation of assignment operators==============
@@ -85,6 +121,7 @@ namespace pni{
                     _stride = o._stride;
                     _offset = o._offset;
                     _counts  = o._counts;
+                    _shape  = o._shape;
                 }
 
                 return *this;
@@ -101,6 +138,7 @@ namespace pni{
                     _stride = std::move(o._stride);
                     _offset = std::move(o._offset);
                     _counts  = std::move(o._counts);
+                    _shape  = std::move(o._shape);
                 }
                 return *this;
             }
@@ -108,13 +146,19 @@ namespace pni{
             //========implementation of inquery methods=========================
             //get size
             size_t H5Selection::size() const{
-                return _sspace.size();
+                return _shape.size();
+            }
+
+            //------------------------------------------------------------------
+            //get number of dimensions
+            size_t H5Selection::rank() const {
+                return _shape.rank();
             }
 
             //------------------------------------------------------------------
             //get shape
-            Shape H5Selection::shape() const {
-                return _sspace.shape();
+            const Shape &H5Selection::shape() const {
+                return _shape;
             }
 
             //------------------------------------------------------------------
@@ -122,62 +166,71 @@ namespace pni{
             const H5Dataspace &H5Selection::space() const{
                 return _sspace;
             }
+
             
             //=================implementation of modifier methods===============
             //access single offset values
-            size_t &H5Selection::offset(size_t i){
+            hsize_t &H5Selection::offset(size_t i){
                 return _offset[i];
             }
 
             //------------------------------------------------------------------
             //access single offset value
-            size_t H5Selection::offset(size_t i) const {
+            hsize_t H5Selection::offset(size_t i) const {
                 return _offset[i];
             }
 
             //------------------------------------------------------------------
             //set all offset values in a single call
-            void H5Selection::offset(size_t i,...) const{
-                va_list alist;
-
-                va_start(alist,i);
-                _offset[0] = i;
-
-                //loop over all other offset values
-
-
-
-                va_end(alist);
+            void H5Selection::offset(size_t i,hsize_t o) {
+                _offset[i] = o;
             }
 
             //------------------------------------------------------------------
-            size_t &H5Selection::stride(size_t i){
+            const Buffer<hsize_t> &H5Selection::offset() const {
+                return _offset;
+            }
+
+            //------------------------------------------------------------------
+            hsize_t &H5Selection::stride(size_t i){
                 return _stride[i];
             }
 
             //------------------------------------------------------------------
-            size_t H5Selection::stride(size_t i) const{
+            hsize_t H5Selection::stride(size_t i) const{
                 return _stride[i];
             }
 
             //------------------------------------------------------------------
-            void H5Selection::stride(size_t i,...) const{
-
+            void H5Selection::stride(size_t i,hsize_t s) {
+                _stride[i] = s;
             }
 
             //------------------------------------------------------------------
-            size_t &H5Selection::count(size_t i){
+            const Buffer<hsize_t> &H5Selection::stride() const {
+                return _stride;
+            }
+
+            //------------------------------------------------------------------
+            hsize_t &H5Selection::count(size_t i){
                 return _counts[i];
             }
 
             //------------------------------------------------------------------
-            size_t H5Selection::count(size_t i) const{
+            hsize_t H5Selection::count(size_t i) const{
                 return _counts[i];
             }
 
             //------------------------------------------------------------------
-            void H5Selection::count(size_t i,...) const{
+            void H5Selection::count(size_t i,hsize_t c) {
+                _counts[i] = c;
+                __update_shape();
+                __update_dataspace();
+            }
 
+            //-----------------------------------------------------------------
+            const Buffer<hsize_t> &H5Selection::count() const {
+                return _counts;
             }
 
 
