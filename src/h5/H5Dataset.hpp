@@ -42,7 +42,8 @@ using namespace pni::utils;
 namespace pni{
     namespace nx{
         namespace h5{
-            
+
+            //! \ingroup nxh5_classes
             //! \brief dataset object
 
             //! Datasets are the essential data holding objects in HDF5.
@@ -257,13 +258,18 @@ namespace pni{
             };
             //==========implementation of private IO methods===================
             //write template for a simple pointer
-            template<typename T>
-                void H5Dataset::__write(const T *ptr){
+            template<typename T> void H5Dataset::__write(const T *ptr){
                 EXCEPTION_SETUP("template<typename T> void H5Dataset::"
                         "__write(const T *ptr)");
 
+                H5Datatype mem_type;
+
                 //select the proper memory data type
-                H5Datatype mem_type = H5Datatype::create<T>();
+                if(this->type_id() != TypeID::BINARY){
+                    mem_type = H5Datatype::create<T>();
+                }else{
+                    mem_type = H5Datatype(TypeID::BINARY);
+                }
                 //write data to disk
                 herr_t err = H5Dwrite(id(),mem_type.id(),H5S_ALL,H5S_ALL,
                                       H5P_DEFAULT,(const void *)ptr);
@@ -282,7 +288,14 @@ namespace pni{
                         "(const H5Selection &s,const T *ptr)");
                 herr_t err;
                 //select the proper memory data type
-                H5Datatype mem_type = H5Datatype::create<T>();
+                H5Datatype mem_type;
+                
+                //select the proper memory data type
+                if(this->type_id() != TypeID::BINARY){
+                    mem_type = H5Datatype::create<T>();
+                }else{
+                    mem_type = H5Datatype(TypeID::BINARY);
+                }
                 
                 //set selection to the file datasets original dataset
                 err = H5Sselect_hyperslab(_space.id(),H5S_SELECT_SET,
@@ -360,6 +373,25 @@ namespace pni{
                 __write(buffer.ptr());
             }
 
+            //-----------------------------------------------------------------
+            template<typename T,template<typename> class BT>
+                void H5Dataset::write(const H5Selection &s,const BT<T> &buffer){
+                EXCEPTION_SETUP("template<typename T,template<typename> "
+                        "class BT> void H5Dataset::write(const BT<T> &buffer)");
+                
+                if(_space.is_scalar()){
+                    EXCEPTION_INIT(ShapeMissmatchError,"Dataset is scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                if(s.size() != buffer.size()){
+                    EXCEPTION_INIT(SizeMissmatchError,
+                            "Buffer and selection size do not match!");
+                    EXCEPTION_THROW();
+                }
+
+                __write(s,buffer.ptr());
+            }
             //-----------------------------------------------------------------
             template<typename T>
                 void H5Dataset::write(const Scalar<T> &scalar){

@@ -35,6 +35,7 @@ extern "C"{
 namespace pni{
     namespace nx{
         namespace h5{
+            //! \ingroup nxh5_classes
             //! \brief basic HDF5 object
 
             //! Each HDF5 object can be addressed by an unique ID. 

@@ -42,7 +42,7 @@ using namespace pni::utils;
 namespace pni{
     namespace nx{
         namespace h5{
-
+            //! \ingroup nxh5_classes
             //! \brief HDF5 attribute object
 
             //! An HDF5 attribute behaves basically like a dataset with the 

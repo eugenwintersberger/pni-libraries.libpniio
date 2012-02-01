@@ -226,9 +226,17 @@ void H5DatasetTest::test_write_buffer(){
 
     Shape cs(1); cs.dim(0,buffer.size());
     s.dim(0,0);
-    H5Dataset ebin_ds("binary_2",_group,buffer.type_id(),s,cs);
+    H5Dataset ebin_ds("binary_2",_group,TypeID::BINARY,s,cs);
+    ebin_ds.extend(0,1024);
+    H5Selection selection(cs);
+    buffer = 100;
+    CPPUNIT_ASSERT_NO_THROW(ebin_ds.write(selection,buffer));
+    ebin_ds.extend(0,1024);
+    selection.offset(0,1024);
+    buffer = 200;
+    CPPUNIT_ASSERT_NO_THROW(ebin_ds.write(selection,buffer));
+     
     
-
 
 }
 

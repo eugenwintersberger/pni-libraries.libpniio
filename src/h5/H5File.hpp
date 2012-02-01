@@ -34,7 +34,9 @@ extern "C"{
 namespace pni{
     namespace nx{
         namespace h5{
-
+            
+            //! \ingroup nxh5_classes
+            //! \brief HDF5 file class
             class H5File:public H5Group {
                 private:
                     H5File(const H5File &){}

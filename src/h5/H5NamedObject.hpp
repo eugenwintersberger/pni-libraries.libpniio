@@ -34,7 +34,7 @@
 namespace pni{
     namespace nx{
         namespace h5{
-            
+            //! \ingroup nxh5_classes            
             //! \brief base class for named objects
 
             //! Named objects are those objects in an HDF5 file that can be 

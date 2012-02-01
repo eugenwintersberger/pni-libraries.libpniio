@@ -40,6 +40,8 @@ namespace pni{
             
             class H5Dataset;
             
+            //! \ingroup nxh5_classes
+            //! \brief HDF5 group object
             class H5Group:public H5AttributeObject{
                 public:
                     //==========constructors and destructors===================

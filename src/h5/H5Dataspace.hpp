@@ -35,6 +35,7 @@ using namespace pni::utils;
 namespace pni{
     namespace nx {
         namespace h5 {
+            //! \ingroup nxh5_classes
             //! \brief dataspace object
 
             //! This class encapsulates an HDF5 dataspace. A dataspace describes

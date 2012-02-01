@@ -38,7 +38,9 @@
 namespace pni{
     namespace nx{
         namespace h5{
-        
+            
+            //! \ingroup nxh5_classes
+            //! \brief objects which can hold attributes
             class H5AttributeObject:public H5NamedObject{
                 protected:
                     H5AttributeObject(const hid_t &oid);

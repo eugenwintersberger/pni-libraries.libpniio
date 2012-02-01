@@ -36,7 +36,7 @@ using namespace pni::utils;
 namespace pni{
     namespace nx{
         namespace h5{
-            
+            //! \ingroup nxh5_classes            
             //! \brief HDF5 type wrapper
 
             //! The class wraps around an HDF5 type object. 
@@ -106,6 +106,10 @@ namespace pni{
                     H5Datatype &operator=(H5Object &&o);
 
                     //==========some inquery methods===========================
+                    //! type ID
+
+                    //! Return the type id of the datatype. 
+                    //! \return type code
                     TypeID type_id() const;
 
                     virtual void close();
