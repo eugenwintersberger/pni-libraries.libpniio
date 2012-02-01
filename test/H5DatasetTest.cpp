@@ -130,44 +130,47 @@ void H5DatasetTest::test_write_simple_types(){
     //start with a scalar dataset
     H5Dataset scalar_ds("scalar_dataset",_group,TypeID::FLOAT32);
     double value =1.23;
-    CPPUNIT_ASSERT_NO_THROW(scalar_ds.write(value));
+    CPPUNIT_ASSERT_THROW(scalar_ds.write(value),ShapeMissmatchError);
 
-    Shape s(1);
+    Shape s(1); s.dim(0,1);
     Shape cs(1); cs.dim(0,1);
     H5Dataset array_ds("array_dataset",_group,TypeID::FLOAT32,s,cs);
-
-    s.dim(0,1);
-    CPPUNIT_ASSERT_NO_THROW(array_ds.resize(s));
-    H5Selection selection(cs);
-    CPPUNIT_ASSERT_NO_THROW(array_ds.write(selection,value));
-    s.dim(0,2);
-    CPPUNIT_ASSERT_NO_THROW(array_ds.resize(s));
-    selection.offset(0,1);
-    value = -9.234;
-    CPPUNIT_ASSERT_NO_THROW(array_ds.write(selection,value));
-    CPPUNIT_ASSERT_NO_THROW(array_ds.extend(0,1));
-    value = 100.23;
-    selection.offset(0,2);
-    CPPUNIT_ASSERT_NO_THROW(array_ds.write(selection,value));
-
+    CPPUNIT_ASSERT_NO_THROW(array_ds.write(value));
 
     //extensible string dataset
     String str="hello";
-    s.dim(0,0);
     H5Dataset string_ds("string_ds",_group,TypeID::STRING,s,cs);
-    string_ds.extend(0);
-    selection.offset(0,0);
-    CPPUNIT_ASSERT_NO_THROW(string_ds.write(selection,str));
-    string_ds.extend(0);
-    selection.offset(0,1);
-    str = "this is a text";
-    CPPUNIT_ASSERT_NO_THROW(string_ds.write(selection,str));
+    CPPUNIT_ASSERT_NO_THROW(string_ds.write(str));
 
     //try a scalar string field
     H5Dataset sstring_ds("scalar_string_ds",_group,TypeID::STRING);
     CPPUNIT_ASSERT_NO_THROW(sstring_ds.write(str));
 }
 
+//-----------------------------------------------------------------------------
+void H5DatasetTest::test_read_simple_types(){
+    std::cout<<"void H5DatasetTest::test_read_simple_types()-----------------";
+    std::cout<<std::endl;
+
+    //start with a scalar dataset
+    H5Dataset scalar_ds("scalar_dataset",_group,TypeID::FLOAT32);
+    double value =1.23;
+    CPPUNIT_ASSERT_NO_THROW(scalar_ds.write(value));
+    double read = 0.;
+    CPPUNIT_ASSERT_NO_THROW(scalar_ds.read(read));
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(value,read,1.e-6);
+
+    Shape s(1); s.dim(0,1);
+    Shape cs(1); cs.dim(0,1);
+    //extensible string dataset
+    String str="hello";
+    H5Dataset string_ds("string_ds",_group,TypeID::STRING,s,cs);
+    CPPUNIT_ASSERT_THROW(string_ds.write(str),ShapeMissmatchError);
+
+    //try a scalar string field
+    H5Dataset sstring_ds("scalar_string_ds",_group,TypeID::STRING);
+    CPPUNIT_ASSERT_NO_THROW(sstring_ds.write(str));
+}
 //-----------------------------------------------------------------------------
 void H5DatasetTest::test_write_scalar(){
     std::cout<<"void H5DatasetTest::test_write_scalar()-----------------------";
@@ -176,17 +179,6 @@ void H5DatasetTest::test_write_scalar(){
     Float32Scalar s(100.233,"scdata","a.u.","a simple scalar value");
     H5Dataset scalar_ds("scalar_ds",_group,s.type_id());
     CPPUNIT_ASSERT_NO_THROW(scalar_ds.write(s));
-
-    Shape sh(1); sh.dim(0,0);
-    Shape cs(1); cs.dim(0,1);
-    H5Dataset array_ds("array_ds",_group,s.type_id(),sh,cs);
-    array_ds.extend(0);
-    H5Selection selection(cs);
-    CPPUNIT_ASSERT_NO_THROW(array_ds.write(selection,s));
-    s = -0.2334;
-    selection.offset(0,1);
-    array_ds.extend(0);
-    CPPUNIT_ASSERT_NO_THROW(array_ds.write(selection,s));
 
 }
 
@@ -203,15 +195,9 @@ void H5DatasetTest::test_write_array(){
     CPPUNIT_ASSERT_NO_THROW(array_ds.write(a));
 
     Shape cs(3); cs.dim(0,1); cs.dim(1,s[0]); cs.dim(2,s[1]);
-    Shape ds(3); ds.dim(0,0); ds.dim(1,s[0]); ds.dim(2,s[1]);
+    Shape ds(3); ds.dim(0,1); ds.dim(1,s[0]); ds.dim(2,s[1]);
     H5Dataset earray_ds("earray_2",_group,a.type_id(),ds,cs);
-    H5Selection selection(cs); 
-    earray_ds.extend(0);
-    CPPUNIT_ASSERT_NO_THROW(earray_ds.write(selection,a));
-    a = 100;
-    earray_ds.extend(0);
-    selection.offset(0,1);
-    CPPUNIT_ASSERT_NO_THROW(earray_ds.write(selection,a));
+    CPPUNIT_ASSERT_THROW(earray_ds.write(a),ShapeMissmatchError);
 }
 
 //-----------------------------------------------------------------------------
@@ -225,18 +211,9 @@ void H5DatasetTest::test_write_buffer(){
     CPPUNIT_ASSERT_NO_THROW(bin_ds.write(buffer));
 
     Shape cs(1); cs.dim(0,buffer.size());
-    s.dim(0,0);
+    s.dim(0,128);
     H5Dataset ebin_ds("binary_2",_group,TypeID::BINARY,s,cs);
-    ebin_ds.extend(0,1024);
-    H5Selection selection(cs);
-    buffer = 100;
-    CPPUNIT_ASSERT_NO_THROW(ebin_ds.write(selection,buffer));
-    ebin_ds.extend(0,1024);
-    selection.offset(0,1024);
-    buffer = 200;
-    CPPUNIT_ASSERT_NO_THROW(ebin_ds.write(selection,buffer));
-     
-    
+    CPPUNIT_ASSERT_NO_THROW(ebin_ds.write(buffer));
 
 }
 

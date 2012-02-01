@@ -42,50 +42,35 @@ namespace pni{
 
             //==============Implementation of constructors and destructors======
             //implementation of the default constructor
-            H5Selection::H5Selection(){
-            
-            }
+            /*H5Selection::H5Selection(){
+             
+            }*/
 
             //------------------------------------------------------------------
             //implementation of the copy constructor
-            H5Selection::H5Selection(const H5Selection &o){
-                _sspace = o.space();
-                _offset = o._offset;
-                _stride = o._stride;
-                _counts = o._counts;
-                _shape  = o._shape;
+            H5Selection::H5Selection(const H5Selection &o)
+                :_shape(o._shape),_sspace(o._sspace),_offset(o._offset),
+                 _stride(o._stride),_counts(o._counts),_dataset(o._dataset)
+            {
             }
 
             //------------------------------------------------------------------
             //implementation of the move constructor
-            H5Selection::H5Selection(H5Selection &&o){
-                _sspace = std::move(o._sspace);
-                _offset = std::move(o._offset);
-                _stride = std::move(o._stride);
-                _counts = std::move(o._counts);
-                _shape  = std::move(o._shape);
+            H5Selection::H5Selection(H5Selection &&o)
+                :_shape(std::move(o._shape)),_sspace(std::move(o._sspace)),
+                 _offset(std::move(o._offset)),_stride(std::move(o._stride)),
+                 _counts(std::move(o._counts)),
+                 _dataset(o._dataset)
+            {
             }
 
-            //------------------------------------------------------------------
-            //implementation of the standard constructor
-            H5Selection::H5Selection(const size_t &r){
-                _offset.allocate(r);
-                _stride.allocate(r);
-                _counts.allocate(r);
-
-                //set initial values where it makes sense
-                _offset = 0;
-                _stride = 1;
-                _counts = 0;
-
-                _shape.rank(r);
-                __update_shape();
-                __update_dataspace();
-            }
             
             //------------------------------------------------------------------
             //implementation of the shape constructor
-            H5Selection::H5Selection(const Shape &s,size_t offset,size_t stride){
+            H5Selection::H5Selection(H5Dataset &ds,const Shape &s,
+                    size_t offset,size_t stride)
+                :_dataset(ds)
+            {
                 _sspace = H5Dataspace(s);
                 _offset.allocate(s.rank());
                 _stride.allocate(s.rank());
@@ -122,6 +107,7 @@ namespace pni{
                     _offset = o._offset;
                     _counts  = o._counts;
                     _shape  = o._shape;
+                    _dataset = o._dataset;
                 }
 
                 return *this;
@@ -139,6 +125,7 @@ namespace pni{
                     _offset = std::move(o._offset);
                     _counts  = std::move(o._counts);
                     _shape  = std::move(o._shape);
+                    _dataset = std::move(o._dataset);
                 }
                 return *this;
             }

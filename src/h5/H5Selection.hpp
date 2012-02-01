@@ -32,12 +32,14 @@
 using namespace pni::utils;
 
 #include "H5Dataspace.hpp"
-
+#include "H5Dataset.hpp"
 
 namespace pni{
     namespace nx{
         namespace h5{
 
+            //! \ingroup nxh5_classes
+            //! \brief selection object
             class H5Selection{
                 private:
                     Shape       _shape;      //!< shape of the selection
@@ -48,19 +50,21 @@ namespace pni{
 
                     void __update_shape();
                     void __update_dataspace();
+
+                    H5Dataset &_dataset;     //!< local reference to the dataset
+                                             //!< to which the selection
+                                             //!< belongs.
+
+                    template<typename T> void __write(const T *ptr);
+                    template<typename T> void __read(T *ptr);
                 public:
                     //============constructors and destructor==================
                     //! default constructor
-                    H5Selection();
+                    //H5Selection();
                     //! copy constructor
                     H5Selection(const H5Selection &o);
                     //! move constructor
                     H5Selection(H5Selection &&o);
-                    //! standard constructor
-                    
-                    //! The default constructor of a selection.
-                    //! \param r rank of the dataset from which to pick data.
-                    H5Selection(const size_t &r);
                     //! construction with shape
                     
                     //! Construct a selection object from a shape object. 
@@ -71,7 +75,8 @@ namespace pni{
                     //! \param s shape (counts and rank) of the selection
                     //! \param offset default offset (0)
                     //! \param stride default stride (1)
-                    H5Selection(const Shape &s,size_t offset=0,size_t stride=1);
+                    H5Selection(H5Dataset &ds,
+                                const Shape &s,size_t offset=0,size_t stride=1);
                     //! destructor
                     virtual ~H5Selection();
 
@@ -194,8 +199,230 @@ namespace pni{
                     //! count values of the selection.
                     //! \return reference to the count buffer
                     const Buffer<hsize_t> &count() const;
+                    
+                    //! write a single value with selection
+
+                    //! write a single value at the location specified by 
+                    //! selection. To use a selection the dataset must not
+                    //! be scalar. 
+                    //! \throws ShapeMissmatchError if the dataset is scalar
+                    //! \throws H5DataSetError in cases of other errors
+                    //! \param s selection object
+                    //! \param value object from which to read data
+                    template<typename T> void write(const T &value);
+                    template<typename T> void read(T &value);
+                    
+                    //! write a buffer with selection
+
+                    //! Writes teh content of a memory buffer to the dataset
+                    //! in the region defined by the selection s. 
+                    //! For this purpose the size of the selection must match
+                    //! the size of the buffer.
+                    //! \throws SizeMissmatchBuffer selection and buffer sizes do not match
+                    //! \throws H5DataSetError in case of other errors
+                    //! \param s selection object
+                    //! \param buffer reference to the buffer object
+                    template<typename T,template<typename> class BT>
+                        void write(const BT<T> &buffer);
+                    
+                    //! write an array with selection
+
+                    //! 
+                    template<typename T,template<typename> class BT>
+                        void write(const Array<T,BT> &array);
+                    
+                    //! write a scalar with selection
+
+                    //! Write a scalar value in the region defined by the
+                    //! selection. In order to succeed the dataset must not be 
+                    //! scalar. 
+                    //! \throws ShapeMissmatchError if the dataset is scalar
+                    //! \throws H5DataSetError in case of all other errors
+                    //! \param s selection object
+                    //! \param scalar the scalar object which to write to disk
+                    template<typename T>
+                        void write(const Scalar<T> &scalar);
 
             };
+
+
+            //===============template implementation============================
+            //write template for a simple pointer with a selection
+            template<typename T> void H5Selection::__write(const T *ptr){
+                EXCEPTION_SETUP("template<typename T> void H5Selection::"
+                        "__write(const T *ptr)");
+                herr_t err;
+                //select the proper memory data type
+                H5Datatype mem_type;
+                
+                //select the proper memory data type
+                if(_dataset.type_id() != TypeID::BINARY){
+                    mem_type = H5Datatype::create<T>();
+                }else{
+                    mem_type = H5Datatype(TypeID::BINARY);
+                }
+                
+                //set selection to the file datasets original dataset
+                err = H5Sselect_hyperslab(_dataset.space().id(),
+                        H5S_SELECT_SET,
+                        this->offset().ptr(), //set the offset pointer
+                        this->stride().ptr(), //set the stride pointer
+                        this->count().ptr(),  //set the count pointer
+                        NULL);
+                if(err < 0){
+                    EXCEPTION_INIT(H5DataSetError,
+                            "Error applying selection!");
+                    EXCEPTION_THROW();
+                }
+
+                //write data to disk
+                err = H5Dwrite(_dataset.id(),
+                        mem_type.id(),          //set memory data type
+                        _sspace.id(),           //set selection data space
+                        _dataset.space().id(),  //set file data space
+                        H5P_DEFAULT,
+                        (const void *)ptr);
+                if(err < 0){
+                    EXCEPTION_INIT(H5DataSetError,
+                            "Error writing data to dataset!");
+                    EXCEPTION_THROW();
+                }
+
+                //remove selection from the dataspace
+                H5Sselect_none(_dataset.space().id());
+            
+            } 
+
+            //-----------------------------------------------------------------
+            //read template for a simple pointer with a selection
+            template<typename T> void H5Selection::__read(T *ptr){
+                EXCEPTION_SETUP("template<typename T> void H5Selection::"
+                        "__read(T *ptr)");
+                herr_t err;
+                //select the proper memory data type
+                H5Datatype mem_type;
+                
+                //select the proper memory data type
+                if(_dataset.type_id() != TypeID::BINARY){
+                    mem_type = H5Datatype::create<T>();
+                }else{
+                    mem_type = H5Datatype(TypeID::BINARY);
+                }
+                
+                //set selection to the file datasets original dataset
+                err = H5Sselect_hyperslab(_dataset.space().id(),
+                        H5S_SELECT_SET,
+                        this->offset().ptr(), //set the offset pointer
+                        this->stride().ptr(), //set the stride pointer
+                        this->count().ptr(),  //set the count pointer
+                        NULL);
+                if(err < 0){
+                    EXCEPTION_INIT(H5DataSetError,
+                            "Error applying selection!");
+                    EXCEPTION_THROW();
+                }
+
+                //write data to disk
+                err = H5Dread(_dataset.id(),
+                        mem_type.id(),         //set memory data type
+                        _sspace.id(),          //set the selection data space
+                        _dataset.space().id(), //set the file data space
+                        H5P_DEFAULT,
+                        (void *)ptr);
+                if(err < 0){
+                    EXCEPTION_INIT(H5DataSetError,
+                            "Error writing data to dataset!");
+                    EXCEPTION_THROW();
+                }
+
+                //remove selection from the dataspace
+                H5Sselect_none(_dataset.space().id());
+            } 
+            
+            //-----------------------------------------------------------------
+            //implementation of a simple write with selection
+            template<typename T> void H5Selection::write(const T &value){
+                EXCEPTION_SETUP("template<typename T> void H5Selection::"
+                        "write(const T &value)");
+                
+                //here we have to check that the selection referes to 
+                //a single value only
+                if(this->size()!=1){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Selection is not scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                __write(&value); 
+                
+            }
+
+            //-----------------------------------------------------------------
+            //implementation of a simple read with selection
+            template<typename T> void H5Selection::read(T &value){
+                EXCEPTION_SETUP("template<typename T> void H5Selection::"
+                        "read(T &value)");
+                
+                //here we have to check that the selection referes to 
+                //a single value only
+                if(this->size()!=1){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Selection is not scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                __read(&value); 
+                
+            }
+            
+            //-----------------------------------------------------------------
+            template<typename T,template<typename> class BT>
+                void H5Selection::write(const BT<T> &buffer){
+                EXCEPTION_SETUP("template<typename T,template<typename> "
+                        "class BT> void H5Selection::write(const BT<T> &buffer)");
+                
+
+                if(this->size() != buffer.size()){
+                    EXCEPTION_INIT(SizeMissmatchError,
+                            "Buffer and selection size do not match!");
+                    EXCEPTION_THROW();
+                }
+
+                __write(buffer.ptr());
+            }
+            
+            //-----------------------------------------------------------------
+            template<typename T> void H5Selection::write(const Scalar<T> &scalar){
+                EXCEPTION_SETUP("template<typename T> void H5Selection::"
+                        "write(const Scalar<T> &scalar)");
+                
+                if(this->size()!=1){
+                    EXCEPTION_INIT(SizeMissmatchError,
+                            "Selection size not equal 1!");
+                    EXCEPTION_THROW();
+                }
+
+                __write(scalar.ptr());
+            }
+            
+            //-----------------------------------------------------------------
+            template<typename T,template<typename> class BT>
+                void H5Selection::write(const Array<T,BT> &array){
+                EXCEPTION_SETUP("template<typename T,template<typename> "
+                        "class BT> void H5Selection::write("
+                        "const Array<T,BT> &array)");
+
+
+                //the size of the array must be equal to the size of the 
+                //selection
+                if(this->size() != array.shape().size()){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Selection and array size do not match!");
+                    EXCEPTION_THROW();
+                }
+
+                __write(array.ptr());
+            }
 
         //end of namespace
         }

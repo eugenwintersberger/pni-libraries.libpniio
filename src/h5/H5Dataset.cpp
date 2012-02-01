@@ -29,6 +29,8 @@
 #include "H5ObjectType.hpp"
 #include "H5Exceptions.hpp"
 
+#include "H5Selection.hpp"
+
 
 namespace pni{
     namespace nx{
@@ -37,6 +39,7 @@ namespace pni{
             //===implementation of constructors and destructors================
             //implementation of the default constructor
             H5Dataset::H5Dataset():H5AttributeObject(){
+            
             }
 
             //-----------------------------------------------------------------
@@ -321,6 +324,22 @@ namespace pni{
             //------------------------------------------------------------------
             TypeID H5Dataset::type_id() const{
                 return _type.type_id();
+            }
+
+            //------------------------------------------------------------------
+            //implementation of selection creation  
+            H5Selection H5Dataset::selection(size_t stride,size_t offset){
+                EXCEPTION_SETUP("H5Selection H5Dataset::"
+                        "selection(size_t stride,size_t offset)");
+                if(_space.is_scalar()){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "You cannot create a selection from a scalar"
+                            "dataset!");
+                    EXCEPTION_THROW();
+                }
+
+                H5Selection selection(*this,shape(),stride,offset);
+                return selection;
             }
 
 
