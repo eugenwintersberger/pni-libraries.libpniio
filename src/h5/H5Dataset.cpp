@@ -317,6 +317,11 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
+            size_t H5Dataset::rank() const {
+                return _space.rank();
+            }
+
+            //-----------------------------------------------------------------
             size_t H5Dataset::dim(const size_t &i) const{
                 return _space.dim(i);
             }
@@ -328,7 +333,7 @@ namespace pni{
 
             //------------------------------------------------------------------
             //implementation of selection creation  
-            H5Selection H5Dataset::selection(size_t stride,size_t offset){
+            H5Selection H5Dataset::selection(size_t stride,size_t offset) const{
                 EXCEPTION_SETUP("H5Selection H5Dataset::"
                         "selection(size_t stride,size_t offset)");
                 if(_space.is_scalar()){
@@ -338,7 +343,7 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
 
-                H5Selection selection(*this,shape(),stride,offset);
+                H5Selection selection(*this,shape(),offset,stride);
                 return selection;
             }
 

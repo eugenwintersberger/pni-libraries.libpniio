@@ -276,6 +276,18 @@ namespace pni{
                 H5Object::id(sid);
             }
 
+            //======================operators===================================
+            std::ostream &operator<<(std::ostream &o,const H5Dataspace &s){
+                o<<"HDF5 Dataspace: "<<s.rank()<<" dimensions"<<std::endl;
+                o<<"act. # of elements: ( ";
+                for(size_t i=0;i<s.rank();i++){
+                    o<<s._dims[i]<<" ";
+                }
+                o<<")";
+
+                return o;
+            }
+
         
         //end of namespace
         }

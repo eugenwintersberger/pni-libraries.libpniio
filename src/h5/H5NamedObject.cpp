@@ -148,7 +148,6 @@ namespace pni{
 
                     H5Iget_name(id(),buffer.ptr(),bsize);
                     String name(buffer.ptr());
-                    std::cout<<name<<std::endl;
                     return name;
                 }
 

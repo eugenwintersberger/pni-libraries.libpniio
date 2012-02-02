@@ -75,7 +75,7 @@ namespace pni{
                     //! \param s shape (counts and rank) of the selection
                     //! \param offset default offset (0)
                     //! \param stride default stride (1)
-                    H5Selection(H5Dataset &ds,
+                    H5Selection(const H5Dataset &ds,
                                 const Shape &s,size_t offset=0,size_t stride=1);
                     //! destructor
                     virtual ~H5Selection();
@@ -210,6 +210,7 @@ namespace pni{
                     //! \param s selection object
                     //! \param value object from which to read data
                     template<typename T> void write(const T &value);
+                    void write(const String &value);
                     template<typename T> void read(T &value);
                     
                     //! write a buffer with selection
@@ -283,6 +284,10 @@ namespace pni{
                         H5P_DEFAULT,
                         (const void *)ptr);
                 if(err < 0){
+                    std::cout<<"----------------------------------------"<<std::endl;
+                    std::cout<<_dataset.space()<<std::endl;
+                    std::cout<<_sspace<<std::endl;
+                    std::cout<<"----------------------------------------"<<std::endl;
                     EXCEPTION_INIT(H5DataSetError,
                             "Error writing data to dataset!");
                     EXCEPTION_THROW();
@@ -356,6 +361,7 @@ namespace pni{
                 __write(&value); 
                 
             }
+
 
             //-----------------------------------------------------------------
             //implementation of a simple read with selection

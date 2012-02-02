@@ -110,10 +110,24 @@ void H5DatasetTest::test_resize(){
 
     CPPUNIT_ASSERT_NO_THROW(ds.extend(0));
     s.dim(0,1);
+    CPPUNIT_ASSERT(ds.rank()  == s.rank());
     CPPUNIT_ASSERT(ds.shape() == s);
     s.dim(0,4);
     CPPUNIT_ASSERT_NO_THROW(ds.extend(0,3));
+    CPPUNIT_ASSERT(ds.rank()  == s.rank());
     CPPUNIT_ASSERT(ds.shape() == s);
+
+    s.rank(1); s.dim(0,0);
+    cs.rank(1); cs.dim(0,1);
+    H5Dataset ss("ss",_group,TypeID::STRING,s,cs);
+    CPPUNIT_ASSERT(ss.rank() == 1);
+    CPPUNIT_ASSERT(ss.size() == 0);
+    CPPUNIT_ASSERT_NO_THROW(ss.extend(0));
+    CPPUNIT_ASSERT(ss.rank() == 1);
+    CPPUNIT_ASSERT(ss.size() == 1);
+    CPPUNIT_ASSERT_NO_THROW(ss.extend(0,10));
+    CPPUNIT_ASSERT(ss.rank() == 1);
+    CPPUNIT_ASSERT(ss.size() == 11);
 
     //reshape the dataset
     Shape ns(2);
@@ -130,7 +144,7 @@ void H5DatasetTest::test_write_simple_types(){
     //start with a scalar dataset
     H5Dataset scalar_ds("scalar_dataset",_group,TypeID::FLOAT32);
     double value =1.23;
-    CPPUNIT_ASSERT_THROW(scalar_ds.write(value),ShapeMissmatchError);
+    CPPUNIT_ASSERT_NO_THROW(scalar_ds.write(value));
 
     Shape s(1); s.dim(0,1);
     Shape cs(1); cs.dim(0,1);
@@ -165,7 +179,7 @@ void H5DatasetTest::test_read_simple_types(){
     //extensible string dataset
     String str="hello";
     H5Dataset string_ds("string_ds",_group,TypeID::STRING,s,cs);
-    CPPUNIT_ASSERT_THROW(string_ds.write(str),ShapeMissmatchError);
+    CPPUNIT_ASSERT_NO_THROW(string_ds.write(str));
 
     //try a scalar string field
     H5Dataset sstring_ds("scalar_string_ds",_group,TypeID::STRING);

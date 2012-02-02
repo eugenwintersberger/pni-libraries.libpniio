@@ -67,11 +67,10 @@ namespace pni{
             
             //------------------------------------------------------------------
             //implementation of the shape constructor
-            H5Selection::H5Selection(H5Dataset &ds,const Shape &s,
+            H5Selection::H5Selection(const H5Dataset &ds,const Shape &s,
                     size_t offset,size_t stride)
-                :_dataset(ds)
+                :_dataset((H5Dataset  &)ds)
             {
-                _sspace = H5Dataspace(s);
                 _offset.allocate(s.rank());
                 _stride.allocate(s.rank());
                 _counts.allocate(s.rank());
@@ -102,11 +101,11 @@ namespace pni{
                         "(const H5Selection &o)");
 
                 if(this != &o){
-                    _sspace = o._sspace;
-                    _stride = o._stride;
-                    _offset = o._offset;
+                    _sspace  = o._sspace;
+                    _stride  = o._stride;
+                    _offset  = o._offset;
                     _counts  = o._counts;
-                    _shape  = o._shape;
+                    _shape   = o._shape;
                     _dataset = o._dataset;
                 }
 
@@ -119,13 +118,14 @@ namespace pni{
                 EXCEPTION_SETUP("H5Selection &H5Selection::operator="
                         "(H5Selection &&o)");
 
+                //original names 
                 if(this != &o){
-                    _sspace = std::move(o._sspace);
-                    _stride = std::move(o._stride);
-                    _offset = std::move(o._offset);
+                    _sspace  = std::move(o._sspace);
+                    _stride  = std::move(o._stride);
+                    _offset  = std::move(o._offset);
                     _counts  = std::move(o._counts);
-                    _shape  = std::move(o._shape);
-                    _dataset = std::move(o._dataset);
+                    _shape   = std::move(o._shape);
+                    _dataset = o._dataset;
                 }
                 return *this;
             }
@@ -218,6 +218,59 @@ namespace pni{
             //-----------------------------------------------------------------
             const Buffer<hsize_t> &H5Selection::count() const {
                 return _counts;
+            }
+
+            //=============specializations of the IO methods===================
+            
+            void H5Selection::write(const String &value){
+                EXCEPTION_SETUP("template<> void H5Selection::"
+                        "write(const String &value)");
+
+                std::cout<<"use string writer ...."<<std::endl;
+
+                if(this->size()!=1){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Selection is not scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                const char *ptr = value.c_str();
+
+                herr_t err;
+                //select the proper memory data type
+                H5Datatype mem_type = H5Datatype(H5Dget_type(_dataset.id()));
+                
+                //set selection to the file datasets original dataset
+                //==========>here we would have to lock the dataset object 
+                err = H5Sselect_hyperslab(_dataset.space().id(),
+                        H5S_SELECT_SET,
+                        this->offset().ptr(), //set the offset pointer
+                        this->stride().ptr(), //set the stride pointer
+                        this->count().ptr(),  //set the count pointer
+                        NULL);
+                if(err < 0){
+                    EXCEPTION_INIT(H5DataSetError,
+                            "Error applying selection!");
+                    EXCEPTION_THROW();
+                }
+
+                //write data to disk
+                err = H5Dwrite(_dataset.id(),
+                        mem_type.id(),          //set memory data type
+                        _sspace.id(),           //set selection data space
+                        _dataset.space().id(),  //set file data space
+                        H5P_DEFAULT,
+                        &ptr);
+                if(err < 0){
+                    EXCEPTION_INIT(H5DataSetError,
+                            "Error writing data to dataset!");
+                    EXCEPTION_THROW();
+                }
+
+                //remove selection from the dataspace
+                H5Sselect_none(_dataset.space().id());
+
+                //===========>the dataset object can be releasd.
             }
 
 

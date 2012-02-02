@@ -66,11 +66,10 @@ namespace pni{
 
                     //===========attribute management methods==================
                     //! create scalar attribute
-                    H5Attribute attr(const String &n,const TypeID &tid)
-                        const;
+                    H5Attribute attr(const String &n,const TypeID &tid) const;
                     //! create an array attribute
                     H5Attribute attr(const String &n,const TypeID &tid,
-                            const Shape &s) const;
+                                     const Shape &s) const;
 
                     //! open an attribute
                     H5Attribute attr(const String &n) const;

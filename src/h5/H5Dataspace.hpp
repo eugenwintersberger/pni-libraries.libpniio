@@ -40,6 +40,9 @@ namespace pni{
 
             //! This class encapsulates an HDF5 dataspace. A dataspace describes
             //! the organization of dataelements within a dataset. 
+            //! A dataspace can be resized in the sense that the number of 
+            //! elements along each dimension can be changed. However, the
+            //! number of dimensions itself remains fixed.
             class H5Dataspace:public H5Object{
                 private:
 
@@ -161,6 +164,9 @@ namespace pni{
 
                     //! close the dataspace
                     virtual void close();
+
+                    friend std::ostream &operator<<(std::ostream &o,
+                            const H5Dataspace &s);
 
             };
 
