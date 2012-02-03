@@ -72,33 +72,37 @@ namespace pni{
             //===========implementation of assignment operators================
 
             H5NamedObject &H5NamedObject::operator=(const H5NamedObject &o){
-                if(this != &o){
-                    (H5Object &)(*this) = (H5Object &)o;
-                }
+                if(this == &o) return *this;
+
+                H5Object::operator=(o);
+
                 return *this;
             }
 
             //-----------------------------------------------------------------
             H5NamedObject &H5NamedObject::operator=(const H5Object &o){
-                if(this != &o){
-                    (H5Object &)(*this) = o;
-                }
+                if(this == &o) return *this;
+
+                H5Object::operator=(o);
+                
                 return *this;
             }
 
             //-----------------------------------------------------------------
             H5NamedObject &H5NamedObject::operator=(H5NamedObject &&o){
-                if(this != &o){
-                    (H5Object &)(*this) = std::move((H5Object &)o);
-                }
+                if(this == &o) return *this;
+
+                H5Object::operator=(std::move(o));
+
                 return *this;
             }
 
             //-----------------------------------------------------------------
             H5NamedObject &H5NamedObject::operator=(H5Object &&o){
-                if(this != &o){
-                    (H5Object &)(*this) = std::move(o);
-                }
+                if(this == &o) return *this;
+
+                H5Object::operator=(std::move(o));
+
                 return *this;
             }
 

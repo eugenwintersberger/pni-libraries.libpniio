@@ -46,10 +46,10 @@ namespace pni{
                     H5NamedObject(const hid_t &id);
                 public:
                     //==============constructors and destructors===============
-                    H5NamedObject();
-                    H5NamedObject(const H5NamedObject &o);
+                    explicit H5NamedObject();
+                    explicit H5NamedObject(const H5NamedObject &o);
                     H5NamedObject(const H5Object &o);
-                    H5NamedObject(H5NamedObject &&o);
+                    explicit H5NamedObject(H5NamedObject &&o);
                     H5NamedObject(H5Object &&o);
 
                     virtual ~H5NamedObject();

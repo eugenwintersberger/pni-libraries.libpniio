@@ -46,21 +46,22 @@ namespace pni{
                 public:
                     //==========constructors and destructors===================
                     //! default constructor
-                    H5Group();
+                    explicit H5Group();
                     //! copy constructor
-                    H5Group(const H5Group &o);
+                    explicit H5Group(const H5Group &o);
                     //! copy conversion constructor
                     H5Group(const H5Object &o);
                     //! move constructor
-                    H5Group(H5Group &&o);
+                    explicit H5Group(H5Group &&o);
                     //! move conversion constructor
                     H5Group(H5Object &&o);
                     //! standard constructor
-                    H5Group(const String &name,const H5Group &p);
+                    explicit H5Group(const String &name,const H5Group &p);
                     //! construct from object ID
-                    H5Group(const hid_t &oid);
+                    explicit H5Group(const hid_t &oid);
                     //! destructor
                     virtual ~H5Group();
+
 
                     //===========assignment operators==========================
                     //! copy assignment

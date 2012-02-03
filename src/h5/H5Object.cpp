@@ -29,26 +29,35 @@ namespace pni{
     namespace nx{
         namespace h5{
             //=================constrcutors and destructors====================
-            H5Object::H5Object(const hid_t &id){
-                _id = id;
+            H5Object::H5Object(const hid_t &id)
+                :_id(id)
+            {
+                //if the id passed to the constructor is valid 
+                //we need to increment the reference counter for this ID.
+                //The reason is simply that somewhere outside there is 
+                //still a handle to this ID.
+                if(H5Iis_valid(_id)) H5Iinc_ref(_id);
             }
             
             //-----------------------------------------------------------------
-            H5Object::H5Object(){
-                _id = 0;
+            H5Object::H5Object()
+                :_id(0)
+            {
             }
 
             //-----------------------------------------------------------------
-            H5Object::H5Object(const H5Object &o){
-                _id = o._id;
+            H5Object::H5Object(const H5Object &o)
+                :_id(o._id)
+            {
                 //need to increment the reference 
                 //counter for this object
                 H5Iinc_ref(_id);
             }
 
             //-----------------------------------------------------------------
-            H5Object::H5Object(H5Object &&o){
-                _id = o._id;
+            H5Object::H5Object(H5Object &&o)
+                :_id(o._id) 
+            {
                 o._id = 0;
                 //since the id is removed from the original object we do not
                 //have to care about the reference counter
@@ -56,20 +65,23 @@ namespace pni{
             
             //-----------------------------------------------------------------
             H5Object::~H5Object(){
+                //this is not a good idea as we are calling a virtual function
+                //in a destructor
                 close();
             }   
 
             //================assignment operators=============================
             //implementation of the copy assignment operator
             H5Object &H5Object::operator=(const H5Object &o){
-                if(this != &o){
-                    close(); //close the actual object
-                    _id = o._id;
 
-                    //if the original object is valid we have to increment 
-                    //the reference counter for this id
-                    if(is_valid()) H5Iinc_ref(_id);
-                }
+                if(this == &o) return *this;
+
+                close(); //close the actual object
+                _id = o._id;
+
+                //if the original object is valid we have to increment 
+                //the reference counter for this id
+                if(is_valid()) H5Iinc_ref(_id);
 
                 return *this;
             }
@@ -77,11 +89,15 @@ namespace pni{
             //-----------------------------------------------------------------
             //implementation of the move assignment operator
             H5Object &H5Object::operator=(H5Object &&o){
-                if(this != &o){
-                    close(); //close the actual object
-                    _id = o._id;
-                    o._id = 0;
-                }
+
+                if(this == &o) return *this;
+
+                close(); //close the actual object
+                _id = o._id;
+                o._id = 0;
+
+                //As this is a move operation we do not need to care
+                //about the IDs reference. 
 
                 return *this;
             }

@@ -60,35 +60,45 @@ namespace pni{
             }
 
             //=======implementation of assignment operators====================
+            //implementation of copy assignment operator
             H5AttributeObject &H5AttributeObject::operator=(const
                     H5AttributeObject &o){
-                if(this != &o){
-                    (H5NamedObject &)(*this) = (H5NamedObject &)o;
-                }
+                if(this == &o) return *this;
+
+                H5NamedObject::operator=(o);
+
                 return *this;
             }
 
+            //-----------------------------------------------------------------
+            //implementation of copy conversion operator
             H5AttributeObject &H5AttributeObject::operator=(const H5Object &o)
             {
-                if(this != &o){
-                    (H5NamedObject &)(*this) = o;
-                }
+                if(this == &o) return *this;
+                
+                H5NamedObject::operator=(o);
+
                 return *this;
             }
 
+            //-----------------------------------------------------------------
+            //implementation of move assignment operator
             H5AttributeObject &H5AttributeObject::operator=(H5AttributeObject
-                    &&o){
-                if(this != &o){
-                   (H5NamedObject &)(*this) = std::move((H5NamedObject &)o); 
-                }
+                    &&o)
+            {
+                if(this == &o) return *this;     
+                
+                H5NamedObject::operator=(std::move(o));
 
                 return *this;
             }
 
+            //-----------------------------------------------------------------
+            //implementation of move conversion operator
             H5AttributeObject &H5AttributeObject::operator=(H5Object &&o){
-                if(this != &o){
-                    (H5NamedObject &)(*this) = std::move(o);
-                }
+                if(this == &o) return *this;
+
+                H5NamedObject::operator=(std::move(o));
                 return *this;
             }
 

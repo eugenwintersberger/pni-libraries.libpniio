@@ -111,12 +111,14 @@ namespace pni{
             H5Group::~H5Group(){
             }
 
+
             //======implementation of assignment operators=====================
             //implementation of copy assignment
             H5Group &H5Group::operator=(const H5Group &o){
-                if(this != &o){
-                    (H5AttributeObject &)(*this) = (H5AttributeObject &)o;
-                }
+                if(this == &o) return *this;
+
+                H5AttributeObject::operator=(o);
+
                 return *this;
             }
             
@@ -132,22 +134,20 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
 
-                if(this != &o){
-                    
+                if(this == &o) return *this;
 
+                H5AttributeObject::operator=(o);
 
-                    (H5AttributeObject &)(*this) = o;
-                }
                 return *this;
             }
 
             //-----------------------------------------------------------------
             //implementation of move assignment
             H5Group &H5Group::operator=(H5Group &&o){
-                if(this != &o){
-                    (H5AttributeObject &)(*this) = std::move((H5AttributeObject
-                                &)o);
-                }
+                if(this == &o) return *this;
+
+                H5AttributeObject::operator=(std::move(o));
+
                 return *this;
             }
             
@@ -161,10 +161,10 @@ namespace pni{
                             "object!");
                     EXCEPTION_THROW();
                 }
+    
+                if(this == &o) return *this;
+                H5AttributeObject::operator=(std::move(o));
 
-                if(this != &o){
-                    (H5AttributeObject &)(*this) = std::move(o);
-                }
                 return *this;
             }
 
@@ -180,12 +180,14 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
 
+                return H5Object(oid);
+
                 //determine the object type
                 switch(H5Iget_type(oid)){
                     case H5I_GROUP: 
-                        return H5Group(oid);
+                        return static_cast<H5Object>(H5Group(oid));
                     case H5I_DATASET:
-                        return H5Dataset(oid);
+                        return static_cast<H5Object>(H5Dataset(oid));
                     default:
                         return H5Object();
                 }

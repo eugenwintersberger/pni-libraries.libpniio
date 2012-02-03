@@ -46,10 +46,10 @@ namespace pni{
                     H5AttributeObject(const hid_t &oid);
                 public:
                     //===========constructors and destructors==================
-                    H5AttributeObject();
-                    H5AttributeObject(const H5AttributeObject &o);
+                    explicit H5AttributeObject();
+                    explicit H5AttributeObject(const H5AttributeObject &o);
                     H5AttributeObject(const H5Object &o);
-                    H5AttributeObject(H5AttributeObject &&);
+                    explicit H5AttributeObject(H5AttributeObject &&);
                     H5AttributeObject(H5Object &&o);
                     virtual ~H5AttributeObject();
 

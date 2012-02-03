@@ -59,18 +59,18 @@ namespace pni{
                 public:
                     //=============constructors and destructors================
                     //! default constructor
-                    H5Object();
+                    explicit H5Object();
                     //! copy constructor
 
                     //! Increments the ID reference counter for the ID wrapped
                     //! by this instance of H5Object.
-                    H5Object(const H5Object &o);
+                    explicit H5Object(const H5Object &o);
                     //! move constructor
 
                     //! Unlike for the copy constructor this constructor does 
                     //! not incluence and IDs reference counter since the 
                     //! ID of the original object is set to 0.
-                    H5Object(H5Object &&o);
+                    explicit H5Object(H5Object &&o);
                     //! destructor
                     virtual ~H5Object();
 
