@@ -46,24 +46,53 @@ namespace pni{
                     H5NamedObject(const hid_t &id);
                 public:
                     //==============constructors and destructors===============
+                    //! default constructor
                     explicit H5NamedObject();
-                    explicit H5NamedObject(const H5NamedObject &o);
+                    //! copy constructor
+                    H5NamedObject(const H5NamedObject &o);
+                    //! copy conversion constructor
                     H5NamedObject(const H5Object &o);
-                    explicit H5NamedObject(H5NamedObject &&o);
+                    //! move constructor
+                    H5NamedObject(H5NamedObject &&o);
+                    //! move conversion constructor
                     H5NamedObject(H5Object &&o);
-
+                    //! destructor
                     virtual ~H5NamedObject();
 
                     //==========assignment operators===========================
+                    //! copy assignment operator
                     H5NamedObject &operator=(const H5NamedObject &o);
+                    //! copy conversion assignment operator
                     H5NamedObject &operator=(const H5Object &o);
+                    //! move assignment operator
                     H5NamedObject &operator=(H5NamedObject &&o);
+                    //! move conversion assignment operator
                     H5NamedObject &operator=(H5Object &&o);
 
 
                     //============name methods=================================
+                    //! return object name
+
+                    //! Returns the name of an object. Within an HDF5 file 
+                    //! objects can be addressed by a UNIX like path. 
+                    //! This method returns the last part of the path. 
+                    //! So if an object would have the following path 
+                    //! /scan_1/detector/data this method would return 
+                    //! data.
+                    //! \return name of the object
                     virtual String name() const;
+                    //! return object base
+
+                    //! Return the the base part of the objects path. 
+                    //! If the object would have the path 
+                    //! /scan_1/detector/data this method would return 
+                    //! /scan_1/detector.
+                    //! \return base part of the objects path
                     virtual String base() const;
+                    //! return object path
+                    
+                    //! This method returns the full path of an object.
+                    //! \return full object path
                     virtual String path() const;
 
 
