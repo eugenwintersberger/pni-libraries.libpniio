@@ -103,19 +103,19 @@ namespace pni{
                     //! is valid and available. For a file object this would
                     //! mean that the file is open.
                     //! \returns true if valid HDF5 object
-                    virtual bool is_valid() const;
+                    bool is_valid() const;
                     //! return HDF5 id
 
                     //! Returns the HDF5 ID of the object. The ID is returned as 
                     //! a const reference and thus cannot be altered.
                     //! \return HDF5 ID
-                    virtual const hid_t &id() const;
-                    //! return the HDF5 type
+                    const hid_t &id() const;
+                    //! return the type of HDF5 object
 
                     //! Returns the HDF5 type of the object which can be used to 
                     //! identify the kind of object one is dealing with.
                     //! \return HDF type
-                    virtual H5ObjectType type() const;
+                    H5ObjectType object_type() const;
             };
 
 

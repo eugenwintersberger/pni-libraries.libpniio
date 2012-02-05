@@ -59,7 +59,7 @@ namespace pni{
                     //! By default a scalar dataspace is constructed. This 
                     //! constructor can always be used in order to store a
                     //! scalar value.
-                    H5Dataspace();
+                    explicit H5Dataspace();
                     //! copy constructor
                     H5Dataspace(const H5Dataspace &o);
                     //! copy conversion constructor
@@ -74,20 +74,20 @@ namespace pni{
                     //! object passed to the constructor. The dimension
                     //! are unlimited along each dimension.
                     //! \param s shape object determining the shape
-                    H5Dataspace(const Shape &s);
+                    explicit H5Dataspace(const Shape &s);
                     //! fixed size datasset
                     
                     //! Creates a dataspace of fixed size. 
                     //! \param s initial shape
                     //! \param mx maximum shape
-                    H5Dataspace(const Shape &s,const Shape &ms);
+                    explicit H5Dataspace(const Shape &s,const Shape &ms);
                     //! create object from HDF5 id
 
                     //! Constructor creating an object directly from its HDF5
                     //! ID.
-                    H5Dataspace(const hid_t &id);
+                    explicit H5Dataspace(const hid_t &id);
 
-                    virtual ~H5Dataspace();
+                    ~H5Dataspace();
 
                     //================Assignment operators=====================
                     //! copy assignment operator

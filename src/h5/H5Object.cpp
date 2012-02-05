@@ -51,7 +51,7 @@ namespace pni{
             {
                 //need to increment the reference 
                 //counter for this object
-                H5Iinc_ref(_id);
+                if(H5Iis_valid(_id)) H5Iinc_ref(_id);
             }
 
             //-----------------------------------------------------------------
@@ -65,10 +65,10 @@ namespace pni{
             
             //-----------------------------------------------------------------
             H5Object::~H5Object(){
-                //this is not a good idea as we are calling a virtual function
-                //in a destructor
-                close();
+                if(is_valid()) H5Oclose(id());
+                _id = 0;
             }   
+
 
             //================assignment operators=============================
             //implementation of the copy assignment operator
@@ -121,7 +121,7 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
-            H5ObjectType H5Object::type() const {
+            H5ObjectType H5Object::object_type() const {
                 H5I_type_t tid;
 
                 tid = H5Iget_type(_id);

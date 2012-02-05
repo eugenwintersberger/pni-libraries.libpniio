@@ -61,6 +61,9 @@ void H5GroupTest::test_assignment(){
     CPPUNIT_ASSERT(g2.is_valid());
     CPPUNIT_ASSERT(!g.is_valid());
 
+    g.close();
+    g1.close();
+    g2.close();
 }
 
 
@@ -71,17 +74,17 @@ void H5GroupTest::test_openobjects(){
     H5Group g("/test/data/detector",file);
     H5Group det;
 
-    det = file.open("/test/data/detector");
+    CPPUNIT_ASSERT_NO_THROW(det = file.open("/test/data/detector"));
     CPPUNIT_ASSERT(det.is_valid());
 
-    H5Group test = file["test"];
+    H5Group test;
+    CPPUNIT_ASSERT_NO_THROW(test = file["test"]);
     CPPUNIT_ASSERT(test.is_valid());
-    H5Group data = test["data"];
-    det = test["data/detector"];
+    H5Group data;
+    CPPUNIT_ASSERT_NO_THROW(data = test["data"]);
+    CPPUNIT_ASSERT_NO_THROW(det = test["data/detector"]);
     CPPUNIT_ASSERT(data.is_valid());
     CPPUNIT_ASSERT(det.is_valid());
-
-    
 }
 
 void H5GroupTest::test_attributes(){

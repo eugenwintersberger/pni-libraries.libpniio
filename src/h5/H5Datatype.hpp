@@ -66,10 +66,11 @@ namespace pni{
 
                     //! private method to create the complex types
                     template<typename T> static hid_t _create_complex_type();
+                protected:
                 public:
                     //======================Constructors and destructors=======
                     //! default constructor
-                    H5Datatype();
+                    explicit H5Datatype();
                     //! copy constructor
                     H5Datatype(const H5Datatype &o);
                     //! copy conversion operator
@@ -79,11 +80,11 @@ namespace pni{
                     //! move conversion operator
                     H5Datatype(H5Object &&o);
                     //! constructor from TypeID
-                    H5Datatype(const TypeID &tid);
+                    explicit H5Datatype(const TypeID &tid);
                     //! constructor form HDF5 id
-                    H5Datatype(const hid_t &tid);
+                    explicit H5Datatype(const hid_t &tid);
                     //! destructor
-                    virtual ~H5Datatype();
+                    ~H5Datatype();
 
                     //=============factory methods=============================
                     //! creation template

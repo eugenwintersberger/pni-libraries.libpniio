@@ -48,11 +48,11 @@ namespace pni{
                     hid_t _acc_plist;    //!< property list for file access
                 public:
                     //! default constructor
-                    H5File();
+                    explicit H5File();
                     //! move constructor
                     H5File(H5File &&o);
                     //! destructor
-                    virtual ~H5File();
+                    ~H5File();
 
                     //! move assignment
                     H5File &operator=(H5File &&o);
@@ -61,9 +61,9 @@ namespace pni{
                         return H5Group::open(n);
                     }
                     virtual void open(const String &n,bool overwrite);
-                    virtual void create(const String &n,bool overwrite,ssize_t ssize);
+                    void create(const String &n,bool overwrite,ssize_t ssize);
                     virtual void close();
-                    virtual void flush() const;
+                    void flush() const;
                     virtual String path() const;
             };
 

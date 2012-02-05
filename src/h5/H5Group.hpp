@@ -94,6 +94,8 @@ namespace pni{
                     //==============misc methods===============================
 
                     void remove(const String &n);
+
+                    virtual void close();
                    
                     
             };

@@ -55,7 +55,7 @@ namespace pni{
                 EXCEPTION_SETUP("H5Dataset::H5Dataset(const H5Object &o)");
 
                 //check if the type is ok for conversion
-                if(type() != H5ObjectType::DATASET){
+                if(object_type() != H5ObjectType::DATASET){
                     EXCEPTION_INIT(H5DataSetError,"Object is not a dataset!");
                     EXCEPTION_THROW();
                 }
@@ -78,7 +78,7 @@ namespace pni{
             H5Dataset::H5Dataset(H5Object &&o):H5AttributeObject(std::move(o)){
                 EXCEPTION_SETUP("H5Dataset::H5Dataset(H5Object &&o)");
 
-                if(type() != H5ObjectType::DATASET){
+                if(object_type() != H5ObjectType::DATASET){
                     EXCEPTION_INIT(H5DataSetError,"Object is not a dataset!");
                     EXCEPTION_THROW();
                 }
@@ -222,7 +222,7 @@ namespace pni{
             H5Dataset &H5Dataset::operator=(const H5Object &o){
                 EXCEPTION_SETUP("H5Dataset &H5Dataset::operator="
                         "(const H5Object &o)");
-                if(o.type()!=H5ObjectType::DATASET){
+                if(o.object_type()!=H5ObjectType::DATASET){
                     EXCEPTION_INIT(H5DataSetError,"Object is not a dataset!");
                     EXCEPTION_THROW();
                 }
@@ -252,7 +252,7 @@ namespace pni{
             H5Dataset &H5Dataset::operator=(H5Object &&o){
                 EXCEPTION_SETUP("H5Dataset &H5Dataset::operator="
                         "(H5Object &&o)");
-                if(o.type() != H5ObjectType::DATASET){
+                if(o.object_type() != H5ObjectType::DATASET){
                     EXCEPTION_INIT(H5DataSetError,"Object is not a dataset!");
                     EXCEPTION_THROW();
                 }

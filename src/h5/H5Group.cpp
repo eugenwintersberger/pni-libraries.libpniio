@@ -47,7 +47,7 @@ namespace pni{
             H5Group::H5Group(const H5Object &o):H5AttributeObject(o){
                 EXCEPTION_SETUP("H5Group::H5Group(const H5Object &o)");
 
-                if(type()!=H5ObjectType::GROUP){
+                if(object_type()!=H5ObjectType::GROUP){
                     EXCEPTION_INIT(H5GroupError,"Object is not a "
                             "group object!");
                     EXCEPTION_THROW();
@@ -64,7 +64,7 @@ namespace pni{
             H5Group::H5Group(H5Object &&o):H5AttributeObject(std::move(o)){
                 EXCEPTION_SETUP("H5Group::H5Group(H5Object &&o)");
 
-                if(type() != H5ObjectType::GROUP){
+                if(object_type() != H5ObjectType::GROUP){
                     EXCEPTION_INIT(H5GroupError,
                             "Object is not a group object!");
                     EXCEPTION_THROW();
@@ -109,6 +109,11 @@ namespace pni{
             //-----------------------------------------------------------------
             //implemenation of the destructor
             H5Group::~H5Group(){
+                if(is_valid()) H5Gclose(id());
+            }
+
+            void H5Group::close(){
+                if(is_valid()) H5Gclose(id());
             }
 
 
@@ -128,7 +133,7 @@ namespace pni{
                 EXCEPTION_SETUP("H5Group &H5Group::operator="
                         "(const H5Object &o)");
 
-                if(o.type() != H5ObjectType::GROUP){
+                if(o.object_type() != H5ObjectType::GROUP){
                     EXCEPTION_INIT(H5GroupError,"Object is not a "
                             "group object!");
                     EXCEPTION_THROW();
@@ -156,7 +161,7 @@ namespace pni{
             H5Group &H5Group::operator=(H5Object &&o){
                 EXCEPTION_SETUP("H5Group &H5Group::operator=(H5Object &&o)");
 
-                if(o.type() != H5ObjectType::GROUP){
+                if(o.object_type() != H5ObjectType::GROUP){
                     EXCEPTION_INIT(H5GroupError,"Object is not a group"
                             "object!");
                     EXCEPTION_THROW();
@@ -181,13 +186,21 @@ namespace pni{
                 }
 
                 //determine the object type
-                switch(H5Iget_type(oid)){
-                    case H5I_GROUP: 
-                        return H5Group(oid);
-                    case H5I_DATASET:
-                        return H5Dataset(oid);
-                    default:
-                        return H5Object();
+                H5I_type_t tid = H5Iget_type(oid);
+                if(tid == H5I_GROUP){
+                    H5Group g(oid);
+                    H5Gclose(oid);
+                    if(!g.is_valid()){
+                        std::cerr<<"group is not valid!"<<std::endl;
+                    }
+                    return g;
+                }else if(tid == H5I_DATASET){
+                    H5Dataset d(oid);
+                    H5Dclose(oid);
+                    return d;
+                }else{
+                    H5Oclose(oid);
+                    return H5Object();
                 }
             }
 

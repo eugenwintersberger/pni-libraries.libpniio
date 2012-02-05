@@ -214,40 +214,42 @@ namespace pni{
             }
 
             H5Datatype::~H5Datatype(){
-
+                if(is_valid()) H5Tclose(id());
             }
 
 
             //=============Assignment operator=================================
-            
-            //! copy assignment operator
+            //implementation of copy assignment operator
             H5Datatype &H5Datatype::operator=(const H5Datatype &o){
                 if(this != &o){
-                    (H5Object &)(*this) = (H5Object &)o;
+                    H5Object::operator=(o);
                 }
                 return *this;
             }
 
-            //! copy conversion assignment operator
+            //------------------------------------------------------------------
+            //implementation of copy conversion assignment operator
             H5Datatype &H5Datatype::operator=(const H5Object &o){
                 if(this != &o){
-                    (H5Object &)(*this) = o;
+                    H5Object::operator=(o);
                 }
                 return *this;
             }
 
-            //! move assignment operator
+            //------------------------------------------------------------------
+            //implementation of move assignment operator
             H5Datatype &H5Datatype::operator=(H5Datatype &&o){
                 if(this != &o){
-                    (H5Object &)(*this) = std::move((H5Object &&)o);
+                    H5Object::operator=(std::move(o));
                 }
                 return *this;
             }
 
-            //! move conversion assignment operator
+            //------------------------------------------------------------------
+            //implementation of move conversion assignment operator
             H5Datatype &H5Datatype::operator=(H5Object &&o){
                 if(this != &o){
-                    (H5Object &)(*this) = std::move(o);
+                    H5Object::operator=(std::move(o));
                 }
                 return *this;
             }
@@ -286,6 +288,8 @@ namespace pni{
 
                 if(H5Datatype(TypeID::BINARY) == *this) return TypeID::BINARY;
                 if(H5Datatype(TypeID::STRING) == *this) return TypeID::STRING;
+
+                return TypeID::NONE;
                 
             }
 

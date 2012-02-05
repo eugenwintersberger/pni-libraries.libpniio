@@ -78,7 +78,8 @@ namespace pni{
             H5Attribute::~H5Attribute(){
                 _dspace.close();
                 _dtype.close();
-                close();
+
+                if(is_valid()) H5Aclose(id());
             }
 
             //===============implementation of assignment operators============

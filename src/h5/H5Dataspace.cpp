@@ -113,13 +113,14 @@ namespace pni{
     
             //-----------------------------------------------------------------
             H5Dataspace::~H5Dataspace(){
+                if(is_valid()) H5Sclose(id());
             }
 
             //===================Assignment operators==========================
             //implementation of the copy assignment operator
             H5Dataspace &H5Dataspace::operator=(const H5Dataspace &o){
                 if(this != &o){
-                    (H5Object &)(*this) = (H5Object &)o;
+                    H5Object::operator=(o);
                     _dims  = o._dims;
                     _maxdims = o._maxdims;
                 }
@@ -131,7 +132,7 @@ namespace pni{
             //implementation of the copy conversion assignment operator
             H5Dataspace &H5Dataspace::operator=(const H5Object &o){
                 if(this != &o){
-                    (H5Object &)(*this) = o;
+                    H5Object::operator=(o);
                     __set_buffers();
                 }
                 return *this;
@@ -141,7 +142,7 @@ namespace pni{
             //implementation of the move assignment operator
             H5Dataspace &H5Dataspace::operator=(H5Dataspace &&o){
                 if(this != &o){
-                    (H5Object &)(*this) = std::move((H5Object &&)o);
+                    H5Object::operator=(std::move(o));
                     _dims  = std::move(o._dims);
                     _maxdims = std::move(o._maxdims);
                 }
@@ -153,7 +154,7 @@ namespace pni{
             //implementation of the move conversion operator
             H5Dataspace &H5Dataspace::operator=(H5Object &&o){
                 if(this != &o){
-                    (H5Object &)(*this) = std::move(o);
+                    H5Object::operator=(std::move(o));
                     __set_buffers();
                 }
                 return *this;
