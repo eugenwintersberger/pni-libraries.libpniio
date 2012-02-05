@@ -43,7 +43,7 @@ namespace pni{
             //! such objects.
             class H5NamedObject:public H5Object{
                 protected:
-                    H5NamedObject(const hid_t &id);
+                    explicit H5NamedObject(const hid_t &id);
                 public:
                     //==============constructors and destructors===============
                     //! default constructor

@@ -43,7 +43,7 @@ namespace pni{
             //! \brief objects which can hold attributes
             class H5AttributeObject:public H5NamedObject{
                 protected:
-                    H5AttributeObject(const hid_t &oid);
+                    explicit H5AttributeObject(const hid_t &oid);
                 public:
                     //===========constructors and destructors==================
                     //! default constructor

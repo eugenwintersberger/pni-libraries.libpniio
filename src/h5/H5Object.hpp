@@ -10,7 +10,7 @@
  *
  * libpninx is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  ee the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -50,7 +50,7 @@ namespace pni{
                 private:
                     hid_t _id; //!< ID of the object
                 protected:
-                    H5Object(const hid_t &id);
+                    explicit H5Object(const hid_t &id);
                     //an HDF5 object cannot be created by itself - this 
                     //must be done by some other instance.
                     void id(const hid_t &oid){

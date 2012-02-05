@@ -43,22 +43,23 @@ namespace pni{
             //! \ingroup nxh5_classes
             //! \brief HDF5 group object
             class H5Group:public H5AttributeObject{
+                protected:
+                    //! construct from object ID
+                    explicit H5Group(const hid_t &oid);
                 public:
                     //==========constructors and destructors===================
                     //! default constructor
                     explicit H5Group();
                     //! copy constructor
-                    explicit H5Group(const H5Group &o);
+                    H5Group(const H5Group &o);
                     //! copy conversion constructor
                     H5Group(const H5Object &o);
                     //! move constructor
-                    explicit H5Group(H5Group &&o);
+                    H5Group(H5Group &&o);
                     //! move conversion constructor
                     H5Group(H5Object &&o);
                     //! standard constructor
                     explicit H5Group(const String &name,const H5Group &p);
-                    //! construct from object ID
-                    explicit H5Group(const hid_t &oid);
                     //! destructor
                     virtual ~H5Group();
 
@@ -74,10 +75,24 @@ namespace pni{
                     H5Group &operator=(H5Object &&o);
 
                     //=============methods to open objects=====================
+                    //! open an arbitrary object
+
+                    //! Opens an arbitrary object. The method takes a path 
+                    //! to the object and returns an H5Object as a result 
+                    //! from which the object can be constructed.
+                    //! \param n object path
+                    //! \return HDF5 object addressed by n
                     H5Object open(const String &n) const;
+                    //! open an arbitrary object
+
+                    //! Basically this does the same as the open() method.
+                    //! \param n object path
+                    //! \return H5Object addressed by n
+                    //! \sa H5Object open(const String &n) const
                     H5Object operator[](const String &n) const;
 
                     //==============misc methods===============================
+
                     void remove(const String &n);
                    
                     
