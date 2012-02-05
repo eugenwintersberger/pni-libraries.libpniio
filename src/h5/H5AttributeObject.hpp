@@ -46,11 +46,20 @@ namespace pni{
                     H5AttributeObject(const hid_t &oid);
                 public:
                     //===========constructors and destructors==================
+                    //! default constructor
                     explicit H5AttributeObject();
+                    //! copy constructor
                     explicit H5AttributeObject(const H5AttributeObject &o);
+                    //! copy conversion constructor
                     H5AttributeObject(const H5Object &o);
+                    //! move constructor
                     explicit H5AttributeObject(H5AttributeObject &&);
+                    //! move conversion constructor
                     H5AttributeObject(H5Object &&o);
+                    //! destructor
+
+                    //! Destructor - must be virtual in order to use this 
+                    //! class as a base class.
                     virtual ~H5AttributeObject();
 
                     //===========assignment operators==========================
@@ -66,12 +75,30 @@ namespace pni{
 
                     //===========attribute management methods==================
                     //! create scalar attribute
+
+                    //! Create a scalar attribute. This method acts as a 
+                    //! factory method for an attribute object.
+                    //! \param n name of the attribute
+                    //! \param tid ID of the data-type
+                    //! \return attribute object
                     H5Attribute attr(const String &n,const TypeID &tid) const;
                     //! create an array attribute
+
+                    //! Create an array attribute. This method acts as a 
+                    //! factory method for an attribute object.
+                    //! \param n name of the attribute
+                    //! \param tid ID of the data-type
+                    //! \param s shape of the array
+                    //! \return attribute object
                     H5Attribute attr(const String &n,const TypeID &tid,
                                      const Shape &s) const;
 
                     //! open an attribute
+                    
+                    //! Open an existing attribute and returns it to the 
+                    //! callee. 
+                    //! \param n name of the attribute
+                    //! \return attribute object
                     H5Attribute attr(const String &n) const;
 
             };

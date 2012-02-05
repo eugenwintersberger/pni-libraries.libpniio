@@ -33,29 +33,43 @@ namespace pni{
         namespace h5{
 
             //=======implementation of constructors and destructors============
+            //implementation of the default constructor
             H5AttributeObject::H5AttributeObject():H5NamedObject(){
             }
 
+            //-----------------------------------------------------------------
+            //implementation of the copy constructor
             H5AttributeObject::H5AttributeObject(const H5AttributeObject &o):
                 H5NamedObject(o){
             }
 
+            //-----------------------------------------------------------------
+            //implementation of the conversion constructor
             H5AttributeObject::H5AttributeObject(const H5Object &o):
                 H5NamedObject(o){
             }
 
+            //-----------------------------------------------------------------
+            //implementation of the move constructor
             H5AttributeObject::H5AttributeObject(H5AttributeObject &&o):
                 H5NamedObject(std::move(o)){
             }
 
+            //-----------------------------------------------------------------
+            //implementation of the move conversion constructor
             H5AttributeObject::H5AttributeObject(H5Object &&o):
                 H5NamedObject(std::move(o)){
             }
 
+            //-----------------------------------------------------------------
+            //implementation of a constructor using an object ID to 
+            //create the object.
             H5AttributeObject::H5AttributeObject(const hid_t&oid):
                 H5NamedObject(oid){
             }
 
+            //-----------------------------------------------------------------
+            //implementation of the destructor
             H5AttributeObject::~H5AttributeObject(){
             }
 
@@ -103,6 +117,7 @@ namespace pni{
             }
 
             //=======implementation of attribute management methods===========
+            //implementation of the scalar attribute factory method
             H5Attribute H5AttributeObject::attr(const String &n,
                     const TypeID &tid) const{
                 EXCEPTION_SETUP("H5Attribute H5AttributeObject::create_attr"
@@ -119,10 +134,10 @@ namespace pni{
                 }
 
                 return H5Attribute(aid);
-
             }
 
             //-----------------------------------------------------------------
+            //implementation of the array attribute factory method
             H5Attribute H5AttributeObject::attr(const String &n,
                     const TypeID &tid,const Shape &s) const{
                 EXCEPTION_SETUP("H5Attribute H5AttributeObject::create_attr"
@@ -145,6 +160,7 @@ namespace pni{
 
 
             //-----------------------------------------------------------------
+            //implementation of the attribute open method
             H5Attribute H5AttributeObject::attr(const String &n) const {
                 EXCEPTION_SETUP("H5Attribute H5AttributeObject::"
                         "open_attr(const String &n) const");

@@ -118,16 +118,16 @@ namespace pni{
                 public:
                     //================constructors and destructors=============
                     //! default constructor
-                    H5Attribute();
+                    explicit H5Attribute();
                     //! copy constructor
                     H5Attribute(const H5Attribute &o);
                     //! move constructor
                     H5Attribute(H5Attribute &&o);
                     //! construct from HDF5 type ID
-                    H5Attribute(const hid_t &id);
+                    explicit H5Attribute(const hid_t &id);
                     
                     //! destructor
-                    virtual ~H5Attribute();
+                    ~H5Attribute();
 
                     //=============assignment operators========================
                     //! copy assignment operator

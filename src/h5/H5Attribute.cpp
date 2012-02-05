@@ -73,16 +73,16 @@ namespace pni{
                 __set_space_type();
             }
 
-            //! destructor
+            //-----------------------------------------------------------------
+            //implementation of the destructor
             H5Attribute::~H5Attribute(){
                 _dspace.close();
                 _dtype.close();
-                H5Object::close();
+                close();
             }
 
             //===============implementation of assignment operators============
-
-            //! copy assignment operator
+            // implementation of copy assignment operator
             H5Attribute &H5Attribute::operator=(const H5Attribute &a){
                if(this != &a){
                    (H5NamedObject &)(*this) = (H5NamedObject &)a;
@@ -90,7 +90,9 @@ namespace pni{
                }
                return *this;
             }
-            //! move assignment operator
+            
+            //----------------------------------------------------------------
+            //implementation of move assignment operator
             H5Attribute &H5Attribute::operator=(H5Attribute &&o){
                 if(this != &o){
                     (H5NamedObject &)(*this) = std::move((H5NamedObject &&)o);
@@ -105,10 +107,12 @@ namespace pni{
                 return _dspace.shape();
             }
 
+            //-----------------------------------------------------------------
             TypeID H5Attribute::type_id() const{
                 return _dtype.type_id();
             }
 
+            //-----------------------------------------------------------------
             void H5Attribute::close(){
                 if(is_valid()) H5Aclose(id());
             }
