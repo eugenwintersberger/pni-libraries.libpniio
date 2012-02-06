@@ -187,21 +187,15 @@ namespace pni{
 
                 //determine the object type
                 H5I_type_t tid = H5Iget_type(oid);
+                H5Object o;
                 if(tid == H5I_GROUP){
-                    H5Group g(oid);
-                    H5Gclose(oid);
-                    if(!g.is_valid()){
-                        std::cerr<<"group is not valid!"<<std::endl;
-                    }
-                    return g;
+                    o = std::move(H5Group(oid)); 
                 }else if(tid == H5I_DATASET){
-                    H5Dataset d(oid);
-                    H5Dclose(oid);
-                    return d;
-                }else{
-                    H5Oclose(oid);
-                    return H5Object();
+                    o = std::move(H5Dataset(oid));
                 }
+                
+                H5Oclose(oid);
+                return o;
             }
 
             //-----------------------------------------------------------------

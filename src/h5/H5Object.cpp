@@ -23,7 +23,9 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
+#include <iostream>
 #include "H5Object.hpp"
+#include "H5Exceptions.hpp"
 
 namespace pni{
     namespace nx{
@@ -122,9 +124,14 @@ namespace pni{
 
             //-----------------------------------------------------------------
             H5ObjectType H5Object::object_type() const {
-                H5I_type_t tid;
+                EXCEPTION_SETUP("H5ObjectType H5Object::object_type() const");
 
-                tid = H5Iget_type(_id);
+                if(!is_valid()){
+                   EXCEPTION_INIT(H5ObjectError, "Invalid HDF5 object");
+                   EXCEPTION_THROW();
+                }
+
+                H5I_type_t tid = H5Iget_type(_id);
                 switch(tid){
                     case H5I_FILE: return H5ObjectType::FILE;
                     case H5I_GROUP: return H5ObjectType::GROUP;
@@ -132,8 +139,7 @@ namespace pni{
                     case H5I_DATATYPE: return H5ObjectType::DATATYPE;
                     case H5I_DATASPACE: return H5ObjectType::DATASPACE;
                     case H5I_ATTR: return H5ObjectType::ATTRIBUTE;
-                    default:
-                        return H5ObjectType::BADID;
+                    default: return H5ObjectType::BADID;
 
                 };
             }
