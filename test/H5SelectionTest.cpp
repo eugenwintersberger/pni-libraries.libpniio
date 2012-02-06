@@ -129,6 +129,7 @@ void H5SelectionTest::test_write_simple_types(){
 //    std::cout<<selection.shape()<<std::endl;
 //    std::cout<<string_ds.space().rank()<<std::endl;
 //    std::cout<<string_ds.space().size()<<std::endl;
+    std::cout<<string_ds.space()<<std::endl;
     CPPUNIT_ASSERT_NO_THROW(selection.write(str));
 
 }
@@ -180,7 +181,7 @@ void H5SelectionTest::test_read_simple_types(){
     //----------read back data with selection-----------------------
     selection.offset(0,0);
     CPPUNIT_ASSERT_NO_THROW(selection.read(read));
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(read,1.2,1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(read,-9.234,1.e-6);
     selection.offset(0,1);
     CPPUNIT_ASSERT_NO_THROW(selection.read(read));
     CPPUNIT_ASSERT_DOUBLES_EQUAL(read,2.3,1.e-6);
@@ -232,7 +233,7 @@ void H5SelectionTest::test_write_scalar(){
     CPPUNIT_ASSERT_NO_THROW(selection.write(s));
     s = -0.2334;
     selection.offset(0,1);
-    array_ds.extend(0);
+    array_ds2.extend(0);
     CPPUNIT_ASSERT_NO_THROW(selection.write(s));
 
 

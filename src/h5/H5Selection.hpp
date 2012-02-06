@@ -42,8 +42,8 @@ namespace pni{
             //! \brief selection object
             class H5Selection{
                 private:
-                    Shape       _shape;      //!< shape of the selection
-                    H5Dataspace _sspace;     //!< dataspace describing the selection
+                    Shape       _shape;       //!< shape of the selection
+                    H5Dataspace _sspace;      //!< dataspace describing the selection
                     Buffer<hsize_t> _offset;  //!< selection offset
                     Buffer<hsize_t> _stride;  //!< selection stride
                     Buffer<hsize_t> _counts;  //!< number of elements along each dimension
@@ -51,7 +51,7 @@ namespace pni{
                     void __update_shape();
                     void __update_dataspace();
 
-                    H5Dataset &_dataset;     //!< local reference to the dataset
+                    const H5Dataset *_dataset;     //!< local reference to the dataset
                                              //!< to which the selection
                                              //!< belongs.
 
@@ -210,6 +210,12 @@ namespace pni{
                     //! \param s selection object
                     //! \param value object from which to read data
                     template<typename T> void write(const T &value);
+
+                    //! write a single string value
+
+                    //! Stings need a slightly different handling than all 
+                    //! other data. Thats why this method was overloaded.
+                    //! \param value the string to write
                     void write(const String &value);
                     template<typename T> void read(T &value);
                     
@@ -257,14 +263,14 @@ namespace pni{
                 H5Datatype mem_type;
                 
                 //select the proper memory data type
-                if(_dataset.type_id() != TypeID::BINARY){
+                if(_dataset->type_id() != TypeID::BINARY){
                     mem_type = H5Datatype::create<T>();
                 }else{
                     mem_type = H5Datatype(TypeID::BINARY);
                 }
                 
                 //set selection to the file datasets original dataset
-                err = H5Sselect_hyperslab(_dataset.space().id(),
+                err = H5Sselect_hyperslab(_dataset->space().id(),
                         H5S_SELECT_SET,
                         this->offset().ptr(), //set the offset pointer
                         this->stride().ptr(), //set the stride pointer
@@ -277,24 +283,26 @@ namespace pni{
                 }
 
                 //write data to disk
-                err = H5Dwrite(_dataset.id(),
+                err = H5Dwrite(_dataset->id(),
                         mem_type.id(),          //set memory data type
                         _sspace.id(),           //set selection data space
-                        _dataset.space().id(),  //set file data space
+                        _dataset->space().id(),  //set file data space
                         H5P_DEFAULT,
                         (const void *)ptr);
                 if(err < 0){
                     std::cout<<"----------------------------------------"<<std::endl;
-                    std::cout<<_dataset.space()<<std::endl;
+                    std::cout<<"target data space:"<<std::endl;
+                    std::cout<<_dataset->space()<<std::endl;
                     std::cout<<_sspace<<std::endl;
                     std::cout<<"----------------------------------------"<<std::endl;
+                    std::cout<<"selection data space:"<<std::endl;
                     EXCEPTION_INIT(H5DataSetError,
                             "Error writing data to dataset!");
                     EXCEPTION_THROW();
                 }
 
                 //remove selection from the dataspace
-                H5Sselect_none(_dataset.space().id());
+                H5Sselect_none(_dataset->space().id());
             
             } 
 
@@ -308,14 +316,14 @@ namespace pni{
                 H5Datatype mem_type;
                 
                 //select the proper memory data type
-                if(_dataset.type_id() != TypeID::BINARY){
+                if(_dataset->type_id() != TypeID::BINARY){
                     mem_type = H5Datatype::create<T>();
                 }else{
                     mem_type = H5Datatype(TypeID::BINARY);
                 }
                 
                 //set selection to the file datasets original dataset
-                err = H5Sselect_hyperslab(_dataset.space().id(),
+                err = H5Sselect_hyperslab(_dataset->space().id(),
                         H5S_SELECT_SET,
                         this->offset().ptr(), //set the offset pointer
                         this->stride().ptr(), //set the stride pointer
@@ -328,10 +336,10 @@ namespace pni{
                 }
 
                 //write data to disk
-                err = H5Dread(_dataset.id(),
+                err = H5Dread(_dataset->id(),
                         mem_type.id(),         //set memory data type
                         _sspace.id(),          //set the selection data space
-                        _dataset.space().id(), //set the file data space
+                        _dataset->space().id(), //set the file data space
                         H5P_DEFAULT,
                         (void *)ptr);
                 if(err < 0){
@@ -341,7 +349,7 @@ namespace pni{
                 }
 
                 //remove selection from the dataspace
-                H5Sselect_none(_dataset.space().id());
+                H5Sselect_none(_dataset->space().id());
             } 
             
             //-----------------------------------------------------------------
