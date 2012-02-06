@@ -166,24 +166,19 @@ void H5DatasetTest::test_read_simple_types(){
     std::cout<<"void H5DatasetTest::test_read_simple_types()-----------------";
     std::cout<<std::endl;
 
-    //start with a scalar dataset
-    H5Dataset scalar_ds("scalar_dataset",_group,TypeID::FLOAT32);
-    double value =1.23;
-    CPPUNIT_ASSERT_NO_THROW(scalar_ds.write(value));
-    double read = 0.;
-    CPPUNIT_ASSERT_NO_THROW(scalar_ds.read(read));
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(value,read,1.e-6);
+    test_write_simple_types();
 
-    Shape s(1); s.dim(0,1);
-    Shape cs(1); cs.dim(0,1);
-    //extensible string dataset
-    String str="hello";
-    H5Dataset string_ds("string_ds",_group,TypeID::STRING,s,cs);
-    CPPUNIT_ASSERT_NO_THROW(string_ds.write(str));
+    double value = 0.;
+    H5Dataset ds = _group["scalar_dataset"];
+    CPPUNIT_ASSERT_NO_THROW(ds.read(value));
+    std::cout<<value<<std::endl;
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(value,1.23,1e-6);
 
-    //try a scalar string field
-    H5Dataset sstring_ds("scalar_string_ds",_group,TypeID::STRING);
-    CPPUNIT_ASSERT_NO_THROW(sstring_ds.write(str));
+    ds = _group["array_dataset"];
+    value = 0.;
+    CPPUNIT_ASSERT_NO_THROW(ds.read(value));
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(value,1.23,1e-6);
+
 }
 //-----------------------------------------------------------------------------
 void H5DatasetTest::test_write_scalar(){
@@ -194,6 +189,23 @@ void H5DatasetTest::test_write_scalar(){
     H5Dataset scalar_ds("scalar_ds",_group,s.type_id());
     CPPUNIT_ASSERT_NO_THROW(scalar_ds.write(s));
 
+    //EXCEPTION TESTS ARE MISSING
+
+}
+
+//-----------------------------------------------------------------------------
+void H5DatasetTest::test_read_scalar(){
+    std::cout<<"void H5DatasetTest::test_read_scalar()-----------------------";
+    std::cout<<std::endl;
+
+    test_write_scalar();
+
+    H5Dataset ds = _group["scalar_ds"];
+    Float64Scalar f64("scalar","au","scalar data");
+    CPPUNIT_ASSERT_NO_THROW(ds.read(f64));
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(f64.value(),100.233,1.e-5);
+
+    //EXCEPTION TESTS ARE MISSING
 }
 
 //-----------------------------------------------------------------------------
@@ -215,19 +227,54 @@ void H5DatasetTest::test_write_array(){
 }
 
 //-----------------------------------------------------------------------------
+void H5DatasetTest::test_read_array(){
+    test_write_array();
+
+    H5Dataset d = _group["array_1"];
+    UInt32Array a(d.shape(),"det","cps","detector data");
+    CPPUNIT_ASSERT_NO_THROW(d.read(a));
+
+    for(size_t i=0;i<a.shape().size();i++) CPPUNIT_ASSERT(a[i] == 24);
+}
+
+//-----------------------------------------------------------------------------
 void H5DatasetTest::test_write_buffer(){
     std::cout<<"void H5DatasetTest::test_write_buffer()----------------------";
     std::cout<<std::endl;
 
     Buffer<Binary> buffer(128);
     Shape s(1); s.dim(0,128); 
+    buffer = 10;
     H5Dataset bin_ds("binary_1",_group,TypeID::BINARY,s);
     CPPUNIT_ASSERT_NO_THROW(bin_ds.write(buffer));
 
     Shape cs(1); cs.dim(0,buffer.size());
     s.dim(0,128);
+    buffer = 200;
     H5Dataset ebin_ds("binary_2",_group,TypeID::BINARY,s,cs);
     CPPUNIT_ASSERT_NO_THROW(ebin_ds.write(buffer));
 
+    buffer.allocate(100);
+    CPPUNIT_ASSERT_THROW(bin_ds.write(buffer),SizeMissmatchError);
+}
+
+//------------------------------------------------------------------------------
+void H5DatasetTest::test_read_buffer(){
+    std::cout<<"void H5DatasetTest::test_read_buffer()------------------------";
+    std::cout<<std::endl;
+
+    test_write_buffer();
+    H5Dataset ds = _group.open("binary_1");
+    Buffer<Binary> buffer(ds.size());
+    CPPUNIT_ASSERT_NO_THROW(ds.read(buffer));
+    for(size_t i=0;i<buffer.size();i++) CPPUNIT_ASSERT(buffer[i] == 10);
+
+    ds = _group["binary_2"];
+    buffer.allocate(ds.size());
+    CPPUNIT_ASSERT_NO_THROW(ds.read(buffer));
+    for(size_t i=0;i<buffer.size();i++) CPPUNIT_ASSERT(buffer[i] == 200);
+
+    buffer.allocate(100);
+    CPPUNIT_ASSERT_THROW(ds.read(buffer),SizeMissmatchError);
 }
 

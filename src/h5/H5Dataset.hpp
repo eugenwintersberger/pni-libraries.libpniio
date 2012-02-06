@@ -164,9 +164,23 @@ namespace pni{
 
 
                     //===============reading data methods======================
+                    //! reading simple data from the dataset
+
+                    //! Read a single data value from the dataset. In order 
+                    //! to succeed the dataset must be a scalar dataset or 
+                    //! the total size of the dataset must be 1.
+                    //! \throws ShapeMissmatchError if dataset is not scalar
+                    //! \throws H5DataSetError in all other error cases
+                    //! \param value variable where to store the data
                     template<typename T> void read(T &value) const;
-                    template<typename T> 
-                        void read(const H5Selection &s,T&value) const;
+
+                    //! reading data to a buffer
+
+                    //! Copy data from a dataset to the buffer. The size
+                    //! of the dataset and the buffer must match.
+                    //! \throws SizeMissmatchError if sizes do not match
+                    //! \throws H5DataSetError in all other cases
+                    //! \param buffer buffer where to store data
                     template<typename T,template<typename> class BT> 
                         void read(BT<T> &buffer) const;
                     template<typename T,template<typename> class BT>
@@ -183,7 +197,8 @@ namespace pni{
 
                     //! This method writes a single value of a particular type
                     //! reading the data from variable value. This method 
-                    //! works only if the dataspace of the dataset is scalar. 
+                    //! works only if the dataspace of the dataset is scalar or 
+                    //! the total dataspace size is 1.
                     //! \throws ShapeMissmatchError if the dataspace is not scalar
                     //! \throws H5DataSetError in case of other errors
                     //! \param value data source
@@ -286,12 +301,12 @@ namespace pni{
                         "write(const T &value)");
 
                 if(_space.size()!=1){
-                    EXCEPTION_INIT(ShapeMissmatchError,
-                            "Dataset is not scalar!");
+                    EXCEPTION_INIT(ShapeMissmatchError,"Dataset is not scalar!");
                     EXCEPTION_THROW();
                 }
                 __write(&value);
             }
+
 
             //-----------------------------------------------------------------
             //implementation of simple read template
@@ -300,14 +315,14 @@ namespace pni{
                         "read(T &value)");
 
                 if(_space.size()!=1){
-                    EXCEPTION_INIT(ShapeMissmatchError,
-                            "Dataset is not scalar!");
+                    EXCEPTION_INIT(ShapeMissmatchError,"Dataset is not scalar!");
                     EXCEPTION_THROW();
                 }
                 __read(&value);
             }
 
             //-----------------------------------------------------------------
+            //implementation of writing data form a buffer
             template<typename T,template<typename> class BT>
                 void H5Dataset::write(const BT<T> &buffer) const{
                 EXCEPTION_SETUP("template<typename T,template<typename> "
@@ -326,14 +341,36 @@ namespace pni{
 
                 __write(buffer.ptr());
             }
+            
+            //-----------------------------------------------------------------
+            //implementation of reading data to a buffer
+            template<typename T,template<typename> class BT>
+                void H5Dataset::read(BT<T> &buffer) const{
+                EXCEPTION_SETUP("template<typename T,template<typename> "
+                        "class BT> void H5Dataset::read(BT<T> &buffer) const");
+                
+                if(_space.is_scalar()){
+                    EXCEPTION_INIT(ShapeMissmatchError,"Dataset is scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                if(_space.size() != buffer.size()){
+                    EXCEPTION_INIT(SizeMissmatchError,
+                            "Buffer and dataset size do not match!");
+                    EXCEPTION_THROW();
+                }
+
+                __read(buffer.ptr());
+            }
 
             //-----------------------------------------------------------------
+            //implementation of writing data from a scalar
             template<typename T>
                 void H5Dataset::write(const Scalar<T> &scalar) const{
                 EXCEPTION_SETUP("template<typename T> void H5Dataset::"
                         "write(const Scalar<T> &scalar)");
 
-                if(!_space.is_scalar()){
+                if((!_space.is_scalar()) || (_space.size() != 1)){
                     EXCEPTION_INIT(ShapeMissmatchError,
                             "Dataset is not scalar!");
                     EXCEPTION_THROW();
@@ -342,8 +379,26 @@ namespace pni{
                 __write(scalar.ptr());
             }
 
+            //-----------------------------------------------------------------
+            //implementation of reading data to a scalar
+            template<typename T>
+                void H5Dataset::read(Scalar<T> &scalar) const{
+                EXCEPTION_SETUP("template<typename T> void H5Dataset::"
+                        "read(Scalar<T> &scalar) const");
+
+                if((!_space.is_scalar()) || (_space.size() != 1)){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Dataset is not scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                __read(scalar.ptr());
+            }
+
+
             
             //-----------------------------------------------------------------
+            //implementation of writting data from an array
             template<typename T,template<typename> class BT>
                 void H5Dataset::write(const Array<T,BT> &array) const{
                 EXCEPTION_SETUP("template<typename T,template<typename> "
@@ -362,6 +417,27 @@ namespace pni{
                 }
 
                 __write(array.ptr());
+            }
+
+            //-----------------------------------------------------------------
+            //implementation of reading data to an array
+            template<typename T,template<typename> class BT>
+                void H5Dataset::read(Array<T,BT> &array) const{
+                EXCEPTION_SETUP("template<typename T,template<typename> "
+                        "class BT> void H5Dataset::readArray<T,BT> &array) const");
+
+                if(_space.is_scalar()){
+                    EXCEPTION_INIT(ShapeMissmatchError,"Dataset is scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                if(_space.shape() != array.shape()){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Dataset and array shape do not match");
+                    EXCEPTION_THROW();
+                }
+
+                __read(array.ptr());
             }
 
         
