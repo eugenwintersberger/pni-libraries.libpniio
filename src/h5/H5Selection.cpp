@@ -225,8 +225,8 @@ namespace pni{
             }
 
             //=============specializations of the IO methods===================
-            
-            void H5Selection::write(const String &value){
+            //implementation of the write string method 
+            void H5Selection::write(const String &value) const{
                 EXCEPTION_SETUP("template<> void H5Selection::"
                         "write(const String &value)");
 
@@ -274,9 +274,71 @@ namespace pni{
                 //remove selection from the dataspace
                 H5Sselect_none(_dataset->space().id());
 
-                //===========>the dataset object can be releasd.
             }
 
+            //------------------------------------------------------------------
+            //implementation of the read string method 
+            void H5Selection::read(String &value) const{
+                EXCEPTION_SETUP("void H5Selection::" "read(String &value) const");
+
+
+                if(this->size()!=1){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Selection is not scalar!");
+                    EXCEPTION_THROW();
+                }
+
+
+                herr_t err;
+                //set selection to the file datasets original dataset
+                //==========>here we would have to lock the dataset object 
+                err = H5Sselect_hyperslab(_dataset->space().id(),
+                        H5S_SELECT_SET,
+                        this->offset().ptr(), //set the offset pointer
+                        this->stride().ptr(), //set the stride pointer
+                        this->count().ptr(),  //set the count pointer
+                        NULL);
+                if(err < 0){
+                    EXCEPTION_INIT(H5DataSetError,
+                            "Error applying selection!");
+                    EXCEPTION_THROW();
+                }
+                
+                const char *ptr = nullptr;
+	            hid_t xfer_plist = H5Pcreate(H5P_DATASET_XFER);
+                
+                //select the proper memory data type
+                H5Datatype mem_type = H5Datatype(H5Dget_type(_dataset->id()));
+
+                //write data to disk
+                err = H5Dread(_dataset->id(),
+                        mem_type.id(),          //set memory data type
+                        _sspace.id(),           //set selection data space
+                        _dataset->space().id(),  //set file data space
+                        xfer_plist,
+                        &ptr);
+                if(err < 0){
+                    EXCEPTION_INIT(H5DataSetError,
+                            "Error writing data to dataset!");
+                    EXCEPTION_THROW();
+                }
+
+                //copy content of the pointer to the string object
+                try{
+                    value = String(ptr);
+                }catch(...){
+                    value = "";
+                }
+                
+                //remove selection from the dataspace
+                H5Sselect_none(_dataset->space().id());
+
+                //reclaim memory from HDF5 library.
+                H5Dvlen_reclaim(mem_type.id(),_dataset->space().id(),
+                                xfer_plist,&ptr);
+
+
+            }
 
         }
     }

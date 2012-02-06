@@ -23,8 +23,8 @@ class H5SelectionTest:public CppUnit::TestFixture{
         CPPUNIT_TEST(test_setup);
         CPPUNIT_TEST(test_write_simple_types);
         CPPUNIT_TEST(test_write_scalar);
-        //CPPUNIT_TEST(test_write_array);
-        //CPPUNIT_TEST(test_write_buffer);
+        CPPUNIT_TEST(test_write_array);
+        CPPUNIT_TEST(test_write_buffer);
         CPPUNIT_TEST(test_read_simple_types);
         CPPUNIT_TEST_SUITE_END();
     private:

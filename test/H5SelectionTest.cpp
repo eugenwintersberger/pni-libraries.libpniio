@@ -204,6 +204,15 @@ void H5SelectionTest::test_read_simple_types(){
     str = "this is a text";
     CPPUNIT_ASSERT_NO_THROW(selection.write(str));
 
+    //read back data
+    String sread;
+    selection.offset(0,0);
+    CPPUNIT_ASSERT_NO_THROW(selection.read(sread));
+    CPPUNIT_ASSERT(sread == "hello");
+    selection.offset(0,1);
+    CPPUNIT_ASSERT_NO_THROW(selection.read(sread));
+    CPPUNIT_ASSERT(sread == "this is a text");
+
 }
 //-----------------------------------------------------------------------------
 void H5SelectionTest::test_write_scalar(){
@@ -246,13 +255,15 @@ void H5SelectionTest::test_write_array(){
 
     Shape s(2); s.dim(0,3); s.dim(1,5);
     UInt32Array a(s,"det","cps","useless data");
+    CPPUNIT_ASSERT(a.is_allocated());
     a = 24;
-
 
     Shape cs(3); cs.dim(0,1); cs.dim(1,s[0]); cs.dim(2,s[1]);
     Shape ds(3); ds.dim(0,0); ds.dim(1,s[0]); ds.dim(2,s[1]);
     H5Dataset earray_ds("earray_2",_file,a.type_id(),ds,cs);
     H5Selection selection = earray_ds.selection(); 
+    selection.offset(0,1);
+    selection.count(0,1); selection.count(1,s[0]);selection.count(2,s[1]);
     earray_ds.extend(0);
     CPPUNIT_ASSERT_NO_THROW(selection.write(a));
     a = 100;
@@ -273,12 +284,12 @@ void H5SelectionTest::test_write_buffer(){
     s.dim(0,0);
     H5Dataset ebin_ds("binary_2",_file,TypeID::BINARY,s,cs);
     H5Selection selection = ebin_ds.selection();
-    ebin_ds.extend(0,1024);
-    selection.count(0,1024);
+    ebin_ds.extend(0,128);
+    selection.count(0,128);
     buffer = 100;
     CPPUNIT_ASSERT_NO_THROW(selection.write(buffer));
-    ebin_ds.extend(0,1024);
-    selection.offset(0,1024);
+    ebin_ds.extend(0,128);
+    selection.offset(0,128);
     buffer = 200;
     CPPUNIT_ASSERT_NO_THROW(selection.write(buffer));
 }

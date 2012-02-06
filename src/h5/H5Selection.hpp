@@ -55,8 +55,8 @@ namespace pni{
                                              //!< to which the selection
                                              //!< belongs.
 
-                    template<typename T> void __write(const T *ptr);
-                    template<typename T> void __read(T *ptr);
+                    template<typename T> void __write(const T *ptr) const;
+                    template<typename T> void __read(T *ptr) const;
                 public:
                     //============constructors and destructor==================
                     //! default constructor
@@ -209,15 +209,26 @@ namespace pni{
                     //! \throws H5DataSetError in cases of other errors
                     //! \param s selection object
                     //! \param value object from which to read data
-                    template<typename T> void write(const T &value);
+                    template<typename T> void write(const T &value) const;
 
                     //! write a single string value
 
                     //! Stings need a slightly different handling than all 
                     //! other data. Thats why this method was overloaded.
                     //! \param value the string to write
-                    void write(const String &value);
-                    template<typename T> void read(T &value);
+                    void write(const String &value) const;
+
+                    //! read a simple value from the selection
+                    template<typename T> void read(T &value) const;
+
+
+                    //! read a string value 
+
+                    //! Read a string value from the selection. This works only
+                    //! if the size of the selection is 1. 
+                    //! \param value variable where to store the data
+                    void read(String &value) const;
+
                     
                     //! write a buffer with selection
 
@@ -230,13 +241,33 @@ namespace pni{
                     //! \param s selection object
                     //! \param buffer reference to the buffer object
                     template<typename T,template<typename> class BT>
-                        void write(const BT<T> &buffer);
+                        void write(const BT<T> &buffer) const;
+
+                    //! read a buffer from selection
+
+                    //! Write the content of the selection into the buffer
+                    //! buffer object. This operation will only succeed if the 
+                    //! size of the selection matches the size of the buffer.
+                    //! \param buffer Buffer object where to store the data
+                    template<typename T,template<typename> class BT>
+                        void read(BT<T> &buffer) const;
                     
                     //! write an array with selection
 
                     //! 
                     template<typename T,template<typename> class BT>
-                        void write(const Array<T,BT> &array);
+                        void write(const Array<T,BT> &array) const;
+
+                    //! read an array
+
+                    //! Read an array from the selection. This method will 
+                    //! only succeed if the size of the selection matches
+                    //! that of the array. 
+                    //! \throws SizeMissmatchError if sizes do not match
+                    //! \throws H5DataSetError in cases of other errors
+                    //! \param array array where to store the data
+                    template<typename T,template<typename> class BT>
+                        void read(Array<T,BT> &array) const;
                     
                     //! write a scalar with selection
 
@@ -248,14 +279,26 @@ namespace pni{
                     //! \param s selection object
                     //! \param scalar the scalar object which to write to disk
                     template<typename T>
-                        void write(const Scalar<T> &scalar);
+                        void write(const Scalar<T> &scalar) const;
+
+                    //! read a selection to a scalar
+
+                    //! Write the content of a selection to a scalar. This 
+                    //! methhod succeeds only if the size of the selection 
+                    //! is 1. If this is not the case a SizeMissmatchError 
+                    //! will be thrown.
+                    //! \throws SizeMissmatchError if selection size not 1
+                    //! \throws H5DatasetError in case of other errors
+                    //! \param scalar object where to store data
+                    template<typename T> 
+                        void read(Scalar<T> &scalar) const;
 
             };
 
 
             //===============template implementation============================
             //write template for a simple pointer with a selection
-            template<typename T> void H5Selection::__write(const T *ptr){
+            template<typename T> void H5Selection::__write(const T *ptr) const{
                 EXCEPTION_SETUP("template<typename T> void H5Selection::"
                         "__write(const T *ptr)");
                 herr_t err;
@@ -308,7 +351,7 @@ namespace pni{
 
             //-----------------------------------------------------------------
             //read template for a simple pointer with a selection
-            template<typename T> void H5Selection::__read(T *ptr){
+            template<typename T> void H5Selection::__read(T *ptr) const {
                 EXCEPTION_SETUP("template<typename T> void H5Selection::"
                         "__read(T *ptr)");
                 herr_t err;
@@ -354,7 +397,7 @@ namespace pni{
             
             //-----------------------------------------------------------------
             //implementation of a simple write with selection
-            template<typename T> void H5Selection::write(const T &value){
+            template<typename T> void H5Selection::write(const T &value) const{
                 EXCEPTION_SETUP("template<typename T> void H5Selection::"
                         "write(const T &value)");
                 
@@ -373,7 +416,7 @@ namespace pni{
 
             //-----------------------------------------------------------------
             //implementation of a simple read with selection
-            template<typename T> void H5Selection::read(T &value){
+            template<typename T> void H5Selection::read(T &value) const{
                 EXCEPTION_SETUP("template<typename T> void H5Selection::"
                         "read(T &value)");
                 
@@ -391,7 +434,7 @@ namespace pni{
             
             //-----------------------------------------------------------------
             template<typename T,template<typename> class BT>
-                void H5Selection::write(const BT<T> &buffer){
+                void H5Selection::write(const BT<T> &buffer) const{
                 EXCEPTION_SETUP("template<typename T,template<typename> "
                         "class BT> void H5Selection::write(const BT<T> &buffer)");
                 
@@ -404,9 +447,26 @@ namespace pni{
 
                 __write(buffer.ptr());
             }
+
+            //-----------------------------------------------------------------
+            template<typename T,template<typename> class BT>
+                void H5Selection::read(BT<T> &buffer) const{
+                EXCEPTION_SETUP("template<typename T,template<typename> "
+                        "class BT> void H5Selection::read(BT<T> &buffer) const");
+                
+
+                if(this->size() != buffer.size()){
+                    EXCEPTION_INIT(SizeMissmatchError,
+                            "Buffer and selection size do not match!");
+                    EXCEPTION_THROW();
+                }
+
+                __read(buffer.ptr());
+            }
             
             //-----------------------------------------------------------------
-            template<typename T> void H5Selection::write(const Scalar<T> &scalar){
+            template<typename T> 
+                void H5Selection::write(const Scalar<T> &scalar) const{
                 EXCEPTION_SETUP("template<typename T> void H5Selection::"
                         "write(const Scalar<T> &scalar)");
                 
@@ -420,8 +480,22 @@ namespace pni{
             }
             
             //-----------------------------------------------------------------
+            template<typename T> void H5Selection::read(Scalar<T> &scalar) const{
+                EXCEPTION_SETUP("template<typename T> void H5Selection::"
+                        "read(Scalar<T> &scalar) const");
+                
+                if(this->size()!=1){
+                    EXCEPTION_INIT(SizeMissmatchError,
+                            "Selection size not equal 1!");
+                    EXCEPTION_THROW();
+                }
+
+                __read(scalar.ptr());
+            }
+            
+            //-----------------------------------------------------------------
             template<typename T,template<typename> class BT>
-                void H5Selection::write(const Array<T,BT> &array){
+                void H5Selection::write(const Array<T,BT> &array) const{
                 EXCEPTION_SETUP("template<typename T,template<typename> "
                         "class BT> void H5Selection::write("
                         "const Array<T,BT> &array)");
@@ -438,6 +512,24 @@ namespace pni{
                 __write(array.ptr());
             }
 
+            //-----------------------------------------------------------------
+            template<typename T,template<typename> class BT>
+                void H5Selection::read(Array<T,BT> &array) const{
+                EXCEPTION_SETUP("template<typename T,template<typename> "
+                        "class BT> void H5Selection::read(Array<T,BT> &array) "
+                        "const");
+
+
+                //the size of the array must be equal to the size of the 
+                //selection
+                if(this->size() != array.shape().size()){
+                    EXCEPTION_INIT(SizeMissmatchError,
+                            "Selection and array size do not match!");
+                    EXCEPTION_THROW();
+                }
+
+                __read(array.ptr());
+            }
         //end of namespace
         }
     }
