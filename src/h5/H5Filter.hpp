@@ -16,55 +16,44 @@
  * You should have received a copy of the GNU General Public License
  * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
- * H5Filter.hpp
+ * H5Filter.cpp
+ *  Definition of the HDF5 filter base class.
  *
- *  Created on: Aug 9, 2011
- *      Author: eugen
+ *  Created on: Feb 7, 2012
+ *      Author: Eugen Wintersberger
  */
-
-#ifndef H5FILTER_HPP_
-#define H5FILTER_HPP_
+#ifndef __H5FILTER_HPP__
+#define __H5FILTER_HPP__
 
 extern "C"{
-#include <hdf5.h>
+#include<hdf5.h>
 }
 
-#include <pni/utils/Types.hpp>
-
-using namespace pni::utils;
-
-namespace pni {
-namespace nx {
-namespace h5 {
-
-//! \ingroup nxh5_classes
-//! \brief HDF5 filter base class
-
-//! Base class for all HDF5 compression filter implementations.
-class H5Filter {
-public:
-	//! default constructor
-	H5Filter();
-	//! copy constructor
-	H5Filter(const H5Filter &o);
-	//! destructor
-	virtual ~H5Filter();
-
-	//! copy assignment operator
-	H5Filter &operator=(const H5Filter &o);
-
-	//! setup method
-
-	//! This method applies the filter to a particular 
-	//! dataset which is given by _id. This method 
-	//! must be overridden by all descendants of this class.
-	void setup(hid_t _id) const;
-};
+#include "H5Exceptions.hpp"
 
 
-//end of namespace
-}
-}
+namespace pni{
+    namespace nx {
+        namespace h5{
+            
+            class H5Filter{
+                private:
+                public:
+                    H5Filter();
+                    H5Filter(const H5Filter &o);
+                    H5Filter(H5Filter &&o);
+                    virtual ~H5Filter();
+
+                    H5Filter &operator=(const H5Filter &o);
+                    H5Filter &operator=(H5Filter &&o);
+
+
+                    virtual void setup(const hid_t &id) const;
+
+            };
+
+        }
+    }
 }
 
-#endif /* H5FILTER_HPP_ */
+#endif

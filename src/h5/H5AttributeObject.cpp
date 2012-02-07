@@ -183,6 +183,17 @@ namespace pni{
 
             }
 
+            //------------------------------------------------------------------
+            //get number of attributes
+            size_t H5AttributeObject::nattr() const{
+                H5O_info_t info;
+                H5Oget_info(id(),&info);
+
+                return info.num_attrs;
+            }
+                
+
+
         
         //end of namespace
         }

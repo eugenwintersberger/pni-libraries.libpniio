@@ -101,6 +101,13 @@ namespace pni{
                     //! \return attribute object
                     H5Attribute attr(const String &n) const;
 
+                    //! get number of attributes
+
+                    //! Method returns the number of attributes attached
+                    //! to this object.
+                    //! \return number of attributes
+                    size_t nattr() const;
+
             };
         
 

@@ -42,12 +42,6 @@ namespace pni{
             }
 
             //==============Implementation of constructors and destructors======
-            //implementation of the default constructor
-            /*H5Selection::H5Selection(){
-             
-            }*/
-
-            //------------------------------------------------------------------
             //implementation of the copy constructor
             H5Selection::H5Selection(const H5Selection &o)
                 :_shape(o._shape),_sspace(o._sspace),_offset(o._offset),
@@ -84,6 +78,28 @@ namespace pni{
                 _shape = s;
                 __update_shape();
                 __update_dataspace();
+            }
+
+            //------------------------------------------------------------------
+            //implementation with initializer lists
+
+            H5Selection::H5Selection(size_t r,
+                                    std::initializer_list<size_t> offset,
+                                    std::initializer_list<size_t> stride,
+                                    std::initializer_list<size_t> count)
+            {
+                //allocate buffers
+                _offset.allocate(r);
+                _stride.allocate(r);
+                _counts.allocate(r);
+
+                //set values
+                for(size_t i=0;i<r;i++){
+                    _offset[i] = offset.get(i);
+                    _stride[i] = stride[i];
+                    _counts[i] = count[i];
+                }
+
             }
 
             //------------------------------------------------------------------

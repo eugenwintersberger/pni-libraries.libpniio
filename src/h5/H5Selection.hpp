@@ -40,6 +40,21 @@ namespace pni{
 
             //! \ingroup nxh5_classes
             //! \brief selection object
+
+            //! A selection allows to read only a part of the data stored
+            //! in a dataset. In other words one can read only a strip or 
+            //! a single frame from a 3D dataset. This implies a
+            //! simple problem: how to describe the shape of the selection.
+            //! For obvious reasons to define a selection with respect 
+            //! to the target HDF5 dataset the rank of the selections shape 
+            //! must be equal to that of the dataset. However, the array 
+            //! (in general it will be an array) which will hold the data
+            //! can have a different shape (think of a 2D slice from a 
+            //! 3D block of data). This implies that we have to manage 
+            //! to kinds of shapes: the selection shape (the shape with 
+            //! respect to the HDF5 dataset) and the memory shape which 
+            //! describes the shape of the object in memory holding the 
+            //! data.
             class H5Selection{
                 private:
                     Shape       _shape;       //!< shape of the selection
@@ -59,8 +74,6 @@ namespace pni{
                     template<typename T> void __read(T *ptr) const;
                 public:
                     //============constructors and destructor==================
-                    //! default constructor
-                    //H5Selection();
                     //! copy constructor
                     H5Selection(const H5Selection &o);
                     //! move constructor
@@ -77,6 +90,10 @@ namespace pni{
                     //! \param stride default stride (1)
                     H5Selection(const H5Dataset &ds,
                                 const Shape &s,size_t offset=0,size_t stride=1);
+
+                    H5Selection(size_t r,std::initializer_list<size_t> offset,
+                                std::initializer_list<size_t> stride,
+                                std::initializer_list<size_t> count); 
                     //! destructor
                     virtual ~H5Selection();
 
@@ -332,6 +349,8 @@ namespace pni{
                         _dataset->space().id(),  //set file data space
                         H5P_DEFAULT,
                         (const void *)ptr);
+
+
                 if(err < 0){
                     std::cout<<"----------------------------------------"<<std::endl;
                     std::cout<<"target data space:"<<std::endl;

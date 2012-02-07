@@ -28,38 +28,49 @@
 #include "H5Filter.hpp"
 
 namespace pni {
-namespace nx {
-namespace h5 {
+    namespace nx {
+        namespace h5 {
 
-//----------------------------------------------------------------------------
-H5Filter::H5Filter() {
+            //------------------------------------------------------------------
+            H5Filter::H5Filter() {
 
-}
+            }
 
-//----------------------------------------------------------------------------
-H5Filter::H5Filter(const H5Filter &o){
-	EXCEPTION_SETUP("H5Filter::H5Filter(const H5Filter &o)");
+            //------------------------------------------------------------------
+            H5Filter::H5Filter(const H5Filter &o){
+                EXCEPTION_SETUP("H5Filter::H5Filter(const H5Filter &o)");
 
-}
+            }
 
-//----------------------------------------------------------------------------
-H5Filter::~H5Filter() {
+            //------------------------------------------------------------------
+            H5Filter::H5Filter(H5Filter &&o){
 
-}
+            }
 
-//----------------------------------------------------------------------------
-H5Filter &H5Filter::operator=(const H5Filter &f){
-	EXCEPTION_SETUP("H5Filter &H5Filter::operator=(const H5Filter &f)");
-	if( this != &f ){
+            //------------------------------------------------------------------
+            H5Filter::~H5Filter() {
 
-	}
+            }
 
-	return *this;
-}
+            //------------------------------------------------------------------
+            H5Filter &H5Filter::operator=(const H5Filter &o){
+                EXCEPTION_SETUP("H5Filter &H5Filter::"
+                        "operator=(const H5Filter &f)");
 
-//----------------------------------------------------------------------------
-void H5Filter::setup(hid_t id) const{
-}
+                return *this;
+            }
+
+            //------------------------------------------------------------------
+            H5Filter &H5Filter::operator=(H5Filter &&o){
+                EXCEPTION_SETUP("H5Filter &H5Filter::"
+                        "operator=(H5Filter &&o)");
+
+                return *this;
+            }
+
+            //------------------------------------------------------------------
+            void H5Filter::setup(const hid_t &id) const{
+            }
 
 
 //end of namespace

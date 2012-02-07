@@ -26,6 +26,9 @@ class H5SelectionTest:public CppUnit::TestFixture{
         CPPUNIT_TEST(test_write_array);
         CPPUNIT_TEST(test_write_buffer);
         CPPUNIT_TEST(test_read_simple_types);
+        CPPUNIT_TEST(test_read_scalar);
+        CPPUNIT_TEST(test_read_buffer);
+        CPPUNIT_TEST(test_read_array);
         CPPUNIT_TEST_SUITE_END();
     private:
         H5File _file;
@@ -43,6 +46,9 @@ class H5SelectionTest:public CppUnit::TestFixture{
         void test_write_array();
         void test_write_buffer();
         void test_read_simple_types();
+        void test_read_scalar();
+        void test_read_buffer();
+        void test_read_array();
 
 };
 

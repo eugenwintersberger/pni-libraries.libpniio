@@ -249,6 +249,31 @@ void H5SelectionTest::test_write_scalar(){
 }
 
 //-----------------------------------------------------------------------------
+void H5SelectionTest::test_read_scalar(){
+    std::cout<<"void H5SelectionTest::test_read_scalar()----------------------";
+    std::cout<<std::endl;
+
+    //generate data
+    test_write_scalar();
+
+    //get dataset and selection object
+    H5Dataset ds = _file["array_ds"];
+    H5Selection selection = ds.selection();
+
+    selection.offset(0,0);
+    selection.count(0,1);
+
+    Float64Scalar scalar("scalar","a.u","scalar data");
+
+    CPPUNIT_ASSERT_NO_THROW(selection.read(scalar));
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(scalar.value(),1,1.e-6);
+    selection.offset(0,1);
+    CPPUNIT_ASSERT_NO_THROW(selection.read(scalar));
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(scalar.value(),-0.2334,1.e-6);
+
+}
+
+//-----------------------------------------------------------------------------
 void H5SelectionTest::test_write_array(){
     std::cout<<"void H5SelectionTest::test_write_array()-----------------------";
     std::cout<<std::endl;
@@ -262,7 +287,7 @@ void H5SelectionTest::test_write_array(){
     Shape ds(3); ds.dim(0,0); ds.dim(1,s[0]); ds.dim(2,s[1]);
     H5Dataset earray_ds("earray_2",_file,a.type_id(),ds,cs);
     H5Selection selection = earray_ds.selection(); 
-    selection.offset(0,1);
+    selection.offset(0,0);
     selection.count(0,1); selection.count(1,s[0]);selection.count(2,s[1]);
     earray_ds.extend(0);
     CPPUNIT_ASSERT_NO_THROW(selection.write(a));
@@ -270,6 +295,23 @@ void H5SelectionTest::test_write_array(){
     earray_ds.extend(0);
     selection.offset(0,1);
     CPPUNIT_ASSERT_NO_THROW(selection.write(a));
+}
+
+//-----------------------------------------------------------------------------
+void H5SelectionTest::test_read_array(){
+    std::cout<<"void H5SelectionTest::test_read_array()----------------------";
+    std::cout<<std::endl;
+
+    //create data
+    test_write_array();
+
+    //get dataset and selection
+    H5Dataset ds = _file.open("earray_2");
+    H5Selection selection = ds.selection();
+
+    selection.offset(0,0);
+    selection.count(0,1);
+    
 }
 
 //-----------------------------------------------------------------------------
@@ -292,4 +334,33 @@ void H5SelectionTest::test_write_buffer(){
     selection.offset(0,128);
     buffer = 200;
     CPPUNIT_ASSERT_NO_THROW(selection.write(buffer));
+}
+
+//------------------------------------------------------------------------------
+void H5SelectionTest::test_read_buffer(){
+    std::cout<<"void H5SelectionTest::test_read_buffer()----------------------";
+    std::cout<<std::endl;
+
+    //generate data
+    test_write_buffer();
+
+    //get dataspace and selection
+    H5Dataset ds = _file["binary_2"];
+    H5Selection selection = ds.selection();
+
+    selection.offset(0,0);
+    selection.count(0,64);
+
+    Buffer<Binary> buffer(selection.size());
+    CPPUNIT_ASSERT_NO_THROW(selection.read(buffer));
+    for(size_t i=0;i<buffer.size();i++) CPPUNIT_ASSERT(buffer[i] == 100);
+   
+    selection.offset(0,64);
+    CPPUNIT_ASSERT_NO_THROW(selection.read(buffer));
+    for(size_t i=0;i<buffer.size();i++) CPPUNIT_ASSERT(buffer[i] == 100);
+    
+    selection.offset(0,128);
+    CPPUNIT_ASSERT_NO_THROW(selection.read(buffer));
+    for(size_t i=0;i<buffer.size();i++) CPPUNIT_ASSERT(buffer[i] == 200);
+
 }
