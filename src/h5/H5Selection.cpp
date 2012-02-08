@@ -64,11 +64,11 @@ namespace pni{
             //implementation of the shape constructor
             H5Selection::H5Selection(const H5Dataset &ds,const Shape &s,
                     size_t offset,size_t stride)
-                :_dataset(&ds)
+                :_dataset(&ds),
+                 _offset(s.rank()),
+                 _stride(s.rank()),
+                 _counts(s.rank())
             {
-                _offset.allocate(s.rank());
-                _stride.allocate(s.rank());
-                _counts.allocate(s.rank());
 
                 //set offset and stride
                 _offset = offset;
@@ -83,23 +83,15 @@ namespace pni{
             //------------------------------------------------------------------
             //implementation with initializer lists
 
-            H5Selection::H5Selection(size_t r,
-                                    std::initializer_list<size_t> offset,
-                                    std::initializer_list<size_t> stride,
-                                    std::initializer_list<size_t> count)
+            H5Selection::H5Selection(const std::initializer_list<hsize_t> &offset,
+                                     const std::initializer_list<hsize_t> &stride,
+                                     const std::initializer_list<hsize_t> &count):
+                _offset(offset),
+                _stride(stride),
+                _counts(count)
             {
-                //allocate buffers
-                _offset.allocate(r);
-                _stride.allocate(r);
-                _counts.allocate(r);
-
-                //set values
-                for(size_t i=0;i<r;i++){
-                    _offset[i] = offset.get(i);
-                    _stride[i] = stride[i];
-                    _counts[i] = count[i];
-                }
-
+                __update_shape();
+                __update_dataspace();
             }
 
             //------------------------------------------------------------------

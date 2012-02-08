@@ -3,7 +3,7 @@
 #include "H5SelectionTest.hpp"
 
 
-CPPUNIT_TEST_SUITE_REGISTRATION(H5SelectionTest);
+//CPPUNIT_TEST_SUITE_REGISTRATION(H5SelectionTest);
 
 //-----------------------------------------------------------------------------
 void H5SelectionTest::setUp(){

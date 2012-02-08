@@ -16,11 +16,14 @@ void H5DataspaceTest::test_creation(){
     H5Dataspace s1;
 
     //per default a scalar data space is created
+    //by default this is a scalar dataspace
     CPPUNIT_ASSERT(s1.is_valid());
     CPPUNIT_ASSERT(s1.is_scalar());
     CPPUNIT_ASSERT(s1.rank()==0);
+    CPPUNIT_ASSERT(s1.size()==1);
 
     //create a dataspace from a shape object
+    //this should lead to a constant dataspace which cannot be extended
     Shape s(3);
     s.dim(0,10);s.dim(1,3);s.dim(2,45);
 
@@ -45,6 +48,7 @@ void H5DataspaceTest::test_creation(){
     CPPUNIT_ASSERT(s4.shape() == s3.shape());
 
 
+    //create a dataspace with a minimum and maximum size.
     Shape ms(s.rank());
     for(size_t i=0; i<ms.rank(); i++) ms.dim(i,100);
     H5Dataspace s6(s,ms);
@@ -54,6 +58,22 @@ void H5DataspaceTest::test_creation(){
         CPPUNIT_ASSERT(s6.dim(i) == s[i]);
         CPPUNIT_ASSERT(s6.max_dim(i) == ms[i]);
     }
+
+    //create a dataspace from a initializer list
+    H5Dataspace s7 = {10,3,45};
+    CPPUNIT_ASSERT(!s7.is_scalar());
+    CPPUNIT_ASSERT(s7.is_valid());
+    CPPUNIT_ASSERT(s7.shape() == s);
+    CPPUNIT_ASSERT(s7.shape() == s7.maxshape());
+
+
+    //create a dataspace wiht minimum and maximum size
+    H5Dataspace s8({10,3,45},{30,9,100});
+    Shape maxshape = {30,9,100};
+    CPPUNIT_ASSERT(!s8.is_scalar());
+    CPPUNIT_ASSERT(s8.is_valid());
+    CPPUNIT_ASSERT(s8.shape() == s);
+    CPPUNIT_ASSERT(s8.maxshape() == maxshape);
 
 }
 
@@ -89,6 +109,7 @@ void H5DataspaceTest::test_inquery(){
     H5Dataspace s1(s);
 
     CPPUNIT_ASSERT(s1.shape() == s);
+    CPPUNIT_ASSERT(s1.maxshape() == s);
     CPPUNIT_ASSERT(s1.rank() == 2);
     CPPUNIT_ASSERT(!s1.is_scalar());
     CPPUNIT_ASSERT(s1.is_valid());
@@ -105,5 +126,19 @@ void H5DataspaceTest::test_resize(){
     CPPUNIT_ASSERT_NO_THROW(space.resize(s));
     CPPUNIT_ASSERT(!space.is_scalar());
     CPPUNIT_ASSERT(space.shape() == s);
+    CPPUNIT_ASSERT(space.maxshape() == s);
+
+    Shape s2 = {100,3};
+    CPPUNIT_ASSERT_NO_THROW(space.resize(s2));
+    CPPUNIT_ASSERT(!space.is_scalar());
+    CPPUNIT_ASSERT(space.shape() == s2);
+    CPPUNIT_ASSERT(space.maxshape() == s2);
+
+    Shape maxshape = {100,2,12};
+    CPPUNIT_ASSERT_THROW(space.resize(s2,maxshape),ShapeMissmatchError);
+    maxshape = {100,20};
+    CPPUNIT_ASSERT_NO_THROW(space.resize(s2,maxshape));
+    CPPUNIT_ASSERT(space.shape() == s2);
+    CPPUNIT_ASSERT(space.maxshape() == maxshape);
 
 }

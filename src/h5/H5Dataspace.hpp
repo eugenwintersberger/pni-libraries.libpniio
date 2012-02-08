@@ -35,6 +35,7 @@ using namespace pni::utils;
 namespace pni{
     namespace nx {
         namespace h5 {
+
             //! \ingroup nxh5_classes
             //! \brief dataspace object
 
@@ -51,9 +52,25 @@ namespace pni{
 
                     //a private method to compute the shape object describing
                     //the dataspace
+
+                    //! create a dataspace from buffers
+
+                    //! This method will create dataspace according to the 
+                    //! values stored in the buffer objects. The resulting 
+                    //! dataspace will always be simple
                     void __create_dataspace();
+
+                    //! set buffers from object
+
+                    //! Use this method if a dataspace is created from an 
+                    //! HDF5 id. The method will fill the buffers according
+                    //! to the dataspace described by the ID. 
                     void __set_buffers();
                 public:
+                    //! static data member describing an unlimited 
+                    //! dimension. 
+                    static const hsize_t UNLIMITED = H5S_UNLIMITED;
+
                     //! default constructor
 
                     //! By default a scalar dataspace is constructed. This 
@@ -70,23 +87,47 @@ namespace pni{
                     H5Dataspace(H5Object &&o);
                     //! shape constructor
 
-                    //! Constructs a dataspace according to the shape
-                    //! object passed to the constructor. The dimension
-                    //! are unlimited along each dimension.
+                    //! This is the most simple constructor for a non-trivial
+                    //! dataspace. It constructs a dataspace of constant size 
+                    //! using a shape object for its description. 
                     //! \param s shape object determining the shape
                     explicit H5Dataspace(const Shape &s);
+
+                    //! construct an unlimited array from an init. list
+
+                    //! Use an initializer list to construct a dataspace.
+                    //! The dataspace created by this constructor is always a 
+                    //! simple constructor and has constant size. 
+                    //! \param list initializer list
+                    //! \sa H5Dataspace(cosnt Shape &s)
+                    H5Dataspace(const std::initializer_list<hsize_t> &list);
+                   
                     //! fixed size datasset
                     
-                    //! Creates a dataspace of fixed size. 
+                    //! Creates a dataspace of fixed size. The dataspace 
+                    //! created by this constructor is always a simple 
+                    //! dataspace.
                     //! \param s initial shape
                     //! \param mx maximum shape
                     explicit H5Dataspace(const Shape &s,const Shape &ms);
+
+                    //! fixed size dataspace
+
+                    //! Create a fixed size dataspace from two initializer 
+                    //! lists. The created dataspace is a simple dataspace in 
+                    //! HDF5 terminilogy.
+                    H5Dataspace(const std::initializer_list<hsize_t> &dlist,
+                                const std::initializer_list<hsize_t> &mlist);
                     //! create object from HDF5 id
 
                     //! Constructor creating an object directly from its HDF5
-                    //! ID.
+                    //! ID. k
                     explicit H5Dataspace(const hid_t &id);
 
+                    //! destructor
+
+                    //! As the destructor is not virtual this class must not 
+                    //! be used as a base class for other classes.
                     ~H5Dataspace();
 
                     //================Assignment operators=====================
@@ -149,10 +190,18 @@ namespace pni{
                     //! resize dataset
 
                     //! Resizes the dataspace to a new shape determined by 
-                    //! s. In this case all maximum dimension are set the 
-                    //! unlimited.
+                    //! s. If the dataspace was originally scalar the 
+                    //! new dataspace becomes simple. In this case the 
+                    //! maximum number of elements along each dimension 
+                    //! will be determined by s too. 
+                    //! 
+                    //! 
                     //! \param s new dataspace shape
                     void resize(const Shape &s);
+                    void resize(const std::initializer_list<hsize_t> &list);
+
+                    //! resize the dataset
+
                     //! resize dataset
 
                     //! Resizes the dataspace to a simple dataspace with 
@@ -161,6 +210,8 @@ namespace pni{
                     //! \param s initial shape of the dataspace
                     //! \param ms maximum shape of the dataspace
                     void resize(const Shape &s,const Shape &ms);
+                    void resize(const std::initializer_list<hsize_t> &dlist,
+                                const std::initializer_list<hsize_t> &mlist);
 
                     //! close the dataspace
                     virtual void close();

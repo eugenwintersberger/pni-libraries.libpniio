@@ -59,7 +59,7 @@ namespace pni{
                 public:
                     //===================Constructors and destructors==========
                     //! default constructor
-                    H5Dataset();
+                    explicit H5Dataset();
                     //! copy constructor
                     H5Dataset(const H5Dataset &o);
                     //! copy conversion constructor
@@ -79,7 +79,7 @@ namespace pni{
                     //! \param g parent group
                     //! \param t id of the data type
                     //! \param s shape of the dataset
-                    H5Dataset(const String &n, const H5Group &g,const TypeID &t,
+                    explicit H5Dataset(const String &n, const H5Group &g,const TypeID &t,
                               const Shape &s);
                     //! constructor - chunked dataset
                     
@@ -94,15 +94,15 @@ namespace pni{
                     //! \param t ID of the data type
                     //! \param s shape of the dataset
                     //! \param cs chunk shape
-                    H5Dataset(const String &n,const H5Group &g,const TypeID &t,
+                    explicit H5Dataset(const String &n,const H5Group &g,const TypeID &t,
                               const Shape &s,const Shape &cs);
                     //! constructor for a scalar object
-                    H5Dataset(const String &n, const H5Group &g,
+                    explicit H5Dataset(const String &n, const H5Group &g,
                             const TypeID &t);
                     //! construct from an object ID
-                    H5Dataset(const hid_t &oid);
+                    explicit H5Dataset(const hid_t &oid);
                     //! construction for a simple 
-                    virtual ~H5Dataset();
+                    ~H5Dataset();
 
 
                     //=================assignment operators====================

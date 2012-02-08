@@ -88,12 +88,12 @@ namespace pni{
                     //! \param s shape (counts and rank) of the selection
                     //! \param offset default offset (0)
                     //! \param stride default stride (1)
-                    H5Selection(const H5Dataset &ds,
+                    explicit H5Selection(const H5Dataset &ds,
                                 const Shape &s,size_t offset=0,size_t stride=1);
 
-                    H5Selection(size_t r,std::initializer_list<size_t> offset,
-                                std::initializer_list<size_t> stride,
-                                std::initializer_list<size_t> count); 
+                    H5Selection(const std::initializer_list<hsize_t> &offset,
+                                const std::initializer_list<hsize_t> &stride,
+                                const std::initializer_list<hsize_t> &count); 
                     //! destructor
                     virtual ~H5Selection();
 
