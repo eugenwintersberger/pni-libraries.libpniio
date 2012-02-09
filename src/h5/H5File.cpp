@@ -172,7 +172,7 @@ namespace pni{
                 std::ostringstream vstring;
                 vstring<<major<<"."<<minor<<"."<<rel;
 
-                H5Attribute a = this->attr("HDF5_version",TypeID::STRING);
+                H5Attribute a = this->attr<String>("HDF5_version");
                 a.write(String(vstring.str()));
                 a.close();
             }

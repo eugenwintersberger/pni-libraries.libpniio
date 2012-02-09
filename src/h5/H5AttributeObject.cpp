@@ -28,6 +28,7 @@
 #include "H5Exceptions.hpp"
 
 
+
 namespace pni{
     namespace nx{
         namespace h5{
@@ -117,46 +118,6 @@ namespace pni{
             }
 
             //=======implementation of attribute management methods===========
-            //implementation of the scalar attribute factory method
-            H5Attribute H5AttributeObject::attr(const String &n,
-                    const TypeID &tid) const{
-                EXCEPTION_SETUP("H5Attribute H5AttributeObject::create_attr"
-                        "(const String &n,const TypeID &tid) const");
-
-                H5Datatype type(tid);
-                H5Dataspace space;
-
-                hid_t aid = H5Acreate2(id(),n.c_str(),type.id(),space.id(),
-                        H5P_DEFAULT,H5P_DEFAULT);
-                if(aid < 0){
-                    EXCEPTION_INIT(H5AttributeError,"Cannot create attribute!");
-                    EXCEPTION_THROW();
-                }
-
-                return H5Attribute(aid);
-            }
-
-            //-----------------------------------------------------------------
-            //implementation of the array attribute factory method
-            H5Attribute H5AttributeObject::attr(const String &n,
-                    const TypeID &tid,const Shape &s) const{
-                EXCEPTION_SETUP("H5Attribute H5AttributeObject::create_attr"
-                        "(const String &n,const TypeID &tid,const Shape &s)"
-                        "const");
-
-                H5Datatype type(tid);
-                H5Dataspace space(s);
-
-                hid_t aid = H5Acreate2(id(),n.c_str(),type.id(),space.id(),
-                        H5P_DEFAULT,H5P_DEFAULT);
-                if(aid < 0){
-                    EXCEPTION_INIT(H5AttributeError,"Cannot create attribute!");
-                    EXCEPTION_THROW();
-                }
-
-                return H5Attribute(aid);
-
-            }
 
 
             //-----------------------------------------------------------------

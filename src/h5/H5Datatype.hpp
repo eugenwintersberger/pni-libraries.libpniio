@@ -42,30 +42,7 @@ namespace pni{
             //! The class wraps around an HDF5 type object. 
             class H5Datatype:public H5Object{
                 private: 
-                    hid_t __get_type_from_id(const TypeID &tid);
 
-                    //from this class we would need a singleton - should be available only
-                    //once at runtime - most probably as a global object.
-                    typedef struct {
-                        Float32 r;
-                        Float32 i;
-
-                    } _struct_complex_32;  //!< C structure for a 32Bit complex type
-                    typedef struct {
-                        Float64 r;
-                        Float64 i;
-                    } _struct_complex_64;  //!< C structure for a 64Bit complex type
-
-                    typedef struct {
-                        Float128 r;
-                        Float128 i;
-                    } _struct_complex_128; //!< C structure for a 128Bit complex type
-                    
-                    //create a string type 
-	                static hid_t _create_string_type();
-
-                    //! private method to create the complex types
-                    template<typename T> static hid_t _create_complex_type();
                 protected:
                 public:
                     //======================Constructors and destructors=======
@@ -79,21 +56,10 @@ namespace pni{
                     H5Datatype(H5Datatype &&o);
                     //! move conversion operator
                     H5Datatype(H5Object &&o);
-                    //! constructor from TypeID
-                    explicit H5Datatype(const TypeID &tid);
                     //! constructor form HDF5 id
                     explicit H5Datatype(const hid_t &tid);
                     //! destructor
                     ~H5Datatype();
-
-                    //=============factory methods=============================
-                    //! creation template
-
-                    //! Use this static template method to create a type from 
-                    //! an existing PNI type. This is particularly useful 
-                    //! if you want to create a type independant from its
-                    //! TypeID.
-                    template<typename T> static H5Datatype create();
 
 
                     //==========Assignment operators===========================

@@ -51,11 +51,19 @@ namespace pni{
             class H5Dataset:public H5AttributeObject{
                 private:
                     H5Dataspace _space; //!< local dataspace of the dataset
-                    H5Datatype  _type;  //!< local datatype of the dataset
 
                     //---------some private IO templates----------------------
                     template<typename T> void __write(const T *ptr) const;
                     template<typename T> void __read(T *ptr) const; 
+
+                    //--------------------------------------------------------
+                    H5Dataspace __obtain_dataspace() const{
+                        return  H5Dataspace(H5Dget_space(id()));
+                    }
+
+                    H5Datatype __obtain_datatype() const{
+                        return H5Datatype(H5Dget_type(id()));
+                    }
                 public:
                     //===================Constructors and destructors==========
                     //! default constructor
@@ -79,8 +87,8 @@ namespace pni{
                     //! \param g parent group
                     //! \param t id of the data type
                     //! \param s shape of the dataset
-                    explicit H5Dataset(const String &n, const H5Group &g,const TypeID &t,
-                              const Shape &s);
+                    explicit H5Dataset(const String &n, const H5Group &g,
+                            const H5Datatype &t, const H5Dataspace &s);
                     //! constructor - chunked dataset
                     
                     //! Constructor for a chunked dataset. Unlike contiguous
@@ -94,11 +102,11 @@ namespace pni{
                     //! \param t ID of the data type
                     //! \param s shape of the dataset
                     //! \param cs chunk shape
-                    explicit H5Dataset(const String &n,const H5Group &g,const TypeID &t,
-                              const Shape &s,const Shape &cs);
+                    explicit H5Dataset(const String &n,const H5Group &g,
+                            const H5Datatype &t, const H5Dataspace &s,const Shape &cs);
                     //! constructor for a scalar object
                     explicit H5Dataset(const String &n, const H5Group &g,
-                            const TypeID &t);
+                            const H5Datatype &t);
                     //! construct from an object ID
                     explicit H5Dataset(const hid_t &oid);
                     //! construction for a simple 
@@ -249,14 +257,11 @@ namespace pni{
                 EXCEPTION_SETUP("template<typename T> void H5Dataset::"
                         "__write(const T *ptr)");
 
-                H5Datatype mem_type;
 
                 //select the proper memory data type
-                if(this->type_id() != TypeID::BINARY){
-                    mem_type = H5Datatype::create<T>();
-                }else{
-                    mem_type = H5Datatype(TypeID::BINARY);
-                }
+                
+                H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
+
                 //write data to disk
                 herr_t err = H5Dwrite(id(),mem_type.id(),H5S_ALL,H5S_ALL,
                                       H5P_DEFAULT,(const void *)ptr);
@@ -273,14 +278,8 @@ namespace pni{
                 EXCEPTION_SETUP("template<typename T> void H5Dataset::"
                         "__read(const T *ptr");
                 
-                H5Datatype mem_type;
+                H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
 
-                //select the proper memory data type
-                if(this->type_id() != TypeID::BINARY){
-                    mem_type = H5Datatype::create<T>();
-                }else{
-                    mem_type = H5Datatype(TypeID::BINARY);
-                }
                 //write data to disk
                 herr_t err = H5Dread(id(),mem_type.id(),H5S_ALL,H5S_ALL,
                                       H5P_DEFAULT,(void *)ptr);

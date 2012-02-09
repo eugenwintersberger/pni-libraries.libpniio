@@ -94,7 +94,7 @@ void H5GroupTest::test_attributes(){
 
     //-----------------read and write a string attribute-----------------------
     String comment = "hello world";
-    CPPUNIT_ASSERT_NO_THROW(g.attr("comment",TypeID::STRING).write(comment));
+    CPPUNIT_ASSERT_NO_THROW(g.attr<String>("comment").write(comment));
     //read the attribute back
     String str_value;
     CPPUNIT_ASSERT_NO_THROW(str_value = g.attr("comment").read<String>());
@@ -103,7 +103,7 @@ void H5GroupTest::test_attributes(){
 
     //--------------read and write a scalar attribute--------------------------
     Float32Scalar scalar(0.2,"atribute","a.u.","scalar attribute");
-    CPPUNIT_ASSERT_NO_THROW(g.attr("pressure",scalar.type_id()).write(scalar));
+    CPPUNIT_ASSERT_NO_THROW(g.attr<TypeID::FLOAT32>("pressure").write(scalar));
     Float64Scalar sc_value("attribute","a.u.","scalar attribute");
     CPPUNIT_ASSERT_NO_THROW(sc_value = g.attr("pressure").read<Float64Scalar>());
     CPPUNIT_ASSERT(sc_value == scalar);
@@ -113,7 +113,7 @@ void H5GroupTest::test_attributes(){
     s.dim(0,10); s.dim(1,3);
     UInt16Array data(s);
     data=113;
-    CPPUNIT_ASSERT_NO_THROW(g.attr("data",data.type_id(),data.shape()).write(data));
+    CPPUNIT_ASSERT_NO_THROW(g.attr<UInt16>("data",data.shape()).write(data));
     Float32Array ar_value;
     CPPUNIT_ASSERT_NO_THROW(ar_value = g.attr("data").read<Float32Array>());
     CPPUNIT_ASSERT(data[0] == ar_value[0]);
@@ -125,7 +125,7 @@ void H5GroupTest::test_attributes(){
 
     //is the other way around workding
     UInt16 sca = 291;
-    CPPUNIT_ASSERT_NO_THROW(g.attr("SCA",TypeID::UINT16).write(sca));
+    CPPUNIT_ASSERT_NO_THROW(g.attr<TypeID::UINT16>("SCA").write(sca));
     UInt32Scalar sca_value;
     CPPUNIT_ASSERT_NO_THROW(sca_value = g.attr("SCA").read<UInt32Scalar>());
     CPPUNIT_ASSERT(sca_value == sca);

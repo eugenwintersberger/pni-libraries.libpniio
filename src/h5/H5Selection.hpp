@@ -33,6 +33,7 @@ using namespace pni::utils;
 
 #include "H5Dataspace.hpp"
 #include "H5Dataset.hpp"
+#include "H5DatatypeFactory.hpp"
 
 namespace pni{
     namespace nx{
@@ -320,14 +321,8 @@ namespace pni{
                         "__write(const T *ptr)");
                 herr_t err;
                 //select the proper memory data type
-                H5Datatype mem_type;
+                H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
                 
-                //select the proper memory data type
-                if(_dataset->type_id() != TypeID::BINARY){
-                    mem_type = H5Datatype::create<T>();
-                }else{
-                    mem_type = H5Datatype(TypeID::BINARY);
-                }
                 
                 //set selection to the file datasets original dataset
                 err = H5Sselect_hyperslab(_dataset->space().id(),
@@ -375,14 +370,7 @@ namespace pni{
                         "__read(T *ptr)");
                 herr_t err;
                 //select the proper memory data type
-                H5Datatype mem_type;
-                
-                //select the proper memory data type
-                if(_dataset->type_id() != TypeID::BINARY){
-                    mem_type = H5Datatype::create<T>();
-                }else{
-                    mem_type = H5Datatype(TypeID::BINARY);
-                }
+                H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
                 
                 //set selection to the file datasets original dataset
                 err = H5Sselect_hyperslab(_dataset->space().id(),

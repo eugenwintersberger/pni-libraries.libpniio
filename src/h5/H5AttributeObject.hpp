@@ -30,9 +30,11 @@
 #include <pni/utils/Scalar.hpp>
 #include <pni/utils/Array.hpp>
 #include <pni/utils/Buffer.hpp>
+#include <pni/utils/IDTypeMap.hpp>
 
 #include "H5NamedObject.hpp"
 #include "H5Attribute.hpp"
+#include "H5DatatypeFactory.hpp"
 
 
 namespace pni{
@@ -81,7 +83,10 @@ namespace pni{
                     //! \param n name of the attribute
                     //! \param tid ID of the data-type
                     //! \return attribute object
-                    H5Attribute attr(const String &n,const TypeID &tid) const;
+                    template<typename T>
+                        H5Attribute attr(const String &n) const;
+                    template<TypeID ID>
+                        H5Attribute attr(const String &n) const;
                     //! create an array attribute
 
                     //! Create an array attribute. This method acts as a 
@@ -90,8 +95,10 @@ namespace pni{
                     //! \param tid ID of the data-type
                     //! \param s shape of the array
                     //! \return attribute object
-                    H5Attribute attr(const String &n,const TypeID &tid,
-                                     const Shape &s) const;
+                    template<typename T>
+                        H5Attribute attr(const String &n, const Shape &s) const;
+                    template<TypeID ID>
+                        H5Attribute attr(const String &n, const Shape &s) const;
 
                     //! open an attribute
                     
@@ -109,6 +116,57 @@ namespace pni{
                     size_t nattr() const;
 
             };
+
+            //implementation of the scalar attribute factory method
+            template<typename T>
+            H5Attribute H5AttributeObject::attr(const String &n) const{
+                EXCEPTION_SETUP("H5Attribute H5AttributeObject::create_attr"
+                        "(const String &n,const TypeID &tid) const");
+
+                H5Datatype type = H5DatatypeFactory::create_type<T>();
+                H5Dataspace space;
+
+                hid_t aid = H5Acreate2(id(),n.c_str(),type.id(),space.id(),
+                        H5P_DEFAULT,H5P_DEFAULT);
+                if(aid < 0){
+                    EXCEPTION_INIT(H5AttributeError,"Cannot create attribute!");
+                    EXCEPTION_THROW();
+                }
+
+                return H5Attribute(aid);
+            }
+            
+            template<TypeID ID>
+            H5Attribute H5AttributeObject::attr(const String &n) const{
+                return attr<typename IDTypeMap<ID>::type>(n);
+            }
+
+            //-----------------------------------------------------------------
+            //implementation of the array attribute factory method
+            template<typename T>
+            H5Attribute H5AttributeObject::attr(const String &n,const Shape &s) const{
+                EXCEPTION_SETUP("H5Attribute H5AttributeObject::create_attr"
+                        "(const String &n,const TypeID &tid,const Shape &s)"
+                        "const");
+
+                H5Datatype type = H5DatatypeFactory::create_type<T>();
+                H5Dataspace space(s);
+
+                hid_t aid = H5Acreate2(id(),n.c_str(),type.id(),space.id(),
+                        H5P_DEFAULT,H5P_DEFAULT);
+                if(aid < 0){
+                    EXCEPTION_INIT(H5AttributeError,"Cannot create attribute!");
+                    EXCEPTION_THROW();
+                }
+
+                return H5Attribute(aid);
+
+            }
+
+            template<TypeID ID>
+            H5Attribute H5AttributeObject::attr(const String &n,const Shape &s) const{
+                return attr<typename IDTypeMap<ID>::type>(n,s);
+            }
         
 
         //end of namespace

@@ -38,6 +38,7 @@ using namespace pni::utils;
 #include "H5Dataspace.hpp"
 #include "H5Datatype.hpp"
 #include "H5Exceptions.hpp"
+#include "H5DatatypeFactory.hpp"
 
 namespace pni{
     namespace nx{
@@ -180,7 +181,7 @@ namespace pni{
                 EXCEPTION_SETUP("template<typename T> void H5Attribute::"
                         "__read_to_ptr(T *ptr) const");
 
-                H5Datatype mem_type = H5Datatype::create<T>();
+                H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
                 herr_t err = H5Aread(id(),mem_type.id(),(void *)ptr);
                 if(err < 0){
                     EXCEPTION_INIT(H5AttributeError,"Error reading attribute!");
@@ -193,7 +194,7 @@ namespace pni{
                 EXCEPTION_SETUP("template<typename T>  void H5Attribute::"
                         "__write_from_ptr(const T *ptr)");
 
-                H5Datatype mem_type = H5Datatype::create<T>();
+                H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
                 herr_t err = H5Awrite(id(),mem_type.id(),(void *)ptr);
                 if(err<0){
                     EXCEPTION_INIT(H5AttributeError,"Error writing attribute!");

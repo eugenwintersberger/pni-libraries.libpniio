@@ -16,7 +16,9 @@ void H5SelectionTest::setUp(){
     _chunk.dim(0,1);
 
     _file.create("H5SelectionTest.h5",true,0);
-    _dset = H5Dataset("array",_file,TypeID::FLOAT32,_shape,_chunk);
+    H5Datatype type = H5DatatypeFactory::create_type<TypeID::FLOAT32>();
+    H5Dataspace space = {0,12,57};
+    _dset = H5Dataset("array",_file,type,space,_chunk);
 }
 
 //-----------------------------------------------------------------------------
@@ -95,7 +97,9 @@ void H5SelectionTest::test_write_simple_types(){
     //start with a scalar dataset
     Shape s(1);
     Shape cs(1); cs.dim(0,1);
-    H5Dataset array_ds("array_dataset",_file,TypeID::FLOAT32,s,cs);
+    H5Datatype type = H5DatatypeFactory::create_type<Float32>();
+    H5Dataspace space(s);
+    H5Dataset array_ds("array_dataset",_file,type,space,cs);
     array_ds.extend(0);
 
     H5Selection selection = array_ds.selection();
@@ -113,7 +117,8 @@ void H5SelectionTest::test_write_simple_types(){
 
     //extensible string dataset
     String str="hello";
-    H5Dataset string_ds("string_ds",_file,TypeID::STRING,s,cs);
+    type = H5DatatypeFactory::create_type<String>();
+    H5Dataset string_ds("string_ds",_file,type,space,cs);
 
     CPPUNIT_ASSERT_NO_THROW(string_ds.extend(0));
 
@@ -144,7 +149,9 @@ void H5SelectionTest::test_read_simple_types(){
     //----------write data with selection--------------------------
     Shape s(1);
     Shape cs(1); cs.dim(0,1);
-    H5Dataset array_ds("array_dataset",_file,TypeID::FLOAT32,s,cs);
+    H5Datatype type = H5DatatypeFactory::create_type<Float32>();
+    H5Dataspace space(s);
+    H5Dataset array_ds("array_dataset",_file,type,space,cs);
     H5Selection selection = array_ds.selection();
     selection.offset(0,0); selection.count(0,1);
     array_ds.extend(0);
@@ -159,8 +166,8 @@ void H5SelectionTest::test_read_simple_types(){
     selection.offset(0,2);
     value = -9.234;
     CPPUNIT_ASSERT_NO_THROW(selection.write(value));
-    
-    H5Dataset array_ds2("array_dataset2",_file,TypeID::FLOAT32,s,cs);
+   
+    H5Dataset array_ds2("array_dataset2",_file,type,space,cs);
     selection = array_ds2.selection();
     selection.offset(0,0); 
     selection.count(0,1);
@@ -193,7 +200,9 @@ void H5SelectionTest::test_read_simple_types(){
     //extensible string dataset
     String str="hello";
     s.dim(0,0);
-    H5Dataset string_ds("string_ds",_file,TypeID::STRING,s,cs);
+    type = H5DatatypeFactory::create_type<String>();
+    space = H5Dataspace(s);
+    H5Dataset string_ds("string_ds",_file,type,space,cs);
     selection = string_ds.selection();
     string_ds.extend(0);
     selection.offset(0,0);
@@ -222,7 +231,9 @@ void H5SelectionTest::test_write_scalar(){
 
     Shape sh(1); sh.dim(0,0);
     Shape cs(1); cs.dim(0,1);
-    H5Dataset array_ds("array_ds",_file,s.type_id(),sh,cs);
+    H5Dataspace space(sh);
+    H5Datatype type = H5DatatypeFactory::create_type<Float32>();
+    H5Dataset array_ds("array_ds",_file,type,space,cs);
     array_ds.extend(0);
     H5Selection selection = array_ds.selection();
     selection.offset(0,0); 
@@ -233,7 +244,9 @@ void H5SelectionTest::test_write_scalar(){
     array_ds.extend(0);
     CPPUNIT_ASSERT_NO_THROW(selection.write(s));
 
-    H5Dataset array_ds2("array_ds2",_file,s.type_id(),sh,cs);
+
+
+    H5Dataset array_ds2("array_ds2",_file,type,space,cs);
     s = 1;
     selection = array_ds2.selection();
     array_ds2.extend(0);
@@ -285,7 +298,9 @@ void H5SelectionTest::test_write_array(){
 
     Shape cs(3); cs.dim(0,1); cs.dim(1,s[0]); cs.dim(2,s[1]);
     Shape ds(3); ds.dim(0,0); ds.dim(1,s[0]); ds.dim(2,s[1]);
-    H5Dataset earray_ds("earray_2",_file,a.type_id(),ds,cs);
+    H5Dataspace space(ds);
+    H5Datatype type = H5DatatypeFactory::create_type<UInt32>();
+    H5Dataset earray_ds("earray_2",_file,type,space,cs);
     H5Selection selection = earray_ds.selection(); 
     selection.offset(0,0);
     selection.count(0,1); selection.count(1,s[0]);selection.count(2,s[1]);
@@ -324,7 +339,9 @@ void H5SelectionTest::test_write_buffer(){
 
     Shape cs(1); cs.dim(0,buffer.size());
     s.dim(0,0);
-    H5Dataset ebin_ds("binary_2",_file,TypeID::BINARY,s,cs);
+    H5Datatype type = H5DatatypeFactory::create_type<Binary>();
+    H5Dataspace space(s);
+    H5Dataset ebin_ds("binary_2",_file,type,space,cs);
     H5Selection selection = ebin_ds.selection();
     ebin_ds.extend(0,128);
     selection.count(0,128);

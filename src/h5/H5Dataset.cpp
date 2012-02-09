@@ -44,14 +44,16 @@ namespace pni{
 
             //-----------------------------------------------------------------
             //implementation of the copy constructor
-            H5Dataset::H5Dataset(const H5Dataset &o):H5AttributeObject(o){
-                _space = o._space;
-                _type  = o._type;
+            H5Dataset::H5Dataset(const H5Dataset &o):
+                H5AttributeObject(o),
+                _space(o._space) 
+            {
             }
 
             //-----------------------------------------------------------------
             //implementation of the copy conversion constructor
-            H5Dataset::H5Dataset(const H5Object &o):H5AttributeObject(o){
+            H5Dataset::H5Dataset(const H5Object &o):H5AttributeObject(o)
+            {
                 EXCEPTION_SETUP("H5Dataset::H5Dataset(const H5Object &o)");
 
                 //check if the type is ok for conversion
@@ -61,16 +63,15 @@ namespace pni{
                 }
 
                 //copy the datatype and dataspace
-                _space = H5Dataspace(H5Dget_space(id()));
-                _type  = H5Datatype(H5Dget_type(id()));
-
+                _space = __obtain_dataspace();
             }
 
             //-----------------------------------------------------------------
             //implementation of the move constrcutor
-            H5Dataset::H5Dataset(H5Dataset &&o):H5AttributeObject(std::move(o)){
-                _space = std::move(o._space);
-                _type  = std::move(o._type);
+            H5Dataset::H5Dataset(H5Dataset &&o):
+                H5AttributeObject(std::move(o)),
+                _space(std::move(o._space)) 
+            {
             }
 
             //-----------------------------------------------------------------
@@ -84,27 +85,23 @@ namespace pni{
                 }
 
                 //move datatype and data space
-                _space = H5Dataspace(H5Dget_space(id()));
-                _type  = H5Datatype(H5Dget_type(id()));
+                _space = __obtain_dataspace();
             }
 
             //-----------------------------------------------------------------
             //implementation of the constructor for a contigous array
             H5Dataset::H5Dataset(const String &n,const H5Group &g,
-                    const TypeID &tid,const Shape &s){
+                    const H5Datatype &t,const H5Dataspace &s){
                 EXCEPTION_SETUP("H5Dataset::H5Dataset(const String &n,"
                         "const H5Group &g, const TypeID &tid,const Shape &s)");
 
-                //create datatype and data space
-                _type = H5Datatype(tid);
-                _space = H5Dataspace(s,s);
 
                 //create link creation property list
                 hid_t lpl = H5Pcreate(H5P_LINK_CREATE);
                 H5Pset_create_intermediate_group(lpl,1);
 
                 //create the datase
-                hid_t did = H5Dcreate2(g.id(),n.c_str(),_type.id(),_space.id(),
+                hid_t did = H5Dcreate2(g.id(),n.c_str(),t.id(),s.id(),
                         lpl,H5P_DEFAULT,H5P_DEFAULT);
                 if(did<0){
                     String estr = "Cannot create dataset ["+n+
@@ -116,23 +113,20 @@ namespace pni{
                 //set id
                 H5Object::id(did);
 
+                //get dataspace
+                _space = __obtain_dataspace();
+
                 //close property list
                 H5Pclose(lpl);
             }
 
             //-----------------------------------------------------------------
             //! constructor 
-            H5Dataset::H5Dataset(const String &n, const H5Group &g, const TypeID &tid,
-                    const Shape &s,const Shape &cs){
+            H5Dataset::H5Dataset(const String &n, const H5Group &g, 
+                    const H5Datatype &t, const H5Dataspace &s,const Shape &cs){
                 EXCEPTION_SETUP("H5Dataset::H5Dataset(const String &n, "
                         "const H5Group &g, const TypeID &tid,const Shape &s,"
                         "const Shape &cs)");
-
-                //create the datat type
-                _type = H5Datatype(tid);
-                
-                //create the data space
-                _space = H5Dataspace(s);
 
                 //create the link creation property list
                 hid_t lpl = H5Pcreate(H5P_LINK_CREATE);
@@ -148,7 +142,7 @@ namespace pni{
                 }
 
                 //create the datase
-                hid_t did = H5Dcreate2(g.id(),n.c_str(),_type.id(),_space.id(),
+                hid_t did = H5Dcreate2(g.id(),n.c_str(),t.id(),s.id(),
                         lpl,cpl,H5P_DEFAULT);
                 if(did<0){
                     String estr = "Cannot create dataset ["+n+
@@ -158,6 +152,7 @@ namespace pni{
                 }
 
                 H5Object::id(did);
+                _space = __obtain_dataspace();
                 //construction done - close property lists
                 H5Pclose(lpl);
                 H5Pclose(cpl);
@@ -165,12 +160,11 @@ namespace pni{
 
             //-----------------------------------------------------------------
             H5Dataset::H5Dataset(const String &n,const H5Group &p,
-                                 const TypeID &tid){
+                                 const H5Datatype &t){
                 EXCEPTION_SETUP("H5Dataset::H5Dataset(const String &n,"
                         "const H5Group &p,const TypeID &tid)");
 
                 //create datatype and dataset
-                _type = H5Datatype(tid);
                 _space = H5Dataspace();
 
                 //create link creation property list
@@ -178,7 +172,7 @@ namespace pni{
                 H5Pset_create_intermediate_group(lpl,1);
 
                 //create the datase
-                hid_t did = H5Dcreate2(p.id(),n.c_str(),_type.id(),_space.id(),
+                hid_t did = H5Dcreate2(p.id(),n.c_str(),t.id(),_space.id(),
                         lpl,H5P_DEFAULT,H5P_DEFAULT);
                 if(did<0){
                     String estr = "Cannot create dataset ["+n+
@@ -196,14 +190,12 @@ namespace pni{
             //implement construction from an object id
             H5Dataset::H5Dataset(const hid_t &oid):H5AttributeObject(oid){
                 _space = H5Dataspace(H5Dget_space(id()));
-                _type  = H5Datatype(H5Dget_type(id()));
             }
 
             //-----------------------------------------------------------------
             //implementation of the default destructor 
             H5Dataset::~H5Dataset(){
                 _space.close();
-                _type.close();
             }
 
             //=========implementation of the assignment operators==============
@@ -212,7 +204,6 @@ namespace pni{
                 if(this != &o){
                     (H5AttributeObject &)(*this) = (H5AttributeObject &)o;
                     _space = o._space;
-                    _type  = o._type;
                 }
                 return *this;
             }
@@ -229,8 +220,7 @@ namespace pni{
 
                 if(this != &o){
                     (H5Object &)(*this) = o;
-                    _space = H5Dataspace(H5Dget_space(o.id()));
-                    _type  = H5Datatype(H5Dget_type(o.id()));
+                    _space = __obtain_dataspace();
                 }
                 return *this;
             }
@@ -242,7 +232,6 @@ namespace pni{
                     (H5AttributeObject &)(*this) = std::move((H5AttributeObject
                                 &)o);
                     _space = std::move(o._space);
-                    _type  = std::move(o._type);
                 }
                 return *this;
             }
@@ -259,8 +248,7 @@ namespace pni{
 
                 if(this != &o){
                     (H5Object &)(*this) = std::move(o);
-                    _space = H5Dataspace(H5Dget_space(id()));
-                    _type  = H5Datatype(H5Dget_type(id()));
+                    _space = __obtain_dataspace();
                 }
                 return *this;
             }
@@ -284,7 +272,7 @@ namespace pni{
                 }
                 
                 //re-fetch data space
-                _space = H5Dataspace(H5Dget_space(id()));
+                _space = __obtain_dataspace();
             }
 
             //-----------------------------------------------------------------
@@ -303,7 +291,7 @@ namespace pni{
                 }
 
                 //re-fetch the new dataspace
-                _space = H5Dataspace(H5Dget_space(id()));
+                _space = __obtain_dataspace();
             }
 
             //------------------------------------------------------------------
@@ -328,7 +316,7 @@ namespace pni{
 
             //------------------------------------------------------------------
             TypeID H5Dataset::type_id() const{
-                return _type.type_id();
+                return __obtain_datatype().type_id();
             }
 
             //------------------------------------------------------------------
