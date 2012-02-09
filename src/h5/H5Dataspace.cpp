@@ -380,6 +380,20 @@ namespace pni{
                 __create_dataspace();
             }
 
+            //------------------------------------------------------------------
+            void H5Dataspace::grow(size_t dim,size_t ext){
+                EXCEPTION_SETUP("void H5Dataspace::"
+                        "grow(size_t dim,size_t ext) const");
+
+                if(dim >= rank()){
+                    EXCEPTION_INIT(IndexError,"Index larger than rank!");
+                    EXCEPTION_THROW();
+                }
+
+                _dims[dim] += ext;
+                __create_dataspace();
+            }
+
 
 
             //======================operators===================================

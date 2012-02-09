@@ -270,7 +270,8 @@ namespace pni{
                     EXCEPTION_INIT(H5DataSetError, "Error resizing the dataset!");
                     EXCEPTION_THROW();
                 }
-                
+               
+
                 //re-fetch data space
                 _space = __obtain_dataspace();
             }
@@ -291,7 +292,7 @@ namespace pni{
                 }
 
                 //re-fetch the new dataspace
-                _space = __obtain_dataspace();
+                _space.grow(e,n);
             }
 
             //------------------------------------------------------------------

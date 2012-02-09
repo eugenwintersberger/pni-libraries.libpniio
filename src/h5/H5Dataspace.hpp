@@ -212,6 +212,7 @@ namespace pni{
                     void resize(const Shape &s,const Shape &ms);
                     void resize(const std::initializer_list<hsize_t> &dlist,
                                 const std::initializer_list<hsize_t> &mlist);
+                    void grow(size_t dim=0,size_t ext=1) ;
 
                     //! close the dataspace
                     virtual void close();
