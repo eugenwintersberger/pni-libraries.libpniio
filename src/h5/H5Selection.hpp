@@ -58,21 +58,17 @@ namespace pni{
             //! data.
             class H5Selection{
                 private:
-                    Shape       _shape;       //!< shape of the selection
-                    H5Dataspace _sspace;      //!< dataspace describing the selection
                     Buffer<hsize_t> _offset;  //!< selection offset
                     Buffer<hsize_t> _stride;  //!< selection stride
                     Buffer<hsize_t> _counts;  //!< number of elements along each dimension
-
-                    void __update_shape();
-                    void __update_dataspace();
-
                     const H5Dataset *_dataset;     //!< local reference to the dataset
                                              //!< to which the selection
                                              //!< belongs.
 
-                    template<typename T> void __write(const T *ptr) const;
-                    template<typename T> void __read(T *ptr) const;
+                    template<typename T> void __write(const H5Datatype &mt,
+                            const H5Dataspace &ms,const T *ptr) const;
+                    template<typename T> void __read(const H5Datatype &mt,
+                            const H5Dataspace &ms,T *ptr) const;
                 public:
                     //============constructors and destructor==================
                     //! copy constructor
@@ -119,14 +115,14 @@ namespace pni{
                     //! shape of the selection
 
                     //! Returns the shape of the selection
-                    const Shape &shape() const;
+                    Shape shape() const;
 
                     //! selection dataspace
 
                     //! Return a constant reference to the dataspace describing
                     //! the selection.
                     //! \return dataspace reference
-                    const H5Dataspace &space() const;
+                    H5Dataspace space() const;
 
                     //! read/write offset 
 
@@ -149,6 +145,12 @@ namespace pni{
                     //! \param i dimension index
                     //! \param o offset value along i
                     void offset(size_t i,hsize_t o);
+
+                    //! set offset with initializer list
+
+                    //! Use this method to set the offset of the selection
+                    //! using an initialzer list.
+                    void offset(const std::initializer_list<hsize_t> &l);
 
 
                     //! get offset buffer
@@ -181,6 +183,11 @@ namespace pni{
                     //! \param s stride along i
                     void stride(size_t i,hsize_t s);
 
+                    //! set stride with initializer list
+
+                    //! Set the stride values using an initializer list.
+                    void stride(const std::initializer_list<hsize_t> &l);
+
                     //! get stride buffer
 
                     //! Return a constant reference to the buffer with the 
@@ -210,6 +217,11 @@ namespace pni{
                     //! \param i dimension index
                     //! \param c count value
                     void count(size_t i,hsize_t c);
+
+                    //! set count with initializer list
+
+                    //! Set the count values using an initializer list.
+                    void count(const std::initializer_list<hsize_t> &l);
 
                     //! get count buffer
 
@@ -316,13 +328,12 @@ namespace pni{
 
             //===============template implementation============================
             //write template for a simple pointer with a selection
-            template<typename T> void H5Selection::__write(const T *ptr) const{
+            template<typename T> void H5Selection::__write(const H5Datatype &mt,
+                    const H5Dataspace &ms,const T *ptr) const
+            {
                 EXCEPTION_SETUP("template<typename T> void H5Selection::"
                         "__write(const T *ptr)");
                 herr_t err;
-                //select the proper memory data type
-                H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
-                
                 
                 //set selection to the file datasets original dataset
                 err = H5Sselect_hyperslab(_dataset->space().id(),
@@ -339,20 +350,14 @@ namespace pni{
 
                 //write data to disk
                 err = H5Dwrite(_dataset->id(),
-                        mem_type.id(),          //set memory data type
-                        _sspace.id(),           //set selection data space
+                        mt.id(),          //set memory data type
+                        ms.id(),           //set selection data space
                         _dataset->space().id(),  //set file data space
                         H5P_DEFAULT,
                         (const void *)ptr);
 
 
                 if(err < 0){
-                    std::cout<<"----------------------------------------"<<std::endl;
-                    std::cout<<"target data space:"<<std::endl;
-                    std::cout<<_dataset->space()<<std::endl;
-                    std::cout<<_sspace<<std::endl;
-                    std::cout<<"----------------------------------------"<<std::endl;
-                    std::cout<<"selection data space:"<<std::endl;
                     EXCEPTION_INIT(H5DataSetError,
                             "Error writing data to dataset!");
                     EXCEPTION_THROW();
@@ -365,12 +370,12 @@ namespace pni{
 
             //-----------------------------------------------------------------
             //read template for a simple pointer with a selection
-            template<typename T> void H5Selection::__read(T *ptr) const {
+            template<typename T> void H5Selection::__read(const H5Datatype &mt,
+                    const H5Dataspace &ms,T *ptr) const 
+            {
                 EXCEPTION_SETUP("template<typename T> void H5Selection::"
                         "__read(T *ptr)");
                 herr_t err;
-                //select the proper memory data type
-                H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
                 
                 //set selection to the file datasets original dataset
                 err = H5Sselect_hyperslab(_dataset->space().id(),
@@ -387,8 +392,8 @@ namespace pni{
 
                 //write data to disk
                 err = H5Dread(_dataset->id(),
-                        mem_type.id(),         //set memory data type
-                        _sspace.id(),          //set the selection data space
+                        mt.id(),         //set memory data type
+                        ms.id(),          //set the selection data space
                         _dataset->space().id(), //set the file data space
                         H5P_DEFAULT,
                         (void *)ptr);
@@ -416,7 +421,11 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
 
-                __write(&value); 
+                //create datatspace and datatype
+                H5Datatype mt = H5DatatypeFactory::create_type<T>();
+                H5Dataspace ms;
+
+                __write(mt,ms,&value); 
                 
             }
 
@@ -435,7 +444,11 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
 
-                __read(&value); 
+                //create memory dataspace and datatype
+                H5Datatype mt = H5DatatypeFactory::create_type<T>();
+                H5Dataspace ms;
+
+                __read(mt,ms,&value); 
                 
             }
             
@@ -452,7 +465,12 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
 
-                __write(buffer.ptr());
+                //create memory datatype and memory dataspace
+                H5Datatype mt = H5DatatypeFactory::create_type<T>();
+                Shape s(1); s.dim(0,buffer.size());
+                H5Dataspace ms(s);
+
+                __write(mt,ms,buffer.ptr());
             }
 
             //-----------------------------------------------------------------
@@ -468,7 +486,12 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
 
-                __read(buffer.ptr());
+                //create memory datatype and memory dataspace
+                H5Datatype mt = H5DatatypeFactory::create_type<T>();
+                Shape s(1); s.dim(0,buffer.size());
+                H5Dataspace ms(s);
+
+                __read(mt,ms,buffer.ptr());
             }
             
             //-----------------------------------------------------------------
@@ -483,7 +506,11 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
 
-                __write(scalar.ptr());
+                //create memory datatype and memory dataspace
+                H5Datatype mt = H5DatatypeFactory::create_type<T>();
+                H5Dataspace ms;
+
+                __write(mt,ms,scalar.ptr());
             }
             
             //-----------------------------------------------------------------
@@ -497,7 +524,11 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
 
-                __read(scalar.ptr());
+                //create memory datatype and memory dataspace
+                H5Datatype mt = H5DatatypeFactory::create_type<T>();
+                H5Dataspace ms;
+
+                __read(mt,ms,scalar.ptr());
             }
             
             //-----------------------------------------------------------------
@@ -516,7 +547,11 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
 
-                __write(array.ptr());
+                //create memory datatype and dataspace
+                H5Datatype mt = H5DatatypeFactory::create_type<T>();
+                H5Dataspace ms(array.shape());
+
+                __write(ms,mt,array.ptr());
             }
 
             //-----------------------------------------------------------------
@@ -535,7 +570,11 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
 
-                __read(array.ptr());
+                //create memory datatype and dataspace
+                H5Datatype mt = H5DatatypeFactory::create_type<T>();
+                H5Dataspace ms(array.shape());
+
+                __read(mt,ms,array.ptr());
             }
         //end of namespace
         }

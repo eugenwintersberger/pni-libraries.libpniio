@@ -31,29 +31,19 @@
 namespace pni{
     namespace nx{
         namespace h5{
-            //==========Implementation of private methods=======================
-            void H5Selection::__update_shape(){
-                for(size_t i=0;i<_shape.rank();i++) _shape.dim(i,_counts[i]);
-            }
-
-            //------------------------------------------------------------------
-            void H5Selection::__update_dataspace(){
-                _sspace = H5Dataspace(_shape);
-            }
 
             //==============Implementation of constructors and destructors======
             //implementation of the copy constructor
             H5Selection::H5Selection(const H5Selection &o)
-                :_shape(o._shape),_sspace(o._sspace),_offset(o._offset),
-                 _stride(o._stride),_counts(o._counts),_dataset(o._dataset)
+                :_offset(o._offset),_stride(o._stride),_counts(o._counts),
+                 _dataset(o._dataset)
             {
             }
 
             //------------------------------------------------------------------
             //implementation of the move constructor
             H5Selection::H5Selection(H5Selection &&o)
-                :_shape(std::move(o._shape)),_sspace(std::move(o._sspace)),
-                 _offset(std::move(o._offset)),_stride(std::move(o._stride)),
+                : _offset(std::move(o._offset)),_stride(std::move(o._stride)),
                  _counts(std::move(o._counts)),
                  _dataset(o._dataset)
             {
@@ -64,10 +54,8 @@ namespace pni{
             //implementation of the shape constructor
             H5Selection::H5Selection(const H5Dataset &ds,const Shape &s,
                     size_t offset,size_t stride)
-                :_dataset(&ds),
-                 _offset(s.rank()),
-                 _stride(s.rank()),
-                 _counts(s.rank())
+                :_offset(s.rank()),_stride(s.rank()),_counts(s.rank()),
+                 _dataset(&ds)
             {
 
                 //set offset and stride
@@ -75,9 +63,6 @@ namespace pni{
                 _stride = stride;
                 for(size_t i=0;i<s.rank();i++) _counts[i] = s[i];
 
-                _shape = s;
-                __update_shape();
-                __update_dataspace();
             }
 
             //------------------------------------------------------------------
@@ -86,18 +71,13 @@ namespace pni{
             H5Selection::H5Selection(const std::initializer_list<hsize_t> &offset,
                                      const std::initializer_list<hsize_t> &stride,
                                      const std::initializer_list<hsize_t> &count):
-                _offset(offset),
-                _stride(stride),
-                _counts(count)
+                _offset(offset), _stride(stride), _counts(count)
             {
-                __update_shape();
-                __update_dataspace();
             }
 
             //------------------------------------------------------------------
             //implementation of the destructor
             H5Selection::~H5Selection(){
-                _sspace.close();
                 _offset.free();
                 _stride.free();
                 _counts.free();
@@ -112,11 +92,9 @@ namespace pni{
                         "(const H5Selection &o)");
 
                 if(this != &o){
-                    _sspace  = o._sspace;
                     _stride  = o._stride;
                     _offset  = o._offset;
                     _counts  = o._counts;
-                    _shape   = o._shape;
                     _dataset = o._dataset;
                 }
 
@@ -131,11 +109,9 @@ namespace pni{
 
                 //original names 
                 if(this != &o){
-                    _sspace  = std::move(o._sspace);
                     _stride  = std::move(o._stride);
                     _offset  = std::move(o._offset);
                     _counts  = std::move(o._counts);
-                    _shape   = std::move(o._shape);
                     _dataset = o._dataset;
                     o._dataset = nullptr;
                 }
@@ -145,25 +121,34 @@ namespace pni{
             //========implementation of inquery methods=========================
             //get size
             size_t H5Selection::size() const{
-                return _shape.size();
+                if(rank() == 0) return 0;
+                
+                size_t s = 1;
+                for(size_t i=0;i<rank();i++) s *= _counts[i];
+
+                return s;
             }
 
             //------------------------------------------------------------------
             //get number of dimensions
             size_t H5Selection::rank() const {
-                return _shape.rank();
+                return _counts.size();
             }
 
             //------------------------------------------------------------------
             //get shape
-            const Shape &H5Selection::shape() const {
-                return _shape;
+            Shape H5Selection::shape() const {
+                Shape s(rank()); 
+                for(size_t i=0;i<rank();i++) s.dim(i,_counts[i]);
+                return s;
             }
+            
 
             //------------------------------------------------------------------
             //return reference to the dataspace
-            const H5Dataspace &H5Selection::space() const{
-                return _sspace;
+            H5Dataspace H5Selection::space() const{
+                H5Dataspace s(shape());
+                return s;
             }
 
             
@@ -183,6 +168,20 @@ namespace pni{
             //set all offset values in a single call
             void H5Selection::offset(size_t i,hsize_t o) {
                 _offset[i] = o;
+            }
+
+            //------------------------------------------------------------------
+            void H5Selection::offset(const std::initializer_list<hsize_t> &l){
+                EXCEPTION_SETUP("void H5Selection::"
+                        "offset(std::initializer_list<hsize_t> &l)");
+
+                if(l.size() != rank()){
+                    EXCEPTION_INIT(SizeMissmatchError, "Number of elements "
+                            "in initializer list exceeds selection rank!");
+                    EXCEPTION_THROW();
+                }
+
+                _offset = l;
             }
 
             //------------------------------------------------------------------
@@ -206,6 +205,19 @@ namespace pni{
             }
 
             //------------------------------------------------------------------
+            void H5Selection::stride(const std::initializer_list<hsize_t> &l){
+                EXCEPTION_SETUP("void H5Selection::"
+                        "stride(const std::initializer_list<hsize_t> &l)");
+
+                if(l.size() != rank()){
+                    EXCEPTION_INIT(SizeMissmatchError,"Number of elements "
+                            "in initializer list exceeds selection rank");
+                    EXCEPTION_THROW();
+                }
+                _stride = l;
+            }
+
+            //------------------------------------------------------------------
             const Buffer<hsize_t> &H5Selection::stride() const {
                 return _stride;
             }
@@ -223,8 +235,19 @@ namespace pni{
             //------------------------------------------------------------------
             void H5Selection::count(size_t i,hsize_t c) {
                 _counts[i] = c;
-                __update_shape();
-                __update_dataspace();
+            }
+
+            //-----------------------------------------------------------------
+            void H5Selection::count(const std::initializer_list<hsize_t> &l){
+                EXCEPTION_SETUP("void H5Selection::"
+                        "count(const std::initialize_list<hsize_t> &l)");
+
+                if(l.size() != _counts.size()){
+                    EXCEPTION_INIT(SizeMissmatchError,"Number of elements "
+                            "in initializer list exceeds selection rank!");
+                    EXCEPTION_THROW();
+                }
+                _counts = l;
             }
 
             //-----------------------------------------------------------------
@@ -251,6 +274,7 @@ namespace pni{
                 herr_t err;
                 //select the proper memory data type
                 H5Datatype mem_type = H5Datatype(H5Dget_type(_dataset->id()));
+                H5Dataspace ms;
                 
                 //set selection to the file datasets original dataset
                 //==========>here we would have to lock the dataset object 
@@ -269,7 +293,7 @@ namespace pni{
                 //write data to disk
                 err = H5Dwrite(_dataset->id(),
                         mem_type.id(),          //set memory data type
-                        _sspace.id(),           //set selection data space
+                        ms.id(),           //set selection data space
                         _dataset->space().id(),  //set file data space
                         H5P_DEFAULT,
                         &ptr);
@@ -317,11 +341,12 @@ namespace pni{
                 
                 //select the proper memory data type
                 H5Datatype mem_type = H5Datatype(H5Dget_type(_dataset->id()));
+                H5Datatype ms;
 
                 //write data to disk
                 err = H5Dread(_dataset->id(),
                         mem_type.id(),          //set memory data type
-                        _sspace.id(),           //set selection data space
+                        ms.id(),           //set selection data space
                         _dataset->space().id(),  //set file data space
                         xfer_plist,
                         &ptr);
