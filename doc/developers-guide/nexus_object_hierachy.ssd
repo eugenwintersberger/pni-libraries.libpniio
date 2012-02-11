@@ -1,0 +1,856 @@
+Storage 
+{
+	{ Format 1.33 }
+	{ GeneratedFrom TSSD-version-2.20 }
+	{ WrittenBy eugen }
+	{ WrittenOn "" }
+}
+
+Document 
+{
+	{ Type "Static Structure Diagram" }
+	{ Name nexus_object_hierachy.ssd }
+	{ Author eugen }
+	{ CreatedOn "" }
+	{ Annotation "" }
+	{ Hierarchy False }
+}
+
+Page 
+{
+	{ PageOrientation Landscape }
+	{ PageSize A4 }
+	{ ShowHeaders False }
+	{ ShowFooters False }
+	{ ShowNumbers False }
+}
+
+Scale 
+{
+	{ ScaleValue 1 }
+}
+
+# GRAPH NODES
+
+SSDClassNode 1
+{
+	{ Name "NXObject" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 7 }
+	{ Operation "String base() const;" }
+	{ Operation "String name() const;" }
+	{ Operation "String path() const;" }
+	{ Operation "NXAttribute attr(const String &n) const;" }
+	{ Operation "NXAttribute attr(const String &n,const TypeID &id) const;" }
+	{ Operation "NXAttribute attr(const String &n,const TypeID &id,const Shape &s);" }
+	{ Operation "virtual void close();" }
+	{ Stereotype "<< - >>" }
+	{ Properties "{ - }" }
+}
+
+SSDClassNode 2
+{
+	{ Name "NXGroup" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 8 }
+	{ Operation "NXObject open(const String &n) const;" }
+	{ Operation "NXObject operator[](const String &n) const;" }
+	{ Operation "template<typename T> NXField create_field(const String &n) const;" }
+	{ Operation "template<typename T> NXField create_field(const String &n,const Shape &s) const;" }
+	{ Operation "template<typename T> NXField create_field(const String &n,const String &s,const String &cs) const;" }
+	{ Operation "template<typename T> NXField create_field(const String &n,const Shape &s,cont Shape &cs,const NXFilter &f) const;" }
+	{ Operation "NXGroup create_group(const String &n) const;" }
+	{ Operation "NXGroup create_group(const String &n,const String &type) const;" }
+	{ Stereotype "<< - >>" }
+	{ Properties "{ - }" }
+}
+
+SSDClassNode 3
+{
+	{ Name "NXFile" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 8 }
+	{ Operation "void overwrite(bool o);" }
+	{ Operation "bool overwrite() const;" }
+	{ Operation "void splitsize(size_t s);" }
+	{ Operation "size_t splitsize() const;" }
+	{ Operation "void readonly(bool ro);" }
+	{ Operation "bool readonly() const;" }
+	{ Operation "void create();" }
+	{ Operation "void create(const String &fname,bool ov,size_t s);" }
+	{ Stereotype "<< - >>" }
+	{ Properties "{ - }" }
+}
+
+SSDClassNode 4
+{
+	{ Name "NXField" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 17 }
+	{ Operation "TypeID typd_id() const;" }
+	{ Operation "TypeClass type_class() const;" }
+	{ Operation "template<typename T> void write(const T &) const;" }
+	{ Operation "template<typename T> void write(const Buffer<T> &b) const;" }
+	{ Operation "template<typename T> void write(const RefBuffer<T> &b) const;" }
+	{ Operation "template<typename T> void write(const Scalar<T> &s) const;" }
+	{ Operation "template<typename T> void write(const Array<T> &a) const;" }
+	{ Operation "template<typename T> void read(T &) const;" }
+	{ Operation "template<typename T> void read(Buffer<T> &b) const;" }
+	{ Operation "template<typename T> void read(RefBuffer<T> &b) const;" }
+	{ Operation "template<typename T> void read(Scalar<T> &s) const;" }
+	{ Operation "template<typename T> void read(Array<T> &a) const;" }
+	{ Operation "template<typename OBJ> OBJ read() const;" }
+	{ Operation "void resize(const Shape &s) const;" }
+	{ Operation "void grow(size_t dim,size_t n) const;" }
+	{ Operation "size_t size() const;" }
+	{ Operation "Shape shape() const;" }
+	{ Stereotype "<< - >>" }
+	{ Properties "{ - }" }
+}
+
+SSDClassNode 5
+{
+	{ Name "NXAttribute" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 8 }
+	{ Operation "String name() const;" }
+	{ Operation "template<typename T> void write(const T &v) const;" }
+	{ Operation "template<typename T> void write(const Scalar<T> &s) const;" }
+	{ Operation "template<typename T> void write(const Array<T> &s) const;" }
+	{ Operation "template<typename T> void read(T &v) const;" }
+	{ Operation "template<typename T> void read(Scalar<T> &s) const;" }
+	{ Operation "template<typename T> void read(Array<T> &a) const;" }
+	{ Operation "template<typename OBJ) OBJ read() const;" }
+	{ Stereotype "<< - >>" }
+	{ Properties "{ - }" }
+}
+
+SSDClassNode 6
+{
+	{ Name "NXSelection" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 12 }
+	{ Operation "template<typename T> void write(const T&) const;" }
+	{ Operation "template<typename T> void write(const Buffer<T> &b) const;" }
+	{ Operation "template<typename T> void write(const RefBuffer<T> &b) const;" }
+	{ Operation "template<typename T> void write(const Scalar<T> &s) const;" }
+	{ Operation "template<typename T> void write(const Array<T> &a) const;" }
+	{ Operation "template<typename T> void read(T &) const;" }
+	{ Operation "template<typename T> void read(Buffer<T> &b) const;" }
+	{ Operation "template<typename T> void read(RefBuffer<T> &b) const;" }
+	{ Operation "template<typename T> void read(Scalar<T> &s) const;" }
+	{ Operation "template<typename T> void read(Array<T> &a) const;" }
+	{ Operation "size_t size() const;" }
+	{ Operation "Shape shape() const;" }
+	{ Stereotype "<< - >>" }
+	{ Properties "{ - }" }
+}
+
+Comment 7
+{
+	{ Name "Overview on Nexus classes" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+}
+
+SSDClassNode 16
+{
+	{ Name "NXObject" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 0 }
+	{ Stereotype "<< - >>" }
+	{ Properties "{ - }" }
+}
+
+SSDClassNode 17
+{
+	{ Name "NXField" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 0 }
+	{ Stereotype "<< - >>" }
+	{ Properties "{ - }" }
+}
+
+SSDClassNode 18
+{
+	{ Name "NXGroup" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 0 }
+	{ Stereotype "<< - >>" }
+	{ Properties "{ - }" }
+}
+
+SSDClassNode 19
+{
+	{ Name "NXFile" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 0 }
+	{ Stereotype "<< - >>" }
+	{ Properties "{ - }" }
+}
+
+SSDClassNode 20
+{
+	{ Name "NXAttribute" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 0 }
+	{ Stereotype "<< - >>" }
+	{ Properties "{ - }" }
+}
+
+SSDClassNode 21
+{
+	{ Name "NXFilter" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 0 }
+	{ Stereotype "<< - >>" }
+	{ Properties "{ - }" }
+}
+
+SSDClassNode 22
+{
+	{ Name "NXSelection" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 0 }
+	{ Stereotype "<< - >>" }
+	{ Properties "{ - }" }
+}
+
+Comment 23
+{
+	{ Name "Base class for structural\rNexus objects." }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+}
+
+Comment 24
+{
+	{ Name "Data holding\rentity" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+}
+
+Comment 25
+{
+	{ Name "Group object for\rintenal data \rorganisation" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+}
+
+Comment 26
+{
+	{ Name "Represents a Nexus\rfile in the code" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+}
+
+Comment 27
+{
+	{ Name "Class used to access\rattribute data attached\rto an object" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+}
+
+Comment 28
+{
+	{ Name "Represents filters\r(i.g. for compression)" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+}
+
+Comment 29
+{
+	{ Name "Selection object\rfor partial IO" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+}
+
+SSDClassNode 50
+{
+	{ Name "NXLink" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Index "" }
+	{ Attributes 0 }
+	{ Operations 0 }
+	{ Stereotype "<< - >>" }
+	{ Properties "{ - }" }
+}
+
+# GRAPH EDGES
+
+SSDGeneralizationEdge 30
+{
+	{ Name "" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Subject1 17 }
+	{ Subject2 16 }
+}
+
+SSDGeneralizationEdge 31
+{
+	{ Name "" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Subject1 18 }
+	{ Subject2 16 }
+}
+
+SSDGeneralizationEdge 32
+{
+	{ Name "" }
+	{ Annotation "" }
+	{ Parent 0 }
+	{ Subject1 19 }
+	{ Subject2 18 }
+}
+
+# VIEWS AND GRAPHICAL SHAPES
+
+View 8
+{
+	{ Index "0" }
+	{ Parent 0 }
+}
+
+SSDTripleClassBox 9
+{
+	{ View 8 }
+	{ Subject 1 }
+	{ Position 1290 170 }
+	{ Size 602 230 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--12*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype False }
+	{ ShowProperties False }
+}
+
+SSDTripleClassBox 10
+{
+	{ View 8 }
+	{ Subject 2 }
+	{ Position 470 830 }
+	{ Size 890 262 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--12*" }
+	{ TextAlignment Left }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype False }
+	{ ShowProperties False }
+}
+
+SSDTripleClassBox 11
+{
+	{ View 8 }
+	{ Subject 3 }
+	{ Position 250 1120 }
+	{ Size 458 250 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--12*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype False }
+	{ ShowProperties False }
+}
+
+SSDTripleClassBox 12
+{
+	{ View 8 }
+	{ Subject 4 }
+	{ Position 1270 880 }
+	{ Size 557 430 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--12*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype False }
+	{ ShowProperties False }
+}
+
+SSDTripleClassBox 13
+{
+	{ View 8 }
+	{ Subject 5 }
+	{ Position 1250 450 }
+	{ Size 530 250 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--12*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype False }
+	{ ShowProperties False }
+}
+
+SSDTripleClassBox 14
+{
+	{ View 8 }
+	{ Subject 6 }
+	{ Position 1880 840 }
+	{ Size 557 247 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-courier-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype False }
+	{ ShowProperties False }
+}
+
+TextBox 15
+{
+	{ View 8 }
+	{ Subject 7 }
+	{ Position 190 30 }
+	{ Size 20 20 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Invisible }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-bold-r-normal--18*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+SSDSingleClassBox 33
+{
+	{ View 8 }
+	{ Subject 16 }
+	{ Position 410 90 }
+	{ Size 106 58 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-bold-r-normal--14*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype False }
+	{ ShowProperties False }
+}
+
+SSDSingleClassBox 34
+{
+	{ View 8 }
+	{ Subject 17 }
+	{ Position 280 210 }
+	{ Size 81 58 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-bold-r-normal--14*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype False }
+	{ ShowProperties False }
+}
+
+SSDSingleClassBox 35
+{
+	{ View 8 }
+	{ Subject 18 }
+	{ Position 550 210 }
+	{ Size 93 58 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-bold-r-normal--14*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype False }
+	{ ShowProperties False }
+}
+
+SSDSingleClassBox 36
+{
+	{ View 8 }
+	{ Subject 19 }
+	{ Position 550 300 }
+	{ Size 80 60 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-bold-r-normal--14*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype False }
+	{ ShowProperties False }
+}
+
+Line 37
+{
+	{ View 8 }
+	{ Subject 30 }
+	{ FromShape 34 }
+	{ ToShape 33 }
+	{ Curved False }
+	{ End1 Empty }
+	{ End2 WhiteTriangle }
+	{ Points 2 }
+	{ Point 311 181 }
+	{ Point 379 119 }
+	{ NamePosition 336 143 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FixedName False }
+	{ Font "-*-courier-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+Line 38
+{
+	{ View 8 }
+	{ Subject 31 }
+	{ FromShape 35 }
+	{ ToShape 33 }
+	{ Curved False }
+	{ End1 Empty }
+	{ End2 WhiteTriangle }
+	{ Points 2 }
+	{ Point 516 181 }
+	{ Point 444 119 }
+	{ NamePosition 489 143 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FixedName False }
+	{ Font "-*-courier-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+Line 39
+{
+	{ View 8 }
+	{ Subject 32 }
+	{ FromShape 36 }
+	{ ToShape 35 }
+	{ Curved False }
+	{ End1 Empty }
+	{ End2 WhiteTriangle }
+	{ Points 2 }
+	{ Point 550 270 }
+	{ Point 550 239 }
+	{ NamePosition 536 254 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FixedName False }
+	{ Font "-*-courier-medium-r-normal--10*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+SSDSingleClassBox 40
+{
+	{ View 8 }
+	{ Subject 20 }
+	{ Position 180 390 }
+	{ Size 114 58 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-bold-r-normal--14*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype False }
+	{ ShowProperties False }
+}
+
+SSDSingleClassBox 41
+{
+	{ View 8 }
+	{ Subject 21 }
+	{ Position 160 490 }
+	{ Size 82 62 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-bold-r-normal--14*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype False }
+	{ ShowProperties False }
+}
+
+SSDSingleClassBox 42
+{
+	{ View 8 }
+	{ Subject 22 }
+	{ Position 180 590 }
+	{ Size 121 62 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-bold-r-normal--14*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype False }
+	{ ShowProperties False }
+}
+
+TextBox 43
+{
+	{ View 8 }
+	{ Subject 23 }
+	{ Position 570 80 }
+	{ Size 20 20 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Invisible }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--12*" }
+	{ TextAlignment Left }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+TextBox 44
+{
+	{ View 8 }
+	{ Subject 24 }
+	{ Position 170 210 }
+	{ Size 20 20 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Invisible }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--12*" }
+	{ TextAlignment Left }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+TextBox 45
+{
+	{ View 8 }
+	{ Subject 25 }
+	{ Position 680 210 }
+	{ Size 20 20 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Invisible }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--12*" }
+	{ TextAlignment Left }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+TextBox 46
+{
+	{ View 8 }
+	{ Subject 26 }
+	{ Position 680 300 }
+	{ Size 20 20 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Invisible }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--12*" }
+	{ TextAlignment Left }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+TextBox 47
+{
+	{ View 8 }
+	{ Subject 27 }
+	{ Position 340 390 }
+	{ Size 20 20 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Invisible }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--12*" }
+	{ TextAlignment Left }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+TextBox 48
+{
+	{ View 8 }
+	{ Subject 28 }
+	{ Position 290 490 }
+	{ Size 20 20 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Invisible }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--12*" }
+	{ TextAlignment Left }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+TextBox 49
+{
+	{ View 8 }
+	{ Subject 29 }
+	{ Position 320 580 }
+	{ Size 20 20 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Invisible }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-medium-r-normal--12*" }
+	{ TextAlignment Left }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+}
+
+SSDSingleClassBox 51
+{
+	{ View 8 }
+	{ Subject 50 }
+	{ Position 540 590 }
+	{ Size 121 69 }
+	{ Color "black" }
+	{ LineWidth 1 }
+	{ LineStyle Solid }
+	{ FillStyle Unfilled }
+	{ FillColor "white" }
+	{ FixedName False }
+	{ Font "-*-helvetica-bold-r-normal--14*" }
+	{ TextAlignment Center }
+	{ TextColor "black" }
+	{ NameUnderlined False }
+	{ ShowStereotype False }
+	{ ShowProperties False }
+}
+

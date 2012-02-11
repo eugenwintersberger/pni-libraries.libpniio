@@ -26,37 +26,149 @@
 #ifndef __NXATTRIBUTEH5IMPLEMENTATION_HPP__
 #define __NXATTRIBUTEH5IMPLEMENTATION_HPP__
 
-class NXAttributeH5Implementation{
-    public:
-        hid_t _id;
+#include "H5Attribute.hpp"
 
-    public:
-        //==============constructors and destructors===========================
-        NXAttributeH5Implementation();
-        NXAttributeH5Implementation(const NXAttributeH5Implementation &);
-        NXAttributeH5Implementation(NXAttributeH5Implementation &&);
-        virtual ~NXAttributeH5Implementation();
+namespace pni{
+    namespace nx{
+        namespace h5{
+
+            //! \ingroup nxh5_classes
+
+            //! Implementation of an NXAttribute object. This class is 
+            //! a delegate fro H5Attribute. Thus all code is defined 
+            //! inline.
+            class NXAttributeH5Implementation{
+                private:
+                    H5Attribute _attribute;                    
+                public:
+                    //==============constructors and destructors================
+                    //! default constructor
+                    explicit NXAttributeH5Implementation():
+                        _attribute(){}
+
+                    //! copy constructor
+                    NXAttributeH5Implementation(const
+                            NXAttributeH5Implementation &o):
+                        _attribute(o._attribute){}
+
+                    //! move constructor
+                    NXAttributeH5Implementation(NXAttributeH5Implementation &&o):
+                        _attribute(std::move(o._attribute)){}
+
+                    //! copy constructor from H5Attribute
+                    explicit NXAttributeH5Implementation(const H5Attribute &a):
+                        _attribute(a){}
+
+                    //! move constructor from H5Attribute
+                    explicit NXAttributeH5Implementation(H5Attribute &&a):
+                        _attribute(std::move(a)){}
+                    
+                    //! destructor
+                    ~NXAttributeH5Implementation(){
+                        _attribute.close();
+                    }
 
 
-        //==============assignment operators====================================
-        NXAttributeH5Implementation &
-            operator=(const NXAttributeH5Implementation&);
-        NXAttributeH5Implementation &operator=(NXAttributeH5Implementation &&);
+                    //==============assignment operators========================
+                    NXAttributeH5Implementation &
+                        operator=(const NXAttributeH5Implementation &o)
+                    {
+                        if(this == &o) return *this;
+
+                        _attribute = o._attribute;
+                        return *this;
+                    }
+                    NXAttributeH5Implementation &
+                        operator=(NXAttributeH5Implementation &&o)
+                    {
+                        if(this == &o) return *this;
+
+                        _attribute = std::move(o._attribute);
+                        return *this;
+                    }
 
 
-        //=================properties for object inquery========================
-        String name() const;
-        void   name(const String);
-        const Shape &shape() const;
+                    //================IO methods================================
+                    template<typename T,template<typename> class BT> 
+                        void write(const BT<T> buffer) const
+                    {
+                        _attribute.write(buffer);
+                    }
+                    //! write from Scalar<T> 
+                    template<typename T> void write(const Scalar<T> &o) const
+                    {
+                        _attribute.write(o);
+                    }
+                    //! write from Array<T> 
+                    template<typename T,template<typename> class BT >
+                        void write(const Array<T,BT> &o) const
+                    {
+                        _attribute.write(o);
+                    }
+
+                    template<typename T> void write(const T &value) const
+                    {
+                        _attribute.write(value);
+                    }
+                    //! write from String
+                    void write(const String &s) const
+                    {
+                        _attribute.write(s);
+                    }
+
+                    //! read to buffer 
+                    template<typename T,template<typename> class BT> 
+                        void read(BT<T> buffer) const
+                    {
+                        _attribute.read(buffer);
+                    }
+
+                    //! read to Array<T>
+                    template<typename T,template<typename> class BT> 
+                        void read(Array<T,BT> &a) const
+                    {
+                        _attribute.read(a);
+                    }
+
+                    //! read to Scalar<T>
+                    template<typename T> void read(Scalar<T> &s) const
+                    {
+                        _attribute.read(s);
+                    }
+
+                    //! read to plain old data or string
+                    template<typename T> void read(T &value) const
+                    {
+                        _attribute.read(value);
+                    }
+                    //! read to string
+                    
+                    //! read without argument
+                    template<typename OBJ> OBJ read() const{
+                        return _attribute.read<OBJ>();
+                    }
+                    void read(String &s) const
+                    {
+                        _attribute.read(s);
+                    }
+
+                    //=================properties for object inquery============
+                    const Shape &shape() const{
+                        return _attribute.shape();
+                    }
+
+                    TypeID type_id() const{
+                        return _attribute.type_id();
+                    }
+
+                    void close()
+                    {
+                        _attribute.close();
+                    }
+                
 
 
-
-
-
-
-
-
-};
+            };
 
 
 #endif

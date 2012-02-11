@@ -23,7 +23,9 @@ doxyfile = build_env.Substfile(target="Doxyfile",source= doxyfile_source,
             
 doxygen_api_doc = build_env.Command(["api-doc/html"],doxyfile,
                                     "cd doc; doxygen $SOURCE.file")
-build_env.Depends(doxygen_api_doc,doxygen_mainpage)
+build_env.Depends(doxygen_api_doc,[doxygen_mainpage])
+build_env.Depends(doxygen_api_doc,Glob('../src/*.hpp'))
+build_env.Depends(doxygen_api_doc,Glob('../src/h5/*.hpp'))
 
 Clean(doxygen_api_doc,"api-doc")
 admin_guide = SConscript("admin-guide/SConscript")

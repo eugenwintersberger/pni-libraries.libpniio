@@ -17,9 +17,11 @@
  * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  * H5LZFFilter.hpp
+ * 
+ * Definition of the LZF Filter class.
  *
  *  Created on: Aug 10, 2011
- *      Author: eugen
+ *      Author: Eugen Wintersberger
  */
 
 #ifndef H5LZFFILTER_HPP_
@@ -42,7 +44,9 @@ namespace h5 {
 //! \ingroup nxh5_classes
 //! \brief LZF filter implementation
 
-//! Implementation of the LZF filter for HDF5.
+//! Implementation of the LZF filter for HDF5. This filter 
+//! was taken from the H5PY project which uses this filter 
+//! in its Python code.
 class H5LZFFilter:public H5Filter {
 public:
 	//! default constructor
