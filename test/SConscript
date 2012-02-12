@@ -6,11 +6,11 @@ test_env.Prepend(LIBPATH=["../src/"])
 test_env.Append(LIBS=["pninx","pniutils","cppunit","plplotcxxd","boost_filesystem","boost_system"])
 test_env.Append(CPPPATH=["../src/"])
 
-sources_list = ["pninxtest.cpp"]
-sources_list.extend(["NXFileTest.cpp","NXGroupTest.cpp","NXNumericFieldTest.cpp"])
-sources_list.extend(["NXStringFieldTest.cpp","NXBinaryFieldTest.cpp"])
-#sources_list.extend(["base_classes/NXrootTest.cpp"])
-#sources_list.extend(["base_classes/NXentryTest.cpp"])
+sources_list = []
+sources_list.extend(["pninxtest.cpp"])
+sources_list.extend(["NXFileTest.cpp","NXGroupTest.cpp","NXFieldTest.cpp"])
+
+#tests for the HDF5 implementation backend
 sources_list.extend(["H5DataspaceTest.cpp","H5DatatypeTest.cpp"])
 sources_list.extend(["H5FileTest.cpp","H5GroupTest.cpp","H5DatasetTest.cpp"])
 sources_list.extend(["H5SelectionTest.cpp"])

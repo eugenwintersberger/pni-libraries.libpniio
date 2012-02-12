@@ -28,15 +28,16 @@
 #ifndef NX_HPP_
 #define NX_HPP_
 
+#include "NXObject.hpp"
 #include "NXFile.hpp"
-//#include "NXObject.hpp"
 #include "NXGroup.hpp"
 #include "NXFilter.hpp"
-#include "NXNumericField.hpp"
-#include "h5/NXFileH5Implementation.hpp"
-#include "h5/NXGroupH5Implementation.hpp"
-#include "h5/NXFieldH5Implementation.hpp"
-#include "h5/H5TypeFactory.hpp"
+#include "NXField.hpp"
+
+#include "h5/H5AttributeObject.hpp"
+#include "h5/H5File.hpp"
+#include "h5/H5Group.hpp"
+#include "h5/H5Dataset.hpp"
 #include "h5/H5Exceptions.hpp"
 #include "h5/H5LibrarySetup.hpp"
 #include "h5/H5Filter.hpp"
@@ -44,30 +45,22 @@
 #include "h5/H5DeflateFilter.hpp"
 #include "h5/NXSelectionH5Implementation.hpp"
 
-#include "h5/NXNumericFieldH5Implementation.hpp"
-#include "h5/NXStringFieldH5Implementation.hpp"
-#include "h5/NXBinaryFieldH5Implementation.hpp"
 
 //#include "utils/Record.hpp"
 
 namespace pni{
-namespace nx{
-namespace h5{
+    namespace nx{
+        namespace h5{
 
-typedef pni::nx::NXObject<NXObjectH5Implementation> NXObject;
-typedef pni::nx::NXFile<NXFileH5Implementation> NXFile;
-typedef pni::nx::NXGroup<NXGroupH5Implementation> NXGroup;
-typedef pni::nx::NXField<NXFieldH5Implementation> NXField;
-typedef pni::nx::NXNumericField<NXNumericFieldH5Implementation> NXNumericField;
-typedef pni::nx::NXStringField<NXStringFieldH5Implementation> NXStringField;
-typedef pni::nx::NXBinaryField<NXBinaryFieldH5Implementation> NXBinaryField;
-typedef pni::nx::NXFilter<H5LZFFilter> NXLZFFilter;
-typedef pni::nx::NXFilter<H5DeflateFilter> NXDeflateFilter;
-typedef pni::nx::NXSelection<NXSelectionH5Implementation> NXSelection;
-//typedef pni::nx::Record<NXField> Record;
+            typedef pni::nx::NXObject<H5AttributeObject>    NXObject;
+            typedef pni::nx::NXFile<H5File>                 NXFile;
+            typedef pni::nx::NXGroup<H5Group>               NXGroup;
+            typedef pni::nx::NXField<H5Dataset>             NXField;
+            typedef pni::nx::NXFilter<H5LZFFilter>          NXLZFFilter;
+            typedef pni::nx::NXFilter<H5DeflateFilter>      NXDeflateFilter;
 
-}
-}
+        }
+    }
 }
 
 

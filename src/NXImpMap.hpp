@@ -30,52 +30,51 @@
 
 #include "NXImpCode.hpp"
 
-#include "h5/NXObjectH5Implementation.hpp"
-#include "h5/NXFileH5Implementation.hpp"
-#include "h5/NXGroupH5Implementation.hpp"
-#include "h5/NXFieldH5Implementation.hpp"
-#include "h5/NXSelectionH5Implementation.hpp"
-#include "h5/NXNumericFieldH5Implementation.hpp"
-#include "h5/NXStringFieldH5Implementation.hpp"
-#include "h5/NXBinaryFieldH5Implementation.hpp"
+#include "h5/H5AttributeObject.hpp"
+#include "h5/H5File.hpp"
+#include "h5/H5Group.hpp"
+#include "h5/H5Dataset.hpp"
+#include "h5/H5Selection.hpp"
+#include "h5/H5Filter.hpp"
+#include "h5/H5Attribute.hpp"
 
 namespace pni{
-namespace nx{
+    namespace nx{
 
-//! \ingroup util_classes
-//! \brief implementation map
 
-//! For each backend a particular class must be provided to implement one
-//! of the low level nexus objects.
-template<ImpCodes c>
-class NXImpMap{
-public:
-	typedef void ObjectImplementation;
-	typedef void GroupImplementation;
-	typedef void FileImplementatoin;
-	typedef void NumericFieldImplementation;
-	typedef void StringFieldImplementation;
-	typedef void BinaryFieldImplementation;
-	typedef void FieldImplementation;
-	typedef void SelectionImplementation;
 
-};
+        //! \ingroup util_classes
+        //! \brief implementation map
 
-//! \cond NO_API_DOC
-template<> class NXImpMap<HDF5>{
-public:
-	typedef pni::nx::h5::NXObjectH5Implementation ObjectImplementation;
-	typedef pni::nx::h5::NXFileH5Implementation FileImplementation;
-	typedef pni::nx::h5::NXGroupH5Implementation GroupImplementation;
-	typedef pni::nx::h5::NXFieldH5Implementation FieldImplementation;
-	typedef pni::nx::h5::NXSelectionH5Implementation SelectionImplementation;
-	typedef pni::nx::h5::NXNumericFieldH5Implementation NumericFieldImplementation;
-	typedef pni::nx::h5::NXStringFieldH5Implementation StringFieldImplementation;
-	typedef pni::nx::h5::NXBinaryFieldH5Implementation BinaryFieldImplementation;
-};
-//! \endcond
+        //! For each backend a particular class must be provided to implement 
+        //! one of the low level nexus objects.
+        template<ImpCode c> class NXImpMap{
+            public:
+                typedef void ObjectImpl;
+                typedef void GroupImpl;
+                typedef void FileImpl;
+                typedef void FieldImpl;
+                typedef void SelectionImpl;
+                typedef void FilterImpl;
+                typedef void AttributeImpl;
+            };
 
-}
+        //! \cond NO_API_DOC
+
+        //set implementation types for the HDF5 implementation
+        template<> class NXImpMap<ImpCode::HDF5>{
+            public:
+                typedef pni::nx::h5::H5AttributeObject  ObjectImpl;
+                typedef pni::nx::h5::H5File             FileImpl;
+                typedef pni::nx::h5::H5Group            GroupImpl;
+                typedef pni::nx::h5::H5Dataset          FieldImpl;
+                typedef pni::nx::h5::H5Selection        SelectionImpl;
+                typedef pni::nx::h5::H5Filter           FilterImpl;
+                typedef pni::nx::h5::H5Attribute        AttributeImpl;
+        };
+        //! \endcond
+
+    }
 }
 
 

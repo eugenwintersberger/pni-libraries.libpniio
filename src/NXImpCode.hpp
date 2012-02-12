@@ -29,13 +29,16 @@
 #define NXIMPCODE_HPP_
 
 namespace pni{
-namespace nx{
+    namespace nx{
 
-//! \ingroup util_classes
-//! \brief implementation codes
-enum ImpCodes {HDF5 //!< HDF5 implementation code
-				};
-}
+        //! \ingroup util_classes
+        //! \brief implementation codes
+
+        //! This codes identify a particular implementation 
+        //! for the Nexus classes.
+        enum class ImpCode {HDF5 //!< HDF5 implementation code
+                        };
+    }
 }
 
 

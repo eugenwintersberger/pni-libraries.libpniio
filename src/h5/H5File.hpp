@@ -43,10 +43,14 @@ namespace pni{
                     H5File &operator=(const H5File &){
                         return *this;
                     }
+
                 protected:
+                    //! constructor from id value
+                    H5File(hid_t id);
                     hid_t _create_plist; //!< property list for file creation
                     hid_t _acc_plist;    //!< property list for file access
                 public:
+                    //============constructors and destructors===============
                     //! default constructor
                     explicit H5File();
                     //! move constructor
@@ -54,16 +58,26 @@ namespace pni{
                     //! destructor
                     ~H5File();
 
+                    //============assignment operators=======================
                     //! move assignment
                     H5File &operator=(H5File &&o);
-                
-                    virtual H5Object open(const String &n){
-                        return H5Group::open(n);
-                    }
-                    virtual void open(const String &n,bool overwrite);
-                    void create(const String &n,bool overwrite,ssize_t ssize);
+               
+                    //===========factory methods=============================
+                    //! open an existing file
+                    static H5File open_file(const String &n,bool ro=true);
+
+                    //! create a new file
+                    static H5File create_file(const String &n,bool ow=false,
+                            ssize_t ssize=0);
+
+                    //=============misc methods==============================
+                    //! close the file
                     virtual void close();
+
+                    //! flush the file
                     void flush() const;
+
+                    //! obtain the path of the file
                     virtual String path() const;
             };
 

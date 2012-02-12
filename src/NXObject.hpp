@@ -37,322 +37,228 @@
 #include <pni/utils/Scalar.hpp>
 
 #include "NXImpMap.hpp"
-
-namespace pni{
-namespace nx{
+#include "NXImpCodeMap.hpp"
+#include "NXAttribute.hpp"
 
 using namespace pni::utils;
 
-//! \ingroup nexus_lowlevel
-//! \brief base class for all Nexus objects in the library.
-
-//! This class provides functionality common to all Nexus objects.
-//! This includes methods for obtaining the name and path of an object
-//! in the Nexus tree, methods to set and get attributes, creation of
-//! links to an object. Methods for creating links to this objects are
-//! also included.
-template<typename Imp>
-class NXObject {
-private:
-	Imp _imp;	//!< implementation object
-protected:
-	//! get implementation reference
-
-	//! Returns a reference to the actual implementation of an object.
-	//! \return reference to implementation
-	Imp &implementation();
-
-
-	//! set implementation object
-
-	//! Set the implementation of an object
-	//! \param i reference to an implementation
-	void implementation(const Imp &i);
-	void implementation(Imp &&i);
-public:
-	//some type definitions
-	typedef typename NXImpMap<Imp::IMPCODE>::ObjectImplementation ObjectImp;
-	typedef typename NXImpMap<Imp::IMPCODE>::FieldImplementation FieldImp;
-	typedef typename NXImpMap<Imp::IMPCODE>::NumericFieldImplementation NumericFieldImp;
-	typedef typename NXImpMap<Imp::IMPCODE>::StringFieldImplementation StringFieldImp;
-	typedef typename NXImpMap<Imp::IMPCODE>::BinaryFieldImplementation BinaryFieldImp;
-	typedef typename NXImpMap<Imp::IMPCODE>::GroupImplementation GroupImp;
-	typedef typename NXImpMap<Imp::IMPCODE>::FileImplementation FileImp;
-	typedef boost::shared_ptr<NXObject<Imp> > sptr;
-	//! default constructor
-	NXObject();
-	//! copy constructor
-	//NXObject(const NXObject<Imp> &o);
-	template<typename PImp> NXObject(const NXObject<PImp> &o);
-	//! move constructor
-	//NXObject(NXObject<Imp> &&o);
-	template<typename PImp> NXObject(NXObject<PImp> &&o);
-
-	NXObject(Imp &&i){
-		_imp = std::move(i);
-	}
-	//! destructor
-	virtual ~NXObject();
-
-	//! copy assignment operator
-	template<typename PImp> NXObject<Imp> &operator=(const NXObject<PImp> &o);
-
-	//! move assignment operator
-	template<typename PImp> NXObject<Imp> &operator=(NXObject<PImp> &&o);
-
-
-	//! retrieve objects path
-
-	//! This method returns the absolute path to this object.
-	//! \return objects absolute path
-	virtual String path() const;
-
-	//! retrieve objects base path
-
-	//! Returns the base part of the absolute path of an object. For example
-	//! if the path to an object is /scan_1/detector/data this method
-	//! will return /scan_1/detector.
-	//! \return base part of the absolute path
-	virtual String base() const;
-
-	//! retrieve an objects name
-
-	//! Return the name of an object. This the top part of the absolute path.
-	//! If the path would be /scan_1/detector/data this method would
-	//! return data.
-	//! \return name of the object
-	virtual String name() const;
-
-	//! write Array attribute
-
-	//! Write an array attribute.
-	//! \param n name of the attribute
-	//! \param a reference to the array object
-	virtual void set_attr(const String &n,const ArrayObject &a) const;
-	//! write scalar attribute
-
-	//! Write a Scalar object as an attribute to a Nexus object.
-	//! \param n name of the attribute
-	//! \param s reference to the scalar object
-	virtual void set_attr(const String &n,const ScalarObject &s) const;
-	//! write string attribute
-
-	//! Write a string attribute
-	//! \param n name of the attribute
-	//! \param s String to write as attribute
-	virtual void set_attr(const String &n,const String &s) const;
-
-
-	//! read Array attribute
-
-	//! Read an array attribute from an object and store its content
-	//! in an array object.
-	//! \param n name of the attribute
-	//! \param a reference to the array object
-	virtual void get_attr(const String &n,ArrayObject &a) const;
-	//! read scalar attribute
-
-	//! Read a scalar attribute from an object an store its content in a
-	//! scalar attribute.
-	//! \param n name of the attribute
-	//! \param s reference to the scalar object
-	virtual void get_attr(const String &n,ScalarObject &s) const;
-	//! read string attribute
-
-	//! Read a string attribute from an object and store it to a string object.
-	//! \param n name of the attribute
-	//! \param s string where to store the data
-	virtual void get_attr(const String &n,String &s) const;
-
-	//! link this object under pos
-
-	//! A link will be created to this object under pos with name n.
-	//! \param pos position of the link
-	//! \param n name of the link
-	template<typename ImpL> void link(const NXObject<ImpL> &pos,const String &n) const;
-	//! link this object under pos
-
-	//! A link to this object will be created under pos using the same
-	//! name for the link.
-	//! \param pos position of the link
-	template<typename ImpL> void link(const NXObject<ImpL> &pos) const;
-
-	//! link this object under a path
-	virtual void link(const String &path) const;
-	virtual void link(const String &path,const String &n) const;
-
-
-	//! get implementation const reference
-
-	const Imp &implementation() const;
-
-	bool is_open() const {
-		return _imp.is_open();
-	}
-
-};
-
-
-//===================constructors and destructor================================
-//implementation of the default constructor
-template<typename Imp> NXObject<Imp>::NXObject() {
-
-}
-
-//------------------------------------------------------------------------------
-//implementation of the copy constructor
-
-template<typename Imp>
-template<typename PImp>
-NXObject<Imp>::NXObject(const NXObject<PImp> &o){
-	this->_imp = o.implementation();
-}
-
-//------------------------------------------------------------------------------
-//implementation of the copy constructor
-/*
-template<typename Imp> NXObject<Imp>::NXObject(const NXObject<Imp> &o){
-	this->_imp = Imp(o._imp);
-}
-*/
-//------------------------------------------------------------------------------
-//implementation of the move constructor
-
-template<typename Imp>
-template<typename PImp>
-NXObject<Imp>::NXObject(NXObject<PImp> &&o){
-	//express the move constructor in terms of move assignment
-	*this = std::move(o);
-}
-
-
-//------------------------------------------------------------------------------
-//implementation of the move constructor
-/*
-template<typename Imp> NXObject<Imp>::NXObject(NXObject<Imp> &&o){
-	*this = std::move(o);
-}*/
-
-//-----------------------------------------------------------------------------
-//implementation of the destructor
-template<typename Imp> NXObject<Imp>::~NXObject() {
-}
-
-
-//====================Implementation of assignment operators===================
-template<typename Imp>
-template<typename PImp> NXObject<Imp> &NXObject<Imp>::operator=(const NXObject<PImp> &o){
-	if(this != &o){
-		this->_imp = o._imp;
-	}
-
-	return *this;
-}
-
-template<typename Imp>
-template<typename PImp> NXObject<Imp> &NXObject<Imp>::operator=(NXObject<PImp> &&o){
-	//we only move the implementation here from one object to the other
-	this->_imp = std::move(o._imp);
-
-	return *this;
-}
-
-//==========methods for obtaining the name and position of the object===========
-template<typename Imp> String NXObject<Imp>::name() const{
-	//here we need obviously a better solution
-	return _imp.name();
-}
-
-template<typename Imp> String NXObject<Imp>::base() const {
-	return _imp.base();
-}
-
-template<typename Imp> String NXObject<Imp>::path() const {
-	return _imp.path();
-}
-
-//============methods for handling the implementation object====================
-
-template<typename Imp> void NXObject<Imp>::implementation(const Imp &i){
-	_imp = i;
-}
-
-template<typename Imp> void NXObject<Imp>::implementation(Imp &&i){
-	_imp = std::move(i);
-}
-
-template<typename Imp> Imp &NXObject<Imp>::implementation(){
-	return _imp;
-}
-
-template<typename Imp> const Imp &NXObject<Imp>::implementation() const{
-	return _imp;
-}
-
-//==============methods for handling object attributes==========================
-template<typename Imp>
-void NXObject<Imp>::set_attr(const String &n,const ArrayObject &a) const{
-	_imp.set_attr(n.c_str(),a);
-}
-
-template<typename Imp>
-void NXObject<Imp>::set_attr(const String &n,const ScalarObject &s) const{
-	_imp.set_attr(n,s);
-}
-
-template<typename Imp>
-void NXObject<Imp>::set_attr(const String &n,const String &s) const{
-	_imp.set_attr(n,s);
-}
-
-template<typename Imp>
-void NXObject<Imp>::get_attr(const String &n,String &s) const{
-	_imp.get_attr(n,s);
-}
-
-template<typename Imp>
-void NXObject<Imp>::get_attr(const String &n,ArrayObject &a) const{
-	_imp.get_attr(n,a);
-}
-
-template<typename Imp>
-void NXObject<Imp>::get_attr(const String &n,ScalarObject &s) const{
-	_imp.get_attr(n,s);
-}
-
-
-//================methods for handling links====================================
-template<typename Imp>
-template<typename ImpL>
-void NXObject<Imp>::link(const NXObject<ImpL> &pos,const String &n) const{
-	_imp.link(pos.implementation(),n);
-}
-
-template<typename Imp>
-template<typename ImpL>
-void NXObject<Imp>::link(const NXObject<ImpL> &pos) const{
-	_imp.link(pos.implementation(),name());
-}
-
-template<typename Imp>
-void NXObject<Imp>::link(const String &path) const{
-	_imp.link(path);
-}
-
-template<typename Imp>
-void NXObject<Imp>::link(const String &path,const String &n) const{
-	String totpath = "";
-	if(path[path.size()]!='/'){
-		totpath += path+"/";
-	}else{
-		totpath += path;
-	}
-	totpath += n;
-	_imp.link(totpath);
-}
-
-//end of namespace
-}
+//selects a particular implementation depending on an other 
+//implementation
+#define MAPTYPE(type,implname)\
+    typename NXImpMap<NXImpCodeMap<type>::icode>::implname
+
+//creates a type with a particular implementation using 
+//depending on a particular implementation type.
+#define OBJTYPE(nxname,type,implname)\
+    (nxname)<MAPTYPE(type,implname) >
+
+
+
+namespace pni{
+    namespace nx{
+
+
+
+
+        //! \ingroup nexus_lowlevel
+        //! \brief base class for all Nexus objects in the library.
+
+        //! This class provides functionality common to all Nexus objects.
+        //! This includes methods for obtaining the name and path of an object
+        //! in the Nexus tree, methods to set and get attributes, creation of
+        //! links to an object. Methods for creating links to this objects are
+        //! also included.
+        template<typename Imp> class NXObject {
+            private:
+                Imp _imp;	//!< implementation object
+            public:
+                //==================constructors and destructors================
+                typedef boost::shared_ptr<NXObject<Imp> > sptr;
+                //! default constructor
+                NXObject(){
+                }
+
+                //--------------------------------------------------------------
+                //! copy constructor
+                NXObject(const NXObject<Imp> &o):
+                    _imp(o._imp)
+                {
+                    //here we nothing to do - the default constructor
+                    //of the implementation object has already been 
+                    //called
+                }
+
+                //--------------------------------------------------------------
+                //! copy constructor from implementation
+                NXObject(const Imp &imp):_imp(imp)
+                {
+                }
+
+                //--------------------------------------------------------------
+                //! move constructor 
+                NXObject(NXObject<Imp> &&o):_imp(std::move(o._imp))
+                {
+                }
+
+                //--------------------------------------------------------------
+                NXObject(Imp &&imp):_imp(std::move(imp))
+                {
+                }
+
+                //-------------------------------------------------------------
+                
+                template<typename PImp> NXObject(const NXObject<PImp> &o):
+                    _imp(o.imp())
+                {
+                }
+                /*
+                //-------------------------------------------------------------
+                //! move constructor from implementation
+                template<typename PImp> NXObject(PImp &&imp):
+                    _imp(std::move(imp))
+                {
+
+                }*/
+               
+                //-------------------------------------------------------------
+                //! destructor
+                virtual ~NXObject(){
+                    _imp.close();
+                }
+
+                //============assignment operators==============================
+                NXObject<Imp> &operator=(const NXObject<Imp> &o)
+                {
+                    if(this == &o) return *this;
+                    _imp = o._imp;
+                    return *this;
+                }
+                //! copy assignment operator
+                template<typename PImp> NXObject<Imp> &
+                    operator=(const NXObject<PImp> &o)
+                {
+                    _imp = o.imp();
+                    return *this;
+                }
+                        
+                //--------------------------------------------------------------
+                NXObject<Imp> &operator=(NXObject<Imp> &&o)
+                {
+                    if(this == &o) return *this;
+                    _imp = std::move(o._imp);
+                    return *this;
+                }
+
+
+                //=========methods managing object names========================
+                //! retrieve objects path
+
+                //! This method returns the absolute path to this object.
+                //! \return objects absolute path
+                String path() const{
+                    return _imp.path();
+                }
+
+                //! retrieve objects base path
+
+                //! Returns the base part of the absolute path of an object. For example
+                //! if the path to an object is /scan_1/detector/data this method
+                //! will return /scan_1/detector.
+                //! \return base part of the absolute path
+                String base() const{
+                    return _imp.base();
+                }
+
+                //! retrieve an objects name
+
+                //! Return the name of an object. This the top part of the absolute path.
+                //! If the path would be /scan_1/detector/data this method would
+                //! return data.
+                //! \return name of the object
+                String name() const{
+                    return _imp.name();
+                }
+
+                //===========attribute management methods==================
+                //! create scalar attribute
+
+                //! Create a scalar attribute. This method acts as a 
+                //! factory method for an attribute object.
+                //! \param n name of the attribute
+                //! \param tid ID of the data-type
+                //! \return attribute object
+    
+                template<typename T> NXAttribute<MAPTYPE(Imp,AttributeImpl)>
+                    attr(const String &n) const
+                {
+                    return NXAttribute<MAPTYPE(Imp,AttributeImpl)>
+                        (this->imp().attr<T>(n));
+                }
+
+                //--------------------------------------------------------------
+                template<TypeID ID> 
+                    NXAttribute<MAPTYPE(Imp,AttributeImpl)>
+                    attr(const String &n) const
+                {
+                    return NXAttribute<MAPTYPE(Imp,AttributeImpl)>
+                        (this->imp().attr<ID>(n));
+                }
+
+                //--------------------------------------------------------------
+                //! create an array attribute
+
+                //! Create an array attribute. This method acts as a 
+                //! factory method for an attribute object.
+                //! \param n name of the attribute
+                //! \param tid ID of the data-type
+                //! \param s shape of the array
+                //! \return attribute object
+                template<typename T> NXAttribute<MAPTYPE(Imp,AttributeImpl)>
+                    attr(const String &n, const Shape &s) const
+                {
+                    return NXAttribute<MAPTYPE(Imp,AttributeImpl)>
+                        (this->imp().attr<T>(n,s));
+                }
+
+                //--------------------------------------------------------------
+                template<TypeID ID> NXAttribute<MAPTYPE(Imp,AttributeImpl)>
+                    attr(const String &n, const Shape &s) const
+                {
+                    return NXAttribute<MAPTYPE(Imp,AttributeImpl)>
+                        (this->imp().attr<ID>(n,s));
+                }
+
+                //--------------------------------------------------------------
+                //! open an attribute
+                
+                //! Open an existing attribute and returns it to the 
+                //! callee. 
+                //! \param n name of the attribute
+                //! \return attribute object
+                NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr(const String &n) const
+                {
+                    return NXAttribute<MAPTYPE(Imp,AttributeImpl)>(_imp.attr(n));
+                }
+
+              
+                //=============misc methods===================================
+                //! close the object
+                void close()
+                {
+                    _imp.close();
+                }
+
+                //--------------------------------------------------------------
+                const Imp &imp() const{
+                    return _imp;
+                }
+
+                //--------------------------------------------------------------
+                bool is_valid() const{
+                    return _imp.is_valid();
+                }
+        };
+    }
 }
 
 

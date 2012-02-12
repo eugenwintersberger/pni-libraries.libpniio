@@ -6,8 +6,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION(H5LinkTest);
 
 //-----------------------------------------------------------------------------
 void H5LinkTest::setUp(){
-    _file1.create("H5LinkTest1.h5",true,0);
-    _file2.create("H5LinkTest2.h5",true,0);
+    _file1 = H5File::create_file("H5LinkTest1.h5",true,0);
+    _file2 = H5File::create_file("H5LinkTest2.h5",true,0);
 }
 
 //------------------------------------------------------------------------------

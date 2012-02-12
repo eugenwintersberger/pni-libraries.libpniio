@@ -24,8 +24,8 @@
  *      Author: Eugen Wintersberger
  */
 
-#ifndef NXNUMERICFIELDTEST_HPP_
-#define NXNUMERICFIELDTEST_HPP_
+#ifndef __NXFIELDTEST_HPP__
+#define __NXFIELDTEST_HPP__
 
 #include "NX.hpp"
 #include <pni/utils/Index.hpp>
@@ -33,21 +33,15 @@
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
-#include<boost/filesystem.hpp>
 
 using namespace pni::utils;
 using namespace pni::nx::h5;
-using namespace boost::filesystem;
 
-class NXNumericFieldTest:public CppUnit::TestFixture {
-	CPPUNIT_TEST_SUITE(NXNumericFieldTest);
+class NXFieldTest:public CppUnit::TestFixture {
+	CPPUNIT_TEST_SUITE(NXFieldTest);
 	CPPUNIT_TEST(testCreation);
 	CPPUNIT_TEST(testAssignment);
-	CPPUNIT_TEST(testAppend);
-	CPPUNIT_TEST(testGetIndividual);
-	CPPUNIT_TEST(testGetAll);
 	CPPUNIT_TEST(testOpen);
-	CPPUNIT_TEST(testSet);
 	CPPUNIT_TEST_SUITE_END();
 private:
 	NXFile file;
@@ -62,10 +56,6 @@ public:
 	void testCreation();
 	void testAssignment();
 	void testOpen();
-	void testAppend();
-	void testGetIndividual();
-	void testGetAll();
-	void testSet();
 
 };
 

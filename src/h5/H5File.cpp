@@ -22,6 +22,10 @@ namespace pni{
                 EXCEPTION_SETUP("H5File::H5File(");
             }
 
+            H5File::H5File(hid_t id):H5Group(id){
+
+            }
+
             //-----------------------------------------------------------------
             //implementation of the move constructor
             H5File::H5File(H5File &&o):H5Group(std::move(o)){
@@ -45,25 +49,25 @@ namespace pni{
             void H5File::close(){
                 //check for open objects in the file
                 if(is_valid()){
-//                    std::cerr<<"File: "<<name()<<std::endl;
-//                    std::cerr<<"Open files:      "<<
-//                        H5Fget_obj_count(id(),H5F_OBJ_FILE)<<std::endl;
-//                    std::cerr<<"Open data sets:  "<<
-//                        H5Fget_obj_count(id(),H5F_OBJ_DATASET)<<std::endl;
-//                    std::cerr<<"Open groups:     "<<
-//                        H5Fget_obj_count(id(),H5F_OBJ_GROUP)<<std::endl;
-//                    std::cerr<<"Open data type:  "<<
-//                        H5Fget_obj_count(id(),H5F_OBJ_DATATYPE)<<std::endl;
-//                    std::cerr<<"Open attributes: "<<
-//                        H5Fget_obj_count(id(),H5F_OBJ_ATTR)<<std::endl;
-
-
-//                    hid_t oid;
-//                    char name[1024];
-//                    H5Fget_obj_ids(id(),H5F_OBJ_GROUP,1,&oid);
-//                    //obtain name of the object
-//                    H5Iget_name(oid,name,1024);
-//                    std::cout<<name<<std::endl;
+//g                    std::cerr<<"File: "<<name()<<std::endl;
+//g                    std::cerr<<"Open files:      "<<
+//g                        H5Fget_obj_count(id(),H5F_OBJ_FILE)<<std::endl;
+//g                    std::cerr<<"Open data sets:  "<<
+//g                        H5Fget_obj_count(id(),H5F_OBJ_DATASET)<<std::endl;
+//g                    std::cerr<<"Open groups:     "<<
+//g                        H5Fget_obj_count(id(),H5F_OBJ_GROUP)<<std::endl;
+//g                    std::cerr<<"Open data type:  "<<
+//g                        H5Fget_obj_count(id(),H5F_OBJ_DATATYPE)<<std::endl;
+//g                    std::cerr<<"Open attributes: "<<
+//g                        H5Fget_obj_count(id(),H5F_OBJ_ATTR)<<std::endl;
+//g
+//g
+//g                    hid_t oid;
+//g                    char name[1024];
+//g                    H5Fget_obj_ids(id(),H5F_OBJ_GROUP,1,&oid);
+//g                    //obtain name of the object
+//g                    H5Iget_name(oid,name,1024);
+//g                    std::cout<<name<<std::endl;
 
                     H5Fflush(id(),H5F_SCOPE_GLOBAL);
                     H5Fclose(id());
@@ -72,9 +76,9 @@ namespace pni{
             }
             
             //-----------------------------------------------------------------
-            void H5File::open(const String &n,bool readonly){
-                EXCEPTION_SETUP("void H5File::"
-                        "open(const String &n,bool readonly)");
+            H5File H5File::open_file(const String &n,bool ro){
+                EXCEPTION_SETUP("H5File H5File::open_file(const String &n,"
+                        "bool ro)");
 
                 hid_t fid;
 
@@ -89,16 +93,16 @@ namespace pni{
                 if(acc_plist<0){
                     EXCEPTION_INIT(H5PropertyListError,"Cannot create file "
                             "access property list for file ["+String(n)+"]!");
-                    close();
                     EXCEPTION_THROW();
                 }
 
                 //open the file in the appropriate mode
-                if(readonly){
+                if(ro){
                     fid = H5Fopen(n.c_str(),H5F_ACC_RDONLY,acc_plist);
                     if(fid<0){
                         EXCEPTION_INIT(H5FileError,"Error opening file "+
                                 String(n)+" in read only mode!");
+                        H5Pclose(acc_plist);
                         EXCEPTION_THROW();
                     }
                 }else{
@@ -106,6 +110,7 @@ namespace pni{
                     if(fid<0){
                         EXCEPTION_INIT(H5FileError,"Error opening file "+
                                 String(n)+" in read/write mode!");
+                        H5Pclose(acc_plist);
                         EXCEPTION_THROW();
                     }
                 }
@@ -113,12 +118,16 @@ namespace pni{
                 //close property lists
                 H5Pclose(acc_plist);
 
-                id(fid);
+                H5File f(fid);
+                H5Fclose(fid);
+
+                return f;
 
             }
 
+
             //-----------------------------------------------------------------
-            void H5File::create(const String &n,bool overwrite,ssize_t ssize){
+            H5File H5File::create_file(const String &n,bool overwrite,ssize_t ssize){
                 EXCEPTION_SETUP("void H5File::create(const String &n,"
                         "bool overwrite)");
                 hid_t fid;
@@ -135,7 +144,6 @@ namespace pni{
                 if(acc_plist<0){
                     EXCEPTION_INIT(H5PropertyListError,"Cannot create file "
                             "access property list for file ["+String(n)+"]!");
-                    close();
                     EXCEPTION_THROW();
                 }
 
@@ -149,7 +157,7 @@ namespace pni{
                     if(fid<0){
                         EXCEPTION_INIT(H5FileError,"Error create file "+
                                 String(n)+" in overwrite mode!");
-                        close();
+                        H5Pclose(acc_plist);
                         EXCEPTION_THROW()
                     }
                 }else{
@@ -158,12 +166,13 @@ namespace pni{
                         EXCEPTION_INIT(H5FileError,"Error create file "+
                                 String(n)+" file most probably already "
                                 "exists - use overwrite!");
-                        close();
+                        H5Pclose(acc_plist);
                         EXCEPTION_THROW();
                     }
                 }
 
-                id(fid);
+                H5File f(fid);
+                H5Fclose(fid);
 
                 //in the end we need to set the HDF5 version to the correct
                 //value
@@ -172,9 +181,11 @@ namespace pni{
                 std::ostringstream vstring;
                 vstring<<major<<"."<<minor<<"."<<rel;
 
-                H5Attribute a = this->attr<String>("HDF5_version");
+                H5Attribute a = f.attr<String>("HDF5_version");
                 a.write(String(vstring.str()));
                 a.close();
+
+                return f;
             }
 
             //-----------------------------------------------------------------

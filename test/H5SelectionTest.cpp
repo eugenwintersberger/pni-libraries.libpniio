@@ -15,7 +15,7 @@ void H5SelectionTest::setUp(){
     _chunk = Shape(_shape);
     _chunk.dim(0,1);
 
-    _file.create("H5SelectionTest.h5",true,0);
+    _file = H5File::create_file("H5SelectionTest.h5",true,0);
     H5Datatype type = H5DatatypeFactory::create_type<TypeID::FLOAT32>();
     H5Dataspace space = {0,12,57};
     _dset = H5Dataset("array",_file,type,space,_chunk);

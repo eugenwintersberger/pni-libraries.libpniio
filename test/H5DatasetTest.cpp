@@ -4,7 +4,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(H5DatasetTest);
 
 
 void H5DatasetTest::setUp(){
-    _file.create("H5DatasetTest.h5",true,0);
+    _file = H5File::create_file("H5DatasetTest.h5",true,0);
     _group =H5Group("data",_file);
 }
 

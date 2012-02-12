@@ -27,11 +27,9 @@
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
-#include<boost/filesystem.hpp>
 
 using namespace pni::utils;
 using namespace pni::nx::h5;
-using namespace boost::filesystem;
 
 class NXFileTest: public CppUnit::TestFixture {
 	CPPUNIT_TEST_SUITE(NXFileTest);
@@ -41,8 +39,6 @@ class NXFileTest: public CppUnit::TestFixture {
 	CPPUNIT_TEST(testAttributeExceptions);
 	CPPUNIT_TEST_SUITE_END();
 private:
-	String _fname1;
-	String _fname2;
 
 	String          _write_str_attr;
 	Float64Scalar   _write_scalar_attr;

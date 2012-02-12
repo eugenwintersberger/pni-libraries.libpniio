@@ -36,18 +36,13 @@ CPPUNIT_TEST_SUITE_REGISTRATION(NXGroupTest);
 void NXGroupTest::setUp(){
 	_fname = "test.group.h5";
 	Index i;
-	_f.close();
-	_f.filename(_fname);
-	_f.overwrite(true);
-	CPPUNIT_ASSERT_NO_THROW(_f.create());
+    _f = NXFile::create_file("NXGroupTest.h5",true,0);
 
 
 	_write_str_attr = "hello world";
 	_write_scalar_attr = 100;
 	_shape = Shape();
-	_shape.rank(2);
-	_shape.dim(0,3);
-	_shape.dim(1,3);
+	_shape = {3,3};
 
 	_write_array_attr = Int16Array();
 	i.rank(_shape.rank());
@@ -66,6 +61,8 @@ void NXGroupTest::setUp(){
 	_write_cmplx_scalar = Complex64(1,-2);
 
 	_read_array_attr = Int16Array();
+    _read_array_attr.shape(_shape);
+    _read_array_attr.allocate();
 
 }
 
@@ -81,22 +78,26 @@ void NXGroupTest::testCreation(){
 	std::cout<<"void NXGroupTest::testCreation()------------------------------";
 	std::cout<<std::endl;
 	NXGroup g;
+    CPPUNIT_ASSERT(!g.is_valid());
 
 	g = _f.create_group("/hello/world");
+    CPPUNIT_ASSERT(g.is_valid());
 	g.close();
+    CPPUNIT_ASSERT(!g.is_valid());
 	g = _f.create_group("/directory_1");
+    CPPUNIT_ASSERT(g.is_valid());
 
 
 	//test copy constructor
 	NXGroup g1(g);
-	CPPUNIT_ASSERT(g1.is_open());
-	CPPUNIT_ASSERT(g.is_open());
+	CPPUNIT_ASSERT(g1.is_valid());
+	CPPUNIT_ASSERT(g.is_valid());
 	CPPUNIT_ASSERT(g1.name() == g.name());
 
 	//test move constructor
 	NXGroup g2 = std::move(g1);
-	CPPUNIT_ASSERT(!g1.is_open());
-	CPPUNIT_ASSERT(g2.is_open());
+	CPPUNIT_ASSERT(!g1.is_valid());
+	CPPUNIT_ASSERT(g2.is_valid());
 
 }
 
@@ -132,17 +133,17 @@ void NXGroupTest::testAttributes(){
 	g = _f.create_group("/Hello/world1");
 
 	//write attribute data
-	g.set_attr("StringAttribute",_write_str_attr);
-	g.set_attr("FloatScalarAttribute",_write_scalar_attr);
-	g.set_attr("IndexOfRefraction",_write_cmplx_scalar);
-	g.set_attr("ArrayAttribute",_write_array_attr);
+	g.attr<String>("StringAttribute").write(_write_str_attr);
+	g.attr<Float64>("FloatScalarAttribute").write(_write_scalar_attr);
+	g.attr<Complex64>("IndexOfRefraction").write(_write_cmplx_scalar);
+	g.attr<Float64>("ArrayAttribute",_write_array_attr.shape()).write(_write_array_attr);
 
 
 	//read data
-	g.get_attr("StringAttribute",_read_str_attr);
-	g.get_attr("FloatScalarAttribute",_read_scalar_attr);
-	g.get_attr("ArrayAttribute",_read_array_attr);
-	g.get_attr("IndexOfRefraction",_read_cmplx_scalar);
+	g.attr("StringAttribute").read(_read_str_attr);
+	g.attr("FloatScalarAttribute").read(_read_scalar_attr);
+	g.attr("ArrayAttribute").read(_read_array_attr);
+	g.attr("IndexOfRefraction").read(_read_cmplx_scalar);
 
 	//check if values are the same
 	CPPUNIT_ASSERT(_write_str_attr == _read_str_attr);
@@ -160,53 +161,28 @@ void NXGroupTest::testAttributeExceptions(){
 	g = _f.create_group("/hello/world");
 
 	//write attribute data
-	g.set_attr("StringAttribute",_write_str_attr);
-	g.set_attr("FloatScalarAttribute",_write_scalar_attr);
-	g.set_attr("IndexOfRefraction",_write_cmplx_scalar);
-	g.set_attr("ArrayAttribute",_write_array_attr);
+	g.attr<String>("StringAttribute").write(_write_str_attr);
+	g.attr<Float64>("FloatScalarAttribute").write(_write_scalar_attr);
+	g.attr<Complex64>("IndexOfRefraction").write(_write_cmplx_scalar);
+	g.attr<Float64>("ArrayAttribute",_write_array_attr.shape()).write(_write_array_attr);
 
 	//trying to overwrite attributes
-	CPPUNIT_ASSERT_NO_THROW(g.set_attr("StringAttribute",_write_str_attr));
-	CPPUNIT_ASSERT_NO_THROW(g.set_attr("FloatScalarAttribute",_write_scalar_attr));
-	CPPUNIT_ASSERT_NO_THROW(g.set_attr("IndexOfRefraction",_write_cmplx_scalar));
-	CPPUNIT_ASSERT_NO_THROW(g.set_attr("ArrayAttribute",_write_array_attr));
+	CPPUNIT_ASSERT_NO_THROW(g.attr<String>("StringAttribute").write(_write_str_attr));
+	CPPUNIT_ASSERT_NO_THROW(g.attr<Float64>("FloatScalarAttribute").write(_write_scalar_attr));
+	CPPUNIT_ASSERT_NO_THROW(g.attr<Complex64>("IndexOfRefraction").write(_write_cmplx_scalar));
+	CPPUNIT_ASSERT_NO_THROW(g.attr<Float64>("ArrayAttribute",_write_array_attr.shape()).write(_write_array_attr));
 
 	//trying to read attributes that do not exist
-	CPPUNIT_ASSERT_THROW(g.get_attr("StringAttribute_not",_read_str_attr),H5AttributeError);
-	CPPUNIT_ASSERT_THROW(g.get_attr("FloatScalarAttribute_not",_read_scalar_attr),H5AttributeError);
-	CPPUNIT_ASSERT_THROW(g.get_attr("ArrayAttribute_not",_read_array_attr),H5AttributeError);
-	CPPUNIT_ASSERT_THROW(g.get_attr("IndexOfRefraction_not",_read_cmplx_scalar),H5AttributeError);
+	CPPUNIT_ASSERT_THROW(g.attr("StringAttribute_not").read(_read_str_attr),H5AttributeError);
+	CPPUNIT_ASSERT_THROW(g.attr("FloatScalarAttribute_not").read(_read_scalar_attr),H5AttributeError);
+	CPPUNIT_ASSERT_THROW(g.attr("ArrayAttribute_not").read(_read_array_attr),H5AttributeError);
+	CPPUNIT_ASSERT_THROW(g.attr("IndexOfRefraction_not").read(_read_cmplx_scalar),H5AttributeError);
 
 	g.close();
 }
 
 //------------------------------------------------------------------------------
 void NXGroupTest::testInternalLinks(){
-	std::cout<<"void NXGroupTest::testInternalLinks()-------------------------";
-	std::cout<<std::endl;
-	NXGroup g1,g2;
-	NXField f,fr;
-
-	//create a group and some data
-	CPPUNIT_ASSERT_NO_THROW(g1 = _f.create_group("/group1"));
-	CPPUNIT_ASSERT_NO_THROW(g2 = _f.create_group("/group2/detector/data"));
-
-	CPPUNIT_ASSERT(g1.path() == "/group1");
-	CPPUNIT_ASSERT(g1.base() == "/");
-	CPPUNIT_ASSERT(g1.name() == "group1");
-
-	CPPUNIT_ASSERT(g2.path() == "/group2/detector/data");
-	CPPUNIT_ASSERT(g2.base() == "/group2/detector/");
-	CPPUNIT_ASSERT(g2.name() == "data");
-
-	CPPUNIT_ASSERT_NO_THROW(g2.link(g1));
-	CPPUNIT_ASSERT_NO_THROW(g2.link(g1,"detdata"));
-
-	//link now g1 into g2
-	CPPUNIT_ASSERT_NO_THROW(g1.link("/group2/detector/g1_link"));
-
-	g1 = _f.open("/group2/detector/data");
-	g1.link("/mydata");
 
 }
 
@@ -248,12 +224,12 @@ void NXGroupTest::testAssignment(){
 
 	CPPUNIT_ASSERT_NO_THROW(g1 = _f.create_group("test1"));
 	CPPUNIT_ASSERT_NO_THROW(g2 = g1);
-	CPPUNIT_ASSERT(g1.is_open());
-	CPPUNIT_ASSERT(g2.is_open());
+	CPPUNIT_ASSERT(g1.is_valid());
+	CPPUNIT_ASSERT(g2.is_valid());
 
 	NXGroup g3;
 	CPPUNIT_ASSERT_NO_THROW(g3 = std::move(g2));
-	CPPUNIT_ASSERT(g3.is_open());
-	CPPUNIT_ASSERT(!g2.is_open());
+	CPPUNIT_ASSERT(g3.is_valid());
+	CPPUNIT_ASSERT(!g2.is_valid());
 }
 

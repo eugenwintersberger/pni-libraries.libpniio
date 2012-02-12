@@ -6,7 +6,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(H5GroupTest);
 
 
 void H5GroupTest::setUp(){
-    file.create("H5GroupTest.h5",true,0);
+    file = H5File::create_file("H5GroupTest.h5",true,0);
 }
 
 void H5GroupTest::tearDown(){
