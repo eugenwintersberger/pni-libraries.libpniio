@@ -168,8 +168,21 @@ namespace pni{
 
 
                     //============attribute inquery methods====================
-                    const Shape &shape() const;
+                    //! obtain attribute shape
+
+                    //! Returns the shape of the attribute.
+                    //! \return shape object
+                    Shape shape() const;
+
+                    //! return type_id
+
+                    //! Return the ID of the datatype used for the attribute.
+                    //! \return type ID
                     TypeID type_id() const;
+
+                    //! close attribute
+
+                    //! This method closes the attribute object.
                     virtual void close();
 
 
@@ -188,7 +201,8 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
             } 
-            
+           
+            //------------------------------------------------------------------
             template<typename T> 
                 void H5Attribute::__write_from_ptr(const T *ptr) const {
                 EXCEPTION_SETUP("template<typename T>  void H5Attribute::"
@@ -215,6 +229,7 @@ namespace pni{
                 __write_from_ptr(&value);
             }
 
+            //------------------------------------------------------------------
             template<typename T,template<typename> class BT> 
             void H5Attribute::write(const BT<T> buffer) const{
                 EXCEPTION_SETUP("template<typename T,template<typename> class"
@@ -297,7 +312,8 @@ namespace pni{
 
                 __read_to_ptr(&value);
             }
-            
+           
+            //------------------------------------------------------------------
             //implementation of read to pointer
             template<typename T,template<typename> class BT> 
                 void H5Attribute::read(BT<T> buffer) const{

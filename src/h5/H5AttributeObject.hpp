@@ -26,6 +26,8 @@
 #ifndef __H5ATTRIBUTEOBJECT_HPP__
 #define __H5ATTRIBUTEOBJECT_HPP__
 
+#include <vector>
+
 #include <pni/utils/Types.hpp>
 #include <pni/utils/Scalar.hpp>
 #include <pni/utils/Array.hpp>
@@ -40,10 +42,14 @@
 namespace pni{
     namespace nx{
         namespace h5{
+                     
             
             //! \ingroup nxh5_classes
             //! \brief objects which can hold attributes
             class H5AttributeObject:public H5NamedObject{
+                private:
+                   static herr_t __get_attribute_names(hid_t locid,const char *name,
+                            const H5A_info_t *info,void *data);
                 protected:
                     explicit H5AttributeObject(const hid_t &oid);
                 public:
@@ -108,12 +114,34 @@ namespace pni{
                     //! \return attribute object
                     H5Attribute attr(const String &n) const;
 
+                    //! checks for an attributes existance
+
+                    //! Checks if an attribute exists and returns true
+                    //! if it does. Otherwise false will be returned.
+                    //! \param n name of the attribute to check for
+                    //! \return true if exists, false otherwise
+                    bool has_attr(const String &n) const;
+
+                    //! delets an attribute
+
+                    //! Deltets an attribute from the object. 
+                    //! \throws H5AttributeError if the attribute does not exist
+                    //! \param n name of the attribute
+                    void del_attr(const String &n) const;
+
                     //! get number of attributes
 
                     //! Method returns the number of attributes attached
                     //! to this object.
                     //! \return number of attributes
                     size_t nattr() const;
+
+                    //! list of attribute names
+
+                    //! Returns a vector of names of all attributes
+                    //! attached to this object. 
+                    //! \return vector of attribute names
+                    std::vector<String> attr_names() const;
 
             };
 
@@ -133,7 +161,9 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
 
-                return H5Attribute(aid);
+                H5Attribute a(aid);
+                H5Aclose(aid);
+                return a;
             }
             
             template<TypeID ID>
@@ -159,7 +189,9 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
 
-                return H5Attribute(aid);
+                H5Attribute a(aid);
+                H5Aclose(aid);
+                return a;
 
             }
 

@@ -86,7 +86,7 @@ namespace pni{
             // implementation of copy assignment operator
             H5Attribute &H5Attribute::operator=(const H5Attribute &a){
                if(this != &a){
-                   (H5NamedObject &)(*this) = (H5NamedObject &)a;
+                   H5NamedObject::operator=(a);
                    __set_space_type();
                }
                return *this;
@@ -96,7 +96,7 @@ namespace pni{
             //implementation of move assignment operator
             H5Attribute &H5Attribute::operator=(H5Attribute &&o){
                 if(this != &o){
-                    (H5NamedObject &)(*this) = std::move((H5NamedObject &&)o);
+                    H5NamedObject::operator=(std::move(o));
                     _dspace = std::move(o._dspace);
                     _dtype  = std::move(o._dtype);
                 }
@@ -104,7 +104,7 @@ namespace pni{
             }
 
             //=========implementation of inquery methods=======================
-            const Shape &H5Attribute::shape() const{
+            Shape H5Attribute::shape() const{
                 return _dspace.shape();
             }
 

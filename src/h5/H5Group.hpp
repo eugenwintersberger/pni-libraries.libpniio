@@ -92,9 +92,16 @@ namespace pni{
                     H5Object operator[](const String &n) const;
 
                     //==============misc methods===============================
+                    //! remove an object
 
+                    //! This method removes an object attached to this 
                     void remove(const String &n);
 
+                    //! check for the existance of an object
+                    bool exists(const String &n) const;
+
+    
+                    //! close the object
                     virtual void close();
                    
                     

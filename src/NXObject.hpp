@@ -191,6 +191,9 @@ namespace pni{
                 template<typename T> NXAttribute<MAPTYPE(Imp,AttributeImpl)>
                     attr(const String &n) const
                 {
+                    
+                    if(this->has_attr(n)) this->del_attr(n);
+
                     return NXAttribute<MAPTYPE(Imp,AttributeImpl)>
                         (this->imp().attr<T>(n));
                 }
@@ -200,6 +203,8 @@ namespace pni{
                     NXAttribute<MAPTYPE(Imp,AttributeImpl)>
                     attr(const String &n) const
                 {
+                    if(this->has_attr(n)) this->del_attr(n);
+
                     return NXAttribute<MAPTYPE(Imp,AttributeImpl)>
                         (this->imp().attr<ID>(n));
                 }
@@ -216,6 +221,8 @@ namespace pni{
                 template<typename T> NXAttribute<MAPTYPE(Imp,AttributeImpl)>
                     attr(const String &n, const Shape &s) const
                 {
+                    if(this->has_attr(n)) this->del_attr(n);
+
                     return NXAttribute<MAPTYPE(Imp,AttributeImpl)>
                         (this->imp().attr<T>(n,s));
                 }
@@ -224,6 +231,8 @@ namespace pni{
                 template<TypeID ID> NXAttribute<MAPTYPE(Imp,AttributeImpl)>
                     attr(const String &n, const Shape &s) const
                 {
+                    if(this->has_attr(n)) this->del_attr(n);
+
                     return NXAttribute<MAPTYPE(Imp,AttributeImpl)>
                         (this->imp().attr<ID>(n,s));
                 }
@@ -238,6 +247,76 @@ namespace pni{
                 NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr(const String &n) const
                 {
                     return NXAttribute<MAPTYPE(Imp,AttributeImpl)>(_imp.attr(n));
+                }
+
+
+                //-------------------------------------------------------------
+                //! delete an attribute
+
+                //! Deletes an attribute attached to this object.
+                //! \throws NXAttributeError in case of errors
+                //! \param n name of the attribute
+                void del_attr(const String &n) const
+                {
+                    EXCEPTION_SETUP("void del_attr(const String &n) const");
+                    try{
+                        this->imp().del_attr(n);
+                    }catch(...){
+                        EXCEPTION_INIT(NXAttributeError,
+                                "Error deleting attribute ["+n+"]!");
+                        EXCEPTION_THROW();
+                    }
+                }
+
+                //-------------------------------------------------------------
+                //! checks for attribute existance
+
+                //! Checks whether or not an attribute with a particular name
+                //! exits. If it does true is returned otherwise false.
+                //! \throws NXAttributeError in case of errors
+                //! \param n name of the attribute
+                //! \return true if n exists otherwise false
+                bool has_attr(const String &n) const
+                {
+                    EXCEPTION_SETUP("bool has_attr(const String &n) const");
+
+                    try{
+                        return this->imp().has_attr(n);
+                    }catch(...){
+                        EXCEPTION_INIT(NXAttributeError,
+                                "Error checking for attribute ["+n+"]!");
+                        EXCEPTION_THROW();
+                    }
+                    return false;
+                }
+
+                //------------------------------------------------------------
+                //! get number of attributes
+
+                //! Returns the number of attributes attached to this 
+                //! object.
+                //! \returns number of attributes
+                size_t nattr() const
+                {
+                    return this->nattr();
+                }
+
+                //-------------------------------------------------------------
+                //! get attribute name list
+
+                //! Returns a vector with the names of all attributes attached
+                //! to this object.
+                //! \return vector with attribute names
+                std::vector<String> attr_names() const
+                {
+                    EXCEPTION_SETUP("std::vector<String> attr_names() const");
+                    try{
+                        return this->imp().attr_names();
+                    }catch(...){
+                        EXCEPTION_INIT(NXAttributeError,
+                                "Cannot obtain attribute names!");
+                        EXCEPTION_THROW();
+                    }
                 }
 
               

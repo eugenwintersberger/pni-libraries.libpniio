@@ -86,6 +86,9 @@ void NXGroupTest::testCreation(){
     CPPUNIT_ASSERT(!g.is_valid());
 	g = _f.create_group("/directory_1");
     CPPUNIT_ASSERT(g.is_valid());
+    CPPUNIT_ASSERT(g.path() == "/directory_1");
+    CPPUNIT_ASSERT(g.name() == "directory_1");
+    CPPUNIT_ASSERT(g.base() == "/");
 
 
 	//test copy constructor

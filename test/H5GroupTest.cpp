@@ -141,3 +141,28 @@ void H5GroupTest::test_attributes(){
 
 }
 
+void H5GroupTest::test_attribute_manipulation(){
+    std::cout<<"void H5GrouTest::test_attribute_manipulation()---------------";
+    std::cout<<std::endl;
+
+    CPPUNIT_ASSERT_NO_THROW(file.attr<String>("strattr"));
+    CPPUNIT_ASSERT_NO_THROW(file.attr<Float64>("temperature"));
+    CPPUNIT_ASSERT_NO_THROW(file.attr<UInt8>("sca_value"));
+    file.flush();
+    
+    std::cout<<"number of attribute: "<<file.nattr()<<std::endl;
+    CPPUNIT_ASSERT(file.nattr() == 4);
+    std::vector<String> names;
+    CPPUNIT_ASSERT_NO_THROW(names = file.attr_names());
+    std::cout<<"number of names: "<<names.size()<<"/"<<names.capacity()<<std::endl;
+    CPPUNIT_ASSERT(file.nattr() == names.size());
+
+    //removeing objects
+    CPPUNIT_ASSERT(file.has_attr("strattr"));
+    CPPUNIT_ASSERT(!file.has_attr("bla"));
+    CPPUNIT_ASSERT_NO_THROW(file.del_attr("strattr"));
+    CPPUNIT_ASSERT(!file.has_attr("strattr"));
+    CPPUNIT_ASSERT_THROW(file.del_attr("bla"),H5AttributeError);
+
+}
+

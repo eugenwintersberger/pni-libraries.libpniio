@@ -49,25 +49,20 @@ namespace pni{
             void H5File::close(){
                 //check for open objects in the file
                 if(is_valid()){
-//g                    std::cerr<<"File: "<<name()<<std::endl;
-//g                    std::cerr<<"Open files:      "<<
-//g                        H5Fget_obj_count(id(),H5F_OBJ_FILE)<<std::endl;
-//g                    std::cerr<<"Open data sets:  "<<
-//g                        H5Fget_obj_count(id(),H5F_OBJ_DATASET)<<std::endl;
-//g                    std::cerr<<"Open groups:     "<<
-//g                        H5Fget_obj_count(id(),H5F_OBJ_GROUP)<<std::endl;
-//g                    std::cerr<<"Open data type:  "<<
-//g                        H5Fget_obj_count(id(),H5F_OBJ_DATATYPE)<<std::endl;
-//g                    std::cerr<<"Open attributes: "<<
-//g                        H5Fget_obj_count(id(),H5F_OBJ_ATTR)<<std::endl;
-//g
-//g
-//g                    hid_t oid;
-//g                    char name[1024];
-//g                    H5Fget_obj_ids(id(),H5F_OBJ_GROUP,1,&oid);
-//g                    //obtain name of the object
-//g                    H5Iget_name(oid,name,1024);
-//g                    std::cout<<name<<std::endl;
+                    /*
+                    std::cerr<<"File: "<<name()<<std::endl;
+                    std::cerr<<"Open files:      "<<
+                        H5Fget_obj_count(id(),H5F_OBJ_FILE)<<std::endl;
+                    std::cerr<<"Open data sets:  "<<
+                        H5Fget_obj_count(id(),H5F_OBJ_DATASET)<<std::endl;
+                    std::cerr<<"Open groups:     "<<
+                        H5Fget_obj_count(id(),H5F_OBJ_GROUP)<<std::endl;
+                    std::cerr<<"Open data type:  "<<
+                        H5Fget_obj_count(id(),H5F_OBJ_DATATYPE)<<std::endl;
+                    std::cerr<<"Open attributes: "<<
+                        H5Fget_obj_count(id(),H5F_OBJ_ATTR)<<std::endl;
+
+                    */
 
                     H5Fflush(id(),H5F_SCOPE_GLOBAL);
                     H5Fclose(id());

@@ -66,7 +66,7 @@ namespace pni{
                 
                 //--------------------------------------------------------------
                 //! move constructor
-                NXGroup(NXGroup<Imp> &&o)
+                NXGroup(NXGroup<Imp> &&o):NXObject<Imp>(std::move(o))
                 {
                 }
                
@@ -90,12 +90,6 @@ namespace pni{
                 {
                 }
 
-                //--------------------------------------------------------------
-                //! move conversion constructor
-                template<typename ObjImp>
-                NXGroup(NXObject<ObjImp> &&o):NXObject<Imp>(std::move(o))
-                {
-                }
 
 
                 //--------------------------------------------------------------
@@ -200,7 +194,9 @@ namespace pni{
                     typedef MAPTYPE(Imp,FieldImpl) FieldImp;
                     typedef NXField<FieldImp> FieldType;
 
-                    Shape cs(s.rank());
+                    //in the first place the chunk shape will be a copy 
+                    //of the original shape
+                    Shape cs(s);
                     //set per default the first index to 1 - so that 
                     //all other dimension vary fastest
                     cs.dim(0,1);
@@ -245,13 +241,14 @@ namespace pni{
 
                 //! check if a particular object exists
                 bool exists(const String &n) const{
-                    return false ;//this->imp().exists(n);
+                    return this->imp().exists(n);
                 }
 
                 //! remove an object from the file
                 void remove(const String &n) const{
                     //this->imp().remove(n);
                 }
+
 
 
         };
