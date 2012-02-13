@@ -336,6 +336,97 @@ namespace pni{
                 return selection;
             }
 
+            //------------------------------------------------------------------
+            //implementation of writing a string scalar
+            void H5Dataset::write(const String &b) const
+            {
+                EXCEPTION_SETUP("void H5Dataset::write(const String &b) const");
+
+                if(_space.size() != 1){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Dataset is not scalar!");
+                    EXCEPTION_THROW();
+                }
+                
+                //select the proper memory data type
+                
+                H5Datatype mem_type(H5Dget_type(id()));
+                const char *ptr = b.c_str();
+
+                //write data to disk
+                herr_t err = H5Dwrite(id(),mem_type.id(),H5S_ALL,H5S_ALL,
+                                      H5P_DEFAULT,(const void *)&ptr);
+                if(err<0){
+                    EXCEPTION_INIT(H5DataSetError,
+                            "Error writing data to dataset!");
+                    EXCEPTION_THROW();
+                }
+
+            }
+
+            //------------------------------------------------------------------
+            //implementation of writing a binary scalar
+            void H5Dataset::write(const Binary &b) const
+            {
+                EXCEPTION_SETUP("void H5Datatype::"
+                        "write(const Binary &b) const");
+                if(_space.size() != 1){
+                    EXCEPTION_INIT(ShapeMissmatchError,"Dataset is not scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                __write(&b);
+            }
+
+            //------------------------------------------------------------------
+            //implementation of reading binary scalar
+            void H5Dataset::read(Binary &b) const
+            {
+                EXCEPTION_SETUP("void H5Datatype::read(Binary &b) const");
+
+                if(_space.size() != 1){
+                    EXCEPTION_INIT(ShapeMissmatchError,"Dataset is not scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                __read(&b);
+            }
+           
+            //------------------------------------------------------------------
+            //implementation of reading string scalar
+            void H5Dataset::read(String &b) const
+            {
+                EXCEPTION_SETUP("void H5Dataset::read(String &b) const");
+
+                if(_space.size() != 1){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Dataset is not scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                H5Datatype mem_type(H5Dget_type(id()));
+                const char *ptr = nullptr;
+                hid_t xfer_plist = H5Pcreate(H5P_DATASET_XFER);
+
+                //write data to disk
+                herr_t err = H5Dread(id(),mem_type.id(),H5S_ALL,H5S_ALL,
+                                      xfer_plist,(void *)&ptr);
+                if(err<0){
+                    EXCEPTION_INIT(H5DataSetError,
+                            "Error writing data to dataset!");
+                    EXCEPTION_THROW();
+                }
+
+                try{
+                    b = String(ptr);
+                }catch(...){
+                    b = "";
+                }
+
+                H5Dvlen_reclaim(mem_type.id(),_space.id(),xfer_plist,&ptr);
+
+            }
+
 
         //end of namespace
         }

@@ -164,7 +164,7 @@ namespace pni{
                 }
 
                 //--------------------------------------------------------------
-                void rank() const{
+                size_t rank() const{
                     return this->imp().rank();
                 }
 
@@ -232,11 +232,26 @@ namespace pni{
                 {
                     this->imp().read(data);
                 }
+                
+                template<typename T> void read(std::complex<T> &value) const
+                {
+                    this->imp().read(value);
+                }
 
                 //--------------------------------------------------------------
                 template<typename Object> Object read() const
                 {
                     return this->imp().read<Object>();                    
+                }
+                
+                void read(Binary &value) const
+                {
+                    this->imp().read(value);
+                }
+
+                void read(String &value) const
+                {
+                    this->imp().read(value);
                 }
 
                 //=============methods for writing data========================
@@ -253,6 +268,24 @@ namespace pni{
                 {
                     this->imp().write(value);
                 }
+
+                template<typename T> void write(const std::complex<T> &value)
+                    const
+                {
+                    this->imp().write(value);
+                }
+
+
+                void write(const Binary &value) const
+                {
+                    this->imp().write(value);
+                }
+
+                void write(const String &value) const
+                {
+                    this->imp().write(value);
+                }
+
 
                 //-------------------------------------------------------------
                 //! write a buffer 

@@ -71,6 +71,8 @@ namespace pni{
         template<typename Imp> class NXObject {
             private:
                 Imp _imp;	//!< implementation object
+            protected:
+                Imp &imp() { return _imp;}
             public:
                 //==================constructors and destructors================
                 typedef boost::shared_ptr<NXObject<Imp> > sptr;

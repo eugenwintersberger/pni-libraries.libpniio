@@ -130,3 +130,52 @@ void NXFieldTest::testAssignment(){
 }
 
 //------------------------------------------------------------------------------
+void NXFieldTest::test_resize(){
+    std::cout<<"void NXFieldTest::test_resize()-------------------------------";
+    std::cout<<std::endl;
+
+    //create base shape
+    Shape s = {0,1024};
+    Shape cs(s);
+    cs.dim(0,1);
+
+    NXField field = file.create_field<Float32>("ds",s);
+    CPPUNIT_ASSERT(field.is_valid());
+    CPPUNIT_ASSERT(field.shape() == s);
+
+    CPPUNIT_ASSERT_NO_THROW(field.grow(0));
+    s.dim(0,1);
+    CPPUNIT_ASSERT(field.rank()  == s.rank());
+    CPPUNIT_ASSERT(field.shape() == s);
+    s.dim(0,4);
+    CPPUNIT_ASSERT_NO_THROW(field.grow(0,3));
+    CPPUNIT_ASSERT(field.rank()  == s.rank());
+    CPPUNIT_ASSERT(field.shape() == s);
+
+    NXField field2 = file.create_field<String>("ss");
+    CPPUNIT_ASSERT(field2.rank() == 1);
+    CPPUNIT_ASSERT(field2.size() == 1);
+    CPPUNIT_ASSERT_NO_THROW(field2.grow(0));
+    CPPUNIT_ASSERT(field2.rank() == 1);
+    CPPUNIT_ASSERT(field2.size() == 2);
+    CPPUNIT_ASSERT_NO_THROW(field2.grow(0,10));
+    CPPUNIT_ASSERT(field2.rank() == 1);
+    CPPUNIT_ASSERT(field2.size() == 12);
+
+    //reshape the dataset
+    s = {100,512};
+    CPPUNIT_ASSERT_NO_THROW(field.resize(s));
+    CPPUNIT_ASSERT(field.shape() == s);
+}
+//------------------------------------------------------------------------------
+
+void NXFieldTest::test_io_string(){
+    NXField field1 = file.create_field<String>("scalar");
+    String write("hello world");
+    String read;
+
+    CPPUNIT_ASSERT_NO_THROW(field1.write(write));
+    CPPUNIT_ASSERT_NO_THROW(field1.read(read));
+    CPPUNIT_ASSERT(write == read);
+}
+

@@ -218,6 +218,15 @@ namespace pni{
                     template<typename T> 
                         void read(Scalar<T> &data) const;
 
+                    template<typename T>
+                        void read(std::complex<T> &scalar) const;
+
+                    //! read binary scalar
+                    void read(Binary &b) const;
+                    //! read a string scalar
+                    void read(String &b) const;
+
+
                     template<typename Object> Object read() const;
                     template<typename Object> 
                         Object read(const H5Selection &s) const;
@@ -269,6 +278,15 @@ namespace pni{
                     //! \param scalar scalar object to write to disk
                     template<typename T> 
                         void write(const Scalar<T> &scalar) const;
+
+                    //! write a complex scalar
+                    template<typename T> 
+                        void write(const std::complex<T> &scalar) const;
+
+                    //! write a binary scalar
+                    void write(const Binary &b) const;
+                    void write(const String &b) const;
+
 
 
 
@@ -391,7 +409,7 @@ namespace pni{
                 EXCEPTION_SETUP("template<typename T> void H5Dataset::"
                         "write(const Scalar<T> &scalar)");
 
-                if((!_space.is_scalar()) || (_space.size() != 1)){
+                if(_space.size() != 1){
                     EXCEPTION_INIT(ShapeMissmatchError,
                             "Dataset is not scalar!");
                     EXCEPTION_THROW();
@@ -401,19 +419,51 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
+            //implementation writing complex data
+            template<typename T>
+                void H5Dataset::write(const std::complex<T> &scalar) const
+            {
+                EXCEPTION_SETUP("template<typename T> void H5Dataset::"
+                        "write(const std::complex<T> &scalar) constw");
+
+                if(_space.size() != 1){
+                    EXCEPTION_INIT(ShapeMissmatchError,"Dataset is not scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                __write(&scalar);
+            }
+
+            //-----------------------------------------------------------------
             //implementation of reading data to a scalar
             template<typename T>
                 void H5Dataset::read(Scalar<T> &scalar) const{
                 EXCEPTION_SETUP("template<typename T> void H5Dataset::"
                         "read(Scalar<T> &scalar) const");
 
-                if((!_space.is_scalar()) || (_space.size() != 1)){
+                if(_space.size() != 1){
                     EXCEPTION_INIT(ShapeMissmatchError,
                             "Dataset is not scalar!");
                     EXCEPTION_THROW();
                 }
 
                 __read(scalar.ptr());
+            }
+
+            //-----------------------------------------------------------------
+            //read complex scalar
+            template<typename T>
+                void H5Dataset::read(std::complex<T> &scalar) const
+            {
+                EXCEPTION_SETUP("template<typename T> void H5Dataset::"
+                        "read(std::complex<T> &scalar) const");
+                if(_space.size() != 1){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Dataset is not scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                __read(&scalar);
             }
 
 
