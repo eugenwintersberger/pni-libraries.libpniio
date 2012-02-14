@@ -3,12 +3,12 @@
 #include "H5SelectionTest.hpp"
 
 
-//CPPUNIT_TEST_SUITE_REGISTRATION(H5SelectionTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(H5SelectionTest);
 
 //-----------------------------------------------------------------------------
 void H5SelectionTest::setUp(){
     _shape.rank(3);
-    _shape.dim(0,0); 
+    _shape.dim(0,1); 
     _shape.dim(1,12); 
     _shape.dim(2,57);
 
@@ -17,7 +17,7 @@ void H5SelectionTest::setUp(){
 
     _file = H5File::create_file("H5SelectionTest.h5",true,0);
     H5Datatype type = H5DatatypeFactory::create_type<TypeID::FLOAT32>();
-    H5Dataspace space = {0,12,57};
+    H5Dataspace space(_shape);
     _dset = H5Dataset("array",_file,type,space,_chunk);
 }
 
@@ -32,6 +32,7 @@ void H5SelectionTest::test_creation(){
     std::cout<<"H5SelectionTest::test_creation-------------------------------";
     std::cout<<std::endl;
 
+    CPPUNIT_ASSERT(_dset.shape() == _shape);
     H5Selection s1 = _dset.selection();
     CPPUNIT_ASSERT(s1.shape() == _shape);
 

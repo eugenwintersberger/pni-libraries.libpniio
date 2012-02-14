@@ -91,8 +91,7 @@ void H5DatasetTest::test_inquery(){
     std::cout<<"void H5DatasetTest::test_inquery()----------------------------";
     std::cout<<std::endl;
 
-    Shape s(2);
-    s.dim(0,1024); s.dim(1,512);
+    Shape s = {1024,512};
     H5Datatype type = H5DatatypeFactory::create_type<Float128>();
     H5Dataspace space = {1024,512};
     H5Dataset ds("ds",_file,type,space);

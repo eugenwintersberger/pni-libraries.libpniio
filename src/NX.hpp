@@ -33,6 +33,7 @@
 #include "NXGroup.hpp"
 #include "NXFilter.hpp"
 #include "NXField.hpp"
+#include "NXSelection.hpp"
 
 #include "h5/H5AttributeObject.hpp"
 #include "h5/H5File.hpp"
@@ -43,7 +44,7 @@
 #include "h5/H5Filter.hpp"
 #include "h5/H5LZFFilter.hpp"
 #include "h5/H5DeflateFilter.hpp"
-#include "h5/NXSelectionH5Implementation.hpp"
+#include "h5/H5Selection.hpp"
 
 
 //#include "utils/Record.hpp"
@@ -58,7 +59,7 @@ namespace pni{
             typedef pni::nx::NXField<H5Dataset>             NXField;
             typedef pni::nx::NXFilter<H5LZFFilter>          NXLZFFilter;
             typedef pni::nx::NXFilter<H5DeflateFilter>      NXDeflateFilter;
-
+            typedef pni::nx::NXSelection<H5Selection>       NXSelection;
         }
     }
 }

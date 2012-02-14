@@ -347,7 +347,16 @@ namespace pni{
                     this->imp().write(scalar);
                 }
 
+                //---------------------------------------------------------------
+                //! create a selection
+                NXSelection<MAPTYPE(Imp,SelectionImpl)> 
+                    selection(size_t stride = 1,size_t offset = 0) const
+                {
+                    typedef MAPTYPE(Imp,SelectionImpl) SelectionImpl;
+                    typedef NXSelection<SelectionImpl> Selection;
 
+                    return Selection(this->imp().selection(stride,offset));
+                }
 
 
 

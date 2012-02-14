@@ -56,10 +56,6 @@ using namespace pni::utils;
 
 namespace pni{
     namespace nx{
-
-
-
-
         //! \ingroup nexus_lowlevel
         //! \brief base class for all Nexus objects in the library.
 

@@ -33,6 +33,11 @@ namespace pni{
         namespace h5{
 
             //==============Implementation of constructors and destructors======
+            //implementation of the default constructor
+            H5Selection::H5Selection():
+                _offset(),_stride(),_counts(),_dataset(nullptr)
+            {
+            }
             //implementation of the copy constructor
             H5Selection::H5Selection(const H5Selection &o)
                 :_offset(o._offset),_stride(o._stride),_counts(o._counts),
@@ -256,6 +261,26 @@ namespace pni{
             }
 
             //=============specializations of the IO methods===================
+            //implementation of writing a binary value
+            void H5Selection::write(const Binary &value) const
+            {
+                EXCEPTION_SETUP("void H5Selection::write(const BinaryType &value) "
+                        "const");
+
+                if(this->size() != 1){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Selection is not scalar!");
+                    EXCEPTION_THROW();
+                }
+                
+                //create memory dataspace and datatype
+                H5Datatype mt = 
+                    H5DatatypeFactory::create_type<Binary>();
+                H5Dataspace ms;
+
+                __write(mt,ms,&value);
+            }
+
             //implementation of the write string method 
             void H5Selection::write(const String &value) const{
                 EXCEPTION_SETUP("template<> void H5Selection::"
@@ -352,7 +377,7 @@ namespace pni{
                         &ptr);
                 if(err < 0){
                     EXCEPTION_INIT(H5DataSetError,
-                            "Error writing data to dataset!");
+                            "Error reading string data to dataset!");
                     EXCEPTION_THROW();
                 }
 
@@ -371,6 +396,27 @@ namespace pni{
                                 xfer_plist,&ptr);
 
 
+            }
+           
+            //---------------------------------------------------------------
+            //implementation of reading a binary value
+            void H5Selection::read(Binary &value) const
+            {
+                EXCEPTION_SETUP("void H5Selection::read(BinaryType &value) "
+                        "const");
+
+                if(this->size() != 1){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Selection is not scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                //create memory dataspace and datatype
+                H5Datatype mt = 
+                    H5DatatypeFactory::create_type<Binary>();
+                H5Dataspace ms;
+
+                __read(mt,ms,&value);
             }
 
         }

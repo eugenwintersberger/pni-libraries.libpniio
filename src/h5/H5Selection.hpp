@@ -71,6 +71,7 @@ namespace pni{
                             const H5Dataspace &ms,T *ptr) const;
                 public:
                     //============constructors and destructor==================
+                    H5Selection();
                     //! copy constructor
                     H5Selection(const H5Selection &o);
                     //! move constructor
@@ -250,6 +251,21 @@ namespace pni{
 
                     //! read a simple value from the selection
                     template<typename T> void read(T &value) const;
+
+
+                    //! reading a complex value
+                    template<typename T> void read(std::complex<T> &value)
+                        const;
+
+                    //! write a complex value
+                    template<typename T> void write(const std::complex<T> &value)
+                        const;
+
+                    //! Reading a binary value
+                    void read(Binary &value) const;
+
+                    //! Writing a binary value
+                    void write(const Binary &value) const;
 
 
                     //! read a string value 
@@ -450,6 +466,51 @@ namespace pni{
 
                 __read(mt,ms,&value); 
                 
+            }
+
+            //-----------------------------------------------------------------
+            //implementation reading a complex value
+            template<typename T> void H5Selection::read(std::complex<T> &value)
+                const
+            {
+                EXCEPTION_SETUP("template<typename T> void H5Selection::"
+                        "read(std:complex<T> &value) const");
+
+                if(this->size() != 1){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Selection is not scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                //create memory dataspace and datatype
+                H5Datatype mt = 
+                    H5DatatypeFactory::create_type<std::complex<T> >();
+                H5Dataspace ms;
+
+                __read(mt,ms,&value);
+            }
+
+            //-----------------------------------------------------------------
+            //implementation writing a complex value
+            template<typename T> void H5Selection::write(const std::complex<T>
+                    &value) const
+            {
+                EXCEPTION_SETUP("template<typename T> void H5Selection::"
+                        "write(const std::complex<T> &value) const");
+
+                if(this->size() != 1){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Selection is not scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                //create memory dataspace and datatype
+                H5Datatype mt = 
+                    H5DatatypeFactory::create_type<std::complex<T> >();
+                H5Dataspace ms;
+
+                __write(mt,ms,&value);
+
             }
             
             //-----------------------------------------------------------------
