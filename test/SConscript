@@ -15,6 +15,7 @@ sources_list.extend(["H5DataspaceTest.cpp","H5DatatypeTest.cpp"])
 sources_list.extend(["H5FileTest.cpp","H5GroupTest.cpp","H5DatasetTest.cpp"])
 sources_list.extend(["H5SelectionTest.cpp"])
 sources_list.extend(["H5LinkTest.cpp"])
+sources_list.extend(["TestHelpers.cpp"])
 
 
 pninx_test = test_env.Program("pninxtest",sources_list)

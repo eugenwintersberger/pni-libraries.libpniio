@@ -168,14 +168,3 @@ void NXFieldTest::test_resize(){
     CPPUNIT_ASSERT(field.shape() == s);
 }
 //------------------------------------------------------------------------------
-
-void NXFieldTest::test_io_string(){
-    NXField field1 = file.create_field<String>("scalar");
-    String write("hello world");
-    String read;
-
-    CPPUNIT_ASSERT_NO_THROW(field1.write(write));
-    CPPUNIT_ASSERT_NO_THROW(field1.read(read));
-    CPPUNIT_ASSERT(write == read);
-}
-
