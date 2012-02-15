@@ -65,6 +65,11 @@ namespace pni{
                     
                 }
 
+                NXFile(NXFile<Imp> &&f):NXGroup<Imp>(std::move(f))
+                {
+                }
+
+
 
                 //--------------------------------------------------------------
                 //! destructor

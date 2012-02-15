@@ -74,6 +74,23 @@ void NXGroupTest::tearDown(){
 }
 
 //------------------------------------------------------------------------------
+void NXGroupTest::test_linking()
+{
+    NXGroup g = _f.create_group("/scan_1/detector/data");
+    CPPUNIT_ASSERT_NO_THROW(g.link("/collection/detector/data"));
+    CPPUNIT_ASSERT(_f.exists("/collection/detector/data"));
+
+    NXGroup ref = g.open("/scan_1");
+    CPPUNIT_ASSERT_NO_THROW(g.link(ref,"a_link"));
+    CPPUNIT_ASSERT(_f.exists("/scan_1/a_link"));
+
+    NXFile file = NXFile::create_file("NXGroupTest2.h5",true,0);
+    file.create_group("/test/data");
+    CPPUNIT_ASSERT_NO_THROW(g.link("NXGroupTest2.h5:/test/data","/external/data"));
+    CPPUNIT_ASSERT(_f.exists("/external/data"));
+}
+
+//------------------------------------------------------------------------------
 void NXGroupTest::testCreation(){
 	std::cout<<"void NXGroupTest::testCreation()------------------------------";
 	std::cout<<std::endl;

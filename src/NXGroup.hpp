@@ -249,6 +249,25 @@ namespace pni{
                     //this->imp().remove(n);
                 }
 
+                //! create link
+
+                void link(const String &n) const
+                {
+                    this->imp().link(n);
+                }
+
+                //! create link
+                void link(const NXGroup &ref,const String &n) const
+                {
+                    this->imp().link(ref.imp(),n);
+                }
+
+                //! create link
+                void link(const String &p,const String &n) const
+                {
+                    this->imp().link(p,n);
+                }
+
 
 
         };
