@@ -34,6 +34,9 @@
 namespace pni{
     namespace nx{
         namespace h5{
+            //forward declaration
+            class H5Group;
+
             //! \ingroup nxh5_classes            
             //! \brief base class for named objects
 
@@ -41,6 +44,7 @@ namespace pni{
             //! accessed by a path or which have a name (this includes Files 
             //! and attributes). This class is used as a base class for 
             //! such objects.
+            //! Due to the fact that such objects can be linked. 
             class H5NamedObject:public H5Object{
                 protected:
                     explicit H5NamedObject(const hid_t &id);
@@ -79,6 +83,8 @@ namespace pni{
                     //! So if an object would have the following path 
                     //! /scan_1/detector/data this method would return 
                     //! data.
+                    //! The behavior of this method is slightly different 
+                    //! for a file object.
                     //! \return name of the object
                     virtual String name() const;
                     //! return object base

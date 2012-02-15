@@ -7,13 +7,9 @@ CPPUNIT_TEST_SUITE_REGISTRATION(H5SelectionTest);
 
 //-----------------------------------------------------------------------------
 void H5SelectionTest::setUp(){
-    _shape.rank(3);
-    _shape.dim(0,1); 
-    _shape.dim(1,12); 
-    _shape.dim(2,57);
+    _shape = {1,12,57};
 
     _chunk = Shape(_shape);
-    _chunk.dim(0,1);
 
     _file = H5File::create_file("H5SelectionTest.h5",true,0);
     H5Datatype type = H5DatatypeFactory::create_type<TypeID::FLOAT32>();
@@ -33,16 +29,17 @@ void H5SelectionTest::test_creation(){
     std::cout<<std::endl;
 
     CPPUNIT_ASSERT(_dset.shape() == _shape);
-    H5Selection s1 = _dset.selection();
+    H5Selection s1 =  _dset.selection();
     CPPUNIT_ASSERT(s1.shape() == _shape);
 
     
     //using copy constructor
-    H5Selection s2 = s1;
+    H5Selection s2= s1;
     CPPUNIT_ASSERT(s2.shape() == s1.shape());
 
     //using move constructor
-    H5Selection s3 = std::move(s1);
+    H5Selection s3;
+    CPPUNIT_ASSERT_NO_THROW(s3= std::move(s1));
     CPPUNIT_ASSERT(s3.shape() == s2.shape());
     CPPUNIT_ASSERT(s3.shape() != s1.shape());
 
@@ -96,10 +93,9 @@ void H5SelectionTest::test_write_simple_types(){
     std::cout<<std::endl;
 
     //start with a scalar dataset
-    Shape s(1);
-    Shape cs(1); cs.dim(0,1);
+    Shape cs = {1};
     H5Datatype type = H5DatatypeFactory::create_type<Float32>();
-    H5Dataspace space(s);
+    H5Dataspace space({0},{H5Dataspace::UNLIMITED});
     H5Dataset array_ds("array_dataset",_file,type,space,cs);
     array_ds.extend(0);
 
@@ -148,10 +144,9 @@ void H5SelectionTest::test_read_simple_types(){
     double read = 0.;
 
     //----------write data with selection--------------------------
-    Shape s(1);
-    Shape cs(1); cs.dim(0,1);
+    Shape cs = {1};
     H5Datatype type = H5DatatypeFactory::create_type<Float32>();
-    H5Dataspace space(s);
+    H5Dataspace space({0},{H5Dataspace::UNLIMITED});
     H5Dataset array_ds("array_dataset",_file,type,space,cs);
     H5Selection selection = array_ds.selection();
     selection.offset(0,0); selection.count(0,1);
@@ -200,9 +195,8 @@ void H5SelectionTest::test_read_simple_types(){
 
     //extensible string dataset
     String str="hello";
-    s.dim(0,0);
     type = H5DatatypeFactory::create_type<String>();
-    space = H5Dataspace(s);
+    space = H5Dataspace({0},{H5Dataspace::UNLIMITED});
     H5Dataset string_ds("string_ds",_file,type,space,cs);
     selection = string_ds.selection();
     string_ds.extend(0);
@@ -232,7 +226,7 @@ void H5SelectionTest::test_write_scalar(){
 
     Shape sh(1); sh.dim(0,0);
     Shape cs(1); cs.dim(0,1);
-    H5Dataspace space(sh);
+    H5Dataspace space({0},{H5Dataspace::UNLIMITED});
     H5Datatype type = H5DatatypeFactory::create_type<Float32>();
     H5Dataset array_ds("array_ds",_file,type,space,cs);
     array_ds.extend(0);
@@ -246,7 +240,6 @@ void H5SelectionTest::test_write_scalar(){
     CPPUNIT_ASSERT_NO_THROW(selection.write(s));
 
 
-
     H5Dataset array_ds2("array_ds2",_file,type,space,cs);
     s = 1;
     selection = array_ds2.selection();
@@ -258,8 +251,6 @@ void H5SelectionTest::test_write_scalar(){
     selection.offset(0,1);
     array_ds2.extend(0);
     CPPUNIT_ASSERT_NO_THROW(selection.write(s));
-
-
 }
 
 //-----------------------------------------------------------------------------
@@ -292,20 +283,26 @@ void H5SelectionTest::test_write_array(){
     std::cout<<"void H5SelectionTest::test_write_array()-----------------------";
     std::cout<<std::endl;
 
-    Shape s(2); s.dim(0,3); s.dim(1,5);
+    //create the array from which to write data
+    Shape s = {3,5};
     UInt32Array a(s,"det","cps","useless data");
     CPPUNIT_ASSERT(a.is_allocated());
     a = 24;
 
-    Shape cs(3); cs.dim(0,1); cs.dim(1,s[0]); cs.dim(2,s[1]);
-    Shape ds(3); ds.dim(0,0); ds.dim(1,s[0]); ds.dim(2,s[1]);
-    H5Dataspace space(ds);
+    //create dataspace and datatype
+    Shape cs = {0,3,5};
+    Shape cms = {H5Dataspace::UNLIMITED,3,5};
+    H5Dataspace space(cs,cms);
     H5Datatype type = H5DatatypeFactory::create_type<UInt32>();
+
+    //create the dataset and selection object
+    cs = {1,3,5};
     H5Dataset earray_ds("earray_2",_file,type,space,cs);
     H5Selection selection = earray_ds.selection(); 
-    selection.offset(0,0);
-    selection.count(0,1); selection.count(1,s[0]);selection.count(2,s[1]);
-    earray_ds.extend(0);
+    selection.offset({0,0,0});
+    selection.count({1,3,5});
+
+    CPPUNIT_ASSERT_NO_THROW(earray_ds.extend(0));
     CPPUNIT_ASSERT_NO_THROW(selection.write(a));
     a = 100;
     earray_ds.extend(0);
@@ -336,12 +333,10 @@ void H5SelectionTest::test_write_buffer(){
     std::cout<<std::endl;
 
     Buffer<Binary> buffer(128);
-    Shape s(1); s.dim(0,128); 
 
-    Shape cs(1); cs.dim(0,buffer.size());
-    s.dim(0,0);
+    Shape cs = {buffer.size()};
     H5Datatype type = H5DatatypeFactory::create_type<Binary>();
-    H5Dataspace space(s);
+    H5Dataspace space({0},{H5Dataspace::UNLIMITED});
     H5Dataset ebin_ds("binary_2",_file,type,space,cs);
     H5Selection selection = ebin_ds.selection();
     ebin_ds.extend(0,128);

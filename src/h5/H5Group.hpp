@@ -103,9 +103,17 @@ namespace pni{
     
                     //! close the object
                     virtual void close();
-                   
+
+                    void link(const String &p) const;
+                    virtual H5Group parent() const{
+                        return open(base());
+                    }
+                    
+                    friend class H5Dataset;                   
                     
             };
+
+
         
         //end of namespace
         }

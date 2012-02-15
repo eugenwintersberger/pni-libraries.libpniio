@@ -33,8 +33,10 @@ class H5SelectionTest:public CppUnit::TestFixture{
         CPPUNIT_TEST(test_read_scalar);
         CPPUNIT_TEST(test_read_buffer);
         CPPUNIT_TEST(test_read_array);
+        //testing selections on a non-extendible
+        //multidimensional dataset using sinel 
+        //scalar values
         CPPUNIT_TEST(test_io_simple_no_ext<UInt8>);
-        /*
         CPPUNIT_TEST(test_io_simple_no_ext<Int8>);
         CPPUNIT_TEST(test_io_simple_no_ext<UInt16>);
         CPPUNIT_TEST(test_io_simple_no_ext<Int16>);
@@ -50,7 +52,59 @@ class H5SelectionTest:public CppUnit::TestFixture{
         CPPUNIT_TEST(test_io_simple_no_ext<Complex128>);
         CPPUNIT_TEST(test_io_simple_no_ext<String>);
         CPPUNIT_TEST(test_io_simple_no_ext<Binary>);
-        */
+        //testing selections on a non-extendible
+        //multidimensional dataset using scalar
+        //objects (this is only useful for numerical 
+        //values);
+        CPPUNIT_TEST(test_io_scalar_no_ext<UInt8>);
+        CPPUNIT_TEST(test_io_scalar_no_ext<Int8>);
+        CPPUNIT_TEST(test_io_scalar_no_ext<UInt16>);
+        CPPUNIT_TEST(test_io_scalar_no_ext<Int16>);
+        CPPUNIT_TEST(test_io_scalar_no_ext<UInt32>);
+        CPPUNIT_TEST(test_io_scalar_no_ext<Int32>);
+        CPPUNIT_TEST(test_io_scalar_no_ext<UInt64>);
+        CPPUNIT_TEST(test_io_scalar_no_ext<Int64>);
+        CPPUNIT_TEST(test_io_scalar_no_ext<Float32>);
+        CPPUNIT_TEST(test_io_scalar_no_ext<Float64>);
+        CPPUNIT_TEST(test_io_scalar_no_ext<Float128>);
+        CPPUNIT_TEST(test_io_scalar_no_ext<Complex32>);
+        CPPUNIT_TEST(test_io_scalar_no_ext<Complex64>);
+        CPPUNIT_TEST(test_io_scalar_no_ext<Complex128>);
+        //testing partial IO using buffers on a fixed
+        //size dataset using numerical and binary data
+        //in connection with a buffer object
+        CPPUNIT_TEST(test_io_buffer_no_ext<UInt8>);
+        CPPUNIT_TEST(test_io_buffer_no_ext<Int8>);
+        CPPUNIT_TEST(test_io_buffer_no_ext<UInt16>);
+        CPPUNIT_TEST(test_io_buffer_no_ext<Int16>);
+        CPPUNIT_TEST(test_io_buffer_no_ext<UInt32>);
+        CPPUNIT_TEST(test_io_buffer_no_ext<Int32>);
+        CPPUNIT_TEST(test_io_buffer_no_ext<UInt64>);
+        CPPUNIT_TEST(test_io_buffer_no_ext<Int64>);
+        CPPUNIT_TEST(test_io_buffer_no_ext<Float32>);
+        CPPUNIT_TEST(test_io_buffer_no_ext<Float64>);
+        CPPUNIT_TEST(test_io_buffer_no_ext<Float128>);
+        CPPUNIT_TEST(test_io_buffer_no_ext<Complex32>);
+        CPPUNIT_TEST(test_io_buffer_no_ext<Complex64>);
+        CPPUNIT_TEST(test_io_buffer_no_ext<Complex128>);
+        CPPUNIT_TEST(test_io_buffer_no_ext<Binary>);
+        //testing partial IO using an array on a fixed
+        //size dataset using numerical data only
+        CPPUNIT_TEST(test_io_array_no_ext<UInt8>);
+        CPPUNIT_TEST(test_io_array_no_ext<Int8>);
+        CPPUNIT_TEST(test_io_array_no_ext<UInt16>);
+        CPPUNIT_TEST(test_io_array_no_ext<Int16>);
+        CPPUNIT_TEST(test_io_array_no_ext<UInt32>);
+        CPPUNIT_TEST(test_io_array_no_ext<Int32>);
+        CPPUNIT_TEST(test_io_array_no_ext<UInt64>);
+        CPPUNIT_TEST(test_io_array_no_ext<Int64>);
+        CPPUNIT_TEST(test_io_array_no_ext<Float32>);
+        CPPUNIT_TEST(test_io_array_no_ext<Float64>);
+        CPPUNIT_TEST(test_io_array_no_ext<Float128>);
+        CPPUNIT_TEST(test_io_array_no_ext<Complex32>);
+        CPPUNIT_TEST(test_io_array_no_ext<Complex64>);
+        CPPUNIT_TEST(test_io_array_no_ext<Complex128>);
+
         CPPUNIT_TEST_SUITE_END();
     private:
         H5File _file;
@@ -78,6 +132,7 @@ class H5SelectionTest:public CppUnit::TestFixture{
 
 };
 
+//------------------------------------------------------------------------------
 template<typename T> void H5SelectionTest::test_io_simple_no_ext()
 {
     H5Datatype type = H5DatatypeFactory::create_type<T>();
@@ -112,19 +167,105 @@ template<typename T> void H5SelectionTest::test_io_simple_no_ext()
 
 }
 
+//------------------------------------------------------------------------------
 template<typename T> void H5SelectionTest::test_io_scalar_no_ext()
 {
+    H5Datatype type = H5DatatypeFactory::create_type<T>();
+    size_t nx = 3, ny = 5;
+    H5Dataspace space({nx,ny});
 
+    //create a simple not extensible scalar dataset
+    H5Dataset dset("scalar",_file,type,space);
+    H5Selection sel = dset.selection();
+        
+    Scalar<T> write,read;
+    init_values(write,read);
+    CPPUNIT_ASSERT_NO_THROW(sel.count({1,1}));
+    CPPUNIT_ASSERT_NO_THROW(sel.offset({0,0}));
+
+    //write loop
+    for(size_t i=0;i<nx; i++){
+        for(size_t j=0;j<ny;j++){
+            CPPUNIT_ASSERT_NO_THROW(sel.offset({i,j}));
+            CPPUNIT_ASSERT_NO_THROW(sel.write(write));
+        }
+    }
+    
+    //write loop
+    for(size_t i=0;i<nx; i++){
+        for(size_t j=0;j<ny;j++){
+            CPPUNIT_ASSERT_NO_THROW(sel.offset({i,j}));
+            CPPUNIT_ASSERT_NO_THROW(sel.read(read));
+            compare_values(read,write);
+        }
+    }
 }
 
+//-----------------------------------------------------------------------------
 template<typename T> void H5SelectionTest::test_io_buffer_no_ext()
 {
+    H5Datatype type = H5DatatypeFactory::create_type<T>();
+    size_t nx = 3, ny = 5;
+    H5Dataspace space({nx,ny});
 
+    //create a simple not extensible scalar dataset
+    H5Dataset dset("scalar",_file,type,space);
+    H5Selection sel = dset.selection();
+        
+    Buffer<T> write(3),read(3);
+    init_values(write,read);
+    CPPUNIT_ASSERT_NO_THROW(sel.count({3,1}));
+    CPPUNIT_ASSERT_NO_THROW(sel.offset({0,0}));
+
+    //write loop
+    for(size_t j=0;j<ny;j++){
+        write = T(j);
+        CPPUNIT_ASSERT_NO_THROW(sel.offset({0,j}));
+        CPPUNIT_ASSERT_NO_THROW(sel.write(write));
+    }
+    
+    //write loop
+    for(size_t j=0;j<ny;j++){
+        CPPUNIT_ASSERT_NO_THROW(sel.offset({0,j}));
+        CPPUNIT_ASSERT_NO_THROW(sel.read(read));
+        for(size_t i = 0;i<read.size();i++){
+            compare_values(read[i],T(j));
+        }
+    }
 }
 
+//------------------------------------------------------------------------------
 template<typename T> void H5SelectionTest::test_io_array_no_ext()
 {
+    H5Datatype type = H5DatatypeFactory::create_type<T>();
+    size_t nx = 3, ny = 5;
+    H5Dataspace space({nx,ny});
 
+    //create a simple not extensible scalar dataset
+    H5Dataset dset("scalar",_file,type,space);
+    H5Selection sel = dset.selection();
+       
+    Shape s = {5};
+    Array<T,Buffer> write(s,"write","a.u","write data");
+    Array<T,Buffer> read(s,"read","a.u","read data");
+    init_values(write,read);
+    CPPUNIT_ASSERT_NO_THROW(sel.count({1,5}));
+    CPPUNIT_ASSERT_NO_THROW(sel.offset({0,0}));
+
+    //write loop
+    for(size_t j=0;j<nx;j++){
+        write = T(j);
+        CPPUNIT_ASSERT_NO_THROW(sel.offset({j,0}));
+        CPPUNIT_ASSERT_NO_THROW(sel.write(write));
+    }
+    
+    //write loop
+    for(size_t j=0;j<nx;j++){
+        CPPUNIT_ASSERT_NO_THROW(sel.offset({j,0}));
+        CPPUNIT_ASSERT_NO_THROW(sel.read(read));
+        write = j;
+        CPPUNIT_ASSERT( write == read);
+    }
 }
 
 #endif

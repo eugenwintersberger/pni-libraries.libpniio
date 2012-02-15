@@ -42,6 +42,10 @@ void H5GroupTest::test_creation(){
     //testing creation of a full path
     H5Group g5("group5/test/directory",file);
     CPPUNIT_ASSERT(g5.is_valid());
+
+    CPPUNIT_ASSERT(g5.name() == "directory");
+    CPPUNIT_ASSERT(g5.path() == "/group5/test/directory");
+    CPPUNIT_ASSERT(g5.base() == "/group5/test");
 }
 
 void H5GroupTest::test_assignment(){
@@ -76,6 +80,15 @@ void H5GroupTest::test_openobjects(){
 
     CPPUNIT_ASSERT_NO_THROW(det = file.open("/test/data/detector"));
     CPPUNIT_ASSERT(det.is_valid());
+    CPPUNIT_ASSERT(det.path() == "/test/data/detector");
+    CPPUNIT_ASSERT(det.base() == "/test/data");
+    CPPUNIT_ASSERT(det.name() == "detector");
+
+    H5Group p;
+    CPPUNIT_ASSERT_NO_THROW(p = det.parent());
+    CPPUNIT_ASSERT(p.path() == "/test/data");
+    CPPUNIT_ASSERT(p.base() == "/test");
+    CPPUNIT_ASSERT(p.name() == "data");
 
     H5Group test;
     CPPUNIT_ASSERT_NO_THROW(test = file["test"]);

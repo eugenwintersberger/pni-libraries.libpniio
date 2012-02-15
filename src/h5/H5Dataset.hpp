@@ -192,6 +192,8 @@ namespace pni{
                         return _space;
                     }
 
+                    
+                    H5Group parent() const;
 
                     //===============reading data methods======================
                     //! reading simple data from the dataset
@@ -285,7 +287,15 @@ namespace pni{
 
                     //! write a binary scalar
                     void write(const Binary &b) const;
+                    //! write a String value
                     void write(const String &b) const;
+
+                    //! create a new link to this dataset
+
+                    //! This method creates a new link to this dataset.
+                    void link(const String &path) const;
+
+                    void link(const H5Group &g,const String &n) const;
 
 
 

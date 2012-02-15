@@ -29,7 +29,8 @@ using namespace pni::utils;
 
 #include "H5NamedObject.hpp"
 #include "H5Exceptions.hpp"
-
+#include "H5Group.hpp"
+#include "H5Path.hpp"
 
 namespace pni{
     namespace nx{
@@ -114,6 +115,8 @@ namespace pni{
                 //if the path is empty return an empty string
                 if(p.empty()) return p;
 
+                if((p.size() == 1) && (p[0] == '/')) return p;
+
                 //need to extract the the name information from the path
                 size_t lpos = p.find_last_of("/");
                 String name = p;
@@ -130,10 +133,30 @@ namespace pni{
 
                 if(p.empty()) return p;
 
+                //if the string is of size 1 and has
+                //only one / return this
+                String base;
+                if((p.size() == 1) && (p[0] == '/')){
+                    base = "/";
+                    return base;
+                }
+
                 size_t lpos = p.find_last_of("/");
-                String base = "";
                 if(lpos != p.npos){
-                    base = String(p,0,lpos+1);
+                    //if the / has been found in the 
+                    //first position we can simply return this
+                    if(lpos == 0){
+                        base = String("/");
+                    }else{
+                        //in all other cases a bit more work 
+                        //is necessary
+                        base = String(p,0,lpos+1);
+
+                        //remove a trailing /
+                        if(base[base.size()-1] == '/'){
+                            base = String(base,0,base.size()-1);
+                        }
+                    }
                 }
 
                 return base;
@@ -157,6 +180,40 @@ namespace pni{
 
                 return String("");
             }
+
+            //----------------------------------------------------------------
+            /*
+            H5Group H5NamedObject::parent() const
+            {
+                hid_t fid = H5Iget_file_id(id());
+                H5Path path(base());
+                hid_t gid = H5Gopen2(fid,"/",H5P_DEFAULT);
+                H5Group g(H5NamedObject(gid));
+
+                return g.open(base());
+
+                H5Fclose(fid);
+
+                //if there is nothing in the path we can return the root group
+                if(path.size() == 0){
+                    H5Group g(H5NamedObject(gid));
+                    H5Gclose(gid);
+                    return g;
+                }
+
+                hid_t oid = gid;
+                for(String &name: path){
+                    gid = H5Gopen2(oid,name.c_str(),H5P_DEFAULT);
+                    H5Gclose(oid);
+                    oid = gid;
+                }
+
+                H5Group g(H5NamedObject(gid)); 
+                H5Gclose(gid);
+                return g;
+            }
+            */
+
 
         //end of namespace
         }

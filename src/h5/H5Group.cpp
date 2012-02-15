@@ -27,7 +27,7 @@
 #include "H5Group.hpp"
 #include "H5Dataset.hpp"
 #include "H5Exceptions.hpp"
-
+#include "H5Link.hpp"
 
 namespace pni{
     namespace nx{
@@ -201,6 +201,12 @@ namespace pni{
             //-----------------------------------------------------------------
             H5Object H5Group::operator[](const String &n) const{
                 return this->open(n);
+            }
+
+            //-----------------------------------------------------------------
+            void H5Group::link(const String &p) const
+            {
+                H5Link::create(path(),parent(),p);
             }
 
             //-----------------------------------------------------------------

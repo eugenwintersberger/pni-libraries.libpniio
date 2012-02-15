@@ -58,19 +58,36 @@ namespace pni{
             //! data.
             class H5Selection{
                 private:
-                    Buffer<hsize_t> _offset;  //!< selection offset
-                    Buffer<hsize_t> _stride;  //!< selection stride
-                    Buffer<hsize_t> _counts;  //!< number of elements along each dimension
-                    const H5Dataset *_dataset;     //!< local reference to the dataset
-                                             //!< to which the selection
-                                             //!< belongs.
+                    Buffer<hsize_t> _offset;    //!< selection offset
+                    Buffer<hsize_t> _stride;    //!< selection stride
+                    Buffer<hsize_t> _counts;    //!< number of elements along each dimension
+                    const H5Dataset *_dataset;  //!< local reference to the dataset
+                                                //!< to which the selection
+                                                //!< belongs.
 
-                    template<typename T> void __write(const H5Datatype &mt,
-                            const H5Dataspace &ms,const T *ptr) const;
-                    template<typename T> void __read(const H5Datatype &mt,
-                            const H5Dataspace &ms,T *ptr) const;
+                    //! write from pointer
+
+                    //! Writes a pointer to the HDF5 dataset using the
+                    //! selection.
+                    //! \param mt memory datatype
+                    //! \param ms memory dataspace
+                    //! \param ptr pointer to the data
+                    template<typename T> void 
+                        __write(const H5Datatype &mt,const H5Dataspace &ms,
+                                const T *ptr) const;
+
+                    //! read to pointer
+
+                    //! Read data to a memory location determined by ptr.
+                    //! \param mt memory datatype
+                    //! \param ms memory dataspace
+                    //! \param ptr pointer where to store data
+                    template<typename T> void 
+                        __read(const H5Datatype &mt,const H5Dataspace &ms,
+                               T *ptr) const;
                 public:
                     //============constructors and destructor==================
+                    //! default constructor
                     H5Selection();
                     //! copy constructor
                     H5Selection(const H5Selection &o);
@@ -89,9 +106,18 @@ namespace pni{
                     explicit H5Selection(const H5Dataset &ds,
                                 const Shape &s,size_t offset=0,size_t stride=1);
 
+                    //! constructor with initializer list
+
+                    //! This constructor uses initializer lists to create a
+                    //! selection object. In order to successfully initialize
+                    //! the selection all lists must be of same length.
+                    //! \param offset list with offset values
+                    //! \param stride list with stride values
+                    //! \param count list with count values
                     H5Selection(const std::initializer_list<hsize_t> &offset,
                                 const std::initializer_list<hsize_t> &stride,
                                 const std::initializer_list<hsize_t> &count); 
+
                     //! destructor
                     virtual ~H5Selection();
 
@@ -101,6 +127,7 @@ namespace pni{
                     //! move assignment operator
                     H5Selection &operator=(H5Selection &&o);
 
+                    //============inquery methods==============================
                     //! number of elements in the selection
 
                     //! Returns the number of elements in the selection. 
@@ -612,7 +639,7 @@ namespace pni{
                 H5Datatype mt = H5DatatypeFactory::create_type<T>();
                 H5Dataspace ms(array.shape());
 
-                __write(ms,mt,array.ptr());
+                __write(mt,ms,array.ptr());
             }
 
             //-----------------------------------------------------------------

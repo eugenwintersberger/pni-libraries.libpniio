@@ -56,7 +56,7 @@ class NXSelectionTest:public CppUnit::TestFixture
         CPPUNIT_TEST(test_io_simple<Complex32>);
         CPPUNIT_TEST(test_io_simple<Complex64>);
         CPPUNIT_TEST(test_io_simple<Complex128>);
-        //CPPUNIT_TEST(test_io_simple<String>);
+        CPPUNIT_TEST(test_io_simple<String>);
         CPPUNIT_TEST_SUITE_END();
     private:
         NXFile file;
@@ -95,7 +95,8 @@ template<typename T> void NXSelectionTest::test_io_simple(){
     CPPUNIT_ASSERT_NO_THROW(sel.count(0,2));
     CPPUNIT_ASSERT_THROW(sel.write(write),ShapeMissmatchError);
     CPPUNIT_ASSERT_THROW(sel.read(read),ShapeMissmatchError);
-
 }
+
+
 
 #endif

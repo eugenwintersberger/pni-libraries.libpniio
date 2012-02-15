@@ -34,10 +34,11 @@ namespace pni{
 
             //==============Implementation of constructors and destructors======
             //implementation of the default constructor
-            H5Selection::H5Selection():
-                _offset(),_stride(),_counts(),_dataset(nullptr)
+            H5Selection::H5Selection()
             {
             }
+
+            //------------------------------------------------------------------
             //implementation of the copy constructor
             H5Selection::H5Selection(const H5Selection &o)
                 :_offset(o._offset),_stride(o._stride),_counts(o._counts),
@@ -55,7 +56,7 @@ namespace pni{
             }
 
             
-            //------------------------------------------------------------------
+            //-------------------------------------------------------------------
             //implementation of the shape constructor
             H5Selection::H5Selection(const H5Dataset &ds,const Shape &s,
                     size_t offset,size_t stride)
@@ -143,6 +144,7 @@ namespace pni{
             //------------------------------------------------------------------
             //get shape
             Shape H5Selection::shape() const {
+                if(rank() == 0 ) return Shape();
                 Shape s(rank()); 
                 for(size_t i=0;i<rank();i++) s.dim(i,_counts[i]);
                 return s;
@@ -281,6 +283,7 @@ namespace pni{
                 __write(mt,ms,&value);
             }
 
+            //------------------------------------------------------------------
             //implementation of the write string method 
             void H5Selection::write(const String &value) const{
                 EXCEPTION_SETUP("template<> void H5Selection::"
@@ -366,7 +369,7 @@ namespace pni{
                 
                 //select the proper memory data type
                 H5Datatype mem_type = H5Datatype(H5Dget_type(_dataset->id()));
-                H5Datatype ms;
+                H5Dataspace ms;
 
                 //write data to disk
                 err = H5Dread(_dataset->id(),

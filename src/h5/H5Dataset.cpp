@@ -28,7 +28,7 @@
 #include "H5Dataset.hpp"
 #include "H5ObjectType.hpp"
 #include "H5Exceptions.hpp"
-
+#include "H5Link.hpp"
 #include "H5Selection.hpp"
 
 
@@ -426,6 +426,33 @@ namespace pni{
                 H5Dvlen_reclaim(mem_type.id(),_space.id(),xfer_plist,&ptr);
 
             }
+
+            //------------------------------------------------------------------
+            void H5Dataset::link(const String &linkname) const
+            {
+                H5Link::create(path(),parent(),linkname);
+            }
+
+            void H5Dataset::link(const H5Group &g,const String &n) const
+            {
+                H5Link::create(path(),g,n);
+            }
+
+
+            H5Group H5Dataset::parent() const
+            {
+                hid_t fid = H5Iget_file_id(id());
+                hid_t gid = H5Oopen(fid,base().c_str(),H5P_DEFAULT);
+                H5Group g(gid);
+                H5Fclose(fid);
+                H5Oclose(gid);
+
+                std::cout<<"Dataset base is "<<base()<<std::endl;
+                std::cout<<"Dataset parent is "<<g.path()<<std::endl;
+                
+                return g;
+            }
+
 
 
         //end of namespace

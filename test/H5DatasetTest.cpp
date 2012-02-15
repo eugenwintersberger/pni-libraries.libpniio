@@ -100,6 +100,24 @@ void H5DatasetTest::test_inquery(){
     CPPUNIT_ASSERT(ds.type_id() == TypeID::FLOAT128);
     CPPUNIT_ASSERT(ds.shape() == s);
 
+    H5Dataset ds2("/scan_1/detector/data",_file,type,space);
+    CPPUNIT_ASSERT(ds2.path() == "/scan_1/detector/data");
+    CPPUNIT_ASSERT(ds2.base() == "/scan_1/detector");
+    CPPUNIT_ASSERT(ds2.name() == "data");
+    H5Group g = ds2.parent();
+    CPPUNIT_ASSERT(g.is_valid());
+    CPPUNIT_ASSERT(g.path() == "/scan_1/detector");
+    CPPUNIT_ASSERT(g.base() == "/scan_1");
+    CPPUNIT_ASSERT(g.name() == "detector");
+    g = _file.open("/scan_1/detector");
+    CPPUNIT_ASSERT(g.path() == "/scan_1/detector");
+    CPPUNIT_ASSERT(g.base() == "/scan_1");
+    CPPUNIT_ASSERT(g.name() == "detector");
+    CPPUNIT_ASSERT_NO_THROW(ds = g.open("/scan_1/detector/data"));
+    CPPUNIT_ASSERT(ds2.path() == "/scan_1/detector/data");
+    CPPUNIT_ASSERT(ds2.base() == "/scan_1/detector");
+    CPPUNIT_ASSERT(ds2.name() == "data");
+
 }
 
 //-----------------------------------------------------------------------------
