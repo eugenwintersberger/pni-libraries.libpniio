@@ -293,8 +293,15 @@ namespace pni{
                     //! create a new link to this dataset
 
                     //! This method creates a new link to this dataset.
+                    //! With this method only a local link can be established.
+                    //! \param path name of the new link to this object
                     void link(const String &path) const;
 
+                    //! creates a new link to this dataset
+
+                    //! This creates a new link to this dataset with name n
+                    //! below group g. Like link(const String &n) this method 
+                    //! can only produce file local links.
                     void link(const H5Group &g,const String &n) const;
 
 

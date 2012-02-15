@@ -70,6 +70,31 @@ void H5GroupTest::test_assignment(){
     g2.close();
 }
 
+void H5GroupTest::test_linking()
+{
+    std::cout<<"void H5GroupTest::test_linking()------------------------------";
+    std::cout<<std::endl;
+
+    //checking internal links
+    H5Group g("/data/test/dir",file);
+    CPPUNIT_ASSERT_NO_THROW(g.link("/collection/dir"));
+    CPPUNIT_ASSERT(file.exists("/collection/dir"));
+
+    H5Group ref = file.open("/data/test");
+    CPPUNIT_ASSERT_NO_THROW(g.link(ref,"whatever"));
+    CPPUNIT_ASSERT(file.exists("/data/test/whatever"));
+
+
+    //check external links
+    H5File file2 = H5File::create_file("H5GroupTest2.h5",true,0);
+    H5Group("/detector/data",file2);
+        
+    CPPUNIT_ASSERT_NO_THROW(file.link("H5GroupTest2.h5:/detector/data",
+                "external/detector/data"));
+    CPPUNIT_ASSERT(file.exists("/external/detector/data"));
+
+    
+}
 
 void H5GroupTest::test_openobjects(){
     std::cout<<"void H5GroupTest::test_openobjects()--------------------------";

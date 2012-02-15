@@ -120,6 +120,25 @@ void H5DatasetTest::test_inquery(){
 
 }
 
+void H5DatasetTest::test_linking()
+{
+    std::cout<<"void H5DatasetTest::test_linking()------------------------------";
+    std::cout<<std::endl;
+
+    //checking internal links
+    H5Datatype type = H5DatatypeFactory::create_type<Float128>();
+    H5Dataspace space;
+    H5Dataset d("/data/test/dir/data",_file,type,space);
+    CPPUNIT_ASSERT_NO_THROW(d.link("/collection/data"));
+    CPPUNIT_ASSERT(_file.exists("/collection/data"));
+
+    H5Group ref = _file.open("/data/test");
+    CPPUNIT_ASSERT_NO_THROW(d.link(ref,"whatever"));
+    CPPUNIT_ASSERT(_file.exists("/data/test/whatever"));
+
+
+}
+
 //-----------------------------------------------------------------------------
 void H5DatasetTest::test_resize(){
     std::cout<<"void H5DatasetTest::test_resize()-----------------------------";

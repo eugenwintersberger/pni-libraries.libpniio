@@ -203,11 +203,6 @@ namespace pni{
                 return this->open(n);
             }
 
-            //-----------------------------------------------------------------
-            void H5Group::link(const String &p) const
-            {
-                H5Link::create(path(),parent(),p);
-            }
 
             //-----------------------------------------------------------------
             bool H5Group::exists(const String &n) const
@@ -267,6 +262,24 @@ namespace pni{
 
                 return true;
 
+            }
+
+            //------------------------------------------------------------------
+            void H5Group::link(const String &name) const
+            {
+                H5Link::create(path(),*this,name);
+            }
+
+            //------------------------------------------------------------------
+            void H5Group::link(const H5Group &ref,const String &name) const
+            {
+                H5Link::create(path(),ref,name);
+            }
+
+            //------------------------------------------------------------------
+            void H5Group::link(const String &path,const String &name) const
+            {
+                H5Link::create(path,*this,name);
             }
         //end of namespace
         }

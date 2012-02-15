@@ -36,6 +36,7 @@ class H5DatasetTest:public CppUnit::TestFixture{
         CPPUNIT_TEST(test_read_array);
         CPPUNIT_TEST(test_read_buffer);
         CPPUNIT_TEST(test_read_scalar);
+        CPPUNIT_TEST(test_linking);
         CPPUNIT_TEST_SUITE_END();
     private:
         H5File _file;
@@ -55,6 +56,7 @@ class H5DatasetTest:public CppUnit::TestFixture{
         void test_read_array();
         void test_read_buffer();
         void test_read_scalar();
+        void test_linking();
 };
 
 #endif

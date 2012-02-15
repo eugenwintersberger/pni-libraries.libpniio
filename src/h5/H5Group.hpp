@@ -98,16 +98,51 @@ namespace pni{
                     void remove(const String &n);
 
                     //! check for the existance of an object
+
+                    //! Checks whether or not an object determined by n exists.
+                    //! n can be either a path relative to this object or 
+                    //! an absolute path. 
+                    //! \param n path to the object 
                     bool exists(const String &n) const;
 
     
                     //! close the object
                     virtual void close();
 
-                    void link(const String &p) const;
+                    //! return the parent group 
+
+                    //! Returns the parent group for this very group.
+                    //! \return parent group 
                     virtual H5Group parent() const{
                         return open(base());
                     }
+
+                    //! create a link to this group
+
+                    //! Creates a file local link to this particular group.
+                    //! path is the new name of the link and is a relative 
+                    //! or absolute path with respect to this group.
+                    //! \param path new link path
+                    void link(const String &path) const;
+
+                    //! create a link to this group
+
+                    //! Creates a file local link to this group. The location 
+                    //! of the link is given by path which is relative
+                    //! to the group object ref.
+                    //! \param ref reference group
+                    //! \param path new link path
+                    void link(const H5Group &ref,const String &path) const;
+
+                    //! creates a local or external link
+
+                    //! This method creates a ling below this group from an 
+                    //! object determined by path. The name of the link is
+                    //! given by name. With this method also external 
+                    //! links are possible.
+                    //! \param path path to the object from which to link
+                    //! \paran name name of the link with respect to this group
+                    void link(const String &path,const String &name) const;
                     
                     friend class H5Dataset;                   
                     
