@@ -1,4 +1,0 @@
-@LIBINSTPATH@/python*/*/pni/*.py
-@LIBINSTPATH@/python*/*/pni/nx/*.py
-@LIBINSTPATH@/python*/*/pni/nx/h5/*.py
-@LIBINSTPATH@/python*/*/pni/nx/h5/*.so

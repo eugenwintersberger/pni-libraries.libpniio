@@ -29,9 +29,3 @@ Depends:
 Description: PNI Nexus library - documentation
  Documentation for the PNI Nexus library.
 
-Package: @PKGNAME@-python
-Section: python
-Architecture: any
-Depends: @PKGNAME@ (=${binary:Version}),${shlibs:Depends}, ${misc:Depends},python (>=2.6),${python:Depends}
-Description: PNI Nexus libraray - python bindings
- Python bindings for the PNI Nexus library.
