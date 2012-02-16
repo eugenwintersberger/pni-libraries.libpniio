@@ -32,7 +32,13 @@
 
 namespace pni{
     namespace nx{
-        
+       
+        //! \ingroup nexus_lowlevel
+        //! \brief attribute object
+
+        //! NXAttribute represents an attribute which is attached to one 
+        //! of the Nexus objects. Objects of this type can be used to 
+        //! read and write attribute data from and to an object.
         template<typename Imp> class NXAttribute{
             private:
                 Imp _imp;
@@ -204,7 +210,7 @@ namespace pni{
 
                 //============simple maintenance methods========================
                 //! obtain attribute shape
-                const Shape &shape() const
+                Shape shape() const
                 {
                     return _imp.shape();
                 }

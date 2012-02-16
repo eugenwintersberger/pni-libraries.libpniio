@@ -22,6 +22,7 @@ using namespace boost::python;
 void wrap_nxobject();
 void wrap_nxgroup();
 void wrap_nxfile();
+void wrap_nxattribute();
 void wrap_nxfield();
 void wrap_nxnumericfield();
 void wrap_nxstringfield();
@@ -54,7 +55,5 @@ BOOST_PYTHON_MODULE(nxh5)
     wrap_nxgroup();
     wrap_nxfile();
     wrap_nxfield();
-    wrap_nxnumericfield();
-    wrap_nxstringfield();
-    wrap_nxbinaryfield();
+    wrap_nxattribute();
 }
