@@ -36,7 +36,7 @@ using namespace pni::utils;
 #include "H5Dataspace.hpp"
 #include "H5Group.hpp"
 #include "H5ObjectType.hpp"
-
+#include "H5Filter.hpp"
 
 
 namespace pni{
@@ -104,6 +104,14 @@ namespace pni{
                     //! \param cs chunk shape
                     explicit H5Dataset(const String &n,const H5Group &g,
                             const H5Datatype &t, const H5Dataspace &s,const Shape &cs);
+
+                    //! construct - chunked dataset with filter
+                    
+                    //! Constructor for a chunked dataset with a filter.
+                    explicit H5Dataset(const String &n,const H5Group &g,
+                            const H5Datatype &t, const H5Dataspace &s,const
+                            Shape &cs,const H5Filter &filter);
+
                     //! constructor for a scalar object
                     explicit H5Dataset(const String &n, const H5Group &g,
                             const H5Datatype &t);
@@ -132,7 +140,24 @@ namespace pni{
                         return H5Dataset(n,g,type,space,cs);
                     }
 
+                    //create multidimensional dataset
+                    template<typename T> static H5Dataset create(
+                            const String &n,const H5Group &g,const Shape &s,
+                            const Shape &cs,const H5Filter &filter)
+                    {
+                        //create the datatype
+                        H5Datatype type = H5DatatypeFactory::create_type<T>();
 
+                        //create the data space
+                        Shape ms(s.rank());
+                        for(size_t i=0;i<s.rank();i++){
+                            ms.dim(i,H5Dataspace::UNLIMITED);
+                        }
+                        H5Dataspace space(s,ms);
+
+                        //create the data type
+                        return H5Dataset(n,g,type,space,cs,filter);
+                    }
 
 
                     //=================assignment operators====================

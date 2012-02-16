@@ -1,4 +1,5 @@
 #include "H5DatasetTest.hpp"
+#include "../src/h5/H5DeflateFilter.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(H5DatasetTest);
 
@@ -55,6 +56,10 @@ void H5DatasetTest::test_creation(){
     CPPUNIT_ASSERT(ds5.is_valid());
     CPPUNIT_ASSERT(!ds4.is_valid());
     CPPUNIT_ASSERT(ds5.type_id() == ds2.type_id());
+
+    //create a chunked datatype with a filter
+    H5DeflateFilter filter(9,true);
+    H5Dataset dsc("compressed_data",_group,type,space,cs,filter);
     
 }
 

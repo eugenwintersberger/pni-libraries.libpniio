@@ -35,20 +35,42 @@ extern "C"{
 namespace pni{
     namespace nx {
         namespace h5{
-            
+
+            //! \ingroup nxh5_classes
+            //! \brief base class for filter implementations
+
+            //! This class provides the basic interface for HDF5 filters that 
+            //! can be passed to a dataset constructor. All concrete filters
+            //! must implement this interface. 
+            //! The idea is that a filter can be configured before being passed
+            //! to the constructor. In the constructor the setup() method is 
+            //! called which applies the filter to the dataset.
             class H5Filter{
-                private:
                 public:
-                    H5Filter();
+                    //! default constructor
+                    explicit H5Filter();
+                    //! copy constructor
                     H5Filter(const H5Filter &o);
+                    //! move constructor
                     H5Filter(H5Filter &&o);
+                    //! destructor
                     virtual ~H5Filter();
 
+                    //! copy assignment operator
                     H5Filter &operator=(const H5Filter &o);
+                    //! move assignment operator
                     H5Filter &operator=(H5Filter &&o);
+                
+                    //! setup method 
 
-
-                    virtual void setup(const hid_t &id) const;
+                    //! This virtual setup method must be implemented by the 
+                    //! concrete filter classes. The only argument of this
+                    //! method is the ID of the dataset creation property 
+                    //! list. In cases of errors H5FilterError should be 
+                    //! thrown.
+                    //! \throw H5FilterError in case of errors
+                    //! \param id id of the
+                    virtual void setup(hid_t id) const = 0;
 
             };
 

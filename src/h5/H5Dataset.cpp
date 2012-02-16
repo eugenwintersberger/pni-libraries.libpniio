@@ -121,7 +121,7 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
-            //! constructor 
+            //implementation of a constructor for a chunked dataset
             H5Dataset::H5Dataset(const String &n, const H5Group &g, 
                     const H5Datatype &t, const H5Dataspace &s,const Shape &cs){
                 EXCEPTION_SETUP("H5Dataset::H5Dataset(const String &n, "
@@ -140,6 +140,50 @@ namespace pni{
                     for(size_t i=0;i<cs.rank();i++) cdims[i]=cs[i];
                     H5Pset_chunk(cpl,cs.rank(),cdims.ptr());
                 }
+
+                //create the datase
+                hid_t did = H5Dcreate2(g.id(),n.c_str(),t.id(),s.id(),
+                        lpl,cpl,H5P_DEFAULT);
+                if(did<0){
+                    String estr = "Cannot create dataset ["+n+
+                        "] below ["+g.path()+"]!";
+                    EXCEPTION_INIT(H5DataSetError,estr);
+                    EXCEPTION_THROW();
+                }
+
+                H5Object::id(did);
+                _space = __obtain_dataspace();
+                //construction done - close property lists
+                H5Pclose(lpl);
+                H5Pclose(cpl);
+            }
+            
+            //-----------------------------------------------------------------
+            //implementation of a constructor for a chunked dataset with filter
+            H5Dataset::H5Dataset(const String &n, const H5Group &g, 
+                    const H5Datatype &t, const H5Dataspace &s,const Shape &cs,
+                    const H5Filter &filter){
+                EXCEPTION_SETUP("H5Dataset::H5Dataset(const String &n, "
+                        "const H5Group &g, const TypeID &tid,const Shape &s,"
+                        "const Shape &cs,const H5Filter &filter)");
+
+                //create the link creation property list
+                hid_t lpl = H5Pcreate(H5P_LINK_CREATE);
+                H5Pset_create_intermediate_group(lpl,1);
+                
+                //create the dataset creation property list
+                hid_t cpl = H5Pcreate(H5P_DATASET_CREATE);
+                if(cs.rank() != 0){
+                    H5Pset_layout(cpl,H5D_CHUNKED);
+                    Buffer<hsize_t> cdims(cs.rank());
+                    for(size_t i=0;i<cs.rank();i++) cdims[i]=cs[i];
+                    H5Pset_chunk(cpl,cs.rank(),cdims.ptr());
+                }
+
+                //setup the filter
+                filter.setup(cpl);
+
+                
 
                 //create the datase
                 hid_t did = H5Dcreate2(g.id(),n.c_str(),t.id(),s.id(),

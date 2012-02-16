@@ -68,9 +68,6 @@ namespace pni {
                 return *this;
             }
 
-            //------------------------------------------------------------------
-            void H5Filter::setup(const hid_t &id) const{
-            }
 
 
 //end of namespace

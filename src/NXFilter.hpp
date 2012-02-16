@@ -35,56 +35,110 @@
 using namespace pni::utils;
 
 namespace pni{
-namespace nx{
+    namespace nx{
 
-//! \ingroup util_classes
-//! \brief Filter object
-template<typename Filter>
-class NXFilter:public Filter{
-public:
-	//! constructor
-	NXFilter();
-	//! copy constructor
-	NXFilter(const NXFilter<Filter> &f);
-	//! destructor
-	virtual ~NXFilter();
+        //! \ingroup util_classes
+        //! \brief Filter object
+        template<typename Imp> class NXFilter{
+            private:
+                Imp _imp;
+            protected:
 
-	//! copy assignment operator
-	NXFilter<Filter> &operator=(const NXFilter<Filter> &f);
+                //! get non-const ref
 
-	const Shape &getChunkShape() const;
-	void setChunkShape(const Shape &s);
-};
+                //! This returns a non constant refernce to the implementation.
+                //! This is necessary for derived classes that want to 
+                //! export some functionality of the implementation object
+                //! to derived clases.
+                //! This makes perfectly sense since the class hierachrchy 
+                //! is not directly for encapsulation but only for avoiding 
+                //! writing work.
+                Imp &imp(){
+                    return _imp;
+                }
+            public:
+                //================constructors  and destructor==================
+                //! default constructor
+                explicit NXFilter():_imp()
+                {
+                }
 
-//-----------------------------------------------------------------------------
-template<typename Filter> NXFilter<Filter>::NXFilter():Filter(){
-}
+                //--------------------------------------------------------------
+                //! copy constructor
+                NXFilter(const NXFilter<Imp> &f):_imp(f._imp)
+                {
+                }
+                
+                //--------------------------------------------------------------
+                //! conversion copy constructor
+                template<typename FImp>
+                    NXFilter(const NXFilter<FImp> &f):_imp(f.imp())
+                {
+                }
 
-//-----------------------------------------------------------------------------
-template<typename Filter> NXFilter<Filter>::NXFilter(const NXFilter<Filter> &o)
-    :Filter(o){
-}
-
-//-----------------------------------------------------------------------------
-template<typename Filter> NXFilter<Filter>::~NXFilter(){
-
-}
-
-//-----------------------------------------------------------------------------
-template<typename Filter>
-NXFilter<Filter> &NXFilter<Filter>::operator=(const NXFilter<Filter> &f){
-	if ( this != &f){
-
-	}
-
-	return *this;
-}
+                //--------------------------------------------------------------
+                //! copy implementation constructor 
+                NXFilter(const Imp &i):_imp(i)
+                {
+                }
 
 
+                //--------------------------------------------------------------
+                //! copy conversion implementation constructor
+                template<typename FImp>
+                    NXFilter(const FImp &i):_imp(i.imp())
+                {
+                }
+
+                //--------------------------------------------------------------
+                //! move constructor
+                NXFilter(NXFilter<Imp> &&f):_imp(std::move(f._imp))
+                {
+                }
+                
+                //--------------------------------------------------------------
+                //! move constructor from implementation
+                NXFilter(Imp &&i):_imp(std::move(i))
+                {
+                }
+
+                //--------------------------------------------------------------
+                //! destructor
+                virtual ~NXFilter()
+                {
+                }
+
+                //================assignment operators==========================
+                //! copy assignment operator
+                NXFilter<Imp> &operator=(const NXFilter<Imp> &f)
+                {
+                    if(this != &f) _imp = f._imp;
+                    return *this;
+                }
+
+                //--------------------------------------------------------------
+                //! move assignment operator
+                NXFilter<Imp> &operator=(NXFilter<Imp> &&f)
+                {
+                    if(this != &f) _imp = std::move(f._imp);
+                    return *this;
+                }
 
 
-//end of namespace
-}
+                //! return const ref to implementation
+
+                //! This method returns a const reference to the implementation 
+                //! of the filter object. 
+                //! \return const ref. to implementation
+                const Imp imp() const
+                {
+                    return _imp;
+                }
+
+        };
+
+    //end of namespace
+    }
 }
 
 

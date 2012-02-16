@@ -67,7 +67,12 @@ namespace pni{
                 //! do not exist they will be created.
                 //! \param path path to the new group
                 NXGroup<MAPTYPE(Imp,GroupImpl)> mkgroup(const String &path)
-                    const;
+                    const
+                {
+                    return file->create_group(path);
+                }
+
+                        
 
                 //! create a group of a particular type
                 
@@ -75,20 +80,32 @@ namespace pni{
                 //! \param path path to the group to create
                 //! \param type nexus class to use
                 NXGroup<MAPTYPE(Imp,GroupImpl)> mkgroup(const String &path,const
-                        String &type) const;
+                        String &type) const
+                {
+                    return file->create_group(path,type);
+                }
 
                 //=================field creation operators=====================
                 //! create a scalar field
                 template<typename T> NXField<MAPTYPE(Imp,FieldImpl)> 
-                    mkfield(const String &path) const;
+                    mkfield(const String &path) const
+                {
+                    return file->create_field<T>(path);
+                }
 
                 //! create a simpel multidimensional field
                 template<typename T> NXField<MAPTYPE(Imp,FieldImpl)>
                     mkfield(const String &path,const Shape &s);
+                {
+                    return file->create_field<T>(path,s);
+                }
 
                 //! create multidimensional field
                 template<typename T> NXField<MAPTYPE(Imp,FieldImpl)>
-                    mkfield(const String &path,const Shape &s,const Shape &cs);
+                    mkfield(const String &path,const Shape &s,const Shape &cs)
+                {
+                    return file->create_field<T>(path,s,cs);
+                }
 
                 //===================linking ==================================
                 //! create a link between two objects
@@ -101,7 +118,10 @@ namespace pni{
                 //! the link is created.
                 //! \param srcpath source object
                 //! \param dstpath link destination
-                void mklink(const String &srcpath,const String &dstpath) const;
+                void mklink(const String &srcpath,const String &dstpath) const
+                {
+                    file->link(srcpath,*file,dstpath);
+                }
 
                 //! create a link between two objects
                 
@@ -113,7 +133,10 @@ namespace pni{
                 //! \param dstpath destination path
                 template<typename OImp>
                 void mklink(const NXObject<OImp> &src,const String &dstpath)
-                const;
+                const
+                {
+                    file->link(src.path(),*file,dstpath);
+                }
 
                 //! create a link
 
@@ -124,7 +147,10 @@ namespace pni{
                 //! \param name name of the link below group
                 template<typename O1Imp,typename O2Imp>
                     void mklinke(const NXObject<O1mp> &src,const NXGroup<O2Imp>
-                            &group,const String &name);
+                            &group,const String &name)
+                {
+                    group.link(src,name);
+                }
 
                 //==================removing objects===========================
                 //! remove object
@@ -134,19 +160,36 @@ namespace pni{
                 //! removed from the file. If there are any remaining soft-links
                 //! they remain dangling.
                 //! \param path object to remove
-                void rm(const String &path) const;
+                void rm(const String &path) const
+                {
+                    //not implemented yet
+                }
 
                 //! remove object
                 
                 //! Removes object o from the file. 
                 template<typename ObjImp> void rm(NXObject<ObjImp> &o) const;
-                
+               
+                //! copy two objects
+
+                //! Copy object determined by src do dest.
+                //! \param src source path
+                //! \param dest destination path
                 void cp(const String &src,const  String &dest) const;
+
+                //! copy object 
+
+                //! Copy object o to group g and store it there under name n.
+                //! \param o source object
+                //! \param g destination group
+                //! \param name new name of the object below group
                 template<typename OImp,typename GImp>
                     void cp(const NXObject<OImp> &o,const NXGroup<GImp> &g,const
                             String &name) const;
-                
+               
+                //! move two objects
 
+                //! Move object 
                 void mv(const String &src,const  String &dest) const;
                 template<typename ObjImp> void
                     mv(NXObject<ObjImp> &o,const String &dest) const;

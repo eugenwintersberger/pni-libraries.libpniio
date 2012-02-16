@@ -84,14 +84,9 @@ void NXFieldTest::testCreation(){
 	CPPUNIT_ASSERT(!field.is_valid());
 
     //create fields with filters
-    /*
-    NXLZFFilter lzf;
-    NXDeflateFilter deflate;
+    NXDeflateFilter deflate(9,true);
     
-    deflate.compression_rate(9);
-    field = file.create_numericfield("test_defalte",
-            TypeID::UINT16,shape,"cps","scalar counter",deflate);
-    */
+    field = file.create_field<Float32>("test_defalte", shape,deflate);
 
 }
 

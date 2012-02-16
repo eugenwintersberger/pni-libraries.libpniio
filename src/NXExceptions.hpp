@@ -126,12 +126,12 @@ namespace pni{
         class NXSelectionError:public Exception {
             public:
                 //! default constructor
-                explicit NXSelectionError():Exception("NXFileError")
+                explicit NXSelectionError():Exception("NXFilterError")
                 {}
 
                 //! constructor
                 explicit NXSelectionError(const String &i,const String &d)
-                    :Exception("NXFileError",i,d)
+                    :Exception("NXFilterError",i,d)
                 {}
 
                 //! destructor
@@ -141,6 +141,33 @@ namespace pni{
                 //! output operator
                 friend std::ostream &operator<<(std::ostream &o,
                                                 const NXSelectionError &e){
+                    return e.print(o);
+                }
+        };
+
+        //----------------------------------------------------------------------
+        //! \ingroup error_classes
+        //! \brief Filter Error
+
+        //! Filter exception class.
+        class NXFilterError:public Exception {
+            public:
+                //! default constructor
+                explicit NXFilterError():Exception("NXFilterError")
+                {}
+
+                //! constructor
+                explicit NXFilterError(const String &i,const String &d)
+                    :Exception("NXFilterError",i,d)
+                {}
+
+                //! destructor
+                ~NXFilterError() throw() 
+                {}
+
+                //! output operator
+                friend std::ostream &operator<<(std::ostream &o,
+                                                const NXFilterError &e){
                     return e.print(o);
                 }
         };

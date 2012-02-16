@@ -209,6 +209,29 @@ namespace pni{
                     return field;
                 }
 
+                //--------------------------------------------------------------
+                //! create a multidimensional field with filter
+
+                //! Creates a multidimensional field with a filter.
+                template<typename T,typename FilterImp> NXField<MAPTYPE(Imp,FieldImpl)>
+                    create_field(const String &n,const Shape &s,
+                           const NXFilter<FilterImp> &filter) const
+                {
+                    typedef MAPTYPE(Imp,FieldImpl) FieldImp;
+                    typedef NXField<FieldImp> FieldType;
+
+                    //in the first place the chunk shape will be a copy 
+                    //of the original shape
+                    Shape cs(s);
+                    //set per default the first index to 1 - so that 
+                    //all other dimension vary fastest
+                    cs.dim(0,1);
+
+                    FieldType field(FieldImp::template
+                            create<T>(n,this->imp(),s,cs,filter.imp()));
+                    return field;
+                }
+
                 //! create a multidimensional field (explicit chunk)
                 template<typename T> NXField<MAPTYPE(Imp,FieldImpl)>
                     create_field(const String &n,const Shape &s,const Shape &cs)
