@@ -14,7 +14,7 @@ python_version = python_version.replace(".","")
 python_build_env.Append(LIBS=["boost_python","boost_python-py"+python_version])
 python_build_env.Append(CPPPATH=[sysconfig.get_python_inc()])
 
-python_sources = ["NXObject.cpp","NXAttribute.cpp"]
+python_sources = ["NXObject.cpp","NXAttribute.cpp","NXGroup.cpp"]
 
 #,"NXFilter.cpp","NXGroup.cpp",
 #                  "NXFile.cpp","NXField.cpp","NXNumericField.cpp",

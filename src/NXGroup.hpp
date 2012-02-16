@@ -242,8 +242,20 @@ namespace pni{
 
                     return FieldType(FieldImp::template create<T>(n,this->imp(),s,cs));
                 }
+                
+                //! create a multidimensional field (explicit chunk) with filter
+                template<typename T,typename FilterImp> NXField<MAPTYPE(Imp,FieldImpl)>
+                    create_field(const String &n,const Shape &s,const Shape &cs,
+                            const NXFilter<FilterImp> &filter)
+                    const
+                {
+                    typedef MAPTYPE(Imp,FieldImpl) FieldImp;
+                    typedef NXField<FieldImp> FieldType;
 
-                //! create a multidi
+                    return FieldType(FieldImp::template
+                            create<T>(n,this->imp(),s,cs,filter.imp()));
+                }
+
 
                 //============methods to open objects===========================
                 //! open an arbitrary object
