@@ -320,7 +320,7 @@ namespace pni{
               
                 //=============misc methods===================================
                 //! close the object
-                void close()
+                virtual void close()
                 {
                     _imp.close();
                 }

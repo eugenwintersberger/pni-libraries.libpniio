@@ -155,10 +155,14 @@ namespace pni{
                             "create_group(const String &n,const String &type)"
                             "const");
 
+                    //we need to do here two things
+                    //we have to check if the particular group type
+                    //exists and add a check object to the class
+
                     typedef MAPTYPE(Imp,GroupImpl) GroupImpl;
 
                     NXGroup<GroupImpl> g(GroupImpl(n,this->imp()));
-                    g.template attr<String>("nx_class").write(type);
+                    g.template attr<String>("NX_class").write(type);
 
                     return g;
                 }

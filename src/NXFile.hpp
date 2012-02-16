@@ -53,6 +53,8 @@ namespace pni{
                 NXFile(const NXFile &o);
                 // nor can it be assigned
                 NXFile &operator=(const NXFile &);
+                
+
             public:
                 typedef std::shared_ptr<NXFile > sptr; //! shared pointer to a file object
                 //============constructors and destructor=======================
@@ -74,6 +76,15 @@ namespace pni{
                 //--------------------------------------------------------------
                 //! destructor
                 ~NXFile(){
+                    if(this->is_valid())
+                    {
+                        try{
+                            this->template attr<String>("file_update_time").write(NXDateTime::getDateTimeStr());
+                        }catch(...){
+                            //do nothing if write fails - most probably 
+                            //the file is in read only mode
+                        }
+                    }
                 }
 
                 //====================assignment operators======================
@@ -97,9 +108,11 @@ namespace pni{
                         EXCEPTION_THROW();
                     }
 
+
                     return file;
                 }
 
+                //--------------------------------------------------------------
                 static NXFile<Imp> create_file(const String &n,bool ow=false,
                         ssize_t ssize = 0)
                 {
@@ -114,6 +127,22 @@ namespace pni{
                         EXCEPTION_INIT(NXFileError,"Error creating file!");
                         EXCEPTION_THROW();
                     }
+                    
+                    //set file specific attributes
+                    file.template
+                        attr<String>("NX_class").write(String("NXroot"));
+                    file.template 
+                        attr<String>("file_time").write(NXDateTime::getDateTimeStr());
+                    file.template 
+                        attr<String>("file_update_time").write(NXDateTime::getDateTimeStr());
+                    file.template attr<String>("file_name").write(n);
+
+                    //this should be taken from a configuration
+                    file.template
+                        attr<String>("NeXus_version").write(String("4.3.0"));
+
+                    //flush the files content
+                    file.flush();
 
                     return file;
                 }
@@ -126,6 +155,20 @@ namespace pni{
                 void flush() const{
                     this->imp().flush();
                 }
+
+                virtual void close(){
+                    try{
+                        this->template attr<String>("file_update_time").write(NXDateTime::getDateTimeStr());
+                    }catch(...){
+                        //do nothing if write fails - most probably 
+                        //the file is in read only mode
+                    }
+
+                    NXObject<Imp>::close();
+                }
+
+
+
 
 
 };
