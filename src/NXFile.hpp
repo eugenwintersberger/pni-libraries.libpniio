@@ -48,12 +48,6 @@ namespace pni{
         //! the basic data holding entity. You can use NXField to read from or write
         //! data to a file.
         template<typename Imp> class NXFile:public NXGroup<Imp> {
-            private:
-                // a file object can neither be copied
-                NXFile(const NXFile &o);
-                // nor can it be assigned
-                NXFile &operator=(const NXFile &);
-                
 
             public:
                 typedef std::shared_ptr<NXFile > sptr; //! shared pointer to a file object
@@ -62,6 +56,13 @@ namespace pni{
                 explicit NXFile():NXGroup<Imp>()
                 {
                 }
+
+                //! copy constrcutor
+                NXFile(const NXFile<Imp> &file):NXGroup<Imp>(file)
+                {
+                }
+
+              
 
                 explicit NXFile(Imp &&imp):NXGroup<Imp>(std::move(imp)){
                     
@@ -91,6 +92,11 @@ namespace pni{
                 NXFile<Imp> &operator=(NXFile<Imp> &&o){
                     if(this == &o) return *this;
                     NXGroup<Imp>::operator=(std::move(o));
+                    return *this;
+                }
+
+                NXFile<Imp> &operator=(const NXFile<Imp> &o){
+                    if(this != &o) NXGroup<Imp>::operator=(o);
                     return *this;
                 }
 

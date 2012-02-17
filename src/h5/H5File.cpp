@@ -33,6 +33,12 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
+            //implementation of copy constructor
+            H5File::H5File(const H5File &o):H5Group(o)
+            {
+            }
+
+            //-----------------------------------------------------------------
             //implementation of the destructor
             H5File::~H5File() {
                 close();
@@ -40,7 +46,15 @@ namespace pni{
 
             //=================Implementation of assignment operators==========
             H5File &H5File::operator=(H5File &&o){
-                (H5Group &)(*this) = std::move((H5Group &)o);
+                if(this != &o) H5Group::operator=(std::move(o));
+                return *this;
+            }
+
+            //-----------------------------------------------------------------
+            //implementation of copy assignment
+            H5File &H5File::operator=(const H5File &o)
+            {
+                if(this != &o) H5Group::operator=(o);
                 return *this;
             }
 

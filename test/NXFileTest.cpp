@@ -98,6 +98,18 @@ void NXFileTest::testCreation(){
 
 	f.close();
 
+    //check copy ans move constructor
+	CPPUNIT_ASSERT_NO_THROW(f = NXFile::create_file("NXFileTest.h5",true,0));
+    NXFile f2(f);
+    CPPUNIT_ASSERT(f.is_valid());
+    CPPUNIT_ASSERT(f2.is_valid());
+
+    //check move construction
+    NXFile f3 = std::move(f2);
+    CPPUNIT_ASSERT(f3.is_valid());
+    CPPUNIT_ASSERT(!f2.is_valid());
+    CPPUNIT_ASSERT(f.is_valid());
+
 }
 
 //------------------------------------------------------------------------------

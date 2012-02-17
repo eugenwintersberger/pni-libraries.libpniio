@@ -38,12 +38,6 @@ namespace pni{
             //! \ingroup nxh5_classes
             //! \brief HDF5 file class
             class H5File:public H5Group {
-                private:
-                    H5File(const H5File &){}
-                    H5File &operator=(const H5File &){
-                        return *this;
-                    }
-
                 protected:
                     //! constructor from id value
                     H5File(hid_t id);
@@ -53,6 +47,8 @@ namespace pni{
                     //============constructors and destructors===============
                     //! default constructor
                     explicit H5File();
+                    //! copy construction
+                    H5File(const H5File &f);
                     //! move constructor
                     H5File(H5File &&o);
                     //! destructor
@@ -61,6 +57,9 @@ namespace pni{
                     //============assignment operators=======================
                     //! move assignment
                     H5File &operator=(H5File &&o);
+
+                    //! copy assignment
+                    H5File &operator=(const H5File &o);
                
                     //===========factory methods=============================
                     //! open an existing file
