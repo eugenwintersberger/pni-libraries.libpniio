@@ -1,8 +1,0 @@
-Import("build_env")
-
-sources = ["BaseClassExceptions.cpp"]
-
-oshared = build_env.SharedObject(sources)
-ostatic = build_env.StaticObject(sources)
-
-Return("oshared ostatic")

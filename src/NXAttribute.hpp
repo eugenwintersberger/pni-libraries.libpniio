@@ -47,30 +47,35 @@ namespace pni{
                 //! default constructor
                 explicit NXAttribute():_imp(){}
 
+                //-------------------------------------------------------------
                 //! copy constructor
                 NXAttribute(const NXAttribute<Imp> &a):
                     _imp(a._imp)
                 {
                 }
 
+                //-------------------------------------------------------------
                 //! move constructor
                 NXAttribute(NXAttribute<Imp> &&a):
                     _imp(std::move(a._imp))
                 {
                 }
 
+                //-------------------------------------------------------------
                 //! copy constructor from implementation
                 explicit NXAttribute(const Imp &i):
                     _imp(i)
                 {
                 }
 
+                //-------------------------------------------------------------
                 //! move constructor from implementation
                 explicit NXAttribute(Imp &&i):
                     _imp(std::move(i))
                 {
                 }
 
+                //-------------------------------------------------------------
                 //!destructor
                 ~NXAttribute(){
                     _imp.close();
