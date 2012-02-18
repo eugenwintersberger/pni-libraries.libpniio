@@ -32,7 +32,7 @@
 #include <cstdlib>
 #include <cstdio>
 
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 #include <pni/utils/Array.hpp>
 
 #include "NX.hpp"
@@ -42,38 +42,36 @@ using namespace pni::utils;
 
 
 int main(int argc,char **argv){
-	NXFile f;
-	NXField d;
-	UInt64 i,runs;
-	String fname;
-	ArrayShape s;
-	Int32Array a;
+	size_t i,runs;
+    //set shape for the array to write
+	Shape s = {2048,2048};
 
 	//create the array which should be stored
-	s.setRank(2);
-	s.setDimension(0,2048);
-	s.setDimension(1,2048);
-	a.setShape(s);
-	a.allocate();
-	a = 1;
-	a.setName("data");
-	a.setUnit("a.u.");
-	a.setDescription("testing data");
+    Int32Array a(s,"data","a.u.","testing data");
+    a = 1;
 
-	f.setFileName("bmark.h5");
-	f.setOverwrite(true);	;
-	f.create();
+    //create data file where to store data
+    NXFile file = NXFile::create_file("bmark.h5",true,0);
 
-	d = f.createNumericField(a);
-
-	runs = 500;
-	for(i=0;i<runs;i++){
-		d<<a;
-		f.flush();
+    //create the field where to store the data
+    //and a selection to access individual frames
+    NXField field = file.create_field<Int32>("data",{0,2048,2048});
+    NXSelection sel = field.selection();
+    
+    //setup selection object
+    sel.offset({0,0,0});
+    sel.count({1,2048,2048});
+    
+	runs =100 ;
+	for(i=0,field.grow(0);i<runs;i++,field.grow(0)){
+        std::cout<<"Writing frame number "<<i<<std::endl;
+        sel.write(a);
+        sel.offset(0,i);
+		file.flush();
 	}
 
 	//close the datafile
-	f.close();
+	file.close();
 
 
 	return 0;

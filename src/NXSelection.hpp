@@ -161,7 +161,7 @@ namespace pni{
                     }
 
                     size_t cnt = 0;
-                    for(size_t &i: l){
+                    for(const size_t &i: l){
                         this->_imp.offset(cnt,i);
                         cnt++;
                     }
@@ -212,7 +212,7 @@ namespace pni{
                     }
                     
                     size_t cnt = 0;
-                    for(size_t &i: l){
+                    for(const size_t &i: l){
                         this->_imp.stride(cnt,i);
                         cnt++;
                     }
@@ -263,7 +263,7 @@ namespace pni{
                     }
                     
                     size_t cnt = 0;
-                    for(size_t &i: l){
+                    for(const size_t &i: l){
                         this->_imp.count(cnt,i);
                         cnt++;
                     }
