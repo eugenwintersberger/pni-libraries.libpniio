@@ -62,9 +62,9 @@ int main(int argc,char **argv){
     sel.offset({0,0,0});
     sel.count({1,2048,2048});
     
-	runs =100 ;
+	runs =1000 ;
 	for(i=0,field.grow(0);i<runs;i++,field.grow(0)){
-        std::cout<<"Writing frame number "<<i<<std::endl;
+        if((i%100)==0) std::cout<<"Writing frame number "<<i<<std::endl;
         sel.write(a);
         sel.offset(0,i);
 		file.flush();
