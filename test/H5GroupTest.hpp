@@ -27,6 +27,7 @@ class H5GroupTest:public CppUnit::TestFixture{
         CPPUNIT_TEST(test_attributes);
         CPPUNIT_TEST(test_attribute_manipulation);
         CPPUNIT_TEST(test_linking);
+        CPPUNIT_TEST(test_comparison);
         CPPUNIT_TEST_SUITE_END();
     private:
         H5File file;
@@ -39,6 +40,7 @@ class H5GroupTest:public CppUnit::TestFixture{
         void test_attributes();
         void test_attribute_manipulation();
         void test_linking();
+        void test_comparison();
     
 };
 

@@ -218,6 +218,46 @@ namespace pni{
 
             }
 
+            //=============comparison operators================================
+            //implementation of equality check
+            bool operator==(const H5Object &a,const H5Object &b)
+            {
+                EXCEPTION_SETUP("bool operator==(const H5Object &a,"
+                        "const H5Object &b)");
+                H5O_info_t ia,ib;
+               
+                //obtain HDF5 info structure of first object
+                herr_t err = H5Oget_info(a.id(),&ia);
+                if(err < 0){
+                    EXCEPTION_INIT(H5ObjectError,"Cannot obtain object info of"
+                            "first object!");
+                    EXCEPTION_THROW();
+                }
+
+                //obtain HDF5 info structure of second object
+                err = H5Oget_info(b.id(),&ib);
+                if(err < 0){
+                    EXCEPTION_INIT(H5ObjectError,"Cannot obtain object info of"
+                            "second object!");
+                    EXCEPTION_THROW();
+                }
+
+                //if the addresses in the file are equal return 
+                //true
+                if(ia.addr == ib.addr) return true;
+
+                return false;
+
+            }
+
+            //-----------------------------------------------------------------
+            //implementation of inequality check
+            bool operator!=(const H5Object &a,const H5Object &b)
+            {
+                if(a == b) return false;
+                return true;
+            }
+
 
 
         }

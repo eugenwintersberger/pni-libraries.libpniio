@@ -156,6 +156,18 @@ namespace pni{
 
             };
 
+            //! equality operator
+
+            //! Operator checks if two HDF5 object are equal. This check is
+            //! done by comparing the address of the objects in the file.
+            //! If they share the same address the objects should be equal.
+            bool operator==(const H5Object &a,const H5Object &b);
+
+            //! inequality operator
+
+            //! Simply the inverse of the equality operator.
+            bool operator!=(const H5Object &a,const H5Object &b);
+
 
 //end of namespace
         }

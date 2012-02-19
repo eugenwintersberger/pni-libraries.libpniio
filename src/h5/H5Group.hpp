@@ -37,7 +37,7 @@ using namespace pni::utils;
 namespace pni{
     namespace nx{
         namespace h5{
-            
+            //class forward declarations            
             class H5Dataset;
             
             //! \ingroup nxh5_classes
@@ -47,6 +47,7 @@ namespace pni{
                     //! construct from object ID
                     explicit H5Group(const hid_t &oid);
                 public:
+
                     //==========constructors and destructors===================
                     //! default constructor
                     explicit H5Group();
@@ -143,6 +144,7 @@ namespace pni{
                     //! \param path path to the object from which to link
                     //! \paran name name of the link with respect to this group
                     void link(const String &path,const String &name) const;
+
                     
                     friend class H5Dataset;                   
                     

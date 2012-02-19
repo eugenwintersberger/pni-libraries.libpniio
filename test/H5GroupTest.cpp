@@ -5,14 +5,17 @@
 CPPUNIT_TEST_SUITE_REGISTRATION(H5GroupTest);
 
 
+//-----------------------------------------------------------------------------
 void H5GroupTest::setUp(){
     file = H5File::create_file("H5GroupTest.h5",true,0);
 }
 
+//-----------------------------------------------------------------------------
 void H5GroupTest::tearDown(){
     file.close();
 }
 
+//-----------------------------------------------------------------------------
 void H5GroupTest::test_creation(){
     std::cout<<"void H5GroupTest::test_creation()-----------------------------";
     std::cout<<std::endl;
@@ -48,6 +51,7 @@ void H5GroupTest::test_creation(){
     CPPUNIT_ASSERT(g5.base() == "/group5/test");
 }
 
+//-----------------------------------------------------------------------------
 void H5GroupTest::test_assignment(){
     std::cout<<"void H5GroupTest::test_assignment()---------------------------";
     std::cout<<std::endl;
@@ -70,6 +74,7 @@ void H5GroupTest::test_assignment(){
     g2.close();
 }
 
+//-----------------------------------------------------------------------------
 void H5GroupTest::test_linking()
 {
     std::cout<<"void H5GroupTest::test_linking()------------------------------";
@@ -96,6 +101,7 @@ void H5GroupTest::test_linking()
     
 }
 
+//------------------------------------------------------------------------------
 void H5GroupTest::test_openobjects(){
     std::cout<<"void H5GroupTest::test_openobjects()--------------------------";
     std::cout<<std::endl;
@@ -125,6 +131,7 @@ void H5GroupTest::test_openobjects(){
     CPPUNIT_ASSERT(det.is_valid());
 }
 
+//------------------------------------------------------------------------------
 void H5GroupTest::test_attributes(){
     std::cout<<"void H5GroupTest::test_attributes()---------------------------";
     std::cout<<std::endl;
@@ -179,6 +186,7 @@ void H5GroupTest::test_attributes(){
 
 }
 
+//------------------------------------------------------------------------------
 void H5GroupTest::test_attribute_manipulation(){
     std::cout<<"void H5GrouTest::test_attribute_manipulation()---------------";
     std::cout<<std::endl;
@@ -202,5 +210,20 @@ void H5GroupTest::test_attribute_manipulation(){
     CPPUNIT_ASSERT(!file.has_attr("strattr"));
     CPPUNIT_ASSERT_THROW(file.del_attr("bla"),H5AttributeError);
 
+}
+
+//-----------------------------------------------------------------------------
+void H5GroupTest::test_comparison()
+{
+    std::cout<<"void H5GroupTest::test_comparison()---------------------------";
+    std::cout<<std::endl;
+
+    H5Group g1("group1/data",file);
+    H5Group g2(g1);
+
+    CPPUNIT_ASSERT(g1 == g2);
+
+    g2 = file["group1"];
+    CPPUNIT_ASSERT(g2 != g1);
 }
 
