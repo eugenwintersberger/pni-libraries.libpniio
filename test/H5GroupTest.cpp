@@ -227,3 +227,37 @@ void H5GroupTest::test_comparison()
     CPPUNIT_ASSERT(g2 != g1);
 }
 
+//-----------------------------------------------------------------------------
+void H5GroupTest::test_iterator()
+{
+    std::cout<<"void NXGroupTest::test_iterator()----------------------------";
+    std::cout<<std::endl;
+
+    H5Group("/data/dir1",file);
+    H5Group("/data/dir2",file);
+    H5Group("/data/dir3",file);
+    H5Group("/data/dir4",file);
+
+    H5Group g = file["/data"];
+    H5Group::iterator iter;
+
+    CPPUNIT_ASSERT(g.begin() != g.end());
+    CPPUNIT_ASSERT(g.begin() == g.begin());
+    CPPUNIT_ASSERT(g.end() == g.end());
+
+    std::cout<<"forward iteration ..."<<std::endl;
+    iter = g.begin();
+    while(iter){
+        std::cout<<iter->path()<<std::endl;
+        iter++;
+    }
+    std::cout<<"classical for loop ..."<<std::endl;
+    for(iter = g.begin();iter != g.end();++iter)
+    {
+        std::cout<<iter->path()<<std::endl;
+    }
+
+    for(const H5Group::iterator::item_type &o: g) std::cout<<o.path()<<std::endl;
+
+
+}

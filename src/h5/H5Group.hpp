@@ -32,6 +32,7 @@
 using namespace pni::utils;
 
 #include "H5AttributeObject.hpp"
+#include "H5LinkIterator.hpp"
 
 
 namespace pni{
@@ -47,7 +48,7 @@ namespace pni{
                     //! construct from object ID
                     explicit H5Group(const hid_t &oid);
                 public:
-
+                    typedef H5LinkIterator<H5Group,H5AttributeObject> iterator;
                     //==========constructors and destructors===================
                     //! default constructor
                     explicit H5Group();
@@ -91,6 +92,22 @@ namespace pni{
                     //! \return H5Object addressed by n
                     //! \sa H5Object open(const String &n) const
                     H5Object operator[](const String &n) const;
+
+                    //! open by index
+                    
+                    //! Opens a child object below this group by its index.
+                    //! \throws IndexError if index exceeds number of childs
+                    //! \param object index
+                    //! \return child object
+                    H5Object open(size_t i) const;
+
+                    //! open by index
+
+                    //! [] operator to obtain a child node by index;
+                    //! \throws IndexError if index exceeds number of childs
+                    //! \param object index
+                    //! \return child node
+                    H5Object operator[](size_t i) const;
 
                     //==============misc methods===============================
                     //! remove an object
@@ -144,6 +161,16 @@ namespace pni{
                     //! \param path path to the object from which to link
                     //! \paran name name of the link with respect to this group
                     void link(const String &path,const String &name) const;
+
+                    //! number of child nodes
+
+                    //! Returns the number of child nodes (groups and datasets)
+                    //! linked below this group.
+                    //! \return number of child nodes
+                    size_t nchilds() const;
+
+                    iterator begin() const;
+                    iterator end() const;
 
                     
                     friend class H5Dataset;                   

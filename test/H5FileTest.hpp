@@ -20,6 +20,7 @@ using namespace pni::nx::h5;
 class H5FileTest:public CppUnit::TestFixture{
         CPPUNIT_TEST_SUITE(H5FileTest);
         CPPUNIT_TEST(test_creation); 
+        CPPUNIT_TEST(test_iterator);
         CPPUNIT_TEST(test_assignment);
         CPPUNIT_TEST(test_inquery);
         CPPUNIT_TEST_SUITE_END();
@@ -29,7 +30,7 @@ class H5FileTest:public CppUnit::TestFixture{
         void test_creation();
         void test_assignment();
         void test_inquery();
-    
+        void test_iterator();    
 };
 
 #endif

@@ -43,6 +43,9 @@ namespace pni{
     namespace nx{
         namespace h5{
                      
+
+            //forward declarations
+            template<typename H5ObjectT,typename ItemT> class H5GroupIterator;
             
             //! \ingroup nxh5_classes
             //! \brief objects which can hold attributes
@@ -143,6 +146,8 @@ namespace pni{
                     //! \return vector of attribute names
                     std::vector<String> attr_names() const;
 
+                    template<typename H5ObjectT,typename ItemT> friend class
+                        H5LinkIterator;
             };
 
             //implementation of the scalar attribute factory method

@@ -24,6 +24,11 @@
  */
 
 
+#include <sstream>
+extern "C"{
+#include<hdf5.h>
+}
+
 #include "H5Group.hpp"
 #include "H5Dataset.hpp"
 #include "H5Exceptions.hpp"
@@ -203,6 +208,36 @@ namespace pni{
                 return this->open(n);
             }
 
+            //-----------------------------------------------------------------
+            H5Object H5Group::open(size_t i) const
+            {
+                EXCEPTION_SETUP("H5Object H5Group::open(size_t i) const");
+                if(i >= nchilds()){
+                    std::stringstream sstream;
+                    sstream<<"Index ("<<i<<") exceeds number of child nodes ("
+                        <<nchilds()<<")!";
+                    EXCEPTION_INIT(IndexError,sstream.str());
+                    EXCEPTION_THROW();
+                }
+
+                char name[1024];
+                ssize_t size = H5Lget_name_by_idx(id(),".",H5_INDEX_NAME,H5_ITER_INC,
+                        i,name,1024,H5P_DEFAULT);
+
+                if(size < 0){
+                    EXCEPTION_INIT(H5GroupError,"Error obtaining object name!");
+                    EXCEPTION_THROW();
+                }
+
+                return open(String(name));
+            }
+
+            //-----------------------------------------------------------------
+            H5Object H5Group::operator[](size_t i) const
+            {
+                return open(i);
+            }
+
 
             //-----------------------------------------------------------------
             bool H5Group::exists(const String &n) const
@@ -282,6 +317,33 @@ namespace pni{
                 H5Link::create(path,*this,name);
             }
 
+
+            //------------------------------------------------------------------
+            size_t H5Group::nchilds() const
+            {
+                EXCEPTION_SETUP("size_t H5Group::nchilds() const");
+                H5G_info_t ginfo;
+                herr_t err = H5Gget_info(id(),&ginfo);
+                if(err < 0){
+                    EXCEPTION_INIT(H5GroupError,"Cannot obtain group "
+                            "information!");
+                    EXCEPTION_THROW();
+                }
+
+                return ginfo.nlinks;
+            }            
+
+            H5LinkIterator<H5Group,H5AttributeObject> H5Group::begin() const
+            {
+                H5LinkIterator<H5Group,H5AttributeObject> iter(*this);
+                return iter;
+            }
+
+            H5LinkIterator<H5Group,H5AttributeObject> H5Group::end() const
+            {
+                H5LinkIterator<H5Group,H5AttributeObject> iter(*this,nchilds());
+                return iter;
+            }
         //end of namespace
         }
     }

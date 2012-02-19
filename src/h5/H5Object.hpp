@@ -36,6 +36,7 @@ extern "C"{
 namespace pni{
     namespace nx{
         namespace h5{
+
             //! \ingroup nxh5_classes
             //! \brief basic HDF5 object
 
@@ -152,7 +153,6 @@ namespace pni{
                     //! the time value is returned as time_t structure.
                     //! \return birth time
                     time_t birth_time() const;
-
 
             };
 
