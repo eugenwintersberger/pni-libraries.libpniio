@@ -45,6 +45,7 @@ class NXGroupTest: public CppUnit::TestFixture  {
 	CPPUNIT_TEST(testAttributes);
 	CPPUNIT_TEST(testAttributeExceptions);
 	CPPUNIT_TEST(testInternalLinks);
+    CPPUNIT_TEST(test_iterator);
 	CPPUNIT_TEST(testExistence);
 	CPPUNIT_TEST(testRemove);
 	CPPUNIT_TEST(testAssignment);
@@ -77,6 +78,7 @@ public:
 	void testAssignment();
     void test_linking();
     void test_comparison();
+    void test_iterator();
 };
 
 #endif /* NXGROUPTEST_HPP_ */

@@ -203,6 +203,21 @@ void NXFileTest::testAttributeExceptions(){
 	f.close();
 }
 
+//-----------------------------------------------------------------------------
+void NXFileTest::test_iterator()
+{
+    std::cout<<"void NXFileTest::test_iterator()-----------------------------";
+    std::cout<<std::endl;
 
+    NXFile f = NXFile::create_file("NXFileTest.h5",true,0);
+    f.create_group("dir1");
+    f.create_group("dir2");
+    f.create_group("dir3");
 
+    for(auto &g: f){
+        std::cout<<g.path()<<std::endl;
+    }
 
+    f.close();
+
+}

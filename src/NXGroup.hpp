@@ -36,6 +36,7 @@
 #include "NXField.hpp"
 #include "NXFilter.hpp"
 #include "NXExceptions.hpp"
+#include "NXObjectIterator.hpp"
 
 using namespace pni::utils;
 
@@ -48,6 +49,9 @@ namespace pni{
         {
             public:
                 typedef std::shared_ptr<NXGroup<Imp> > sptr;
+                typedef
+                    NXObjectIterator<NXGroup<Imp>,NXObject<MAPTYPE(Imp,ObjectImpl)>
+                    > iterator;
                 //===========constructors and destructor========================
                 //! default constructor
                 explicit NXGroup():NXObject<Imp>()
@@ -232,6 +236,7 @@ namespace pni{
                     return field;
                 }
 
+                //-------------------------------------------------------------
                 //! create a multidimensional field (explicit chunk)
                 template<typename T> NXField<MAPTYPE(Imp,FieldImpl)>
                     create_field(const String &n,const Shape &s,const Shape &cs)
@@ -242,7 +247,8 @@ namespace pni{
 
                     return FieldType(FieldImp::template create<T>(n,this->imp(),s,cs));
                 }
-                
+               
+                //--------------------------------------------------------------
                 //! create a multidimensional field (explicit chunk) with filter
                 template<typename T,typename FilterImp> NXField<MAPTYPE(Imp,FieldImpl)>
                     create_field(const String &n,const Shape &s,const Shape &cs,
@@ -259,6 +265,11 @@ namespace pni{
 
                 //============methods to open objects===========================
                 //! open an arbitrary object
+
+                //! Returns an object by name. The name can be either an
+                //! absolute or relative path.
+                //! \param n path or name of the object to open
+                //! \return object
                 virtual NXObject<MAPTYPE(Imp,ObjectImpl)> open(const String &n)
                     const
                 {
@@ -278,9 +289,53 @@ namespace pni{
                     return object;
                 }
 
+                //-------------------------------------------------------------
+                //! open an object
+
+                //! Opens an object using the [] operator. 
+                //! \param n name or path of the object
+                //! \return object
                 NXObject<MAPTYPE(Imp,ObjectImpl)> operator[](const String &n)
+                    const
                 {
                     return this->open(n);
+                }
+
+                //-------------------------------------------------------------
+                //! number of childs
+
+                //! Returns the total number of childs linke below this group.
+                //! \return number of childs
+                size_t nchilds() const
+                {
+                    return this->imp().nchilds();
+                }
+
+                //-------------------------------------------------------------
+                //! open object by index
+
+                //! Unlike open(const String &n) here the object is 
+                //! addressed by its index. Thus only objects directly linked
+                //! below this group can be accessed.
+                //! \throws IndexError if the index exceeds number of childs
+                //! \param i index of the object
+                //! \return object
+                NXObject<MAPTYPE(Imp,ObjectImpl)> open(size_t i) const
+                {
+                    return
+                        NXObject<MAPTYPE(Imp,ObjectImpl)>(this->imp().open(i));
+                }
+
+                //-------------------------------------------------------------
+                //! open object by index
+
+                //! Opens an object by index using the [] operator. 
+                //! \throws IndexError if the index exceeds number of childs
+                //! \param i index of the object
+                //! \return object
+                NXObject<MAPTYPE(Imp,ObjectImpl)> operator[](size_t i) const
+                {
+                    return this->open(i);
                 }
 
                 //! check if a particular object exists
@@ -310,6 +365,21 @@ namespace pni{
                 void link(const String &p,const String &n) const
                 {
                     this->imp().link(p,n);
+                }
+
+                NXObjectIterator<NXGroup<Imp>,
+                    NXObject<MAPTYPE(Imp,ObjectImpl)> > begin() const
+                {
+                    return NXObjectIterator<NXGroup<Imp>,
+                           NXObject<MAPTYPE(Imp,ObjectImpl)> >(*this);
+                }
+                
+                NXObjectIterator<NXGroup<Imp>,
+                    NXObject<MAPTYPE(Imp,ObjectImpl)> > end() const
+                {
+                    return NXObjectIterator<NXGroup<Imp>,
+                           NXObject<MAPTYPE(Imp,ObjectImpl)> >(*this,
+                                   this->nchilds());
                 }
 
 

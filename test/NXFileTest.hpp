@@ -37,6 +37,7 @@ class NXFileTest: public CppUnit::TestFixture {
 	CPPUNIT_TEST(testOpen);
 	CPPUNIT_TEST(testAttributes);
 	CPPUNIT_TEST(testAttributeExceptions);
+    CPPUNIT_TEST(test_iterator);
 	CPPUNIT_TEST_SUITE_END();
 private:
 
@@ -58,6 +59,7 @@ public:
 	void testOpen();
 	void testAttributes();
 	void testAttributeExceptions();
+    void test_iterator();
 
 
 };

@@ -274,3 +274,19 @@ void NXGroupTest::test_comparison(){
 
 }
 
+//-----------------------------------------------------------------------------
+void NXGroupTest::test_iterator()
+{
+    std::cout<<"void NXGroupTest::test_iterator()-----------------------------";
+    std::cout<<std::endl;
+
+    NXGroup g = _f.create_group("data");
+    g.create_group("dir1");
+    g.create_group("dir2");
+    g.create_group("dir3");
+
+    for(auto &sg: g){
+        std::cout<<sg.path()<<std::endl;
+    }
+}
+
