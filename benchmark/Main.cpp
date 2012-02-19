@@ -30,6 +30,7 @@ using namespace pni::utils;
 #include "BenchmarkConfig.hpp"
 #include "BenchmarkRun.hpp"
 #include "HDF5Run.hpp"
+#include "PNIRun.hpp"
 
 
 template<typename T> double run_benchmark(const BenchmarkConfig &c)
@@ -41,8 +42,8 @@ template<typename T> double run_benchmark(const BenchmarkConfig &c)
         std::cout<<"Instantiating HDF5 benchmark run ..."<<std::endl;
         Run = new HDF5Run<T>(c);
     }else if(c.libid() == LibID::PNINX){
-        std::cerr<<"not implemented yet!"<<std::endl;
-        return 0;
+        std::cout<<"Instantiating PNINX benchmark run ..."<<std::endl;
+        Run = new PNIRun<T>(c);
     }
 
     //run the simulation 
