@@ -11,12 +11,15 @@
 
 using namespace pni::utils;
 
+enum class LibID { HDF5,PNINX};
+
 //! class for benchmark configuration
 
 //! This class holds the entire configuration for a a single
 //! benchmark.
 class BenchmarkConfig{
     private:
+        LibID  _libid;    //!< id which library to use
         TypeID _typecode; //!< typecode of the datatype to use
         size_t _nx;       //!< number of channels in x-direction
         size_t _ny;       //!< number of channels in y-direction
@@ -96,6 +99,12 @@ class BenchmarkConfig{
         //! in bytes.
         //! \return datatype size in bytes
         size_t typesize() const;
+
+        //! return library id
+
+        //! Returns the library ID to use for the benchmark.
+        //! \return library id
+        LibID libid() const;
 
 };
 

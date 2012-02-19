@@ -20,6 +20,8 @@
 #include<pni/utils/Types.hpp>
 #include<pni/utils/Array.hpp>
 
+using namespace pni::utils;
+
 /*
 #include "bmark.h"
 #include "run.h"
@@ -32,23 +34,45 @@
 
 template<typename T> double run_benchmark(const BenchmarkConfig &c)
 {
-    HDF5Run<T> benchmark(c);
+   
+    BenchmarkRun<T> *Run = nullptr;
 
-    return benchmark.run();
+    if(c.libid() == LibID::HDF5){
+        std::cout<<"Instantiating HDF5 benchmark run ..."<<std::endl;
+        Run = new HDF5Run<T>(c);
+    }else if(c.libid() == LibID::PNINX){
+        std::cerr<<"not implemented yet!"<<std::endl;
+        return 0;
+    }
+
+    //run the simulation 
+    for(size_t i = 0; i < c.nruns(); i++){
+        double etime = Run->run();
+        std::cout<<etime<<std::endl;
+    }
+
+   
+    //free memory
+    delete Run;
+
+    return 0.;
 }
 
 
 int main(int argc,char **argv){
-    String filename;
     
-    unsigned long run;
-    unsigned long i = 0;
-
     //read configuration from the command line
     BenchmarkConfig config(argc,argv);
  
+    if(config.typecode() == TypeID::UINT8) run_benchmark<UInt8>(config);
+    else if(config.typecode() == TypeID::INT8) run_benchmark<Int8>(config);
+    else if(config.typecode() == TypeID::UINT16) run_benchmark<UInt16>(config);
+    else if(config.typecode() == TypeID::INT16) run_benchmark<Int16>(config);
+    else if(config.typecode() == TypeID::UINT32) run_benchmark<UInt32>(config);
+    else if(config.typecode() == TypeID::INT32) run_benchmark<Int32>(config);
+    else if(config.typecode() == TypeID::UINT64) run_benchmark<UInt64>(config);
+    else if(config.typecode() == TypeID::INT64) run_benchmark<Int64>(config);
 
-    run_benchmark<UInt8>(config);
 
     return 0;
 }

@@ -9,6 +9,85 @@ extern "C"{
 #include "BenchmarkConfig.hpp"
 #include "Timer.hpp"
 
+template<typename T> class H5TypeTrait;
+
+template<> class H5TypeTrait<UInt8>{
+    public:
+        static hid_t H5Type(){
+            return H5Tcopy(H5T_NATIVE_UCHAR);
+        }
+};
+
+template<> class H5TypeTrait<Int8>{
+    public:
+        static hid_t H5Type(){
+            return H5Tcopy(H5T_NATIVE_CHAR);
+        }
+};
+
+template<> class H5TypeTrait<UInt16>{
+    public:
+        static hid_t H5Type(){
+            return H5Tcopy(H5T_NATIVE_USHORT);
+        }
+};
+
+template<> class H5TypeTrait<Int16>{
+    public:
+        static hid_t H5Type(){
+            return H5Tcopy(H5T_NATIVE_SHORT);
+        }
+};
+
+template<> class H5TypeTrait<UInt32>{
+    public:
+        static hid_t H5Type(){
+            return H5Tcopy(H5T_NATIVE_UINT);
+        }
+};
+
+template<> class H5TypeTrait<Int32>{
+    public:
+        static hid_t H5Type(){
+            return H5Tcopy(H5T_NATIVE_INT);
+        }
+};
+
+template<> class H5TypeTrait<UInt64>{
+    public:
+        static hid_t H5Type(){
+            return H5Tcopy(H5T_NATIVE_LONG);
+        }
+};
+
+template<> class H5TypeTrait<Int64>{
+    public:
+        static hid_t H5Type(){
+            return H5Tcopy(H5T_NATIVE_ULONG);
+        }
+};
+
+template<> class H5TypeTrait<Float32>{
+    public:
+        static hid_t H5Type(){
+            return H5Tcopy(H5T_NATIVE_FLOAT);
+        }
+};
+
+template<> class H5TypeTrait<Float64>{
+    public:
+        static hid_t H5Type(){
+            return H5Tcopy(H5T_NATIVE_DOUBLE);
+        }
+};
+
+template<> class H5TypeTrait<Float128>{
+    public:
+        static hid_t H5Type(){
+            return H5Tcopy(H5T_NATIVE_LDOUBLE);
+        }
+};
+
 //! \brief
 
 //! Implementation of a benchmark for plain HDF5.
@@ -49,7 +128,7 @@ template<typename T> HDF5Run<T>::HDF5Run(const BenchmarkConfig &c):
     _file = H5Fcreate(c.filename().c_str(), H5F_ACC_TRUNC,H5P_DEFAULT,H5P_DEFAULT);
 
     //create dtype
-    _type = H5Tcopy(H5T_NATIVE_USHORT);
+    _type = H5TypeTrait<T>::H5Type();
 
     //create data-space on disk
     _fdims[0] = 0; 

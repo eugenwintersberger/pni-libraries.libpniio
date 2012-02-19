@@ -4,14 +4,26 @@
 //-----------------------------------------------------------------------------
 BenchmarkConfig::BenchmarkConfig(int argc,char **argv)
 {
-    if(argc<8){
+    if(argc<9){
         std::cerr<<"Usage: <prog> <lib> <type> <nx> <ny> <nframes> <nruns> "
             "<noiselevel> <filename>lx"<<std::endl;
         exit(1);
     }
 
     //read command line arguments
-    String typestr(argv[1]);
+    String libcode(argv[1]);
+    if(libcode == "pninx"){
+        std::cout<<"Using PNINX for writing data ..."<<std::endl;
+        _libid = LibID::PNINX;
+    }else if(libcode == "hdf5"){
+        std::cout<<"using plain HDF5 for writing data ..."<<std::endl;
+        _libid = LibID::HDF5;
+    }else{
+        std::cerr<<"Unknown library code - aborting!"<<std::endl;
+        exit(1);
+    }
+
+    String typestr(argv[2]);
     if(typestr == "uint8")         _typecode = TypeID::UINT8;
     else if(typestr == "int8")     _typecode = TypeID::INT8;
     else if(typestr == "uint16")   _typecode = TypeID::UINT16;
@@ -29,12 +41,12 @@ BenchmarkConfig::BenchmarkConfig(int argc,char **argv)
     }
 
 
-    _nx      = (size_t)atoi(argv[2]);
-    _ny      = (size_t)atoi(argv[3]);
-    _nframes = (size_t)(atoi(argv[4])); //read the number of points
-    _nruns   = (size_t)(atoi(argv[5]));
-    _nlevel  = (Int32)atoi(argv[6]);
-    _fname   = String(argv[7]);
+    _nx      = (size_t)atoi(argv[3]);
+    _ny      = (size_t)atoi(argv[4]);
+    _nframes = (size_t)(atoi(argv[5])); //read the number of points
+    _nruns   = (size_t)(atoi(argv[6]));
+    _nlevel  = (Int32)atoi(argv[7]);
+    _fname   = String(argv[8]);
 }
 
 //----------------------------------------------------------------------------
@@ -105,5 +117,11 @@ size_t BenchmarkConfig::frame_size() const
 size_t BenchmarkConfig::data_size() const
 {
     return frame_size()*nframes();
+}
+
+//---------------------------------------------------------------------------
+LibID BenchmarkConfig::libid() const
+{
+    return _libid;
 }
 
