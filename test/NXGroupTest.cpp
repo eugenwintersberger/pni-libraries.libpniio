@@ -255,3 +255,22 @@ void NXGroupTest::testAssignment(){
 	CPPUNIT_ASSERT(!g2.is_valid());
 }
 
+//------------------------------------------------------------------------------
+void NXGroupTest::test_comparison(){
+    std::cout<<"void NXGroupTest::test_comparison()---------------------------";
+    std::cout<<std::endl;
+
+    NXGroup g1 = _f.create_group("hello/world");
+    NXGroup g2 = _f["/hello/world"];
+
+    CPPUNIT_ASSERT(g1 == g2);
+
+    g2 = _f["/hello"];
+    CPPUNIT_ASSERT(g1 != g2);
+
+    g1.link("/link");
+    g2 = _f["/link"];
+    CPPUNIT_ASSERT(g1 == g2);
+
+}
+

@@ -366,9 +366,23 @@ namespace pni{
                 {
                     return NXDateTime::getDateTimeStr(_imp.birth_time());
                 }
-                
 
         };
+
+        //=============comparison operators====================================
+        template<typename ImpA,typename ImpB>
+            bool operator==(const NXObject<ImpA> &a,const NXObject<ImpB> &b)
+        {
+            if(a.imp() == b.imp()) return true;
+            return false;
+        }
+
+        template<typename ImpA,typename ImpB>
+            bool operator!=(const NXObject<ImpA> &a,const NXObject<ImpB> &b)
+        {
+            if(a == b) return false;
+            return true;
+        }
     }
 }
 

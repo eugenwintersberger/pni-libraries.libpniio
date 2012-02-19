@@ -49,6 +49,7 @@ class NXGroupTest: public CppUnit::TestFixture  {
 	CPPUNIT_TEST(testRemove);
 	CPPUNIT_TEST(testAssignment);
     CPPUNIT_TEST(test_linking);
+    CPPUNIT_TEST(test_comparison);
 	CPPUNIT_TEST_SUITE_END();
 private:
 	String _fname;
@@ -75,6 +76,7 @@ public:
 	void testRemove();
 	void testAssignment();
     void test_linking();
+    void test_comparison();
 };
 
 #endif /* NXGROUPTEST_HPP_ */

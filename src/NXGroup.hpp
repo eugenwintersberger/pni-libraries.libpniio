@@ -278,6 +278,11 @@ namespace pni{
                     return object;
                 }
 
+                NXObject<MAPTYPE(Imp,ObjectImpl)> operator[](const String &n)
+                {
+                    return this->open(n);
+                }
+
                 //! check if a particular object exists
                 bool exists(const String &n) const{
                     return this->imp().exists(n);
