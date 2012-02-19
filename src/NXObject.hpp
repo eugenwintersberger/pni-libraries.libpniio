@@ -39,6 +39,8 @@
 #include "NXImpMap.hpp"
 #include "NXImpCodeMap.hpp"
 #include "NXAttribute.hpp"
+#include "NXObjectType.hpp"
+#include "NXDateTime.hpp"
 
 using namespace pni::utils;
 
@@ -334,6 +336,38 @@ namespace pni{
                 bool is_valid() const{
                     return _imp.is_valid();
                 }
+
+                //--------------------------------------------------------------
+                NXObjectType object_type() const
+                {
+                    return _imp.nxobject_type();
+                }
+
+                //-------------------------------------------------------------
+                String access_time() const
+                {
+                    return NXDateTime::getDateTimeStr(_imp.acc_time());
+                }
+
+                //-------------------------------------------------------------
+                String modified_time() const
+                {
+                    return NXDateTime::getDateTimeStr(_imp.mod_time());
+                }
+                
+                //-------------------------------------------------------------
+                String change_time() const
+                {
+                    return NXDateTime::getDateTimeStr(_imp.chng_time());
+                }
+                
+                //-------------------------------------------------------------
+                String create_time() const
+                {
+                    return NXDateTime::getDateTimeStr(_imp.birth_time());
+                }
+                
+
         };
     }
 }

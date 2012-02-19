@@ -29,6 +29,7 @@
 #include<cppunit/extensions/HelperMacros.h>
 
 #include "NX.hpp"
+#include "NXObjectType.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(NXGroupTest);
 
@@ -37,6 +38,7 @@ void NXGroupTest::setUp(){
 	_fname = "test.group.h5";
 	Index i;
     _f = NXFile::create_file("NXGroupTest.h5",true,0);
+    CPPUNIT_ASSERT(_f.object_type() == pni::nx::NXObjectType::NXGROUP);
 
 
 	_write_str_attr = "hello world";

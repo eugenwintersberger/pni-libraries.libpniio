@@ -21,5 +21,15 @@ String NXDateTime::getDateTimeStr(){
 	return out;
 }
 
+String NXDateTime::getDateTimeStr(const time_t &t)
+{
+    char dtstr[DATETIME_MAX_LENGTH];
+
+    struct tm *time = std::localtime(&t);
+    std::strftime(dtstr,DATETIME_MAX_LENGTH,DATETIME_FORMAT,time);
+    String out(dtstr);
+    return out;
+}
+
 } /* namespace nx */
 } /* namespace pni */

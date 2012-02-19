@@ -16,42 +16,32 @@
  * You should have received a copy of the GNU General Public License
  * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
- * NXDateTime.hpp
  *
- *  Created on: Nov 17, 2011
- *      Author: Eugen Wintersberger
+ * Definition of a enum class for object types.
+ *
+ * Created on: Feb 19, 2012
+ *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#ifndef NXDATETIME_HPP_
-#define NXDATETIME_HPP_
+#ifndef __NXOBJECTYPE_HPP__
+#define __NXOBJECTYPE_HPP__
 
-#include<ctime>
-#include <pni/utils/Types.hpp>
+namespace pni{
+    namespace nx{
 
-using namespace pni::utils;
+        //! \ingroup nx_utilities
+        //! \brief Nexus typd ids
 
-namespace pni {
-namespace nx {
+        //! This enumeration class provides identifiers for 
+        //! different Nexus types. Basically there are only two 
+        //! types: fields and groups. 
+        enum class NXObjectType { NXFIELD, //!< NXField identifier
+                                  NXGROUP, //!< NXGroup identifier
+                                  NXNONE   //!< no valid Nexus object
+                                };
 
-#define DATETIME_FORMAT "%Y-%m-%dT%H:%M:%S%z"
-#define DATETIME_MAX_LENGTH 1024
+        //end of namespace
+    }
+}
 
-//! \ingroup util_classes
-//! \brief date time factory
-
-//! NXDateTime provides static methods to create date-time strings
-//! which are compliant to the Nexus standard.
-class NXDateTime {
-public:
-
-	//! date-time now
-
-	//! Returns a string with a Nexus compliant date-time string
-	//! for now.
-	static String getDateTimeStr();
-    static String getDateTimeStr(const time_t &t);
-};
-
-} /* namespace nx */
-} /* namespace pni */
-#endif /* NXDATETIME_HPP_ */
+#endif

@@ -144,6 +144,80 @@ namespace pni{
                 };
             }
 
+            //-----------------------------------------------------------------
+            time_t H5Object::acc_time() const
+            {
+                EXCEPTION_SETUP("time_t H5Object::acc_time() const");
+                H5O_info_t info;
+
+                herr_t err = H5Oget_info(id(),&info);
+                if(err < 0){
+                    EXCEPTION_INIT(H5ObjectError,"Cannot obtain object info!");
+                    EXCEPTION_THROW();
+                }
+
+                return info.atime;
+            }
+            
+            //-----------------------------------------------------------------
+            time_t H5Object::mod_time() const
+            {
+                EXCEPTION_SETUP("time_t H5Object::mod_time() const");
+                H5O_info_t info;
+
+                herr_t err = H5Oget_info(id(),&info);
+                if(err < 0){
+                    EXCEPTION_INIT(H5ObjectError,"Cannot obtain object info!");
+                    EXCEPTION_THROW();
+                }
+
+                return info.mtime;
+            }
+            
+            //-----------------------------------------------------------------
+            time_t H5Object::chng_time() const
+            {
+                EXCEPTION_SETUP("time_t H5Object::chng_time() const");
+                H5O_info_t info;
+
+                herr_t err = H5Oget_info(id(),&info);
+                if(err < 0){
+                    EXCEPTION_INIT(H5ObjectError,"Cannot obtain object info!");
+                    EXCEPTION_THROW();
+                }
+
+                return info.ctime;
+            }
+
+            //-----------------------------------------------------------------
+            time_t H5Object::birth_time() const
+            {
+                EXCEPTION_SETUP("time_t H5Object::birth_time() const");
+                H5O_info_t info;
+
+                herr_t err = H5Oget_info(id(),&info);
+                if(err < 0){
+                    EXCEPTION_INIT(H5ObjectError,"Cannot obtain object info!");
+                    EXCEPTION_THROW();
+                }
+
+                return info.btime;
+            }
+
+            //-----------------------------------------------------------------
+            pni::nx::NXObjectType H5Object::nxobject_type() const
+            {
+                if(object_type() == H5ObjectType::GROUP) 
+                    return pni::nx::NXObjectType::NXGROUP;
+                else if(object_type() == H5ObjectType::FILE)
+                    return pni::nx::NXObjectType::NXGROUP;
+                else if(object_type() == H5ObjectType::DATASET)
+                    return pni::nx::NXObjectType::NXFIELD;
+                else
+                    return pni::nx::NXObjectType::NXNONE;
+
+            }
+
 
 
         }

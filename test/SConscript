@@ -22,5 +22,5 @@ sources_list.extend(["H5PathTest.cpp"])
 
 pninx_test = test_env.Program("pninxtest",sources_list)
 
-test_env.Alias("test",[pninx_test,pninx_bmark])
-test_env.Alias("all",[pninx_test,pninx_bmark])
+test_env.Alias("test",[pninx_test])
+test_env.Alias("all",[pninx_test])

@@ -31,6 +31,7 @@ extern "C"{
 }
 
 #include "H5ObjectType.hpp"
+#include "../NXObjectType.hpp"
 
 namespace pni{
     namespace nx{
@@ -116,6 +117,43 @@ namespace pni{
                     //! identify the kind of object one is dealing with.
                     //! \return HDF type
                     H5ObjectType object_type() const;
+
+                    //! return the Nexus object type
+
+                    //! Returns the Nexus object type of an object.
+                    //! This can be either NXObjecType::NXFIELD or
+                    //! NXObjectType::NXGROUP. 
+                    pni::nx::NXObjectType nxobject_type() const;
+
+                    //! return the access time of the object
+
+                    //! Returns the last time the object was accessed.
+                    //! The time is returned as a time_t structure.
+                    //! \return access time
+                    time_t acc_time() const;
+
+                    //! return modification time
+
+                    //! Returns the time when the object was last mofified.
+                    //! The time is returned as a time_t structure.
+                    //! \return modification time
+                    time_t mod_time() const;
+
+                    //! return change time
+
+                    //! Returns the time when the object was changed last.
+                    //! The time value is returned as a time_t struct.
+                    //! \return change time
+                    time_t chng_time() const;
+
+                    //! return birth time
+
+                    //! Returns the time when the object was created. 
+                    //! the time value is returned as time_t structure.
+                    //! \return birth time
+                    time_t birth_time() const;
+
+
             };
 
 
