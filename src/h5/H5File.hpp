@@ -35,8 +35,15 @@ namespace pni{
     namespace nx{
         namespace h5{
             
-            //! \ingroup nxh5_classes
-            //! \brief HDF5 file class
+            /*! \ingroup nxh5_classes
+            \brief HDF5 file class
+
+            An HDF5 file behaves in nearly all aspects like a group object.
+            It can be considered as the root group for all other groups or the
+            root of a filesystem on a UNIX system. File objects are created by
+            using static methods for creating and opening files on the
+            filesystem.
+            */
             class H5File:public H5Group {
                 protected:
                     //! constructor from id value
@@ -62,10 +69,32 @@ namespace pni{
                     H5File &operator=(const H5File &o);
                
                     //===========factory methods=============================
-                    //! open an existing file
+                    /*! \brief open an existing file
+                    
+                    Static method to open an exing file. Using the ro flag one
+                    can open the file either for read/write or for read-only
+                    acess.
+                    \throws H5FileError if the file is not an HDF5 file or an error occured during opening the file.
+                    \throws H5PropertyListError if an error occurs during property list creation
+                    \param n name of the file
+                    \param ro if true file will be in read only mode
+                    */
                     static H5File open_file(const String &n,bool ro=true);
 
-                    //! create a new file
+                    /*! \brief create a new file
+                       
+                    Creates a new file on the filesystem. By default this method
+                    fails if a file of identical name already exists. However,
+                    if seting the overwrite flag ow to true the existing file
+                    will be overwriten and all data in this file is lost. In
+                    addition files can be split into smaller portions. The split
+                    size can be set with ssize.
+                    \throws H5FileError for all file related errors
+                    \throws H5PropertyListError for errors during property list creation
+                    \param n file name
+                    \param ow overwrite existing file if true
+                    \param ssize split size
+                    */
                     static H5File create_file(const String &n,bool ow=false,
                             ssize_t ssize=0);
 
