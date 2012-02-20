@@ -46,6 +46,7 @@ namespace pni{
                 }
             }
 
+            //-----------------------------------------------------------------
             void H5Dataspace::__create_dataspace(){
                 EXCEPTION_SETUP("void H5Dataspace::__create_dataspace()");
 
@@ -329,6 +330,7 @@ namespace pni{
                 __create_dataspace();
             }
 
+            //-----------------------------------------------------------------
             void H5Dataspace::resize(const std::initializer_list<hsize_t> &list){
                 EXCEPTION_SETUP("void H5Dataspace::"
                         "resize(std::initializer_list<hsize_t> list)");
@@ -369,7 +371,7 @@ namespace pni{
                         "std::initializer_list<hsize_t> mlist)");
 
                 if(dlist.size() != mlist.size()){
-                    EXCEPTION_INIT(SizeMissmatchError,
+                    EXCEPTION_INIT(ShapeMissmatchError,
                             "Sizes of initializer lists do not match!");
                     EXCEPTION_THROW();
                 }
