@@ -159,6 +159,16 @@ void NXGroupTest::testAttributes(){
 	g.attr<Float64>("FloatScalarAttribute").write(_write_scalar_attr);
 	g.attr<Complex64>("IndexOfRefraction").write(_write_cmplx_scalar);
 	g.attr<Float64>("ArrayAttribute",_write_array_attr.shape()).write(_write_array_attr);
+    CPPUNIT_ASSERT(g.nattr() == 4);
+   
+    NXGroup::attr_iterator aiter = g.attr_begin();
+    while(aiter){
+        std::cout<<aiter->name()<<std::endl;
+        aiter++;
+    }
+
+    for(auto iter = g.attr_begin();iter != g.attr_end();iter++)
+        std::cout<<iter->name()<<std::endl;
 
 
 	//read data

@@ -41,6 +41,7 @@
 #include "NXAttribute.hpp"
 #include "NXObjectType.hpp"
 #include "NXDateTime.hpp"
+#include "NXAttributeIterator.hpp"
 
 using namespace pni::utils;
 
@@ -72,6 +73,8 @@ namespace pni{
             protected:
                 Imp &imp() { return _imp;}
             public:
+                typedef NXAttributeIterator<NXObject<Imp>,
+                       NXAttribute<MAPTYPE(Imp,AttributeImpl)> > attr_iterator;
                 //==================constructors and destructors================
                 typedef boost::shared_ptr<NXObject<Imp> > sptr;
                 //! default constructor
@@ -227,18 +230,9 @@ namespace pni{
                         (this->imp().attr<T>(n,s));
                 }
 
-                //--------------------------------------------------------------
-                template<TypeID ID> NXAttribute<MAPTYPE(Imp,AttributeImpl)>
-                    attr(const String &n, const Shape &s) const
-                {
-                    if(this->has_attr(n)) this->del_attr(n);
-
-                    return NXAttribute<MAPTYPE(Imp,AttributeImpl)>
-                        (this->imp().attr<ID>(n,s));
-                }
 
                 //--------------------------------------------------------------
-                //! open an attribute
+                //! open an attribute by name
                 
                 //! Open an existing attribute and returns it to the 
                 //! callee. 
@@ -249,6 +243,17 @@ namespace pni{
                     return NXAttribute<MAPTYPE(Imp,AttributeImpl)>(_imp.attr(n));
                 }
 
+                //--------------------------------------------------------------
+                //! open an attribute by index
+                
+                //! Open an existing attribute and returns it to the 
+                //! callee. 
+                //! \param n name of the attribute
+                //! \return attribute object
+                NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr(size_t i) const
+                {
+                    return NXAttribute<MAPTYPE(Imp,AttributeImpl)>(_imp.attr(i));
+                }
 
                 //-------------------------------------------------------------
                 //! delete an attribute
@@ -298,26 +303,9 @@ namespace pni{
                 //! \returns number of attributes
                 size_t nattr() const
                 {
-                    return this->nattr();
+                    return this->imp().nattr();
                 }
 
-                //-------------------------------------------------------------
-                //! get attribute name list
-
-                //! Returns a vector with the names of all attributes attached
-                //! to this object.
-                //! \return vector with attribute names
-                std::vector<String> attr_names() const
-                {
-                    EXCEPTION_SETUP("std::vector<String> attr_names() const");
-                    try{
-                        return this->imp().attr_names();
-                    }catch(...){
-                        EXCEPTION_INIT(NXAttributeError,
-                                "Cannot obtain attribute names!");
-                        EXCEPTION_THROW();
-                    }
-                }
 
               
                 //=============misc methods===================================
@@ -365,6 +353,17 @@ namespace pni{
                 String create_time() const
                 {
                     return NXDateTime::getDateTimeStr(_imp.birth_time());
+                }
+
+                //-------------------------------------------------------------
+                attr_iterator attr_begin() const
+                {
+                    return attr_iterator(*this);
+                }
+
+                attr_iterator attr_end() const
+                {
+                    return attr_iterator(*this,this->nattr());
                 }
 
         };

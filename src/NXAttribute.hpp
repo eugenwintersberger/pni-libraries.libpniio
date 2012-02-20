@@ -239,6 +239,12 @@ namespace pni{
                     _imp.close();
                 }
 
+                //---------------------------------------------------------------
+                String name() const
+                {
+                    return _imp.name();
+                }
+
         };
 
     }

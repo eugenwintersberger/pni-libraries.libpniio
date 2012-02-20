@@ -77,6 +77,7 @@ void H5DataspaceTest::test_creation(){
 
 }
 
+//------------------------------------------------------------------------------
 void H5DataspaceTest::test_assignment(){
     std::cout<<"void H5Dataspace::test_assignment()---------------------------";
     std::cout<<std::endl;
@@ -103,6 +104,7 @@ void H5DataspaceTest::test_assignment(){
 
 }
 
+//------------------------------------------------------------------------------
 void H5DataspaceTest::test_inquery(){
     Shape s(2);
     s.dim(1,100); s.dim(0,50);
@@ -117,6 +119,7 @@ void H5DataspaceTest::test_inquery(){
 
 }
 
+//------------------------------------------------------------------------------
 void H5DataspaceTest::test_resize(){
     H5Dataspace space;
     CPPUNIT_ASSERT(space.is_scalar());

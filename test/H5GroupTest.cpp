@@ -148,7 +148,7 @@ void H5GroupTest::test_attributes(){
 
     //--------------read and write a scalar attribute--------------------------
     Float32Scalar scalar(0.2,"atribute","a.u.","scalar attribute");
-    CPPUNIT_ASSERT_NO_THROW(g.attr<TypeID::FLOAT32>("pressure").write(scalar));
+    CPPUNIT_ASSERT_NO_THROW(g.attr<Float32>("pressure").write(scalar));
     Float64Scalar sc_value("attribute","a.u.","scalar attribute");
     CPPUNIT_ASSERT_NO_THROW(sc_value = g.attr("pressure").read<Float64Scalar>());
     CPPUNIT_ASSERT(sc_value == scalar);
@@ -171,7 +171,7 @@ void H5GroupTest::test_attributes(){
 
     //is the other way around workding
     UInt16 sca = 291;
-    CPPUNIT_ASSERT_NO_THROW(g.attr<TypeID::UINT16>("SCA").write(sca));
+    CPPUNIT_ASSERT_NO_THROW(g.attr<UInt16>("SCA").write(sca));
     UInt32Scalar sca_value;
     CPPUNIT_ASSERT_NO_THROW(sca_value = g.attr("SCA").read<UInt32Scalar>());
     CPPUNIT_ASSERT(sca_value == sca);
@@ -199,10 +199,6 @@ void H5GroupTest::test_attribute_manipulation(){
     
     std::cout<<"number of attribute: "<<file.nattr()<<std::endl;
     CPPUNIT_ASSERT(file.nattr() == 4);
-    std::vector<String> names;
-    CPPUNIT_ASSERT_NO_THROW(names = file.attr_names());
-    std::cout<<"number of names: "<<names.size()<<"/"<<names.capacity()<<std::endl;
-    CPPUNIT_ASSERT(file.nattr() == names.size());
 
     //removeing objects
     CPPUNIT_ASSERT(file.has_attr("strattr"));
