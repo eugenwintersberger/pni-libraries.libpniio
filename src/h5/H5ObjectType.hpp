@@ -26,6 +26,22 @@
 #ifndef __H5OBJECTTYPE_HPP__
 #define __H5OBJECTTYPE_HPP__
 
-enum class H5ObjectType {FILE,GROUP,DATATYPE,DATASPACE,DATASET,ATTRIBUTE,BADID};
+//! \ingroup nxh5_classes 
+//! \brief HDF5 object type enumerations
+
+//! This enumeration class defines type-codes for different kinds
+//! of HDF5 objects. As all HDF5 objects are derived from H5Object
+//! an thus can be convereted into such an object we need this
+//! codes to identify the particular object type of an 
+//! instance of H5Object.
+enum class H5ObjectType {FILE,       //!< HDF5 file code
+                         GROUP,      //!< HDF5 group code
+                         DATATYPE,   //!< HDF5 datatype code
+                         DATASPACE,  //!< HDF5 dataspace code
+                         DATASET,    //!< HDF5 dataset code
+                         ATTRIBUTE,  //!< HDF5 attribute
+                         BADID       //!< unknown object
+                        };
+
 #endif
 

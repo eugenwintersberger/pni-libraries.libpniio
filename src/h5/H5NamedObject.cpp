@@ -71,7 +71,7 @@ namespace pni{
             }
 
             //===========implementation of assignment operators================
-
+            //implementation of copy assignment operator
             H5NamedObject &H5NamedObject::operator=(const H5NamedObject &o){
                 if(this == &o) return *this;
 
@@ -81,6 +81,7 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
+            //implementation of conversion copy assignment
             H5NamedObject &H5NamedObject::operator=(const H5Object &o){
                 if(this == &o) return *this;
 
@@ -90,6 +91,7 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
+            //implementation of move assignment
             H5NamedObject &H5NamedObject::operator=(H5NamedObject &&o){
                 if(this == &o) return *this;
 
@@ -99,6 +101,7 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
+            //implementation of move conversion assignment
             H5NamedObject &H5NamedObject::operator=(H5Object &&o){
                 if(this == &o) return *this;
 
@@ -108,7 +111,6 @@ namespace pni{
             }
 
             //================implementation of name operations================
-
             String H5NamedObject::name() const{
                 String p = path();
 
@@ -180,39 +182,6 @@ namespace pni{
 
                 return String("");
             }
-
-            //----------------------------------------------------------------
-            /*
-            H5Group H5NamedObject::parent() const
-            {
-                hid_t fid = H5Iget_file_id(id());
-                H5Path path(base());
-                hid_t gid = H5Gopen2(fid,"/",H5P_DEFAULT);
-                H5Group g(H5NamedObject(gid));
-
-                return g.open(base());
-
-                H5Fclose(fid);
-
-                //if there is nothing in the path we can return the root group
-                if(path.size() == 0){
-                    H5Group g(H5NamedObject(gid));
-                    H5Gclose(gid);
-                    return g;
-                }
-
-                hid_t oid = gid;
-                for(String &name: path){
-                    gid = H5Gopen2(oid,name.c_str(),H5P_DEFAULT);
-                    H5Gclose(oid);
-                    oid = gid;
-                }
-
-                H5Group g(H5NamedObject(gid)); 
-                H5Gclose(gid);
-                return g;
-            }
-            */
 
 
         //end of namespace

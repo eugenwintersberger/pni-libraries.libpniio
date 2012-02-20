@@ -47,6 +47,11 @@ namespace pni{
             //! Due to the fact that such objects can be linked. 
             class H5NamedObject:public H5Object{
                 protected:
+                    //! construct from HDF5 ID
+
+                    //! This protected constructor allows object construction
+                    //! form an HDF5 ID. Only derived classes are supposed
+                    //! to use this constructor.
                     explicit H5NamedObject(const hid_t &id);
                 public:
                     //==============constructors and destructors===============

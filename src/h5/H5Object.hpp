@@ -17,7 +17,7 @@
  * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  *
- * Declaration of a general HDF5 Object.
+ * Definition of a general HDF5 Object.
  *
  * Created on: Jan 10, 2012
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
@@ -52,6 +52,27 @@ namespace pni{
                 private:
                     hid_t _id; //!< ID of the object
                 protected:
+                    //! construct from HDF5 ID
+
+                    //! This constructor can be used to construct an instance
+                    //! of H5Object from an HDF5 ID. The constructor increases
+                    //! the reference count to this id to avoid that the object
+                    //! becomes invalid if the original id becomes destroyed.
+                    //! Thus it is absolutely neccessary that the original ID 
+                    //! must be closed by the appropriate HDF5 API  function.
+                    //! This can be seen in the example below:
+                    //! \code
+                    //! .....
+                    //! hid_t id = H5Gopen(fid,"data",H5P_DEFAULT);
+                    //! H5Object o(id);
+                    //! H5Gclose(id); //destroy the original object will
+                    //!               //decrement the reference count of id
+                    //! ...
+                    //! \endcode
+                    //! The reason is simple: if the id is not closed properly
+                    //! it remains open and prohibits the file it belongs to 
+                    //! to become closed properly. 
+                    //! \parm id HDF5 object ID.
                     explicit H5Object(const hid_t &id);
                     //an HDF5 object cannot be created by itself - this 
                     //must be done by some other instance.
