@@ -17,7 +17,7 @@
  * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  *
- * Implementation of a general named HDF5 object.
+ * Definition of an HDF5 dataset class
  *
  * Created on: Jan 10, 2012
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
