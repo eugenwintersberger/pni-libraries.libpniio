@@ -39,24 +39,28 @@ namespace pni{
                 //here we do nothing
             }
 
+            //-----------------------------------------------------------------
             H5Datatype::H5Datatype(const H5Datatype &o):H5Object(o){
 
             }
 
+            //-----------------------------------------------------------------
             H5Datatype::H5Datatype(const H5Object &o):H5Object(o){
             }
 
+            //-----------------------------------------------------------------
             H5Datatype::H5Datatype(H5Datatype &&o):H5Object(std::move(o)){
             }
 
+            //-----------------------------------------------------------------
             H5Datatype::H5Datatype(H5Object &&o):H5Object(std::move(o)){
             }
 
-
+            //----------------------------------------------------------------
             H5Datatype::H5Datatype(const hid_t &tid):H5Object(tid){
             }
 
-
+            //----------------------------------------------------------------
             H5Datatype::~H5Datatype(){
                 if(is_valid()) H5Tclose(id());
             }

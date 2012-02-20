@@ -17,7 +17,7 @@
  * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  *
- * Declaration of a general HDF5 datatype object.
+ * Definition of a general HDF5 datatype object.
  *
  * Created on: Jan 10, 2012
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
@@ -39,11 +39,11 @@ namespace pni{
             //! \ingroup nxh5_classes            
             //! \brief HDF5 type wrapper
 
-            //! The class wraps around an HDF5 type object. 
+            //! The class wraps around an HDF5 type object. One will hardly 
+            //! ever construct this class by oneself. This is usually done 
+            //! using the H5DatatypeFactory which provides convenient methods
+            //! for this purpose.
             class H5Datatype:public H5Object{
-                private: 
-
-                protected:
                 public:
                     //======================Constructors and destructors=======
                     //! default constructor
@@ -78,7 +78,8 @@ namespace pni{
                     //! Return the type id of the datatype. 
                     //! \return type code
                     TypeID type_id() const;
-
+                    
+                    //! close the datatype
                     virtual void close();
 
 
