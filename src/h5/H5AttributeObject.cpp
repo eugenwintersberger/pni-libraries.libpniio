@@ -32,16 +32,6 @@
 namespace pni{
     namespace nx{
         namespace h5{
-            //===========implementation of private methods=====================
-            herr_t H5AttributeObject::__get_attribute_names(hid_t locid,
-                    const char *name, const H5A_info_t *info,void *data)
-            {
-                std::vector<String> *vector = (std::vector<String> *)data;
-                vector->push_back(String(name));
-
-                return 0;
-            }
-
             //=======implementation of constructors and destructors============
             //implementation of the default constructor
             H5AttributeObject::H5AttributeObject():H5NamedObject(){
@@ -135,19 +125,53 @@ namespace pni{
                 EXCEPTION_SETUP("H5Attribute H5AttributeObject::"
                         "open_attr(const String &n) const");
 
-                hid_t aid = 0;
                 if(H5Aexists(id(),n.c_str())<=0){
                     EXCEPTION_INIT(H5AttributeError,
-                            "Attribute does not exist!");
+                            "Object ["+name()+"] has no attribute [" +n+"]!");
                     EXCEPTION_THROW();
                 }
 
-                aid = H5Aopen(id(),n.c_str(),H5P_DEFAULT);
+                hid_t aid = H5Aopen(id(),n.c_str(),H5P_DEFAULT);
                 if(aid < 0){
                     EXCEPTION_INIT(H5AttributeError,
-                            "Error opening attribute!");
+                            "Error opening attribute ["+n+"] from object ["
+                            +name()+"]!");
                     EXCEPTION_THROW();
                 }
+                H5Attribute a(aid);
+                H5Aclose(aid);
+                return a;
+            }
+
+            //-----------------------------------------------------------------
+            //implementation of opening an attribute by index
+            H5Attribute H5AttributeObject::attr(size_t i) const
+            {
+                EXCEPTION_SETUP("H5Attribute H5AttributeObject::attr(size_t i)"
+                        " const");
+
+                if(i>=nattr()){
+                    std::stringstream idx;
+                    idx<<i;
+                    std::stringstream na;
+                    na<<nattr();
+                    EXCEPTION_INIT(IndexError,"Index ("+idx.str()+") exceeds "
+                            "number of attributes ("+na.str()+") on object "
+                            "["+name()+"]!");
+                    EXCEPTION_THROW();
+                }
+
+                hid_t aid = H5Aopen_by_idx(id(),".",H5_INDEX_NAME,
+                        H5_ITER_INC,i,H5P_DEFAULT,H5P_DEFAULT);
+                if(aid<0){
+                    std::stringstream idx;
+                    idx << i;
+                    EXCEPTION_INIT(H5AttributeError,"Error opening attribute "
+                            " with index ("+idx.str()+") from object ["
+                            +name()+"]!");
+                    EXCEPTION_THROW();
+                }
+
                 H5Attribute a(aid);
                 H5Aclose(aid);
                 return a;
@@ -176,8 +200,8 @@ namespace pni{
                 }else{
                     //something went wrong - throw an exception here
                     EXCEPTION_INIT(H5AttributeError,
-                            "Error while checking for existance of attribute ["+
-                            n+"]!");
+                            "Error checking for existance of attribute ["+n+
+                            "] on object ["+name()+"]");
                     EXCEPTION_THROW();
                 }
             }
@@ -191,33 +215,12 @@ namespace pni{
                 herr_t err = H5Adelete(id(),n.c_str());
                 if(err < 0){
                     EXCEPTION_INIT(H5AttributeError,
-                            "Error deleteing attribute ["+n+"]!");
+                            "Error deleteing attribute ["+n+"] from "
+                            "object ["+name()+"]!");
                     EXCEPTION_THROW();
                 }
 
             }
-
-            //------------------------------------------------------------------
-            std::vector<String> H5AttributeObject::attr_names() const
-            {
-                EXCEPTION_SETUP("std::vector<String> H5AttributeObject::"
-                        "attr_names() const");
-
-                std::vector<String> names(0); 
-
-                hsize_t n=0; 
-                herr_t err = H5Aiterate2(id(),H5_INDEX_NAME,H5_ITER_NATIVE,&n,
-                        H5AttributeObject::__get_attribute_names,(void *)&(names));
-                if(err < 0){
-                    EXCEPTION_INIT(H5AttributeError,
-                            "Error obtaining attribute name list!");
-                    EXCEPTION_THROW();
-                }
-
-                return names;
-            }
-                
-
 
         
         //end of namespace

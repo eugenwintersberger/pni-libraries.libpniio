@@ -17,7 +17,7 @@
  * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  *
- * Declaration of an HDF5 attribute object.
+ * Definition of an HDF5 attribute object.
  *
  * Created on: Jan 10, 2012
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
@@ -47,13 +47,38 @@ namespace pni{
             //forward declarations
             template<typename H5ObjectT,typename ItemT> class H5GroupIterator;
             
-            //! \ingroup nxh5_classes
-            //! \brief objects which can hold attributes
+            /*! \ingroup nxh5_classes
+            \brief objects which can hold attributes
+
+            H5AttributeObject is a type which is capable of holding attributes.
+            In HDF5 this would be Datasets, Groups, and Files. The class
+            provides all the methods responsible for manging attributes.
+            */
             class H5AttributeObject:public H5NamedObject{
                 private:
-                   static herr_t __get_attribute_names(hid_t locid,const char *name,
-                            const H5A_info_t *info,void *data);
+                    /*! create attribute
+                    
+                    Creates an attribute of type T. If the ov flag is true
+                    the method overwrites an existing attribute of same name.
+                    Otherwise an exception will be thrown.
+                    \throw H5AttributeError in case of errors
+                    \param n name of the attribute
+                    \param ov overwrite flag 
+                    \param space dataspace to use for the attribute
+                    \return H5Attribute instance
+                    */
+                    template<typename T> H5Attribute __create_attr
+                        (const String &n, bool ov, const H5Dataspace &space) 
+                        const;
+
                 protected:
+                    /*! \brief construction from HDF5 ID
+                    
+                    Constructor which allows object construction from an HDF5
+                    ID. As it is protected it can be only used by derived
+                    classes.
+                    \param oid HDF5 of the object
+                    */ 
                     explicit H5AttributeObject(const hid_t &oid);
                 public:
                     //===========constructors and destructors==================
@@ -85,79 +110,116 @@ namespace pni{
 
 
                     //===========attribute management methods==================
-                    //! create scalar attribute
+                    /*! \brief create scalar attribute
 
-                    //! Create a scalar attribute. This method acts as a 
-                    //! factory method for an attribute object.
-                    //! \param n name of the attribute
-                    //! \param tid ID of the data-type
-                    //! \return attribute object
-                    template<typename T>
-                        H5Attribute attr(const String &n) const;
-                    template<TypeID ID>
-                        H5Attribute attr(const String &n) const;
-                    //! create an array attribute
+                    Create a scalar attribute of type T. Such an attribute can 
+                    only take a single value of type T. The type T must be 
+                    provided explicitly in the code. The method returns an
+                    instance of H5Attribute. If an attribute of name n already 
+                    exists an exception will be thrown unless ov in the
+                    parameter list of the method is set to true. In this case
+                    the existing attribute will be overwritten.
+                    \throws H5AttributeError if attribute exists or in case of errors
+                    \param n name of the attribute
+                    \return attribute object
+                    */
+                    template<typename T> H5Attribute 
+                        attr(const String &n,bool ov=false) const;
 
-                    //! Create an array attribute. This method acts as a 
-                    //! factory method for an attribute object.
-                    //! \param n name of the attribute
-                    //! \param tid ID of the data-type
-                    //! \param s shape of the array
-                    //! \return attribute object
-                    template<typename T>
-                        H5Attribute attr(const String &n, const Shape &s) const;
-                    template<TypeID ID>
-                        H5Attribute attr(const String &n, const Shape &s) const;
+                    /*! \brief create an array attribute
 
-                    //! open an attribute
+                    Create an array attribute of type T and shape s. The type
+                    must be explicitly given as a template parameter when using
+                    this method. If an attribute with name n already exists 
+                    an exception will be thrown unless ov is set to true.
+                    In the later case the existing attribute will be
+                    overwritten.
+                    \throws H5AttributeError if the attribute exists or in case of errors
+                    \param n name of the attribute
+                    \param s shape of the array
+                    \return attribute object
+                    */
+                    template<typename T> H5Attribute 
+                        attr(const String &n, const Shape &s,bool ov=false) const;
+
+                    /*! \brief open attribute by name
                     
-                    //! Open an existing attribute and returns it to the 
-                    //! callee. 
-                    //! \param n name of the attribute
-                    //! \return attribute object
+                    Open an existing attribute and returns it to the callee.  If
+                    the attribute does not exist or an other error occurs during
+                    attribute creation H5AttributeError is thrown.
+                    \throws H5AttributeError if attribute does not exist or creation error
+                    \param n name of the attribute
+                    \return attribute object
+                    */
                     H5Attribute attr(const String &n) const;
 
-                    //! checks for an attributes existance
+                    /*! \brief open attribute by index
 
-                    //! Checks if an attribute exists and returns true
-                    //! if it does. Otherwise false will be returned.
-                    //! \param n name of the attribute to check for
-                    //! \return true if exists, false otherwise
+                    Opens an attribute reference by index i. If i exceeds the
+                    number of attributes attached to this object an exception
+                    will be thrown.
+                    \throws IndexError if i exceeds 
+                    \param i index of the attribute
+                    \returns instance of H5Attribute
+                    */
+                    H5Attribute attr(size_t i) const;
+
+                    /*! checks for an attributes existence
+
+                    Checks if an attribute exists and returns true if it does. 
+                    Otherwise false will be returned.
+                    \throws H5AttributeError in case of errors
+                    \param n name of the attribute to check for
+                    \return true if exists, false otherwise
+                    */
                     bool has_attr(const String &n) const;
 
-                    //! delets an attribute
+                    /*! Deletes an attribute
 
-                    //! Deltets an attribute from the object. 
-                    //! \throws H5AttributeError if the attribute does not exist
-                    //! \param n name of the attribute
+                    Deletes an attribute from the object. 
+                    \throws H5AttributeError in case of errors 
+                    \param n name of the attribute
+                    */
                     void del_attr(const String &n) const;
 
-                    //! get number of attributes
+                    /*! get number of attributes
 
-                    //! Method returns the number of attributes attached
-                    //! to this object.
-                    //! \return number of attributes
+                    Method returns the number of attributes attached to this 
+                    object.
+                    \return number of attributes
+                    */
                     size_t nattr() const;
-
-                    //! list of attribute names
-
-                    //! Returns a vector of names of all attributes
-                    //! attached to this object. 
-                    //! \return vector of attribute names
-                    std::vector<String> attr_names() const;
 
                     template<typename H5ObjectT,typename ItemT> friend class
                         H5LinkIterator;
             };
 
-            //implementation of the scalar attribute factory method
-            template<typename T>
-            H5Attribute H5AttributeObject::attr(const String &n) const{
-                EXCEPTION_SETUP("H5Attribute H5AttributeObject::create_attr"
-                        "(const String &n,const TypeID &tid) const");
+            //============implementation of template methods===================
+            template<typename T> H5Attribute
+                H5AttributeObject::__create_attr(const String &n,
+                        bool ov,const H5Dataspace &space) const
+            {
+                EXCEPTION_SETUP("template<typename T> H5Attribute "
+                    "H5AttributeObject::__create_attr(const String &n,"
+                    "bool ov,const H5Dataspace &space)");
 
                 H5Datatype type = H5DatatypeFactory::create_type<T>();
-                H5Dataspace space;
+
+                //what to do if the attribute already exists?
+                if(has_attr(n)){
+                    if(ov){
+                        //if the overwrite flag is set the original attribute
+                        //will be removed
+                        del_attr(n);
+                    }else{
+                        //if the overwrite flag is not set an exception will
+                        //be thrown
+                        EXCEPTION_INIT(H5AttributeError,
+                                "Attribute ["+n+"] already exists on "
+                                "object ["+name()+"]!");
+                        EXCEPTION_THROW();
+                    }
+                }
 
                 hid_t aid = H5Acreate2(id(),n.c_str(),type.id(),space.id(),
                         H5P_DEFAULT,H5P_DEFAULT);
@@ -170,40 +232,27 @@ namespace pni{
                 H5Aclose(aid);
                 return a;
             }
-            
-            template<TypeID ID>
-            H5Attribute H5AttributeObject::attr(const String &n) const{
-                return attr<typename IDTypeMap<ID>::type>(n);
+
+            //------------------------------------------------------------------
+            //implementation of the scalar attribute factory method
+            template<typename T> H5Attribute 
+                H5AttributeObject::attr(const String &n,bool ov) const
+            {
+                H5Dataspace space;
+                return __create_attr<T>(n,ov,space);   
             }
+            
 
             //-----------------------------------------------------------------
             //implementation of the array attribute factory method
-            template<typename T>
-            H5Attribute H5AttributeObject::attr(const String &n,const Shape &s) const{
-                EXCEPTION_SETUP("H5Attribute H5AttributeObject::create_attr"
-                        "(const String &n,const TypeID &tid,const Shape &s)"
-                        "const");
-
-                H5Datatype type = H5DatatypeFactory::create_type<T>();
+            template<typename T> H5Attribute 
+                H5AttributeObject::attr(const String &n,const Shape &s, bool ov) 
+                const
+            {
                 H5Dataspace space(s);
-
-                hid_t aid = H5Acreate2(id(),n.c_str(),type.id(),space.id(),
-                        H5P_DEFAULT,H5P_DEFAULT);
-                if(aid < 0){
-                    EXCEPTION_INIT(H5AttributeError,"Cannot create attribute!");
-                    EXCEPTION_THROW();
-                }
-
-                H5Attribute a(aid);
-                H5Aclose(aid);
-                return a;
-
+                return __create_attr<T>(n,ov,space);
             }
 
-            template<TypeID ID>
-            H5Attribute H5AttributeObject::attr(const String &n,const Shape &s) const{
-                return attr<typename IDTypeMap<ID>::type>(n,s);
-            }
         
 
         //end of namespace
