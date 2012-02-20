@@ -61,21 +61,3 @@ void H5FileTest::test_inquery(){
 
 }
 
-void H5FileTest::test_iterator(){
-    std::cout<<"void H5FileTest::test_iterator()----------------------------";
-    std::cout<<std::endl;
-
-    H5File file = H5File::create_file("H5FileTest.h5",true,0);
-
-    H5Group("dir1",file);
-    H5Group("dir2",file);
-    H5Group("dir3",file);
-    H5Group("dir4",file);
-
-    H5File::iterator iter;
-
-    for(auto &s: file)
-    {
-        std::cout<<s.path()<<std::endl;
-    }
-}

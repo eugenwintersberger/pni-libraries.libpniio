@@ -333,17 +333,6 @@ namespace pni{
                 return ginfo.nlinks;
             }            
 
-            H5LinkIterator<H5Group,H5AttributeObject> H5Group::begin() const
-            {
-                H5LinkIterator<H5Group,H5AttributeObject> iter(*this);
-                return iter;
-            }
-
-            H5LinkIterator<H5Group,H5AttributeObject> H5Group::end() const
-            {
-                H5LinkIterator<H5Group,H5AttributeObject> iter(*this,nchilds());
-                return iter;
-            }
         //end of namespace
         }
     }

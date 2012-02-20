@@ -32,7 +32,6 @@
 using namespace pni::utils;
 
 #include "H5AttributeObject.hpp"
-#include "H5LinkIterator.hpp"
 
 
 namespace pni{
@@ -41,14 +40,18 @@ namespace pni{
             //class forward declarations            
             class H5Dataset;
             
-            //! \ingroup nxh5_classes
-            //! \brief HDF5 group object
+            /*! \ingroup nxh5_classes
+            \brief HDF5 group object
+            
+            Group objects are the fundamental structuring objects in the HDF5
+            world. They can be identified by a path within the file and
+            attributes can be attached to them. 
+            */
             class H5Group:public H5AttributeObject{
                 protected:
                     //! construct from object ID
                     explicit H5Group(const hid_t &oid);
                 public:
-                    typedef H5LinkIterator<H5Group,H5AttributeObject> iterator;
                     //==========constructors and destructors===================
                     //! default constructor
                     explicit H5Group();
@@ -77,36 +80,49 @@ namespace pni{
                     H5Group &operator=(H5Object &&o);
 
                     //=============methods to open objects=====================
-                    //! open an arbitrary object
+                    /*! open an arbitrary object
 
-                    //! Opens an arbitrary object. The method takes a path 
-                    //! to the object and returns an H5Object as a result 
-                    //! from which the object can be constructed.
-                    //! \param n object path
-                    //! \return HDF5 object addressed by n
+                    Opens an arbitrary object. The method takes a path to the 
+                    object and returns an H5Object. As all classes derived from 
+                    H5Object every other object can be constructed from such 
+                    an general H5Object. 
+
+                    The path can be either an absolute path or relative to 
+                    the group instance calling this method. Both methods work as
+                    expected.
+                    \param n object path
+                    \return HDF5 object 
+                    */
                     H5Object open(const String &n) const;
-                    //! open an arbitrary object
 
-                    //! Basically this does the same as the open() method.
-                    //! \param n object path
-                    //! \return H5Object addressed by n
-                    //! \sa H5Object open(const String &n) const
+                    /*! open an arbitrary object
+
+                    Basically this does the same as the open() method.
+                    \param n object path
+                    \return H5Object addressed by n
+                    \sa H5Object open(const String &n) const
+                    */
                     H5Object operator[](const String &n) const;
 
-                    //! open by index
+                    /*! open by index
                     
-                    //! Opens a child object below this group by its index.
-                    //! \throws IndexError if index exceeds number of childs
-                    //! \param object index
-                    //! \return child object
+                    Opens a child object below this group by its index. Unlike
+                    open(const String &n) only objects linked to this group can
+                    be opened with this method.
+                    \throws IndexError if index exceeds number of childs
+                    \param object index
+                    \return child object
+                    */
                     H5Object open(size_t i) const;
 
-                    //! open by index
+                    /*! open by index
 
-                    //! [] operator to obtain a child node by index;
-                    //! \throws IndexError if index exceeds number of childs
-                    //! \param object index
-                    //! \return child node
+                    [] operator to obtain a child node by index;
+                    \throws IndexError if index exceeds number of childs
+                    \param object index
+                    \return child node
+                    \sa open(size_t i)
+                    */
                     H5Object operator[](size_t i) const;
 
                     //==============misc methods===============================
@@ -115,51 +131,58 @@ namespace pni{
                     //! This method removes an object attached to this 
                     void remove(const String &n);
 
-                    //! check for the existance of an object
+                    /*! check for the existance of an object
 
-                    //! Checks whether or not an object determined by n exists.
-                    //! n can be either a path relative to this object or 
-                    //! an absolute path. 
-                    //! \param n path to the object 
+                    Checks whether or not an object determined by n exists.
+                    n can be either a path relative to this object or 
+                    an absolute path. 
+                    \param n path to the object 
+                    */
                     bool exists(const String &n) const;
 
     
                     //! close the object
                     virtual void close();
 
-                    //! return the parent group 
+                    /*! \brief return the parent group 
 
-                    //! Returns the parent group for this very group.
-                    //! \return parent group 
+                    Returns the parent group und which this group object is 
+                    linked.
+                    \return parent group 
+                    */
                     virtual H5Group parent() const{
                         return open(base());
                     }
 
-                    //! create a link to this group
+                    /*! \brief create a link to this group
 
-                    //! Creates a file local link to this particular group.
-                    //! path is the new name of the link and is a relative 
-                    //! or absolute path with respect to this group.
-                    //! \param path new link path
+                    Creates a file local link pointing to this group. The new
+                    path under which this group can be accessed is given by
+                    path. This may either be an absolute or relative path (with
+                    respect to this group).
+                    \param path new link path
+                    */
                     void link(const String &path) const;
 
-                    //! create a link to this group
+                    /*! \brief create a link to this group
 
-                    //! Creates a file local link to this group. The location 
-                    //! of the link is given by path which is relative
-                    //! to the group object ref.
-                    //! \param ref reference group
-                    //! \param path new link path
+                    Creates a file local link to this group. The location 
+                    of the link is given by path which is relative
+                    to the group object ref.
+                    \param ref reference group
+                    \param path new link path
+                    */
                     void link(const H5Group &ref,const String &path) const;
 
-                    //! creates a local or external link
+                    /*! creates a local or external link
 
-                    //! This method creates a ling below this group from an 
-                    //! object determined by path. The name of the link is
-                    //! given by name. With this method also external 
-                    //! links are possible.
-                    //! \param path path to the object from which to link
-                    //! \paran name name of the link with respect to this group
+                    This method creates a link below this group from an 
+                    object determined by path. The name of the link is
+                    given by name. With this method also external 
+                    links are possible.
+                    \param path path to the object from which to link
+                    \paran name name of the link with respect to this group
+                    */
                     void link(const String &path,const String &name) const;
 
                     //! number of child nodes
@@ -168,9 +191,6 @@ namespace pni{
                     //! linked below this group.
                     //! \return number of child nodes
                     size_t nchilds() const;
-
-                    iterator begin() const;
-                    iterator end() const;
 
                     
                     friend class H5Dataset;                   
