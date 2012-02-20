@@ -167,6 +167,7 @@ void H5GroupTest::test_attributes(){
     Float32 fvalue;
     CPPUNIT_ASSERT_NO_THROW(fvalue = g.attr("pressure").read<Float32>());
     CPPUNIT_ASSERT(fvalue == sc_value);
+    CPPUNIT_ASSERT(g.attr("pressure").name() == "pressure");
 
     //is the other way around workding
     UInt16 sca = 291;

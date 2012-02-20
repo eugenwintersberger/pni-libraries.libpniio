@@ -117,12 +117,39 @@ namespace pni{
             void H5Attribute::close(){
                 if(is_valid()) H5Aclose(id());
             }
+
+            //-----------------------------------------------------------------
+            String H5Attribute::name() const
+            {
+                char name[1024];
+                H5Aget_name(id(),1024,name);
+                return String(name);
+            }
+
+            //------------------------------------------------------------------
+            String H5Attribute::base() const
+            {
+                return String("");
+            }
+
+            //-----------------------------------------------------------------
+            String H5Attribute::path() const
+            {
+                return String("");
+            }
             
             //-----------------------------------------------------------------
             //implementation of write from String
             void H5Attribute::write(const String &s) const{
                 EXCEPTION_SETUP("void H5Attribute::write(const String &s) "
                         "const");
+
+                //throw exception if the attribute is not scalar
+                if(!_dspace.is_scalar()){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Attribute ["+name()+"] is not scalar!");
+                    EXCEPTION_THROW();
+                }
 
                 const char *ptr = s.c_str();
 
@@ -131,7 +158,7 @@ namespace pni{
                 herr_t err = H5Awrite(id(),element_type,&ptr);
                 if(err < 0){
                     EXCEPTION_INIT(H5AttributeError,
-                            "Error writing attribute data");
+                            "Error writing attribute ["+name()+"]!");
                     EXCEPTION_THROW();
                 }
             }
@@ -140,6 +167,12 @@ namespace pni{
             //implementation to read to string
             void H5Attribute::read(String &s) const{
                 EXCEPTION_SETUP("void H5Attribute::read(String &s) const");
+
+                if(!_dspace.is_scalar()){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Attribute ["+name()+"] is not scalar!");
+                    EXCEPTION_THROW();
+                }
                 
                 hid_t element_type = H5Aget_type(id());
 
@@ -148,7 +181,7 @@ namespace pni{
                 herr_t err = H5Aread(id(),element_type,&ptr);
                 if(err<0){
                     EXCEPTION_INIT(H5AttributeError,
-                            "Error writing attribute!");
+                            "Error reading attribute ["+name()+"]!");
                     EXCEPTION_THROW();
                 }
 

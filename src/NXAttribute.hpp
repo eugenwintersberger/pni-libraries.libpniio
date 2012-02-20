@@ -41,7 +41,7 @@ namespace pni{
         //! read and write attribute data from and to an object.
         template<typename Imp> class NXAttribute{
             private:
-                Imp _imp;
+                Imp _imp;  //!< implementation of the attribute object
             public:
                 //==========constructors and destructors=======================
                 //! default constructor
@@ -102,6 +102,9 @@ namespace pni{
 
                 //================IO methods====================================
                 //! write from a buffer
+
+                //! Write attribute data from a buffer object. The method 
+                //! throws a
                 template<typename T,template<typename> class BT> 
                     void write(const BT<T> buffer) const
                 {
