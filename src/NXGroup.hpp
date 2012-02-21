@@ -53,17 +53,20 @@ namespace pni{
                     NXObjectIterator<NXGroup<Imp>,NXObject<MAPTYPE(Imp,ObjectImpl)>
                     > iterator;
                 //===========constructors and destructor========================
-                //! default constructor
+                /*! \brief default constructor
+
+                */
                 explicit NXGroup():NXObject<Imp>()
                 {
                 }
 
                 //--------------------------------------------------------------
-                //! copy constructor
+                /*! \brief copy constructor
 
-                //! The copy constructor is doing exactly the
-                //! same as the assignment operator. Thus it can be used to assign
-                //! an object directly at its construction.
+                The copy constructor is doing exactly the
+                same as the assignment operator. Thus it can be used to assign
+                an object directly at its construction.
+                */
                 NXGroup(const NXGroup<Imp> &o):NXObject<Imp>(o)
                 {
                 }
@@ -93,8 +96,6 @@ namespace pni{
                 NXGroup(const NXObject<ObjImp> &o):NXObject<Imp>(o)
                 {
                 }
-
-
 
                 //--------------------------------------------------------------
                 //! destructor
@@ -130,11 +131,12 @@ namespace pni{
 
 
                 //=================group creation methods=======================
-                //! create a simple group
+                /*! \brief create a simple group
 
-                //! Creates a simple group in the Nexus data tree. No class
-                //! attribute is attached to this kind of group.
-                //! \param n name of the group
+                Creates a simple group in the Nexus data tree. No class
+                attribute is attached to this kind of group.
+                \param n name of the group
+                */
                 NXGroup<MAPTYPE(Imp,GroupImpl)> create_group(const String &n) const
                 {
                     EXCEPTION_SETUP("RETTYPE(NXGroup,Imp,NXGroupImpl) "
@@ -147,11 +149,12 @@ namespace pni{
                 }
                
                 //--------------------------------------------------------------
-                //! create a group as nexus class
+                /*! \brief create a group as nexus class
 
-                //! Create a group that represents a Nexus class. 
-                //! \param n group name
-                //! \param type nexus class type
+                Create a group that represents a Nexus class. 
+                \param n group name
+                \param type nexus class type
+                */
                 NXGroup<MAPTYPE(Imp,GroupImpl)> 
                     create_group(const String &n,const String &type) const
                 {
@@ -172,9 +175,9 @@ namespace pni{
                 }
 
                 //--------------------------------------------------------------
-                //! create a scalar field
+                /*! \brief create a scalar field
 
-                //! Create a field 
+                */
                 template<typename T> NXField<MAPTYPE(Imp,FieldImpl)>
                     create_field(const String &n) const
                 {
@@ -190,12 +193,13 @@ namespace pni{
                 }
                 
                 //--------------------------------------------------------------
-                //! create a multidimensional field
+                /*! \brief create a multidimensional field
 
-                //! Create a multidimensional field of shape s. The field 
-                //! can be extended in any direction. 
-                //! \param n name of the field
-                //! \param s shape of the field
+                Create a multidimensional field of shape s. The field can be 
+                extended in any direction. 
+                \param n name of the field
+                \param s shape of the field
+                */
                 template<typename T> NXField<MAPTYPE(Imp,FieldImpl)>
                     create_field(const String &n,const Shape &s) const
                 {
@@ -214,9 +218,9 @@ namespace pni{
                 }
 
                 //--------------------------------------------------------------
-                //! create a multidimensional field with filter
+                /*! \brief Creates a multidimensional field with a filter.
 
-                //! Creates a multidimensional field with a filter.
+                */
                 template<typename T,typename FilterImp> NXField<MAPTYPE(Imp,FieldImpl)>
                     create_field(const String &n,const Shape &s,
                            const NXFilter<FilterImp> &filter) const
@@ -237,7 +241,9 @@ namespace pni{
                 }
 
                 //-------------------------------------------------------------
-                //! create a multidimensional field (explicit chunk)
+                /*! \brief create a multidimensional field (explicit chunk)
+
+                */
                 template<typename T> NXField<MAPTYPE(Imp,FieldImpl)>
                     create_field(const String &n,const Shape &s,const Shape &cs)
                     const
@@ -249,7 +255,9 @@ namespace pni{
                 }
                
                 //--------------------------------------------------------------
-                //! create a multidimensional field (explicit chunk) with filter
+                /*! \brief create a multidimensional field (explicit chunk) with filter
+
+                */
                 template<typename T,typename FilterImp> NXField<MAPTYPE(Imp,FieldImpl)>
                     create_field(const String &n,const Shape &s,const Shape &cs,
                             const NXFilter<FilterImp> &filter)
@@ -264,12 +272,13 @@ namespace pni{
 
 
                 //============methods to open objects===========================
-                //! open an arbitrary object
+                /*! \brief open an arbitrary object
 
-                //! Returns an object by name. The name can be either an
-                //! absolute or relative path.
-                //! \param n path or name of the object to open
-                //! \return object
+                Returns an object by name. The name can be either an absolute or 
+                relative path.
+                \param n path or name of the object to open
+                \return object
+                */
                 virtual NXObject<MAPTYPE(Imp,ObjectImpl)> open(const String &n)
                     const
                 {
@@ -290,11 +299,12 @@ namespace pni{
                 }
 
                 //-------------------------------------------------------------
-                //! open an object
+                /*! \brief open an object
 
-                //! Opens an object using the [] operator. 
-                //! \param n name or path of the object
-                //! \return object
+                Opens an object using the [] operator. 
+                \param n name or path of the object
+                \return object
+                */
                 NXObject<MAPTYPE(Imp,ObjectImpl)> operator[](const String &n)
                     const
                 {
@@ -302,24 +312,26 @@ namespace pni{
                 }
 
                 //-------------------------------------------------------------
-                //! number of childs
+                /*! \brief number of childs
 
-                //! Returns the total number of childs linke below this group.
-                //! \return number of childs
+                Returns the total number of childs linke below this group.
+                \return number of childs
+                */
                 size_t nchilds() const
                 {
                     return this->imp().nchilds();
                 }
 
                 //-------------------------------------------------------------
-                //! open object by index
+                /*! \brief open object by index
 
-                //! Unlike open(const String &n) here the object is 
-                //! addressed by its index. Thus only objects directly linked
-                //! below this group can be accessed.
-                //! \throws IndexError if the index exceeds number of childs
-                //! \param i index of the object
-                //! \return object
+                Unlike open(const String &n) here the object is addressed by 
+                its index. Thus only objects directly linked below this group 
+                can be accessed.
+                \throws IndexError if the index exceeds number of childs
+                \param i index of the object
+                \return object
+                */
                 NXObject<MAPTYPE(Imp,ObjectImpl)> open(size_t i) const
                 {
                     return
@@ -327,53 +339,75 @@ namespace pni{
                 }
 
                 //-------------------------------------------------------------
-                //! open object by index
+                /*! \brief open object by index
 
-                //! Opens an object by index using the [] operator. 
-                //! \throws IndexError if the index exceeds number of childs
-                //! \param i index of the object
-                //! \return object
+                Opens an object by index using the [] operator. 
+                \throws IndexError if the index exceeds number of childs
+                \param i index of the object
+                \return object
+                */
                 NXObject<MAPTYPE(Imp,ObjectImpl)> operator[](size_t i) const
                 {
                     return this->open(i);
                 }
 
-                //! check if a particular object exists
+                //-------------------------------------------------------------
+                /*! \brief check if a particular object exists
+
+                */
                 bool exists(const String &n) const{
                     return this->imp().exists(n);
                 }
 
-                //! remove an object from the file
+                //-------------------------------------------------------------
+                /*! \brief remove an object from the file
+
+                */
                 void remove(const String &n) const{
                     //this->imp().remove(n);
                 }
 
-                //! create link
+                //-------------------------------------------------------------
+                /*! \brief create link
 
+                */
                 void link(const String &n) const
                 {
                     this->imp().link(n);
                 }
 
-                //! create link
+                //--------------------------------------------------------------
+                /*! \brief create link
+
+                */
                 void link(const NXGroup &ref,const String &n) const
                 {
                     this->imp().link(ref.imp(),n);
                 }
 
-                //! create link
+                //--------------------------------------------------------------
+                /*! create link
+
+                */
                 void link(const String &p,const String &n) const
                 {
                     this->imp().link(p,n);
                 }
 
+                //--------------------------------------------------------------
+                /*! \brief iterator on first element
+
+                */
                 NXObjectIterator<NXGroup<Imp>,
                     NXObject<MAPTYPE(Imp,ObjectImpl)> > begin() const
                 {
                     return NXObjectIterator<NXGroup<Imp>,
                            NXObject<MAPTYPE(Imp,ObjectImpl)> >(*this);
                 }
-                
+               
+                /*! \brief iterator on last element
+
+                */
                 NXObjectIterator<NXGroup<Imp>,
                     NXObject<MAPTYPE(Imp,ObjectImpl)> > end() const
                 {
@@ -381,8 +415,6 @@ namespace pni{
                            NXObject<MAPTYPE(Imp,ObjectImpl)> >(*this,
                                    this->nchilds());
                 }
-
-
 
         };
 
