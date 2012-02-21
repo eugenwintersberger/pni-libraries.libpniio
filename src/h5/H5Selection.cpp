@@ -31,6 +31,49 @@
 namespace pni{
     namespace nx{
         namespace h5{
+            //=================Implementation of private methods================
+            void H5Selection::__throw_if_not_scalar(const String &method) const
+            {
+                String desc ="Selection is not scalar!"; 
+                if(this->size()!=1){
+                    ShapeMissmatchError error(method,desc);
+                    throw(error);
+                }
+            }
+            
+            //------------------------------------------------------------------
+            void H5Selection::__throw_if_selection_app_fails
+                (herr_t err, const String &method)const
+            {
+                if(err < 0){
+                    H5DataSetError error(method,"Error applying selection!");
+                    throw(error);
+                }
+            }
+           
+            //------------------------------------------------------------------
+            void H5Selection::__throw_selection_read_fail
+                (herr_t err,const String &method) const
+            {
+                String d = "Error reading data via selection to dataset"
+                           " ["+_dataset->name()+"]!";
+                if(err < 0){
+                    H5DataSetError error(method,d);
+                    throw(error);
+                }
+            }
+
+            //------------------------------------------------------------------
+            void H5Selection::__throw_selection_write_fail
+                (herr_t err,const String &method) const
+            {
+                String d = "Error writing data via selection to dataset"
+                           " ["+_dataset->name()+"]!";
+                if(err < 0){
+                    H5DataSetError error(method,d);
+                    throw(error);
+                }
+            }
 
             //==============Implementation of constructors and destructors======
             //implementation of the default constructor
@@ -63,6 +106,15 @@ namespace pni{
                 :_offset(s.rank()),_stride(s.rank()),_counts(s.rank()),
                  _dataset(&ds)
             {
+                EXCEPTION_SETUP("H5Selection::H5Selection(const H5Dataset &ds,"
+                                "const Shape &s,size_t offset,size_t stride)");
+
+                if(s.rank() != ds.rank()){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Rank of dataset ["+ds.name()+"] and selection "
+                            "rank do not match!");
+                    EXCEPTION_THROW();
+                }
 
                 //set offset and stride
                 _offset = offset;
@@ -71,15 +123,6 @@ namespace pni{
 
             }
 
-            //------------------------------------------------------------------
-            //implementation with initializer lists
-
-            H5Selection::H5Selection(const std::initializer_list<hsize_t> &offset,
-                                     const std::initializer_list<hsize_t> &stride,
-                                     const std::initializer_list<hsize_t> &count):
-                _offset(offset), _stride(stride), _counts(count)
-            {
-            }
 
             //------------------------------------------------------------------
             //implementation of the destructor
@@ -269,15 +312,11 @@ namespace pni{
                 EXCEPTION_SETUP("void H5Selection::write(const BinaryType &value) "
                         "const");
 
-                if(this->size() != 1){
-                    EXCEPTION_INIT(ShapeMissmatchError,
-                            "Selection is not scalar!");
-                    EXCEPTION_THROW();
-                }
+                __throw_if_not_scalar("void H5Selection::write(const "
+                                      "BinaryType &value) const");
                 
                 //create memory dataspace and datatype
-                H5Datatype mt = 
-                    H5DatatypeFactory::create_type<Binary>();
+                H5Datatype mt = H5DatatypeFactory::create_type<Binary>();
                 H5Dataspace ms;
 
                 __write(mt,ms,&value);
@@ -286,16 +325,11 @@ namespace pni{
             //------------------------------------------------------------------
             //implementation of the write string method 
             void H5Selection::write(const String &value) const{
-                EXCEPTION_SETUP("template<> void H5Selection::"
+                EXCEPTION_SETUP("void H5Selection::"
                         "write(const String &value)");
 
-                std::cout<<"use string writer ...."<<std::endl;
-
-                if(this->size()!=1){
-                    EXCEPTION_INIT(ShapeMissmatchError,
-                            "Selection is not scalar!");
-                    EXCEPTION_THROW();
-                }
+                __throw_if_not_scalar("template<> void H5Selection::write"
+                                      "(const String &value)");
 
                 const char *ptr = value.c_str();
 
@@ -312,11 +346,8 @@ namespace pni{
                         this->stride().ptr(), //set the stride pointer
                         this->count().ptr(),  //set the count pointer
                         NULL);
-                if(err < 0){
-                    EXCEPTION_INIT(H5DataSetError,
-                            "Error applying selection!");
-                    EXCEPTION_THROW();
-                }
+                __throw_if_selection_app_fails(err,"void H5Selection::"
+                                               "write(const String &value)");
 
                 //write data to disk
                 err = H5Dwrite(_dataset->id(),
@@ -325,11 +356,8 @@ namespace pni{
                         _dataset->space().id(),  //set file data space
                         H5P_DEFAULT,
                         &ptr);
-                if(err < 0){
-                    EXCEPTION_INIT(H5DataSetError,
-                            "Error writing data to dataset!");
-                    EXCEPTION_THROW();
-                }
+                __throw_selection_write_fail(err,"void H5Selection::"
+                                             "write(const String &value)");
 
                 //remove selection from the dataspace
                 H5Sselect_none(_dataset->space().id());
@@ -339,15 +367,10 @@ namespace pni{
             //------------------------------------------------------------------
             //implementation of the read string method 
             void H5Selection::read(String &value) const{
-                EXCEPTION_SETUP("void H5Selection::" "read(String &value) const");
+                EXCEPTION_SETUP("void H5Selection::read(String &value) const");
 
-
-                if(this->size()!=1){
-                    EXCEPTION_INIT(ShapeMissmatchError,
-                            "Selection is not scalar!");
-                    EXCEPTION_THROW();
-                }
-
+                __throw_if_not_scalar("void H5Selection::read(String &value)"
+                                      " const");
 
                 herr_t err;
                 //set selection to the file datasets original dataset
@@ -358,11 +381,8 @@ namespace pni{
                         this->stride().ptr(), //set the stride pointer
                         this->count().ptr(),  //set the count pointer
                         NULL);
-                if(err < 0){
-                    EXCEPTION_INIT(H5DataSetError,
-                            "Error applying selection!");
-                    EXCEPTION_THROW();
-                }
+                __throw_if_selection_app_fails(err,"void H5Selection::"
+                                               "read(String &value) const");
                 
                 const char *ptr = nullptr;
 	            hid_t xfer_plist = H5Pcreate(H5P_DATASET_XFER);
@@ -378,11 +398,8 @@ namespace pni{
                         _dataset->space().id(),  //set file data space
                         xfer_plist,
                         &ptr);
-                if(err < 0){
-                    EXCEPTION_INIT(H5DataSetError,
-                            "Error reading string data to dataset!");
-                    EXCEPTION_THROW();
-                }
+                __throw_selection_read_fail(err,"void H5Selection::read"
+                                            "(String &value) const");
 
                 //copy content of the pointer to the string object
                 try{
@@ -408,15 +425,11 @@ namespace pni{
                 EXCEPTION_SETUP("void H5Selection::read(BinaryType &value) "
                         "const");
 
-                if(this->size() != 1){
-                    EXCEPTION_INIT(ShapeMissmatchError,
-                            "Selection is not scalar!");
-                    EXCEPTION_THROW();
-                }
+                __throw_if_not_scalar("void H5Selection::read(BinaryType "
+                                      "&value) const");
 
                 //create memory dataspace and datatype
-                H5Datatype mt = 
-                    H5DatatypeFactory::create_type<Binary>();
+                H5Datatype mt = H5DatatypeFactory::create_type<Binary>();
                 H5Dataspace ms;
 
                 __read(mt,ms,&value);

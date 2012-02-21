@@ -17,7 +17,7 @@
  * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  *
- * Declaration of a HDF5 selection class.
+ * Definition of a HDF5 selection class.
  *
  * Created on: Jan 16, 2012
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
@@ -39,23 +39,22 @@ namespace pni{
     namespace nx{
         namespace h5{
 
-            //! \ingroup nxh5_classes
-            //! \brief selection object
+            /*! \ingroup nxh5_classes
+            \brief selection object
 
-            //! A selection allows to read only a part of the data stored
-            //! in a dataset. In other words one can read only a strip or 
-            //! a single frame from a 3D dataset. This implies a
-            //! simple problem: how to describe the shape of the selection.
-            //! For obvious reasons to define a selection with respect 
-            //! to the target HDF5 dataset the rank of the selections shape 
-            //! must be equal to that of the dataset. However, the array 
-            //! (in general it will be an array) which will hold the data
-            //! can have a different shape (think of a 2D slice from a 
-            //! 3D block of data). This implies that we have to manage 
-            //! to kinds of shapes: the selection shape (the shape with 
-            //! respect to the HDF5 dataset) and the memory shape which 
-            //! describes the shape of the object in memory holding the 
-            //! data.
+            A selection allows to read only a part of the data stored in a 
+            dataset. In other words one can read only a strip or a single frame
+            from a 3D dataset. This implies a simple problem: how to describe 
+            the shape of the selection. For obvious reasons to define a 
+            selection with respect to the target HDF5 dataset the rank of the 
+            selections shape must be equal to that of the dataset. However, the
+            array (in general it will be an array) which will hold the data can 
+            have a different shape (think of a 2D slice from a 3D block of 
+            data). This implies that we have to manage to kinds of shapes: the 
+            selection shape (the shape with respect to the HDF5 dataset) and 
+            the memory shape which describes the shape of the object in memory 
+            holding the data.
+            */
             class H5Selection{
                 private:
                     Buffer<hsize_t> _offset;    //!< selection offset
@@ -65,59 +64,111 @@ namespace pni{
                                                 //!< to which the selection
                                                 //!< belongs.
 
-                    //! write from pointer
+                    //---------------------------------------------------------
+                    /*! \brief write from pointer
 
-                    //! Writes a pointer to the HDF5 dataset using the
-                    //! selection.
-                    //! \param mt memory datatype
-                    //! \param ms memory dataspace
-                    //! \param ptr pointer to the data
+                    Writes a pointer to the HDF5 dataset using the selection.
+                    \throws H5DataSetError in case of errors
+                    \param mt memory datatype
+                    \param ms memory dataspace
+                    \param ptr pointer to the data
+                    */
                     template<typename T> void 
                         __write(const H5Datatype &mt,const H5Dataspace &ms,
                                 const T *ptr) const;
 
-                    //! read to pointer
+                    //---------------------------------------------------------
+                    /*! \brief read to pointer
 
-                    //! Read data to a memory location determined by ptr.
-                    //! \param mt memory datatype
-                    //! \param ms memory dataspace
-                    //! \param ptr pointer where to store data
+                    Read data to a memory location determined by ptr.
+                    \throws H5DataSetError in case of errors 
+                    \param mt memory datatype
+                    \param ms memory dataspace
+                    \param ptr pointer where to store data
+                    */
                     template<typename T> void 
                         __read(const H5Datatype &mt,const H5Dataspace &ms,
                                T *ptr) const;
+
+                    //---------------------------------------------------------
+                    /*! \brief throw exception if selection is not scalar
+
+                    This method throws an exception if the selection is not 
+                    scalar.
+                    \throws ShapeMissmatchError if dataset is not scalar
+                    \param method name of the method for which to throw
+                    */
+                    void __throw_if_not_scalar(const String &method) const;
+
+                    //---------------------------------------------------------
+                    /*! \brief error if dataset application fails
+
+                    Private method throwing H5DatasetError if the application 
+                    of the selection on the dataset fails.
+                    \throws H5DataSetError if application of the dataset fails
+                    \param err error code
+                    \param method name of the method
+                    */
+                    void __throw_if_selection_app_fails(herr_t err,
+                                                        const String &method
+                                                       )const;
+
+                    //---------------------------------------------------------
+                    /*! \brief error reading from selection
+
+                    Throws an exception if reading from the selection failed.
+                    \throws H5DataSetError if reading from selection fails
+                    \param err error code
+                    \param method name of the method where the error occured
+                    */
+                    void __throw_selection_read_fail(herr_t err,
+                                                     const String &method
+                                                    ) const;
+
+                    //--------------------------------------------------------
+                    /*! \brief error writing to selection
+
+                    Method throws an exception if writing to the selection
+                    failed.
+                    \throws H5DataSetError if writing to selection fails
+                    \param err error code
+                    \param method name of the method where writing failed
+                    */
+                    void __throw_selection_write_fail(herr_t err,
+                                                      const String &method
+                                                     ) const;
                 public:
                     //============constructors and destructor==================
                     //! default constructor
                     H5Selection();
+
+                    //---------------------------------------------------------
                     //! copy constructor
                     H5Selection(const H5Selection &o);
+
+                    //---------------------------------------------------------
                     //! move constructor
                     H5Selection(H5Selection &&o);
-                    //! construction with shape
+
+                    //---------------------------------------------------------
+                    /*! \brief construction with shape
                     
-                    //! Construct a selection object from a shape object. 
-                    //! The shape object only defines the counts along each 
-                    //! dimension. The stride and offset are set with default 
-                    //! values and must be adjusted after object 
-                    //! instantiation.
-                    //! \param s shape (counts and rank) of the selection
-                    //! \param offset default offset (0)
-                    //! \param stride default stride (1)
+                    Construct a selection object from a shape object.  The 
+                    shape object only defines the counts along each dimension. 
+                    The stride and offset are set with default values and must
+                    be adjusted after object instantiation. The rank of the 
+                    dataset and the shape object must be equal.
+                    \throws ShapeMissmatchError if selection and dataset rank do
+                    not match
+                    \param s shape (counts and rank) of the selection
+                    \param offset default offset (0)
+                    \param stride default stride (1)
+                    */
                     explicit H5Selection(const H5Dataset &ds,
                                 const Shape &s,size_t offset=0,size_t stride=1);
 
-                    //! constructor with initializer list
 
-                    //! This constructor uses initializer lists to create a
-                    //! selection object. In order to successfully initialize
-                    //! the selection all lists must be of same length.
-                    //! \param offset list with offset values
-                    //! \param stride list with stride values
-                    //! \param count list with count values
-                    H5Selection(const std::initializer_list<hsize_t> &offset,
-                                const std::initializer_list<hsize_t> &stride,
-                                const std::initializer_list<hsize_t> &count); 
-
+                    //---------------------------------------------------------
                     //! destructor
                     virtual ~H5Selection();
 
@@ -128,243 +179,369 @@ namespace pni{
                     H5Selection &operator=(H5Selection &&o);
 
                     //============inquery methods==============================
-                    //! number of elements in the selection
+                    /*! \brief number of elements in the selection
 
-                    //! Returns the number of elements in the selection. 
-                    //! \return number of elements
+                    Returns the number of elements in the selection. 
+                    \return number of elements
+                    */
                     size_t size() const;
 
-                    //! rank of the selection
+                    //---------------------------------------------------------
+                    /*! \brief rank of the selection
 
-                    //! Return the rank (number of dimensions) of the selection.
-                    //! \return number of dimensions
+                    Return the rank (number of dimensions) of the selection.
+                    \return number of dimensions
+                    */
                     size_t rank() const;
 
-                    //! shape of the selection
+                    //----------------------------------------------------------
+                    /*! \brief shape of the selection
 
-                    //! Returns the shape of the selection
+                    Returns the shape of the selection which contains the rank
+                    and the count values along each dimension.
+                    \return selection shape
+                    */
                     Shape shape() const;
 
-                    //! selection dataspace
+                    //----------------------------------------------------------
+                    /*! \brief selection dataspace
 
-                    //! Return a constant reference to the dataspace describing
-                    //! the selection.
-                    //! \return dataspace reference
+                    Returns a copy of the dataspace descriping the selection.
+                    This dataspace can be used as a memory dataspace for IO 
+                    operations on the selection.
+                    \return selection dataspace
+                    */
                     H5Dataspace space() const;
 
-                    //! read/write offset 
+                    //----------------------------------------------------------
+                    /*! \brief read/write offset 
 
-                    //! Returns a read write reference to offset value i.
-                    //! \throws IndexError if i exceeds selection rank
-                    //! \param i index of the requested offset value
-                    //! \return reference to offset value
+                    Returns a read write reference to offset value i.
+                    \throws IndexError if i exceeds selection rank
+                    \param i index of the requested offset value
+                    \return reference to offset value
+                    */
                     hsize_t &offset(size_t i);
-                    //! read offset 
 
-                    //! Returns a copy of offset value i. 
-                    //! \throws IndexError if i exceeds selection rank
-                    //! \param i index of the requested offset value
-                    //! \return offset value
+                    //----------------------------------------------------------
+                    /*! \brief read offset 
+
+                    Returns a copy of offset value i. 
+                    \throws IndexError if i exceeds selection rank
+                    \param i index of the requested offset value
+                    \return offset value
+                    */
                     hsize_t offset(size_t i) const;
-                    //! set offset
 
-                    //! Set the offset value for dimension i.
-                    //! \throws IndexError if i exceeds selection rank
-                    //! \param i dimension index
-                    //! \param o offset value along i
+                    //----------------------------------------------------------
+                    /*! \brief set offset
+
+                    Set the offset value for dimension i.
+                    \throws IndexError if i exceeds selection rank
+                    \param i dimension index
+                    \param o offset value along i
+                    */
                     void offset(size_t i,hsize_t o);
 
-                    //! set offset with initializer list
+                    //---------------------------------------------------------
+                    /*! \brief set offset with initializer list
 
-                    //! Use this method to set the offset of the selection
-                    //! using an initialzer list.
+                    Use this method to set the offset of the selection
+                    using an initialzer list.
+                    \throws SizeMissmatchError if list length and selection rank
+                    do not match
+                    \param l initializer list with offset values
+                    */
                     void offset(const std::initializer_list<hsize_t> &l);
 
+                    //---------------------------------------------------------
+                    /*! \brief get offset buffer
 
-                    //! get offset buffer
-
-                    //! This method must be used to obtain a reference to the 
-                    //! offset buffer of the selection.
-                    //! \return reference to the offset buffer
+                    This method must be used to obtain a reference to the 
+                    offset buffer of the selection.
+                    \return reference to the offset buffer
+                    */
                     const Buffer<hsize_t> &offset() const;
-                   
-                    //! read/write stride
+                  
+                    //---------------------------------------------------------
+                    /*! \brief read/write stride
 
-                    //! Returns a read/write reference to the stride value
-                    //! along dimension i.
-                    //! \throws IndexError if i exceeds selection rank
-                    //! \param i dimension index
-                    //! \return reference to the stride of dimension i
+                    Returns a read/write reference to the stride value
+                    along dimension i.
+                    \throws IndexError if i exceeds selection rank
+                    \param i dimension index
+                    \return reference to the stride of dimension i
+                    */
                     hsize_t &stride(size_t i);
-                    //! copy of stride along i
+                    
+                    //---------------------------------------------------------
+                    /*! \brief copy of stride along i
 
-                    //! Returns a copy of the stride value along dimension i.
-                    //! \throws IndexError if i exceeds selection rank
-                    //! \param i dimension index
-                    //! \return stride value along dimension i
+                    Returns a copy of the stride value along dimension i.
+                    \throws IndexError if i exceeds selection rank
+                    \param i dimension index
+                    \return stride value along dimension i
+                    */
                     hsize_t stride(size_t i) const;
-                    //! set stride along i
 
-                    //! Set the stride value along dimension i to s.
-                    //! \throws IndexError if i exceeds selection rank
-                    //! \param i dimension index
-                    //! \param s stride along i
+                    //---------------------------------------------------------
+                    /*! \brief set stride along i
+
+                    Set the stride value along dimension i to s.
+                    \throws IndexError if i exceeds selection rank
+                    \param i dimension index
+                    \param s stride along i
+                    */
                     void stride(size_t i,hsize_t s);
 
-                    //! set stride with initializer list
+                    //---------------------------------------------------------
+                    /*! \brief set stride with initializer list
 
-                    //! Set the stride values using an initializer list.
+                    Set the stride values using an initializer list.
+                    \throws SizeMissmatchError if list length and selection rank
+                    do not match
+                    \param l initializer list with stride values
+                    */
                     void stride(const std::initializer_list<hsize_t> &l);
 
-                    //! get stride buffer
+                    //---------------------------------------------------------
+                    /*! \brief get stride buffer
 
-                    //! Return a constant reference to the buffer with the 
-                    //! stride values of the selection.
-                    //! \return reference to the stride buffer
+                    Return a constant reference to the buffer with the 
+                    stride values of the selection.
+                    \return reference to the stride buffer
+                    */
                     const Buffer<hsize_t> &stride() const;
 
-                    //! read/write count
+                    //---------------------------------------------------------
+                    /*! \brief read/write count
 
-                    //! Returns a read write reference to the count value 
-                    //! along dimension i.
-                    //! \throws IndexError if i exceeds selection rank
-                    //! \param i dimension index
-                    //! \return reference to the count value along i
+                    Returns a read write reference to the count value 
+                    along dimension i.
+                    \throws IndexError if i exceeds selection rank
+                    \param i dimension index
+                    \return reference to the count value along i
+                    */
                     hsize_t &count(size_t i);
-                    //! copy of count along i
 
-                    //! Returns a copy of the count value along dimension i.
-                    //! \throws IndexError if i exceeds selection rank
-                    //! \param i dimension index
-                    //! \return count along dimension i
+                    //---------------------------------------------------------
+                    /*! \brief copy of count along i
+
+                    Returns a copy of the count value along dimension i.
+                    \throws IndexError if i exceeds selection rank
+                    \param i dimension index
+                    \return count along dimension i
+                    */
                     hsize_t count(size_t i) const;
-                    //! set count value
 
-                    //! Sets the count value along dimension i to c.
-                    //! \throws IndexError if i exceeds selection rank
-                    //! \param i dimension index
-                    //! \param c count value
+                    //---------------------------------------------------------
+                    /*! \brief set count value
+
+                    Sets the count value along dimension i to c.
+                    \throws IndexError if i exceeds selection rank
+                    \param i dimension index
+                    \param c count value
+                    */
                     void count(size_t i,hsize_t c);
 
-                    //! set count with initializer list
+                    //----------------------------------------------------------
+                    /*! \brief set count with initializer list
 
-                    //! Set the count values using an initializer list.
+                    Set the count values using an initializer list.
+                    \throw SizeMissmatchError if list length and selection rank
+                    do not match
+                    \param l initializer list with count values
+                    */
                     void count(const std::initializer_list<hsize_t> &l);
 
-                    //! get count buffer
+                    //----------------------------------------------------------
+                    /*! \brief get count buffer
 
-                    //! Returns a constant reference to the buffer with the 
-                    //! count values of the selection.
-                    //! \return reference to the count buffer
+                    Returns a constant reference to the buffer with the 
+                    count values of the selection.
+                    \return reference to the count buffer
+                    */
                     const Buffer<hsize_t> &count() const;
-                    
-                    //! write a single value with selection
+                   
+                    //---------------------------------------------------------
+                    /*! \brief write a single value with selection
 
-                    //! write a single value at the location specified by 
-                    //! selection. To use a selection the dataset must not
-                    //! be scalar. 
-                    //! \throws ShapeMissmatchError if the dataset is scalar
-                    //! \throws H5DataSetError in cases of other errors
-                    //! \param s selection object
-                    //! \param value object from which to read data
+                    write a single value at the location specified by selection. 
+                    To use a selection the dataset must not be scalar. 
+                    \throws ShapeMissmatchError if the dataset is scalar
+                    \throws H5DataSetError in cases of other errors
+                    \param s selection object
+                    \param value object from which to read data
+                    */
                     template<typename T> void write(const T &value) const;
 
-                    //! write a single string value
+                    //---------------------------------------------------------
+                    /*! \brief write a single string value
 
-                    //! Stings need a slightly different handling than all 
-                    //! other data. Thats why this method was overloaded.
-                    //! \param value the string to write
+                    Stings need a slightly different handling than all 
+                    other data. Thats why this method was overloaded.
+                    The selection must be scalar in order for this operation 
+                    to succeed.
+                    \throws ShapeMissmatchError if selection is not scalar
+                    \throws H5DataSetError in case of other IO errors
+                    \param value the string to write
+                    */
                     void write(const String &value) const;
 
-                    //! read a simple value from the selection
+                    //---------------------------------------------------------
+                    /*! \brief read a simple value from the selection
+
+                    Read a simple POD value from the selection. 
+                    \throws ShapeMissmatchValue if selection is not scalar
+                    \throws H5DataSetError in case of other IO errors
+                    \param value variable where to store the data
+                    */
                     template<typename T> void read(T &value) const;
 
 
-                    //! reading a complex value
+                    //---------------------------------------------------------
+                    /*! \brief reading a complex value
+                    
+                    Reading data from the selection and store it to an 
+                    instance of std::complex<T> with T being a floating 
+                    point type. 
+                    \throws ShapeMissmatchError if selection is not scalar
+                    \throws H5DataSetError in case of other IO errors
+                    \param value instance of std::complex<T> where to store data
+                    */
                     template<typename T> void read(std::complex<T> &value)
                         const;
 
-                    //! write a complex value
+                    //---------------------------------------------------------
+                    /*! \brief write a complex value
+
+                    Write the content of an instance of std::complex<T> to the 
+                    selection. T must be a floating point type. 
+                    \throws ShapeMissmatchError if selection is not scalar
+                    \throws H5DataSetError in case of other IO errors
+                    \parma value instance from which to write data to the
+                    selection
+                    */
                     template<typename T> void write(const std::complex<T> &value)
                         const;
 
-                    //! Reading a binary value
+                    //----------------------------------------------------------
+                    /*! \brief reading a binary value
+
+                    Read a single value of type Binary from the selection. 
+                    \throws ShapeMissmatchError if selection is not scalar
+                    \throws H5DataSetError in case of other IO errors
+                    \param value target variable to which to read data
+                    */
                     void read(Binary &value) const;
 
-                    //! Writing a binary value
+                    //----------------------------------------------------------
+                    /*! \brief Writing a binary value
+
+                    Write a single value of type Binary to the selection.
+                    \throws ShapeMissmatchError if the selection is not scalar
+                    \throws H5DataSetError in case of other IO errors
+                    \param value Binary value which to write to disk
+                    */
                     void write(const Binary &value) const;
 
+                    //----------------------------------------------------------
+                    /*! \brief read a string value 
 
-                    //! read a string value 
-
-                    //! Read a string value from the selection. This works only
-                    //! if the size of the selection is 1. 
-                    //! \param value variable where to store the data
+                    Read a string value from the selection. This works only
+                    if the size of the selection is 1. 
+                    \throws ShapeMissmatchError if selection is not scalar
+                    \throws H5DataSetError in case of other IO errors
+                    \param value variable where to store the data
+                    */
                     void read(String &value) const;
 
-                    
-                    //! write a buffer with selection
+                    //----------------------------------------------------------
+                    /*! \brief write a buffer with selection
 
-                    //! Writes teh content of a memory buffer to the dataset
-                    //! in the region defined by the selection s. 
-                    //! For this purpose the size of the selection must match
-                    //! the size of the buffer.
-                    //! \throws SizeMissmatchBuffer selection and buffer sizes do not match
-                    //! \throws H5DataSetError in case of other errors
-                    //! \param s selection object
-                    //! \param buffer reference to the buffer object
+                    Writes teh content of a memory buffer to the dataset in the 
+                    region defined by the selection s.  For this purpose the 
+                    size of the selection must match the size of the buffer.
+                    \throws MemoryAccessError if the buffer is not allocated
+                    \throws SizeMissmatchBuffer selection and buffer sizes do not match
+                    \throws H5DataSetError in case of other errors
+                    \param s selection object
+                    \param buffer reference to the buffer object
+                    */
                     template<typename T,template<typename> class BT>
                         void write(const BT<T> &buffer) const;
 
-                    //! read a buffer from selection
+                    //---------------------------------------------------------
+                    /*! \brief read a buffer from selection
 
-                    //! Write the content of the selection into the buffer
-                    //! buffer object. This operation will only succeed if the 
-                    //! size of the selection matches the size of the buffer.
-                    //! \param buffer Buffer object where to store the data
+                    Write the content of the selection into the buffer
+                    buffer object. This operation will only succeed if the 
+                    size of the selection matches the size of the buffer.
+                    \throws MemoryAccessError if the buffer is not allocated
+                    \throws SizeMissmatchError if selection and buffer size do
+                    not match
+                    \throws H5DataSetError in case of other IO errors
+                    \param buffer Buffer object where to store the data
+                    */
                     template<typename T,template<typename> class BT>
                         void read(BT<T> &buffer) const;
-                    
-                    //! write an array with selection
+                   
+                    //---------------------------------------------------------
+                    /*! \brief write an array with selection
 
-                    //! 
+                    Write array data to the selection. For this operation to 
+                    succeed the array size and the selection size must match.
+                    \throws MemoryAccessError if array is not allocated
+                    \throws SizeMissmatchError if array size and selection size
+                    do not match
+                    \throws H5DataSetError in case of other IO errors
+                    \param array instance of Array<T,BT> from which to write
+                    data
+                    */ 
                     template<typename T,template<typename> class BT>
                         void write(const Array<T,BT> &array) const;
 
-                    //! read an array
+                    //---------------------------------------------------------
+                    /*! \brief read an array
 
-                    //! Read an array from the selection. This method will 
-                    //! only succeed if the size of the selection matches
-                    //! that of the array. 
-                    //! \throws SizeMissmatchError if sizes do not match
-                    //! \throws H5DataSetError in cases of other errors
-                    //! \param array array where to store the data
+                    Read an array from the selection. This method will only 
+                    succeed if the size of the selection matches that of the 
+                    array. 
+                    \throws MemoryAccessError if array is not allocated
+                    \throws SizeMissmatchError if sizes do not match
+                    \throws H5DataSetError in cases of other errors
+                    \param array instance of Array<T,BT> to which to store the
+                    data
+                    */
                     template<typename T,template<typename> class BT>
                         void read(Array<T,BT> &array) const;
-                    
-                    //! write a scalar with selection
+                   
+                    //---------------------------------------------------------
+                    /*! \brief write a scalar with selection
 
-                    //! Write a scalar value in the region defined by the
-                    //! selection. In order to succeed the dataset must not be 
-                    //! scalar. 
-                    //! \throws ShapeMissmatchError if the dataset is scalar
-                    //! \throws H5DataSetError in case of all other errors
-                    //! \param s selection object
-                    //! \param scalar the scalar object which to write to disk
+                    Write a scalar value in the region defined by the
+                    selection. In order to succeed the dataset must not be 
+                    scalar. 
+                    \throws ShapeMissmatchError if the dataset is scalar
+                    \throws H5DataSetError in case of all other errors
+                    \param s selection object
+                    \param scalar instance of Scalar<T> from which to write data
+                    */
                     template<typename T>
                         void write(const Scalar<T> &scalar) const;
 
-                    //! read a selection to a scalar
+                    //---------------------------------------------------------
+                    /*! \brief read a selection to a scalar
 
-                    //! Write the content of a selection to a scalar. This 
-                    //! methhod succeeds only if the size of the selection 
-                    //! is 1. If this is not the case a SizeMissmatchError 
-                    //! will be thrown.
-                    //! \throws SizeMissmatchError if selection size not 1
-                    //! \throws H5DatasetError in case of other errors
-                    //! \param scalar object where to store data
-                    template<typename T> 
-                        void read(Scalar<T> &scalar) const;
+                    Write the content of a selection to a scalar. This 
+                    methhod succeeds only if the size of the selection 
+                    is 1. If this is not the case a SizeMissmatchError 
+                    will be thrown.
+                    \throws SizeMissmatchError if selection size not 1
+                    \throws H5DatasetError in case of other errors
+                    \param scalar instance of Scalar<T> to which to read data
+                    */
+                    template<typename T> void read(Scalar<T> &scalar) const;
 
             };
 
@@ -375,7 +552,8 @@ namespace pni{
                     const H5Dataspace &ms,const T *ptr) const
             {
                 EXCEPTION_SETUP("template<typename T> void H5Selection::"
-                        "__write(const T *ptr)");
+                                "__write(const H5Datatype &mt,"
+                                "const H5Dataspace &ms,const T *ptr) const");
                 herr_t err;
                 
                 //set selection to the file datasets original dataset
@@ -385,11 +563,9 @@ namespace pni{
                         this->stride().ptr(), //set the stride pointer
                         this->count().ptr(),  //set the count pointer
                         NULL);
-                if(err < 0){
-                    EXCEPTION_INIT(H5DataSetError,
-                            "Error applying selection!");
-                    EXCEPTION_THROW();
-                }
+                __throw_if_selection_app_fails(err,"template<typename T> "
+                        "void H5Selection::__write(const H5Datatype &mt,"
+                        "const H5Dataspace &ms,const T *ptr) const");
 
                 //write data to disk
                 err = H5Dwrite(_dataset->id(),
@@ -398,13 +574,9 @@ namespace pni{
                         _dataset->space().id(),  //set file data space
                         H5P_DEFAULT,
                         (const void *)ptr);
-
-
-                if(err < 0){
-                    EXCEPTION_INIT(H5DataSetError,
-                            "Error writing data to dataset!");
-                    EXCEPTION_THROW();
-                }
+                __throw_selection_write_fail(err,"template<typename T> "
+                        "void H5Selection::__write(const H5Datatype &mt,"
+                        "const H5Dataspace &ms,const T *ptr) const");
 
                 //remove selection from the dataspace
                 H5Sselect_none(_dataset->space().id());
@@ -417,7 +589,8 @@ namespace pni{
                     const H5Dataspace &ms,T *ptr) const 
             {
                 EXCEPTION_SETUP("template<typename T> void H5Selection::"
-                        "__read(T *ptr)");
+                                "__read(const H5Datatype &mt,"
+                                "const H5Dataspace &ms,T *ptr) const");
                 herr_t err;
                 
                 //set selection to the file datasets original dataset
@@ -427,11 +600,9 @@ namespace pni{
                         this->stride().ptr(), //set the stride pointer
                         this->count().ptr(),  //set the count pointer
                         NULL);
-                if(err < 0){
-                    EXCEPTION_INIT(H5DataSetError,
-                            "Error applying selection!");
-                    EXCEPTION_THROW();
-                }
+                __throw_if_selection_app_fails(err,"template<typename T> "
+                        "void H5Selection::__read(const H5Datatype &mt,"
+                        "const H5Dataspace &ms,T *ptr) const");
 
                 //write data to disk
                 err = H5Dread(_dataset->id(),
@@ -440,11 +611,9 @@ namespace pni{
                         _dataset->space().id(), //set the file data space
                         H5P_DEFAULT,
                         (void *)ptr);
-                if(err < 0){
-                    EXCEPTION_INIT(H5DataSetError,
-                            "Error writing data to dataset!");
-                    EXCEPTION_THROW();
-                }
+                __throw_selection_read_fail(err,"template<typename T> "
+                        "void H5Selection::__read(const H5Datatype &mt,"
+                        "const H5Dataspace &ms,T *ptr) const");
 
                 //remove selection from the dataspace
                 H5Sselect_none(_dataset->space().id());
@@ -454,15 +623,11 @@ namespace pni{
             //implementation of a simple write with selection
             template<typename T> void H5Selection::write(const T &value) const{
                 EXCEPTION_SETUP("template<typename T> void H5Selection::"
-                        "write(const T &value)");
+                        "write(const T &value) const");
                 
-                //here we have to check that the selection referes to 
-                //a single value only
-                if(this->size()!=1){
-                    EXCEPTION_INIT(ShapeMissmatchError,
-                            "Selection is not scalar!");
-                    EXCEPTION_THROW();
-                }
+                __throw_if_not_scalar("template<typename T> void "
+                                      "H5Selection::write(const T &value) "
+                                      "const");
 
                 //create datatspace and datatype
                 H5Datatype mt = H5DatatypeFactory::create_type<T>();
@@ -477,15 +642,10 @@ namespace pni{
             //implementation of a simple read with selection
             template<typename T> void H5Selection::read(T &value) const{
                 EXCEPTION_SETUP("template<typename T> void H5Selection::"
-                        "read(T &value)");
+                        "read(T &value) const");
                 
-                //here we have to check that the selection referes to 
-                //a single value only
-                if(this->size()!=1){
-                    EXCEPTION_INIT(ShapeMissmatchError,
-                            "Selection is not scalar!");
-                    EXCEPTION_THROW();
-                }
+                __throw_if_not_scalar("template<typename T> void "
+                                      "H5Selection::read(T &value) const");
 
                 //create memory dataspace and datatype
                 H5Datatype mt = H5DatatypeFactory::create_type<T>();
@@ -503,11 +663,8 @@ namespace pni{
                 EXCEPTION_SETUP("template<typename T> void H5Selection::"
                         "read(std:complex<T> &value) const");
 
-                if(this->size() != 1){
-                    EXCEPTION_INIT(ShapeMissmatchError,
-                            "Selection is not scalar!");
-                    EXCEPTION_THROW();
-                }
+                __throw_if_not_scalar("template<typename T> void H5Selection::"
+                                      "read(std:complex<T> &value) const");
 
                 //create memory dataspace and datatype
                 H5Datatype mt = 
@@ -525,11 +682,9 @@ namespace pni{
                 EXCEPTION_SETUP("template<typename T> void H5Selection::"
                         "write(const std::complex<T> &value) const");
 
-                if(this->size() != 1){
-                    EXCEPTION_INIT(ShapeMissmatchError,
-                            "Selection is not scalar!");
-                    EXCEPTION_THROW();
-                }
+                __throw_if_not_scalar("template<typename T> void H5Selection::"
+                                      "write(const std::complex<T> &value)"
+                                      "const");
 
                 //create memory dataspace and datatype
                 H5Datatype mt = 
@@ -586,13 +741,10 @@ namespace pni{
             template<typename T> 
                 void H5Selection::write(const Scalar<T> &scalar) const{
                 EXCEPTION_SETUP("template<typename T> void H5Selection::"
-                        "write(const Scalar<T> &scalar)");
+                        "write(const Scalar<T> &scalar) const");
                 
-                if(this->size()!=1){
-                    EXCEPTION_INIT(SizeMissmatchError,
-                            "Selection size not equal 1!");
-                    EXCEPTION_THROW();
-                }
+                __throw_if_not_scalar("template<typename T> void H5Selection::"
+                                      "write(const Scalar<T> &scalar) const");
 
                 //create memory datatype and memory dataspace
                 H5Datatype mt = H5DatatypeFactory::create_type<T>();
@@ -626,6 +778,12 @@ namespace pni{
                         "class BT> void H5Selection::write("
                         "const Array<T,BT> &array)");
 
+                //check if array is allocated
+                if(!array.buffer().is_allocated()){
+                    EXCEPTION_INIT(MemoryAccessError,
+                            "Array buffer not allocated!");
+                    EXCEPTION_THROW();
+                }
 
                 //the size of the array must be equal to the size of the 
                 //selection
@@ -649,6 +807,12 @@ namespace pni{
                         "class BT> void H5Selection::read(Array<T,BT> &array) "
                         "const");
 
+                //check if array is allocated
+                if(!array.buffer().is_allocated()){
+                    EXCEPTION_INIT(MemoryAccessError,
+                            "Array buffer not allocated!");
+                    EXCEPTION_THROW();
+                }
 
                 //the size of the array must be equal to the size of the 
                 //selection
