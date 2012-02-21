@@ -35,7 +35,68 @@
 namespace pni{
     namespace nx{
         namespace h5{
-            
+            //============implementation of private methods====================
+            //throw a ShapeMissmatchError exception if dataset not scalar
+            void H5Dataset::__throw_if_not_scalar(const String &method) const
+            {
+                String desc = "Dataset ["+this->name()+"] is not scalar!";
+                if(_space.size()!=1){
+                    ShapeMissmatchError error(method,desc);
+                    throw(error);
+                }
+            }
+
+            //-----------------------------------------------------------------
+            //implementation of the buffer check routine
+            void H5Dataset::__check_buffer(const String &method,
+                                           const BufferObject &buffer) const
+            {
+                std::stringstream bs; bs<<buffer.size();
+                std::stringstream ss; ss<<_space.size();
+
+                String desc_not_alloc = "Buffer is not allocated - cannot "
+                    "read data from dataset ["+this->name()+"]!";
+                String desc_size_err = "Buffer size ("+bs.str()+") and dataset "
+                    "["+ this->name()+"] size ("+ss.str()+") do not match!";
+
+                if(!buffer.is_allocated()){
+                    MemoryAccessError error(method,desc_not_alloc);
+                    throw(error);
+                }
+
+                if(_space.size() != buffer.size()){
+                    SizeMissmatchError error(method,desc_size_err);
+                    throw(error);
+                }
+            }
+           
+            //-----------------------------------------------------------------
+            //implementation of the 
+            void H5Dataset::__check_array(const String &method,
+                                          const ArrayObject &array) const
+            {
+                std::stringstream as; as<<array.shape();
+                std::stringstream ss; ss<<_space.shape();
+
+                String desc_not_alloc = "Array not allocated - cannot write "
+                                        "data to dataset ["+this->name()+"]!";
+                String desc_shape_error = "Dataset ["+this->name()+"] shape "
+                    "("+ss.str()+") and array shape ("+as.str()+") do not "
+                    "match!";
+
+                //check if the array buffer is allocated
+                if(!array.buffer().is_allocated()){
+                    MemoryAccessError error(method,desc_not_alloc);
+                    throw(error);
+                }
+
+                //check if dataspace shape and array shape are equal
+                if(_space.shape() != array.shape()){
+                    ShapeMissmatchError error(method,desc_shape_error);
+                    throw(error);
+                }
+
+            }
             //===implementation of constructors and destructors================
             //implementation of the default constructor
             H5Dataset::H5Dataset():H5AttributeObject(){
@@ -203,36 +264,16 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
-            H5Dataset::H5Dataset(const String &n,const H5Group &p,
-                                 const H5Datatype &t){
-                EXCEPTION_SETUP("H5Dataset::H5Dataset(const String &n,"
-                        "const H5Group &p,const TypeID &tid)");
+            //implement construction from an object id
+            H5Dataset::H5Dataset(const hid_t &oid):H5AttributeObject(oid){
+                EXCEPTION_SETUP("H5Dataset::H5Dataset(const hid_t &oid)");
 
-                //create datatype and dataset
-                _space = H5Dataspace();
-
-                //create link creation property list
-                hid_t lpl = H5Pcreate(H5P_LINK_CREATE);
-                H5Pset_create_intermediate_group(lpl,1);
-
-                //create the datase
-                hid_t did = H5Dcreate2(p.id(),n.c_str(),t.id(),_space.id(),
-                        lpl,H5P_DEFAULT,H5P_DEFAULT);
-                if(did<0){
-                    String estr = "Cannot create dataset ["+n+
-                        "] below ["+p.path()+"]!";
-                    EXCEPTION_INIT(H5DataSetError,estr);
+                if(object_type() != H5ObjectType::DATASET){
+                    EXCEPTION_INIT(H5DataSetError,
+                            "Object ID does not belong to a dataset!");
                     EXCEPTION_THROW();
                 }
 
-                H5Object::id(did);
-                //construction done - close property lists
-                H5Pclose(lpl);
-            }
-
-            //-----------------------------------------------------------------
-            //implement construction from an object id
-            H5Dataset::H5Dataset(const hid_t &oid):H5AttributeObject(oid){
                 _space = H5Dataspace(H5Dget_space(id()));
             }
 
@@ -302,8 +343,8 @@ namespace pni{
                 EXCEPTION_SETUP("void H5Dataset::resize(const Shape &s)");
 
                 if(s.rank() != _space.rank()){
-                    EXCEPTION_INIT(ShapeMissmatchError,"New datatype does not"
-                           " have the same rank!");
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "New shape does not have the same rank!");
                     EXCEPTION_THROW();
                 }
                 Buffer<hsize_t> b(s.rank());
@@ -311,7 +352,8 @@ namespace pni{
 
                 herr_t err = H5Dset_extent(id(),b.ptr());
                 if(err < 0){
-                    EXCEPTION_INIT(H5DataSetError, "Error resizing the dataset!");
+                    EXCEPTION_INIT(H5DataSetError, 
+                            "Resizing of dataset ["+name()+"] failed!");
                     EXCEPTION_THROW();
                 }
                
@@ -321,9 +363,18 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
-            void H5Dataset::extend(const size_t &e,const size_t &n){
+            void H5Dataset::grow(const size_t &e,const size_t &n){
                 EXCEPTION_SETUP("void H5Dataset::extend(const size_t &e,"
                         "const size_t &n)");
+
+                if(e>=rank()){
+                    std::stringstream se; se << e;
+                    std::stringstream sr; sr << rank();
+                    EXCEPTION_INIT(IndexError,"Dimension index ("+se.str()+") "
+                            "exceeds rank of dataspace ["+name()+"] which is "
+                            "("+sr.str()+")!");
+                    EXCEPTION_THROW();
+                }
 
                 Buffer<hsize_t> b(_space.rank());
                 for(size_t i=0;i<_space.rank();i++) b[i] = _space[i];
@@ -331,7 +382,8 @@ namespace pni{
 
                 herr_t err = H5Dset_extent(id(),b.ptr());
                 if(err < 0){
-                    EXCEPTION_INIT(H5DataSetError,"Dataset resizing failed!");
+                    EXCEPTION_INIT(H5DataSetError,
+                            "Grow of dataset ["+name()+"] failed!");
                     EXCEPTION_THROW();
                 }
 
@@ -366,17 +418,17 @@ namespace pni{
 
             //------------------------------------------------------------------
             //implementation of selection creation  
-            H5Selection H5Dataset::selection(size_t stride,size_t offset) const{
-                EXCEPTION_SETUP("H5Selection H5Dataset::"
-                        "selection(size_t stride,size_t offset)");
+            H5Selection H5Dataset::selection() const{
+                EXCEPTION_SETUP("H5Selection H5Dataset::selection() const");
+
                 if(_space.is_scalar()){
                     EXCEPTION_INIT(ShapeMissmatchError,
-                            "You cannot create a selection from a scalar"
-                            "dataset!");
+                            "You cannot create a selection from the scalar"
+                            "dataset ["+name()+"]!");
                     EXCEPTION_THROW();
                 }
 
-                H5Selection selection(*this,shape(),offset,stride);
+                H5Selection selection(*this,shape(),0,1);
                 return selection;
             }
 
@@ -385,12 +437,9 @@ namespace pni{
             void H5Dataset::write(const String &b) const
             {
                 EXCEPTION_SETUP("void H5Dataset::write(const String &b) const");
-
-                if(_space.size() != 1){
-                    EXCEPTION_INIT(ShapeMissmatchError,
-                            "Dataset is not scalar!");
-                    EXCEPTION_THROW();
-                }
+                
+                __throw_if_not_scalar("void H5Dataset::write(const String &b) "
+                                      "const");
                 
                 //select the proper memory data type
                 
@@ -412,13 +461,8 @@ namespace pni{
             //implementation of writing a binary scalar
             void H5Dataset::write(const Binary &b) const
             {
-                EXCEPTION_SETUP("void H5Datatype::"
-                        "write(const Binary &b) const");
-                if(_space.size() != 1){
-                    EXCEPTION_INIT(ShapeMissmatchError,"Dataset is not scalar!");
-                    EXCEPTION_THROW();
-                }
-
+                __throw_if_not_scalar("void H5Datatype::write(const Binary &b)"
+                                      " const");
                 __write(&b);
             }
 
@@ -426,13 +470,7 @@ namespace pni{
             //implementation of reading binary scalar
             void H5Dataset::read(Binary &b) const
             {
-                EXCEPTION_SETUP("void H5Datatype::read(Binary &b) const");
-
-                if(_space.size() != 1){
-                    EXCEPTION_INIT(ShapeMissmatchError,"Dataset is not scalar!");
-                    EXCEPTION_THROW();
-                }
-
+                __throw_if_not_scalar("void H5Datatype::read(Binary &b) const");
                 __read(&b);
             }
            
@@ -442,11 +480,7 @@ namespace pni{
             {
                 EXCEPTION_SETUP("void H5Dataset::read(String &b) const");
 
-                if(_space.size() != 1){
-                    EXCEPTION_INIT(ShapeMissmatchError,
-                            "Dataset is not scalar!");
-                    EXCEPTION_THROW();
-                }
+                __throw_if_not_scalar("void H5Dataset::read(String &b) const");
 
                 H5Datatype mem_type(H5Dget_type(id()));
                 const char *ptr = nullptr;
@@ -457,7 +491,7 @@ namespace pni{
                                       xfer_plist,(void *)&ptr);
                 if(err<0){
                     EXCEPTION_INIT(H5DataSetError,
-                            "Error writing data to dataset!");
+                            "Error writing data to dataset ["+name()+"]!");
                     EXCEPTION_THROW();
                 }
 
@@ -471,18 +505,19 @@ namespace pni{
 
             }
 
-            //------------------------------------------------------------------
+            //-----------------------------------------------------------------
             void H5Dataset::link(const String &linkname) const
             {
                 H5Link::create(path(),parent(),linkname);
             }
 
+            //------------------------------------------------------------------
             void H5Dataset::link(const H5Group &g,const String &n) const
             {
                 H5Link::create(path(),g,n);
             }
 
-
+            //------------------------------------------------------------------
             H5Group H5Dataset::parent() const
             {
                 hid_t fid = H5Iget_file_id(id());
@@ -491,9 +526,6 @@ namespace pni{
                 H5Fclose(fid);
                 H5Oclose(gid);
 
-                std::cout<<"Dataset base is "<<base()<<std::endl;
-                std::cout<<"Dataset parent is "<<g.path()<<std::endl;
-                
                 return g;
             }
 

@@ -160,7 +160,7 @@ namespace pni{
                 //--------------------------------------------------------------
                 void grow(const size_t &e,const size_t &n=1)
                 {
-                    this->imp().extend(e,n);
+                    this->imp().grow(e,n);
                 }
 
                 //--------------------------------------------------------------
@@ -349,13 +349,12 @@ namespace pni{
 
                 //---------------------------------------------------------------
                 //! create a selection
-                NXSelection<MAPTYPE(Imp,SelectionImpl)> 
-                    selection(size_t stride = 1,size_t offset = 0) const
+                NXSelection<MAPTYPE(Imp,SelectionImpl)> selection() const
                 {
                     typedef MAPTYPE(Imp,SelectionImpl) SelectionImpl;
                     typedef NXSelection<SelectionImpl> Selection;
 
-                    return Selection(this->imp().selection(stride,offset));
+                    return Selection(this->imp().selection());
                 }
 
 

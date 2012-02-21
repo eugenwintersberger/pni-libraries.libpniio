@@ -97,14 +97,14 @@ void H5SelectionTest::test_write_simple_types(){
     H5Datatype type = H5DatatypeFactory::create_type<Float32>();
     H5Dataspace space({0},{H5Dataspace::UNLIMITED});
     H5Dataset array_ds("array_dataset",_file,type,space,cs);
-    array_ds.extend(0);
+    array_ds.grow(0);
 
     H5Selection selection = array_ds.selection();
     selection.count(0,1);
     selection.offset(0,0);
     double value = 1;
     CPPUNIT_ASSERT_NO_THROW(selection.write(value));
-    array_ds.extend(0);
+    array_ds.grow(0);
     selection.offset(0,1);
     value = 2;
     CPPUNIT_ASSERT_NO_THROW(selection.write(value));
@@ -117,14 +117,14 @@ void H5SelectionTest::test_write_simple_types(){
     type = H5DatatypeFactory::create_type<String>();
     H5Dataset string_ds("string_ds",_file,type,space,cs);
 
-    CPPUNIT_ASSERT_NO_THROW(string_ds.extend(0));
+    CPPUNIT_ASSERT_NO_THROW(string_ds.grow(0));
 
     selection = string_ds.selection();
     selection.offset(0,0); 
     selection.count(0,1);
     CPPUNIT_ASSERT_NO_THROW(selection.write(str));
 
-    CPPUNIT_ASSERT_NO_THROW(string_ds.extend(0));
+    CPPUNIT_ASSERT_NO_THROW(string_ds.grow(0));
     selection.offset(0,1);
     str = "this is a text";
 //    std::cout<<string_ds.shape()<<std::endl;
@@ -150,15 +150,15 @@ void H5SelectionTest::test_read_simple_types(){
     H5Dataset array_ds("array_dataset",_file,type,space,cs);
     H5Selection selection = array_ds.selection();
     selection.offset(0,0); selection.count(0,1);
-    array_ds.extend(0);
+    array_ds.grow(0);
     CPPUNIT_ASSERT_NO_THROW(selection.write(value));
 
-    array_ds.extend(0);
+    array_ds.grow(0);
     selection.offset(0,1);
     value = 2.3;
     CPPUNIT_ASSERT_NO_THROW(selection.write(value));
    
-    array_ds.extend(0);
+    array_ds.grow(0);
     selection.offset(0,2);
     value = -9.234;
     CPPUNIT_ASSERT_NO_THROW(selection.write(value));
@@ -167,15 +167,15 @@ void H5SelectionTest::test_read_simple_types(){
     selection = array_ds2.selection();
     selection.offset(0,0); 
     selection.count(0,1);
-    array_ds2.extend(0);
+    array_ds2.grow(0);
     CPPUNIT_ASSERT_NO_THROW(selection.write(value));
 
-    array_ds2.extend(0);
+    array_ds2.grow(0);
     selection.offset(0,1);
     value = 2.3;
     CPPUNIT_ASSERT_NO_THROW(selection.write(value));
    
-    array_ds2.extend(0);
+    array_ds2.grow(0);
     selection.offset(0,2);
     value = -9.234;
     CPPUNIT_ASSERT_NO_THROW(selection.write(value));
@@ -199,11 +199,11 @@ void H5SelectionTest::test_read_simple_types(){
     space = H5Dataspace({0},{H5Dataspace::UNLIMITED});
     H5Dataset string_ds("string_ds",_file,type,space,cs);
     selection = string_ds.selection();
-    string_ds.extend(0);
+    string_ds.grow(0);
     selection.offset(0,0);
     selection.count(0,1);
     CPPUNIT_ASSERT_NO_THROW(selection.write(str));
-    string_ds.extend(0);
+    string_ds.grow(0);
     selection.offset(0,1);
     str = "this is a text";
     CPPUNIT_ASSERT_NO_THROW(selection.write(str));
@@ -229,27 +229,27 @@ void H5SelectionTest::test_write_scalar(){
     H5Dataspace space({0},{H5Dataspace::UNLIMITED});
     H5Datatype type = H5DatatypeFactory::create_type<Float32>();
     H5Dataset array_ds("array_ds",_file,type,space,cs);
-    array_ds.extend(0);
+    array_ds.grow(0);
     H5Selection selection = array_ds.selection();
     selection.offset(0,0); 
     selection.count(0,1);
     CPPUNIT_ASSERT_NO_THROW(selection.write(s));
     s = -0.2334;
     selection.offset(0,1);
-    array_ds.extend(0);
+    array_ds.grow(0);
     CPPUNIT_ASSERT_NO_THROW(selection.write(s));
 
 
     H5Dataset array_ds2("array_ds2",_file,type,space,cs);
     s = 1;
     selection = array_ds2.selection();
-    array_ds2.extend(0);
+    array_ds2.grow(0);
     selection.offset(0,0); 
     selection.count(0,1);
     CPPUNIT_ASSERT_NO_THROW(selection.write(s));
     s = -0.2334;
     selection.offset(0,1);
-    array_ds2.extend(0);
+    array_ds2.grow(0);
     CPPUNIT_ASSERT_NO_THROW(selection.write(s));
 }
 
@@ -302,10 +302,10 @@ void H5SelectionTest::test_write_array(){
     selection.offset({0,0,0});
     selection.count({1,3,5});
 
-    CPPUNIT_ASSERT_NO_THROW(earray_ds.extend(0));
+    CPPUNIT_ASSERT_NO_THROW(earray_ds.grow(0));
     CPPUNIT_ASSERT_NO_THROW(selection.write(a));
     a = 100;
-    earray_ds.extend(0);
+    earray_ds.grow(0);
     selection.offset(0,1);
     CPPUNIT_ASSERT_NO_THROW(selection.write(a));
 }
@@ -339,11 +339,11 @@ void H5SelectionTest::test_write_buffer(){
     H5Dataspace space({0},{H5Dataspace::UNLIMITED});
     H5Dataset ebin_ds("binary_2",_file,type,space,cs);
     H5Selection selection = ebin_ds.selection();
-    ebin_ds.extend(0,128);
+    ebin_ds.grow(0,128);
     selection.count(0,128);
     buffer = 100;
     CPPUNIT_ASSERT_NO_THROW(selection.write(buffer));
-    ebin_ds.extend(0,128);
+    ebin_ds.grow(0,128);
     selection.offset(0,128);
     buffer = 200;
     CPPUNIT_ASSERT_NO_THROW(selection.write(buffer));

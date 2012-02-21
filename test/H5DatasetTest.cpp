@@ -41,7 +41,7 @@ void H5DatasetTest::test_creation(){
 
     //create a scalar dataset
     type = H5DatatypeFactory::create_type<TypeID::FLOAT128>();
-    H5Dataset ds3("ds3",_group,type);
+    H5Dataset ds3("ds3",_group,type,H5Dataspace());
     CPPUNIT_ASSERT(ds3.is_valid());
     CPPUNIT_ASSERT(ds3.type_id() == TypeID::FLOAT128);
 
@@ -159,12 +159,12 @@ void H5DatasetTest::test_resize(){
 
     H5Dataset ds("ds",_group,type,space,cs);
 
-    CPPUNIT_ASSERT_NO_THROW(ds.extend(0));
+    CPPUNIT_ASSERT_NO_THROW(ds.grow(0));
     s.dim(0,1);
     CPPUNIT_ASSERT(ds.rank()  == s.rank());
     CPPUNIT_ASSERT(ds.shape() == s);
     s.dim(0,4);
-    CPPUNIT_ASSERT_NO_THROW(ds.extend(0,3));
+    CPPUNIT_ASSERT_NO_THROW(ds.grow(0,3));
     CPPUNIT_ASSERT(ds.rank()  == s.rank());
     CPPUNIT_ASSERT(ds.shape() == s);
 
@@ -175,10 +175,10 @@ void H5DatasetTest::test_resize(){
     H5Dataset ss("ss",_group,type,space,cs);
     CPPUNIT_ASSERT(ss.rank() == 1);
     CPPUNIT_ASSERT(ss.size() == 0);
-    CPPUNIT_ASSERT_NO_THROW(ss.extend(0));
+    CPPUNIT_ASSERT_NO_THROW(ss.grow(0));
     CPPUNIT_ASSERT(ss.rank() == 1);
     CPPUNIT_ASSERT(ss.size() == 1);
-    CPPUNIT_ASSERT_NO_THROW(ss.extend(0,10));
+    CPPUNIT_ASSERT_NO_THROW(ss.grow(0,10));
     CPPUNIT_ASSERT(ss.rank() == 1);
     CPPUNIT_ASSERT(ss.size() == 11);
 
@@ -196,7 +196,7 @@ void H5DatasetTest::test_write_simple_types(){
 
     //start with a scalar dataset
     H5Datatype type = H5DatatypeFactory::create_type<Float32>();
-    H5Dataset scalar_ds("scalar_dataset",_group,type);
+    H5Dataset scalar_ds("scalar_dataset",_group,type,H5Dataspace());
     double value =1.23;
     CPPUNIT_ASSERT_NO_THROW(scalar_ds.write(value));
 
@@ -213,7 +213,7 @@ void H5DatasetTest::test_write_simple_types(){
     CPPUNIT_ASSERT_NO_THROW(string_ds.write(str));
 
     //try a scalar string field
-    H5Dataset sstring_ds("scalar_string_ds",_group,type);
+    H5Dataset sstring_ds("scalar_string_ds",_group,type,H5Dataspace());
     CPPUNIT_ASSERT_NO_THROW(sstring_ds.write(str));
 }
 
@@ -243,7 +243,7 @@ void H5DatasetTest::test_write_scalar(){
 
     Float32Scalar s(100.233,"scdata","a.u.","a simple scalar value");
     H5Datatype type = H5DatatypeFactory::create_type<Float32>();
-    H5Dataset scalar_ds("scalar_ds",_group,type);
+    H5Dataset scalar_ds("scalar_ds",_group,type,H5Dataspace());
     CPPUNIT_ASSERT_NO_THROW(scalar_ds.write(s));
 
     //EXCEPTION TESTS ARE MISSING
