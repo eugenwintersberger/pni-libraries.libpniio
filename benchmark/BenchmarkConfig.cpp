@@ -124,4 +124,14 @@ LibID BenchmarkConfig::libid() const
 {
     return _libid;
 }
+//---------------------------------------------------------------------------
+std::ostream &operator<<(std::ostream &o,const BenchmarkConfig &c)
+{
+    o<<"Storing data to: "<<c.filename()<<std::endl;
+    o<<"number of runs:  "<<c.nruns()<<std::endl;
+    o<<"number of rames: "<<c.nframes()<<std::endl;
+    o<<"total data size: "<<c.data_size()/1024./1024.<<std::endl;
+
+    return o;
+}
 

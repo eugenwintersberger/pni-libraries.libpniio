@@ -71,7 +71,6 @@ if env["PKGNAME"] == "":
 
 #set some linker flags
 
-env.Append(LIBS=["hdf5"])
 
 #set the proper compiler - this should be changed to something 
 #more general - independent of the underlying operating system
@@ -81,10 +80,13 @@ env.Replace(CXX = env["CXX"])
 env.Append(CXXFLAGS = ["-Wall","-std=c++0x"])
 #set paths for Boost and HDF5
 
-env.Append(LIBPATH=[path.join(env["HDF5PREFIX"],"lib")])
-env.Append(CPPPATH=[path.join(env["HDF5PREFIX"],"include")])
+env.Append(LIBPATH=Dir([path.join(env["HDF5PREFIX"],"lib")]))
+env.Append(CPPPATH=Dir([path.join(env["HDF5PREFIX"],"include")]))
 env.Append(LIBPATH=[path.join(env["BOOSTPREFIX"],"lib")])
 env.Append(CPPPATH=[path.join(env["BOOSTPREFIX"],"include")])
+
+print env["LIBDIRSUFFIX"]
+env.Append(LIBS=["hdf5"])
 
 #Once all parameters are set we can start with system configuration
 #-------------------------------------------------------------------------------
@@ -150,7 +152,7 @@ if not conf.CheckCHeader("hdf5.h"):
     Exit(1)
     
 #check for libraries
-if not conf.CheckLib("hdf5"):
+if not conf.CheckLib("hdf5",autoadd=0):
     print "HDF5 libraries not installed!"
     Exit(1)
 
@@ -161,7 +163,6 @@ if not conf.CheckLib("cppunit"):
     
     
 env = conf.Finish()
-
 
 
 #-------------------------------------------------------------------------------

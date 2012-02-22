@@ -29,34 +29,33 @@ using namespace pni::utils;
 
 #include "BenchmarkConfig.hpp"
 #include "BenchmarkRun.hpp"
+#include "BenchmarkResult.hpp"
 #include "HDF5Run.hpp"
 #include "PNIRun.hpp"
 
 
-template<typename T> double run_benchmark(const BenchmarkConfig &c)
+template<typename T> std::vector<BenchmarkResult> run_benchmark(const BenchmarkConfig &c)
 {
    
     BenchmarkRun<T> *Run = nullptr;
+    std::vector<BenchmarkResult> results(0);
 
-    if(c.libid() == LibID::HDF5){
-        std::cout<<"Instantiating HDF5 benchmark run ..."<<std::endl;
-        Run = new HDF5Run<T>(c);
-    }else if(c.libid() == LibID::PNINX){
-        std::cout<<"Instantiating PNINX benchmark run ..."<<std::endl;
-        Run = new PNIRun<T>(c);
-    }
+    if(c.libid() == LibID::HDF5) Run = new HDF5Run<T>(c);
+    else if(c.libid() == LibID::PNINX) Run = new PNIRun<T>(c);
 
     //run the simulation 
     for(size_t i = 0; i < c.nruns(); i++){
         double etime = Run->run();
-        std::cout<<etime<<std::endl;
+        //need to compute results for every run
+        BenchmarkResult r(etime,c);
+        std::cout<<i<<"\t"<<r<<std::endl;
+        results.push_back(r);
     }
-
    
     //free memory
     delete Run;
 
-    return 0.;
+    return results;
 }
 
 
@@ -64,16 +63,30 @@ int main(int argc,char **argv){
     
     //read configuration from the command line
     BenchmarkConfig config(argc,argv);
- 
-    if(config.typecode() == TypeID::UINT8) run_benchmark<UInt8>(config);
-    else if(config.typecode() == TypeID::INT8) run_benchmark<Int8>(config);
-    else if(config.typecode() == TypeID::UINT16) run_benchmark<UInt16>(config);
-    else if(config.typecode() == TypeID::INT16) run_benchmark<Int16>(config);
-    else if(config.typecode() == TypeID::UINT32) run_benchmark<UInt32>(config);
-    else if(config.typecode() == TypeID::INT32) run_benchmark<Int32>(config);
-    else if(config.typecode() == TypeID::UINT64) run_benchmark<UInt64>(config);
-    else if(config.typecode() == TypeID::INT64) run_benchmark<Int64>(config);
+    std::vector<BenchmarkResult> result;
+
+    std::cout<<config<<std::endl;
+    if(config.typecode() == TypeID::UINT8) 
+        result = run_benchmark<UInt8>(config);
+    else if(config.typecode() == TypeID::INT8) 
+        result = run_benchmark<Int8>(config);
+    else if(config.typecode() == TypeID::UINT16) 
+        result = run_benchmark<UInt16>(config);
+    else if(config.typecode() == TypeID::INT16) 
+        result = run_benchmark<Int16>(config);
+    else if(config.typecode() == TypeID::UINT32) 
+        result = run_benchmark<UInt32>(config);
+    else if(config.typecode() == TypeID::INT32) 
+        result = run_benchmark<Int32>(config);
+    else if(config.typecode() == TypeID::UINT64) 
+        result = run_benchmark<UInt64>(config);
+    else if(config.typecode() == TypeID::INT64) 
+        result = run_benchmark<Int64>(config);
 
 
+    BenchmarkResult av = average(result);
+    std::cout<<std::endl;
+    std::cout<<"average: "<<std::endl;
+    std::cout<<"\t"<<av<<std::endl;
     return 0;
 }

@@ -108,4 +108,6 @@ class BenchmarkConfig{
 
 };
 
+std::ostream &operator<<(std::ostream &o,const BenchmarkConfig &c);
+
 #endif

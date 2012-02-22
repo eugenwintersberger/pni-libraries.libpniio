@@ -26,6 +26,6 @@ env.Append(LIBPATH = [env["HDF5LIBDIR"],env["PNINXLIBDIR"],env["PNIUTILSLIBDIR"]
 env.Append(CPPPATH = [env["HDF5INCDIR"],env["PNINXINCDIR"],env["PNIUTILSINCDIR"]])
 env.Append(LIBS=["hdf5","libpniutils","libpninx"])
 
-src_list = ["BenchmarkConfig.cpp","Timer.cpp","Main.cpp"]
+src_list = ["BenchmarkConfig.cpp","Timer.cpp","Main.cpp","BenchmarkResult.cpp"]
 env.Program("nxbmark",src_list)
 
