@@ -1,7 +1,7 @@
 //nxstrfield_ex1.cpp
 
 #include <pni/nx/NX.hpp>
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 
 using namespace pni::nx::h5;
 using namespace pni::utils;
@@ -9,14 +9,9 @@ using namespace pni::utils;
 #include <iostream>
 
 int main(int argc,char **argv){
-    NXFile file;
-    NXStringField field;
+    NXFile file = NXFile::create_file("nxstrfield_ex1.h5",true,0);
 
-    file.setFileName("nxstrfield_ex1.h5");
-    file.setOverwrite(true);
-    file.create();
-
-    field = file.createStringField("text");
+    NXField field = file.create_field<String>("text");
 
     field.close();
     file.close();

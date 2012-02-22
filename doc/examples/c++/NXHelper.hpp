@@ -2,7 +2,7 @@
 #define __NXHELPER_HPP__
 
 #include <pni/nx/NX.hpp>
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 #include <pni/utils/Array.hpp>
 #include <pni/utils/Scalar.hpp>
 

@@ -1,6 +1,6 @@
 //file: simple_ex1.cpp
 
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 #include <pni/utils/Array.hpp>
 #include <pni/utils/Scalar.hpp>
 
@@ -15,27 +15,27 @@ using namespace pni::nx::h5;
 
 #include "NXHelper.hpp"
 
-typedef std::map<String,NXNumericField *> file_record;
+typedef std::map<String,NXField> file_record;
 typedef std::map<String,NumericObject *> mem_record;
 
 void setup_records(NXGroup &scan,file_record &frec,mem_record &mrec){
     mrec["OMS"] = new Float32Scalar("OMS","degree","sample angle");
     mrec["TTS"] = new Float32Scalar("TTS","degree","detector angle");
     mrec["current"] = new Float32Scalar("current","mA","ring current");
-    ArrayShape shape(1); shape.setDimension(0,2048);
+    Shape shape = {2048};
     mrec["detector"] = new UInt32Array(shape,"detector","count","detector");
     
-    frec["OMS"] = new NXNumericField(std::move(scan.open("sample/OMS/value")));
-    frec["TTS"] = new NXNumericField(std::move(scan.open("instrument/detector/TTS/value")));
-    frec["current"] = new NXNumericField(std::move(scan.open("instrument/DORIS/current")));
-    frec["detector"] = new NXNumericField(std::move(scan.open("instrument/detector/data")));
+    frec["OMS"] = scan.open("sample/OMS/value");
+    frec["TTS"] = scan.open("instrument/detector/TTS/value");
+    frec["current"] = scan.open("instrument/DORIS/current");
+    frec["detector"] = scan.open("instrument/detector/data");
 
 }
 
 NXGroup scan_setup(NXFile &file,const String &scan){
-    NXGroup scan_group = file.createGroup(scan,"NXentry");
-    NXGroup ig = scan_group.createGroup("instrument","NXinstrument");
-    NXGroup sg = scan_group.createGroup("sample","NXsample");
+    NXGroup scan_group = file.create_group(scan,"NXentry");
+    NXGroup ig = scan_group.create_group("instrument","NXinstrument");
+    NXGroup sg = scan_group.create_group("sample","NXsample");
     NXGroup g;
 
     //sample
@@ -44,27 +44,30 @@ NXGroup scan_setup(NXFile &file,const String &scan){
     NXHelper::createNXpositioner(sg,"YS","mm","YS","sample y-translation");
 
     //create storage ring
-    g = ig.createGroup("DORIS","NXsource");
-    g.createNumericField("current",PNITypeID::FLOAT32,"mA","ring current");
+    g = ig.create_group("DORIS","NXsource");
+    NXField f =g.create_field<Float32>("current");
+    f.attr<String>("unit").write(String("mA"));
+    f.attr<String>("description").write("ring current");
     
     //create detector
-    ArrayShape shape(1); shape.setDimension(0,2048);
-    g = ig.createGroup("detector","NXdetector");
-    g.createNumericField("data",PNITypeID::UINT32,shape,"count","detector data");
+    Shape shape = {2048};
+    g = ig.create_group("detector","NXdetector");
+    
+    f = g.create_field<UInt32>("data",shape);
+    f.attr<String>("unit").write("count");
+    f.attr<String>("description").write("detector data");
     NXHelper::createNXpositioner(g,"TTS","degree","TTS","detector scattering angle");
 
     return scan_group;
 }
 
 int main(int argc,char **argv){
-    NXFile f;
     file_record frec;
     mem_record mrec;
     std::vector<String> rkeys;
 
-    f.setFileName("simple_ex1.nx.h5"); f.setOverwrite(true);
-    f.create();
-
+    NXFile f = NXFile::create_file("simple_ex1.nx.h5",true,0);
+    
     NXGroup scan = scan_setup(f,"scan_1");
     f.flush();
     setup_records(scan,frec,mrec);
@@ -75,7 +78,7 @@ int main(int argc,char **argv){
     rkeys.push_back("detector");
 
     //major scan loop
-    for(UInt64 i=0;i<10;i++){
+    for(size_t i=0;i<10;i++){
         //collect data
 
         //save data

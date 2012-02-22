@@ -1,49 +1,53 @@
 //nxnumfield_ex2.cpp
 
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 #include <pni/nx/NX.hpp>
 
 using namespace pni::utils;
 using namespace pni::nx::h5;
 
 int main(int argc,char **argv){
-    NXFile file;
-    file.setFileName("nxnumfield_ex2.h5");
-    file.setOverwrite(true);
-    file.create();
+    NXFile file = NXFile::create_file("nxnumfield_ex2.h5",true,0);
     
     //create field
     UInt32Scalar counter("counter","cps","a scalar counter");
-    NXNumericField field = file.createNumericField(counter);
+    NXField field = file.create_field<UInt32>(counter.name(),{0});
+    NXSelection sel = field.selection();
+    sel.count({1});
+    sel.offset({0});
+    sel.stride({1});
     
     //write stream
-    for(UInt32 i=0;i<10;i++){
+    for(size_t i=0;i<10;i++){
+        field.grow(0);
+        sel.offset(0,i);
         counter = i;
-        field<<counter;
+        sel.write(counter); 
     }
 
     //read individual values
-    field.get(3,counter);
+    sel.offset(0,3);
+    sel.read(counter);
 
     //read all values
-    ArrayShape shape(1);
-    shape.setDimension(0,field.size());
+    Shape shape = {field.size()};
     Int32Array counters(shape);
-    counters.setUnit(counter.getUnit());
-    field.get(counters);
+    field.read(counters);
 
     //read a part of the values
-    shape.setDimension(0,3);
-    counters.reset(); counters.setShape(shape);
+    shape.dim(0,3);
+    counters.reset(); counters.shape(shape);
     counters.allocate();
 
-    field.get(2,counters);
+    sel.offset({2});
+    sel.count({3});
+    sel.read(counters);
 
     //set individual entries
     counter = 100;
-    field.set(2,counter);
-    field.set(12,counter);
-
+    sel.offset({2});
+    sel.count({1});
+    sel.write(counter);
 
     return 0;
 }

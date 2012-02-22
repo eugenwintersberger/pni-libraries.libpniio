@@ -158,6 +158,12 @@ namespace pni{
                 }
 
                 //--------------------------------------------------------------
+                void write(const char *value) const
+                {
+                    _imp.write(String(value));
+                }
+
+                //--------------------------------------------------------------
                 //! read to buffer 
                 template<typename T,template<typename> class BT> 
                     void read(BT<T> buffer) const

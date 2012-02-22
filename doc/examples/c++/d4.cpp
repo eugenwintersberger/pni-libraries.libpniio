@@ -8,7 +8,7 @@
 #include <iostream>
 #include <map>
 
-#include <pni/utils/PNITypes.hpp>
+#include <pni/utils/Types.hpp>
 #include <pni/nx/NX.hpp>
 
 using namespace pni::nx::h5;
@@ -47,10 +47,7 @@ public:
 };
 
 D4File::D4File(const String &fname){
-	_file.setFileName(fname);
-	_file.setOverwrite(true);
-	_file.create();
-
+    _file = NXFile::create_file(fname,true,0);
 }
 
 D4File::~D4File(){
@@ -72,23 +69,35 @@ NXField &D4File::operator[](const String &key){
 
 void D4File::_setup_storage_ring(){
 	NXGroup doris;
-	NXNumericField nf;
-    NXStringField sf;
 	Float32Scalar emittance_x(410,"emittance_x","nm-rad","emittance in horizontal direction");
 	Float32Scalar emittance_y(12,"emittance_y","nm-rad","emittance in vertical direction");
 	Float32Scalar energy(4.45,"energy","GeV","positron energy");
 	Float32Scalar current("current","mA","ring current");
 
 
-	doris = _instrument.createGroup("DORIS","NXsource");
-	nf = doris.createNumericField("distance",PNITypeID::FLOAT32,"m","distance to DORIS");
-	nf<<Float32Scalar(40.,"distance","m","distance to DORIS");
-	sf = doris.createStringField("name"); sf<<"DORIS";
-	sf = doris.createStringField("type"); sf<<"Synchrotron X-ray Source";
-	sf = doris.createStringField("probe"); sf<<"positron";
-	nf = doris.createNumericField(emittance_x); nf<<emittance_x;
-	nf = doris.createNumericField(emittance_y); nf<<emittance_y;
-	nf = doris.createNumericField(energy); nf<<energy;
+	doris = _instrument.create_group("DORIS","NXsource");
+    NXField f = doris.create_field<Float32>("distance");
+    f.attr<String>("unit").write(String("m"));
+    f.attr<String>("description").write(String("distance to DORIS"));
+    f.write(Float32Scalar(40.,"distance","m","distance to DORIS"));
+
+	doris.create_field<String>("name").write(String("DORIS"));
+	doris.create_field<String>("type").write(String("Synchrotron X-ray Source"));
+	doris.create_field<String>("probe").write(String("positron"));
+    f = doris.create_field<Float32>("emittance_x");
+    f.write(emittance_x);
+    f.attr<String>("unit").write(emittance_x.unit());
+    f.attr<String>("description").write(emittance_x.description());
+
+	f = doris.create_field<Float32>(emittance_y.name());
+    f.write(emittance_y);
+    f.attr<String>("unit").write(emittance_y.unit());
+    f.attr<String>("description").write(emittance_y.description());
+
+	f = doris.create_field<Float32>(energy.name());
+    f.write(energy);
+    f.attr<String>("unit").write(energy.unit());
+    f.attr<String>("description").write(energy.description());
 
 	//doris current might be written during scan
 	//_record["doris_current"] = doris.createNumericField(current);
@@ -101,10 +110,10 @@ void D4File::_setup_bending_magnet(){
 void D4File::setup_scan(const String &scan_name){
 	NXGroup g;
 
-	_entry = _file.createGroup(scan_name,"NXentry");
-	_instrument = _entry.createGroup("instrument","NXinstrument");
-	_sample = _entry.createGroup("sample","NXsample");
-    _entry.createGroup("control","NXmonitor");
+	_entry = _file.create_group(scan_name,"NXentry");
+	_instrument = _entry.create_group("instrument","NXinstrument");
+	_sample = _entry.create_group("sample","NXsample");
+    _entry.create_group("control","NXmonitor");
 
 
 	//setup the basic system
@@ -132,7 +141,6 @@ void D4File::setup_scan(const String &scan_name){
     NXHelper::createNXpositioner(_sample,"GLS","mm","GLS","lower cradle");
     NXHelper::createNXpositioner(_sample,"OMA","mm","OMA","sample rotation");
     NXHelper::createNXpositioner(_sample,"OMS","degree","OMS","angle of incidence");
-    
     
 
 }

@@ -286,6 +286,12 @@ namespace pni{
                     this->imp().write(value);
                 }
 
+                void write(const char *value) const
+                {
+                    this->imp().write(String(value));
+                }
+
+
 
                 //-------------------------------------------------------------
                 //! write a buffer 

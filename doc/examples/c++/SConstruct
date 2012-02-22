@@ -1,10 +1,9 @@
 env = Environment()
 
-env.Append(LIBS=["pninx","pniutils"])
+env.Append(LIBS=["pninx","pniutils","hdf5"])
 env.Append(CXXFLAGS=["-O2","-std=c++0x"])
 d4 = env.Program("d4",["d4.cpp","NXHelper.cpp"])
 nxfile_ex1 = env.Program("nxfile_ex1.cpp")
-nxfile_ex2 = env.Program("nxfile_ex2.cpp")
 nxgroup_ex1 = env.Program("nxgroup_ex1.cpp")
 simple_ex2 = env.Program("simple_ex1",["simple_ex1.cpp","NXHelper.cpp"])
 nxnumfield_ex1 = env.Program("nxnumfield_ex1.cpp")
