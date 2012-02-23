@@ -36,19 +36,6 @@ var.Add("PKGNAME","package name (actually only used for Debian packages)","")
 env = Environment(variables=var,tools=['default','packaging','textfile'])
 env.Replace(CXX = env["CXX"])
 
-#check if the compiler version is ok and set definies if necessary
-gcc_version = GCCVersionParser().parse(prog=env["CXX"])
-#for GCC versions 4.4 and 4.5 some extra defines are required in order
-#to work correctly with C++11 language extensions.
-if gcc_version < ProgramVersion(4,4,0):
-    print "compiler version not supported!"
-    sys.exit()
-elif gcc_version <= ProgramVersion(4,6,0):
-    env.Append(CXXFLAGS=["-Dnullptr=NULL"])
-    env.Append(CXXFLAGS=["-DNOFOREACH"])
-    env.Append(CXXFLAGS=["-DBRACEFIX"])
-else:
-    pass
             
 libname = LibFileNames(env["LIBNAME"],env["VERSION"],env["SOVERSION"])
 env.Append(LIBFULLNAME = libname.full_name(env))
@@ -87,12 +74,69 @@ env.Append(CPPPATH=Dir([path.join(env["HDF5PREFIX"],"include")]))
 env.Append(LIBPATH=[path.join(env["BOOSTPREFIX"],"lib")])
 env.Append(CPPPATH=[path.join(env["BOOSTPREFIX"],"include")])
 
-print env["LIBDIRSUFFIX"]
+nullptr_test_code="""
+int main(int argc,char **argv){
+    char *ptr=nullptr;
+    return 0;
+}
+"""
+
+def CheckNullPtr(context):
+    context.Message("Checking if compiler supports nullptr idiom ...")
+    result = context.TryCompile(nullptr_test_code,".cpp")
+    context.Result(result)
+    return result
+
+foreach_test_code="""
+#include<iostream>
+#include<vector>
+int main(int argc,char **arv){
+std::vector<int> vec = {1,2,3,4};
+for(int &v: vec){
+   std::cout<<v<<std::endl; 
+}
+return 0;
+}
+"""
+
+def CheckForEach(context):
+    context.Message("Check if compiler supports foreach loops ...")
+    result = context.TryCompile(foreach_test_code,".cpp")
+    context.Result(result)
+    return result
+
+initlist_test_code = """
+#include <initializer_list>
+class test{
+public:
+void testfunction(const std::initializer_list<int> &l){
+
+}
+};
+
+template<typename T> void testtmp(){
+    test t;
+    t.testfunction({1,2,3});
+}
+
+int main(int argc,char **argv){
+    testtmp<float>();
+return 0;
+}
+"""
+
+def CheckInitList(context):
+    context.Message("Check for comprehensive init-list support ...")
+    result = context.TryCompile(initlist_test_code,".cpp")
+    context.Result(result)
+    return result
 
 #Once all parameters are set we can start with system configuration
 #-------------------------------------------------------------------------------
 #start with configuration
-conf = Configure(env,custom_tests = {"CheckProgram":CheckProgram})
+conf = Configure(env,
+custom_tests = {"CheckProgram":CheckProgram,"CheckNullPtr":CheckNullPtr,
+                "CheckForEach":CheckForEach,"CheckInitList":CheckInitList})
 
 #check available programs
 if not conf.CheckProgram("pdflatex -v"):
@@ -106,6 +150,19 @@ if not conf.CheckProgram("dot -V"):
 if not conf.CheckProgram("perl -v"):
     print "perl not installed!"
     Exit(1)
+
+#checking compiler capabilities
+if not conf.CheckNullPtr():
+    print "nullptr not supported - use NULL"
+    env.Append(CXXFLAGS=["-Dnullptr=NULL"])
+
+if not conf.CheckForEach():
+    print "foreach construction not supported - use workaround"
+    env.Append(CXXFLAGS=["-DNOFOREACH"])
+
+if not conf.CheckInitList():
+    print "comprehensive init list do not work ..."
+    env.Append(CXXFLAGS=["-DINITLISTBUG"])
 
 #check for header files
 if not conf.CheckCXXHeader("boost/numeric/conversion/cast.hpp"):
@@ -160,6 +217,10 @@ if not conf.CheckLib("hdf5"):
     
 if not conf.CheckLib("cppunit",language="C++"):
     print "CPPUNIT unit test libraray is not installed!"
+    Exit(1)
+
+if not conf.CheckLib("pniutils",language="C++"):
+    print "libpniutils not installed!"
     Exit(1)
     
     

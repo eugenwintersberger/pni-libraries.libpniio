@@ -252,7 +252,7 @@ namespace pni{
                     do not match
                     \param l initializer list with offset values
                     */
-                    void offset(const std::vector<hsize_t> &l);
+                    void offset(const std::initializer_list<hsize_t> &l);
 
                     //---------------------------------------------------------
                     /*! \brief get offset buffer
@@ -302,7 +302,7 @@ namespace pni{
                     do not match
                     \param l initializer list with stride values
                     */
-                    void stride(const std::initializer_list<size_t> &l);
+                    void stride(const std::initializer_list<hsize_t> &l);
 
                     //---------------------------------------------------------
                     /*! \brief get stride buffer
@@ -352,7 +352,7 @@ namespace pni{
                     do not match
                     \param l initializer list with count values
                     */
-                    void count(const std::initializer_list<size_t> &l);
+                    void count(const std::initializer_list<hsize_t> &l);
 
                     //----------------------------------------------------------
                     /*! \brief get count buffer
