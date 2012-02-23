@@ -221,7 +221,7 @@ namespace pni{
             }
 
             //------------------------------------------------------------------
-            void H5Selection::offset(const std::initializer_list<hsize_t> &l){
+            void H5Selection::offset(const std::vector<hsize_t> &l){
                 EXCEPTION_SETUP("void H5Selection::"
                         "offset(std::initializer_list<hsize_t> &l)");
 
@@ -231,7 +231,16 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
 
-                _offset = l;
+                size_t cnt=0;
+#ifdef NOFOREACH
+                for(auto iter=l.begin();iter!=l.end();iter++){
+                    const hsize_t &o = *iter;
+#else
+                for(const hsize_t &o: l){
+#endif
+                    _offset[cnt] = o;
+                    cnt++;
+                }
             }
 
             //------------------------------------------------------------------
@@ -255,7 +264,7 @@ namespace pni{
             }
 
             //------------------------------------------------------------------
-            void H5Selection::stride(const std::initializer_list<hsize_t> &l){
+            void H5Selection::stride(const std::initializer_list<size_t> &l){
                 EXCEPTION_SETUP("void H5Selection::"
                         "stride(const std::initializer_list<hsize_t> &l)");
 
@@ -264,7 +273,12 @@ namespace pni{
                             "in initializer list exceeds selection rank");
                     EXCEPTION_THROW();
                 }
-                _stride = l;
+
+                size_t cnt = 0;
+                for(auto iter = l.begin();iter!=l.end();iter++){
+                    _stride[cnt] = *iter;
+                    cnt ++;
+                }
             }
 
             //------------------------------------------------------------------
@@ -288,7 +302,7 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
-            void H5Selection::count(const std::initializer_list<hsize_t> &l){
+            void H5Selection::count(const std::initializer_list<size_t> &l){
                 EXCEPTION_SETUP("void H5Selection::"
                         "count(const std::initialize_list<hsize_t> &l)");
 
@@ -297,7 +311,12 @@ namespace pni{
                             "in initializer list exceeds selection rank!");
                     EXCEPTION_THROW();
                 }
-                _counts = l;
+
+                size_t cnt = 0;
+                for(auto iter = l.begin(); iter!=l.end();iter++){
+                    _counts[cnt] = *iter;
+                    cnt++;
+                }
             }
 
             //-----------------------------------------------------------------

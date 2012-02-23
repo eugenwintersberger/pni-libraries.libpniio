@@ -44,7 +44,9 @@ if gcc_version < ProgramVersion(4,4,0):
     print "compiler version not supported!"
     sys.exit()
 elif gcc_version <= ProgramVersion(4,6,0):
-    env.Append(CXXFLAGS=["-Dnullptr=NULL","-DOLD_CXX"])
+    env.Append(CXXFLAGS=["-Dnullptr=NULL"])
+    env.Append(CXXFLAGS=["-DNOFOREACH"])
+    env.Append(CXXFLAGS=["-DBRACEFIX"])
 else:
     pass
             
@@ -86,7 +88,6 @@ env.Append(LIBPATH=[path.join(env["BOOSTPREFIX"],"lib")])
 env.Append(CPPPATH=[path.join(env["BOOSTPREFIX"],"include")])
 
 print env["LIBDIRSUFFIX"]
-env.Append(LIBS=["hdf5"])
 
 #Once all parameters are set we can start with system configuration
 #-------------------------------------------------------------------------------
@@ -152,12 +153,12 @@ if not conf.CheckCHeader("hdf5.h"):
     Exit(1)
     
 #check for libraries
-if not conf.CheckLib("hdf5",autoadd=0):
+if not conf.CheckLib("hdf5"):
     print "HDF5 libraries not installed!"
     Exit(1)
 
     
-if not conf.CheckLib("cppunit"):
+if not conf.CheckLib("cppunit",language="C++"):
     print "CPPUNIT unit test libraray is not installed!"
     Exit(1)
     

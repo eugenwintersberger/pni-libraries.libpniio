@@ -161,7 +161,12 @@ namespace pni{
                     }
 
                     size_t cnt = 0;
+#ifdef NOFOREACH
+                    for(auto iter = l.begin(); iter != l.end(); iter++){
+                        const size_t &i = *iter;
+#else
                     for(const size_t &i: l){
+#endif
                         this->_imp.offset(cnt,i);
                         cnt++;
                     }
@@ -212,7 +217,12 @@ namespace pni{
                     }
                     
                     size_t cnt = 0;
+#ifdef NOFOREACH
+                    for(auto iter = l.begin(); iter!=l.end();iter++){
+                        const size_t &i = *iter;
+#else
                     for(const size_t &i: l){
+#endif
                         this->_imp.stride(cnt,i);
                         cnt++;
                     }
@@ -263,7 +273,12 @@ namespace pni{
                     }
                     
                     size_t cnt = 0;
+#ifdef NOFOREACH
+                    for(auto iter = l.begin(); iter!=l.end();iter++){
+                        const size_t &i = *iter;
+#else
                     for(const size_t &i: l){
+#endif
                         this->_imp.count(cnt,i);
                         cnt++;
                     }

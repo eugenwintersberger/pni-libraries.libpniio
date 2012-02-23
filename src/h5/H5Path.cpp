@@ -149,7 +149,12 @@ namespace pni{
             //===================output operator================================
             std::ostream &operator<<(std::ostream &o,const H5Path &p)
             {
+#ifdef NOFOREACH
+                for(auto iter = p.begin(); iter != p.end();iter++){
+                    const String &name = *iter;
+#else
                 for(const String &name: p){
+#endif
                     o<<name<<std::endl;
                 }
 

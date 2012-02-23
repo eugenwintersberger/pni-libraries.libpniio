@@ -295,7 +295,12 @@ void NXGroupTest::test_iterator()
     g.create_group("dir2");
     g.create_group("dir3");
 
+#ifdef NOFOREACH
+    for(auto iter = g.begin(); iter!=g.end(); iter++){
+        auto &sg = *iter;
+#else
     for(auto &sg: g){
+#endif
         std::cout<<sg.path()<<std::endl;
     }
 }
