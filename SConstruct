@@ -55,9 +55,8 @@ var.Add("MANDIR","installation directory for man pages","share/man")
 var.Add("LIBSONAME","name of the library including the SO-version","")
 var.Add("LIBLINKNAME","name of the library used for linking","")
 var.Add("LIBFULLNAME","full name of the library binary","")
-var.Add("INCINSTPATH","installation path for header files","")
-var.Add("LIBINSTPATH","library installation path","")
-var.Add("PKGNAME","package name (actually only used for Debian packages)","")
+var.Add("INCDIR","installation path for header files","")
+var.Add("LIBDIR","library installation path","")
 
 #need now to create the proper library suffix
 
@@ -72,23 +71,17 @@ env.Append(LIBSONAME   = libname.so_name(env))
 env.Append(LIBLINKNAME = libname.link_name(env))
 
 #create installation paths
-env.Append(INCINSTPATH = path.join(env["PREFIX"],"include/pni/nx"))
-if platform.machine()=="x86_64":
-    env.Append(LIBINSTPATH = path.join(env["PREFIX"],"lib"))
-else:
-    env.Append(LIBINSTPATH = path.join(env["PREFIX"],"lib"))
+if not env["INCDIR"]:
+    env.Append(INCDIR = path.join(env["PREFIX"],"include/pni/nx"))
 
-if env["DOCDIR"] == "":
+if not env["LIBDIR"]:
+    env.Append(LIBDIR = path.join(env["PREFIX"],"lib"))
+
+if not env["DOCDIR"]:
     #set default documentation directory for installation
     env.Append(DOCDIR = path.join(env["PREFIX"],"share/doc/"+
                                   env["LIBPREFIX"]+env["LIBNAME"]
                                   +env["SOVERSION"]+"-doc"))
-
-if env["PKGNAME"] == "":
-    env.Append(PKGNAME = env["LIBPREFIX"]+env["LIBNAME"]+env["SOVERSION"])
-
-#set some linker flags
-
 
 #set the proper compiler - this should be changed to something 
 #more general - independent of the underlying operating system
@@ -96,6 +89,8 @@ env.Replace(CXX = env["CXX"])
 
 #set default compiler flags
 env.Append(CXXFLAGS = ["-Wall","-std=c++0x"])
+#need to link explicit against libdl because some compilers 
+#are not doing this by default
 env.Append(LIBS=["dl"])
 #set paths for Boost and HDF5
 
@@ -232,7 +227,6 @@ if not conf.CheckCHeader("hdf5.h"):
 if not conf.CheckLib("hdf5"):
     print "HDF5 libraries not installed!"
     Exit(1)
-
     
 if not conf.CheckLib("cppunit",language="C++"):
     print "CPPUNIT unit test libraray is not installed!"
