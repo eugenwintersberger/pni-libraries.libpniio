@@ -20,8 +20,11 @@ namespace pni{
             //implementation of the default constructor
             H5File::H5File():H5Group(){
                 EXCEPTION_SETUP("H5File::H5File(");
-            }
 
+            }
+           
+            //-----------------------------------------------------------------
+            //implement constructor (protected) using an HDF5 ID object
             H5File::H5File(hid_t id):H5Group(id){
 
             }

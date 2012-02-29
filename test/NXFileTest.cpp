@@ -93,13 +93,13 @@ void NXFileTest::testCreation(){
     //if overwrite is not set an exception should be thrown
 	CPPUNIT_ASSERT_THROW(NXFile::create_file("NXFileTest.h5",false,0),
             pni::nx::NXFileError);
-    CPPUNIT_ASSERT_THROW(NXFile::create_file("NXFileTest.h5",true,0),
-            pni::nx::NXFileError);
+    CPPUNIT_ASSERT_NO_THROW(NXFile::create_file("NXFileTest.h5",true,0));
 
 	f.close();
 
     //check copy ans move constructor
 	CPPUNIT_ASSERT_NO_THROW(f = NXFile::create_file("NXFileTest.h5",true,0));
+    CPPUNIT_ASSERT(f.is_valid());
     NXFile f2(f);
     CPPUNIT_ASSERT(f.is_valid());
     CPPUNIT_ASSERT(f2.is_valid());
@@ -125,7 +125,7 @@ void NXFileTest::testOpen(){
 	//here we should get exceptions because the file is already open
 	CPPUNIT_ASSERT_NO_THROW(NXFile::open_file("NXFileTest.h5",true));
 
-	CPPUNIT_ASSERT_THROW(NXFile::create_file("NXFileTest.h5",true,0),pni::nx::NXFileError);
+	CPPUNIT_ASSERT_NO_THROW(NXFile::create_file("NXFileTest.h5",true,0));
 
 	CPPUNIT_ASSERT_NO_THROW(f.close());
 
