@@ -43,6 +43,8 @@ var = Variables('BuildConfig.py')
 var.Add(PathVariable("PREFIX","set installation prefix","/usr"))
 var.Add(PathVariable("BOOSTPREFIX","set the installation prefix for boost","/usr"))
 var.Add(PathVariable("HDF5PREFIX","set the installation prefix for HDF5","/usr"))
+var.Add(PathVariable("H5INCDIR","Directory where HDF5 headers are installed","",PathVariable.PathAccept))
+var.Add(PathVariable("H5LIBDIR","Directory where HDF5 libraries are installed","",PathVariable.PathAccept))
 var.Add(PathVariable("PNIUPREFIX","set the installation prefix for PNIUtils","/usr"))
 var.Add("VERSION","library version","0.0.0")
 var.Add("LIBNAME","library name","pniutils")
@@ -93,13 +95,21 @@ env.Append(CXXFLAGS = ["-Wall","-std=c++0x"])
 #are not doing this by default
 env.Append(LIBS=["dl"])
 #set paths for Boost and HDF5
+if env["H5LIBDIR"]:
+    env.Append(LIBPATH = env['H5LIBDIR'])
+else:
+    env.Append(LIBPATH=path.join(env["HDF5PREFIX"],"lib"))
 
-env.Append(LIBPATH=[path.join(env["HDF5PREFIX"],"lib"),
-                    path.join(env["BOOSTPREFIX"],"lib"),
+env.Append(LIBPATH=[path.join(env["BOOSTPREFIX"],"lib"),
                     path.join(env["PNIUPREFIX"],"lib"),
 ])
-env.Append(CPPPATH=[path.join(env["HDF5PREFIX"],"include"),
-                    path.join(env["BOOSTPREFIX"],"include"),
+
+if env['H5INCDIR']:
+    env.Append(CPPPATH = env['H5INCDIR'])
+else:
+    env.Append(CPPPATH = path.join(env["HDF5PREFIX"],"include"))  
+    
+env.Append(CPPPATH=[path.join(env["BOOSTPREFIX"],"include"),
                     path.join(env["PNIUPREFIX"],"include")
 ])
 

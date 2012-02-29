@@ -32,11 +32,9 @@
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
-#include<boost/filesystem.hpp>
 
 using namespace pni::utils;
 using namespace pni::nx::h5;
-using namespace boost::filesystem;
 
 class NXGroupTest: public CppUnit::TestFixture  {
 	CPPUNIT_TEST_SUITE(NXGroupTest);
