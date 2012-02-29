@@ -1,6 +1,0 @@
-The Debian Package libpninx
----------------------------
-
-libpninx provides a C++ API for the Nexus file format.
-
- -- Eugen Wintersberger <eugen.wintersberger@desy.de>  Tue, 24 May 2011 11:15:08 +0200

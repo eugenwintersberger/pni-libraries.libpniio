@@ -28,6 +28,7 @@
 #ifndef NXOBJECT_HPP_
 #define NXOBJECT_HPP_
 
+#include <memory>
 #include <iostream>
 
 #include <pni/utils/Types.hpp>
@@ -76,7 +77,7 @@ namespace pni{
                 typedef NXAttributeIterator<NXObject<Imp>,
                        NXAttribute<MAPTYPE(Imp,AttributeImpl)> > attr_iterator;
                 //==================constructors and destructors================
-                typedef boost::shared_ptr<NXObject<Imp> > sptr;
+                typedef std::shared_ptr<NXObject<Imp> > sptr;
                 //! default constructor
                 NXObject(){
                 }

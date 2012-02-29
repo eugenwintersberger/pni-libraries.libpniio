@@ -1,4 +1,0 @@
-@INCINSTPATH@/*
-@LIBINSTPATH@/lib*.a
-@LIBINSTPATH@/lib*.so
-@LIBINSTPATH@/pkgconfig/*

@@ -2,10 +2,38 @@
 import os.path as path
 import os
 import platform
-from smod import ProgramVersion
-from smod import GCCVersionParser
-from smod import CheckProgram
-from smod import LibFileNames
+
+###================================================================================
+#Function to assemble library filenames depending on the operating system for
+#which the library is built.
+class LibFileNames(object):
+    def __init__(self,libname,version,soversion):
+        self.libname = libname
+        self.version = version
+        self.soversion = soversion
+    
+    def full_name(self,env):
+        rstr = env["LIBPREFIX"]+self.libname
+        if os.name == "posix":
+            rstr += env["SHLIBSUFFIX"]+"."+self.soversion+"."+self.version
+        if os.name == "nt":
+            rstr += "."+self.soversion+"."+self.version+env["SHLIBSUFFIX"]
+            
+        return rstr
+    
+    def so_name(self,env):
+        rstr = env["LIBPREFIX"]+self.libname
+        if os.name == "posix":
+            rstr += env["SHLIBSUFFIX"]+"."+self.soversion
+        if os.name == "nt":
+            rstr += "."+self.soversion+env["SHLIBSUFFIX"]
+            
+        return rstr
+    
+    def link_name(self,env):
+        rstr = env["LIBPREFIX"]+self.libname+env["SHLIBSUFFIX"]
+        return rstr
+#==================================================================================
 
 #made here a small comment - should be only in the branch
 
@@ -15,6 +43,7 @@ var = Variables('BuildConfig.py')
 var.Add(PathVariable("PREFIX","set installation prefix","/usr"))
 var.Add(PathVariable("BOOSTPREFIX","set the installation prefix for boost","/usr"))
 var.Add(PathVariable("HDF5PREFIX","set the installation prefix for HDF5","/usr"))
+var.Add(PathVariable("PNIUPREFIX","set the installation prefix for PNIUtils","/usr"))
 var.Add("VERSION","library version","0.0.0")
 var.Add("LIBNAME","library name","pniutils")
 var.Add("SOVERSION","SOVersion of the library (binary interface version)","0")
@@ -67,12 +96,17 @@ env.Replace(CXX = env["CXX"])
 
 #set default compiler flags
 env.Append(CXXFLAGS = ["-Wall","-std=c++0x"])
+env.Append(LIBS=["dl"])
 #set paths for Boost and HDF5
 
-env.Append(LIBPATH=Dir([path.join(env["HDF5PREFIX"],"lib")]))
-env.Append(CPPPATH=Dir([path.join(env["HDF5PREFIX"],"include")]))
-env.Append(LIBPATH=[path.join(env["BOOSTPREFIX"],"lib")])
-env.Append(CPPPATH=[path.join(env["BOOSTPREFIX"],"include")])
+env.Append(LIBPATH=[path.join(env["HDF5PREFIX"],"lib"),
+                    path.join(env["BOOSTPREFIX"],"lib"),
+                    path.join(env["PNIUPREFIX"],"lib"),
+])
+env.Append(CPPPATH=[path.join(env["HDF5PREFIX"],"include"),
+                    path.join(env["BOOSTPREFIX"],"include"),
+                    path.join(env["PNIUPREFIX"],"include")
+])
 
 nullptr_test_code="""
 int main(int argc,char **argv){
@@ -135,21 +169,9 @@ def CheckInitList(context):
 #-------------------------------------------------------------------------------
 #start with configuration
 conf = Configure(env,
-custom_tests = {"CheckProgram":CheckProgram,"CheckNullPtr":CheckNullPtr,
+custom_tests = {"CheckNullPtr":CheckNullPtr,
                 "CheckForEach":CheckForEach,"CheckInitList":CheckInitList})
 
-#check available programs
-if not conf.CheckProgram("pdflatex -v"):
-    print "pdflatex not installed!"
-    Exit(1)
-    
-if not conf.CheckProgram("dot -V"):
-    print "graphviz not installed!"
-    Exit(1)
-    
-if not conf.CheckProgram("perl -v"):
-    print "perl not installed!"
-    Exit(1)
 
 #checking compiler capabilities
 if not conf.CheckNullPtr():
@@ -169,9 +191,6 @@ if not conf.CheckCXXHeader("boost/numeric/conversion/cast.hpp"):
     print "BOOST header file cast.hpp does not exist!"
     Exit(1)
     
-if not conf.CheckCXXHeader("boost/shared_ptr.hpp"):
-    print "BOOST header shared_ptr.hpp does not exist!"
-    Exit(1)
     
 if not conf.CheckCXXHeader("boost/static_assert.hpp"):
     print "BOOST header static_assert.hpp does not exist!"
@@ -193,7 +212,7 @@ if not conf.CheckCXXHeader("cppunit/TestCaller.h"):
     print "CPPUNIT header TestCaller.h does not exist!"
     Exit(1)
     
-if not conf.CheckCXXHeader("cppunit/TestResult.h"):
+if not conf.CheckCXXHeader(["string","cppunit/TestResult.h"]):
     print "CPPUNIT header TestResult.h does not exist!"
     Exit(1)
     
@@ -246,7 +265,6 @@ Export("test_build_env")
 
 SConscript(["src/SConscript"])
 SConscript(["test/SConscript"])
-SConscript(["debian/SConscript"])
 SConscript(["doc/SConscript"])
 
 #set default target this is important otherwise we get a problem with the 
