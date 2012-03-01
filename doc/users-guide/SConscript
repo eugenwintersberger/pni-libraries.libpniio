@@ -1,2 +1,4 @@
-users_guide = PDF("users-guide.tex")
+ug_env = Environment()
+ug_env.Append(PDFLATEXFLAGS=["-shell-escape"])
+users_guide = ug_env.PDF("users-guide.tex")
 Return("users_guide")

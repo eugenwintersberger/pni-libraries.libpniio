@@ -1,12 +1,23 @@
 %%low level objects in the library
 
-The API is quite minimalistic. From a users point of view only 
+\pninx s' API is quite minimalistic. From a users point of view only 
 three classes are required: {\tt NXFile}, {\tt NXGroup}, and {\tt NXField}.
 This are the basic components required to create a valid Nexus file and 
 fill it with data. Each of this classes will be presented in a separate 
 section of this chapter. 
 Because using links takes a little more explanation this topic has 
 its own section in at the very end of this chapter.
+
+To start using \pninx\ you only need to include a single header file 
+and maybe set a proper namespace
+\begin{minted}[linenos=true]{c++}
+#include<pni/nx/NX.hpp>
+
+using namespace pni::nx::h5;
+\end{minted}
+
+The namespace selects which implementation to use. Actually only {\tt h5} for
+HDF5 is supported.
 
 \section{NXFile}\label{section:nxfile}
 \input{tex/NXFile.tex}
@@ -17,8 +28,6 @@ its own section in at the very end of this chapter.
 \section{NXField}\label{section:nxfield}
 \input{tex/NXField.tex}
 
-\section{Attributes}\label{section:attributes}
-
-\section{Link creation}\label{section:links}
+\section{Links}\label{section:links}
 
 \section{A full example}\label{section:full_example}

@@ -1,5 +1,4 @@
 //nxnumfield_ex2.cpp
-
 #include <pni/utils/Types.hpp>
 #include <pni/nx/NX.hpp>
 

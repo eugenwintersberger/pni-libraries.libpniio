@@ -3,34 +3,45 @@
 The aim of \pninx\ is to provide an easy to use but yet powerful interface
 to write Nexus files from C++. Although the Nexus group already provides 
 an binding of their Nexus API (NAPI) for C++, this is not much more than a 
-thin wrapper around the C library. Thus the native C++ API suffers from 
-a whole bunch of features that a C++ programmer would expect from an API. 
+thin wrapper around the Nexus C API. Thus the native C++ API does not espose
+many of the features a C++ programmer would expect from an API. 
 \pninx\ is an approach to overcome the limitations of the native C++ API 
 and provide you with all the object oriented features that C++ exposes.
 
-In this chapter the general design of the library will be discussed. 
-Though this section is usualy for developers only, users of the library 
-are highly encouraged to read this chapter as it provides a lot of useful 
-information about the philosophy behind certain objects. In particular 
+This chapter presents the general design of the API. Every user of the API is
+highly encouraged to read this chapter as it contains the basic information 
+required to use the API. In particular 
 section~\ref{section:nxfield_design} should be read by all users of \pninx. 
 
 \section{Nexus and HDF5}
 
 There is some confusion about how Nexus and HDF5 are related to each other. 
-Mostly by people which know neither the one nor the other. 
-So I will give an attempt to bring a bit light into this miracle. 
-HDF5 is a binary file format which is primarily used to store numerical data. 
-Each HDF5 file consist of primarily two kinds of objects: groups and datasets. 
-The idea behind HDF5 is quite similar to that of a file system: the groups 
-act like directories holding other groups and datasets while the datasets 
-can be considered as files. In it simplest form a dataset can be treated as a 
-multidimensional array of numbers of a particular data type. 
-If you are familiar with the arrays provided by the {\tt numpy} package 
-for Python you can directly map the anatomy of such an array to an HDF5 dataset. 
-A {\tt numpy} array consist of a shape object which is simply a tuple holding 
-the number of elements along each dimension and a data type (integer, float, or
-whatever you have decided to store in the array). In HDF5 the shape is 
-called data-space and the data type - well - is the data-type. 
+The reason for this confusion is mostly due to the fact that Nexus is considered
+by many people to be a physical file format of its own. Indeed, Nexus is only a
+set of rules and conventions how data should be organized (we will see later
+what this means). However, in the end data is writing using one of several
+physical file formats supported by Nexus. These formats are XML, HDF4, and last
+but not least HDF5. As Nexus describes the structure of data (not the way how it
+will be stored on disk) the file format used to store data according to the
+Nexus standard must provide some kind of structuring mechanisms as it is the
+case for the formats mentioned above. 
+While the native Nexus APIs support all these physical file formats \pninx\
+only supports HDf5. However, as the other tow (HDF4 and XML) are available
+mostly due to historical reasons, this is not a serious limitation. 
+
+HDF5 is a binary file format which is primarily developed  to store large
+amounts of numerical data. 
+An HDF5 file can be considered pretty much like file system. The data is stored 
+in objects called {\em datasets}. In simplest case a dataset is a
+multi-dimensional array holding data of a particular type. The datasets can be 
+organized in {\em groups}. Thus, to come back to the image of a file system 
+the datasets represent files where the groups can be considered as directories.
+For those who are more familiar with scientific software development a dataset
+can also be imagined as a {\tt numpy} array in Python or as a numerical array 
+in Fortran. Such arrays have a data-type and a shape. The later one holds the 
+number of elements along each dimension of the array.
+As the datasets are organized by groups each of them can be addressed by a Unix
+like path (we are back again in the file-system picture). In the 
 
 Attributes can be attached to groups and datasets in an HDF5 file. One  can
 imagine attributes as kind of tags that can be stuck on an object. 
@@ -43,13 +54,22 @@ can think of.
 %%%----------------------------------------------------------------------------
 \begin{figure}[tb]
 \centering
+\begin{minipage}[t]{0.4\linewidth}
+\centering
 \resizebox{\linewidth}{!}{\includegraphics{pics/class_inheritance.pdf}}
 \caption{{\small\label{fig:class_inheritance}
-Inheritance relations between the major objects provided by \pninx.
-\nxobject\ is the root of the class tree but will hardly be used. 
-The class important to a developer are the three classes derived from 
-\nxobject: \nxfield, \nxgroup, and \nxfile.
+There are only four major objects: \nxobject, \nxfield, \nxgroup, and 
+\nxfile. Which are all derived from \nxobject. 
 }}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.59\linewidth}
+\centering
+\resizebox{\linewidth}{!}{\includegraphics{pics/helper_classes.pdf}}
+\caption{{\small\label{fig:helper_classes} 
+Helper classes
+}}
+\end{minipage}
 \end{figure}
 %%%----------------------------------------------------------------------------
 To keep the API simple, only a few classes are exposed. These classes and their 
@@ -86,129 +106,107 @@ provided by the C++11 standard. Thus, an actual compiler is required to
 build the library (for {\tt gcc} a version larger or equal $4.4$ is required).
  
 
-\section{A closer view on \nxfield}\label{section:nxfield_design}
-The classes derived form \nxfield\ are most probably the most important 
-objects in the \pninx-universe as they are used to read from and write data to 
-the file. From the point of C++, \nxfield\ can be considered a container like 
-{\tt std::vector<>} or {\tt std::list<>}.
-When an \nxfield\ object is newly instantiated it represents an empty container. 
-Writing data to disk means nothing else than appending data to the container. 
-To read data form disk means to fetch data from the container.
-The size (number of elements) of the container is limited by the amount of 
-free space on the storage device on which the file is written.
-This means that you do not know the number of elements you want to write 
-at the time of instantiating these objects. 
-All classes derived form \nxfield\ mimic the behavior of a C++ container 
-class in some or the other way.  So you will find methods like 
-{\tt get()}, {\tt set()}, {\tt append()} and so on. However, some flavors
-of these method may behave slightly unexpected. The reason for this is that 
-unlike for a classical container there are tow points of how we can look 
-on the data stored in such a container (this is in particular true for 
-numeric data). 
-There are basically three kinds of objects that can be stored in these container
-\begin{enumerate}
-  \item numerical data (\nxnumericfield)
-  \item strings (\nxstringfield)
-  \item and binary uninterpreted data (\nxbinaryfield)
-\end{enumerate}
-\nxfield\ can handle all different kinds of data which keeps the number of 
-classes in the library small. However, there is a price one has to pay 
-for this simplicity: \nxfield\ behaves slightly different depending 
-on which kind of data is stored. 
+\section{Supported datatypes}
 
-\subsection{Numerical data}
-%%%-----------------------------------------------------------------------------
+\begin{table}[tb]
+\centering
+\begin{tabular}{l|c|l||l|c|l}
+ name & size (Bit) & description & name & size (Bit) & description \\
+ \hline
+ {\tt UInt8} & $8$ & unsigned integer & {\tt Float32} & $32$ & floating point \\
+ {\tt Int8}  & $8$ & signed integer &   {\tt Float64} & $64$ & floating point \\
+ {\tt UInt16} & $16$ & unsigned integer & {\tt Float128} & $128$ & floating
+ point\\
+ {\tt Int16} & $16$ & signed integer & {\tt Complex32} & $64$ & complex floating
+ point \\
+ {\tt UInt32} & $32$ & unsigned integer & {\tt Complex64} & $128$ & complex
+ floating point \\
+ {\tt Int32} & $32$ & signed integer & {\tt Complex128} & $256$ & complex
+ floating point \\
+ {\tt UInt64} & $64$ & unsigned integer & & & \\
+ {\tt Int64} & $64$ & signed integer & & & \\
+\hline
+\end{tabular}
+\caption{{\small\label{tab:numeric_types} Numerical data-types supported by
+\pninx. The complex floating point types are instances of the {\tt
+std::complex<T>} template for the  {\tt Float32}, {\tt Float64}, and {\tt
+Float128} types respectively.}}
+\end{table}
+
+\pninx\ supports a whole bunch of data-types. The numeric types are shown in 
+Tab.~\ref{tab:numeric_types}. \pninx supports all types supported by the Nexus
+standard too. In addition there is support for complex numbers and for $128$ Bit
+floating point numbers. The complex numbers are instances of the 
+{\tt std::complex<T>} template provided by C++.
+In addition to the numerical types there is support for string and binary data. 
+Strings are represented by the {\tt String} type which is basically nothing else
+than a {\tt typedef} to {\tt std::string} included in the C++ standard library.
+The binary type {\tt Binary} is slightly more complex. In the official Nexus
+standard binary data is represented by {\tt unsigned char}. This has several 
+disadvantages. The first is that binary data looks completely the same 
+for the compiler as {\tt UInt8} (being itself a {\tt typedef} to {\tt unsigned
+char}). This makes it impossible to distinguish this two types in template
+parameters. In addition all arithmetic operators are defined for {\tt unsigned
+char} which would make it possible to treat binary data as numbers which is
+definitely what we want. To circumvent this problem a special template 
+{\tt BinaryType<T>} was defined and the type {\tt Binary} is nothing else 
+than a {\tt typedef} to {\tt BinaryType<unsigned char>}. The resulting type is
+binary compatible with {\tt unsigned char} however, since no arithmetic
+operators are exposed such operations are impossible with binary data. 
+The compiler would not even compile code that tries to do such things. 
+
+
+\section{The \nxfield\ class}
+%%%============================================================================
 \begin{figure}[tb]
 \centering
-\begin{minipage}[t]{0.39\linewidth}
+\begin{minipage}[t]{0.25\linewidth}
 \centering
-\resizebox{\linewidth}{!}{\includegraphics{pics/container_scalar.pdf}}
-\caption{{\small\label{fig:container_scalar} An \nxfield\ object holding 
-scalar values can be either considered as a list of single scalar values 
-or as a 1-dimensional array of numbers.}}
+\resizebox{\linewidth}{!}{\includegraphics{pics/array.pdf}}
+\caption{{\small\label{fig:array}A two dimensional \nxfield\ before growing. }}
 \end{minipage}
-\hfill
-\begin{minipage}[t]{0.58\linewidth}
+\hspace{0.01\linewidth}
+\begin{minipage}[t]{0.3\linewidth}
 \centering
-\resizebox{\linewidth}{!}{\includegraphics{pics/container_array.pdf}}
-\caption{{\small\label{fig:container_array}An \nxfield\ object with 2D-arrays 
-of data can be either considered as a list of individual arrays or as a
-single 3D array where the first dimension runs over the number of elements
-and the other dimension correspond to those of the array data.}}
+\resizebox{\linewidth}{!}{\includegraphics{pics/array_grow.pdf}}
+\caption{{\small\label{fig:array_grow}The \nxfield\ after growth along dimension
+$0$ by $2$ elements.}}
 \end{minipage}
-\end{figure} 
-%%%-----------------------------------------------------------------------------
-Numeric data is handled by the two templates \arrayt\ and \scalart\  
-provided by \pniutils. For more information on this two templates see 
-the users-guide of \pniutils.
-Figures~\ref{fig:container_scalar} and \ref{fig:container_array} show how these 
-two templates are stored in a field container. 
-Basically we can treat data in two different ways: as a list of invididual
-elements or, collectively, as a single array of data. 
-Both approaches are are depicted in Figs.~\ref{fig:container_scalar} and 
-\ref{fig:container_array}. A field storing scalars can be either considered 
-as a list of individual numbers or as a 1D array of numbers. 
-The same holds for arrays as shown in Fig.~\ref{fig:container_array}. Here 
-we have either a list of individual 2D arrays or a single 3D array where the 
-first index runs over the number of elements in the list while the remaining 
-indices correspond to those of the 2D arrays.
-Both points of view - the element wise or the collective view have their own 
-applications and thus are taken into account in the API. 
-
-\subsection{String data}
-%%%-----------------------------------------------------------------------------
-\begin{figure}[tb]
+\hspace{0.01\linewidth}
+\begin{minipage}[t]{0.36\linewidth}
 \centering
-\begin{minipage}[c]{0.4\linewidth}
-\centering
-\resizebox{\linewidth}{!}{\includegraphics{pics/container_string.pdf}}
-\end{minipage}
-\hfill
-\begin{minipage}[c]{0.58\linewidth}
-\caption{{\small\label{fig:container_string} String fields can hold strings 
-of different length. Each time a string is appended to the container 
-a new entry is created. This can be used to store text files in a line-wise
-manner. Each entry represents a line in the text-file.}}
+\resizebox{\linewidth}{!}{\includegraphics{pics/selection.pdf}}
+\caption{{\small\label{fig:selection}\nxselection\ object allow to read only 
+portions of an \nxfield. This is sometimes useful where one is not interested in
+the entire data.}}
 \end{minipage}
 \end{figure}
-%%%-----------------------------------------------------------------------------
-As usually strings are slightly different from everything else. 
-This is also true for \pninx\ as shown in Fig.~\ref{fig:container_string}.
-In the container view each element stores an individual string. The strings 
-can have different length. 
-As for numeric data one can either read individual strings or all strings 
-in a single step. This would make it easy for instance to dump an entire 
-ASCII file in such a string field. 
+%%%============================================================================
 
-\subsection{Binary data}
-%%%-----------------------------------------------------------------------------
-\begin{figure}[tb]
-\centering
-\begin{minipage}[c]{0.4\linewidth}
-\centering
-\resizebox{\linewidth}{!}{\includegraphics{pics/container_binary.pdf}}
-\end{minipage}
-\hfill
-\begin{minipage}[c]{0.58\linewidth}
-\caption{{\small\label{fig:container_binary} Binary data is stored block wise.
-Each container entry holds a block of constant size of data. Thus at 
-field creation a block size must be passed to the creating factory method. 
-If the block size is as large as the entire binary data only a single element 
-must be stored representing the entire binary data.}}
-\end{minipage}
-\end{figure}
-%%%-----------------------------------------------------------------------------
-The last class of data supported by Nexus is binary data. 
-Image files (JPEG, PNG,TIFF), PDF files or other binary data can be stored in
-such a field. The binary stream is not interpreted. 
-The interesting question is how to represent such a binary blob of data in 
-a container view as it is provided by \nxfield?. 
-Binary data is usually read in blocks of a certain size. So the elements
-in the list are blocks. In the simplest case a block is only $1$ byte. 
-In this case you can read data byte by byte and dump it to the field. 
+The class a user of \pninx\ most often has to deal with is \nxfield. 
+Thus a short introduction to the concepts behind \nxfield\ should be given here.
+A field is basically nothing else than a dataset in the HDF5 world. 
+It represents a multi-dimensional array of data of a particular type stored on
+disk. The data-type can be any of the types supported by \pninx\ and described
+in the previous section. 
+Figure~\ref{fig:array} shows a $2$-dimensional field. The number of dimensions
+of a field is determined at creation time. However, the number of elements along
+each dimension can be extended (not reduced, due to limitations of HDF5) during 
+the entire lifetime of the \nxfield\ object. This process is called {\em
+growth}. A \nxfield\ object can grow along a single dimension by certain number
+of elements. An example of such an operation is shown in
+Fig.~\ref{fig:array_grow} where the field from Fig.~\ref{fig:array} is expanded
+by two elements along dimension $0$. 
+It is important to note that the ordering of elements in a \nxfield\ object
+follows the {\tt C}-convention. This means that the last index varies fastest.
 
-
-
-
+A helper class which is of particular importance is the \nxselection\ class. 
+It is mentioned here because it is very closely related to \nxfield\ objects.
+Selections allow for partial IO. This means only a small portion of the data
+stored in an \nxfield\ object is read or written. Figure~\ref{fig:selection}
+shows the basic concept of a selection applied to a $2$-dimensional field. 
+\nxselection\ objects as will be shown later are totally bound to the \nxfield\
+object which created them. This is important in  as so far that a selection can
+be applied only to the field that created it.
  
 

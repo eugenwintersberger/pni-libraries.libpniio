@@ -1,16 +1,27 @@
-//nxbinfield_ex1.cpp
-
+//Filename: nxbinfield_ex1.cpp
+#include <iostream>
+#include <fstream>
 #include <pni/nx/NX.hpp>
 #include <pni/utils/Types.hpp>
 #include <pni/utils/Buffer.hpp>
-
 using namespace pni::nx::h5;
 using namespace pni::utils;
 
 typedef Buffer<Binary> BinBuffer;
 
-#include <iostream>
-#include <fstream>
+void read_image(const String &n,NXField &field);
+void write_image(NXfield &f,const String &n);
+
+//----------------------------------------------------------
+int main(int argc,char **argv){
+    NXFile file = NXFile::create_file("nxbinfield_ex1.h5",true,0); 
+
+    NXField field = file.create_field<Binary>("image");
+    read_image("nexus.png",field); 
+    write_image(field,"test.png");
+    
+    return 0;
+}
 
 //------------------------------------------------------------
 void read_image(const String &n,NXField &field)
@@ -42,15 +53,4 @@ void write_image(NXField &field,const String &n)
     field.read(buffer);
     ostream.write((char *)buffer.ptr(),buffer.size());
     ostream.close();
-}
-
-//----------------------------------------------------------
-int main(int argc,char **argv){
-    NXFile file = NXFile::create_file("nxbinfield_ex1.h5",true,0); 
-
-    NXField field = file.create_field<Binary>("image");
-    read_image("nexus.png",field); 
-    write_image(field,"test.png");
-    
-    return 0;
 }

@@ -1,10 +1,44 @@
-env = Environment()
+from os import path
+
+vars = Variables()
+vars.Add("H5PREFIX","HDF5 installation prefix","/usr")
+vars.Add("H5INCDIR","HDF5 header installation directory","")
+vars.Add("H5LIBDIR","HDF5 library installation directory","")
+vars.Add("PNIPREFIX","PNI software installation prefix","/usr")
+vars.Add("PNIINCDIR","PNI header installation directory","")
+vars.Add("PNILIBDIR","PNI library installation directory","")
+
+env = Environment(variables=vars)
+
+if env["H5INCDIR"]:
+    env.Append(CPPPATH = [env["H5INCDIR"]])
+else:
+    env.Append(CPPPATH = [path.join(env["H5PREFIX"],"include")])
+
+if env["PNIINCDIR"]:
+    env.Append(CPPPATH = [env["PNIINCDIR"]])
+else:
+    env.Append(CPPPATH = [path.join(env["PNIPREFIX"],"include")])
+
+if env["H5LIBDIR"]:
+    env.Append(LIBPATH = [env["H5LIBDIR"]])
+else:
+    env.Append(LIBPATH = [path.join(env["H5PREFIX"],"lib")])
+
+if env["PNILIBDIR"]:
+    env.Append(LIBPATH = [env["PNILIBDIR"]])
+else:
+    env.Append(LIBPATH = [path.join(env["PNIPREFIX"],"lib")])
+
+
+
 
 env.Append(LIBS=["pninx","pniutils","hdf5"])
 env.Append(CXXFLAGS=["-O2","-std=c++0x"])
 d4 = env.Program("d4",["d4.cpp","NXHelper.cpp"])
 nxfile_ex1 = env.Program("nxfile_ex1.cpp")
 nxgroup_ex1 = env.Program("nxgroup_ex1.cpp")
+nxgroup_ex2 = env.Program("nxgroup_ex2.cpp")
 #simple_ex2 = env.Program("simple_ex1",["simple_ex1.cpp","NXHelper.cpp"])
 nxnumfield_ex1 = env.Program("nxnumfield_ex1.cpp")
 nxnumfield_ex2 = env.Program("nxnumfield_ex2.cpp")
