@@ -215,8 +215,10 @@ void H5GroupTest::test_comparison()
     std::cout<<"void H5GroupTest::test_comparison()---------------------------";
     std::cout<<std::endl;
 
-    H5Group g1("group1/data",file);
-    H5Group g2(g1);
+    H5Group("group1/data",file);
+
+    H5Group g1 = file["group1/data"];
+    H5Group g2 = file["group1/data"];
 
     CPPUNIT_ASSERT(g1 == g2);
 

@@ -119,6 +119,7 @@ namespace pni{
 
             void H5Group::close(){
                 if(is_valid()) H5Gclose(id());
+                H5Object::close();
             }
 
 

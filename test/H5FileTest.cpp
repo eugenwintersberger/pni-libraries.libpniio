@@ -19,8 +19,10 @@ void H5FileTest::test_creation(){
 
     //should raise an exception because the file is not an HDF5 file
     CPPUNIT_ASSERT_THROW(H5File::open_file("H5FileTest.cpp",false),H5FileError);
+    CPPUNIT_ASSERT_THROW(H5File::open_file("H5FileTest.cpp",true),H5FileError);
     //should throw an exception because the file does not exist.
     CPPUNIT_ASSERT_THROW(H5File::open_file("blablabla.h5",false),H5FileError);
+    CPPUNIT_ASSERT_THROW(H5File::open_file("blablabla.h5",true),H5FileError);
 
     //create a file
     CPPUNIT_ASSERT_NO_THROW(file = H5File::create_file("H5FileTest.h5",true,0));
@@ -29,7 +31,8 @@ void H5FileTest::test_creation(){
     CPPUNIT_ASSERT(!file.is_valid());
 
     //open the file
-    CPPUNIT_ASSERT_NO_THROW(file = H5File::open_file("H5FileTest.h5",false));
+    file = H5File::open_file("H5FileTest.h5",false);
+    //CPPUNIT_ASSERT_NO_THROW(file = H5File::open_file("H5FileTest.h5",false));
     CPPUNIT_ASSERT(file.is_valid());
 
     //use the move constructor

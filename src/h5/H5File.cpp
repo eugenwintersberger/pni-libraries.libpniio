@@ -44,12 +44,32 @@ namespace pni{
             //-----------------------------------------------------------------
             //implementation of the destructor
             H5File::~H5File() {
-                close();
+                if(is_valid()){
+                    /*
+                    std::cerr<<"File: "<<name()<<std::endl;
+                    std::cerr<<"Open files:      "<<
+                        H5Fget_obj_count(id(),H5F_OBJ_FILE)<<std::endl;
+                    std::cerr<<"Open data sets:  "<<
+                        H5Fget_obj_count(id(),H5F_OBJ_DATASET)<<std::endl;
+                    std::cerr<<"Open groups:     "<<
+                        H5Fget_obj_count(id(),H5F_OBJ_GROUP)<<std::endl;
+                    std::cerr<<"Open data type:  "<<
+                        H5Fget_obj_count(id(),H5F_OBJ_DATATYPE)<<std::endl;
+                    std::cerr<<"Open attributes: "<<
+                        H5Fget_obj_count(id(),H5F_OBJ_ATTR)<<std::endl;
+
+                    */
+
+                    H5Fflush(id(),H5F_SCOPE_GLOBAL);
+                    H5Fclose(id());
+                }
             }
 
             //=================Implementation of assignment operators==========
             H5File &H5File::operator=(H5File &&o){
-                if(this != &o) H5Group::operator=(std::move(o));
+                if(this != &o) 
+                    H5Group::operator=(std::move(o));
+
                 return *this;
             }
 
@@ -57,7 +77,9 @@ namespace pni{
             //implementation of copy assignment
             H5File &H5File::operator=(const H5File &o)
             {
-                if(this != &o) H5Group::operator=(o);
+                if(this != &o) 
+                    H5Group::operator=(o);
+
                 return *this;
             }
 
@@ -84,6 +106,7 @@ namespace pni{
                     H5Fflush(id(),H5F_SCOPE_GLOBAL);
                     H5Fclose(id());
                 }
+                H5Object::close();
 
             }
             
