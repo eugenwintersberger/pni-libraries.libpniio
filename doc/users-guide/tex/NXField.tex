@@ -1,16 +1,24 @@
 %%%NXField documentation
 
-In the Nexus world the payload (your real data) is stored in fields which 
-are represented in this library by objects of class {\tt NXField}.
-Like groups, fields cannot be instantiated by their constructor but are 
-rather created using factory methods provided by all classes derived 
-from  {\tt NXGroup}. One word of caution: a prerequisit for understanding 
-this section is a fundamental knowledge of the data objects provided 
-by {\tt libpniutils}. If you are not please consult the {\tt libpniutils}
-users guide first.
-One can distinguish between two basic types of fields: string-fields
-and numeric-fields. The former hold string data while the later 
-holds numbers.   
+Objects of type \nxfield\ are the data-holding entities in the world of \pninx.
+As descendants of \nxobject\ they can hold attribute data as \nxgroup. 
+Instances of \nxfield\ are created using the {\tt create\_field<T>} template
+method provided by \nxfile\ and \nxgroup. 
+This method comes in several version which will be briefly discussed here before
+we continue with examples. 
+Let us assume that  {\tt g} represents an instance of \nxgroup. The simplest 
+approach to create a field is
+\begin{minted}{c++}
+    NXField field = g.create_field<Float32>("data");
+\end{minted}
+which will create a field with name {\tt data} below group {\tt g}. The rank
+(number of dimensions) of the field is $1$ and a single data value can be stored
+after creation. If a you want to create a multidimensional field an additional
+shape argument must be supplied to the method like this
+\begin{minted}{c++}
+    Shape s = {1024,1024};
+    NXField field = g.create_field<UInt16>("detector",s);
+\end{minted}
 
 
 \subsection{Fields with numerical data}
@@ -26,7 +34,18 @@ holds numbers.
 
 \subsection{Fields with binary data}
 \label{section:nxfield_binary_io}
-
+The {\tt Binary} data-type provided by \pniutils\ has only one intention: hold
+uninterpreted binary data. There are not too many applications for such data.
+The most natural one might be to store a file in a Nexus file and latter write
+it back to disk. This file might be an image file, a PDF document, or an office
+file. In all cases the only operations applied to the binary data is reading and
+writing. 
+The next section presents such an application where an image file is read from
+disk and stored to an \nxfield\ from which it will be read back and stored on
+disk.
+The main program of this program is shown below and looks rather trivial.
 \inputminted[linenos,firstline=1,lastline=24]{c++}{../examples/c++/nxbinfield_ex1.cpp}
+The scalar \nxfield\ instance holding the binary data is created in line 19.
+
 \inputminted[linenos,firstnumber=27,firstline=27,lastline=44]{c++}{../examples/c++/nxbinfield_ex1.cpp}
 \inputminted[linenos,firstnumber=47,firstline=47,lastline=56]{c++}{../examples/c++/nxbinfield_ex1.cpp}
