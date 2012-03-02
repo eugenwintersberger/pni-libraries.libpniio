@@ -151,6 +151,15 @@ template<typename T> void NXFieldTest::test_io_array(){
     field1 = file.create_field<T>("array2",{2,2});
     CPPUNIT_ASSERT_THROW(field1.write(write),ShapeMissmatchError);
 
+    NXDeflateFilter deflate;
+    deflate.compression_rate(9);
+    deflate.shuffle(true);
+
+    field1 = file.create_field<T>("array2_delfate",s,deflate);
+    CPPUNIT_ASSERT_NO_THROW(field1.write(write));
+    CPPUNIT_ASSERT_NO_THROW(field1.read(read));
+    CPPUNIT_ASSERT(write == read);
+
 }
 
 //-----------------------------------------------------------------------------
