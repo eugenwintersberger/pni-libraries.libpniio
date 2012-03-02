@@ -10,13 +10,13 @@ using namespace pni::utils;
 typedef Buffer<Binary> BinBuffer;
 
 void read_image(const String &n,NXField &field);
-void write_image(NXfield &f,const String &n);
+void write_image(NXField &f,const String &n);
 
 //----------------------------------------------------------
 int main(int argc,char **argv){
     NXFile file = NXFile::create_file("nxbinfield_ex1.h5",true,0); 
 
-    NXField field = file.create_field<Binary>("image");
+    NXField field = file.create_field<Binary>("image",{0});
     read_image("nexus.png",field); 
     write_image(field,"test.png");
     
@@ -39,7 +39,7 @@ void read_image(const String &n,NXField &field)
 
     istream.close();
 
-    field.grow(0,buffer.size()-1);
+    field.grow(0,buffer.size());
     field.write(buffer);
 }
 

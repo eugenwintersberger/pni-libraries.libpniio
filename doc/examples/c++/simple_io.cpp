@@ -17,7 +17,7 @@ void write_data(String fname,size_t np,size_t nx,size_t ny)
     NXSelection fsel = data.selection();
     fsel.offset({0,0,0});
     fsel.stride({1,1,1});
-    fsel.count({1,nx,ny});
+    fsel.shape({1,nx,ny});
 
     for(size_t i=0;i<np;i++){
         //read data
@@ -44,7 +44,7 @@ void read_data(String fname,size_t np,size_t nx,size_t ny)
     NXField field = file["/scan_1/instrument/detector/data"];
     NXSelection dsel = field.selection();
     dsel.offset({0,0,0});
-    dsel.count({np,1,ny});
+    dsel.shape({np,1,ny});
     dsel.stride({1,1,1});
 
     for(size_t i=0;i<nx;i++){

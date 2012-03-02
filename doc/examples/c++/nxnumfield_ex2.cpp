@@ -12,7 +12,7 @@ int main(int argc,char **argv){
     UInt32Scalar counter("counter","cps","a scalar counter");
     NXField field = file.create_field<UInt32>(counter.name(),{0});
     NXSelection sel = field.selection();
-    sel.count({1});
+    sel.shape({1});
     sel.offset({0});
     sel.stride({1});
     
@@ -39,13 +39,13 @@ int main(int argc,char **argv){
     counters.allocate();
 
     sel.offset({2});
-    sel.count({3});
+    sel.shape({3});
     sel.read(counters);
 
     //set individual entries
     counter = 100;
     sel.offset({2});
-    sel.count({1});
+    sel.shape({1});
     sel.write(counter);
 
     return 0;

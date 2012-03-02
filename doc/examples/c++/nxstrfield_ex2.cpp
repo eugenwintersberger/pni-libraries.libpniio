@@ -17,7 +17,7 @@ void write_log(const String &logfile,NXField &field){
 
     istream.open(logfile,std::ifstream::in);
     NXSelection sel = field.selection();
-    sel.count(0,1);
+    sel.shape(0,1);
     sel.stride(0,1);
     sel.offset(0,0);
    
@@ -45,7 +45,7 @@ int main(int argc,char **argv){
     NXSelection sel = field.selection();
     sel.offset(0,0);
     sel.stride(0,1);
-    sel.count(0,1);
+    sel.shape(0,1);
     for(size_t i=0;i<field.size();i++)
     {
         String line;
