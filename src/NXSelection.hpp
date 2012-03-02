@@ -229,37 +229,37 @@ namespace pni{
                 }
             
                 //-------------------------------------------------------------
-                //! get selection count
+                //! get selection shape
 
-                //! Returns the count value (number of elements) along dimension i. 
+                //! Returns the shape value (number of elements) along dimension i. 
                 //! \throws IndexError if i exceeds selection rank
                 //! \param i dimension index
-                //! \return count value along dimension i
-                size_t count(size_t i) const
+                //! \return shape value along dimension i
+                size_t shape(size_t i) const
                 {
                     return this->_imp.count(i);
                 }
 
                 //--------------------------------------------------------------
-                //! set selection count
+                //! set selection shape
 
-                //! Sets the selections count value along dimension i to s.
+                //! Sets the selections shape value along dimension i to s.
                 //! \throws IndexError if i exceeds selection rank
                 //! \param i index of the dimension
                 //! \param s count value
-                void count(size_t i,size_t s)
+                void shape(size_t i,size_t s)
                 {
                     this->_imp.count(i,s);
                 }
 
                 //--------------------------------------------------------------
-                //! set all count
+                //! set entire shape
 
-                //! All count values for the selection can be set by a single 
+                //! Sets the entire shape of a selection with a single 
                 //! call using an initializer list.
                 //! \throws ShapeMissmatchError if list size does not match rank
                 //! \param l initializer list with count values
-                void count(const std::initializer_list<size_t> &l)
+                void shape(const std::initializer_list<size_t> &l)
                 {
                     EXCEPTION_SETUP("void NXSelection::count("
                             "const std::initializer_list<size_t> &l)");

@@ -72,6 +72,8 @@ class NXSelectionTest:public CppUnit::TestFixture
 
 //testting to write to a simple scalar datatype
 template<typename T> void NXSelectionTest::test_io_simple(){
+    std::cout<<"NXSelectionTest::test_io_simple<T>()-------------------------";
+    std::cout<<std::endl;
     NXField field = file.create_field<T>("scalar");
     T write,read;
     init_values<T>(write,read);
@@ -92,7 +94,7 @@ template<typename T> void NXSelectionTest::test_io_simple(){
     }
 
     CPPUNIT_ASSERT_NO_THROW(sel.offset(0,0));
-    CPPUNIT_ASSERT_NO_THROW(sel.count(0,2));
+    CPPUNIT_ASSERT_NO_THROW(sel.shape(0,2));
     CPPUNIT_ASSERT_THROW(sel.write(write),ShapeMissmatchError);
     CPPUNIT_ASSERT_THROW(sel.read(read),ShapeMissmatchError);
 }
