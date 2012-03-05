@@ -291,8 +291,7 @@ void H5SelectionTest::test_write_array(){
 
     //create dataspace and datatype
     Shape cs = {0,3,5};
-    Shape cms = {H5Dataspace::UNLIMITED,3,5};
-    H5Dataspace space(cs,cms);
+    H5Dataspace space({0,3,5},{H5Dataspace::UNLIMITED,3,5});
     H5Datatype type = H5DatatypeFactory::create_type<UInt32>();
 
     //create the dataset and selection object
