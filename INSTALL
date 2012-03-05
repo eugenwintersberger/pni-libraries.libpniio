@@ -5,16 +5,19 @@ Installation instructions
     ------------
 
 Required software to build libpninx:
--> scons 
+-> gcc >= 4.4.1
+-> scons >= 2.0.0
+
+To build the documentation some additional programs are required
 -> doxygen
--> latex (pdflatex)
+-> pdflatex
+-> pygmented
 
 Library dependencies:
 -> libpniutils
 -> boost
 -> HDF5
 -> cppunit
--> GIT python bindings (http://gitorious.org/projects/git-python/)
 
 libpninx relies on C++11 standard so you need a compliant compiler. 
 The code is developed with gcc-4.6. gcc-4.5 works too. There is a compiler bug
@@ -34,17 +37,25 @@ scons in the root directory of the source directory.
 
 $> scons
 
-In cases where your libraries are installed under non-standard locations 
-additional parameters can be used. For instance
+If you want to use a different C++ compiler than the default system compiler use
+the CXX build variable like this
 
-$> scons BOOSTPREFIX=/usr/local/boost HDF5PREFIX=/usr/local/hdf5
+$> scons CXX=/usr/local/bin/g++-4.6
 
-must be used in cases where boost and hdf5 are installed under 
-/usr/local/boost and /usr/local/hdf5 respectively. 
-In some cases you may want to use a different compiler. This can be done 
-using the CXX variable
+SCons tries to do some auto-configuration before the build. If it finds all the
+required libraries by itself you are well off and the build will run. 
+However, in situations where required libraries are installed in non-standard
+locations, or in locations not known by the linker you have to use special build
+variables to pass this information to scons.
 
-$> scons CXX=/usr/local/bin/gcc-4.6
+If BOOST is not in a standard location you can use the BOOSTPREFIX build
+variable
+
+$> scons BOOSTPREFIX=/usr/local/boost 
+
+which assumes that libraries and headers are installed und BOOSTPREFIX/lib and 
+BOOSTPREFIX/include respectively. The prefix variables for HDF5 (HDF5PREFIX) and 
+libpniutils (PNIUPREFIX) behave in the same manner. 
 
 To build only the documentation (which resides under the doc directory 
 in the source tree simply type
@@ -53,7 +64,7 @@ $> scons doc
 
 To cleanup the source directory use 
 
-$> scons -c; scons -c debian
+$> scons -c
 
 
 2.1.) Installation on Linux
@@ -75,18 +86,3 @@ To install libpninx under a different location use
 
 $> scons PREFIX=/opt/pninx install
 
-If you want to build a debian package type 
-
-$> scons debian
-
-After the run you will find the packages one level above the source tree. 
-For a new debian package run you first need to clean the 
-debian build directory with 
-
-$> scons -c debian
-
-
-2.2.) Build and installation on Windows
-      ---------------------------------
-      
-NOT SUPPORTED YET!
