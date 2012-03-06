@@ -137,6 +137,8 @@ namespace pni{
                     _imp = o._imp;
                     return *this;
                 }
+
+                //--------------------------------------------------------------
                 //! copy assignment operator
                 template<typename PImp> NXObject<Imp> &
                     operator=(const NXObject<PImp> &o)
@@ -191,7 +193,6 @@ namespace pni{
                 //! \param n name of the attribute
                 //! \param tid ID of the data-type
                 //! \return attribute object
-    
                 template<typename T> NXAttribute<MAPTYPE(Imp,AttributeImpl)>
                     attr(const String &n,bool ov=false) const
                 {
@@ -347,6 +348,7 @@ namespace pni{
                     return attr_iterator(*this);
                 }
 
+                //-------------------------------------------------------------
                 attr_iterator attr_end() const
                 {
                     return attr_iterator(*this,this->nattr());
