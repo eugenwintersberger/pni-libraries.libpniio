@@ -80,7 +80,7 @@ namespace pni{
                     if(this->is_valid())
                     {
                         try{
-                            this->template attr<String>("file_update_time").write(NXDateTime::getDateTimeStr());
+                            this->template attr<String>("file_update_time",true).write(NXDateTime::getDateTimeStr());
                         }catch(...){
                             //do nothing if write fails - most probably 
                             //the file is in read only mode
@@ -164,7 +164,7 @@ namespace pni{
 
                 virtual void close(){
                     try{
-                        this->template attr<String>("file_update_time").write(NXDateTime::getDateTimeStr());
+                        this->template attr<String>("file_update_time",true).write(NXDateTime::getDateTimeStr());
                     }catch(...){
                         //do nothing if write fails - most probably 
                         //the file is in read only mode
