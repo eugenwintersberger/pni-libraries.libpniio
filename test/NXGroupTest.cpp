@@ -199,10 +199,10 @@ void NXGroupTest::testAttributeExceptions(){
 	g.attr<Float64>("ArrayAttribute",_write_array_attr.shape()).write(_write_array_attr);
 
 	//trying to overwrite attributes
-	CPPUNIT_ASSERT_NO_THROW(g.attr<String>("StringAttribute").write(_write_str_attr));
-	CPPUNIT_ASSERT_NO_THROW(g.attr<Float64>("FloatScalarAttribute").write(_write_scalar_attr));
-	CPPUNIT_ASSERT_NO_THROW(g.attr<Complex64>("IndexOfRefraction").write(_write_cmplx_scalar));
-	CPPUNIT_ASSERT_NO_THROW(g.attr<Float64>("ArrayAttribute",_write_array_attr.shape()).write(_write_array_attr));
+	CPPUNIT_ASSERT_NO_THROW(g.attr<String>("StringAttribute",true).write(_write_str_attr));
+	CPPUNIT_ASSERT_NO_THROW(g.attr<Float64>("FloatScalarAttribute",true).write(_write_scalar_attr));
+	CPPUNIT_ASSERT_NO_THROW(g.attr<Complex64>("IndexOfRefraction",true).write(_write_cmplx_scalar));
+	CPPUNIT_ASSERT_NO_THROW(g.attr<Float64>("ArrayAttribute",_write_array_attr.shape(),true).write(_write_array_attr));
 
 	//trying to read attributes that do not exist
 	CPPUNIT_ASSERT_THROW(g.attr("StringAttribute_not").read(_read_str_attr),H5AttributeError);

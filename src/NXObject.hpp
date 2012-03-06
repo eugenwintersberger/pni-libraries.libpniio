@@ -193,25 +193,12 @@ namespace pni{
                 //! \return attribute object
     
                 template<typename T> NXAttribute<MAPTYPE(Imp,AttributeImpl)>
-                    attr(const String &n) const
+                    attr(const String &n,bool ov=false) const
                 {
-                    
-                    if(this->has_attr(n)) this->del_attr(n);
-
                     return NXAttribute<MAPTYPE(Imp,AttributeImpl)>
-                        (this->imp().attr<T>(n));
+                        (this->imp().attr<T>(n,ov));
                 }
 
-                //--------------------------------------------------------------
-                template<TypeID ID> 
-                    NXAttribute<MAPTYPE(Imp,AttributeImpl)>
-                    attr(const String &n) const
-                {
-                    if(this->has_attr(n)) this->del_attr(n);
-
-                    return NXAttribute<MAPTYPE(Imp,AttributeImpl)>
-                        (this->imp().attr<ID>(n));
-                }
 
                 //--------------------------------------------------------------
                 //! create an array attribute
@@ -223,12 +210,10 @@ namespace pni{
                 //! \param s shape of the array
                 //! \return attribute object
                 template<typename T> NXAttribute<MAPTYPE(Imp,AttributeImpl)>
-                    attr(const String &n, const Shape &s) const
+                    attr(const String &n, const Shape &s,bool ov=true) const
                 {
-                    if(this->has_attr(n)) this->del_attr(n);
-
                     return NXAttribute<MAPTYPE(Imp,AttributeImpl)>
-                        (this->imp().attr<T>(n,s));
+                        (this->imp().attr<T>(n,s,ov));
                 }
 
 
