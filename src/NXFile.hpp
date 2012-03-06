@@ -163,11 +163,13 @@ namespace pni{
                 }
 
                 virtual void close(){
-                    try{
-                        this->template attr<String>("file_update_time",true).write(NXDateTime::getDateTimeStr());
-                    }catch(...){
-                        //do nothing if write fails - most probably 
-                        //the file is in read only mode
+                    if(this->is_valid()){
+                        try{
+                            this->template attr<String>("file_update_time",true).write(NXDateTime::getDateTimeStr());
+                        }catch(...){
+                            //do nothing if write fails - most probably 
+                            //the file is in read only mode
+                        }
                     }
 
                     NXObject<Imp>::close();
