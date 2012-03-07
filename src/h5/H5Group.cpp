@@ -115,11 +115,12 @@ namespace pni{
             //implemenation of the destructor
             H5Group::~H5Group(){
                 if(is_valid()) H5Gclose(id());
+                H5Object::id(0);
             }
 
             void H5Group::close(){
                 if(is_valid()) H5Gclose(id());
-                H5Object::close();
+                H5Object::id(0);
             }
 
 

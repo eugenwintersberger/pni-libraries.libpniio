@@ -281,6 +281,8 @@ namespace pni{
             //implementation of the default destructor 
             H5Dataset::~H5Dataset(){
                 _space.close();
+                H5Dclose(id());
+                H5Object::id(0);
             }
 
             //=========implementation of the assignment operators==============
