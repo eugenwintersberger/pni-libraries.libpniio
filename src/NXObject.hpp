@@ -60,18 +60,24 @@ using namespace pni::utils;
 
 namespace pni{
     namespace nx{
-        //! \ingroup nexus_lowlevel
-        //! \brief base class for all Nexus objects in the library.
+        /*! \ingroup nexus_lowlevel
+        \brief base class for all Nexus objects in the library.
 
-        //! This class provides functionality common to all Nexus objects.
-        //! This includes methods for obtaining the name and path of an object
-        //! in the Nexus tree, methods to set and get attributes, creation of
-        //! links to an object. Methods for creating links to this objects are
-        //! also included.
+        This class provides functionality common to all Nexus objects.
+        This includes methods for obtaining the name and path of an object
+        in the Nexus tree, methods to set and get attributes, creation of
+        links to an object. Methods for creating links to this objects are
+        also included.
+        */
         template<typename Imp> class NXObject {
             private:
                 Imp _imp;	//!< implementation object
             protected:
+                //! return read/write reference to implementation
+
+                //! This method is used only by derived classes and thus not 
+                //! exposed to the public interface.
+                //! \return reference to implementation
                 Imp &imp() { return _imp;}
             public:
                 typedef NXAttributeIterator<NXObject<Imp>,
@@ -105,24 +111,21 @@ namespace pni{
                 }
 
                 //--------------------------------------------------------------
+                //! move constructor from implementation instance
                 NXObject(Imp &&imp):_imp(std::move(imp))
                 {
                 }
 
                 //-------------------------------------------------------------
-                
+                //! copy constructor 
+
+                //! Does copy construction from an arbitrary different 
+                //! implementation of NXObject<>. This implies that the two
+                //! implementation instances are convertible.
                 template<typename PImp> NXObject(const NXObject<PImp> &o):
                     _imp(o.imp())
                 {
                 }
-                /*
-                //-------------------------------------------------------------
-                //! move constructor from implementation
-                template<typename PImp> NXObject(PImp &&imp):
-                    _imp(std::move(imp))
-                {
-
-                }*/
                
                 //-------------------------------------------------------------
                 //! destructor
@@ -131,6 +134,7 @@ namespace pni{
                 }
 
                 //============assignment operators==============================
+                //! copy assignment operator
                 NXObject<Imp> &operator=(const NXObject<Imp> &o)
                 {
                     if(this == &o) return *this;
@@ -139,7 +143,7 @@ namespace pni{
                 }
 
                 //--------------------------------------------------------------
-                //! copy assignment operator
+                //! copy assignment operator for different implementations
                 template<typename PImp> NXObject<Imp> &
                     operator=(const NXObject<PImp> &o)
                 {
@@ -148,6 +152,7 @@ namespace pni{
                 }
                         
                 //--------------------------------------------------------------
+                //! move assignment operator
                 NXObject<Imp> &operator=(NXObject<Imp> &&o)
                 {
                     if(this == &o) return *this;
@@ -186,68 +191,141 @@ namespace pni{
                 }
 
                 //===========attribute management methods==================
-                //! create scalar attribute
+                /*! \brief create scalar attribute
 
-                //! Create a scalar attribute. This method acts as a 
-                //! factory method for an attribute object.
-                //! \param n name of the attribute
-                //! \param tid ID of the data-type
-                //! \return attribute object
+                Template method creating a scalar atribute of type T. By default
+                an exception is raised if an attribute of same name already
+                exists. If ov=true the existing attribute will be overwritten
+                and no exeption will be thrown.
+                \throws NXAttributeError in case of errors
+                \param n name of the attribute
+                \param ov overwrite flag
+                \return an instance of NXAttribute
+                */
                 template<typename T> NXAttribute<MAPTYPE(Imp,AttributeImpl)>
                     attr(const String &n,bool ov=false) const
                 {
-                    return NXAttribute<MAPTYPE(Imp,AttributeImpl)>
-                        (this->imp().attr<T>(n,ov));
+                    EXCEPTION_SETUP("template<typename T> NXAttribute<MAPTYPE"
+                            "(Imp,AttributeImpl)> attr(const String &n,bool "
+                            "ov=false) const");
+
+                    typedef NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr_type;
+                    attr_type attr;
+
+                    try{
+                        attr = attr_type(this->imp().template attr<T>(n,ov));
+                    }catch(...){
+                        EXCEPTION_INIT(NXAttributeError,
+                                "Error creating attribute ["+n+"] for object"
+                                " ["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
+                    return attr;
                 }
 
 
                 //--------------------------------------------------------------
-                //! create an array attribute
+                /*! create an array attribute
 
-                //! Create an array attribute. This method acts as a 
-                //! factory method for an attribute object.
-                //! \param n name of the attribute
-                //! \param tid ID of the data-type
-                //! \param s shape of the array
-                //! \return attribute object
+                Template method creating a multidimensional attribute of type T
+                and shape s. By default an exception will be thrown if an
+                attribute of same name already exists. If ov=true an existing
+                attribute will be overwritten
+                \throws NXAttributeError in case of errors
+                \param n name of the attribute
+                \param s shape of the array
+                \param ov overwrite flag
+                \return instance of NXAttribute
+                */
                 template<typename T> NXAttribute<MAPTYPE(Imp,AttributeImpl)>
                     attr(const String &n, const Shape &s,bool ov=true) const
                 {
-                    return NXAttribute<MAPTYPE(Imp,AttributeImpl)>
-                        (this->imp().attr<T>(n,s,ov));
+                    EXCEPTION_SETUP("template<typename T> NXAttribute<MAPTYPE"
+                            "(Imp,AttributeImpl)> attr(const String &n, const "
+                            "Shape &s,bool ov=true) const");
+
+                    typedef NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr_type;
+                    attr_type attr;
+
+                    try{
+                        attr = attr_type(this->imp().template attr<T>(n,s,ov));
+                    }catch(...){
+                        EXCEPTION_INIT(NXAttributeError,
+                                "Cannot create attribute ["+n+"] for object "
+                                "["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
+                    return attr;
                 }
 
 
                 //--------------------------------------------------------------
-                //! open an attribute by name
-                
-                //! Open an existing attribute and returns it to the 
-                //! callee. 
-                //! \param n name of the attribute
-                //! \return attribute object
+                /*! \brief open an existing attribute by name
+               
+                Opens an existing attribute of name n and returns an instance of
+                NXAttribute<> to the callee. An exception will be thrown if the
+                attribute does not exist.
+                \throws NXAttributeError in case of problems
+                \param n name of the attribute
+                \return instance of NXAttribute
+                */
                 NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr(const String &n) const
                 {
-                    return NXAttribute<MAPTYPE(Imp,AttributeImpl)>(_imp.attr(n));
+                    EXCEPTION_SETUP("NXAttribute<MAPTYPE(Imp,AttributeImpl)> "
+                            "attr(const String &n) const");
+
+                    typedef NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr_type;
+                    attr_type attr;
+
+                    try{
+                        attr = attr_type(_imp.attr(n));
+                    }catch(...){
+                        EXCEPTION_INIT(NXAttributeError,
+                                "Cannot open attribute ["+n+"] from object ["
+                                +this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
+                    return attr;
                 }
 
                 //--------------------------------------------------------------
-                //! open an attribute by index
-                
-                //! Open an existing attribute and returns it to the 
-                //! callee. 
-                //! \param n name of the attribute
-                //! \return attribute object
+                /*! \brief open an attribute by index
+               
+                Opens an existing attribute by its index. If the index exceeds
+                the total number of attributes attached to this object an
+                exception will be thrown.
+                \throws NXAttributeError in case of errors
+                \param i index of the attribute
+                \return instance of NXAttribute
+                */
                 NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr(size_t i) const
                 {
-                    return NXAttribute<MAPTYPE(Imp,AttributeImpl)>(_imp.attr(i));
+                    EXCEPTION_SETUP("NXAttribute<MAPTYPE(Imp,AttributeImpl)> "
+                            "attr(size_t i) const");    
+                    typedef NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr_type;
+                    attr_type attr;
+
+                    try{
+                        attr = attr_type(_imp.attr(i));
+                    }catch(...){
+                        std::stringstream istr;
+                        istr<<i;
+                        EXCEPTION_INIT(NXAttributeError,
+                                "Cannot open attribute ["+istr.str()+"] from"
+                                " object ["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
+
+                    return attr;
                 }
 
                 //-------------------------------------------------------------
-                //! delete an attribute
+                /*! \brief delete an attribute
 
-                //! Deletes an attribute attached to this object.
-                //! \throws NXAttributeError in case of errors
-                //! \param n name of the attribute
+                Deletes an attribute attached to this object.
+                \throws NXAttributeError in case of errors
+                \param n name of the attribute
+                */
                 void del_attr(const String &n) const
                 {
                     EXCEPTION_SETUP("void del_attr(const String &n) const");
@@ -261,13 +339,14 @@ namespace pni{
                 }
 
                 //-------------------------------------------------------------
-                //! checks for attribute existance
+                /*! checks for attribute existance
 
-                //! Checks whether or not an attribute with a particular name
-                //! exits. If it does true is returned otherwise false.
-                //! \throws NXAttributeError in case of errors
-                //! \param n name of the attribute
-                //! \return true if n exists otherwise false
+                Checks whether or not an attribute with a particular name
+                exits. If it does true is returned otherwise false.
+                \throws NXAttributeError in case of errors
+                \param n name of the attribute
+                \return true if n exists otherwise false
+                */
                 bool has_attr(const String &n) const
                 {
                     EXCEPTION_SETUP("bool has_attr(const String &n) const");
@@ -283,11 +362,12 @@ namespace pni{
                 }
 
                 //------------------------------------------------------------
-                //! get number of attributes
+                /*! get number of attributes
 
-                //! Returns the number of attributes attached to this 
-                //! object.
-                //! \returns number of attributes
+                Returns the number of attributes attached to this 
+                object.
+                \returns number of attributes
+                */
                 size_t nattr() const
                 {
                     return this->imp().nattr();
@@ -303,52 +383,102 @@ namespace pni{
                 }
 
                 //--------------------------------------------------------------
+                //! return implementation object
+
+                //! Returns a const. reference to the implementation object.
+                //! \return reference to implementation
                 const Imp &imp() const{
                     return _imp;
                 }
 
                 //--------------------------------------------------------------
+                //! \brief checks object validity
+
+                //! Method returns true if the object is a valid (open) Nexus
+                //! object. 
+                //! \returns true if valid object, false otherwise
                 bool is_valid() const{
                     return _imp.is_valid();
                 }
 
                 //--------------------------------------------------------------
+                /*! \brief return object type
+                
+                Return an object identifier. This can be used to distinguish
+                between group and field object.
+                \return object identifier
+                */
                 NXObjectType object_type() const
                 {
                     return _imp.nxobject_type();
                 }
 
                 //-------------------------------------------------------------
+                /*! \brief return access time
+
+                Return the time the object was accessed last as Nexus date-time
+                string.
+                \return access time as date-time string
+                */
                 String access_time() const
                 {
                     return NXDateTime::getDateTimeStr(_imp.acc_time());
                 }
 
                 //-------------------------------------------------------------
+                /*! \brief return modification time
+
+                Return the time when the object was last modified as a Nexus
+                date-time string.
+                \return modification time as date-time string
+                */
                 String modified_time() const
                 {
                     return NXDateTime::getDateTimeStr(_imp.mod_time());
                 }
                 
                 //-------------------------------------------------------------
+                /*! \brief return data change time
+                
+                Return the time when the data held by the object was last
+                changed as a Nexus date-time string (need to verify this). 
+                \return change time as date-time string
+                */
                 String change_time() const
                 {
                     return NXDateTime::getDateTimeStr(_imp.chng_time());
                 }
                 
                 //-------------------------------------------------------------
+                /*! \brief return object creation time
+
+                Return the time when the object was created as Nexus date-time
+                string. 
+                \return creation time as date-time string
+                */
                 String create_time() const
                 {
                     return NXDateTime::getDateTimeStr(_imp.birth_time());
                 }
 
                 //-------------------------------------------------------------
+                /*! \brief iterator to frist attribute
+
+                Return an iterator to the first attribute attached to the
+                object.
+                \return iterator to first attribute
+                */
                 attr_iterator attr_begin() const
                 {
                     return attr_iterator(*this);
                 }
 
                 //-------------------------------------------------------------
+                /*! \brief iterator to last attribute
+
+                Return an iterator to the last attribute attached to the object.
+                \return iterator to last attribute
+                */
                 attr_iterator attr_end() const
                 {
                     return attr_iterator(*this,this->nattr());

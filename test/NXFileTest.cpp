@@ -198,10 +198,10 @@ void NXFileTest::testAttributeExceptions(){
 	CPPUNIT_ASSERT_NO_THROW(f.attr("ArrayAttribute").write(_write_array_attr));
 
 	//trying to read attributes that do not exist
-	CPPUNIT_ASSERT_THROW(f.attr("StringAttribute_not").read(_read_str_attr),H5AttributeError);
-	CPPUNIT_ASSERT_THROW(f.attr("FloatScalarAttribute_not").read(_read_scalar_attr),H5AttributeError);
-	CPPUNIT_ASSERT_THROW(f.attr("ArrayAttribute_not").read(_read_array_attr),H5AttributeError);
-	CPPUNIT_ASSERT_THROW(f.attr("IndexOfRefraction_not").read(_read_cmplx_scalar),H5AttributeError);
+	CPPUNIT_ASSERT_THROW(f.attr("StringAttribute_not").read(_read_str_attr),pni::nx::NXAttributeError);
+	CPPUNIT_ASSERT_THROW(f.attr("FloatScalarAttribute_not").read(_read_scalar_attr),pni::nx::NXAttributeError);
+	CPPUNIT_ASSERT_THROW(f.attr("ArrayAttribute_not").read(_read_array_attr),pni::nx::NXAttributeError);
+	CPPUNIT_ASSERT_THROW(f.attr("IndexOfRefraction_not").read(_read_cmplx_scalar),pni::nx::NXAttributeError);
 
 	f.close();
 }

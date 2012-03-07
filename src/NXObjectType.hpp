@@ -29,12 +29,13 @@
 namespace pni{
     namespace nx{
 
-        //! \ingroup nx_utilities
+        //! \ingroup util_classes
         //! \brief Nexus typd ids
 
         //! This enumeration class provides identifiers for 
         //! different Nexus types. Basically there are only two 
-        //! types: fields and groups. 
+        //! types: fields and groups. Indeed a third is required if the objects
+        //! does not belong to any of the two mentioned before.
         enum class NXObjectType { NXFIELD, //!< NXField identifier
                                   NXGROUP, //!< NXGroup identifier
                                   NXNONE   //!< no valid Nexus object

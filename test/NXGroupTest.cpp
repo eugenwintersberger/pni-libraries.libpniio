@@ -205,10 +205,10 @@ void NXGroupTest::testAttributeExceptions(){
 	CPPUNIT_ASSERT_NO_THROW(g.attr<Float64>("ArrayAttribute",_write_array_attr.shape(),true).write(_write_array_attr));
 
 	//trying to read attributes that do not exist
-	CPPUNIT_ASSERT_THROW(g.attr("StringAttribute_not").read(_read_str_attr),H5AttributeError);
-	CPPUNIT_ASSERT_THROW(g.attr("FloatScalarAttribute_not").read(_read_scalar_attr),H5AttributeError);
-	CPPUNIT_ASSERT_THROW(g.attr("ArrayAttribute_not").read(_read_array_attr),H5AttributeError);
-	CPPUNIT_ASSERT_THROW(g.attr("IndexOfRefraction_not").read(_read_cmplx_scalar),H5AttributeError);
+	CPPUNIT_ASSERT_THROW(g.attr("StringAttribute_not").read(_read_str_attr),pni::nx::NXAttributeError);
+	CPPUNIT_ASSERT_THROW(g.attr("FloatScalarAttribute_not").read(_read_scalar_attr),pni::nx::NXAttributeError);
+	CPPUNIT_ASSERT_THROW(g.attr("ArrayAttribute_not").read(_read_array_attr),pni::nx::NXAttributeError);
+	CPPUNIT_ASSERT_THROW(g.attr("IndexOfRefraction_not").read(_read_cmplx_scalar),pni::nx::NXAttributeError);
 
 	g.close();
 }

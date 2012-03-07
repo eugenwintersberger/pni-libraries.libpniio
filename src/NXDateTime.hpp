@@ -48,7 +48,13 @@ public:
 
 	//! Returns a string with a Nexus compliant date-time string
 	//! for now.
+    //! \return Nexus date-time string
 	static String getDateTimeStr();
+    //! date-time at t
+
+    //! Converts a given time in time_t format to a Nexus date-time string.
+    //! \param t time as time_t
+    //! \return Nexus date-time string
     static String getDateTimeStr(const time_t &t);
 };
 
