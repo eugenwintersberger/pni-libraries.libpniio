@@ -246,6 +246,13 @@ namespace pni{
                 }
 
                 //---------------------------------------------------------------
+                //! check validity of the attribute
+                bool is_valid() const
+                {
+                    return _imp.is_valid();
+                }
+
+                //---------------------------------------------------------------
                 String name() const
                 {
                     return _imp.name();

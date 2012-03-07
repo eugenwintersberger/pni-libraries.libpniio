@@ -80,6 +80,7 @@ namespace pni{
                 _dtype.close();
 
                 if(is_valid()) H5Aclose(id());
+                H5Object::id(0);
             }
 
             //===============implementation of assignment operators============
@@ -116,6 +117,7 @@ namespace pni{
             //-----------------------------------------------------------------
             void H5Attribute::close(){
                 if(is_valid()) H5Aclose(id());
+                H5Object::id(0);
             }
 
             //-----------------------------------------------------------------
