@@ -29,7 +29,7 @@ users_guide = SConscript("users-guide/SConscript")
 
 
 
-build_env.Alias("doc",[doxygen_api_doc,admin_guide,users_guide])
+build_env.Alias("doc",[doxygen_api_doc])
      
 api_html_doc_install = build_env.Install("${DOCDIR}/api","api-doc/html")
 admin_guide_install = build_env.Install("${DOCDIR}",admin_guide)
