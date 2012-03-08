@@ -203,6 +203,16 @@ namespace pni{
 
 
                     //=============reading and writting data===================
+                    /*! \brief write a complex number
+                    
+                    Write complex number as an attribute.
+                    \throws ShapeMissmatchError if attribute is not scalar
+                    \throws H5AttributeError in case of general IO errors
+                    \param cmplx the complex number to write
+                    */
+                    template<typename T> void write(const std::complex<T>
+                            &cmplx) const;
+
                     //! write from a buffer
 
                     //! Write data from a buffer object ot the attribute.
@@ -393,6 +403,22 @@ namespace pni{
                 }
 
                 __write_from_ptr(&value);
+            }
+
+            //-----------------------------------------------------------------
+            template<typename T> void H5Attribute::
+                write(const std::complex<T> &cmplx) const
+            {
+                EXCEPTION_SETUP("template<typename T> void H5Attribute::"
+                                "write(const std::complex<T> &cmplx) const");
+
+                if(!_dspace.is_scalar()){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Attribute ["+name()+"]is not scalar!");
+                    EXCEPTION_THROW();
+                }
+                
+                __write_from_ptr(&cmplx);
             }
 
             //------------------------------------------------------------------

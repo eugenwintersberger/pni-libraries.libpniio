@@ -176,6 +176,9 @@ void H5GroupTest::test_attributes(){
     CPPUNIT_ASSERT_NO_THROW(sca_value = g.attr("SCA").read<UInt32Scalar>());
     CPPUNIT_ASSERT(sca_value == sca);
 
+    //nee to check complex data
+    CPPUNIT_ASSERT_NO_THROW(g.attr<Complex32>("ref_index").write(Complex32(1.e-4,-1.e-5)));
+
     //================now we need to check exceptions==========================
     CPPUNIT_ASSERT_THROW(g.attr("data").write(sca),ShapeMissmatchError);
     CPPUNIT_ASSERT_THROW(g.attr("SCA").write(data),ShapeMissmatchError);
