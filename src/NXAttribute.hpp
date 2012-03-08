@@ -120,6 +120,15 @@ namespace pni{
                     _imp.write(buffer);
                 }
 
+                /*! \brief write complex attribute
+
+                */
+                template<typename T> void write(const std::complex<T> &cmplx)
+                    const
+                {
+                    _imp.write(cmplx);
+                }
+
                 //--------------------------------------------------------------
                 //! write from Scalar<T> 
                 template<typename T> void write(const Scalar<T> &o) const
