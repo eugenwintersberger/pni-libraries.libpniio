@@ -278,6 +278,15 @@ namespace pni{
                     template<typename T,template<typename> class BT> 
                         void read(Array<T,BT> &a) const;
 
+                    /*! \brief read data to complex variable
+                    
+                    Read data to a complex variables. 
+                    \throws ShapeMissmatchError if attribute is not scalar
+                    \throws H5AttributeError in case of general IO errors
+                    \param s scalar value
+                    */
+                    template<typename T> void read(std::complex<T> &s) const;
+
                     //! read to Scalar<T>
 
                     //! Read data to a scalar. As an attribute object does not
@@ -509,6 +518,19 @@ namespace pni{
             template<typename T> void H5Attribute::read(T &value) const {
                 EXCEPTION_SETUP("template<typename T> void H5Attribute::"
                         "read(T &value) const");
+                if(!_dspace.is_scalar()){
+                    EXCEPTION_INIT(ShapeMissmatchError,
+                            "Attribute ["+name()+"] not scalar!");
+                    EXCEPTION_THROW();
+                }
+
+                __read_to_ptr(&value);
+            }
+            
+            //-----------------------------------------------------------------
+            template<typename T> void H5Attribute::read(std::complex<T> &value) const {
+                EXCEPTION_SETUP("template<typename T> void H5Attribute::"
+                        "read(std::complex<T> &value) const");
                 if(!_dspace.is_scalar()){
                     EXCEPTION_INIT(ShapeMissmatchError,
                             "Attribute ["+name()+"] not scalar!");

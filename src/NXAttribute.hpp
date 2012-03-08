@@ -218,6 +218,12 @@ namespace pni{
                 }
 
                 //--------------------------------------------------------------
+                //! read to complex variables
+                template<typename T> void read(std::complex<T> &value) const
+                {
+                    _imp.read(value);
+                }
+                //--------------------------------------------------------------
                 //! read to string
                 void read(String &s) const
                 {
