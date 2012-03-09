@@ -81,7 +81,7 @@ namespace pni{
             template<>
                 H5Datatype H5DatatypeFactory::create_type<UInt32>()
             {
-                return H5Datatype(H5Tcopy(H5T_NATIVE_INT));
+                return H5Datatype(H5Tcopy(H5T_NATIVE_UINT));
             }
             
             template<>
@@ -93,7 +93,7 @@ namespace pni{
             template<>
                 H5Datatype H5DatatypeFactory::create_type<Int32>()
             {
-                return H5Datatype(H5Tcopy(H5T_NATIVE_UINT));
+                return H5Datatype(H5Tcopy(H5T_NATIVE_INT));
             }
             
             template<>

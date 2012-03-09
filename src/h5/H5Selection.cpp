@@ -307,6 +307,12 @@ namespace pni{
                 return _counts;
             }
 
+            //-----------------------------------------------------------------
+            TypeID H5Selection::type_id() const
+            {
+                return _dataset->type_id();
+            }
+
             //=============specializations of the IO methods===================
             //implementation of writing a binary value
             void H5Selection::write(const Binary &value) const

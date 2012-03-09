@@ -284,6 +284,18 @@ namespace pni{
                     }
                 }
 
+                //-------------------------------------------------------------
+                /*! \brief return type id
+
+                Returns the TypeID of the field to which this selection is
+                bound.
+                \return TypID value
+                */
+                TypeID type_id() const
+                {
+                    return this->_imp.type_id();
+                }
+
 
 
                 //=================methods for reading data====================

@@ -362,6 +362,16 @@ namespace pni{
                     \return reference to the count buffer
                     */
                     const Buffer<hsize_t> &count() const;
+
+                    //---------------------------------------------------------
+                    /*! \brief get type id 
+
+                    Return the typeid of the dataset connected to the selection.
+                    This makes it possible to make all information important 
+                    for data IO also accessible via the selection object.
+                    \return TypeID value
+                    */
+                    TypeID type_id() const;
                    
                     //---------------------------------------------------------
                     /*! \brief write a single value with selection
