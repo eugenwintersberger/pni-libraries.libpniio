@@ -304,21 +304,57 @@ namespace pni{
                 {
                     EXCEPTION_SETUP("template<typename T> void "
                                     "NXSelection::read(T &value) const");
-                    this->_imp.read(value);
+
+                    try{
+                        this->_imp.read(value);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXSelectionError,"Error reading data "
+                                "from selection!");
+                        EXCEPTION_THROW();
+                    }
+
                 }
 
                 //--------------------------------------------------------------
                 //! read a complex value
                 template<typename T> void read(std::complex<T> &value) const
                 {
-                    this->_imp.read(value);
+                    EXCEPTION_SETUP("template<typename T> void NXSelection"
+                            "<Imp>::read(std::complex<T> &value) const ");
+                    try{ 
+                        this->_imp.read(value);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXSelectionError,"Error reading data "
+                                "from selection!");
+                        EXCEPTION_THROW();
+                    }
                 }
 
                 //-------------------------------------------------------------
                 //! read a binary value
                 void read(Binary &value) const
                 {
-                    this->_imp.read(value);
+                    EXCEPTION_SETUP("void NXSelection<Imp>::read(Binary "
+                            "&value) const");
+                    try{
+                        this->_imp.read(value);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXSelectionError,"Error reading data "
+                                "from selection!");
+                        EXCEPTION_THROW();
+                    }
                 }
 
                 //-------------------------------------------------------------
@@ -329,8 +365,19 @@ namespace pni{
                 //! \param value variable where to store the data
                 void read(String &value) const
                 {
-                    EXCEPTION_SETUP("void NXSelection::read(String &value) const");
-                    this->_imp.read(value);
+                    EXCEPTION_SETUP("void NXSelection<Imp>::read(String "
+                            "&value) const");
+                    try{
+                        this->_imp.read(value);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXSelectionError,"Error reading data "
+                                "from selection!");
+                        EXCEPTION_THROW();
+                    }
                 }
                 
                 //-------------------------------------------------------------
@@ -345,8 +392,19 @@ namespace pni{
                 {
                     EXCEPTION_SETUP("template<typename T,template<typename> "
                             "class BT> void NXSelection::read(BT<T> &buffer) const");
+                    
+                    try{
+                        this->_imp.read(buffer);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXSelectionError,"Error reading data "
+                                "from selection!");
+                        EXCEPTION_THROW();
+                    }
 
-                    this->_imp.read(buffer);
                 }
                 
                 //-------------------------------------------------------------
@@ -364,7 +422,17 @@ namespace pni{
                     EXCEPTION_SETUP("template<typename T,template<typename> "
                             "class BT> void NXSelection::read(Array<T,BT> &array) const");
 
-                    this->_imp.read(array);
+                    try{
+                        this->_imp.read(array);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXSelectionError,"Error reading data "
+                                "from selection!");
+                        EXCEPTION_THROW();
+                    }
                 }
                 
 
@@ -383,7 +451,17 @@ namespace pni{
                     EXCEPTION_SETUP("template<typename T> void "
                             "NXSelection::read(Scalar<T> &scalar) const");
 
-                    this->_imp.read(scalar);
+                    try{
+                        this->_imp.read(scalar);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXSelectionError,"Error reading data "
+                                "from selection!");
+                        EXCEPTION_THROW();
+                    }
 
                 }
 
@@ -402,7 +480,17 @@ namespace pni{
                     EXCEPTION_SETUP("template<typename T> void "
                             "NXSelection::write(const T &value) const");
 
-                    this->_imp.write(value);
+                    try{
+                        this->_imp.write(value);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXSelectionError,"Error writing data "
+                                "from selection!");
+                        EXCEPTION_THROW();
+                    }
                 }
 
                 //--------------------------------------------------------------
@@ -416,14 +504,37 @@ namespace pni{
                     EXCEPTION_SETUP("void NXSelection::"
                             "write(const String &value) const");
 
-                    this->_imp.write(value);
+                    try{
+                        this->_imp.write(value);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXSelectionError,"Error writing data "
+                                "from selection!");
+                        EXCEPTION_THROW();
+                    }
                 }
 
                 //--------------------------------------------------------------
                 //! write a binary value
                 void write(const Binary &value) const
                 {
-                    this->_imp.write(value);
+                    EXCEPTION_SETUP("void NXSelection<Imp>::write(const "
+                            "Binary &value) const");
+
+                    try{
+                        this->_imp.write(value);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXSelectionError,"Error writing data "
+                                "from selection!");
+                        EXCEPTION_THROW();
+                    }
                 }
 
                 //--------------------------------------------------------------
@@ -431,7 +542,20 @@ namespace pni{
                 template<typename T> void write(const std::complex<T> &value)
                     const
                 {
-                    this->_imp.write(value);
+                    EXCEPTION_SETUP("template<typename T> void write(const "
+                            "std::complex<T> &value) const");
+
+                    try{
+                        this->_imp.write(value);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXSelectionError,"Error writing data "
+                                "from selection!");
+                        EXCEPTION_THROW();
+                    }
                 }
                
                 //--------------------------------------------------------------
@@ -450,7 +574,17 @@ namespace pni{
                             "NXSelection::write(const Scalar<T> &scalar)"
                             "const");
 
-                    this->_imp.write(scalar);
+                    try{
+                        this->_imp.write(scalar);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXSelectionError,"Error writing data "
+                                "from selection!");
+                        EXCEPTION_THROW();
+                    }
                 }
                
                 //--------------------------------------------------------------
@@ -471,8 +605,17 @@ namespace pni{
                             "class BT> void NXSelection::write(const BT<T> "
                             "&buffer) const");
 
-                    this->_imp.write(buffer);
-
+                    try{
+                        this->_imp.write(buffer);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXSelectionError,"Error writing data "
+                                "from selection!");
+                        EXCEPTION_THROW();
+                    }
                 }
                
                 //---------------------------------------------------------------
@@ -486,7 +629,17 @@ namespace pni{
                             "class BT> void NXSelection::write(const "
                             "Array<T,BT> &array) const");
 
-                    this->_imp.write(array);
+                    try{
+                        this->_imp.write(array);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXSelectionError,"Error writing data "
+                                "from selection!");
+                        EXCEPTION_THROW();
+                    }
 
                 }
 
