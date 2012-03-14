@@ -136,6 +136,8 @@ public:
 
 //-----------------------------------------------------------------------------
 template<typename T> void NXFieldTest::test_io_array(){
+    std::cout<<"NXFieldTest::test_io_array()--------------------------------";
+    std::cout<<std::endl;
     Shape s = {10,50};
     Array<T,Buffer> write(s);
     Array<T,Buffer> read(s);

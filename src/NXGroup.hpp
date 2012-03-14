@@ -131,36 +131,22 @@ namespace pni{
 
 
                 //=================group creation methods=======================
-                /*! \brief create a simple group
-
-                Creates a simple group in the Nexus data tree. No class
-                attribute is attached to this kind of group.
-                \param n name of the group
-                */
-                NXGroup<MAPTYPE(Imp,GroupImpl)> create_group(const String &n) const
-                {
-                    EXCEPTION_SETUP("RETTYPE(NXGroup,Imp,NXGroupImpl) "
-                            "create_group(const String &n) const");
-                    typedef MAPTYPE(Imp,GroupImpl) GroupImpl;
-                   
-                    NXGroup<GroupImpl> g(GroupImpl(n,this->imp()));
-
-                    return g;
-                }
-               
-                //--------------------------------------------------------------
                 /*! \brief create a group as nexus class
 
-                Create a group that represents a Nexus class. 
+                Create a new group. The optional argument type determines the 
+                Nexus object type the group represents. By default type is an
+                empty string in which case the NX_class attribute will not be
+                written.
                 \param n group name
                 \param type nexus class type
+                \return a new instance of NXGroup
                 */
                 NXGroup<MAPTYPE(Imp,GroupImpl)> 
-                    create_group(const String &n,const String &type) const
+                    create_group(const String &n,const String &type=String()) const
                 {
                     EXCEPTION_SETUP("RETTYPE(NXGRoup,Imp,NXGroupImpl) "
-                            "create_group(const String &n,const String &type)"
-                            "const");
+                            "create_group(const String &n,"
+                            "const String &type=String()) const");
 
                     //we need to do here two things
                     //we have to check if the particular group type
@@ -169,7 +155,11 @@ namespace pni{
                     typedef MAPTYPE(Imp,GroupImpl) GroupImpl;
 
                     NXGroup<GroupImpl> g(GroupImpl(n,this->imp()));
-                    g.template attr<String>("NX_class").write(type);
+
+                    //if the type string is not empty we write the 
+                    //appropriate attribute.
+                    if(!type.empty())
+                        g.template attr<String>("NX_class").write(type);
 
                     return g;
                 }
@@ -178,6 +168,7 @@ namespace pni{
                 /*! \brief create a scalar field
 
                 */
+                /*
                 template<typename T> NXField<MAPTYPE(Imp,FieldImpl)>
                     create_field(const String &n) const
                 {
@@ -187,6 +178,35 @@ namespace pni{
 
                     Shape s = {1};
                     Shape cs = {1};
+
+                    FieldType field(FieldImp::template create<T>(n,this->imp(),s,cs));
+                    return field;
+                }*/
+
+                template<typename T> NXField<MAPTYPE(Imp,FieldImpl)>
+                    create_field(const String &n,const Shape &shape=Shape(),
+                                 const Shape &chunk=Shape())
+                {
+                    typedef NXField<MAPTYPE(Imp,FieldImpl)> FieldType;
+                    typedef MAPTYPE(Imp,FieldImpl) FieldImp;
+                    Shape s,cs;
+
+                    if(shape.rank() == 0){
+                        //here we create a field for scalar data
+                        s = Shape({1});
+                        cs = s;
+                    }else{
+                        //a multidimensional field shall be created
+                        s = shape;
+                        if(chunk.rank() == 0){
+                            //no explicit chunk-size by the use
+                            cs = s;
+                            cs.dim(0,1);
+                        }else{
+                            //the user requested for a particular chunk size
+                            cs = chunk;
+                        }
+                    }
 
                     FieldType field(FieldImp::template create<T>(n,this->imp(),s,cs));
                     return field;
@@ -200,6 +220,7 @@ namespace pni{
                 \param n name of the field
                 \param s shape of the field
                 */
+                /*
                 template<typename T> NXField<MAPTYPE(Imp,FieldImpl)>
                     create_field(const String &n,const Shape &s) const
                 {
@@ -215,7 +236,7 @@ namespace pni{
 
                     FieldType field(FieldImp::template create<T>(n,this->imp(),s,cs));
                     return field;
-                }
+                }*/
 
                 //--------------------------------------------------------------
                 /*! \brief Creates a multidimensional field with a filter.
@@ -244,6 +265,7 @@ namespace pni{
                 /*! \brief create a multidimensional field (explicit chunk)
 
                 */
+                /*
                 template<typename T> NXField<MAPTYPE(Imp,FieldImpl)>
                     create_field(const String &n,const Shape &s,const Shape &cs)
                     const
@@ -252,7 +274,7 @@ namespace pni{
                     typedef NXField<FieldImp> FieldType;
 
                     return FieldType(FieldImp::template create<T>(n,this->imp(),s,cs));
-                }
+                }*/
                
                 //--------------------------------------------------------------
                 /*! \brief create a multidimensional field (explicit chunk) with filter
