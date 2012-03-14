@@ -59,6 +59,7 @@ namespace pni{
             typedef pni::nx::NXGroup<H5Group>               NXGroup;
             typedef pni::nx::NXField<H5Dataset>             NXField;
             typedef pni::nx::NXSelection<H5Selection>       NXSelection;
+            typedef pni::nx::NXFilter<H5Filter>             NXFilter;
             typedef pni::nx::NXDeflateFilter<H5DeflateFilter> NXDeflateFilter;
             typedef pni::nx::NXAttribute<H5Attribute>  NXAttribute;
         }
