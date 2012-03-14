@@ -165,27 +165,12 @@ namespace pni{
                 }
 
                 //--------------------------------------------------------------
-                /*! \brief create a scalar field
+                /*! \brief create a field without filter
 
                 */
-                /*
-                template<typename T> NXField<MAPTYPE(Imp,FieldImpl)>
-                    create_field(const String &n) const
-                {
-                    typedef NXField<MAPTYPE(Imp,FieldImpl)> FieldType;
-                    typedef MAPTYPE(Imp,FieldImpl) FieldImp;
-
-
-                    Shape s = {1};
-                    Shape cs = {1};
-
-                    FieldType field(FieldImp::template create<T>(n,this->imp(),s,cs));
-                    return field;
-                }*/
-
                 template<typename T> NXField<MAPTYPE(Imp,FieldImpl)>
                     create_field(const String &n,const Shape &shape=Shape(),
-                                 const Shape &chunk=Shape())
+                                 const Shape &chunk=Shape()) const
                 {
                     typedef NXField<MAPTYPE(Imp,FieldImpl)> FieldType;
                     typedef MAPTYPE(Imp,FieldImpl) FieldImp;
@@ -212,31 +197,6 @@ namespace pni{
                     return field;
                 }
                 
-                //--------------------------------------------------------------
-                /*! \brief create a multidimensional field
-
-                Create a multidimensional field of shape s. The field can be 
-                extended in any direction. 
-                \param n name of the field
-                \param s shape of the field
-                */
-                /*
-                template<typename T> NXField<MAPTYPE(Imp,FieldImpl)>
-                    create_field(const String &n,const Shape &s) const
-                {
-                    typedef MAPTYPE(Imp,FieldImpl) FieldImp;
-                    typedef NXField<FieldImp> FieldType;
-
-                    //in the first place the chunk shape will be a copy 
-                    //of the original shape
-                    Shape cs(s);
-                    //set per default the first index to 1 - so that 
-                    //all other dimension vary fastest
-                    cs.dim(0,1);
-
-                    FieldType field(FieldImp::template create<T>(n,this->imp(),s,cs));
-                    return field;
-                }*/
 
                 //--------------------------------------------------------------
                 /*! \brief Creates a multidimensional field with a filter.
@@ -261,20 +221,6 @@ namespace pni{
                     return field;
                 }
 
-                //-------------------------------------------------------------
-                /*! \brief create a multidimensional field (explicit chunk)
-
-                */
-                /*
-                template<typename T> NXField<MAPTYPE(Imp,FieldImpl)>
-                    create_field(const String &n,const Shape &s,const Shape &cs)
-                    const
-                {
-                    typedef MAPTYPE(Imp,FieldImpl) FieldImp;
-                    typedef NXField<FieldImp> FieldType;
-
-                    return FieldType(FieldImp::template create<T>(n,this->imp(),s,cs));
-                }*/
                
                 //--------------------------------------------------------------
                 /*! \brief create a multidimensional field (explicit chunk) with filter
