@@ -167,6 +167,13 @@ namespace pni{
                 //--------------------------------------------------------------
                 /*! \brief create a field without filter
 
+                \throws ShapeMissmatchError if chunk and field shape do not have
+                the same rank
+                \throws NXGroupError in all other cases
+                \param n name (path) of the field
+                \param shape shape of the field
+                \param chunk chunk shape of the field
+                \return instane of an NXFIeld object
                 */
                 template<typename T> NXField<MAPTYPE(Imp,FieldImpl)>
                     create_field(const String &n,const Shape &shape=Shape(),
@@ -193,7 +200,17 @@ namespace pni{
                         }
                     }
 
-                    FieldType field(FieldImp::template create<T>(n,this->imp(),s,cs));
+                    FieldType field;
+                    try{
+                        field = FieldType(FieldImp::template create<T>(n,this->imp(),s,cs));
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        NXGroupError error;
+                        error.issuer("this");
+                        error.description("something went wrong");
+                        throw(error);
+                    }
                     return field;
                 }
                 
