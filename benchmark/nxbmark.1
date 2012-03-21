@@ -1,0 +1,132 @@
+.\" Manpage for nxbmark
+.\" Contact Eugen Wintersberger <eugen.wintersberger@desy.de> for typos and corrections
+.TH man 1 "21.03.2012" "1.0" "nxbmark man page"
+.SH NAME
+nxbmark \- performance benchmark for Nexus and HDF5
+.SH SYNOPSIS
+.B nxbmark [OPTIONS] 
+.I FILE
+.\"-------------------------description section---------------------------------
+.SH DESCRIPTION
+
+.B nxbmark
+is a benchmark program to compare the performance of plain HDF5 code and
+libpninx. The original intention for this program was to determine the
+performance loss the additional code in libpninx causes in comparsion to plain
+HDF5.
+Now 
+.B nxbmark 
+can be used to measure the performance of libpninx on a particular
+hardware and operating system platform and compare the result with plain HDF5
+doing the same job. As libpninx was developed with the focus on photon, neutron,
+and ion scattering experiments the operations performed during a benchmark tries
+to mimic the most common situation a high performance IO library faces in this
+business: it writes a number of frames of a 2D detector to a file. The runtime
+of this operation is determined and from the total amount of data written the
+average data rate is computed. This procedure can be repeated several times in
+order to get better statistics. 
+The size of the 2D detector frame as well as the data-type used for the data can
+be configured via command line options. 
+
+
+.\"-----------------------------options section---------------------------------
+.SH OPTIONS
+.IP "-h, --help"
+print some help text on the terminal
+.IP "-v, --verbose"
+provide verbose output during operation
+.IP "-f --print-files"
+print filenames right before the output of an operation. This option makes only
+sense in cases where a whole bunch of files is processed.
+.IP "--iformat=fmtstr"
+if autodetection of the input format fails use this option to tell
+.B detops
+in which format the detector data is stored in the files.
+.IP "-r, --roi"
+sets a region of interest. This option can be used more than once on the 
+command line to provide several ROIs to the program. The result of the operation
+for each ROI will be printed to standard out in the order the ROIs are 
+given on the command-line.
+.IP "-c, --command"
+determines which operation to perform. This option can take the following 
+values 
+.B sum
+for summation, 
+.B av
+for averaging,
+.B min 
+for finding the minimum, and
+.B max
+for finding the maximum value in the data.
+
+There are some other options available, as you can see in the output 
+of 
+.B detops -h
+, which are not implemented yet.
+.\"---------------------------example section----------------------------------
+.SH EXAMPLES
+The simplest application one can imagine for  
+.B detops
+is the summation of all the data-values in a detector. Let us assume that the 
+detector-data is stored in the file
+.B detector.cbf
+using the 
+.B CBF
+format. The following command line computes the sum of all pixle values in the 
+detector array
+ 
+$> detops -csum detector.cbf
+   10000034
+
+The result is printed to standard out. Now you maybe want to restrict the 
+operation to a particular region in the detector array. Let us assume that the 
+detector has a size of 1024x512 pixles and we want detops to perform an 
+operation only on a region of 10x10 pixles in the center of the detector. 
+This can be achieved by using a ROI with
+ 
+$> detops -csum -r507:517,251:261 detector.cbf
+   12304
+   
+The same operation can be applied to several ROIs at once. For instance
+
+$> detops -csum -r507:517,251:261 -r50:100,100:150 detector.cbf
+   12304 567
+   
+the different output values correspond to the ROIs in the order as they are 
+defined in the command line.
+.B detops 
+not only processes single files but can be applied to a whole bunch of files.
+Consider a directory with detectors files all having the extension 
+.B .cbf.
+We can then apply the above operation to all these files using
+
+$> detops -csum -r507:517,251:261 -r50:100,100:150 *.cbf
+   12304 567
+   12389 347
+   12980 609
+   .........
+   .........
+   345 45
+
+In such cases of coarse we do not know which output corresponds to which file.
+The file name can be printed along with the result using the 
+.B -f 
+option switch. With this the last command line modifies to
+
+$> detops -csum -f -r507:517,251:261 -r50:100,100:150 *.cbf
+   detector_00001.cbf 12304 567
+   detector_00002.cbf 12389 347
+   detector_00003.cbf 12980 609
+   ............................
+   ............................
+   detector_01001.cbf 345 45
+
+
+.\"----------------------------copyright section--------------------------------
+.SH COPYRIGHT
+.\"---------------------------author section------------------------------------
+.SH AUTHOR
+Eugen Wintersberger (eugen.wintersberger@desy.de)
+.\"---------------------------See also section----------------------------------
+.SH SEE ALSO
+no idea where else to look

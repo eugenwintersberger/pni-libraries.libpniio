@@ -1,21 +1,63 @@
 #include "BenchmarkConfig.hpp"
+#include<boost/program_options/option.hpp>
+#include<boost/program_options/options_description.hpp>
+#include<boost/program_options/positional_options.hpp>
+#include<boost/program_options/variables_map.hpp>
+#include<boost/program_options/parsers.hpp>
 
+namespace popts = boost::program_options;
 
 //-----------------------------------------------------------------------------
 BenchmarkConfig::BenchmarkConfig(int argc,char **argv)
 {
-    if(argc<9){
-        std::cerr<<"Usage: <prog> <lib> <type> <nx> <ny> <nframes> <nruns> "
-            "<noiselevel> <filename>lx"<<std::endl;
-        exit(1);
+
+    //create command line options
+    popts::options_description odesc("CLI options");
+    popts::options_description hidden("hidden options");
+    popts::positional_options_description adesc;
+    odesc.add_options()
+        ("help,h","show help message")
+        ("lib,l",popts::value<String>()->default_value("pninx"),
+         "library to use for the benchmark")
+        ("type,t",popts::value<String>()->default_value("uint8"),
+         "data type of the frames")
+        ("nx,x",popts::value<size_t>(&_nx)->default_value(512),
+         "number of channels in x-direction")
+        ("ny,y",popts::value<size_t>(&_ny)->default_value(512),
+         "number of channels in y-direction")
+        ("frames,f",popts::value<size_t>(&_nframes)->default_value(100),
+         "number of rames to write during each run")
+        ("runs,r",popts::value<size_t>(&_nruns)->default_value(1),
+         "number of runs")
+        ("noise,n",popts::value<UInt32>(&_nlevel)->default_value(0),
+         "noise level for the data")
+        ;
+    hidden.add_options()
+        ("output,o",popts::value<String>(&_fname)->default_value("out.h5"),
+         "output file")
+        ;
+
+    adesc.add("output",-1);
+
+    popts::options_description cliopts("Command line options");
+    cliopts.add(odesc).add(hidden);
+
+    popts::variables_map omap;
+    popts::store(popts::command_line_parser(argc,argv).options(cliopts).positional(adesc).run(),omap);
+    popts::notify(omap);
+
+    //check for help options
+    if(omap.count("help")){
+        std::cout<<"show help message!"<<std::endl;
+        std::cout<<odesc<<std::endl;
+        exit(0);
     }
 
-    //read command line arguments
-    String libcode(argv[1]);
-    if(libcode == "pninx"){
+    //determine which library to use for the benchmark
+    if(omap["lib"].as<String>() == "pninx"){
         std::cout<<"Using PNINX for writing data ..."<<std::endl;
         _libid = LibID::PNINX;
-    }else if(libcode == "hdf5"){
+    }else if(omap["lib"].as<String>() == "hdf5"){
         std::cout<<"using plain HDF5 for writing data ..."<<std::endl;
         _libid = LibID::HDF5;
     }else{
@@ -23,30 +65,35 @@ BenchmarkConfig::BenchmarkConfig(int argc,char **argv)
         exit(1);
     }
 
-    String typestr(argv[2]);
-    if(typestr == "uint8")         _typecode = TypeID::UINT8;
-    else if(typestr == "int8")     _typecode = TypeID::INT8;
-    else if(typestr == "uint16")   _typecode = TypeID::UINT16;
-    else if(typestr == "int16")    _typecode = TypeID::INT16;
-    else if(typestr == "uint32")   _typecode = TypeID::UINT32;
-    else if(typestr == "int32")    _typecode = TypeID::INT32;
-    else if(typestr == "uint64")   _typecode = TypeID::UINT64;
-    else if(typestr == "int64")    _typecode = TypeID::INT64;
-    else if(typestr == "float32")  _typecode = TypeID::FLOAT32;
-    else if(typestr == "float64")  _typecode = TypeID::FLOAT64;
-    else if(typestr == "float128") _typecode = TypeID::FLOAT128;
+    //determine the datatype to use for the payload data
+    if(omap["type"].as<String>() == "uint8")         
+        _typecode = TypeID::UINT8;
+    else if(omap["type"].as<String>() == "int8")     
+        _typecode = TypeID::INT8;
+    else if(omap["type"].as<String>() == "uint16")   
+        _typecode = TypeID::UINT16;
+    else if(omap["type"].as<String>() == "int16")    
+        _typecode = TypeID::INT16;
+    else if(omap["type"].as<String>() == "uint32")   
+        _typecode = TypeID::UINT32;
+    else if(omap["type"].as<String>() == "int32")    
+        _typecode = TypeID::INT32;
+    else if(omap["type"].as<String>() == "uint64")   
+        _typecode = TypeID::UINT64;
+    else if(omap["type"].as<String>() == "int64")    
+        _typecode = TypeID::INT64;
+    else if(omap["type"].as<String>() == "float32")  
+        _typecode = TypeID::FLOAT32;
+    else if(omap["type"].as<String>() == "float64")  
+        _typecode = TypeID::FLOAT64;
+    else if(omap["type"].as<String>() == "float128") 
+        _typecode = TypeID::FLOAT128;
     else{
         std::cerr<<"Unkown type code - aborting!"<<std::endl;
         exit(1);
     }
 
 
-    _nx      = (size_t)atoi(argv[3]);
-    _ny      = (size_t)atoi(argv[4]);
-    _nframes = (size_t)(atoi(argv[5])); //read the number of points
-    _nruns   = (size_t)(atoi(argv[6]));
-    _nlevel  = (Int32)atoi(argv[7]);
-    _fname   = String(argv[8]);
 }
 
 //----------------------------------------------------------------------------

@@ -22,10 +22,6 @@
 
 using namespace pni::utils;
 
-/*
-#include "bmark.h"
-#include "run.h"
-*/
 
 #include "BenchmarkConfig.hpp"
 #include "BenchmarkRun.hpp"
