@@ -16,4 +16,3 @@
 *.pyc
 *.changes
 .sconf_temp
-Makefile
