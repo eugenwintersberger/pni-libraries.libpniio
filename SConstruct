@@ -45,6 +45,7 @@ var.Add(PathVariable("BOOSTPREFIX","set the installation prefix for boost","/usr
 var.Add(PathVariable("HDF5PREFIX","set the installation prefix for HDF5","/usr"))
 var.Add(PathVariable("H5INCDIR","Directory where HDF5 headers are installed","",PathVariable.PathAccept))
 var.Add(PathVariable("H5LIBDIR","Directory where HDF5 libraries are installed","",PathVariable.PathAccept))
+var.Add("H5LIBNAME","HDF5 library name","hdf5")
 var.Add(PathVariable("PNIUPREFIX","set the installation prefix for PNIUtils","/usr"))
 var.Add("VERSION","library version","0.0.0")
 var.Add("LIBNAME","library name","pniutils")
@@ -234,7 +235,7 @@ if not conf.CheckCHeader("hdf5.h"):
     Exit(1)
     
 #check for libraries
-if not conf.CheckLib("hdf5"):
+if not conf.CheckLib(env["H5LIBNAME"]):
     print "HDF5 libraries not installed!"
     Exit(1)
     

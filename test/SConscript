@@ -1,3 +1,5 @@
+import re
+from os import path
 Import("test_build_env")
 
 test_env = test_build_env.Clone()
@@ -21,6 +23,35 @@ sources_list.extend(["H5PathTest.cpp"])
 
 
 pninx_test = test_env.Program("pninxtest",sources_list)
+
+if 'testrun' in COMMAND_LINE_TARGETS:
+    def check_test_log(target,source,env):
+        end_of_test = re.compile(r"^Test Results:")
+        issue = re.compile(r"\d*\)")
+    
+        #open the log file
+        lfile = file(path.join("test",source[0].name))
+        #move to the results section
+        for line in lfile: 
+            if end_of_test.match(line): break
+
+        #show test results
+        error_flag = False
+        for line in lfile:
+            print line
+            if issue.match(line): 
+                error_flag = True
+
+        if error_flag: 
+            Exit(1)
+
+    print "Running unit tests ...."
+    #delete the original log file
+    test_run = test_env.Command("testrun.log",pninx_test,
+                    ["export LD_LIBRARY_PATH=src; echo \"start test\"; $SOURCE > $TARGET; rm *.h5"])
+    AlwaysBuild(test_run) 
+    test_check = test_env.Command("testrun.check",test_run,check_test_log)
+    test_env.Alias("testrun",[test_run,test_check])
 
 test_env.Alias("test",[pninx_test])
 test_env.Alias("all",[pninx_test])
