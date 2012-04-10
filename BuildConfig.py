@@ -1,7 +1,7 @@
 #default build configuration - this holds general purpose 
 #configurations for the build
 
-VERSION="0.2.2" #library version - release version
+VERSION="0.2.4" #library version - release version
 
 SOVERSION="2"   #library SOVERSION (needed for debian and RPM packages) - should
                 #be consistent for each release for all binary packages.
