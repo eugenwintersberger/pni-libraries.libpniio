@@ -26,38 +26,51 @@
 #define NXDATETIME_HPP_
 
 #include<ctime>
+#include<boost/date_time/posix_time/posix_time.hpp>
+#include<boost/date_time/local_time_adjustor.hpp>
+#include<boost/date_time/c_local_time_adjustor.hpp>
 #include <pni/utils/Types.hpp>
 
 using namespace pni::utils;
+using namespace boost::posix_time;
+using namespace boost::gregorian;
 
 namespace pni {
-namespace nx {
+    namespace nx {
 
-#define DATETIME_FORMAT "%Y-%m-%dT%H:%M:%S%z"
-#define DATETIME_MAX_LENGTH 1024
+        /*! \ingroup util_classes
+        \brief date time factory
 
-//! \ingroup util_classes
-//! \brief date time factory
+        NXDateTime provides static methods to create date-time strings
+        which are compliant to the Nexus standard. It is highly important for
+        this class to work properly that the time zone setup is correct. 
+        Time-zone information can come either directly from the host machine the
+        program is running on or can be configured manually if this setup is not 
+        correct. 
+        */
+        class NXDateTime {
+            private:
+                static String __get_date_time_str(const ptime &t);
+            public:
+                //-------------------------------------------------------------
+                /*! date-time now
 
-//! NXDateTime provides static methods to create date-time strings
-//! which are compliant to the Nexus standard.
-class NXDateTime {
-public:
+                Returns a string with a Nexus compliant date-time string
+                for now.
+                \return Nexus date-time string
+                */
+                static String get_date_time_str();
+                //-------------------------------------------------------------
+                /*! date-time at t
 
-	//! date-time now
+                Converts a given time in time_t format to a Nexus date-time 
+                string.
+                \param t time as time_t
+                \return Nexus date-time string
+                */
+                static String get_date_time_str(const ptime &t);
+        };
 
-	//! Returns a string with a Nexus compliant date-time string
-	//! for now.
-    //! \return Nexus date-time string
-	static String getDateTimeStr();
-    //! date-time at t
-
-    //! Converts a given time in time_t format to a Nexus date-time string.
-    //! \param t time as time_t
-    //! \return Nexus date-time string
-    static String getDateTimeStr(const time_t &t);
-};
-
-} /* namespace nx */
+    } /* namespace nx */
 } /* namespace pni */
 #endif /* NXDATETIME_HPP_ */
