@@ -35,15 +35,20 @@ namespace pni{
                 hid_t dspace_id = 0;
                 hid_t dtype_id = 0;
 
-                //obtain the IDs of the dataspace and the datatype used 
-                //to create the attribute.
-                dspace_id = H5Aget_space(id());
-                dtype_id  = H5Aget_type(id());
+                if(is_valid()){
+                    //obtain the IDs of the dataspace and the datatype used 
+                    //to create the attribute.
+                    dspace_id = H5Aget_space(id());
+                    dtype_id  = H5Aget_type(id());
 
-                //we can use this Ids to create new H5Objects from which 
-                //the datatype and the dataspace can be constructed.
-                _dspace = H5Dataspace(dspace_id);
-                _dtype  = H5Datatype(dtype_id);
+                    //we can use this Ids to create new H5Objects from which 
+                    //the datatype and the dataspace can be constructed.
+                    _dspace = H5Dataspace(dspace_id);
+                    _dtype  = H5Datatype(dtype_id);
+                }else{
+                    _dspace = H5Dataspace();
+                    _dtype = H5Datatype();
+                }
             }
 
             //===========constructors and destructors==========================

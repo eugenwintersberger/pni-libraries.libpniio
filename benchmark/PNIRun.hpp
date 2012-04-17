@@ -1,7 +1,7 @@
 #ifndef __PNIRUN_HPP__
 #define __PNIRUN_HPP__
 
-#include <NX.hpp>
+#include <pni/nx/NX.hpp>
 
 using namespace pni::nx::h5;
 

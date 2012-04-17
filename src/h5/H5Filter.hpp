@@ -70,7 +70,7 @@ namespace pni{
                     //! thrown.
                     //! \throw H5FilterError in case of errors
                     //! \param id id of the
-                    virtual void setup(hid_t id) const = 0;
+                    virtual void setup(hid_t id) const{}
 
             };
 

@@ -253,6 +253,8 @@ namespace pni{
                     and a shape object to describe the dataspace. The dataspaces
                     created using this method are infinitely extensible in along
                     all dimensions.
+                    \throws ShapeMissmatchError if chunk and field shape do not
+                    have the same rank
                     \throws H5DatasetError in case of errors
                     \param n name of the dataset
                     \param g group below which the dataset will be created
@@ -268,6 +270,22 @@ namespace pni{
                     {
                         //create the datatype
                         H5Datatype type = H5DatatypeFactory::create_type<T>();
+
+                        if(s.rank() != cs.rank())
+                        {
+                            std::stringstream estr;
+                            ShapeMissmatchError error;
+                            error.issuer("template<typename T> static "
+                                    "H5Dataset create( const String &n,"
+                                    "const H5Group &g, const Shape &s,"
+                                    "const Shape &cs)");
+                            estr<<"Chunk shape and field shape must be";
+                            estr<<" equal!"<<std::endl;
+                            estr<<"Field shape: "<<s<<std::endl;
+                            estr<<"Chunk shape: "<<cs<<std::endl;
+                            error.description(estr.str());
+                            throw(error);
+                        }
 
                         //create the data space
                         Shape ms(s.rank());
@@ -289,6 +307,8 @@ namespace pni{
                     &cs) despite the fact that it requires an additional
                     argument describing the filter.
                     \throws H5DatasetError in case of errors
+                    \throws ShapeMissmatchError if chunk and dataset shape do
+                    not have equal rank
                     \param n name of the dataset
                     \param g group below which the dataset will be created
                     \param s shape describing the dataset
@@ -305,6 +325,22 @@ namespace pni{
                     {
                         //create the datatype
                         H5Datatype type = H5DatatypeFactory::create_type<T>();
+                        
+                        if(s.rank() != cs.rank())
+                        {
+                            std::stringstream estr;
+                            ShapeMissmatchError error;
+                            error.issuer("template<typename T> static "
+                                    "H5Dataset create( const String &n,"
+                                    "const H5Group &g, const Shape &s,"
+                                    "const Shape &cs)");
+                            estr<<"Chunk shape and field shape must be";
+                            estr<<" equal!"<<std::endl;
+                            estr<<"Field shape: "<<s<<std::endl;
+                            estr<<"Chunk shape: "<<cs<<std::endl;
+                            error.description(estr.str());
+                            throw(error);
+                        }
 
                         //create the data space
                         Shape ms(s.rank());

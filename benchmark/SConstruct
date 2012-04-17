@@ -5,14 +5,14 @@ import os.path as path
 var = Variables()
 
 #
-var.Add(PathVariable("HDF5LIBDIR","HDF5 library installation directory","/usr/lib"))
-var.Add(PathVariable("HDF5INCDIR","HDF5 headers installation directory","/usr/include"))
+var.Add(PathVariable("H5LIB","HDF5 library installation directory","/usr/lib"))
+var.Add(PathVariable("H5INC","HDF5 headers installation directory","/usr/include"))
 
-var.Add(PathVariable("PNINXLIBDIR","libpninx library installation directory","/usr/lib"))
-var.Add(PathVariable("PNINXINCDIR","libpninx header installation directory","/usr/include"))
+var.Add(PathVariable("NXLIB","libpninx library installation directory","/usr/lib"))
+var.Add(PathVariable("NXINC","libpninx header installation directory","/usr/include"))
 
-var.Add(PathVariable("PNIUTILSLIBDIR","lipniutils library installation directory","/usr/lib"))
-var.Add(PathVariable("PNIUTILSINCDIR","lipniutils header installation directory","/usr/include"))
+var.Add(PathVariable("UTLIB","lipniutils library installation directory","/usr/lib"))
+var.Add(PathVariable("UTINC","lipniutils header installation directory","/usr/include"))
 
 
 env = Environment(variables=var)
@@ -20,11 +20,11 @@ env = Environment(variables=var)
 
 #add linker paths
 env.Append(CPPFLAGS= ["-O2","-Wall","-std=c++0x"])
-env.Append(LIBPATH = [env["HDF5LIBDIR"],env["PNINXLIBDIR"],env["PNIUTILSLIBDIR"]])
+env.Append(LIBPATH = [env["H5LIB"],env["NXLIB"],env["UTLIB"]])
 
 #add include paths
-env.Append(CPPPATH = [env["HDF5INCDIR"],env["PNINXINCDIR"],env["PNIUTILSINCDIR"]])
-env.Append(LIBS=["hdf5","libpniutils","libpninx"])
+env.Append(CPPPATH = [env["H5INC"],env["NXINC"],env["UTINC"]])
+env.Append(LIBS=["hdf5","libpniutils","libpninx","boost_program_options"])
 
 src_list = ["BenchmarkConfig.cpp","Timer.cpp","Main.cpp","BenchmarkResult.cpp"]
 env.Program("nxbmark",src_list)

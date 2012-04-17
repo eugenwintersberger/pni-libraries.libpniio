@@ -33,7 +33,7 @@ namespace pni{
             template<>
                 H5Datatype H5DatatypeFactory::create_type<UInt8>()
             {
-                return H5Datatype(H5Tcopy(H5T_NATIVE_UCHAR));
+                return H5Datatype(H5Tcopy(H5T_NATIVE_UINT8));
             }
 
             template<>
@@ -45,7 +45,7 @@ namespace pni{
             template<>
                 H5Datatype H5DatatypeFactory::create_type<Int8>()
             {
-                return H5Datatype(H5Tcopy(H5T_NATIVE_CHAR));
+                return H5Datatype(H5Tcopy(H5T_NATIVE_INT8));
             }
 
             template<>
@@ -57,7 +57,7 @@ namespace pni{
             template<>
                 H5Datatype H5DatatypeFactory::create_type<UInt16>()
             {
-                return H5Datatype(H5Tcopy(H5T_NATIVE_USHORT));
+                return H5Datatype(H5Tcopy(H5T_NATIVE_UINT16));
             }
             
             template<>
@@ -69,7 +69,7 @@ namespace pni{
             template<>
                 H5Datatype H5DatatypeFactory::create_type<Int16>()
             {
-                return H5Datatype(H5Tcopy(H5T_NATIVE_SHORT));
+                return H5Datatype(H5Tcopy(H5T_NATIVE_INT16));
             }
             
             template<>
@@ -81,7 +81,7 @@ namespace pni{
             template<>
                 H5Datatype H5DatatypeFactory::create_type<UInt32>()
             {
-                return H5Datatype(H5Tcopy(H5T_NATIVE_UINT));
+                return H5Datatype(H5Tcopy(H5T_NATIVE_UINT32));
             }
             
             template<>
@@ -93,7 +93,7 @@ namespace pni{
             template<>
                 H5Datatype H5DatatypeFactory::create_type<Int32>()
             {
-                return H5Datatype(H5Tcopy(H5T_NATIVE_INT));
+                return H5Datatype(H5Tcopy(H5T_NATIVE_INT32));
             }
             
             template<>
@@ -105,7 +105,7 @@ namespace pni{
             template<>
                 H5Datatype H5DatatypeFactory::create_type<UInt64>()
             {
-                return H5Datatype(H5Tcopy(H5T_NATIVE_ULONG));
+                return H5Datatype(H5Tcopy(H5T_NATIVE_UINT64));
             }
             
             template<>
@@ -117,7 +117,7 @@ namespace pni{
             template<>
                 H5Datatype H5DatatypeFactory::create_type<Int64>()
             {
-                return H5Datatype(H5Tcopy(H5T_NATIVE_LONG));
+                return H5Datatype(H5Tcopy(H5T_NATIVE_INT64));
             }
 
             template<>

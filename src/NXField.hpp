@@ -185,7 +185,20 @@ namespace pni{
                 //! \param value variable where to store the data
                 template<typename T> void read(T &value) const
                 {
-                    this->imp().read(value);
+                    EXCEPTION_SETUP("template<typename T> void NXField<Imp>::"
+                            "read(T &value) const");
+
+                    try{
+                        this->imp().read(value);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXFieldError,"Error reading data from "
+                                "field ["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
                 }
 
                 //-------------------------------------------------------------
@@ -200,7 +213,7 @@ namespace pni{
                     void read(BT<T> &buffer) const
                 {
                     EXCEPTION_SETUP("template<typename T,template<typename> "
-                            "class BT> void read(BT<T> &buffer) const");
+                            "class BT> void NXField<Imp>::read(BT<T> &buffer) const");
 
                     if(!buffer.is_allocated()){
                         EXCEPTION_INIT(MemoryAccessError,
@@ -208,7 +221,17 @@ namespace pni{
                         EXCEPTION_THROW();
                     }
 
-                    this->imp().read(buffer);
+                    try{
+                        this->imp().read(buffer);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXFieldError,"Error reading data from "
+                                "field ["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
                 }
 
                 //--------------------------------------------------------------
@@ -224,34 +247,112 @@ namespace pni{
                         EXCEPTION_THROW();
                     }
 
-                    this->imp().read(array);
+                    try{
+                        this->imp().read(array);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXFieldError,"Error reading data from "
+                                "field ["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
                 }
 
                 //--------------------------------------------------------------
                 template<typename T> void read(Scalar<T> &data) const
                 {
-                    this->imp().read(data);
+                    EXCEPTION_SETUP("template<typename T> void NXField<Imp>::"
+                            "read(Scalar<T> &data) const");
+                    
+                    try{
+                        this->imp().read(data);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXFieldError,"Error reading data from "
+                                "field ["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
                 }
-                
+               
+                //---------------------------------------------------------------
                 template<typename T> void read(std::complex<T> &value) const
                 {
-                    this->imp().read(value);
+                    EXCEPTION_SETUP("template<typename T> void NXField<Imp>::"
+                            "read(std::complex<T> &value) const");
+
+                    try{
+                        this->imp().read(value);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXFieldError,"Error reading data from "
+                                "field ["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
                 }
 
                 //--------------------------------------------------------------
                 template<typename Object> Object read() const
                 {
-                    return this->imp().read<Object>();                    
+                    EXCEPTION_SETUP("template<typename Object> Object"
+                            "NXField<Imp>::read() const");
+                    
+                    try{
+                        return this->imp().read<Object>();                    
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXFieldError,"Error reading data from "
+                                "field ["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
                 }
-                
+               
+                //-------------------------------------------------------------
                 void read(Binary &value) const
                 {
-                    this->imp().read(value);
+                    EXCEPTION_SETUP("void NXField<Imp>::read(Binary &value) "
+                            "const");
+
+                    try{
+                        this->imp().read(value);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXFieldError,"Error reading data from "
+                                "field ["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
                 }
 
+                //-------------------------------------------------------------
                 void read(String &value) const
                 {
-                    this->imp().read(value);
+                    EXCEPTION_SETUP("void NXField<Imp>::read(String &value) "
+                            "const");
+
+                    try{
+                        this->imp().read(value);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXFieldError,"Error reading data from "
+                                "field ["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
                 }
 
                 //=============methods for writing data========================
@@ -266,32 +367,98 @@ namespace pni{
                 //! \param value data source
                 template<typename T> void write(const T &value) const
                 {
-                    this->imp().write(value);
+                    EXCEPTION_SETUP("template<typename T> void NXField<Imp>::"
+                            "write(const T &value) const");
+
+                    try{
+                        this->imp().write(value);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXFieldError,"Error writing data to "
+                                "field ["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
                 }
 
+                //-------------------------------------------------------------
                 template<typename T> void write(const std::complex<T> &value)
                     const
                 {
-                    this->imp().write(value);
+                    EXCEPTION_SETUP("template<typename T> void NXField<Imp>::"
+                            "write(const std::complex<T> &value) const");
+
+                    try{
+                        this->imp().write(value);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXFieldError,"Error writing data to "
+                                "field ["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
                 }
 
-
+                //-------------------------------------------------------------
                 void write(const Binary &value) const
                 {
-                    this->imp().write(value);
+                    EXCEPTION_SETUP("void NXField<Imp>::write(const Binary "
+                            "&value) const");
+
+                    try{
+                        this->imp().write(value);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXFieldError,"Error writing data to "
+                                "field ["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
                 }
 
+                //-------------------------------------------------------------
                 void write(const String &value) const
                 {
-                    this->imp().write(value);
+                    EXCEPTION_SETUP("void NXField<Imp>::write(const String "
+                            "&value) const");
+
+                    try{
+                        this->imp().write(value);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXFieldError,"Error writing data to "
+                                "field ["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
                 }
 
+                //-------------------------------------------------------------
                 void write(const char *value) const
                 {
-                    this->imp().write(String(value));
+                    EXCEPTION_SETUP("void NXField<Imp>::write(const char "
+                            "*value) const");
+
+                    try{
+                        this->imp().write(String(value));
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXFieldError,"Error writing data to "
+                                "field ["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
                 }
-
-
 
                 //-------------------------------------------------------------
                 //! write a buffer 
@@ -313,7 +480,18 @@ namespace pni{
                         EXCEPTION_INIT(MemoryAccessError,"Buffer not allocated!");
                         EXCEPTION_THROW();
                     }
-                    this->imp().write(buffer);
+                    try{
+                        this->imp().write(buffer);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXFieldError,"Error writing data to "
+                                "field ["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
+
                 }
 
                 //--------------------------------------------------------------
@@ -337,7 +515,18 @@ namespace pni{
                                 "Array not allocated!");
                         EXCEPTION_THROW();
                     }
-                    this->imp().write(array);
+                    try{
+                        this->imp().write(array);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXFieldError,"Error writing data to "
+                                "field ["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
+
                 }
 
                 //-------------------------------------------------------------
@@ -350,7 +539,20 @@ namespace pni{
                 //! \param scalar scalar object to write to disk
                 template<typename T> void write(const Scalar<T> &scalar) const
                 {
-                    this->imp().write(scalar);
+                    EXCEPTION_SETUP("template<typename T> void NXField<Imp>::"
+                            "write(const Scalar<T> &scalar) const");
+
+                    try{
+                        this->imp().write(scalar);
+                    }catch(ShapeMissmatchError &error){
+                        throw(error);
+                    }catch(SizeMissmatchError &error){
+                        throw(error);
+                    }catch(...){
+                        EXCEPTION_INIT(NXFieldError,"Error writing data to "
+                                "field ["+this->path()+"]!");
+                        EXCEPTION_THROW();
+                    }
                 }
 
                 //---------------------------------------------------------------
