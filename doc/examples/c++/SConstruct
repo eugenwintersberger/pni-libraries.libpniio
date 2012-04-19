@@ -11,30 +11,30 @@ vars.Add("PNILIBDIR","PNI library installation directory","")
 env = Environment(variables=vars)
 
 if env["H5INCDIR"]:
-    env.Append(CPPPATH = [env["H5INCDIR"]])
+    env.PrependUnique(CPPPATH = [env["H5INCDIR"]])
 else:
-    env.Append(CPPPATH = [path.join(env["H5PREFIX"],"include")])
+    env.PrependUnique(CPPPATH = [path.join(env["H5PREFIX"],"include")])
 
 if env["PNIINCDIR"]:
-    env.Append(CPPPATH = [env["PNIINCDIR"]])
+    env.PrependUnique(CPPPATH = [env["PNIINCDIR"]])
 else:
-    env.Append(CPPPATH = [path.join(env["PNIPREFIX"],"include")])
+    env.PrependUnique(CPPPATH = [path.join(env["PNIPREFIX"],"include")])
 
 if env["H5LIBDIR"]:
-    env.Append(LIBPATH = [env["H5LIBDIR"]])
+    env.PrependUnique(LIBPATH = [env["H5LIBDIR"]])
 else:
-    env.Append(LIBPATH = [path.join(env["H5PREFIX"],"lib")])
+    env.PrependUnique(LIBPATH = [path.join(env["H5PREFIX"],"lib")])
 
 if env["PNILIBDIR"]:
-    env.Append(LIBPATH = [env["PNILIBDIR"]])
+    env.PrependUnique(LIBPATH = [env["PNILIBDIR"]])
 else:
-    env.Append(LIBPATH = [path.join(env["PNIPREFIX"],"lib")])
+    env.PrependUnique(LIBPATH = [path.join(env["PNIPREFIX"],"lib")])
 
 
 
 
 env.Append(LIBS=["pninx","pniutils","hdf5"])
-env.Append(CXXFLAGS=["-O2","-std=c++0x"])
+env.Append(CXXFLAGS=["-O0","-g","-std=c++0x"])
 d4 = env.Program("d4",["d4.cpp","NXHelper.cpp"])
 nxfile_ex1 = env.Program("nxfile_ex1.cpp")
 nxgroup_ex1 = env.Program("nxgroup_ex1.cpp")
@@ -46,4 +46,5 @@ nxstrfield_ex1 = env.Program("nxstrfield_ex1.cpp")
 nxstrfield_ex2 = env.Program("nxstrfield_ex2.cpp")
 nxbinfield_ex1 = env.Program("nxbinfield_ex1.cpp")
 simple_io = env.Program("simple_io.cpp")
+thread_ex1 = env.Program("thread_ex1.cpp")
 
