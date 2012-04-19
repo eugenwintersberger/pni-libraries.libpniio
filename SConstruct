@@ -97,20 +97,20 @@ env.Append(CXXFLAGS = ["-Wall","-std=c++0x"])
 env.Append(LIBS=["dl"])
 #set paths for Boost and HDF5
 if env["H5LIBDIR"]:
-    env.Append(LIBPATH = env['H5LIBDIR'])
+    env.AppendUnique(LIBPATH = env['H5LIBDIR'])
 else:
-    env.Append(LIBPATH=path.join(env["HDF5PREFIX"],"lib"))
+    env.AppendUnique(LIBPATH=path.join(env["HDF5PREFIX"],"lib"))
 
-env.Append(LIBPATH=[path.join(env["BOOSTPREFIX"],"lib"),
+env.AppendUnique(LIBPATH=[path.join(env["BOOSTPREFIX"],"lib"),
                     path.join(env["PNIUPREFIX"],"lib"),
 ])
 
 if env['H5INCDIR']:
-    env.Append(CPPPATH = env['H5INCDIR'])
+    env.AppendUnique(CPPPATH = env['H5INCDIR'])
 else:
-    env.Append(CPPPATH = path.join(env["HDF5PREFIX"],"include"))  
+    env.AppendUnique(CPPPATH = path.join(env["HDF5PREFIX"],"include"))  
     
-env.Append(CPPPATH=[path.join(env["BOOSTPREFIX"],"include"),
+env.AppendUnique(CPPPATH=[path.join(env["BOOSTPREFIX"],"include"),
                     path.join(env["PNIUPREFIX"],"include")
 ])
 
