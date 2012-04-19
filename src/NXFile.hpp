@@ -80,7 +80,8 @@ namespace pni{
                     if(this->is_valid())
                     {
                         try{
-                            this->template attr<String>("file_update_time",true).write(NXDateTime::getDateTimeStr());
+                            this->template attr<String>("file_update_time",true)
+                                .write(NXDateTime::get_date_time_str());
                         }catch(...){
                             //do nothing if write fails - most probably 
                             //the file is in read only mode
@@ -138,9 +139,9 @@ namespace pni{
                     file.template
                         attr<String>("NX_class").write(String("NXroot"));
                     file.template 
-                        attr<String>("file_time").write(NXDateTime::getDateTimeStr());
+                        attr<String>("file_time").write(NXDateTime::get_date_time_str());
                     file.template 
-                        attr<String>("file_update_time").write(NXDateTime::getDateTimeStr());
+                        attr<String>("file_update_time").write(NXDateTime::get_date_time_str());
                     file.template attr<String>("file_name").write(n);
 
                     //this should be taken from a configuration
@@ -165,7 +166,8 @@ namespace pni{
                 virtual void close(){
                     if(this->is_valid()){
                         try{
-                            this->template attr<String>("file_update_time",true).write(NXDateTime::getDateTimeStr());
+                            this->template attr<String>("file_update_time",true)
+                                .write(NXDateTime::get_date_time_str());
                         }catch(...){
                             //do nothing if write fails - most probably 
                             //the file is in read only mode

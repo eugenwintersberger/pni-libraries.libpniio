@@ -51,6 +51,7 @@ namespace pni {
         class NXDateTime {
             private:
                 static String __get_date_time_str(const ptime &t);
+                static String __get_utc_delta();
             public:
                 //-------------------------------------------------------------
                 /*! date-time now
@@ -68,9 +69,10 @@ namespace pni {
                 \param t time as time_t
                 \return Nexus date-time string
                 */
-                static String get_date_time_str(const ptime &t);
+                static String get_date_time_str(const time_t &t);
         };
 
-    } /* namespace nx */
-} /* namespace pni */
+    //end of namepsace
+    } 
+} 
 #endif /* NXDATETIME_HPP_ */

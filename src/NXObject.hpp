@@ -422,7 +422,7 @@ namespace pni{
                 */
                 String access_time() const
                 {
-                    return NXDateTime::getDateTimeStr(_imp.acc_time());
+                    return NXDateTime::get_date_time_str(_imp.acc_time());
                 }
 
                 //-------------------------------------------------------------
@@ -434,7 +434,7 @@ namespace pni{
                 */
                 String modified_time() const
                 {
-                    return NXDateTime::getDateTimeStr(_imp.mod_time());
+                    return NXDateTime::get_date_time_str(_imp.mod_time());
                 }
                 
                 //-------------------------------------------------------------
@@ -446,7 +446,7 @@ namespace pni{
                 */
                 String change_time() const
                 {
-                    return NXDateTime::getDateTimeStr(_imp.chng_time());
+                    return NXDateTime::get_date_time_str(_imp.chng_time());
                 }
                 
                 //-------------------------------------------------------------
@@ -458,7 +458,7 @@ namespace pni{
                 */
                 String create_time() const
                 {
-                    return NXDateTime::getDateTimeStr(_imp.birth_time());
+                    return NXDateTime::get_date_time_str(_imp.birth_time());
                 }
 
                 //-------------------------------------------------------------
