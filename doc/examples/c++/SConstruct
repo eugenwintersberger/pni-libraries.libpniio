@@ -47,4 +47,5 @@ nxstrfield_ex2 = env.Program("nxstrfield_ex2.cpp")
 nxbinfield_ex1 = env.Program("nxbinfield_ex1.cpp")
 simple_io = env.Program("simple_io.cpp")
 thread_ex1 = env.Program("thread_ex1.cpp")
+thread_ex1no = env.Program("thread_ex1_nothread.cpp")
 
