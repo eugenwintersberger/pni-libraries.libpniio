@@ -35,7 +35,7 @@ else:
 
 
 env.Append(LIBS=["pninx","pniutils",env["H5LIBNAME"]])
-env.Append(CXXFLAGS=["-O0","-g","-std=c++0x"])
+env.Append(CXXFLAGS=["-O2","-std=c++0x"])
 d4 = env.Program("d4",["d4.cpp","NXHelper.cpp"])
 nxfile_ex1 = env.Program("nxfile_ex1.cpp")
 nxgroup_ex1 = env.Program("nxgroup_ex1.cpp")
@@ -48,5 +48,4 @@ nxstrfield_ex2 = env.Program("nxstrfield_ex2.cpp")
 nxbinfield_ex1 = env.Program("nxbinfield_ex1.cpp")
 simple_io = env.Program("simple_io.cpp")
 thread_ex1 = env.Program("thread_ex1.cpp")
-thread_ex1no = env.Program("thread_ex1_nothread.cpp")
 
