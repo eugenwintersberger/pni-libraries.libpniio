@@ -33,6 +33,7 @@ extern "C"{
 }
 
 #include "H5Datatype.hpp"
+#include "H5Exceptions.hpp"
 
 using namespace pni::utils;
 
