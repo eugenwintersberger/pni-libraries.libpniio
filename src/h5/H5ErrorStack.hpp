@@ -145,6 +145,7 @@ public:
 	//! default destructor
 	virtual ~H5ErrorStack();
 
+    //! copy constructor
 	H5ErrorStack &operator=(const H5ErrorStack &s);
 
 	//! get number of errors

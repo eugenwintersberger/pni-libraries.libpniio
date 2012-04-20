@@ -85,7 +85,7 @@ namespace pni {
                     //! If this option is set the shuffle filter will be 
                     //! activated in advance of the defalte filter. This
                     //! can lead to higher compression ratios.
-                    //! \param bool true/false use/not use shuffle filter
+                    //! \param value true/false use/not use shuffle filter
                     void shuffle(bool value);
 
                     //! get shuffle status

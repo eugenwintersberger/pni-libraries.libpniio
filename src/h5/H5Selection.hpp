@@ -160,6 +160,7 @@ namespace pni{
                     dataset and the shape object must be equal.
                     \throws ShapeMissmatchError if selection and dataset rank do
                     not match
+                    \param ds dataset from which to draw the selection
                     \param s shape (counts and rank) of the selection
                     \param offset default offset (0)
                     \param stride default stride (1)
@@ -380,7 +381,6 @@ namespace pni{
                     To use a selection the dataset must not be scalar. 
                     \throws ShapeMissmatchError if the dataset is scalar
                     \throws H5DataSetError in cases of other errors
-                    \param s selection object
                     \param value object from which to read data
                     */
                     template<typename T> void write(const T &value) const;
@@ -429,7 +429,7 @@ namespace pni{
                     selection. T must be a floating point type. 
                     \throws ShapeMissmatchError if selection is not scalar
                     \throws H5DataSetError in case of other IO errors
-                    \parma value instance from which to write data to the
+                    \param value instance from which to write data to the
                     selection
                     */
                     template<typename T> void write(const std::complex<T> &value)
@@ -475,7 +475,6 @@ namespace pni{
                     \throws MemoryAccessError if the buffer is not allocated
                     \throws SizeMissmatchBuffer selection and buffer sizes do not match
                     \throws H5DataSetError in case of other errors
-                    \param s selection object
                     \param buffer reference to the buffer object
                     */
                     template<typename T,template<typename> class BT>
@@ -534,7 +533,6 @@ namespace pni{
                     scalar. 
                     \throws ShapeMissmatchError if the dataset is scalar
                     \throws H5DataSetError in case of all other errors
-                    \param s selection object
                     \param scalar instance of Scalar<T> from which to write data
                     */
                     template<typename T>

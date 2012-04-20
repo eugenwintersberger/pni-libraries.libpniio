@@ -19,7 +19,6 @@ sources_list.extend(["H5SelectionTest.cpp"])
 sources_list.extend(["H5LinkTest.cpp"])
 sources_list.extend(["TestHelpers.cpp"])
 sources_list.extend(["NXSelectionTest.cpp"])
-sources_list.extend(["H5PathTest.cpp"])
 
 
 pninx_test = test_env.Program("pninxtest",sources_list)

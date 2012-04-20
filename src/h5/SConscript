@@ -21,8 +21,7 @@ src_list = ["H5LibrarySetup.cpp",
             "H5File.cpp",
             "H5Selection.cpp",
             "H5DatatypeFactory.cpp",
-            "H5Link.cpp",
-            "H5Path.cpp"]
+            "H5Link.cpp"]
            
 #building shared and static objects
 shared_objects = build_env.SharedObject(src_list)

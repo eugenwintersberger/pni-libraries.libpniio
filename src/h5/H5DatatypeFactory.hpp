@@ -40,6 +40,12 @@ namespace pni{
     namespace nx{
         namespace h5{
 
+            /*! \ingroup nxh5_classes
+
+            \brief data type factory
+
+            This class acts as a factory for H5Datatype objects.
+            */
             class H5DatatypeFactory{
                 private:
                     //from this class we would need a singleton - should be available only
@@ -59,10 +65,35 @@ namespace pni{
                         Float128 i;
                     } __struct_complex_128; //!< C structure for a 128Bit complex type
                 public:
-                    template<typename T>
-                        static H5Datatype create_type();
-                    template<TypeID ID>
-                        static H5Datatype create_type();
+                    /*! \brief create from type
+
+                    This static template method can be used to create a
+                    H5Datatype object from a particular type T. T must be a type
+                    defined in pni/utils/Types.hpp. 
+
+                    \code
+                    H5Datatype t = H5DatatypeFactor::create_type<Float32>();
+                    \endcode
+
+                    \throws H5DataTypeError if type creation was unsuccessful 
+                    \return instance of H5Datatype 
+                    */
+                    template<typename T> static H5Datatype create_type();
+
+                    //---------------------------------------------------------
+                    /*! \brief create from type id
+
+                    Static template method to create an instance of H5Datatype 
+                    from a PNI type id. 
+
+                    \code
+                    H5Datatype t = H5DatatypeFactor::create_type<TypeID::UINT8>();
+                    \endcode
+
+                    \throws H5DataTypeError if type creation was unsuccessful
+                    \return instance of H5Datatype
+                    */
+                    template<TypeID ID> static H5Datatype create_type();
             };
 
 

@@ -110,7 +110,7 @@ namespace pni{
                     open(const String &n) only objects linked to this group can
                     be opened with this method.
                     \throws IndexError if index exceeds number of childs
-                    \param object index
+                    \param i object index
                     \return child object
                     */
                     H5Object open(size_t i) const;
@@ -119,7 +119,7 @@ namespace pni{
 
                     [] operator to obtain a child node by index;
                     \throws IndexError if index exceeds number of childs
-                    \param object index
+                    \param i object index
                     \return child node
                     \sa open(size_t i)
                     */
@@ -174,22 +174,23 @@ namespace pni{
                     */
                     void link(const H5Group &ref,const String &path) const;
 
-                    /*! creates a local or external link
+                    /*! \brief creates a local or external link
 
                     This method creates a link below this group from an 
                     object determined by path. The name of the link is
                     given by name. With this method also external 
                     links are possible.
                     \param path path to the object from which to link
-                    \paran name name of the link with respect to this group
+                    \param name name of the link with respect to this group
                     */
                     void link(const String &path,const String &name) const;
 
-                    //! number of child nodes
+                    /*! \brief number of child nodes
 
-                    //! Returns the number of child nodes (groups and datasets)
-                    //! linked below this group.
-                    //! \return number of child nodes
+                    Returns the number of child nodes (groups and datasets)
+                    linked below this group.
+                    \return number of child nodes
+                    */
                     size_t nchilds() const;
 
                     
