@@ -40,13 +40,18 @@
 
 namespace pni{
     namespace nx{
-        
+       
+        /*! \ingroup 
+        \brief implementation code type map
+
+        This type map maps a particular implementation type to a type code.
+        */
         template<typename T> class NXImpCodeMap{
             public:
-                static const ImpCode icode;
+                static const ImpCode icode; //!< implementation code
         };
 
-
+        //! \cond NO_API_DOC
         //specialization for the HDF5 Implementation
         template<> class NXImpCodeMap<pni::nx::h5::H5AttributeObject>{
             public:
@@ -83,9 +88,9 @@ namespace pni{
                 static const ImpCode icode = ImpCode::HDF5;
         };
 
+        //! \endcond
 
-
-
+    //end of namespace
     }
 }
 

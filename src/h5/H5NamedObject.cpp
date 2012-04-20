@@ -30,7 +30,6 @@ using namespace pni::utils;
 #include "H5NamedObject.hpp"
 #include "H5Exceptions.hpp"
 #include "H5Group.hpp"
-#include "H5Path.hpp"
 
 namespace pni{
     namespace nx{

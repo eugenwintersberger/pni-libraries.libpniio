@@ -29,10 +29,10 @@
 
 namespace pni{
     namespace nx{
-        
+
         template<typename Imp,typename FileType> class NXFileOps{
             private:
-                FileType *_file;
+                FileType *_file; //!< pointer to a file instance
             public:
                 //============constructors and destructors=====================
                 //! default constructor
@@ -189,7 +189,7 @@ namespace pni{
                
                 //! move two objects
 
-                //! Move object 
+                //!
                 void mv(const String &src,const  String &dest) const;
                 template<typename ObjImp> void
                     mv(NXObject<ObjImp> &o,const String &dest) const;

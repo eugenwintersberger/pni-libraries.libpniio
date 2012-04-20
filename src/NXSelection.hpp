@@ -44,7 +44,7 @@ namespace pni{
         //! perform partial IO as implemented in HDF5.
         template<typename Imp> class NXSelection:public Imp{
             private:
-                Imp _imp;
+                Imp _imp; //!< selection implementation
             public:
                 //=============constructors and destructors====================
                 //!default constructor
@@ -473,7 +473,6 @@ namespace pni{
                 //! be scalar. 
                 //! \throws ShapeMissmatchError if the dataset is scalar
                 //! \throws H5DataSetError in cases of other errors
-                //! \param s selection object
                 //! \param value object from which to read data
                 template<typename T> void write(const T &value) const
                 {
@@ -566,7 +565,6 @@ namespace pni{
                 //! scalar. 
                 //! \throws ShapeMissmatchError if the dataset is scalar
                 //! \throws H5DataSetError in case of all other errors
-                //! \param s selection object
                 //! \param scalar the scalar object which to write to disk
                 template<typename T> void write(const Scalar<T> &scalar) const
                 {
@@ -596,7 +594,6 @@ namespace pni{
                 //! the size of the buffer.
                 //! \throws SizeMissmatchBuffer selection and buffer sizes do not match
                 //! \throws H5DataSetError in case of other errors
-                //! \param s selection object
                 //! \param buffer reference to the buffer object
                 template<typename T,template<typename> class BT>
                     void write(const BT<T> &buffer) const

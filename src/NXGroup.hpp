@@ -48,10 +48,11 @@ namespace pni{
         template<typename Imp> class NXGroup:public NXObject<Imp> 
         {
             public:
-                typedef std::shared_ptr<NXGroup<Imp> > sptr;
+                typedef std::shared_ptr<NXGroup<Imp> > 
+                    shared_ptr; //!< shared pointer type to a NXGroup type
                 typedef
                     NXObjectIterator<NXGroup<Imp>,NXObject<MAPTYPE(Imp,ObjectImpl)>
-                    > iterator;
+                    > iterator; //!< object iterator type
                 //===========constructors and destructor========================
                 /*! \brief default constructor
 

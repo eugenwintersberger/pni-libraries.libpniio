@@ -41,7 +41,7 @@ namespace pni{
         //! \brief Filter object
         template<typename Imp> class NXFilter{
             private:
-                Imp _imp;
+                Imp _imp; //!< filter implementation object
             protected:
 
                 //! get non-const ref

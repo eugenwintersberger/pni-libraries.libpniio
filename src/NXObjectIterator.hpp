@@ -44,8 +44,8 @@ namespace pni{
                 ItemT      _item;   //!< the actual object to which the 
                                     //!< interator referes
             public:
-                typedef IterableT iterable_type;
-                typedef ItemT     item_type;
+                typedef IterableT iterable_type; //!< type of iterable
+                typedef ItemT     item_type;     //!< item type
                 //===========constructors and destructor===================
                 //! default constructor
                 NXObjectIterator():
@@ -147,6 +147,7 @@ namespace pni{
                     return _item;
                 }
 
+                //! const dereferenceing operator
                 const ItemT &operator*() const
                 {
                     return _item;
@@ -168,6 +169,7 @@ namespace pni{
                     return *this;
                 }
 
+                //! iterator increment
                 NXObjectIterator<IterableT,ItemT> &operator++(int i)
                 {
                     EXCEPTION_SETUP("H5GroupIterator<ItemT> &operator++(int i)");
@@ -183,6 +185,7 @@ namespace pni{
                     return *this;
                 }
 
+                //! iterator comparison for equality
                 bool operator==(const NXObjectIterator<IterableT,ItemT> &o)
                     const
                 {
@@ -192,6 +195,7 @@ namespace pni{
                     return true;
                 }
 
+                //! iterator comparison for inequality
                 bool operator!=(const NXObjectIterator<IterableT,ItemT> &o)
                     const
                 {

@@ -129,7 +129,7 @@ namespace pni{
                     Creates a dataspace of fixed size. The dataspace created by 
                     this constructor is always a simple dataspace.
                     \param s initial shape
-                    \param mx maximum shape
+                    \param ms maximum shape
                     */
                     explicit H5Dataspace(const Shape &s,const Shape &ms);
 
@@ -291,6 +291,7 @@ namespace pni{
                     //! close the dataspace
                     virtual void close();
 
+                    //! output operator
                     friend std::ostream &operator<<(std::ostream &o,
                             const H5Dataspace &s);
 

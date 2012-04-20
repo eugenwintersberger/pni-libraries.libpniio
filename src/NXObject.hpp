@@ -81,9 +81,11 @@ namespace pni{
                 Imp &imp() { return _imp;}
             public:
                 typedef NXAttributeIterator<NXObject<Imp>,
-                       NXAttribute<MAPTYPE(Imp,AttributeImpl)> > attr_iterator;
+                       NXAttribute<MAPTYPE(Imp,AttributeImpl)> > 
+                           attr_iterator; //!< attribute iterator type
                 //==================constructors and destructors================
-                typedef std::shared_ptr<NXObject<Imp> > sptr;
+                typedef std::shared_ptr<NXObject<Imp> > 
+                    shared_ptr; //!< shared poitner type to an NXObject
                 //! default constructor
                 NXObject(){
                 }

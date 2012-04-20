@@ -50,13 +50,13 @@ namespace pni{
         //! one of the low level nexus objects.
         template<ImpCode c> class NXImpMap{
             public:
-                typedef void ObjectImpl;
-                typedef void GroupImpl;
-                typedef void FileImpl;
-                typedef void FieldImpl;
-                typedef void SelectionImpl;
-                typedef void FilterImpl;
-                typedef void AttributeImpl;
+                typedef void ObjectImpl;     //!< implementation type for NXObject
+                typedef void GroupImpl;      //!< implementation type for NXGroup
+                typedef void FileImpl;       //!< implementation type for NXFile
+                typedef void FieldImpl;      //!< implementation type for NXField
+                typedef void SelectionImpl;  //!< implementation type for NXSelection
+                typedef void FilterImpl;     //!< implementation type for NXFilter
+                typedef void AttributeImpl;  //!< implementation type for NXAttribute
             };
 
         //! \cond NO_API_DOC

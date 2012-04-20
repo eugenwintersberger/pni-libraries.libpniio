@@ -45,25 +45,28 @@ namespace pni{
 
             \brief data type factory
 
-            This class acts as a factory for H5Datatype objects.
+            This class acts as a factory for H5Datatype objects. For complex
+            data a compound data type is used. The naming convention of the
+            structure memebers follows those of h5py (in order to produce files
+            which can be opened easily from Python). 
             */
             class H5DatatypeFactory{
                 private:
                     //from this class we would need a singleton - should be available only
                     //once at runtime - most probably as a global object.
                     typedef struct {
-                        Float32 r;
-                        Float32 i;
+                        Float32 r;   //!< real part
+                        Float32 i;   //!< imaginary part
 
                     } __struct_complex_32;  //!< C structure for a 32Bit complex type
                     typedef struct {
-                        Float64 r;
-                        Float64 i;
+                        Float64 r;   //!< real part
+                        Float64 i;   //!< imaginary part
                     } __struct_complex_64;  //!< C structure for a 64Bit complex type
 
                     typedef struct {
-                        Float128 r;
-                        Float128 i;
+                        Float128 r;  //!< real part
+                        Float128 i;  //!< imaginary part
                     } __struct_complex_128; //!< C structure for a 128Bit complex type
                 public:
                     /*! \brief create from type

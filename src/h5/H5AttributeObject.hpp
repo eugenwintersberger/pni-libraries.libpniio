@@ -121,6 +121,7 @@ namespace pni{
                     the existing attribute will be overwritten.
                     \throws H5AttributeError if attribute exists or in case of errors
                     \param n name of the attribute
+                    \param ov overwrite attribute if true
                     \return attribute object
                     */
                     template<typename T> H5Attribute 
@@ -137,6 +138,7 @@ namespace pni{
                     \throws H5AttributeError if the attribute exists or in case of errors
                     \param n name of the attribute
                     \param s shape of the array
+                    \param ov overwrite attribute if true
                     \return attribute object
                     */
                     template<typename T> H5Attribute 

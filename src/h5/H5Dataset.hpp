@@ -77,11 +77,13 @@ namespace pni{
                     template<typename T> void __read(T *ptr) const; 
 
                     //--------------------------------------------------------
+                    //! obtain the dataspace from an existing object
                     H5Dataspace __obtain_dataspace() const{
                         return  H5Dataspace(H5Dget_space(id()));
                     }
 
                     //--------------------------------------------------------
+                    //! obtain the datatype from an existing object
                     H5Datatype __obtain_datatype() const{
                         return H5Datatype(H5Dget_type(id()));
                     }
@@ -314,7 +316,7 @@ namespace pni{
                     \param s shape describing the dataset
                     \param cs chunk shape
                     \param filter H5Filter object describing the filter
-                    \param H5Dataset instance
+                    \return H5Dataset instance
                     */
                     template<typename T> static H5Dataset create(
                                          const String &n,
