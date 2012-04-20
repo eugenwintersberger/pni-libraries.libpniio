@@ -35,23 +35,54 @@ using namespace pni::utils;
 namespace pni{
     namespace nx{
 
+        /*! 
+        \brief library configuration class
+
+        This class holds the configuration of the library. The class is
+        initialized from several configuration files. 
+
+        The global configuration of the library resides on Linux under 
+        /etc/pni/pninx/ 
+        
+        Aside from this every user can have a local configuration under 
+        $HOME/.pni/pninx
+
+        The configuration holds information such as the timezone of the 
+        machine, the NXDL files for base classes and application definitions. 
+        
+        The class is implemented as a singleton and available as a global
+        variable from all instances. The class provides methods to reread the
+        configuration at runtime. This allows, for instance the installation of
+        additional NXDL files while a program is running. 
+        */
         class NXConfiguration{
             private:
                 String __config_dir_root; //!< root directory of the library
                                           //!< configuration
                 String __global_nxdl_dir; //!< global NXDL 
-                std::vector<String> __base_classes;
-                std::vector<String> __
-                std::vector<String> __app_classes;
+                std::vector<String> __base_classes; //!< base classes
+                std::vector<String> __app_classes;  //!< application definitions
             public:
+                //! default constructor
                 NXConfiguration();
+
+                //! destructor
                 ~NXConfiguration();
 
+                //! get global configuration directory
                 String global_config_dir() const;
+
+                //! get the global NXDL directory
                 String global_nxdl_dir() const;
 
+                //! get base classes
                 const std::vector<String> &base_classes() const;
-                cosnt std::vector<String> &app_classes() const;
+
+                //! get application definitions
+                const std::vector<String> &app_classes() const;
+
+                //! reset
+                void reset();
 
 
 

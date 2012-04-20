@@ -59,7 +59,8 @@ namespace pni{
         */
         template<typename Imp> class NXField:public NXObject<Imp> {
             public:
-                typedef std::shared_ptr<NXField<Imp> > sptr;
+                typedef std::shared_ptr<NXField<Imp> > 
+                    shared_ptr; //!< shared pointer type for the field object
                 //============constructors and destructors=====================
                 //! default constructor
                 explicit NXField():NXObject<Imp>()

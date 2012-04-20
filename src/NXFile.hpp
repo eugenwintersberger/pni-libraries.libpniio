@@ -50,7 +50,8 @@ namespace pni{
         template<typename Imp> class NXFile:public NXGroup<Imp> {
 
             public:
-                typedef std::shared_ptr<NXFile > sptr; //! shared pointer to a file object
+                typedef std::shared_ptr<NXFile > 
+                    shared_ptr; //!< shared pointer type for a file object
                 //============constructors and destructor=======================
                 //! default constructor
                 explicit NXFile():NXGroup<Imp>()
@@ -62,17 +63,15 @@ namespace pni{
                 {
                 }
 
-              
-
+                //! implemenetation move constructor
                 explicit NXFile(Imp &&imp):NXGroup<Imp>(std::move(imp)){
                     
                 }
 
+                //! move constructor
                 NXFile(NXFile<Imp> &&f):NXGroup<Imp>(std::move(f))
                 {
                 }
-
-
 
                 //--------------------------------------------------------------
                 //! destructor
@@ -90,18 +89,28 @@ namespace pni{
                 }
 
                 //====================assignment operators======================
+                //! move assignment operator
                 NXFile<Imp> &operator=(NXFile<Imp> &&o){
                     if(this == &o) return *this;
                     NXGroup<Imp>::operator=(std::move(o));
                     return *this;
                 }
 
+                //! copy assignment operator
                 NXFile<Imp> &operator=(const NXFile<Imp> &o){
                     if(this != &o) NXGroup<Imp>::operator=(o);
                     return *this;
                 }
 
                 //=============factory methods==================================
+                /*! \brief open file
+
+                Static method opening an existing file.
+                \throws NXFileError in case of errors
+                \param n name of the file
+                \param ro open read only if true
+                \return an instance of NXFile
+                */
                 static NXFile<Imp> open_file(const String &n,bool ro=true){
                     EXCEPTION_SETUP("static NXFile<Imp> "
                             "open_file(const String &n,bool ro=true)");
@@ -120,6 +129,15 @@ namespace pni{
                 }
 
                 //--------------------------------------------------------------
+                /*! \brief create file
+                
+                Static method to create a file. 
+                \throws NXFileError in case of errors
+                \param n name of the file to create
+                \param ow overwrite existing file if true
+                \param ssize split size (not implemented yet)
+                \return instance of NXFile
+                */
                 static NXFile<Imp> create_file(const String &n,bool ow=false,
                         ssize_t ssize = 0)
                 {
@@ -154,15 +172,14 @@ namespace pni{
                     return file;
                 }
 
-                //============methods for setting up the file object============
-
-
                 //--------------------------------------------------------------
                 //! flush the file
                 void flush() const{
                     this->imp().flush();
                 }
 
+                //-------------------------------------------------------------
+                //! close the file
                 virtual void close(){
                     if(this->is_valid()){
                         try{
@@ -176,12 +193,7 @@ namespace pni{
 
                     NXObject<Imp>::close();
                 }
-
-
-
-
-
-};
+        };
 
 
     //end of namespace

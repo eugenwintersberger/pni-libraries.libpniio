@@ -54,16 +54,21 @@ namespace pni{
                 private:
                     //from this class we would need a singleton - should be available only
                     //once at runtime - most probably as a global object.
+
+                    //! \brief structure for 32Bit complex number
                     typedef struct {
                         Float32 r;   //!< real part
                         Float32 i;   //!< imaginary part
 
                     } __struct_complex_32;  //!< C structure for a 32Bit complex type
+
+                    //! \brief structure for 64Bit complex numbers
                     typedef struct {
                         Float64 r;   //!< real part
                         Float64 i;   //!< imaginary part
                     } __struct_complex_64;  //!< C structure for a 64Bit complex type
 
+                    //! \brief structure for 128Bit complex numbers
                     typedef struct {
                         Float128 r;  //!< real part
                         Float128 i;  //!< imaginary part
