@@ -190,6 +190,8 @@ namespace pni{
             //-----------------------------------------------------------------
             H5Dataspace::~H5Dataspace(){
                 if(is_valid()) H5Sclose(id());
+                //reset the object ID
+                H5Object::id(0);
             }
 
             //===================Assignment operators==========================

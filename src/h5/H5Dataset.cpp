@@ -281,7 +281,7 @@ namespace pni{
             //implementation of the default destructor 
             H5Dataset::~H5Dataset(){
                 _space.close();
-                H5Dclose(id());
+                if(is_valid()) H5Dclose(id());
                 H5Object::id(0);
             }
 

@@ -4,6 +4,7 @@ vars = Variables()
 vars.Add("H5PREFIX","HDF5 installation prefix","/usr")
 vars.Add("H5INCDIR","HDF5 header installation directory","")
 vars.Add("H5LIBDIR","HDF5 library installation directory","")
+vars.Add("H5LIBNAME","HDF5 library name","hdf5")
 vars.Add("PNIPREFIX","PNI software installation prefix","/usr")
 vars.Add("PNIINCDIR","PNI header installation directory","")
 vars.Add("PNILIBDIR","PNI library installation directory","")
@@ -33,7 +34,7 @@ else:
 
 
 
-env.Append(LIBS=["pninx","pniutils","hdf5"])
+env.Append(LIBS=["pninx","pniutils",env["H5LIBNAME"]])
 env.Append(CXXFLAGS=["-O0","-g","-std=c++0x"])
 d4 = env.Program("d4",["d4.cpp","NXHelper.cpp"])
 nxfile_ex1 = env.Program("nxfile_ex1.cpp")

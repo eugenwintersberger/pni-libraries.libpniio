@@ -81,14 +81,22 @@ namespace pni{
             H5Group::H5Group(const String &name,const H5Group &parent){
                 EXCEPTION_SETUP("H5Group::H5Group(const string &name,"
                         "const String &parent)");
-                hid_t link_pl; //link creation property list
-                hid_t cr_pl;   //creation property list
+                hid_t link_pl = 0; //link creation property list
+                hid_t cr_pl   = 0; //creation property list
 
                 //create link property list
                 link_pl = H5Pcreate(H5P_LINK_CREATE);
+                if(link_pl < 0) 
+                {
+                    String estr = "Creation of link property list failed"
+                        "for new group ["+name+"] under ["+parent.path()+
+                        "]!";
+                    EXCEPTION_INIT(H5GroupError,estr);
+                    EXCEPTION_THROW();
+                }
                 H5Pset_create_intermediate_group(link_pl,1);
-                cr_pl = H5Pcreate(H5P_GROUP_CREATE);
-                H5Pset_create_intermediate_group(cr_pl,1);
+                //cr_pl = H5Pcreate(H5P_GROUP_CREATE);
+                //H5Pset_create_intermediate_group(cr_pl,1);
 
                 hid_t gid = H5Gcreate2(parent.id(),name.c_str(),
                         link_pl,cr_pl,H5P_DEFAULT);
@@ -102,7 +110,7 @@ namespace pni{
 
                 H5Object::id(gid);
                 //destroy property lists
-                H5Pclose(cr_pl);
+                //H5Pclose(cr_pl);
                 H5Pclose(link_pl);
             }
 

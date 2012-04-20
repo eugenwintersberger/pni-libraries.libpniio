@@ -121,6 +121,9 @@ namespace pni{
 
             //-----------------------------------------------------------------
             void H5Attribute::close(){
+                _dspace.close();
+                _dtype.close();
+
                 if(is_valid()) H5Aclose(id());
                 H5Object::id(0);
             }

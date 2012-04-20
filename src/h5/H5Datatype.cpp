@@ -63,6 +63,7 @@ namespace pni{
             //----------------------------------------------------------------
             H5Datatype::~H5Datatype(){
                 if(is_valid()) H5Tclose(id());
+                H5Object::id(0);
             }
 
 
@@ -154,6 +155,7 @@ namespace pni{
             //-----------------------------------------------------------------
             void H5Datatype::close(){
                 if(is_valid()) H5Tclose(id());
+                H5Object::id(0);
             }
 
 
