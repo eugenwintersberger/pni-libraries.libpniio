@@ -160,7 +160,7 @@ namespace pni{
                     //! ShapeMissmatchError is thrown
                     //! \throws ShapeMissmatchError
                     //! \param object reference to new object
-                    template<typename T,template<typename> class BT>
+                    template<typename T,template<typename,typename> class BT>
                         void __create_object(Array<T,BT> &object) const{
                         EXCEPTION_SETUP("template<typename T,template<typename>"
                                 "class BT> void __create_object(Array<T,BT> "
@@ -220,8 +220,9 @@ namespace pni{
                     //! \throws SizeMissmatchError attribute and buffer size do not match
                     //! \throws H5AttributeError in case of general IO errors
                     //! \param buffer buffer whose data to write 
-                    template<typename T,template<typename> class BT> 
-                        void write(const BT<T> buffer) const;
+                    template<typename T,template<typename,typename> class BT,
+                        typename Allocator> 
+                        void write(const BT<T,Allocator> buffer) const;
 
                     //! write from Scalar<T> 
 
@@ -237,8 +238,9 @@ namespace pni{
                     //! \throws MemoryAccessError if array buffer not allocated
                     //! \throws ShapeMissmatchError array and attribute shape do not match
                     //! \param o array object from whicht to write data
-                    template<typename T,template<typename> class BT >
-                        void write(const Array<T,BT> &o) const;
+                    template<typename T,template<typename,typename> class BT,
+                        typename Allocator>
+                        void write(const Array<T,BT,Allocator> &o) const;
 
                     //! write POD data
 
@@ -265,8 +267,9 @@ namespace pni{
                     //! \throws SizeMissmatchError if buffer and attribute size do not match
                     //! \throws H5AttributeError in case of general IO errors 
                     //! \param buffer buffer object 
-                    template<typename T,template<typename> class BT> 
-                        void read(BT<T> buffer) const;
+                    template<typename T,template<typename,typename> class BT,
+                        typename Allocator> 
+                        void read(BT<T,Allocator> buffer) const;
 
                     //! read to Array<T>
 
@@ -275,8 +278,9 @@ namespace pni{
                     //! \throws ShapeMissmatchERror if array and attribute shape do not match
                     //! \throws H5AttributeError in case of general IO errors
                     //! \param a array where to store data
-                    template<typename T,template<typename> class BT> 
-                        void read(Array<T,BT> &a) const;
+                    template<typename T,template<typename,typename> class BT,
+                             typename Allocator> 
+                        void read(Array<T,BT,Allocator> &a) const;
 
                     /*! \brief read data to complex variable
                     
@@ -431,8 +435,9 @@ namespace pni{
             }
 
             //------------------------------------------------------------------
-            template<typename T,template<typename> class BT> 
-            void H5Attribute::write(const BT<T> buffer) const{
+            template<typename T,template<typename,typename> class BT,typename
+                Allocator> 
+            void H5Attribute::write(const BT<T,Allocator> buffer) const{
                 EXCEPTION_SETUP("template<typename T,template<typename> class"
                         "BT> void H5Attribute::write(const BT<T> buffer) "
                         "const");
@@ -478,8 +483,9 @@ namespace pni{
 
             //-----------------------------------------------------------------
             //implementation of write from Array<T> 
-            template<typename T,template<typename> class Buffer >
-            void H5Attribute::write(const Array<T,Buffer> &o) const{
+            template<typename T,template<typename,typename> class
+                Buffer,typename Allocator >
+            void H5Attribute::write(const Array<T,Buffer,Allocator> &o) const{
                 EXCEPTION_SETUP("template<typename T,template<typename> class"
                         " Buffer > void H5Attribute::write(const Array<T,"
                         "Buffer> &o) const");
@@ -542,8 +548,9 @@ namespace pni{
            
             //------------------------------------------------------------------
             //implementation of read to pointer
-            template<typename T,template<typename> class BT> 
-                void H5Attribute::read(BT<T> buffer) const{
+            template<typename T,template<typename,typename> class BT,typename
+                Allocator> 
+                void H5Attribute::read(BT<T,Allocator> buffer) const{
                 EXCEPTION_SETUP("template<typename T,template<typename> class"
                         " BT> void H5Attribute::read(BT<T> buffer) const");
 
@@ -572,8 +579,9 @@ namespace pni{
 
             //-----------------------------------------------------------------
             //implementation of read to Array<T>
-            template<typename T,template<typename> class BT> 
-            void H5Attribute::read(Array<T,BT> &a) const{
+            template<typename T,template<typename,typename> class BT,
+                     typename Allocator> 
+            void H5Attribute::read(Array<T,BT,Allocator> &a) const{
                 EXCEPTION_SETUP("template<typename T,template<typename> "
                         "class Buffer> void H5Attribute::read(Array<T,"
                         "Buffer> &a) const");

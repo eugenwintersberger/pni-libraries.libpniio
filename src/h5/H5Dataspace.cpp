@@ -252,20 +252,20 @@ namespace pni{
             Shape H5Dataspace::shape() const {
                 if(is_scalar()) return Shape();
 
-                Shape s(rank());
-                for(size_t i=0;i<rank();i++) s.dim(i,_dims[i]);
+                std::vector<size_t> d(rank());
+                for(size_t i=0;i<rank();i++) d[i]= _dims[i];
 
-                return s;
+                return Shape(d);
             }
 
             //-----------------------------------------------------------------
             Shape H5Dataspace::maxshape() const {
                 if(is_scalar()) return Shape();
 
-                Shape s(rank());
-                for(size_t i=0;i<rank();i++) s.dim(i,_maxdims[i]);
+                std::vector<size_t> d(rank());
+                for(size_t i=0;i<rank();i++) d[i] = _maxdims[i];
 
-                return s;
+                return Shape(d);
             }
 
             //-----------------------------------------------------------------
