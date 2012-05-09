@@ -1,10 +1,11 @@
 prefix = @PREFIX@ 
 exec_prefix = ${prefix}
-includedir = ${prefix}/include/pni/nx
+includedir = @INCDIR@
 libdir = ${prefix}/lib
 
 Name: @LIBNAME@
 Description: PNI Nexus library
 Version: @VERSION@
 Cflags: -I${includedir}
-Libs: -L${libdir} -l@LIBNAME@
+Requires: pniutils
+Libs: -L${libdir} -l@LIBNAME@ -l@H5LIBNAME@

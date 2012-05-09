@@ -6,7 +6,6 @@
 *.dblite
 *.aux
 *.fls
-*.log
 *.toc
 *.bbl
 *.blg
@@ -16,3 +15,5 @@
 *.pyc
 *.changes
 .sconf_temp
+build.log
+config.log

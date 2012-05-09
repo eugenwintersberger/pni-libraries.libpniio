@@ -29,6 +29,7 @@ void write_log(const String &logfile,NXField &field){
         sel.offset(0,lcnt);    //set offset for selection
         sel.write(line);       //write data
         lcnt++;                //increment the line counter
+        std::cout<<"wrote line "<<lcnt<<std::endl;
     }
 
     istream.close();
@@ -39,6 +40,7 @@ int main(int argc,char **argv){
     NXFile file = NXFile::create_file("nxstrfield_ex2.h5",true,0);
 
     NXField field = file.create_field<String>("logfile",{0});
+    std::cout<<"Write log file ..."<<std::endl;
     write_log("nxstrfield_ex2.log",field);
    
     //read everything at once
@@ -46,6 +48,7 @@ int main(int argc,char **argv){
     sel.offset(0,0);
     sel.stride(0,1);
     sel.shape(0,1);
+    std::cout<<"Read log file ..."<<std::endl;
     for(size_t i=0;i<field.size();i++)
     {
         String line;
@@ -58,6 +61,7 @@ int main(int argc,char **argv){
     field.grow(0);
     sel.offset(0,field.size()-1);
     sel.write(String("End of log"));
+    std::cout<<"Read read partly ..."<<std::endl;
     for(size_t i=field.size()-20;i<field.size();i++){
         String line;
         sel.offset(0,i);

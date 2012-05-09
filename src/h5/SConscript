@@ -35,7 +35,7 @@ shared_objects.extend(filter_shared_objects)
 static_objects.extend(filter_static_objects)
 
 #manage header installation
-inch5_inst = build_env.Install(path.join(build_env["PREFIX"],"include/pni/nx/h5"),Glob("*.hpp"))
+inch5_inst = build_env.Install(path.join(build_env["INCDIR"],"pni/nx/h5"),Glob("*.hpp"))
 build_env.Alias("install",[inch5_inst])
 
 #return the shared and static objects to the calling SConscript

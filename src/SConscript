@@ -38,7 +38,9 @@ static_library = build_env.StaticLibrary(build_env["LIBNAME"],static_objects)
 #------------------------Package config file creation--------------------------
 pkg_config_file = build_env.Substfile(source=["pninx.pc.in"],
 				 SUBST_DICT={"@PREFIX@":"$PREFIX","@LIBNAME@":"$LIBNAME",
-				             "@VERSION@":"$VERSION"})
+				             "@VERSION@":"$VERSION",
+                             "@INCDIR@":"$INCDIR",
+                             "@H5LIBNAME@":"$H5LIBNAME"})
 
 #-------------------------some alias targets -----------------------------------
 build_env.Alias("all",[temp_shared_library,shared_library,static_library,
@@ -48,7 +50,7 @@ build_env.Alias("library",[temp_shared_library,shared_library,static_library,
                            shared_library_link,shared_library_so])
                            
 #--------------------------Installation targets--------------------------------
-hdr_inst_path = path.join(build_env["PREFIX"],"include/pni/nx")
+hdr_inst_path = path.join(build_env["INCDIR"],"pni/nx")
 
 shared_library_install = build_env.Install("$LIBDIR",[shared_library])
 shared_library_link_install = build_env.Command("${SOURCE.dir}/$LIBLINKNAME",shared_library_install,

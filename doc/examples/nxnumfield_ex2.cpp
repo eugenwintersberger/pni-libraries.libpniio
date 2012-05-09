@@ -35,8 +35,7 @@ int main(int argc,char **argv){
 
     //read a part of the values
     shape.dim(0,3);
-    counters.reset(); counters.shape(shape);
-    counters.allocate();
+    counters = Int32Array(shape);
 
     sel.offset({2});
     sel.shape({3});
