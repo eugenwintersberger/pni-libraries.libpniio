@@ -109,9 +109,33 @@ namespace pni{
                     \throws SizeMissmatchError if buffer size does not match
                     dataset size
                     */
+                    template<typename T,
+                             template<typename,typename> class BT,
+                             typename Allocator
+                            >
                     void __check_buffer(const String &method,
-                                        const BufferObject &buffer
-                                       ) const;
+                                        const BT<T,Allocator> &buffer
+                                       )const
+                    {
+                        std::stringstream bs; bs<<buffer.size();
+                        std::stringstream ss; ss<<_space.size();
+
+                        String desc_not_alloc = "Buffer is not allocated - cannot "
+                            "read data from dataset ["+this->name()+"]!";
+                        String desc_size_err = "Buffer size ("+bs.str()+") and dataset "
+                            "["+ this->name()+"] size ("+ss.str()+") do not match!";
+
+                        if(!buffer.is_allocated()){
+                            MemoryAccessError error(method,desc_not_alloc);
+                            throw(error);
+                        }
+
+                        if(_space.size() != buffer.size()){
+                            SizeMissmatchError error(method,desc_size_err);
+                            throw(error);
+                        }
+
+                    }
 
                     //----------------------------------------------------------
                     /*! \brief checks array compatibility
@@ -123,9 +147,36 @@ namespace pni{
                     \throw ShapeMissmatchError if dataset and array shape do not
                     match
                     */
+                    template<typename T,
+                             template<typename,typename> class BT,
+                             typename Allocator
+                            >
                     void __check_array(const String &method,
-                                       const ArrayObject &array
-                                      ) const;
+                                       const Array<T,BT,Allocator> &array
+                                      )const
+                    {
+
+                        std::stringstream as; as<<array.shape();
+                        std::stringstream ss; ss<<_space.shape();
+
+                        String desc_not_alloc = "Array not allocated - cannot write "
+                                                "data to dataset ["+this->name()+"]!";
+                        String desc_shape_error = "Dataset ["+this->name()+"] shape "
+                            "("+ss.str()+") and array shape ("+as.str()+") do not "
+                            "match!";
+
+                        //check if the array buffer is allocated
+                        if(!array.buffer().is_allocated()){
+                            MemoryAccessError error(method,desc_not_alloc);
+                            throw(error);
+                        }
+
+                        //check if dataspace shape and array shape are equal
+                        if(_space.shape() != array.shape()){
+                            ShapeMissmatchError error(method,desc_shape_error);
+                            throw(error);
+                        }
+                    }
                 public:
                     //===================Constructors and destructors==========
                     //! default constructor
@@ -523,8 +574,9 @@ namespace pni{
                     \throws H5DataSetError in all other cases
                     \param buffer buffer where to store data
                     */
-                    template<typename T,template<typename> class BT> 
-                        void read(BT<T> &buffer) const;
+                    template<typename T,template<typename,typename> class BT,
+                             typename Allocator> 
+                        void read(BT<T,Allocator> &buffer) const;
 
                     //---------------------------------------------------------
                     /*! \brief read to array
@@ -537,8 +589,9 @@ namespace pni{
                     \throws H5DataSetError in case of other IO errors
                     \param array array where to store the data from the dataset
                     */
-                    template<typename T,template<typename> class BT>
-                        void read(Array<T,BT> &array) const;
+                    template<typename T,template<typename,typename> class BT,
+                             typename Allocator>
+                        void read(Array<T,BT,Allocator> &array) const;
 
                     //---------------------------------------------------------
                     /*! \brief read to a scalar object
@@ -629,8 +682,9 @@ namespace pni{
                     \throws H5DataSetError in cases of other errors
                     \param buffer reference to the buffer
                     */
-                    template<typename T,template<typename> class BT>
-                        void write(const BT<T> &buffer) const;
+                    template<typename T,template<typename,typename> class BT,
+                             typename Allocator>
+                        void write(const BT<T,Allocator> &buffer) const;
 
                     //---------------------------------------------------------
                     /*! \brief write an array
@@ -645,8 +699,9 @@ namespace pni{
                     \throws H5DataSetError in case of other errors
                     \param array array to write to disk
                     */
-                    template<typename T,template<typename> class BT>
-                        void write(const Array<T,BT> &array) const;
+                    template<typename T,template<typename,typename> class BT,
+                             typename Allocator>
+                        void write(const Array<T,BT,Allocator> &array) const;
 
                     //---------------------------------------------------------
                     /*! \brief write a scalar
@@ -774,8 +829,9 @@ namespace pni{
 
             //-----------------------------------------------------------------
             //implementation of writing data form a buffer
-            template<typename T,template<typename> class BT>
-                void H5Dataset::write(const BT<T> &buffer) const
+            template<typename T,template<typename,typename> class BT,
+                     typename Allocator>
+                void H5Dataset::write(const BT<T,Allocator> &buffer) const
             {
                 __check_buffer("template<typename T,template<typename> "
                         "class BT> void H5Dataset::write(const BT<T> &buffer)"
@@ -786,8 +842,9 @@ namespace pni{
             
             //-----------------------------------------------------------------
             //implementation of reading data to a buffer
-            template<typename T,template<typename> class BT>
-                void H5Dataset::read(BT<T> &buffer) const
+            template<typename T,template<typename,typename> class BT,
+                     typename Allocator>
+                void H5Dataset::read(BT<T,Allocator> &buffer) const
             {
                 __check_buffer("template<typename T,template<typename> "
                         "class BT> void H5Dataset::read(BT<T> &buffer) const",
@@ -837,8 +894,9 @@ namespace pni{
 
             //-----------------------------------------------------------------
             //implementation of writting data from an array
-            template<typename T,template<typename> class BT>
-                void H5Dataset::write(const Array<T,BT> &array) const
+            template<typename T,template<typename,typename> class BT,
+                     typename Allocator>
+                void H5Dataset::write(const Array<T,BT,Allocator> &array) const
             {
                 __check_array("template<typename T,template<typename> "
                         "class BT> void H5Dataset::write(const Array<T,BT> "
@@ -848,8 +906,9 @@ namespace pni{
 
             //-----------------------------------------------------------------
             //implementation of reading data to an array
-            template<typename T,template<typename> class BT>
-                void H5Dataset::read(Array<T,BT> &array) const
+            template<typename T,template<typename,typename> class BT,
+                     typename Allocator>
+                void H5Dataset::read(Array<T,BT,Allocator> &array) const
             {
                 __check_array("template<typename T,template<typename> class B"
                         "T> void H5Dataset::readArray<T,BT> &array) const",

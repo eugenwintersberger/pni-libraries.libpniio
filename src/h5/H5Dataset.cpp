@@ -46,57 +46,6 @@ namespace pni{
                 }
             }
 
-            //-----------------------------------------------------------------
-            //implementation of the buffer check routine
-            void H5Dataset::__check_buffer(const String &method,
-                                           const BufferObject &buffer) const
-            {
-                std::stringstream bs; bs<<buffer.size();
-                std::stringstream ss; ss<<_space.size();
-
-                String desc_not_alloc = "Buffer is not allocated - cannot "
-                    "read data from dataset ["+this->name()+"]!";
-                String desc_size_err = "Buffer size ("+bs.str()+") and dataset "
-                    "["+ this->name()+"] size ("+ss.str()+") do not match!";
-
-                if(!buffer.is_allocated()){
-                    MemoryAccessError error(method,desc_not_alloc);
-                    throw(error);
-                }
-
-                if(_space.size() != buffer.size()){
-                    SizeMissmatchError error(method,desc_size_err);
-                    throw(error);
-                }
-            }
-           
-            //-----------------------------------------------------------------
-            //implementation of the 
-            void H5Dataset::__check_array(const String &method,
-                                          const ArrayObject &array) const
-            {
-                std::stringstream as; as<<array.shape();
-                std::stringstream ss; ss<<_space.shape();
-
-                String desc_not_alloc = "Array not allocated - cannot write "
-                                        "data to dataset ["+this->name()+"]!";
-                String desc_shape_error = "Dataset ["+this->name()+"] shape "
-                    "("+ss.str()+") and array shape ("+as.str()+") do not "
-                    "match!";
-
-                //check if the array buffer is allocated
-                if(!array.buffer().is_allocated()){
-                    MemoryAccessError error(method,desc_not_alloc);
-                    throw(error);
-                }
-
-                //check if dataspace shape and array shape are equal
-                if(_space.shape() != array.shape()){
-                    ShapeMissmatchError error(method,desc_shape_error);
-                    throw(error);
-                }
-
-            }
             //===implementation of constructors and destructors================
             //implementation of the default constructor
             H5Dataset::H5Dataset():H5AttributeObject(){
