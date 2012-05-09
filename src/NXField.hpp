@@ -31,10 +31,8 @@
 #include <sstream>
 
 #include <pni/utils/Types.hpp>
-#include <pni/utils/ScalarObject.hpp>
 #include <pni/utils/Scalar.hpp>
 #include <pni/utils/Shape.hpp>
-#include <pni/utils/ArrayObject.hpp>
 #include <pni/utils/Array.hpp>
 #include <pni/utils/NumericObject.hpp>
 
@@ -283,8 +281,9 @@ namespace pni{
                 \throws NXFieldError in all other cases
                 \param buffer buffer where to store data
                 */
-                template<typename T,template<typename> class BT> 
-                    void read(BT<T> &buffer) const
+                template<typename T,template<typename,typename> class BT,
+                         typename Allocator> 
+                    void read(BT<T,Allocator> &buffer) const
                 {
                     EXCEPTION_SETUP("template<typename T,template<typename> "
                             "class BT> void NXField<Imp>::read(BT<T> &buffer) const");
@@ -329,8 +328,9 @@ namespace pni{
                 \throws NXFieldError in case of all other errors.
                 \param array Array instance where to store the data
                 */
-                template<typename T,template<typename> class BT>
-                    void read(Array<T,BT> &array) const
+                template<typename T,template<typename,typename> class BT,
+                         typename Allocator>
+                    void read(Array<T,BT,Allocator> &array) const
                 {
                     EXCEPTION_SETUP("template<typename T,template<typename> "
                             "class BT> void read(Array<T,BT> &array) const");
@@ -698,8 +698,9 @@ namespace pni{
                 \throws NXFieldError in cases of other errors
                 \param buffer buffer object whose data to write
                 */
-                template<typename T,template<typename> class BT>
-                    void write(const BT<T> &buffer) const
+                template<typename T,template<typename,typename> class BT,
+                         typename Allocator>
+                    void write(const BT<T,Allocator> &buffer) const
                 {
                     EXCEPTION_SETUP("template<typename T,template<typename> "
                             "class BT> void write(const BT<T> &buffer) const");
@@ -738,8 +739,9 @@ namespace pni{
                 \throws NXFieldError in case of other errors
                 \param array array to write to disk
                 */
-                template<typename T,template<typename> class BT>
-                    void write(const Array<T,BT> &array) const
+                template<typename T,template<typename,typename> class BT,
+                         typename Allocator>
+                    void write(const Array<T,BT,Allocator> &array) const
                 {
                     EXCEPTION_SETUP("template<typename T,template<typename> "
                             "class BT> void write(const Array<T,BT> &array)"

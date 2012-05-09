@@ -32,9 +32,7 @@
 #include <iostream>
 
 #include <pni/utils/Types.hpp>
-#include <pni/utils/ArrayObject.hpp>
 #include <pni/utils/Array.hpp>
-#include <pni/utils/ScalarObject.hpp>
 #include <pni/utils/Scalar.hpp>
 
 #include "NXImpMap.hpp"

@@ -105,8 +105,9 @@ namespace pni{
 
                 //! Write attribute data from a buffer object. The method 
                 //! throws a
-                template<typename T,template<typename> class BT> 
-                    void write(const BT<T> buffer) const
+                template<typename T,template<typename,typename> class BT,
+                         typename Allocator> 
+                    void write(const BT<T,Allocator> buffer) const
                 {
                     EXCEPTION_SETUP("template<typename T,template<typename> "
                             "class BT> void write(const BT<T> buffer) const"
@@ -138,8 +139,9 @@ namespace pni{
 
                 //--------------------------------------------------------------
                 //! write from Array<T> 
-                template<typename T,template<typename> class BT >
-                    void write(const Array<T,BT> &o) const
+                template<typename T,template<typename,typename> class BT,
+                         typename Allocator>
+                    void write(const Array<T,BT,Allocator> &o) const
                 {
                     EXCEPTION_SETUP("template<typename T,template<typename> "
                             "class BT > void write(const Array<T,BT> &o) const");
@@ -174,8 +176,9 @@ namespace pni{
 
                 //--------------------------------------------------------------
                 //! read to buffer 
-                template<typename T,template<typename> class BT> 
-                    void read(BT<T> buffer) const
+                template<typename T,template<typename,typename> class BT, 
+                         typename Allocator> 
+                    void read(BT<T,Allocator> buffer) const
                 {
                     EXCEPTION_SETUP("template<typename T,template<typename> "
                             "class BT> void read(BT<T> buffer) const");
@@ -189,8 +192,9 @@ namespace pni{
 
                 //--------------------------------------------------------------
                 //! read to Array<T>
-                template<typename T,template<typename> class BT> 
-                    void read(Array<T,BT> &a) const
+                template<typename T,template<typename,typename> class BT,
+                         typename Allocator> 
+                    void read(Array<T,BT,Allocator> &a) const
                 {
                     EXCEPTION_SETUP("template<typename T,template<typename> "
                             "class BT> void read(Array<T,BT> &a) const");

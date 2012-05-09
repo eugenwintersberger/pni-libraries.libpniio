@@ -29,7 +29,6 @@
 #define NXSELECTION_HPP_
 
 #include<pni/utils/Types.hpp>
-#include<pni/utils/ArrayObject.hpp>
 
 using namespace pni::utils;
 
@@ -387,8 +386,9 @@ namespace pni{
                 //! buffer object. This operation will only succeed if the 
                 //! size of the selection matches the size of the buffer.
                 //! \param buffer Buffer object where to store the data
-                template<typename T,template<typename> class BT>
-                    void read(BT<T> &buffer) const
+                template<typename T,template<typename,typename> class BT,
+                         typename Allocator>
+                    void read(BT<T,Allocator> &buffer) const
                 {
                     EXCEPTION_SETUP("template<typename T,template<typename> "
                             "class BT> void NXSelection::read(BT<T> &buffer) const");
@@ -416,8 +416,9 @@ namespace pni{
                 //! \throws SizeMissmatchError if sizes do not match
                 //! \throws H5DataSetError in cases of other errors
                 //! \param array array where to store the data
-                template<typename T,template<typename> class BT>
-                    void read(Array<T,BT> &array) const
+                template<typename T,template<typename,typename> class BT,
+                         typename Allocator>
+                    void read(Array<T,BT,Allocator> &array) const
                 {
                     EXCEPTION_SETUP("template<typename T,template<typename> "
                             "class BT> void NXSelection::read(Array<T,BT> &array) const");
@@ -595,8 +596,9 @@ namespace pni{
                 //! \throws SizeMissmatchBuffer selection and buffer sizes do not match
                 //! \throws H5DataSetError in case of other errors
                 //! \param buffer reference to the buffer object
-                template<typename T,template<typename> class BT>
-                    void write(const BT<T> &buffer) const
+                template<typename T,template<typename,typename> class BT,
+                         typename Allocator>
+                    void write(const BT<T,Allocator> &buffer) const
                 {
                     EXCEPTION_SETUP("template<typename T,template<typename> "
                             "class BT> void NXSelection::write(const BT<T> "
@@ -619,8 +621,9 @@ namespace pni{
                 //! write an array with selection
 
                 //! 
-                template<typename T,template<typename> class BT>
-                    void write(const Array<T,BT> &array) const
+                template<typename T,template<typename,typename> class BT,
+                         typename Allocator>
+                    void write(const Array<T,BT,Allocator> &array) const
                 {
                     EXCEPTION_SETUP("template<typename T,template<typename> "
                             "class BT> void NXSelection::write(const "
