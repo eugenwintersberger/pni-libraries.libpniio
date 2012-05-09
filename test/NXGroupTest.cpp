@@ -46,10 +46,8 @@ void NXGroupTest::setUp(){
 	_shape = Shape();
 	_shape = {3,3};
 
-	_write_array_attr = Int16Array();
+	_write_array_attr = Int16Array(_shape);
 	i.rank(_shape.rank());
-	_write_array_attr.shape(_shape);
-	_write_array_attr.allocate();
 	i[0] = 0; i[1] = 0; _write_array_attr(i) = 1;
 	i[0] = 0; i[1] = 1; _write_array_attr(i) = 2;
 	i[0] = 0; i[1] = 2; _write_array_attr(i) = 3;
@@ -62,9 +60,7 @@ void NXGroupTest::setUp(){
 
 	_write_cmplx_scalar = Complex64(1,-2);
 
-	_read_array_attr = Int16Array();
-    _read_array_attr.shape(_shape);
-    _read_array_attr.allocate();
+	_read_array_attr = Int16Array(_shape);
 
 }
 

@@ -724,7 +724,7 @@ namespace pni{
 
                 //create memory datatype and memory dataspace
                 H5Datatype mt = H5DatatypeFactory::create_type<T>();
-                Shape s(1); s.dim(0,buffer.size());
+                Shape s{buffer.size()};
                 H5Dataspace ms(s);
 
                 __write(mt,ms,buffer.ptr());
@@ -747,7 +747,7 @@ namespace pni{
 
                 //create memory datatype and memory dataspace
                 H5Datatype mt = H5DatatypeFactory::create_type<T>();
-                Shape s(1); s.dim(0,buffer.size());
+                Shape s{buffer.size()};
                 H5Dataspace ms(s);
 
                 __read(mt,ms,buffer.ptr());

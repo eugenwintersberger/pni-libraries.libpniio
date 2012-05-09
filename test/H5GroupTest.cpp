@@ -154,8 +154,7 @@ void H5GroupTest::test_attributes(){
     CPPUNIT_ASSERT(sc_value == scalar);
 
     //-------------read and write an array attribute--------------------------
-    Shape s(2);
-    s.dim(0,10); s.dim(1,3);
+    Shape s{10,3};
     UInt16Array data(s);
     data=113;
     CPPUNIT_ASSERT_NO_THROW(g.attr<UInt16>("data",data.shape()).write(data));

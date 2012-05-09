@@ -24,8 +24,7 @@ void H5DataspaceTest::test_creation(){
 
     //create a dataspace from a shape object
     //this should lead to a constant dataspace which cannot be extended
-    Shape s(3);
-    s.dim(0,10);s.dim(1,3);s.dim(2,45);
+    Shape s{10,3,45};
 
     H5Dataspace s2(s);
     CPPUNIT_ASSERT(s2.is_valid());
@@ -49,8 +48,7 @@ void H5DataspaceTest::test_creation(){
 
 
     //create a dataspace with a minimum and maximum size.
-    Shape ms(s.rank());
-    for(size_t i=0; i<ms.rank(); i++) ms.dim(i,100);
+    Shape ms = std::vector<size_t>(s.rank(),100);
     H5Dataspace s6(s,ms);
     CPPUNIT_ASSERT(s6.is_valid());
     CPPUNIT_ASSERT(!s6.is_scalar());
@@ -84,8 +82,7 @@ void H5DataspaceTest::test_assignment(){
 
     H5Dataspace s1;
 
-    Shape s(3);
-    s.dim(0,10);s.dim(1,3);s.dim(2,45);
+    Shape s{10,3,45};
 
     //copy assignment
     s1 = H5Dataspace(s);
@@ -106,8 +103,7 @@ void H5DataspaceTest::test_assignment(){
 
 //------------------------------------------------------------------------------
 void H5DataspaceTest::test_inquery(){
-    Shape s(2);
-    s.dim(1,100); s.dim(0,50);
+    Shape s{100,50};
     H5Dataspace s1(s);
 
     CPPUNIT_ASSERT(s1.shape() == s);
@@ -123,8 +119,8 @@ void H5DataspaceTest::test_inquery(){
 void H5DataspaceTest::test_resize(){
     H5Dataspace space;
     CPPUNIT_ASSERT(space.is_scalar());
-    
-    Shape s(3); s.dim(0,10); s.dim(1,4); s.dim(2,17);
+   
+    Shape s{10,4,17};
     Shape ms(s);
     CPPUNIT_ASSERT_NO_THROW(space.resize(s));
     CPPUNIT_ASSERT(!space.is_scalar());

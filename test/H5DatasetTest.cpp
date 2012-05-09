@@ -19,9 +19,7 @@ void H5DatasetTest::tearDown(){
 void H5DatasetTest::test_creation(){
     std::cout<<"void H5DatasetTest::test_creation()---------------------------";
     std::cout<<std::endl;
-    Shape s(2);
-    s.dim(0,10);
-    s.dim(1,50);
+    Shape s{10,50};
     H5Dataspace space = {10,50};
     H5Datatype type   = H5DatatypeFactory::create_type<TypeID::FLOAT32>();
 
@@ -31,9 +29,7 @@ void H5DatasetTest::test_creation(){
     CPPUNIT_ASSERT(ds1.type_id()==TypeID::FLOAT32);
 
     //create a chunked dataset
-    Shape cs(2);
-    cs.dim(0,1);
-    cs.dim(1,50);
+    Shape cs{1,50};
     type = H5DatatypeFactory::create_type<TypeID::UINT32>();
     H5Dataset ds2("ds2",_group,type,space,cs);
     CPPUNIT_ASSERT(ds2.is_valid());
@@ -68,9 +64,7 @@ void H5DatasetTest::test_assignment(){
     std::cout<<"void H5DatasetTest::test_assignment()-------------------------";
     std::cout<<std::endl;
     
-    Shape s(2);
-    s.dim(0,1024);
-    s.dim(1,512);
+    Shape s{1024,512};
     H5Datatype type = H5DatatypeFactory::create_type<TypeID::FLOAT32>();
     H5Dataspace space = {1024,512};
     H5Dataset ds("ds",_group,type,space);
@@ -150,10 +144,8 @@ void H5DatasetTest::test_resize(){
     std::cout<<std::endl;
 
     //create base shape
-    Shape s(2);
-    s.dim(0,0); s.dim(1,1024);
-    Shape cs(2);
-    cs.dim(0,1); cs.dim(1,1024);
+    Shape s{0,1024};
+    Shape cs{1,1024};
     H5Datatype type = H5DatatypeFactory::create_type<UInt32>();
     H5Dataspace space({0,1024},{H5Dataspace::UNLIMITED,H5Dataspace::UNLIMITED});
 
@@ -168,8 +160,8 @@ void H5DatasetTest::test_resize(){
     CPPUNIT_ASSERT(ds.rank()  == s.rank());
     CPPUNIT_ASSERT(ds.shape() == s);
 
-    s.rank(1); s.dim(0,0);
-    cs.rank(1); cs.dim(0,1);
+    s = {0};
+    cs = {1};
     type = H5DatatypeFactory::create_type<String>();
     CPPUNIT_ASSERT_NO_THROW(space = H5Dataspace({0},{H5Dataspace::UNLIMITED}));
     H5Dataset ss("ss",_group,type,space,cs);
@@ -183,8 +175,7 @@ void H5DatasetTest::test_resize(){
     CPPUNIT_ASSERT(ss.size() == 11);
 
     //reshape the dataset
-    Shape ns(2);
-    ns.dim(0,100);ns.dim(1,512);
+    Shape ns{100,512};
     CPPUNIT_ASSERT_NO_THROW(ds.resize(ns));
     CPPUNIT_ASSERT(ds.shape() == ns);
 }
@@ -200,8 +191,8 @@ void H5DatasetTest::test_write_simple_types(){
     double value =1.23;
     CPPUNIT_ASSERT_NO_THROW(scalar_ds.write(value));
 
-    Shape s(1); s.dim(0,1);
-    Shape cs(1); cs.dim(0,1); 
+    Shape s{1};
+    Shape cs{1}; 
     H5Dataset array_ds("array_dataset",_group,type,{1},cs);
     CPPUNIT_ASSERT_NO_THROW(array_ds.write(value));
 
@@ -270,7 +261,7 @@ void H5DatasetTest::test_write_array(){
     std::cout<<"void H5DatasetTest::test_write_array()-----------------------";
     std::cout<<std::endl;
 
-    Shape s(2); s.dim(0,3); s.dim(1,5);
+    Shape s{3,5};
     UInt32Array a(s,"det","cps","useless data");
     a = 24;
 
@@ -279,8 +270,8 @@ void H5DatasetTest::test_write_array(){
     H5Dataset array_ds("array_1",_group,type,space);
     CPPUNIT_ASSERT_NO_THROW(array_ds.write(a));
 
-    Shape cs(3); cs.dim(0,1); cs.dim(1,s[0]); cs.dim(2,s[1]);
-    Shape ds(3); ds.dim(0,1); ds.dim(1,s[0]); ds.dim(2,s[1]);
+    Shape cs{1,s[0],s[1]};
+    Shape ds{1,s[0],s[1]};
     space = H5Dataspace({1,3,5});
     H5Dataset earray_ds("earray_2",_group,type,space,cs);
     CPPUNIT_ASSERT_THROW(earray_ds.write(a),ShapeMissmatchError);
@@ -303,15 +294,14 @@ void H5DatasetTest::test_write_buffer(){
     std::cout<<std::endl;
 
     Buffer<Binary> buffer(128);
-    Shape s(1); s.dim(0,128); 
+    Shape s{128}; 
     buffer = 10;
     H5Datatype type = H5DatatypeFactory::create_type<TypeID::BINARY>();
     H5Dataspace space = {128};
     H5Dataset bin_ds("binary_1",_group,type,space);
     CPPUNIT_ASSERT_NO_THROW(bin_ds.write(buffer));
 
-    Shape cs(1); cs.dim(0,buffer.size());
-    s.dim(0,128);
+    Shape cs{buffer.size()};
     buffer = 200;
     H5Dataset ebin_ds("binary_2",_group,type,space,cs);
     CPPUNIT_ASSERT_NO_THROW(ebin_ds.write(buffer));

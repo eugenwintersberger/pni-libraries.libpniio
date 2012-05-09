@@ -223,8 +223,8 @@ void H5SelectionTest::test_write_scalar(){
     std::cout<<std::endl;
     Float32Scalar s(1,"scalar","au","test scalar");
 
-    Shape sh(1); sh.dim(0,0);
-    Shape cs(1); cs.dim(0,1);
+    Shape sh{0};
+    Shape cs{1};
     H5Dataspace space({0},{H5Dataspace::UNLIMITED});
     H5Datatype type = H5DatatypeFactory::create_type<Float32>();
     H5Dataset array_ds("array_ds",_file,type,space,cs);

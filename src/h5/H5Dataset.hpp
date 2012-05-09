@@ -341,10 +341,11 @@ namespace pni{
                         }
 
                         //create the data space
-                        Shape ms(s.rank());
-                        for(size_t i=0;i<s.rank();i++){
-                            ms.dim(i,H5Dataspace::UNLIMITED);
-                        }
+                        std::vector<size_t> d(s.rank());
+
+                        for(size_t i=0;i<s.rank();i++) d[i] = H5Dataspace::UNLIMITED;
+
+                        Shape ms(d);
                         H5Dataspace space(s,ms);
 
                         //create the data type
@@ -396,10 +397,9 @@ namespace pni{
                         }
 
                         //create the data space
-                        Shape ms(s.rank());
-                        for(size_t i=0;i<s.rank();i++){
-                            ms.dim(i,H5Dataspace::UNLIMITED);
-                        }
+                        std::vector<size_t> d(s.rank());
+                        for(size_t i=0;i<s.rank();i++) d[i] = H5Dataspace::UNLIMITED; 
+                        Shape ms(d);
                         H5Dataspace space(s,ms);
 
                         //create the data type
