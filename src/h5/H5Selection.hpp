@@ -477,8 +477,9 @@ namespace pni{
                     \throws H5DataSetError in case of other errors
                     \param buffer reference to the buffer object
                     */
-                    template<typename T,template<typename> class BT>
-                        void write(const BT<T> &buffer) const;
+                    template<typename T,template<typename,typename> class BT,
+                             typename Allocator>
+                        void write(const BT<T,Allocator> &buffer) const;
 
                     //---------------------------------------------------------
                     /*! \brief read a buffer from selection
@@ -492,8 +493,9 @@ namespace pni{
                     \throws H5DataSetError in case of other IO errors
                     \param buffer Buffer object where to store the data
                     */
-                    template<typename T,template<typename> class BT>
-                        void read(BT<T> &buffer) const;
+                    template<typename T,template<typename,typename> class BT,
+                             typename Allocator>
+                        void read(BT<T,Allocator> &buffer) const;
                    
                     //---------------------------------------------------------
                     /*! \brief write an array with selection
@@ -507,8 +509,9 @@ namespace pni{
                     \param array instance of Array<T,BT> from which to write
                     data
                     */ 
-                    template<typename T,template<typename> class BT>
-                        void write(const Array<T,BT> &array) const;
+                    template<typename T,template<typename,typename> class BT,
+                             typename Allocator>
+                        void write(const Array<T,BT,Allocator> &array) const;
 
                     //---------------------------------------------------------
                     /*! \brief read an array
@@ -522,8 +525,9 @@ namespace pni{
                     \param array instance of Array<T,BT> to which to store the
                     data
                     */
-                    template<typename T,template<typename> class BT>
-                        void read(Array<T,BT> &array) const;
+                    template<typename T,template<typename,typename> class BT,
+                             typename Allocator>
+                        void read(Array<T,BT,Allocator> &array) const;
                    
                     //---------------------------------------------------------
                     /*! \brief write a scalar with selection
@@ -704,8 +708,10 @@ namespace pni{
             }
             
             //-----------------------------------------------------------------
-            template<typename T,template<typename> class BT>
-                void H5Selection::write(const BT<T> &buffer) const{
+            template<typename T,template<typename,typename> class BT,
+                     typename Allocator>
+                void H5Selection::write(const BT<T,Allocator> &buffer) const
+            {
                 EXCEPTION_SETUP("template<typename T,template<typename> "
                         "class BT> void H5Selection::write(const BT<T> &buffer)");
                 
@@ -725,8 +731,10 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
-            template<typename T,template<typename> class BT>
-                void H5Selection::read(BT<T> &buffer) const{
+            template<typename T,template<typename,typename> class BT,
+                     typename Allocator>
+                void H5Selection::read(BT<T,Allocator> &buffer) const
+            {
                 EXCEPTION_SETUP("template<typename T,template<typename> "
                         "class BT> void H5Selection::read(BT<T> &buffer) const");
                 
@@ -780,8 +788,10 @@ namespace pni{
             }
             
             //-----------------------------------------------------------------
-            template<typename T,template<typename> class BT>
-                void H5Selection::write(const Array<T,BT> &array) const{
+            template<typename T,template<typename,typename> class BT,
+                     typename Allocator>
+                void H5Selection::write(const Array<T,BT,Allocator> &array) const
+            {
                 EXCEPTION_SETUP("template<typename T,template<typename> "
                         "class BT> void H5Selection::write("
                         "const Array<T,BT> &array)");
@@ -809,8 +819,10 @@ namespace pni{
             }
 
             //-----------------------------------------------------------------
-            template<typename T,template<typename> class BT>
-                void H5Selection::read(Array<T,BT> &array) const{
+            template<typename T,template<typename,typename> class BT,
+                     typename Allocator>
+                void H5Selection::read(Array<T,BT,Allocator> &array) const
+            {
                 EXCEPTION_SETUP("template<typename T,template<typename> "
                         "class BT> void H5Selection::read(Array<T,BT> &array) "
                         "const");

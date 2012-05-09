@@ -186,11 +186,14 @@ namespace pni{
 
             //------------------------------------------------------------------
             //get shape
-            Shape H5Selection::shape() const {
+            Shape H5Selection::shape() const 
+            {
                 if(rank() == 0 ) return Shape();
-                Shape s(rank()); 
-                for(size_t i=0;i<rank();i++) s.dim(i,_counts[i]);
-                return s;
+
+                std::vector<size_t> d(rank());
+                for(size_t i=0;i<rank();i++) d[i] = _counts[i];
+
+                return Shape(d);
             }
             
 
