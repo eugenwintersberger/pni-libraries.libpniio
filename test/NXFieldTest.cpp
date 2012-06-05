@@ -65,7 +65,10 @@ void NXFieldTest::testCreation(){
 	CPPUNIT_ASSERT(field.is_valid());
 
 	Float32Scalar scalar("scalar","m","a scalar");
-	Complex128Array array(shape,"array","nm","AFM image");
+	Complex128Array array = ArrayFactory<Complex128>::create(shape);
+    array.name("array");
+    array.unit("nm");
+    array.description("AFM image");
 
 	CPPUNIT_ASSERT_NO_THROW(field = file.create_field<Float32>(scalar.name()));
 	CPPUNIT_ASSERT(field.is_valid());
@@ -131,18 +134,17 @@ void NXFieldTest::test_resize(){
 
     //create base shape
     Shape s = {0,1024};
-    Shape cs(s);
-    cs.dim(0,1);
+    Shape cs = {1,1024};
 
     NXField field = file.create_field<Float32>("ds",s);
     CPPUNIT_ASSERT(field.is_valid());
     CPPUNIT_ASSERT(field.shape() == s);
 
     CPPUNIT_ASSERT_NO_THROW(field.grow(0));
-    s.dim(0,1);
+    s = Shape({1,1024});
     CPPUNIT_ASSERT(field.rank()  == s.rank());
     CPPUNIT_ASSERT(field.shape() == s);
-    s.dim(0,4);
+    s = Shape({4,1024});
     CPPUNIT_ASSERT_NO_THROW(field.grow(0,3));
     CPPUNIT_ASSERT(field.rank()  == s.rank());
     CPPUNIT_ASSERT(field.shape() == s);

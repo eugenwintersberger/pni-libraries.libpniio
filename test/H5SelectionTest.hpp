@@ -8,6 +8,8 @@
 #include <pni/utils/Types.hpp>
 #include <pni/utils/Buffer.hpp>
 #include <pni/utils/Shape.hpp>
+#include <pni/utils/ArrayFactory.hpp>
+#include <pni/utils/Array.hpp>
 
 #include "../src/h5/H5Selection.hpp"
 #include "../src/h5/H5Dataset.hpp"
@@ -301,8 +303,10 @@ template<typename T> void H5SelectionTest::test_io_array_no_ext()
     H5Selection sel = dset.selection();
        
     Shape s = {5};
-    Array<T,Buffer> write(s,"write","a.u","write data");
-    Array<T,Buffer> read(s,"read","a.u","read data");
+    auto write = ArrayFactory<T,Buffer>::create(s);
+    write.name("write");write.unit("a.u");write.description("write data");
+    auto read = ArrayFactory<T,Buffer>::create(s);
+    read.name("read"); read.unit("a.u"); read.description("read data");
     init_values(write,read);
 #ifdef INITLISTBUG
     CPPUNIT_ASSERT_NO_THROW(sel.count(0,1));

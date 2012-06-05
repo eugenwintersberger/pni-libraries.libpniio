@@ -27,6 +27,11 @@
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
+#include <pni/utils/Types.hpp>
+#include <pni/utils/ArrayFactory.hpp>
+#include <pni/utils/Array.hpp>
+
+#include "NX.hpp"
 
 using namespace pni::utils;
 using namespace pni::nx::h5;

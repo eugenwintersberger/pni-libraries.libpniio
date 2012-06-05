@@ -31,7 +31,7 @@
 #include <random>
 
 #include "NX.hpp"
-#include <pni/utils/Index.hpp>
+#include <pni/utils/ArrayFactory.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
@@ -139,8 +139,8 @@ template<typename T> void NXFieldTest::test_io_array(){
     std::cout<<"NXFieldTest::test_io_array()--------------------------------";
     std::cout<<std::endl;
     Shape s = {10,50};
-    Array<T,Buffer> write(s);
-    Array<T,Buffer> read(s);
+    Array<T,Buffer> write = ArrayFactory<T,Buffer>::create(s);
+    Array<T,Buffer> read = ArrayFactory<T,Buffer>::create(s);
 
     write = 100;
     read  = 0;

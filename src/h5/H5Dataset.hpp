@@ -901,7 +901,7 @@ namespace pni{
                 __check_array("template<typename T,template<typename> "
                         "class BT> void H5Dataset::write(const Array<T,BT> "
                         "&array)",array);
-                __write(array.ptr());
+                __write(array.buffer().ptr());
             }
 
             //-----------------------------------------------------------------
@@ -913,7 +913,7 @@ namespace pni{
                 __check_array("template<typename T,template<typename> class B"
                         "T> void H5Dataset::readArray<T,BT> &array) const",
                         array);
-                __read(array.ptr());
+                __read(const_cast<T *>(array.buffer().ptr()));
             }
 
         

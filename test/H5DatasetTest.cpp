@@ -152,10 +152,10 @@ void H5DatasetTest::test_resize(){
     H5Dataset ds("ds",_group,type,space,cs);
 
     CPPUNIT_ASSERT_NO_THROW(ds.grow(0));
-    s.dim(0,1);
+    s = Shape({1,1024});
     CPPUNIT_ASSERT(ds.rank()  == s.rank());
     CPPUNIT_ASSERT(ds.shape() == s);
-    s.dim(0,4);
+    s = Shape({4,1024});
     CPPUNIT_ASSERT_NO_THROW(ds.grow(0,3));
     CPPUNIT_ASSERT(ds.rank()  == s.rank());
     CPPUNIT_ASSERT(ds.shape() == s);
@@ -262,7 +262,8 @@ void H5DatasetTest::test_write_array(){
     std::cout<<std::endl;
 
     Shape s{3,5};
-    UInt32Array a(s,"det","cps","useless data");
+    auto a = ArrayFactory<UInt32>::create(s);
+    a.name("det"); a.unit("cps"); a.description("useless data");
     a = 24;
 
     H5Datatype type = H5DatatypeFactory::create_type<UInt32>();
@@ -282,7 +283,8 @@ void H5DatasetTest::test_read_array(){
     test_write_array();
 
     H5Dataset d = _group["array_1"];
-    UInt32Array a(d.shape(),"det","cps","detector data");
+    auto a = ArrayFactory<UInt32>::create(d.shape());
+    a.name("det"); a.unit("cps"); a.description("detector data");
     CPPUNIT_ASSERT_NO_THROW(d.read(a));
 
     for(size_t i=0;i<a.shape().size();i++) CPPUNIT_ASSERT(a[i] == 24);

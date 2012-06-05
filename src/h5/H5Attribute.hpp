@@ -160,8 +160,9 @@ namespace pni{
                     //! ShapeMissmatchError is thrown
                     //! \throws ShapeMissmatchError
                     //! \param object reference to new object
-                    template<typename T,template<typename,typename> class BT>
-                        void __create_object(Array<T,BT> &object) const{
+                    template<typename T,template<typename,typename> class
+                        BT,typename ALLOCATOR>
+                        void __create_object(Array<T,BT,ALLOCATOR> &object) const{
                         EXCEPTION_SETUP("template<typename T,template<typename>"
                                 "class BT> void __create_object(Array<T,BT> "
                                 "&object) const");
@@ -172,8 +173,7 @@ namespace pni{
                                     " not scalar!");
                             EXCEPTION_THROW();
                         }
-                        object =
-                            Array<T,BT>(_dspace.shape(),"NONE","NONE","NONE");
+                        object = ArrayFactory<T,BT,ALLOCATOR>::create(_dspace.shape());
                     }
 
                 public:
@@ -507,7 +507,7 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
                 
-                __write_from_ptr(o.ptr());
+                __write_from_ptr(o.buffer().ptr());
             }
 
 
@@ -602,7 +602,7 @@ namespace pni{
                     EXCEPTION_THROW();
                 }
                 
-                __read_to_ptr(a.ptr());
+                __read_to_ptr(const_cast<T *>(a.buffer().ptr()));
             }
 
             //-----------------------------------------------------------------

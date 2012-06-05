@@ -31,27 +31,19 @@ CPPUNIT_TEST_SUITE_REGISTRATION(NXFileTest);
 
 //------------------------------------------------------------------------------
 void NXFileTest::setUp(){
-	Index i;
 
 	_write_str_attr = "hello world";
 	_write_scalar_attr = 100;
 	_shape = {3,3};
 
-	_write_array_attr = Int16Array(_shape);
-    i.rank(_shape.rank());
-	i[0] = 0; i[1] = 0; _write_array_attr(i) = 1;
-	i[0] = 0; i[1] = 1; _write_array_attr(i) = 2;
-	i[0] = 0; i[1] = 2; _write_array_attr(i) = 3;
-	i[0] = 1; i[1] = 0; _write_array_attr(i) = 4;
-	i[0] = 1; i[1] = 1; _write_array_attr(i) = 5;
-	i[0] = 1; i[1] = 2; _write_array_attr(i) = 6;
-	i[0] = 2; i[1] = 0; _write_array_attr(i) = 7;
-	i[0] = 2; i[1] = 1; _write_array_attr(i) = 8;
-	i[0] = 2; i[1] = 2; _write_array_attr(i) = 9;
+	_write_array_attr = ArrayFactory<Int16>::create(_shape);
+
+    Int16 value = 0;
+    for(Int16 &v: _write_array_attr) v = value++;
 
 	_write_cmplx_scalar = Complex64(1,-2);
 
-	_read_array_attr = Int16Array(_shape);
+	_read_array_attr = ArrayFactory<Int16>::create(_shape);
 
 }
 

@@ -38,76 +38,77 @@ extern "C"{
 using namespace pni::utils;
 
 namespace pni{
-    namespace nx{
-        namespace h5{
+namespace nx{
+namespace h5{
 
-            /*! \ingroup nxh5_classes
+    /*! \ingroup nxh5_classes
 
-            \brief data type factory
+    \brief data type factory
 
-            This class acts as a factory for H5Datatype objects. For complex
-            data a compound data type is used. The naming convention of the
-            structure memebers follows those of h5py (in order to produce files
-            which can be opened easily from Python). 
+    This class acts as a factory for H5Datatype objects. For complex
+    data a compound data type is used. The naming convention of the
+    structure memebers follows those of h5py (in order to produce files
+    which can be opened easily from Python). 
+    */
+    class H5DatatypeFactory{
+        private:
+            //from this class we would need a singleton - should be available only
+            //once at runtime - most probably as a global object.
+
+            //! \brief structure for 32Bit complex number
+            typedef struct {
+                Float32 r;   //!< real part
+                Float32 i;   //!< imaginary part
+
+            } __struct_complex_32;  //!< C structure for a 32Bit complex type
+
+            //! \brief structure for 64Bit complex numbers
+            typedef struct {
+                Float64 r;   //!< real part
+                Float64 i;   //!< imaginary part
+            } __struct_complex_64;  //!< C structure for a 64Bit complex type
+
+            //! \brief structure for 128Bit complex numbers
+            typedef struct {
+                Float128 r;  //!< real part
+                Float128 i;  //!< imaginary part
+            } __struct_complex_128; //!< C structure for a 128Bit complex type
+        public:
+            /*! \brief create from type
+
+            This static template method can be used to create a
+            H5Datatype object from a particular type T. T must be a type
+            defined in pni/utils/Types.hpp. 
+
+            \code
+            H5Datatype t = H5DatatypeFactor::create_type<Float32>();
+            \endcode
+
+            \throws H5DataTypeError if type creation was unsuccessful 
+            \return instance of H5Datatype 
             */
-            class H5DatatypeFactory{
-                private:
-                    //from this class we would need a singleton - should be available only
-                    //once at runtime - most probably as a global object.
+            template<typename T> static H5Datatype create_type();
 
-                    //! \brief structure for 32Bit complex number
-                    typedef struct {
-                        Float32 r;   //!< real part
-                        Float32 i;   //!< imaginary part
+            //---------------------------------------------------------
+            /*! \brief create from type id
 
-                    } __struct_complex_32;  //!< C structure for a 32Bit complex type
+            Static template method to create an instance of H5Datatype 
+            from a PNI type id. 
 
-                    //! \brief structure for 64Bit complex numbers
-                    typedef struct {
-                        Float64 r;   //!< real part
-                        Float64 i;   //!< imaginary part
-                    } __struct_complex_64;  //!< C structure for a 64Bit complex type
+            \code
+            H5Datatype t = H5DatatypeFactor::create_type<TypeID::UINT8>();
+            \endcode
 
-                    //! \brief structure for 128Bit complex numbers
-                    typedef struct {
-                        Float128 r;  //!< real part
-                        Float128 i;  //!< imaginary part
-                    } __struct_complex_128; //!< C structure for a 128Bit complex type
-                public:
-                    /*! \brief create from type
-
-                    This static template method can be used to create a
-                    H5Datatype object from a particular type T. T must be a type
-                    defined in pni/utils/Types.hpp. 
-
-                    \code
-                    H5Datatype t = H5DatatypeFactor::create_type<Float32>();
-                    \endcode
-
-                    \throws H5DataTypeError if type creation was unsuccessful 
-                    \return instance of H5Datatype 
-                    */
-                    template<typename T> static H5Datatype create_type();
-
-                    //---------------------------------------------------------
-                    /*! \brief create from type id
-
-                    Static template method to create an instance of H5Datatype 
-                    from a PNI type id. 
-
-                    \code
-                    H5Datatype t = H5DatatypeFactor::create_type<TypeID::UINT8>();
-                    \endcode
-
-                    \throws H5DataTypeError if type creation was unsuccessful
-                    \return instance of H5Datatype
-                    */
-                    template<TypeID ID> static H5Datatype create_type();
-            };
+            \throws H5DataTypeError if type creation was unsuccessful
+            \return instance of H5Datatype
+            */
+            template<TypeID ID> static H5Datatype create_type();
+    };
 
 
-        }
-    }
+//end of namespace
+}
+}
 }
 
 

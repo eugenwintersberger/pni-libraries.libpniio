@@ -193,8 +193,11 @@ namespace pni{
                         s = shape;
                         if(chunk.rank() == 0){
                             //no explicit chunk-size by the use
-                            cs = s;
-                            cs.dim(0,1);
+                            std::vector<size_t> v(s.rank());
+                            size_t index =0;
+                            for(size_t &i: v)  i = s[index++];
+                            v[0] = 1;
+                            cs = Shape(v);
                         }else{
                             //the user requested for a particular chunk size
                             cs = chunk;
@@ -227,12 +230,15 @@ namespace pni{
                     typedef MAPTYPE(Imp,FieldImpl) FieldImp;
                     typedef NXField<FieldImp> FieldType;
 
-                    //in the first place the chunk shape will be a copy 
-                    //of the original shape
-                    Shape cs(s);
-                    //set per default the first index to 1 - so that 
-                    //all other dimension vary fastest
-                    cs.dim(0,1);
+                    //create a vector with the number of elements of the 
+                    //shape and set the first dimension to 1
+                    std::vector<size_t> v(s.rank());
+                    size_t index = 0;
+                    for(size_t &i: v) i = s[index++];
+                    v[0] = 1;
+
+                    //create the chunk shape
+                    Shape cs(v);
 
                     FieldType field(FieldImp::template
                             create<T>(n,this->imp(),s,cs,filter.imp()));

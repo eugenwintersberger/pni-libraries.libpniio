@@ -48,7 +48,7 @@ void H5DataspaceTest::test_creation(){
 
 
     //create a dataspace with a minimum and maximum size.
-    Shape ms = std::vector<size_t>(s.rank(),100);
+    Shape ms(std::vector<size_t>(s.rank(),100));
     H5Dataspace s6(s,ms);
     CPPUNIT_ASSERT(s6.is_valid());
     CPPUNIT_ASSERT(!s6.is_scalar());

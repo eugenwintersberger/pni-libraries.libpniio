@@ -815,7 +815,7 @@ namespace pni{
                 H5Datatype mt = H5DatatypeFactory::create_type<T>();
                 H5Dataspace ms(array.shape());
 
-                __write(mt,ms,array.ptr());
+                __write(mt,ms,array.buffer().ptr());
             }
 
             //-----------------------------------------------------------------
@@ -846,7 +846,7 @@ namespace pni{
                 H5Datatype mt = H5DatatypeFactory::create_type<T>();
                 H5Dataspace ms(array.shape());
 
-                __read(mt,ms,array.ptr());
+                __read(mt,ms,array.buffer().ptr());
             }
         //end of namespace
         }

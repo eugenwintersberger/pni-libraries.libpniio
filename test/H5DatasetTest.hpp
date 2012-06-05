@@ -9,6 +9,7 @@ extern "C"{
 #include <pni/utils/Types.hpp>
 #include <pni/utils/Shape.hpp>
 #include <pni/utils/Scalar.hpp>
+#include <pni/utils/ArrayFactory.hpp>
 #include <pni/utils/Array.hpp>
 
 #include<cppunit/TestFixture.h>

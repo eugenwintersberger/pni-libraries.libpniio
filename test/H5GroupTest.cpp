@@ -1,4 +1,5 @@
 
+#include <pni/utils/ArrayFactory.hpp>
 #include "H5GroupTest.hpp"
 
 
@@ -155,7 +156,7 @@ void H5GroupTest::test_attributes(){
 
     //-------------read and write an array attribute--------------------------
     Shape s{10,3};
-    UInt16Array data(s);
+    UInt16Array data = ArrayFactory<UInt16>::create(s);
     data=113;
     CPPUNIT_ASSERT_NO_THROW(g.attr<UInt16>("data",data.shape()).write(data));
     Float32Array ar_value;

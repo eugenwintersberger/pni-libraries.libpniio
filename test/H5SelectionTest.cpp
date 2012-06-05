@@ -284,7 +284,8 @@ void H5SelectionTest::test_write_array(){
 
     //create the array from which to write data
     Shape s = {3,5};
-    UInt32Array a(s,"det","cps","useless data");
+    auto a = ArrayFactory<UInt32>::create(s);
+    a.name("det"); a.unit("cps"); a.description("useless data");
     CPPUNIT_ASSERT(a.is_allocated());
     a = 24;
 
