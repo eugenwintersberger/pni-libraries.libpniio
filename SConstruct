@@ -45,6 +45,7 @@ var.Add(PathVariable("BOOSTPREFIX","set the installation prefix for boost","/usr
 var.Add(PathVariable("HDF5PREFIX","set the installation prefix for HDF5","/usr"))
 var.Add(PathVariable("H5INCDIR","Directory where HDF5 headers are installed","",PathVariable.PathAccept))
 var.Add(PathVariable("H5LIBDIR","Directory where HDF5 libraries are installed","",PathVariable.PathAccept))
+
 var.Add("H5LIBNAME","HDF5 library name","hdf5")
 var.Add(PathVariable("PNIUPREFIX","set the installation prefix for PNIUtils","/usr"))
 var.Add("VERSION","library version","0.0.0")
@@ -60,6 +61,7 @@ var.Add("LIBLINKNAME","name of the library used for linking","")
 var.Add("LIBFULLNAME","full name of the library binary","")
 var.Add("INCDIR","installation path for header files","")
 var.Add("LIBDIR","library installation path","")
+
 
 #need now to create the proper library suffix
 
@@ -235,6 +237,7 @@ if not conf.CheckCXXHeader("cppunit/ui/text/TextTestRunner.h"):
 if not conf.CheckCHeader("hdf5.h"):
     print "HDF5 header files are not installed!"
     Exit(1)
+
     
 #check for libraries
 if not conf.CheckLib(env["H5LIBNAME"]):
@@ -252,6 +255,8 @@ if not conf.CheckLib("pniutils",language="C++"):
 if not conf.CheckLib("boost_date_time",language="C++"):
     print "boost_date_time library not installed!"
     Exit(1)
+
+    
     
     
 env = conf.Finish()
