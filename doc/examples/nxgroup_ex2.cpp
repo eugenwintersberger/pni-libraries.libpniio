@@ -2,6 +2,7 @@
 #include<iostream>
 #include<pni/nx/NX.hpp>
 #include<pni/utils/Types.hpp>
+#include<pni/utils/ArrayFactory.hpp>
 #include<pni/utils/Array.hpp>
 
 using namespace pni::nx::h5;
@@ -26,7 +27,8 @@ int main(int argc,char **argv){
     std::cout<<temp<<std::endl;
 
     //a array attribute
-    UInt32Array wa({10,3},"vectors","a.u.","vector data");
+    UInt32Array wa = ArrayFactory<UInt32>::create(Shape({10,3}));
+    wa.name("vectors"); wa.unit("a.u."); wa.description("vector data");
     for(size_t i=0;i<wa.size();i++) wa[i] = i;
 
     attr = g.attr<UInt32>("vectors",wa.shape());

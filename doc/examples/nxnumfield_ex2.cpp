@@ -1,5 +1,7 @@
 //nxnumfield_ex2.cpp
 #include <pni/utils/Types.hpp>
+#include <pni/utils/ArrayFactory.hpp>
+#include <pni/utils/Array.hpp>
 #include <pni/nx/NX.hpp>
 
 using namespace pni::utils;
@@ -30,12 +32,11 @@ int main(int argc,char **argv){
 
     //read all values
     Shape shape = {field.size()};
-    Int32Array counters(shape);
+    Int32Array counters = ArrayFactory<Int32>::create(shape);
     field.read(counters);
 
     //read a part of the values
-    shape.dim(0,3);
-    counters = Int32Array(shape);
+    counters = ArrayFactory<Int32>::create(Shape({3}));
 
     sel.offset({2});
     sel.shape({3});

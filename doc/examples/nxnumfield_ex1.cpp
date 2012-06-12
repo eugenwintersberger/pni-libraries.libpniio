@@ -2,6 +2,8 @@
 #include<iostream>
 #include<pni/nx/NX.hpp>
 #include<pni/utils/Types.hpp>
+#include<pni/utils/ArrayFactory.hpp>
+#include<pni/utils/Array.hpp>
 
 using namespace pni::nx::h5;
 using namespace pni::utils;
@@ -11,7 +13,8 @@ int main(int argc,char **argv){
     NXFile file = NXFile::create_file("nxnumfield_ex1.h5",true,0);
 
     //create a array data 
-    UInt16Array data({1024,512},"detector1","cps","first detector");
+    UInt16Array data = ArrayFactory<UInt16>::create(Shape({1024,512}));
+    data.name("detector1"); data.unit("cps"); data.description("first detector");
     data = 1;
 
 	//automatic from memory object
