@@ -1,0 +1,124 @@
+/*! \page installation Installation instructions
+
+\c libpniutils can be either installed from source or from a binary package. The latter one is more
+comfortable and requires not too much know how from the user, building from
+source gives you more control over what and how the library will be installed. 
+Thus installing binary packages is the recommended procedure for common users
+while system administrators may want to build the package from source.
+
+\section install_binary Installing the binary distribution
+
+\subsection install_binary_req Required additional software
+
+\c libpniutils links against several additional libraries which must be installed
+in order to make the software working. It depends on your operating systems
+whether or not this additional components must be explicitly installed by you or
+the package installation system takes care about it. 
+
+\subsection install_binary_linux Binary package installation on Linux 
+
+\subsection install_binary_windows Binary package installation on Windows
+
+NOT SUPPORTED YET
+
+
+\section install_source Installing from sources
+
+\subsection build_req Build requirements
+
+The following programs are required to build the entire source tree including
+the documentation
+
+\li <a href="http://www.scons.org"><tt>SCons</tt></a> the build system used for \c libpniutils
+\li <a href="http://www.doxygen.org"><tt>doxygen</tt></a> documentation generator
+\li <a href="http://www.freedesktop.org/wiki/Software/pkg-config"><tt>pkg-config</tt></a> package config
+
+Additionally \c libpninx depends on a couple of libraries which must be installed on
+the target system in order to build correctly:
+
+\li <a href="http://sourceforge.net/projects/cppunit/"><tt>cppunit</tt></a>  - a C++ unit-test framework
+\li <a href="http://www.boost.org"><tt>BOOST</tt></a> - C++ libraries 
+\li <a href="http://www.hdfgroup.org/HDF5/"><tt>HDF5</tt></a> - compiled with thread-safety and only C-support
+\li <a href="http://sourceforge.net/projects/libpniutils/"><tt>libpniutils</tt></a> - PNI utility library
+
+In addition \c libpniutils make use of a lot of new C++11 features. Thus a
+recent compiler should be installed on your system. For gcc version 4.6 and
+upwards are optimal. 
+On most of the large Linux distributions these components may can be easily
+installed directly from their package repositories. For Windows the appropriate
+packages must be installed manually. 
+
+\subsection obtaining_sources Obtaining the sources
+
+The next step is to obtain the source code of \c libpninx. A release tarball
+can be downloaded from the <a href="http://sourceforge.net/projects/libpninx/files/">
+sourceforge site of the project</a>. Once you obtained the tarball with the
+actual release of \c libpninx you can unpack it with
+\code
+$> tar xjf libpninx*.tar.bz2 
+\endcode
+Alternatively you can clone the \c git repository from the sourceforge site. 
+On Linux this can be done with
+\code
+$>git clone git://git.code.sf.net/p/libpninx/code libpninx
+\endcode
+Once the repository is cloned you will find the code in the \c libpninx
+directory below your current working directory. 
+
+\subsection build_install_linux Building and installing on Linux
+
+I strongly recommand to use \c pkg-config in order to get linker and compiler
+options right. At least \c libpniutils and \c cppunit support \c pkg-config so
+that linker and compiler options for these libraries can be handled by it.
+If \c pkg-config is set up correctly there is nothing else to do than typing 
+\code
+$>scons all 
+\endcode
+in the root of the source directory, which should start the build. As \c HDf5
+and \c BOOST do not support \c pkg-config build variables are provided to tell
+the system where to look for header files and runtime binaries of the libraries
+
+\li \c BOOSTINCDIR - installation directory of the \c BOOST header files
+\li \c BOOSTLIBDIR - installation directory of the \c BOOST library binaries
+\li \c HDF5INCDIR - installation directory of the \c HDF5 header files
+\li \c HDF5LIBDIR - installation directory of the \c HDF5 library binaries
+
+An additional build variable can be used to set the compiler to use for
+compilation of 
+
+\li \c CXX - binary of the C++ compiler (default  is \c g++)
+
+Finally there is a set of build variables responsible for where the library and
+its components will be installed:
+
+\li \c PREFIX - installation prefix (default is \c /usr/local)
+\li \c LIBDIR - installation path for the library binaries (default is \c PREFIX/lib)
+\li \c INCDIR - installation path for the library headers (default is \c PREFIX/include)
+\li \c DOCDIR - installation path for the documentation (default is \c PREFIX/share/doc/libpninx)
+
+Usually the location where binaries, headers, and documentation files are
+installed are determined by the \c PREFIX build variable. However, \c LIBDIR, \c INCDIR, 
+and \c DOCDIR give you the opportunity to tune the installation entirely to your
+needs.
+
+The build command as shown above uses the  \c all target. This target will build
+the library along with the unit tests and the documentation.  For installation
+use the \c install target. Since \c scons actually runs the full configuration
+for the \c all as well as for the \c install target you need to provide the same
+build variables for both calls. Let us for example show a build where the
+library should be installed below \c /opt but the documentation goes to a
+slightly different location
+\code
+$> scons HDF5INCDIR=/usr/local/hdf5/lib HDF5INCDIR=/usr/local/hdf5/include PREFIX=/opt/libpninx DOCDIR=/opt/share/doc/libpninx install
+\endcode
+
+\subsection build_install_windows Building and installing on Windows 
+
+NOT SUPPORTED YET
+
+
+
+
+
+
+*/
