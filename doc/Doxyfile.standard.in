@@ -62,10 +62,10 @@ WARN_NO_PARAMDOC       = NO
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = ../src/ mainpage
+INPUT                  = ../src/ mainpage installation usage
 RECURSIVE              = YES
 EXCLUDE_SYMLINKS       = NO
-EXAMPLE_PATH           =
+EXAMPLE_PATH           = examples
 EXAMPLE_PATTERNS       =
 EXAMPLE_RECURSIVE      = NO
 IMAGE_PATH             =

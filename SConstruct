@@ -243,9 +243,6 @@ if not conf.CheckLib("boost_date_time",language="C++"):
     print "boost_date_time library not installed!"
     Exit(1)
 
-    
-    
-    
 env = conf.Finish()
 
 
