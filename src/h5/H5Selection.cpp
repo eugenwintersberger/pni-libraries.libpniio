@@ -76,30 +76,6 @@ namespace pni{
             }
 
             //==============Implementation of constructors and destructors======
-            //implementation of the default constructor
-            H5Selection::H5Selection()
-            {
-            }
-
-            //------------------------------------------------------------------
-            //implementation of the copy constructor
-            H5Selection::H5Selection(const H5Selection &o)
-                :_offset(o._offset),_stride(o._stride),_counts(o._counts),
-                 _dataset(o._dataset)
-            {
-            }
-
-            //------------------------------------------------------------------
-            //implementation of the move constructor
-            H5Selection::H5Selection(H5Selection &&o)
-                : _offset(std::move(o._offset)),_stride(std::move(o._stride)),
-                 _counts(std::move(o._counts)),
-                 _dataset(o._dataset)
-            {
-            }
-
-            
-            //-------------------------------------------------------------------
             //implementation of the shape constructor
             H5Selection::H5Selection(const H5Dataset &ds,const Shape &s,
                     size_t offset,size_t stride)
@@ -126,7 +102,8 @@ namespace pni{
 
             //------------------------------------------------------------------
             //implementation of the destructor
-            H5Selection::~H5Selection(){
+            H5Selection::~H5Selection()
+            {
                 _offset.free();
                 _stride.free();
                 _counts.free();
@@ -173,15 +150,13 @@ namespace pni{
                 if(rank() == 0) return 0;
                 
                 size_t s = 1;
+#ifdef NOFOREACH
                 for(size_t i=0;i<rank();i++) s *= _counts[i];
+#else
+                for(auto v: _counts) s *= v;
+#endif
 
                 return s;
-            }
-
-            //------------------------------------------------------------------
-            //get number of dimensions
-            size_t H5Selection::rank() const {
-                return _counts.size();
             }
 
             //------------------------------------------------------------------
@@ -199,30 +174,14 @@ namespace pni{
 
             //------------------------------------------------------------------
             //return reference to the dataspace
-            H5Dataspace H5Selection::space() const{
+            H5Dataspace H5Selection::space() const
+            {
                 H5Dataspace s(shape());
                 return s;
             }
 
             
             //=================implementation of modifier methods===============
-            //access single offset values
-            hsize_t &H5Selection::offset(size_t i){
-                return _offset[i];
-            }
-
-            //------------------------------------------------------------------
-            //access single offset value
-            hsize_t H5Selection::offset(size_t i) const {
-                return _offset[i];
-            }
-
-            //------------------------------------------------------------------
-            //set all offset values in a single call
-            void H5Selection::offset(size_t i,hsize_t o) {
-                _offset[i] = o;
-            }
-
             //------------------------------------------------------------------
             void H5Selection::offset(const std::initializer_list<hsize_t> &l){
                 EXCEPTION_SETUP("void H5Selection::"
@@ -235,26 +194,6 @@ namespace pni{
                 }
 
                 _offset = l;
-            }
-
-            //------------------------------------------------------------------
-            const Buffer<hsize_t> &H5Selection::offset() const {
-                return _offset;
-            }
-
-            //------------------------------------------------------------------
-            hsize_t &H5Selection::stride(size_t i){
-                return _stride[i];
-            }
-
-            //------------------------------------------------------------------
-            hsize_t H5Selection::stride(size_t i) const{
-                return _stride[i];
-            }
-
-            //------------------------------------------------------------------
-            void H5Selection::stride(size_t i,hsize_t s) {
-                _stride[i] = s;
             }
 
             //------------------------------------------------------------------
@@ -271,25 +210,6 @@ namespace pni{
                 _stride = l;
             }
 
-            //------------------------------------------------------------------
-            const Buffer<hsize_t> &H5Selection::stride() const {
-                return _stride;
-            }
-
-            //------------------------------------------------------------------
-            hsize_t &H5Selection::count(size_t i){
-                return _counts[i];
-            }
-
-            //------------------------------------------------------------------
-            hsize_t H5Selection::count(size_t i) const{
-                return _counts[i];
-            }
-
-            //------------------------------------------------------------------
-            void H5Selection::count(size_t i,hsize_t c) {
-                _counts[i] = c;
-            }
 
             //-----------------------------------------------------------------
             void H5Selection::count(const std::initializer_list<hsize_t> &l){
@@ -305,16 +225,6 @@ namespace pni{
                 _counts = l;
             }
 
-            //-----------------------------------------------------------------
-            const Buffer<hsize_t> &H5Selection::count() const {
-                return _counts;
-            }
-
-            //-----------------------------------------------------------------
-            TypeID H5Selection::type_id() const
-            {
-                return _dataset->type_id();
-            }
 
             //=============specializations of the IO methods===================
             //implementation of writing a binary value

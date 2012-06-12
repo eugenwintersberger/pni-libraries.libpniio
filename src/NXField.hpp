@@ -57,6 +57,7 @@ namespace pni{
         */
         template<typename Imp> class NXField:public NXObject<Imp> {
             private:
+                //-------------------------------------------------------------
                 template<typename ...ITYPES>
                     void _setup_selection(
                             NXSelection<MAPTYPE(Imp,SelectionImpl)> &s,
@@ -69,9 +70,10 @@ namespace pni{
                     s.stride(rec,1);
 
                     //call recursion
-                    _setup_selection(s,rec++,indices...);
+                    _setup_selection(s,rec+1,indices...);
                 }
 
+                //-------------------------------------------------------------
                 template <typename ...ITYPES> 
                     void _setup_selection(
                             NXSelection<MAPTYPE(Imp,SelectionImpl)> &s,
@@ -83,9 +85,10 @@ namespace pni{
                     s.stride(rec,sl.stride());
                     s.shape(rec,pni::utils::size(sl));
                     //call recursion
-                    _setup_selection(s,rec++,indices...);
+                    _setup_selection(s,rec+1,indices...);
                 }
 
+                //-------------------------------------------------------------
                 //break method
                 void _setup_selection(
                         NXSelection<MAPTYPE(Imp,SelectionImpl)> &s,
@@ -856,7 +859,6 @@ namespace pni{
 
                     //now we need to setup offset, stride, and shape of the 
                     //selection from the variadic template
-
                     _setup_selection(s,0,indices...);
                     return s; 
                 }

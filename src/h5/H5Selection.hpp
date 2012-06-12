@@ -140,15 +140,25 @@ namespace pni{
                 public:
                     //============constructors and destructor==================
                     //! default constructor
-                    H5Selection();
+                    H5Selection() {}
 
                     //---------------------------------------------------------
                     //! copy constructor
-                    H5Selection(const H5Selection &o);
+                    H5Selection(const H5Selection &o):
+                        _offset(o._offset),
+                        _stride(o._stride),
+                        _counts(o._counts),
+                        _dataset(o._dataset)
+                    { }
 
                     //---------------------------------------------------------
                     //! move constructor
-                    H5Selection(H5Selection &&o);
+                    H5Selection(H5Selection &&o): 
+                        _offset(std::move(o._offset)),
+                        _stride(std::move(o._stride)),
+                        _counts(std::move(o._counts)),
+                        _dataset(o._dataset)
+                    { }
 
                     //---------------------------------------------------------
                     /*! \brief construction with shape
@@ -193,7 +203,10 @@ namespace pni{
                     Return the rank (number of dimensions) of the selection.
                     \return number of dimensions
                     */
-                    size_t rank() const;
+                    size_t rank() const
+                    {
+                        return _counts.size();
+                    }
 
                     //----------------------------------------------------------
                     /*! \brief shape of the selection
@@ -215,16 +228,6 @@ namespace pni{
                     H5Dataspace space() const;
 
                     //----------------------------------------------------------
-                    /*! \brief read/write offset 
-
-                    Returns a read write reference to offset value i.
-                    \throws IndexError if i exceeds selection rank
-                    \param i index of the requested offset value
-                    \return reference to offset value
-                    */
-                    hsize_t &offset(size_t i);
-
-                    //----------------------------------------------------------
                     /*! \brief read offset 
 
                     Returns a copy of offset value i. 
@@ -232,7 +235,7 @@ namespace pni{
                     \param i index of the requested offset value
                     \return offset value
                     */
-                    hsize_t offset(size_t i) const;
+                    hsize_t offset(size_t i) const { return _offset.at(i); }
 
                     //----------------------------------------------------------
                     /*! \brief set offset
@@ -242,7 +245,7 @@ namespace pni{
                     \param i dimension index
                     \param o offset value along i
                     */
-                    void offset(size_t i,hsize_t o);
+                    void offset(size_t i,hsize_t o) { _offset.at(i) = o; }
 
                     //---------------------------------------------------------
                     /*! \brief set offset with initializer list
@@ -262,19 +265,8 @@ namespace pni{
                     offset buffer of the selection.
                     \return reference to the offset buffer
                     */
-                    const Buffer<hsize_t> &offset() const;
+                    const Buffer<hsize_t> &offset() const { return _offset; }
                   
-                    //---------------------------------------------------------
-                    /*! \brief read/write stride
-
-                    Returns a read/write reference to the stride value
-                    along dimension i.
-                    \throws IndexError if i exceeds selection rank
-                    \param i dimension index
-                    \return reference to the stride of dimension i
-                    */
-                    hsize_t &stride(size_t i);
-                    
                     //---------------------------------------------------------
                     /*! \brief copy of stride along i
 
@@ -283,7 +275,7 @@ namespace pni{
                     \param i dimension index
                     \return stride value along dimension i
                     */
-                    hsize_t stride(size_t i) const;
+                    hsize_t stride(size_t i) const { return _stride.at(i); }
 
                     //---------------------------------------------------------
                     /*! \brief set stride along i
@@ -293,7 +285,7 @@ namespace pni{
                     \param i dimension index
                     \param s stride along i
                     */
-                    void stride(size_t i,hsize_t s);
+                    void stride(size_t i,hsize_t s) { _stride.at(i) = s; }
 
                     //---------------------------------------------------------
                     /*! \brief set stride with initializer list
@@ -312,18 +304,8 @@ namespace pni{
                     stride values of the selection.
                     \return reference to the stride buffer
                     */
-                    const Buffer<hsize_t> &stride() const;
+                    const Buffer<hsize_t> &stride() const { return _stride; }
 
-                    //---------------------------------------------------------
-                    /*! \brief read/write count
-
-                    Returns a read write reference to the count value 
-                    along dimension i.
-                    \throws IndexError if i exceeds selection rank
-                    \param i dimension index
-                    \return reference to the count value along i
-                    */
-                    hsize_t &count(size_t i);
 
                     //---------------------------------------------------------
                     /*! \brief copy of count along i
@@ -333,7 +315,7 @@ namespace pni{
                     \param i dimension index
                     \return count along dimension i
                     */
-                    hsize_t count(size_t i) const;
+                    hsize_t count(size_t i) const { return _counts.at(i); } 
 
                     //---------------------------------------------------------
                     /*! \brief set count value
@@ -343,7 +325,7 @@ namespace pni{
                     \param i dimension index
                     \param c count value
                     */
-                    void count(size_t i,hsize_t c);
+                    void count(size_t i,hsize_t c) { _counts.at(i) = c; }
 
                     //----------------------------------------------------------
                     /*! \brief set count with initializer list
@@ -362,7 +344,7 @@ namespace pni{
                     count values of the selection.
                     \return reference to the count buffer
                     */
-                    const Buffer<hsize_t> &count() const;
+                    const Buffer<hsize_t> &count() const { return _counts; }
 
                     //---------------------------------------------------------
                     /*! \brief get type id 
@@ -372,7 +354,7 @@ namespace pni{
                     for data IO also accessible via the selection object.
                     \return TypeID value
                     */
-                    TypeID type_id() const;
+                    TypeID type_id() const { return _dataset->type_id(); }
                    
                     //---------------------------------------------------------
                     /*! \brief write a single value with selection
@@ -806,8 +788,10 @@ namespace pni{
                 //the size of the array must be equal to the size of the 
                 //selection
                 if(this->size() != array.shape().size()){
-                    EXCEPTION_INIT(ShapeMissmatchError,
-                            "Selection and array size do not match!");
+                    std::stringstream ss;
+                    ss<<"Selection size ("<<this->size()<<") and array size (";
+                    ss<<array.shape().size()<<") do not match!";
+                    EXCEPTION_INIT(SizeMissmatchError,ss.str());
                     EXCEPTION_THROW();
                 }
 

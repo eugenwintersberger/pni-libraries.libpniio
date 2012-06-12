@@ -79,9 +79,9 @@ void H5SelectionTest::test_setup(){
     CPPUNIT_ASSERT(s1.offset(0) == 0);
     CPPUNIT_ASSERT(s1.stride(0) == 1);
 
-    s1.offset(1)=5;
+    s1.offset(1,5);
     CPPUNIT_ASSERT(s1.offset(1) == 5);
-    s1.stride(2)=10;
+    s1.stride(2,10);
     CPPUNIT_ASSERT(s1.stride(2) == 10);
     
 }

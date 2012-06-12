@@ -13,22 +13,13 @@ int main(int argc,char **argv){
     //create field
     UInt32Scalar counter("counter","cps","a scalar counter");
     NXField field = file.create_field<UInt32>(counter.name(),{0});
-    NXSelection sel = field.selection();
-    sel.shape({1});
-    sel.offset({0});
-    sel.stride({1});
-    
+
     //write stream
     for(size_t i=0;i<10;i++){
         field.grow(0);
-        sel.offset(0,i);
         counter = i;
-        sel.write(counter); 
+        field(i).write(counter);
     }
-
-    //read individual values
-    sel.offset(0,3);
-    sel.read(counter);
 
     //read all values
     Shape shape = {field.size()};
@@ -37,16 +28,11 @@ int main(int argc,char **argv){
 
     //read a part of the values
     counters = ArrayFactory<Int32>::create(Shape({3}));
-
-    sel.offset({2});
-    sel.shape({3});
-    sel.read(counters);
+    field(Slice(2,5)).read(counters);
 
     //set individual entries
     counter = 100;
-    sel.offset({2});
-    sel.shape({1});
-    sel.write(counter);
+    field(2).write(100);
 
     return 0;
 }
