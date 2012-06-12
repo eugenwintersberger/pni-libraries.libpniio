@@ -41,13 +41,12 @@ debug = ARGUMENTS.get("DEBUG",0)
 
 var = Variables('BuildConfig.py')
 var.Add(PathVariable("PREFIX","set installation prefix","/usr"))
-var.Add(PathVariable("BOOSTPREFIX","set the installation prefix for boost","/usr"))
-var.Add(PathVariable("HDF5PREFIX","set the installation prefix for HDF5","/usr"))
+var.Add(PathVariable("BOOSTINCDIR","installation directory of boost headers","/usr/include"))
+var.Add(PathVariable("BOOSTLIBDIR","installation directory of boost libraries","/usr/include"))
 var.Add(PathVariable("H5INCDIR","Directory where HDF5 headers are installed","",PathVariable.PathAccept))
 var.Add(PathVariable("H5LIBDIR","Directory where HDF5 libraries are installed","",PathVariable.PathAccept))
 
 var.Add("H5LIBNAME","HDF5 library name","hdf5")
-var.Add(PathVariable("PNIUPREFIX","set the installation prefix for PNIUtils","/usr"))
 var.Add("VERSION","library version","0.0.0")
 var.Add("LIBNAME","library name","pniutils")
 var.Add("SOVERSION","SOVersion of the library (binary interface version)","0")
@@ -69,6 +68,7 @@ var.Add("LIBDIR","library installation path","")
 env = Environment(variables=var,tools=['default','packaging','textfile'])
 env["ENV"]["PKG_CONFIG_PATH"] = os.environ["PKG_CONFIG_PATH"]
 env.ParseConfig('pkg-config --libs --cflags pniutils')
+env.ParseConfig('pkg-config --libs --cflags cppunit')
 env.Replace(CXX = env["CXX"])
 
             
@@ -78,11 +78,9 @@ env.Append(LIBSONAME   = libname.so_name(env))
 env.Append(LIBLINKNAME = libname.link_name(env))
 
 #create installation paths
-if not env["INCDIR"]:
-    env.Append(INCDIR = path.join(env["PREFIX"],"include"))
+if not env["INCDIR"]: env.Append(INCDIR = path.join(env["PREFIX"],"include"))
 
-if not env["LIBDIR"]:
-    env.Append(LIBDIR = path.join(env["PREFIX"],"lib"))
+if not env["LIBDIR"]: env.Append(LIBDIR = path.join(env["PREFIX"],"lib"))
 
 if not env["DOCDIR"]:
     #set default documentation directory for installation
@@ -100,24 +98,13 @@ env.Append(CXXFLAGS = ["-Wall","-std=c++0x"])
 #are not doing this by default
 env.Append(LIBS=["dl"])
 #set paths for Boost and HDF5
-if env["H5LIBDIR"]:
-    env.AppendUnique(LIBPATH = env['H5LIBDIR'])
-else:
-    env.AppendUnique(LIBPATH=path.join(env["HDF5PREFIX"],"lib"))
+if env["H5LIBDIR"]: env.AppendUnique(LIBPATH = env['H5LIBDIR'])
+if env["H5INCDIR"]: env.AppendUnique(CPPPATH = env['H5INCDIR'])
+if env['BOOSTINCDIR']: env.AppendUnique(CPPPATH = env['BOOSTINCDIR'])
+if env['BOOSTLIBDIR']: env.AppendUnique(LIBPATH = env['BOOSTLIBDIR'])
 
-env.AppendUnique(LIBPATH=[path.join(env["BOOSTPREFIX"],"lib"),
-                    path.join(env["PNIUPREFIX"],"lib"),
-])
 
-if env['H5INCDIR']:
-    env.AppendUnique(CPPPATH = env['H5INCDIR'])
-else:
-    env.AppendUnique(CPPPATH = path.join(env["HDF5PREFIX"],"include"))  
-    
-env.AppendUnique(CPPPATH=[path.join(env["BOOSTPREFIX"],"include"),
-                    path.join(env["PNIUPREFIX"],"include")
-])
-
+#========================custom tests for compiler capabilties=================
 nullptr_test_code="""
 int main(int argc,char **argv){
     char *ptr=nullptr;
