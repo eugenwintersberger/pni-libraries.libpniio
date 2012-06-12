@@ -21,7 +21,8 @@ class IOQueue{
         std::queue<String> _queue;
         std::condition_variable _data_ready;
     public:
-        void push(const String &value){
+        void push(const String &value)
+        {
             std::lock_guard<std::mutex> guard(_mutex);
             _queue.push(value);
             _data_ready.notify_one();
@@ -40,14 +41,10 @@ class IOQueue{
 class Writer{
     private:
         String _filename;
-
         IOQueue &_queue;
-
         h5::NXFile  _log_file;
         h5::NXField _log_data;
-        h5::NXSelection _log_datas;
         h5::NXField _log_time;
-        h5::NXSelection _log_times;
 
         //private method writing a single log entry
         void __write_entry(const String &s){
@@ -55,13 +52,9 @@ class Writer{
             _log_time.grow(0);
             _log_data.grow(0);
 
-            //update the selction offsets
-            _log_times.offset(0,_log_time.dim(0)-1);
-            _log_datas.offset(0,_log_data.dim(0)-1);
-
             //write the data
-            _log_times.write(NXDateTime::get_date_time_str());
-            _log_datas.write(s);
+            _log_time(_log_time.dim(0)-1).write(NXDateTime::get_date_time_str());
+            _log_data(_log_data.dim(0)-1).write(s);
 
             //flush the new log entry
             _log_file.flush();
@@ -81,20 +74,6 @@ class Writer{
             //create log data and timestamp field
             _log_data = g.create_field<String>("data",{0});
             _log_time = g.create_field<String>("timestamp",{0}); 
-
-            //obtain selections which are used to write data
-            _log_datas = _log_data.selection();
-            _log_times = _log_time.selection();
-
-            //set shape offset and stride for the log data selection
-            _log_datas.shape({1});
-            _log_datas.offset({0});
-            _log_datas.stride({1});
-
-            //set shape offset and stride for the log time selection
-            _log_times.shape({1});
-            _log_times.offset({0});
-            _log_times.stride({1});
 
             //flush the file after initialization
             _log_file.flush();
