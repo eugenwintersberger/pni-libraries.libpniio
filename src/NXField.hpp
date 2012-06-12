@@ -56,6 +56,41 @@ namespace pni{
         time being can be either strings, Scalars, or Array objects.
         */
         template<typename Imp> class NXField:public NXObject<Imp> {
+            private:
+                template<typename ...ITYPES>
+                    void _setup_selection(
+                            NXSelection<MAPTYPE(Imp,SelectionImpl)> &s,
+                            size_t rec,
+                            size_t i,ITYPES ...indices)
+                {
+                    //setup the selection from a single index
+                    s.offset(rec,i);
+                    s.shape(rec,1);
+                    s.stride(rec,1);
+
+                    //call recursion
+                    _setup_selection(s,rec++,indices...);
+                }
+
+                template <typename ...ITYPES> 
+                    void _setup_selection(
+                            NXSelection<MAPTYPE(Imp,SelectionImpl)> &s,
+                            size_t rec,
+                            const Slice &sl,ITYPES ...indices)
+
+                {
+                    s.offset(rec,sl.first());
+                    s.stride(rec,sl.stride());
+                    s.shape(rec,pni::utils::size(sl));
+                    //call recursion
+                    _setup_selection(s,rec++,indices...);
+                }
+
+                //break method
+                void _setup_selection(
+                        NXSelection<MAPTYPE(Imp,SelectionImpl)> &s,
+                        size_t rec)
+                { }
             public:
                 typedef std::shared_ptr<NXField<Imp> > 
                     shared_ptr; //!< shared pointer type for the field object
@@ -810,6 +845,21 @@ namespace pni{
                     return Selection(this->imp().selection());
                 }
 
+                template<typename ...ITYPES> 
+                    NXSelection<MAPTYPE(Imp,SelectionImpl)> 
+                    operator()(ITYPES ...indices)
+                {
+                    typedef MAPTYPE(Imp,SelectionImpl) SelectionImpl;
+                    typedef NXSelection<SelectionImpl> Selection;
+
+                    Selection s(this->imp().selection());
+
+                    //now we need to setup offset, stride, and shape of the 
+                    //selection from the variadic template
+
+                    _setup_selection(s,0,indices...);
+                    return s; 
+                }
 
 
         };

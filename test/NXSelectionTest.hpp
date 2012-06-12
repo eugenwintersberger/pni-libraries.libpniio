@@ -78,25 +78,20 @@ template<typename T> void NXSelectionTest::test_io_simple(){
     T write,read;
     init_values<T>(write,read);
 
-    NXSelection sel = field.selection();
-    CPPUNIT_ASSERT_NO_THROW(sel.write(write));
+    CPPUNIT_ASSERT_NO_THROW(field.write(write));
     for(size_t i=1;i<10;i++){
         CPPUNIT_ASSERT_NO_THROW(field.grow(0,1));
-        CPPUNIT_ASSERT_NO_THROW(sel.offset(0,i));
-        CPPUNIT_ASSERT_NO_THROW(sel.write(write));
+        CPPUNIT_ASSERT_NO_THROW(field(i).write(write));
     }
     
     for(size_t i=0;i<10;i++){
-        CPPUNIT_ASSERT_NO_THROW(sel.offset(0,i));
-        CPPUNIT_ASSERT_NO_THROW(sel.read(read));
+        CPPUNIT_ASSERT_NO_THROW(field(i).read(read));
         //std::cout<<write<<" = "<<read<<std::endl;
         compare_values(write,read);
     }
 
-    CPPUNIT_ASSERT_NO_THROW(sel.offset(0,0));
-    CPPUNIT_ASSERT_NO_THROW(sel.shape(0,2));
-    CPPUNIT_ASSERT_THROW(sel.write(write),ShapeMissmatchError);
-    CPPUNIT_ASSERT_THROW(sel.read(read),ShapeMissmatchError);
+    CPPUNIT_ASSERT_THROW(field(Slice(1,3)).write(write),ShapeMissmatchError);
+    CPPUNIT_ASSERT_THROW(field(Slice(0,4)).read(read),ShapeMissmatchError);
 }
 
 
