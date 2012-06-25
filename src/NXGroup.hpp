@@ -195,7 +195,16 @@ namespace pni{
                             //no explicit chunk-size by the use
                             std::vector<size_t> v(s.rank());
                             size_t index =0;
-                            for(size_t &i: v)  i = s[index++];
+#ifdef NOFOREACH
+                            for(auto iter = v.begin(); iter!=v.end();iter++)
+                            {
+                                size_t &i=*iter;
+#else
+                            for(size_t &i: v)  
+                            {
+#endif
+                                i = s[index++];
+                            }
                             v[0] = 1;
                             cs = Shape(v);
                         }else{
@@ -234,7 +243,16 @@ namespace pni{
                     //shape and set the first dimension to 1
                     std::vector<size_t> v(s.rank());
                     size_t index = 0;
-                    for(size_t &i: v) i = s[index++];
+#ifdef NOFOREACH
+                    for(auto iter=v.begin();iter!=v.end();iter++)
+                    {
+                        size_t &i = *iter;
+#else
+                    for(size_t &i: v)
+                    {
+#endif
+                        i = s[index++];
+                    }
                     v[0] = 1;
 
                     //create the chunk shape
