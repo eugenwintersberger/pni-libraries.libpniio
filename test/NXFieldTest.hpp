@@ -134,6 +134,8 @@ public:
 
 };
 
+template<typename T> T create_init_data(const T &value) { return value; }
+
 //-----------------------------------------------------------------------------
 template<typename T> void NXFieldTest::test_io_array(){
     std::cout<<"NXFieldTest::test_io_array()--------------------------------";
@@ -142,8 +144,8 @@ template<typename T> void NXFieldTest::test_io_array(){
     Array<T,Buffer> write = ArrayFactory<T,Buffer>::create(s);
     Array<T,Buffer> read = ArrayFactory<T,Buffer>::create(s);
 
-    write = 100;
-    read  = 0;
+    write = T(100);
+    read  = T(0);
 
     NXField field1 = file.create_field<T>("array",s);
     CPPUNIT_ASSERT_NO_THROW(field1.write(write));

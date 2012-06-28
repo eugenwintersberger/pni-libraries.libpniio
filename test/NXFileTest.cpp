@@ -39,7 +39,16 @@ void NXFileTest::setUp(){
 	_write_array_attr = ArrayFactory<Int16>::create(_shape);
 
     Int16 value = 0;
-    for(Int16 &v: _write_array_attr) v = value++;
+#ifdef NOFOREACH
+    for(auto iter=_write_array_attr.begin();iter!=_write_array_attr.end();iter++)
+    {
+        Int16 &v = *iter;
+#else
+    for(Int16 &v: _write_array_attr)
+    {
+#endif
+        v = value++;
+    }
 
 	_write_cmplx_scalar = Complex64(1,-2);
 
