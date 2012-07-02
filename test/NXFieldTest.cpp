@@ -30,6 +30,7 @@
 
 #include "NX.hpp"
 #include "NXExceptions.hpp"
+#include "NXFieldUtils.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(NXFieldTest);
 
@@ -90,6 +91,13 @@ void NXFieldTest::testCreation(){
     NXDeflateFilter deflate(9,true);
     
     field = file.create_field<Float32>("test_defalte", shape,deflate);
+
+    //create a field with a utilty function
+    field = create_field(file,"test_util", TypeID::UINT32);
+    field = create_field(file,"test_util2",TypeID::FLOAT128,
+                         Shape{0,1024,1024},Shape{1,1024,1024});
+    field = create_field(file,"test_util3",TypeID::FLOAT128,
+                         Shape{0,1024,1024},Shape{1,1024,1024},deflate);
 
 }
 

@@ -52,7 +52,8 @@ namespace pni{
                     shared_ptr; //!< shared pointer type to a NXGroup type
                 typedef
                     NXObjectIterator<NXGroup<Imp>,NXObject<MAPTYPE(Imp,ObjectImpl)>
-                    > iterator; //!< object iterator type
+                    > iterator; //!< object iterator typeq
+                typedef NXField<MAPTYPE(Imp,FieldImpl)> field_type; //!< field type
                 //===========constructors and destructor========================
                 /*! \brief default constructor
 
@@ -405,7 +406,7 @@ namespace pni{
                 }
 
                 //--------------------------------------------------------------
-                /*! \brief iterator on first element
+                /*! \brief iterator on first child
 
                 */
                 NXObjectIterator<NXGroup<Imp>,
@@ -415,7 +416,7 @@ namespace pni{
                            NXObject<MAPTYPE(Imp,ObjectImpl)> >(*this);
                 }
                
-                /*! \brief iterator on last element
+                /*! \brief iterator on last child
 
                 */
                 NXObjectIterator<NXGroup<Imp>,
