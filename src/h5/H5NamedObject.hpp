@@ -32,86 +32,86 @@
 
 
 namespace pni{
-    namespace nx{
-        namespace h5{
-            //forward declaration
-            class H5Group;
+namespace nx{
+namespace h5{
+    //forward declaration
+    class H5Group;
 
-            //! \ingroup nxh5_classes            
-            //! \brief base class for named objects
+    //! \ingroup nxh5_classes            
+    //! \brief base class for named objects
 
-            //! Named objects are those objects in an HDF5 file that can be 
-            //! accessed by a path or which have a name (this includes Files 
-            //! and attributes). This class is used as a base class for 
-            //! such objects.
-            //! Due to the fact that such objects can be linked. 
-            class H5NamedObject:public H5Object{
-                protected:
-                    //! construct from HDF5 ID
+    //! Named objects are those objects in an HDF5 file that can be 
+    //! accessed by a path or which have a name (this includes Files 
+    //! and attributes). This class is used as a base class for 
+    //! such objects.
+    //! Due to the fact that such objects can be linked. 
+    class H5NamedObject:public H5Object{
+        protected:
+            //! construct from HDF5 ID
 
-                    //! This protected constructor allows object construction
-                    //! form an HDF5 ID. Only derived classes are supposed
-                    //! to use this constructor.
-                    explicit H5NamedObject(const hid_t &id);
-                public:
-                    //==============constructors and destructors===============
-                    //! default constructor
-                    explicit H5NamedObject();
-                    //! copy constructor
-                    H5NamedObject(const H5NamedObject &o);
-                    //! copy conversion constructor
-                    H5NamedObject(const H5Object &o);
-                    //! move constructor
-                    H5NamedObject(H5NamedObject &&o);
-                    //! move conversion constructor
-                    H5NamedObject(H5Object &&o);
-                    //! destructor
-                    virtual ~H5NamedObject();
+            //! This protected constructor allows object construction
+            //! form an HDF5 ID. Only derived classes are supposed
+            //! to use this constructor.
+            explicit H5NamedObject(const hid_t &id);
+        public:
+            //==============constructors and destructors=======================
+            //! default constructor
+            explicit H5NamedObject();
+            //! copy constructor
+            H5NamedObject(const H5NamedObject &o);
+            //! copy conversion constructor
+            H5NamedObject(const H5Object &o);
+            //! move constructor
+            H5NamedObject(H5NamedObject &&o);
+            //! move conversion constructor
+            H5NamedObject(H5Object &&o);
+            //! destructor
+            virtual ~H5NamedObject();
 
-                    //==========assignment operators===========================
-                    //! copy assignment operator
-                    H5NamedObject &operator=(const H5NamedObject &o);
-                    //! copy conversion assignment operator
-                    H5NamedObject &operator=(const H5Object &o);
-                    //! move assignment operator
-                    H5NamedObject &operator=(H5NamedObject &&o);
-                    //! move conversion assignment operator
-                    H5NamedObject &operator=(H5Object &&o);
-
-
-                    //============name methods=================================
-                    //! return object name
-
-                    //! Returns the name of an object. Within an HDF5 file 
-                    //! objects can be addressed by a UNIX like path. 
-                    //! This method returns the last part of the path. 
-                    //! So if an object would have the following path 
-                    //! /scan_1/detector/data this method would return 
-                    //! data.
-                    //! The behavior of this method is slightly different 
-                    //! for a file object.
-                    //! \return name of the object
-                    virtual String name() const;
-                    //! return object base
-
-                    //! Return the the base part of the objects path. 
-                    //! If the object would have the path 
-                    //! /scan_1/detector/data this method would return 
-                    //! /scan_1/detector.
-                    //! \return base part of the objects path
-                    virtual String base() const;
-                    //! return object path
-                    
-                    //! This method returns the full path of an object.
-                    //! \return full object path
-                    virtual String path() const;
+            //==========assignment operators===================================
+            //! copy assignment operator
+            H5NamedObject &operator=(const H5NamedObject &o);
+            //! copy conversion assignment operator
+            H5NamedObject &operator=(const H5Object &o);
+            //! move assignment operator
+            H5NamedObject &operator=(H5NamedObject &&o);
+            //! move conversion assignment operator
+            H5NamedObject &operator=(H5Object &&o);
 
 
-            };
+            //============name methods=========================================
+            //! return object name
 
-        //end of namespace
-        }
-    }
+            //! Returns the name of an object. Within an HDF5 file 
+            //! objects can be addressed by a UNIX like path. 
+            //! This method returns the last part of the path. 
+            //! So if an object would have the following path 
+            //! /scan_1/detector/data this method would return 
+            //! data.
+            //! The behavior of this method is slightly different 
+            //! for a file object.
+            //! \return name of the object
+            virtual String name() const;
+            //! return object base
+
+            //! Return the the base part of the objects path. 
+            //! If the object would have the path 
+            //! /scan_1/detector/data this method would return 
+            //! /scan_1/detector.
+            //! \return base part of the objects path
+            virtual String base() const;
+            //! return object path
+            
+            //! This method returns the full path of an object.
+            //! \return full object path
+            virtual String path() const;
+
+
+    };
+
+//end of namespace
+}
+}
 }
 
 #endif
