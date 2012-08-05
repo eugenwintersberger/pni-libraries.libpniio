@@ -28,47 +28,32 @@
 #include "H5Filter.hpp"
 
 namespace pni {
-    namespace nx {
-        namespace h5 {
+namespace nx {
+namespace h5 {
 
-            //------------------------------------------------------------------
-            H5Filter::H5Filter() {
+    //-------------------------------------------------------------------------
+    H5Filter::H5Filter() { }
 
-            }
+    //-------------------------------------------------------------------------
+    H5Filter::H5Filter(const H5Filter &o) { }
 
-            //------------------------------------------------------------------
-            H5Filter::H5Filter(const H5Filter &o){
-                EXCEPTION_SETUP("H5Filter::H5Filter(const H5Filter &o)");
+    //-------------------------------------------------------------------------
+    H5Filter::H5Filter(H5Filter &&o){ }
 
-            }
+    //-------------------------------------------------------------------------
+    H5Filter::~H5Filter() { }
 
-            //------------------------------------------------------------------
-            H5Filter::H5Filter(H5Filter &&o){
+    //-------------------------------------------------------------------------
+    H5Filter &H5Filter::operator=(const H5Filter &o)
+    {
+        return *this;
+    }
 
-            }
-
-            //------------------------------------------------------------------
-            H5Filter::~H5Filter() {
-
-            }
-
-            //------------------------------------------------------------------
-            H5Filter &H5Filter::operator=(const H5Filter &o){
-                EXCEPTION_SETUP("H5Filter &H5Filter::"
-                        "operator=(const H5Filter &f)");
-
-                return *this;
-            }
-
-            //------------------------------------------------------------------
-            H5Filter &H5Filter::operator=(H5Filter &&o){
-                EXCEPTION_SETUP("H5Filter &H5Filter::"
-                        "operator=(H5Filter &&o)");
-
-                return *this;
-            }
-
-
+    //-------------------------------------------------------------------------
+    H5Filter &H5Filter::operator=(H5Filter &&o)
+    {
+        return *this;
+    }
 
 //end of namespace
 }

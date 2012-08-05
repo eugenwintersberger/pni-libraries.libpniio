@@ -34,197 +34,205 @@ namespace pni{
 namespace nx{
 namespace h5{
 
-//----------------------------------------------------------------------------
-H5Error::H5Error(){
+    //--------------------------------------------------------------------------
+    H5Error::H5Error() { }
 
-}
+    //--------------------------------------------------------------------------
+    H5Error::H5Error(const H5Error &e)
+    {
+        _class_id = e._class_id;
+        _class_name = e._class_name;
+        _major_number = e._major_number;
+        _minor_number = e._minor_number;
+        _file_name = e._file_name;
+        _func_name = e._func_name;
+        _description = e._description;
+        _minor_message = e._minor_message;
+        _major_message = e._major_message;
+    }
 
-//----------------------------------------------------------------------------
-H5Error::H5Error(const H5Error &e){
-	_class_id = e._class_id;
-	_class_name = e._class_name;
-	_major_number = e._major_number;
-	_minor_number = e._minor_number;
-	_file_name = e._file_name;
-	_func_name = e._func_name;
-	_description = e._description;
-	_minor_message = e._minor_message;
-	_major_message = e._major_message;
-}
+    //--------------------------------------------------------------------------
+    H5Error::~H5Error(){ }
 
-//----------------------------------------------------------------------------
-H5Error::~H5Error(){
+    //--------------------------------------------------------------------------
+    H5Error &H5Error::operator=(const H5Error &e)
+    {
+        if(this != &e)
+        {
+            _class_id = e._class_id;
+            _class_name = e._class_name;
+            _major_number = e._major_number;
+            _minor_number = e._minor_number;
+            _file_name = e._file_name;
+            _func_name = e._func_name;
+            _description = e._description;
+            _minor_message = e._minor_message;
+            _major_message = e._major_message;
+        }
 
-}
+        return *this;
+    }
 
-//----------------------------------------------------------------------------
-H5Error &H5Error::operator=(const H5Error &e){
-	if(this != &e){
-		_class_id = e._class_id;
-		_class_name = e._class_name;
-		_major_number = e._major_number;
-		_minor_number = e._minor_number;
-		_file_name = e._file_name;
-		_func_name = e._func_name;
-		_description = e._description;
-		_minor_message = e._minor_message;
-		_major_message = e._major_message;
-	}
+    //--------------------------------------------------------------------------
+    hid_t H5Error::class_id() const
+    {
+        return _class_id;
+    }
 
-	return *this;
-}
+    //--------------------------------------------------------------------------
+    void H5Error::class_id(hid_t id)
+    {
+        char *ptr = nullptr;
+        size_t buffer_size = 0;
 
-//----------------------------------------------------------------------------
-hid_t H5Error::class_id() const{
-	return _class_id;
-}
+        //set the class id
+        _class_id = id;
+        //determine the class name from the class id
 
-//----------------------------------------------------------------------------
-void H5Error::class_id(hid_t id){
-	EXCEPTION_SETUP("void H5Error::setClassId(hid_t id)");
-	char *ptr = nullptr;
-	size_t buffer_size = 0;
+        //allocate memory
+        buffer_size = H5Eget_class_name(id,NULL,1)+1;
+        ptr = new char[buffer_size];
+        if(!ptr)
+            throw MemoryAllocationError(EXCEPTION_RECORD, 
+                                        "Memory allocation failed!");
 
-	//set the class id
-	_class_id = id;
-	//determine the class name from the class id
+        //obtain error class
+        H5Eget_class_name(id,ptr,buffer_size);
+        _class_name = String(ptr);
+        //free memory
+        if(ptr) delete [] ptr;
+    }
 
-	//allocate memory
-	buffer_size = H5Eget_class_name(id,NULL,1)+1;
-	ptr = new char[buffer_size];
-	if(!ptr){
-		EXCEPTION_INIT(MemoryAllocationError,"Memory allocation failed!");
-		EXCEPTION_THROW(); 
-	}
+    //--------------------------------------------------------------------------
+    hid_t H5Error::major_number() const
+    {
+        return _major_number;
+    }
 
-	//obtain error class
-	H5Eget_class_name(id,ptr,buffer_size);
-	_class_name = String(ptr);
-	//free memory
-	if(ptr) delete [] ptr;
-}
+    //--------------------------------------------------------------------------
+    void H5Error::major_number(hid_t v)
+    {
+        char *ptr = nullptr;
+        size_t buffer_size = 0;
+        H5E_type_t msg_type;
 
-//----------------------------------------------------------------------------
-hid_t H5Error::major_number() const{
-	return _major_number;
-}
+        //set the major number
+        _major_number = v;
 
-//----------------------------------------------------------------------------
-void H5Error::major_number(hid_t v){
-	EXCEPTION_SETUP("void H5Error::setMajorNumber(hid_t v)");
-	char *ptr = nullptr;
-	size_t buffer_size = 0;
-	H5E_type_t msg_type;
+        //get the major message from the error stack
+        buffer_size = H5Eget_msg(v,&msg_type,NULL,1);
+        if(buffer_size > 0){
+            //memory allocation
+            ptr = new char[buffer_size+1];
+            if(!ptr)
+                throw MemoryAllocationError(EXCEPTION_RECORD, 
+                                            "Memory allocation failed!");
 
-	//set the major number
-	_major_number = v;
+            //read error message
+            H5Eget_msg(v,&msg_type,ptr,buffer_size+1);
+            _major_message = String(ptr);
 
-	//get the major message from the error stack
-	buffer_size = H5Eget_msg(v,&msg_type,NULL,1);
-	if(buffer_size > 0){
-		//memory allocation
-		ptr = new char[buffer_size+1];
-		if(!ptr){
-			EXCEPTION_INIT(MemoryAllocationError,"Memory allocation failed!");
-			EXCEPTION_THROW();
-		}
+            //free memory
+            if(ptr) delete [] ptr;
+            ptr = nullptr;
+        }
+    }
 
-		//read error message
-		H5Eget_msg(v,&msg_type,ptr,buffer_size+1);
-		_major_message = String(ptr);
+    //-------------------------------------------------------------------------
+    hid_t H5Error::minor_number() const
+    {
+        return _minor_number;
+    }
 
-		//free memory
-		if(ptr) delete [] ptr;
-		ptr = nullptr;
-	}
-}
+    //--------------------------------------------------------------------------
+    void H5Error::minor_number(hid_t v)
+    {
+        char *ptr = nullptr;
+        size_t buffer_size = 0;
+        H5E_type_t msg_type;
 
-//----------------------------------------------------------------------------
-hid_t H5Error::minor_number() const{
-	return _minor_number;
-}
+        //set the minor number
+        _minor_number = v;
 
-//----------------------------------------------------------------------------
-void H5Error::minor_number(hid_t v){
-	EXCEPTION_SETUP("void H5Error::setMinorNumber(hid_t v)");
-	char *ptr = nullptr;
-	size_t buffer_size = 0;
-	H5E_type_t msg_type;
+        //get the minor message
+        buffer_size = H5Eget_msg(v,&msg_type,NULL,1);
+        if(buffer_size > 0){
+            //memory allocation
+            ptr = new char[buffer_size+1];
+            if(!ptr)
+                throw MemoryAllocationError(EXCEPTION_RECORD, 
+                                            "Memory allocation failed!");
 
-	//set the minor number
-	_minor_number = v;
+            //read minor number
+            H5Eget_msg(v,&msg_type,ptr,buffer_size+1);
+            _minor_message = String(ptr);
 
-	//get the minor message
-	buffer_size = H5Eget_msg(v,&msg_type,NULL,1);
-	if(buffer_size > 0){
-		//memory allocation
-		ptr = new char[buffer_size+1];
-		if(!ptr){
-			EXCEPTION_INIT(MemoryAllocationError,"Memory allocation failed!");
-			EXCEPTION_THROW();
-		}
+            //free memory	
+            if(ptr) delete [] ptr;	
+            ptr = nullptr;
+        }
+    }
 
-		//read minor number
-		H5Eget_msg(v,&msg_type,ptr,buffer_size+1);
-		_minor_message = String(ptr);
+    //--------------------------------------------------------------------------
+    String H5Error::file_name() const
+    {
+        return _file_name;
+    }
 
-		//free memory	
-		if(ptr) delete [] ptr;	
-		ptr = nullptr;
-	}
-}
+    //--------------------------------------------------------------------------
+    void H5Error::file_name(const String &n)
+    {
+        _file_name = n;
+    }
 
-//----------------------------------------------------------------------------
-String H5Error::file_name() const{
-	return _file_name;
-}
+    //--------------------------------------------------------------------------
+    String H5Error::func_name() const
+    {
+        return _func_name;
+    }
 
-//----------------------------------------------------------------------------
-void H5Error::file_name(const String &n){
-	_file_name = n;
-}
+    //--------------------------------------------------------------------------
+    void H5Error::func_name(const String &n)
+    {
+        _func_name = n;
+    }
 
-//----------------------------------------------------------------------------
-String H5Error::func_name() const{
-	return _func_name;
-}
+    //--------------------------------------------------------------------------
+    String H5Error::description() const
+    {
+        return _description;
+    }
 
-//----------------------------------------------------------------------------
-void H5Error::func_name(const String &n){
-	_func_name = n;
-}
-
-//----------------------------------------------------------------------------
-String H5Error::description() const{
-	return _description;
-}
-
-//----------------------------------------------------------------------------
-void H5Error::description(const String &n){
-	_description = n;
-}
+    //--------------------------------------------------------------------------
+    void H5Error::description(const String &n)
+    {
+        _description = n;
+    }
 
 
-//----------------------------------------------------------------------------
-String H5Error::major_message() const{
-	return _major_message;
-}
+    //--------------------------------------------------------------------------
+    String H5Error::major_message() const
+    {
+        return _major_message;
+    }
 
 
-//----------------------------------------------------------------------------
-String H5Error::minor_message() const{
-	return _minor_message;
-}
+    //--------------------------------------------------------------------------
+    String H5Error::minor_message() const
+    {
+        return _minor_message;
+    }
 
-//----------------------------------------------------------------------------
-std::ostream &operator<<(std::ostream &o,const H5Error &e){
-	o<<e._class_name<<" - Error in: "<<e._func_name<<" ("<<e._file_name
-	 <<")"<<std::endl;
-	o<<e._description<<": "<<e._major_message<<" -- "<<e._minor_message
-	 <<std::endl;
+    //--------------------------------------------------------------------------
+    std::ostream &operator<<(std::ostream &o,const H5Error &e)
+    {
+        o<<e._class_name<<" - Error in: "<<e._func_name<<" ("<<e._file_name
+         <<")"<<std::endl;
+        o<<e._description<<": "<<e._major_message<<" -- "<<e._minor_message
+         <<std::endl;
 
-	return o;
-}
+        return o;
+    }
 
 //end of namespace
 }

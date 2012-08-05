@@ -28,244 +28,215 @@
 #include "H5Exceptions.hpp"
 
 namespace pni{
-    namespace nx{
-        namespace h5{
-            //=================constrcutors and destructors====================
-            H5Object::H5Object(const hid_t &id)
-                :_id(id)
-            {
-                //if the id passed to the constructor is valid 
-                //we need to increment the reference counter for this ID.
-                //The reason is simply that somewhere outside there is 
-                //still a handle to this ID.
-                if(H5Iis_valid(_id)) H5Iinc_ref(_id);
-            }
-            
-            //-----------------------------------------------------------------
-            H5Object::H5Object()
-                :_id(0)
-            {
-            }
-
-            //-----------------------------------------------------------------
-            H5Object::H5Object(const H5Object &o)
-                :_id(o._id)
-            {
-                //need to increment the reference 
-                //counter for this object
-                if(H5Iis_valid(_id)) H5Iinc_ref(_id);
-            }
-
-            //-----------------------------------------------------------------
-            H5Object::H5Object(H5Object &&o)
-                :_id(o._id) 
-            {
-                o._id = 0;
-                //since the id is removed from the original object we do not
-                //have to care about the reference counter
-            }
-            
-            //-----------------------------------------------------------------
-            H5Object::~H5Object(){
-                if(is_valid()) H5Oclose(id());
-                _id = 0;
-            }   
-
-
-            //================assignment operators=============================
-            //implementation of the copy assignment operator
-            H5Object &H5Object::operator=(const H5Object &o){
-
-                if(this == &o) return *this;
-
-                close(); //close the actual object
-                _id = o._id;
-
-                //if the original object is valid we have to increment 
-                //the reference counter for this id
-                if(is_valid()) H5Iinc_ref(_id);
-
-                return *this;
-            }
-        
-            //-----------------------------------------------------------------
-            //implementation of the move assignment operator
-            H5Object &H5Object::operator=(H5Object &&o){
-
-                if(this == &o) return *this;
-
-                close(); //close the actual object
-                _id = o._id;
-                o._id = 0;
-
-                //As this is a move operation we do not need to care
-                //about the IDs reference. 
-
-                return *this;
-            }
-           
-            //=============basic manipulation methods==========================
-            bool H5Object::is_valid() const {
-                //std::cout<<_id;
-                if(H5Iis_valid(_id)>0){
-                    //std::cout<<" is valid"<<std::endl;
-                    return true;
-                }
-
-                //std::cout<<" is not valid!"<<std::endl;
-
-                return false;
-            }
-    
-            //-----------------------------------------------------------------
-            void H5Object::close() {
-                if(is_valid()) H5Oclose(_id);
-                _id = 0;
-            }
-            
-            //-----------------------------------------------------------------
-            const hid_t &H5Object::id() const {
-                return _id;
-            }
-
-            //-----------------------------------------------------------------
-            H5ObjectType H5Object::object_type() const {
-                EXCEPTION_SETUP("H5ObjectType H5Object::object_type() const");
-
-                if(!is_valid()){
-                   EXCEPTION_INIT(H5ObjectError, "Invalid HDF5 object");
-                   EXCEPTION_THROW();
-                }
-
-                H5I_type_t tid = H5Iget_type(_id);
-                switch(tid){
-                    case H5I_FILE: return H5ObjectType::FILE;
-                    case H5I_GROUP: return H5ObjectType::GROUP;
-                    case H5I_DATASET: return H5ObjectType::DATASET;
-                    case H5I_DATATYPE: return H5ObjectType::DATATYPE;
-                    case H5I_DATASPACE: return H5ObjectType::DATASPACE;
-                    case H5I_ATTR: return H5ObjectType::ATTRIBUTE;
-                    default: return H5ObjectType::BADID;
-
-                };
-            }
-
-            //-----------------------------------------------------------------
-            time_t H5Object::acc_time() const
-            {
-                EXCEPTION_SETUP("time_t H5Object::acc_time() const");
-                H5O_info_t info;
-
-                herr_t err = H5Oget_info(id(),&info);
-                if(err < 0){
-                    EXCEPTION_INIT(H5ObjectError,"Cannot obtain object info!");
-                    EXCEPTION_THROW();
-                }
-
-                return info.atime;
-            }
-            
-            //-----------------------------------------------------------------
-            time_t H5Object::mod_time() const
-            {
-                EXCEPTION_SETUP("time_t H5Object::mod_time() const");
-                H5O_info_t info;
-
-                herr_t err = H5Oget_info(id(),&info);
-                if(err < 0){
-                    EXCEPTION_INIT(H5ObjectError,"Cannot obtain object info!");
-                    EXCEPTION_THROW();
-                }
-
-                return info.mtime;
-            }
-            
-            //-----------------------------------------------------------------
-            time_t H5Object::chng_time() const
-            {
-                EXCEPTION_SETUP("time_t H5Object::chng_time() const");
-                H5O_info_t info;
-
-                herr_t err = H5Oget_info(id(),&info);
-                if(err < 0){
-                    EXCEPTION_INIT(H5ObjectError,"Cannot obtain object info!");
-                    EXCEPTION_THROW();
-                }
-
-                return info.ctime;
-            }
-
-            //-----------------------------------------------------------------
-            time_t H5Object::birth_time() const
-            {
-                EXCEPTION_SETUP("time_t H5Object::birth_time() const");
-                H5O_info_t info;
-
-                herr_t err = H5Oget_info(id(),&info);
-                if(err < 0){
-                    EXCEPTION_INIT(H5ObjectError,"Cannot obtain object info!");
-                    EXCEPTION_THROW();
-                }
-
-                return info.btime;
-            }
-
-            //-----------------------------------------------------------------
-            pni::nx::NXObjectType H5Object::nxobject_type() const
-            {
-                if(object_type() == H5ObjectType::GROUP) 
-                    return pni::nx::NXObjectType::NXGROUP;
-                else if(object_type() == H5ObjectType::FILE)
-                    return pni::nx::NXObjectType::NXGROUP;
-                else if(object_type() == H5ObjectType::DATASET)
-                    return pni::nx::NXObjectType::NXFIELD;
-                else
-                    return pni::nx::NXObjectType::NXNONE;
-
-            }
-
-            //=============comparison operators================================
-            //implementation of equality check
-            bool operator==(const H5Object &a,const H5Object &b)
-            {
-                EXCEPTION_SETUP("bool operator==(const H5Object &a,"
-                        "const H5Object &b)");
-                H5O_info_t ia,ib;
-               
-                //obtain HDF5 info structure of first object
-                herr_t err = H5Oget_info(a.id(),&ia);
-                if(err < 0){
-                    EXCEPTION_INIT(H5ObjectError,"Cannot obtain object info of"
-                            "first object!");
-                    EXCEPTION_THROW();
-                }
-
-                //obtain HDF5 info structure of second object
-                err = H5Oget_info(b.id(),&ib);
-                if(err < 0){
-                    EXCEPTION_INIT(H5ObjectError,"Cannot obtain object info of"
-                            "second object!");
-                    EXCEPTION_THROW();
-                }
-
-                //if the addresses in the file are equal return 
-                //true
-                if(ia.addr == ib.addr) return true;
-
-                return false;
-
-            }
-
-            //-----------------------------------------------------------------
-            //implementation of inequality check
-            bool operator!=(const H5Object &a,const H5Object &b)
-            {
-                if(a == b) return false;
-                return true;
-            }
-
-
-
-        }
+namespace nx{
+namespace h5{
+    //=================constrcutors and destructors============================
+    H5Object::H5Object(const hid_t &id)
+        :_id(id)
+    {
+        //if the id passed to the constructor is valid 
+        //we need to increment the reference counter for this ID.
+        //The reason is simply that somewhere outside there is 
+        //still a handle to this ID.
+        if(H5Iis_valid(_id)) H5Iinc_ref(_id);
     }
+    
+    //-------------------------------------------------------------------------
+    H5Object::H5Object() :_id(0) { }
+
+    //-------------------------------------------------------------------------
+    H5Object::H5Object(const H5Object &o) :_id(o._id)
+    {
+        //need to increment the reference 
+        //counter for this object
+        if(H5Iis_valid(_id)) H5Iinc_ref(_id);
+    }
+
+    //-------------------------------------------------------------------------
+    H5Object::H5Object(H5Object &&o) :_id(o._id) 
+    {
+        o._id = 0;
+        //since the id is removed from the original object we do not
+        //have to care about the reference counter
+    }
+    
+    //-------------------------------------------------------------------------
+    H5Object::~H5Object()
+    {
+        if(is_valid()) H5Oclose(id());
+        _id = 0;
+    }   
+
+
+    //================assignment operators=====================================
+    //implementation of the copy assignment operator
+    H5Object &H5Object::operator=(const H5Object &o)
+    {
+        if(this == &o) return *this;
+
+        close(); //close the actual object
+        _id = o._id;
+
+        //if the original object is valid we have to increment 
+        //the reference counter for this id
+        if(is_valid()) H5Iinc_ref(_id);
+
+        return *this;
+    }
+
+    //-------------------------------------------------------------------------
+    //implementation of the move assignment operator
+    H5Object &H5Object::operator=(H5Object &&o)
+    {
+        if(this == &o) return *this;
+
+        close(); //close the actual object
+        _id = o._id;
+        o._id = 0;
+
+        //As this is a move operation we do not need to care
+        //about the IDs reference. 
+
+        return *this;
+    }
+   
+    //=============basic manipulation methods==================================
+    bool H5Object::is_valid() const {
+        //std::cout<<_id;
+        if(H5Iis_valid(_id)>0) return true;
+
+        return false;
+    }
+
+    //-------------------------------------------------------------------------
+    void H5Object::close() 
+    {
+        if(is_valid()) H5Oclose(_id);
+        _id = 0;
+    }
+    
+    //-------------------------------------------------------------------------
+    const hid_t &H5Object::id() const { return _id; }
+
+    //-------------------------------------------------------------------------
+    H5ObjectType H5Object::object_type() const 
+    {
+
+        if(!is_valid())
+            throw H5ObjectError(EXCEPTION_RECORD,"Invalid HDF5 object");
+
+        H5I_type_t tid = H5Iget_type(_id);
+        switch(tid){
+            case H5I_FILE: return H5ObjectType::FILE;
+            case H5I_GROUP: return H5ObjectType::GROUP;
+            case H5I_DATASET: return H5ObjectType::DATASET;
+            case H5I_DATATYPE: return H5ObjectType::DATATYPE;
+            case H5I_DATASPACE: return H5ObjectType::DATASPACE;
+            case H5I_ATTR: return H5ObjectType::ATTRIBUTE;
+            default: return H5ObjectType::BADID;
+
+        };
+    }
+
+    //-------------------------------------------------------------------------
+    time_t H5Object::acc_time() const
+    {
+        H5O_info_t info;
+
+        herr_t err = H5Oget_info(id(),&info);
+        if(err < 0)
+            throw H5ObjectError(EXCEPTION_RECORD,"Cannot obtain object info!");
+
+        return info.atime;
+    }
+    
+    //-------------------------------------------------------------------------
+    time_t H5Object::mod_time() const
+    {
+        H5O_info_t info;
+
+        herr_t err = H5Oget_info(id(),&info);
+        if(err < 0)
+            throw H5ObjectError(EXCEPTION_RECORD,"Cannot obtain object info!");
+
+        return info.mtime;
+    }
+    
+    //-------------------------------------------------------------------------
+    time_t H5Object::chng_time() const
+    {
+        H5O_info_t info;
+
+        herr_t err = H5Oget_info(id(),&info);
+        if(err < 0)
+            throw H5ObjectError(EXCEPTION_RECORD,"Cannot obtain object info!");
+
+        return info.ctime;
+    }
+
+    //--------------------------------------------------------------------------
+    time_t H5Object::birth_time() const
+    {
+        H5O_info_t info;
+
+        herr_t err = H5Oget_info(id(),&info);
+        if(err < 0)
+            throw H5ObjectError(EXCEPTION_RECORD,"Cannot obtain object info!");
+
+        return info.btime;
+    }
+
+    //-------------------------------------------------------------------------
+    pni::nx::NXObjectType H5Object::nxobject_type() const
+    {
+        if(object_type() == H5ObjectType::GROUP) 
+            return pni::nx::NXObjectType::NXGROUP;
+        else if(object_type() == H5ObjectType::FILE)
+            return pni::nx::NXObjectType::NXGROUP;
+        else if(object_type() == H5ObjectType::DATASET)
+            return pni::nx::NXObjectType::NXFIELD;
+        else
+            return pni::nx::NXObjectType::NXNONE;
+
+    }
+
+    //=============comparison operators========================================
+    //implementation of equality check
+    bool operator==(const H5Object &a,const H5Object &b)
+    {
+        H5O_info_t ia,ib;
+       
+        //obtain HDF5 info structure of first object
+        herr_t err = H5Oget_info(a.id(),&ia);
+        if(err < 0)
+            throw H5ObjectError(EXCEPTION_RECORD,"Cannot obtain object info of"
+                                "first object!");
+
+        //obtain HDF5 info structure of second object
+        err = H5Oget_info(b.id(),&ib);
+        if(err < 0)
+            throw H5ObjectError(EXCEPTION_RECORD,"Cannot obtain object info of"
+                                "second object!");
+
+        //if the addresses in the file are equal return 
+        //true
+        if(ia.addr == ib.addr) return true;
+
+        return false;
+
+    }
+
+    //-------------------------------------------------------------------------
+    //implementation of inequality check
+    bool operator!=(const H5Object &a,const H5Object &b)
+    {
+        if(a == b) return false;
+        return true;
+    }
+
+
+
+//end of namespace
+}
+}
 }

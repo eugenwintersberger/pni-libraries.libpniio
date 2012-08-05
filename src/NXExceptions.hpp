@@ -34,147 +34,154 @@
 using namespace pni::utils;
 
 namespace pni{
-    namespace nx{
+namespace nx{
 
-        //! \ingroup error_classes
-        //! \brief field exception
+    //! \ingroup error_classes
+    //! \brief field exception
 
-        //! Raised if an error occured in one of the NXField methods.
-        class NXFieldError:public Exception{
-            public:
-                //! default constructor
-                explicit NXFieldError();
-                //! constructor
-                explicit NXFieldError(const String &i,const String &d);
-                //! destructor
-                ~NXFieldError() throw();
-                
-                //! output operator
-                friend std::ostream &operator<<(std::ostream &o,
-                                                const NXFieldError &e);
-        };
+    //! Raised if an error occured in one of the NXField methods.
+    class NXFieldError:public Exception
+    {
+        public:
+            //! default constructor
+            explicit NXFieldError();
+            //! constructor
+            explicit NXFieldError(const ExceptionRecord &i,const String &d);
+            //! destructor
+            ~NXFieldError() throw();
+            
+            //! output operator
+            friend std::ostream &operator<<(std::ostream &o,
+                                            const NXFieldError &e);
+    };
 
-        //---------------------------------------------------------------------
-        //! \ingroup error_classes
-        //! \brief Attribute Error
+    //---------------------------------------------------------------------
+    //! \ingroup error_classes
+    //! \brief Attribute Error
 
-        //! Raised in cases where reading or writing an attribute failed.
-        class NXAttributeError:public Exception{
-            public:
-                //! default constructor
-                explicit NXAttributeError();
-                //! constructor
-                explicit NXAttributeError(const String &i,const String &d);
-                //! destructor
-                ~NXAttributeError() throw();
-                
-                //! output operator
-                friend std::ostream &operator<<(std::ostream &o,
-                                                const NXAttributeError &e);
-        };
+    //! Raised in cases where reading or writing an attribute failed.
+    class NXAttributeError:public Exception
+    {
+        public:
+            //! default constructor
+            explicit NXAttributeError();
+            //! constructor
+            explicit NXAttributeError(const ExceptionRecord &i,const String &d);
+            //! destructor
+            ~NXAttributeError() throw();
+            
+            //! output operator
+            friend std::ostream &operator<<(std::ostream &o,
+                                            const NXAttributeError &e);
+    };
 
-        //----------------------------------------------------------------------
-        //! \ingroup error_classes
-        //! \brief Group Error
+    //----------------------------------------------------------------------
+    //! \ingroup error_classes
+    //! \brief Group Error
 
-        //! Error in case of group operations.
-        class NXGroupError:public Exception{
-            public:
-                //! default constructor
-                explicit NXGroupError();
-                //! constructor
-                explicit NXGroupError(const String &i,const String &d);
-                //! destructor
-                ~NXGroupError() throw();
-                //! output operator
-                friend std::ostream &operator<<(std::ostream &o,
-                                                const NXGroupError &e);
-        };
+    //! Error in case of group operations.
+    class NXGroupError:public Exception
+    {
+        public:
+            //! default constructor
+            explicit NXGroupError();
+            //! constructor
+            explicit NXGroupError(const ExceptionRecord &i,const String &d);
+            //! destructor
+            ~NXGroupError() throw();
+            //! output operator
+            friend std::ostream &operator<<(std::ostream &o,
+                                            const NXGroupError &e);
+    };
 
-        //----------------------------------------------------------------------
-        //! \ingroup error_classes
-        //! \brief File Error
+    //----------------------------------------------------------------------
+    //! \ingroup error_classes
+    //! \brief File Error
 
-        //! File exception class.
-        class NXFileError:public Exception {
-            public:
-                //! default constructor
-                explicit NXFileError():Exception("NXFileError")
-                {}
+    //! File exception class.
+    class NXFileError:public Exception 
+    {
+        public:
+            //! default constructor
+            explicit NXFileError():Exception("NXFileError") {}
 
-                //! constructor
-                explicit NXFileError(const String &i,const String &d)
-                    :Exception("NXFileError",i,d)
-                {}
+            //! constructor
+            explicit NXFileError(const ExceptionRecord &i,const String &d)
+                :Exception("NXFileError",i,d)
+            {}
 
-                //! destructor
-                ~NXFileError() throw() 
-                {}
+            //! destructor
+            ~NXFileError() throw() 
+            {}
 
-                //! output operator
-                friend std::ostream &operator<<(std::ostream &o,
-                                                const NXFileError &e){
-                    return e.print(o);
-                }
-        };
+            //! output operator
+            friend std::ostream &operator<<(std::ostream &o,
+                                            const NXFileError &e)
+            {
+                return e.print(o);
+            }
+    };
 
-        //----------------------------------------------------------------------
-        //! \ingroup error_classes
-        //! \brief Selection Error
+    //----------------------------------------------------------------------
+    //! \ingroup error_classes
+    //! \brief Selection Error
 
-        //! Selection exception class.
-        class NXSelectionError:public Exception {
-            public:
-                //! default constructor
-                explicit NXSelectionError():Exception("NXFilterError")
-                {}
+    //! Selection exception class.
+    class NXSelectionError:public Exception 
+    {
+        public:
+            //! default constructor
+            explicit NXSelectionError():Exception("NXFilterError")
+            {}
 
-                //! constructor
-                explicit NXSelectionError(const String &i,const String &d)
-                    :Exception("NXFilterError",i,d)
-                {}
+            //! constructor
+            explicit NXSelectionError(const ExceptionRecord &i,const String &d)
+                :Exception("NXFilterError",i,d)
+            {}
 
-                //! destructor
-                ~NXSelectionError() throw() 
-                {}
+            //! destructor
+            ~NXSelectionError() throw() 
+            {}
 
-                //! output operator
-                friend std::ostream &operator<<(std::ostream &o,
-                                                const NXSelectionError &e){
-                    return e.print(o);
-                }
-        };
+            //! output operator
+            friend std::ostream &operator<<(std::ostream &o,
+                                            const NXSelectionError &e)
+            {
+                return e.print(o);
+            }
+    };
 
-        //----------------------------------------------------------------------
-        //! \ingroup error_classes
-        //! \brief Filter Error
+    //----------------------------------------------------------------------
+    //! \ingroup error_classes
+    //! \brief Filter Error
 
-        //! Filter exception class.
-        class NXFilterError:public Exception {
-            public:
-                //! default constructor
-                explicit NXFilterError():Exception("NXFilterError")
-                {}
+    //! Filter exception class.
+    class NXFilterError:public Exception 
+    {
+        public:
+            //! default constructor
+            explicit NXFilterError():Exception("NXFilterError")
+            {}
 
-                //! constructor
-                explicit NXFilterError(const String &i,const String &d)
-                    :Exception("NXFilterError",i,d)
-                {}
+            //! constructor
+            explicit NXFilterError(const ExceptionRecord &i,const String &d)
+                :Exception("NXFilterError",i,d)
+            {}
 
-                //! destructor
-                ~NXFilterError() throw() 
-                {}
+            //! destructor
+            ~NXFilterError() throw() 
+            {}
 
-                //! output operator
-                friend std::ostream &operator<<(std::ostream &o,
-                                                const NXFilterError &e){
-                    return e.print(o);
-                }
-        };
+            //! output operator
+            friend std::ostream &operator<<(std::ostream &o,
+                                            const NXFilterError &e){
+                return e.print(o);
+            }
+    };
 
 
 //end of namespace
-    }
+}
 }
 
 

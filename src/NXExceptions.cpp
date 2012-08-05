@@ -31,56 +31,53 @@ namespace pni{
 namespace nx{
 
 //------------------------------------------------------------------------------
-NXFieldError::NXFieldError():Exception("NXFieldError"){
-}
+NXFieldError::NXFieldError():Exception("NXFieldError"){ }
 
 //------------------------------------------------------------------------------
-NXFieldError::NXFieldError(const String &i,const String &d)
-		     :Exception("NXFieldError",i,d){
-}
+NXFieldError::NXFieldError(const ExceptionRecord &i,const String &d)
+		     :Exception("NXFieldError",i,d)
+{ }
 
 //------------------------------------------------------------------------------
-NXFieldError::~NXFieldError() throw() {
-}
+NXFieldError::~NXFieldError() throw() { }
 
 //------------------------------------------------------------------------------
-std::ostream &operator<<(std::ostream &o,const NXFieldError &e){
+std::ostream &operator<<(std::ostream &o,const NXFieldError &e)
+{
 	return e.print(o);
 }
 
 //------------------------------------------------------------------------------
-NXAttributeError::NXAttributeError():Exception("NXAttributeError"){
-}
+NXAttributeError::NXAttributeError():Exception("NXAttributeError"){ }
 
 //------------------------------------------------------------------------------
-NXAttributeError::NXAttributeError(const String &i,const String &d)
-                 :Exception("NXAttributeError",i,d){
-}
+NXAttributeError::NXAttributeError(const ExceptionRecord &i,const String &d)
+                 :Exception("NXAttributeError",i,d)
+{ }
 
 //------------------------------------------------------------------------------
-NXAttributeError::~NXAttributeError() throw() {
-}
+NXAttributeError::~NXAttributeError() throw() { }
 
 //------------------------------------------------------------------------------
-std::ostream &operator<<(std::ostream &o,const NXAttributeError &e){
+std::ostream &operator<<(std::ostream &o,const NXAttributeError &e)
+{
 	return e.print(o);
 }
 
 //------------------------------------------------------------------------------
-NXGroupError::NXGroupError():Exception("NXGroupError"){
-}
+NXGroupError::NXGroupError():Exception("NXGroupError") { }
 
 //------------------------------------------------------------------------------
-NXGroupError::NXGroupError(const String &i,const String &d)
-			 :Exception("NXGroupError",i,d){
-}
+NXGroupError::NXGroupError(const ExceptionRecord &i,const String &d)
+			 :Exception("NXGroupError",i,d)
+{ }
 
 //------------------------------------------------------------------------------
-NXGroupError::~NXGroupError() throw() {
-}
+NXGroupError::~NXGroupError() throw() { }
 
 //------------------------------------------------------------------------------
-std::ostream &operator<<(std::ostream &o,const NXGroupError &e){
+std::ostream &operator<<(std::ostream &o,const NXGroupError &e)
+{
 	return e.print(o);
 }
 
