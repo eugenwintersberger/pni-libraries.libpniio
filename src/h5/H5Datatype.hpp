@@ -34,66 +34,69 @@ using namespace pni::utils;
 
 
 namespace pni{
-    namespace nx{
-        namespace h5{
-            //! \ingroup nxh5_classes            
-            //! \brief HDF5 type wrapper
+namespace nx{
+namespace h5{
+    /*! 
+    \ingroup nxh5_classes            
+    \brief HDF5 type wrapper
 
-            //! The class wraps around an HDF5 type object. One will hardly 
-            //! ever construct this class by oneself. This is usually done 
-            //! using the H5DatatypeFactory which provides convenient methods
-            //! for this purpose.
-            class H5Datatype:public H5Object{
-                public:
-                    //======================Constructors and destructors=======
-                    //! default constructor
-                    explicit H5Datatype();
-                    //! copy constructor
-                    H5Datatype(const H5Datatype &o);
-                    //! copy conversion operator
-                    H5Datatype(const H5Object &o);
-                    //! move constructor
-                    H5Datatype(H5Datatype &&o);
-                    //! move conversion operator
-                    H5Datatype(H5Object &&o);
-                    //! constructor form HDF5 id
-                    explicit H5Datatype(const hid_t &tid);
-                    //! destructor
-                    ~H5Datatype();
-
-
-                    //==========Assignment operators===========================
-                    //! copy assignment operator
-                    H5Datatype &operator=(const H5Datatype &o);
-                    //! copy conversion assignment operator
-                    H5Datatype &operator=(const H5Object &o);
-                    //! move assignment operator
-                    H5Datatype &operator=(H5Datatype &&o);
-                    //! move conversion assignment operator
-                    H5Datatype &operator=(H5Object &&o);
-
-                    //==========some inquery methods===========================
-                    //! type ID
-
-                    //! Return the type id of the datatype. 
-                    //! \return type code
-                    TypeID type_id() const;
-                    
-                    //! close the datatype
-                    virtual void close();
+    The class wraps around an HDF5 type object. One will hardly 
+    ever construct this class by oneself. This is usually done 
+    using the H5DatatypeFactory which provides convenient methods
+    for this purpose.
+    */
+    class H5Datatype:public H5Object
+    {
+        public:
+            //======================Constructors and destructors===============
+            //! default constructor
+            explicit H5Datatype();
+            //! copy constructor
+            H5Datatype(const H5Datatype &o);
+            //! copy conversion operator
+            H5Datatype(const H5Object &o);
+            //! move constructor
+            H5Datatype(H5Datatype &&o);
+            //! move conversion operator
+            H5Datatype(H5Object &&o);
+            //! constructor form HDF5 id
+            explicit H5Datatype(const hid_t &tid);
+            //! destructor
+            ~H5Datatype();
 
 
-                    //!==========comparison operators==========================
-                    //! equality comparison
-                    friend bool operator==(const H5Datatype &a,const H5Datatype &b);
-                    //! inequality 
-                    friend bool operator!=(const H5Datatype &a,const H5Datatype &b);
-            };
+            //==========Assignment operators===================================
+            //! copy assignment operator
+            H5Datatype &operator=(const H5Datatype &o);
+            //! copy conversion assignment operator
+            H5Datatype &operator=(const H5Object &o);
+            //! move assignment operator
+            H5Datatype &operator=(H5Datatype &&o);
+            //! move conversion assignment operator
+            H5Datatype &operator=(H5Object &&o);
+
+            //==========some inquery methods===================================
+            //! type ID
+
+            //! Return the type id of the datatype. 
+            //! \return type code
+            TypeID type_id() const;
+            
+            //! close the datatype
+            virtual void close();
 
 
-        //end of namespace
-        }
-    }
+            //!==========comparison operators==================================
+            //! equality comparison
+            friend bool operator==(const H5Datatype &a,const H5Datatype &b);
+            //! inequality 
+            friend bool operator!=(const H5Datatype &a,const H5Datatype &b);
+    };
+
+
+//end of namespace
+}
+}
 }
 
 
