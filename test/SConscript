@@ -10,15 +10,18 @@ test_env.Append(CPPPATH=["../src/"])
 
 sources_list = []
 sources_list.extend(["pninxtest.cpp"])
-sources_list.extend(["NXFileTest.cpp","NXGroupTest.cpp","NXFieldTest.cpp"])
+#sources_list.extend(["NXFileTest.cpp","NXGroupTest.cpp","NXFieldTest.cpp"])
 
 #tests for the HDF5 implementation backend
-sources_list.extend(["H5DataspaceTest.cpp","H5DatatypeTest.cpp"])
-sources_list.extend(["H5FileTest.cpp","H5GroupTest.cpp","H5DatasetTest.cpp"])
-sources_list.extend(["H5SelectionTest.cpp"])
-sources_list.extend(["H5LinkTest.cpp"])
-sources_list.extend(["TestHelpers.cpp"])
-sources_list.extend(["NXSelectionTest.cpp"])
+sources_list.append("H5DataspaceTest.cpp")
+sources_list.append("H5DatatypeTest.cpp")
+sources_list.append("H5FileTest.cpp")
+sources_list.append("H5GroupTest.cpp")
+sources_list.append("H5DatasetTest.cpp")
+#sources_list.append("H5SelectionTest.cpp")
+#sources_list.append("H5LinkTest.cpp")
+sources_list.append("TestHelpers.cpp")
+#sources_list.append("NXSelectionTest.cpp")
 
 
 pninx_test = test_env.Program("pninxtest",sources_list)

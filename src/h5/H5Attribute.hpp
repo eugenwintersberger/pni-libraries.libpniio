@@ -32,7 +32,9 @@
 #include <pni/utils/Types.hpp>
 #include <pni/utils/Scalar.hpp>
 #include <pni/utils/Array.hpp>
-#include <pni/utils/Buffer.hpp>
+#include <pni/utils/DBuffer.hpp>
+#include <pni/utils/SBuffer.hpp>
+#include <pni/utils/RBuffer.hpp>
 
 using namespace pni::utils;
 
@@ -64,6 +66,7 @@ namespace h5{
             H5Dataspace _dspace; //!< dataspace of the attribute
             H5Datatype _dtype;   //!< data type of the attribute
 
+            //-----------------------------------------------------------------
             /*! 
             \brief set dataspace and datatype
 
@@ -73,6 +76,7 @@ namespace h5{
             */
             void __set_space_type();
 
+            //-----------------------------------------------------------------
             /*! 
             \brief pointer read
 
@@ -82,8 +86,16 @@ namespace h5{
             \throws H5AttributeError in case of IO errors
             \param ptr pointer to memory
             */
-            template<typename T> void __read_to_ptr(T *ptr) const;
+            template<typename T> void __read_to_ptr(T *ptr) const
+            {
+                H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
+                herr_t err = H5Aread(id(),mem_type.id(),(void *)ptr);
+                if(err < 0)
+                    throw H5AttributeError(EXCEPTION_RECORD,
+                            "Error reading attribute ["+this->name()+"]!");
+            } 
 
+            //-----------------------------------------------------------------
             /*! 
             \brief pointer write
 
@@ -92,70 +104,105 @@ namespace h5{
             \throws H5AttributeError in case of IO errors
             \param ptr pointer to memory
             */
-            template<typename T> void __write_from_ptr(const T *ptr)
-                const;
-
-            //---------methods to create objects from the attribute----
-            /*! 
-            \brief create POD data
-
-            Private method to create a plain old data object. The 
-            newly created object is asigned to object which is 
-            passed by reference. A ShapeMissmatchError is thrown 
-            if the attribute is not scalar.
-            \throws ShapeMissmatchError if attribute not scalar
-            \param object reference to target object
-            */
-            template<typename T> void __create_object(T &object) const
+            template<typename T> void __write_from_ptr(const T *ptr) const
             {
-                if(!_dspace.is_scalar())
-                    throw ShapeMissmatchError(EXCEPTION_RECORD,
-                            "Cannot create POD object - "
-                            "attribute ["+name()+"] is not scalar");
+                H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
+                herr_t err = H5Awrite(id(),mem_type.id(),(void *)ptr);
+                if(err<0)
+                    throw H5AttributeError(EXCEPTION_RECORD, 
+                        "Error writing attribute ["+this->name()+"]!");
             }
 
-            /*! 
-            \brief create a buffer object
+            //-----------------------------------------------------------------
+            /*!
+            \brief write buffer type
 
-            Private method to create a Buffer<T> object from the 
-            attribute object. The Buffer<T> object is created with 
-            enough memory allocated to store the entire content 
-            of the attribute. If the attribute is scalar the size 
-            of the buffer is 1. 
-            \param object reference ot the new object
+            Write data from a buffer template
             */
-            template<typename T> 
-                void __create_object(DBuffer<T> &object) const
+            template<template<typename ...> class BTYPE,typename ...OTS>
+                void _write_buffer(const BTYPE<OTS...> &buffer) const
             {
-                //allocate memory to hold all the data 
-                if(_dspace.is_scalar())
-                    object.allocate(1);//in the case of a scalar type
-                else
-                    object.allocate(_dspace.shape().size());
+                //check if the buffer we are trying to read from is allocated
+                if(!buffer.is_allocated())
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD, 
+                                            "Buffer not allocated!");
+
+                check_equal_size(buffer,this->_dspace.shape(),EXCEPTION_RECORD);
+
+                __write_from_ptr(buffer.ptr());
             }
 
-            //! create an array object
+            //-----------------------------------------------------------------
+            /*!
+            \brief write buffer from an array
 
-            //! Create an array type from an attribute. All mandatory
-            //! attributes of the array: name, unit, and description
-            //! are set to NONE. If the attribute is scalar
-            //! ShapeMissmatchError is thrown
-            //! \throws ShapeMissmatchError
-            //! \param object reference to new object
-            template<typename T,template<typename,typename> class
-                BT,typename ALLOCATOR>
-                void __create_object(Array<T,BT,ALLOCATOR> &object) const{
-                EXCEPTION_SETUP("template<typename T,template<typename>"
-                        "class BT> void __create_object(Array<T,BT> "
-                        "&object) const");
+            */
+            template<template<typename ...> class ATYPE,typename ...OTS>
+                void _write_array(const ATYPE<OTS...> &array) const
+            {
+                if(!array.storage().is_allocated())
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                            "Array is not allocated!");
 
-                if(_dspace.is_scalar()){
-                    EXCEPTION_INIT(ShapeMissmatchError,"Cannot create "
-                            "array data - attribute ["+name()+"] is"
-                            " not scalar!");
-                    EXCEPTION_THROW();
-                }
-                object = ArrayFactory<T,BT,ALLOCATOR>::create(_dspace.shape());
+                check_equal_shape(array,this->_dspace,EXCEPTION_RECORD);
+                
+                __write_from_ptr(array.storage().ptr());
+
+            }
+
+            //-----------------------------------------------------------------
+            template<typename ...OTS> 
+                void _write_array(const NumArray<OTS...> &array) const
+            {
+                if(!array.storage().storage().is_allocated())
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                            "Array is not allocated!");
+
+                check_equal_shape(array,_dspace,EXCEPTION_RECORD);
+                
+                __write_from_ptr(array.storage().storage().ptr());
+            }
+
+            //-----------------------------------------------------------------
+            template<template<typename ...> class BTYPE,typename ...OTS>
+                void _read_buffer(BTYPE<OTS...> &buffer) const
+            {
+                //check if the buffer is allocated
+                if(!buffer.is_allocated())
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD, 
+                                             "Buffer not allocated!");
+
+                check_equal_size(buffer,this->_dspace,EXCEPTION_RECORD);
+
+                __read_to_ptr(buffer.ptr());
+            }
+
+            //-----------------------------------------------------------------
+            template<template<typename ...> class ATYPE,typename ...OTS>
+                void _read_array(ATYPE<OTS...> &array) const
+            {
+                typedef typename ATYPE<OTS...>::value_type value_type;
+                if(!array.storage().is_allocated())
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD, 
+                                             "Array is not allocated!");
+
+                check_equal_shape(_dspace,array,EXCEPTION_RECORD);
+
+                __read_to_ptr(const_cast<value_type *>(array.storage().ptr()));
+            }
+
+            //-----------------------------------------------------------------
+            template<typename ...OTS>
+                void _read_array(NumArray<OTS...> &array) const
+            {
+                typedef typename NumArray<OTS...>::value_type value_type;
+                if(!array.storage().storage().is_allocated())
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD, 
+                                             "Array is not allocated!");
+
+                check_equal_shape(_dspace,array,EXCEPTION_RECORD);
+
+                __read_to_ptr(const_cast<value_type *>(array.storage().storage().ptr()));
             }
 
         public:
@@ -184,143 +231,200 @@ namespace h5{
             H5Attribute &operator=(H5Attribute &&o);
 
 
-            //=============reading and writting data===================
-            /*! \brief write a complex number
-            
-            Write complex number as an attribute.
-            \throws ShapeMissmatchError if attribute is not scalar
-            \throws H5AttributeError in case of general IO errors
-            \param cmplx the complex number to write
+            //===================reading and writting data=====================
+            /*! \brief write a single scalar
+
+            Write a single scalar value of a POD type. 
+            \tparam T POD type
+            \param v reference to the data to write
             */
-            template<typename T> void write(const std::complex<T>
-                    &cmplx) const;
+            template<typename T> void write(const T &v) const
+            {
+                if(!_dspace.is_scalar())
+                    throw ShapeMissmatchError(EXCEPTION_RECORD, 
+                        "Attribute ["+this->name()+"]is not scalar!");
 
-            //! write from a buffer
+                __write_from_ptr(&v);
+            }
+       
+            //-----------------------------------------------------------------
+            /*! 
+            \brief write a string to the attribure
 
-            //! Write data from a buffer object ot the attribute.
-            //! \throws MemoryAccessError if buffer not allocated
-            //! \throws SizeMissmatchError attribute and buffer size do not match
-            //! \throws H5AttributeError in case of general IO errors
-            //! \param buffer buffer whose data to write 
-            template<typename T,template<typename,typename> class BT,
-                typename Allocator> 
-                void write(const BT<T,Allocator> buffer) const;
-
-            //! write from Scalar<T> 
-
-            //! Writing data form a scalar object to the attribute.
-            //! \throws ShapeMissmatchError if attribute is not scalar
-            //! \throws H5AttributeError in case of general IO errors
-            //! \param o scalar from which to write data
-            template<typename T> void write(const Scalar<T> &o) const;
-
-            //! write from Array<T> 
-
-            //! Write data form an array to the attribute
-            //! \throws MemoryAccessError if array buffer not allocated
-            //! \throws ShapeMissmatchError array and attribute shape do not match
-            //! \param o array object from whicht to write data
-            template<typename T,template<typename,typename> class BT,
-                typename Allocator>
-                void write(const Array<T,BT,Allocator> &o) const;
-
-            //! write POD data
-
-            //! Write attribute from plain old data objects (in other
-            //! words native data types). 
-            //! \throws ShapeMissmatchError attribute not scalar
-            //! \throws H5AttributeError general IO errors
-            //! \param value POD value from which to read data
-            template<typename T> void write(const T &value) const;
-
-            //! write from String
-
-            //! Write attribute from a string value.
-            //! \throws H5AttributeError in case of general IO errors
-            //! \param s string to write 
+            Write attribute from a string value.
+            \throws H5AttributeError in case of general IO errors
+            \param s string to write 
+            */
             void write(const String &s) const;
 
-            //! read to buffer 
 
-            //! Read data from the attribute and store it to an 
-            //! instance of a buffer object. The buffer object might
-            //! be an instance of Buffer<T> or RefBuffer<T>. 
-            //! \throws MemoryAllocationError if buffer not allocated
-            //! \throws SizeMissmatchError if buffer and attribute size do not match
-            //! \throws H5AttributeError in case of general IO errors 
-            //! \param buffer buffer object 
-            template<typename T,template<typename,typename> class BT,
-                typename Allocator> 
-                void read(BT<T,Allocator> buffer) const;
+            //-----------------------------------------------------------------
+            /*!
+            \brief write from a static buffer 
 
-            //! read to Array<T>
+            Write data form a static buffer.
+            \throws SizeMissmatchError attribute and buffer size do not match
+            \throws H5AttributeError in case of general IO errors
+            \tparam OTS template arguments to SBuffer template
+            \param buffer instance of SBuffer<OTS...> whose data to write
+            */
+            template<typename ...OTS> 
+                void write(const SBuffer<OTS...> &buffer) const
+            {
+                this->_write_buffer(buffer);
+            }
 
-            //! Read data to array a.
-            //! \throws MemoryAllocationError if array buffer not allocated
-            //! \throws ShapeMissmatchERror if array and attribute shape do not match
-            //! \throws H5AttributeError in case of general IO errors
-            //! \param a array where to store data
-            template<typename T,template<typename,typename> class BT,
-                     typename Allocator> 
-                void read(Array<T,BT,Allocator> &a) const;
+            //-----------------------------------------------------------------
+            /*!
+            \brief write from a dynamic buffer
 
-            /*! \brief read data to complex variable
-            
-            Read data to a complex variables. 
+            Write data from a dynamic buffer.
+            \throws MemoryNotAllocatedError if buffer not allocated
+            \throws SizeMissmatchError if buffer and attribute size do not match
+            \throws H5AttributeError in case of any other IO error
+            \tparam OTS template arguments
+            \param buffer instance of DBuffer
+            */
+            template<typename ...OTS>
+                void write(const DBuffer<OTS...> &buffer) const
+            {
+                this->_write_buffer(buffer);
+            }
+
+            //-----------------------------------------------------------------
+            /*!
+            \brief write data from a refbuffer
+
+            Write data from a reference buffer.
+            \throws MemoryNotAllocatedError if buffer not allocated
+            \throws SizeMissmatchError if buffer and attribute size do not match
+            \throws H5AttributeError in case of any other IO error
+            */
+            template<typename ...OTS>
+                void write(const RBuffer<OTS...> &buffer) const
+            {
+                this->_write_buffer(buffer);
+            }
+           
+            //-----------------------------------------------------------------
+            /*! 
+            \brief write from a numeric array
+
+            Write data form an array to the attribute
+            \throws MemoryAccessError if array buffer not allocated
+            \throws ShapeMissmatchError array and attribute shape do not match
+            \param o array object from whicht to write data
+            */
+            template<typename ...OTS>
+                void write(const NumArray<OTS...> &o) const
+            {
+                this->_write_array(o);
+            }
+
+            //-----------------------------------------------------------------
+            template<typename ...OTS>
+                void write(const DArray<OTS...> &o) const
+            {
+                this->_write_array(o);
+            }
+
+            //-----------------------------------------------------------------
+            template<typename ...OTS>
+                void write(const SArray<OTS...> &o) const
+            {
+                this->_write_array(o);
+            }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief read to POD
+
+            Read data from an attribute to a POD value. 
             \throws ShapeMissmatchError if attribute is not scalar
             \throws H5AttributeError in case of general IO errors
-            \param s scalar value
+            \param value POD value to which data will be stored
             */
-            template<typename T> void read(std::complex<T> &s) const;
+            template<typename T> void read(T &value) const
+            {
+                if(!_dspace.is_scalar())
+                    throw ShapeMissmatchError(EXCEPTION_RECORD, 
+                            "Attribute ["+this->name()+"] not scalar!");
 
-            //! read to Scalar<T>
+                __read_to_ptr(&value);
+            }
 
-            //! Read data to a scalar. As an attribute object does not
-            //! carry any additional information about the object, 
-            //! units, description and other important attributes must
-            //! be set by the user.
-            //! \throws ShapeMissmatchError if attribute not scalar
-            //! \throws H5AttributeError in case of general IO erros
-            //! \param s scalar object 
-            template<typename T> void read(Scalar<T> &s) const;
+            //-----------------------------------------------------------------
+            /*! 
+            \brief read to string
 
-            //! read to POD
-
-            //! Read data from an attribute to a POD value. 
-            //! \throws ShapeMissmatchError if attribute is not scalar
-            //! \throws H5AttributeError in case of general IO errors
-            //! \param value POD value to which data will be stored
-            template<typename T> void read(T &value) const;
-
-            //! read to string
-
-            //! Reads a string value from an attribute.
-            //! \throws ShapeMissmatchError if attribute is not scalar
-            //! \throws H5AttributeError in case of general IO errors
-            //! \param s string variable to which data will be written
+            Reads a string value from an attribute.
+            \throws ShapeMissmatchError if attribute is not scalar
+            \throws H5AttributeError in case of general IO errors
+            \param s string variable to which data will be written
+            */
             void read(String &s) const;
             
-            //! read to an arbitrary object
+            //-----------------------------------------------------------------
+            /*! 
+            \brief read data to DBuffer
 
-            //! This method can be used to read data to an arbitrary 
-            //! object whose type massed be passed as a template 
-            //! parameter explicit in the code. The method tries to 
-            //! construct an instance of type OBJ according to its needs
-            //! and raises an exception if this fails. Once the instance
-            //! is created the attributes data is read to this object
-            //! which is finally returned. 
-            //! \throws ShapeMissmatchError if OBJ does not support the attributes shape
-            //! \throws H5AttributeError in case of general IO errors
-            //! \return instance of OBJ with attribute data
-            template<typename OBJ> OBJ read() const;
+            Read data from the attribute and store it to an 
+            instance of a buffer object. The buffer object might
+            be an instance of Buffer<T> or RefBuffer<T>. 
+            \throws MemoryAllocationError if buffer not allocated
+            \throws SizeMissmatchError if buffer and attribute size do not match
+            \throws H5AttributeError in case of general IO errors 
+            \param buffer buffer object 
+            */
+            template<typename ...OTS> void read(DBuffer<OTS...> &buffer) const
+            {
+                this->_read_buffer(buffer);
+            }
 
+            template<typename ...OTS> void read(SBuffer<OTS...> &buffer) const
+            {
+                this->_read_buffer(buffer);
+            }
 
+            template<typename ...OTS> void read(RBuffer<OTS...> &buffer) const
+            {
+                this->_read_buffer(buffer);
+            }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief read to Array<T>
+
+            Read data to array a.
+            \throws MemoryAllocationError if array buffer not allocated
+            \throws ShapeMissmatchERror if array and attribute shape do not match
+            \throws H5AttributeError in case of general IO errors
+            \param a array where to store data
+            */
+            template<typename ...OTS> void read(NumArray<OTS...> &a) const
+            {
+                this->_read_array(a);
+            }
+
+            template<typename ...OTS> void read(DArray<OTS...> &a) const
+            {
+                this->_read_array(a);
+            }
+
+            template<typename ...OTS> void read(SArray<OTS...> &a) const
+            {
+                this->_read_array(a);
+            }
+           
             //============attribute inquery methods====================
             //! obtain attribute shape
 
             //! Returns the shape of the attribute.
             //! \return shape object
-            Shape shape() const;
+            template<typename CTYPE> CTYPE shape() const
+            {
+                return this->_dspace.template shape<CTYPE>();
+            }
 
             //! return type_id
 
@@ -356,256 +460,13 @@ namespace h5{
     };
 
     //===============private template declarations=====================
-    //implementation of reading to pointer
-    template<typename T> void H5Attribute::__read_to_ptr(T *ptr) const{
-        EXCEPTION_SETUP("template<typename T> void H5Attribute::"
-                "__read_to_ptr(T *ptr) const");
-
-        H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
-        herr_t err = H5Aread(id(),mem_type.id(),(void *)ptr);
-        if(err < 0){
-            EXCEPTION_INIT(H5AttributeError,
-                    "Error reading attribute ["+name()+"]!");
-            EXCEPTION_THROW();
-        }
-    } 
-   
-    //------------------------------------------------------------------
-    //implementation of writing from pointer
-    template<typename T> 
-        void H5Attribute::__write_from_ptr(const T *ptr) const {
-        EXCEPTION_SETUP("template<typename T>  void H5Attribute::"
-                "__write_from_ptr(const T *ptr)");
-
-        H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
-        herr_t err = H5Awrite(id(),mem_type.id(),(void *)ptr);
-        if(err<0){
-            EXCEPTION_INIT(H5AttributeError,
-                    "Error writing attribute ["+name()+"]!");
-            EXCEPTION_THROW()
-        }
-    }
-
-    //=======templates for writing attribute data======================
-    template<typename T> void H5Attribute::write(const T &value) const{
-        EXCEPTION_SETUP("template<typename T> void H5Attribute::"
-                "write(const T &value) const");
-
-        if(!_dspace.is_scalar()){
-            EXCEPTION_INIT(ShapeMissmatchError,
-                    "Attribute ["+name()+"]is not scalar!");
-            EXCEPTION_THROW();
-        }
-
-        __write_from_ptr(&value);
-    }
-
-    //-----------------------------------------------------------------
-    template<typename T> void H5Attribute::
-        write(const std::complex<T> &cmplx) const
-    {
-        EXCEPTION_SETUP("template<typename T> void H5Attribute::"
-                        "write(const std::complex<T> &cmplx) const");
-
-        if(!_dspace.is_scalar()){
-            EXCEPTION_INIT(ShapeMissmatchError,
-                    "Attribute ["+name()+"]is not scalar!");
-            EXCEPTION_THROW();
-        }
-        
-        __write_from_ptr(&cmplx);
-    }
-
-    //------------------------------------------------------------------
-    template<typename T,template<typename,typename> class BT,typename
-        Allocator> 
-    void H5Attribute::write(const BT<T,Allocator> buffer) const{
-        EXCEPTION_SETUP("template<typename T,template<typename> class"
-                "BT> void H5Attribute::write(const BT<T> buffer) "
-                "const");
-
-        //check if the buffer we are trying to read from is allocated
-        if(!buffer.is_allocated()){
-            EXCEPTION_INIT(MemoryAccessError,"Buffer not allocated!");
-            EXCEPTION_THROW();
-        }
-
-        //the size of the attribute must be equal to the size of the 
-        //buffer
-        if(buffer.size()!=this->_dspace.shape().size()){
-            std::stringstream bs_stream; 
-            bs_stream<<buffer.size();
-            std::stringstream as_stream;
-            as_stream<<_dspace.size();
-            EXCEPTION_INIT(SizeMissmatchError,
-                    "Buffer size ("+bs_stream.str()+") and size of "
-                    "attribute ["+name()+"] ("+as_stream.str()+")"
-                    "do not match!");
-                    EXCEPTION_THROW();
-        }
-
-        __write_from_ptr(buffer.ptr());
-    }
-
-    //-----------------------------------------------------------------
-    //implementation of write from Scalar<T> 
-    template<typename T> 
-    void H5Attribute::write(const Scalar<T> &o) const{
-        EXCEPTION_SETUP("template<typename T> void H5Attribute::"
-                "write(const Scalar<T> &o) const");
-        
-        if(!_dspace.is_scalar()){
-            EXCEPTION_INIT(ShapeMissmatchError,
-                    "Attribute ["+name()+"] is not a scalar");
-            EXCEPTION_THROW();
-        }
-        
-        __write_from_ptr(o.ptr());
-    }
-
-    //-----------------------------------------------------------------
-    //implementation of write from Array<T> 
-    template<typename T,template<typename,typename> class
-        Buffer,typename Allocator >
-    void H5Attribute::write(const Array<T,Buffer,Allocator> &o) const{
-        EXCEPTION_SETUP("template<typename T,template<typename> class"
-                " Buffer > void H5Attribute::write(const Array<T,"
-                "Buffer> &o) const");
-        
-        if(!o.buffer().is_allocated()){
-            EXCEPTION_INIT(MemoryAccessError,"Array not allocated!");
-            EXCEPTION_THROW();
-        }
-
-        if(o.shape() != _dspace.shape()){
-            std::stringstream oshape;
-            oshape<<o.shape();
-            std::stringstream ashape;
-            ashape<<_dspace.shape();
-            EXCEPTION_INIT(ShapeMissmatchError,
-                    "Array shape ("+oshape.str()+") and attribute shape"
-                    " ("+ashape.str()+") of attribute ["+name()+"] do"
-                    " not match!");
-            EXCEPTION_THROW();
-        }
-        
-        __write_from_ptr(o.buffer().ptr());
-    }
-
-
-    //======templates for reading attribute data=======================
-    //! 
-    template<typename OBJ> OBJ H5Attribute::read() const{
-        OBJ object;
-        __create_object(object);
-        read(object);
-        return object;
-    }
-
-    //-----------------------------------------------------------------
-    template<typename T> void H5Attribute::read(T &value) const {
-        EXCEPTION_SETUP("template<typename T> void H5Attribute::"
-                "read(T &value) const");
-        if(!_dspace.is_scalar()){
-            EXCEPTION_INIT(ShapeMissmatchError,
-                    "Attribute ["+name()+"] not scalar!");
-            EXCEPTION_THROW();
-        }
-
-        __read_to_ptr(&value);
-    }
     
-    //-----------------------------------------------------------------
-    template<typename T> void H5Attribute::read(std::complex<T> &value) const {
-        EXCEPTION_SETUP("template<typename T> void H5Attribute::"
-                "read(std::complex<T> &value) const");
-        if(!_dspace.is_scalar()){
-            EXCEPTION_INIT(ShapeMissmatchError,
-                    "Attribute ["+name()+"] not scalar!");
-            EXCEPTION_THROW();
-        }
 
-        __read_to_ptr(&value);
-    }
-   
-    //------------------------------------------------------------------
-    //implementation of read to pointer
-    template<typename T,template<typename,typename> class BT,typename
-        Allocator> 
-        void H5Attribute::read(BT<T,Allocator> buffer) const{
-        EXCEPTION_SETUP("template<typename T,template<typename> class"
-                " BT> void H5Attribute::read(BT<T> buffer) const");
-
-        //check if the buffer is allocated
-        if(!buffer.is_allocated()){
-            EXCEPTION_INIT(MemoryAccessError,"Buffer not allocated!");
-            EXCEPTION_THROW();
-        }
-
-        //check if the size of the buffer and that of the attribute
-        //match
-        if(buffer.size() != this->_dspace.shape().size()){
-            std::stringstream bs;
-            bs << buffer.size();
-            std::stringstream as;
-            as << this->_dspace.size();
-            EXCEPTION_INIT(SizeMissmatchError,
-                    "Buffer size ("+bs.str()+") and dataspace size "
-                    " ("+as.str()+") of attribute ["+name()+"] do "
-                    "not match!");
-            EXCEPTION_THROW();
-        }
-
-        __read_to_ptr(buffer.ptr());
-    }
-
-    //-----------------------------------------------------------------
-    //implementation of read to Array<T>
-    template<typename T,template<typename,typename> class BT,
-             typename Allocator> 
-    void H5Attribute::read(Array<T,BT,Allocator> &a) const{
-        EXCEPTION_SETUP("template<typename T,template<typename> "
-                "class Buffer> void H5Attribute::read(Array<T,"
-                "Buffer> &a) const");
-        if(!a.buffer().is_allocated()){
-            EXCEPTION_INIT(MemoryAccessError,"Array is not allocated!");
-            EXCEPTION_THROW();
-        }
-
-        if(_dspace.shape()!=a.shape()){
-            std::stringstream bshape;
-            bshape << a.shape();
-            std::stringstream ashape;
-            ashape << _dspace.shape();
-            EXCEPTION_INIT(ShapeMissmatchError,
-                    "Array shape ("+bshape.str()+") and dataspace shape"
-                    " ("+ashape.str()+") of attribute ["+name()+"] do"
-                    " not match!");
-            EXCEPTION_THROW();
-        }
-        
-        __read_to_ptr(const_cast<T *>(a.buffer().ptr()));
-    }
-
-    //-----------------------------------------------------------------
-    //implementation of read to Scalar<T>
-    template<typename T> void H5Attribute::read(Scalar<T> &s) const{
-        EXCEPTION_SETUP("template<typename T> void H5Attribute::"
-                "read(Scalar<T> &s) const");
-        if(!_dspace.is_scalar()){
-            EXCEPTION_INIT(ShapeMissmatchError,
-                    "Attribute ["+name()+"] is not scalar!");
-            EXCEPTION_THROW();
-        }
-
-        __read_to_ptr(s.ptr());
-    }
-            
             
 
-        //end of namespace
-        }
-    }
+//end of namespace
+}
+}
 }
 
 

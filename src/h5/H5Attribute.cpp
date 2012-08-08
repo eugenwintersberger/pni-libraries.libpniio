@@ -121,10 +121,6 @@ namespace h5{
     }
 
     //=========implementation of inquery methods===============================
-    Shape H5Attribute::shape() const
-    {
-        return _dspace.shape();
-    }
 
     //-------------------------------------------------------------------------
     TypeID H5Attribute::type_id() const

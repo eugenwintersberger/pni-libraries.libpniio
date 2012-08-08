@@ -142,8 +142,11 @@ namespace h5{
             \param ov overwrite attribute if true
             \return attribute object
             */
-            template<typename T> H5Attribute 
-                attr(const String &n, const Shape &s,bool ov=false) const;
+            template<typename T,
+                    template<typename ...> class CTYPE,
+                    typename ...OTS> 
+            H5Attribute 
+            attr(const String &n, const CTYPE<OTS...> &s,bool ov=false) const;
 
             /*! \brief open attribute by name
             

@@ -3,25 +3,26 @@ from os import path
 Import("build_env")
 
 #sources which must be compiled
-src_list = ["H5LibrarySetup.cpp",
-            "H5Exceptions.cpp",
-            "H5ErrorStack.cpp",
-            "H5Error.cpp",
-            "H5Filter.cpp",
-            "H5LZFFilter.cpp",
-            "H5DeflateFilter.cpp",
-            "H5Object.cpp",
-            "H5Dataspace.cpp",
-            "H5Datatype.cpp",
-            "H5NamedObject.cpp",
-            "H5Attribute.cpp",
-            "H5AttributeObject.cpp",
-            "H5Group.cpp",
-            "H5Dataset.cpp",
-            "H5File.cpp",
-            "H5Selection.cpp",
-            "H5DatatypeFactory.cpp",
-            "H5Link.cpp"]
+src_list = []
+src_list.append("H5LibrarySetup.cpp")
+src_list.append("H5Exceptions.cpp")
+src_list.append("H5ErrorStack.cpp")
+src_list.append("H5Error.cpp")
+src_list.append("H5Filter.cpp")
+src_list.append("H5LZFFilter.cpp")
+src_list.append("H5DeflateFilter.cpp")
+src_list.append("H5Object.cpp")
+src_list.append("H5Dataspace.cpp")
+src_list.append("H5Datatype.cpp")
+src_list.append("H5NamedObject.cpp")
+src_list.append("H5Attribute.cpp")
+src_list.append("H5AttributeObject.cpp")
+src_list.append("H5Group.cpp")
+#src_list.append("H5Dataset.cpp")
+src_list.append("H5File.cpp")
+#src_list.append("H5Selection.cpp")
+src_list.append("H5DatatypeFactory.cpp")
+#src_list.append("H5Link.cpp")
            
 #building shared and static objects
 shared_objects = build_env.SharedObject(src_list)

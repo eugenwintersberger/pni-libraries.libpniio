@@ -28,8 +28,11 @@
 #ifndef __H5NAMEDOBJECT_HPP__
 #define __H5NAMEDOBJECT_HPP__
 
+#include <pni/utils/Types.hpp>
 #include "H5Object.hpp"
 
+
+using namespace pni::utils;
 
 namespace pni{
 namespace nx{
@@ -45,7 +48,8 @@ namespace h5{
     //! and attributes). This class is used as a base class for 
     //! such objects.
     //! Due to the fact that such objects can be linked. 
-    class H5NamedObject:public H5Object{
+    class H5NamedObject:public H5Object
+    {
         protected:
             //! construct from HDF5 ID
 
