@@ -36,7 +36,8 @@ namespace h5 {
     //====================private methods======================================
 
     //implementation of the buffer allocation routine
-    void H5Dataspace::__set_buffers(){
+    void H5Dataspace::__setup_buffers()
+    {
         if(!is_scalar())
         {
             _maxdims.allocate(rank());
@@ -48,10 +49,11 @@ namespace h5 {
     }
 
     //-------------------------------------------------------------------------
-    void H5Dataspace::__create_dataspace()
+    void H5Dataspace::__setup_dataspace()
     {
         size_t s=1;
-        for(auto v: _dims) s*=v;
+        for(auto iter = _dims.begin();iter!=_dims.end();++iter)
+            s *= *iter;
 
         herr_t err = H5Sset_extent_simple(id(),s,_dims.ptr(),_maxdims.ptr());
                         
@@ -79,7 +81,7 @@ namespace h5 {
     H5Dataspace::H5Dataspace(const H5Object &o):H5Object(o)
     {
         //now we have to set the shape object
-        __set_buffers();
+        __setup_buffers();
     }
 
     //-------------------------------------------------------------------------
@@ -88,16 +90,14 @@ namespace h5 {
         H5Object(std::move(o)),
         _maxdims(std::move(o._maxdims)),
         _dims(std::move(o._dims))
-    {
-
-    }
+    { }
 
     //-------------------------------------------------------------------------
     //implementation of the move conversion constructor
     H5Dataspace::H5Dataspace(H5Object &&o):H5Object(std::move(o))
     {
         //this is a perfekt application for the __set_buffers() method
-        __set_buffers();
+        __setup_buffers();
     }
 
 
@@ -107,9 +107,8 @@ namespace h5 {
         H5Object(H5Screate(H5S_SCALAR)),
         _maxdims(list),
         _dims(list)
-        
     {
-        __create_dataspace();
+        __setup_dataspace();
     }
 
     //-------------------------------------------------------------------------
@@ -131,13 +130,13 @@ namespace h5 {
         }
 
         //finally resize the dataspace
-        __create_dataspace();
+        __setup_dataspace();
     }
 
     //-------------------------------------------------------------------------
     H5Dataspace::H5Dataspace(const hid_t &tid):H5Object(tid)
     {
-        __set_buffers();
+        __setup_buffers();
     }
 
     //-------------------------------------------------------------------------
@@ -168,7 +167,7 @@ namespace h5 {
         if(this == &o) return *this;
             
         H5Object::operator=(o);
-        __set_buffers();
+        __setup_buffers();
 
         return *this;
     }
@@ -193,7 +192,7 @@ namespace h5 {
         if(this == &o) return *this;
 
         H5Object::operator=(std::move(o));
-        __set_buffers();
+        __setup_buffers();
 
         return *this;
     }
@@ -270,7 +269,7 @@ namespace h5 {
         std::copy(list.begin(),list.end(),_dims.begin());
         std::copy(list.begin(),list.end(),_maxdims.begin());
 
-        __create_dataspace();
+        __setup_dataspace();
     }
 
 
@@ -289,7 +288,7 @@ namespace h5 {
         std::copy(dlist.begin(),dlist.end(),_dims.begin());
         std::copy(mlist.begin(),mlist.end(),_maxdims.begin());
 
-        __create_dataspace();
+        __setup_dataspace();
     }
 
     //-------------------------------------------------------------------------
@@ -306,7 +305,7 @@ namespace h5 {
 
         //set extension
         _dims[dim] += ext;
-        __create_dataspace();
+        __setup_dataspace();
     }
 
 

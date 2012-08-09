@@ -45,17 +45,17 @@ namespace nx{
     
     \code
     //create a default field of shape {1} and chunk shape {1}
-    auto f = create_field(g,"test");
+    auto f = create_field(g,"test",TypeID::STRING);
 
     //create a field with custom shape and chunk shape
     Shape s{0,1024,1024};
     Shape cs{1,1024,1024};
-    auto f = create_field(g,"test2",s,cs);
+    auto f = create_field(g,"test2",TypeID::UINT16,s,cs);
 
     //create a field with a filter - in this case shape and chunk shape
     //must be provided 
     NXDeflateFilter deflate(9,true);
-    auto f = create_field(g,"test3",s,cs,deflate);
+    auto f = create_field(g,"test3",TypeID::UINT16,s,cs,deflate);
     \endcode
    
     \throws TypeError if type ID does not exist

@@ -28,258 +28,238 @@
 #ifndef __NXATTRIBUTE_HPP__
 #define __NXATTRIBUTE_HPP__
 
+#include <pni/utils/Array.hpp>
+#include <pni/utils/DBuffer.hpp>
+#include <pni/utils/SBuffer.hpp>
+#include <pni/utils/Types.hpp>
+
 #include "NXExceptions.hpp"
 
+using namespace pni::utils;
+
 namespace pni{
-    namespace nx{
+namespace nx{
        
-        //! \ingroup nexus_lowlevel
-        //! \brief attribute object
+    /*! 
+    \ingroup nexus_lowlevel
+    \brief attribute object
 
-        //! NXAttribute represents an attribute which is attached to one 
-        //! of the Nexus objects. Objects of this type can be used to 
-        //! read and write attribute data from and to an object.
-        template<typename Imp> class NXAttribute{
-            private:
-                Imp _imp;  //!< implementation of the attribute object
-            public:
-                //==========constructors and destructors=======================
-                //! default constructor
-                explicit NXAttribute():_imp(){}
+    NXAttribute represents an attribute which is attached to one of the Nexus 
+    objects. Objects of this type can be used to read and write attribute data 
+    from and to an object.
+    */
+    template<typename Imp> class NXAttribute
+    {
+        private:
+            Imp _imp;  //!< implementation of the attribute object
+        public:
+            //==========constructors and destructors============================
+            //! default constructor
+            explicit NXAttribute():_imp(){}
 
-                //-------------------------------------------------------------
-                //! copy constructor
-                NXAttribute(const NXAttribute<Imp> &a):
-                    _imp(a._imp)
-                {
+            //------------------------------------------------------------------
+            //! copy constructor
+            NXAttribute(const NXAttribute<Imp> &a): _imp(a._imp) { }
+
+            //------------------------------------------------------------------
+            //! move constructor
+            NXAttribute(NXAttribute<Imp> &&a):_imp(std::move(a._imp)) { }
+
+            //------------------------------------------------------------------
+            //! copy constructor from implementation
+            explicit NXAttribute(const Imp &i):_imp(i) { }
+
+            //------------------------------------------------------------------
+            //! move constructor from implementation
+            explicit NXAttribute(Imp &&i):_imp(std::move(i)) { }
+
+            //------------------------------------------------------------------
+            //!destructor
+            ~NXAttribute(){ _imp.close(); }
+
+            //===================assignment operators===========================
+            //! copy assignment operator
+            NXAttribute<Imp> &operator=(const NXAttribute<Imp> &a)
+            {
+                if(this == &a) return *this;
+
+                _imp = a._imp;
+                return *this;
+            }
+
+            //------------------------------------------------------------------
+            //! move assignment operator
+            NXAttribute<Imp> &operator=(NXAttribute<Imp> &&a)
+            {
+                if(this == &a) return *this;
+                _imp = std::move(a._imp);
+                return *this;
+            }
+
+            //====================IO methods====================================
+            /*! 
+            \brief write data from a DBuffer template
+
+            Write data from an instance of the DBuffer template.
+            */
+            template<typename ...OTS> 
+                void write(const DBuffer<OTS...> buffer) const
+            {
+                _imp.write_buffer(buffer);
+            }
+
+
+            //--------------------------------------------------------------
+            //! write from Scalar<T> 
+            template<typename T> void write(const Scalar<T> &o) const
+            {
+                _imp.write(o);
+            }
+
+            //--------------------------------------------------------------
+            //! write from Array<T> 
+            template<typename T,template<typename,typename> class BT,
+                     typename Allocator>
+                void write(const Array<T,BT,Allocator> &o) const
+            {
+                EXCEPTION_SETUP("template<typename T,template<typename> "
+                        "class BT > void write(const Array<T,BT> &o) const");
+
+                if(!o.buffer().is_allocated()){
+                    EXCEPTION_INIT(MemoryAccessError,
+                            "Array not allocated!");
+                    EXCEPTION_THROW();
                 }
+                _imp.write(o);
+            }
 
-                //-------------------------------------------------------------
-                //! move constructor
-                NXAttribute(NXAttribute<Imp> &&a):
-                    _imp(std::move(a._imp))
-                {
+            //--------------------------------------------------------------
+            //! write single primitive value
+            template<typename T> void write(const T &value) const
+            {
+                _imp.write(value);
+            }
+
+            //--------------------------------------------------------------
+            //! write from String
+            void write(const String &s) const
+            {
+                _imp.write(s);
+            }
+
+            //--------------------------------------------------------------
+            void write(const char *value) const
+            {
+                _imp.write(String(value));
+            }
+
+            //--------------------------------------------------------------
+            //! read to buffer 
+            template<typename T,template<typename,typename> class BT, 
+                     typename Allocator> 
+                void read(BT<T,Allocator> buffer) const
+            {
+                EXCEPTION_SETUP("template<typename T,template<typename> "
+                        "class BT> void read(BT<T> buffer) const");
+                if(!buffer.is_allocated()){
+                    EXCEPTION_INIT(MemoryAccessError,
+                            "Buffer not allocated!");
+                    EXCEPTION_THROW();
                 }
+                _imp.read(buffer);
+            }
 
-                //-------------------------------------------------------------
-                //! copy constructor from implementation
-                explicit NXAttribute(const Imp &i):
-                    _imp(i)
-                {
+            //--------------------------------------------------------------
+            //! read to Array<T>
+            template<typename T,template<typename,typename> class BT,
+                     typename Allocator> 
+                void read(Array<T,BT,Allocator> &a) const
+            {
+                EXCEPTION_SETUP("template<typename T,template<typename> "
+                        "class BT> void read(Array<T,BT> &a) const");
+
+                if(!a.buffer().is_allocated()){
+                    EXCEPTION_INIT(MemoryAccessError,
+                            "Array not allocated!");
+                    EXCEPTION_THROW();
                 }
+                _imp.read(a);
+            }
 
-                //-------------------------------------------------------------
-                //! move constructor from implementation
-                explicit NXAttribute(Imp &&i):
-                    _imp(std::move(i))
-                {
-                }
+            //--------------------------------------------------------------
+            //! read to Scalar<T>
+            template<typename T> void read(Scalar<T> &s) const
+            {
+                _imp.read(s);
+            }
 
-                //-------------------------------------------------------------
-                //!destructor
-                ~NXAttribute(){
-                    _imp.close();
-                }
+            //--------------------------------------------------------------
+            //! read to plain old data or string
+            template<typename T> void read(T &value) const
+            {
+                _imp.read(value);
+            }
 
-                //=========assignment operators=================================
-                //! copy assignment operator
-                NXAttribute<Imp> &operator=(const NXAttribute<Imp> &a)
-                {
-                    if(this == &a) return *this;
+            //--------------------------------------------------------------
+            //! read to complex variables
+            template<typename T> void read(std::complex<T> &value) const
+            {
+                _imp.read(value);
+            }
+            //--------------------------------------------------------------
+            //! read to string
+            void read(String &s) const
+            {
+                _imp.read(s);
+            } 
+           
+            //--------------------------------------------------------------
+            //! read without argument
+            template<typename OBJ> OBJ read() const
+            {
+                return _imp.read<OBJ>();
+            }
 
-                    _imp = a._imp;
-                    return *this;
-                }
+            //============simple maintenance methods========================
+            //! obtain attribute shape
+            Shape shape() const
+            {
+                return _imp.shape();
+            }
 
-                //--------------------------------------------------------------
-                //! move assignment operator
-                NXAttribute<Imp> &operator=(NXAttribute<Imp> &&a)
-                {
-                    if(this == &a) return *this;
-                    _imp = std::move(a._imp);
-                    return *this;
-                }
+            //--------------------------------------------------------------
+            //! obtain type id
 
-                //================IO methods====================================
-                //! write from a buffer
+            //! Returns the type ID of the data stored in the attribute.
+            TypeID type_id() const
+            {
+                return _imp.type_id();
+            }
 
-                //! Write attribute data from a buffer object. The method 
-                //! throws a
-                template<typename T,template<typename,typename> class BT,
-                         typename Allocator> 
-                    void write(const BT<T,Allocator> buffer) const
-                {
-                    EXCEPTION_SETUP("template<typename T,template<typename> "
-                            "class BT> void write(const BT<T> buffer) const"
-                            "_imp.write(buffer);");
+            //--------------------------------------------------------------
+            //! close attribute
+            void close()
+            {
+                _imp.close();
+            }
 
-                    if(!buffer.is_allocated()){
-                        EXCEPTION_INIT(MemoryAccessError,
-                                "Buffer not allocated!");
-                        EXCEPTION_THROW();
-                    }
-                    _imp.write(buffer);
-                }
+            //---------------------------------------------------------------
+            //! check validity of the attribute
+            bool is_valid() const
+            {
+                return _imp.is_valid();
+            }
 
-                /*! \brief write complex attribute
+            //---------------------------------------------------------------
+            String name() const
+            {
+                return _imp.name();
+            }
 
-                */
-                template<typename T> void write(const std::complex<T> &cmplx)
-                    const
-                {
-                    _imp.write(cmplx);
-                }
+    };
 
-                //--------------------------------------------------------------
-                //! write from Scalar<T> 
-                template<typename T> void write(const Scalar<T> &o) const
-                {
-                    _imp.write(o);
-                }
-
-                //--------------------------------------------------------------
-                //! write from Array<T> 
-                template<typename T,template<typename,typename> class BT,
-                         typename Allocator>
-                    void write(const Array<T,BT,Allocator> &o) const
-                {
-                    EXCEPTION_SETUP("template<typename T,template<typename> "
-                            "class BT > void write(const Array<T,BT> &o) const");
-
-                    if(!o.buffer().is_allocated()){
-                        EXCEPTION_INIT(MemoryAccessError,
-                                "Array not allocated!");
-                        EXCEPTION_THROW();
-                    }
-                    _imp.write(o);
-                }
-
-                //--------------------------------------------------------------
-                //! write single primitive value
-                template<typename T> void write(const T &value) const
-                {
-                    _imp.write(value);
-                }
-
-                //--------------------------------------------------------------
-                //! write from String
-                void write(const String &s) const
-                {
-                    _imp.write(s);
-                }
-
-                //--------------------------------------------------------------
-                void write(const char *value) const
-                {
-                    _imp.write(String(value));
-                }
-
-                //--------------------------------------------------------------
-                //! read to buffer 
-                template<typename T,template<typename,typename> class BT, 
-                         typename Allocator> 
-                    void read(BT<T,Allocator> buffer) const
-                {
-                    EXCEPTION_SETUP("template<typename T,template<typename> "
-                            "class BT> void read(BT<T> buffer) const");
-                    if(!buffer.is_allocated()){
-                        EXCEPTION_INIT(MemoryAccessError,
-                                "Buffer not allocated!");
-                        EXCEPTION_THROW();
-                    }
-                    _imp.read(buffer);
-                }
-
-                //--------------------------------------------------------------
-                //! read to Array<T>
-                template<typename T,template<typename,typename> class BT,
-                         typename Allocator> 
-                    void read(Array<T,BT,Allocator> &a) const
-                {
-                    EXCEPTION_SETUP("template<typename T,template<typename> "
-                            "class BT> void read(Array<T,BT> &a) const");
-
-                    if(!a.buffer().is_allocated()){
-                        EXCEPTION_INIT(MemoryAccessError,
-                                "Array not allocated!");
-                        EXCEPTION_THROW();
-                    }
-                    _imp.read(a);
-                }
-
-                //--------------------------------------------------------------
-                //! read to Scalar<T>
-                template<typename T> void read(Scalar<T> &s) const
-                {
-                    _imp.read(s);
-                }
-
-                //--------------------------------------------------------------
-                //! read to plain old data or string
-                template<typename T> void read(T &value) const
-                {
-                    _imp.read(value);
-                }
-
-                //--------------------------------------------------------------
-                //! read to complex variables
-                template<typename T> void read(std::complex<T> &value) const
-                {
-                    _imp.read(value);
-                }
-                //--------------------------------------------------------------
-                //! read to string
-                void read(String &s) const
-                {
-                    _imp.read(s);
-                } 
-               
-                //--------------------------------------------------------------
-                //! read without argument
-                template<typename OBJ> OBJ read() const
-                {
-                    return _imp.read<OBJ>();
-                }
-
-                //============simple maintenance methods========================
-                //! obtain attribute shape
-                Shape shape() const
-                {
-                    return _imp.shape();
-                }
-
-                //--------------------------------------------------------------
-                //! obtain type id
-
-                //! Returns the type ID of the data stored in the attribute.
-                TypeID type_id() const
-                {
-                    return _imp.type_id();
-                }
-
-                //--------------------------------------------------------------
-                //! close attribute
-                void close()
-                {
-                    _imp.close();
-                }
-
-                //---------------------------------------------------------------
-                //! check validity of the attribute
-                bool is_valid() const
-                {
-                    return _imp.is_valid();
-                }
-
-                //---------------------------------------------------------------
-                String name() const
-                {
-                    return _imp.name();
-                }
-
-        };
-
-    }
+//end of namespace
+}
 }
 
 #endif

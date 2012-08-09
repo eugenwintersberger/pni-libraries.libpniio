@@ -6,12 +6,13 @@ extern "C"{
 #include <hdf5.h>
 }
 
-#include <pni/utils/Shape.hpp>
-
+#include<vector>
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
+#include<boost/current_function.hpp>
 
-#include "../src/h5/H5Dataspace.hpp"
+#include "h5/H5Dataspace.hpp"
+#include "h5/H5Exceptions.hpp"
 
 using namespace pni::utils;
 using namespace pni::nx::h5;
@@ -23,6 +24,8 @@ class H5DataspaceTest:public CppUnit::TestFixture{
         CPPUNIT_TEST(test_inquery);
         CPPUNIT_TEST(test_resize);
         CPPUNIT_TEST_SUITE_END();
+    private:
+        typedef std::vector<size_t> shape_t;
     public:
         void setUp();
         void tearDown();

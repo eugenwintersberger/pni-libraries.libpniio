@@ -67,6 +67,7 @@ var.Add("LIBDIR","library installation path","")
 #create the build environment
 env = Environment(variables=var,tools=['default','packaging','textfile'])
 env["ENV"]["PKG_CONFIG_PATH"] = os.environ["PKG_CONFIG_PATH"]
+env["ENV"]["PATH"] = os.environ["PATH"]
 env.ParseConfig('pkg-config --libs --cflags pniutils')
 env.ParseConfig('pkg-config --libs --cflags cppunit')
 env.Replace(CXX = env["CXX"])

@@ -18,6 +18,27 @@ using namespace pni::nx::h5;
 typedef std::map<String,NXField> file_record;
 typedef std::map<String,NumericObject *> mem_record;
 
+class Record
+{
+    private:
+        std::
+    
+    public:
+        //! default constructor
+        Record():_sinks() {}
+
+        void append(const String &name,const NXField &f,
+
+        //write data to disk
+        void operator() const;
+
+};
+
+void Record::operator() const
+{
+    for(auto v
+}
+
 void setup_records(NXGroup &scan,file_record &frec,mem_record &mrec){
     mrec["OMS"] = new Float32Scalar("OMS","degree","sample angle");
     mrec["TTS"] = new Float32Scalar("TTS","degree","detector angle");
