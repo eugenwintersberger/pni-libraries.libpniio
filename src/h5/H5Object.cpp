@@ -31,14 +31,11 @@ namespace pni{
 namespace nx{
 namespace h5{
     //=================constrcutors and destructors============================
-    H5Object::H5Object(const hid_t &id)
-        :_id(id)
+    H5Object::H5Object(const hid_t &sid) :_id(sid)
     {
-        //if the id passed to the constructor is valid 
-        //we need to increment the reference counter for this ID.
-        //The reason is simply that somewhere outside there is 
-        //still a handle to this ID.
-        if(H5Iis_valid(_id)) H5Iinc_ref(_id);
+        if(id()<0)
+            throw H5ObjectError(EXCEPTION_RECORD,
+                    "Object ID < 0, object creation failed!");
     }
     
     //-------------------------------------------------------------------------
@@ -111,6 +108,8 @@ namespace h5{
     //-------------------------------------------------------------------------
     void H5Object::close() 
     {
+        //if the ID is valid this will decrement the reference counter or close
+        //the object if the counter becomes 0.
         if(is_valid()) H5Oclose(_id);
         _id = 0;
     }
@@ -123,7 +122,7 @@ namespace h5{
     {
 
         if(!is_valid())
-            throw H5ObjectError(EXCEPTION_RECORD,"Invalid HDF5 object");
+            throw H5ObjectError(EXCEPTION_RECORD,"Invalid HDF5 object!");
 
         H5I_type_t tid = H5Iget_type(_id);
         switch(tid){
