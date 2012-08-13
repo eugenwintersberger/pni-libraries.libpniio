@@ -148,31 +148,33 @@ namespace h5{
             H5Attribute 
             attr(const String &n, const CTYPE<OTS...> &s,bool ov=false) const;
 
+            //-----------------------------------------------------------------
             /*! \brief open attribute by name
             
-            Open an existing attribute and returns it to the callee.  If
-            the attribute does not exist or an other error occurs during
-            attribute creation H5AttributeError is thrown.
+            Open an existing attribute and returns it to the callee.  If the
+            attribute does not exist or an other error occurs during attribute
+            creation H5AttributeError is thrown.
             \throws H5AttributeError if attribute does not exist or creation error
             \param n name of the attribute
             \return attribute object
             */
             H5Attribute attr(const String &n) const;
 
+            //-----------------------------------------------------------------
             /*! \brief open attribute by index
 
-            Opens an attribute reference by index i. If i exceeds the
-            number of attributes attached to this object an exception
-            will be thrown.
+            Opens an attribute reference by index i. If i exceeds the number of
+            attributes attached to this object an exception will be thrown.
             \throws IndexError if i exceeds 
             \param i index of the attribute
             \returns instance of H5Attribute
             */
             H5Attribute attr(size_t i) const;
 
+            //-----------------------------------------------------------------
             /*! checks for an attributes existence
 
-            Checks if an attribute exists and returns true if it does. 
+            Checks if an attribute exists and returns true if it does.
             Otherwise false will be returned.
             \throws H5AttributeError in case of errors
             \param n name of the attribute to check for
@@ -180,6 +182,7 @@ namespace h5{
             */
             bool has_attr(const String &n) const;
 
+            //-----------------------------------------------------------------
             /*! Deletes an attribute
 
             Deletes an attribute from the object. 
@@ -188,6 +191,7 @@ namespace h5{
             */
             void del_attr(const String &n) const;
 
+            //-----------------------------------------------------------------
             /*! get number of attributes
 
             Method returns the number of attributes attached to this 
@@ -200,46 +204,38 @@ namespace h5{
                 H5LinkIterator;
     };
 
-    //============implementation of template methods===================
+    //===================implementation of template methods====================
     template<typename T> H5Attribute
         H5AttributeObject::__create_attr(const String &n,
                 bool ov,const H5Dataspace &space) const
     {
-        EXCEPTION_SETUP("template<typename T> H5Attribute "
-            "H5AttributeObject::__create_attr(const String &n,"
-            "bool ov,const H5Dataspace &space)");
-
         H5Datatype type = H5DatatypeFactory::create_type<T>();
 
         //what to do if the attribute already exists?
-        if(has_attr(n)){
-            if(ov){
-                //if the overwrite flag is set the original attribute
-                //will be removed
-                del_attr(n);
-            }else{
-                //if the overwrite flag is not set an exception will
-                //be thrown
-                EXCEPTION_INIT(H5AttributeError,
-                        "Attribute ["+n+"] already exists on "
-                        "object ["+name()+"]!");
-                EXCEPTION_THROW();
+        if(has_attr(n))
+        {
+            //if the overwrite flag is set the original attribute will be removed
+            if(ov) del_attr(n);
+            else
+            {
+                String ss = "Attribute ["+n+"] already exists on "
+                        "object ["+name()+"]!";
+                throw H5AttributeError(EXCEPTION_RECORD,ss);
             }
         }
 
         hid_t aid = H5Acreate2(id(),n.c_str(),type.id(),space.id(),
                 H5P_DEFAULT,H5P_DEFAULT);
-        if(aid < 0){
-            EXCEPTION_INIT(H5AttributeError,"Cannot create attribute!");
-            EXCEPTION_THROW();
-        }
+        if(aid < 0)
+            throw H5AttributeError(EXCEPTION_RECORD, 
+                    "Cannot create attribute!");
 
         H5Attribute a(aid);
         H5Aclose(aid);
         return a;
     }
 
-    //------------------------------------------------------------------
+    //-------------------------------------------------------------------------
     //implementation of the scalar attribute factory method
     template<typename T> H5Attribute 
         H5AttributeObject::attr(const String &n,bool ov) const
@@ -249,10 +245,11 @@ namespace h5{
     }
     
 
-    //-----------------------------------------------------------------
+    //-------------------------------------------------------------------------
     //implementation of the array attribute factory method
-    template<typename T> H5Attribute 
-        H5AttributeObject::attr(const String &n,const Shape &s, bool ov) 
+    template<typename T,template<typename ...> class CTYPE,typename ...OTS> 
+        H5Attribute 
+        H5AttributeObject::attr(const String &n,const CTYPE<OTS...> &s, bool ov) 
         const
     {
         H5Dataspace space(s);

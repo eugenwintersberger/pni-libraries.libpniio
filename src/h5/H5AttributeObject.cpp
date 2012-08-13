@@ -182,16 +182,14 @@ namespace h5{
     bool H5AttributeObject::has_attr(const String &n) const
     {
         htri_t ret = H5Aexists(id(),n.c_str());
-        if(ret >0 )
-            return true;
-        else if(ret == 0)
-            return false;
+        if(ret >0 ) return true;
+        else if(ret == 0) return false;
         else
         {
             std::stringstream ss;
             ss<<"Error checking for existence of attribute ";
             ss<<"["<<n<<"] on object ["<<name()<<"]!";
-            throw H5AttributeError(EXCEPTION_RECORD,ss.str()):
+            throw H5AttributeError(EXCEPTION_RECORD,ss.str());
         }
     }
 
@@ -203,7 +201,7 @@ namespace h5{
         {
             std::stringstream ss;
             ss<<"Error deleteing attribute ["<<n<<"] from ";
-            ss<<"object ["<<name()<<"]!");
+            ss<<"object ["<<name()<<"]!";
             throw H5AttributeError(EXCEPTION_RECORD,ss.str());
         }
     }
