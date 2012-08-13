@@ -100,7 +100,7 @@ namespace h5{
     //================implementation of name operations========================
     String H5NamedObject::name() const
     {
-        String p(path());
+        String p(H5NamedObject::path());
 
         //if the path is empty return an empty string
         if(p.empty()) return p;
@@ -118,7 +118,7 @@ namespace h5{
     //-------------------------------------------------------------------------
     String H5NamedObject::base() const
     {
-        String p(path());
+        String p(H5NamedObject::path());
 
         if(p.empty()) return p;
 
