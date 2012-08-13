@@ -38,24 +38,26 @@ namespace pni{
 namespace nx{
 namespace h5{
     //forward declaration
-    class H5Group;
+    //class H5Group;
 
-    //! \ingroup nxh5_classes            
-    //! \brief base class for named objects
+    /*! 
+    \ingroup nxh5_classes            
+    \brief base class for named objects
 
-    //! Named objects are those objects in an HDF5 file that can be 
-    //! accessed by a path or which have a name (this includes Files 
-    //! and attributes). This class is used as a base class for 
-    //! such objects.
-    //! Due to the fact that such objects can be linked. 
+    Named objects are those objects in an HDF5 file that can be accessed by a
+    path or which have a name (this includes Files and attributes). This class
+    is used as a base class for such objects.  Due to the fact that such objects
+    can be linked. 
+    */
     class H5NamedObject:public H5Object
     {
         protected:
-            //! construct from HDF5 ID
+            /*! 
+            \brief construct from HDF5 ID
 
-            //! This protected constructor allows object construction
-            //! form an HDF5 ID. Only derived classes are supposed
-            //! to use this constructor.
+            This protected constructor allows object construction form an HDF5
+            ID. Only derived classes are supposed to use this constructor.
+            */
             explicit H5NamedObject(const hid_t &id);
         public:
             //==============constructors and destructors=======================
@@ -84,30 +86,36 @@ namespace h5{
 
 
             //============name methods=========================================
-            //! return object name
+            /*! 
+            \brief return object name
 
-            //! Returns the name of an object. Within an HDF5 file 
-            //! objects can be addressed by a UNIX like path. 
-            //! This method returns the last part of the path. 
-            //! So if an object would have the following path 
-            //! /scan_1/detector/data this method would return 
-            //! data.
-            //! The behavior of this method is slightly different 
-            //! for a file object.
-            //! \return name of the object
+            Returns the name of an object. Within an HDF5 file objects can be
+            addressed by a UNIX like path.  This method returns the last part of
+            the path.  So if an object would have the following path
+            /scan_1/detector/data this method would return data.  The behavior
+            of this method is slightly different for a file object.
+            \return name of the object
+            */
             virtual String name() const;
-            //! return object base
 
-            //! Return the the base part of the objects path. 
-            //! If the object would have the path 
-            //! /scan_1/detector/data this method would return 
-            //! /scan_1/detector.
-            //! \return base part of the objects path
+            //-----------------------------------------------------------------
+            /*! 
+            \brief return object base
+
+            Return the the base part of the objects path.  If the object would
+            have the path /scan_1/detector/data this method would return
+            /scan_1/detector.
+            \return base part of the objects path
+            */
             virtual String base() const;
-            //! return object path
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief return object path
             
-            //! This method returns the full path of an object.
-            //! \return full object path
+            This method returns the full path of an object.
+            \return full object path
+            */
             virtual String path() const;
 
 

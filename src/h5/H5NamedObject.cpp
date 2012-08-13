@@ -25,7 +25,8 @@
 
 #include "H5NamedObject.hpp"
 #include "H5Exceptions.hpp"
-#include "H5Group.hpp"
+#include <pni/utils/DBuffer.hpp>
+//#include "H5Group.hpp"
 
 namespace pni{
 namespace nx{
@@ -99,7 +100,7 @@ namespace h5{
     //================implementation of name operations========================
     String H5NamedObject::name() const
     {
-        String p = path();
+        String p(path());
 
         //if the path is empty return an empty string
         if(p.empty()) return p;
@@ -109,9 +110,7 @@ namespace h5{
         //need to extract the the name information from the path
         size_t lpos = p.find_last_of("/");
         String name = p;
-        if(lpos != p.npos){
-            name = String(p,lpos+1,p.size()-lpos+1);
-        }
+        if(lpos != p.npos) name = String(p,lpos+1,p.size()-lpos+1);
 
         return name;
     }
@@ -126,18 +125,16 @@ namespace h5{
         //if the string is of size 1 and has
         //only one / return this
         String base;
-        if((p.size() == 1) && (p[0] == '/')){
-            base = "/";
-            return base;
-        }
+        if((p.size() == 1) && (p[0] == '/')) return String("/");
 
         size_t lpos = p.find_last_of("/");
-        if(lpos != p.npos){
+        if(lpos != p.npos)
+        {
             //if the / has been found in the 
             //first position we can simply return this
-            if(lpos == 0){
-                base = String("/");
-            }else{
+            if(lpos == 0) base = String("/");
+            else
+            {
                 //in all other cases a bit more work 
                 //is necessary
                 base = String(p,0,lpos+1);
