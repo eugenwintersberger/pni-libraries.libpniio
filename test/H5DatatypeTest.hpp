@@ -7,7 +7,6 @@ extern "C"{
 }
 
 #include <pni/utils/Types.hpp>
-#include <pni/utils/Shape.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>

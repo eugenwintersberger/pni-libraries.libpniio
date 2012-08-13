@@ -1,4 +1,5 @@
 #include "H5DatatypeTest.hpp"
+#include <boost/current_function.hpp>
 #include "../src/h5/H5DatatypeFactory.hpp"
 
 
@@ -11,9 +12,9 @@ void H5DatatypeTest::setUp(){
 void H5DatatypeTest::tearDown(){
 }
 
-void H5DatatypeTest::test_creation(){
-    std::cout<<"void NXDatatypeTest::test_creation()-------------------------";
-    std::cout<<std::endl;
+void H5DatatypeTest::test_creation()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     H5Datatype t1;
 
     //per default no type is created
@@ -40,9 +41,9 @@ void H5DatatypeTest::test_creation(){
 
 }
 
-void H5DatatypeTest::test_assignment(){
-    std::cout<<"void H5Datatype::test_assignment()---------------------------";
-    std::cout<<std::endl;
+void H5DatatypeTest::test_assignment()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     H5Datatype t1 = H5DatatypeFactory::create_type<TypeID::FLOAT32>();
     CPPUNIT_ASSERT(t1.is_valid());
@@ -66,7 +67,9 @@ void H5DatatypeTest::test_assignment(){
 
 }
 
-void H5DatatypeTest::test_inquery(){
+void H5DatatypeTest::test_inquery()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     H5Datatype type;
 
     type = H5DatatypeFactory::create_type<TypeID::UINT8>();
@@ -115,9 +118,9 @@ void H5DatatypeTest::test_inquery(){
 
 }
 
-void H5DatatypeTest::test_comparison(){
-    std::cout<<"void H5DatatypeTest::test_comparison()------------------------";
-    std::cout<<std::endl;
+void H5DatatypeTest::test_comparison()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     H5Datatype t1 = H5DatatypeFactory::create_type<TypeID::FLOAT32>();
     H5Datatype t2 = H5DatatypeFactory::create_type<TypeID::INT32>();
 

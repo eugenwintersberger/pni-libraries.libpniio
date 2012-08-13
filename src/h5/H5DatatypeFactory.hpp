@@ -41,8 +41,8 @@ namespace pni{
 namespace nx{
 namespace h5{
 
-    /*! \ingroup nxh5_classes
-
+    /*! 
+    \ingroup nxh5_classes
     \brief data type factory
 
     This class acts as a factory for H5Datatype objects. For complex

@@ -17,7 +17,7 @@ sources_list.append("pninxtest.cpp")
 #tests for the HDF5 implementation backend
 sources_list.append("H5ObjectTest.cpp")
 sources_list.append("H5DataspaceTest.cpp")
-#sources_list.append("H5DatatypeTest.cpp")
+sources_list.append("H5DatatypeTest.cpp")
 #sources_list.append("H5FileTest.cpp")
 #sources_list.append("H5GroupTest.cpp")
 #sources_list.append("H5DatasetTest.cpp")

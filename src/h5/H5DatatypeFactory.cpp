@@ -39,17 +39,13 @@ namespace h5{
                 ss<<"Error creating ";\
                 ss<<STR(hdftype);\
                 ss<<" type!";\
-                EXCEPTION_INIT(H5DataTypeError,ss.str());\
-                EXCEPTION_THROW();\
+                throw H5DataTypeError(EXCEPTION_RECORD,ss.str());\
             }\
             return H5Datatype(t);
           
     //------------create integer data types------------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<UInt8>()
     {
-        EXCEPTION_SETUP("template<> H5Datatype "
-                "H5DatatypeFactory::create_type<UInt8>()");
-
         CREATE_TYPE(H5T_NATIVE_UINT8);
     }
 
@@ -62,9 +58,6 @@ namespace h5{
     //-------------------------------------------------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<Int8>()
     {
-        EXCEPTION_SETUP("template<> H5Datatype "
-                "H5DatatypeFactory::create_type<Int8>()");
-
         CREATE_TYPE(H5T_NATIVE_INT8);
     }
 
@@ -77,9 +70,6 @@ namespace h5{
     //-------------------------------------------------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<UInt16>()
     {
-        EXCEPTION_SETUP("template<> H5Datatype "
-                "H5DatatypeFactory::create_type<UInt16>()");
-
         CREATE_TYPE(H5T_NATIVE_UINT16);
     }
    
@@ -92,9 +82,6 @@ namespace h5{
     //-------------------------------------------------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<Int16>()
     {
-        EXCEPTION_SETUP("template<> H5Datatype "
-                "H5DatatypeFactory::create_type<Int16>()");
-
         CREATE_TYPE(H5T_NATIVE_INT16);
     }
    
@@ -107,9 +94,6 @@ namespace h5{
     //-------------------------------------------------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<UInt32>()
     {
-        EXCEPTION_SETUP("template<> H5Datatype "
-                "H5DatatypeFactory::create_type<UInt32>()");
-
         CREATE_TYPE(H5T_NATIVE_UINT32);
     }
    
@@ -122,8 +106,6 @@ namespace h5{
     //-------------------------------------------------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<Int32>()
     {
-        EXCEPTION_SETUP("template<> H5Datatype "
-                "H5DatatypeFactory::create_type<Int32>()");
         CREATE_TYPE(H5T_NATIVE_INT32);
     }
    
@@ -136,9 +118,6 @@ namespace h5{
     //-------------------------------------------------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<UInt64>()
     {
-        EXCEPTION_SETUP("template<> H5Datatype "
-                "H5DatatypeFactory::create_type<UInt64>()");
-
         CREATE_TYPE(H5T_NATIVE_UINT64);
     }
    
@@ -151,9 +130,6 @@ namespace h5{
     //-------------------------------------------------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<Int64>()
     {
-        EXCEPTION_SETUP("template<> H5Datatype "
-                "H5DatatypeFactory::create_type<Int64>()");
-
         CREATE_TYPE(H5T_NATIVE_INT64);
     }
 
@@ -165,9 +141,6 @@ namespace h5{
     //---------------create floating point types-------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<Float32>()
     {
-        EXCEPTION_SETUP(" template<> H5Datatype "
-                "H5DatatypeFactory::create_type<Float32>()");
-
         CREATE_TYPE(H5T_NATIVE_FLOAT);
     }
    
@@ -180,9 +153,6 @@ namespace h5{
     //-------------------------------------------------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<Float64>()
     {
-        EXCEPTION_SETUP("template<> H5Datatype "
-                "H5DatatypeFactory::create_type<Float64>()");
-
         CREATE_TYPE(H5T_NATIVE_DOUBLE);
     }
    
@@ -195,8 +165,6 @@ namespace h5{
     //-------------------------------------------------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<Float128>()
     {
-        EXCEPTION_SETUP("template<> H5Datatype "
-                "H5DatatypeFactory::create_type<Float128>()");
         CREATE_TYPE(H5T_NATIVE_LDOUBLE);
     }
    
@@ -209,28 +177,16 @@ namespace h5{
     //-------------------create double types-----------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<Complex32>()
     {
-        EXCEPTION_SETUP("template<> H5Datatype "
-                "H5DatatypeFactory::create_type<Complex32>()");
-
         String estr = "Cannot create COMPLEX_32 type!";
         hid_t tid = H5Tcreate(H5T_COMPOUND,sizeof(__struct_complex_32));
         if(tid<0)
-        {
-            EXCEPTION_INIT(H5DataTypeError,estr);
-            EXCEPTION_THROW();
-        }
+            throw H5DataTypeError(EXCEPTION_RECORD,estr);
 
         if(H5Tinsert(tid,"r",HOFFSET(__struct_complex_32,r),H5T_NATIVE_FLOAT)<0)
-        {
-            EXCEPTION_INIT(H5DataTypeError,estr);
-            EXCEPTION_THROW();
-        }
+            throw H5DataTypeError(EXCEPTION_RECORD,estr);
         
         if(H5Tinsert(tid,"i",HOFFSET(__struct_complex_32,i),H5T_NATIVE_FLOAT)<0)
-        {
-            EXCEPTION_INIT(H5DataTypeError,estr);
-            EXCEPTION_THROW();
-        }
+            throw H5DataTypeError(EXCEPTION_RECORD,estr);
 
         return H5Datatype(tid);
     }
@@ -244,28 +200,16 @@ namespace h5{
     //-------------------------------------------------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<Complex64>()
     {
-        EXCEPTION_SETUP("template<> H5Datatype "
-                "H5DatatypeFactory::create_type<Complex64>()");
-        
         String estr = "Error creating COMPLEX_64 type!";
         hid_t tid = H5Tcreate(H5T_COMPOUND,sizeof(__struct_complex_64));
         if(tid<0)
-        {
-            EXCEPTION_INIT(H5DataTypeError,estr);
-            EXCEPTION_THROW();
-        }
+            throw H5DataTypeError(EXCEPTION_RECORD,estr);
 
         if(H5Tinsert(tid,"r",HOFFSET(__struct_complex_64,r),H5T_NATIVE_DOUBLE)<0)
-        {
-            EXCEPTION_INIT(H5DataTypeError,estr);
-            EXCEPTION_THROW();
-        }
+            throw H5DataTypeError(EXCEPTION_RECORD,estr);
 
         if(H5Tinsert(tid,"i",HOFFSET(__struct_complex_64,i),H5T_NATIVE_DOUBLE)<0)
-        {
-            EXCEPTION_INIT(H5DataTypeError,estr);
-            EXCEPTION_THROW();
-        }
+            throw H5DataTypeError(EXCEPTION_RECORD,estr);
 
         return H5Datatype(tid);
     }
@@ -279,28 +223,17 @@ namespace h5{
     //-------------------------------------------------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<Complex128>()
     {
-        EXCEPTION_SETUP("template<> H5Datatype "
-                "H5DatatypeFactory::create_type<Complex128>()");
-        
         String estr = "Error creating COMPLEX_128 type!";
 
         hid_t tid = H5Tcreate(H5T_COMPOUND,sizeof(__struct_complex_128));
         if(tid<0)
-        {
-            EXCEPTION_INIT(H5DataTypeError,estr);
-            EXCEPTION_THROW();
-        }
+            throw H5DataTypeError(EXCEPTION_RECORD,estr);
         
         if(H5Tinsert(tid,"r",HOFFSET(__struct_complex_128,r),H5T_NATIVE_LDOUBLE)<0)
-        {
-            EXCEPTION_INIT(H5DataTypeError,estr);
-            EXCEPTION_THROW();
-        }
+            throw H5DataTypeError(EXCEPTION_RECORD,estr);
+        
         if(H5Tinsert(tid,"i",HOFFSET(__struct_complex_128,i),H5T_NATIVE_LDOUBLE)<0)
-        {
-            EXCEPTION_INIT(H5DataTypeError,estr);
-            EXCEPTION_THROW();
-        }
+            throw H5DataTypeError(EXCEPTION_RECORD,estr);
         return H5Datatype(tid);
     }
    
@@ -313,37 +246,21 @@ namespace h5{
     //----------------create string and binary types--------------------
     template<> H5Datatype H5DatatypeFactory::create_type<String>()
     {
-        EXCEPTION_SETUP("template<> H5Datatype "
-                "H5DatatypeFactory::create_type<String>()");
-
         hid_t tid;
-
         String estr = "Error creating STRING type!";
 
         tid = H5Tcopy(H5T_C_S1);
-        if(tid<0){
-            EXCEPTION_INIT(H5DataTypeError,estr);
-            EXCEPTION_THROW();
-        }
+        if(tid<0) throw H5DataTypeError(EXCEPTION_RECORD,estr); 
 
         if(H5Tset_strpad(tid,H5T_STR_NULLTERM)<0)
-        {
-            EXCEPTION_INIT(H5DataTypeError,estr);
-            EXCEPTION_THROW();
-        }
+            throw H5DataTypeError(EXCEPTION_RECORD,estr);
 
         if(H5Tset_cset(tid,H5T_CSET_UTF8)<0)
-        {
-            EXCEPTION_INIT(H5DataTypeError,estr);
-            EXCEPTION_THROW();
-        }
+            throw H5DataTypeError(EXCEPTION_RECORD,estr);
 
         //always use variable strings 
         if(H5Tset_size(tid,H5T_VARIABLE)<0)
-        {
-            EXCEPTION_INIT(H5DataTypeError,estr);
-            EXCEPTION_THROW();
-        }
+            throw H5DataTypeError(EXCEPTION_RECORD,estr);
 
         return H5Datatype(tid);
     }
@@ -357,15 +274,10 @@ namespace h5{
     //-------------------------------------------------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<Binary>()
     {
-        EXCEPTION_SETUP("template<> H5Datatype "
-                "H5DatatypeFactory::create_type<Binary>()");
-
+        String estr = "Error creating binary type!";
         hid_t t = H5Tcreate(H5T_OPAQUE,1);
-        if(t<0){
-            String estr = "Error creating H5T_OPAQUE type!";
-            EXCEPTION_INIT(H5DataTypeError,estr);
-            EXCEPTION_THROW();
-        }
+        if(t<0)
+            throw H5DataTypeError(EXCEPTION_RECORD,estr); 
 
         return H5Datatype(t);
     }
