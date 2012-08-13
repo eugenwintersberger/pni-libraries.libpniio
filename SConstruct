@@ -95,6 +95,9 @@ env.Replace(CXX = env["CXX"])
 
 #set default compiler flags
 env.Append(CXXFLAGS = ["-Wall","-std=c++0x"])
+if debug:
+    env.Append(CXXFLAGS=["-DDEBUG"])
+
 #need to link explicit against libdl because some compilers 
 #are not doing this by default
 env.Append(LIBS=["dl"])

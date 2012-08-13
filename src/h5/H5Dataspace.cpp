@@ -51,15 +51,18 @@ namespace h5 {
     //-------------------------------------------------------------------------
     void H5Dataspace::__setup_dataspace()
     {
-        size_t s=1;
-        for(auto iter = _dims.begin();iter!=_dims.end();++iter)
-            s *= *iter;
 
-        herr_t err = H5Sset_extent_simple(id(),s,_dims.ptr(),_maxdims.ptr());
+        herr_t err = H5Sset_extent_simple(id(),_dims.size(),_dims.ptr(),_maxdims.ptr());
                         
         if(err<0)
-            throw H5DataSpaceError(EXCEPTION_RECORD,
+        {
+            H5DataSpaceError error(EXCEPTION_RECORD,
                     "Cannot create HDF5 dataspace!");
+#ifdef DEBUG
+            std::cerr<<error<<std::endl;
+#endif
+            throw error;
+        }
     }
 
     //=============Constructors and destructors================================
@@ -239,7 +242,8 @@ namespace h5 {
     }
 
     //-------------------------------------------------------------------------
-    size_t H5Dataspace::size() const {
+    size_t H5Dataspace::size() const 
+    {
         //return 1 if the dataspace is scalar
         if(is_scalar()) return 1;
 

@@ -107,7 +107,7 @@ void H5ObjectTest::test_comparison()
     H5Object
         o1(H5TestObject(H5Gcreate2(file,"group",H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT)));
     H5Object o2(H5TestObject(H5Gcreate2(file,"group2",H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT)));
-    H5Object o3(H5TestObject(H5Gopen(file,"group")));
+    H5Object o3(H5TestObject(H5Gopen2(file,"group",H5P_DEFAULT)));
    
     CPPUNIT_ASSERT(o1!=o2);
     CPPUNIT_ASSERT(o1==o3);

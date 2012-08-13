@@ -25,59 +25,53 @@ void H5DataspaceTest::test_creation(){
     //this should lead to a constant dataspace which cannot be extended
     shape_t s({10,3,45});
 
-    try{
-        H5Dataspace s2(s);
-        CPPUNIT_ASSERT(s2.is_valid());
-        CPPUNIT_ASSERT(!s2.is_scalar());
-        CPPUNIT_ASSERT(s2.rank() == s.size());
+    H5Dataspace s2(s);
+    CPPUNIT_ASSERT(s2.is_valid());
+    CPPUNIT_ASSERT(!s2.is_scalar());
+    CPPUNIT_ASSERT(s2.rank() == s.size());
 
-        //check copy process
-        H5Dataspace s3(s2);
-        CPPUNIT_ASSERT(s3.is_valid());
-        CPPUNIT_ASSERT(s2.is_valid());
-        CPPUNIT_ASSERT(!s3.is_scalar());
-        CPPUNIT_ASSERT(!s2.is_scalar());
-        CPPUNIT_ASSERT(s2.shape() == s3.shape());
-        
-        
-        //check move constructor
-        H5Dataspace s4(std::move(s2));
-        CPPUNIT_ASSERT(s4.is_valid());
-        CPPUNIT_ASSERT(!s2.is_valid());
-        CPPUNIT_ASSERT(s4.shape() == s3.shape());
-
-
-        //create a dataspace with a minimum and maximum size.
-        shape_t ms(std::vector<size_t>(s.size(),100));
-        H5Dataspace s6(s,ms);
-        CPPUNIT_ASSERT(s6.is_valid());
-        CPPUNIT_ASSERT(!s6.is_scalar());
-        for(size_t i=0;i<s6.rank();i++){
-            CPPUNIT_ASSERT(s6.dim(i) == s[i]);
-            CPPUNIT_ASSERT(s6.max_dim(i) == ms[i]);
-        }
-
-        //create a dataspace from a initializer list
-        H5Dataspace s7{10,3,45};
-        CPPUNIT_ASSERT(!s7.is_scalar());
-        CPPUNIT_ASSERT(s7.is_valid());
-        CPPUNIT_ASSERT(std::equal(s7.shape().begin(),s7.shape().end(),s.begin()));
-        CPPUNIT_ASSERT(std::equal(s7.shape().begin(),s7.shape().end(),s7.maxshape().begin()));
+    //check copy process
+    H5Dataspace s3(s2);
+    CPPUNIT_ASSERT(s3.is_valid());
+    CPPUNIT_ASSERT(s2.is_valid());
+    CPPUNIT_ASSERT(!s3.is_scalar());
+    CPPUNIT_ASSERT(!s2.is_scalar());
+    CPPUNIT_ASSERT(s2.shape() == s3.shape());
+    
+    
+    //check move constructor
+    H5Dataspace s4(std::move(s2));
+    CPPUNIT_ASSERT(s4.is_valid());
+    CPPUNIT_ASSERT(!s2.is_valid());
+    CPPUNIT_ASSERT(s4.shape() == s3.shape());
 
 
-        //create a dataspace wiht minimum and maximum size
-        H5Dataspace s8({10,3,45},{30,9,100});
-        shape_t maxshape{30,9,100};
-        CPPUNIT_ASSERT(!s8.is_scalar());
-        CPPUNIT_ASSERT(s8.is_valid());
-        CPPUNIT_ASSERT(std::equal(s8.shape().begin(),s8.shape().end(),s.begin()));
-        CPPUNIT_ASSERT(std::equal(s8.maxshape().begin(),s8.maxshape().end(),maxshape.begin()));
-    }
-    catch(H5DataSpaceError &error)
-    {
-        std::cout<<error<<std::endl;
+    //create a dataspace with a minimum and maximum size.
+    shape_t ms(std::vector<size_t>(s.size(),100));
+    H5Dataspace s6(s,ms);
+    CPPUNIT_ASSERT(s6.is_valid());
+    CPPUNIT_ASSERT(!s6.is_scalar());
+    for(size_t i=0;i<s6.rank();i++){
+        CPPUNIT_ASSERT(s6.dim(i) == s[i]);
+        CPPUNIT_ASSERT(s6.max_dim(i) == ms[i]);
     }
 
+    //create a dataspace from a initializer list
+    H5Dataspace s7{10,3,45};
+    CPPUNIT_ASSERT(!s7.is_scalar());
+    CPPUNIT_ASSERT(s7.is_valid());
+    CPPUNIT_ASSERT(std::equal(s7.shape().begin(),s7.shape().end(),s.begin()));
+    CPPUNIT_ASSERT(std::equal(s7.shape().begin(),s7.shape().end(),s7.maxshape().begin()));
+
+
+    //create a dataspace wiht minimum and maximum size
+    H5Dataspace s8({10,3,45},{30,9,100});
+    shape_t maxshape{30,9,100};
+    CPPUNIT_ASSERT(!s8.is_scalar());
+    CPPUNIT_ASSERT(s8.is_valid());
+    CPPUNIT_ASSERT(std::equal(s8.shape().begin(),s8.shape().end(),s.begin()));
+    CPPUNIT_ASSERT(std::equal(s8.maxshape().begin(),s8.maxshape().end(),maxshape.begin()));
+    
 }
 
 //------------------------------------------------------------------------------
@@ -117,7 +111,7 @@ void H5DataspaceTest::test_inquery()
     CPPUNIT_ASSERT(s1.rank() == 2);
     CPPUNIT_ASSERT(!s1.is_scalar());
     CPPUNIT_ASSERT(s1.is_valid());
-    CPPUNIT_ASSERT(s.size() == 50*100);
+    CPPUNIT_ASSERT(s1.size() == 50*100);
 
 }
 
