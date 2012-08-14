@@ -32,119 +32,87 @@
 #include "H5Link.hpp"
 
 namespace pni{
-    namespace nx{
-        namespace h5{
-            //===========implementation of private methods======================
-            void H5Link::__split_path(const String &path,String &file,
-                    String &opath)
-            {
-                EXCEPTION_SETUP("void H5Link::__split_path(const String &path,"
-                        "const String &file, const String &opath)");
+namespace nx{
+namespace h5{
+    //===============implementation of private methods=========================
+    void H5Link::__split_path(const String &path,String &file,String &opath)
+    {
+        size_t cpos = path.find_first_of(':');
 
-                size_t cpos = path.find_first_of(':');
-
-                if(cpos == String::npos){
-                    //if there is no colon in the path the link should be 
-                    //internal
-                    file = "";
-                    opath = path;
-                }else if(cpos != 0){
-                    //if the colon appears not in the first position of the 
-                    //path string this is most probably an external link
-                    file = String(path,0,cpos);
-                    opath = String(path,cpos+1);
-                }else{
-                    //raise an exception here
-                    EXCEPTION_INIT(H5LinkError,"Invalid target string!");
-                    EXCEPTION_THROW();
-                }
-            }
-
-            //------------------------------------------------------------------
-            void H5Link::__create_ext_link(const String &file,
-                    const String &opath,const H5Group &ref,
-                    const String &name)
-            {
-                EXCEPTION_SETUP("void H5Link::__create_ext_link("
-                        "const String &file, const String &opath,"
-                        "const H5Object &ref, const String &name) const");
-
-                hid_t lcpl = H5Pcreate(H5P_LINK_CREATE);
-                H5Pset_create_intermediate_group(lcpl,1);
-
-                herr_t err = H5Lcreate_external(file.c_str(),opath.c_str(),
-                        ref.id(),name.c_str(),lcpl,H5P_DEFAULT);
-                if(err < 0){
-                    EXCEPTION_INIT(H5LinkError,"Error creating external link!");
-                    EXCEPTION_THROW();
-                }
-
-            }
-
-            //------------------------------------------------------------------
-            void H5Link::__create_int_link(const String &opath,
-                    const H5Group &ref,const String &name)
-            {
-                EXCEPTION_SETUP("void H5Link::__create_int_link("
-                        "const String &opath, const H5Object &ref,"
-                        "const String &name) const");
-
-                hid_t lcpl = H5Pcreate(H5P_LINK_CREATE);
-                H5Pset_create_intermediate_group(lcpl,1);
-
-                herr_t err = H5Lcreate_soft(opath.c_str(),ref.id(),name.c_str(),
-                        lcpl,H5P_DEFAULT);
-                if(err < 0){
-                    EXCEPTION_INIT(H5LinkError,"Error creating internal link!");
-                    EXCEPTION_THROW();
-                }
-                
-            }
-
-            //===========implementation of public methods=======================
-            //------------------------------------------------------------------
-            void H5Link::create(const String &s,const H5Group &ref,
-                    const String &name)
-            {
-                EXCEPTION_SETUP("void H5Link::create(const String &s,"
-                        "const H5Group &ref, const String &name) const");
-
-                String filepath,opath;
-
-                __split_path(s,filepath,opath);
-
-                if(filepath != ""){
-                    //create an external link
-                    __create_ext_link(filepath,opath,ref,name);
-                }else{
-                    __create_int_link(opath,ref,name);
-                }
-
-            }
-
-            //------------------------------------------------------------------
-            void H5Link::create(const H5Group &g,const H5Group &ref,
-                    const String &name)
-            {
-                EXCEPTION_SETUP("void H5Link::create(const H5Group &g,"
-                        "const H5Group &ref, const String &name) const");
-
-                __create_int_link(g.path(),ref,name);
-
-            }
-
-            //------------------------------------------------------------------
-            void H5Link::create(const H5Dataset &d,const H5Group &ref,
-                    const String &n)
-            {
-                EXCEPTION_SETUP("void H5Link::create(const H5Dataset &d,"
-                        "const H5Group &ref, const String &n) const");
-
-                __create_int_link(d.path(),ref,n);
-
-            }
-
-
+        if(cpos == String::npos)
+        {
+            //if there is no colon in the path the link should be 
+            //internal
+            file = "";
+            opath = path;
         }
+        else if(cpos != 0)
+        {
+            //if the colon appears not in the first position of the 
+            //path string this is most probably an external link
+            file = String(path,0,cpos);
+            opath = String(path,cpos+1);
+        }
+        else throw H5LinkError(EXCEPTION_RECORD,"Invalid target string!");
     }
+
+    //-------------------------------------------------------------------------
+    void H5Link::__create_ext_link(const String &file,const String &opath,
+                                   const H5Group &ref,const String &name)
+    {
+        hid_t lcpl = H5Pcreate(H5P_LINK_CREATE);
+        H5Pset_create_intermediate_group(lcpl,1);
+
+        herr_t err = H5Lcreate_external(file.c_str(),opath.c_str(),
+                ref.id(),name.c_str(),lcpl,H5P_DEFAULT);
+        if(err < 0)
+            throw H5LinkError(EXCEPTION_RECORD,
+                    "Error creating external link!");
+
+    }
+
+    //-------------------------------------------------------------------------
+    void H5Link::__create_int_link(const String &opath,const H5Group &ref,
+                                   const String &name)
+    {
+        hid_t lcpl = H5Pcreate(H5P_LINK_CREATE);
+        H5Pset_create_intermediate_group(lcpl,1);
+
+        herr_t err = H5Lcreate_soft(opath.c_str(),ref.id(),name.c_str(),
+                lcpl,H5P_DEFAULT);
+        if(err < 0)
+            throw H5LinkError(EXCEPTION_RECORD,
+                    "Error creating internal link!");
+    }
+
+    //================implementation of public methods=========================
+    void H5Link::create(const String &s,const H5Group &ref,const String &name)
+    {
+        String filepath,opath;
+
+        __split_path(s,filepath,opath);
+
+        if(filepath != "")
+            //create an external link
+            __create_ext_link(filepath,opath,ref,name);
+        else
+            __create_int_link(opath,ref,name);
+    }
+
+    //-------------------------------------------------------------------------
+    void H5Link::create(const H5Group &g,const H5Group &ref,const String &name)
+    {
+        __create_int_link(g.path(),ref,name);
+    }
+
+    //-------------------------------------------------------------------------
+    void H5Link::create(const H5Dataset &d,const H5Group &ref,const String &n)
+    {
+        __create_int_link(d.path(),ref,n);
+    }
+
+
+//end of namespace
+}
+}
 }

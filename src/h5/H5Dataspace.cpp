@@ -137,7 +137,7 @@ namespace h5 {
     }
 
     //-------------------------------------------------------------------------
-    H5Dataspace::H5Dataspace(const hid_t &tid):H5Object(tid)
+    H5Dataspace::H5Dataspace(hid_t tid):H5Object(tid)
     {
         __setup_buffers();
     }

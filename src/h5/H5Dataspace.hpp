@@ -98,13 +98,15 @@ namespace h5 {
             //! scalar value.
             explicit H5Dataspace();
             //! copy constructor
-            explicit H5Dataspace(const H5Dataspace &o);
+            H5Dataspace(const H5Dataspace &o);
             //! copy conversion constructor
             explicit H5Dataspace(const H5Object &o);
             //! move constructor
-            explicit H5Dataspace(H5Dataspace &&o);
+            H5Dataspace(H5Dataspace &&o);
             //! move conversion constructor
             explicit H5Dataspace(H5Object &&o);
+            //! construct from ID
+            explicit H5Dataspace(hid_t id);
             
             //-----------------------------------------------------------------
             /*! 
@@ -219,13 +221,6 @@ namespace h5 {
             explicit H5Dataspace(const std::initializer_list<hsize_t> &dlist,
                         const std::initializer_list<hsize_t> &mlist);
            
-            //-----------------------------------------------------------------
-            /*! 
-            \brief create object from HDF5 id
-
-            Constructor creating an object directly from its HDF5 ID. k
-            */
-            explicit H5Dataspace(const hid_t &id);
 
             //-----------------------------------------------------------------
             /*! 

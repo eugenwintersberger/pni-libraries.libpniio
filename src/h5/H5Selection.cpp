@@ -23,84 +23,16 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
+#include <sstream>
 #include <cstdarg>
 #include "H5Selection.hpp"
 #include "H5Exceptions.hpp"
 
 
 namespace pni{
-    namespace nx{
-        namespace h5{
-            //=================Implementation of private methods================
-            void H5Selection::__throw_if_not_scalar(const String &method) const
-            {
-                String desc ="Selection is not scalar!"; 
-                if(this->size()!=1){
-                    ShapeMissmatchError error(method,desc);
-                    throw(error);
-                }
-            }
-            
-            //------------------------------------------------------------------
-            void H5Selection::__throw_if_selection_app_fails
-                (herr_t err, const String &method)const
-            {
-                if(err < 0){
-                    H5DataSetError error(method,"Error applying selection!");
-                    throw(error);
-                }
-            }
-           
-            //------------------------------------------------------------------
-            void H5Selection::__throw_selection_read_fail
-                (herr_t err,const String &method) const
-            {
-                String d = "Error reading data via selection to dataset"
-                           " ["+_dataset->name()+"]!";
-                if(err < 0){
-                    H5DataSetError error(method,d);
-                    throw(error);
-                }
-            }
-
-            //------------------------------------------------------------------
-            void H5Selection::__throw_selection_write_fail
-                (herr_t err,const String &method) const
-            {
-                String d = "Error writing data via selection to dataset"
-                           " ["+_dataset->name()+"]!";
-                if(err < 0){
-                    H5DataSetError error(method,d);
-                    throw(error);
-                }
-            }
-
+namespace nx{
+namespace h5{
             //==============Implementation of constructors and destructors======
-            //implementation of the shape constructor
-            H5Selection::H5Selection(const H5Dataset &ds,const Shape &s,
-                    size_t offset,size_t stride)
-                :_offset(s.rank()),_stride(s.rank()),_counts(s.rank()),
-                 _dataset(&ds)
-            {
-                EXCEPTION_SETUP("H5Selection::H5Selection(const H5Dataset &ds,"
-                                "const Shape &s,size_t offset,size_t stride)");
-
-                if(s.rank() != ds.rank()){
-                    EXCEPTION_INIT(ShapeMissmatchError,
-                            "Rank of dataset ["+ds.name()+"] and selection "
-                            "rank do not match!");
-                    EXCEPTION_THROW();
-                }
-
-                //set offset and stride
-                _offset = offset;
-                _stride = stride;
-                for(size_t i=0;i<s.rank();i++) _counts[i] = s[i];
-
-            }
-
-
-            //------------------------------------------------------------------
             //implementation of the destructor
             H5Selection::~H5Selection()
             {
@@ -113,9 +45,8 @@ namespace pni{
 
             //==============Implementation of assignment operators==============
             //implementation of the copy assignment operator
-            H5Selection &H5Selection::operator=(const H5Selection &o){
-                EXCEPTION_SETUP("H5Selection &H5Selection::operator="
-                        "(const H5Selection &o)");
+            H5Selection &H5Selection::operator=(const H5Selection &o)
+            {
 
                 if(this != &o){
                     _stride  = o._stride;
@@ -129,10 +60,8 @@ namespace pni{
 
             //------------------------------------------------------------------
             //implementation of the move assignment operator
-            H5Selection &H5Selection::operator=(H5Selection &&o){
-                EXCEPTION_SETUP("H5Selection &H5Selection::operator="
-                        "(H5Selection &&o)");
-
+            H5Selection &H5Selection::operator=(H5Selection &&o)
+            {
                 //original names 
                 if(this != &o){
                     _stride  = std::move(o._stride);
@@ -146,8 +75,9 @@ namespace pni{
 
             //========implementation of inquery methods=========================
             //get size
-            size_t H5Selection::size() const{
-                if(rank() == 0) return 0;
+            size_t H5Selection::size() const
+            {
+                if(rank() == 0) return 1;
                 
                 size_t s = 1;
 #ifdef NOFOREACH
@@ -159,98 +89,68 @@ namespace pni{
                 return s;
             }
 
-            //------------------------------------------------------------------
-            //get shape
-            Shape H5Selection::shape() const 
-            {
-                if(rank() == 0 ) return Shape();
-
-                std::vector<size_t> d(rank());
-                for(size_t i=0;i<rank();i++) d[i] = _counts[i];
-
-                return Shape(d);
-            }
             
 
             //------------------------------------------------------------------
             //return reference to the dataspace
             H5Dataspace H5Selection::space() const
             {
-                H5Dataspace s(shape());
+                H5Dataspace s(shape<std::vector<hsize_t> >());
                 return s;
             }
 
             
             //=================implementation of modifier methods===============
             //------------------------------------------------------------------
-            void H5Selection::offset(const std::initializer_list<hsize_t> &l){
-                EXCEPTION_SETUP("void H5Selection::"
-                        "offset(std::initializer_list<hsize_t> &l)");
-
-                if(l.size() != rank()){
-                    EXCEPTION_INIT(SizeMissmatchError, "Number of elements "
-                            "in initializer list exceeds selection rank!");
-                    EXCEPTION_THROW();
+            void H5Selection::offset(const std::initializer_list<hsize_t> &l)
+            {
+                if(l.size() != rank())
+                {
+                    std::stringstream ss;
+                    ss<<"Size of initializer list ("<<l.size()<<") does not ";
+                    ss<<"match selection rank ("<<rank()<<")!";
+                    throw SizeMissmatchError(EXCEPTION_RECORD,ss.str());
                 }
-
-                _offset = l;
+                std::copy(l.begin(),l.end(),_offset.begin());
             }
 
             //------------------------------------------------------------------
-            void H5Selection::stride(const std::initializer_list<hsize_t> &l){
-                EXCEPTION_SETUP("void H5Selection::"
-                        "stride(const std::initializer_list<hsize_t> &l)");
-
-                if(l.size() != rank()){
-                    EXCEPTION_INIT(SizeMissmatchError,"Number of elements "
-                            "in initializer list exceeds selection rank");
-                    EXCEPTION_THROW();
+            void H5Selection::stride(const std::initializer_list<hsize_t> &l)
+            {
+                if(l.size() != rank())
+                {
+                    std::stringstream ss;
+                    ss<<"Size of initializer list ("<<l.size()<<") does not ";
+                    ss<<"match selection rank ("<<rank()<<")!";
+                    throw SizeMissmatchError(EXCEPTION_RECORD,ss.str());
                 }
 
-                _stride = l;
+                std::copy(l.begin(),l.end(),_stride.begin());
             }
 
 
             //-----------------------------------------------------------------
-            void H5Selection::count(const std::initializer_list<hsize_t> &l){
-                EXCEPTION_SETUP("void H5Selection::"
-                        "count(const std::initialize_list<hsize_t> &l)");
-
-                if(l.size() != _counts.size()){
-                    EXCEPTION_INIT(SizeMissmatchError,"Number of elements "
-                            "in initializer list exceeds selection rank!");
-                    EXCEPTION_THROW();
+            void H5Selection::count(const std::initializer_list<hsize_t> &l)
+            {
+                if(l.size() != rank())
+                {
+                    std::stringstream ss;
+                    ss<<"Size of initializer list ("<<l.size()<<") does not ";
+                    ss<<"match selection rank ("<<rank()<<")!";
+                    throw SizeMissmatchError(EXCEPTION_RECORD,ss.str());
                 }
 
-                _counts = l;
+                std::copy(l.begin(),l.end(),_counts.begin());
             }
 
 
             //=============specializations of the IO methods===================
-            //implementation of writing a binary value
-            void H5Selection::write(const Binary &value) const
-            {
-                EXCEPTION_SETUP("void H5Selection::write(const BinaryType &value) "
-                        "const");
-
-                __throw_if_not_scalar("void H5Selection::write(const "
-                                      "BinaryType &value) const");
-                
-                //create memory dataspace and datatype
-                H5Datatype mt = H5DatatypeFactory::create_type<Binary>();
-                H5Dataspace ms;
-
-                __write(mt,ms,&value);
-            }
-
-            //------------------------------------------------------------------
             //implementation of the write string method 
-            void H5Selection::write(const String &value) const{
-                EXCEPTION_SETUP("void H5Selection::"
-                        "write(const String &value)");
-
-                __throw_if_not_scalar("template<> void H5Selection::write"
-                                      "(const String &value)");
+            void H5Selection::write(const String &value) const
+            {
+                if(size()!=1)
+                    throw ShapeMissmatchError(EXCEPTION_RECORD,
+                            "Selection is not scalar!");
 
                 const char *ptr = value.c_str();
 
@@ -267,8 +167,9 @@ namespace pni{
                         this->stride().ptr(), //set the stride pointer
                         this->count().ptr(),  //set the count pointer
                         NULL);
-                __throw_if_selection_app_fails(err,"void H5Selection::"
-                                               "write(const String &value)");
+                if(err<0)
+                    throw H5DataSetError(EXCEPTION_RECORD,
+                            "Error applying selection to dataset!");
 
                 //write data to disk
                 err = H5Dwrite(_dataset->id(),
@@ -277,21 +178,21 @@ namespace pni{
                         _dataset->space().id(),  //set file data space
                         H5P_DEFAULT,
                         &ptr);
-                __throw_selection_write_fail(err,"void H5Selection::"
-                                             "write(const String &value)");
+                if(err<0)
+                    throw H5DataSetError(EXCEPTION_RECORD,
+                            "Error writing string to dataset via selection!");
 
                 //remove selection from the dataspace
                 H5Sselect_none(_dataset->space().id());
-
             }
 
             //------------------------------------------------------------------
             //implementation of the read string method 
-            void H5Selection::read(String &value) const{
-                EXCEPTION_SETUP("void H5Selection::read(String &value) const");
-
-                __throw_if_not_scalar("void H5Selection::read(String &value)"
-                                      " const");
+            void H5Selection::read(String &value) const
+            {
+                if(size()!=1)
+                    throw ShapeMissmatchError(EXCEPTION_RECORD,
+                            "Selection is not scalar!");
 
                 herr_t err;
                 //set selection to the file datasets original dataset
@@ -302,9 +203,11 @@ namespace pni{
                         this->stride().ptr(), //set the stride pointer
                         this->count().ptr(),  //set the count pointer
                         NULL);
-                __throw_if_selection_app_fails(err,"void H5Selection::"
-                                               "read(String &value) const");
-                
+                if(err<0)
+                    throw H5DataSetError(EXCEPTION_RECORD,
+                            "Error applying selection to dataset ["+
+                            _dataset->name()+"]!");
+
                 const char *ptr = nullptr;
 	            hid_t xfer_plist = H5Pcreate(H5P_DATASET_XFER);
                 
@@ -319,8 +222,10 @@ namespace pni{
                         _dataset->space().id(),  //set file data space
                         xfer_plist,
                         &ptr);
-                __throw_selection_read_fail(err,"void H5Selection::read"
-                                            "(String &value) const");
+                if(err<0)
+                    throw H5DataSetError(EXCEPTION_RECORD,
+                            "Error writing string data to dataset ["+
+                            _dataset->name()+"] via selection!");
 
                 //copy content of the pointer to the string object
                 try{
@@ -335,29 +240,12 @@ namespace pni{
                 //reclaim memory from HDF5 library.
                 H5Dvlen_reclaim(mem_type.id(),_dataset->space().id(),
                                 xfer_plist,&ptr);
-
-
             }
            
-            //---------------------------------------------------------------
-            //implementation of reading a binary value
-            void H5Selection::read(Binary &value) const
-            {
-                EXCEPTION_SETUP("void H5Selection::read(BinaryType &value) "
-                        "const");
 
-                __throw_if_not_scalar("void H5Selection::read(BinaryType "
-                                      "&value) const");
-
-                //create memory dataspace and datatype
-                H5Datatype mt = H5DatatypeFactory::create_type<Binary>();
-                H5Dataspace ms;
-
-                __read(mt,ms,&value);
-            }
-
-        }
-    }
+//end of namespace
+}
+}
 }
 
 

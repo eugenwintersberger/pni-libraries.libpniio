@@ -103,7 +103,7 @@ namespace h5{
             Copies the ID of the o and increments its reference counter.
             \param o object which to cpy
             */
-            explicit H5Object(const H5Object &o);
+            H5Object(const H5Object &o);
 
             //-----------------------------------------------------------------
             /*! 
@@ -114,7 +114,7 @@ namespace h5{
             ID will not be incremented.
             \param o object to move
             */
-            explicit H5Object(H5Object &&o);
+            H5Object(H5Object &&o);
 
             //-----------------------------------------------------------------
             //! destructor
