@@ -76,7 +76,6 @@ namespace h5{
         _dspace = std::move(o._dspace);
         _dtype  = std::move(o._dtype);
     }
-
     //-------------------------------------------------------------------------
     H5Attribute::H5Attribute(const hid_t &id):
         H5NamedObject(id)
