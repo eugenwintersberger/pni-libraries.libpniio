@@ -141,5 +141,46 @@ void H5AttributeObjectTest::test_string_attribute()
     a.read(value2);
     CPPUNIT_ASSERT(value2 == "Hello world");
 
+    //attribute copy construction
+    H5Attribute a2(a);
+    CPPUNIT_ASSERT((a2.is_valid())&&(a.is_valid()));
+    CPPUNIT_ASSERT(a2.name() == a.name());
+    CPPUNIT_ASSERT(a2.type_id() == a.type_id());
+    CPPUNIT_ASSERT(a2.rank() == a.rank());
+    CPPUNIT_ASSERT(a2.size() == a.size());
+
+    //move construction
+    H5Attribute a3(std::move(a2));
+    CPPUNIT_ASSERT(!a2.is_valid());
+    CPPUNIT_ASSERT(a3.is_valid());
+    CPPUNIT_ASSERT(a3.name() == a.name());
+    CPPUNIT_ASSERT(a3.type_id() == a.type_id());
+    CPPUNIT_ASSERT(a3.rank() == a.rank());
+    CPPUNIT_ASSERT(a3.size() == a.size());
+
+    //copy assignment
+    H5Attribute a4 = a3;
+    CPPUNIT_ASSERT((a4.is_valid())&&(a3.is_valid()));
+    CPPUNIT_ASSERT(a4.name() == a3.name());
+    CPPUNIT_ASSERT(a4.type_id() == a3.type_id());
+    CPPUNIT_ASSERT(a4.rank() == a3.rank());
+    CPPUNIT_ASSERT(a4.size() == a3.size());
+    
+    //now close one of the objects
+    a4.close();
+    CPPUNIT_ASSERT(!a4.is_valid());
+    CPPUNIT_ASSERT(a3.is_valid());
+    CPPUNIT_ASSERT(a.is_valid());
+
+    //test move assignment
+    H5Attribute a5 = std::move(a3);
+    CPPUNIT_ASSERT(!a3.is_valid());
+    CPPUNIT_ASSERT(a5.is_valid());
+    CPPUNIT_ASSERT(a5.name() == a.name());
+    CPPUNIT_ASSERT(a5.type_id() == a.type_id());
+    CPPUNIT_ASSERT(a5.rank() == a.rank());
+    CPPUNIT_ASSERT(a5.size() == a.size());
+
+
 }
 
