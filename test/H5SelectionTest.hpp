@@ -6,9 +6,6 @@
 #include<initializer_list>
 
 #include <pni/utils/Types.hpp>
-#include <pni/utils/Buffer.hpp>
-#include <pni/utils/Shape.hpp>
-#include <pni/utils/ArrayFactory.hpp>
 #include <pni/utils/Array.hpp>
 
 #include "../src/h5/H5Selection.hpp"
@@ -58,61 +55,19 @@ class H5SelectionTest:public CppUnit::TestFixture{
         //testing selections on a non-extendible
         //multidimensional dataset using scalar
         //objects (this is only useful for numerical 
-        //values);
-        CPPUNIT_TEST(test_io_scalar_no_ext<UInt8>);
-        CPPUNIT_TEST(test_io_scalar_no_ext<Int8>);
-        CPPUNIT_TEST(test_io_scalar_no_ext<UInt16>);
-        CPPUNIT_TEST(test_io_scalar_no_ext<Int16>);
-        CPPUNIT_TEST(test_io_scalar_no_ext<UInt32>);
-        CPPUNIT_TEST(test_io_scalar_no_ext<Int32>);
-        CPPUNIT_TEST(test_io_scalar_no_ext<UInt64>);
-        CPPUNIT_TEST(test_io_scalar_no_ext<Int64>);
-        CPPUNIT_TEST(test_io_scalar_no_ext<Float32>);
-        CPPUNIT_TEST(test_io_scalar_no_ext<Float64>);
-        CPPUNIT_TEST(test_io_scalar_no_ext<Float128>);
-        CPPUNIT_TEST(test_io_scalar_no_ext<Complex32>);
-        CPPUNIT_TEST(test_io_scalar_no_ext<Complex64>);
-        CPPUNIT_TEST(test_io_scalar_no_ext<Complex128>);
+        //values);a
+        CPPUNIT_TEST(test_scalar_selection<UInt8>);
         //testing partial IO using buffers on a fixed
         //size dataset using numerical and binary data
         //in connection with a buffer object
-        CPPUNIT_TEST(test_io_buffer_no_ext<UInt8>);
-        CPPUNIT_TEST(test_io_buffer_no_ext<Int8>);
-        CPPUNIT_TEST(test_io_buffer_no_ext<UInt16>);
-        CPPUNIT_TEST(test_io_buffer_no_ext<Int16>);
-        CPPUNIT_TEST(test_io_buffer_no_ext<UInt32>);
-        CPPUNIT_TEST(test_io_buffer_no_ext<Int32>);
-        CPPUNIT_TEST(test_io_buffer_no_ext<UInt64>);
-        CPPUNIT_TEST(test_io_buffer_no_ext<Int64>);
-        CPPUNIT_TEST(test_io_buffer_no_ext<Float32>);
-        CPPUNIT_TEST(test_io_buffer_no_ext<Float64>);
-        CPPUNIT_TEST(test_io_buffer_no_ext<Float128>);
-        CPPUNIT_TEST(test_io_buffer_no_ext<Complex32>);
-        CPPUNIT_TEST(test_io_buffer_no_ext<Complex64>);
-        CPPUNIT_TEST(test_io_buffer_no_ext<Complex128>);
-        CPPUNIT_TEST(test_io_buffer_no_ext<Binary>);
+        CPPUNIT_TEST(test_array_selection<UInt8>);
         //testing partial IO using an array on a fixed
         //size dataset using numerical data only
-        CPPUNIT_TEST(test_io_array_no_ext<UInt8>);
-        CPPUNIT_TEST(test_io_array_no_ext<Int8>);
-        CPPUNIT_TEST(test_io_array_no_ext<UInt16>);
-        CPPUNIT_TEST(test_io_array_no_ext<Int16>);
-        CPPUNIT_TEST(test_io_array_no_ext<UInt32>);
-        CPPUNIT_TEST(test_io_array_no_ext<Int32>);
-        CPPUNIT_TEST(test_io_array_no_ext<UInt64>);
-        CPPUNIT_TEST(test_io_array_no_ext<Int64>);
-        CPPUNIT_TEST(test_io_array_no_ext<Float32>);
-        CPPUNIT_TEST(test_io_array_no_ext<Float64>);
-        CPPUNIT_TEST(test_io_array_no_ext<Float128>);
-        CPPUNIT_TEST(test_io_array_no_ext<Complex32>);
-        CPPUNIT_TEST(test_io_array_no_ext<Complex64>);
-        CPPUNIT_TEST(test_io_array_no_ext<Complex128>);
-
         CPPUNIT_TEST_SUITE_END();
     private:
         H5File _file;
-        Shape _shape;
-        Shape _chunk;
+        shape_t _shape;
+        shape_t _chunk;
         H5Dataset _dset;
     public:
         void setUp();
@@ -120,30 +75,20 @@ class H5SelectionTest:public CppUnit::TestFixture{
         void test_creation();
         void test_assignment();
         void test_setup();
-        void test_write_simple_types();
-        void test_write_scalar();
-        void test_write_array();
-        void test_write_buffer();
-        void test_read_simple_types();
-        void test_read_scalar();
-        void test_read_buffer();
-        void test_read_array();
-        template<typename T> void test_io_simple_no_ext();
-        template<typename T> void test_io_scalar_no_ext();
-        template<typename T> void test_io_buffer_no_ext();
-        template<typename T> void test_io_array_no_ext();
+        template<typename T> void test_scalar_selection();
+        template<typename T> void test_array_selection();
 
 };
 
 //------------------------------------------------------------------------------
-template<typename T> void H5SelectionTest::test_io_simple_no_ext()
+template<typename T> void H5SelectionTest::test_scalar_selection()
 {
     H5Datatype type = H5DatatypeFactory::create_type<T>();
-    size_t nx = 3, ny = 5;
-    H5Dataspace space({nx,ny});
+    shape_t s{3,5};
+    H5Dataspace space(s);
 
     //create a simple not extensible scalar dataset
-    H5Dataset dset("scalar",_file,type,space);
+    H5Dataset dset("dataset",_file,type,space);
     H5Selection sel = dset.selection();
         
     T write,read;

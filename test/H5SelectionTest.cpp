@@ -1,15 +1,16 @@
 //implementation of H5Selection tests
 
+#include <boost/current_function.hpp>
 #include "H5SelectionTest.hpp"
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(H5SelectionTest);
 
 //-----------------------------------------------------------------------------
-void H5SelectionTest::setUp(){
+void H5SelectionTest::setUp()
+{
     _shape = {1,12,57};
-
-    _chunk = Shape(_shape);
+    _chunk = _shap3;
 
     _file = H5File::create_file("H5SelectionTest.h5",true,0);
     H5Datatype type = H5DatatypeFactory::create_type<TypeID::FLOAT32>();
@@ -18,37 +19,38 @@ void H5SelectionTest::setUp(){
 }
 
 //-----------------------------------------------------------------------------
-void H5SelectionTest::tearDown(){
+void H5SelectionTest::tearDown()
+{
     _dset.close();
     _file.close();
 }
 
 //-----------------------------------------------------------------------------
-void H5SelectionTest::test_creation(){
-    std::cout<<"H5SelectionTest::test_creation-------------------------------";
-    std::cout<<std::endl;
+void H5SelectionTest::test_creation()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    CPPUNIT_ASSERT(_dset.shape() == _shape);
+    CPPUNIT_ASSERT(std::equal(_shape.begin(),_shape.end(),_dset.shape<shape_t>().begin()));
     H5Selection s1 =  _dset.selection();
-    CPPUNIT_ASSERT(s1.shape() == _shape);
+    CPPUNIT_ASSERT(std::equal(_shape.begin(),_shape.end(),s1.shape<shape_t>().begin()));
 
     
     //using copy constructor
     H5Selection s2= s1;
-    CPPUNIT_ASSERT(s2.shape() == s1.shape());
+    CPPUNIT_ASSERT(std::equal(s2.shape<shape_t>().begin(),s2.shape<shape_t>().end(),
+                              s1.shape<shape_t>().begin()));
 
     //using move constructor
     H5Selection s3;
     CPPUNIT_ASSERT_NO_THROW(s3= std::move(s1));
-    CPPUNIT_ASSERT(s3.shape() == s2.shape());
-    CPPUNIT_ASSERT(s3.shape() != s1.shape());
-
+    CPPUNIT_ASSERT(std::equal(s3.shape<shape_t>().begin(),s3.shape<shape_t>().end(),
+                              s2.shape<shape_t>().begin()));
 }
 
 //-----------------------------------------------------------------------------
-void H5SelectionTest::test_assignment(){
-    std::cout<<"H5SelectionTest::test_assignment-----------------------------";
-    std::cout<<std::endl;
+void H5SelectionTest::test_assignment()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     H5Selection s1 = _dset.selection();
     H5Selection s2 = _dset.selection();
@@ -65,14 +67,12 @@ void H5SelectionTest::test_assignment(){
     H5Selection s3 = _dset.selection();
     s3 = std::move(s1);
     CPPUNIT_ASSERT(s3.shape() == s2.shape());
-    CPPUNIT_ASSERT(s3.shape() != s1.shape());
-
 }
 
 //-----------------------------------------------------------------------------
-void H5SelectionTest::test_setup(){
-    std::cout<<"H5SelectionTest::test_setup-----------------------------------";
-    std::cout<<std::endl;
+void H5SelectionTest::test_setup()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     H5Selection s1 = _dset.selection();
 
@@ -87,8 +87,9 @@ void H5SelectionTest::test_setup(){
 }
 
 //-----------------------------------------------------------------------------
-void H5SelectionTest::test_write_simple_types(){
-    std::cout<<"void H5SelectionTest::test_write_simple_types()-----------------";
+void H5SelectionTest::test_write_simple_types()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     std::cout<<std::endl;
 
     //start with a scalar dataset

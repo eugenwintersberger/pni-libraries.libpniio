@@ -39,7 +39,8 @@ namespace pni{
 namespace nx{
 namespace h5{
 
-    /*! \ingroup nxh5_classes
+    /*! 
+    \ingroup nxh5_classes
     \brief selection object
 
     A selection allows to read only a part of the data stored in a dataset. In
@@ -53,7 +54,8 @@ namespace h5{
     shape (the shape with respect to the HDF5 dataset) and the memory shape
     which describes the shape of the object in memory holding the data.
     */
-    class H5Selection{
+    class H5Selection
+    {
         private:
             //! selection offset
             DBuffer<hsize_t> _offset;    
