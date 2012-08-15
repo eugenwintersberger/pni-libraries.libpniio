@@ -307,7 +307,7 @@ namespace h5{
         hid_t gid = H5Oopen(fid,base().c_str(),H5P_DEFAULT);
         H5Group g(gid);
         H5Fclose(fid);
-        H5Oclose(gid);
+        //H5Oclose(gid);
 
         return g;
     }

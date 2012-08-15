@@ -170,11 +170,11 @@ namespace h5{
                 
                 //create the dataset creation property list
                 hid_t cpl = H5Pcreate(H5P_DATASET_CREATE);
-                if(cs.rank() != 0){
+                if(cs.size() != 0){
                     H5Pset_layout(cpl,H5D_CHUNKED);
                     DBuffer<hsize_t> cdims(cs.size());
                     std::copy(cs.begin(),cs.end(),cdims.begin());
-                    H5Pset_chunk(cpl,cs.rank(),cdims.ptr());
+                    H5Pset_chunk(cpl,cs.size(),cdims.ptr());
                 }
 
                 //create the datase
@@ -223,11 +223,12 @@ namespace h5{
                 
                 //create the dataset creation property list
                 hid_t cpl = H5Pcreate(H5P_DATASET_CREATE);
-                if(cs.rank() != 0){
+                if(cs.size() != 0)
+                {
                     H5Pset_layout(cpl,H5D_CHUNKED);
                     DBuffer<hsize_t> cdims(cs.size());
                     std::copy(cs.begin(),cs.end(),cdims.begin());
-                    H5Pset_chunk(cpl,cs.rank(),cdims.ptr());
+                    H5Pset_chunk(cpl,cs.size(),cdims.ptr());
                 }
 
                 //setup the filter
