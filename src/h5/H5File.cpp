@@ -24,7 +24,7 @@ namespace h5{
     //implement constructor (protected) using an HDF5 ID object
     H5File::H5File(hid_t id):H5Group(id){ }
 
-    //-------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     //implementation of the move constructor
     H5File::H5File(H5File &&o):H5Group(std::move(o)){ }
 
@@ -147,7 +147,7 @@ namespace h5{
         H5Pclose(acc_plist);
 
         H5File f(fid);
-        H5Fclose(fid);
+        //H5Fclose(fid);
 
         return f;
     }
@@ -198,7 +198,7 @@ namespace h5{
         }
 
         H5File f(fid);
-        H5Fclose(fid);
+        //H5Fclose(fid);
 
         //in the end we need to set the HDF5 version to the correct
         //value
@@ -214,14 +214,15 @@ namespace h5{
         return f;
     }
 
-    //-----------------------------------------------------------------
+    //-------------------------------------------------------------------------
     void H5File::flush() const
     {
         if(is_valid()) H5Fflush(id(),H5F_SCOPE_LOCAL);
     }
     
-    //-----------------------------------------------------------------
-    String H5File::path() const {
+    //-------------------------------------------------------------------------
+    String H5File::path() const 
+    {
         DBuffer<char> buffer;
 
         if(is_valid())
@@ -237,6 +238,44 @@ namespace h5{
         }
 
         return String("");
+    }
+
+    //-------------------------------------------------------------------------
+    String H5File::base() const
+    {
+        String p(H5File::path());
+
+        
+        //need to extract the the name information from the path
+        size_t lpos = p.find_last_of("/");
+        String base = "";
+        if(lpos != p.npos) base = String(p,0,lpos+1);
+
+        return base;
+    }
+
+    //-------------------------------------------------------------------------
+    String H5File::name() const
+    {
+        String p(H5File::path());
+
+        //need to extract the the name information from the path
+        size_t lpos = p.find_last_of("/");
+        String name = p;
+        if(lpos != p.npos) name = String(p,lpos+1,p.size()-lpos+1);
+
+        return name;
+    }
+
+
+    //-------------------------------------------------------------------------
+    bool H5File::is_readonly() const
+    {
+        unsigned int stat;
+        H5Fget_intent(id(),&stat);
+
+        if(stat==H5F_ACC_RDWR) return false;
+        return true;
     }
 
 //end of namespace
