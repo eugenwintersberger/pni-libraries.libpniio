@@ -119,6 +119,35 @@ void H5AttributeObjectTest::test_comparison()
 }
 
 //-----------------------------------------------------------------------------
+void H5AttributeObjectTest::test_inquery()
+{
+    H5AttributeObject
+        o1(H5TestObject(H5Gcreate2(file,"group",H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT)));
+
+    o1.attr<Float32>("test1");
+    o1.attr<UInt8>("test2");
+
+    CPPUNIT_ASSERT(o1.nattr() == 2);
+    //check for existing attributes
+    CPPUNIT_ASSERT(o1.has_attr("test1"));
+    CPPUNIT_ASSERT(!o1.has_attr("bla"));
+    
+    CPPUNIT_ASSERT_THROW(o1.attr("bla"),H5AttributeError);
+    CPPUNIT_ASSERT_NO_THROW(o1.attr(0));
+    CPPUNIT_ASSERT_NO_THROW(o1.attr(1));
+    CPPUNIT_ASSERT_THROW(o1.attr(2),IndexError);
+    CPPUNIT_ASSERT_THROW(o1.attr(100),IndexError);
+
+    //try to create a new one without overwrite
+    CPPUNIT_ASSERT_THROW(o1.attr<String>("test1"),H5AttributeError);
+    CPPUNIT_ASSERT_NO_THROW(o1.attr<String>("test1",true));
+
+    CPPUNIT_ASSERT_NO_THROW(o1.del_attr("test1"));
+    CPPUNIT_ASSERT_NO_THROW(o1.attr<String>("test1"));
+
+}
+
+//-----------------------------------------------------------------------------
 void H5AttributeObjectTest::test_string_attribute()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;

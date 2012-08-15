@@ -25,12 +25,14 @@ class H5TestObject:public H5AttributeObject
         H5TestObject(hid_t id):H5AttributeObject(id) {};
 };
 
-class H5AttributeObjectTest:public CppUnit::TestFixture{
+class H5AttributeObjectTest:public CppUnit::TestFixture
+{
         CPPUNIT_TEST_SUITE(H5AttributeObjectTest);
         CPPUNIT_TEST(test_creation); 
         CPPUNIT_TEST(test_assignment);
         CPPUNIT_TEST(test_destruction);
         CPPUNIT_TEST(test_comparison);
+        CPPUNIT_TEST(test_inquery);
         CPPUNIT_TEST(test_scalar_attribute<UInt8>);
         CPPUNIT_TEST(test_scalar_attribute<Int8>);
         CPPUNIT_TEST(test_scalar_attribute<UInt16>);
@@ -82,6 +84,7 @@ class H5AttributeObjectTest:public CppUnit::TestFixture{
         template<typename T>
         void test_array_attribute();
         void test_string_attribute();
+        void test_inquery();
 };
 
 //-----------------------------------------------------------------------------
