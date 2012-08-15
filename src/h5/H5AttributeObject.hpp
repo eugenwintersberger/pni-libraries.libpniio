@@ -227,11 +227,15 @@ namespace h5{
         hid_t aid = H5Acreate2(id(),n.c_str(),type.id(),space.id(),
                 H5P_DEFAULT,H5P_DEFAULT);
         if(aid < 0)
-            throw H5AttributeError(EXCEPTION_RECORD, 
-                    "Cannot create attribute!");
+        {
+            H5AttributeError error(EXCEPTION_RECORD,"Cannot create attribute!");
+            std::cout<<H5Tget_size(type.id())<<std::endl;
+            std::cout<<space.size()<<std::endl;
+            throw error;
+        }
 
         H5Attribute a(aid);
-        H5Aclose(aid);
+        //H5Aclose(aid);
         return a;
     }
 

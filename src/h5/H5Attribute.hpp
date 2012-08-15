@@ -50,14 +50,13 @@ namespace h5{
     \ingroup nxh5_classes
     \brief HDF5 attribute object
 
-    An HDF5 attribute behaves basically like a dataset with the 
-    exception that (for obvious reasons) no other attributes 
-    can be attached to it. In addition attributes cannot use 
-    compression nor can they be used along with a chunked layout.
-    Attribute objects are derived from H5NamedObject. However, 
-    the semantics of the name(), base(), and path() methods is 
-    slightly different. name() returns the name of the attribute
-    while base() and path() return emtpy strings as an attribute
+    An HDF5 attribute behaves basically like a dataset with the exception that
+    (for obvious reasons) no other attributes can be attached to it. In addition
+    attributes cannot use compression nor can they be used along with a chunked
+    layout.  Attribute objects are derived from H5NamedObject. However, the
+    semantics of the name(), base(), and path() methods is slightly different.
+    name() returns the name of the attribute while base() and path() return
+    emtpy strings as an attribute
     */ 
     class H5Attribute:public H5NamedObject
     {
@@ -69,37 +68,47 @@ namespace h5{
             /*! 
             \brief set dataspace and datatype
 
-            This ethod uses the HDF5 ID of an attribute object
-            to obtain the dataspace and the datatype. 
-            Thus it sets the internal state of the class.
+            This ethod uses the HDF5 ID of an attribute object to obtain the
+            dataspace and the datatype.  Thus it sets the internal state of the
+            class.
             */
             void __set_space_type();
 
         public:
-            //================constructors and destructors=============
+            //==============-====constructors and destructors===================
             //! default constructor
             explicit H5Attribute();
+
+            //-----------------------------------------------------------------
             //! copy constructor
             H5Attribute(const H5Attribute &o);
+
+            //-----------------------------------------------------------------
             //! move constructor
             H5Attribute(H5Attribute &&o);
-            //! construct from HDF5 type ID
 
-            //! This constructor takes the ID to an attribute object
-            //! and initializes the class. The ID can be obtained 
-            //! with HDF5s C interface.
-            //! \param id HDF5 id of the attribute object.
+            //-----------------------------------------------------------------
+            /*! 
+            \brief construct from HDF5 type ID
+
+            This constructor takes the ID to an attribute object
+            and initializes the class. The ID can be obtained 
+            with HDF5s C interface.
+            \param id HDF5 id of the attribute object.
+            */
             explicit H5Attribute(const hid_t &id);
-            
+           
+            //-----------------------------------------------------------------
             //! destructor
             ~H5Attribute();
 
-            //=============assignment operators========================
+            //=====================assignment operators========================
             //! copy assignment operator
             H5Attribute &operator=(const H5Attribute &a);
+
+            //-----------------------------------------------------------------
             //! move assignment operator
             H5Attribute &operator=(H5Attribute &&o);
-
 
             //===================reading and writting data=====================
             /*
@@ -107,6 +116,7 @@ namespace h5{
 
             Private method writing data from memory addressed by 
             ptr to the attribute.
+            \tparam T data type in memory
             \throws H5AttributeError in case of IO errors
             \param ptr pointer to memory
             */
@@ -120,14 +130,39 @@ namespace h5{
             }
 
             //-----------------------------------------------------------------
+            /*!
+            \brief write string attribute
+
+            Write data to a string attribute.
+            \param s string to write
+            */
             void write(const String &s) const;
-           
+
+            //-----------------------------------------------------------------
+            /*!
+            \brief handle C-style strings
+
+            This method is used as a string constant is not converted to String
+            but rather to const char *. This method is called in the following
+            example
+            \code
+            H5Attribute a=...;
+            a.write("hello word");
+            \endcode
+            \param s pointer to the character string
+            */
+            void write(const char *s) const 
+            {
+                write(String(s));
+            }
+          
+            //-----------------------------------------------------------------
             /*! 
             \brief pointer read
 
-            Private method reading data form the attribute to a 
-            memory region addressed by ptr. An exception is 
-            thrown if an error occurs
+            Private method reading data form the attribute to a memory region
+            addressed by ptr. An exception is thrown if an error occurs
+            \tparam T type of data in memory
             \throws H5AttributeError in case of IO errors
             \param ptr pointer to memory
             */
@@ -174,6 +209,24 @@ namespace h5{
 
             //-----------------------------------------------------------------
             /*! 
+            \brief get size
+
+            Return  the total number of elements stored in the attribute.
+            \return number of elements
+            */
+            size_t size() const { return this->_dspace.size(); }
+
+            //-----------------------------------------------------------------
+            /*!
+            \brief get rank
+
+            Get the number of dimensions.
+            \return number of dimensions
+            */
+            size_t rank() const { return this->_dspace.rank(); }
+
+            //-----------------------------------------------------------------
+            /*! 
             \brief close attribute
 
             This method closes the attribute object.
@@ -206,8 +259,6 @@ namespace h5{
             \return attribute name
             */
             virtual String name() const;
-
-
     };
 
 

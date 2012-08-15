@@ -120,8 +120,6 @@ namespace h5{
     }
 
     //=========implementation of inquery methods===============================
-
-    //-------------------------------------------------------------------------
     TypeID H5Attribute::type_id() const
     {
         return _dtype.type_id();
