@@ -194,7 +194,7 @@ namespace h5{
         if(tid == H5I_GROUP) o = std::move(H5Group(oid)); 
         else if(tid == H5I_DATASET) o = std::move(H5Dataset(oid));
         
-        H5Oclose(oid);
+        //H5Oclose(oid);
         return o;
     }
 

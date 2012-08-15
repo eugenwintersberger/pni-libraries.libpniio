@@ -8,7 +8,6 @@ extern "C"{
 }
 
 #include <pni/utils/Types.hpp>
-#include <pni/utils/Shape.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
@@ -19,13 +18,12 @@ extern "C"{
 using namespace pni::utils;
 using namespace pni::nx::h5;
 
-class H5GroupTest:public CppUnit::TestFixture{
+class H5GroupTest:public CppUnit::TestFixture
+{
         CPPUNIT_TEST_SUITE(H5GroupTest);
         CPPUNIT_TEST(test_creation); 
         CPPUNIT_TEST(test_assignment);
         CPPUNIT_TEST(test_openobjects);
-        CPPUNIT_TEST(test_attributes);
-        CPPUNIT_TEST(test_attribute_manipulation);
         CPPUNIT_TEST(test_linking);
         CPPUNIT_TEST(test_comparison);
         CPPUNIT_TEST_SUITE_END();

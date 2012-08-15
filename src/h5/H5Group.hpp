@@ -43,28 +43,41 @@ namespace h5{
     /*! \ingroup nxh5_classes
     \brief HDF5 group object
     
-    Group objects are the fundamental structuring objects in the HDF5
-    world. They can be identified by a path within the file and
-    attributes can be attached to them. 
+    Group objects are the fundamental structuring objects in the HDF5 world.
+    They can be identified by a path within the file and attributes can be
+    attached to them. 
     */
-    class H5Group:public H5AttributeObject{
+    class H5Group:public H5AttributeObject
+    {
         protected:
             //! construct from object ID
             explicit H5Group(const hid_t &oid);
         public:
-            //==========constructors and destructors===================
+            //==========constructors and destructors===========================
             //! default constructor
             explicit H5Group();
+
+            //-----------------------------------------------------------------
             //! copy constructor
             H5Group(const H5Group &o);
+
+            //-----------------------------------------------------------------
             //! copy conversion constructor
             H5Group(const H5Object &o);
+
+            //-----------------------------------------------------------------
             //! move constructor
             H5Group(H5Group &&o);
+
+            //-----------------------------------------------------------------
             //! move conversion constructor
             H5Group(H5Object &&o);
+
+            //-----------------------------------------------------------------
             //! standard constructor
             explicit H5Group(const String &name,const H5Group &p);
+
+            //-----------------------------------------------------------------
             //! destructor
             virtual ~H5Group();
 
@@ -72,31 +85,37 @@ namespace h5{
             //===================assignment operators===========================
             //! copy assignment
             H5Group &operator=(const H5Group &o);
+
+            //------------------------------------------------------------------
             //! copy conversion assignment
             H5Group &operator=(const H5Object &o);
+
+            //------------------------------------------------------------------
             //! move assignment
             H5Group &operator=(H5Group &&o);
+
+            //-----------------------------------------------------------------
             //! move conversion assignment
             H5Group &operator=(H5Object &&o);
 
-            //=================methods to open objects=========================
-            /*! open an arbitrary object
+            //=================methods to open objects==========================
+            /*! 
+            \brief open an arbitrary object
 
-            Opens an arbitrary object. The method takes a path to the 
-            object and returns an H5Object. As all classes derived from 
-            H5Object every other object can be constructed from such 
-            an general H5Object. 
+            Opens an arbitrary object. The method takes a path to the object and
+            returns an H5Object. As all classes derived from H5Object every
+            other object can be constructed from such an general H5Object. 
 
-            The path can be either an absolute path or relative to 
-            the group instance calling this method. Both methods work as
-            expected.
+            The path can be either an absolute path or relative to the group
+            instance calling this method. Both methods work as expected.
             \param n object path
             \return HDF5 object 
             */
             H5Object open(const String &n) const;
 
             //-----------------------------------------------------------------
-            /*! open an arbitrary object
+            /*! 
+            \brief open an arbitrary object
 
             Basically this does the same as the open() method.
             \param n object path
@@ -106,11 +125,12 @@ namespace h5{
             H5Object operator[](const String &n) const;
 
             //-----------------------------------------------------------------
-            /*! open by index
+            /*! 
+            \brief open by index
             
             Opens a child object below this group by its index. Unlike
-            open(const String &n) only objects linked to this group can
-            be opened with this method.
+            open(const String &n) only objects linked to this group can be
+            opened with this method.
             \throws IndexError if index exceeds number of childs
             \param i object index
             \return child object
@@ -118,7 +138,8 @@ namespace h5{
             H5Object open(size_t i) const;
 
             //-----------------------------------------------------------------
-            /*! open by index
+            /*! 
+            \brief open by index
 
             [] operator to obtain a child node by index;
             \throws IndexError if index exceeds number of childs
@@ -148,10 +169,10 @@ namespace h5{
             virtual void close();
 
             //-----------------------------------------------------------------
-            /*! \brief return the parent group 
+            /*! 
+            \brief return the parent group 
 
-            Returns the parent group und which this group object is 
-            linked.
+            Returns the parent group und which this group object is linked.
             \return parent group 
             */
             virtual H5Group parent() const { return open(base()); }

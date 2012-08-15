@@ -13,6 +13,7 @@ sources_list.append("pninxtest.cpp")
 #sources_list.append("NXFileTest.cpp")
 #sources_list.append("NXGroupTest.cpp")
 #sources_list.append("NXFieldTest.cpp")
+#sources_list.append("NXSelectionTest.cpp")
 
 #tests for the HDF5 implementation backend
 sources_list.append("H5ObjectTest.cpp")
@@ -21,12 +22,11 @@ sources_list.append("H5DatatypeTest.cpp")
 sources_list.append("H5NamedObjectTest.cpp")
 sources_list.append("H5AttributeObjectTest.cpp")
 sources_list.append("H5FileTest.cpp")
-#sources_list.append("H5GroupTest.cpp")
+sources_list.append("H5GroupTest.cpp")
 #sources_list.append("H5DatasetTest.cpp")
 #sources_list.append("H5SelectionTest.cpp")
 #sources_list.append("H5LinkTest.cpp")
 #sources_list.append("TestHelpers.cpp")
-#sources_list.append("NXSelectionTest.cpp")
 
 
 pninx_test = test_env.Program("pninxtest",sources_list)
