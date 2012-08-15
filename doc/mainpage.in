@@ -64,11 +64,6 @@ interface of HDF5 to make it possible to read and write data in parallel.
     Exceptions related to the library.
 */
 
-/*! \defgroup nxh5_classes HDF5 implementation classes
-    HDF5 implementation of the Nexus file format. This module describes the 
-    implementation classes which are used to instantiate the low level 
-    class templates.
-*/
 
 
 
