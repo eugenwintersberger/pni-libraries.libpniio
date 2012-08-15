@@ -45,7 +45,7 @@ namespace h5 {
 
     This class encapsulates an HDF5 dataspace. A dataspace describes the
     organization of dataelements within a dataset in the file or of data stored
-    in memory. Thus it basically describes a multidimensional array with a
+    in memory. It basically describes a multidimensional array with a
     particular rank (number of dimensions) and a particular number of elements
     along each dimension. For each dimension there exists an actual number of
     elements which is the number of elements now allocated and a maximum number
@@ -57,8 +57,9 @@ namespace h5 {
     At any time during the lifetime of a H5Dataspace object the dataspace it
     describes can be resized to any required shape (see the resize() and grow()
     methods).  This makes it easy to adopt the object to your needs.  There are
-    many possibilities how to construct a dataspace.  See the users manual for
-    details.
+    many possibilities how to construct a dataspace.  
+
+    A dataspace representing a scalar value has a rank of  0 and a size of 1. 
     */
     class H5Dataspace:public H5Object
     {
@@ -91,20 +92,31 @@ namespace h5 {
             static const hsize_t UNLIMITED = H5S_UNLIMITED;
 
             //==============constructors and destructor========================
-            //! default constructor
+            /*! 
+            \brief default constructor
 
-            //! By default a scalar dataspace is constructed. This 
-            //! constructor can always be used in order to store a
-            //! scalar value.
+            By default a scalar dataspace is constructed. This constructor can
+            always be used in order to store a scalar value.
+            */
             explicit H5Dataspace();
+
+            //-----------------------------------------------------------------
             //! copy constructor
             H5Dataspace(const H5Dataspace &o);
+
+            //-----------------------------------------------------------------
             //! copy conversion constructor
             explicit H5Dataspace(const H5Object &o);
+
+            //-----------------------------------------------------------------
             //! move constructor
             H5Dataspace(H5Dataspace &&o);
+
+            //-----------------------------------------------------------------
             //! move conversion constructor
             explicit H5Dataspace(H5Object &&o);
+
+            //-----------------------------------------------------------------
             //! construct from ID
             explicit H5Dataspace(hid_t id);
             
@@ -234,24 +246,55 @@ namespace h5 {
             //=====================Assignment operators========================
             //! copy assignment operator
             H5Dataspace &operator=(const H5Dataspace &o);
+
+            //-----------------------------------------------------------------
             //! copy conversion operator
             H5Dataspace &operator=(const H5Object &o);
+
+            //-----------------------------------------------------------------
             //! move assignment operator
             H5Dataspace &operator=(H5Dataspace &&o);
+
+            //-----------------------------------------------------------------
             //! move conversion assignment operator
             H5Dataspace &operator=(H5Object &&o);
 
             //=====================convenience  methods========================
-            /*! \brief obtain current shape
-            
-            This method returns the actual shape (number of elements
-            along each dimension) of the dataspace.
-            If the dataspace is scalar an empty shape is returned.
-            \return shape object 
+            /*! 
+            \brief get reference to the shape buffer
+           
+            This method returns a const reference to the internal buffer holding
+            the actual number of elements along each dimension. For a dataspace
+            representing a scalar value this will be an empty buffer. 
+            The aim of this method is to provide a quick way to access the shape
+            of a dataspace.
+            \return const reference to shape buffer
+            \sa CTYPE shape() const
+            \sa void shape(CTYPE &c) const
             */
             const DBuffer<hsize_t> &shape() const { return _dims; }
 
             //-----------------------------------------------------------------
+            /*! 
+            \brief get actual shape
+
+            Returns the actual number of elements along each dimension in a
+            user definied container as shown in the example below where a list
+            container is used
+            \code
+            H5Dataspace space({1,2,3});
+
+            auto adims = space.shape<std::list<hsize_t> >();
+            \endcode
+            Though this method provides a high degree of flexibility it has a
+            major disadvantage: as it needs to allocate new memory for the
+            container every time it is called this method may not be suitable
+            for situations where high performance is required.
+            \tparam CTYPE container type
+            \return instance of CTYPE with elements along each dimension
+            \sa shape() 
+            \sa void shape(CTYPE &c) 
+            */
             template<typename CTYPE> CTYPE shape() const
             {
                 CTYPE c(_dims.size());
@@ -260,22 +303,101 @@ namespace h5 {
             }
 
             //-----------------------------------------------------------------
+            /*! 
+            \brief get actual shape
+
+            Copy the actual shape to an existing container object. The container
+            can be any STL compliant type. 
+            \code 
+            H5Dataspace s{1,2,3};
+            std::vector<size_t> shape(s.rank());
+            s.shape(shape);
+            \endcode
+            The method does not reallocate the container and thus assumes that
+            it has the appropriate size. If this is not the case an exception
+            will be thrown. Since no memory must be allocated this method should
+            be sufficiently quite fast.
+            \throw ShapeMissmatchError if size of container does not match the
+            rank of the dataspace
+            \tparam CTYPE type of the container
+            \param c reference to the container
+            */
+            template<typename CTYPE> void shape(CTYPE &c) const
+            {
+                if(c.size() != rank())
+                {
+                    std::stringstream ss;
+                    ss<<"Container size ("<<c.size()<<") does not match the ";
+                    ss<<"dataspace rank ("<<rank()<<")!";
+                    throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
+                }
+
+                std::copy(this->shape().begin(),this->shape().end(),c.begin());
+            }
+
+
+            //-----------------------------------------------------------------
             /*! \brief obtain the maximum shape
 
             Returns the maximum shape of the dataspace. 
-            \return shape object */
-            const DBuffer<hsize_t> &maxshape() const
-            {
-                return _maxdims;
-            }
+            \return shape object 
+             
+            */
+            const DBuffer<hsize_t> &maxshape() const { return _maxdims; }
 
             //----------------------------------------------------------------
+            /*!
+            \brief get maximum shape
+
+            Get the maximum shape of the dataspace (the maximum number of
+            elements to which a dataset initialized with this shape can grow). 
+            \code
+            H5Dataspace space({1,2,3,4},{100,100,100,100});
+            auto shape = space<std::vector<size_t> >();
+            \endcode
+            Like for CTYPE shape() this method allocates the requested container
+            and thus is maybe not the best choice if performance is an issue. 
+            \tparam CTYPE container type
+            \return instance of CTYPE with the maximum shape of the dataspace
+            */
             template<typename CTYPE> CTYPE maxshape() const
             {
                 CTYPE c(_maxdims.size());
                 std::copy(_maxdims.begin(),_maxdims.end(),c.begin());
                 return c;
             }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief get maximum shape
+
+            Store the maximum shape of the dataspace to an already existing
+            container. 
+            \code
+            H5Dataspace space({1,2,3,4},{100,100,100,100});
+            std::vector<size_t> shape(space.rank());
+            space.shape(shape);
+            \endcode
+            The method assumes that the container is of appropriate size. If
+            this is not the case an exception will be thrown.
+            \throw ShapeMissmatchError if container size does not match the rank
+            of the dataspace
+            \tparam CTYPE container type
+            \param c reference to container instance
+            */
+            template<typename CTYPE> void maxshape(CTYPE &c) const
+            {
+                if(c.size() != rank())
+                {
+                    std::stringstream ss;
+                    ss<<"Container size ("<<c.size()<<") does not match the ";
+                    ss<<"dataspace rank ("<<rank()<<")!";
+                    throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
+                }
+
+                std::copy(this->shape().begin(),this->shape().end(),c.begin());
+            }
+
 
             //-----------------------------------------------------------------
             /*! \brief rank of dataset
@@ -438,6 +560,7 @@ namespace h5 {
                     const H5Dataspace &s);
 
         };
+
 
 //end of namespace
 }

@@ -24,7 +24,6 @@ void H5DataspaceTest::test_creation(){
     //create a dataspace from a shape object
     //this should lead to a constant dataspace which cannot be extended
     shape_t s({10,3,45});
-
     H5Dataspace s2(s);
     CPPUNIT_ASSERT(s2.is_valid());
     CPPUNIT_ASSERT(!s2.is_scalar());
@@ -75,7 +74,8 @@ void H5DataspaceTest::test_creation(){
 }
 
 //------------------------------------------------------------------------------
-void H5DataspaceTest::test_assignment(){
+void H5DataspaceTest::test_assignment()
+{
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     H5Dataspace s1;
@@ -113,6 +113,21 @@ void H5DataspaceTest::test_inquery()
     CPPUNIT_ASSERT(s1.is_valid());
     CPPUNIT_ASSERT(s1.size() == 50*100);
 
+    //request shapes
+    std::list<size_t> slist(s1.rank());
+    CPPUNIT_ASSERT_NO_THROW(s1.shape(slist));
+    CPPUNIT_ASSERT(std::equal(s1.shape().begin(),s1.shape().end(),slist.begin()));
+    CPPUNIT_ASSERT_NO_THROW(s1.maxshape(slist));
+    CPPUNIT_ASSERT(std::equal(s1.maxshape().begin(),s1.maxshape().end(),slist.begin()));
+
+    slist = std::list<size_t>(s1.rank()+1);
+    CPPUNIT_ASSERT_THROW(s1.shape(slist),ShapeMissmatchError);
+    CPPUNIT_ASSERT_THROW(s1.maxshape(slist),ShapeMissmatchError);
+
+    auto list = s1.shape<std::list<size_t> >();
+    auto mlist = s1.maxshape<std::list<size_t> >();
+    CPPUNIT_ASSERT(std::equal(s1.shape().begin(),s1.shape().end(),list.begin()));
+    CPPUNIT_ASSERT(std::equal(s1.maxshape().begin(),s1.maxshape().end(),mlist.begin()));
 }
 
 //------------------------------------------------------------------------------
