@@ -41,7 +41,7 @@ namespace h5{
 using namespace pni::utils;
 
     /*! 
-    \ingroup nxh5_classes error_classes
+    \ingroup nxh5_error_classes 
     \brief HDF5 exceptions base class
 
     Base class for all HDF5 related exceptions. The class is a descendant
@@ -78,7 +78,7 @@ using namespace pni::utils;
     };
 
     /*! 
-    \ingroup nxh5_classes error_classes
+    \ingroup nxh5_error_classes
     \brief data-type error
 
     Exception is thrown in cases where errors concerning HDF5 data-type objects
@@ -103,7 +103,7 @@ using namespace pni::utils;
     };
 
     /*! 
-    \ingroup nxh5_classes error_classes
+    \ingroup nxh5_error_classes
     \brief dataset error
 
     Exception thrown in situations where errors concering an HDF5 data-set
@@ -128,7 +128,7 @@ using namespace pni::utils;
     };
 
     /*! 
-    \ingroup nxh5_classes error_classes
+    \ingroup nxh5_error_classes
     \brief data-space error
 
     Exception thrown in error situations involving HDF5 data-spaces.
@@ -152,7 +152,7 @@ using namespace pni::utils;
     };
 
     /*! 
-    \ingroup nxh5_classes error_classes
+    \ingroup nxh5_error_classes
     \brief attribute error
 
     Exception thrown in situations where errors occur involving HDF5 attributes.
@@ -176,7 +176,7 @@ using namespace pni::utils;
     };
 
     /*! 
-    \ingroup nxh5_classes error_classes
+    \ingroup nxh5_error_classes
     \brief file error
 
     Exception thrown in situations where error occur involving HDF5 file objects.
@@ -200,7 +200,7 @@ using namespace pni::utils;
     };
 
     /*! 
-    \ingroup nxh5_classes error_classes
+    \ingroup nxh5_error_classes
     \brief group error
 
     Exception thrown in situations where errors occur involving HDF5 group objects.
@@ -224,7 +224,7 @@ using namespace pni::utils;
     };
 
     /*! 
-    \ingroup nxh5_classes error_classes
+    \ingroup nxh5_error_classes
     \brief property list error
 
     Exception thrown in situations where errors occur involving HDF5 property
@@ -249,7 +249,7 @@ using namespace pni::utils;
     };
 
     /*! 
-    \ingroup nxh5_classes error_classes
+    \ingroup nxh5_error_classes
     \brief filter error
 
     Exception thrown for errors involving HDF5 filters.
@@ -273,7 +273,7 @@ using namespace pni::utils;
     };
 
     /*! 
-    \ingroup nxh5_classes error_classes
+    \ingroup nxh5_error_classes
     \brief object error
 
     Exception thrown in all cases where HDF5 objects in general are involved.
@@ -301,7 +301,7 @@ using namespace pni::utils;
     };
 
     /*! 
-    \ingroup nxh5_classes error_classes
+    \ingroup nxh5_error_classes
     \brief link error
 
     Exception thrown in all cases where errors occur during link creation.
