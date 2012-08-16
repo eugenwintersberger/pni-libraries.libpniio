@@ -183,5 +183,45 @@ void H5DatasetTest::test_resize()
     CPPUNIT_ASSERT(std::equal(ns.begin(),ns.end(),ds.shape<shape_t>().begin()));
 }
 
+//------------------------------------------------------------------------------
+void H5DatasetTest::test_string_array_data()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    shape_t s{2,3};
+    H5Datatype type = H5DatatypeFactory::create_type<String>();
+    H5Dataspace space(s);
+
+    H5Dataset dset("sarray",_group,type,space,s);
+
+    DArray<String> swrite(s);
+    swrite(0,0) = "hello"; swrite(0,1) = "world"; swrite(0,2) = "this";
+    swrite(1,0) = "is"; swrite(1,1) = "a string"; swrite(1,2) = "array";
+    
+    CPPUNIT_ASSERT_NO_THROW(dset.write(swrite.storage().ptr()));
+
+    DArray<String> sread(s);
+
+    CPPUNIT_ASSERT_NO_THROW(dset.read(const_cast<String*>(sread.storage().ptr())));
+
+    std::equal(swrite.begin(),swrite.end(),sread.begin());
+}
+
+//-----------------------------------------------------------------------------
+void H5DatasetTest::test_string_scalar_data()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    H5Datatype type = H5DatatypeFactory::create_type<String>();
+    H5Dataspace space;
+
+    H5Dataset dset("sscalar",_group,type,space);
+
+    String write = "hello world";
+    dset.write(&write);
+    String read;
+    dset.read(&read);
+    CPPUNIT_ASSERT(read == write);
+}
+
 
 

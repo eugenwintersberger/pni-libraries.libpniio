@@ -239,53 +239,58 @@ namespace h5{
     }
 
     //------------------------------------------------------------------
-    //implementation of writing a string scalar
-    void H5Dataset::write(const String &b) const
+    void H5Dataset::write(const String *sptr) const
     {
-        if(size()!=1)
-            throw ShapeMissmatchError(EXCEPTION_RECORD,
-                    "Dataset is not scalar!");
-
+        typedef const char * char_ptr_t;
         //select the proper memory data type
         
         H5Datatype mem_type(H5Dget_type(id()));
-        const char *ptr = b.c_str();
+        char_ptr_t *ptr = new char_ptr_t[size()];
+        for(size_t i=0;i<size();i++)
+            ptr[i] = sptr[i].c_str();
 
         //write data to disk
         herr_t err = H5Dwrite(id(),mem_type.id(),H5S_ALL,H5S_ALL,
-                              H5P_DEFAULT,(const void *)&ptr);
+                              H5P_DEFAULT,(const void *)ptr);
+
+        delete [] ptr; //free memory
         if(err<0)
             throw H5DataSetError(EXCEPTION_RECORD, 
                     "Error writing data to dataset!");
     }
 
-    //------------------------------------------------------------------
-    //implementation of reading string scalar
-    void H5Dataset::read(String &b) const
+    //-----------------------------------------------------------------
+    void H5Dataset::read(String *sptr) const
     {
-        if(size()!=1)
-            throw ShapeMissmatchError(EXCEPTION_RECORD,
-                    "Dataset is not scalar!");
-
+        typedef char * char_ptr_t;
+        //select the proper memory data type
+        
         H5Datatype mem_type(H5Dget_type(id()));
-        const char *ptr = nullptr;
+        char_ptr_t *ptr = new char_ptr_t[size()];
         hid_t xfer_plist = H5Pcreate(H5P_DATASET_XFER);
 
         //write data to disk
         herr_t err = H5Dread(id(),mem_type.id(),H5S_ALL,H5S_ALL,
-                              xfer_plist,(void *)&ptr);
+                              xfer_plist,(void *)ptr);
         if(err<0)
-            throw H5DataSetError(EXCEPTION_RECORD, 
+        {
+            H5DataSetError error(EXCEPTION_RECORD, 
                     "Error writing data to dataset ["+name()+"]!");
-
-        try{
-            b = String(ptr);
-        }catch(...){
-            b = "";
+            std::cout<<error<<std::endl;
+            throw error;
         }
 
-        H5Dvlen_reclaim(mem_type.id(),_space.id(),xfer_plist,&ptr);
+        for(size_t i=0;i<size();i++)
+        {
+            try{
+                sptr[i] = String(ptr[i]);
+            }catch(...){
+                sptr[i] = "";
+            }
+        }
 
+        H5Dvlen_reclaim(mem_type.id(),_space.id(),xfer_plist,ptr);
+        delete [] ptr;
     }
 
     //-----------------------------------------------------------------

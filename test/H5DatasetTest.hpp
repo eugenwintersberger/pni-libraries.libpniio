@@ -43,6 +43,7 @@ class H5DatasetTest:public CppUnit::TestFixture{
         CPPUNIT_TEST(test_scalar_data<Complex64>);
         CPPUNIT_TEST(test_scalar_data<Complex128>);
         CPPUNIT_TEST(test_scalar_data<Binary>);
+        CPPUNIT_TEST(test_string_scalar_data);
 
         CPPUNIT_TEST(test_array_data<UInt8>);
         CPPUNIT_TEST(test_array_data<Int8>);
@@ -59,7 +60,8 @@ class H5DatasetTest:public CppUnit::TestFixture{
         CPPUNIT_TEST(test_array_data<Complex64>);
         CPPUNIT_TEST(test_array_data<Complex128>);
         CPPUNIT_TEST(test_array_data<Binary>);
-        CPPUNIT_TEST(test_linking);
+        CPPUNIT_TEST(test_string_array_data);
+        //CPPUNIT_TEST(test_linking);
         CPPUNIT_TEST_SUITE_END();
     private:
         H5File _file;
@@ -73,6 +75,8 @@ class H5DatasetTest:public CppUnit::TestFixture{
         void test_resize();
         template<typename T> void test_scalar_data();
         template<typename T> void test_array_data();
+        void test_string_array_data();
+        void test_string_scalar_data();
         void test_linking();
 };
 
