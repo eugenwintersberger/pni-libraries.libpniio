@@ -44,6 +44,7 @@ class H5DatasetTest:public CppUnit::TestFixture{
         CPPUNIT_TEST(test_scalar_data<Complex128>);
         CPPUNIT_TEST(test_scalar_data<Binary>);
         CPPUNIT_TEST(test_string_scalar_data);
+        CPPUNIT_TEST(test_bool_scalar_data);
 
         CPPUNIT_TEST(test_array_data<UInt8>);
         CPPUNIT_TEST(test_array_data<Int8>);
@@ -61,6 +62,7 @@ class H5DatasetTest:public CppUnit::TestFixture{
         CPPUNIT_TEST(test_array_data<Complex128>);
         CPPUNIT_TEST(test_array_data<Binary>);
         CPPUNIT_TEST(test_string_array_data);
+        CPPUNIT_TEST(test_bool_array_data);
         //CPPUNIT_TEST(test_linking);
         CPPUNIT_TEST_SUITE_END();
     private:
@@ -77,6 +79,8 @@ class H5DatasetTest:public CppUnit::TestFixture{
         template<typename T> void test_array_data();
         void test_string_array_data();
         void test_string_scalar_data();
+        void test_bool_scalar_data();
+        void test_bool_array_data();
         void test_linking();
 };
 

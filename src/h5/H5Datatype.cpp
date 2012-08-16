@@ -100,6 +100,7 @@ namespace h5{
     {
         if(H5DatatypeFactory::create_type<TypeID::UINT8>()==*this) 
             return TypeID::UINT8;
+
         if(H5DatatypeFactory::create_type<TypeID::INT8>() ==*this) 
             return TypeID::INT8;
 
@@ -110,11 +111,13 @@ namespace h5{
 
         if(H5DatatypeFactory::create_type<TypeID::UINT32>()==*this) 
             return TypeID::UINT32;
+
         if(H5DatatypeFactory::create_type<TypeID::INT32>() ==*this) 
             return TypeID::INT32;
         
         if(H5DatatypeFactory::create_type<TypeID::UINT64>()==*this) 
             return TypeID::UINT64;
+
         if(H5DatatypeFactory::create_type<TypeID::INT64>() ==*this) 
             return TypeID::INT64;
         
@@ -138,8 +141,12 @@ namespace h5{
 
         if(H5DatatypeFactory::create_type<TypeID::BINARY>() == *this) 
             return TypeID::BINARY;
+
         if(H5DatatypeFactory::create_type<TypeID::STRING>() == *this) 
             return TypeID::STRING;
+
+        if(H5DatatypeFactory::create_type<TypeID::BOOL>() == *this)
+            return TypeID::BOOL;
 
         return TypeID::NONE;
         

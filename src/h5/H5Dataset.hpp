@@ -567,7 +567,6 @@ namespace h5{
             \throws H5DataSetError in case of other IO errors
             \param b String variable where to store the data
             */
-            //void read(String &b) const;
             void read(String *sptr) const;
 
             //===============writing data methods==============================
@@ -603,7 +602,6 @@ namespace h5{
             \throws H5DataSetError in the case of all other errors
             \param b String type variable
             */
-            //void write(const String &b) const;
             void write(const String *sptr) const;
 
             //-----------------------------------------------------------------

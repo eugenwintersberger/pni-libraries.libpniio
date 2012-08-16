@@ -223,5 +223,43 @@ void H5DatasetTest::test_string_scalar_data()
     CPPUNIT_ASSERT(read == write);
 }
 
+//-----------------------------------------------------------------------------
+void H5DatasetTest::test_bool_scalar_data()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    Bool read_flag,write_flag;
+
+    H5Datatype type = H5DatatypeFactory::create_type<Bool>();
+    H5Dataspace space;
+
+    H5Dataset dset("flag",_group,type,space);
+
+    read_flag = false; write_flag = true;
+    dset.write(&write_flag);
+    dset.read(&read_flag);
+    CPPUNIT_ASSERT(read_flag == write_flag);
+
+}
+
+//-----------------------------------------------------------------------------
+void H5DatasetTest::test_bool_array_data()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    SArray<Bool,2,3> write_flags;
+    SArray<Bool,2,3> read_flags;
+
+    write_flags(0,0) = true; write_flags(0,1) = false; write_flags(0,2)=true;
+    write_flags(1,0) = false; write_flags(1,1) = true; write_flags(1,2)=false;
+
+    H5Datatype type = H5DatatypeFactory::create_type<Bool>();
+    H5Dataspace space(write_flags.shape<shape_t>());
+    H5Dataset dset("flags",_group,type,space);
+
+    dset.write(write_flags.storage().ptr());
+    dset.read(const_cast<Bool*>(read_flags.storage().ptr()));
+
+    CPPUNIT_ASSERT(std::equal(write_flags.begin(),write_flags.end(),read_flags.begin()));
+}
+
 
 

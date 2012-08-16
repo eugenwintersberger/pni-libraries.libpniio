@@ -42,6 +42,26 @@ namespace h5{
                 throw H5DataTypeError(EXCEPTION_RECORD,ss.str());\
             }\
             return H5Datatype(t);
+
+    //-------------------create boolean data type------------------------------
+    template<> H5Datatype H5DatatypeFactory::create_type<Bool>()
+    {
+        //we need to create a special bool type here as there is nothing like
+        //this in HDF5. The reason is that HDF5 is implemented in C which does
+        //not posses any native bool type. We use a single bit unsigned integer
+        //value to describe boolean data. This should make boolean values
+        //identifiable even from the native HDF5 API.
+
+        hid_t tid = H5Tcopy(H5T_NATIVE_UINT8);
+        H5Tset_precision(tid,1);
+        return H5Datatype(tid);
+    }
+
+    //---------------------create boolean data type----------------------------
+    template<> H5Datatype H5DatatypeFactory::create_type<TypeID::BOOL>()
+    {
+        return create_type<Bool>();
+    }
           
     //------------create integer data types------------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<UInt8>()

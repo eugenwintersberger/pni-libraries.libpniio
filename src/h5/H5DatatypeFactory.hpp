@@ -50,7 +50,8 @@ namespace h5{
     structure memebers follows those of h5py (in order to produce files
     which can be opened easily from Python). 
     */
-    class H5DatatypeFactory{
+    class H5DatatypeFactory
+    {
         private:
             //from this class we would need a singleton - should be available only
             //once at runtime - most probably as a global object.

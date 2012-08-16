@@ -116,6 +116,10 @@ void H5DatatypeTest::test_inquery()
     type = H5DatatypeFactory::create_type<TypeID::BINARY>();
     CPPUNIT_ASSERT(type.type_id() == TypeID::BINARY);
 
+    type = H5DatatypeFactory::create_type<TypeID::BOOL>();
+    std::cout<<type.type_id()<<std::endl;
+    CPPUNIT_ASSERT(type.type_id() == TypeID::BOOL);
+
 }
 
 void H5DatatypeTest::test_comparison()
