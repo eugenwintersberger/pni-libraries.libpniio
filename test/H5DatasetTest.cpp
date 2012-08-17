@@ -261,5 +261,26 @@ void H5DatasetTest::test_bool_array_data()
     CPPUNIT_ASSERT(std::equal(write_flags.begin(),write_flags.end(),read_flags.begin()));
 }
 
+//-----------------------------------------------------------------------------
+void H5DatasetTest::test_selection() 
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    H5Datatype type = H5DatatypeFactory::create_type<Bool>();
+    shape_t shape({100,200});
+    H5Dataspace space(shape);
+    H5Dataset dset("flags",_group,type,space);
+
+    shape_t s;
+    s = dset.shape<shape_t>();
+    CPPUNIT_ASSERT(dset.size()==100*200);
+
+    //apply selection
+    std::vector<Slice> selection({Slice(1,2),Slice(50,100)});
+    dset.apply_selection(selection);
+    CPPUNIT_ASSERT(dset.size()==50);
+
+    //remove selection
+}
+
 
 

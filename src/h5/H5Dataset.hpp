@@ -29,6 +29,8 @@
 
 #include <sstream>
 #include <pni/utils/Types.hpp>
+#include <pni/utils/Slice.hpp>
+#include <pni/utils/ArraySelection.hpp>
 
 using namespace pni::utils;
 
@@ -511,6 +513,38 @@ namespace h5{
             H5Selection selection() const;
 
             //-----------------------------------------------------------------
+            //! apply a selection
+            template<typename CTYPE> void apply_selection(const CTYPE &s) const
+            {
+                std::vector<Slice> sel(s.size());
+                std::copy(s.begin(),s.end(),sel.begin());
+
+                //create an array selection
+                ArraySelection asel = ArraySelection::create(sel);
+
+                //create buffers
+                auto offset = asel.offset<DBuffer<hsize_t> >();
+                auto stride = asel.stride<DBuffer<hsize_t> >();
+                auto count = asel.full_shape<DBuffer<hsize_t> >();
+
+                //apply the selection
+                herr_t err = H5Sselect_hyperslab(_space.id(),
+                        H5S_SELECT_SET,offset.ptr(),stride.ptr(),count.ptr(),
+                        NULL);
+                if(err<0)
+                    throw H5DataSetError(EXCEPTION_RECORD,
+                            "Error applying selection to dataset!");
+
+            }
+
+            //----------------------------------------------------------------
+            //! remove a selection
+            void remove_selection() const
+            {
+                H5Sselect_none(_space.id());
+            }
+
+            //-----------------------------------------------------------------
             /*! 
             \brief return dataspace
 
@@ -531,6 +565,7 @@ namespace h5{
             */
             H5Group parent() const;
 
+
             //===================reading data methods==========================
             /*! 
             \brief reading simple data from the dataset
@@ -549,7 +584,7 @@ namespace h5{
                 H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
 
                 //write data to disk
-                herr_t err = H5Dread(id(),mem_type.id(),H5S_ALL,H5S_ALL,
+                herr_t err = H5Dread(id(),mem_type.id(),_space.id(),_space.id(),
                                       H5P_DEFAULT,(void *)ptr);
                 if(err<0)
                     throw H5DataSetError(EXCEPTION_RECORD, 
@@ -586,7 +621,7 @@ namespace h5{
                 H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
 
                 //write data to disk
-                herr_t err = H5Dwrite(id(),mem_type.id(),H5S_ALL,H5S_ALL,
+                herr_t err = H5Dwrite(id(),mem_type.id(),_space.id(),_space.id(),
                                       H5P_DEFAULT,(const void *)ptr);
                 if(err<0)
                     throw H5DataSetError(EXCEPTION_RECORD, 

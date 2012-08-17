@@ -64,6 +64,8 @@ class H5DatasetTest:public CppUnit::TestFixture{
         CPPUNIT_TEST(test_string_array_data);
         CPPUNIT_TEST(test_bool_array_data);
         //CPPUNIT_TEST(test_linking);
+
+        CPPUNIT_TEST(test_selection);
         CPPUNIT_TEST_SUITE_END();
     private:
         H5File _file;
@@ -82,6 +84,7 @@ class H5DatasetTest:public CppUnit::TestFixture{
         void test_bool_scalar_data();
         void test_bool_array_data();
         void test_linking();
+        void test_selection();
 };
 
 //-----------------------------------------------------------------------------

@@ -250,7 +250,7 @@ namespace h5{
             ptr[i] = sptr[i].c_str();
 
         //write data to disk
-        herr_t err = H5Dwrite(id(),mem_type.id(),H5S_ALL,H5S_ALL,
+        herr_t err = H5Dwrite(id(),mem_type.id(),_space.id(),_space.id(),
                               H5P_DEFAULT,(const void *)ptr);
 
         delete [] ptr; //free memory
@@ -270,7 +270,7 @@ namespace h5{
         hid_t xfer_plist = H5Pcreate(H5P_DATASET_XFER);
 
         //write data to disk
-        herr_t err = H5Dread(id(),mem_type.id(),H5S_ALL,H5S_ALL,
+        herr_t err = H5Dread(id(),mem_type.id(),_space.id(),_space.id(),
                               xfer_plist,(void *)ptr);
         if(err<0)
         {
