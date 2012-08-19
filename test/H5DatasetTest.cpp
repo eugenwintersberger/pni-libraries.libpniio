@@ -277,6 +277,7 @@ void H5DatasetTest::test_selection()
     //apply selection
     std::vector<Slice> selection({Slice(1,2),Slice(50,100)});
     dset.apply_selection(selection);
+    std::cout<<dset.size()<<std::endl;
     CPPUNIT_ASSERT(dset.size()==50);
 
     //remove selection

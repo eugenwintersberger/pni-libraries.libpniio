@@ -41,7 +41,7 @@ namespace h5{
     void H5Dataset::__throw_if_not_scalar(const ExceptionRecord &rec) const
     {
         String desc = "Dataset ["+this->name()+"] is not scalar!";
-        if(_space.size()!=1)
+        if(_fspace.size()!=1)
             throw ShapeMissmatchError(rec,desc);
     }
 
@@ -55,7 +55,7 @@ namespace h5{
     //implementation of the copy constructor
     H5Dataset::H5Dataset(const H5Dataset &o):
         H5AttributeObject(o),
-        _space(o._space) 
+        _fspace(o._fspace) 
     {
     }
 
@@ -69,14 +69,14 @@ namespace h5{
                     "Object is not a dataset!");
 
         //copy the datatype and dataspace
-        _space = __obtain_dataspace();
+        _fspace = __obtain_dataspace();
     }
 
     //-----------------------------------------------------------------
     //implementation of the move constrcutor
     H5Dataset::H5Dataset(H5Dataset &&o):
         H5AttributeObject(std::move(o)),
-        _space(std::move(o._space)) 
+        _fspace(std::move(o._fspace)) 
     { }
 
     //-----------------------------------------------------------------
@@ -89,7 +89,7 @@ namespace h5{
                                 "Object is not a dataset!");
 
         //move datatype and data space
-        _space = __obtain_dataspace();
+        _fspace = __obtain_dataspace();
     }
 
     //-----------------------------------------------------------------
@@ -113,7 +113,7 @@ namespace h5{
         H5Object::id(did);
 
         //get dataspace
-        _space = __obtain_dataspace();
+        _fspace = __obtain_dataspace();
 
         //close property list
         H5Pclose(lpl);
@@ -129,14 +129,14 @@ namespace h5{
             throw H5DataSetError(EXCEPTION_RECORD,
                 "Object ID does not belong to a dataset!");
 
-        _space = H5Dataspace(H5Dget_space(id()));
+        _fspace = H5Dataspace(H5Dget_space(id()));
     }
 
     //-----------------------------------------------------------------
     //implementation of the default destructor 
     H5Dataset::~H5Dataset()
     {
-        _space.close();
+        _fspace.close();
         if(is_valid()) H5Dclose(id());
         H5Object::id(0);
     }
@@ -147,7 +147,7 @@ namespace h5{
     {
         if(this != &o){
             (H5AttributeObject &)(*this) = (H5AttributeObject &)o;
-            _space = o._space;
+            _fspace = o._fspace;
         }
         return *this;
     }
@@ -163,7 +163,7 @@ namespace h5{
         if(this != &o)
         {
             (H5Object &)(*this) = o;
-            _space = __obtain_dataspace();
+            _fspace = __obtain_dataspace();
         }
         return *this;
     }
@@ -176,7 +176,7 @@ namespace h5{
         {
             (H5AttributeObject &)(*this) = std::move((H5AttributeObject
                         &)o);
-            _space = std::move(o._space);
+            _fspace = std::move(o._fspace);
         }
         return *this;
     }
@@ -192,7 +192,7 @@ namespace h5{
         if(this != &o)
         {
             (H5Object &)(*this) = std::move(o);
-            _space = __obtain_dataspace();
+            _fspace = __obtain_dataspace();
         }
         return *this;
     }
@@ -208,9 +208,9 @@ namespace h5{
             throw IndexError(EXCEPTION_RECORD,ss.str());
         }
 
-        DBuffer<hsize_t> b(_space.rank());
+        DBuffer<hsize_t> b(_fspace.rank());
 
-        for(size_t i=0;i<_space.rank();i++) b[i] = _space[i];
+        for(size_t i=0;i<_fspace.rank();i++) b[i] = _fspace[i];
         b[e] += n;
 
         herr_t err = H5Dset_extent(id(),b.ptr());
@@ -219,7 +219,7 @@ namespace h5{
                   "Grow of dataset ["+name()+"] failed!");
 
         //re-fetch the new dataspace
-        _space.grow(e,n);
+        _fspace.grow(e,n);
     }
 
     //------------------------------------------------------------------
@@ -229,12 +229,12 @@ namespace h5{
     H5Selection H5Dataset::selection() const
     {
 
-        if(_space.is_scalar())
+        if(_fspace.is_scalar())
             throw ShapeMissmatchError(EXCEPTION_RECORD, 
                     "You cannot create a selection from the scalar"
                     "dataset ["+name()+"]!");
 
-        H5Selection selection(*this,_space.shape<std::vector<hsize_t> >(),0,1);
+        H5Selection selection(*this,_fspace.shape<std::vector<hsize_t> >(),0,1);
         return selection;
     }
 
@@ -250,7 +250,7 @@ namespace h5{
             ptr[i] = sptr[i].c_str();
 
         //write data to disk
-        herr_t err = H5Dwrite(id(),mem_type.id(),_space.id(),_space.id(),
+        herr_t err = H5Dwrite(id(),mem_type.id(),_fspace.id(),_fspace.id(),
                               H5P_DEFAULT,(const void *)ptr);
 
         delete [] ptr; //free memory
@@ -270,7 +270,7 @@ namespace h5{
         hid_t xfer_plist = H5Pcreate(H5P_DATASET_XFER);
 
         //write data to disk
-        herr_t err = H5Dread(id(),mem_type.id(),_space.id(),_space.id(),
+        herr_t err = H5Dread(id(),mem_type.id(),_fspace.id(),_fspace.id(),
                               xfer_plist,(void *)ptr);
         if(err<0)
         {
@@ -289,7 +289,7 @@ namespace h5{
             }
         }
 
-        H5Dvlen_reclaim(mem_type.id(),_space.id(),xfer_plist,ptr);
+        H5Dvlen_reclaim(mem_type.id(),_fspace.id(),xfer_plist,ptr);
         delete [] ptr;
     }
 

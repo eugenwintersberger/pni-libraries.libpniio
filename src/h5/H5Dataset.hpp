@@ -56,7 +56,7 @@ namespace h5{
     class H5Dataset:public H5AttributeObject
     {
         private:
-            H5Dataspace _space; //!< local dataspace of the dataset
+            H5Dataspace _fspace; //!< file dataspace of the dataset
 
             //---------some private IO templates----------------------
             //! obtain the dataspace from an existing object
@@ -187,7 +187,7 @@ namespace h5{
                           "Cannot create dataset ["+n+"] below ["+g.path()+"]!");
 
                 H5Object::id(did);
-                _space = __obtain_dataspace();
+                _fspace = __obtain_dataspace();
                 //construction done - close property lists
                 H5Pclose(lpl);
                 H5Pclose(cpl);
@@ -244,7 +244,7 @@ namespace h5{
                          "Cannot create dataset ["+n+"] below ["+g.path()+"]!");
 
                 H5Object::id(did);
-                _space = __obtain_dataspace();
+                _fspace = __obtain_dataspace();
                 //construction done - close property lists
                 H5Pclose(lpl);
                 H5Pclose(cpl);
@@ -414,7 +414,7 @@ namespace h5{
             */
             template<typename CTYPE> void resize(const CTYPE &s)
             {
-                if(s.size() != _space.rank())
+                if(s.size() != _fspace.rank())
                     throw ShapeMissmatchError(EXCEPTION_RECORD,
                           "New shape does not have the same rank!");
 
@@ -427,7 +427,7 @@ namespace h5{
                          "Resizing of dataset ["+name()+"] failed!");
 
                 //re-fetch data space
-                _space = __obtain_dataspace();
+                _fspace = __obtain_dataspace();
             }
 
             //-----------------------------------------------------------------
@@ -451,7 +451,7 @@ namespace h5{
             Returns the total number of elements stored in the dataset.
             \return total number of elements
             */
-            size_t size() const { return _space.size(); }
+            size_t size() const { return _fspace.size(); }
 
             //-----------------------------------------------------------------
             /*! 
@@ -462,7 +462,7 @@ namespace h5{
             */
             template<typename CTYPE> CTYPE shape() const
             {
-                return _space.shape<CTYPE>();
+                return _fspace.shape<CTYPE>();
             }
 
             //-----------------------------------------------------------------
@@ -472,7 +472,7 @@ namespace h5{
             Returns the number of dimensions of the dataset.
             \return number of dimensions
             */
-            size_t rank() const { return _space.rank(); }
+            size_t rank() const { return _fspace.rank(); }
 
             //-----------------------------------------------------------------
             /*! 
@@ -483,7 +483,7 @@ namespace h5{
             \param i index of the dimension
             \return number of elements along i
             */
-            size_t dim(const size_t &i) const { return _space.dim(i); }
+            size_t dim(const size_t &i) const { return _fspace.dim(i); }
 
             //-----------------------------------------------------------------
             /*! 
@@ -528,7 +528,7 @@ namespace h5{
                 auto count = asel.full_shape<DBuffer<hsize_t> >();
 
                 //apply the selection
-                herr_t err = H5Sselect_hyperslab(_space.id(),
+                herr_t err = H5Sselect_hyperslab(_fspace.id(),
                         H5S_SELECT_SET,offset.ptr(),stride.ptr(),count.ptr(),
                         NULL);
                 if(err<0)
@@ -541,7 +541,7 @@ namespace h5{
             //! remove a selection
             void remove_selection() const
             {
-                H5Sselect_none(_space.id());
+                H5Sselect_none(_fspace.id());
             }
 
             //-----------------------------------------------------------------
@@ -553,7 +553,7 @@ namespace h5{
             */
             const H5Dataspace &space() const
             {
-                return _space;
+                return _fspace;
             }
 
             //-----------------------------------------------------------------
@@ -584,7 +584,7 @@ namespace h5{
                 H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
 
                 //write data to disk
-                herr_t err = H5Dread(id(),mem_type.id(),_space.id(),_space.id(),
+                herr_t err = H5Dread(id(),mem_type.id(),_fspace.id(),_fspace.id(),
                                       H5P_DEFAULT,(void *)ptr);
                 if(err<0)
                     throw H5DataSetError(EXCEPTION_RECORD, 
@@ -621,7 +621,7 @@ namespace h5{
                 H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
 
                 //write data to disk
-                herr_t err = H5Dwrite(id(),mem_type.id(),_space.id(),_space.id(),
+                herr_t err = H5Dwrite(id(),mem_type.id(),_fspace.id(),_fspace.id(),
                                       H5P_DEFAULT,(const void *)ptr);
                 if(err<0)
                     throw H5DataSetError(EXCEPTION_RECORD, 
