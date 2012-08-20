@@ -261,27 +261,90 @@ void H5DatasetTest::test_bool_array_data()
     CPPUNIT_ASSERT(std::equal(write_flags.begin(),write_flags.end(),read_flags.begin()));
 }
 
+
 //-----------------------------------------------------------------------------
-void H5DatasetTest::test_selection() 
+void H5DatasetTest::test_string_selection() 
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    H5Datatype type = H5DatatypeFactory::create_type<Bool>();
-    shape_t shape({100,200});
+    H5Datatype type = H5DatatypeFactory::create_type<String>();
+    shape_t shape({10,20});
     H5Dataspace space(shape);
-    H5Dataset dset("flags",_group,type,space);
+    H5Dataset dset("text",_group,type,space);
 
     shape_t s;
     s = dset.shape<shape_t>();
-    CPPUNIT_ASSERT(dset.size()==100*200);
+    CPPUNIT_ASSERT(dset.size()==10*20);
 
-    //apply selection
-    std::vector<Slice> selection({Slice(1,2),Slice(50,100)});
-    dset.apply_selection(selection);
-    std::cout<<dset.size()<<std::endl;
-    CPPUNIT_ASSERT(dset.size()==50);
+    DBuffer<String> writebuf(10);
+    DBuffer<String> readbuf(10);
 
-    //remove selection
+    for(size_t i=0;i<10;i++)
+    {
+        std::stringstream ss;
+
+        //select regtion in the dataset
+        std::vector<Slice> selection({Slice(i),Slice(10,20)});
+        //set buffer value
+        
+        ss<<"bla "<<i;
+        std::fill(writebuf.begin(),writebuf.end(),String(ss.str()));
+        
+        //apply selection
+        dset.apply_selection(selection);
+        CPPUNIT_ASSERT(dset.size()==10);
+
+        //write data
+        dset.write(writebuf.ptr());
+
+        //read data back
+        dset.read(const_cast<String*>(readbuf.ptr()));
+
+        //compare data
+        CPPUNIT_ASSERT(std::equal(writebuf.begin(),writebuf.end(),readbuf.begin()));
+        dset.clear_selections();
+    }
+
 }
 
+//-----------------------------------------------------------------------------
+void H5DatasetTest::test_bool_selection() 
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    H5Datatype type = H5DatatypeFactory::create_type<Bool>();
+    shape_t shape({10,20});
+    H5Dataspace space(shape);
+    H5Dataset dset("text",_group,type,space);
+
+    shape_t s;
+    s = dset.shape<shape_t>();
+    CPPUNIT_ASSERT(dset.size()==10*20);
+
+    DBuffer<Bool> writebuf(10);
+    DBuffer<Bool> readbuf(10);
+
+    for(size_t i=0;i<10;i++)
+    {
+        //select regtion in the dataset
+        std::vector<Slice> selection({Slice(i),Slice(10,20)});
+        //set buffer value
+        
+        std::fill(writebuf.begin(),writebuf.end(),true);
+        
+        //apply selection
+        dset.apply_selection(selection);
+        CPPUNIT_ASSERT(dset.size()==10);
+
+        //write data
+        dset.write(writebuf.ptr());
+
+        //read data back
+        dset.read(const_cast<Bool*>(readbuf.ptr()));
+
+        //compare data
+        CPPUNIT_ASSERT(std::equal(writebuf.begin(),writebuf.end(),readbuf.begin()));
+        dset.clear_selections();
+    }
+
+}
 
 

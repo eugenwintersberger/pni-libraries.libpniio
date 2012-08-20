@@ -65,7 +65,23 @@ class H5DatasetTest:public CppUnit::TestFixture{
         CPPUNIT_TEST(test_bool_array_data);
         //CPPUNIT_TEST(test_linking);
 
-        CPPUNIT_TEST(test_selection);
+        CPPUNIT_TEST(test_selection<UInt8>);
+        CPPUNIT_TEST(test_selection<Int8>);
+        CPPUNIT_TEST(test_selection<UInt16>);
+        CPPUNIT_TEST(test_selection<Int16>);
+        CPPUNIT_TEST(test_selection<UInt32>);
+        CPPUNIT_TEST(test_selection<Int32>);
+        CPPUNIT_TEST(test_selection<UInt64>);
+        CPPUNIT_TEST(test_selection<Int64>);
+        CPPUNIT_TEST(test_selection<Float32>);
+        CPPUNIT_TEST(test_selection<Float64>);
+        CPPUNIT_TEST(test_selection<Float128>);
+        CPPUNIT_TEST(test_selection<Complex32>);
+        CPPUNIT_TEST(test_selection<Complex64>);
+        CPPUNIT_TEST(test_selection<Complex128>);
+        CPPUNIT_TEST(test_selection<Binary>);
+        CPPUNIT_TEST(test_string_selection);
+        CPPUNIT_TEST(test_bool_selection);
         CPPUNIT_TEST_SUITE_END();
     private:
         H5File _file;
@@ -84,7 +100,9 @@ class H5DatasetTest:public CppUnit::TestFixture{
         void test_bool_scalar_data();
         void test_bool_array_data();
         void test_linking();
-        void test_selection();
+        template<typename T> void test_selection();
+        void test_string_selection();
+        void test_bool_selection();
 };
 
 //-----------------------------------------------------------------------------
@@ -121,4 +139,43 @@ template<typename T> void H5DatasetTest::test_array_data()
     for(size_t i=0;i<write.size();i++) check_equality(write[i],read[i]);
 }
 
+//-----------------------------------------------------------------------------
+template<typename T> void H5DatasetTest::test_selection() 
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    H5Datatype type = H5DatatypeFactory::create_type<T>();
+    shape_t shape({10,20});
+    H5Dataspace space(shape);
+    H5Dataset dset("flags",_group,type,space);
+
+    shape_t s;
+    s = dset.shape<shape_t>();
+    CPPUNIT_ASSERT(dset.size()==10*20);
+
+    DBuffer<T> writebuf(10);
+    DBuffer<T> readbuf(10);
+
+    for(size_t i=0;i<10;i++)
+    {
+        //select regtion in the dataset
+        std::vector<Slice> selection({Slice(i),Slice(10,20)});
+        //set buffer value
+        std::fill(writebuf.begin(),writebuf.end(),T(i));
+        
+        //apply selection
+        dset.apply_selection(selection);
+        CPPUNIT_ASSERT(dset.size()==10);
+
+        //write data
+        dset.write(writebuf.ptr());
+
+        //read data back
+        dset.read(const_cast<T*>(readbuf.ptr()));
+
+        //compare data
+        CPPUNIT_ASSERT(std::equal(writebuf.begin(),writebuf.end(),readbuf.begin()));
+        dset.clear_selections();
+    }
+
+}
 #endif

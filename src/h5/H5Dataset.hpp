@@ -57,6 +57,7 @@ namespace h5{
     {
         private:
             H5Dataspace _fspace; //!< file dataspace of the dataset
+            H5Dataspace _mspace; //!< memory dataspace
 
             //---------some private IO templates----------------------
             //! obtain the dataspace from an existing object
@@ -187,7 +188,11 @@ namespace h5{
                           "Cannot create dataset ["+n+"] below ["+g.path()+"]!");
 
                 H5Object::id(did);
+
+                //when we create a dataset the file and memory dataspace
+                //coincide
                 _fspace = __obtain_dataspace();
+                _mspace = _fspace;
                 //construction done - close property lists
                 H5Pclose(lpl);
                 H5Pclose(cpl);
@@ -244,7 +249,9 @@ namespace h5{
                          "Cannot create dataset ["+n+"] below ["+g.path()+"]!");
 
                 H5Object::id(did);
+                //file and memory dataspace are equal after creation
                 _fspace = __obtain_dataspace();
+                _mspace = _fspace;
                 //construction done - close property lists
                 H5Pclose(lpl);
                 H5Pclose(cpl);
@@ -514,7 +521,7 @@ namespace h5{
 
             //-----------------------------------------------------------------
             //! apply a selection
-            template<typename CTYPE> void apply_selection(const CTYPE &s) const
+            template<typename CTYPE> void apply_selection(const CTYPE &s) 
             {
                 std::vector<Slice> sel(s.size());
                 std::copy(s.begin(),s.end(),sel.begin());
@@ -535,11 +542,15 @@ namespace h5{
                     throw H5DataSetError(EXCEPTION_RECORD,
                             "Error applying selection to dataset!");
 
+                //need to set the memory dataspace to the effective shape of the
+                //selection
+                _mspace = H5Dataspace(asel.shape());
+
             }
 
             //----------------------------------------------------------------
             //! remove a selection
-            void remove_selection() const
+            void clear_selections() const
             {
                 H5Sselect_none(_fspace.id());
             }
@@ -584,7 +595,7 @@ namespace h5{
                 H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
 
                 //write data to disk
-                herr_t err = H5Dread(id(),mem_type.id(),_fspace.id(),_fspace.id(),
+                herr_t err = H5Dread(id(),mem_type.id(),_mspace.id(),_fspace.id(),
                                       H5P_DEFAULT,(void *)ptr);
                 if(err<0)
                     throw H5DataSetError(EXCEPTION_RECORD, 
@@ -621,7 +632,7 @@ namespace h5{
                 H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
 
                 //write data to disk
-                herr_t err = H5Dwrite(id(),mem_type.id(),_fspace.id(),_fspace.id(),
+                herr_t err = H5Dwrite(id(),mem_type.id(),_mspace.id(),_fspace.id(),
                                       H5P_DEFAULT,(const void *)ptr);
                 if(err<0)
                     throw H5DataSetError(EXCEPTION_RECORD, 

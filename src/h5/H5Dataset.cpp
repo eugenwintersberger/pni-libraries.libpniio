@@ -55,7 +55,8 @@ namespace h5{
     //implementation of the copy constructor
     H5Dataset::H5Dataset(const H5Dataset &o):
         H5AttributeObject(o),
-        _fspace(o._fspace) 
+        _fspace(o._fspace), 
+        _mspace(o._mspace)
     {
     }
 
@@ -70,13 +71,15 @@ namespace h5{
 
         //copy the datatype and dataspace
         _fspace = __obtain_dataspace();
+        _mspace = _fspace;
     }
 
     //-----------------------------------------------------------------
     //implementation of the move constrcutor
     H5Dataset::H5Dataset(H5Dataset &&o):
         H5AttributeObject(std::move(o)),
-        _fspace(std::move(o._fspace)) 
+        _fspace(std::move(o._fspace)),
+        _mspace(std::move(o._mspace))
     { }
 
     //-----------------------------------------------------------------
@@ -90,6 +93,7 @@ namespace h5{
 
         //move datatype and data space
         _fspace = __obtain_dataspace();
+        _mspace = _fspace;
     }
 
     //-----------------------------------------------------------------
@@ -114,7 +118,7 @@ namespace h5{
 
         //get dataspace
         _fspace = __obtain_dataspace();
-
+        _mspace = _fspace;
         //close property list
         H5Pclose(lpl);
     }
@@ -130,6 +134,7 @@ namespace h5{
                 "Object ID does not belong to a dataset!");
 
         _fspace = H5Dataspace(H5Dget_space(id()));
+        _mspace = _fspace;
     }
 
     //-----------------------------------------------------------------
@@ -137,6 +142,7 @@ namespace h5{
     H5Dataset::~H5Dataset()
     {
         _fspace.close();
+        _mspace.close();
         if(is_valid()) H5Dclose(id());
         H5Object::id(0);
     }
@@ -148,6 +154,7 @@ namespace h5{
         if(this != &o){
             (H5AttributeObject &)(*this) = (H5AttributeObject &)o;
             _fspace = o._fspace;
+            _mspace = o._mspace;
         }
         return *this;
     }
@@ -164,6 +171,7 @@ namespace h5{
         {
             (H5Object &)(*this) = o;
             _fspace = __obtain_dataspace();
+            _mspace = _fspace;
         }
         return *this;
     }
@@ -177,6 +185,7 @@ namespace h5{
             (H5AttributeObject &)(*this) = std::move((H5AttributeObject
                         &)o);
             _fspace = std::move(o._fspace);
+            _mspace = std::move(o._mspace);
         }
         return *this;
     }
@@ -193,6 +202,7 @@ namespace h5{
         {
             (H5Object &)(*this) = std::move(o);
             _fspace = __obtain_dataspace();
+            _mspace = _fspace;
         }
         return *this;
     }
@@ -250,7 +260,7 @@ namespace h5{
             ptr[i] = sptr[i].c_str();
 
         //write data to disk
-        herr_t err = H5Dwrite(id(),mem_type.id(),_fspace.id(),_fspace.id(),
+        herr_t err = H5Dwrite(id(),mem_type.id(),_mspace.id(),_fspace.id(),
                               H5P_DEFAULT,(const void *)ptr);
 
         delete [] ptr; //free memory
@@ -270,7 +280,7 @@ namespace h5{
         hid_t xfer_plist = H5Pcreate(H5P_DATASET_XFER);
 
         //write data to disk
-        herr_t err = H5Dread(id(),mem_type.id(),_fspace.id(),_fspace.id(),
+        herr_t err = H5Dread(id(),mem_type.id(),_mspace.id(),_fspace.id(),
                               xfer_plist,(void *)ptr);
         if(err<0)
         {
@@ -289,7 +299,7 @@ namespace h5{
             }
         }
 
-        H5Dvlen_reclaim(mem_type.id(),_fspace.id(),xfer_plist,ptr);
+        H5Dvlen_reclaim(mem_type.id(),_mspace.id(),xfer_plist,ptr);
         delete [] ptr;
     }
 
@@ -312,7 +322,6 @@ namespace h5{
         hid_t gid = H5Oopen(fid,base().c_str(),H5P_DEFAULT);
         H5Group g(gid);
         H5Fclose(fid);
-        //H5Oclose(gid);
 
         return g;
     }
