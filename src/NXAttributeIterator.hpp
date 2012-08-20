@@ -46,8 +46,9 @@ namespace nx{
             ItemT      _item;   //!< the actual object to which the 
                                 //!< interator referes
         public:
-            typedef IterableT iterable_type;
-            typedef ItemT     item_type;
+            //===============public types======================================
+            typedef IterableT iterable_type; //!< iteratble type
+            typedef ItemT     item_type;     //!< item type
             //=============constructors and destructor=========================
             //! default constructor
             NXAttributeIterator():
@@ -92,7 +93,8 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! destructor
-            virtual ~NXAttributeIterator(){
+            virtual ~NXAttributeIterator()
+            {
                 _parent = nullptr;
                 _nattrs = 0;
                 _index  = 0;
@@ -104,7 +106,8 @@ namespace nx{
             NXAttributeIterator<IterableT,ItemT> &
                 operator=(const NXAttributeIterator<IterableT,ItemT> &i)
             {
-                if(this != &i){
+                if(this != &i)
+                {
                     _parent = i._parent;
                     _nattrs = i._nattrs;
                     _index  = i._index;
@@ -118,7 +121,8 @@ namespace nx{
             NXAttributeIterator<IterableT,ItemT> &
                 operator=(NXAttributeIterator<IterableT,ItemT> &&i)
             {
-                if(this != &i){
+                if(this != &i)
+                {
                     _parent = i._parent;
                     i._parent = nullptr;
                     _nattrs = i._nattrs;
@@ -132,7 +136,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! conversion to bool 
-            operator bool() 
+            explicit operator bool() 
             {
                 if(_index >= _nattrs) return false;
                 return true;
@@ -144,7 +148,8 @@ namespace nx{
             {
                 return &_item;
             }
-            
+           
+            //-----------------------------------------------------------------
             //! pointer access operator
             const ItemT *operator->() const
             {
@@ -159,41 +164,38 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
+            //! pointer operator
             const ItemT &operator*() const
             {
                 return _item;
             }
 
             //-----------------------------------------------------------------
-            //! increment operator
+            //! postfix increment operator 
             NXAttributeIterator<IterableT,ItemT> &operator++()
             {
                 //if the actual index is equal to the total number
                 //of links no increment is possible
                 _index++;
-                if(_index < _nattrs){
-                    _item = _parent->attr(_index);
-                }
-
+                if(_index < _nattrs) _item = _parent->attr(_index);
 
                 return *this;
             }
 
             //-----------------------------------------------------------------
+            //! prefix increment operator
             NXAttributeIterator<IterableT,ItemT> &operator++(int i)
             {
                 //if the actual index is equal to the total number
                 //of links no increment is possible
                 _index++;
-                if(_index < _nattrs){
-                    _item = _parent->attr(_index);
-                }
-
+                if(_index < _nattrs) _item = _parent->attr(_index);
 
                 return *this;
             }
 
             //-----------------------------------------------------------------
+            //! equality operator
             bool operator==(const NXAttributeIterator<IterableT,ItemT> &o)
                 const
             {
@@ -204,6 +206,7 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
+            //! in-equalty operator
             bool operator!=(const NXAttributeIterator<IterableT,ItemT> &o)
                 const
             {
