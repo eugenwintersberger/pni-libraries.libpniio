@@ -545,7 +545,6 @@ namespace h5 {
             dimension. If dim is larger than the rank of the dataspace an
             exception will be thrown.
             \throws IndexError if dim exceeds rank of dataspace
-            \throws 
             \param dim dimension along which to grow
             \param ext extend by which to grow */
             void grow(size_t dim=0,size_t ext=1) ;

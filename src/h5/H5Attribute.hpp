@@ -111,7 +111,7 @@ namespace h5{
             H5Attribute &operator=(H5Attribute &&o);
 
             //===================reading and writting data=====================
-            /*
+            /*!
             \brief pointer write
 
             Private method writing data from memory addressed by 

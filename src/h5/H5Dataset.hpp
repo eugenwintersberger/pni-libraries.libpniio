@@ -79,7 +79,7 @@ namespace h5{
             method if the dataset is not scalar (if the size of the
             dataset is not 1).
             \throws ShapeMissmatchError if dataset is not scalar
-            \param method name of the method where to error occurred 
+            \param rec exception record
             */
             void __throw_if_not_scalar(const ExceptionRecord &rec) const;
 
@@ -583,7 +583,7 @@ namespace h5{
             \throws ShapeMissmatchError if dataset is not scalar or the size of
             the dataset is not 1
             \throws H5DataSetError in all other error cases
-            \param value variable where to store the data
+            \param ptr pointer to memory where the data should be stored.
             */
             template<typename T> void read(T *ptr) const
             {
@@ -607,7 +607,7 @@ namespace h5{
             handled slightly different from other objects.
             \throws ShapeMissmatchError if the dataset is not scalar
             \throws H5DataSetError in case of other IO errors
-            \param b String variable where to store the data
+            \param sptr pointer to String objects
             */
             void read(String *sptr) const;
 
@@ -620,7 +620,7 @@ namespace h5{
             the dataset is scalar or the total dataspace size is 1.
             \throws ShapeMissmatchError if the dataspace is not scalar
             \throws H5DataSetError in case of other errors
-            \param value variable from which to write data
+            \param ptr pointer to the memory region from which to read
             */
             template<typename T> void write(const T *ptr) const
             {
@@ -642,7 +642,7 @@ namespace h5{
             Write data from a String variable to the dataset.
             \throws ShapeMissmatchError if the dataset is not scalar
             \throws H5DataSetError in the case of all other errors
-            \param b String type variable
+            \param sptr pointer to String objects.
             */
             void write(const String *sptr) const;
 
