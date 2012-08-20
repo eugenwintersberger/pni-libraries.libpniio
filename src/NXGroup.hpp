@@ -29,7 +29,6 @@
 #define NXGROUP_HPP_
 
 #include <pni/utils/Types.hpp>
-#include <pni/utils/Shape.hpp>
 
 #include "NXObject.hpp"
 #include "NXImpMap.hpp"
@@ -41,398 +40,392 @@
 using namespace pni::utils;
 
 namespace pni{
-    namespace nx{
+namespace nx{
 
-        //! \ingroup nexus_lowlevel
-        //! \brief NXgroup object
-        template<typename Imp> class NXGroup:public NXObject<Imp> 
-        {
-            public:
-                typedef std::shared_ptr<NXGroup<Imp> > 
-                    shared_ptr; //!< shared pointer type to a NXGroup type
-                typedef
-                    NXObjectIterator<NXGroup<Imp>,NXObject<MAPTYPE(Imp,ObjectImpl)>
-                    > iterator; //!< object iterator typeq
-                typedef NXField<MAPTYPE(Imp,FieldImpl)> field_type; //!< field type
-                //===========constructors and destructor========================
-                /*! \brief default constructor
+    /*! 
+    \ingroup nexus_lowlevel
+    \brief NXgroup object
+    */
+    template<typename Imp> class NXGroup:public NXObject<Imp> 
+    {
+        public:
+            //! shared pointer type to a NXGroup type
+            typedef std::shared_ptr<NXGroup<Imp> > shared_ptr; 
+            typedef NXObjectIterator<NXGroup<Imp>,
+                                     NXObject<MAPTYPE(Imp,ObjectImpl)> > 
+                    iterator; //!< iterator type
+            //! field type
+            typedef NXField<MAPTYPE(Imp,FieldImpl)> field_type; 
+            //==============constructors and destructor========================
+            //! default constructor
+            explicit NXGroup():NXObject<Imp>() { }
 
-                */
-                explicit NXGroup():NXObject<Imp>()
+            //-----------------------------------------------------------------
+            /*! \brief copy constructor
+
+            The copy constructor is doing exactly the same as the assignment
+            operator. Thus it can be used to assign
+            an object directly at its construction.
+            */
+            NXGroup(const NXGroup<Imp> &o):NXObject<Imp>(o) { }
+            
+            //-----------------------------------------------------------------
+            //! move constructor
+            NXGroup(NXGroup<Imp> &&o):NXObject<Imp>(std::move(o)) { }
+           
+            //-----------------------------------------------------------------
+            //!copy construct from implementation object
+            NXGroup(const Imp &imp):NXObject<Imp>(imp) { }
+
+            //-----------------------------------------------------------------
+            //! move construct from implementation object
+            NXGroup(Imp &&imp):NXObject<Imp>(std::move(imp)) { }
+
+
+            //-----------------------------------------------------------------
+            //! copy conversion constructor
+            template<typename ObjImp>
+            NXGroup(const NXObject<ObjImp> &o):NXObject<Imp>(o)
+            { }
+
+            //-----------------------------------------------------------------
+            //! destructor
+            virtual ~NXGroup(){ } 
+
+            //=====================assignment operators========================
+            //! copy assignment operator
+            NXGroup<Imp> &operator=(const NXGroup<Imp> &o)
+            {
+                if(this == &o) return *this;
+                NXObject<Imp>::operator=(o);
+                return *this;
+            }
+
+            //-----------------------------------------------------------------
+            //! copy assignment conversion operator
+            template<typename ObjImp>
+            NXGroup<Imp> &operator=(const NXObject<ObjImp> &o)
+            {
+                NXObject<Imp>::operator=(o);
+                return *this;
+            }
+
+            //-----------------------------------------------------------------
+            //! move assignment operator
+            NXGroup<Imp> &operator=(NXGroup<Imp> &&o)
+            {
+                if(this == &o) return *this;
+                NXObject<Imp>::operator=(std::move(o));
+                return *this;
+            }
+
+
+            //====================group creation methods=======================
+            /*! 
+            \brief create a group as nexus class
+
+            Create a new group. The optional argument type determines the Nexus
+            object type the group represents. By default type is an empty string
+            in which case the NX_class attribute will not be written.
+            \param n group name
+            \param type nexus class type
+            \return a new instance of NXGroup
+            */
+            NXGroup<MAPTYPE(Imp,GroupImpl)> 
+                create_group(const String &n,const String &type=String()) const
+            {
+                //we need to do here two things
+                //we have to check if the particular group type
+                //exists and add a check object to the class
+
+                typedef MAPTYPE(Imp,GroupImpl) GroupImpl;
+
+                NXGroup<GroupImpl> g(GroupImpl(n,this->imp()));
+
+                //if the type string is not empty we write the 
+                //appropriate attribute.
+                if(!type.empty())
+                    g.template attr<String>("NX_class").write(type);
+
+                return g;
+            }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief create a field without filter
+
+            \throws ShapeMissmatchError if chunk and field shape do not have the
+            same rank
+            \throws NXGroupError in all other cases
+            \tparam T data type of the field
+            \tparam CTYPES container type for the shape and chunk shape
+            \param n name (path) of the field
+            \param shape shape of the field
+            \param chunk chunk shape of the field
+            \return instane of an NXFIeld object
+            */
+            template<typename T, 
+                     typename CTYPES=shape_t, 
+                     typename CTYPEC=shape_t > 
+            NXField<MAPTYPE(Imp,FieldImpl)>
+                create_field(const String &n,const CTYPES &shape=CTYPES(),
+                             const CTYPES &chunk=CTYPES()) const
+            {
+                typedef NXField<MAPTYPE(Imp,FieldImpl)> FieldType;
+                typedef MAPTYPE(Imp,FieldImpl) FieldImp;
+                shape_t s,cs;
+
+                if(shape.size() == 0)
                 {
+                    //here we create a field for scalar data
+                    s = shape_t({1});
+                    cs = s;
+                }
+                else
+                {
+                    //a multidimensional field shall be created
+                    s = shape_t(shape.size());
+                    std::copy(shape.begin(),shape.end(),s.begin());
+                    cs = s;
+                    
+                    if(chunk.size() == 0)
+                        //no chunk size from user
+                        cs[0] = 1;
+                    else
+                        //chunk size provided by the user
+                        std::copy(chunk.begin(),chunk.end(),cs.begin());
                 }
 
-                //--------------------------------------------------------------
-                /*! \brief copy constructor
+                FieldType field;
+                try
+                {
+                    field = FieldType(FieldImp::template 
+                                      create<T>(n,this->imp(),s,cs));
+                }
+                catch(ShapeMissmatchError &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+                catch(...)
+                {
+                    throw NXGroupError(EXCEPTION_RECORD,
+                                       "Something went wrong!");
+                }
+                return field;
+            }
+            
 
-                The copy constructor is doing exactly the
-                same as the assignment operator. Thus it can be used to assign
-                an object directly at its construction.
-                */
-                NXGroup(const NXGroup<Imp> &o):NXObject<Imp>(o)
-                {
-                }
-                
-                //--------------------------------------------------------------
-                //! move constructor
-                NXGroup(NXGroup<Imp> &&o):NXObject<Imp>(std::move(o))
-                {
-                }
+            //------------------------------------------------------------------
+            /*! 
+            \brief Creates a multidimensional field with a filter.
+
+            Create a multidimensional field with a filter for data compression.
+            With this method the chunk shape for the field is determined
+            automatically.
+            \tparam T data type for the filed
+            \tparam FilterImp filter implementation (implicit)
+            \tparam CTYPES container type for the field shape
+            \param n name of the field
+            \param s shape of the field
+            \param filter implementation
+            */
+            template<typename T,typename FilterImp,typename CTYPES> 
+                NXField<MAPTYPE(Imp,FieldImpl)>
+                create_field(const String &n,const CTYPES &s,
+                             const NXFilter<FilterImp> &filter) const
+            {
+                typedef MAPTYPE(Imp,FieldImpl) FieldImp;
+                typedef NXField<FieldImp> FieldType;
+
+                //create a vector with the number of elements of the 
+                //shape and set the first dimension to 1
+                shape_t cs(s.size());
+                std::copy(s.begin(),s.end(),cs.begin());
+                cs[0] = 1;
+
+                FieldType field(FieldImp::template
+                        create<T>(n,this->imp(),s,cs,filter.imp()));
+                return field;
+            }
+
+           
+            //-----------------------------------------------------------------
+            /*! 
+            \brief create a multidimensional field (explicit chunk) with filter
+
+            Create a field with filter and adjustable chunk shape.
+            \tparam T data type of the field
+            \tparam FilterImp filter implementation type
+            \tparam CTYPES container type for the shape
+            \tparam CTYPEC container type for the chunk shape
+            \param n name or path of the field
+            \param s shape of the field
+            \param cs chunk shape of the field
+            \param filter filter instance to use
+            */
+            template<typename T,
+                     typename FilterImp,
+                     typename CTYPES,
+                     typename CTYPEC
+                    > 
+            NXField<MAPTYPE(Imp,FieldImpl)>
+                create_field(const String &n,const CTYPES &s,const CTYPEC &cs,
+                        const NXFilter<FilterImp> &filter) const
+            {
+                typedef MAPTYPE(Imp,FieldImpl) FieldImp;
+                typedef NXField<FieldImp> FieldType;
+
+                return FieldType(FieldImp::template
+                        create<T>(n,this->imp(),s,cs,filter.imp()));
+            }
+
+
+            //===============methods to open objects===========================
+            /*! 
+            \brief open an arbitrary object
+
+            Returns an object by name. The name can be either an absolute or
+            relative path.
+            \param n path or name of the object to open
+            \return object
+            */
+            virtual NXObject<MAPTYPE(Imp,ObjectImpl)> open(const String &n)
+                const
+            {
+                typedef MAPTYPE(Imp,ObjectImpl) ObjectImp;
+                NXObject<ObjectImp> object;
                
-                //--------------------------------------------------------------
-                //!copy construct from implementation object
-                NXGroup(const Imp &imp):NXObject<Imp>(imp)
+                try
                 {
+                   object = NXObject<ObjectImp>(this->imp().open(n));
                 }
-
-                //--------------------------------------------------------------
-                //! move construct from implementation object
-                NXGroup(Imp &&imp):NXObject<Imp>(std::move(imp))
+                catch(...)
                 {
+                    throw NXGroupError(EXCEPTION_RECORD,
+                          "Error opening ["+n+"] below group ["+this->path()+
+                          "]!");
                 }
 
+                return object;
+            }
 
-                //--------------------------------------------------------------
-                //! copy conversion constructor
-                template<typename ObjImp>
-                NXGroup(const NXObject<ObjImp> &o):NXObject<Imp>(o)
-                {
-                }
+            //-----------------------------------------------------------------
+            /*! 
+            \brief open an object
 
-                //--------------------------------------------------------------
-                //! destructor
-                virtual ~NXGroup(){
-                }
+            Opens an object using the [] operator. 
+            \param n name or path of the object
+            \return object
+            */
+            NXObject<MAPTYPE(Imp,ObjectImpl)> operator[](const String &n) const
+            {
+                return this->open(n);
+            }
 
-                //==================assignment operators========================
-                //! copy assignment operator
-                NXGroup<Imp> &operator=(const NXGroup<Imp> &o)
-                {
-                    if(this == &o) return *this;
-                    NXObject<Imp>::operator=(o);
-                    return *this;
-                }
+            //-----------------------------------------------------------------
+            /*! 
+            \brief number of childs
 
-                //--------------------------------------------------------------
-                //! copy assignment conversion operator
-                template<typename ObjImp>
-                NXGroup<Imp> &operator=(const NXObject<ObjImp> &o)
-                {
-                    NXObject<Imp>::operator=(o);
-                    return *this;
-                }
+            Returns the total number of childs linke below this group.
+            \return number of childs
+            */
+            size_t nchilds() const { return this->imp().nchilds(); }
 
-                //--------------------------------------------------------------
-                //! move assignment operator
-                NXGroup<Imp> &operator=(NXGroup<Imp> &&o)
-                {
-                    if(this == &o) return *this;
-                    NXObject<Imp>::operator=(std::move(o));
-                    return *this;
-                }
+            //-----------------------------------------------------------------
+            /*! 
+            \brief open object by index
 
+            Unlike open(const String &n) here the object is addressed by its
+            index. Thus only objects directly linked below this group can be
+            accessed.
+            \throws IndexError if the index exceeds number of childs
+            \param i index of the object
+            \return object
+            */
+            NXObject<MAPTYPE(Imp,ObjectImpl)> open(size_t i) const
+            {
+                return
+                    NXObject<MAPTYPE(Imp,ObjectImpl)>(this->imp().open(i));
+            }
 
-                //=================group creation methods=======================
-                /*! \brief create a group as nexus class
+            //-----------------------------------------------------------------
+            /*! 
+            \brief open object by index
 
-                Create a new group. The optional argument type determines the 
-                Nexus object type the group represents. By default type is an
-                empty string in which case the NX_class attribute will not be
-                written.
-                \param n group name
-                \param type nexus class type
-                \return a new instance of NXGroup
-                */
-                NXGroup<MAPTYPE(Imp,GroupImpl)> 
-                    create_group(const String &n,const String &type=String()) const
-                {
-                    EXCEPTION_SETUP("RETTYPE(NXGRoup,Imp,NXGroupImpl) "
-                            "create_group(const String &n,"
-                            "const String &type=String()) const");
+            Opens an object by index using the [] operator. 
+            \throws IndexError if the index exceeds number of childs
+            \param i index of the object
+            \return object
+            */
+            NXObject<MAPTYPE(Imp,ObjectImpl)> operator[](size_t i) const
+            {
+                return this->open(i);
+            }
 
-                    //we need to do here two things
-                    //we have to check if the particular group type
-                    //exists and add a check object to the class
+            //-----------------------------------------------------------------
+            /*! \brief check if a particular object exists
 
-                    typedef MAPTYPE(Imp,GroupImpl) GroupImpl;
+            */
+            bool exists(const String &n) const{ return this->imp().exists(n); }
 
-                    NXGroup<GroupImpl> g(GroupImpl(n,this->imp()));
+            //-----------------------------------------------------------------
+            /*! \brief remove an object from the file
 
-                    //if the type string is not empty we write the 
-                    //appropriate attribute.
-                    if(!type.empty())
-                        g.template attr<String>("NX_class").write(type);
+            */
+            void remove(const String &n) const{ this->imp().remove(n); }
 
-                    return g;
-                }
+            //-----------------------------------------------------------------
+            /*! \brief create link
 
-                //--------------------------------------------------------------
-                /*! \brief create a field without filter
+            */
+            void link(const String &n) const { this->imp().link(n); }
 
-                \throws ShapeMissmatchError if chunk and field shape do not have
-                the same rank
-                \throws NXGroupError in all other cases
-                \param n name (path) of the field
-                \param shape shape of the field
-                \param chunk chunk shape of the field
-                \return instane of an NXFIeld object
-                */
-                template<typename T> NXField<MAPTYPE(Imp,FieldImpl)>
-                    create_field(const String &n,const Shape &shape=Shape(),
-                                 const Shape &chunk=Shape()) const
-                {
-                    typedef NXField<MAPTYPE(Imp,FieldImpl)> FieldType;
-                    typedef MAPTYPE(Imp,FieldImpl) FieldImp;
-                    Shape s,cs;
+            //-----------------------------------------------------------------
+            /*! \brief create link
 
-                    if(shape.rank() == 0){
-                        //here we create a field for scalar data
-                        s = Shape({1});
-                        cs = s;
-                    }else{
-                        //a multidimensional field shall be created
-                        s = shape;
-                        if(chunk.rank() == 0){
-                            //no explicit chunk-size by the use
-                            std::vector<size_t> v(s.rank());
-                            size_t index =0;
-#ifdef NOFOREACH
-                            for(auto iter = v.begin(); iter!=v.end();iter++)
-                            {
-                                size_t &i=*iter;
-#else
-                            for(size_t &i: v)  
-                            {
-#endif
-                                i = s[index++];
-                            }
-                            v[0] = 1;
-                            cs = Shape(v);
-                        }else{
-                            //the user requested for a particular chunk size
-                            cs = chunk;
-                        }
-                    }
+            */
+            void link(const NXGroup &ref,const String &n) const
+            {
+                this->imp().link(ref.imp(),n);
+            }
 
-                    FieldType field;
-                    try{
-                        field = FieldType(FieldImp::template create<T>(n,this->imp(),s,cs));
-                    }catch(ShapeMissmatchError &error){
-                        throw(error);
-                    }catch(...){
-                        NXGroupError error;
-                        error.issuer("this");
-                        error.description("something went wrong");
-                        throw(error);
-                    }
-                    return field;
-                }
-                
+            //-----------------------------------------------------------------
+            /*! create link
 
-                //--------------------------------------------------------------
-                /*! \brief Creates a multidimensional field with a filter.
+            */
+            void link(const String &p,const String &n) const
+            {
+                this->imp().link(p,n);
+            }
 
-                */
-                template<typename T,typename FilterImp> NXField<MAPTYPE(Imp,FieldImpl)>
-                    create_field(const String &n,const Shape &s,
-                           const NXFilter<FilterImp> &filter) const
-                {
-                    typedef MAPTYPE(Imp,FieldImpl) FieldImp;
-                    typedef NXField<FieldImp> FieldType;
+            //-----------------------------------------------------------------
+            /*! \brief iterator on first child
 
-                    //create a vector with the number of elements of the 
-                    //shape and set the first dimension to 1
-                    std::vector<size_t> v(s.rank());
-                    size_t index = 0;
-#ifdef NOFOREACH
-                    for(auto iter=v.begin();iter!=v.end();iter++)
-                    {
-                        size_t &i = *iter;
-#else
-                    for(size_t &i: v)
-                    {
-#endif
-                        i = s[index++];
-                    }
-                    v[0] = 1;
+            */
+            NXObjectIterator<NXGroup<Imp>,
+                NXObject<MAPTYPE(Imp,ObjectImpl)> > begin() const
+            {
+                return NXObjectIterator<NXGroup<Imp>,
+                       NXObject<MAPTYPE(Imp,ObjectImpl)> >(*this);
+            }
+          
+            //-----------------------------------------------------------------
+            /*! \brief iterator on last child
 
-                    //create the chunk shape
-                    Shape cs(v);
+            */
+            NXObjectIterator<NXGroup<Imp>,
+                NXObject<MAPTYPE(Imp,ObjectImpl)> > end() const
+            {
+                return NXObjectIterator<NXGroup<Imp>,
+                       NXObject<MAPTYPE(Imp,ObjectImpl)> >(*this,
+                               this->nchilds());
+            }
 
-                    FieldType field(FieldImp::template
-                            create<T>(n,this->imp(),s,cs,filter.imp()));
-                    return field;
-                }
-
-               
-                //--------------------------------------------------------------
-                /*! \brief create a multidimensional field (explicit chunk) with filter
-
-                */
-                template<typename T,typename FilterImp> NXField<MAPTYPE(Imp,FieldImpl)>
-                    create_field(const String &n,const Shape &s,const Shape &cs,
-                            const NXFilter<FilterImp> &filter)
-                    const
-                {
-                    typedef MAPTYPE(Imp,FieldImpl) FieldImp;
-                    typedef NXField<FieldImp> FieldType;
-
-                    return FieldType(FieldImp::template
-                            create<T>(n,this->imp(),s,cs,filter.imp()));
-                }
-
-
-                //============methods to open objects===========================
-                /*! \brief open an arbitrary object
-
-                Returns an object by name. The name can be either an absolute or 
-                relative path.
-                \param n path or name of the object to open
-                \return object
-                */
-                virtual NXObject<MAPTYPE(Imp,ObjectImpl)> open(const String &n)
-                    const
-                {
-                    EXCEPTION_SETUP("virtual NXObject<MAPTYPE(Imp,ObjectImpl)>"
-                            " open(const String &n) const");
-
-                    typedef MAPTYPE(Imp,ObjectImpl) ObjectImp;
-                    NXObject<ObjectImp> object;
-                   
-                    try{
-                       object = NXObject<ObjectImp>(this->imp().open(n));
-                    }catch(...){
-                        EXCEPTION_INIT(NXGroupError,"Error opening object!");
-                        EXCEPTION_THROW();
-                    }
-
-                    return object;
-                }
-
-                //-------------------------------------------------------------
-                /*! \brief open an object
-
-                Opens an object using the [] operator. 
-                \param n name or path of the object
-                \return object
-                */
-                NXObject<MAPTYPE(Imp,ObjectImpl)> operator[](const String &n)
-                    const
-                {
-                    return this->open(n);
-                }
-
-                //-------------------------------------------------------------
-                /*! \brief number of childs
-
-                Returns the total number of childs linke below this group.
-                \return number of childs
-                */
-                size_t nchilds() const
-                {
-                    return this->imp().nchilds();
-                }
-
-                //-------------------------------------------------------------
-                /*! \brief open object by index
-
-                Unlike open(const String &n) here the object is addressed by 
-                its index. Thus only objects directly linked below this group 
-                can be accessed.
-                \throws IndexError if the index exceeds number of childs
-                \param i index of the object
-                \return object
-                */
-                NXObject<MAPTYPE(Imp,ObjectImpl)> open(size_t i) const
-                {
-                    return
-                        NXObject<MAPTYPE(Imp,ObjectImpl)>(this->imp().open(i));
-                }
-
-                //-------------------------------------------------------------
-                /*! \brief open object by index
-
-                Opens an object by index using the [] operator. 
-                \throws IndexError if the index exceeds number of childs
-                \param i index of the object
-                \return object
-                */
-                NXObject<MAPTYPE(Imp,ObjectImpl)> operator[](size_t i) const
-                {
-                    return this->open(i);
-                }
-
-                //-------------------------------------------------------------
-                /*! \brief check if a particular object exists
-
-                */
-                bool exists(const String &n) const{
-                    return this->imp().exists(n);
-                }
-
-                //-------------------------------------------------------------
-                /*! \brief remove an object from the file
-
-                */
-                void remove(const String &n) const{
-                    //this->imp().remove(n);
-                }
-
-                //-------------------------------------------------------------
-                /*! \brief create link
-
-                */
-                void link(const String &n) const
-                {
-                    this->imp().link(n);
-                }
-
-                //--------------------------------------------------------------
-                /*! \brief create link
-
-                */
-                void link(const NXGroup &ref,const String &n) const
-                {
-                    this->imp().link(ref.imp(),n);
-                }
-
-                //--------------------------------------------------------------
-                /*! create link
-
-                */
-                void link(const String &p,const String &n) const
-                {
-                    this->imp().link(p,n);
-                }
-
-                //--------------------------------------------------------------
-                /*! \brief iterator on first child
-
-                */
-                NXObjectIterator<NXGroup<Imp>,
-                    NXObject<MAPTYPE(Imp,ObjectImpl)> > begin() const
-                {
-                    return NXObjectIterator<NXGroup<Imp>,
-                           NXObject<MAPTYPE(Imp,ObjectImpl)> >(*this);
-                }
-               
-                /*! \brief iterator on last child
-
-                */
-                NXObjectIterator<NXGroup<Imp>,
-                    NXObject<MAPTYPE(Imp,ObjectImpl)> > end() const
-                {
-                    return NXObjectIterator<NXGroup<Imp>,
-                           NXObject<MAPTYPE(Imp,ObjectImpl)> >(*this,
-                                   this->nchilds());
-                }
-
-        };
+    };
 
 
 //end of namespace
-    }
 }
-
+}
 
 #endif /* NXGROUP_HPP_ */

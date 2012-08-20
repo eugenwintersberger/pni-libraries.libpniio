@@ -39,7 +39,77 @@ using namespace pni::utils;
 
 namespace pni{
 namespace nx{
+
+#define ATTRIBUTE_WRITE_BUFFER(buffer)\
+    try\
+    {\
+        this->_write_buffer(buffer);\
+    }\
+    catch(MemoryNotAllocatedError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }\
+    catch(SizeMissmatchError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }\
+    catch(NXAttributeError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }
        
+#define ATTRIBUTE_READ_BUFFER(buffer)\
+    try\
+    {\
+        this->_read_buffer(buffer);\
+    }\
+    catch(MemoryNotAllocatedError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }\
+    catch(SizeMissmatchError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }\
+    catch(NXAttributeError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }
+#define ATTRIBUTE_WRITE_ARRAY(array)\
+    try\
+    {\
+        this->_write_array(o);\
+    }\
+    catch(MemoryNotAllocatedError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }\
+    catch(ShapeMissmatchError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }\
+    catch(NXAttributeError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }
+
+#define ATTRIBUTE_READ_ARRAY(array)\
+    try\
+    {\
+        this->_read_array(o);\
+    }\
+    catch(MemoryNotAllocatedError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }\
+    catch(ShapeMissmatchError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }\
+    catch(NXAttributeError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }
     /*! 
     \ingroup nexus_lowlevel
     \brief attribute object
@@ -52,6 +122,91 @@ namespace nx{
     {
         private:
             Imp _imp;  //!< implementation of the attribute object
+
+            //------------------------------------------------------------------
+            template<typename BTYPE> void _write_buffer(const BTYPE &b) const
+            {
+                if(b.size() == 0)
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                            "Source buffer not allocated!");
+
+                if(this->size()!=b.size())
+                {
+                    std::stringstream ss;
+                    ss<<"Buffer size ("<<b.size()<<") and attribute size (";
+                    ss<<this->size()<<") do not match!";
+                    throw SizeMissmatchError(EXCEPTION_RECORD,ss.str());
+                }
+
+                this->_imp.write(b.ptr());
+            }
+            
+            //------------------------------------------------------------------
+            template<typename BTYPE> void _read_buffer(BTYPE &b) const
+            {
+                if(b.size() == 0)
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                            "Target buffer not allocated!");
+
+                if(this->size()!=b.size())
+                {
+                    std::stringstream ss;
+                    ss<<"Buffer size ("<<b.size()<<") and attribute size (";
+                    ss<<this->size()<<") do not match!";
+                    throw SizeMissmatchError(EXCEPTION_RECORD,ss.str());
+                }
+
+                this->_imp.read(const_cast<typename BTYPE::value_type *>
+                               (b.ptr()));
+            }
+
+            //-----------------------------------------------------------------
+            template<typename ATYPE> void _write_array(const ATYPE &a) const
+            {
+                if(a.size()==0)
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                            "Array storage not allocated!");
+
+                auto ashape = a.template shape<shape_t>();
+                auto shape = this->template shape<shape_t>();
+                if(!std::equal(ashape.begin(),ashape.end(),shape.begin()))
+                {
+                    std::stringstream ss;
+                    ss<<"Array shape ( ";
+                    for(auto v: ashape) ss<<v<<" ";
+                    ss<<") and attribute shape ( ";
+                    for(auto v: shape) ss<<v<<" ";
+                    ss<<") do not match!";
+                    throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
+                }
+
+                this->_imp.write(a.storage().ptr());
+            }
+            
+            //-----------------------------------------------------------------
+            template<typename ATYPE> void _read_array(ATYPE &a) const
+            {
+                if(a.size()==0)
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                            "Array storage not allocated!");
+
+                auto ashape = a.template shape<shape_t>();
+                auto shape = this->template shape<shape_t>();
+                if(!std::equal(ashape.begin(),ashape.end(),shape.begin()))
+                {
+                    std::stringstream ss;
+                    ss<<"Array shape ( ";
+                    for(auto v: ashape) ss<<v<<" ";
+                    ss<<") and attribute shape ( ";
+                    for(auto v: shape) ss<<v<<" ";
+                    ss<<") do not match!";
+                    throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
+                }
+
+                this->_imp.write(const_cast<typename ATYPE::value_type*>
+                                 (a.storage().ptr()));
+            }
+
         public:
             //==========constructors and destructors============================
             //! default constructor
@@ -103,128 +258,104 @@ namespace nx{
             Write data from an instance of the DBuffer template.
             */
             template<typename ...OTS> 
-                void write(const DBuffer<OTS...> buffer) const
+                void write(const DBuffer<OTS...> &buffer) const
             {
-                _imp.write_buffer(buffer);
+                ATTRIBUTE_WRITE_BUFFER(buffer);
             }
 
-
-            //--------------------------------------------------------------
-            //! write from Scalar<T> 
-            template<typename T> void write(const Scalar<T> &o) const
+            //-----------------------------------------------------------------
+            template<typename ...OTS>
+                void write(const SBuffer<OTS...> &buffer) const
             {
-                _imp.write(o);
+                ATTRIBUTE_WRITE_BUFFER(buffer);
             }
 
-            //--------------------------------------------------------------
+            //-----------------------------------------------------------------
+            template<typename ...OTS>
+                void write(const RBuffer<OTS...> &buffer) const
+            {
+                ATTRIBUTE_WRITE_BUFFER(buffer);
+            }
+
+            //-----------------------------------------------------------------
             //! write from Array<T> 
-            template<typename T,template<typename,typename> class BT,
-                     typename Allocator>
-                void write(const Array<T,BT,Allocator> &o) const
+            template<typename ...OTS>
+                void write(const DArray<OTS...> &o) const
             {
-                EXCEPTION_SETUP("template<typename T,template<typename> "
-                        "class BT > void write(const Array<T,BT> &o) const");
-
-                if(!o.buffer().is_allocated()){
-                    EXCEPTION_INIT(MemoryAccessError,
-                            "Array not allocated!");
-                    EXCEPTION_THROW();
-                }
-                _imp.write(o);
+                ATTRIBUTE_WRITE_ARRAY(o);
             }
 
-            //--------------------------------------------------------------
+            //-----------------------------------------------------------------
+            template<typename ...OTS>
+                void write(const SArray<OTS...> &o) const
+            {
+                ATTRIBUTE_WRITE_ARRAY(o);
+            }
+
+
+            //-----------------------------------------------------------------
             //! write single primitive value
             template<typename T> void write(const T &value) const
             {
-                _imp.write(value);
+                _imp.write(&value);
             }
 
-            //--------------------------------------------------------------
-            //! write from String
-            void write(const String &s) const
-            {
-                _imp.write(s);
-            }
-
-            //--------------------------------------------------------------
+            //-----------------------------------------------------------------
             void write(const char *value) const
             {
-                _imp.write(String(value));
+                String s(value);
+                this->write(s);
             }
 
-            //--------------------------------------------------------------
-            //! read to buffer 
-            template<typename T,template<typename,typename> class BT, 
-                     typename Allocator> 
-                void read(BT<T,Allocator> buffer) const
+            //-----------------------------------------------------------------
+            template<typename ...OTS> void read(DBuffer<OTS...> &buffer) const
             {
-                EXCEPTION_SETUP("template<typename T,template<typename> "
-                        "class BT> void read(BT<T> buffer) const");
-                if(!buffer.is_allocated()){
-                    EXCEPTION_INIT(MemoryAccessError,
-                            "Buffer not allocated!");
-                    EXCEPTION_THROW();
-                }
-                _imp.read(buffer);
+                ATTRIBUTE_READ_BUFFER(buffer);
             }
 
-            //--------------------------------------------------------------
-            //! read to Array<T>
-            template<typename T,template<typename,typename> class BT,
-                     typename Allocator> 
-                void read(Array<T,BT,Allocator> &a) const
+            //-----------------------------------------------------------------
+            template<typename ...OTS> void read(SBuffer<OTS...> &buffer) const
             {
-                EXCEPTION_SETUP("template<typename T,template<typename> "
-                        "class BT> void read(Array<T,BT> &a) const");
-
-                if(!a.buffer().is_allocated()){
-                    EXCEPTION_INIT(MemoryAccessError,
-                            "Array not allocated!");
-                    EXCEPTION_THROW();
-                }
-                _imp.read(a);
+                ATTRIBUTE_READ_BUFFER(buffer);
             }
 
-            //--------------------------------------------------------------
-            //! read to Scalar<T>
-            template<typename T> void read(Scalar<T> &s) const
+            //-----------------------------------------------------------------
+            template<typename ...OTS> void read(RBuffer<OTS...> &buffer) const
             {
-                _imp.read(s);
+                ATTRIBUTE_READ_BUFFER(buffer);
             }
 
-            //--------------------------------------------------------------
-            //! read to plain old data or string
+            //-----------------------------------------------------------------
+            template<typename ...OTS> void read(DArray<OTS...> &o) const
+            {
+                ATTRIBUTE_READ_ARRAY(o);
+            }
+
+            //-----------------------------------------------------------------
+            template<typename ...OTS> void read(SArray<OTS...> &o) const
+            {
+                ATTRIBUTE_READ_ARRAY(o);
+            }
+
+
+            //-----------------------------------------------------------------
             template<typename T> void read(T &value) const
             {
-                _imp.read(value);
+                _imp.write(&value);
             }
 
-            //--------------------------------------------------------------
-            //! read to complex variables
-            template<typename T> void read(std::complex<T> &value) const
+            //-----------------------------------------------------------------
+            void read(const char *value) const
             {
-                _imp.read(value);
-            }
-            //--------------------------------------------------------------
-            //! read to string
-            void read(String &s) const
-            {
-                _imp.read(s);
-            } 
-           
-            //--------------------------------------------------------------
-            //! read without argument
-            template<typename OBJ> OBJ read() const
-            {
-                return _imp.read<OBJ>();
+                String s(value);
+                this->write(s);
             }
 
             //============simple maintenance methods========================
             //! obtain attribute shape
-            Shape shape() const
+            template<typename CTYPE> CTYPE shape() const
             {
-                return _imp.shape();
+                return _imp.template shape<CTYPE>();
             }
 
             //--------------------------------------------------------------

@@ -28,183 +28,192 @@
 
 
 namespace pni{
-    namespace nx{
+namespace nx{
 
-        //! \ingroup nexus_lowlevel
-        //! \brief Group iterator
+    /*! 
+    \ingroup nexus_lowlevel
+    \brief Group iterator
 
-        //! This is a forward iterator that runs through all the objects
-        //! linked below a group. 
-        template<typename IterableT,typename ItemT> class NXObjectIterator
-        {
-            private:
-                const IterableT *_parent; //!< parent object of the interator
-                size_t     _nlinks; //!< total number of links
-                size_t     _index;  //!< actual index 
-                ItemT      _item;   //!< the actual object to which the 
-                                    //!< interator referes
-            public:
-                typedef IterableT iterable_type; //!< type of iterable
-                typedef ItemT     item_type;     //!< item type
-                //===========constructors and destructor===================
-                //! default constructor
-                NXObjectIterator():
-                    _parent(nullptr),
-                    _nlinks(0),
-                    _index(0),
-                    _item()
-                {}   
-                //! copy constructor
-                NXObjectIterator(const NXObjectIterator<IterableT,ItemT> &i):
-                    _parent(i._parent),
-                    _nlinks(i._nlinks),
-                    _index(i._index),
-                    _item(i._item)
-                {}
+    This is a forward iterator that runs through all the objects linked below a
+    group. 
+    */
+    template<typename IterableT,typename ItemT> class NXObjectIterator
+    {
+        private:
+            const IterableT *_parent; //!< parent object of the interator
+            size_t     _nlinks; //!< total number of links
+            size_t     _index;  //!< actual index 
+            ItemT      _item;   //!< the actual object to which the 
+                                //!< interator referes
+        public:
+            typedef IterableT iterable_type; //!< type of iterable
+            typedef ItemT     item_type;     //!< item type
+            //================constructors and destructor======================
+            //! default constructor
+            NXObjectIterator():
+                _parent(nullptr),
+                _nlinks(0),
+                _index(0),
+                _item()
+            {}   
 
-                //! move constructor
-                NXObjectIterator(NXObjectIterator<IterableT,ItemT> &&i):
-                    _parent(i._parent),
-                    _nlinks(i._nlinks),
-                    _index(i._index),
-                    _item(std::move(i._item))
-                {
+            //-----------------------------------------------------------------
+            //! copy constructor
+            NXObjectIterator(const NXObjectIterator<IterableT,ItemT> &i):
+                _parent(i._parent),
+                _nlinks(i._nlinks),
+                _index(i._index),
+                _item(i._item)
+            {}
+
+            //-----------------------------------------------------------------
+            //! move constructor
+            NXObjectIterator(NXObjectIterator<IterableT,ItemT> &&i):
+                _parent(i._parent),
+                _nlinks(i._nlinks),
+                _index(i._index),
+                _item(std::move(i._item))
+            {
+                i._parent = nullptr;
+                i._nlinks = 0;
+                i._index  = 0;
+            }
+
+            //-----------------------------------------------------------------
+            //! constructor from group object
+            NXObjectIterator(const IterableT &g,size_t start_index=0):
+                _parent(&g),
+                _nlinks(g.nchilds()),
+                _index(start_index),
+                _item()
+            {
+                if(_index < _nlinks) _item = _parent->open(_index);
+            }
+
+            //-----------------------------------------------------------------
+            //! destructor
+            virtual ~NXObjectIterator(){
+                _parent = nullptr;
+                _nlinks = 0;
+                _index  = 0;
+                _item.close();
+            }
+
+            //=================assignment operators============================
+            //! copy assignment operator
+            NXObjectIterator<IterableT,ItemT> &
+                operator=(const NXObjectIterator<IterableT,ItemT> &i)
+            {
+                if(this != &i){
+                    _parent = i._parent;
+                    _nlinks = i._nlinks;
+                    _index  = i._index;
+                    _item   = i._item;
+                }
+                return *this;
+            }
+
+            //-----------------------------------------------------------------
+            //! move assignment operator
+            NXObjectIterator<IterableT,ItemT> &
+                operator=(NXObjectIterator<IterableT,ItemT> &&i)
+            {
+                if(this != &i){
+                    _parent = i._parent;
                     i._parent = nullptr;
+                    _nlinks = i._nlinks;
                     i._nlinks = 0;
-                    i._index  = 0;
+                    _index  = i._index;
+                    i._index = 0;
+                    _item   = std::move(i._item);
                 }
+                return *this;
+            }
 
-                //! constructor from group object
-                NXObjectIterator(const IterableT &g,size_t start_index=0):
-                    _parent(&g),
-                    _nlinks(g.nchilds()),
-                    _index(start_index),
-                    _item()
-                {
-                    if(_index < _nlinks) _item = _parent->open(_index);
-                }
+            //-----------------------------------------------------------------
+            //! conversion to bool 
+            operator bool() 
+            {
+                if(_index >= _nlinks) return false;
+                return true;
+            }
 
-                //! destructor
-                virtual ~NXObjectIterator(){
-                    _parent = nullptr;
-                    _nlinks = 0;
-                    _index  = 0;
-                    _item.close();
-                }
+            //-----------------------------------------------------------------
+            //! pointer access operator
+            ItemT  *operator->()
+            {
+                return &_item;
+            }
+           
+            //-----------------------------------------------------------------
+            //! pointer access operator
+            const ItemT *operator->() const
+            {
+                return &_item;
+            }
+           
+            //-----------------------------------------------------------------
+            //! dereferencing operator
+            ItemT & operator*()
+            {
+                return _item;
+            }
 
-                //=============assignment operators========================
-                //! copy assignment operator
-                NXObjectIterator<IterableT,ItemT> &
-                    operator=(const NXObjectIterator<IterableT,ItemT> &i)
-                {
-                    if(this != &i){
-                        _parent = i._parent;
-                        _nlinks = i._nlinks;
-                        _index  = i._index;
-                        _item   = i._item;
-                    }
-                    return *this;
-                }
+            //-----------------------------------------------------------------
+            //! const dereferenceing operator
+            const ItemT &operator*() const
+            {
+                return _item;
+            }
 
-                //! move assignment operator
-                NXObjectIterator<IterableT,ItemT> &
-                    operator=(NXObjectIterator<IterableT,ItemT> &&i)
-                {
-                    if(this != &i){
-                        _parent = i._parent;
-                        i._parent = nullptr;
-                        _nlinks = i._nlinks;
-                        i._nlinks = 0;
-                        _index  = i._index;
-                        i._index = 0;
-                        _item   = std::move(i._item);
-                    }
-                    return *this;
-                }
-
-                //! conversion to bool 
-                operator bool() 
-                {
-                    if(_index >= _nlinks) return false;
-                    return true;
-                }
-
-                //! pointer access operator
-                ItemT  *operator->()
-                {
-                    return &_item;
-                }
-                
-                //! pointer access operator
-                const ItemT *operator->() const
-                {
-                    return &_item;
-                }
-                
-                //! dereferencing operator
-                ItemT & operator*()
-                {
-                    return _item;
-                }
-
-                //! const dereferenceing operator
-                const ItemT &operator*() const
-                {
-                    return _item;
-                }
-
-                //! increment operator
-                NXObjectIterator<IterableT,ItemT> &operator++()
-                {
-                    EXCEPTION_SETUP("NXObjectIterator<ItemT> &operator++()");
-
-                    //if the actual index is equal to the total number
-                    //of links no increment is possible
-                    _index++;
-                    if(_index < _nlinks){
-                        _item = _parent->open(_index);
-                    }
+            //-----------------------------------------------------------------
+            //! increment operator
+            NXObjectIterator<IterableT,ItemT> &operator++()
+            {
+                //if the actual index is equal to the total number
+                //of links no increment is possible
+                _index++;
+                if(_index < _nlinks) _item = _parent->open(_index);
 
 
-                    return *this;
-                }
+                return *this;
+            }
 
-                //! iterator increment
-                NXObjectIterator<IterableT,ItemT> &operator++(int i)
-                {
-                    EXCEPTION_SETUP("H5GroupIterator<ItemT> &operator++(int i)");
-                    
-                    //if the actual index is equal to the total number
-                    //of links no increment is possible
-                    _index++;
-                    if(_index < _nlinks){
-                        _item = _parent->open(_index);
-                    }
-
-
-                    return *this;
-                }
-
-                //! iterator comparison for equality
-                bool operator==(const NXObjectIterator<IterableT,ItemT> &o)
-                    const
-                {
-                    if(_parent != o._parent) return false;
-                    if(_index  != o._index)  return false;
-                    if(_nlinks != o._nlinks) return false;
-                    return true;
-                }
-
-                //! iterator comparison for inequality
-                bool operator!=(const NXObjectIterator<IterableT,ItemT> &o)
-                    const
-                {
-                    if(*this == o) return false;
-                    return true;
+            //-----------------------------------------------------------------
+            //! iterator increment
+            NXObjectIterator<IterableT,ItemT> &operator++(int i)
+            {
+                //if the actual index is equal to the total number
+                //of links no increment is possible
+                _index++;
+                if(_index < _nlinks){
+                    _item = _parent->open(_index);
                 }
 
 
-        };
+                return *this;
+            }
+
+            //-----------------------------------------------------------------
+            //! iterator comparison for equality
+            bool operator==(const NXObjectIterator<IterableT,ItemT> &o) const
+            {
+                if(_parent != o._parent) return false;
+                if(_index  != o._index)  return false;
+                if(_nlinks != o._nlinks) return false;
+                return true;
+            }
+
+            //-----------------------------------------------------------------
+            //! iterator comparison for inequality
+            bool operator!=(const NXObjectIterator<IterableT,ItemT> &o) const
+            {
+                if(*this == o) return false;
+                return true;
+            }
+
+
+    };
     //end of namespace
     }
 }

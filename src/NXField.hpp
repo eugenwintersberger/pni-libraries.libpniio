@@ -31,843 +31,711 @@
 #include <sstream>
 
 #include <pni/utils/Types.hpp>
-#include <pni/utils/Scalar.hpp>
-#include <pni/utils/Shape.hpp>
 #include <pni/utils/Array.hpp>
-#include <pni/utils/NumericObject.hpp>
+#include <pni/utils/SBuffer.hpp>
+#include <pni/utils/RBuffer.hpp>
+#include <pni/utils/DBuffer.hpp>
+#include <pni/utils/Slice.hpp>
 
 #include "NXObject.hpp"
 #include "NXExceptions.hpp"
-#include "NXSelection.hpp"
+//#include "NXSelection.hpp"
 
 using namespace pni::utils;
 
 namespace pni{
-    namespace nx{
+namespace nx{
 
+#define READ_BUFFER(buffer)\
+    try\
+    {\
+        this->_read_buffer(buffer);\
+    }\
+    catch(MemoryNotAllocatedError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }\
+    catch(SizeMissmatchError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }\
+    catch(NXFieldError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }
 
-        /*! \ingroup nexus_lowlevel
-        \brief NXfield base class
+#define WRITE_BUFFER(buffer)\
+    try\
+    {\
+        this->_write_buffer(b);\
+    }\
+    catch(MemoryNotAllocatedError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }\
+    catch(SizeMissmatchError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }\
+    catch(NXFieldError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }
 
-        NXField is the basic data holding object in a Nexus file. You 
-        cannot create an instance of this object directly rather you 
-        have to use one of the factory methods provided by NXGroup.
-        NXField behaves like a container for data object which for the 
-        time being can be either strings, Scalars, or Array objects.
-        */
-        template<typename Imp> class NXField:public NXObject<Imp> {
-            private:
-                //-------------------------------------------------------------
-                template<typename ...ITYPES>
-                    void _setup_selection(
-                            NXSelection<MAPTYPE(Imp,SelectionImpl)> &s,
-                            size_t rec,
-                            size_t i,ITYPES ...indices)
+#define READ_ARRAY(array)\
+    try\
+    {\
+        this->_read_array(array);\
+    }\
+    catch(MemoryNotAllocatedError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }\
+    catch(ShapeMissmatchError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }\
+    catch(NXFieldError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }
+
+#define WRITE_ARRAY(array)\
+    try\
+    {\
+        this->_write_array(array);\
+    }\
+    catch(MemoryNotAllocatedError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }\
+    catch(ShapeMissmatchError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }\
+    catch(NXFieldError &error)\
+    {\
+        error.append(EXCEPTION_RECORD); throw error;\
+    }
+
+    /*! \ingroup nexus_lowlevel
+    \brief NXfield base class
+
+    NXField is the basic data holding object in a Nexus file. You cannot create
+    an instance of this object directly rather you have to use one of the
+    factory methods provided by NXGroup.  NXField behaves like a container for
+    data object which for the time being can be either strings, Scalars, or
+    Array objects.
+    */
+    template<typename Imp> class NXField:public NXObject<Imp> 
+    {
+        private:
+            /*!
+            \brief read data to buffer
+
+            \throws MemoryNotAllocatedError if buffer size is 0
+            \throws SizeMissmatchError if buffer and field size do not match
+            \tparam BTYPE buffer type
+            \param b reference to an instance of BTYPE
+            */
+            //------------------read buffer-----------------------------------
+            template<typename BTYPE> void _read_buffer(BTYPE &b) const
+            {
+                if(b.size() == 0)
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                            "Target buffer not allocated!");
+
+                if(b.size() != this->imp().size())
                 {
-                    //setup the selection from a single index
-                    s.offset(rec,i);
-                    s.shape(rec,1);
-                    s.stride(rec,1);
-
-                    //call recursion
-                    _setup_selection(s,rec+1,indices...);
-                }
-
-                //-------------------------------------------------------------
-                template <typename ...ITYPES> 
-                    void _setup_selection(
-                            NXSelection<MAPTYPE(Imp,SelectionImpl)> &s,
-                            size_t rec,
-                            const Slice &sl,ITYPES ...indices)
-
-                {
-                    s.offset(rec,sl.first());
-                    s.stride(rec,sl.stride());
-                    s.shape(rec,pni::utils::size(sl));
-                    //call recursion
-                    _setup_selection(s,rec+1,indices...);
-                }
-
-                //-------------------------------------------------------------
-                //break method
-                void _setup_selection(
-                        NXSelection<MAPTYPE(Imp,SelectionImpl)> &s,
-                        size_t rec)
-                { }
-            public:
-                typedef std::shared_ptr<NXField<Imp> > 
-                    shared_ptr; //!< shared pointer type for the field object
-                //============constructors and destructors=====================
-                //! default constructor
-                explicit NXField():NXObject<Imp>()
-                {
-                }
-
-                //-------------------------------------------------------------
-                //! copy constructor
-                NXField(const NXField<Imp> &o):NXObject<Imp>(o)
-                {
-                }
-
-                //-------------------------------------------------------------
-                //! move constructor
-                NXField(NXField<Imp> &&o):NXObject<Imp>(std::move(o))
-                {
-                }
-
-                //-------------------------------------------------------------
-                //! copy constructor from implementation object
-                explicit NXField(const Imp &o):NXObject<Imp>(o)
-                {
-                }
-                //-------------------------------------------------------------
-                //! move constructor from implementation object
-                explicit NXField(Imp &&o):NXObject<Imp>(std::move(o)){}
-
-                //-------------------------------------------------------------
-                //! copy conversion constructor
-                template<typename ObjImp> NXField(const NXObject<ObjImp> &o)
-                    :NXObject<Imp>(o)
-                {
-                }
-
-
-                //-------------------------------------------------------------
-                //!destructor
-                ~NXField(){
-                }
-
-                //=================assignment operators========================
-                //! copy assignment
-                NXField<Imp> &operator=(const NXField<Imp> &o)
-                {
-                    if(this == &o) return *this;
-                    NXObject<Imp>::operator=(o);
-                    return *this;
-                }
-
-                //-------------------------------------------------------------
-                //! copy conversion assignment
-                template<typename ObjImp>
-                NXField<Imp> &operator=(const NXObject<ObjImp> &o)
-                {
-                    NXObject<Imp>::operator=(o);
-                    return *this;
-                }
-
-                //-------------------------------------------------------------
-                //! move assignment
-                NXField<Imp> &operator=(NXField<Imp> &&o)
-                {
-                    if(this == &o) return *this;
-                    NXObject<Imp>::operator=(std::move(o));
-                    return *this;
-                }
-
-
-                //=============dataset inquiry methods=========================
-                /*! \brief field shape
-
-                Returns the shape of the field
-                \return Shape object
-                */
-                Shape shape() const{
-                    return this->imp().shape();
-                }
-
-                //-------------------------------------------------------------
-                /*! \brief return size
-
-                Return the size (number of elements) in the field.
-                */
-                size_t size() const{
-                    return this->imp().size();
-                }
-
-                //-------------------------------------------------------------
-                /*! \brief get the type ID
-
-                Return the ID of the data type stored in the field.
-                \return data type ID
-                */
-                TypeID type_id() const {
-                    return this->imp().type_id();
+                    std::stringstream ss;
+                    ss<<"Buffer size ("<<b.size()<<") and field size (";
+                    ss<<this->size()<<") do not match!";
+                    SizeMissmatchError error(EXCEPTION_RECORD,ss.str());
+                    std::cout<<error<<std::endl;
+                    throw error;
                 }
                 
-                //--------------------------------------------------------------
-                /*! \brief resize field
-
-                Resize the field to a new shape determined by s. 
-                The rank of the old and the new shape must coincide otherwise 
-                an exception will be thrown.
-                \throws ShapeMissmatchError if ranks do not match
-                \throws NXFieldError in case of other errors
-                \param s describing the new shape of the field
-                */
-                void resize(const Shape &s)
+                try
                 {
-                    EXCEPTION_SETUP("void resize(const Shape &s)");
-                    try{
-                        this->imp().resize(s);
-                    }catch(ShapeMissmatchError &e){
-                        throw e;
-                    }catch(...){
-                        EXCEPTION_INIT(NXFieldError,"Error resizing field!");
-                        EXCEPTION_THROW();
-                    }
+                    this->imp().read(const_cast<typename BTYPE::value_type
+                            *>(b.ptr()));
                 }
-
-                //--------------------------------------------------------------
-                /*! \brief grow field along a particular dimension
-
-                Grows the field by n elements along dimension e. This method
-                is pretty useful in cases where an arbitrary number of points
-                shall be stored in a field and their number is not known 
-                when the field was created.
-                \throws IndexError if e exceeds the rank of the field
-                \throws NXFieldError in case of other errors
-                \param e index of dimension along which to grow
-                \param n number of elements by which to grow
-                */
-                void grow(const size_t &e,const size_t &n=1)
+                catch(...)
                 {
-                    EXCEPTION_SETUP("void grow(const size_t &e,"
-                            "const size_t &n=1)");
-
-                    try{
-                        this->imp().grow(e,n);
-                    }catch(IndexError &e){
-                        throw(e);
-                    }catch(...){
-                        std::stringstream ss;
-                        ss<<"Growing field ["<<this->path();
-                        ss<<"] along dimension"<<e<<" by "<<n<<" elements ";
-                        ss<<"failed!";
-                        EXCEPTION_INIT(NXFieldError,ss.str());
-                        EXCEPTION_THROW();
-                    }
+                    throw NXFieldError(EXCEPTION_RECORD,
+                            "Cannot read to buffer!");
                 }
 
-                //--------------------------------------------------------------
-                /*! \brief number of dimensions
+                //clear selections if there  are some
+                this->imp().clear_selections();
+            }
 
-                Returns the number of dimensions of the field.
-                \return number of dimensions
-                */
-                size_t rank() const{
-                    return this->imp().rank();
-                }
+            //-----------------------------------------------------------------
+            /*! 
+            \brief write data from buffer
 
-                //--------------------------------------------------------------
-                /*! \brief number of elements along dimension
+            Write data from a buffer to the file
+            \throws MemoryNotAllocatedError if buffer is not allocated
+            \throws SizeMissmatchError if field and buffer size do not match
+            \throws NXFieldError in case of any other error
+            \tparam BTYPE buffer type
+            \param b reference to an instance of BTYPE
+            */
+            template<typename BTYPE> void _write_buffer(const BTYPE &b) const
+            {
+                if(b.size() == 0)
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                            "Source buffer not allocated!");
 
-                Returns the number of elements along dimension i. An exception
-                is thrown if i exceeds the rank of the field.
-                \throws IndexError if i exceeds the rank of the field
-                \return number of elements
-                */
-                size_t dim(size_t i) const{
-                    return this->imp().dim(i);
-                }
-
-                //==========methods for reading data============================
-                /*! reading simple data from the dataset
-
-                Read a single data value from the dataset. In order 
-                to succeed the dataset must be a scalar dataset or 
-                the total size of the dataset must be 1.
-                \code
-                UInt32 scalar;
-                field.read(scalar);
-                \endcode
-                \throws ShapeMissmatchError if dataset is not scalar
-                \throws NXFieldError in all other error cases
-                \param value variable where to store the data
-                */
-                template<typename T> void read(T &value) const
+                if(b.size() != this->size())
                 {
-                    EXCEPTION_SETUP("template<typename T> void NXField<Imp>::"
-                            "read(T &value) const");
-
-                    try{
-                        this->imp().read(value);
-                    }catch(SizeMissmatchError &error){
-                        throw(error);
-                    }catch(ShapeMissmatchError &error){
-                        throw(error);
-                    }catch(...){
-                        EXCEPTION_INIT(NXFieldError,"Error reading data from "
-                                "field ["+this->path()+"]!");
-                        EXCEPTION_THROW();
-                    }
+                    std::stringstream ss;
+                    ss<<"Source buffer size ("<<b.size()<<") does not match";
+                    ss<<"target field size ("<<this->size()<<")!";
+                    throw SizeMissmatchError(EXCEPTION_RECORD,ss.str());
                 }
 
-                //-------------------------------------------------------------
-                /*! reading data to a buffer
-
-                Copy data from a dataset to the buffer. The size
-                of the dataset and the buffer must match. An exception will be
-                thrown if the buffer object is not allocated.
-
-                \code
-                Buffer<UInt16> buffer(field.size());
-                field.read(buffer);
-
-                \endcode
-                \throws MemoryAccessError if the buffer is not allocated
-                \throws SizeMissmatchError if sizes do not match
-                \throws NXFieldError in all other cases
-                \param buffer buffer where to store data
-                */
-                template<typename T,template<typename,typename> class BT,
-                         typename Allocator> 
-                    void read(BT<T,Allocator> &buffer) const
+                try
                 {
-                    EXCEPTION_SETUP("template<typename T,template<typename> "
-                            "class BT> void NXField<Imp>::read(BT<T> &buffer) const");
-
-                    if(!buffer.is_allocated()){
-                        std::stringstream ss;
-                        ss<<"Buffer object not allocated - cannot write data";
-                        ss<<" to field ["<<this->path()<<"]!";
-                        EXCEPTION_INIT(MemoryAccessError,ss.str());
-                        EXCEPTION_THROW();
-                    }
-
-                    try{
-                        this->imp().read(buffer);
-                    }catch(SizeMissmatchError &error){
-                        throw(error);
-                    }catch(...){
-                        EXCEPTION_INIT(NXFieldError,"Error reading data from "
-                                "field ["+this->path()+"]!");
-                        EXCEPTION_THROW();
-                    }
+                    this->imp().write(b.ptr());
                 }
-
-                //--------------------------------------------------------------
-                /*! \brief read data to array
-
-                Copy the data stored in the field to an array object.
-                An exception is thrown if the buffer holding the arrays data is
-                not allocated or the shape of the array does not match the shape
-                of the field.
-                
-                \code
-                Float32Array a(field.shape,field.name(),
-                               field.attr("units").read<String>(),
-                               field.attr("long_name").read<String>());
-                field.read(a);
-                \endcode
-
-                \throws ShapeMissmatchError if field and array-shape do not
-                match
-                \throws MemoryAccessError if array buffer not allocated
-                \throws NXFieldError in case of all other errors.
-                \param array Array instance where to store the data
-                */
-                template<typename T,template<typename,typename> class BT,
-                         typename Allocator>
-                    void read(Array<T,BT,Allocator> &array) const
+                catch(...)
                 {
-                    EXCEPTION_SETUP("template<typename T,template<typename> "
-                            "class BT> void read(Array<T,BT> &array) const");
-
-                    if(!array.is_allocated()){
-                        std::stringstream ss;
-                        ss<<"Array buffer not allocated - cannot write data";
-                        ss<<" to field ["<<this->path()<<"]!";
-                        EXCEPTION_INIT(MemoryAccessError,ss.str());
-                        EXCEPTION_THROW();
-                    }
-
-                    try{
-                        this->imp().read(array);
-                    }catch(ShapeMissmatchError &error){
-                        throw(error);
-                    }catch(...){
-                        EXCEPTION_INIT(NXFieldError,"Error reading data from "
-                                "field ["+this->path()+"]!");
-                        EXCEPTION_THROW();
-                    }
+                    throw NXFieldError(EXCEPTION_RECORD,
+                            "Cannot write buffer!");
                 }
 
-                //--------------------------------------------------------------
-                /*! \brief read data to scalar
+                //clear selection if there is one
+                this->imp().clear_selections();
+            }
 
-                Copy data from the field to a simple scalar object. An exception
-                will be thrown if the field is not scalar. 
-                
-                \code 
-                Scalar<Float32> s(field.name(),
-                                  field.attr("units").read<String>(),
-                                  field.attr("long_name").read<String>());
-                field.read(s);
-                \endcode
+            //-----------------------------------------------------------------
+            /*!
+            \brief read data to array
 
-                \throws ShapeMissmatchError if the field is not scalar
-                \throws NXFieldError in case of other errors
-                \param data instance of Scalar<T> where to store the data
-                */
-                template<typename T> void read(Scalar<T> &data) const
+            \throws MemoryNotAllocatedError if array buffer not allocated
+            \throws ShapeMissmatchError if shapes do not match
+            \throws NXFieldError in case of other errors
+            \tparam ATYPE array type
+            \pararm a reference to an instance fo ATYPE
+            */
+            template<typename ATYPE> void _read_array(ATYPE &a) const
+            {
+                if(a.size() == 0)
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                            "Target array buffer not allocated!");
+
+                auto ashape = a.shape<shape_t>();
+                auto fshape = this->shape<shape_t>();
+                if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
                 {
-                    EXCEPTION_SETUP("template<typename T> void NXField<Imp>::"
-                            "read(Scalar<T> &data) const");
-                    
-                    try{
-                        this->imp().read(data);
-                    }catch(ShapeMissmatchError &error){
-                        throw(error);
-                    }catch(...){
-                        EXCEPTION_INIT(NXFieldError,"Error reading data from "
-                                "field ["+this->path()+"]!");
-                        EXCEPTION_THROW();
-                    }
+                    std::stringstream ss;
+                    ss<<"Array shape ( ";
+                    for(auto v: ashape) ss<<v<<" ";
+                    ss<<") and field shape ( ";
+                    for(auto v: fshape) ss<<v<<" ";
+                    ss<<") do not match!";
+                    throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
                 }
-               
-                //---------------------------------------------------------------
-                /*! \brief read data to a complex value
 
-                Copy data to a value of type std::complex<T> where T is a
-                floating point type. An exception is thrown in the field is not
-                scalar.
-                
-                \code
-                std::complex<Float32> value;
-                field.read(value);
-                \endcode
-
-                \throws ShapeMissmatchError if field is not scalar
-                \throws NXFieldError in case of other errors
-                \param value instance of std::complex<T>
-                */
-                template<typename T> void read(std::complex<T> &value) const
+                try
                 {
-                    EXCEPTION_SETUP("template<typename T> void NXField<Imp>::"
-                            "read(std::complex<T> &value) const");
-
-                    try{
-                        this->imp().read(value);
-                    }catch(ShapeMissmatchError &error){
-                        throw(error);
-                    }catch(...){
-                        EXCEPTION_INIT(NXFieldError,"Error reading data from "
-                                "field ["+this->path()+"]!");
-                        EXCEPTION_THROW();
-                    }
+                    this->imp().read(const_cast<typename ATYPE::value_type*>(
+                                a.storage().ptr()));
                 }
-
-                //--------------------------------------------------------------
-                /*! \brief read data to a user defined typ
-
-                This is a special method which allows the user to select which
-                object to use for reading data.
-                The advantage of this method is that a user must not take care
-                about allocating an object of appropriate size. This is done by
-                the method automatically. The only thing the user must know is
-                which object he wants and the data-type which should be used.
-                A ShapeMissmatchError is thrown if, for instance Object can only
-                hold scalar data but the field is a multidimensional array (the
-                same holds the other way around). SizeMissmatchErrors are hardly
-                possible as the method is doing all memory allocation by itself.
-                In the case of Buffer<T> this means, for instance, that the
-                buffer is always of sufficient size. 
-
-                Clearly this method has the disadvantage that with each call a
-                new instance of an object is created. This might no be a problem
-                for scalar types. However, for large array types the expenses
-                for memory allocation can be come critical.
-                
-                \code
-                auto data = field.read<Buffer<Float32> >();
-                \endcode
-
-                \throws ShapeMissmatchError in case of shape issues
-                \throws NXFieldError in case of an arbitrary error.
-                \return instance of Object with the data
-                */
-                template<typename Object> Object read() const
+                catch(...)
                 {
-                    EXCEPTION_SETUP("template<typename Object> Object"
-                            "NXField<Imp>::read() const");
-                    
-                    try{
-                        return this->imp().read<Object>();                    
-                    }catch(ShapeMissmatchError &error){
-                        throw(error);
-                    }catch(SizeMissmatchError &error){
-                        throw(error);
-                    }catch(...){
-                        EXCEPTION_INIT(NXFieldError,"Error reading data from "
-                                "field ["+this->path()+"]!");
-                        EXCEPTION_THROW();
-                    }
+                    throw NXFieldError(EXCEPTION_RECORD,
+                            "Cannt read data to array!");
                 }
-               
-                //-------------------------------------------------------------
-                /*! \brief read binary data
 
-                Copy data as binary from the field. This is a specialization of
-                the read(T &value) template. 
-                
-                \code
-                Binary bin;
-                field.read(bin);
-                \endcode
+                //clear selections
+                this->imp().clear_selections();
 
-                \throws ShapeMissmatchError if field is not scalar
-                \throws NXFieldError in case of other errors
-                \param value instance of Binary
-                */
-                void read(Binary &value) const
+            }
+
+            //-----------------------------------------------------------------
+            /*!
+            \brief write data from array
+
+            \throws MemoryNotAllocatedError if array buffer not allocated
+            \throws ShapeMissmatchError if shapes do not match
+            \throws NXFieldError in case of other errors
+            \tparam ATYPE array type
+            \pararm a reference to an instance fo ATYPE
+            */
+            template<typename ATYPE> void _write_array(ATYPE &a) const
+            {
+                if(a.size() == 0)
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                            "Source array buffer not allocated!");
+
+                auto ashape = a.shape<shape_t>();
+                auto fshape = this->shape<shape_t>();
+                if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
                 {
-                    EXCEPTION_SETUP("void NXField<Imp>::read(Binary &value) "
-                            "const");
-
-                    try{
-                        this->imp().read(value);
-                    }catch(ShapeMissmatchError &error){
-                        throw(error);
-                    }catch(...){
-                        EXCEPTION_INIT(NXFieldError,"Error reading data from "
-                                "field ["+this->path()+"]!");
-                        EXCEPTION_THROW();
-                    }
+                    std::stringstream ss;
+                    ss<<"Source array shape ( ";
+                    for(auto v: ashape) ss<<v<<" ";
+                    ss<<") and field shape ( ";
+                    for(auto v: fshape) ss<<v<<" ";
+                    ss<<") do not match!";
+                    throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
                 }
 
-                //-------------------------------------------------------------
-                /*! \brief read string value
+                try
+                {
+                    this->imp().write(a.storage().ptr());
+                }
+                catch(...)
+                {
+                    throw NXFieldError(EXCEPTION_RECORD,
+                            "Cannt write data from array!");
+                }
 
-                Read a String value from a field. This is a specialization of
-                the read(T &value) template method.
+                //clear selections
+                this->imp().clear_selections();
+
+            }
+        public:
+            //! shared pointer type for the field object
+            typedef std::shared_ptr<NXField<Imp> > shared_ptr; 
+            //============constructors and destructors=========================
+            //! default constructor
+            explicit NXField():NXObject<Imp>() { }
+
+            //-----------------------------------------------------------------
+            //! copy constructor
+            NXField(const NXField<Imp> &o):NXObject<Imp>(o) { }
+
+            //-----------------------------------------------------------------
+            //! move constructor
+            NXField(NXField<Imp> &&o):NXObject<Imp>(std::move(o)) { }
+
+            //-----------------------------------------------------------------
+            //! copy constructor from implementation object
+            explicit NXField(const Imp &o):NXObject<Imp>(o) { }
+
+            //-----------------------------------------------------------------
+            //! move constructor from implementation object
+            explicit NXField(Imp &&o):NXObject<Imp>(std::move(o)){}
+
+            //-----------------------------------------------------------------
+            //! copy conversion constructor
+            template<typename ObjImp> NXField(const NXObject<ObjImp> &o)
+                :NXObject<Imp>(o)
+            { }
+
+            //-----------------------------------------------------------------
+            //!destructor
+            ~NXField(){ }
+
+            //====================assignment operators=========================
+            //! copy assignment
+            NXField<Imp> &operator=(const NXField<Imp> &o)
+            {
+                if(this == &o) return *this;
+                NXObject<Imp>::operator=(o);
+                return *this;
+            }
+
+            //-----------------------------------------------------------------
+            //! copy conversion assignment
+            template<typename ObjImp>
+            NXField<Imp> &operator=(const NXObject<ObjImp> &o)
+            {
+                NXObject<Imp>::operator=(o);
+                return *this;
+            }
+
+            //-----------------------------------------------------------------
+            //! move assignment
+            NXField<Imp> &operator=(NXField<Imp> &&o)
+            {
+                if(this == &o) return *this;
+                NXObject<Imp>::operator=(std::move(o));
+                return *this;
+            }
+
+
+            //=================dataset inquiry methods=========================
+            /*! 
+            \brief field shape
+
+            Returns the shape of the field
+            \return Shape object
+            */
+            template<typename CTYPE>
+            CTYPE shape() const { return this->imp().template shape<CTYPE>(); }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief return size
+
+            Return the size (number of elements) in the field.
+            */
+            size_t size() const { return this->imp().size(); }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief get the type ID
+
+            Return the ID of the data type stored in the field.
+            \return data type ID
+            */
+            TypeID type_id() const { return this->imp().type_id(); }
             
-                \code
-                String s;
-                field.read(s);
-                \endcode
+            //-----------------------------------------------------------------
+            /*! 
+            \brief resize field
 
-                \throws ShapeMissmatchError if the field is not scalar
-                \throws NXFieldError in case of other errors
-                \param value string value where to copy data
-                */
-                void read(String &value) const
+            Resize the field to a new shape determined by s.  The rank of the
+            old and the new shape must coincide otherwise an exception will be
+            thrown.
+            \throws ShapeMissmatchError if ranks do not match
+            \throws NXFieldError in case of other errors
+            \param s describing the new shape of the field
+            */
+            template<typename CTYPE> void resize(const CTYPE &s)
+            {
+                try
                 {
-                    EXCEPTION_SETUP("void NXField<Imp>::read(String &value) "
-                            "const");
-
-                    try{
-                        this->imp().read(value);
-                    }catch(ShapeMissmatchError &error){
-                        throw(error);
-                    }catch(...){
-                        EXCEPTION_INIT(NXFieldError,"Error reading data from "
-                                "field ["+this->path()+"]!");
-                        EXCEPTION_THROW();
-                    }
+                    this->imp().resize(s);
                 }
-
-                //=============methods for writing data========================
-                /*! write a single value
-
-                Writs a single value of type T to the field. This method will 
-                succeed only if the field can hold only a single value.
-                
-                \code
-                Float64 data = 1.2340;
-                field.write(data);
-                \endcode
-
-                \throws ShapeMissmatchError if the dataspace is not scalar
-                \throws NXFieldError in case of other errors
-                \param value value to write
-                */
-                template<typename T> void write(const T &value) const
+                catch(ShapeMissmatchError &e)
                 {
-                    EXCEPTION_SETUP("template<typename T> void NXField<Imp>::"
-                            "write(const T &value) const");
-
-                    try{
-                        this->imp().write(value);
-                    }catch(ShapeMissmatchError &error){
-                        throw(error);
-                    }catch(...){
-                        EXCEPTION_INIT(NXFieldError,"Error writing data to "
-                                "field ["+this->path()+"]!");
-                        EXCEPTION_THROW();
-                    }
+                    e.append(EXCEPTION_RECORD); throw e;
                 }
-
-                //-------------------------------------------------------------
-                /*! \brief write complex value
-
-                Writes a complex data value to the field. This is a
-                specialization of the write(T &value) template method.
-
-                \code
-                Complex32 value(1.2,-134.20);
-                field.write(value);
-                \endcode
-
-                \throws ShapeMissmatchError if the field is not scalar
-                \throws NXFieldError in case of other errors
-                \param value complex data value to write
-                */
-                template<typename T> void write(const std::complex<T> &value)
-                    const
+                catch(...)
                 {
-                    EXCEPTION_SETUP("template<typename T> void NXField<Imp>::"
-                            "write(const std::complex<T> &value) const");
-
-                    try{
-                        this->imp().write(value);
-                    }catch(ShapeMissmatchError &error){
-                        throw(error);
-                    }catch(...){
-                        EXCEPTION_INIT(NXFieldError,"Error writing data to "
-                                "field ["+this->path()+"]!");
-                        EXCEPTION_THROW();
-                    }
+                    throw NXFieldError(EXCEPTION_RECORD,
+                            "Error resizing field!");
                 }
+            }
 
-                //-------------------------------------------------------------
-                /*! \brief write binary value
+            //-----------------------------------------------------------------
+            /*! 
+            \brief grow field along a particular dimension
 
-                Writes a single binary value. This is a specialization of the
-                write(const T &value) template method.
-
-                \code
-                Binary bin;
-                ...
-                field.write(bin);
-                \endcode
-
-                \throws ShapeMissmatchError if field is not scalar
-                \throws NXFieldError in case of other errors
-                \param value binary value to write.
-                */
-                void write(const Binary &value) const
+            Grows the field by n elements along dimension e. This method is
+            pretty useful in cases where an arbitrary number of points shall be
+            stored in a field and their number is not known when the field was
+            created.
+            \throws IndexError if e exceeds the rank of the field
+            \throws NXFieldError in case of other errors
+            \param e index of dimension along which to grow
+            \param n number of elements by which to grow
+            */
+            void grow(const size_t &e,const size_t &n=1)
+            {
+                try
                 {
-                    EXCEPTION_SETUP("void NXField<Imp>::write(const Binary "
-                            "&value) const");
-
-                    try{
-                        this->imp().write(value);
-                    }catch(ShapeMissmatchError &error){
-                        throw(error);
-                    }catch(...){
-                        EXCEPTION_INIT(NXFieldError,"Error writing data to "
-                                "field ["+this->path()+"]!");
-                        EXCEPTION_THROW();
-                    }
+                    this->imp().grow(e,n);
                 }
-
-                //-------------------------------------------------------------
-                /*! \brief write String value
-
-                Writes a single string to the field. This method is a
-                specialization of the write(const T &value) template. 
-
-                \code
-                String s = "hello world";
-                field.write(s);
-                \endcode
-
-                \throws ShapeMissmatchError if the field is not scalar
-                \throws NXFieldError in case of other errors
-                \param value string to write to disk
-                */
-                void write(const String &value) const
+                catch(IndexError &e)
                 {
-                    EXCEPTION_SETUP("void NXField<Imp>::write(const String "
-                            "&value) const");
-
-                    try{
-                        this->imp().write(value);
-                    }catch(ShapeMissmatchError &error){
-                        throw(error);
-                    }catch(...){
-                        EXCEPTION_INIT(NXFieldError,"Error writing data to "
-                                "field ["+this->path()+"]!");
-                        EXCEPTION_THROW();
-                    }
+                    e.append(EXCEPTION_RECORD); throw e;
                 }
-
-                //-------------------------------------------------------------
-                /*! \brief write old style string
-
-                Writes a C-style string to disk. This method is a specialization
-                of the write(const T &value) template mathod.
-
-                \throws ShapeMissmatchError if the field is not scalar
-                \throws NXFieldError in case of other errors
-                \param value pointer to string data
-                */
-                void write(const char *value) const
+                catch(...)
                 {
-                    EXCEPTION_SETUP("void NXField<Imp>::write(const char "
-                            "*value) const");
-
-                    try{
-                        this->imp().write(String(value));
-                    }catch(ShapeMissmatchError &error){
-                        throw(error);
-                    }catch(...){
-                        EXCEPTION_INIT(NXFieldError,"Error writing data to "
-                                "field ["+this->path()+"]!");
-                        EXCEPTION_THROW();
-                    }
+                    std::stringstream ss;
+                    ss<<"Growing field ["<<this->path();
+                    ss<<"] along dimension"<<e<<" by "<<n<<" elements ";
+                    ss<<"failed!";
+                    throw NXFieldError(EXCEPTION_RECORD,ss.str());
                 }
+            }
 
-                //-------------------------------------------------------------
-                /*! \brief write buffer content
+            //-----------------------------------------------------------------
+            /*! 
+            \brief number of dimensions
 
-                Writes the content of a buffer object to the field. In order for
-                this method to succeed the buffer must be allocated and its size
-                must match the size of the field. 
+            Returns the number of dimensions of the field.
+            \return number of dimensions
+            */
+            size_t rank() const{ return this->imp().rank(); }
 
-                \code
-                Buffer<Binary> image_data;
-                ...
-                field.write(image_data);
-                \endcode
-                
-                \throws SizeMissmatchError field and buffer size do not match
-                \throws MemoryAccessError buffer is not allocated
-                \throws NXFieldError in cases of other errors
-                \param buffer buffer object whose data to write
-                */
-                template<typename T,template<typename,typename> class BT,
-                         typename Allocator>
-                    void write(const BT<T,Allocator> &buffer) const
+            //-----------------------------------------------------------------
+            /*! \brief number of elements along dimension
+
+            Returns the number of elements along dimension i. An exception is
+            thrown if i exceeds the rank of the field.
+            \throws IndexError if i exceeds the rank of the field
+            \return number of elements
+            */
+            size_t dim(size_t i) const{ return this->imp().dim(i); }
+
+            //=============methods for reading data============================
+            /*! 
+            \brief reading simple data from the dataset
+
+            Read a single data value from the dataset. In order to succeed the
+            dataset must be a scalar dataset or the total size of the dataset
+            must be 1.
+            \code
+            UInt32 scalar;
+            field.read(scalar);
+            \endcode
+            \throws ShapeMissmatchError if dataset is not scalar
+            \throws NXFieldError in all other error cases
+            \param value variable where to store the data
+            */
+            template<typename T> void read(T &value) const
+            {
+                if(this->imp().size() != 1)
+                    throw ShapeMissmatchError(EXCEPTION_RECORD,
+                            "Field is not scalar!");
+
+                try
                 {
-                    EXCEPTION_SETUP("template<typename T,template<typename> "
-                            "class BT> void write(const BT<T> &buffer) const");
-
-                    if(!buffer.is_allocated()){
-                        String estr = "Buffer not allocated - cannot write data"
-                                      " to field ["+this->path()+"]!";
-                        EXCEPTION_INIT(MemoryAccessError,estr);
-                        EXCEPTION_THROW();
-                    }
-                    try{
-                        this->imp().write(buffer);
-                    }catch(SizeMissmatchError &error){
-                        throw(error);
-                    }catch(...){
-                        EXCEPTION_INIT(NXFieldError,"Error writing data to "
-                                "field ["+this->path()+"]!");
-                        EXCEPTION_THROW();
-                    }
-
+                    this->imp().read(&value);
                 }
-
-                //--------------------------------------------------------------
-                /*! \brief write an array
-
-                Write the content of an array to the field.
-
-                \code
-                UInt32Array det({1024,1024},"image","cps","reference image data");
-                ...
-                field.write(det);
-                \endcode
-
-                \throws ShapeMissmatchError if array and dataset shape do not match
-                \throws MemoryAccessError array buffer not allocated
-                \throws NXFieldError in case of other errors
-                \param array array to write to disk
-                */
-                template<typename T,template<typename,typename> class BT,
-                         typename Allocator>
-                    void write(const Array<T,BT,Allocator> &array) const
+                catch(...)
                 {
-                    EXCEPTION_SETUP("template<typename T,template<typename> "
-                            "class BT> void write(const Array<T,BT> &array)"
-                            "const");
-
-                    if(!array.is_allocated()){
-                        EXCEPTION_INIT(MemoryAccessError,
-                                "Array not allocated!");
-                        EXCEPTION_THROW();
-                    }
-                    try{
-                        this->imp().write(array);
-                    }catch(ShapeMissmatchError &error){
-                        throw(error);
-                    }catch(...){
-                        EXCEPTION_INIT(NXFieldError,"Error writing data to "
-                                "field ["+this->path()+"]!");
-                        EXCEPTION_THROW();
-                    }
-
+                    throw NXFieldError(EXCEPTION_RECORD,
+                    "Error reading data from field ["+this->path()+"]!");
                 }
+            }
 
-                //-------------------------------------------------------------
-                /*! \brief write a scalar to disk
+            //-----------------------------------------------------------------
+            /*! 
+            \brief reading data to a static buffer
 
-                Write a single scalar object to disk. 
+            Copy data from a dataset to the buffer. The size of the dataset and
+            the buffer must match. An exception will be thrown if the buffer
+            object is not allocated.
 
-                \code 
-                Int32Scalar s("counter","cps","a simple counter");
-                s = 10230;
-                field.write(s);
-                \endcode 
+            \code
+            SBuffer<UInt16> buffer(field.size());
+            field.read(buffer);
 
-                \throws ShapeMissmatchError if not a scalar dataset
-                \throws NXFieldError in case of all other errors
-                \param scalar scalar object to write to disk
-                */
-                template<typename T> void write(const Scalar<T> &scalar) const
+            \endcode
+            \throws MemoryAccessError if the buffer is not allocated
+            \throws SizeMissmatchError if sizes do not match
+            \throws NXFieldError in all other cases
+            \param buffer buffer where to store data
+            */
+            template<typename ...OTYPES> 
+                void read(SBuffer<OTYPES...> &buffer) const
+            {
+                READ_BUFFER(buffer);
+            }
+
+            //-----------------------------------------------------------------
+            /*!
+            \brief read data to a reference buffer
+
+            \throws MemoryNotAllocatedError if buffer not allocated
+            \throws SizeMissmatchError if buffer and field size do not match
+            \throws NXFieldError in case of any other errors
+            \param buffer reference to an RBuffer instance
+            */
+            template<typename ...OTYPES>
+                void read(RBuffer<OTYPES...> &buffer) const
+            {
+                READ_BUFFER(buffer);
+            }
+
+            //-----------------------------------------------------------------
+            /*!
+            \brief read data to a dynamic buffer
+
+            \throws MemoryNotAllocatedError if buffer not allocated
+            \throws SizeMissmatchError if buffer and field size do not match
+            \throws NXFieldError in case of any other errors
+            \param buffer reference to an RBuffer instance
+            */
+            template<typename ...OTYPES>
+                void read(DBuffer<OTYPES...> &buffer) const
+            {
+                READ_BUFFER(buffer);
+            }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief read data to array
+
+            Copy the data stored in the field to an array object.
+            An exception is thrown if the buffer holding the arrays data is
+            not allocated or the shape of the array does not match the shape
+            of the field.
+            
+            \code
+            Float32Array a(field.shape,field.name(),
+                           field.attr("units").read<String>(),
+                           field.attr("long_name").read<String>());
+            field.read(a);
+            \endcode
+
+            \throws ShapeMissmatchError if field and array-shape do not
+            match
+            \throws MemoryAccessError if array buffer not allocated
+            \throws NXFieldError in case of all other errors.
+            \param array Array instance where to store the data
+            */
+            template<typename ...OTS>
+                void read(DArray<OTS...> &array) const
+            {
+                READ_ARRAY(array);
+            }
+
+            //-----------------------------------------------------------------
+            template<typename ...OTS>
+                void read(SArray<OTS...> &array) const
+            {
+                READ_ARRAY(array);
+            }
+
+            //-----------------------------------------------------------------
+            template<typename ...OTS>
+                void read(NumArray<OTS...> &array) const
+            {
+                try
                 {
-                    EXCEPTION_SETUP("template<typename T> void NXField<Imp>::"
-                            "write(const Scalar<T> &scalar) const");
-
-                    try{
-                        this->imp().write(scalar);
-                    }catch(ShapeMissmatchError &error){
-                        throw(error);
-                    }catch(...){
-                        EXCEPTION_INIT(NXFieldError,"Error writing data to "
-                                "field ["+this->path()+"]!");
-                        EXCEPTION_THROW();
-                    }
+                    this->read(array.storage());
                 }
-
-                //---------------------------------------------------------------
-                /*! \brief create a selection
-
-                Create a new selection object for the field. 
-                \return selection object
-                \sa NXSelection
-                */
-                NXSelection<MAPTYPE(Imp,SelectionImpl)> selection() const
+                catch(MemoryNotAllocatedError &error)
                 {
-                    typedef MAPTYPE(Imp,SelectionImpl) SelectionImpl;
-                    typedef NXSelection<SelectionImpl> Selection;
-
-                    return Selection(this->imp().selection());
+                    error.append(EXCEPTION_RECORD); throw error;
                 }
-
-                template<typename ...ITYPES> 
-                    NXSelection<MAPTYPE(Imp,SelectionImpl)> 
-                    operator()(ITYPES ...indices)
+                catch(ShapeMissmatchError &error)
                 {
-                    typedef MAPTYPE(Imp,SelectionImpl) SelectionImpl;
-                    typedef NXSelection<SelectionImpl> Selection;
-
-                    Selection s(this->imp().selection());
-
-                    //now we need to setup offset, stride, and shape of the 
-                    //selection from the variadic template
-                    _setup_selection(s,0,indices...);
-                    return s; 
+                    error.append(EXCEPTION_RECORD); throw error;
                 }
+                catch(NXFieldError &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+            }
+
+           
+            //=================methods for writing data========================
+            /*! write a single value
+
+            Writs a single value of type T to the field. This method will 
+            succeed only if the field can hold only a single value.
+            
+            \code
+            Float64 data = 1.2340;
+            field.write(data);
+            \endcode
+
+            \throws ShapeMissmatchError if the dataspace is not scalar
+            \throws NXFieldError in case of other errors
+            \param value value to write
+            */
+            template<typename T> void write(const T &value) const
+            {
+                if(this->imp().size()!=1) 
+                    throw ShapeMissmatchError(EXCEPTION_RECORD,
+                            "Field is not scalar!");
+
+                try
+                {
+                    this->imp().write(&value);
+                }
+                catch(...)
+                {
+                    throw NXFieldError(EXCEPTION_RECORD,
+                    "Error writing data to field ["+this->path()+"]!");
+                }
+            }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief write old style string
+
+            Writes a C-style string to disk. This method is a specialization of
+            the write(const T &value) template mathod.
+
+            \throws ShapeMissmatchError if the field is not scalar
+            \throws NXFieldError in case of other errors
+            \param value pointer to string data
+            */
+            void write(const char *value) const
+            {
+                try
+                {
+                    String s(value);
+                    this->read(s);
+                }
+                catch(ShapeMissmatchError &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+                catch(NXFieldError &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+            }
+
+            //------------------------------------------------------------------
+            template<typename ...OTS> void write(const DBuffer<OTS...> &b) const
+            {
+                WRITE_BUFFER(b);
+            }
+
+            //------------------------------------------------------------------
+            template<typename ...OTS> void write(const SBuffer<OTS...> &b) const
+            {
+                WRITE_BUFFER(b);
+            }
+
+            //------------------------------------------------------------------
+            template<typename ...OTS> void write(const RBuffer<OTS...> &b) const
+            {
+                WRITE_BUFFER(b);
+            }
+
+            //-----------------------------------------------------------------
+            template<typename ...OTS> void write(const DArray<OTS...> &a) const
+            {
+                WRITE_ARRAY(a);
+            }
+
+            //-----------------------------------------------------------------
+            template<typename ...OTS> void write(const SArray<OTS...> &a) const
+            {
+                WRITE_ARRAY(a);
+            }
+
+            //-----------------------------------------------------------------
+            template<typename ...OTS> void write(const NumArray<OTS...> &a)
+                const
+            {
+                try
+                {
+                    this->write(a.storage());
+                }
+                catch(MemoryNotAllocatedError &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+                catch(ShapeMissmatchError &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+                catch(NXFieldError &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+            }
 
 
-        };
+            //---------------------------------------------------------------
+            template<typename ...ITYPES>
+            NXField<Imp> &operator()(ITYPES ...indices)
+            {
+                this->imp().apply_selection(std::vector<Slice>({Slice(indices)...}));
+
+                return *this; 
+            }
+
+
+    };
 
 //end of namespace
-    }
+}
 }
 
 #endif /* NXFIELD_HPP_ */

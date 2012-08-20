@@ -30,41 +30,15 @@
 CPPUNIT_TEST_SUITE_REGISTRATION(NXFileTest);
 
 //------------------------------------------------------------------------------
-void NXFileTest::setUp(){
-
-	_write_str_attr = "hello world";
-	_write_scalar_attr = 100;
-	_shape = {3,3};
-
-	_write_array_attr = ArrayFactory<Int16>::create(_shape);
-
-    Int16 value = 0;
-#ifdef NOFOREACH
-    for(auto iter=_write_array_attr.begin();iter!=_write_array_attr.end();iter++)
-    {
-        Int16 &v = *iter;
-#else
-    for(Int16 &v: _write_array_attr)
-    {
-#endif
-        v = value++;
-    }
-
-	_write_cmplx_scalar = Complex64(1,-2);
-
-	_read_array_attr = ArrayFactory<Int16>::create(_shape);
-
-}
+void NXFileTest::setUp() { }
 
 //------------------------------------------------------------------------------
-void NXFileTest::tearDown(){
-	//after finishing the tests we need to remove all created files
-}
+void NXFileTest::tearDown() { }
 
 //------------------------------------------------------------------------------
-void NXFileTest::testCreation(){
-	std::cout<<"void NXFileTest::testCreation()-------------------------------";
-	std::cout<<std::endl;
+void NXFileTest::test_creation()
+{
+	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 	NXFile f;
 
 	//initially create the file
@@ -111,9 +85,9 @@ void NXFileTest::testCreation(){
 }
 
 //------------------------------------------------------------------------------
-void NXFileTest::testOpen(){
-	std::cout<<"void NXFileTest::testOpen()-----------------------------------";
-	std::cout<<std::endl;
+void NXFileTest::test_open()
+{
+	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 	NXFile f;
 
     CPPUNIT_ASSERT_NO_THROW(f = NXFile::create_file("NXFileTest.h5",true,0));
@@ -134,80 +108,11 @@ void NXFileTest::testOpen(){
 
 }
 
-//------------------------------------------------------------------------------
-void NXFileTest::testAttributes(){
-	std::cout<<"void NXFileTest::testAttributes()-----------------------------";
-	std::cout<<std::endl;
-	NXFile f;
-
-	//create a new file
-    f = NXFile::create_file("NXFileTest.h5",true,0);
-
-	//write attribute data
-	CPPUNIT_ASSERT_NO_THROW(
-            f.attr<String>("StringAttribute").write(_write_str_attr));
-	CPPUNIT_ASSERT_NO_THROW(
-            f.attr<Float32>("FloatScalarAttribute").write(_write_scalar_attr));
-	CPPUNIT_ASSERT_NO_THROW(
-            f.attr<Complex64>("IndexOfRefraction").write(_write_cmplx_scalar));
-	CPPUNIT_ASSERT_NO_THROW(
-            f.attr<Float64>("ArrayAttribute",_write_array_attr.shape())
-            .write(_write_array_attr));
-
-	//close and reopen the file
-	f.close();
-	f = NXFile::open_file("NXFileTest.h5",false);
-
-
-	//read data
-	CPPUNIT_ASSERT_NO_THROW(f.attr("StringAttribute").read(_read_str_attr));
-	CPPUNIT_ASSERT_NO_THROW(f.attr("FloatScalarAttribute").read(_read_scalar_attr));
-	CPPUNIT_ASSERT_NO_THROW(f.attr("ArrayAttribute").read(_read_array_attr));
-	CPPUNIT_ASSERT_NO_THROW(f.attr("IndexOfRefraction").read(_read_cmplx_scalar));
-
-	//check if values are the same
-	CPPUNIT_ASSERT(_write_str_attr == _read_str_attr);
-	CPPUNIT_ASSERT(_read_scalar_attr == _read_scalar_attr);
-	CPPUNIT_ASSERT(_read_array_attr == _write_array_attr);
-	CPPUNIT_ASSERT(_write_cmplx_scalar == _read_cmplx_scalar);
-	f.close();
-}
-
-//------------------------------------------------------------------------------
-void NXFileTest::testAttributeExceptions(){
-	std::cout<<"void NXFileTest::testAttributeExceptions()--------------------";
-	std::cout<<std::endl;
-	NXFile f;
-
-	//create a new file
-    f = NXFile::create_file("NXFileTest.h5",true,0);
-
-	//write attribute data
-	f.attr<String>("StringAttribute").write(_write_str_attr);
-	f.attr<Float64>("FloatScalarAttribute").write(_write_scalar_attr);
-	f.attr<Complex64>("IndexOfRefraction").write(_write_cmplx_scalar);
-	f.attr<Float64>("ArrayAttribute",_write_array_attr.shape()).write(_write_array_attr);
-
-	//it is possible to overwrite attributes
-	CPPUNIT_ASSERT_NO_THROW(f.attr("StringAttribute").write(_write_str_attr));
-	CPPUNIT_ASSERT_NO_THROW(f.attr("FloatScalarAttribute").write(_write_scalar_attr));
-	CPPUNIT_ASSERT_NO_THROW(f.attr("IndexOfRefraction").write(_write_cmplx_scalar));
-	CPPUNIT_ASSERT_NO_THROW(f.attr("ArrayAttribute").write(_write_array_attr));
-
-	//trying to read attributes that do not exist
-	CPPUNIT_ASSERT_THROW(f.attr("StringAttribute_not").read(_read_str_attr),pni::nx::NXAttributeError);
-	CPPUNIT_ASSERT_THROW(f.attr("FloatScalarAttribute_not").read(_read_scalar_attr),pni::nx::NXAttributeError);
-	CPPUNIT_ASSERT_THROW(f.attr("ArrayAttribute_not").read(_read_array_attr),pni::nx::NXAttributeError);
-	CPPUNIT_ASSERT_THROW(f.attr("IndexOfRefraction_not").read(_read_cmplx_scalar),pni::nx::NXAttributeError);
-
-	f.close();
-}
 
 //-----------------------------------------------------------------------------
 void NXFileTest::test_iterator()
 {
-    std::cout<<"void NXFileTest::test_iterator()-----------------------------";
-    std::cout<<std::endl;
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     NXFile f = NXFile::create_file("NXFileTest.h5",true,0);
     f.create_group("dir1");

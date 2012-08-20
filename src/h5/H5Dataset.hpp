@@ -306,14 +306,18 @@ namespace h5{
                     std::stringstream estr;
                     estr<<"Chunk shape and field shape must be";
                     estr<<" equal!"<<std::endl;
-                    estr<<"Field shape: "<<s<<std::endl;
-                    estr<<"Chunk shape: "<<cs<<std::endl;
+                    estr<<"Field shape: ";
+                    for(auto v: s) estr<<v<<" ";
+                    estr<<std::endl;
+                    estr<<"Chunk shape: ";
+                    for(auto v: cs) estr<<v<<" ";
+                    estr<<std::endl;
                     throw ShapeMissmatchError(EXCEPTION_RECORD,estr.str());
                 }
 
                 //create the container with the maximum number of elements
                 SCTYPE ms(s.size());
-                std::fill(ms.begin(),ms.end(),H5Dataspace::UNLIMITED);
+                std::fill(ms.begin(),ms.end(),(typename SCTYPE::value_type)H5Dataspace::UNLIMITED);
 
                 //create the dataspace
                 H5Dataspace space(s,ms);
@@ -353,14 +357,18 @@ namespace h5{
                     std::stringstream estr;
                     estr<<"Chunk shape and field shape must be";
                     estr<<" equal!"<<std::endl;
-                    estr<<"Field shape: "<<s<<std::endl;
-                    estr<<"Chunk shape: "<<cs<<std::endl;
+                    estr<<"Field shape: ";
+                    for(auto v: s) estr<<v<<" ";
+                    estr<<std::endl;
+                    estr<<"Chunk shape: ";
+                    for(auto v: cs) estr<<v<<" ";
+                    estr<<std::endl;
                     throw ShapeMissmatchError(EXCEPTION_RECORD,estr.str());
                 }
 
                 //create the container with the maximum number of elements
                 SCTYPE ms(s.size());
-                std::fill(ms.begin(),ms.end(),H5Dataspace::UNLIMITED);
+                std::fill(ms.begin(),ms.end(),(typename SCTYPE::value_type)H5Dataspace::UNLIMITED);
                 //create the dataspace
                 H5Dataspace space(s,ms);
 
@@ -552,7 +560,7 @@ namespace h5{
             //! remove a selection
             void clear_selections() const
             {
-                H5Sselect_none(_fspace.id());
+                H5Sselect_all(_fspace.id());
             }
 
             //-----------------------------------------------------------------

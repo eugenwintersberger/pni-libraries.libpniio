@@ -39,165 +39,170 @@
 using namespace pni::utils;
 
 namespace pni{
-    namespace nx{
+namespace nx{
 
-        //! \ingroup nexus_lowlevel
-        //! \brief File object
+    /*! 
+    \ingroup nexus_lowlevel
+    \brief File object
 
-        //! NXFile represents a file for reading and writing data too. It is
-        //! the basic data holding entity. You can use NXField to read from or write
-        //! data to a file.
-        template<typename Imp> class NXFile:public NXGroup<Imp> {
+    NXFile represents a file for reading and writing data too. It is the basic
+    data holding entity. You can use NXField to read from or write data to a
+    file.
+    */
+    template<typename Imp> class NXFile:public NXGroup<Imp> 
+    {
+        public:
+            //! shared pointer type for a file object
+            typedef std::shared_ptr<NXFile > shared_ptr; 
+            //===============constructors and destructor========================
+            //! default constructor
+            explicit NXFile():NXGroup<Imp>() { }
 
-            public:
-                typedef std::shared_ptr<NXFile > 
-                    shared_ptr; //!< shared pointer type for a file object
-                //============constructors and destructor=======================
-                //! default constructor
-                explicit NXFile():NXGroup<Imp>()
+            //-----------------------------------------------------------------
+            //! copy constrcutor
+            NXFile(const NXFile<Imp> &file):NXGroup<Imp>(file) { }
+
+            //-----------------------------------------------------------------
+            //! implemenetation move constructor
+            explicit NXFile(Imp &&imp):NXGroup<Imp>(std::move(imp)){ }
+
+            //-----------------------------------------------------------------
+            //! move constructor
+            NXFile(NXFile<Imp> &&f):NXGroup<Imp>(std::move(f)) { }
+
+            //-----------------------------------------------------------------
+            //! destructor
+            ~NXFile()
+            {
+                if(this->is_valid())
                 {
-                }
-
-                //! copy constrcutor
-                NXFile(const NXFile<Imp> &file):NXGroup<Imp>(file)
-                {
-                }
-
-                //! implemenetation move constructor
-                explicit NXFile(Imp &&imp):NXGroup<Imp>(std::move(imp)){
-                    
-                }
-
-                //! move constructor
-                NXFile(NXFile<Imp> &&f):NXGroup<Imp>(std::move(f))
-                {
-                }
-
-                //--------------------------------------------------------------
-                //! destructor
-                ~NXFile(){
-                    if(this->is_valid())
-                    {
-                        try{
-                            this->template attr<String>("file_update_time",true)
-                                .write(NXDateTime::get_date_time_str());
-                        }catch(...){
-                            //do nothing if write fails - most probably 
-                            //the file is in read only mode
-                        }
-                    }
-                }
-
-                //====================assignment operators======================
-                //! move assignment operator
-                NXFile<Imp> &operator=(NXFile<Imp> &&o){
-                    if(this == &o) return *this;
-                    NXGroup<Imp>::operator=(std::move(o));
-                    return *this;
-                }
-
-                //! copy assignment operator
-                NXFile<Imp> &operator=(const NXFile<Imp> &o){
-                    if(this != &o) NXGroup<Imp>::operator=(o);
-                    return *this;
-                }
-
-                //=============factory methods==================================
-                /*! \brief open file
-
-                Static method opening an existing file.
-                \throws NXFileError in case of errors
-                \param n name of the file
-                \param ro open read only if true
-                \return an instance of NXFile
-                */
-                static NXFile<Imp> open_file(const String &n,bool ro=true){
-                    EXCEPTION_SETUP("static NXFile<Imp> "
-                            "open_file(const String &n,bool ro=true)");
-
-                    NXFile<Imp> file;
-
                     try{
-                        file = NXFile<Imp>(Imp::open_file(n,ro));
+                        this->template attr<String>("file_update_time",true)
+                            .write(NXDateTime::get_date_time_str());
                     }catch(...){
-                        EXCEPTION_INIT(NXFileError,"Error opening file!");
-                        EXCEPTION_THROW();
+                        //do nothing if write fails - most probably 
+                        //the file is in read only mode
                     }
+                }
+            }
 
+            //====================assignment operators=========================
+            //! move assignment operator
+            NXFile<Imp> &operator=(NXFile<Imp> &&o)
+            {
+                if(this == &o) return *this;
+                NXGroup<Imp>::operator=(std::move(o));
+                return *this;
+            }
 
-                    return file;
+            //-----------------------------------------------------------------
+            //! copy assignment operator
+            NXFile<Imp> &operator=(const NXFile<Imp> &o)
+            {
+                if(this != &o) NXGroup<Imp>::operator=(o);
+                return *this;
+            }
+
+            //================factory methods==================================
+            /*! 
+            \brief open file
+
+            Static method opening an existing file.
+            \throws NXFileError in case of errors
+            \param n name of the file
+            \param ro open read only if true
+            \return an instance of NXFile
+            */
+            static NXFile<Imp> open_file(const String &n,bool ro=true)
+            {
+                NXFile<Imp> file;
+
+                try
+                {
+                    file = NXFile<Imp>(Imp::open_file(n,ro));
+                }
+                catch(...)
+                {
+                    throw NXFileError(EXCEPTION_RECORD,"Error opening file!");
                 }
 
-                //--------------------------------------------------------------
-                /*! \brief create file
+
+                return file;
+            }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief create file
+            
+            Static method to create a file. 
+            \throws NXFileError in case of errors
+            \param n name of the file to create
+            \param ow overwrite existing file if true
+            \param ssize split size (not implemented yet)
+            \return instance of NXFile
+            */
+            static NXFile<Imp> 
+                create_file(const String &n,bool ow=false, ssize_t ssize = 0)
+            {
+                NXFile<Imp> file;
+
+                try
+                {
+                    file = NXFile<Imp>(Imp::create_file(n,ow,ssize));
+                }
+                catch(...)
+                {
+                    throw NXFileError(EXCEPTION_RECORD,"Error creating file!");
+                }
                 
-                Static method to create a file. 
-                \throws NXFileError in case of errors
-                \param n name of the file to create
-                \param ow overwrite existing file if true
-                \param ssize split size (not implemented yet)
-                \return instance of NXFile
-                */
-                static NXFile<Imp> create_file(const String &n,bool ow=false,
-                        ssize_t ssize = 0)
+                //set file specific attributes
+                file.template
+                    attr<String>("NX_class").write(String("NXroot"));
+                file.template 
+                    attr<String>("file_time").write(NXDateTime::get_date_time_str());
+                file.template 
+                    attr<String>("file_update_time").write(NXDateTime::get_date_time_str());
+                file.template attr<String>("file_name").write(n);
+
+                //this should be taken from a configuration
+                file.template
+                    attr<String>("NeXus_version").write(String("4.3.0"));
+
+                //flush the files content
+                file.flush();
+
+                return file;
+            }
+
+            //-----------------------------------------------------------------
+            //! flush the file
+            void flush() const{ this->imp().flush(); }
+
+            //-----------------------------------------------------------------
+            //! close the file
+            virtual void close()
+            {
+                if(this->is_valid())
                 {
-                    EXCEPTION_SETUP("static NXFile<Imp> create_file("
-                            "const String &n,bool ow=false, ssize_t ssize = 0)");
-
-                    NXFile<Imp> file;
-
-                    try{
-                        file = NXFile<Imp>(Imp::create_file(n,ow,ssize));
-                    }catch(...){
-                        EXCEPTION_INIT(NXFileError,"Error creating file!");
-                        EXCEPTION_THROW();
+                    try
+                    {
+                        this->template attr<String>("file_update_time",true)
+                            .write(NXDateTime::get_date_time_str());
                     }
-                    
-                    //set file specific attributes
-                    file.template
-                        attr<String>("NX_class").write(String("NXroot"));
-                    file.template 
-                        attr<String>("file_time").write(NXDateTime::get_date_time_str());
-                    file.template 
-                        attr<String>("file_update_time").write(NXDateTime::get_date_time_str());
-                    file.template attr<String>("file_name").write(n);
-
-                    //this should be taken from a configuration
-                    file.template
-                        attr<String>("NeXus_version").write(String("4.3.0"));
-
-                    //flush the files content
-                    file.flush();
-
-                    return file;
-                }
-
-                //--------------------------------------------------------------
-                //! flush the file
-                void flush() const{
-                    this->imp().flush();
-                }
-
-                //-------------------------------------------------------------
-                //! close the file
-                virtual void close(){
-                    if(this->is_valid()){
-                        try{
-                            this->template attr<String>("file_update_time",true)
-                                .write(NXDateTime::get_date_time_str());
-                        }catch(...){
-                            //do nothing if write fails - most probably 
-                            //the file is in read only mode
-                        }
+                    catch(...)
+                    {
+                        //do nothing if write fails - most probably 
+                        //the file is in read only mode
                     }
-
-                    NXObject<Imp>::close();
                 }
-        };
+
+                NXObject<Imp>::close();
+            }
+    };
 
 
-    //end of namespace
-    }
+//end of namespace
+}
 }
 
 #endif /* NXFILE_HPP_ */

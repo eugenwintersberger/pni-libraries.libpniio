@@ -35,7 +35,8 @@
 CPPUNIT_TEST_SUITE_REGISTRATION(NXFieldTest);
 
 //------------------------------------------------------------------------------
-void NXFieldTest::setUp(){
+void NXFieldTest::setUp()
+{
     file = NXFile::create_file("NXFieldTest.h5",true,0);
 
 	for(size_t i=0;i<n;i++) testdata[i] = i+1;
@@ -46,36 +47,17 @@ void NXFieldTest::setUp(){
 }
 
 //------------------------------------------------------------------------------
-void NXFieldTest::tearDown(){
-	file.close();
-}
+void NXFieldTest::tearDown(){ file.close(); }
 
 //------------------------------------------------------------------------------
-void NXFieldTest::testCreation(){
-	std::cout<<"NXFieldTest::testCreation()----------------------------";
-	std::cout<<std::endl;
+void NXFieldTest::test_creation()
+{
+	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
 	NXField field;
 
 	CPPUNIT_ASSERT_NO_THROW(field = file.create_field<UInt16>("test1"));
     CPPUNIT_ASSERT(field.is_valid());
-
-	Shape shape = {100,123};
-
-	CPPUNIT_ASSERT_NO_THROW(field = file.create_field<Float32>("test2",shape));
-	CPPUNIT_ASSERT(field.is_valid());
-
-	Float32Scalar scalar("scalar","m","a scalar");
-	Complex128Array array = ArrayFactory<Complex128>::create(shape);
-    array.name("array");
-    array.unit("nm");
-    array.description("AFM image");
-
-	CPPUNIT_ASSERT_NO_THROW(field = file.create_field<Float32>(scalar.name()));
-	CPPUNIT_ASSERT(field.is_valid());
-	CPPUNIT_ASSERT_NO_THROW(field =
-            file.create_field<Complex128>(array.name(),array.shape()));
-	CPPUNIT_ASSERT(field.is_valid());
 
 	//check copy construction
 	NXField field2(field);
@@ -89,22 +71,24 @@ void NXFieldTest::testCreation(){
 
     //create fields with filters
     NXDeflateFilter deflate(9,true);
-    
+   
+    shape_t shape{100,100};
     field = file.create_field<Float32>("test_defalte", shape,deflate);
 
     //create a field with a utilty function
     field = create_field(file,"test_util", TypeID::UINT32);
     field = create_field(file,"test_util2",TypeID::FLOAT128,
-                         Shape{0,1024,1024},Shape{1,1024,1024});
+                         shape_t{0,1024,1024},shape_t{1,1024,1024});
     field = create_field(file,"test_util3",TypeID::FLOAT128,
-                         Shape{0,1024,1024},Shape{1,1024,1024},deflate);
+                         shape_t{0,1024,1024},shape_t{1,1024,1024},deflate);
 
 }
 
 //------------------------------------------------------------------------------
-void NXFieldTest::testOpen(){
-	std::cout<<"NXFieldTest::testOpen()--------------------------------";
-	std::cout<<std::endl;
+void NXFieldTest::test_open()
+{
+	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
 	file.create_field<UInt32>("data1");
 
 	NXField f1 = file.open("data1");
@@ -114,9 +98,9 @@ void NXFieldTest::testOpen(){
 }
 
 //------------------------------------------------------------------------------
-void NXFieldTest::testAssignment(){
-	std::cout<<"NXFieldTest::testAssignment()--------------------------";
-	std::cout<<std::endl;
+void NXFieldTest::test_assignment()
+{
+	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
 	NXField field = file.create_field<UInt16>("test1");
 	CPPUNIT_ASSERT(field.is_valid());
@@ -136,26 +120,29 @@ void NXFieldTest::testAssignment(){
 }
 
 //------------------------------------------------------------------------------
-void NXFieldTest::test_resize(){
-    std::cout<<"void NXFieldTest::test_resize()-------------------------------";
-    std::cout<<std::endl;
+void NXFieldTest::test_resize()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     //create base shape
-    Shape s = {0,1024};
-    Shape cs = {1,1024};
+    shape_t s = {0,1024};
+    shape_t cs = {1,1024};
 
     NXField field = file.create_field<Float32>("ds",s);
     CPPUNIT_ASSERT(field.is_valid());
-    CPPUNIT_ASSERT(field.shape() == s);
+    auto shape = field.shape<shape_t>();
+    CPPUNIT_ASSERT(std::equal(shape.begin(),shape.end(),s.begin()));
 
     CPPUNIT_ASSERT_NO_THROW(field.grow(0));
-    s = Shape({1,1024});
-    CPPUNIT_ASSERT(field.rank()  == s.rank());
-    CPPUNIT_ASSERT(field.shape() == s);
-    s = Shape({4,1024});
+    s = shape_t({1,1024});
+    CPPUNIT_ASSERT(field.rank()  == s.size());
+    shape = field.shape<shape_t>();
+    CPPUNIT_ASSERT(std::equal(shape.begin(),shape.end(),s.begin()));
+    s = shape_t({4,1024});
     CPPUNIT_ASSERT_NO_THROW(field.grow(0,3));
-    CPPUNIT_ASSERT(field.rank()  == s.rank());
-    CPPUNIT_ASSERT(field.shape() == s);
+    CPPUNIT_ASSERT(field.rank()  == s.size());
+    shape = field.shape<shape_t>();
+    CPPUNIT_ASSERT(std::equal(shape.begin(),shape.end(),s.begin()));
 
     NXField field2 = file.create_field<String>("ss");
     CPPUNIT_ASSERT(field2.rank() == 1);
@@ -168,8 +155,9 @@ void NXFieldTest::test_resize(){
     CPPUNIT_ASSERT(field2.size() == 12);
 
     //reshape the dataset
-    s = {100,512};
+    s = shape_t{100,512};
     CPPUNIT_ASSERT_NO_THROW(field.resize(s));
-    CPPUNIT_ASSERT(field.shape() == s);
+    shape = field.shape<shape_t>();
+    CPPUNIT_ASSERT(std::equal(shape.begin(),shape.end(),s.begin()));
 }
 //------------------------------------------------------------------------------

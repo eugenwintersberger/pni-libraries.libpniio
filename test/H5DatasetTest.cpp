@@ -302,6 +302,7 @@ void H5DatasetTest::test_string_selection()
         //compare data
         CPPUNIT_ASSERT(std::equal(writebuf.begin(),writebuf.end(),readbuf.begin()));
         dset.clear_selections();
+        CPPUNIT_ASSERT(dset.size() == 10*20);
     }
 
 }
@@ -343,6 +344,7 @@ void H5DatasetTest::test_bool_selection()
         //compare data
         CPPUNIT_ASSERT(std::equal(writebuf.begin(),writebuf.end(),readbuf.begin()));
         dset.clear_selections();
+        CPPUNIT_ASSERT(dset.size() == 10*20);
     }
 
 }

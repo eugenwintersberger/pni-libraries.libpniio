@@ -28,7 +28,6 @@
 #include<cppunit/extensions/HelperMacros.h>
 
 #include <pni/utils/Types.hpp>
-#include <pni/utils/ArrayFactory.hpp>
 #include <pni/utils/Array.hpp>
 
 #include "NX.hpp"
@@ -38,32 +37,17 @@ using namespace pni::nx::h5;
 
 class NXFileTest: public CppUnit::TestFixture {
 	CPPUNIT_TEST_SUITE(NXFileTest);
-	CPPUNIT_TEST(testCreation);
-	CPPUNIT_TEST(testOpen);
-	CPPUNIT_TEST(testAttributes);
-	CPPUNIT_TEST(testAttributeExceptions);
+	CPPUNIT_TEST(test_creation);
+	CPPUNIT_TEST(test_open);
     CPPUNIT_TEST(test_iterator);
 	CPPUNIT_TEST_SUITE_END();
-private:
-
-	String          _write_str_attr;
-	Float64Scalar   _write_scalar_attr;
-	Shape	        _shape;
-	Int16Array      _write_array_attr;
-	Complex64Scalar _write_cmplx_scalar;
-	String          _read_str_attr;
-	Float64Scalar   _read_scalar_attr;
-	Int16Array      _read_array_attr;
-	Complex64Scalar _read_cmplx_scalar;
 public:
 	void setUp();
 	void tearDown();
 
 	//testing basic file functionality
-	void testCreation();
-	void testOpen();
-	void testAttributes();
-	void testAttributeExceptions();
+	void test_creation();
+	void test_open();
     void test_iterator();
 
 

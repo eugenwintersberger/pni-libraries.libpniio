@@ -25,7 +25,6 @@
 
 #include<pni/utils/Types.hpp>
 #include<pni/utils/TypeIDMap.hpp>
-#include<pni/utils/Shape.hpp>
 
 #include "NXField.hpp"
 #include "NXGroup.hpp"
@@ -104,13 +103,7 @@ namespace nx{
             return g.create_field<String>(fname,args...);   
         else
         {
-            TypeError error;
-            error.issuer("template<typename GTYPE,typename ...ATYPES>"
-                         "typename GTYPE::field_type"
-                         "create_field(const GTYPE &g,const String &fname,"
-                         "const TypeID &tid, ATYPES ...args)");
-            error.description("Unsupported data type!");
-            throw error;
+            throw TypeError(EXCEPTION_RECORD,"Unsupported data type!");
         }
 
     }
