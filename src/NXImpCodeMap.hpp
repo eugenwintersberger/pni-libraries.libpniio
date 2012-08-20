@@ -40,7 +40,8 @@
 namespace pni{
     namespace nx{
        
-        /*! \ingroup 
+        /*! 
+        \ingroup nexus_lowlevel
         \brief implementation code type map
 
         This type map maps a particular implementation type to a type code.
