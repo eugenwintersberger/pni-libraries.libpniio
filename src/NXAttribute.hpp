@@ -110,6 +110,7 @@ namespace nx{
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }
+
     /*! 
     \ingroup nexus_lowlevel
     \brief attribute object
@@ -124,6 +125,16 @@ namespace nx{
             Imp _imp;  //!< implementation of the attribute object
 
             //------------------------------------------------------------------
+            /*! 
+            \brief write attribute from a buffer
+
+            Write attribute from a buffer type. 
+            \throws MemoryNotAllocatedError if the buffer is not allocated
+            \throws SizeMissmatchError if the buffer and the attribute size do
+            not match
+            \tparam BTYPE buffer type
+            \param b instance of BTYPE with the data
+            */
             template<typename BTYPE> void _write_buffer(const BTYPE &b) const
             {
                 if(b.size() == 0)
@@ -142,6 +153,15 @@ namespace nx{
             }
             
             //------------------------------------------------------------------
+            /*! 
+            \brief read attribute to buffer
+
+            Read attribute data from the file and store it to a buffer object.
+            \throws MemoryNotAllocatedError if buffer is not allocated
+            \throws SizeMissmatchError if attribute and buffer size do not match
+            \tparam BTYPE buffer type 
+            \param b instance of BTYPE
+            */
             template<typename BTYPE> void _read_buffer(BTYPE &b) const
             {
                 if(b.size() == 0)
@@ -161,6 +181,16 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
+            /*!
+            \brief write data from array
+
+            Read data from an array type and store it in the attribute.
+            \throws MemoryNotAllocatedError if the array buffer is not allocated
+            \throws ShapeMissmatchError if the shapes of the array and the
+            attribute do not match
+            \tparam ATYPE array type
+            \param a instance of ATYPE
+            */
             template<typename ATYPE> void _write_array(const ATYPE &a) const
             {
                 if(a.size()==0)
@@ -184,6 +214,17 @@ namespace nx{
             }
             
             //-----------------------------------------------------------------
+            /*!
+            \brief read data to array
+
+            Read attribute data from the file and store it to the array.
+            \throws MemoryNotAllocatedError if the arrays buffer is not
+            allocated
+            \throws ShapeMissmatchError if the shapes of the array and the
+            attribute do not match
+            \tparam ATYPE array type
+            \param a instance of ATYPE
+            */
             template<typename ATYPE> void _read_array(ATYPE &a) const
             {
                 if(a.size()==0)
@@ -256,6 +297,11 @@ namespace nx{
             \brief write data from a DBuffer template
 
             Write data from an instance of the DBuffer template.
+            \throws MemoryNotAllocated if buffer memory is not allocated
+            \throws SizeMissmatchError if buffer and attribute size do not match
+            \throws NXAttributeError in case of any other IO error
+            \tparam OTS template argumens to the DBuffer template
+            \param buffer buffer from which to write data
             */
             template<typename ...OTS> 
                 void write(const DBuffer<OTS...> &buffer) const
@@ -264,6 +310,16 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
+            /*!
+            \brief write data from a SBuffer template
+
+            Write the data from a static buffer type. 
+            \throws MemoryNotAllocated if buffer memory is not allocated
+            \throws SizeMissmatchError if buffer and attribute size do not match
+            \throws NXAttributeError in case of any other IO error
+            \tparam OTS template arguments to SBuffer
+            \param buffer buffer from which to write data
+            */
             template<typename ...OTS>
                 void write(const SBuffer<OTS...> &buffer) const
             {
@@ -271,6 +327,16 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
+            /*! 
+            \brief write data from reference buffer
+
+            Write the data from a reference buffer template.
+            \throws MemoryNoAllocated if buffer memory is not allocated
+            \throws SizeMissmatchError if buffer and attribute size do not match
+            \throws NXAttributeError in case of any other IO error
+            \tparam OTS template arguments to RBuffer
+            \param buffer buffer from which to write data
+            */
             template<typename ...OTS>
                 void write(const RBuffer<OTS...> &buffer) const
             {
@@ -278,7 +344,17 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            //! write from Array<T> 
+            /*! 
+            \brief write data from a DArray template
+
+            Write data from a dynamic array template. 
+            \throws MemoryNotAllocated if array buffer is not allocated
+            \throws ShapeMissmatchError if array and attribute shape do not
+            match
+            \throws NXAttributeError in case of any other IO error
+            \tparam OTS template arguments to DArray
+            \param o instance of DArray from which to write data
+            */
             template<typename ...OTS>
                 void write(const DArray<OTS...> &o) const
             {
@@ -286,6 +362,17 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
+            /*!
+            \brief write data from a static array
+
+            Write data form a static array template.
+            \throws MemoryNotAllocated if array buffer is not allocated
+            \throws ShapeMissmatchError if array and attribute shape do not
+            match
+            \throws NXAttributeError in case of any other IO error
+            \tparam OTS template arguments to SArray template
+            \param o instance SArray from which to write data
+            */
             template<typename ...OTS>
                 void write(const SArray<OTS...> &o) const
             {
@@ -294,44 +381,136 @@ namespace nx{
 
 
             //-----------------------------------------------------------------
-            //! write single primitive value
+            /*! 
+            \brief write a single scalar value
+
+            Write a single scalar value. This throws an exception if the field
+            is not scalar (size=1).
+            \throws ShapeMissmatchError if field is not scalar
+            \throws NXAttributeError in case of any other IO error
+            \tparam T data type of the scalar to write
+            \param value reference to the value to write
+            */
             template<typename T> void write(const T &value) const
             {
-                _imp.write(&value);
+                if(this->size()!=1)
+                    throw ShapeMissmatchError(EXCEPTION_RECORD,
+                            "Field is not scalar!");
+
+                try
+                {
+                    _imp.write(&value);
+                }
+                catch(...)
+                {
+                    throw NXFieldError(EXCEPTION_RECORD,
+                            "Error writing attribute!");
+                }
             }
 
             //-----------------------------------------------------------------
+            /*! 
+            \brief write a C-string
+
+            This is a special implementation of write for classical C-strings.
+            \throws ShapeMissmatchError if field is not scalar
+            \throws NXAttributeError in case of any other IO error
+            \param value pointer to a C-string
+            */
             void write(const char *value) const
             {
-                String s(value);
-                this->write(s);
+                try
+                {
+                    String s(value);
+                    this->write(s);
+                }
+                catch(ShapeMissmatchError &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+                catch(NXFieldError &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
             }
 
             //-----------------------------------------------------------------
+            /*!
+            \brief read data to a buffer
+
+            Read data to a DBuffer instance.
+            \throws MemoryNotAllocated if buffer is not allocated
+            \throws SizeMissmatchError if buffer and attribute size do not match
+            \throws NXAttributeError in case of any other IO error
+            \tparam OTS template arguments to the DBuffer template
+            \param buffer instance of DBuffer in which to store the data
+            */
             template<typename ...OTS> void read(DBuffer<OTS...> &buffer) const
             {
                 ATTRIBUTE_READ_BUFFER(buffer);
             }
 
             //-----------------------------------------------------------------
+            /*!
+            \brief read data to a buffer
+
+            Read data to a SBuffer instance.
+            \throws MemoryNotAllocated if buffer is not allocated
+            \throws SizeMissmatchError if buffer and attribute size do not match
+            \throws NXAttributeError in case of any other IO error
+            \tparam OTS template arguments to the SBuffer template
+            \param buffer instance of SBuffer in which to store the data
+            */
             template<typename ...OTS> void read(SBuffer<OTS...> &buffer) const
             {
                 ATTRIBUTE_READ_BUFFER(buffer);
             }
 
             //-----------------------------------------------------------------
+            /*!
+            \brief read data to a buffer
+
+            Read data to a RBuffer instance.
+            \throws MemoryNotAllocated if buffer is not allocated
+            \throws SizeMissmatchError if buffer and attribute size do not match
+            \throws NXAttributeError in case of any other IO error
+            \tparam OTS template arguments to the RBuffer template
+            \param buffer instance of RBuffer in which to store the data
+            */
             template<typename ...OTS> void read(RBuffer<OTS...> &buffer) const
             {
                 ATTRIBUTE_READ_BUFFER(buffer);
             }
 
             //-----------------------------------------------------------------
+            /*!
+            \brief read data to an array
+
+            Read data to an DArray instance.
+            \throws MemoryNotAllocated if array buffer is not allocated
+            \throws ShapeMissmatchError if array and attribute shape do not
+            match
+            \throws NXAttributeError in the case of any other IO error
+            \tparam OTS template arguments to DArray
+            \param o instance of DArray
+            */
             template<typename ...OTS> void read(DArray<OTS...> &o) const
             {
                 ATTRIBUTE_READ_ARRAY(o);
             }
 
             //-----------------------------------------------------------------
+            /*!
+            \brief read data to an array
+
+            Read data to an SArray instance.
+            \throws MemoryNotAllocated if array buffer is not allocated
+            \throws ShapeMissmatchError if array and attribute shape do not
+            match
+            \throws NXAttributeError in the case of any other IO error
+            \tparam OTS template arguments to SArray
+            \param o instance of SArray
+            */
             template<typename ...OTS> void read(SArray<OTS...> &o) const
             {
                 ATTRIBUTE_READ_ARRAY(o);
@@ -339,16 +518,18 @@ namespace nx{
 
 
             //-----------------------------------------------------------------
+            /*!
+            \brief read a single scalar value
+
+            Read a single scalar value.
+            \throws ShapeMissmatchError if the attribute is not scalar
+            \throws NXAttributeError in case of any other IO error
+            \tparam T type to read to
+            \param value reference to an instance of T
+            */
             template<typename T> void read(T &value) const
             {
                 _imp.write(&value);
-            }
-
-            //-----------------------------------------------------------------
-            void read(const char *value) const
-            {
-                String s(value);
-                this->write(s);
             }
 
             //============simple maintenance methods========================
@@ -356,6 +537,13 @@ namespace nx{
             template<typename CTYPE> CTYPE shape() const
             {
                 return _imp.template shape<CTYPE>();
+            }
+
+            //--------------------------------------------------------------
+            //! obtain attribute size
+            size_t size() const
+            {
+                return _imp.size();
             }
 
             //--------------------------------------------------------------
@@ -382,6 +570,7 @@ namespace nx{
             }
 
             //---------------------------------------------------------------
+            //! get attribute name
             String name() const
             {
                 return _imp.name();
