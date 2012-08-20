@@ -64,6 +64,9 @@ class NXFieldTest:public CppUnit::TestFixture
     CPPUNIT_TEST(test_io_scalar<Complex32>);
     CPPUNIT_TEST(test_io_scalar<Complex64>);
     CPPUNIT_TEST(test_io_scalar<Complex128>);
+    CPPUNIT_TEST(test_io_scalar<Binary>);
+    CPPUNIT_TEST(test_io_string_scalar);
+    CPPUNIT_TEST(test_io_bool_scalar);
     //testing buffer io 
     CPPUNIT_TEST(test_io_buffer<UInt8>);
     CPPUNIT_TEST(test_io_buffer<Int8>);
@@ -80,6 +83,9 @@ class NXFieldTest:public CppUnit::TestFixture
     CPPUNIT_TEST(test_io_buffer<Complex32>);
     CPPUNIT_TEST(test_io_buffer<Complex64>);
     CPPUNIT_TEST(test_io_buffer<Complex128>);
+    CPPUNIT_TEST(test_io_buffer<Binary>);
+    CPPUNIT_TEST(test_io_string_buffer);
+    CPPUNIT_TEST(test_io_bool_buffer);
     //testing array IO
     CPPUNIT_TEST(test_io_array<UInt8>);
     CPPUNIT_TEST(test_io_array<Int8>);
@@ -95,6 +101,9 @@ class NXFieldTest:public CppUnit::TestFixture
     CPPUNIT_TEST(test_io_array<Complex32>);
     CPPUNIT_TEST(test_io_array<Complex64>);
     CPPUNIT_TEST(test_io_array<Complex128>);
+    CPPUNIT_TEST(test_io_array<Binary>);
+    CPPUNIT_TEST(test_io_string_array);
+    CPPUNIT_TEST(test_io_bool_array);
 	CPPUNIT_TEST_SUITE_END();
 private:
 	NXFile file;
@@ -113,8 +122,14 @@ public:
     void test_resize();
     template<typename T> void test_io_simple();
     template<typename T> void test_io_scalar();
+    void test_io_string_scalar();
+    void test_io_bool_scalar();
     template<typename T> void test_io_buffer();
+    void test_io_string_buffer();
+    void test_io_bool_buffer();
     template<typename T> void test_io_array();
+    void test_io_string_array();
+    void test_io_bool_array();
     void test_io_string();
 
 };

@@ -161,3 +161,141 @@ void NXFieldTest::test_resize()
     CPPUNIT_ASSERT(std::equal(shape.begin(),shape.end(),s.begin()));
 }
 //------------------------------------------------------------------------------
+void NXFieldTest::test_io_string_scalar()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    NXField field1 = file.create_field<String>("scalar");
+
+    String write,read;
+    write = "hello";
+    read = "";
+
+    CPPUNIT_ASSERT_NO_THROW(field1.write(write));
+    CPPUNIT_ASSERT_NO_THROW(field1.read(read));
+    CPPUNIT_ASSERT(write == read);
+
+    CPPUNIT_ASSERT_NO_THROW(field1.grow(0));
+    CPPUNIT_ASSERT_THROW(field1.write(write),ShapeMissmatchError);
+}
+
+//------------------------------------------------------------------------------
+void NXFieldTest::test_io_bool_scalar()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    NXField field1 = file.create_field<Bool>("scalar");
+
+    Bool write,read;
+    write = true;
+    read = false;
+
+    CPPUNIT_ASSERT_NO_THROW(field1.write(write));
+    CPPUNIT_ASSERT_NO_THROW(field1.read(read));
+    CPPUNIT_ASSERT(write == read);
+
+    CPPUNIT_ASSERT_NO_THROW(field1.grow(0));
+    CPPUNIT_ASSERT_THROW(field1.write(write),ShapeMissmatchError);
+}
+//------------------------------------------------------------------------------
+void NXFieldTest::test_io_string_array()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    shape_t s{3,4};
+    DArray<String> write(s);
+    DArray<String> read(s);
+
+    std::fill(write.begin(),write.end(),"Hello");
+    std::fill(write.begin(),write.end(),"");
+
+    NXField field1 = file.create_field<String>("array",s);
+    CPPUNIT_ASSERT_NO_THROW(field1.write(write));
+    CPPUNIT_ASSERT_NO_THROW(field1.read(read));
+    CPPUNIT_ASSERT(std::equal(write.begin(),write.end(),read.begin()));
+
+    field1 = file.create_field<String>("array2",{2,2});
+    CPPUNIT_ASSERT_THROW(field1.write(write),ShapeMissmatchError);
+
+    NXDeflateFilter deflate;
+    deflate.compression_rate(9);
+    deflate.shuffle(true);
+
+    field1 = file.create_field<String>("array2_delfate",s,deflate);
+    CPPUNIT_ASSERT_NO_THROW(field1.write(write));
+    CPPUNIT_ASSERT_NO_THROW(field1.read(read));
+    CPPUNIT_ASSERT(std::equal(write.begin(),write.end(),read.begin()));
+
+}
+
+//------------------------------------------------------------------------------
+void NXFieldTest::test_io_bool_array()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    shape_t s{3,4};
+    DArray<Bool> write(s);
+    DArray<Bool> read(s);
+
+    std::fill(write.begin(),write.end(),true);
+    std::fill(write.begin(),write.end(),false);
+
+    NXField field1 = file.create_field<Bool>("array",s);
+    CPPUNIT_ASSERT_NO_THROW(field1.write(write));
+    CPPUNIT_ASSERT_NO_THROW(field1.read(read));
+    CPPUNIT_ASSERT(std::equal(write.begin(),write.end(),read.begin()));
+
+    field1 = file.create_field<Bool>("array2",{2,2});
+    CPPUNIT_ASSERT_THROW(field1.write(write),ShapeMissmatchError);
+
+    NXDeflateFilter deflate;
+    deflate.compression_rate(9);
+    deflate.shuffle(true);
+
+    field1 = file.create_field<Bool>("array2_delfate",s,deflate);
+    CPPUNIT_ASSERT_NO_THROW(field1.write(write));
+    CPPUNIT_ASSERT_NO_THROW(field1.read(read));
+    CPPUNIT_ASSERT(std::equal(write.begin(),write.end(),read.begin()));
+
+}
+//-----------------------------------------------------------------------------
+void NXFieldTest::test_io_string_buffer()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    shape_t s{5};
+    DBuffer<String> write_buffer({"Hello","world","this","is","a test"});
+    DBuffer<String> read_buffer(5);
+
+    NXField field1 = file.create_field<String>("buffer",s);
+    CPPUNIT_ASSERT_NO_THROW(field1.write(write_buffer));
+    CPPUNIT_ASSERT_NO_THROW(field1.read(read_buffer));
+
+    CPPUNIT_ASSERT(std::equal(write_buffer.begin(),write_buffer.end(),
+                              read_buffer.begin()));
+
+    //check exceptions
+    CPPUNIT_ASSERT_NO_THROW(field1 = file.create_field<String>("buffer2",{200}));
+    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),SizeMissmatchError);
+
+    write_buffer.free();
+    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),MemoryNotAllocatedError);
+}
+
+//-----------------------------------------------------------------------------
+void NXFieldTest::test_io_bool_buffer()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    shape_t s{5};
+    DBuffer<Bool> write_buffer({true,true,false,true,false});
+    DBuffer<Bool> read_buffer({false,false,false,false,false});
+
+    NXField field1 = file.create_field<Bool>("buffer",s);
+    CPPUNIT_ASSERT_NO_THROW(field1.write(write_buffer));
+    CPPUNIT_ASSERT_NO_THROW(field1.read(read_buffer));
+
+    CPPUNIT_ASSERT(std::equal(write_buffer.begin(),write_buffer.end(),
+                              read_buffer.begin()));
+
+    //check exceptions
+    CPPUNIT_ASSERT_NO_THROW(field1 = file.create_field<Bool>("buffer2",{200}));
+    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),SizeMissmatchError);
+
+    write_buffer.free();
+    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),MemoryNotAllocatedError);
+}
