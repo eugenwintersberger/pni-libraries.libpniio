@@ -6,7 +6,6 @@
 #include<iostream>
 #include<queue>
 #include<vector>
-#include<pni/hdf5/hdf5.h>
 
 #include<pni/utils/Types.hpp>
 #include<pni/nx/NX.hpp>
@@ -15,7 +14,8 @@
 using namespace pni::utils;
 using namespace pni::nx;
 
-class IOQueue{
+class IOQueue
+{
     private:
         std::mutex _mutex;
         std::queue<String> _queue;

@@ -2,7 +2,6 @@
 #include<iostream>
 #include<pni/nx/NX.hpp>
 #include<pni/utils/Types.hpp>
-#include<pni/utils/ArrayFactory.hpp>
 #include<pni/utils/Array.hpp>
 
 using namespace pni::nx::h5;
@@ -23,18 +22,18 @@ int main(int argc,char **argv){
     //a float attribute
     attr = g.attr<Float32>("temperature");
     attr.write(389.2343);
-    Float64 temp = attr.read<Float64>();
+    Float64 temp;
+    attr.read<Float64>(temp);
     std::cout<<temp<<std::endl;
 
     //a array attribute
-    UInt32Array wa = ArrayFactory<UInt32>::create(Shape({10,3}));
-    wa.name("vectors"); wa.unit("a.u."); wa.description("vector data");
+    DArray<UInt32> wa(shape_t{10,3});
     for(size_t i=0;i<wa.size();i++) wa[i] = i;
 
     attr = g.attr<UInt32>("vectors",wa.shape());
     attr.write(wa);
-    
-    auto ra = attr.read<Float32Array>();
+   
+    DArray<Float32> ra(attr.shape<shape_t>());
     for(size_t i=0;i<ra.size();i++) std::cout<<wa[i]<<" "<<ra[i]<<std::endl;
 
     file.close();

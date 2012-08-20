@@ -16,27 +16,21 @@ void write_log(const String &logfile,NXField &field){
     String line;
 
     istream.open(logfile,std::ifstream::in);
-    NXSelection sel = field.selection();
-    sel.shape(0,1);
-    sel.stride(0,1);
-    sel.offset(0,0);
-   
     
     size_t lcnt = 0;
-    while(!istream.eof()){
+    while(!istream.eof())
+    {
         getline(istream,line); //read a line
         field.grow(0);         //grow dataset by one
-        sel.offset(0,lcnt);    //set offset for selection
-        sel.write(line);       //write data
-        lcnt++;                //increment the line counter
-        std::cout<<"wrote line "<<lcnt<<std::endl;
+        field(lcnt++).write(line);
     }
 
     istream.close();
 }
 
 //-----------------------------------------------------------
-int main(int argc,char **argv){
+int main(int argc,char **argv)
+{
     NXFile file = NXFile::create_file("nxstrfield_ex2.h5",true,0);
 
     NXField field = file.create_field<String>("logfile",{0});
@@ -44,28 +38,22 @@ int main(int argc,char **argv){
     write_log("nxstrfield_ex2.log",field);
    
     //read everything at once
-    NXSelection sel = field.selection();
-    sel.offset(0,0);
-    sel.stride(0,1);
-    sel.shape(0,1);
     std::cout<<"Read log file ..."<<std::endl;
     for(size_t i=0;i<field.size();i++)
     {
         String line;
-        sel.read(line);
+        field(i).read(line);
         std::cout<<line<<std::endl;
-        sel.offset({i});
     }
 
     //set individual lines
     field.grow(0);
-    sel.offset(0,field.size()-1);
-    sel.write(String("End of log"));
+    field(field.size()-1).write("End of log");
     std::cout<<"Read read partly ..."<<std::endl;
-    for(size_t i=field.size()-20;i<field.size();i++){
+    for(size_t i=field.size()-20;i<field.size();i++)
+    {
         String line;
-        sel.offset(0,i);
-        sel.read(line);
+        field(i).read(line);
         std::cout<<"line "<<i<<" : "<<line<<std::endl;
     }
 

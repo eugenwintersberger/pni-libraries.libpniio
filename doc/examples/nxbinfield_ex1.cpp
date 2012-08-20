@@ -3,17 +3,19 @@
 #include <fstream>
 #include <pni/nx/NX.hpp>
 #include <pni/utils/Types.hpp>
-#include <pni/utils/Buffer.hpp>
+#include <pni/utils/DBuffer.hpp>
+
 using namespace pni::nx::h5;
 using namespace pni::utils;
 
-typedef Buffer<Binary> BinBuffer;
+typedef DBuffer<Binary> BinBuffer;
 
 void read_image(const String &n,NXField &field);
 void write_image(NXField &f,const String &n);
 
 //----------------------------------------------------------
-int main(int argc,char **argv){
+int main(int argc,char **argv)
+{
     NXFile file = NXFile::create_file("nxbinfield_ex1.h5",true,0); 
 
     NXField field = file.create_field<Binary>("image",{0});
@@ -32,7 +34,7 @@ void read_image(const String &n,NXField &field)
     //determine the size of the stream
     //and allocate buffer
     istream.seekg(0,std::ifstream::end);
-    Buffer<Binary> buffer(istream.tellg());
+    DBuffer<Binary> buffer((size_t)istream.tellg());
     //reset stream position
     istream.seekg(0,std::ifstream::beg);
     istream.read((char *)buffer.ptr(),buffer.size());
@@ -49,7 +51,7 @@ void write_image(NXField &field,const String &n)
     std::ofstream ostream;
 
     ostream.open(n,std::ostream::binary);
-    Buffer<Binary> buffer(field.size());
+    DBuffer<Binary> buffer(field.size());
     field.read(buffer);
     ostream.write((char *)buffer.ptr(),buffer.size());
     ostream.close();
