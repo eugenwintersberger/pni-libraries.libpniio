@@ -151,7 +151,6 @@ namespace nx{
                     ss<<"Buffer size ("<<b.size()<<") and field size (";
                     ss<<this->size()<<") do not match!";
                     SizeMissmatchError error(EXCEPTION_RECORD,ss.str());
-                    std::cout<<error<<std::endl;
                     throw error;
                 }
                 

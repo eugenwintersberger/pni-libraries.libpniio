@@ -443,6 +443,7 @@ namespace h5{
 
                 //re-fetch data space
                 _fspace = __obtain_dataspace();
+                _mspace = _fspace;
             }
 
             //-----------------------------------------------------------------
@@ -477,7 +478,12 @@ namespace h5{
             */
             template<typename CTYPE> CTYPE shape() const
             {
+                return _mspace.shape<CTYPE>();
+                /*
+                if(_fspace != _mspace) return _mspace.shape<CTYPE>();
+
                 return _fspace.shape<CTYPE>();
+                */
             }
 
             //-----------------------------------------------------------------

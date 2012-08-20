@@ -230,6 +230,7 @@ namespace h5{
 
         //re-fetch the new dataspace
         _fspace.grow(e,n);
+        _mspace = _fspace;
     }
 
     //------------------------------------------------------------------

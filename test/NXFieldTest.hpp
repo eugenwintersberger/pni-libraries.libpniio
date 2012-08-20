@@ -104,6 +104,7 @@ class NXFieldTest:public CppUnit::TestFixture
     CPPUNIT_TEST(test_io_array<Binary>);
     CPPUNIT_TEST(test_io_string_array);
     CPPUNIT_TEST(test_io_bool_array);
+
 	CPPUNIT_TEST_SUITE_END();
 private:
 	NXFile file;
@@ -131,6 +132,8 @@ public:
     void test_io_string_array();
     void test_io_bool_array();
     void test_io_string();
+
+    template<typename T> void test_scalar_selection();
 
 };
 
@@ -209,6 +212,7 @@ template<typename T> void NXFieldTest::test_io_scalar()
     CPPUNIT_ASSERT_NO_THROW(field1.grow(0));
     CPPUNIT_ASSERT_THROW(field1.write(write),ShapeMissmatchError);
 }
+
 
 
 

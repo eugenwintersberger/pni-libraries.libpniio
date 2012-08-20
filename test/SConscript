@@ -13,7 +13,7 @@ sources_list.append("pninxtest.cpp")
 sources_list.append("NXFileTest.cpp")
 sources_list.append("NXGroupTest.cpp")
 sources_list.append("NXFieldTest.cpp")
-#sources_list.append("NXSelectionTest.cpp")
+sources_list.append("NXSelectionTest.cpp")
 
 #tests for the HDF5 implementation backend
 sources_list.append("H5ObjectTest.cpp")

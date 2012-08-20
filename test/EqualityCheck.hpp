@@ -1,7 +1,7 @@
 #ifndef __EQUALITYCHECK_HPP__
 #define __EQUALITYCHECK_HPP__
 
-
+#include <cppunit/extensions/HelperMacros.h>
 #include <pni/utils/TypeInfo.hpp>
 
 using namespace pni::utils;
