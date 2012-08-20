@@ -30,7 +30,6 @@
 #include "H5ObjectType.hpp"
 #include "H5Exceptions.hpp"
 #include "H5Link.hpp"
-#include "H5Selection.hpp"
 
 
 namespace pni{
@@ -231,22 +230,6 @@ namespace h5{
         //re-fetch the new dataspace
         _fspace.grow(e,n);
         _mspace = _fspace;
-    }
-
-    //------------------------------------------------------------------
-
-    //------------------------------------------------------------------
-    //implementation of selection creation  
-    H5Selection H5Dataset::selection() const
-    {
-
-        if(_fspace.is_scalar())
-            throw ShapeMissmatchError(EXCEPTION_RECORD, 
-                    "You cannot create a selection from the scalar"
-                    "dataset ["+name()+"]!");
-
-        H5Selection selection(*this,_fspace.shape<std::vector<hsize_t> >(),0,1);
-        return selection;
     }
 
     //------------------------------------------------------------------

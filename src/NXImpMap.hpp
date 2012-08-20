@@ -34,7 +34,6 @@
 #include "h5/H5File.hpp"
 #include "h5/H5Group.hpp"
 #include "h5/H5Dataset.hpp"
-#include "h5/H5Selection.hpp"
 #include "h5/H5Filter.hpp"
 #include "h5/H5Attribute.hpp"
 
@@ -54,7 +53,6 @@ namespace pni{
                 typedef void GroupImpl;      //!< implementation type for NXGroup
                 typedef void FileImpl;       //!< implementation type for NXFile
                 typedef void FieldImpl;      //!< implementation type for NXField
-                typedef void SelectionImpl;  //!< implementation type for NXSelection
                 typedef void FilterImpl;     //!< implementation type for NXFilter
                 typedef void AttributeImpl;  //!< implementation type for NXAttribute
             };
@@ -68,7 +66,6 @@ namespace pni{
                 typedef pni::nx::h5::H5File             FileImpl;
                 typedef pni::nx::h5::H5Group            GroupImpl;
                 typedef pni::nx::h5::H5Dataset          FieldImpl;
-                typedef pni::nx::h5::H5Selection        SelectionImpl;
                 typedef pni::nx::h5::H5Filter           FilterImpl;
                 typedef pni::nx::h5::H5Attribute        AttributeImpl;
         };

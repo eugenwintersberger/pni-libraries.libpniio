@@ -34,7 +34,6 @@
 #include "h5/H5File.hpp"
 #include "h5/H5Group.hpp"
 #include "h5/H5Dataset.hpp"
-#include "h5/H5Selection.hpp"
 #include "h5/H5Filter.hpp"
 #include "h5/H5Attribute.hpp"
 
@@ -73,11 +72,6 @@ namespace pni{
                 static const ImpCode icode = ImpCode::HDF5;
         };
         
-        template<> class NXImpCodeMap<pni::nx::h5::H5Selection>{
-            public:
-                static const ImpCode icode = ImpCode::HDF5;
-        };
-
         template<> class NXImpCodeMap<pni::nx::h5::H5Filter>{
             public:
                 static const ImpCode icode = ImpCode::HDF5;

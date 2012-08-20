@@ -21,7 +21,6 @@ src_list.append("H5AttributeObject.cpp")
 src_list.append("H5Group.cpp")
 src_list.append("H5Dataset.cpp")
 src_list.append("H5File.cpp")
-src_list.append("H5Selection.cpp")
 src_list.append("H5Link.cpp")
            
 #building shared and static objects

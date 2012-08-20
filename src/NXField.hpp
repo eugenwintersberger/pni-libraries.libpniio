@@ -39,7 +39,6 @@
 
 #include "NXObject.hpp"
 #include "NXExceptions.hpp"
-//#include "NXSelection.hpp"
 
 using namespace pni::utils;
 

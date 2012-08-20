@@ -45,7 +45,6 @@ using namespace pni::utils;
 namespace pni{
 namespace nx{
 namespace h5{
-    class H5Selection;
 
     /*! 
     \ingroup nxh5_classes
@@ -515,23 +514,6 @@ namespace h5{
             */
             TypeID type_id() const { return __obtain_datatype().type_id(); }
 
-            //----------------------------------------------------------------
-            /*! 
-            \brief return a selection 
-
-            Returns a selection offset for the dataset. The selection created by
-            this method initially spans the entire dataset.  Restrictions to the
-            selection must be made later by the user. Selections can be only
-            made on multidimensional datasets. If the dataspace which was used
-            to create the dataset was scalar an exception will be thrown.  It is
-            important to note that a selection object is always bound to the
-            dataset it belongs to. You cannot reconnect a selection to a new
-            dataset. Instead you always have to produce a new one using this
-            method.
-            \throws ShapeMissmatchError if dataset is scalar
-            \return instance of H5Selection bound to this dataset
-            */
-            H5Selection selection() const;
 
             //-----------------------------------------------------------------
             //! apply a selection
