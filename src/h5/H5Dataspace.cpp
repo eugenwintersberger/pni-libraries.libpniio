@@ -247,13 +247,9 @@ namespace h5 {
         //return 1 if the dataspace is scalar
         if(is_scalar()) return 1;
 
-        if(H5Sget_select_type(id()) == H5S_SEL_HYPERSLABS)
-            return (size_t)H5Sget_select_elem_npoints(id());
-
-
         //return the number of elements in the dataspace if the 
         //dataspcae is simple
-        return H5Sget_simple_extent_npoints(id());
+        return (size_t)H5Sget_select_npoints(id());
     }
 
     //-------------------------------------------------------------------------
