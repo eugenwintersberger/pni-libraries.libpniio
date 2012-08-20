@@ -134,6 +134,7 @@ namespace nx{
 
             \throws MemoryNotAllocatedError if buffer size is 0
             \throws SizeMissmatchError if buffer and field size do not match
+            \throws NXFieldError in case of any other IO error
             \tparam BTYPE buffer type
             \param b reference to an instance of BTYPE
             */
@@ -215,7 +216,7 @@ namespace nx{
             \throws ShapeMissmatchError if shapes do not match
             \throws NXFieldError in case of other errors
             \tparam ATYPE array type
-            \pararm a reference to an instance fo ATYPE
+            \param a reference to an instance fo ATYPE
             */
             template<typename ATYPE> void _read_array(ATYPE &a) const
             {
@@ -260,7 +261,7 @@ namespace nx{
             \throws ShapeMissmatchError if shapes do not match
             \throws NXFieldError in case of other errors
             \tparam ATYPE array type
-            \pararm a reference to an instance fo ATYPE
+            \param a reference to an instance fo ATYPE
             */
             template<typename ATYPE> void _write_array(ATYPE &a) const
             {
@@ -559,9 +560,7 @@ namespace nx{
             of the field.
             
             \code
-            Float32Array a(field.shape,field.name(),
-                           field.attr("units").read<String>(),
-                           field.attr("long_name").read<String>());
+            DArray<Float32> a(field.shape<shape_t>());
             field.read(a);
             \endcode
 
@@ -578,6 +577,17 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
+            /*! 
+            \brief read data to a static array
+
+            Copy the field data to a static array. 
+
+            \throws ShapeMissmatchError if field and array-shape do not match
+            \throws MemoryNotAllocatedError if array-buffer is not allocated
+            \throws NXFieldError in acase of any other IO error
+            \tparam OTS template arguments for SArray
+            \param array  instance of SArray
+            */
             template<typename ...OTS>
                 void read(SArray<OTS...> &array) const
             {
@@ -585,11 +595,22 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
+            /*!
+            \brief read data to a numeric array
+
+            \throws MemoryNotAllocated if array buffer is not allocated
+            \throws ShapeMissmatchError if array and field shape do not match
+            \throws NXFieldError in case of any other IO error
+            \tparam OTS template parameters for NumArray template
+            \param array instance of NumArray
+            */
             template<typename ...OTS>
                 void read(NumArray<OTS...> &array) const
             {
                 try
                 {
+                    //this should virtually call the appropriate read method
+                    //according to the storage type of the NumArray template
                     this->read(array.storage());
                 }
                 catch(MemoryNotAllocatedError &error)
@@ -668,36 +689,96 @@ namespace nx{
             }
 
             //------------------------------------------------------------------
+            /*! 
+            \brief write field from a DBuffer
+
+            Write data form a DBuffer instance to the field.
+            \throws MemoryNotAllocatedError if buffer is not allocated
+            \throws SizeMissmatchError if buffer and field size do not match
+            \throws NXFieldError in case of any other IO error
+            \tparam OTS template arguments to DBuffer
+            \param b instance of DBuffer from which to write data
+            */
             template<typename ...OTS> void write(const DBuffer<OTS...> &b) const
             {
                 WRITE_BUFFER(b);
             }
 
             //------------------------------------------------------------------
+            /*! 
+            \brief write field from a SBuffer
+
+            Write data form a SBuffer instance to the field.
+            \throws MemoryNotAllocatedError if buffer is not allocated
+            \throws SizeMissmatchError if buffer and field size do not match
+            \throws NXFieldError in case of any other IO error
+            \tparam OTS template arguments to SBuffer
+            \param b instance of SBuffer from which to write data
+            */
             template<typename ...OTS> void write(const SBuffer<OTS...> &b) const
             {
                 WRITE_BUFFER(b);
             }
 
             //------------------------------------------------------------------
+            /*! 
+            \brief write field from a RBuffer
+
+            Write data form a RBuffer instance to the field.
+            \throws MemoryNotAllocatedError if buffer is not allocated
+            \throws SizeMissmatchError if buffer and field size do not match
+            \throws NXFieldError in case of any other IO error
+            \tparam OTS template arguments to RBuffer
+            \param b instance of RBuffer from which to write data
+            */
             template<typename ...OTS> void write(const RBuffer<OTS...> &b) const
             {
                 WRITE_BUFFER(b);
             }
 
             //-----------------------------------------------------------------
+            /*! 
+            \brief write data form a DArray
+
+            Write data from an instance of DArray. 
+            \throws MemoryNotAllocatedError if array-buffer is not allocated
+            \throws ShapeMissmatchError if field and array shape do not match
+            \throws NXFieldError in case of any other IO error
+            \tparam OTS template arguments to DArray
+            \param a instance of DArray
+            */
             template<typename ...OTS> void write(const DArray<OTS...> &a) const
             {
                 WRITE_ARRAY(a);
             }
 
             //-----------------------------------------------------------------
+            /*! 
+            \brief write data form a SArray
+
+            Write data from an instance of SArray. 
+            \throws MemoryNotAllocatedError if array-buffer is not allocated
+            \throws ShapeMissmatchError if field and array shape do not match
+            \throws NXFieldError in case of any other IO error
+            \tparam OTS template arguments to SArray
+            \param a instance of SArray
+            */
             template<typename ...OTS> void write(const SArray<OTS...> &a) const
             {
                 WRITE_ARRAY(a);
             }
 
             //-----------------------------------------------------------------
+            /*! 
+            \brief write data from a NumArray instance
+
+            Write data form an instance of NumArray.
+            \throws MemoryNotAllocatedError if array-buffer is not allocated
+            \throws ShapeMissmatchError if field and array shape do not match
+            \throws NXFieldError in case of any other IO error
+            \tparam OTS template arguments to NumArray
+            \param a instance of NumArray
+            */
             template<typename ...OTS> void write(const NumArray<OTS...> &a)
                 const
             {
@@ -721,9 +802,24 @@ namespace nx{
 
 
             //---------------------------------------------------------------
+            /*! 
+            \brief set a selection on the field
+
+            This method applies a selection to the field and return a reference
+            to this field. This can now be used to write data only to the
+            selection of the array.
+            \code
+            NXField f = g.create_field<UInt16>("frame",shape_t{1024,1024});
+            DArray<UInt16> spec(shape_t{1024});
+
+            f(100,Slice(0,1024)).read(spec)
+
+            \endcode
+            */
             template<typename ...ITYPES>
             NXField<Imp> &operator()(ITYPES ...indices)
             {
+
                 this->imp().apply_selection(std::vector<Slice>({Slice(indices)...}));
 
                 return *this; 
