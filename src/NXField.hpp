@@ -117,14 +117,111 @@ namespace nx{
         error.append(EXCEPTION_RECORD); throw error;\
     }
 
-    /*! \ingroup nexus_lowlevel
+    /*! 
+    \ingroup nexus_lowlevel
     \brief NXfield base class
 
-    NXField is the basic data holding object in a Nexus file. You cannot create
-    an instance of this object directly rather you have to use one of the
-    factory methods provided by NXGroup.  NXField behaves like a container for
-    data object which for the time being can be either strings, Scalars, or
-    Array objects.
+    NXField is a type used to store multidimensional data in a file. The IO
+    methods it provides support all the array templates provided by \c
+    libpniutils. Partial IO is provided by the () operator (see below). 
+    The interface of NXField is quite similar to those of the array templates
+    provided by \c libpniutils. Like them it provides a shape() and  a size()
+    method returning the number of elements along each dimension and the total
+    number of elements in the field. rank() returns the number of dimensions of
+    the field. 
+    Unlike the array templates which provide the ID of their element type via a
+    static member variable the method type_id() is provided by NXField for the
+    same purpose.
+
+    \section nxfield_resize_and_grow resize and grow
+    <div align="right"
+    style="width:500;float:right;border-width:20px;margin-left:20px">
+    <table>
+    <tr>
+    <td> 
+    \image html array_grow.svg 
+    </td>
+    <td> 
+    \image html array_resize.svg 
+    </td>
+    </tr>
+    <tr>
+    <td> <center> Grow operation </center> </td>
+    <td> <center> Resize operation </center> </td>
+    </tr>
+    </table>
+    </div>
+    The number of dimensions a field provides is fixed at the time it is
+    created. However, the number of elements along each of these dimensions can
+    be altered at runtime. Two methods of the class are responsible for resizing
+    a field: resize() and grow(). 
+    The difference between resize and grow is shown in the figure below. 
+    While the grow() operation resizes the field by a fixed amount of elements
+    along a particular dimension a resize operation can enlarge multiple
+    dimensions at the same time. 
+    The latter one is useful in situations where the number of elements along
+    each dimension is unknown at the time the field is created. 
+    The grow() operation is however very useful in situations where the number
+    of elements to store in an element is not known at the time the field is
+    created. One can use this to append data along one dimensions. 
+    Consider for instance this example that shows a very common situation during
+    experiments. Data should be stored in a field but the total number of points
+    is not known when the field is created
+    \code
+    //we start with a field of size 0 - no element
+    NXField field = group.create_field<Float32>("motor",shape_t{0}); 
+
+    size_t np = 0;
+    while(true)
+    {
+        field.grow(0);
+        field(np++).write(get_data());
+        if(get_break_condition()) break;
+    }
+    \endcode
+    The above loop runs until get_break_condition() return true. In no case we
+    can no in advance when the loop will exit and thus how many elements should
+    be stored. The grow() method offers an easy way to handle such situations.
+
+    \section nxfield_partial_io Partial IO
+    <div align="right"
+    style="width:500;float:right;border-width:20px;margin-left:20px">
+    <table>
+    <tr>
+    <td> \image html selection_1.png </td>
+    <td> \image html selection_2.png </td>
+    <td> \image html selection_3.png </td>
+    </tr>
+    <tr>
+    <td><center> Selection 1 </center></td>
+    <td><center> Selection 2 </center></td>
+    <td><center> Selection 3 </center></td>
+    </table>
+    </div>
+
+    As HDF5 datasets, NXField objects provide the possibility to read or write
+    only a part of the data.  The mechanism works pretty much as the array view
+    selection in \c libpniutils. 
+    Compare the following code with the figures on the right side
+    \code
+    DArray<UInt32> strip(shape_t{1024});
+
+    //selection 1
+    field1(3,Slice(0,1024)).read(strip);
+
+    //selection 2
+    DArray<UInt32> block(shape_t{4,6});
+    field2(Slice(3,7),Slice(2,8)).read(block);
+
+    //selection 3
+    DArray<UInt32> block2(shape_t{4,5});
+    field3(Slice(2,6),Slice(2,10,2)).read(block2);
+
+    \endcode
+    Under the hood the () operator of NXField applies a selection to the
+    underlying HDF5 dataset according to the arguments passed to it. 
+    Every call to read or write immediately after reading or writing the data
+    removes this selections.
     */
     template<typename Imp> class NXField:public NXObject<Imp> 
     {

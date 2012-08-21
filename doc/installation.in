@@ -1,6 +1,6 @@
 /*! \page installation Installation instructions
 
-\c libpniutils can be either installed from source or from a binary package. The latter one is more
+\c libpninx can be either installed from source or from a binary package. The latter one is more
 comfortable and requires not too much know how from the user, building from
 source gives you more control over what and how the library will be installed. 
 Thus installing binary packages is the recommended procedure for common users
@@ -10,7 +10,7 @@ while system administrators may want to build the package from source.
 
 \subsection install_binary_req Required additional software
 
-\c libpniutils links against several additional libraries which must be installed
+\c libpninx links against several additional libraries which must be installed
 in order to make the software working. It depends on your operating systems
 whether or not this additional components must be explicitly installed by you or
 the package installation system takes care about it. 
@@ -29,7 +29,7 @@ NOT SUPPORTED YET
 The following programs are required to build the entire source tree including
 the documentation
 
-\li <a href="http://www.scons.org"><tt>SCons</tt></a> the build system used for \c libpniutils
+\li <a href="http://www.scons.org"><tt>SCons</tt></a> the build system used for \c libpninx
 \li <a href="http://www.doxygen.org"><tt>doxygen</tt></a> documentation generator
 \li <a href="http://www.freedesktop.org/wiki/Software/pkg-config"><tt>pkg-config</tt></a> package config
 
@@ -41,9 +41,9 @@ the target system in order to build correctly:
 \li <a href="http://www.hdfgroup.org/HDF5/"><tt>HDF5</tt></a> - compiled with thread-safety and only C-support
 \li <a href="http://sourceforge.net/projects/libpniutils/"><tt>libpniutils</tt></a> - PNI utility library
 
-In addition \c libpniutils make use of a lot of new C++11 features. Thus a
-recent compiler should be installed on your system. For gcc version 4.6 and
-upwards are optimal. 
+In addition \c libpninx make use of a lot of new C++11 features. Thus a
+recent compiler should be installed on your system. You need at least gcc
+version equal or larger than 4.4.  
 On most of the large Linux distributions these components may can be easily
 installed directly from their package repositories. For Windows the appropriate
 packages must be installed manually. 
