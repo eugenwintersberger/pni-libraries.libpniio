@@ -494,6 +494,8 @@ namespace nx{
                     throw NXFieldError(EXCEPTION_RECORD,
                     "Error reading data from field ["+this->path()+"]!");
                 }
+
+                this->imp().clear_selections();
             }
 
             //-----------------------------------------------------------------
@@ -658,6 +660,8 @@ namespace nx{
                     throw NXFieldError(EXCEPTION_RECORD,
                     "Error writing data to field ["+this->path()+"]!");
                 }
+
+                this->imp().clear_selections();
             }
 
             //-----------------------------------------------------------------

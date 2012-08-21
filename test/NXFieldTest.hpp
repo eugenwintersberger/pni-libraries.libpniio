@@ -104,6 +104,7 @@ class NXFieldTest:public CppUnit::TestFixture
     CPPUNIT_TEST(test_io_array<Binary>);
     CPPUNIT_TEST(test_io_string_array);
     CPPUNIT_TEST(test_io_bool_array);
+    CPPUNIT_TEST(test_grow);
 
 	CPPUNIT_TEST_SUITE_END();
 private:
@@ -134,6 +135,7 @@ public:
     void test_io_string();
 
     template<typename T> void test_scalar_selection();
+    void test_grow();
 
 };
 

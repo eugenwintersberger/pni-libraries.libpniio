@@ -299,3 +299,19 @@ void NXFieldTest::test_io_bool_buffer()
     write_buffer.free();
     CPPUNIT_ASSERT_THROW(field1.write(write_buffer),MemoryNotAllocatedError);
 }
+
+//-----------------------------------------------------------------------------
+void NXFieldTest::test_grow()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    shape_t s{0};
+    NXField field = file.create_field<Bool>("flags",s);
+    CPPUNIT_ASSERT(field.size() == 0);
+
+    field.grow(0);
+    CPPUNIT_ASSERT(field.size() == 1);
+    field.grow(0);
+    CPPUNIT_ASSERT(field.size() == 2);
+}
+
+
