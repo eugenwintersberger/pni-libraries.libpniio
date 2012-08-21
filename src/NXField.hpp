@@ -516,8 +516,8 @@ namespace nx{
             \throws NXFieldError in all other cases
             \param buffer buffer where to store data
             */
-            template<typename ...OTYPES> 
-                void read(SBuffer<OTYPES...> &buffer) const
+            template<typename T,size_t SIZE> 
+                void read(SBuffer<T,SIZE> &buffer) const
             {
                 READ_BUFFER(buffer);
             }
@@ -531,8 +531,7 @@ namespace nx{
             \throws NXFieldError in case of any other errors
             \param buffer reference to an RBuffer instance
             */
-            template<typename ...OTYPES>
-                void read(RBuffer<OTYPES...> &buffer) const
+            template<typename T> void read(RBuffer<T> &buffer) const
             {
                 READ_BUFFER(buffer);
             }
@@ -546,8 +545,8 @@ namespace nx{
             \throws NXFieldError in case of any other errors
             \param buffer reference to an RBuffer instance
             */
-            template<typename ...OTYPES>
-                void read(DBuffer<OTYPES...> &buffer) const
+            template<typename T,typename ALLOCATOR>
+                void read(DBuffer<T,ALLOCATOR> &buffer) const
             {
                 READ_BUFFER(buffer);
             }
@@ -572,8 +571,8 @@ namespace nx{
             \throws NXFieldError in case of all other errors.
             \param array Array instance where to store the data
             */
-            template<typename ...OTS>
-                void read(DArray<OTS...> &array) const
+            template<typename T,typename STORAGE,typename IMAP>
+                void read(DArray<T,STORAGE,IMAP> &array) const
             {
                 READ_ARRAY(array);
             }
@@ -590,8 +589,8 @@ namespace nx{
             \tparam OTS template arguments for SArray
             \param array  instance of SArray
             */
-            template<typename ...OTS>
-                void read(SArray<OTS...> &array) const
+            template<typename T,size_t ...INDICES>
+                void read(SArray<T,INDICES...> &array) const
             {
                 READ_ARRAY(array);
             }
@@ -606,8 +605,8 @@ namespace nx{
             \tparam OTS template parameters for NumArray template
             \param array instance of NumArray
             */
-            template<typename ...OTS>
-                void read(NumArray<OTS...> &array) const
+            template<typename ATYPE>
+                void read(NumArray<ATYPE> &array) const
             {
                 try
                 {
@@ -703,7 +702,8 @@ namespace nx{
             \tparam OTS template arguments to DBuffer
             \param b instance of DBuffer from which to write data
             */
-            template<typename ...OTS> void write(const DBuffer<OTS...> &b) const
+            template<typename T,typename ALLOCATOR> 
+                void write(const DBuffer<T,ALLOCATOR> &b) const
             {
                 WRITE_BUFFER(b);
             }
@@ -719,7 +719,8 @@ namespace nx{
             \tparam OTS template arguments to SBuffer
             \param b instance of SBuffer from which to write data
             */
-            template<typename ...OTS> void write(const SBuffer<OTS...> &b) const
+            template<typename T,size_t SIZE> 
+                void write(const SBuffer<T,SIZE> &b) const
             {
                 WRITE_BUFFER(b);
             }
@@ -735,7 +736,7 @@ namespace nx{
             \tparam OTS template arguments to RBuffer
             \param b instance of RBuffer from which to write data
             */
-            template<typename ...OTS> void write(const RBuffer<OTS...> &b) const
+            template<typename T> void write(const RBuffer<T> &b) const
             {
                 WRITE_BUFFER(b);
             }
@@ -751,7 +752,8 @@ namespace nx{
             \tparam OTS template arguments to DArray
             \param a instance of DArray
             */
-            template<typename ...OTS> void write(const DArray<OTS...> &a) const
+            template<typename T,typename STORAGE,typename IMAP> 
+                void write(const DArray<T,STORAGE,IMAP> &a) const
             {
                 WRITE_ARRAY(a);
             }
@@ -767,7 +769,8 @@ namespace nx{
             \tparam OTS template arguments to SArray
             \param a instance of SArray
             */
-            template<typename ...OTS> void write(const SArray<OTS...> &a) const
+            template<typename T,size_t ...INDICES> 
+                void write(const SArray<T,INDICES...> &a) const
             {
                 WRITE_ARRAY(a);
             }
@@ -783,8 +786,8 @@ namespace nx{
             \tparam OTS template arguments to NumArray
             \param a instance of NumArray
             */
-            template<typename ...OTS> void write(const NumArray<OTS...> &a)
-                const
+            template<typename ATYPE> 
+                void write(const NumArray<ATYPE> &a) const
             {
                 try
                 {

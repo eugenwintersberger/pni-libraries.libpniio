@@ -303,8 +303,8 @@ namespace nx{
             \tparam OTS template argumens to the DBuffer template
             \param buffer buffer from which to write data
             */
-            template<typename ...OTS> 
-                void write(const DBuffer<OTS...> &buffer) const
+            template<typename T,typename ALLOCATOR> 
+                void write(const DBuffer<T,ALLOCATOR> &buffer) const
             {
                 ATTRIBUTE_WRITE_BUFFER(buffer);
             }
@@ -320,8 +320,8 @@ namespace nx{
             \tparam OTS template arguments to SBuffer
             \param buffer buffer from which to write data
             */
-            template<typename ...OTS>
-                void write(const SBuffer<OTS...> &buffer) const
+            template<typename T,size_t SIZE>
+                void write(const SBuffer<T,SIZE> &buffer) const
             {
                 ATTRIBUTE_WRITE_BUFFER(buffer);
             }
@@ -337,8 +337,7 @@ namespace nx{
             \tparam OTS template arguments to RBuffer
             \param buffer buffer from which to write data
             */
-            template<typename ...OTS>
-                void write(const RBuffer<OTS...> &buffer) const
+            template<typename T> void write(const RBuffer<T> &buffer) const
             {
                 ATTRIBUTE_WRITE_BUFFER(buffer);
             }
@@ -355,8 +354,8 @@ namespace nx{
             \tparam OTS template arguments to DArray
             \param o instance of DArray from which to write data
             */
-            template<typename ...OTS>
-                void write(const DArray<OTS...> &o) const
+            template<typename T,typename STORAGE,typename IMAP>
+                void write(const DArray<T,STORAGE,IMAP> &o) const
             {
                 ATTRIBUTE_WRITE_ARRAY(o);
             }
@@ -373,8 +372,8 @@ namespace nx{
             \tparam OTS template arguments to SArray template
             \param o instance SArray from which to write data
             */
-            template<typename ...OTS>
-                void write(const SArray<OTS...> &o) const
+            template<typename T,size_t ...INDICES>
+                void write(const SArray<T,INDICES...> &o) const
             {
                 ATTRIBUTE_WRITE_ARRAY(o);
             }
@@ -445,7 +444,8 @@ namespace nx{
             \tparam OTS template arguments to the DBuffer template
             \param buffer instance of DBuffer in which to store the data
             */
-            template<typename ...OTS> void read(DBuffer<OTS...> &buffer) const
+            template<typename T,typename ALLOCATOR> 
+                void read(DBuffer<T,ALLOCATOR> &buffer) const
             {
                 ATTRIBUTE_READ_BUFFER(buffer);
             }
@@ -461,7 +461,8 @@ namespace nx{
             \tparam OTS template arguments to the SBuffer template
             \param buffer instance of SBuffer in which to store the data
             */
-            template<typename ...OTS> void read(SBuffer<OTS...> &buffer) const
+            template<typename T,size_t SIZE> 
+                void read(SBuffer<T,SIZE> &buffer) const
             {
                 ATTRIBUTE_READ_BUFFER(buffer);
             }
@@ -477,7 +478,7 @@ namespace nx{
             \tparam OTS template arguments to the RBuffer template
             \param buffer instance of RBuffer in which to store the data
             */
-            template<typename ...OTS> void read(RBuffer<OTS...> &buffer) const
+            template<typename T> void read(RBuffer<T> &buffer) const
             {
                 ATTRIBUTE_READ_BUFFER(buffer);
             }
@@ -494,7 +495,8 @@ namespace nx{
             \tparam OTS template arguments to DArray
             \param o instance of DArray
             */
-            template<typename ...OTS> void read(DArray<OTS...> &o) const
+            template<typename T,typename STORAGE,typename IMAP> 
+                void read(DArray<T,STORAGE,IMAP> &o) const
             {
                 ATTRIBUTE_READ_ARRAY(o);
             }
@@ -511,7 +513,8 @@ namespace nx{
             \tparam OTS template arguments to SArray
             \param o instance of SArray
             */
-            template<typename ...OTS> void read(SArray<OTS...> &o) const
+            template<typename T,size_t ...INDICES> 
+                void read(SArray<T,INDICES...> &o) const
             {
                 ATTRIBUTE_READ_ARRAY(o);
             }
