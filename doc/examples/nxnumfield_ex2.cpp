@@ -25,7 +25,6 @@ int main(int argc,char **argv)
         std::cout<<field.size()<<std::endl;
     }
 
-    return 0;
     //read all values
     shape_t shape{field.size()};
     DArray<Int32> counters(shape);
