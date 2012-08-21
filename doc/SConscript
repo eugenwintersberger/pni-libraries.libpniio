@@ -4,8 +4,7 @@ Import("build_env")
 
 
 #set here some directories
-api_doc_dir = "api-doc"
-api_doc_html_dir = "html"
+doxygen_doc_dir = "html"
 
 
 doxygen_dict = {"@LIBPREFIX@":"${LIBPREFIX}","@LIBNAME@":"${LIBNAME}",
@@ -21,27 +20,19 @@ instfile = build_env.Substfile(target="installation",source="installation.in",
 usagefile = build_env.Substfile(target="usage",source="usage.in",
                                 SUBST_DICT=doxygen_dict,SUBSTFILESUFFIX="")
             
-doxygen_api_doc = build_env.Command(["api-doc/html"],doxyfile,
+doxygen_doc = build_env.Command(["html"],doxyfile,
                                     "cd doc; doxygen $SOURCE.file")
-build_env.Depends(doxygen_api_doc,[doxygen_mainpage,instfile,usagefile])
-build_env.Depends(doxygen_api_doc,Glob('../src/*.hpp'))
-build_env.Depends(doxygen_api_doc,Glob('../src/h5/*.hpp'))
+build_env.Depends(doxygen_doc,[doxygen_mainpage,instfile,usagefile])
+build_env.Depends(doxygen_doc,Glob('../src/*.hpp'))
+build_env.Depends(doxygen_doc,Glob('../src/h5/*.hpp'))
 
-Clean(doxygen_api_doc,"api-doc")
-admin_guide = SConscript("admin-guide/SConscript")
-users_guide = SConscript("users-guide/SConscript")
+Clean(doxygen_doc,"html")
 
 
+build_env.Alias("doc",[doxygen_doc])
+doc_install = build_env.Install("${DOCDIR}","html")
 
-build_env.Alias("doc",[doxygen_api_doc])
-     
-api_html_doc_install = build_env.Install("${DOCDIR}/api","api-doc/html")
-admin_guide_install = build_env.Install("${DOCDIR}",admin_guide)
-users_guide_install = build_env.Install("${DOCDIR}",users_guide)
-
-build_env.Alias("pdfdoc",[admin_guide,users_guide])
-build_env.Alias("pdfdocinstall",[admin_guide_install,users_guide_install])
-build_env.Alias("all",[doxygen_api_doc])
-build_env.Alias("install",[api_html_doc_install])
+build_env.Alias("all",[doxygen_doc])
+build_env.Alias("install",[doc_install])
 
 
