@@ -122,7 +122,7 @@ template<typename T> void NXSelectionTest::test_array_selection()
     shape_t shape{3,4};
     NXField field = file.create_field<T>("array",shape);
 
-    DArray<T> write(shape_t{3}),read(shape_t{3});
+    DArray<T> write(shape_t({3})),read(shape_t({3}));
 
     for(size_t j=0;j<shape[1];j++)
     {

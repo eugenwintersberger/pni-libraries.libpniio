@@ -172,7 +172,8 @@ namespace h5{
                 
                 //create the dataset creation property list
                 hid_t cpl = H5Pcreate(H5P_DATASET_CREATE);
-                if(cs.size() != 0){
+                if(cs.size() != 0)
+                {
                     H5Pset_layout(cpl,H5D_CHUNKED);
                     DBuffer<hsize_t> cdims(cs.size());
                     std::copy(cs.begin(),cs.end(),cdims.begin());
@@ -306,10 +307,28 @@ namespace h5{
                     estr<<"Chunk shape and field shape must be";
                     estr<<" equal!"<<std::endl;
                     estr<<"Field shape: ";
-                    for(auto v: s) estr<<v<<" ";
+#ifdef NOFOREACH
+                    for(auto iter = s.begin();iter!=s.end();++iter)
+                    {
+                        auto v = *iter;
+#else
+                    for(auto v: s)
+                    {
+#endif 
+                        estr<<v<<" ";
+                    }
                     estr<<std::endl;
                     estr<<"Chunk shape: ";
-                    for(auto v: cs) estr<<v<<" ";
+#ifdef NOFOREACH
+                    for(auto iter = cs.begin();iter!=cs.end();++iter)
+                    {
+                        auto v = *iter;
+#else
+                    for(auto v: cs) 
+                    {
+#endif
+                        estr<<v<<" ";
+                    }
                     estr<<std::endl;
                     throw ShapeMissmatchError(EXCEPTION_RECORD,estr.str());
                 }
@@ -357,10 +376,28 @@ namespace h5{
                     estr<<"Chunk shape and field shape must be";
                     estr<<" equal!"<<std::endl;
                     estr<<"Field shape: ";
-                    for(auto v: s) estr<<v<<" ";
+#ifdef NOFOREACH
+                    for(auto iter = s.begin();iter!=s.end();++iter)
+                    {
+                        auto v = *iter;
+#else
+                    for(auto v: s) 
+                    {
+#endif
+                        estr<<v<<" ";
+                    }
                     estr<<std::endl;
                     estr<<"Chunk shape: ";
-                    for(auto v: cs) estr<<v<<" ";
+#ifdef NOFOREACH
+                    for(auto iter = cs.begin();iter!=cs.end();++iter)
+                    {
+                        auto v = *iter;
+#else
+                    for(auto v: cs) 
+                    {
+#endif
+                        estr<<v<<" ";
+                    }
                     estr<<std::endl;
                     throw ShapeMissmatchError(EXCEPTION_RECORD,estr.str());
                 }

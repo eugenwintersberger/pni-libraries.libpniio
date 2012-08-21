@@ -203,9 +203,27 @@ namespace nx{
                 {
                     std::stringstream ss;
                     ss<<"Array shape ( ";
-                    for(auto v: ashape) ss<<v<<" ";
+#ifdef NOFOREACH
+                    for(auto iter=ashape.begin();iter!=ashape.end();++iter)
+                    {
+                        auto v = *iter;
+#else
+                    for(auto v: ashape)
+                    {
+#endif
+                        ss<<v<<" ";
+                    }
                     ss<<") and attribute shape ( ";
-                    for(auto v: shape) ss<<v<<" ";
+#ifdef NOFOREACH
+                    for(auto iter = shape.begin();iter!=shape.end();++iter)
+                    {
+                        auto v = *iter;
+#else
+                    for(auto v: shape) 
+                    {
+#endif 
+                        ss<<v<<" ";
+                    }
                     ss<<") do not match!";
                     throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
                 }
@@ -237,9 +255,27 @@ namespace nx{
                 {
                     std::stringstream ss;
                     ss<<"Array shape ( ";
-                    for(auto v: ashape) ss<<v<<" ";
+#ifdef NOFOREACH
+                    for(auto iter = ashape.begin();iter!=ashape.end();++iter)
+                    {
+                        auto v = *iter;
+#else
+                    for(auto v: ashape) 
+                    {
+#endif 
+                        ss<<v<<" ";
+                    }
                     ss<<") and attribute shape ( ";
-                    for(auto v: shape) ss<<v<<" ";
+#ifdef NOFOREACH
+                    for(auto iter = ashape.begin();iter!=ashape.end();++iter)
+                    {
+                        auto v = *iter;
+#else
+                    for(auto v: shape) 
+                    {
+#endif
+                        ss<<v<<" ";
+                    }
                     ss<<") do not match!";
                     throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
                 }

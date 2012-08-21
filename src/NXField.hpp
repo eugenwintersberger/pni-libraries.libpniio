@@ -230,9 +230,27 @@ namespace nx{
                 {
                     std::stringstream ss;
                     ss<<"Array shape ( ";
-                    for(auto v: ashape) ss<<v<<" ";
+#ifdef NOFOREACH
+                    for(auto iter = ashape.begin();iter!=ashape.end();++iter)
+                    {
+                        auto v = *iter;
+#else
+                    for(auto v: ashape) 
+                    {
+#endif
+                        ss<<v<<" ";
+                    }
                     ss<<") and field shape ( ";
-                    for(auto v: fshape) ss<<v<<" ";
+#ifdef NOFOREACH
+                    for(auto iter = fshape.begin();iter!=fshape.end();++iter)
+                    {
+                        auto v = *iter;
+#else
+                    for(auto v: fshape) 
+                    {
+#endif 
+                        ss<<v<<" ";
+                    }
                     ss<<") do not match!";
                     throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
                 }
@@ -275,9 +293,27 @@ namespace nx{
                 {
                     std::stringstream ss;
                     ss<<"Source array shape ( ";
-                    for(auto v: ashape) ss<<v<<" ";
+#ifdef NOFOREACH
+                    for(auto iter = ashape.begin();iter!=ashape.end();++iter)
+                    {
+                        auto v = *iter;
+#else
+                    for(auto v: ashape) 
+                    {
+#endif
+                        ss<<v<<" ";
+                    }
                     ss<<") and field shape ( ";
-                    for(auto v: fshape) ss<<v<<" ";
+#ifdef NOFOREACH
+                    for(auto iter = fshape.begin();iter!=fshape.end();++iter)
+                    {
+                        auto v = *iter;
+#else
+                    for(auto v: fshape) 
+                    {
+#endif
+                        ss<<v<<" ";
+                    }
                     ss<<") do not match!";
                     throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
                 }
