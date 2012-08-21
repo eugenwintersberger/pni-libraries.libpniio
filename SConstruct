@@ -109,156 +109,22 @@ if env['BOOSTLIBDIR']: env.AppendUnique(LIBPATH = env['BOOSTLIBDIR'])
 
 
 #========================custom tests for compiler capabilties=================
-nullptr_test_code="""
-int main(int argc,char **argv){
-    char *ptr=nullptr;
-    return 0;
-}
-"""
-
-def CheckNullPtr(context):
-    context.Message("Checking if compiler supports nullptr idiom ...")
-    result = context.TryCompile(nullptr_test_code,".cpp")
-    context.Result(result)
-    return result
-
-foreach_test_code="""
-#include<iostream>
-#include<vector>
-int main(int argc,char **arv){
-std::vector<int> vec = {1,2,3,4};
-for(int &v: vec){
-   std::cout<<v<<std::endl; 
-}
-return 0;
-}
-"""
-
-def CheckForEach(context):
-    context.Message("Check if compiler supports foreach loops ...")
-    result = context.TryCompile(foreach_test_code,".cpp")
-    context.Result(result)
-    return result
-
-initlist_test_code = """
-#include <initializer_list>
-class test{
-public:
-void testfunction(const std::initializer_list<int> &l){
-
-}
-};
-
-template<typename T> void testtmp(){
-    test t;
-    t.testfunction({1,2,3});
-}
-
-int main(int argc,char **argv){
-    testtmp<float>();
-return 0;
-}
-"""
-
-def CheckInitList(context):
-    context.Message("Check for comprehensive init-list support ...")
-    result = context.TryCompile(initlist_test_code,".cpp")
-    context.Result(result)
-    return result
 
 #Once all parameters are set we can start with system configuration
 #-------------------------------------------------------------------------------
 #start with configuration
-conf = Configure(env,
-custom_tests = {"CheckNullPtr":CheckNullPtr,
-                "CheckForEach":CheckForEach,"CheckInitList":CheckInitList})
-
-
-#checking compiler capabilities
-if not conf.CheckNullPtr():
-    print "nullptr not supported - use NULL"
-    env.Append(CXXFLAGS=["-Dnullptr=NULL"])
-
-if not conf.CheckForEach():
-    print "foreach construction not supported - use workaround"
-    env.Append(CXXFLAGS=["-DNOFOREACH"])
-
-if not conf.CheckInitList():
-    print "comprehensive init list do not work ..."
-    env.Append(CXXFLAGS=["-DINITLISTBUG"])
-
-#check for header files
-if not conf.CheckCXXHeader("boost/numeric/conversion/cast.hpp"):
-    print "BOOST header file cast.hpp does not exist!"
-    Exit(1)
-    
-    
-if not conf.CheckCXXHeader("boost/static_assert.hpp"):
-    print "BOOST header static_assert.hpp does not exist!"
-    Exit(1)
-    
-if not conf.CheckCXXHeader("cppunit/TestFixture.h"):
-    print "CPPUNIT header TestFixture.h does not exist!"
-    Exit(1)
-    
-if not conf.CheckCXXHeader("cppunit/TestRunner.h"):
-    print "CPPUNIT header TestRunner.h does not exist!"
-    Exit(1)
-    
-if not conf.CheckCXXHeader("cppunit/extensions/HelperMacros.h"):
-    print "CPPUNIT header HelperMacros.h does not exist!"
-    Exit(1)
-    
-if not conf.CheckCXXHeader("cppunit/TestCaller.h"):
-    print "CPPUNIT header TestCaller.h does not exist!"
-    Exit(1)
-    
-if not conf.CheckCXXHeader(["string","cppunit/TestResult.h"]):
-    print "CPPUNIT header TestResult.h does not exist!"
-    Exit(1)
-    
-if not conf.CheckCXXHeader("cppunit/TextTestProgressListener.h"):
-    print "CPPUNIT header TextTestProgressListener.h does not exist!"
-    Exit(1)
-    
-if not conf.CheckCXXHeader("cppunit/ui/text/TextTestRunner.h"):
-    print "CPPUNIT header TextTestRunner.h does not exist!"
-    Exit(1)
-    
-if not conf.CheckCHeader("hdf5.h"):
-    print "HDF5 header files are not installed!"
-    Exit(1)
-
-    
-#check for libraries
-if not conf.CheckLib(env["H5LIBNAME"]):
-    print "HDF5 libraries not installed!"
-    Exit(1)
-    
-if not conf.CheckLib("cppunit",language="C++"):
-    print "CPPUNIT unit test libraray is not installed!"
-    Exit(1)
-
-if not conf.CheckLib("pniutils",language="C++"):
-    print "libpniutils not installed!"
-    Exit(1)
-
-if not conf.CheckLib("boost_date_time",language="C++"):
-    print "boost_date_time library not installed!"
-    Exit(1)
-
-env = conf.Finish()
-
+Export("env")
+(build_env,test_env) = SConscript("configure/SConscript")
 
 #-------------------------------------------------------------------------------
 
-#setup the different build environments
-build_env = env.Clone()
 
 if debug:
     build_env.Append(CXXFLAGS=["-O0","-g"])
+    test_env.Append(CXXFLAGS=["-O0","-g"])
 else:
     build_env.Append(CXXFLAGS=["-O2"])
+    test_env.Append(CXXFLAGS=["-O2"])
     
 test_build_env = build_env.Clone()
 build_env.Append(LINKFLAGS=["-Wl,-h"+libname.so_name(env)]) 

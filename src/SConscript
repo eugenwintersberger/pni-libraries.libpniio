@@ -42,6 +42,8 @@ pkg_config_file = build_env.Substfile(source=["pninx.pc.in"],
                              "@INCDIR@":"$INCDIR",
                              "@H5LIBNAME@":"$H5LIBNAME"})
 
+build_env.AlwaysBuild(pkg_config_file)
+
 #-------------------------some alias targets -----------------------------------
 build_env.Alias("all",[temp_shared_library,shared_library,static_library,
                        shared_library_link,shared_library_so])

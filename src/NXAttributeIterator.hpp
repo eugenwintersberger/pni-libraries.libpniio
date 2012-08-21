@@ -136,7 +136,11 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! conversion to bool 
+#ifdef NOEXPLICITCONV
+            operator bool()
+#else
             explicit operator bool() 
+#endif
             {
                 if(_index >= _nattrs) return false;
                 return true;
