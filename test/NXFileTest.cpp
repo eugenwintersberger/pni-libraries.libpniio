@@ -45,6 +45,7 @@ void NXFileTest::test_creation()
 	CPPUNIT_ASSERT(!f.is_valid());
 	CPPUNIT_ASSERT_NO_THROW(f = NXFile::create_file("NXFileTest.h5",true,0));
 	CPPUNIT_ASSERT(f.is_valid());
+    CPPUNIT_ASSERT(!f.is_readonly());
     CPPUNIT_ASSERT_NO_THROW(f.close());
     CPPUNIT_ASSERT(!f.is_valid());
 
@@ -94,6 +95,7 @@ void NXFileTest::test_open()
     CPPUNIT_ASSERT_NO_THROW(f.close());
 
 	CPPUNIT_ASSERT_NO_THROW(f = NXFile::open_file("NXFileTest.h5",true));
+    CPPUNIT_ASSERT(f.is_readonly());
 	//here we should get exceptions because the file is already open
 	CPPUNIT_ASSERT_NO_THROW(NXFile::open_file("NXFileTest.h5",true));
 
@@ -105,6 +107,19 @@ void NXFileTest::test_open()
 
 	//try to open a file which does not exist
 	CPPUNIT_ASSERT_THROW(NXFile::open_file("blabla.h5",true),pni::nx::NXFileError);
+
+}
+
+//-----------------------------------------------------------------------------
+void NXFileTest::test_inquery()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    NXFile f;
+
+    CPPUNIT_ASSERT_NO_THROW(f = NXFile::create_file("NXFileTest.h5",true,0));
+    CPPUNIT_ASSERT(f.path()=="NXFileTest.h5");
+    CPPUNIT_ASSERT(f.name()=="NXFileTest.h5");
+    CPPUNIT_ASSERT(f.base()=="");
 
 }
 

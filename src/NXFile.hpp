@@ -27,6 +27,7 @@
 
 
 #include <pni/utils/Types.hpp>
+#include <pni/utils/service.hpp>
 
 
 #ifndef NXFILE_HPP_
@@ -74,15 +75,10 @@ namespace nx{
             //! destructor
             ~NXFile()
             {
-                if(this->is_valid())
+                if((this->is_valid())&&(!this->is_readonly()))
                 {
-                    try{
-                        this->template attr<String>("file_update_time",true)
-                            .write(NXDateTime::get_date_time_str());
-                    }catch(...){
-                        //do nothing if write fails - most probably 
-                        //the file is in read only mode
-                    }
+                    this->template attr<String>("file_update_time",true)
+                        .write(NXDateTime::get_date_time_str());
                 }
             }
 
@@ -174,26 +170,24 @@ namespace nx{
                 return file;
             }
 
+
             //-----------------------------------------------------------------
             //! flush the file
             void flush() const{ this->imp().flush(); }
+            
+            //-----------------------------------------------------------------
+            //! check read only
+            bool is_readonly() const { return this->imp().is_readonly(); }
+
 
             //-----------------------------------------------------------------
             //! close the file
             virtual void close()
             {
-                if(this->is_valid())
+                if((this->is_valid())&&(!this->is_readonly()))
                 {
-                    try
-                    {
-                        this->template attr<String>("file_update_time",true)
-                            .write(NXDateTime::get_date_time_str());
-                    }
-                    catch(...)
-                    {
-                        //do nothing if write fails - most probably 
-                        //the file is in read only mode
-                    }
+                    this->template attr<String>("file_update_time",true)
+                        .write(NXDateTime::get_date_time_str());
                 }
 
                 NXObject<Imp>::close();

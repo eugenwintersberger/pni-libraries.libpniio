@@ -40,6 +40,7 @@ class NXFileTest: public CppUnit::TestFixture {
 	CPPUNIT_TEST(test_creation);
 	CPPUNIT_TEST(test_open);
     CPPUNIT_TEST(test_iterator);
+    CPPUNIT_TEST(test_inquery);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	void setUp();
@@ -49,6 +50,7 @@ public:
 	void test_creation();
 	void test_open();
     void test_iterator();
+    void test_inquery();
 
 
 };

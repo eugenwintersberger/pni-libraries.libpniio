@@ -102,9 +102,9 @@ void NXGroupTest::test_open()
 	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 	NXGroup g1,g2;
 
-	g1 = _f.create_group("/directory1/data");
+	CPPUNIT_ASSERT_NO_THROW(g1 = _f.create_group("/directory1/data"));
 
-	g2 = _f.open("/directory1");
+	CPPUNIT_ASSERT_NO_THROW(g2 = _f.open("/directory1"));
 	NXGroup g = g2.open("data");
 	NXGroup g3;
 	g3 = g2.open("data");
