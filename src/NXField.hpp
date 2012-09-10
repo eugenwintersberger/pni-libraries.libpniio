@@ -965,6 +965,19 @@ namespace nx{
                 return *this; 
             }
 
+            //---------------------------------------------------------------
+            /*!
+            \brief set a selection on the field
+
+            Operator to set a selection to the field. The selection is given by
+            a vector container of Slice objects.
+            */
+            NXField<Imp> &operator()(const std::vector<Slice> &selection) 
+            {
+                this->imp().apply_selection(selection);
+                return *this;
+            }
+
 
     };
 

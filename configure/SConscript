@@ -153,6 +153,15 @@ if not conf.CheckCXXHeader("boost/regex.hpp"):
 if not conf.CheckCXXHeader("boost/current_function.hpp"):
     print "BOOST current_function.hpp not found!"
     Exit(1)
+
+if GetOption("with_mpi"):
+    if not conf.CheckHeader("mpi.h"):
+        print "MPI header file not found!"
+        Exit(1)
+
+    if not conf.CheckLib("mpi"):
+        print "MPI library not found!"
+        Exit(1)
     
 
 #check for boost regular expressions library

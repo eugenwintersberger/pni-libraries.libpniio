@@ -39,12 +39,16 @@ class LibFileNames(object):
 
 debug = ARGUMENTS.get("DEBUG",0)
 
+AddOption("--enable-mpi",dest="with_mpi",action="store_true",default=False)
+
 var = Variables('BuildConfig.py')
 var.Add(PathVariable("PREFIX","set installation prefix","/usr"))
 var.Add(PathVariable("BOOSTINCDIR","installation directory of boost headers","/usr/include"))
 var.Add(PathVariable("BOOSTLIBDIR","installation directory of boost libraries","/usr/include"))
 var.Add(PathVariable("H5INCDIR","Directory where HDF5 headers are installed","",PathVariable.PathAccept))
 var.Add(PathVariable("H5LIBDIR","Directory where HDF5 libraries are installed","",PathVariable.PathAccept))
+var.Add(PathVariable("MPILIBDIR","Directory where MPI libraries are installed","/usr/lib"))
+var.Add(PathVariable("MPIINCDIR","Directory where MPI headers are installed","/usr/include/mpi"))
 
 var.Add("H5LIBNAME","HDF5 library name","hdf5")
 var.Add("VERSION","library version","0.0.0")
@@ -107,6 +111,9 @@ if env["H5INCDIR"]: env.AppendUnique(CPPPATH = env['H5INCDIR'])
 if env['BOOSTINCDIR']: env.AppendUnique(CPPPATH = env['BOOSTINCDIR'])
 if env['BOOSTLIBDIR']: env.AppendUnique(LIBPATH = env['BOOSTLIBDIR'])
 
+if GetOption("with_mpi"):
+    env.AppendUnique(LIBPATH=env["MPILIBDIR"])
+    env.AppendUnique(CPPPATH=env["MPIINCDIR"])
 
 #========================custom tests for compiler capabilties=================
 
