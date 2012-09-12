@@ -43,6 +43,26 @@ namespace h5{
             }\
             return H5Datatype(t);
 
+#define CREATE_TYPE_METHODS(type,id,h5type)\
+    template<> H5Datatype H5DatatypeFactory::create_type<type>()\
+    {\
+        CREATE_TYPE(h5type);\
+    }\
+    template<> H5Datatype H5DatatypeFactory::create_type<id>()\
+    {\
+        return create_type<type>();\
+    }
+
+#define CREATE_TYPE_GET_METHOD(type,id,h5type)\
+    template<> const H5Datatype &H5DatatypeFactory::get_type<type>() const\
+    {\
+        return h5type;\
+    }\
+    template<> const H5Datatype &H5DatatypeFactory::get_type<id>() const\
+    {\
+        return h5type;\
+    }
+
     //-------------------create boolean data type------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<Bool>()
     {
@@ -64,135 +84,17 @@ namespace h5{
     }
           
     //------------create integer data types------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<UInt8>()
-    {
-        CREATE_TYPE(H5T_NATIVE_UINT8);
-    }
-
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<TypeID::UINT8>()
-    {
-        return create_type<UInt8>();
-    }
-
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<Int8>()
-    {
-        CREATE_TYPE(H5T_NATIVE_INT8);
-    }
-
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<TypeID::INT8>()
-    {
-        return create_type<Int8>();
-    }
-
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<UInt16>()
-    {
-        CREATE_TYPE(H5T_NATIVE_UINT16);
-    }
-   
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<TypeID::UINT16>()
-    {
-        return create_type<UInt16>();
-    }
-
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<Int16>()
-    {
-        CREATE_TYPE(H5T_NATIVE_INT16);
-    }
-   
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<TypeID::INT16>()
-    {
-        return create_type<Int16>();
-    }
-
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<UInt32>()
-    {
-        CREATE_TYPE(H5T_NATIVE_UINT32);
-    }
-   
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<TypeID::UINT32>()
-    {
-        return create_type<UInt32>();
-    }
-
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<Int32>()
-    {
-        CREATE_TYPE(H5T_NATIVE_INT32);
-    }
-   
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<TypeID::INT32>()
-    {
-        return create_type<Int32>();
-    }
-   
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<UInt64>()
-    {
-        CREATE_TYPE(H5T_NATIVE_UINT64);
-    }
-   
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<TypeID::UINT64>()
-    {
-        return create_type<UInt64>();
-    }
-
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<Int64>()
-    {
-        CREATE_TYPE(H5T_NATIVE_INT64);
-    }
-
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<TypeID::INT64>()
-    {
-        return create_type<Int64>();
-    }
-    //---------------create floating point types-------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<Float32>()
-    {
-        CREATE_TYPE(H5T_NATIVE_FLOAT);
-    }
-   
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<TypeID::FLOAT32>()
-    {
-        return create_type<Float32>();
-    }
-
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<Float64>()
-    {
-        CREATE_TYPE(H5T_NATIVE_DOUBLE);
-    }
-   
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<TypeID::FLOAT64>()
-    {
-        return create_type<Float64>();
-    }
-
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<Float128>()
-    {
-        CREATE_TYPE(H5T_NATIVE_LDOUBLE);
-    }
-   
-    //-------------------------------------------------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<TypeID::FLOAT128>()
-    {
-        return create_type<Float128>();
-    }
+    CREATE_TYPE_METHODS(UInt8,TypeID::UINT8,H5T_NATIVE_UINT8);
+    CREATE_TYPE_METHODS(Int8,TypeID::INT8,H5T_NATIVE_INT8);
+    CREATE_TYPE_METHODS(UInt16,TypeID::UINT16,H5T_NATIVE_UINT16);
+    CREATE_TYPE_METHODS(Int16,TypeID::INT16,H5T_NATIVE_INT16);
+    CREATE_TYPE_METHODS(UInt32,TypeID::UINT32,H5T_NATIVE_UINT32);
+    CREATE_TYPE_METHODS(Int32,TypeID::INT32,H5T_NATIVE_INT32);
+    CREATE_TYPE_METHODS(UInt64,TypeID::UINT64,H5T_NATIVE_UINT64);
+    CREATE_TYPE_METHODS(Int64,TypeID::INT64,H5T_NATIVE_INT64);
+    CREATE_TYPE_METHODS(Float32,TypeID::FLOAT32,H5T_NATIVE_FLOAT);
+    CREATE_TYPE_METHODS(Float64,TypeID::FLOAT64,H5T_NATIVE_DOUBLE);
+    CREATE_TYPE_METHODS(Float128,TypeID::FLOAT128,H5T_NATIVE_LDOUBLE);
 
     //-------------------create double types-----------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<Complex32>()
@@ -307,6 +209,72 @@ namespace h5{
     {
         return create_type<Binary>();
     }
+
+    //-------------------------------------------------------------------------
+    H5DatatypeFactory::H5DatatypeFactory():
+        _bool_t(H5DatatypeFactory::create_type<Bool>()),
+        _uint8_t(H5DatatypeFactory::create_type<UInt8>()),
+        _int8_t(H5DatatypeFactory::create_type<Int8>()),
+        _uint16_t(H5DatatypeFactory::create_type<UInt16>()),
+        _int16_t(H5DatatypeFactory::create_type<Int16>()),
+        _uint32_t(H5DatatypeFactory::create_type<UInt32>()),
+        _int32_t(H5DatatypeFactory::create_type<Int32>()),
+        _uint64_t(H5DatatypeFactory::create_type<UInt64>()),
+        _int64_t(H5DatatypeFactory::create_type<Int64>()),
+        _float32_t(H5DatatypeFactory::create_type<Float32>()),
+        _float64_t(H5DatatypeFactory::create_type<Float64>()),
+        _float128_t(H5DatatypeFactory::create_type<Float128>()),
+        _cmplx32_t(H5DatatypeFactory::create_type<Complex32>()),
+        _cmplx64_t(H5DatatypeFactory::create_type<Complex64>()),
+        _cmplx128_t(H5DatatypeFactory::create_type<Complex128>()),
+        _string_t(H5DatatypeFactory::create_type<String>()),
+        _binary_t(H5DatatypeFactory::create_type<Binary>())
+    { }
+
+    //-------------------------------------------------------------------------
+    H5DatatypeFactory::~H5DatatypeFactory()
+    {
+        _bool_t.close();   
+        _uint8_t.close();  
+        _int8_t.close();   
+        _uint16_t.close(); 
+        _int16_t.close();  
+        _uint32_t.close(); 
+        _int32_t.close();  
+        _uint64_t.close(); 
+        _int64_t.close();  
+
+        _float32_t.close(); 
+        _float64_t.close(); 
+        _float128_t.close(); 
+        
+        _cmplx32_t.close(); 
+        _cmplx64_t.close(); 
+        _cmplx128_t.close(); 
+
+        _string_t.close(); 
+        _binary_t.close(); 
+    }
+
+    //-------------------------------------------------------------------------
+    CREATE_TYPE_GET_METHOD(Bool,TypeID::BOOL,_bool_t);
+    CREATE_TYPE_GET_METHOD(UInt8,TypeID::UINT8,_uint8_t);
+    CREATE_TYPE_GET_METHOD(Int8,TypeID::INT8,_int8_t);
+    CREATE_TYPE_GET_METHOD(UInt16,TypeID::UINT16,_uint16_t);
+    CREATE_TYPE_GET_METHOD(Int16,TypeID::INT16,_int16_t);
+    CREATE_TYPE_GET_METHOD(UInt32,TypeID::UINT32,_uint32_t);
+    CREATE_TYPE_GET_METHOD(Int32,TypeID::INT32,_int32_t);
+    CREATE_TYPE_GET_METHOD(UInt64,TypeID::UINT64,_uint64_t);
+    CREATE_TYPE_GET_METHOD(Int64,TypeID::INT64,_int64_t);
+    CREATE_TYPE_GET_METHOD(Float32,TypeID::FLOAT32,_float32_t);
+    CREATE_TYPE_GET_METHOD(Float64,TypeID::FLOAT64,_float64_t);
+    CREATE_TYPE_GET_METHOD(Float128,TypeID::FLOAT128,_float128_t);
+    CREATE_TYPE_GET_METHOD(Complex32,TypeID::COMPLEX32,_cmplx32_t);
+    CREATE_TYPE_GET_METHOD(Complex64,TypeID::COMPLEX64,_cmplx64_t);
+    CREATE_TYPE_GET_METHOD(Complex128,TypeID::COMPLEX128,_cmplx128_t);
+    CREATE_TYPE_GET_METHOD(String,TypeID::STRING,_string_t);
+    CREATE_TYPE_GET_METHOD(Binary,TypeID::BINARY,_binary_t);
+
 
 //end of namespace
 }

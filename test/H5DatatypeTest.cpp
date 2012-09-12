@@ -135,3 +135,38 @@ void H5DatatypeTest::test_comparison()
     CPPUNIT_ASSERT(!(t1 != t2));
     CPPUNIT_ASSERT(t1 == t2);
 }
+
+void H5DatatypeTest::test_global_factory()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    CPPUNIT_ASSERT(H5TFactory.get_type<Bool>().type_id()==TypeID::BOOL);
+    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::BOOL>().type_id()==TypeID::BOOL);
+
+    CPPUNIT_ASSERT(H5TFactory.get_type<UInt8>().type_id()==TypeID::UINT8);
+    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::UINT8>().type_id()==TypeID::UINT8);
+    CPPUNIT_ASSERT(H5TFactory.get_type<UInt16>().type_id()==TypeID::UINT16);
+    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::UINT16>().type_id()==TypeID::UINT16);
+    CPPUNIT_ASSERT(H5TFactory.get_type<UInt32>().type_id()==TypeID::UINT32);
+    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::UINT32>().type_id()==TypeID::UINT32);
+    CPPUNIT_ASSERT(H5TFactory.get_type<UInt64>().type_id()==TypeID::UINT64);
+    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::UINT64>().type_id()==TypeID::UINT64);
+
+    CPPUNIT_ASSERT(H5TFactory.get_type<Float32>().type_id()==TypeID::FLOAT32);
+    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::FLOAT32>().type_id()==TypeID::FLOAT32);
+    CPPUNIT_ASSERT(H5TFactory.get_type<Float64>().type_id()==TypeID::FLOAT64);
+    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::FLOAT64>().type_id()==TypeID::FLOAT64);
+    CPPUNIT_ASSERT(H5TFactory.get_type<Float128>().type_id()==TypeID::FLOAT128);
+    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::FLOAT128>().type_id()==TypeID::FLOAT128);
+
+    CPPUNIT_ASSERT(H5TFactory.get_type<Complex32>().type_id()==TypeID::COMPLEX32);
+    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::COMPLEX32>().type_id()==TypeID::COMPLEX32);
+    CPPUNIT_ASSERT(H5TFactory.get_type<Complex64>().type_id()==TypeID::COMPLEX64);
+    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::COMPLEX64>().type_id()==TypeID::COMPLEX64);
+    CPPUNIT_ASSERT(H5TFactory.get_type<Complex128>().type_id()==TypeID::COMPLEX128);
+    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::COMPLEX128>().type_id()==TypeID::COMPLEX128);
+
+    CPPUNIT_ASSERT(H5TFactory.get_type<String>().type_id() == TypeID::STRING);
+    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::STRING>().type_id()==TypeID::STRING);
+    CPPUNIT_ASSERT(H5TFactory.get_type<Binary>().type_id() == TypeID::BINARY);
+    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::BINARY>().type_id()==TypeID::BINARY);
+}

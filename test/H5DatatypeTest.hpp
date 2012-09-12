@@ -6,6 +6,7 @@ extern "C"{
 #include <hdf5.h>
 }
 
+#include<boost/current_function.hpp>
 #include <pni/utils/Types.hpp>
 
 #include<cppunit/TestFixture.h>
@@ -29,6 +30,7 @@ class H5DatatypeTest:public CppUnit::TestFixture{
         void test_assignment();
         void test_inquery();
         void test_comparison();
+        void test_global_factory();
        
     
 };
