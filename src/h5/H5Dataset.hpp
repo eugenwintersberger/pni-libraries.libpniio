@@ -625,7 +625,7 @@ namespace h5{
             template<typename T> void read(T *ptr) const
             {
                 //select the proper memory data type
-                H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
+                const H5Datatype &mem_type = H5TFactory.get_type<T>();
 
                 //write data to disk
                 herr_t err = H5Dread(id(),mem_type.id(),_mspace.id(),_fspace.id(),
@@ -662,7 +662,7 @@ namespace h5{
             template<typename T> void write(const T *ptr) const
             {
                 //select the proper memory data type
-                H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
+                const H5Datatype &mem_type = H5TFactory.get_type<T>();
 
                 //write data to disk
                 herr_t err = H5Dwrite(id(),mem_type.id(),_mspace.id(),_fspace.id(),

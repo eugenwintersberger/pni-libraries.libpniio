@@ -122,7 +122,7 @@ namespace h5{
             */
             template<typename T> void write(const T *ptr) const
             {
-                H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
+                const H5Datatype &mem_type = H5TFactory.get_type<T>();
                 herr_t err = H5Awrite(id(),mem_type.id(),(void *)ptr);
                 if(err<0)
                     throw H5AttributeError(EXCEPTION_RECORD, 
@@ -168,7 +168,7 @@ namespace h5{
             */
             template<typename T> void read(T *ptr) const
             {
-                H5Datatype mem_type = H5DatatypeFactory::create_type<T>();
+                const H5Datatype &mem_type = H5TFactory.get_type<T>();
                 herr_t err = H5Aread(id(),mem_type.id(),(void *)ptr);
                 if(err < 0)
                     throw H5AttributeError(EXCEPTION_RECORD,

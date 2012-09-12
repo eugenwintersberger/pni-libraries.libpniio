@@ -172,6 +172,9 @@ namespace h5{
         if(err < 0)
             throw H5AttributeError(EXCEPTION_RECORD, 
                     "Error writing attribute ["+name()+"]!");
+
+        //close the data type
+        H5Tclose(element_type);
     }
 
     //-------------------------------------------------------------------------
@@ -190,6 +193,9 @@ namespace h5{
         if(err<0)
             throw H5AttributeError(EXCEPTION_RECORD, 
                     "Error reading attribute ["+name()+"]!");
+
+        //close the data type
+        H5Tclose(element_type);
 
         if(ptr)
             s = String(ptr);
