@@ -43,7 +43,8 @@ namespace pni {
             This class holds information about the linked HDF5 library used for
             linking the project.
             */
-            class H5LibrarySetup {
+            class H5LibrarySetup 
+            {
             private:
                 UInt32 _major_version_number; //!< major version number of the HDF5 library
                 UInt32 _minor_version_number; //!< minor version number of the HDF5 library

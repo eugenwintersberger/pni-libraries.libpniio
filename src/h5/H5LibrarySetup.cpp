@@ -31,7 +31,8 @@ namespace nx {
 namespace h5 {
 
 //------------------------------------------------------------------------------
-H5LibrarySetup::H5LibrarySetup() {
+H5LibrarySetup::H5LibrarySetup() 
+{
 	H5open();
 	H5Eset_auto2(H5E_DEFAULT,0,NULL);
 	H5get_libversion(&_major_version_number,&_minor_version_number,
@@ -39,34 +40,37 @@ H5LibrarySetup::H5LibrarySetup() {
 
 	//register custom filters to the library
 	register_lzf();
-
 }
 
 //------------------------------------------------------------------------------
-H5LibrarySetup::~H5LibrarySetup() {
+H5LibrarySetup::~H5LibrarySetup() 
+{
 	H5garbage_collect();
 	H5close();
 }
 
 //------------------------------------------------------------------------------
-String H5LibrarySetup::version_string() const{
+String H5LibrarySetup::version_string() const
+{
 	String vstr;
-
 	return vstr;
 }
 
 //------------------------------------------------------------------------------
-UInt32 H5LibrarySetup::major_number() const{
+UInt32 H5LibrarySetup::major_number() const
+{
 	return _major_version_number;
 }
 
 //------------------------------------------------------------------------------
-UInt32 H5LibrarySetup::minor_number() const{
+UInt32 H5LibrarySetup::minor_number() const
+{
 	return _minor_version_number;
 }
 
 //------------------------------------------------------------------------------
-UInt32 H5LibrarySetup::release_number() const{
+UInt32 H5LibrarySetup::release_number() const
+{
 	return _release_number;
 }
 

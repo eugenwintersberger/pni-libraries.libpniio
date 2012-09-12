@@ -211,6 +211,10 @@ namespace h5{
         a.write(String(vstring.str()));
         a.close();
 
+        //close file create and access property lists
+        H5Pclose(create_plist);
+        H5Pclose(acc_plist);
+
         return f;
     }
 
