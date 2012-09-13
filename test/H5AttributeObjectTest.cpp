@@ -7,32 +7,46 @@ CPPUNIT_TEST_SUITE_REGISTRATION(H5AttributeObjectTest);
 //-----------------------------------------------------------------------------
 void H5AttributeObjectTest::setUp()
 {
-    file = H5Fcreate("test.h5",H5F_ACC_TRUNC,H5P_DEFAULT,H5P_DEFAULT);
-
-
-
+    //open the HDF5 file 
+    file = H5Fcreate("H5AttributeObjectTest.h5",H5F_ACC_TRUNC,
+                     H5P_DEFAULT,H5P_DEFAULT);
 }
 
 //-----------------------------------------------------------------------------
 void H5AttributeObjectTest::tearDown()
 {
+    //close the HDF5 file
     H5Fclose(file);
+}
+
+//-----------------------------------------------------------------------------
+hid_t H5AttributeObjectTest::create_group(hid_t pid,const String &name) const
+{
+    return H5Gcreate2(pid,name.c_str(),H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT);
+}
+
+//-----------------------------------------------------------------------------
+void H5AttributeObjectTest::local_function(hid_t id)
+{
+    H5AttributeObject o(std::move(H5TestObject(id)));
+    CPPUNIT_ASSERT(o.is_valid());
+    //now the object will be destroyed 
 }
 
 //-----------------------------------------------------------------------------
 void H5AttributeObjectTest::test_creation()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
+    PRINT_TEST_FUNCTION_SIG;
+
     //default constructor
     H5AttributeObject o;
     CPPUNIT_ASSERT(!o.is_valid());
     CPPUNIT_ASSERT_THROW(o.object_type(),H5ObjectError);
+    //try to construct an instance from an invalid HDF5 ID.
     CPPUNIT_ASSERT_THROW(H5TestObject(-1),H5ObjectError);
   
     //test constructor from new object
-    H5TestObject
-        test(H5Gcreate2(file,"group",H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT));
+    H5AttributeObject test(H5TestObject(create_group(file,"group")));
 
     //check the object type
     CPPUNIT_ASSERT(test.object_type() == H5ObjectType::GROUP);
@@ -44,8 +58,7 @@ void H5AttributeObjectTest::test_creation()
     CPPUNIT_ASSERT(!test.is_valid());
 
     //test copy constructor
-    H5TestObject
-        t1(H5Gcreate2(file,"group2",H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT));
+    H5AttributeObject t1(H5TestObject(create_group(file,"group2")));
 
     H5AttributeObject t2(t1);
     CPPUNIT_ASSERT((t2.is_valid())&&(t1.is_valid()));
@@ -61,16 +74,14 @@ void H5AttributeObjectTest::test_creation()
     t3.close();
     CPPUNIT_ASSERT(!t3.is_valid());
 
-
 }
 
 //-----------------------------------------------------------------------------
 void H5AttributeObjectTest::test_assignment()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    PRINT_TEST_FUNCTION_SIG;
 
-    H5AttributeObject
-        o1(H5TestObject(H5Gcreate2(file,"group",H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT)));
+    H5AttributeObject o1(H5TestObject(create_group(file,"group")));
 
     CPPUNIT_ASSERT(o1.is_valid());
     H5AttributeObject o2;
@@ -87,31 +98,24 @@ void H5AttributeObjectTest::test_assignment()
 }
 
 //-----------------------------------------------------------------------------
-void attribute_object_test_function(hid_t i)
-{
-    H5TestObject t(i);
-    H5AttributeObject object(t);
-    CPPUNIT_ASSERT(object.is_valid());
-}
-//-----------------------------------------------------------------------------
 void H5AttributeObjectTest::test_destruction()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    PRINT_TEST_FUNCTION_SIG;
 
-    hid_t id = H5Gcreate2(file,"group",H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT);
+    hid_t id = create_group(file,"group");
     //here the H5Object takes ownership over the id
-    attribute_object_test_function(id);
+    local_function(id);
     CPPUNIT_ASSERT(!(H5Iis_valid(id)>0));
-
 }
 
 
 //-----------------------------------------------------------------------------
 void H5AttributeObjectTest::test_comparison()
 {
-    H5AttributeObject
-        o1(H5TestObject(H5Gcreate2(file,"group",H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT)));
-    H5AttributeObject o2(H5TestObject(H5Gcreate2(file,"group2",H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT)));
+    PRINT_TEST_FUNCTION_SIG;
+
+    H5AttributeObject o1(H5TestObject(create_group(file,"group")));
+    H5AttributeObject o2(H5TestObject(create_group(file,"group2")));
     H5AttributeObject o3(H5TestObject(H5Gopen2(file,"group",H5P_DEFAULT)));
    
     CPPUNIT_ASSERT(o1!=o2);
@@ -121,8 +125,9 @@ void H5AttributeObjectTest::test_comparison()
 //-----------------------------------------------------------------------------
 void H5AttributeObjectTest::test_inquery()
 {
-    H5AttributeObject
-        o1(H5TestObject(H5Gcreate2(file,"group",H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT)));
+    PRINT_TEST_FUNCTION_SIG;
+
+    H5AttributeObject o1(H5TestObject(create_group(file,"group")));
 
     o1.attr<Float32>("test1");
     o1.attr<UInt8>("test2");
@@ -148,68 +153,19 @@ void H5AttributeObjectTest::test_inquery()
 }
 
 //-----------------------------------------------------------------------------
-void H5AttributeObjectTest::test_string_attribute()
+void H5AttributeObjectTest::test_attribute_open()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    H5AttributeObject
-        o1(H5TestObject(H5Gcreate2(file,"group",H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT)));
+    PRINT_TEST_FUNCTION_SIG;
 
-    H5Attribute a = o1.attr<String>("test1");
-    CPPUNIT_ASSERT(a.is_valid());
-    CPPUNIT_ASSERT(a.base().empty());
-    CPPUNIT_ASSERT(a.path().empty());
-    CPPUNIT_ASSERT(a.name() == "test1");
-    CPPUNIT_ASSERT(a.rank() == 0);
-    CPPUNIT_ASSERT(a.size() == 1);
+    H5AttributeObject o(H5TestObject(create_group(file,"group")));
 
-    //write data
-    String value = "Hello world";
-    a.write("Hello world");
-    //read data back and check equality
-    String value2;
-    a.read(value2);
-    CPPUNIT_ASSERT(value2 == "Hello world");
-
-    //attribute copy construction
-    H5Attribute a2(a);
-    CPPUNIT_ASSERT((a2.is_valid())&&(a.is_valid()));
-    CPPUNIT_ASSERT(a2.name() == a.name());
-    CPPUNIT_ASSERT(a2.type_id() == a.type_id());
-    CPPUNIT_ASSERT(a2.rank() == a.rank());
-    CPPUNIT_ASSERT(a2.size() == a.size());
-
-    //move construction
-    H5Attribute a3(std::move(a2));
-    CPPUNIT_ASSERT(!a2.is_valid());
-    CPPUNIT_ASSERT(a3.is_valid());
-    CPPUNIT_ASSERT(a3.name() == a.name());
-    CPPUNIT_ASSERT(a3.type_id() == a.type_id());
-    CPPUNIT_ASSERT(a3.rank() == a.rank());
-    CPPUNIT_ASSERT(a3.size() == a.size());
-
-    //copy assignment
-    H5Attribute a4 = a3;
-    CPPUNIT_ASSERT((a4.is_valid())&&(a3.is_valid()));
-    CPPUNIT_ASSERT(a4.name() == a3.name());
-    CPPUNIT_ASSERT(a4.type_id() == a3.type_id());
-    CPPUNIT_ASSERT(a4.rank() == a3.rank());
-    CPPUNIT_ASSERT(a4.size() == a3.size());
-    
-    //now close one of the objects
-    a4.close();
-    CPPUNIT_ASSERT(!a4.is_valid());
-    CPPUNIT_ASSERT(a3.is_valid());
+    CPPUNIT_ASSERT_NO_THROW(o.attr<Float32>("temp"));
+    CPPUNIT_ASSERT(o.has_attr("temp"));
+    H5Attribute a;
+    CPPUNIT_ASSERT_NO_THROW(a = o.attr("temp"));
+    CPPUNIT_ASSERT(o.attr("temp").is_valid());
     CPPUNIT_ASSERT(a.is_valid());
 
-    //test move assignment
-    H5Attribute a5 = std::move(a3);
-    CPPUNIT_ASSERT(!a3.is_valid());
-    CPPUNIT_ASSERT(a5.is_valid());
-    CPPUNIT_ASSERT(a5.name() == a.name());
-    CPPUNIT_ASSERT(a5.type_id() == a.type_id());
-    CPPUNIT_ASSERT(a5.rank() == a.rank());
-    CPPUNIT_ASSERT(a5.size() == a.size());
-
-
+    CPPUNIT_ASSERT_THROW(o.attr("bla"),H5AttributeError);
 }
 

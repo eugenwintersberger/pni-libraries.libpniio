@@ -137,7 +137,6 @@ namespace h5{
         }
 
         H5Attribute a(aid);
-        H5Aclose(aid);
         return a;
     }
 
@@ -164,7 +163,6 @@ namespace h5{
         }
 
         H5Attribute a(aid);
-        H5Aclose(aid);
         return a;
     }
 

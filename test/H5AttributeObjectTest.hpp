@@ -6,146 +6,237 @@ extern "C" {
 #include <hdf5.h>
 }
 
+#include "common.hpp"
 
-#include<cppunit/TestFixture.h>
-#include<cppunit/extensions/HelperMacros.h>
-#include<boost/current_function.hpp>
 #include<pni/utils/Array.hpp>
-
 #include "h5/H5AttributeObject.hpp"
-#include "EqualityCheck.hpp"
 
 
-using namespace pni::nx::h5;
 
-//cannot construct an H5Object type directly so we need a small helper class
-class H5TestObject:public H5AttributeObject
-{
-    public:
-        H5TestObject(hid_t id):H5AttributeObject(id) {};
-};
+/*!
+\ingroup test_suites
+\brief testing attribute object behavior
 
+Testing the behavior of instances of H5AttributeObject. 
+*/
 class H5AttributeObjectTest:public CppUnit::TestFixture
 {
+        //registering tests for this test suite
         CPPUNIT_TEST_SUITE(H5AttributeObjectTest);
         CPPUNIT_TEST(test_creation); 
         CPPUNIT_TEST(test_assignment);
         CPPUNIT_TEST(test_destruction);
         CPPUNIT_TEST(test_comparison);
         CPPUNIT_TEST(test_inquery);
-        CPPUNIT_TEST(test_scalar_attribute<UInt8>);
-        CPPUNIT_TEST(test_scalar_attribute<Int8>);
-        CPPUNIT_TEST(test_scalar_attribute<UInt16>);
-        CPPUNIT_TEST(test_scalar_attribute<Int16>);
-        CPPUNIT_TEST(test_scalar_attribute<UInt32>);
-        CPPUNIT_TEST(test_scalar_attribute<Int32>);
-        CPPUNIT_TEST(test_scalar_attribute<UInt64>);
-        CPPUNIT_TEST(test_scalar_attribute<Int64>);
-        CPPUNIT_TEST(test_scalar_attribute<Float32>);
-        CPPUNIT_TEST(test_scalar_attribute<Float64>);
-        CPPUNIT_TEST(test_scalar_attribute<Float128>);
-        CPPUNIT_TEST(test_scalar_attribute<Complex32>);
-        CPPUNIT_TEST(test_scalar_attribute<Complex64>);
-        CPPUNIT_TEST(test_scalar_attribute<Complex128>);
-        CPPUNIT_TEST(test_string_attribute);
         
-        CPPUNIT_TEST(test_array_attribute<UInt8>);
-        CPPUNIT_TEST(test_array_attribute<Int8>);
-        CPPUNIT_TEST(test_array_attribute<UInt16>);
-        CPPUNIT_TEST(test_array_attribute<Int16>);
-        CPPUNIT_TEST(test_array_attribute<UInt32>);
-        CPPUNIT_TEST(test_array_attribute<Int32>);
-        CPPUNIT_TEST(test_array_attribute<UInt64>);
-        CPPUNIT_TEST(test_array_attribute<Int64>);
-        CPPUNIT_TEST(test_array_attribute<Float32>);
-        CPPUNIT_TEST(test_array_attribute<Float64>);
-        CPPUNIT_TEST(test_array_attribute<Float128>);
-        CPPUNIT_TEST(test_array_attribute<Complex32>);
-        CPPUNIT_TEST(test_array_attribute<Complex64>);
-        CPPUNIT_TEST(test_array_attribute<Complex128>);
+        CPPUNIT_TEST(test_attribute_open);
+        //scalar attribute creation tests
+        CPPUNIT_TEST(test_scalar_attribute_create<UInt8>);
+        CPPUNIT_TEST(test_scalar_attribute_create<Int8>);
+        CPPUNIT_TEST(test_scalar_attribute_create<UInt16>);
+        CPPUNIT_TEST(test_scalar_attribute_create<Int16>);
+        CPPUNIT_TEST(test_scalar_attribute_create<UInt32>);
+        CPPUNIT_TEST(test_scalar_attribute_create<Int32>);
+        CPPUNIT_TEST(test_scalar_attribute_create<UInt64>);
+        CPPUNIT_TEST(test_scalar_attribute_create<Int64>);
 
+        CPPUNIT_TEST(test_scalar_attribute_create<Float32>);
+        CPPUNIT_TEST(test_scalar_attribute_create<Float64>);
+        CPPUNIT_TEST(test_scalar_attribute_create<Float128>);
+        
+        CPPUNIT_TEST(test_scalar_attribute_create<Complex32>);
+        CPPUNIT_TEST(test_scalar_attribute_create<Complex64>);
+        CPPUNIT_TEST(test_scalar_attribute_create<Complex128>);
+
+        CPPUNIT_TEST(test_scalar_attribute_create<String>);
+        CPPUNIT_TEST(test_scalar_attribute_create<Binary>);
+        CPPUNIT_TEST(test_scalar_attribute_create<Bool>);
+
+        //array attribute creation tests
+        CPPUNIT_TEST(test_array_attribute_create<UInt8>);
+        CPPUNIT_TEST(test_array_attribute_create<Int8>);
+        CPPUNIT_TEST(test_array_attribute_create<UInt16>);
+        CPPUNIT_TEST(test_array_attribute_create<Int16>);
+        CPPUNIT_TEST(test_array_attribute_create<UInt32>);
+        CPPUNIT_TEST(test_array_attribute_create<Int32>);
+        CPPUNIT_TEST(test_array_attribute_create<UInt64>);
+        CPPUNIT_TEST(test_array_attribute_create<Int64>);
+
+        CPPUNIT_TEST(test_array_attribute_create<Float32>);
+        CPPUNIT_TEST(test_array_attribute_create<Float64>);
+        CPPUNIT_TEST(test_array_attribute_create<Float128>);
+        
+        CPPUNIT_TEST(test_array_attribute_create<Complex32>);
+        CPPUNIT_TEST(test_array_attribute_create<Complex64>);
+        CPPUNIT_TEST(test_array_attribute_create<Complex128>);
+
+        CPPUNIT_TEST(test_array_attribute_create<String>);
+        CPPUNIT_TEST(test_array_attribute_create<Binary>);
+        CPPUNIT_TEST(test_array_attribute_create<Bool>);
         CPPUNIT_TEST_SUITE_END();
     private:
-        hid_t file;
-        hid_t group;
-        hid_t type;
-        hid_t dataspace;
-        hid_t dataset;
+        //-------------------local private members-----------------------------
+        hid_t file;      //!< HDF5 file 
+        hid_t group;     //!< HDF5 group
+        hid_t type;      //!< HDF5 type 
+        hid_t dataspace; //!< HDF5 dataspace
+        hid_t dataset;   //!< HDF5 dataset
+
+        //-----------------------local types-----------------------------------
+        /*!
+        \brief private test class
+
+        This test class provides a type which derives from H5AttributeObject.
+        The reason for this is that H5AttributeObject cannot be constructed
+        directly as its constructors are protected or private.
+        */
+        class H5TestObject:public H5AttributeObject
+        {
+            public:
+                //! constructor
+                H5TestObject(hid_t id):H5AttributeObject(id) {};
+        };
+
+        //-------------------private methods-----------------------------------
+        /*!
+        \brief create a group
+
+        Function creates a group and returns the groups HDF5 ID. The function
+        performs no error checking.
+        \param pid HDF5 ID of the parent object
+        \param name string object with the groups name
+        \return HDF5 ID of the group
+        */
+        hid_t create_group(hid_t pid,const String &name) const;
+
+        //---------------------------------------------------------------------
+        /*! 
+        \brief creates local instance 
+
+        This function is used to test the destructor of an H5AttributeObject.
+        It creates a local instance of H5AttributeObject using the HDF5 ID
+        passed as an argument to this function. Thus it takes over the ownership
+        of the HDF5 object belonging to the id. When the function looses scope
+        the H5AttributeObject gets destroyed and thus the HDF5 object should be
+        destroyed too. 
+        \param id HDF5 object id
+        */
+        void local_function(hid_t id);
 
     public:
+        //---------------------------------------------------------------------
+        /*! 
+        \brief setup method
+
+        Called before each test.
+        */
         void setUp();
+
+        //---------------------------------------------------------------------
+        /*! 
+        \brief tear down method
+        
+        Called after each test.
+        */
         void tearDown();
+
+        //---------------------------------------------------------------------
+        /*!
+        \brief creation tests
+
+        Test object constructors.
+        */
         void test_creation();
+
+        //---------------------------------------------------------------------
+        /*! 
+        \brief test assignment
+
+        Test assignment operators
+        */
         void test_assignment();
+
+        //---------------------------------------------------------------------
+        /*!
+        \brief test destruction
+
+        Test destruction of an H5AttributeObject. This test should ensure that
+        with calling close or the destructor the object is really destroyed.
+        */
         void test_destruction();
+
+        //---------------------------------------------------------------------
+        /*!
+        \brief test comparison
+
+        Test the comparison operators.
+        */
         void test_comparison();
-        template<typename T>
-        void test_scalar_attribute();
-        template<typename T>
-        void test_array_attribute();
-        void test_string_attribute();
+
+        //---------------------------------------------------------------------
+        /*! 
+        \brief test inquiry
+
+        Test objects inquiry methods.
+        */
         void test_inquery();
+
+        //---------------------------------------------------------------------
+        /*! 
+        \brief test opening attributes
+
+        Test opening existing attributes.
+        */
+        void test_attribute_open();
+
+        //---------------------------------------------------------------------
+        /*!
+        \brief test scalar attribute creation
+
+        Test for scalar attribute creation.
+        \tparam T data type of the attribute
+        */
+        template<typename T> void test_scalar_attribute_create();
+
+        //---------------------------------------------------------------------
+        /*!
+        \brief test array attribute creation
+
+        Test for array attribute creation
+        \tparam T data type of the array attribute
+        */
+        template<typename T> void test_array_attribute_create();
 };
 
 //-----------------------------------------------------------------------------
-template<typename T> void H5AttributeObjectTest::test_scalar_attribute()
+template<typename T> void H5AttributeObjectTest::test_scalar_attribute_create()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    H5AttributeObject
-        o1(H5TestObject(H5Gcreate2(file,"group",H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT)));
+    PRINT_TEST_FUNCTION_SIG;
+    
+    H5AttributeObject o(H5TestObject(create_group(file,"group")));
 
-    H5Attribute a = o1.attr<T>("test1");
-    CPPUNIT_ASSERT(a.is_valid());
-    CPPUNIT_ASSERT(a.base().empty());
-    CPPUNIT_ASSERT(a.path().empty());
-    CPPUNIT_ASSERT(a.name() == "test1");
-    CPPUNIT_ASSERT(a.rank() == 0);
-    CPPUNIT_ASSERT(a.size() == 1);
+    H5Attribute a;
 
-    //write data
-    T value = T(1);
-    a.write(&value);
-    //read data back and check equality
-    T value2;
-    a.read(&value2);
-    check_equality(value,value2);
-
-    //check overwrite
-    CPPUNIT_ASSERT_THROW(o1.attr<T>("test1"),H5AttributeError);
-    CPPUNIT_ASSERT_NO_THROW(o1.attr<T>("test1",true));
+    CPPUNIT_ASSERT_NO_THROW(o.attr<T>("a1"));
+    //test invalid creation
+    CPPUNIT_ASSERT_THROW(o.attr<T>("a1"),H5AttributeError);
+    //but
+    CPPUNIT_ASSERT_NO_THROW(o.attr<T>("a1",true));
 }
 
 //-----------------------------------------------------------------------------
-template<typename T> void H5AttributeObjectTest::test_array_attribute()
+template<typename T> void H5AttributeObjectTest::test_array_attribute_create()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    PRINT_TEST_FUNCTION_SIG;
 
-    shape_t s{10,20};
-    DArray<T> a1(s);
-    SArray<T,10,20> a2;
+    H5AttributeObject o(H5TestObject(create_group(file,"group")));
 
-    std::fill(a1.begin(),a1.end(),T(2));
+    shape_t s{10,3};
 
-    H5AttributeObject
-        o1(H5TestObject(H5Gcreate2(file,"group",H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT)));
-
-    H5Attribute a = o1.attr<T>("test1",s);
-    CPPUNIT_ASSERT(a.is_valid());
-    CPPUNIT_ASSERT(a.base().empty());
-    CPPUNIT_ASSERT(a.path().empty());
-    CPPUNIT_ASSERT(a.name() == "test1");
-    CPPUNIT_ASSERT(a.rank() == s.size());
-    CPPUNIT_ASSERT(a.size() == 10*20);
-
-    //write data
-    a.write(a1.storage().ptr());
-    //read data back
-    a.read(const_cast<T*>(a2.storage().ptr()));
-
-    //compare data
-    for(size_t i=0;i<a1.size();i++) check_equality(a1[i],a2[i]);
-    
-
+    CPPUNIT_ASSERT_NO_THROW(o.attr<T>("a1",s));
+    CPPUNIT_ASSERT_THROW(o.attr<T>("a1",s),H5AttributeError);
+    CPPUNIT_ASSERT_NO_THROW(o.attr<T>("a1",s,true));
 }
+
 
 #endif

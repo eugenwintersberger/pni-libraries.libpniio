@@ -9,11 +9,15 @@ test_env.Append(LIBS=["pninx","pniutils","cppunit"])
 test_env.Append(CPPPATH=["../src/"])
 
 sources_list = []
+
+sources_list.append("data.cpp")
+
 sources_list.append("pninxtest.cpp")
 sources_list.append("NXFileTest.cpp")
 sources_list.append("NXGroupTest.cpp")
 sources_list.append("NXFieldTest.cpp")
 sources_list.append("NXSelectionTest.cpp")
+#sources_list.append("NXAttributeTest.cpp")
 
 #tests for the HDF5 implementation backend
 sources_list.append("H5ObjectTest.cpp")
