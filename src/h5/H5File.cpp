@@ -208,7 +208,8 @@ namespace h5{
         vstring<<major<<"."<<minor<<"."<<rel;
 
         H5Attribute a = f.attr<String>("HDF5_version");
-        a.write(String(vstring.str()));
+        String version(vstring.str());
+        a.write(&version);
         a.close();
 
         //close file create and access property lists

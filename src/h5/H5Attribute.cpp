@@ -157,18 +157,19 @@ namespace h5{
     
     //-------------------------------------------------------------------------
     //implementation of write from String
-    void H5Attribute::write(const String &s) const
+    void H5Attribute::write(const String *s) const
     {
-        //throw exception if the attribute is not scalar
-        if(!_dspace.is_scalar())
-            throw ShapeMissmatchError(EXCEPTION_RECORD,
-                "Attribute ["+name()+"] is not scalar!");
+        typedef const char * char_ptr_t;
+        
+        char_ptr_t *ptr = new char_ptr_t[size()];
+        for(size_t i=0;i<size();i++) ptr[i] = s[i].c_str();
 
-        const char *ptr = s.c_str();
-
+        //get element type
         hid_t element_type = H5Aget_type(id()); 
 
-        herr_t err = H5Awrite(id(),element_type,&ptr);
+        herr_t err = H5Awrite(id(),element_type,ptr);
+        delete [] ptr;
+
         if(err < 0)
             throw H5AttributeError(EXCEPTION_RECORD, 
                     "Error writing attribute ["+name()+"]!");
@@ -179,28 +180,30 @@ namespace h5{
 
     //-------------------------------------------------------------------------
     //implementation to read to string
-    void H5Attribute::read(String &s) const
+    void H5Attribute::read(String *s) const
     {
-        if(!_dspace.is_scalar())
-            throw ShapeMissmatchError(EXCEPTION_RECORD, 
-                    "Attribute ["+name()+"] is not scalar!");
-        
+        typedef char * char_ptr_t;
+
         hid_t element_type = H5Aget_type(id());
 
-        char *ptr = nullptr;
+        char_ptr_t *ptr = new char_ptr_t[size()];
 
-        herr_t err = H5Aread(id(),element_type,&ptr);
+        herr_t err = H5Aread(id(),element_type,ptr);
         if(err<0)
+        {
+            delete [] ptr;
             throw H5AttributeError(EXCEPTION_RECORD, 
                     "Error reading attribute ["+name()+"]!");
+        }
 
         //close the data type
         H5Tclose(element_type);
 
-        if(ptr)
-            s = String(ptr);
-        else
-            s = "";
+        for(size_t i = 0;i<size();i++)
+        {
+            s[i] = String(ptr[i]);
+        }
+        delete [] ptr;
     }
            
 

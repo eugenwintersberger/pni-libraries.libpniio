@@ -136,7 +136,7 @@ namespace h5{
             Write data to a string attribute.
             \param s string to write
             */
-            void write(const String &s) const;
+            void write(const String *s) const;
 
             //-----------------------------------------------------------------
             /*!
@@ -153,7 +153,8 @@ namespace h5{
             */
             void write(const char *s) const 
             {
-                write(String(s));
+                String str(s);
+                write(&str);
             }
           
             //-----------------------------------------------------------------
@@ -184,7 +185,7 @@ namespace h5{
             \throws H5AttributeError in case of general IO errors
             \param s string variable to which data will be written
             */
-            void read(String &s) const;
+            void read(String *s) const;
            
             //=================attribute inquery methods=======================
             /*! 

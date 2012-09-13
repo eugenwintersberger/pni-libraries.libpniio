@@ -268,17 +268,20 @@ namespace h5{
                               xfer_plist,(void *)ptr);
         if(err<0)
         {
+            delete [] ptr; //free memory
             H5DataSetError error(EXCEPTION_RECORD, 
                     "Error writing data to dataset ["+name()+"]!");
-            std::cout<<error<<std::endl;
             throw error;
         }
 
         for(size_t i=0;i<size();i++)
         {
-            try{
+            try
+            {
                 sptr[i] = String(ptr[i]);
-            }catch(...){
+            }
+            catch(...)
+            {
                 sptr[i] = "";
             }
         }

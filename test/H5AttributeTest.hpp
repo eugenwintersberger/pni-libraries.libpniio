@@ -26,8 +26,6 @@ class H5AttributeTest:public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE(H5AttributeTest);
         CPPUNIT_TEST(test_creation); 
         CPPUNIT_TEST(test_assignment);
-        CPPUNIT_TEST(test_destruction);
-        CPPUNIT_TEST(test_comparison);
         CPPUNIT_TEST(test_inquery);
 
         CPPUNIT_TEST(test_scalar_attribute<UInt8>);
@@ -46,7 +44,7 @@ class H5AttributeTest:public CppUnit::TestFixture
         CPPUNIT_TEST(test_scalar_attribute<Complex128>);
         CPPUNIT_TEST(test_scalar_attribute<String>);
         CPPUNIT_TEST(test_scalar_attribute<Bool>);
-        
+
         CPPUNIT_TEST(test_array_attribute<UInt8>);
         CPPUNIT_TEST(test_array_attribute<Int8>);
         CPPUNIT_TEST(test_array_attribute<UInt16>);
@@ -63,7 +61,6 @@ class H5AttributeTest:public CppUnit::TestFixture
         CPPUNIT_TEST(test_array_attribute<Complex128>);
         CPPUNIT_TEST(test_array_attribute<String>);
         CPPUNIT_TEST(test_array_attribute<Bool>);
-
         CPPUNIT_TEST_SUITE_END();
     private:
         H5File file;   //!< file object
@@ -141,7 +138,7 @@ template<typename T> void H5AttributeTest::test_array_attribute()
     a.read(const_cast<T*>(read.storage().ptr()));
 
     //compare data
-    for(size_t i=0;i<a1.size();i++) check_equality(read[i],write[i]);
+    for(size_t i=0;i<a.size();i++) check_equality(read[i],write[i]);
 }
 
 #endif
