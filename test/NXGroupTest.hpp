@@ -36,7 +36,8 @@
 using namespace pni::utils;
 using namespace pni::nx::h5;
 
-class NXGroupTest: public CppUnit::TestFixture  {
+class NXGroupTest: public CppUnit::TestFixture  
+{
 	CPPUNIT_TEST_SUITE(NXGroupTest);
 	CPPUNIT_TEST(test_creation);
 	CPPUNIT_TEST(test_open);

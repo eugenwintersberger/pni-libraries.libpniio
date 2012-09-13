@@ -52,6 +52,8 @@ void NXGroupTest::tearDown()
 //------------------------------------------------------------------------------
 void NXGroupTest::test_linking()
 {
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
     NXGroup g = _f.create_group("/scan_1/detector/data");
     CPPUNIT_ASSERT_NO_THROW(g.link("/collection/detector/data"));
     CPPUNIT_ASSERT(_f.exists("/collection/detector/data"));

@@ -434,7 +434,7 @@ namespace nx{
 
                 try
                 {
-                    _imp.write(&value);
+                    this->_imp.write(&value);
                 }
                 catch(...)
                 {
@@ -460,7 +460,7 @@ namespace nx{
 
                 try
                 {
-                    _imp.write(value);
+                    this->_imp.write(&value);
                 }
                 catch(...)
                 {
@@ -483,7 +483,7 @@ namespace nx{
                 try
                 {
                     String s(value);
-                    this->write(s);
+                    this->write(&s);
                 }
                 catch(ShapeMissmatchError &error)
                 {

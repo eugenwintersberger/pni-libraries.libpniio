@@ -20,6 +20,9 @@ template<typename T> T create_scalar_data()
     return T(1);
 }
 
+template<> String create_scalar_data<String>();
+template<> Bool create_scalar_data<Bool>();
+
 //-----------------------------------------------------------------------------
 /*!
 \brief create array test data
@@ -38,6 +41,9 @@ template<typename T> std::vector<T> create_array_data(size_t n)
     std::fill(v.begin(),v.end(),T(1));
     return v;
 }
+
+template<> std::vector<String> create_array_data(size_t n);
+template<> std::vector<Bool> create_array_data(size_t n);
 
 
 #endif
