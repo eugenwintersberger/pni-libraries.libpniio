@@ -197,9 +197,14 @@ namespace nx{
                     throw MemoryNotAllocatedError(EXCEPTION_RECORD,
                             "Array storage not allocated!");
 
+                //get the shape of the array to write
                 auto ashape = a.template shape<shape_t>();
-                auto shape = this->template shape<shape_t>();
-                if(!std::equal(ashape.begin(),ashape.end(),shape.begin()))
+
+                //get the shape of this attribute
+                auto s = this->shape<shape_t>();
+
+                if((s.size()!=ashape.size())||
+                   (!std::equal(ashape.begin(),ashape.end(),s.begin())))
                 {
                     std::stringstream ss;
                     ss<<"Array shape ( ";
@@ -215,11 +220,11 @@ namespace nx{
                     }
                     ss<<") and attribute shape ( ";
 #ifdef NOFOREACH
-                    for(auto iter = shape.begin();iter!=shape.end();++iter)
+                    for(auto iter = s.begin();iter!=s.end();++iter)
                     {
                         auto v = *iter;
 #else
-                    for(auto v: shape) 
+                    for(auto v: s) 
                     {
 #endif 
                         ss<<v<<" ";
@@ -280,7 +285,7 @@ namespace nx{
                     throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
                 }
 
-                this->_imp.write(const_cast<typename ATYPE::value_type*>
+                this->_imp.read(const_cast<typename ATYPE::value_type*>
                                  (a.storage().ptr()));
             }
 
@@ -443,7 +448,7 @@ namespace nx{
                 }
             }
 
-            //-----------------------------------------------------------------
+            //------------------------------------------------------------------
             /*!
             \brief writing string attributes
 
@@ -581,7 +586,6 @@ namespace nx{
                 ATTRIBUTE_READ_ARRAY(o);
             }
 
-
             //-----------------------------------------------------------------
             /*!
             \brief read a single scalar value
@@ -594,7 +598,7 @@ namespace nx{
             */
             template<typename T> void read(T &value) const
             {
-                _imp.write(&value);
+                _imp.read(&value);
             }
 
             //============simple maintenance methods========================
@@ -605,41 +609,30 @@ namespace nx{
             }
 
             //--------------------------------------------------------------
+            //! return attribute rank
+            size_t rank() const { return this->_imp.rank(); }
+
+            //--------------------------------------------------------------
             //! obtain attribute size
-            size_t size() const
-            {
-                return _imp.size();
-            }
+            size_t size() const { return _imp.size(); }
 
             //--------------------------------------------------------------
             //! obtain type id
 
             //! Returns the type ID of the data stored in the attribute.
-            TypeID type_id() const
-            {
-                return _imp.type_id();
-            }
+            TypeID type_id() const { return _imp.type_id(); }
 
             //--------------------------------------------------------------
             //! close attribute
-            void close()
-            {
-                _imp.close();
-            }
+            void close() { _imp.close(); }
 
             //---------------------------------------------------------------
             //! check validity of the attribute
-            bool is_valid() const
-            {
-                return _imp.is_valid();
-            }
+            bool is_valid() const { return _imp.is_valid(); }
 
             //---------------------------------------------------------------
             //! get attribute name
-            String name() const
-            {
-                return _imp.name();
-            }
+            String name() const { return _imp.name(); }
 
     };
 
