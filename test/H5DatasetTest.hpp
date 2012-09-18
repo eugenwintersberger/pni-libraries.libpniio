@@ -79,8 +79,8 @@ class H5DatasetTest:public CppUnit::TestFixture{
         CPPUNIT_TEST(test_selection<Complex64>);
         CPPUNIT_TEST(test_selection<Complex128>);
         CPPUNIT_TEST(test_selection<Binary>);
-        CPPUNIT_TEST(test_string_selection);
         CPPUNIT_TEST(test_bool_selection);
+        CPPUNIT_TEST(test_string_selection);
         CPPUNIT_TEST_SUITE_END();
     private:
         H5File _file;

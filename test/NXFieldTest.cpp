@@ -204,7 +204,7 @@ void NXFieldTest::test_io_string_array()
     DArray<String> read(s);
 
     std::fill(write.begin(),write.end(),"Hello");
-    std::fill(write.begin(),write.end(),"");
+    std::fill(read.begin(),read.end(),"");
 
     NXField field1 = file.create_field<String>("array",s);
     CPPUNIT_ASSERT_NO_THROW(field1.write(write));
