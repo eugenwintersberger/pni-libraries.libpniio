@@ -62,4 +62,4 @@ run:
 	./nxstrfield_ex1
 	./nxstrfield_ex2
 	./nxbinfield_ex1
-	./d4
+	./simple_io

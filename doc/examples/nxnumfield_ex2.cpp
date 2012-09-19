@@ -28,6 +28,9 @@ int main(int argc,char **argv)
     //read all values
     shape_t shape{field.size()};
     DArray<Int32> counters(shape);
+    std::cout<<"size: "<<field.size()<<std::endl;
+    for(auto s: field.shape<shape_t>()) std::cout<<s<<" ";
+    std::cout<<std::endl;
     field.read(counters);
 
     //read a part of the values

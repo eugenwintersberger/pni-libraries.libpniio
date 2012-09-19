@@ -56,7 +56,7 @@ namespace h5{
     {
         private:
             H5Dataspace _fspace; //!< file dataspace of the dataset
-            H5Dataspace _mspace; //!< memory dataspace
+            mutable H5Dataspace _mspace; //!< memory dataspace
 
             //---------some private IO templates----------------------
             //! obtain the dataspace from an existing object
@@ -515,11 +515,6 @@ namespace h5{
             template<typename CTYPE> CTYPE shape() const
             {
                 return _mspace.shape<CTYPE>();
-                /*
-                if(_fspace != _mspace) return _mspace.shape<CTYPE>();
-
-                return _fspace.shape<CTYPE>();
-                */
             }
 
             //-----------------------------------------------------------------
@@ -586,6 +581,7 @@ namespace h5{
             void clear_selections() const
             {
                 H5Sselect_all(_fspace.id());
+                _mspace = _fspace;
             }
 
             //-----------------------------------------------------------------

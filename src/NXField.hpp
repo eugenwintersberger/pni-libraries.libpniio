@@ -244,6 +244,7 @@ namespace nx{
 
                 if(b.size() != this->imp().size())
                 {
+                    this->imp().clear_selections();
                     std::stringstream ss;
                     ss<<"Buffer size ("<<b.size()<<") and field size (";
                     ss<<this->size()<<") do not match!";
@@ -258,6 +259,7 @@ namespace nx{
                 }
                 catch(...)
                 {
+                    this->imp().clear_selections();
                     throw NXFieldError(EXCEPTION_RECORD,
                             "Cannot read to buffer!");
                 }
@@ -285,6 +287,7 @@ namespace nx{
 
                 if(b.size() != this->size())
                 {
+                    this->imp().clear_selections();
                     std::stringstream ss;
                     ss<<"Source buffer size ("<<b.size()<<") does not match";
                     ss<<"target field size ("<<this->size()<<")!";
@@ -297,6 +300,7 @@ namespace nx{
                 }
                 catch(...)
                 {
+                    this->imp().clear_selections();
                     throw NXFieldError(EXCEPTION_RECORD,
                             "Cannot write buffer!");
                 }
@@ -359,6 +363,7 @@ namespace nx{
                 }
                 catch(...)
                 {
+                    this->imp().clear_selections();
                     throw NXFieldError(EXCEPTION_RECORD,
                             "Cannt read data to array!");
                 }
@@ -421,6 +426,7 @@ namespace nx{
                 }
                 catch(...)
                 {
+                    this->imp().clear_selections();
                     throw NXFieldError(EXCEPTION_RECORD,
                             "Cannt write data from array!");
                 }
@@ -749,16 +755,21 @@ namespace nx{
                 }
                 catch(MemoryNotAllocatedError &error)
                 {
+                    this->imp().clear_selections();
                     error.append(EXCEPTION_RECORD); throw error;
                 }
                 catch(ShapeMissmatchError &error)
                 {
+                    this->imp().clear_selections();
                     error.append(EXCEPTION_RECORD); throw error;
                 }
                 catch(NXFieldError &error)
                 {
+                    this->imp().clear_selections();
                     error.append(EXCEPTION_RECORD); throw error;
                 }
+
+                this->imp().clear_selections();
             }
 
            
@@ -789,6 +800,7 @@ namespace nx{
                 }
                 catch(...)
                 {
+                    this->imp().clear_selections();
                     throw NXFieldError(EXCEPTION_RECORD,
                     "Error writing data to field ["+this->path()+"]!");
                 }
@@ -816,12 +828,16 @@ namespace nx{
                 }
                 catch(ShapeMissmatchError &error)
                 {
+                    this->imp().clear_selections();
                     error.append(EXCEPTION_RECORD); throw error;
                 }
                 catch(NXFieldError &error)
                 {
+                    this->imp().clear_selections();
                     error.append(EXCEPTION_RECORD); throw error;
                 }
+
+                this->imp().clear_selections();
             }
 
             //------------------------------------------------------------------
@@ -928,16 +944,20 @@ namespace nx{
                 }
                 catch(MemoryNotAllocatedError &error)
                 {
+                    this->imp().clear_selections();
                     error.append(EXCEPTION_RECORD); throw error;
                 }
                 catch(ShapeMissmatchError &error)
                 {
+                    this->imp().clear_selections();
                     error.append(EXCEPTION_RECORD); throw error;
                 }
                 catch(NXFieldError &error)
                 {
+                    this->imp().clear_selections();
                     error.append(EXCEPTION_RECORD); throw error;
                 }
+                this->imp().clear_selections();
             }
 
 

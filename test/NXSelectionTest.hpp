@@ -104,6 +104,7 @@ template<typename T> void NXSelectionTest::test_scalar_selection()
         {
             write = T(i*j);
             read = T(0);
+            CPPUNIT_ASSERT(field(i,j).size()==1);
             field(i,j).write(write);
             field(i,j).read(read);
             check_equality(read,write);
