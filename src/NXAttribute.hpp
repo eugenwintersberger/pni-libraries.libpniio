@@ -449,32 +449,6 @@ namespace nx{
             }
 
             //------------------------------------------------------------------
-            /*!
-            \brief writing string attributes
-
-            Special method for writing a string attribute.
-            \throws ShapeMissmatchError if the field is not scalar
-            \throws NXAttributeError in case of any other IO error
-            \param value reference to the string to write
-            */
-            void write(const String &value) const
-            {
-                if(this->size()!=1)
-                    throw ShapeMissmatchError(EXCEPTION_RECORD,
-                            "Field is not scalar!");
-
-                try
-                {
-                    this->_imp.write(&value);
-                }
-                catch(...)
-                {
-                    throw NXAttributeError(EXCEPTION_RECORD,
-                            "Error writing attribute!");
-                }
-            }
-
-            //-----------------------------------------------------------------
             /*! 
             \brief write a C-string
 
@@ -488,7 +462,7 @@ namespace nx{
                 try
                 {
                     String s(value);
-                    this->write(&s);
+                    this->write(s);
                 }
                 catch(ShapeMissmatchError &error)
                 {
