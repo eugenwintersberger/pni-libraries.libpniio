@@ -1,7 +1,7 @@
 CPPFLAGS=-O0 -g -std=c++0x $(shell pkg-config --cflags pninx)
 LDFLAGS=$(shell pkg-config --libs pninx)
 
-all: nxfile_ex1 nxgroup_ex1 nxgroup_ex2 nxnumfield_ex1 nxnumfield_ex2 nxstrfield_ex1 nxstrfield_ex2 nxbinfield_ex1 simple_io thread_ex1
+all: nxfile_ex1 nxgroup_ex1 nxgroup_ex2 nxnumfield_ex1 nxnumfield_ex2 nxstrfield_ex1 nxstrfield_ex2 nxbinfield_ex1 simple_io thread_ex1 nxnumfield_ex4
 
 nxfile_ex1: nxfile_ex1.cpp
 	$(CXX) -o $@ $< $(CPPFLAGS) $(LDFLAGS)
@@ -39,6 +39,9 @@ d4: d4.cpp NXHelper.cpp
 thread_ex1: thread_ex1.cpp
 	$(CXX) -o $@ $< $(CPPFLAGS) $(LDFLAGS)
 
+nxnumfield_ex4: nxnumfield_ex4.cpp
+	$(CXX) -o $@ $< $(CPPFLAGS) $(LDFLAGS)
+
 .PHONY: clean run
 
 clean:
@@ -52,6 +55,7 @@ clean:
 	rm -f nxbinfield_ex1
 	rm -f simple_io
 	rm -r thread_ex1
+	rm -rf nxnumfield_ex4
 
 run:
 	./nxfile_ex1
@@ -59,6 +63,7 @@ run:
 	./nxgroup_ex2
 	./nxnumfield_ex1
 	./nxnumfield_ex2
+	./nxnumfield_ex4
 	./nxstrfield_ex1
 	./nxstrfield_ex2
 	./nxbinfield_ex1

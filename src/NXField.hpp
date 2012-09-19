@@ -751,7 +751,7 @@ namespace nx{
                 {
                     //this should virtually call the appropriate read method
                     //according to the storage type of the NumArray template
-                    this->read(array.storage());
+                    this->read(const_cast<ATYPE&>(array.storage()));
                 }
                 catch(MemoryNotAllocatedError &error)
                 {
