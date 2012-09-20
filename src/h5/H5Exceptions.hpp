@@ -44,9 +44,9 @@ using namespace pni::utils;
     \ingroup nxh5_error_classes 
     \brief HDF5 exceptions base class
 
-    Base class for all HDF5 related exceptions. The class is a descendant
-    of the Exception class declared in libpniutils and adds managment for the
-    HDF5 error stack (H5ErrorStack).
+    Base class for all HDF5 related exceptions. The class is a descendant of the
+    Exception class declared in libpniutils and adds managment for the HDF5
+    error stack (H5ErrorStack).
     */
     class H5Exception:public Exception
     {
@@ -54,29 +54,44 @@ using namespace pni::utils;
             H5ErrorStack _h5estack;  //!< HDF5 error stack
             std::ostream &print(std::ostream &) const; //!< print method
         public:
+            //-----------------------------------------------------------------
             //! default constructor
             H5Exception();
-            //! constructor
 
-            //! \param n name of the exception
+            //-----------------------------------------------------------------
+            /*! 
+            \brief constructor
+
+            \param n name of the exception
+            */
             H5Exception(const String &n);
-            //! constructor
 
-            //! \param n exception name
-            //! \param i exception issuer
-            //! \param d exception description
+            //-----------------------------------------------------------------
+            /*! 
+            \brief constructor
+
+            \param n exception name
+            \param i exception issuer
+            \param d exception description
+            */
             H5Exception(const String &n,const ExceptionRecord &i,const String &d);
+
+            //-----------------------------------------------------------------
             //! copy constructor
             H5Exception(const H5Exception &e);
-            //! destructor
-            virtual ~H5Exception() throw();
 
+            //-----------------------------------------------------------------
+            //! destructor
+            ~H5Exception() throw();
+
+            //-----------------------------------------------------------------
             //! output operator
             friend std::ostream &operator<<(std::ostream &o,
                                             const H5Exception &e);
 
     };
 
+    //-------------------------------------------------------------------------
     /*! 
     \ingroup nxh5_error_classes
     \brief data-type error
@@ -87,21 +102,30 @@ using namespace pni::utils;
     class H5DataTypeError:public H5Exception
     {
         public:
+            //-----------------------------------------------------------------
             //! default constructor
             H5DataTypeError();
-            //! constructor
 
-            //! \param i signature of the exception issuer
-            //! \param d exception description
+            //-----------------------------------------------------------------
+            /*! 
+            \brief constructor
+
+            \param i signature of the exception issuer
+            \param d exception description
+            */
             H5DataTypeError(const ExceptionRecord &i,const String &d);
-            //! destructor
-            virtual ~H5DataTypeError() throw();
 
+            //-----------------------------------------------------------------
+            //! destructor
+            ~H5DataTypeError() throw();
+
+            //-----------------------------------------------------------------
             //! output operator
             friend std::ostream &operator<<(std::ostream &o,
                                             const H5DataTypeError &e);
     };
 
+    //-------------------------------------------------------------------------
     /*! 
     \ingroup nxh5_error_classes
     \brief dataset error
@@ -112,21 +136,30 @@ using namespace pni::utils;
     class H5DataSetError:public H5Exception
     {
         public:
+            //-----------------------------------------------------------------
             //! default constructor
             H5DataSetError();
-            //! constructor
 
-            //! \param i signature of the exception issuer
-            //! \param d exception description
+            //-----------------------------------------------------------------
+            /*! 
+            \brief constructor
+
+            \param i signature of the exception issuer
+            \param d exception description
+            */
             H5DataSetError(const ExceptionRecord &i,const String &d);
-            //! default destructor
-            virtual ~H5DataSetError() throw();
 
+            //-----------------------------------------------------------------
+            //! default destructor
+            ~H5DataSetError() throw();
+
+            //-----------------------------------------------------------------
             //! output operator
             friend std::ostream &operator<<(std::ostream &o,
                                             const H5DataSetError &e);
     };
 
+    //-------------------------------------------------------------------------
     /*! 
     \ingroup nxh5_error_classes
     \brief data-space error
@@ -136,21 +169,30 @@ using namespace pni::utils;
     class H5DataSpaceError:public H5Exception
     {
         public:
+            //-----------------------------------------------------------------
             //! default constructor
             H5DataSpaceError();
-            //! constructor
 
-            //! \param i signature of the exception issuer
-            //! \param d description of the exception
+            //-----------------------------------------------------------------
+            /*! 
+            \brief constructor
+
+            \param i signature of the exception issuer
+            \param d description of the exception
+            */
             H5DataSpaceError(const ExceptionRecord &i,const String &d);
-            //! destructor
-            virtual ~H5DataSpaceError() throw();
 
+            //-----------------------------------------------------------------
+            //! destructor
+            ~H5DataSpaceError() throw();
+
+            //-----------------------------------------------------------------
             //! output operator
             friend std::ostream &operator<<(std::ostream &o,
                                             const H5DataSpaceError &e);
     };
 
+    //-------------------------------------------------------------------------
     /*! 
     \ingroup nxh5_error_classes
     \brief attribute error
@@ -160,69 +202,98 @@ using namespace pni::utils;
     class H5AttributeError:public H5Exception
     {
         public:
+            //-----------------------------------------------------------------
             //! default constructor
             H5AttributeError();
-            //! constructor
 
-            //! \param i signature of the exception issuer
-            //! \param d description of the error
+            //-----------------------------------------------------------------
+            /*! 
+            \brief constructor
+
+            \param i signature of the exception issuer
+            \param d description of the error
+            */
             H5AttributeError(const ExceptionRecord &i,const String &d);
-            //! destructor
-            virtual ~H5AttributeError() throw();
 
+            //-----------------------------------------------------------------
+            //! destructor
+            ~H5AttributeError() throw();
+
+            //-----------------------------------------------------------------
             //! output operator
             friend std::ostream &operator<<(std::ostream &o,
                                             const H5AttributeError &e);
     };
 
+    //-------------------------------------------------------------------------
     /*! 
     \ingroup nxh5_error_classes
     \brief file error
 
-    Exception thrown in situations where error occur involving HDF5 file objects.
+    Exception thrown in situations where error occur involving HDF5 file
+    objects.
     */
     class H5FileError:public H5Exception
     {
         public:
+            //-----------------------------------------------------------------
             //! default constructor
             H5FileError();
-            //! constructor
 
-            //! \param i signature of the exception issuer
-            //! \param d description of the error
+            //-----------------------------------------------------------------
+            /*! 
+            \brief constructor
+
+            \param i signature of the exception issuer
+            \param d description of the error
+            */
             H5FileError(const ExceptionRecord &i,const String &d);
-            //! destructor
-            virtual ~H5FileError() throw();
 
+            //-----------------------------------------------------------------
+            //! destructor
+            ~H5FileError() throw();
+
+            //-----------------------------------------------------------------
             //! output operator
             friend std::ostream &operator<<(std::ostream &o,
                                             const H5FileError &e);
     };
 
+    //-------------------------------------------------------------------------
     /*! 
     \ingroup nxh5_error_classes
     \brief group error
 
-    Exception thrown in situations where errors occur involving HDF5 group objects.
+    Exception thrown in situations where errors occur involving HDF5 group
+    objects.
     */
     class H5GroupError:public H5Exception
     {
         public:
+            //-----------------------------------------------------------------
             //! default constructor
             H5GroupError();
-            //! constructor
 
-            //! \param i signature of the exception issuer
-            //! \param d description of the error
+            //-----------------------------------------------------------------
+            /*! 
+            \brief constructor
+
+            \param i signature of the exception issuer
+            \param d description of the error
+            */
             H5GroupError(const ExceptionRecord &i,const String &d);
-            //! destructor
-            virtual ~H5GroupError() throw();
 
+            //-----------------------------------------------------------------
+            //! destructor
+            ~H5GroupError() throw();
+
+            //-----------------------------------------------------------------
             //! output operator
             friend std::ostream &operator<<(std::ostream &o,
                                             const H5GroupError &e);
     };
 
+    //-------------------------------------------------------------------------
     /*! 
     \ingroup nxh5_error_classes
     \brief property list error
@@ -233,21 +304,30 @@ using namespace pni::utils;
     class H5PropertyListError:public H5Exception
     {
         public:
+            //-----------------------------------------------------------------
             //! default constructor
             H5PropertyListError();
-            //! constructor
 
-            //! \param i signature of the exception issuer
-            //! \param d description of the error
+            //-----------------------------------------------------------------
+            /*! 
+            \brief constructor
+
+            \param i signature of the exception issuer
+            \param d description of the error
+            */
             H5PropertyListError(const ExceptionRecord &i,const String &d);
-            //! destructor
-            virtual ~H5PropertyListError() throw();
 
+            //-----------------------------------------------------------------
+            //! destructor
+            ~H5PropertyListError() throw();
+
+            //-----------------------------------------------------------------
             //! output operator
             friend std::ostream &operator<<(std::ostream &o,
                                             const H5PropertyListError &e);
     };
 
+    //-------------------------------------------------------------------------
     /*! 
     \ingroup nxh5_error_classes
     \brief filter error
@@ -257,21 +337,30 @@ using namespace pni::utils;
     class H5FilterError:public H5Exception
     {
         public:
+            //-----------------------------------------------------------------
             //! default constructor
             H5FilterError();
-            //! constructor
 
-            //! \param i signature of the exception issuer
-            //! \param d description of the error
+            //-----------------------------------------------------------------
+            /*! 
+            \brief constructor
+
+            \param i signature of the exception issuer
+            \param d description of the error
+            */
             H5FilterError(const ExceptionRecord &i,const String &d);
-            //! destructor
-            virtual ~H5FilterError() throw();
 
+            //-----------------------------------------------------------------
+            //! destructor
+            ~H5FilterError() throw();
+
+            //-----------------------------------------------------------------
             //! output operator
             friend std::ostream &operator<<(std::ostream &o,
                                             const H5FilterError &e);
     };
 
+    //-------------------------------------------------------------------------
     /*! 
     \ingroup nxh5_error_classes
     \brief object error
@@ -281,25 +370,32 @@ using namespace pni::utils;
     class H5ObjectError:public H5Exception
     {
         public:
+            //-----------------------------------------------------------------
             //! default constructor
             H5ObjectError():H5Exception("H5ObjectError"){ }
 
-            //! constructor
+            //-----------------------------------------------------------------
+            /*! 
+            \brief constructor
 
-            //! \param i signature of the exception issuer
-            //! \param d description of the error
+            \param i signature of the exception issuer
+            \param d description of the error
+            */
             H5ObjectError(const ExceptionRecord &i,const String &d):
                 H5Exception("H5ObjectError",i,d)
             { }
 
+            //-----------------------------------------------------------------
             //! destructor
-            virtual ~H5ObjectError() throw(){ }
+            ~H5ObjectError() throw(){ }
 
+            //-----------------------------------------------------------------
             //! output operator
             friend std::ostream &operator<<(std::ostream &o,
                                             const H5ObjectError &e);
     };
 
+    //-------------------------------------------------------------------------
     /*! 
     \ingroup nxh5_error_classes
     \brief link error
@@ -309,20 +405,26 @@ using namespace pni::utils;
     class H5LinkError:public H5Exception
     {
         public:
+            //-----------------------------------------------------------------
             //! default constructor
             H5LinkError():H5Exception("H5LinkError"){ }
 
-            //! constructor
+            //-----------------------------------------------------------------
+            /*! 
+            \brief constructor
 
-            //! \param i signature of the exception issuer
-            //! \param d description of the error
+            \param i signature of the exception issuer
+            \param d description of the error
+            */
             H5LinkError(const ExceptionRecord &i,const String &d):
                 H5Exception("H5LinkError",i,d)
             { }
 
+            //-----------------------------------------------------------------
             //! destructor
             virtual ~H5LinkError() throw(){ }
 
+            //-----------------------------------------------------------------
             //! output operator
             friend std::ostream &operator<<(std::ostream &o,
                                             const H5LinkError &e);
