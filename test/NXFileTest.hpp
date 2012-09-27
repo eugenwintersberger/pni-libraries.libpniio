@@ -51,8 +51,6 @@ public:
 	void test_open();
     void test_iterator();
     void test_inquery();
-
-
 };
 
 #endif

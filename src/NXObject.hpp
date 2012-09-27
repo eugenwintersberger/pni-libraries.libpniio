@@ -128,7 +128,7 @@ namespace nx{
             //! destructor
             virtual ~NXObject()
             {
-                _imp.close();
+                this->_imp.close();
             }
 
             //============assignment operators=================================
@@ -136,7 +136,7 @@ namespace nx{
             NXObject<Imp> &operator=(const NXObject<Imp> &o)
             {
                 if(this == &o) return *this;
-                _imp = o._imp;
+                this->_imp = o._imp;
                 return *this;
             }
 
@@ -145,7 +145,7 @@ namespace nx{
             template<typename PImp> NXObject<Imp> &
                 operator=(const NXObject<PImp> &o)
             {
-                _imp = o.imp();
+                this->_imp = o.imp();
                 return *this;
             }
                     
@@ -154,7 +154,7 @@ namespace nx{
             NXObject<Imp> &operator=(NXObject<Imp> &&o)
             {
                 if(this == &o) return *this;
-                _imp = std::move(o._imp);
+                this->_imp = std::move(o._imp);
                 return *this;
             }
 
@@ -373,7 +373,7 @@ namespace nx{
           
             //==================+misc methods===================================
             //! close the object
-            virtual void close() { _imp.close(); }
+            virtual void close() { this->_imp.close(); }
 
             //------------------------------------------------------------------
             /*! 

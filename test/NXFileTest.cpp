@@ -55,17 +55,20 @@ void NXFileTest::test_creation()
 
 	//everything should work fine
 	CPPUNIT_ASSERT_NO_THROW(f = NXFile::create_file("NXFileTest.h5",true,0));
+    CPPUNIT_ASSERT_THROW(f =
+            NXFile::create_file("NXFileTest.h5",true,0),pni::nx::NXFileError);
     f.flush();
     //should produce no exception as HDF5 allows multiple files to be open
-	CPPUNIT_ASSERT_NO_THROW(NXFile::open_file("NXFileTest.h5",true));
+	CPPUNIT_ASSERT_NO_THROW(f = NXFile::open_file("NXFileTest.h5",true));
+    CPPUNIT_ASSERT_NO_THROW(f = NXFile::open_file("NXFileTest.h5",true));
     //try now with readonly flag set
-    CPPUNIT_ASSERT_NO_THROW(NXFile::open_file("NXFileTest.h5",false));
+    CPPUNIT_ASSERT_NO_THROW(f = NXFile::open_file("NXFileTest.h5",false));
 
     //try now multiple calls to create
     //if overwrite is not set an exception should be thrown
-	CPPUNIT_ASSERT_THROW(NXFile::create_file("NXFileTest.h5",false,0),
+	CPPUNIT_ASSERT_THROW(f = NXFile::create_file("NXFileTest.h5",false,0),
             pni::nx::NXFileError);
-    CPPUNIT_ASSERT_THROW(NXFile::create_file("NXFileTest.h5",true,0),
+    CPPUNIT_ASSERT_THROW(f = NXFile::create_file("NXFileTest.h5",true,0),
             pni::nx::NXFileError);
 
 	f.close();

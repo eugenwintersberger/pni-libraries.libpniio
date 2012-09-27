@@ -36,8 +36,8 @@ namespace h5{
     //implementation of the destructor
     H5File::~H5File() 
     {
-        if(is_valid()){
-            /*
+        if(is_valid())
+        {
             std::cerr<<"File: "<<name()<<std::endl;
             std::cerr<<"Open files:      "<<
                 H5Fget_obj_count(id(),H5F_OBJ_FILE)<<std::endl;
@@ -50,7 +50,6 @@ namespace h5{
             std::cerr<<"Open attributes: "<<
                 H5Fget_obj_count(id(),H5F_OBJ_ATTR)<<std::endl;
 
-            */
 
             H5Fflush(id(),H5F_SCOPE_GLOBAL);
             H5Fclose(id());
@@ -82,7 +81,6 @@ namespace h5{
         //check for open objects in the file
         if(is_valid())
         {
-            /*
             std::cerr<<"File: "<<name()<<std::endl;
             std::cerr<<"Open files:      "<<
                 H5Fget_obj_count(id(),H5F_OBJ_FILE)<<std::endl;
@@ -95,7 +93,6 @@ namespace h5{
             std::cerr<<"Open attributes: "<<
                 H5Fget_obj_count(id(),H5F_OBJ_ATTR)<<std::endl;
 
-            */
 
             H5Fflush(id(),H5F_SCOPE_GLOBAL);
             H5Fclose(id());
@@ -181,8 +178,10 @@ namespace h5{
             if(fid<0)
             {
                 H5Pclose(acc_plist);
-                throw H5FileError(EXCEPTION_RECORD,
+                H5FileError error(EXCEPTION_RECORD,
                 "Error create file "+String(n)+" in overwrite mode!");
+                std::cerr<<error<<std::endl;
+                throw error;
             }
         }
         else
@@ -191,9 +190,11 @@ namespace h5{
             if(fid<0)
             {
                 H5Pclose(acc_plist);
-                throw H5FileError(EXCEPTION_RECORD,
+                H5FileError error(EXCEPTION_RECORD,
                 "Error create file "+String(n)+" file most probably already "
                 "exists - use overwrite!");
+                std::cerr<<error<<std::endl;
+                throw error;
             }
         }
 
