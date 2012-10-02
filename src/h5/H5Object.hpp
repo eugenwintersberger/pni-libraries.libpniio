@@ -128,6 +128,7 @@ namespace h5{
             Just like for the copy constructor the reference counter for the
             original ID is incremented.
             \param o object to assign
+            \return refence to object
              */
             H5Object &operator=(const H5Object &o);
 
@@ -137,6 +138,8 @@ namespace h5{
 
             Like the move constructor this operator has no influence on the
             value of the IDs reference counter.
+            \param o object form which to move data
+            \return reference to object
             */
             H5Object &operator=(H5Object &&o);
 
@@ -193,6 +196,7 @@ namespace h5{
 
             Returns the Nexus object type of an object.  This can be either
             NXObjecType::NXFIELD or NXObjectType::NXGROUP. 
+            \return Nexus object type
             */
             pni::nx::NXObjectType nxobject_type() const;
 
