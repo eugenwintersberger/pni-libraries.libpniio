@@ -88,6 +88,7 @@ namespace h5{
             creation
             \param n name of the file
             \param ro if true file will be in read only mode
+            \return instance of H5File
             */
             static H5File open_file(const String &n,bool ro=true);
 
@@ -105,6 +106,7 @@ namespace h5{
             \param n file name
             \param ow overwrite existing file if true
             \param ssize split size
+            \return instance of H5File
             */
             static H5File create_file(const String &n,bool ow=false,
                                       ssize_t ssize=0);

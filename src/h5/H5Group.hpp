@@ -150,17 +150,22 @@ namespace h5{
             H5Object operator[](size_t i) const;
 
             //======================misc methods===============================
-            //! remove an object
+            /*! 
+            \brief remove an object
 
-            //! This method removes an object attached to this 
+            This method removes an object of name n attached to this  group.
+            \param n name of the object to remove
+            */
             void remove(const String &n);
 
             //-----------------------------------------------------------------
-            /*! check for the existance of an object
+            /*! 
+            \brief check for the existance of an object
 
             Checks whether or not an object determined by n exists.  n can be
             either a path relative to this object or an absolute path. 
             \param n path to the object 
+            \return true if an object of name n exists
             */
             bool exists(const String &n) const;
 

@@ -228,6 +228,10 @@ using namespace pni::utils;
             \brief walker function
 
             This function is used to walk through the HDF5 error stack. 
+            \param n undocumented
+            \param eptr pointer to error stack
+            \param client_data data passed by the client to the walker code
+            \return HDF5 error code
             */
             friend herr_t _error_walker(unsigned n,const H5E_error2_t *eptr,void *client_data);
     };
