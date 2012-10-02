@@ -57,6 +57,8 @@ namespace h5{
 
             This protected constructor allows object construction form an HDF5
             ID. Only derived classes are supposed to use this constructor.
+            The reference counter of the id passed will not be altered.
+            \param id HDF5 id
             */
             explicit H5NamedObject(const hid_t &id);
         public:
