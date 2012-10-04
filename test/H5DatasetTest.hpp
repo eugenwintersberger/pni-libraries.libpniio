@@ -27,6 +27,7 @@ class H5DatasetTest:public CppUnit::TestFixture{
         CPPUNIT_TEST(test_assignment);
         CPPUNIT_TEST(test_inquery);
         CPPUNIT_TEST(test_resize);
+        CPPUNIT_TEST(test_parent);
         CPPUNIT_TEST(test_scalar_data<UInt8>);
         CPPUNIT_TEST(test_scalar_data<Int8>);
         CPPUNIT_TEST(test_scalar_data<UInt16>);
@@ -102,6 +103,7 @@ class H5DatasetTest:public CppUnit::TestFixture{
         template<typename T> void test_selection();
         void test_string_selection();
         void test_bool_selection();
+        void test_parent();
 };
 
 //-----------------------------------------------------------------------------

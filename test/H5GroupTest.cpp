@@ -154,3 +154,14 @@ void H5GroupTest::test_comparison()
     CPPUNIT_ASSERT(g2 != g1);
 }
 
+//-----------------------------------------------------------------------------
+void H5GroupTest::test_parent()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    H5Group g1("group1/data",file);
+    CPPUNIT_ASSERT(g1.parent().name() == "group1");
+    H5Group p(g1.parent());
+
+    CPPUNIT_ASSERT(p.parent().name() == "/");
+}

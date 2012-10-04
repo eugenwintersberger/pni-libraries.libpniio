@@ -142,6 +142,21 @@ void H5DatasetTest::test_linking()
 }
 
 //-----------------------------------------------------------------------------
+void H5DatasetTest::test_parent()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    H5Datatype type = H5DatatypeFactory::create_type<UInt16>();
+    H5Dataspace space;
+    H5Dataset d("/detector/data",_file,type,space);
+
+    H5Group p(d.parent());
+    CPPUNIT_ASSERT(p.name() == "detector");
+    H5Dataset t("temperature",_file,type,space);
+    CPPUNIT_ASSERT(t.parent().name() == "/");
+}
+
+//-----------------------------------------------------------------------------
 void H5DatasetTest::test_resize()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
