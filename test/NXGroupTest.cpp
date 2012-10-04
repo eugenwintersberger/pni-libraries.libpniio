@@ -99,6 +99,17 @@ void NXGroupTest::test_creation()
 }
 
 //------------------------------------------------------------------------------
+void NXGroupTest::test_parent()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    NXGroup g = _f.create_group("detector/modules");
+    NXGroup p = g.parent();
+    CPPUNIT_ASSERT(p.name() == "detector");
+    CPPUNIT_ASSERT(p.parent().name() == "/");
+}
+
+//------------------------------------------------------------------------------
 void NXGroupTest::test_open()
 {
 	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;

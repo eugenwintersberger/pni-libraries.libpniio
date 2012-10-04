@@ -25,8 +25,8 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#ifndef NXFIELD_HPP_
-#define NXFIELD_HPP_
+#ifndef __NXFIELD_HPP__
+#define __NXFIELD_HPP__
 
 #include <sstream>
 
@@ -522,6 +522,18 @@ namespace nx{
             \return data type ID
             */
             TypeID type_id() const { return this->imp().type_id(); }
+
+            //-----------------------------------------------------------------
+            /*!
+            \brief get parent object
+
+            Returns the parent object of the field.
+            \return parent object
+            */
+            NXObject<MAPTYPE(Imp,ObjectImpl)> parent() const
+            {
+                return NXObject<MAPTYPE(Imp,ObjectImpl)>(this->imp().parent());
+            }
             
             //-----------------------------------------------------------------
             /*! 

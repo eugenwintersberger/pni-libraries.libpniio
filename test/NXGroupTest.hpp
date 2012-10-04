@@ -41,6 +41,7 @@ class NXGroupTest: public CppUnit::TestFixture
 	CPPUNIT_TEST_SUITE(NXGroupTest);
 	CPPUNIT_TEST(test_creation);
 	CPPUNIT_TEST(test_open);
+    CPPUNIT_TEST(test_parent);
 	CPPUNIT_TEST(test_internal_links);
     CPPUNIT_TEST(test_iterator);
 	CPPUNIT_TEST(test_existance);
@@ -64,6 +65,7 @@ public:
     void test_linking();
     void test_comparison();
     void test_iterator();
+    void test_parent();
 };
 
 

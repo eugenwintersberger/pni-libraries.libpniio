@@ -98,6 +98,19 @@ void NXFieldTest::test_open()
 }
 
 //------------------------------------------------------------------------------
+void NXFieldTest::test_parent()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    NXField f = file.create_field<Float64>("/detector/data");
+    NXGroup p = f.parent();
+    CPPUNIT_ASSERT(p.is_valid());
+    CPPUNIT_ASSERT(p.name() == "detector");
+    f = file.create_field<UInt16>("temperature");
+    CPPUNIT_ASSERT(f.parent().name() == "/");
+}
+
+//------------------------------------------------------------------------------
 void NXFieldTest::test_assignment()
 {
 	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;

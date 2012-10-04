@@ -25,8 +25,8 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#ifndef NXGROUP_HPP_
-#define NXGROUP_HPP_
+#ifndef __NXGROUP_HPP__
+#define __NXGROUP_HPP__
 
 #include <pni/utils/Types.hpp>
 
@@ -330,6 +330,18 @@ namespace nx{
             \return number of childs
             */
             size_t nchilds() const { return this->imp().nchilds(); }
+
+            //-----------------------------------------------------------------
+            /*!
+            \brief return parent object
+
+            Return the parent object of the gruop.
+            \return parent object
+            */
+            NXObject<MAPTYPE(Imp,ObjectImpl)> parent() const
+            {
+                return NXGroup<Imp>(this->imp().parent());
+            }
 
             //-----------------------------------------------------------------
             /*! 

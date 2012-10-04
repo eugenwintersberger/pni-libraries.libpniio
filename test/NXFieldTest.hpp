@@ -49,6 +49,7 @@ class NXFieldTest:public CppUnit::TestFixture
 	CPPUNIT_TEST(test_assignment);
 	CPPUNIT_TEST(test_open);
     CPPUNIT_TEST(test_resize);
+    CPPUNIT_TEST(test_parent);
     //testing scalar object IO
     CPPUNIT_TEST(test_io_scalar<UInt8>);
     CPPUNIT_TEST(test_io_scalar<Int8>);
@@ -136,6 +137,7 @@ public:
 
     template<typename T> void test_scalar_selection();
     void test_grow();
+    void test_parent();
 
 };
 
