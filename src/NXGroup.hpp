@@ -49,6 +49,7 @@ namespace nx{
     template<typename Imp> class NXGroup:public NXObject<Imp> 
     {
         public:
+            //===================public types==================================
             //! shared pointer type to a NXGroup type
             typedef std::shared_ptr<NXGroup<Imp> > shared_ptr; 
             typedef NXObjectIterator<NXGroup<Imp>,

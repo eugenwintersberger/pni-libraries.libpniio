@@ -67,7 +67,8 @@ namespace nx{
     tree, methods to set and get attributes, creation of links to an object.
     Methods for creating links to this objects are also included.
     */
-    template<typename Imp> class NXObject {
+    template<typename Imp> class NXObject 
+    {
         private:
             Imp _imp;	//!< implementation object
         protected:
@@ -80,20 +81,21 @@ namespace nx{
             */
             Imp &imp() { return _imp;}
         public:
+            //=====================public types================================
+            //! shared poitner type to an NXObject
+            typedef std::shared_ptr<NXObject<Imp> > shared_ptr; 
+
+            //! attribute iterator type
             typedef NXAttributeIterator<NXObject<Imp>,
                    NXAttribute<MAPTYPE(Imp,AttributeImpl)> > 
                        attr_iterator; //!< attribute iterator type
             //==================constructors and destructors===================
-            typedef std::shared_ptr<NXObject<Imp> > 
-                shared_ptr; //!< shared poitner type to an NXObject
             //! default constructor
-            NXObject(){
-            }
+            NXObject(){ }
 
             //-----------------------------------------------------------------
             //! copy constructor
-            NXObject(const NXObject<Imp> &o):
-                _imp(o._imp)
+            NXObject(const NXObject<Imp> &o):_imp(o._imp)
             {
                 //here we nothing to do - the default constructor
                 //of the implementation object has already been 
@@ -128,10 +130,7 @@ namespace nx{
            
             //-----------------------------------------------------------------
             //! destructor
-            virtual ~NXObject()
-            {
-                this->_imp.close();
-            }
+            virtual ~NXObject() { this->_imp.close(); }
 
             //============assignment operators=================================
             //! copy assignment operator

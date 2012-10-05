@@ -61,7 +61,7 @@ namespace h5{
     H5Object::~H5Object()
     {
         if(is_valid()) H5Oclose(id());
-        _id = 0;
+        _id = 0; //reset the ID value to 0
     }   
 
 
@@ -98,7 +98,8 @@ namespace h5{
     }
    
     //=============basic manipulation methods==================================
-    bool H5Object::is_valid() const {
+    bool H5Object::is_valid() const 
+    {
         //std::cout<<_id;
         if(H5Iis_valid(_id)>0) return true;
 
@@ -125,7 +126,8 @@ namespace h5{
             throw H5ObjectError(EXCEPTION_RECORD,"Invalid HDF5 object!");
 
         H5I_type_t tid = H5Iget_type(_id);
-        switch(tid){
+        switch(tid)
+        {
             case H5I_FILE: return H5ObjectType::FILE;
             case H5I_GROUP: return H5ObjectType::GROUP;
             case H5I_DATASET: return H5ObjectType::DATASET;
@@ -133,7 +135,6 @@ namespace h5{
             case H5I_DATASPACE: return H5ObjectType::DATASPACE;
             case H5I_ATTR: return H5ObjectType::ATTRIBUTE;
             default: return H5ObjectType::BADID;
-
         };
     }
 
