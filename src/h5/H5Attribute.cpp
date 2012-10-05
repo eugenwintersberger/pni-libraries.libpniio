@@ -91,7 +91,6 @@ namespace h5{
         _dtype.close();
 
         if(is_valid()) H5Aclose(id());
-        //H5Object::id(0);
         H5Object::close();
     }
 
@@ -133,7 +132,6 @@ namespace h5{
         _dtype.close();
 
         if(is_valid()) H5Aclose(id());
-        //H5Object::id(0);
         H5Object::close();
     }
 

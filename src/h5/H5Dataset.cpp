@@ -111,11 +111,6 @@ namespace h5{
 
         //set id
         *this = H5Dataset(did);
-        //H5Object::id(did);
-
-        //get dataspace
-        //_fspace = __obtain_dataspace();
-        //_mspace = _fspace;
         //close property list
         H5Pclose(lpl);
     }
@@ -142,7 +137,6 @@ namespace h5{
         _mspace.close();
         if(is_valid()) H5Dclose(id());
         H5Object::close();
-        //H5Object::id(0);
     }
 
     //=========implementation of the assignment operators==============

@@ -184,17 +184,16 @@ namespace h5{
                 hid_t did = H5Dcreate2(g.id(),n.c_str(),t.id(),s.id(),
                         lpl,cpl,H5P_DEFAULT);
                 if(did<0)
+                {
+                    //close property lists before throw exceptions
+                    H5Pclose(lpl);
+                    H5Pclose(cpl);
                     throw H5DataSetError(EXCEPTION_RECORD, 
                           "Cannot create dataset ["+n+"] below ["+g.path()+"]!");
+                };
 
                 
                 *this = H5Dataset(did);
-                //H5Object::id(did);
-
-                //when we create a dataset the file and memory dataspace
-                //coincide
-                //_fspace = __obtain_dataspace();
-                //_mspace = _fspace;
                 //construction done - close property lists
                 H5Pclose(lpl);
                 H5Pclose(cpl);
@@ -247,14 +246,15 @@ namespace h5{
                 hid_t did = H5Dcreate2(g.id(),n.c_str(),t.id(),s.id(),
                         lpl,cpl,H5P_DEFAULT);
                 if(did<0)
+                {
+                    //close property lists before throw exceptions
+                    H5Pclose(lpl);
+                    H5Pclose(cpl);
                     throw H5DataSetError(EXCEPTION_RECORD, 
                          "Cannot create dataset ["+n+"] below ["+g.path()+"]!");
+                }
 
                 *this = H5Dataset(did);
-                //H5Object::id(did);
-                //file and memory dataspace are equal after creation
-                //_fspace = __obtain_dataspace();
-                //_mspace = _fspace;
                 //construction done - close property lists
                 H5Pclose(lpl);
                 H5Pclose(cpl);

@@ -147,7 +147,6 @@ namespace h5 {
     {
         if(is_valid()) H5Sclose(id());
         //reset the object ID
-        //H5Object::id(0);
         H5Object::close();
     }
 
