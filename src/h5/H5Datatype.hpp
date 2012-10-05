@@ -87,9 +87,23 @@ namespace h5{
 
 
             //!==========comparison operators==================================
-            //! equality comparison
+            /*! 
+            \brief equality comparison
+
+            \param a lhs value of the operator
+            \param b rhs value of the operator
+            \return true if types are equal
+            */
             friend bool operator==(const H5Datatype &a,const H5Datatype &b);
-            //! inequality 
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief inequality 
+
+            \param a lhs value of the operator
+            \param b rhs value of the operator
+            \return true if not equal
+            */
             friend bool operator!=(const H5Datatype &a,const H5Datatype &b);
     };
 

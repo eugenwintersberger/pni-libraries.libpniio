@@ -119,6 +119,8 @@ namespace nx{
             Does copy construction from an arbitrary different implementation of
             NXObject<>. This implies that the two implementation instances are
             convertible.
+            \tparam PImp implementation type of the original NXObject instance
+            \param o original instance of the object
             */
             template<typename PImp> NXObject(const NXObject<PImp> &o):
                 _imp(o.imp())

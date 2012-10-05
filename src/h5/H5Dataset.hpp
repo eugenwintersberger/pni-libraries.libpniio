@@ -425,6 +425,7 @@ namespace h5{
             thrown.
             \throws H5DatasetError if H5Object is not a dataset
             \param o H5Object to convert to H5Datatype
+            \return instance of H5Dataset
             */
             H5Dataset &operator=(const H5Object &o);
 
@@ -441,6 +442,7 @@ namespace h5{
             exception will be thrown. 
             \throws H5DatasetError if H5Object is not a dataset
             \param o H5Object to convert to H5Dataset
+            \return instance of H5Dataset
             */
             H5Dataset &operator=(H5Object &&o);
 
@@ -695,6 +697,8 @@ namespace h5{
             This creates a new link to this dataset with name n below group g.
             Like link(const String &n) this method can only produce file local
             links.
+            \param g group where the link should be placed
+            \param n name of the new link
             */
             void link(const H5Group &g,const String &n) const;
 

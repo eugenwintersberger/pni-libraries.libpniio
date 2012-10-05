@@ -66,6 +66,7 @@ namespace nx{
             The copy constructor is doing exactly the same as the assignment
             operator. Thus it can be used to assign
             an object directly at its construction.
+            \param o original group object 
             */
             NXGroup(const NXGroup<Imp> &o):NXObject<Imp>(o) { }
             
@@ -154,6 +155,18 @@ namespace nx{
             /*! 
             \brief create a field without filter
 
+            Create a new data field without a filter for compression.
+            \code
+            NXGroup g = f["/scan_1/instrument/detector"];
+
+            shape_t shape{0,1024,1024};
+            shape_t chunk{0,128,1024};
+
+            NField field = g.create_field<UInt16>("data",shape,chunk);
+            \endcode
+            The chunk shape here is optional. If not given a default value will
+            be generated from the original shape where the first dimension is
+            set to one. 
             \throws ShapeMissmatchError if chunk and field shape do not have the
             same rank
             \throws NXGroupError in all other cases
@@ -222,12 +235,21 @@ namespace nx{
             Create a multidimensional field with a filter for data compression.
             With this method the chunk shape for the field is determined
             automatically.
+            \code
+            NXGroup g = file["/scan_1/instrument/detector"];
+
+            shape_t shape{0,2048,2048};
+            NXDeflateFilter filter;
+
+            NXField field = g.create_field<UInt16>("data",shape,filter);
+            \endcode
             \tparam T data type for the filed
             \tparam FilterImp filter implementation (implicit)
             \tparam CTYPES container type for the field shape
             \param n name of the field
             \param s shape of the field
             \param filter implementation
+            \return instance of NXField
             */
             template<typename T,typename FilterImp,typename CTYPES> 
                 NXField<MAPTYPE(Imp,FieldImpl)>
@@ -254,6 +276,16 @@ namespace nx{
             \brief create a multidimensional field (explicit chunk) with filter
 
             Create a field with filter and adjustable chunk shape.
+            \code
+            NXGroup g = file.create_group("scan_1/instrument/detector");
+
+            shape_t shape{0,1024,1024};
+            shape_t chunk{100,1024,0};
+            NXDeflateFilter filter;
+
+            NXField field = g.create_field<UInt16>("data",shape,chunk,filter);
+
+            \endcode
             \tparam T data type of the field
             \tparam FilterImp filter implementation type
             \tparam CTYPES container type for the shape
@@ -262,6 +294,7 @@ namespace nx{
             \param s shape of the field
             \param cs chunk shape of the field
             \param filter filter instance to use
+            \return instance of NXField
             */
             template<typename T,
                      typename FilterImp,
@@ -377,24 +410,62 @@ namespace nx{
             //-----------------------------------------------------------------
             /*! \brief check if a particular object exists
 
+            Check if a link with name n to an object can be found below this
+            group. 
+            \param n name of the link (object) to look for
+            \return true if the object exist, false otherwise
             */
             bool exists(const String &n) const{ return this->imp().exists(n); }
 
             //-----------------------------------------------------------------
             /*! \brief remove an object from the file
 
+            Remove the link with name n to an object. As objects are not really
+            delted this will only remove a particular link to an object. If this
+            was the only link the object is no longer accessible. However, the
+            object still exists. You have to use h5repack in order to physically
+            delete the object from the file.
+            \param n name of the link to delete
             */
             void remove(const String &n) const{ this->imp().remove(n); }
 
             //-----------------------------------------------------------------
             /*! \brief create link
 
+            Create a new link to this very group. The link will be available
+            under the new name n. 
+            \code
+            //create the original group
+            NXGroup g1 = file.create_group("/scan_1/detector/module_01")
+            
+            //create a new link to this group
+            g1.link("/scan_1/modules/m01");
+
+            NXGroup g2 = file["/scan_1/modules/m01"];
+            \endcode
+            This method can only be used to create file local links. 
+            \param n name of the new link to this object
             */
             void link(const String &n) const { this->imp().link(n); }
 
             //-----------------------------------------------------------------
             /*! \brief create link
 
+            Another method to create a link. The method creates a new link to
+            this object which will be available by the name n below group ref. 
+            \code
+            String ipath = "/scan_1/instrument/";
+            String spath = "/scan_1/sample/";
+            NXGroup cont = file.create_group(ipath+"motors","NXcontainer");
+            NXGroup piezo = file.create_group(spath+"piezo","NXpositioner");
+
+            piezo.link(cont,"piezo_stage");
+            //get piezo under its new name
+            NXGroup stage = cont["piezo_stage"];
+            \endcode
+            This method can only be used to create file local links.
+            \param ref reference group below which the link shall be created
+            \param n new name of the link
             */
             void link(const NXGroup &ref,const String &n) const
             {
@@ -404,6 +475,23 @@ namespace nx{
             //-----------------------------------------------------------------
             /*! create link
 
+            Create a new link to an object determined by the path p under the
+            new path n. With this method it is possible to even create external
+            links. 
+            Creating an internal link
+            \code
+            NXGroup g1 = file.create_group("/test1/data");
+            NXGroup g2 = file.create_group("/test2/data");
+            //create a link from g2 to /test1/data_2
+            g1.link("/test2/data","/test1/data_2");
+            \endcode
+            Create an external link
+            \code
+            NXGroup g1 = file.create_group("/scan_1/instrument/detector");
+            g1.link("detectordata.nx:/detector/data",g1.path()+"/data");
+            \endcode
+            \param p path to the object to which the link refers to
+            \param n name of the link
             */
             void link(const String &p,const String &n) const
             {
@@ -413,6 +501,8 @@ namespace nx{
             //-----------------------------------------------------------------
             /*! \brief iterator on first child
 
+            Return an iterator on the first child stored in below the group.
+            \return iterator
             */
             NXObjectIterator<NXGroup<Imp>,
                 NXObject<MAPTYPE(Imp,ObjectImpl)> > begin() const
@@ -424,6 +514,8 @@ namespace nx{
             //-----------------------------------------------------------------
             /*! \brief iterator on last child
 
+            Returns an iterator on the last+1 obejct stored in the group.
+            \return iterator
             */
             NXObjectIterator<NXGroup<Imp>,
                 NXObject<MAPTYPE(Imp,ObjectImpl)> > end() const
