@@ -53,7 +53,8 @@ namespace h5{
 
             H5Fflush(id(),H5F_SCOPE_GLOBAL);
             H5Fclose(id());
-            H5Object::id(0);
+            //H5Object::id(0);
+            H5Object::close();
         }
     }
 
@@ -96,7 +97,8 @@ namespace h5{
 
             H5Fflush(id(),H5F_SCOPE_GLOBAL);
             H5Fclose(id());
-            H5Object::id(0);
+            //H5Object::id(0);
+            H5Object::close();
         }
 
     }

@@ -374,7 +374,8 @@ namespace nx{
             */
             NXObject<MAPTYPE(Imp,ObjectImpl)> parent() const
             {
-                return NXGroup<Imp>(this->imp().parent());
+                NXObject<MAPTYPE(Imp,ObjectImpl)> g(this->imp().parent());
+                return g;
             }
 
             //-----------------------------------------------------------------

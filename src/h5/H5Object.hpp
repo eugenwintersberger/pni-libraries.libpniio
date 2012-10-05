@@ -87,10 +87,11 @@ namespace h5{
             NEED TO CHECK IF WE REALLY NEED THIS METHOD IF WE TREAT THE CLASS AS
             A GUARD OBJECT - MAYBE WE CAN REMOVE IT.
             */
+            /*
             void id(const hid_t &oid)
             {
                 _id = oid;
-            }
+            }*/
         public:
             //================constructors and destructors=====================
             //! default constructor

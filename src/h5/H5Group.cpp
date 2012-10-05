@@ -100,7 +100,8 @@ namespace h5{
             throw H5GroupError(EXCEPTION_RECORD,estr);
         }
 
-        H5Object::id(gid);
+        *this = H5Group(gid); 
+        //H5Object::id(gid);
         //destroy property lists
         //H5Pclose(cr_pl);
         H5Pclose(link_pl);
@@ -115,14 +116,15 @@ namespace h5{
     H5Group::~H5Group()
     {
         if(is_valid()) H5Gclose(id());
-        H5Object::id(0);
+        //H5Object::id(0);
     }
 
     //-------------------------------------------------------------------------
     void H5Group::close()
     {
         if(is_valid()) H5Gclose(id());
-        H5Object::id(0);
+        H5Object::close();
+        //H5Object::id(0);
     }
 
 

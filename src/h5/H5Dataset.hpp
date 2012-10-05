@@ -187,12 +187,14 @@ namespace h5{
                     throw H5DataSetError(EXCEPTION_RECORD, 
                           "Cannot create dataset ["+n+"] below ["+g.path()+"]!");
 
-                H5Object::id(did);
+                
+                *this = H5Dataset(did);
+                //H5Object::id(did);
 
                 //when we create a dataset the file and memory dataspace
                 //coincide
-                _fspace = __obtain_dataspace();
-                _mspace = _fspace;
+                //_fspace = __obtain_dataspace();
+                //_mspace = _fspace;
                 //construction done - close property lists
                 H5Pclose(lpl);
                 H5Pclose(cpl);
@@ -248,10 +250,11 @@ namespace h5{
                     throw H5DataSetError(EXCEPTION_RECORD, 
                          "Cannot create dataset ["+n+"] below ["+g.path()+"]!");
 
-                H5Object::id(did);
+                *this = H5Dataset(did);
+                //H5Object::id(did);
                 //file and memory dataspace are equal after creation
-                _fspace = __obtain_dataspace();
-                _mspace = _fspace;
+                //_fspace = __obtain_dataspace();
+                //_mspace = _fspace;
                 //construction done - close property lists
                 H5Pclose(lpl);
                 H5Pclose(cpl);

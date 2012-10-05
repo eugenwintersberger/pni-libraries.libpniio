@@ -46,18 +46,15 @@ namespace h5{
 
     //===implementation of constructors and destructors================
     //implementation of the default constructor
-    H5Dataset::H5Dataset():H5AttributeObject(){
+    H5Dataset::H5Dataset():H5AttributeObject(){ } 
     
-    }
-
     //-----------------------------------------------------------------
     //implementation of the copy constructor
     H5Dataset::H5Dataset(const H5Dataset &o):
         H5AttributeObject(o),
         _fspace(o._fspace), 
         _mspace(o._mspace)
-    {
-    }
+    { }
 
     //-----------------------------------------------------------------
     //implementation of the copy conversion constructor
@@ -113,11 +110,12 @@ namespace h5{
             "Cannot create dataset ["+n+"] below ["+path()+"]!");
 
         //set id
-        H5Object::id(did);
+        *this = H5Dataset(did);
+        //H5Object::id(did);
 
         //get dataspace
-        _fspace = __obtain_dataspace();
-        _mspace = _fspace;
+        //_fspace = __obtain_dataspace();
+        //_mspace = _fspace;
         //close property list
         H5Pclose(lpl);
     }
@@ -143,7 +141,8 @@ namespace h5{
         _fspace.close();
         _mspace.close();
         if(is_valid()) H5Dclose(id());
-        H5Object::id(0);
+        H5Object::close();
+        //H5Object::id(0);
     }
 
     //=========implementation of the assignment operators==============
