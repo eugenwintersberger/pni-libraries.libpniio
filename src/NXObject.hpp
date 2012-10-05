@@ -25,8 +25,8 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#ifndef NXOBJECT_HPP_
-#define NXOBJECT_HPP_
+#ifndef __NXOBJECT_HPP__
+#define __NXOBJECT_HPP__
 
 #include <memory>
 #include <iostream>
