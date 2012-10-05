@@ -511,6 +511,7 @@ namespace nx{
             \brief return size
 
             Return the size (number of elements) in the field.
+            \return total number of elements in the field
             */
             size_t size() const { return this->imp().size(); }
 
@@ -606,11 +607,13 @@ namespace nx{
             size_t rank() const{ return this->imp().rank(); }
 
             //-----------------------------------------------------------------
-            /*! \brief number of elements along dimension
+            /*! 
+            \brief number of elements along dimension
 
             Returns the number of elements along dimension i. An exception is
             thrown if i exceeds the rank of the field.
             \throws IndexError if i exceeds the rank of the field
+            \param i index of the dimension
             \return number of elements
             */
             size_t dim(size_t i) const{ return this->imp().dim(i); }
@@ -987,6 +990,11 @@ namespace nx{
             f(100,Slice(0,1024)).read(spec)
 
             \endcode
+            The selection will be reset with every call to the read() or write
+            methods. 
+            \tparam ITYPES index types
+            \param indices instances of ITYPES
+            \return field object with selection set
             */
             template<typename ...ITYPES>
             NXField<Imp> &operator()(ITYPES ...indices)
@@ -1003,6 +1011,10 @@ namespace nx{
 
             Operator to set a selection to the field. The selection is given by
             a vector container of Slice objects.
+            The selection will be reset with each call to the read() or write()
+            methods.
+            \param selection container with instances of Slice
+            \return instance of NXField with selection set
             */
             NXField<Imp> &operator()(const std::vector<Slice> &selection) 
             {

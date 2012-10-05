@@ -37,76 +37,63 @@ using namespace pni::utils;
 namespace pni{
     namespace nx{
 
-        //! \ingroup util_classes
-        //! \brief Filter object
-        template<typename Imp> class NXFilter{
+        /*! 
+        \ingroup util_classes
+        \brief Filter object
+
+        Base class for all filter objects in the Nexus world.
+        */
+        template<typename Imp> class NXFilter
+        {
             private:
                 Imp _imp; //!< filter implementation object
             protected:
 
-                //! get non-const ref
+                /*! get non-const ref
 
-                //! This returns a non constant refernce to the implementation.
-                //! This is necessary for derived classes that want to 
-                //! export some functionality of the implementation object
-                //! to derived clases.
-                //! This makes perfectly sense since the class hierachrchy 
-                //! is not directly for encapsulation but only for avoiding 
-                //! writing work.
-                Imp &imp(){
-                    return _imp;
-                }
+                This returns a non constant refernce to the implementation.
+                This is necessary for derived classes that want to export some
+                functionality of the implementation object to derived clases.
+                This makes perfectly sense since the class hierachrchy is not
+                directly for encapsulation but only for avoiding writing work.
+                \return reference to implementation object
+                */
+                Imp &imp(){ return _imp; }
             public:
                 //================constructors  and destructor==================
                 //! default constructor
-                explicit NXFilter():_imp()
-                {
-                }
+                explicit NXFilter():_imp() { }
 
                 //--------------------------------------------------------------
                 //! copy constructor
-                NXFilter(const NXFilter<Imp> &f):_imp(f._imp)
-                {
-                }
+                NXFilter(const NXFilter<Imp> &f):_imp(f._imp) { }
                 
                 //--------------------------------------------------------------
                 //! conversion copy constructor
                 template<typename FImp>
-                    NXFilter(const NXFilter<FImp> &f):_imp(f.imp())
-                {
-                }
+                    NXFilter(const NXFilter<FImp> &f):_imp(f.imp()) { }
 
                 //--------------------------------------------------------------
                 //! copy implementation constructor 
-                NXFilter(const Imp &i):_imp(i)
-                {
-                }
+                NXFilter(const Imp &i):_imp(i) { }
 
 
                 //--------------------------------------------------------------
                 //! copy conversion implementation constructor
                 template<typename FImp>
-                    NXFilter(const FImp &i):_imp(i.imp())
-                {
-                }
+                    NXFilter(const FImp &i):_imp(i.imp()) { }
 
                 //--------------------------------------------------------------
                 //! move constructor
-                NXFilter(NXFilter<Imp> &&f):_imp(std::move(f._imp))
-                {
-                }
+                NXFilter(NXFilter<Imp> &&f):_imp(std::move(f._imp)) { }
                 
                 //--------------------------------------------------------------
                 //! move constructor from implementation
-                NXFilter(Imp &&i):_imp(std::move(i))
-                {
-                }
+                NXFilter(Imp &&i):_imp(std::move(i)) { }
 
                 //--------------------------------------------------------------
                 //! destructor
-                virtual ~NXFilter()
-                {
-                }
+                virtual ~NXFilter() { }
 
                 //================assignment operators==========================
                 //! copy assignment operator

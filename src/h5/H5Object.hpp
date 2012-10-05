@@ -250,6 +250,9 @@ namespace h5{
     Operator checks if two HDF5 object are equal. This check is done by
     comparing the address of the objects in the file.  If they share the same
     address the objects should be equal.
+    \param a lhs value of the operator
+    \param b rhs value of the operator
+    \return true if equal, false otherwise
     */
     bool operator==(const H5Object &a,const H5Object &b);
 
@@ -259,6 +262,9 @@ namespace h5{
     \brief inequality operator
 
     Simply the inverse of the equality operator.
+    \param a lhs value of the operator
+    \param b rhs value of the operator
+    \return true if not equal, false otherwise
     */
     bool operator!=(const H5Object &a,const H5Object &b);
 

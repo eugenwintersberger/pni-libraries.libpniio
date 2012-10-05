@@ -591,9 +591,12 @@ namespace nx{
             size_t size() const { return _imp.size(); }
 
             //--------------------------------------------------------------
-            //! obtain type id
+            /*! 
+            \brief obtain type id
 
-            //! Returns the type ID of the data stored in the attribute.
+            Returns the type ID of the data stored in the attribute.
+            \return type id of the elements stored in the field
+            */
             TypeID type_id() const { return _imp.type_id(); }
 
             //--------------------------------------------------------------
