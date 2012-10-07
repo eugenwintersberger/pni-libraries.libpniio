@@ -75,6 +75,15 @@ void NXFieldTest::test_creation()
     shape_t shape{100,100};
     field = file.create_field<Float32>("test_defalte", shape,deflate);
 
+    //throw ShapeMissmatchError if the rank of the chunk and the field shape 
+    //do not match
+    shape_t cshape{100};
+    CPPUNIT_ASSERT_THROW(file.create_field<Float32>("test_fail",shape,cshape),
+                         ShapeMissmatchError);
+
+    CPPUNIT_ASSERT_THROW(file.create_field<Float32>("test_fail",shape,cshape,deflate),
+                         ShapeMissmatchError);
+
     //create a field with a utilty function
     field = create_field(file,"test_util", TypeID::UINT32);
     field = create_field(file,"test_util2",TypeID::FLOAT128,

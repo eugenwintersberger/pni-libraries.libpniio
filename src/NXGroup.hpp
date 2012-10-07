@@ -206,8 +206,11 @@ namespace nx{
                         //no chunk size from user
                         cs[0] = 1;
                     else
+                    {
                         //chunk size provided by the user
+                        cs = shape_t(chunk.size());
                         std::copy(chunk.begin(),chunk.end(),cs.begin());
+                    }
                 }
 
                 FieldType field;
@@ -287,6 +290,8 @@ namespace nx{
             NXField field = g.create_field<UInt16>("data",shape,chunk,filter);
 
             \endcode
+            \throws ShapeMissmatchError if the rank of chunk and field shape do
+            not share the same rank
             \tparam T data type of the field
             \tparam FilterImp filter implementation type
             \tparam CTYPES container type for the shape
