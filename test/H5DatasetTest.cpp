@@ -30,6 +30,8 @@ void H5DatasetTest::test_creation()
     H5Dataset ds1("ds1",_group,type,space);
     CPPUNIT_ASSERT(ds1.is_valid());
     CPPUNIT_ASSERT(ds1.type_id()==TypeID::FLOAT32);
+    CPPUNIT_ASSERT(ds1.rank() == 2);
+    CPPUNIT_ASSERT(ds1.size() == 10*50);
 
     //create a chunked dataset
     shape_t cs{1,50};
@@ -43,6 +45,8 @@ void H5DatasetTest::test_creation()
     H5Dataset ds3("ds3",_group,type,H5Dataspace());
     CPPUNIT_ASSERT(ds3.is_valid());
     CPPUNIT_ASSERT(ds3.type_id() == TypeID::FLOAT128);
+    CPPUNIT_ASSERT(ds3.rank() == 0);
+    CPPUNIT_ASSERT(ds3.size() == 1);
 
     //test copy constructor
     H5Dataset ds4 = ds2;
