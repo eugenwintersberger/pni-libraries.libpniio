@@ -58,20 +58,20 @@ void NXFieldTest::test_creation()
 
 	CPPUNIT_ASSERT_NO_THROW(field = file.create_field<UInt16>("test1"));
     CPPUNIT_ASSERT(field.is_valid());
-    CPPUNIT_ASSERT(field.rank()==0);
+    CPPUNIT_ASSERT(field.rank()==1);
     CPPUNIT_ASSERT(field.size() == 1);
 
 	//check copy construction
 	NXField field2(field);
 	CPPUNIT_ASSERT(field.is_valid());
 	CPPUNIT_ASSERT(field2.is_valid());
-    CPPUNIT_ASSERT(field2.rank()== 0);
+    CPPUNIT_ASSERT(field2.rank()== 1);
     CPPUNIT_ASSERT(field2.size() == 1);
 
 	//check move construction
 	NXField field3 = std::move(field);
 	CPPUNIT_ASSERT(field3.is_valid());
-    CPPUNIT_ASSERT(field3.rank() == 0);
+    CPPUNIT_ASSERT(field3.rank() == 1);
     CPPUNIT_ASSERT(field3.size() == 1);
 	CPPUNIT_ASSERT(!field.is_valid());
 

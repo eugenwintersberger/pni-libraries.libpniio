@@ -192,6 +192,20 @@ namespace nx{
 
                 NXObject<Imp>::close();
             }
+
+            //-----------------------------------------------------------------
+            /*!
+            \brief get number of open groups
+            \return number ofopen groups
+            */
+            size_t open_groups() const { return this->imp().open_groups(); }
+
+            //------------------------------------------------------------------
+            /*!
+            \brief get number of open fields
+            \return number of open fields
+            */
+            size_t open_fields() const { return this->imp().open_fields(); }
     };
 
 

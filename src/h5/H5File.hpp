@@ -135,6 +135,29 @@ namespace h5{
             //! obtain the name of the file (path without base)
             virtual String name() const;
 
+            //-----------------------------------------------------------------
+            /*!
+            \brief get number of open fields
+
+            Returns the number of open fields.
+            \return number of open fields
+            */
+            size_t open_fields() const
+            {
+                return H5Fget_obj_count(id(),H5F_OBJ_DATASET);
+            }
+
+            //-----------------------------------------------------------------
+            /*!
+            \brief get number of open groups
+
+            \return number of open groups
+            */
+            size_t open_groups() const
+            {
+                return H5Fget_obj_count(id(),H5F_OBJ_GROUP);
+            }
+
     };
 
 
