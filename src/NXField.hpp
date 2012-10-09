@@ -482,6 +482,7 @@ namespace nx{
             template<typename ObjImp>
             NXField<Imp> &operator=(const NXObject<ObjImp> &o)
             {
+                if((void *)this == (void *)&o) return *this;
                 NXObject<Imp>::operator=(o);
                 return *this;
             }

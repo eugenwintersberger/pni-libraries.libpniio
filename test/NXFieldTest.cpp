@@ -142,12 +142,16 @@ void NXFieldTest::test_assignment()
 	CPPUNIT_ASSERT_NO_THROW(field2 = field);
 	CPPUNIT_ASSERT(field2.is_valid());
 	CPPUNIT_ASSERT(field.is_valid());
+    CPPUNIT_ASSERT(field2.size() == field.size());
+    CPPUNIT_ASSERT(field2.rank() == field.rank());
 
 	//move assignment
 	NXField field3;
-	CPPUNIT_ASSERT_NO_THROW(field3 = std::move(field));
+	CPPUNIT_ASSERT_NO_THROW(field3 = std::move(field2));
 	CPPUNIT_ASSERT(field3.is_valid());
-	CPPUNIT_ASSERT(!field.is_valid());
+	CPPUNIT_ASSERT(!field2.is_valid());
+    CPPUNIT_ASSERT(field3.size() == field.size());
+    CPPUNIT_ASSERT(field3.rank() == field.rank());
 }
 
 //------------------------------------------------------------------------------
