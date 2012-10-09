@@ -87,8 +87,6 @@ namespace h5{
             throw H5GroupError(EXCEPTION_RECORD,estr);
         }
         H5Pset_create_intermediate_group(link_pl,1);
-        //cr_pl = H5Pcreate(H5P_GROUP_CREATE);
-        //H5Pset_create_intermediate_group(cr_pl,1);
 
         hid_t gid = H5Gcreate2(parent.id(),name.c_str(),
                 link_pl,cr_pl,H5P_DEFAULT);
@@ -101,9 +99,6 @@ namespace h5{
         }
 
         *this = H5Group(gid); 
-        //H5Object::id(gid);
-        //destroy property lists
-        //H5Pclose(cr_pl);
         H5Pclose(link_pl);
     }
 
@@ -116,7 +111,7 @@ namespace h5{
     H5Group::~H5Group()
     {
         if(is_valid()) H5Gclose(id());
-        //H5Object::id(0);
+        H5Object::close();
     }
 
     //-------------------------------------------------------------------------
@@ -124,7 +119,6 @@ namespace h5{
     {
         if(is_valid()) H5Gclose(id());
         H5Object::close();
-        //H5Object::id(0);
     }
 
 
