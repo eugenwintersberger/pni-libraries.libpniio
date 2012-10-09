@@ -45,7 +45,7 @@ namespace h5{
     H5Object::H5Object(const H5Object &o) :_id(o._id)
     {
         //need to increment the reference 
-        //counter for this object
+        //counter for this object as we do copy construction
         if(H5Iis_valid(_id)) H5Iinc_ref(_id);
     }
 

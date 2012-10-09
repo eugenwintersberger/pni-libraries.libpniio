@@ -249,7 +249,16 @@ namespace h5 {
 
         //return the number of elements in the dataspace if the 
         //dataspcae is simple
-        return (size_t)H5Sget_select_npoints(id());
+        ssize_t size = H5Sget_select_npoints(id());
+        if(size<0) 
+        {
+            H5DataSpaceError error( EXCEPTION_RECORD,
+                    "Could not determine dataspace size");
+            std::cerr<<error<<std::endl;
+            throw error;
+        }
+
+        return (size_t)(size);
     }
 
     //-------------------------------------------------------------------------
