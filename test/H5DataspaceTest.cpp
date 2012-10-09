@@ -24,10 +24,14 @@ void H5DataspaceTest::test_creation(){
     //create a dataspace from a shape object
     //this should lead to a constant dataspace which cannot be extended
     shape_t s({10,3,45});
+    shape_t
+        uls({H5Dataspace::UNLIMITED,H5Dataspace::UNLIMITED,H5Dataspace::UNLIMITED});
+    size_t s_size = 10*3*45;
     H5Dataspace s2(s);
     CPPUNIT_ASSERT(s2.is_valid());
     CPPUNIT_ASSERT(!s2.is_scalar());
     CPPUNIT_ASSERT(s2.rank() == s.size());
+    CPPUNIT_ASSERT(s2.size() == s_size);
 
     //check copy process
     H5Dataspace s3(s2);
@@ -36,6 +40,7 @@ void H5DataspaceTest::test_creation(){
     CPPUNIT_ASSERT(!s3.is_scalar());
     CPPUNIT_ASSERT(!s2.is_scalar());
     CPPUNIT_ASSERT(s2.shape() == s3.shape());
+    CPPUNIT_ASSERT(s3.size() == s_size);
     
     
     //check move constructor
@@ -50,7 +55,9 @@ void H5DataspaceTest::test_creation(){
     H5Dataspace s6(s,ms);
     CPPUNIT_ASSERT(s6.is_valid());
     CPPUNIT_ASSERT(!s6.is_scalar());
-    for(size_t i=0;i<s6.rank();i++){
+    CPPUNIT_ASSERT(s6.size() == s_size);
+    for(size_t i=0;i<s6.rank();i++)
+    {
         CPPUNIT_ASSERT(s6.dim(i) == s[i]);
         CPPUNIT_ASSERT(s6.max_dim(i) == ms[i]);
     }

@@ -53,12 +53,16 @@ void H5DatasetTest::test_creation()
     CPPUNIT_ASSERT(ds4.is_valid());
     CPPUNIT_ASSERT(ds2.is_valid());
     CPPUNIT_ASSERT(ds4.type_id() == ds2.type_id());
+    CPPUNIT_ASSERT(ds4.size() == ds2.size());
+    CPPUNIT_ASSERT(ds4.rank() == ds2.rank());
 
     //test move constructor
     H5Dataset ds5 = std::move(ds4);
     CPPUNIT_ASSERT(ds5.is_valid());
     CPPUNIT_ASSERT(!ds4.is_valid());
     CPPUNIT_ASSERT(ds5.type_id() == ds2.type_id());
+    CPPUNIT_ASSERT(ds5.size() == ds2.size());
+    CPPUNIT_ASSERT(ds5.rank() == ds2.rank());
 
     //create a chunked datatype with a filter
     H5DeflateFilter filter(9,true);

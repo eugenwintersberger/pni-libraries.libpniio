@@ -508,7 +508,7 @@ namespace h5{
             Returns the total number of elements stored in the dataset.
             \return total number of elements
             */
-            size_t size() const { return _fspace.size(); }
+            size_t size() const { return _mspace.size(); }
 
             //-----------------------------------------------------------------
             /*! 
