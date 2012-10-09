@@ -92,7 +92,10 @@ void H5DatasetTest::test_assignment()
     CPPUNIT_ASSERT_NO_THROW(ds2 = std::move(ds1));
     CPPUNIT_ASSERT(ds2.is_valid());
     CPPUNIT_ASSERT(!ds1.is_valid());
-
+    
+    //testing close
+    ds2.close();
+    CPPUNIT_ASSERT(!ds2.is_valid());
 
 }
 

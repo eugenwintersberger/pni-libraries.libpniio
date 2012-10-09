@@ -143,8 +143,9 @@ namespace h5{
     //implementation of the  copy assignment operator
     H5Dataset &H5Dataset::operator=(const H5Dataset &o)
     {
-        if(this != &o){
-            (H5AttributeObject &)(*this) = (H5AttributeObject &)o;
+        if(this != &o)
+        {
+            H5AttributeObject::operator=(o);
             _fspace = o._fspace;
             _mspace = o._mspace;
         }
@@ -161,7 +162,8 @@ namespace h5{
 
         if(this != &o)
         {
-            (H5Object &)(*this) = o;
+            H5Object::operator=(o);
+            //obtain the dataspace from the object
             _fspace = __obtain_dataspace();
             _mspace = _fspace;
         }
@@ -174,8 +176,7 @@ namespace h5{
     {
         if(this != &o)
         {
-            (H5AttributeObject &)(*this) = std::move((H5AttributeObject
-                        &)o);
+            H5AttributeObject::operator=(std::move(o));
             _fspace = std::move(o._fspace);
             _mspace = std::move(o._mspace);
         }
@@ -192,7 +193,8 @@ namespace h5{
 
         if(this != &o)
         {
-            (H5Object &)(*this) = std::move(o);
+            H5Object::operator=(std::move(o));
+            //obtain the dataspace from the object
             _fspace = __obtain_dataspace();
             _mspace = _fspace;
         }
@@ -304,6 +306,14 @@ namespace h5{
         H5Fclose(fid);
 
         return g;
+    }
+
+    //-------------------------------------------------------------------------
+    void H5Dataset::close() 
+    {
+        _fspace.close();
+        _mspace.close();
+        H5AttributeObject::close();
     }
 
 

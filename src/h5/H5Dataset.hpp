@@ -705,6 +705,14 @@ namespace h5{
             */
             void link(const H5Group &g,const String &n) const;
 
+            //-----------------------------------------------------------------
+            /*!
+            \brief close the dataset
+
+            Method closing the dataset.
+            */
+            virtual void close();
+
     };
 
 
