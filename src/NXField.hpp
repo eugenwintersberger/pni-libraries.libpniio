@@ -33,7 +33,6 @@
 #include <pni/utils/Types.hpp>
 #include <pni/utils/Array.hpp>
 #include <pni/utils/SBuffer.hpp>
-#include <pni/utils/RBuffer.hpp>
 #include <pni/utils/DBuffer.hpp>
 #include <pni/utils/Slice.hpp>
 
@@ -227,6 +226,47 @@ namespace nx{
     {
         private:
             /*!
+            \brief gernerate error message
+
+            Generate the error message for a shape missmatch error between a
+            field and an array type. 
+            \param ashape array shape
+            \param fshape field shape
+            \return error message
+            */
+            static String _shape_missmatch_error_message(const shape_t
+                    &ashape,const shape_t &fshape) 
+            {
+                std::stringstream ss;
+                ss<<"Array shape ( ";
+#ifdef NOFOREACH
+                for(auto iter = ashape.begin();iter!=ashape.end();++iter)
+                {
+                    auto v = *iter;
+#else
+                for(auto v: ashape) 
+                {
+#endif
+                    ss<<v<<" ";
+                }
+                ss<<") and field shape ( ";
+#ifdef NOFOREACH
+                for(auto iter = fshape.begin();iter!=fshape.end();++iter)
+                {
+                    auto v = *iter;
+#else
+                for(auto v: fshape) 
+                {
+#endif 
+                    ss<<v<<" ";
+                }
+                ss<<") do not match!";
+
+                return ss.str();
+            }
+
+            //-----------------------------------------------------------------
+            /*!
             \brief read data to buffer
 
             \throws MemoryNotAllocatedError if buffer size is 0
@@ -327,35 +367,25 @@ namespace nx{
 
                 auto ashape = a.shape<shape_t>();
                 auto fshape = this->shape<shape_t>();
-                if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
+                
+                if(ashape.size() == fshape.size())
                 {
-                    std::stringstream ss;
-                    ss<<"Array shape ( ";
-#ifdef NOFOREACH
-                    for(auto iter = ashape.begin();iter!=ashape.end();++iter)
-                    {
-                        auto v = *iter;
-#else
-                    for(auto v: ashape) 
-                    {
-#endif
-                        ss<<v<<" ";
-                    }
-                    ss<<") and field shape ( ";
-#ifdef NOFOREACH
-                    for(auto iter = fshape.begin();iter!=fshape.end();++iter)
-                    {
-                        auto v = *iter;
-#else
-                    for(auto v: fshape) 
-                    {
-#endif 
-                        ss<<v<<" ";
-                    }
-                    ss<<") do not match!";
-                    throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
+                    //if array and field have the same rank we need to check the
+                    //shape of each of the objects
+                    if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
+                        throw ShapeMissmatchError(EXCEPTION_RECORD,
+                                _shape_missmatch_error_message(ashape,fshape));
+                }
+                else
+                {
+                    //if the two components are of different size we have to
+                    //throw an exception in any case
+                    if(this->size() != a.size())
+                        throw ShapeMissmatchError(EXCEPTION_RECORD,
+                                _shape_missmatch_error_message(ashape,fshape));
                 }
 
+                //finally we read the data
                 try
                 {
                     this->imp().read(const_cast<typename ATYPE::value_type*>(
@@ -372,6 +402,7 @@ namespace nx{
                 this->imp().clear_selections();
 
             }
+
 
             //-----------------------------------------------------------------
             /*!
@@ -391,34 +422,20 @@ namespace nx{
 
                 auto ashape = a.shape<shape_t>();
                 auto fshape = this->shape<shape_t>();
-                if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
+
+                if(ashape.size() == fshape.size())
                 {
-                    std::stringstream ss;
-                    ss<<"Source array shape ( ";
-#ifdef NOFOREACH
-                    for(auto iter = ashape.begin();iter!=ashape.end();++iter)
-                    {
-                        auto v = *iter;
-#else
-                    for(auto v: ashape) 
-                    {
-#endif
-                        ss<<v<<" ";
-                    }
-                    ss<<") and field shape ( ";
-#ifdef NOFOREACH
-                    for(auto iter = fshape.begin();iter!=fshape.end();++iter)
-                    {
-                        auto v = *iter;
-#else
-                    for(auto v: fshape) 
-                    {
-#endif
-                        ss<<v<<" ";
-                    }
-                    ss<<") do not match!";
-                    throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
+                    if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
+                        throw ShapeMissmatchError(EXCEPTION_RECORD,
+                                _shape_missmatch_error_message(ashape,fshape));
                 }
+                else
+                {
+                    if(this->size() != a.size())
+                        throw ShapeMissmatchError(EXCEPTION_RECORD,
+                                _shape_missmatch_error_message(ashape,fshape));
+                }
+
 
                 try
                 {

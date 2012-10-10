@@ -156,6 +156,11 @@ template<typename T> void H5DatasetTest::test_selection()
     DBuffer<T> writebuf(10);
     DBuffer<T> readbuf(10);
 
+    //check single value selection
+    std::vector<Slice> selection({Slice(1),Slice(2)});
+    dset.apply_selection(selection);
+    CPPUNIT_ASSERT(dset.size() == 1);
+
     for(size_t i=0;i<10;i++)
     {
         //select regtion in the dataset
@@ -165,7 +170,13 @@ template<typename T> void H5DatasetTest::test_selection()
         
         //apply selection
         dset.apply_selection(selection);
+
+        //check new properties of the dataset with selection
         CPPUNIT_ASSERT(dset.size()==10);
+        CPPUNIT_ASSERT(dset.rank()==1);
+        auto sel_s = dset.shape<shape_t>();
+        CPPUNIT_ASSERT(sel_s.size() == 1);
+        CPPUNIT_ASSERT(sel_s[0] == 10);
 
         //write data
         dset.write(writebuf.ptr());

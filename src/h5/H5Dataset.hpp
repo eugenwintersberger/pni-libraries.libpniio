@@ -529,7 +529,7 @@ namespace h5{
             Returns the number of dimensions of the dataset.
             \return number of dimensions
             */
-            size_t rank() const { return _fspace.rank(); }
+            size_t rank() const { return _mspace.rank(); }
 
             //-----------------------------------------------------------------
             /*! 
@@ -540,7 +540,7 @@ namespace h5{
             \param i index of the dimension
             \return number of elements along i
             */
-            size_t dim(const size_t &i) const { return _fspace.dim(i); }
+            size_t dim(const size_t &i) const { return _mspace.dim(i); }
 
             //-----------------------------------------------------------------
             /*! 
