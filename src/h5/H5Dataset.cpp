@@ -133,8 +133,8 @@ namespace h5{
     //implementation of the default destructor 
     H5Dataset::~H5Dataset()
     {
-        //_fspace.close();
-        //_mspace.close();
+        _fspace.close();
+        _mspace.close();
         if(is_valid()) H5Dclose(id());
         H5Object::close();
     }

@@ -271,6 +271,7 @@ namespace h5 {
     void H5Dataspace::close()
     {
         if(is_valid()) H5Sclose(id());
+        H5Object::close();
     }
 
     //-------------------------------------------------------------------------
