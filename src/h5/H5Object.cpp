@@ -61,7 +61,7 @@ namespace h5{
     H5Object::~H5Object()
     {
         if(is_valid()) H5Oclose(id());
-        _id = 0; //reset the ID value to 0
+        reset_id(); //reset the ID value to 0
     }   
 
 

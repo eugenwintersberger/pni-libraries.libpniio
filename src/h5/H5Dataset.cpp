@@ -136,7 +136,7 @@ namespace h5{
         _fspace.close();
         _mspace.close();
         if(is_valid()) H5Dclose(id());
-        H5Object::close();
+        H5Object::reset_id();
     }
 
     //=========implementation of the assignment operators==============

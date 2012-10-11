@@ -55,7 +55,7 @@ namespace h5{
     H5Datatype::~H5Datatype()
     {
         if(is_valid()) H5Tclose(id());
-        //H5Object::id(0);
+        H5Object::reset_id();
     }
 
 
@@ -156,9 +156,8 @@ namespace h5{
     void H5Datatype::close()
     {
         if(is_valid()) H5Tclose(id());
-        H5Object::close(); //call the parent funtion in order to reset the 
+        H5Object::reset_id(); //call the parent funtion in order to reset the 
                            //id to zero.
-        //H5Object::id(0);
     }
 
 

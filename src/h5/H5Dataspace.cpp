@@ -147,7 +147,7 @@ namespace h5 {
     {
         if(is_valid()) H5Sclose(id());
         //reset the object ID
-        H5Object::close();
+        H5Object::reset_id();
     }
 
     //===================Assignment operators==================================
@@ -271,7 +271,7 @@ namespace h5 {
     void H5Dataspace::close()
     {
         if(is_valid()) H5Sclose(id());
-        H5Object::close();
+        H5Object::reset_id();
     }
 
     //-------------------------------------------------------------------------

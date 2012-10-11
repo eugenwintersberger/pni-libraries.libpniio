@@ -111,14 +111,14 @@ namespace h5{
     H5Group::~H5Group()
     {
         if(is_valid()) H5Gclose(id());
-        H5Object::close();
+        H5Object::reset_id();
     }
 
     //-------------------------------------------------------------------------
     void H5Group::close()
     {
         if(is_valid()) H5Gclose(id());
-        H5Object::close();
+        H5Object::reset_id();
     }
 
 

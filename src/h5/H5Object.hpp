@@ -76,22 +76,12 @@ namespace h5{
             explicit H5Object(const hid_t &id);
 
             //-----------------------------------------------------------------
-            /*! \brief set the object id
+            /*! 
+            \brief reset the ID
 
-            This method can be used to set the HDF5 id of an object. The method
-            does not take care about reference counting. The original object
-            from which the id value has been taken must not be closed. This is
-            done later by this class.
-            \param oid HDF5 object ID
-
-            NEED TO CHECK IF WE REALLY NEED THIS METHOD IF WE TREAT THE CLASS AS
-            A GUARD OBJECT - MAYBE WE CAN REMOVE IT.
+            Reset the ID of the object to zero and thus renders it as invalid.
             */
-            /*
-            void id(const hid_t &oid)
-            {
-                _id = oid;
-            }*/
+            void reset_id() { _id = 0; }
         public:
             //================constructors and destructors=====================
             //! default constructor

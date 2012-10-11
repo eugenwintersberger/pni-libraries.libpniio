@@ -130,7 +130,7 @@ namespace nx{
            
             //-----------------------------------------------------------------
             //! destructor
-            virtual ~NXObject() { this->_imp.close(); }
+            virtual ~NXObject() { }
 
             //============assignment operators=================================
             //! copy assignment operator

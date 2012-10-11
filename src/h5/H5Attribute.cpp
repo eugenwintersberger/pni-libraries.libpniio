@@ -91,7 +91,7 @@ namespace h5{
         _dtype.close();
 
         if(is_valid()) H5Aclose(id());
-        H5Object::close();
+        H5Object::reset_id();
     }
 
     //===============implementation of assignment operators====================
@@ -132,7 +132,7 @@ namespace h5{
         _dtype.close();
 
         if(is_valid()) H5Aclose(id());
-        H5Object::close();
+        H5Object::reset_id();
     }
 
     //-------------------------------------------------------------------------
