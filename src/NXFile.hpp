@@ -189,7 +189,8 @@ namespace nx{
                     this->template attr<String>("file_update_time",true)
                         .write(NXDateTime::get_date_time_str());
                 }
-
+                
+                this->imp().close();
                 NXObject<Imp>::close();
             }
 

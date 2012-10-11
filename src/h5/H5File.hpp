@@ -49,8 +49,6 @@ namespace h5{
         protected:
             //! constructor from id value
             explicit H5File(hid_t id);
-            hid_t _create_plist; //!< property list for file creation
-            hid_t _acc_plist;    //!< property list for file access
         public:
             //===============constructors and destructors======================
             //! default constructor

@@ -82,44 +82,60 @@ namespace h5{
             */ 
             explicit H5AttributeObject(const hid_t &oid);
         public:
-            //===========constructors and destructors==================
+            //=================constructors and destructors====================
             //! default constructor
             explicit H5AttributeObject();
+
+            //-----------------------------------------------------------------
             //! copy constructor
             explicit H5AttributeObject(const H5AttributeObject &o);
+
+            //-----------------------------------------------------------------
             //! copy conversion constructor
             H5AttributeObject(const H5Object &o);
+
+            //-----------------------------------------------------------------
             //! move constructor
             explicit H5AttributeObject(H5AttributeObject &&);
+
+            //-----------------------------------------------------------------
             //! move conversion constructor
             H5AttributeObject(H5Object &&o);
-            //! destructor
 
-            //! Destructor - must be virtual in order to use this 
-            //! class as a base class.
+            //-----------------------------------------------------------------
+            /*! 
+            \brief destructor
+
+            Destructor - must be virtual in order to use this class as a base
+            class.
+            */
             virtual ~H5AttributeObject();
 
-            //===========assignment operators==========================
+            //==================assignment operators===========================
             //! copy assignment operator
             H5AttributeObject &operator=(const H5AttributeObject &o);
+
+            //-----------------------------------------------------------------
             //! copy conversion assignment operator
             H5AttributeObject &operator=(const H5Object &o);
+
+            //-----------------------------------------------------------------
             //! move assignment operator
             H5AttributeObject &operator=(H5AttributeObject &&o);
+
+            //-----------------------------------------------------------------
             //! move conversion assignment operator
             H5AttributeObject &operator=(H5Object &&o);
 
-
-            //===========attribute management methods==================
+            //==============attribute management methods=======================
             /*! \brief create scalar attribute
 
-            Create a scalar attribute of type T. Such an attribute can 
-            only take a single value of type T. The type T must be 
-            provided explicitly in the code. The method returns an
-            instance of H5Attribute. If an attribute of name n already 
-            exists an exception will be thrown unless ov in the
-            parameter list of the method is set to true. In this case
-            the existing attribute will be overwritten.
+            Create a scalar attribute of type T. Such an attribute can only take
+            a single value of type T. The type T must be provided explicitly in
+            the code. The method returns an instance of H5Attribute. If an
+            attribute of name n already exists an exception will be thrown
+            unless ov in the parameter list of the method is set to true. In
+            this case the existing attribute will be overwritten.
             \throws H5AttributeError if attribute exists or in case of errors
             \param n name of the attribute
             \param ov overwrite attribute if true
@@ -128,6 +144,7 @@ namespace h5{
             template<typename T> H5Attribute 
                 attr(const String &n,bool ov=false) const;
 
+            //-----------------------------------------------------------------
             /*! \brief create an array attribute
 
             Create an array attribute of type T and shape s. The type
@@ -148,7 +165,7 @@ namespace h5{
             H5Attribute 
             attr(const String &n, const CTYPE<OTS...> &s,bool ov=false) const;
 
-            //-----------------------------------------------------------------
+            //------------------------------------------------------------------
             /*! \brief open attribute by name
             
             Open an existing attribute and returns it to the callee.  If the
@@ -160,7 +177,7 @@ namespace h5{
             */
             H5Attribute attr(const String &n) const;
 
-            //-----------------------------------------------------------------
+            //------------------------------------------------------------------
             /*! \brief open attribute by index
 
             Opens an attribute reference by index i. If i exceeds the number of

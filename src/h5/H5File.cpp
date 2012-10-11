@@ -33,13 +33,12 @@ namespace h5{
     H5File::H5File(const H5File &o):H5Group(o) { } 
 
     //-------------------------------------------------------------------------
-
-    //-------------------------------------------------------------------------
     //implementation of the destructor
     H5File::~H5File() 
     {
         if(is_valid())
         {
+            /*
             std::cerr<<"File: "<<name()<<std::endl;
             std::cerr<<"Open files:      "<<
                 H5Fget_obj_count(id(),H5F_OBJ_FILE)<<std::endl;
@@ -51,7 +50,7 @@ namespace h5{
                 H5Fget_obj_count(id(),H5F_OBJ_DATATYPE)<<std::endl;
             std::cerr<<"Open attributes: "<<
                 H5Fget_obj_count(id(),H5F_OBJ_ATTR)<<std::endl;
-
+            */
 
             H5Fflush(id(),H5F_SCOPE_GLOBAL);
             H5Fclose(id());
@@ -83,6 +82,7 @@ namespace h5{
         //check for open objects in the file
         if(is_valid())
         {
+            /*
             std::cerr<<"File: "<<name()<<std::endl;
             std::cerr<<"Open files:      "<<
                 H5Fget_obj_count(id(),H5F_OBJ_FILE)<<std::endl;
@@ -94,7 +94,7 @@ namespace h5{
                 H5Fget_obj_count(id(),H5F_OBJ_DATATYPE)<<std::endl;
             std::cerr<<"Open attributes: "<<
                 H5Fget_obj_count(id(),H5F_OBJ_ATTR)<<std::endl;
-
+            */
 
             H5Fflush(id(),H5F_SCOPE_GLOBAL);
             H5Fclose(id());
@@ -106,9 +106,8 @@ namespace h5{
     //-------------------------------------------------------------------------
     H5File H5File::open_file(const String &n,bool ro)
     {
-
         hid_t fid;
-
+        
         //check if the file is a valid HDF5 file
         if(!H5Fis_hdf5(n.c_str()))
             throw H5FileError(EXCEPTION_RECORD, 
@@ -178,6 +177,7 @@ namespace h5{
             if(fid<0)
             {
                 H5Pclose(acc_plist);
+                H5Pclose(create_plist);
                 H5FileError error(EXCEPTION_RECORD,
                 "Error create file "+String(n)+" in overwrite mode!");
                 std::cerr<<error<<std::endl;
@@ -190,6 +190,7 @@ namespace h5{
             if(fid<0)
             {
                 H5Pclose(acc_plist);
+                H5Pclose(create_plist);
                 H5FileError error(EXCEPTION_RECORD,
                 "Error create file "+String(n)+" file most probably already "
                 "exists - use overwrite!");
@@ -199,7 +200,6 @@ namespace h5{
         }
 
         H5File f(fid);
-        //H5Fclose(fid);
 
         //in the end we need to set the HDF5 version to the correct
         //value

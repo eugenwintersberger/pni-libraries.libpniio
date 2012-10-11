@@ -144,16 +144,10 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    String H5Attribute::base() const
-    {
-        return String("");
-    }
+    String H5Attribute::base() const { return String(""); }
 
     //-------------------------------------------------------------------------
-    String H5Attribute::path() const
-    {
-        return String("");
-    }
+    String H5Attribute::path() const { return String(""); }
     
     //-------------------------------------------------------------------------
     //implementation of write from String
