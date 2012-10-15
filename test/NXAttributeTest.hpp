@@ -220,7 +220,7 @@ template<typename APTYPE> void NXAttributeTest<APTYPE>::setUp()
     create_parent(_f,_parent);
 
     //create shape
-    _shape = shape_t{10,20};
+    _shape = shape_t({10,20});
     _size = 200;
 }
 
