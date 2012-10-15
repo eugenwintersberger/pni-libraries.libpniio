@@ -48,7 +48,7 @@ var.Add(PathVariable("BOOSTLIBDIR","installation directory of boost libraries","
 var.Add(PathVariable("H5INCDIR","Directory where HDF5 headers are installed","",PathVariable.PathAccept))
 var.Add(PathVariable("H5LIBDIR","Directory where HDF5 libraries are installed","",PathVariable.PathAccept))
 var.Add(PathVariable("MPILIBDIR","Directory where MPI libraries are installed","/usr/lib"))
-var.Add(PathVariable("MPIINCDIR","Directory where MPI headers are installed","/usr/include/mpi"))
+var.Add(PathVariable("MPIINCDIR","Directory where MPI headers are installed","/usr/include"))
 
 var.Add("H5LIBNAME","HDF5 library name","hdf5")
 var.Add("VERSION","library version","0.0.0")
