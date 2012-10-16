@@ -177,8 +177,10 @@ if GetOption("with_mpi"):
 
 #check for boost regular expressions library
 if not conf.CheckLib("boost_regex",language="C++"):
-    print "BOOST regular expression library not found"
-    Exit(1)
+    env.AppendUnique(LIBS=['dl'])
+    if not conf.CheckLib("boost_regex",language="C++"):
+        print "BOOST regular expression library not found"
+        Exit(1)
 
 if not conf.CheckCHeader("hdf5.h"):
     print "HDF5 header files are missing!"

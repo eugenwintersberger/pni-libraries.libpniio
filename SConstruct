@@ -104,7 +104,6 @@ if debug:
 
 #need to link explicit against libdl because some compilers 
 #are not doing this by default
-env.Append(LIBS=["dl"])
 #set paths for Boost and HDF5
 if env["H5LIBDIR"]: env.AppendUnique(LIBPATH = env['H5LIBDIR'])
 if env["H5INCDIR"]: env.AppendUnique(CPPPATH = env['H5INCDIR'])

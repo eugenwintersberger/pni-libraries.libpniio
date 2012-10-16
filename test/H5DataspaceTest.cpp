@@ -24,8 +24,7 @@ void H5DataspaceTest::test_creation(){
     //create a dataspace from a shape object
     //this should lead to a constant dataspace which cannot be extended
     shape_t s({10,3,45});
-    shape_t
-        uls({H5Dataspace::UNLIMITED,H5Dataspace::UNLIMITED,H5Dataspace::UNLIMITED});
+    std::vector<UInt64> uls({H5Dataspace::UNLIMITED,H5Dataspace::UNLIMITED,H5Dataspace::UNLIMITED});
     size_t s_size = 10*3*45;
     H5Dataspace s2(s);
     CPPUNIT_ASSERT(s2.is_valid());
