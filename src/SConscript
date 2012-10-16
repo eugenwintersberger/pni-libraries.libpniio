@@ -39,8 +39,10 @@ static_library = build_env.StaticLibrary(build_env["LIBNAME"],static_objects)
 pkg_config_file = build_env.Substfile(source=["pninx.pc.in"],
 				 SUBST_DICT={"@PREFIX@":"$PREFIX","@LIBNAME@":"$LIBNAME",
 				             "@VERSION@":"$VERSION",
-                             "@INCDIR@":"$INCDIR",
-                             "@H5LIBNAME@":"$H5LIBNAME"})
+                             "@INCPATH@":"${_CPPINCFLAGS}",
+                             "@DEFINES@":"${_CPPDEFFLAGS}",
+                             "@LIBPATH@":"${_LIBDIRFLAGS}",
+                             "@LIBS@":"${_LIBFLAGS}"})
 
 build_env.AlwaysBuild(pkg_config_file)
 
