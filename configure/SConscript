@@ -106,39 +106,50 @@ if not conf.CheckForEnumBug():
     env.AppendUnique(CPPDEFINES=['ENUMBUG'])
 
 #check type sizes
-if not conf.CheckTypeSize('char',expect=1):
-    pass
+if not conf.CheckTypeSize('int8_t',"#include<cstdint>",language="C++",expect=1):
+    print "int8_t size does not fit ..."
+    Exit(1)
 
-if not conf.CheckTypeSize('unsigned char',expect=1):
-    pass
+if not conf.CheckTypeSize('uint8_t',"#include<cstdint>",language="C++",expect=1):
+    print "uint8_t size does not fit ..."
+    Exit(1)
 
-if not conf.CheckTypeSize('short',expect=2):
-    pass
+if not conf.CheckTypeSize('int16_t',"#include<cstdint>",language="C++",expect=2):
+    print "int16_t size does not fit ..."
+    Exit(1)
 
-if not conf.CheckTypeSize('unsigned short',expect=2):
-    pass
+if not conf.CheckTypeSize('uint16_t',"#include<cstdint>",language="C++",expect=2):
+    print "uint16_t size does not fit ..."
+    Exit(1)
 
-if not conf.CheckTypeSize('int',expect=4):
-    pass
+if not conf.CheckTypeSize('int32_t',"#include<cstdint>",language="C++",expect=4):
+    print "int32_t size does not fit ..."
+    Exit(1)
 
-if not conf.CheckTypeSize('unsigned int',expect=4):
-    pass
+if not conf.CheckTypeSize('uint32_t',"#include<cstdint>",language="C++",expect=4):
+    print "uint32_t size does not fit ..."
+    Exit(1)
 
-if not conf.CheckTypeSize('long',expect=8):
-    pass
+if not conf.CheckTypeSize('int64_t',"#include<cstdint>",language="C++",expect=8):
+    print "int64_t size does not fit ..."
+    Exit(1)
 
-if not conf.CheckTypeSize('unsigned long',expect=8):
-    pass
+if not conf.CheckTypeSize('uint64_t',"#include<cstdint>",language="C++",expect=8):
+    print "uint64_t size does not fit ..."
+    Exit(1)
 
-if not conf.CheckTypeSize('float',expect=4):
-    pass
+if not conf.CheckTypeSize('float',language="C++",expect=4):
+    print "float size does not match ..."
+    Exit(1)
 
-if not conf.CheckTypeSize('double',expect=8):
-    pass
+if not conf.CheckTypeSize('double',language="C++",expect=8):
+    print "double size does not match ..."
+    Exit(1)
 
-if not conf.CheckTypeSize('long double',expect = 16):
-    #in this case we are on 32Bit PC platform
-    pass
+if not conf.CheckTypeSize('long double',language="C++",expect = 16):
+    if not conf.CheckTypeSize('long double',language="C++",expect=12):
+        print "long double size does not match ..."
+        Exit(1)
 
 if not conf.CheckCXXHeader("boost/static_assert.hpp"):
     print "BOOST header static_assert.hpp does not exist!"
@@ -225,8 +236,10 @@ if not test_conf.CheckCXXHeader("cppunit/ui/text/TextTestRunner.h"):
 
 #check for mandatory libraries
 if not test_conf.CheckLib("cppunit",language="C++"):
-    print "CPPUNIT unit test libraray is not installed!"
-    Exit(1)
+    test_env.AppendUnique(LIBS=["dl"])
+    if not test_conf.CheckLib('cppunit',language='C++'):
+        print "CPPUNIT unit test libraray is not installed!"
+        Exit(1)
 
 
 test_env = test_conf.Finish()
