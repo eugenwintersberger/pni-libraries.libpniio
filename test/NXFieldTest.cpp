@@ -100,7 +100,7 @@ void NXFieldTest::test_creation()
                          shape_t({0,1024,1024}),shape_t({1,1024,1024})));
     CPPUNIT_ASSERT_NO_THROW(
     field = create_field(file,"test_util3",TypeID::FLOAT128,
-                         shape_t{0,1024,1024},shape_t{1,1024,1024},deflate));
+                         shape_t({0,1024,1024}),shape_t({1,1024,1024}),deflate));
 
 }
 
