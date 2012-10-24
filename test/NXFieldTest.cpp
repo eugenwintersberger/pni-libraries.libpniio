@@ -94,11 +94,13 @@ void NXFieldTest::test_creation()
                          ShapeMissmatchError);
 
     //create a field with a utilty function
-    field = create_field(file,"test_util", TypeID::UINT32);
+    CPPUNIT_ASSERT_NO_THROW(field = create_field(file,"test_util", TypeID::UINT32));
+    CPPUNIT_ASSERT_NO_THROW(
     field = create_field(file,"test_util2",TypeID::FLOAT128,
-                         shape_t{0,1024,1024},shape_t{1,1024,1024});
+                         shape_t({0,1024,1024}),shape_t({1,1024,1024})));
+    CPPUNIT_ASSERT_NO_THROW(
     field = create_field(file,"test_util3",TypeID::FLOAT128,
-                         shape_t{0,1024,1024},shape_t{1,1024,1024},deflate);
+                         shape_t({0,1024,1024}),shape_t({1,1024,1024}),deflate));
 
 }
 
@@ -163,7 +165,8 @@ void NXFieldTest::test_resize()
     shape_t s = {0,1024};
     shape_t cs = {1,1024};
 
-    NXField field = file.create_field<Float32>("ds",s);
+    NXField field;
+    CPPUNIT_ASSERT_NO_THROW(field= file.create_field<Float32>("ds",s));
     CPPUNIT_ASSERT(field.is_valid());
     auto shape = field.shape<shape_t>();
     CPPUNIT_ASSERT(std::equal(shape.begin(),shape.end(),s.begin()));
@@ -179,7 +182,8 @@ void NXFieldTest::test_resize()
     shape = field.shape<shape_t>();
     CPPUNIT_ASSERT(std::equal(shape.begin(),shape.end(),s.begin()));
 
-    NXField field2 = file.create_field<String>("ss");
+    NXField field2;
+    CPPUNIT_ASSERT_NO_THROW(field2 = file.create_field<String>("ss"));
     CPPUNIT_ASSERT(field2.rank() == 1);
     CPPUNIT_ASSERT(field2.size() == 1);
     CPPUNIT_ASSERT_NO_THROW(field2.grow(0));
@@ -340,7 +344,8 @@ void NXFieldTest::test_grow()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     shape_t s{0};
-    NXField field = file.create_field<Bool>("flags",s);
+    NXField field;
+    CPPUNIT_ASSERT_NO_THROW(field= file.create_field<Bool>("flags",s));
     CPPUNIT_ASSERT(field.size() == 0);
 
     field.grow(0);
