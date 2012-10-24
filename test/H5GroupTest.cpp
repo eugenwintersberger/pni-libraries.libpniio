@@ -54,6 +54,7 @@ void H5GroupTest::test_creation()
     CPPUNIT_ASSERT(g5.name() == "directory");
     CPPUNIT_ASSERT(g5.path() == "/group5/test/directory");
     CPPUNIT_ASSERT(g5.base() == "/group5/test");
+
 }
 
 //-----------------------------------------------------------------------------
@@ -134,6 +135,12 @@ void H5GroupTest::test_openobjects()
     CPPUNIT_ASSERT_NO_THROW(det = test["data/detector"]);
     CPPUNIT_ASSERT(data.is_valid());
     CPPUNIT_ASSERT(det.is_valid());
+    
+    //check for the root group
+    H5Group root = file["/"];
+    CPPUNIT_ASSERT(root.name() == "/");
+    CPPUNIT_ASSERT(root.path() == "/");
+    CPPUNIT_ASSERT(root.base() == "/");
 }
 
 
