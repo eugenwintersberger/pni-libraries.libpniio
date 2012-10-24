@@ -192,7 +192,7 @@ namespace h5{
         if(object_type() == H5ObjectType::GROUP) 
             return pni::nx::NXObjectType::NXGROUP;
         else if(object_type() == H5ObjectType::FILE)
-            return pni::nx::NXObjectType::NXGROUP;
+            return pni::nx::NXObjectType::NXFILE;
         else if(object_type() == H5ObjectType::DATASET)
             return pni::nx::NXObjectType::NXFIELD;
         else

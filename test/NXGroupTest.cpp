@@ -39,7 +39,7 @@ void NXGroupTest::setUp()
 {
 	_fname = "test.group.h5";
     _f = NXFile::create_file("NXGroupTest.h5",true,0);
-    CPPUNIT_ASSERT(_f.object_type() == pni::nx::NXObjectType::NXGROUP);
+    CPPUNIT_ASSERT(_f.object_type() == pni::nx::NXObjectType::NXFILE);
 
 }
 

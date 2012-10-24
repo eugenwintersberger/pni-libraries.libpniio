@@ -38,6 +38,7 @@ namespace pni{
         //! does not belong to any of the two mentioned before.
         enum class NXObjectType { NXFIELD, //!< NXField identifier
                                   NXGROUP, //!< NXGroup identifier
+                                  NXFILE,  //!< NXFile identifier
                                   NXNONE   //!< no valid Nexus object
                                 };
 
