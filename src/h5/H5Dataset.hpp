@@ -585,6 +585,8 @@ namespace h5{
             //! remove a selection
             void clear_selections() const
             {
+                //this should be quite easy - there is nothing special we have
+                ///to do.
                 H5Sselect_all(_fspace.id());
                 _mspace = _fspace;
             }
