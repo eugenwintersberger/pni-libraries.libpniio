@@ -570,7 +570,7 @@ namespace h5{
                 //apply the selection
                 herr_t err = H5Sselect_hyperslab(_fspace.id(),
                         H5S_SELECT_SET,offset.ptr(),stride.ptr(),count.ptr(),
-                        NULL);
+                        nullptr);
                 if(err<0)
                     throw H5DataSetError(EXCEPTION_RECORD,
                             "Error applying selection to dataset!");

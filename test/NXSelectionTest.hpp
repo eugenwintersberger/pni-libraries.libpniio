@@ -96,7 +96,7 @@ template<typename T> void NXSelectionTest::test_scalar_selection()
     shape_t shape{3,4};
     NXField field = file.create_field<T>("array",shape);
 
-    T write,read;
+    T write=T(0),read=T(0);
     
     CPPUNIT_ASSERT(field.size()==12);
     CPPUNIT_ASSERT(field.rank()==2);
@@ -140,6 +140,8 @@ template<typename T> void NXSelectionTest::test_array_selection()
     NXField field = file.create_field<T>("array",shape);
 
     DArray<T> write(shape_t({3})),read(shape_t({3}));
+    std::fill(write.begin(),write.end(),T(0));
+    std::fill(read.begin(),read.end(),T(0));
 
     for(size_t j=0;j<shape[1];j++)
     {
@@ -152,7 +154,6 @@ template<typename T> void NXSelectionTest::test_array_selection()
         for(size_t i=0;i<write.size();i++) check_equality(read[i],write[i]);
     }
 
-    field(Slice(1,3),0).write(write);
     CPPUNIT_ASSERT_THROW(field(Slice(1,3),0).write(write),ShapeMissmatchError);
     DBuffer<T> rbuff(2);
     CPPUNIT_ASSERT_THROW(field(Slice(0,3),0).read(rbuff),SizeMissmatchError);

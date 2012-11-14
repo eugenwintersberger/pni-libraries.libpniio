@@ -38,6 +38,7 @@
 
 #include "NXObject.hpp"
 #include "NXExceptions.hpp"
+#include "NXSelection.hpp"
 
 using namespace pni::utils;
 
@@ -279,16 +280,15 @@ namespace nx{
             template<typename BTYPE> void _read_buffer(BTYPE &b) const
             {
                 if(b.size() == 0)
-                    _throw_exception(MemoryNotAllocatedError(EXCEPTION_RECORD,
-                                     "Target buffer not allocated!"));
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                                           "Target buffer not allocated!");
 
                 if(b.size() != this->imp().size())
                 {
                     std::stringstream ss;
                     ss<<"Buffer size ("<<b.size()<<") and field size (";
                     ss<<this->size()<<") do not match!";
-                    _throw_exception(SizeMissmatchError(EXCEPTION_RECORD,
-                                     ss.str()));
+                    throw SizeMissmatchError(EXCEPTION_RECORD,ss.str());
                 }
                 
                 try
@@ -298,12 +298,9 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    _throw_exception(NXFieldError(EXCEPTION_RECORD,
-                                     "Cannot read to buffer!"));
+                    throw NXFieldError(EXCEPTION_RECORD,
+                                       "Cannot read to buffer!");
                 }
-
-                //clear selections if there  are some
-                this->imp().clear_selections();
             }
 
             //-----------------------------------------------------------------
@@ -320,16 +317,15 @@ namespace nx{
             template<typename BTYPE> void _write_buffer(const BTYPE &b) const
             {
                 if(b.size() == 0)
-                    _throw_exception(MemoryNotAllocatedError(EXCEPTION_RECORD,
-                                     "Source buffer not allocated!"));
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                                     "Source buffer not allocated!");
 
                 if(b.size() != this->size())
                 {
                     std::stringstream ss;
                     ss<<"Source buffer size ("<<b.size()<<") does not match";
                     ss<<"target field size ("<<this->size()<<")!";
-                    _throw_exception(SizeMissmatchError(EXCEPTION_RECORD,
-                                     ss.str()));
+                    throw SizeMissmatchError(EXCEPTION_RECORD,ss.str());
                 }
 
                 try
@@ -338,12 +334,8 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    _throw_exception(NXFieldError(EXCEPTION_RECORD,
-                                     "Cannot write buffer!"));
+                    throw NXFieldError(EXCEPTION_RECORD,"Cannot write buffer!");
                 }
-
-                //clear selection if there is one
-                this->imp().clear_selections();
             }
 
             //-----------------------------------------------------------------
@@ -359,8 +351,8 @@ namespace nx{
             template<typename ATYPE> void _read_array(ATYPE &a) const
             {
                 if(a.size() == 0)
-                    _throw_exception(MemoryNotAllocatedError(EXCEPTION_RECORD,
-                                     "Target array buffer not allocated!"));
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                                     "Target array buffer not allocated!");
 
                 auto ashape = a.shape<shape_t>();
                 auto fshape = this->shape<shape_t>();
@@ -370,16 +362,16 @@ namespace nx{
                     //if array and field have the same rank we need to check the
                     //shape of each of the objects
                     if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
-                        _throw_exception(ShapeMissmatchError(EXCEPTION_RECORD,
-                                _shape_missmatch_error_message(ashape,fshape)));
+                        throw ShapeMissmatchError(EXCEPTION_RECORD,
+                                _shape_missmatch_error_message(ashape,fshape));
                 }
                 else
                 {
                     //if the two components are of different size we have to
                     //throw an exception in any case
                     if(this->size() != a.size())
-                        _throw_exception(ShapeMissmatchError(EXCEPTION_RECORD,
-                                _shape_missmatch_error_message(ashape,fshape)));
+                        throw ShapeMissmatchError(EXCEPTION_RECORD,
+                                _shape_missmatch_error_message(ashape,fshape));
                 }
 
                 //finally we read the data
@@ -390,12 +382,9 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    _throw_exception(NXFieldError(EXCEPTION_RECORD,
-                                     "Cannt read data to array!"));
+                    throw NXFieldError(EXCEPTION_RECORD,
+                                     "Cannt read data to array!");
                 }
-
-                //clear selections
-                this->imp().clear_selections();
 
             }
 
@@ -413,8 +402,8 @@ namespace nx{
             template<typename ATYPE> void _write_array(ATYPE &a) const
             {
                 if(a.size() == 0)
-                    _throw_exception(MemoryNotAllocatedError(EXCEPTION_RECORD,
-                                     "Source array buffer not allocated!"));
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                                     "Source array buffer not allocated!");
 
                 auto ashape = a.shape<shape_t>();
                 auto fshape = this->shape<shape_t>();
@@ -422,43 +411,37 @@ namespace nx{
                 if(ashape.size() == fshape.size())
                 {
                     if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
-                        _throw_exception(ShapeMissmatchError(EXCEPTION_RECORD,
-                                _shape_missmatch_error_message(ashape,fshape)));
+                        throw ShapeMissmatchError(EXCEPTION_RECORD,
+                                _shape_missmatch_error_message(ashape,fshape));
                 }
                 else
                 {
                     if(this->size() != a.size())
-                        _throw_exception(ShapeMissmatchError(EXCEPTION_RECORD,
-                               _shape_missmatch_error_message(ashape,fshape)));
+                        throw ShapeMissmatchError(EXCEPTION_RECORD,
+                               _shape_missmatch_error_message(ashape,fshape));
                 }
 
 
                 try { this->imp().write(a.storage().ptr()); }
                 catch(...)
                 {
-                    _throw_exception(NXFieldError(EXCEPTION_RECORD,
-                                     "Cannt write data from array!"));
+                    throw NXFieldError(EXCEPTION_RECORD,
+                                     "Cannt write data from array!");
                 }
-
-                //clear selections
-                this->imp().clear_selections();
-
             }
 
-            /*!
-            \brief throw an exception
+            //-----------------------------------------------------------------
+            void apply_selection(const std::vector<Slice> &s) 
+            {
+                this->imp().apply_selection(s);
+            }
 
-            Everytime an exception is thrown by a method of this class the
-            actually applied selection must be reliefed. This is done by this
-            method. Thus, always use this method to throw an exception rather
-            than using the common \b throw operator. 
-            \param error the exception to throw
-            */
-            void _throw_exception(const Exception &error) const
+            //-----------------------------------------------------------------
+            void reset_selection() 
             {
                 this->imp().clear_selections();
-                throw error;
             }
+
         public:
             //! shared pointer type for the field object
             typedef std::shared_ptr<NXField<Imp> > shared_ptr; 
@@ -534,7 +517,6 @@ namespace nx{
             template<typename CTYPE> CTYPE shape() const 
             { 
                 auto shape = this->imp().template shape<CTYPE>(); 
-                this->imp().clear_selections();
                 return shape;
             }
 
@@ -548,7 +530,6 @@ namespace nx{
             size_t size() const 
             { 
                 size_t s = this->imp().size(); 
-                this->imp().clear_selections();
                 return s;
             }
 
@@ -562,7 +543,6 @@ namespace nx{
             TypeID type_id() const 
             {
                 TypeID id = this->imp().type_id(); 
-                this->imp().clear_selections();
                 return id;
             }
 
@@ -649,7 +629,6 @@ namespace nx{
             size_t rank() const
             { 
                 size_t r = this->imp().rank(); 
-                this->imp().clear_selections();
                 return r;
             }
 
@@ -666,7 +645,6 @@ namespace nx{
             size_t dim(size_t i) const
             { 
                 size_t d = this->imp().dim(i); 
-                this->imp().clear_selections();
                 return d;
             }
 
@@ -688,8 +666,8 @@ namespace nx{
             template<typename T> void read(T &value) const
             {
                 if(this->imp().size() != 1)
-                    _throw_exception(ShapeMissmatchError(EXCEPTION_RECORD,
-                                     "Field is not scalar!"));
+                    throw ShapeMissmatchError(EXCEPTION_RECORD,
+                                              "Field is not scalar!");
 
                 try
                 {
@@ -697,12 +675,10 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    _throw_exception(NXFieldError(EXCEPTION_RECORD,
-                                     "Error reading data from field ["
-                                     +this->path()+"]!"));
+                    throw NXFieldError(EXCEPTION_RECORD,
+                                       "Error reading data from field ["
+                                       +this->path()+"]!");
                 }
-
-                this->imp().clear_selections();
             }
 
             //-----------------------------------------------------------------
@@ -836,8 +812,6 @@ namespace nx{
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
-
-                this->imp().clear_selections();
             }
 
            
@@ -859,8 +833,8 @@ namespace nx{
             template<typename T> void write(const T &value) const
             {
                 if(this->imp().size()!=1) 
-                    _throw_exception(ShapeMissmatchError(EXCEPTION_RECORD,
-                                     "Field is not scalar!"));
+                    throw ShapeMissmatchError(EXCEPTION_RECORD,
+                                              "Field is not scalar!");
 
                 try
                 {
@@ -868,12 +842,11 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    _throw_exception(NXFieldError(EXCEPTION_RECORD,
-                                     "Error writing data to field ["
-                                     +this->path()+"]!"));
+                    throw NXFieldError(EXCEPTION_RECORD,
+                            "Error writing data to field ["
+                            +this->path()+"]!");
                 }
 
-                this->imp().clear_selections();
             }
 
             //-----------------------------------------------------------------
@@ -903,7 +876,6 @@ namespace nx{
                     error.append(EXCEPTION_RECORD); throw error;
                 }
 
-                this->imp().clear_selections();
             }
 
             //------------------------------------------------------------------
@@ -1018,10 +990,8 @@ namespace nx{
                 }
                 catch(NXFieldError &error)
                 {
-                    this->imp().clear_selections();
                     error.append(EXCEPTION_RECORD); throw error;
                 }
-                this->imp().clear_selections();
             }
 
 
@@ -1046,10 +1016,12 @@ namespace nx{
             \return field object with selection set
             */
             template<typename ...ITYPES>
-            NXField<Imp> &operator()(ITYPES ...indices)
+            NXSelection<NXField<Imp> > operator()(ITYPES ...indices)
             {
-                this->imp().apply_selection(std::vector<Slice>({Slice(indices)...}));
-                return *this;
+                typedef NXSelection<NXField<Imp> > sel_type;
+                typedef typename sel_type::selection_type container_type;
+
+                return sel_type(container_type({Slice(indices)...}),*this);
             }
 
             //---------------------------------------------------------------
@@ -1063,12 +1035,14 @@ namespace nx{
             \param selection container with instances of Slice
             \return instance of NXField with selection set
             */
-            NXField<Imp> &operator()(const std::vector<Slice> &selection) 
+            NXSelection<NXField<Imp> > operator()(const std::vector<Slice> &selection) 
             {
-                this->imp().apply_selection(selection);
-                return *this;
-            }
+                typedef NXSelection<NXField<Imp> > sel_type;
 
+                return sel_type(selection,*this);
+            }
+        
+            friend class NXSelection<NXField<Imp> >;
 
     };
 
