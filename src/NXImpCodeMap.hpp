@@ -50,11 +50,11 @@ namespace nx{
             static const ImpCode icode; //!< implementation code
     };
 
-#define NXIMPCODEMAPDECL(type,icode)\
+#define NXIMPCODEMAPDECL(type,impcode)\
     template<> class NXImpCodeMap<type>\
     {\
         public:\
-            static const ImpCode icode = icode;\
+            static const ImpCode icode = impcode;\
     }
 
     //! \cond NO_API_DOC
@@ -63,8 +63,8 @@ namespace nx{
     NXIMPCODEMAPDECL(pni::nx::h5::H5File,ImpCode::HDF5);
     NXIMPCODEMAPDECL(pni::nx::h5::H5Group,ImpCode::HDF5);
     NXIMPCODEMAPDECL(pni::nx::h5::H5Dataset,ImpCode::HDF5);
-    NXIMPCODEMAPDECL(pni::nx::h5::H5Filter);
-    NXIMPCODEMAPDECL(pni::nx::h5::H5Attribute);
+    NXIMPCODEMAPDECL(pni::nx::h5::H5Filter,ImpCode::HDF5);
+    NXIMPCODEMAPDECL(pni::nx::h5::H5Attribute,ImpCode::HDF5);
     //! \endcond
 
 //end of namespace

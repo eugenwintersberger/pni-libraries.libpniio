@@ -41,7 +41,7 @@ namespace h5{
                 ss<<" type!";\
                 throw H5DataTypeError(EXCEPTION_RECORD,ss.str());\
             }\
-            return H5Datatype(t);
+            return H5Datatype(t)
 
 #define CREATE_TYPE_METHODS(type,id,h5type)\
     template<> H5Datatype H5DatatypeFactory::create_type<type>()\
@@ -84,17 +84,17 @@ namespace h5{
     }
           
     //------------create integer data types------------------------------------
-    CREATE_TYPE_METHODS(UInt8,TypeID::UINT8,H5T_NATIVE_UINT8);
-    CREATE_TYPE_METHODS(Int8,TypeID::INT8,H5T_NATIVE_INT8);
-    CREATE_TYPE_METHODS(UInt16,TypeID::UINT16,H5T_NATIVE_UINT16);
-    CREATE_TYPE_METHODS(Int16,TypeID::INT16,H5T_NATIVE_INT16);
-    CREATE_TYPE_METHODS(UInt32,TypeID::UINT32,H5T_NATIVE_UINT32);
-    CREATE_TYPE_METHODS(Int32,TypeID::INT32,H5T_NATIVE_INT32);
-    CREATE_TYPE_METHODS(UInt64,TypeID::UINT64,H5T_NATIVE_UINT64);
-    CREATE_TYPE_METHODS(Int64,TypeID::INT64,H5T_NATIVE_INT64);
-    CREATE_TYPE_METHODS(Float32,TypeID::FLOAT32,H5T_NATIVE_FLOAT);
-    CREATE_TYPE_METHODS(Float64,TypeID::FLOAT64,H5T_NATIVE_DOUBLE);
-    CREATE_TYPE_METHODS(Float128,TypeID::FLOAT128,H5T_NATIVE_LDOUBLE);
+    CREATE_TYPE_METHODS(UInt8,TypeID::UINT8,H5T_NATIVE_UINT8)
+    CREATE_TYPE_METHODS(Int8,TypeID::INT8,H5T_NATIVE_INT8)
+    CREATE_TYPE_METHODS(UInt16,TypeID::UINT16,H5T_NATIVE_UINT16)
+    CREATE_TYPE_METHODS(Int16,TypeID::INT16,H5T_NATIVE_INT16)
+    CREATE_TYPE_METHODS(UInt32,TypeID::UINT32,H5T_NATIVE_UINT32)
+    CREATE_TYPE_METHODS(Int32,TypeID::INT32,H5T_NATIVE_INT32)
+    CREATE_TYPE_METHODS(UInt64,TypeID::UINT64,H5T_NATIVE_UINT64)
+    CREATE_TYPE_METHODS(Int64,TypeID::INT64,H5T_NATIVE_INT64)
+    CREATE_TYPE_METHODS(Float32,TypeID::FLOAT32,H5T_NATIVE_FLOAT)
+    CREATE_TYPE_METHODS(Float64,TypeID::FLOAT64,H5T_NATIVE_DOUBLE)
+    CREATE_TYPE_METHODS(Float128,TypeID::FLOAT128,H5T_NATIVE_LDOUBLE)
 
     //-------------------create double types-----------------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<Complex32>()
@@ -257,23 +257,23 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    CREATE_TYPE_GET_METHOD(Bool,TypeID::BOOL,_bool_t);
-    CREATE_TYPE_GET_METHOD(UInt8,TypeID::UINT8,_uint8_t);
-    CREATE_TYPE_GET_METHOD(Int8,TypeID::INT8,_int8_t);
-    CREATE_TYPE_GET_METHOD(UInt16,TypeID::UINT16,_uint16_t);
-    CREATE_TYPE_GET_METHOD(Int16,TypeID::INT16,_int16_t);
-    CREATE_TYPE_GET_METHOD(UInt32,TypeID::UINT32,_uint32_t);
-    CREATE_TYPE_GET_METHOD(Int32,TypeID::INT32,_int32_t);
-    CREATE_TYPE_GET_METHOD(UInt64,TypeID::UINT64,_uint64_t);
-    CREATE_TYPE_GET_METHOD(Int64,TypeID::INT64,_int64_t);
-    CREATE_TYPE_GET_METHOD(Float32,TypeID::FLOAT32,_float32_t);
-    CREATE_TYPE_GET_METHOD(Float64,TypeID::FLOAT64,_float64_t);
-    CREATE_TYPE_GET_METHOD(Float128,TypeID::FLOAT128,_float128_t);
-    CREATE_TYPE_GET_METHOD(Complex32,TypeID::COMPLEX32,_cmplx32_t);
-    CREATE_TYPE_GET_METHOD(Complex64,TypeID::COMPLEX64,_cmplx64_t);
-    CREATE_TYPE_GET_METHOD(Complex128,TypeID::COMPLEX128,_cmplx128_t);
-    CREATE_TYPE_GET_METHOD(String,TypeID::STRING,_string_t);
-    CREATE_TYPE_GET_METHOD(Binary,TypeID::BINARY,_binary_t);
+    CREATE_TYPE_GET_METHOD(Bool,TypeID::BOOL,_bool_t)
+    CREATE_TYPE_GET_METHOD(UInt8,TypeID::UINT8,_uint8_t)
+    CREATE_TYPE_GET_METHOD(Int8,TypeID::INT8,_int8_t)
+    CREATE_TYPE_GET_METHOD(UInt16,TypeID::UINT16,_uint16_t)
+    CREATE_TYPE_GET_METHOD(Int16,TypeID::INT16,_int16_t)
+    CREATE_TYPE_GET_METHOD(UInt32,TypeID::UINT32,_uint32_t)
+    CREATE_TYPE_GET_METHOD(Int32,TypeID::INT32,_int32_t)
+    CREATE_TYPE_GET_METHOD(UInt64,TypeID::UINT64,_uint64_t)
+    CREATE_TYPE_GET_METHOD(Int64,TypeID::INT64,_int64_t)
+    CREATE_TYPE_GET_METHOD(Float32,TypeID::FLOAT32,_float32_t)
+    CREATE_TYPE_GET_METHOD(Float64,TypeID::FLOAT64,_float64_t)
+    CREATE_TYPE_GET_METHOD(Float128,TypeID::FLOAT128,_float128_t)
+    CREATE_TYPE_GET_METHOD(Complex32,TypeID::COMPLEX32,_cmplx32_t)
+    CREATE_TYPE_GET_METHOD(Complex64,TypeID::COMPLEX64,_cmplx64_t)
+    CREATE_TYPE_GET_METHOD(Complex128,TypeID::COMPLEX128,_cmplx128_t)
+    CREATE_TYPE_GET_METHOD(String,TypeID::STRING,_string_t)
+    CREATE_TYPE_GET_METHOD(Binary,TypeID::BINARY,_binary_t)
 
 
 //end of namespace

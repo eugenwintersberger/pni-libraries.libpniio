@@ -98,7 +98,7 @@ if not env["DOCDIR"]:
 env.Replace(CXX = env["CXX"])
 
 #set default compiler flags
-env.Append(CXXFLAGS = ["-Wall","-std=c++0x","-fno-deduce-init-list"])
+env.Append(CXXFLAGS = ["-Wall","-std=c++0x","-fno-deduce-init-list","-pedantic"])
 if debug:
     env.Append(CXXFLAGS=["-DDEBUG"])
 
