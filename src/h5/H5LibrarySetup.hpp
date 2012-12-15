@@ -33,92 +33,97 @@ extern "C"{
 using namespace pni::utils;
 
 namespace pni {
-    namespace nx {
-        namespace h5 {
+namespace nx {
+namespace h5 {
 
-            /*! \ingroup nxh5_classes
-            \brief HDF5 library setup
+    /*! \ingroup nxh5_classes
+    \brief HDF5 library setup
 
-            This class holds information about the linked HDF5 library used for
-            linking the project.
-            */
-            class H5LibrarySetup 
-            {
-            private:
-                UInt32 _major_version_number; //!< major version number of the HDF5 library
-                UInt32 _minor_version_number; //!< minor version number of the HDF5 library
-                UInt32 _release_number;       //!< release version of the HDF5 library
+    This class holds information about the linked HDF5 library used for linking
+    the project.
+    */
+    class H5LibrarySetup 
+    {
+    private:
+        //! major version number of the HDF5 library
+        UInt32 _major_version_number;
+        //! minor version number of the HDF5 library
+        UInt32 _minor_version_number;
+        //! release version of the HDF5 library
+        UInt32 _release_number;       
 
-                bool _verbose;   //!< verbose flag
+        bool _verbose;   //!< verbose flag
 
-            public:
-                //================constructors and destructor==================
-                //! default constructor
-                H5LibrarySetup();
-                //! destructor
-                virtual ~H5LibrarySetup();
+    public:
+        //======================constructors and destructor====================
+        //! default constructor
+        H5LibrarySetup();
 
-                //===================class methods=============================
-                /*! \brief get version string
+        //---------------------------------------------------------------------
+        //! destructor
+        virtual ~H5LibrarySetup();
 
-                Returns the full HDF5 library version as a string of the form
-                \<major number\>.\<minor number\>.\<release number\>.
-                \return version string
-                */
-                String version_string() const;
+        //=========================class methods===============================
+        /*! \brief get version string
 
-                //-------------------------------------------------------------
-                /*! \brief get major number
+        Returns the full HDF5 library version as a string of the form
+        \<major number\>.\<minor number\>.\<release number\>.
+        \return version string
+        */
+        String version_string() const;
 
-                Returns the major version number of the HDF5 library as 
-                unsigned integer.
-                \return major version number
-                */
-                UInt32 major_number() const;
+        //---------------------------------------------------------------------
+        /*! \brief get major number
 
-                //-------------------------------------------------------------
-                /*! \brief get minor number
+        Returns the major version number of the HDF5 library as 
+        unsigned integer.
+        \return major version number
+        */
+        UInt32 major_number() const;
 
-                Returns the minor version number of the HDF5 library as 
-                unsigned integer
-                \return minor version number
-                */
-                UInt32 minor_number() const;
+        //---------------------------------------------------------------------
+        /*! \brief get minor number
 
-                //-------------------------------------------------------------
-                /*! \brief get release number
+        Returns the minor version number of the HDF5 library as 
+        unsigned integer
+        \return minor version number
+        */
+        UInt32 minor_number() const;
 
-                Returns the release version of the HDF5 library as unsigned 
-                integer.
-                \return release version number
-                */
-                UInt32 release_number() const;
+        //---------------------------------------------------------------------
+        /*! \brief get release number
 
-                //-------------------------------------------------------------
-                /*! \brief set verbosity flag
+        Returns the release version of the HDF5 library as unsigned 
+        integer.
+        \return release version number
+        */
+        UInt32 release_number() const;
 
-                Use this method to set on and off the verbosity flag.
-                \param f flag value
-                */
-                void verbose(bool f) { _verbose = f; }
+        //---------------------------------------------------------------------
+        /*! \brief set verbosity flag
 
-                //-------------------------------------------------------------
-                /*! \brief check verbosity
+        Use this method to set on and off the verbosity flag.
+        \param f flag value
+        */
+        void verbose(bool f) { _verbose = f; }
 
-                Check whether or not the verbosity flag is set. Actually 
-                the flag has no particular meaning. This is for future
-                implementations.
-                \return value of the verbosity flag
-                */
-                bool is_verbose() const { return _verbose; }
-            };
+        //---------------------------------------------------------------------
+        /*! \brief check verbosity
 
-            //global setup of the library - should be implemented as a singleton in future
-            static H5LibrarySetup H5Setup;
+        Check whether or not the verbosity flag is set. Actually 
+        the flag has no particular meaning. This is for future
+        implementations.
+        \return value of the verbosity flag
+        */
+        bool is_verbose() const { return _verbose; }
+    };
+
+    //global setup of the library - should be implemented as a singleton in future
+    static H5LibrarySetup H5Setup;
 
 
-        //end of namespace
-        }
-    }
+//end of namespace
+}
+}
 }
 
