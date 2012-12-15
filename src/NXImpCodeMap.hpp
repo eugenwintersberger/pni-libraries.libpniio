@@ -44,43 +44,27 @@ namespace nx{
 
     This type map maps a particular implementation type to a type code.
     */
-    template<typename T> class NXImpCodeMap{
+    template<typename T> class NXImpCodeMap
+    {
         public:
             static const ImpCode icode; //!< implementation code
     };
 
+#define NXIMPCODEMAPDECL(type,icode)\
+    template<> class NXImpCodeMap<type>\
+    {\
+        public:\
+            static const ImpCode icode = icode;\
+    }
+
     //! \cond NO_API_DOC
     //specialization for the HDF5 Implementation
-    template<> class NXImpCodeMap<pni::nx::h5::H5AttributeObject>{
-        public:
-            static const ImpCode icode = ImpCode::HDF5;
-    };
-
-    template<> class NXImpCodeMap<pni::nx::h5::H5File>{
-        public:
-            static const ImpCode icode = ImpCode::HDF5;
-    };
-    
-    template<> class NXImpCodeMap<pni::nx::h5::H5Group>{
-        public:
-            static const ImpCode icode = ImpCode::HDF5;
-    };
-    
-    template<> class NXImpCodeMap<pni::nx::h5::H5Dataset>{
-        public:
-            static const ImpCode icode = ImpCode::HDF5;
-    };
-    
-    template<> class NXImpCodeMap<pni::nx::h5::H5Filter>{
-        public:
-            static const ImpCode icode = ImpCode::HDF5;
-    };
-
-    template<> class NXImpCodeMap<pni::nx::h5::H5Attribute>{
-        public:
-            static const ImpCode icode = ImpCode::HDF5;
-    };
-
+    NXIMPCODEMAPDECL(pni::nx::h5::H5AttributeObject,ImpCode::HDF5);
+    NXIMPCODEMAPDECL(pni::nx::h5::H5File,ImpCode::HDF5);
+    NXIMPCODEMAPDECL(pni::nx::h5::H5Group,ImpCode::HDF5);
+    NXIMPCODEMAPDECL(pni::nx::h5::H5Dataset,ImpCode::HDF5);
+    NXIMPCODEMAPDECL(pni::nx::h5::H5Filter);
+    NXIMPCODEMAPDECL(pni::nx::h5::H5Attribute);
     //! \endcond
 
 //end of namespace
