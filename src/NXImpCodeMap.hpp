@@ -25,9 +25,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#ifndef __NXIMPCODEMAP_HPP__
-#define __NXIMPCODEMAP_HPP__
-
+#pragma once
 #include "NXImpCode.hpp"
 
 #include "h5/H5AttributeObject.hpp"
@@ -38,55 +36,53 @@
 #include "h5/H5Attribute.hpp"
 
 namespace pni{
-    namespace nx{
+namespace nx{
        
-        /*! 
-        \ingroup nexus_lowlevel
-        \brief implementation code type map
+    /*! 
+    \ingroup nexus_lowlevel
+    \brief implementation code type map
 
-        This type map maps a particular implementation type to a type code.
-        */
-        template<typename T> class NXImpCodeMap{
-            public:
-                static const ImpCode icode; //!< implementation code
-        };
+    This type map maps a particular implementation type to a type code.
+    */
+    template<typename T> class NXImpCodeMap{
+        public:
+            static const ImpCode icode; //!< implementation code
+    };
 
-        //! \cond NO_API_DOC
-        //specialization for the HDF5 Implementation
-        template<> class NXImpCodeMap<pni::nx::h5::H5AttributeObject>{
-            public:
-                static const ImpCode icode = ImpCode::HDF5;
-        };
+    //! \cond NO_API_DOC
+    //specialization for the HDF5 Implementation
+    template<> class NXImpCodeMap<pni::nx::h5::H5AttributeObject>{
+        public:
+            static const ImpCode icode = ImpCode::HDF5;
+    };
 
-        template<> class NXImpCodeMap<pni::nx::h5::H5File>{
-            public:
-                static const ImpCode icode = ImpCode::HDF5;
-        };
-        
-        template<> class NXImpCodeMap<pni::nx::h5::H5Group>{
-            public:
-                static const ImpCode icode = ImpCode::HDF5;
-        };
-        
-        template<> class NXImpCodeMap<pni::nx::h5::H5Dataset>{
-            public:
-                static const ImpCode icode = ImpCode::HDF5;
-        };
-        
-        template<> class NXImpCodeMap<pni::nx::h5::H5Filter>{
-            public:
-                static const ImpCode icode = ImpCode::HDF5;
-        };
+    template<> class NXImpCodeMap<pni::nx::h5::H5File>{
+        public:
+            static const ImpCode icode = ImpCode::HDF5;
+    };
+    
+    template<> class NXImpCodeMap<pni::nx::h5::H5Group>{
+        public:
+            static const ImpCode icode = ImpCode::HDF5;
+    };
+    
+    template<> class NXImpCodeMap<pni::nx::h5::H5Dataset>{
+        public:
+            static const ImpCode icode = ImpCode::HDF5;
+    };
+    
+    template<> class NXImpCodeMap<pni::nx::h5::H5Filter>{
+        public:
+            static const ImpCode icode = ImpCode::HDF5;
+    };
 
-        template<> class NXImpCodeMap<pni::nx::h5::H5Attribute>{
-            public:
-                static const ImpCode icode = ImpCode::HDF5;
-        };
+    template<> class NXImpCodeMap<pni::nx::h5::H5Attribute>{
+        public:
+            static const ImpCode icode = ImpCode::HDF5;
+    };
 
-        //! \endcond
+    //! \endcond
 
-    //end of namespace
-    }
+//end of namespace
 }
-
-#endif
+}

@@ -24,22 +24,21 @@
  * Created on: Jul 3, 2011
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
-
-#ifndef NXIMPCODE_HPP_
-#define NXIMPCODE_HPP_
+#pragma once
 
 namespace pni{
-    namespace nx{
+namespace nx{
 
-        //! \ingroup util_classes
-        //! \brief implementation codes
+        /*! 
+        \ingroup util_classes
+        \brief implementation codes
 
-        //! This codes identify a particular implementation 
-        //! for the Nexus classes.
+        This codes identify a particular implementation for the Nexus classes.
+        */
         enum class ImpCode {HDF5 //!< HDF5 implementation code
-                        };
-    }
+
+        };
+
+//end of namespace
 }
-
-
-#endif /* NXIMPCODE_HPP_ */
+}

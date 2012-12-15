@@ -24,9 +24,7 @@
  * Created on: Jul 1, 2011
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
-
-#ifndef __NXGROUP_HPP__
-#define __NXGROUP_HPP__
+#pragma once
 
 #include <pni/utils/Types.hpp>
 
@@ -538,5 +536,3 @@ namespace nx{
 //end of namespace
 }
 }
-
-#endif /* NXGROUP_HPP_ */

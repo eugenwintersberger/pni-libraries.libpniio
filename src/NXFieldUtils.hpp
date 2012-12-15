@@ -23,6 +23,8 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
+#pragma once
+
 #include<pni/utils/Types.hpp>
 #include<pni/utils/TypeIDMap.hpp>
 

@@ -25,8 +25,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#ifndef NXEXCEPTIONS_HPP_
-#define NXEXCEPTIONS_HPP_
+#pragma once
 
 #include <iostream>
 #include <pni/utils/Exceptions.hpp>
@@ -183,6 +182,3 @@ namespace nx{
 //end of namespace
 }
 }
-
-
-#endif /* NXEXCEPTIONS_HPP_ */

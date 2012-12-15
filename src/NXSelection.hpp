@@ -24,9 +24,7 @@
  * Created on: Nov 14, 2012
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
-
-#ifndef __NXSELECTION_HPP_
-#define __NXSELECTION_HPP__
+#pragma once
 
 #include <vector>
 
@@ -143,5 +141,3 @@ namespace nx{
 //end of namespace
 }
 }
-
-#endif

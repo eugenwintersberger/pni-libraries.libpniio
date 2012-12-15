@@ -25,8 +25,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#ifndef __NXATTRIBUTE_HPP__
-#define __NXATTRIBUTE_HPP__
+#pragma once
 
 #include <pni/utils/Array.hpp>
 #include <pni/utils/DBuffer.hpp>
@@ -616,5 +615,3 @@ namespace nx{
 //end of namespace
 }
 }
-
-#endif

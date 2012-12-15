@@ -25,8 +25,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#ifndef NXTYPES_HPP_
-#define NXTYPES_HPP_
+#pragma once
 
 namespace pni{
 namespace nx{
@@ -38,6 +37,3 @@ enum NXObjectClass {NXNONE,NXFIELD,NXGROUP,NXFILE};
 //end of namespace
 }
 }
-
-
-#endif /* NXTYPES_HPP_ */

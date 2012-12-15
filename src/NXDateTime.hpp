@@ -22,8 +22,7 @@
  *      Author: Eugen Wintersberger
  */
 
-#ifndef NXDATETIME_HPP_
-#define NXDATETIME_HPP_
+#pragma once
 
 #include<ctime>
 #include<boost/date_time/posix_time/posix_time.hpp>
@@ -75,4 +74,3 @@ namespace nx {
 //end of namepsace
 } 
 } 
-#endif /* NXDATETIME_HPP_ */

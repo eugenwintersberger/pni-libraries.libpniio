@@ -24,9 +24,7 @@
  * Created on: Jul 3, 2011
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
-
-#ifndef __NXFIELD_HPP__
-#define __NXFIELD_HPP__
+#pragma once
 
 #include <sstream>
 
@@ -1049,5 +1047,3 @@ namespace nx{
 //end of namespace
 }
 }
-
-#endif /* NXFIELD_HPP_ */

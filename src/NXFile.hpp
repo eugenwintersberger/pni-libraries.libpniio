@@ -25,13 +25,10 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
+#pragma once
 
 #include <pni/utils/Types.hpp>
 #include <pni/utils/service.hpp>
-
-
-#ifndef NXFILE_HPP_
-#define NXFILE_HPP_
 
 #include "NXObject.hpp"
 #include "NXGroup.hpp"
@@ -213,5 +210,3 @@ namespace nx{
 //end of namespace
 }
 }
-
-#endif /* NXFILE_HPP_ */

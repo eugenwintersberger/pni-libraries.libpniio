@@ -23,9 +23,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#ifndef __NXATTRIBUTEITERATOR_HPP__
-#define __NXATTRIBUTEITERATOR_HPP__
-
+#pragma once
 
 namespace pni{
 namespace nx{
@@ -220,10 +218,7 @@ namespace nx{
 
 
     };
-    //end of namespace
-    }
+//end of namespace
+}
 }
 
-
-
-#endif

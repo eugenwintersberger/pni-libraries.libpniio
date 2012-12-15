@@ -23,8 +23,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#ifndef __NXCONFIGURATION_HPP__
-#define __NXCONFIGURATION_HPP__
+#pragma once
 
 #include<vector>
 #include<map>
@@ -90,9 +89,6 @@ namespace pni{
 
         };
 
-    //end of namespace
-    }
+//end of namespace
 }
-
-
-#endif
+}

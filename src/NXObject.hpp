@@ -24,9 +24,7 @@
  * Created on: Jul 1, 2011
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
-
-#ifndef __NXOBJECT_HPP__
-#define __NXOBJECT_HPP__
+#pragma once
 
 #include <memory>
 #include <iostream>
@@ -496,6 +494,3 @@ namespace nx{
 //end of namespace
 }
 }
-
-
-#endif /* NXOBJECT_HPP_ */

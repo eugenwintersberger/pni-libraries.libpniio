@@ -23,26 +23,24 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#ifndef __NXOBJECTYPE_HPP__
-#define __NXOBJECTYPE_HPP__
+#pragma once
 
 namespace pni{
-    namespace nx{
+namespace nx{
 
-        //! \ingroup util_classes
-        //! \brief Nexus typd ids
+    /*! 
+    \ingroup util_classes
+    \brief Nexus typd ids
 
-        //! This enumeration class provides identifiers for 
-        //! different Nexus types. Basically there are only two 
-        //! types: fields and groups. Indeed a third is required if the objects
-        //! does not belong to any of the two mentioned before.
-        enum class NXObjectType { NXFIELD, //!< NXField identifier
-                                  NXGROUP, //!< NXGroup identifier
-                                  NXNONE   //!< no valid Nexus object
-                                };
+    This enumeration class provides identifiers for different Nexus types.
+    Basically there are only two types: fields and groups. Indeed a third is
+    required if the objects does not belong to any of the two mentioned before.
+    */
+    enum class NXObjectType { NXFIELD, //!< NXField identifier
+                              NXGROUP, //!< NXGroup identifier
+                              NXNONE   //!< no valid Nexus object
+                            };
 
-        //end of namespace
-    }
+//end of namespace
 }
-
-#endif
+}

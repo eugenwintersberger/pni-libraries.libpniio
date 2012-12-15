@@ -24,9 +24,7 @@
  * Created on: Jul 1, 2011
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
-
-#ifndef NX_HPP_
-#define NX_HPP_
+#pragma once
 
 #include "NXObject.hpp"
 #include "NXFile.hpp"
@@ -62,5 +60,3 @@ namespace h5{
 }
 }
 
-
-#endif /* NX_HPP_ */
