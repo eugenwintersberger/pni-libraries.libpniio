@@ -22,8 +22,7 @@
  *  Created on: Feb 7, 2012
  *      Author: Eugen Wintersberger
  */
-#ifndef __H5FILTER_HPP__
-#define __H5FILTER_HPP__
+#pragma once
 
 extern "C"{
 #include<hdf5.h>
@@ -78,4 +77,3 @@ namespace pni{
     }
 }
 
-#endif

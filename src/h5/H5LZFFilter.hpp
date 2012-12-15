@@ -24,8 +24,7 @@
  *      Author: Eugen Wintersberger
  */
 
-#ifndef H5LZFFILTER_HPP_
-#define H5LZFFILTER_HPP_
+#pragma once
 
 extern "C"{
 #include <hdf5.h>
@@ -68,5 +67,3 @@ public:
 }
 }
 }
-
-#endif /* H5LZFFILTER_HPP_ */

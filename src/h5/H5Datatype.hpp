@@ -23,8 +23,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#ifndef __H5DATATYPE_HPP__
-#define __H5DATATYPE_HPP__
+#pragma once
 
 #include <pni/utils/Types.hpp>
 
@@ -112,6 +111,3 @@ namespace h5{
 }
 }
 }
-
-
-#endif

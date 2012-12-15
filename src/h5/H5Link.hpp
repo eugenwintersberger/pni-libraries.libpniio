@@ -23,9 +23,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-
-#ifndef __H5LINK_HPP__
-#define __H5LINK_HPP__
+#pragma once
 
 extern "C"{
 #include <hdf5.h>
@@ -107,5 +105,3 @@ namespace pni{
         }
     }
 }
-
-#endif

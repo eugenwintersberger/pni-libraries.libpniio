@@ -24,8 +24,7 @@
  *      Author: eugen
  */
 
-#ifndef H5ERRORSTACK_HPP_
-#define H5ERRORSTACK_HPP_
+#pragma once
 
 extern "C"{
 #include <hdf5.h>
@@ -241,5 +240,3 @@ using namespace pni::utils;
 }
 }
 }
-
-#endif /* H5ERRORSTACK_HPP_ */

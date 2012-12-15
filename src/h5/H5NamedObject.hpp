@@ -22,11 +22,7 @@
  * Created on: Jan 10, 2012
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
-
-
-
-#ifndef __H5NAMEDOBJECT_HPP__
-#define __H5NAMEDOBJECT_HPP__
+#pragma once
 
 #include <pni/utils/Types.hpp>
 #include "H5Object.hpp"
@@ -127,5 +123,3 @@ namespace h5{
 }
 }
 }
-
-#endif

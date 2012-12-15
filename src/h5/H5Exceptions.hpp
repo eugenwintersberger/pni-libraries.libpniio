@@ -22,8 +22,7 @@
  *      Author: Eugen Wintersberger
  */
 
-#ifndef H5EXCEPTIONS_HPP_
-#define H5EXCEPTIONS_HPP_
+#pragma once
 
 #include <pni/utils/Types.hpp>
 #include <pni/utils/Exceptions.hpp>
@@ -435,6 +434,3 @@ using namespace pni::utils;
 }
 }
 }
-
-
-#endif /* H5EXCEPTIONS_HPP_ */

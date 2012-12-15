@@ -23,8 +23,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#ifndef __H5OBJECTTYPE_HPP__
-#define __H5OBJECTTYPE_HPP__
+#pragma once
 
 //! \ingroup nxh5_classes 
 //! \brief HDF5 object type enumerations
@@ -42,6 +41,4 @@ enum class H5ObjectType {FILE,       //!< HDF5 file code
                          ATTRIBUTE,  //!< HDF5 attribute
                          BADID       //!< unknown object
                         };
-
-#endif
 

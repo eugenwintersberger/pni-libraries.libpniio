@@ -23,8 +23,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#ifndef __H5OBJECT_HPP__
-#define __H5OBJECT_HPP__
+#pragma once
 
 extern "C"{
 #include <hdf5.h>
@@ -264,5 +263,3 @@ namespace h5{
 }
 }
 }
-
-#endif

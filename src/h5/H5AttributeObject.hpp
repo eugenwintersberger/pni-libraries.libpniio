@@ -23,9 +23,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#ifndef __H5ATTRIBUTEOBJECT_HPP__
-#define __H5ATTRIBUTEOBJECT_HPP__
-
+#pragma once
 #include <vector>
 
 #include <pni/utils/Types.hpp>
@@ -284,6 +282,3 @@ namespace h5{
 }
 }
 
-
-
-#endif

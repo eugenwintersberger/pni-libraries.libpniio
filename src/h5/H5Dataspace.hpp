@@ -23,8 +23,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#ifndef __H5DATASPACE_HPP__
-#define __H5DATASPACE_HPP__
+#pragma once
 
 #include <sstream>
 #include <algorithm>
@@ -565,8 +564,4 @@ namespace h5 {
 }
 }
 }
-
-
-
-#endif
 

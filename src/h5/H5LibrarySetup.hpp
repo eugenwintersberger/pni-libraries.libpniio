@@ -22,8 +22,7 @@
  *      Author: Eugen Wintersberger
  */
 
-#ifndef H5LIBRARYSETUP_HPP_
-#define H5LIBRARYSETUP_HPP_
+#pragma once
 
 extern "C"{
 #include <hdf5.h>
@@ -123,5 +122,3 @@ namespace pni {
     }
 }
 
-
-#endif /* H5LIBRARYSETUP_HPP_ */

@@ -21,10 +21,7 @@
  *  Created on: Aug 10, 2011
  *      Author: Eugen Wintersberger
  */
-
-#ifndef H5DEFLATEFILTER_HPP_
-#define H5DEFLATEFILTER_HPP_
-
+#pragma once
 #include "H5Filter.hpp"
 
 namespace pni {
@@ -104,5 +101,3 @@ namespace pni {
 }
 }
 }
-
-#endif /* H5DEFLATEFILTER_HPP_ */

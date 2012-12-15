@@ -24,8 +24,7 @@
  */
 
 
-#ifndef __H5GROUP_HPP__
-#define __H5GROUP_HPP__
+#pragma once
 
 #include <pni/utils/Types.hpp>
 
@@ -234,5 +233,3 @@ namespace h5{
 }
 }
 }
-
-#endif

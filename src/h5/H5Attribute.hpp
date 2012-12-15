@@ -24,8 +24,7 @@
  */
 
 
-#ifndef __H5ATTRIBUTE_HPP__
-#define __H5ATTRIBUTE_HPP__
+#pragma once
 
 #include<sstream>
 
@@ -267,7 +266,4 @@ namespace h5{
 }
 }
 }
-
-
-#endif
 
