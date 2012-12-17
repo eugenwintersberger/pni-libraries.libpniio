@@ -1,6 +1,7 @@
 #include "benchmark_factory.hpp"
 
 #include "pninx_io_benchmark.hpp"
+#include "hdf5_io_benchmark.hpp"
 
 //-----------------------------------------------------------------------------
 benchmark_factory::benchmark_factory():
@@ -46,6 +47,21 @@ benchmark_factory::create_pninx_benchmark(const String &tc) const
 std::unique_ptr<file_io_benchmark>
 benchmark_factory::create_hdf5_benchmark(const String &tc) const
 {
+    typedef std::unique_ptr<file_io_benchmark> ptr_t;
+
+    if(tc == "uint8")
+        return ptr_t(new hdf5_io_benchmark<UInt8>(_fname,_nx,_ny,_nframes));
+    if(tc == "int8")
+        return ptr_t(new hdf5_io_benchmark<Int8>(_fname,_nx,_ny,_nframes));
+    if(tc == "uint16")
+        return ptr_t(new hdf5_io_benchmark<UInt16>(_fname,_nx,_ny,_nframes));
+    if(tc == "int16")
+        return ptr_t(new hdf5_io_benchmark<Int16>(_fname,_nx,_ny,_nframes));
+    if(tc == "uint32")
+        return ptr_t(new hdf5_io_benchmark<UInt32>(_fname,_nx,_ny,_nframes));
+    if(tc == "int32")
+        return ptr_t(new hdf5_io_benchmark<Int32>(_fname,_nx,_ny,_nframes));
+
     return nullptr;
 }
 
