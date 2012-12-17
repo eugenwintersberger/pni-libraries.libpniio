@@ -61,4 +61,8 @@ class file_io_benchmark
         //the run function of the benchmark
         virtual void run() {};
 
+        virtual void create() {}
+
+        virtual void close() {}
+
 };

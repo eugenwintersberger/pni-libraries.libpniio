@@ -29,7 +29,9 @@ template<typename T> class pninx_io_benchmark : public file_io_benchmark
         pninx_io_benchmark(const String &fname,size_t nx,size_t ny,size_t nframes):
             file_io_benchmark(fname,nx,ny,nframes)
         {
-            create(); 
+            //create the frame buffer
+            shape_t fshape{nx,ny};
+            _frame_buffer = DArray<T>(fshape);
         }
 
         //---------------------------------------------------------------------
@@ -37,7 +39,8 @@ template<typename T> class pninx_io_benchmark : public file_io_benchmark
 
         //======================public member functions========================
         //! create data structures
-        void create();
+        virtual void create();
+        virtual void close();
 
         //---------------------------------------------------------------------
         //! run the benchmark
@@ -48,15 +51,20 @@ template<typename T> class pninx_io_benchmark : public file_io_benchmark
 //-----------------------------------------------------------------------------
 template<typename T> void pninx_io_benchmark<T>::create()
 {
-    //create the frame buffer
-    shape_t fshape{nx(),ny()};
-    _frame_buffer = DArray<T>(fshape);
     //create the file
     _file = NXFile::create_file(filename(),true,0);
     shape_t s{0,nx(),ny()};
     shape_t cs{1,nx(),ny()};
     _field = _file.template create_field<T>("data",s,cs);
 }
+
+//-----------------------------------------------------------------------------
+template<typename T> void pninx_io_benchmark<T>::close()
+{
+    _field.close();
+    _file.close();
+}
+
 
 //-----------------------------------------------------------------------------
 template<typename T> void pninx_io_benchmark<T>::run() 
