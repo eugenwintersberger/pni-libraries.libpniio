@@ -243,6 +243,14 @@ if not test_conf.CheckLib("cppunit",language="C++"):
         print "CPPUNIT unit test libraray is not installed!"
         Exit(1)
 
+if not test_conf.CheckLib("boost_program_options",language="C++"):
+    print "BOOST program options library not installed!"
+    Exit(1)
+
+if not test_conf.CheckLib("boost_system",language="C++"):
+    print "BOOST system library not installed!"
+    Exit(1)
+
 
 test_env = test_conf.Finish()
 

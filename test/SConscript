@@ -1,8 +1,7 @@
 import re
 from os import path
-Import("test_build_env")
+Import("test_env")
 
-test_env = test_build_env.Clone()
 
 test_env.Prepend(LIBPATH=["../src/"])
 test_env.Append(LIBS=["pninx","pniutils","cppunit"])
@@ -34,8 +33,16 @@ sources_list.append("H5AttributeTest.cpp")
 #sources_list.append("H5LinkTest.cpp")
 #sources_list.append("TestHelpers.cpp")
 
+#sources for benchmark code
+bmsources_list = ["pninxbm.cpp"]
+bmsources_list.append(["benchmark/program_config.cpp"])
+bmsources_list.append(["benchmark/exceptions.cpp"])
+bmsources_list.append(["benchmark/file_io_benchmark.cpp"])
+bmsources_list.append(["benchmark/benchmark_factory.cpp"])
+
 
 pninx_test = test_env.Program("pninxtest",sources_list)
+benchmark = test_env.Program("pninxbm",bmsources_list)
 
 if 'testrun' in COMMAND_LINE_TARGETS:
     def check_test_log(target,source,env):
@@ -66,5 +73,5 @@ if 'testrun' in COMMAND_LINE_TARGETS:
     test_check = test_env.Command("testrun.check",test_run,check_test_log)
     test_env.Alias("testrun",[test_run,test_check])
 
-test_env.Alias("test",[pninx_test])
+test_env.Alias("test",[pninx_test,benchmark])
 test_env.Alias("all",[pninx_test])

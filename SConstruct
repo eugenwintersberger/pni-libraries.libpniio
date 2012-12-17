@@ -132,11 +132,10 @@ else:
     build_env.Append(CXXFLAGS=["-O2"])
     test_env.Append(CXXFLAGS=["-O2"])
     
-test_build_env = build_env.Clone()
 build_env.Append(LINKFLAGS=["-Wl,-h"+libname.so_name(env)]) 
     
 Export("build_env")
-Export("test_build_env")
+Export("test_env")
 
 
 SConscript(["src/SConscript"])
