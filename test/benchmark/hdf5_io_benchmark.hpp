@@ -6,6 +6,26 @@ extern "C" {
     #include <hdf5.h>
 }
 
+template<typename T> struct type2hdftype;
+
+#define TC2HDFTYPEMAP(stype,hdftype)\
+    template<> struct type2hdftype<stype>\
+    {\
+        static hid_t type()\
+        {\
+            return hdftype;\
+        }\
+    }
+
+TC2HDFTYPEMAP(UInt8,H5T_NATIVE_UCHAR);
+TC2HDFTYPEMAP(Int8,H5T_NATIVE_SCHAR);
+TC2HDFTYPEMAP(UInt16,H5T_NATIVE_USHORT);
+TC2HDFTYPEMAP(Int16,H5T_NATIVE_SHORT);
+TC2HDFTYPEMAP(UInt32,H5T_NATIVE_UINT);
+TC2HDFTYPEMAP(Int32,H5T_NATIVE_INT);
+TC2HDFTYPEMAP(UInt64,H5T_NATIVE_ULONG);
+TC2HDFTYPEMAP(Int64,H5T_NATIVE_LONG);
+
 template<typename T> class hdf5_io_benchmark : public file_io_benchmark
 {
     private:
@@ -31,6 +51,13 @@ template<typename T> class hdf5_io_benchmark : public file_io_benchmark
             _frame_data = new T[nx*ny]; 
         }
 
+        //---------------------------------------------------------------------
+        //! destructor
+        ~hdf5_io_benchmark()
+        {
+            if(_frame_data) delete [] _frame_data;
+        }
+
         //=======================public member functions=======================
         //! create file and dataspace
         virtual void create();
@@ -49,7 +76,7 @@ template<typename T> void hdf5_io_benchmark<T>::create()
     _file = H5Fcreate(filename().c_str(),H5F_ACC_TRUNC,H5P_DEFAULT,H5P_DEFAULT);
 
     //create dtype
-    _datatype = H5Tcopy(H5T_NATIVE_USHORT);
+    _datatype = H5Tcopy(type2hdftype<T>::type());
 
     //create data-space on disk
     hsize_t fdims[] = {0,nx(),ny()};
@@ -103,7 +130,7 @@ template<typename T> void hdf5_io_benchmark<T>::run()
                  H5P_DEFAULT,_frame_data);
 
         H5Fflush(_file,H5F_SCOPE_LOCAL);
-
+        offset[0]++;
     }
 
 }
