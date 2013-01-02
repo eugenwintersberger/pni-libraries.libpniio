@@ -35,8 +35,6 @@ sources_list.append("H5AttributeTest.cpp")
 
 #sources for benchmark code
 bmsources_list = ["pninxbm.cpp"]
-bmsources_list.append(["benchmark/program_config.cpp"])
-bmsources_list.append(["benchmark/exceptions.cpp"])
 bmsources_list.append(["benchmark/file_io_benchmark.cpp"])
 bmsources_list.append(["benchmark/benchmark_factory.cpp"])
 

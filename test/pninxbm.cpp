@@ -6,7 +6,8 @@
 #include <pni/utils/benchmark/ChronoTimer.hpp>
 #include <pni/utils/benchmark/BenchmarkRunner.hpp>
 
-#include "benchmark/program_config.hpp"
+#include <pni/utils/config/configuration.hpp>
+#include <pni/utils/config/config_parser.hpp>
 #include "benchmark/benchmark_factory.hpp"
 #include "benchmark/file_io_benchmark.hpp"
 
@@ -16,7 +17,7 @@ int main(int argc,char **argv)
 {
     typedef ChronoTimer<std::chrono::high_resolution_clock,
                         std::chrono::milliseconds> bm_timer_t;
-    program_config config;
+    configuration config;
     //setup program configuration
     config.add_option(config_option<String>("backend","b",
                       "HDF5 or PNINX backend","pninx"));
@@ -39,7 +40,7 @@ int main(int argc,char **argv)
     //parse commmand line options 
     try
     {
-        config.parse(argc,argv);
+        parse(config,argc,(const char**)argv);
     }
     catch(cli_help_request &error)
     {
