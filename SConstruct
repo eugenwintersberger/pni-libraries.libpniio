@@ -52,7 +52,7 @@ var.Add(PathVariable("MPIINCDIR","Directory where MPI headers are installed","/u
 
 var.Add("H5LIBNAME","HDF5 library name","hdf5")
 var.Add("VERSION","library version","0.0.0")
-var.Add("LIBNAME","library name","pniutils")
+var.Add("LIBNAME","library name","pnicore")
 var.Add("SOVERSION","SOVersion of the library (binary interface version)","0")
 var.Add("CXX","set the compiler to use","g++")
 var.Add("MAINTAINER","package maintainer for the project","Eugen Wintersberger")
@@ -72,7 +72,7 @@ var.Add("LIBDIR","library installation path","")
 env = Environment(variables=var,tools=['default','packaging','textfile'])
 env["ENV"]["PKG_CONFIG_PATH"] = os.environ["PKG_CONFIG_PATH"]
 env["ENV"]["PATH"] = os.environ["PATH"]
-env.ParseConfig('pkg-config --libs --cflags pniutils')
+env.ParseConfig('pkg-config --libs --cflags pnicore')
 env.ParseConfig('pkg-config --libs --cflags cppunit')
 env.Replace(CXX = env["CXX"])
 

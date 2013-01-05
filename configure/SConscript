@@ -190,7 +190,7 @@ if not conf.CheckLib("hdf5"):
     print "HDF5 library not installed!"
     Exit(1)
 
-if not conf.CheckLib("pniutils",language="C++"):
+if not conf.CheckLib("pnicore",language="C++"):
     print "libpniutils not installed!"
     Exit(1)
 

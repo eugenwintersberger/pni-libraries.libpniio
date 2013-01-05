@@ -36,7 +36,7 @@ shared_library_so = build_env.Command("$LIBSONAME",shared_library,
 static_library = build_env.StaticLibrary(build_env["LIBNAME"],static_objects)
 
 #------------------------Package config file creation--------------------------
-pkg_config_file = build_env.Substfile(source=["pninx.pc.in"],
+pkg_config_file = build_env.Substfile(source=["pniio.pc.in"],
 				 SUBST_DICT={"@PREFIX@":"$PREFIX","@LIBNAME@":"$LIBNAME",
 				             "@VERSION@":"$VERSION",
                              "@INCDIR@":"$INCDIR",

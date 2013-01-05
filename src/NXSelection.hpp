@@ -3,20 +3,20 @@
  *
  * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
  *
- * This file is part of libpninx.
+ * This file is part of libpniio.
  *
- * libpninx is free software: you can redistribute it and/or modify
+ * libpniio is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
- * libpninx is distributed in the hope that it will be useful,
+ * libpniio is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
+ * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  *
  * Declaration of the NXfield template
@@ -28,11 +28,12 @@
 
 #include <vector>
 
-#include <pni/utils/Slice.hpp>
+#include <pni/core/Slice.hpp>
 
-using namespace pni::utils;
+using namespace pni::core;
 
 namespace pni{
+namespace io{
 namespace nx{
 
     template<typename FTYPE> class NXSelection
@@ -132,12 +133,10 @@ namespace nx{
                 this->_field.write(data);
                 this->reset_selection();
             }
-
-
-
     };
 
 
 //end of namespace
+}
 }
 }

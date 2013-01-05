@@ -3,20 +3,20 @@
  *
  * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
  *
- * This file is part of libpninx.
+ * This file is part of libpniio.
  *
- * libpninx is free software: you can redistribute it and/or modify
+ * libpniio is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
- * libpninx is distributed in the hope that it will be useful,
+ * libpniio is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
+ * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  *
  * Declaration of the NXfield template
@@ -28,19 +28,20 @@
 
 #include <sstream>
 
-#include <pni/utils/Types.hpp>
-#include <pni/utils/Array.hpp>
-#include <pni/utils/SBuffer.hpp>
-#include <pni/utils/DBuffer.hpp>
-#include <pni/utils/Slice.hpp>
+#include <pni/core/Types.hpp>
+#include <pni/core/Array.hpp>
+#include <pni/core/SBuffer.hpp>
+#include <pni/core/DBuffer.hpp>
+#include <pni/core/Slice.hpp>
 
 #include "NXObject.hpp"
 #include "NXExceptions.hpp"
 #include "NXSelection.hpp"
 
-using namespace pni::utils;
+using namespace pni::core;
 
 namespace pni{
+namespace io{
 namespace nx{
 
 #define READ_BUFFER(buffer)\
@@ -121,9 +122,9 @@ namespace nx{
 
     NXField is a type used to store multidimensional data in a file. The IO
     methods it provides support all the array templates provided by \c
-    libpniutils. Partial IO is provided by the () operator (see below). 
+    libpnicore. Partial IO is provided by the () operator (see below). 
     The interface of NXField is quite similar to those of the array templates
-    provided by \c libpniutils. Like them it provides a shape() and  a size()
+    provided by \c libpnicore. Like them it provides a shape() and  a size()
     method returning the number of elements along each dimension and the total
     number of elements in the field. rank() returns the number of dimensions of
     the field. 
@@ -199,7 +200,7 @@ namespace nx{
 
     As HDF5 datasets, NXField objects provide the possibility to read or write
     only a part of the data.  The mechanism works pretty much as the array view
-    selection in \c libpniutils. 
+    selection in \c libpnicore. 
     Compare the following code with the figures on the right side
     \code
     DArray<UInt32> strip(shape_t{1024});
@@ -1045,5 +1046,6 @@ namespace nx{
     };
 
 //end of namespace
+}
 }
 }

@@ -3,20 +3,20 @@
  *
  * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
  *
- * This file is part of libpninx.
+ * This file is part of libpniio.
  *
- * libpninx is free software: you can redistribute it and/or modify
+ * libpniio is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
- * libpninx is distributed in the hope that it will be useful,
+ * libpniio is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
+ * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  *
  * Declaration of Nexus specific exceptions
@@ -28,17 +28,20 @@
 #pragma once
 
 #include <iostream>
-#include <pni/utils/Exceptions.hpp>
+#include <pni/core/Exceptions.hpp>
 
-using namespace pni::utils;
+using namespace pni::core;
 
 namespace pni{
+namespace io{
 namespace nx{
 
-    //! \ingroup error_classes
-    //! \brief field exception
+    /*! 
+    \ingroup error_classes
+    \brief field exception
 
-    //! Raised if an error occured in one of the NXField methods.
+    Raised if an error occured in one of the NXField methods.
+    */
     class NXFieldError:public Exception
     {
         public:
@@ -54,11 +57,13 @@ namespace nx{
                                             const NXFieldError &e);
     };
 
-    //---------------------------------------------------------------------
-    //! \ingroup error_classes
-    //! \brief Attribute Error
+    //-------------------------------------------------------------------------
+    /*! 
+    \ingroup error_classes
+    \brief Attribute Error
 
-    //! Raised in cases where reading or writing an attribute failed.
+    Raised in cases where reading or writing an attribute failed.
+    */
     class NXAttributeError:public Exception
     {
         public:
@@ -74,11 +79,13 @@ namespace nx{
                                             const NXAttributeError &e);
     };
 
-    //----------------------------------------------------------------------
-    //! \ingroup error_classes
-    //! \brief Group Error
+    //-------------------------------------------------------------------------
+    /*! 
+    \ingroup error_classes
+    \brief Group Error
 
-    //! Error in case of group operations.
+    Error in case of group operations.
+    */
     class NXGroupError:public Exception
     {
         public:
@@ -93,11 +100,13 @@ namespace nx{
                                             const NXGroupError &e);
     };
 
-    //----------------------------------------------------------------------
-    //! \ingroup error_classes
-    //! \brief File Error
+    //--------------------------------------------------------------------------
+    /*! 
+    \ingroup error_classes
+    \brief File Error
 
-    //! File exception class.
+    File exception class.
+    */
     class NXFileError:public Exception 
     {
         public:
@@ -121,11 +130,13 @@ namespace nx{
             }
     };
 
-    //----------------------------------------------------------------------
-    //! \ingroup error_classes
-    //! \brief Selection Error
+    //-------------------------------------------------------------------------
+    /*! 
+    \ingroup error_classes
+    \brief Selection Error
 
-    //! Selection exception class.
+    Selection exception class.
+    */
     class NXSelectionError:public Exception 
     {
         public:
@@ -150,11 +161,13 @@ namespace nx{
             }
     };
 
-    //----------------------------------------------------------------------
-    //! \ingroup error_classes
-    //! \brief Filter Error
+    //-------------------------------------------------------------------------
+    /*! 
+    \ingroup error_classes
+    \brief Filter Error
 
-    //! Filter exception class.
+    Filter exception class.
+    */
     class NXFilterError:public Exception 
     {
         public:
@@ -180,5 +193,6 @@ namespace nx{
 
 
 //end of namespace
+}
 }
 }
