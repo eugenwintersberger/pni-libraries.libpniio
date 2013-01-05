@@ -11,7 +11,7 @@
 #include<pni/core/Types.hpp>
 
 //headers from pninx
-#include<pni/nx/NX.hpp>
+#include<pni/io/nx/NX.hpp>
 
 //local template for equality checks
 #include "EqualityCheck.hpp"

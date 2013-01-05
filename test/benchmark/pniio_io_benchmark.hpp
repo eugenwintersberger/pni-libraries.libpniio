@@ -4,7 +4,7 @@
 #include <pni/core/DArray.hpp>
 #include "file_io_benchmark.hpp"
 
-#include <pni/nx/NX.hpp>
+#include <pni/io/nx/NX.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx::h5;
