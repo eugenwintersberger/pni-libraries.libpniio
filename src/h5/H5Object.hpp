@@ -189,7 +189,7 @@ namespace h5{
             NXObjecType::NXFIELD or NXObjectType::NXGROUP. 
             \return Nexus object type
             */
-            pni::nx::NXObjectType nxobject_type() const;
+            pni::io::nx::NXObjectType nxobject_type() const;
 
             //-----------------------------------------------------------------
             /*! 

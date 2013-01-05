@@ -25,7 +25,7 @@
 
 #include "H5NamedObject.hpp"
 #include "H5Exceptions.hpp"
-#include <pni/utils/DBuffer.hpp>
+#include <pni/core/DBuffer.hpp>
 //#include "H5Group.hpp"
 
 namespace pni{

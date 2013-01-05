@@ -188,16 +188,16 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    pni::nx::NXObjectType H5Object::nxobject_type() const
+    pni::io::nx::NXObjectType H5Object::nxobject_type() const
     {
         if(object_type() == H5ObjectType::GROUP) 
-            return pni::nx::NXObjectType::NXGROUP;
+            return pni::io::nx::NXObjectType::NXGROUP;
         else if(object_type() == H5ObjectType::FILE)
-            return pni::nx::NXObjectType::NXGROUP;
+            return pni::io::nx::NXObjectType::NXGROUP;
         else if(object_type() == H5ObjectType::DATASET)
-            return pni::nx::NXObjectType::NXFIELD;
+            return pni::io::nx::NXObjectType::NXFIELD;
         else
-            return pni::nx::NXObjectType::NXNONE;
+            return pni::io::nx::NXObjectType::NXNONE;
 
     }
 

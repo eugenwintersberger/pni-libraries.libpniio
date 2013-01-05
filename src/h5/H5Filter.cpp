@@ -22,7 +22,7 @@
  *      Author: Eugen Wintersberger
  */
 
-#include <pni/utils/Exceptions.hpp>
+#include <pni/core/Exceptions.hpp>
 
 
 #include "H5Filter.hpp"
