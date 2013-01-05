@@ -1,13 +1,12 @@
 
-#ifndef __H5DATASETTEST_HPP__
-#define __H5DATASETTEST_HPP__
+#pragma once
 
 extern "C"{
 #include <hdf5.h>
 }
 
-#include <pni/utils/Types.hpp>
-#include <pni/utils/Array.hpp>
+#include <pni/core/Types.hpp>
+#include <pni/core/Array.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
@@ -18,10 +17,11 @@ extern "C"{
 
 #include "EqualityCheck.hpp"
 
-using namespace pni::utils;
-using namespace pni::nx::h5;
+using namespace pni::core;
+using namespace pni::io::nx::h5;
 
-class H5DatasetTest:public CppUnit::TestFixture{
+class H5DatasetTest:public CppUnit::TestFixture
+{
         CPPUNIT_TEST_SUITE(H5DatasetTest);
         CPPUNIT_TEST(test_creation); 
         CPPUNIT_TEST(test_assignment);
@@ -190,4 +190,3 @@ template<typename T> void H5DatasetTest::test_selection()
     }
 
 }
-#endif

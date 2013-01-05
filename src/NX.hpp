@@ -48,13 +48,13 @@ namespace io{
 namespace nx{
 namespace h5{
 
-            typedef pni::nx::NXObject<H5AttributeObject>    NXObject;
-            typedef pni::nx::NXFile<H5File>                 NXFile;
-            typedef pni::nx::NXGroup<H5Group>               NXGroup;
-            typedef pni::nx::NXField<H5Dataset>             NXField;
-            typedef pni::nx::NXFilter<H5Filter>             NXFilter;
-            typedef pni::nx::NXDeflateFilter<H5DeflateFilter> NXDeflateFilter;
-            typedef pni::nx::NXAttribute<H5Attribute>  NXAttribute;
+            typedef pni::io::nx::NXObject<H5AttributeObject>    NXObject;
+            typedef pni::io::nx::NXFile<H5File>                 NXFile;
+            typedef pni::io::nx::NXGroup<H5Group>               NXGroup;
+            typedef pni::io::nx::NXField<H5Dataset>             NXField;
+            typedef pni::io::nx::NXFilter<H5Filter>             NXFilter;
+            typedef pni::io::nx::NXDeflateFilter<H5DeflateFilter> NXDeflateFilter;
+            typedef pni::io::nx::NXAttribute<H5Attribute>  NXAttribute;
 
 //end of namespace
 }

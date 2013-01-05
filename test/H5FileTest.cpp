@@ -1,5 +1,5 @@
 
-#include <pni/utils/Array.hpp>
+#include <pni/core/Array.hpp>
 #include <boost/current_function.hpp>
 #include "H5FileTest.hpp"
 

@@ -1,10 +1,8 @@
-#ifndef __DATA_HPP__
-#define __DATA_HPP__
-
+#pragma once
 #include<vector>
-#include<pni/utils/Types.hpp>
+#include<pni/core/Types.hpp>
 
-using namespace pni::utils;
+using namespace pni::core;
 
 //-----------------------------------------------------------------------------
 /*!
@@ -45,5 +43,3 @@ template<typename T> std::vector<T> create_array_data(size_t n)
 template<> std::vector<String> create_array_data(size_t n);
 template<> std::vector<Bool> create_array_data(size_t n);
 
-
-#endif

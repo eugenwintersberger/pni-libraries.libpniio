@@ -1,6 +1,4 @@
-
-#ifndef __H5DATASPACETEST_HPP__
-#define __H5DATASPACETEST_HPP__
+#pragma once
 
 extern "C"{
 #include <hdf5.h>
@@ -14,10 +12,11 @@ extern "C"{
 #include "h5/H5Dataspace.hpp"
 #include "h5/H5Exceptions.hpp"
 
-using namespace pni::utils;
-using namespace pni::nx::h5;
+using namespace pni::core;
+using namespace pni::io::nx::h5;
 
-class H5DataspaceTest:public CppUnit::TestFixture{
+class H5DataspaceTest:public CppUnit::TestFixture
+{
         CPPUNIT_TEST_SUITE(H5DataspaceTest);
         CPPUNIT_TEST(test_creation); 
         CPPUNIT_TEST(test_assignment);
@@ -36,4 +35,3 @@ class H5DataspaceTest:public CppUnit::TestFixture{
     
 };
 
-#endif

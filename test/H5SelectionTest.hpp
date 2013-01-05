@@ -1,12 +1,11 @@
-#ifndef __H5DATASETTEST_HPP__
-#define __H5DATASETTEST_HPP__
+#pragma once
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 #include<initializer_list>
 
-#include <pni/utils/Types.hpp>
-#include <pni/utils/Array.hpp>
+#include <pni/core/Types.hpp>
+#include <pni/core/Array.hpp>
 
 #include "../src/h5/H5Selection.hpp"
 #include "../src/h5/H5Dataset.hpp"
@@ -15,8 +14,8 @@
 
 #include "TestHelpers.hpp"
 
-using namespace pni::utils;
-using namespace pni::nx::h5;
+using namespace pni::core;
+using namespace pni::io::nx::h5;
 
 
 
@@ -289,4 +288,3 @@ template<typename T> void H5SelectionTest::test_io_array_no_ext()
     }
 }
 
-#endif

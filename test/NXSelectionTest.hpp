@@ -1,33 +1,31 @@
 /*
  * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
  *
- * This file is part of libpninx.
+ * This file is part of libpniio.
  *
- * libpninx is free software: you can redistribute it and/or modify
+ * libpniio is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
- * libpninx is distributed in the hope that it will be useful,
+ * libpniio is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
+ * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  * NXSelectionTest.hpp
  *
  *  Created on: Feb 14, 2012
  *      Author: Eugen Wintersberger
  */
-
-#ifndef __NXSELECTIONTEST_HPP__
-#define __NXSELECTIONTEST_HPP__
+#pragma once
 
 #include <boost/current_function.hpp>
-#include <pni/utils/Types.hpp>
-#include <pni/utils/Array.hpp>
+#include <pni/core/Types.hpp>
+#include <pni/core/Array.hpp>
 #include "NX.hpp"
 #include "EqualityCheck.hpp"
 
@@ -37,8 +35,8 @@
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
-using namespace pni::utils;
-using namespace pni::nx::h5;
+using namespace pni::core;
+using namespace pni::io::nx::h5;
 
 class NXSelectionTest:public CppUnit::TestFixture
 {
@@ -161,5 +159,3 @@ template<typename T> void NXSelectionTest::test_array_selection()
     CPPUNIT_ASSERT_THROW(field(Slice(0,3),0).read(rbuff),MemoryNotAllocatedError);
 }
 
-
-#endif

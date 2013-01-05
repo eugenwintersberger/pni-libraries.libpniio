@@ -2,16 +2,16 @@
 #include <functional>
 #include <chrono>
 #include <fstream>
-#include <pni/utils/Types.hpp>
-#include <pni/utils/benchmark/ChronoTimer.hpp>
-#include <pni/utils/benchmark/BenchmarkRunner.hpp>
+#include <pni/core/Types.hpp>
+#include <pni/core/benchmark/ChronoTimer.hpp>
+#include <pni/core/benchmark/BenchmarkRunner.hpp>
 
-#include <pni/utils/config/configuration.hpp>
-#include <pni/utils/config/config_parser.hpp>
+#include <pni/core/config/configuration.hpp>
+#include <pni/core/config/config_parser.hpp>
 #include "benchmark/benchmark_factory.hpp"
 #include "benchmark/file_io_benchmark.hpp"
 
-using namespace pni::utils;
+using namespace pni::core;
 
 int main(int argc,char **argv)
 {

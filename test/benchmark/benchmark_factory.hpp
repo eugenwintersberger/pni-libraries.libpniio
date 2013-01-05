@@ -1,11 +1,11 @@
 #pragma once
 
 #include <memory>
-#include <pni/utils/Types.hpp>
+#include <pni/core/Types.hpp>
 
 #include "file_io_benchmark.hpp"
 
-using namespace pni::utils;
+using namespace pni::core;
 
 class benchmark_factory
 {

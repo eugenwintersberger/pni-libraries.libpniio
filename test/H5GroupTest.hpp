@@ -1,13 +1,12 @@
 
-#ifndef __H5GROUPTEST_HPP__
-#define __H5GROUPTEST_HPP__
+#pragma once
 
 
 extern "C"{
 #include <hdf5.h>
 }
 
-#include <pni/utils/Types.hpp>
+#include <pni/core/Types.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
@@ -15,8 +14,8 @@ extern "C"{
 #include "../src/h5/H5File.hpp"
 #include "../src/h5/H5Group.hpp"
 
-using namespace pni::utils;
-using namespace pni::nx::h5;
+using namespace pni::core;
+using namespace pni::io::nx::h5;
 
 class H5GroupTest:public CppUnit::TestFixture
 {
@@ -43,5 +42,3 @@ class H5GroupTest:public CppUnit::TestFixture
         void test_parent();
     
 };
-
-#endif

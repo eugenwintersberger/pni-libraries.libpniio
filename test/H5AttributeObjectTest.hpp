@@ -1,6 +1,5 @@
 
-#ifndef __H5OBJECTTEST_HPP__
-#define __H5OBJECTTEST_HPP__
+#pragma once
 
 extern "C" {
 #include <hdf5.h>
@@ -8,7 +7,7 @@ extern "C" {
 
 #include "common.hpp"
 
-#include<pni/utils/Array.hpp>
+#include<pni/core/Array.hpp>
 #include "h5/H5AttributeObject.hpp"
 
 
@@ -238,5 +237,3 @@ template<typename T> void H5AttributeObjectTest::test_array_attribute_create()
     CPPUNIT_ASSERT_NO_THROW(o.attr<T>("a1",s,true));
 }
 
-
-#endif

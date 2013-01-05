@@ -1,15 +1,15 @@
 #pragma once
 
-#include <pni/utils/Types.hpp>
-#include <pni/utils/DArray.hpp>
+#include <pni/core/Types.hpp>
+#include <pni/core/DArray.hpp>
 #include "file_io_benchmark.hpp"
 
 #include <pni/nx/NX.hpp>
 
-using namespace pni::utils;
-using namespace pni::nx::h5;
+using namespace pni::core;
+using namespace pni::io::nx::h5;
 
-template<typename T> class pninx_io_benchmark : public file_io_benchmark
+template<typename T> class pniio_io_benchmark : public file_io_benchmark
 {
     private:
         //! array holding the buffer for the frame data
@@ -19,14 +19,14 @@ template<typename T> class pninx_io_benchmark : public file_io_benchmark
     public:
         //===================constructors and destructor=======================
         //! default constructor
-        pninx_io_benchmark():
+        pniio_io_benchmark():
             file_io_benchmark(),
             _frame_buffer()
         {}
 
         //---------------------------------------------------------------------
         //! constructor
-        pninx_io_benchmark(const String &fname,size_t nx,size_t ny,size_t nframes):
+        pniio_io_benchmark(const String &fname,size_t nx,size_t ny,size_t nframes):
             file_io_benchmark(fname,nx,ny,nframes)
         {
             //create the frame buffer
@@ -49,7 +49,7 @@ template<typename T> class pninx_io_benchmark : public file_io_benchmark
 };
 
 //-----------------------------------------------------------------------------
-template<typename T> void pninx_io_benchmark<T>::create()
+template<typename T> void pniio_io_benchmark<T>::create()
 {
     //create the file
     _file = NXFile::create_file(filename(),true,0);
@@ -59,7 +59,7 @@ template<typename T> void pninx_io_benchmark<T>::create()
 }
 
 //-----------------------------------------------------------------------------
-template<typename T> void pninx_io_benchmark<T>::close()
+template<typename T> void pniio_io_benchmark<T>::close()
 {
     _field.close();
     _file.close();
@@ -67,7 +67,7 @@ template<typename T> void pninx_io_benchmark<T>::close()
 
 
 //-----------------------------------------------------------------------------
-template<typename T> void pninx_io_benchmark<T>::run() 
+template<typename T> void pniio_io_benchmark<T>::run() 
 {
     for(size_t n = 0; n<nframes();n++)
     {

@@ -1,6 +1,5 @@
 
-#ifndef __H5OBJECTTEST_HPP__
-#define __H5OBJECTTEST_HPP__
+#pragma once
 
 extern "C" {
 #include <hdf5.h>
@@ -13,7 +12,7 @@ extern "C" {
 
 #include "h5/H5NamedObject.hpp"
 
-using namespace pni::nx::h5;
+using namespace pni::io::nx::h5;
 
 //cannot construct an H5Object type directly so we need a small helper class
 class H5TestObject:public H5NamedObject
@@ -45,4 +44,3 @@ class H5NamedObjectTest:public CppUnit::TestFixture{
         void test_comparison();
 };
 
-#endif

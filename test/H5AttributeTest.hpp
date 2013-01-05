@@ -1,6 +1,5 @@
 
-#ifndef __H5OBJECTTEST_HPP__
-#define __H5OBJECTTEST_HPP__
+#pragma once
 
 extern "C" {
 #include <hdf5.h>
@@ -9,7 +8,7 @@ extern "C" {
 #include "common.hpp"
 #include "data.hpp"
 
-#include<pni/utils/Array.hpp>
+#include<pni/core/Array.hpp>
 
 #include "h5/H5File.hpp"
 #include "h5/H5Group.hpp"
@@ -141,4 +140,3 @@ template<typename T> void H5AttributeTest::test_array_attribute()
     for(size_t i=0;i<a.size();i++) check_equality(read[i],write[i]);
 }
 
-#endif

@@ -1,11 +1,10 @@
-#ifndef __H5LINKTEST_HPP__
-#define __H5LINKTEST_HPP__
+#pragma once
 
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
-#include <pni/utils/Types.hpp>
+#include <pni/core/Types.hpp>
 
 
 #include "../src/h5/H5Link.hpp"
@@ -16,8 +15,8 @@
 #include "../src/h5/H5DatatypeFactory.hpp"
 #include "../src/h5/H5Dataset.hpp"
 
-using namespace pni::utils;
-using namespace pni::nx::h5;
+using namespace pni::core;
+using namespace pni::io::nx::h5;
 
 class H5LinkTest:public CppUnit::TestFixture{
         CPPUNIT_TEST_SUITE(H5LinkTest);
@@ -33,8 +32,3 @@ class H5LinkTest:public CppUnit::TestFixture{
         void test_internal();
         void test_external();
 };
-
-
-
-
-#endif

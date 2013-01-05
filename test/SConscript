@@ -4,7 +4,7 @@ Import("test_env")
 
 
 test_env.Prepend(LIBPATH=["../src/"])
-test_env.Append(LIBS=["pninx","pniutils","cppunit"])
+test_env.Append(LIBS=["pniio","pnicore","cppunit"])
 test_env.Append(CPPPATH=["../src/"])
 
 sources_list = []
@@ -12,7 +12,7 @@ sources_list = []
 sources_list.append("data.cpp")
 sources_list.append("EqualityCheck.cpp")
 
-sources_list.append("pninxtest.cpp")
+sources_list.append("pniiotest.cpp")
 sources_list.append("NXFileTest.cpp")
 sources_list.append("NXGroupTest.cpp")
 sources_list.append("NXFieldTest.cpp")
@@ -34,13 +34,13 @@ sources_list.append("H5AttributeTest.cpp")
 #sources_list.append("TestHelpers.cpp")
 
 #sources for benchmark code
-bmsources_list = ["pninxbm.cpp"]
+bmsources_list = ["pniiobm.cpp"]
 bmsources_list.append(["benchmark/file_io_benchmark.cpp"])
 bmsources_list.append(["benchmark/benchmark_factory.cpp"])
 
 
-pninx_test = test_env.Program("pninxtest",sources_list)
-benchmark = test_env.Program("pninxbm",bmsources_list)
+pninx_test = test_env.Program("pniiotest",sources_list)
+benchmark = test_env.Program("pniiobm",bmsources_list)
 
 if 'testrun' in COMMAND_LINE_TARGETS:
     def check_test_log(target,source,env):

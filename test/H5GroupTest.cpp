@@ -1,5 +1,5 @@
 
-#include <pni/utils/Array.hpp>
+#include <pni/core/Array.hpp>
 #include "H5GroupTest.hpp"
 
 

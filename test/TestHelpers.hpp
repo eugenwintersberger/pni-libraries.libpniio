@@ -1,11 +1,9 @@
 //functions and template functions that should make 
 //Test development easier.
 
-#ifndef __TESTHELPERS_HPP__
-#define __TESTHELPERS_HPP__
-
-#include <pni/utils/Types.hpp>
-using namespace pni::utils;
+#pragma once
+#include <pni/core/Types.hpp>
+using namespace pni::core;
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
@@ -37,5 +35,3 @@ template<typename T> void compare_values(std::complex<T> a,std::complex<T> b)
     compare_values(a.imag(),b.imag());
 }
 
-
-#endif

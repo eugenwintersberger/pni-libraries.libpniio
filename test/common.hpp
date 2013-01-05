@@ -1,5 +1,4 @@
-#ifndef __COMMON_HPP__
-#define __COMMON_HPP__
+#pragma once
 
 //header file for the BOOST_CURRENT_FUNCTION macro
 #include<boost/current_function.hpp>
@@ -9,7 +8,7 @@
 #include<cppunit/extensions/HelperMacros.h>
 
 //headers from pniutils
-#include<pni/utils/Types.hpp>
+#include<pni/core/Types.hpp>
 
 //headers from pninx
 #include<pni/nx/NX.hpp>
@@ -18,11 +17,10 @@
 #include "EqualityCheck.hpp"
 
 //set the common namespace
-using namespace pni::nx::h5;
-using namespace pni::utils;
+using namespace pni::io::nx::h5;
+using namespace pni::core;
 
 
 //common macros
 #define PRINT_TEST_FUNCTION_SIG std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-#endif

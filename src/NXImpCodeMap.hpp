@@ -60,12 +60,12 @@ namespace nx{
 
     //! \cond NO_API_DOC
     //specialization for the HDF5 Implementation
-    NXIMPCODEMAPDECL(pni::nx::h5::H5AttributeObject,ImpCode::HDF5);
-    NXIMPCODEMAPDECL(pni::nx::h5::H5File,ImpCode::HDF5);
-    NXIMPCODEMAPDECL(pni::nx::h5::H5Group,ImpCode::HDF5);
-    NXIMPCODEMAPDECL(pni::nx::h5::H5Dataset,ImpCode::HDF5);
-    NXIMPCODEMAPDECL(pni::nx::h5::H5Filter,ImpCode::HDF5);
-    NXIMPCODEMAPDECL(pni::nx::h5::H5Attribute,ImpCode::HDF5);
+    NXIMPCODEMAPDECL(pni::io::nx::h5::H5AttributeObject,ImpCode::HDF5);
+    NXIMPCODEMAPDECL(pni::io::nx::h5::H5File,ImpCode::HDF5);
+    NXIMPCODEMAPDECL(pni::io::nx::h5::H5Group,ImpCode::HDF5);
+    NXIMPCODEMAPDECL(pni::io::nx::h5::H5Dataset,ImpCode::HDF5);
+    NXIMPCODEMAPDECL(pni::io::nx::h5::H5Filter,ImpCode::HDF5);
+    NXIMPCODEMAPDECL(pni::io::nx::h5::H5Attribute,ImpCode::HDF5);
     //! \endcond
 
 //end of namespace

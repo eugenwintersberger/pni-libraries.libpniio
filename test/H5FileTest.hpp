@@ -1,6 +1,5 @@
 
-#ifndef __H5FILETEST_HPP__
-#define __H5FILETEST_HPP__
+#pragma once
 
 
 extern "C"{
@@ -12,8 +11,8 @@ extern "C"{
 
 #include "h5/H5File.hpp"
 
-using namespace pni::utils;
-using namespace pni::nx::h5;
+using namespace pni::core;
+using namespace pni::io::nx::h5;
 
 class H5FileTest:public CppUnit::TestFixture
 {
@@ -29,5 +28,3 @@ class H5FileTest:public CppUnit::TestFixture
         void test_assignment();
         void test_inquery();
 };
-
-#endif

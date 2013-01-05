@@ -3,20 +3,20 @@
  *
  * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
  *
- * This file is part of libpninx.
+ * This file is part of libpniio.
  *
- * libpninx is free software: you can redistribute it and/or modify
+ * libpniio is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
- * libpninx is distributed in the hope that it will be useful,
+ * libpniio is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
+ * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  * NXAttributeTest.hpp
  *
@@ -25,9 +25,7 @@
  */
 
 
-#ifndef __NXATTRIBUTETEST_HPP__
-#define __NXATTRIBUTETEST_HPP__
-
+#pragma once
 #include "common.hpp"
 #include "data.hpp"
 
@@ -281,10 +279,10 @@ template<typename T> void NXAttributeTest<APTYPE>::test_scalar_attribute()
     //--------------------test some exceptions---------------------------------
     //try to recreate an attribute
     CPPUNIT_ASSERT_THROW(
-            _parent.template attr<T>("a1"),pni::nx::NXAttributeError);
+            _parent.template attr<T>("a1"),pni::io::nx::NXAttributeError);
 
     //try to open a non-existing attribute
-    CPPUNIT_ASSERT_THROW(_parent.attr("b1"),pni::nx::NXAttributeError);
+    CPPUNIT_ASSERT_THROW(_parent.attr("b1"),pni::io::nx::NXAttributeError);
 }
 
 //-----------------------------------------------------------------------------
@@ -328,4 +326,3 @@ template<typename BTYPE> void NXAttributeTest<APTYPE>::test_buffer_attribute()
 }
 
 
-#endif

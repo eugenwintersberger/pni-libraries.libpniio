@@ -64,12 +64,12 @@ namespace nx{
     //set implementation types for the HDF5 implementation
     template<> class NXImpMap<ImpCode::HDF5>{
         public:
-            typedef pni::nx::h5::H5AttributeObject  ObjectImpl;
-            typedef pni::nx::h5::H5File             FileImpl;
-            typedef pni::nx::h5::H5Group            GroupImpl;
-            typedef pni::nx::h5::H5Dataset          FieldImpl;
-            typedef pni::nx::h5::H5Filter           FilterImpl;
-            typedef pni::nx::h5::H5Attribute        AttributeImpl;
+            typedef pni::io::nx::h5::H5AttributeObject  ObjectImpl;
+            typedef pni::io::nx::h5::H5File             FileImpl;
+            typedef pni::io::nx::h5::H5Group            GroupImpl;
+            typedef pni::io::nx::h5::H5Dataset          FieldImpl;
+            typedef pni::io::nx::h5::H5Filter           FilterImpl;
+            typedef pni::io::nx::h5::H5Attribute        AttributeImpl;
     };
     //! \endcond
 

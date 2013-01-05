@@ -1,10 +1,9 @@
-#ifndef __EQUALITYCHECK_HPP__
-#define __EQUALITYCHECK_HPP__
+#pragma once
 
 #include <cppunit/extensions/HelperMacros.h>
-#include <pni/utils/TypeInfo.hpp>
+#include <pni/core/TypeInfo.hpp>
 
-using namespace pni::utils;
+using namespace pni::core;
 
 template<typename T,bool is_int,bool is_complex> class EqualityCheck;
 
@@ -45,4 +44,3 @@ template<typename T> void check_equality(const T &a,const T &b)
 void check_equality(const String &a,const String &b);
 void check_equality(const Bool &a,const Bool &b);
 
-#endif

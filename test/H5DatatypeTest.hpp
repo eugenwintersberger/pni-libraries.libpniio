@@ -1,21 +1,19 @@
 
-#ifndef __H5DATATYPETEST_HPP__
-#define __H5DATATYPETEST_HPP__
-
+#pragma once
 extern "C"{
 #include <hdf5.h>
 }
 
 #include<boost/current_function.hpp>
-#include <pni/utils/Types.hpp>
+#include <pni/core/Types.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
 #include "../src/h5/H5Datatype.hpp"
 
-using namespace pni::utils;
-using namespace pni::nx::h5;
+using namespace pni::core;
+using namespace pni::io::nx::h5;
 
 class H5DatatypeTest:public CppUnit::TestFixture{
         CPPUNIT_TEST_SUITE(H5DatatypeTest);
@@ -35,4 +33,3 @@ class H5DatatypeTest:public CppUnit::TestFixture{
     
 };
 
-#endif

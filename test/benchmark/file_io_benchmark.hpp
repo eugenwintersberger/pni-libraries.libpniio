@@ -1,9 +1,9 @@
 #pragma once
 
-#include <pni/utils/Types.hpp>
+#include <pni/core/Types.hpp>
 #include <iostream>
 
-using namespace pni::utils;
+using namespace pni::core;
 
 class file_io_benchmark
 {

@@ -3,20 +3,20 @@
  *
  * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
  *
- * This file is part of libpninx.
+ * This file is part of libpniio.
  *
- * libpninx is free software: you can redistribute it and/or modify
+ * libpniio is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
- * libpninx is distributed in the hope that it will be useful,
+ * libpniio is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
+ * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  * NXGroupTest.cpp
  *
@@ -39,7 +39,7 @@ void NXGroupTest::setUp()
 {
 	_fname = "test.group.h5";
     _f = NXFile::create_file("NXGroupTest.h5",true,0);
-    CPPUNIT_ASSERT(_f.object_type() == pni::nx::NXObjectType::NXGROUP);
+    CPPUNIT_ASSERT(_f.object_type() == pni::io::nx::NXObjectType::NXGROUP);
 
 }
 
@@ -124,7 +124,7 @@ void NXGroupTest::test_open()
 
 	NXGroup g4 = _f.open("/directory1/data");
 
-	CPPUNIT_ASSERT_THROW(_f.open("directory2"),pni::nx::NXGroupError);
+	CPPUNIT_ASSERT_THROW(_f.open("directory2"),pni::io::nx::NXGroupError);
 	CPPUNIT_ASSERT_NO_THROW(_f.open("directory1/data"));
 
 	g1.close();
