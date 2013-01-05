@@ -7,5 +7,5 @@ Name: @LIBNAME@
 Description: PNI Nexus library
 Version: @VERSION@
 Cflags: -I${includedir} @INCPATH@ @DEFINES@
-Requires: pniutils
+Requires: pnicore
 Libs: -L${libdir} -l@LIBNAME@ @LIBPATH@ @LIBS@
