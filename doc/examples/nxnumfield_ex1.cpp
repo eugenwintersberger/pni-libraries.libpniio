@@ -1,11 +1,11 @@
 //Filename: nxnumfield_ex1.cpp
 #include<iostream>
-#include<pni/nx/NX.hpp>
-#include<pni/utils/Types.hpp>
-#include<pni/utils/Array.hpp>
+#include<pni/io/nx/NX.hpp>
+#include<pni/core/Types.hpp>
+#include<pni/core/Array.hpp>
 
-using namespace pni::nx::h5;
-using namespace pni::utils;
+using namespace pni::io::nx::h5;
+using namespace pni::core;
 
 int main(int argc,char **argv){
     //create the file

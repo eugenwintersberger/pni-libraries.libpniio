@@ -1,7 +1,7 @@
 //File: nxgroup_ex1.cpp
 #include<iostream>
-#include<pni/nx/NX.hpp>
-using namespace pni::nx::h5;
+#include<pni/io/nx/NX.hpp>
+using namespace pni::io::nx::h5;
 
 int main(int argc,char **argv){
     NXFile file = NXFile::create_file("nxgroup_ex1.h5",true,0);

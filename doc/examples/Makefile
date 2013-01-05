@@ -1,5 +1,5 @@
-CPPFLAGS=-O0 -g -std=c++0x $(shell pkg-config --cflags pninx)
-LDFLAGS=$(shell pkg-config --libs pninx)
+CPPFLAGS=-O0 -g -std=c++0x $(shell pkg-config --cflags pniio)
+LDFLAGS=$(shell pkg-config --libs pniio)
 
 all: nxfile_ex1 nxgroup_ex1 nxgroup_ex2 nxnumfield_ex1 nxnumfield_ex2 nxstrfield_ex1 nxstrfield_ex2 nxbinfield_ex1 simple_io thread_ex1 nxnumfield_ex4
 

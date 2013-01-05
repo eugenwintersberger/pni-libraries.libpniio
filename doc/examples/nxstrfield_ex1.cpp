@@ -1,10 +1,10 @@
 //nxstrfield_ex1.cpp
 
-#include <pni/nx/NX.hpp>
-#include <pni/utils/Types.hpp>
+#include <pni/io/nx/NX.hpp>
+#include <pni/core/Types.hpp>
 
-using namespace pni::nx::h5;
-using namespace pni::utils;
+using namespace pni::io::nx::h5;
+using namespace pni::core;
 
 #include <iostream>
 

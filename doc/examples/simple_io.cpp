@@ -1,9 +1,9 @@
-#include<pni/utils/Types.hpp>
-#include<pni/utils/Array.hpp>
-#include<pni/nx/NX.hpp>
+#include<pni/core/Types.hpp>
+#include<pni/core/Array.hpp>
+#include<pni/io/nx/NX.hpp>
 
-using namespace pni::utils;
-using namespace pni::nx::h5;
+using namespace pni::core;
+using namespace pni::io::nx::h5;
 
 
 void write_data(String fname,size_t np,size_t nx,size_t ny)

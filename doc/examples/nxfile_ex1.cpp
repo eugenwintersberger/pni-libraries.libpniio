@@ -1,8 +1,8 @@
 //File: nxfile_ex1.cpp
 #include <iostream>
-#include <pni/nx/NX.hpp>  //include NXexus header file
+#include <pni/io/nx/NX.hpp>  //include NXexus header file
 
-using namespace pni::nx::h5; //switch to proper namespace
+using namespace pni::io::nx::h5; //switch to proper namespace
 
 int main(int argc,char **argv){
     //create a file and overwrite an existing file with same name

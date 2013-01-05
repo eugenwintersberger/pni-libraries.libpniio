@@ -1,12 +1,12 @@
 //Filename: nxbinfield_ex1.cpp
 #include <iostream>
 #include <fstream>
-#include <pni/nx/NX.hpp>
-#include <pni/utils/Types.hpp>
-#include <pni/utils/DBuffer.hpp>
+#include <pni/io/nx/NX.hpp>
+#include <pni/core/Types.hpp>
+#include <pni/core/DBuffer.hpp>
 
-using namespace pni::nx::h5;
-using namespace pni::utils;
+using namespace pni::io::nx::h5;
+using namespace pni::core;
 
 typedef DBuffer<Binary> BinBuffer;
 
