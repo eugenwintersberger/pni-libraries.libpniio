@@ -39,6 +39,7 @@ using namespace pni::core;
 #include "H5Group.hpp"
 #include "H5ObjectType.hpp"
 #include "H5Filter.hpp"
+#include "../NXExceptions.hpp"
 
 
 namespace pni{
@@ -634,8 +635,15 @@ namespace h5{
                 herr_t err = H5Dread(id(),mem_type.id(),_mspace.id(),_fspace.id(),
                                       H5P_DEFAULT,(void *)ptr);
                 if(err<0)
-                    throw H5DataSetError(EXCEPTION_RECORD, 
-                          "Error writing data to dataset ["+this->name()+"]!");
+                {
+                    H5ErrorStack estack;
+                    std::stringstream ss;
+                    ss<<"Error writing data to dataset ["+this->name()+"]!";
+                    ss<<std::endl<<"HDF5 error report:"<<std::endl;
+                    ss<<estack;
+                    throw pni::io::nx::NXFieldError(EXCEPTION_RECORD, 
+                          ss.str());
+                }
             }
 
             //-----------------------------------------------------------------

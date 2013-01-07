@@ -379,10 +379,9 @@ namespace nx{
                     this->imp().read(const_cast<typename ATYPE::value_type*>(
                                 a.storage().ptr()));
                 }
-                catch(...)
+                catch(pni::io::nx::NXFileError &error)
                 {
-                    throw NXFieldError(EXCEPTION_RECORD,
-                                     "Cannt read data to array!");
+                    error.append(EXCEPTION_RECORD); throw error;
                 }
 
             }
