@@ -68,6 +68,15 @@ namespace nx{
                 _field(sel._field)
             {}
 
+            //-----------------------------------------------------------------
+            //! destructor
+            ~NXSelection()  
+            {
+                //need to remove all eventual selections in case that something 
+                //goes wrong and the selection gets destroyed
+                reset_selection();
+            }
+
             //=================assignment operators============================
             NXSelection<FTYPE> &operator=(const NXSelection<FTYPE> &sel)
             {
