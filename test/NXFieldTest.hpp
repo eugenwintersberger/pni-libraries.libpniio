@@ -106,6 +106,8 @@ class NXFieldTest:public CppUnit::TestFixture
     CPPUNIT_TEST(test_grow);
     CPPUNIT_TEST(test_io_string_array);
 
+    CPPUNIT_TEST(test_io_array);
+
 	CPPUNIT_TEST_SUITE_END();
 private:
 	NXFile file;
@@ -137,6 +139,7 @@ public:
     template<typename T> void test_scalar_selection();
     void test_grow();
     void test_parent();
+    void test_io_array();
 
 };
 

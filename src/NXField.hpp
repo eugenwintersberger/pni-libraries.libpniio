@@ -33,6 +33,7 @@
 #include <pni/core/SBuffer.hpp>
 #include <pni/core/DBuffer.hpp>
 #include <pni/core/Slice.hpp>
+#include <pni/core/array.hpp>
 
 #include "NXObject.hpp"
 #include "NXExceptions.hpp"
@@ -778,6 +779,18 @@ namespace nx{
 
             //-----------------------------------------------------------------
             /*!
+            \brief read data to a array instance
+
+            This method reads data to an array type erasure. 
+            \throws ShapeMissmatchError if field and array-shape do not match
+            \throws MemoryNotAllocatedError if array-buffer is not allocated
+            \throws NXFieldError in case of any other IO error
+            \param a instance of the array
+            */
+            void read(array &a) const;
+
+            //-----------------------------------------------------------------
+            /*!
             \brief read data to a numeric array
 
             \throws MemoryNotAllocated if array buffer is not allocated
@@ -992,6 +1005,9 @@ namespace nx{
                 }
             }
 
+            //-----------------------------------------------------------------
+            void write(const array &a) const;
+
 
             //---------------------------------------------------------------
             /*! 
@@ -1043,6 +1059,145 @@ namespace nx{
             friend class NXSelection<NXField<Imp> >;
 
     };
+
+    //-------------------------------------------------------------------------
+    template<typename Imp> void NXField<Imp>::read(array &a) const
+    {
+        if(a.size() == 0)
+            throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                             "Target array buffer not allocated!");
+
+        shape_t ashape = a.shape();
+        auto fshape = this->shape<shape_t>();
+        
+        if(ashape.size() == fshape.size())
+        {
+            //if array and field have the same rank we need to check the
+            //shape of each of the objects
+            if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
+                throw ShapeMissmatchError(EXCEPTION_RECORD,
+                        _shape_missmatch_error_message(ashape,fshape));
+        }
+        else
+        {
+            //if the two components are of different size we have to
+            //throw an exception in any case
+            if(this->size() != a.size())
+                throw ShapeMissmatchError(EXCEPTION_RECORD,
+                        _shape_missmatch_error_message(ashape,fshape));
+        }
+
+        //finally we read the data
+        try
+        {
+            if(a.type_id() == TypeID::UINT8) 
+                this->imp().read((UInt8*)(const_cast<void*>(a.ptr())));
+            else if(a.type_id() == TypeID::INT8)
+                this->imp().read((Int8*)const_cast<void*>(a.ptr()));
+
+            if(a.type_id() == TypeID::UINT16) 
+                this->imp().read((UInt16*)const_cast<void*>(a.ptr()));
+            else if(a.type_id() == TypeID::INT16)
+                this->imp().read((Int16*)const_cast<void*>(a.ptr()));
+
+            if(a.type_id() == TypeID::UINT32) 
+                this->imp().read((UInt32*)const_cast<void*>(a.ptr()));
+            else if(a.type_id() == TypeID::INT32)
+                this->imp().read((Int32*)const_cast<void*>(a.ptr()));
+
+            if(a.type_id() == TypeID::UINT64) 
+                this->imp().read((UInt64*)const_cast<void*>(a.ptr()));
+            else if(a.type_id() == TypeID::INT64)
+                this->imp().read((Int64*)const_cast<void*>(a.ptr()));
+
+            else if(a.type_id() == TypeID::FLOAT32)
+                this->imp().read((Float32*)const_cast<void*>(a.ptr()));
+            else if(a.type_id() == TypeID::FLOAT64)
+                this->imp().read((Float64*)const_cast<void*>(a.ptr()));
+            else if(a.type_id() == TypeID::FLOAT128)
+                this->imp().read((Float128*)const_cast<void*>(a.ptr()));
+
+            else if(a.type_id() == TypeID::COMPLEX32)
+                this->imp().read((Complex32*)const_cast<void*>(a.ptr()));
+            else if(a.type_id() == TypeID::COMPLEX64)
+                this->imp().read((Complex64*)const_cast<void*>(a.ptr()));
+            else if(a.type_id() == TypeID::COMPLEX128)
+                this->imp().read((Complex128*)const_cast<void*>(a.ptr()));
+        }
+        catch(pni::io::nx::NXFileError &error)
+        {
+            error.append(EXCEPTION_RECORD); throw error;
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    template<typename Imp> void NXField<Imp>::write(const array &a) const
+    {
+
+        if(a.size() == 0)
+            throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                             "Source array buffer not allocated!");
+
+        shape_t ashape = a.shape();
+        auto fshape = this->shape<shape_t>();
+
+        if(ashape.size() == fshape.size())
+        {
+            if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
+                throw ShapeMissmatchError(EXCEPTION_RECORD,
+                        _shape_missmatch_error_message(ashape,fshape));
+        }
+        else
+        {
+            if(this->size() != a.size())
+                throw ShapeMissmatchError(EXCEPTION_RECORD,
+                       _shape_missmatch_error_message(ashape,fshape));
+        }
+
+
+        try 
+        { 
+            if(a.type_id() == TypeID::UINT8) 
+                this->imp().write((UInt8*)a.ptr());
+            else if(a.type_id() == TypeID::INT8)
+                this->imp().write((Int8*)a.ptr());
+
+            if(a.type_id() == TypeID::UINT16) 
+                this->imp().write((UInt16*)a.ptr());
+            else if(a.type_id() == TypeID::INT16)
+                this->imp().write((Int16*)a.ptr());
+
+            if(a.type_id() == TypeID::UINT32) 
+                this->imp().write((UInt32*)a.ptr());
+            else if(a.type_id() == TypeID::INT32)
+                this->imp().write((Int32*)a.ptr());
+
+            if(a.type_id() == TypeID::UINT64) 
+                this->imp().write((UInt64*)a.ptr());
+            else if(a.type_id() == TypeID::INT64)
+                this->imp().write((Int64*)a.ptr());
+
+            else if(a.type_id() == TypeID::FLOAT32)
+                this->imp().write((Float32*)a.ptr());
+            else if(a.type_id() == TypeID::FLOAT64)
+                this->imp().write((Float64*)a.ptr());
+            else if(a.type_id() == TypeID::FLOAT128)
+                this->imp().write((Float128*)a.ptr());
+
+            else if(a.type_id() == TypeID::COMPLEX32)
+                this->imp().write((Complex32*)a.ptr());
+            else if(a.type_id() == TypeID::COMPLEX64)
+                this->imp().write((Complex64*)a.ptr());
+            else if(a.type_id() == TypeID::COMPLEX128)
+                this->imp().write((Complex128*)a.ptr());
+            
+        }
+        catch(...)
+        {
+            throw NXFieldError(EXCEPTION_RECORD,
+                             "Cannt write data from array!");
+        }
+    }
 
 //end of namespace
 }

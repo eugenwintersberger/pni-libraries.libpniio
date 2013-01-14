@@ -25,12 +25,15 @@
  */
 
 #include "NXFieldTest.hpp"
+#include "EqualityCheck.hpp"
 
 #include<cppunit/extensions/HelperMacros.h>
 
 #include "NX.hpp"
 #include "NXExceptions.hpp"
 #include "NXFieldUtils.hpp"
+
+#include <pni/core/array.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION(NXFieldTest);
 
@@ -349,4 +352,32 @@ void NXFieldTest::test_grow()
     CPPUNIT_ASSERT(field.size() == 2);
 }
 
+//-----------------------------------------------------------------------------
+void NXFieldTest::test_io_array()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    DArray<Float64> data(shape_t({10,5}));
+    array o(data);
+
+    NXField field = file.create_field<Float64>("data",data.shape<shape_t>());
+    double index = 0.;
+    for(auto iter=o.begin();iter!=o.end();++iter)
+        *iter = index++;
+
+    field.write(o);
+
+    //read back data
+    array o2(data);
+    std::fill(o2.begin(),o2.end(),Float64(0));
+
+    field.read(o2);
+    for(auto iter1=o.begin(),iter2=o2.begin();
+        iter1!=o.end();
+        ++iter1,++iter2)
+        check_equality(iter1->as<Float64>(),iter2->as<Float64>());
+
+
+
+    
+}
 
