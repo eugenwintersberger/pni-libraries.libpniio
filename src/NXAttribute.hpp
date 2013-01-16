@@ -31,6 +31,7 @@
 #include <pni/core/DBuffer.hpp>
 #include <pni/core/SBuffer.hpp>
 #include <pni/core/Types.hpp>
+#include <pni/core/array.hpp>
 
 #include "NXExceptions.hpp"
 
@@ -471,6 +472,38 @@ namespace nx{
                 catch(NXFieldError &error)
                 {
                     error.append(EXCEPTION_RECORD); throw error;
+                }
+            }
+
+            //-----------------------------------------------------------------
+            void write(const array &a) const
+            {
+                if(a.size()==0)
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                            "Array storage not allocated!");
+
+                //get the shape of the array to write
+                auto ashape = a.template shape<shape_t>();
+
+                //get the shape of this attribute
+                auto s = this->shape<shape_t>();
+
+                if((s.size()!=ashape.size())||
+                   (!std::equal(ashape.begin(),ashape.end(),s.begin())))
+                {
+                    std::stringstream ss;
+                    ss<<"Array shape ( ";
+                    for(auto v: ashape)
+                    {
+                        ss<<v<<" ";
+                    }
+                    ss<<") and attribute shape ( ";
+                    for(auto v: s) 
+                    {
+                        ss<<v<<" ";
+                    }
+                    ss<<") do not match!";
+                    throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
                 }
             }
 

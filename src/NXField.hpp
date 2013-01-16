@@ -38,6 +38,7 @@
 #include "NXObject.hpp"
 #include "NXExceptions.hpp"
 #include "NXSelection.hpp"
+//#include "io_utils.hpp"
 
 using namespace pni::core;
 
@@ -1124,7 +1125,7 @@ namespace nx{
             else if(a.type_id() == TypeID::COMPLEX128)
                 this->imp().read((Complex128*)const_cast<void*>(a.ptr()));
         }
-        catch(pni::io::nx::NXFileError &error)
+        catch(NXFileError &error)
         {
             error.append(EXCEPTION_RECORD); throw error;
         }
@@ -1157,40 +1158,14 @@ namespace nx{
 
         try 
         { 
-            if(a.type_id() == TypeID::UINT8) 
-                this->imp().write((UInt8*)a.ptr());
-            else if(a.type_id() == TypeID::INT8)
-                this->imp().write((Int8*)a.ptr());
-
-            if(a.type_id() == TypeID::UINT16) 
-                this->imp().write((UInt16*)a.ptr());
-            else if(a.type_id() == TypeID::INT16)
-                this->imp().write((Int16*)a.ptr());
-
-            if(a.type_id() == TypeID::UINT32) 
-                this->imp().write((UInt32*)a.ptr());
-            else if(a.type_id() == TypeID::INT32)
-                this->imp().write((Int32*)a.ptr());
-
-            if(a.type_id() == TypeID::UINT64) 
-                this->imp().write((UInt64*)a.ptr());
-            else if(a.type_id() == TypeID::INT64)
-                this->imp().write((Int64*)a.ptr());
-
-            else if(a.type_id() == TypeID::FLOAT32)
-                this->imp().write((Float32*)a.ptr());
-            else if(a.type_id() == TypeID::FLOAT64)
-                this->imp().write((Float64*)a.ptr());
-            else if(a.type_id() == TypeID::FLOAT128)
-                this->imp().write((Float128*)a.ptr());
-
-            else if(a.type_id() == TypeID::COMPLEX32)
-                this->imp().write((Complex32*)a.ptr());
-            else if(a.type_id() == TypeID::COMPLEX64)
-                this->imp().write((Complex64*)a.ptr());
-            else if(a.type_id() == TypeID::COMPLEX128)
-                this->imp().write((Complex128*)a.ptr());
-            
+            std::cout<<"nothing to do"<<std::endl;
+            //write_array(this->imp(),a);            
+        }
+        catch(TypeError &error)
+        {
+            //in case of a type error we propagate the error to the next level
+            error.append(EXCEPTION_RECORD);
+            throw error;
         }
         catch(...)
         {
