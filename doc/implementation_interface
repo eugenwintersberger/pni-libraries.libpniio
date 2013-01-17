@@ -1,0 +1,67 @@
+/*! \page implementation_interface Implementation interface
+
+If someone wants to support a new file format backend (currently only HDF5 is
+supported he simply has to provide implementation types for the following
+classes:
+\li NXObject
+\li NXField
+\li NXAttribute
+\li NXGroup
+\li NXFile
+
+The types are passed as template parameters to the nexus base object templates. 
+These types have to provide an implicit interface that will be discussed here.
+
+
+\section io_object_implementation Implementation of IO objects
+
+There are basically two I/O-types that must be provides: 
+\li one for NXField
+\li and one for NXAttribute.
+I/O-types are those types whose instances are used to transfer data form and and
+to the file. Every IO implementation type is considered as a multidimensional
+dataset stored in the file. 
+The implicit interface of such an object must look like this
+\code
+class nexus_io_object
+{
+    public:
+    //--------------member functions for object inquery------------
+    //return the number of dimensions - if the rank() is 0 the object is
+    //considered a scalar
+    size_t rank() const; 
+
+    //return the number of elements along each dimension as a container of type
+    //CTYPE. In the case of a scalar object the shape is an empty container.
+    template<typename CTYPE> CTYPE shape() const;
+
+    //get the type id of the data stored in this object
+    TypeID type_id() const;
+
+    //get the total number of elements stored in the object. For scalars a size
+    //of 1 will be returned.
+    size_t size() const;
+
+    //get the name of the object
+    String name() const;
+
+    //get the total path to the object
+    String path() const;
+
+    //get the base part of the path (everything but the last element - the name
+    //of the object)
+    String base() const;
+
+    //IO-related member functions
+    template<typename OBJT> void read(OBJT &o);
+    template<typename OBJT> void write(const OBJT &o);
+
+    //apply a selection to the object
+    void apply_selection();
+    //reset a selection
+    void reset_selection();
+};
+
+\endcode
+
+*/
