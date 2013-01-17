@@ -38,7 +38,7 @@
 #include "NXObject.hpp"
 #include "NXExceptions.hpp"
 #include "NXSelection.hpp"
-//#include "io_utils.hpp"
+#include "io_utils.hpp"
 
 using namespace pni::core;
 
@@ -1091,39 +1091,7 @@ namespace nx{
         //finally we read the data
         try
         {
-            if(a.type_id() == TypeID::UINT8) 
-                this->imp().read((UInt8*)(const_cast<void*>(a.ptr())));
-            else if(a.type_id() == TypeID::INT8)
-                this->imp().read((Int8*)const_cast<void*>(a.ptr()));
-
-            if(a.type_id() == TypeID::UINT16) 
-                this->imp().read((UInt16*)const_cast<void*>(a.ptr()));
-            else if(a.type_id() == TypeID::INT16)
-                this->imp().read((Int16*)const_cast<void*>(a.ptr()));
-
-            if(a.type_id() == TypeID::UINT32) 
-                this->imp().read((UInt32*)const_cast<void*>(a.ptr()));
-            else if(a.type_id() == TypeID::INT32)
-                this->imp().read((Int32*)const_cast<void*>(a.ptr()));
-
-            if(a.type_id() == TypeID::UINT64) 
-                this->imp().read((UInt64*)const_cast<void*>(a.ptr()));
-            else if(a.type_id() == TypeID::INT64)
-                this->imp().read((Int64*)const_cast<void*>(a.ptr()));
-
-            else if(a.type_id() == TypeID::FLOAT32)
-                this->imp().read((Float32*)const_cast<void*>(a.ptr()));
-            else if(a.type_id() == TypeID::FLOAT64)
-                this->imp().read((Float64*)const_cast<void*>(a.ptr()));
-            else if(a.type_id() == TypeID::FLOAT128)
-                this->imp().read((Float128*)const_cast<void*>(a.ptr()));
-
-            else if(a.type_id() == TypeID::COMPLEX32)
-                this->imp().read((Complex32*)const_cast<void*>(a.ptr()));
-            else if(a.type_id() == TypeID::COMPLEX64)
-                this->imp().read((Complex64*)const_cast<void*>(a.ptr()));
-            else if(a.type_id() == TypeID::COMPLEX128)
-                this->imp().read((Complex128*)const_cast<void*>(a.ptr()));
+            read_array(this->imp(),a);
         }
         catch(NXFileError &error)
         {
@@ -1158,8 +1126,7 @@ namespace nx{
 
         try 
         { 
-            std::cout<<"nothing to do"<<std::endl;
-            //write_array(this->imp(),a);            
+            write_array(this->imp(),a);            
         }
         catch(TypeError &error)
         {

@@ -89,6 +89,62 @@ namespace nx{
                     "Unsupported data type!");
     }
 
+    //-------------------------------------------------------------------------
+    /*!
+    \brief read array 
+
+    Read data form a readable object and store it to an array instance. 
+    It throws whatever exception the read method of obj is throwing. In addtion
+    if the data type of the array is not supported a TypeError exception is
+    thrown.
+    \throws TypeError in case of an unsupported datat type
+    \tparam IOT IO type
+    \param obj instance of IOT from which to read data
+    \param a instance of array where to store the data
+    */
+    template<typename IOT> void read_array(const IOT &obj,array &a)
+    {
+        if(a.type_id() == TypeID::UINT8) 
+            obj.read((UInt8*)(const_cast<void*>(a.ptr())));
+        else if(a.type_id() == TypeID::INT8)
+            obj.read((Int8*)const_cast<void*>(a.ptr()));
+
+        if(a.type_id() == TypeID::UINT16) 
+            obj.read((UInt16*)const_cast<void*>(a.ptr()));
+        else if(a.type_id() == TypeID::INT16)
+            obj.read((Int16*)const_cast<void*>(a.ptr()));
+
+        if(a.type_id() == TypeID::UINT32) 
+            obj.read((UInt32*)const_cast<void*>(a.ptr()));
+        else if(a.type_id() == TypeID::INT32)
+            obj.read((Int32*)const_cast<void*>(a.ptr()));
+
+        if(a.type_id() == TypeID::UINT64) 
+            obj.read((UInt64*)const_cast<void*>(a.ptr()));
+        else if(a.type_id() == TypeID::INT64)
+            obj.read((Int64*)const_cast<void*>(a.ptr()));
+
+        else if(a.type_id() == TypeID::FLOAT32)
+            obj.read((Float32*)const_cast<void*>(a.ptr()));
+        else if(a.type_id() == TypeID::FLOAT64)
+            obj.read((Float64*)const_cast<void*>(a.ptr()));
+        else if(a.type_id() == TypeID::FLOAT128)
+            obj.read((Float128*)const_cast<void*>(a.ptr()));
+
+        else if(a.type_id() == TypeID::STRING)
+            obj.read((String*)const_cast<void*>(a.ptr()));
+
+        else if(a.type_id() == TypeID::COMPLEX32)
+            obj.read((Complex32*)const_cast<void*>(a.ptr()));
+        else if(a.type_id() == TypeID::COMPLEX64)
+            obj.read((Complex64*)const_cast<void*>(a.ptr()));
+        else if(a.type_id() == TypeID::COMPLEX128)
+            obj.read((Complex128*)const_cast<void*>(a.ptr()));
+        else
+            throw TypeError(EXCEPTION_RECORD,
+                    "Unsupported data type!");
+    }
+
 
 //end of namespace
 }

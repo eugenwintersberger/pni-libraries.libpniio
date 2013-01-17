@@ -28,6 +28,7 @@
 #pragma once
 #include "common.hpp"
 #include "data.hpp"
+#include <pni/core/array.hpp>
 
 #define SARRAY( type ) SArray<type,10,20>
 #define SBUFFER( type ) SBuffer<type,200>
@@ -138,6 +139,8 @@ template<typename APTYPE> class NXAttributeTest: public CppUnit::TestFixture
         CPPUNIT_TEST(test_array_attribute<SARRAY(Bool) >);
         CPPUNIT_TEST(test_array_attribute<SARRAY(Binary) >);
         CPPUNIT_TEST(test_array_attribute<SARRAY(String) >);
+
+        CPPUNIT_TEST(test_array);
         
         CPPUNIT_TEST_SUITE_END();
     private:
@@ -181,6 +184,7 @@ template<typename APTYPE> class NXAttributeTest: public CppUnit::TestFixture
         void setUp();
         void tearDown();
         void test_creation();
+        void test_array();
         template<typename T> void test_scalar_attribute();
         template<typename ATYPE> void test_array_attribute();
         template<typename BTYPE> void test_buffer_attribute();
@@ -325,4 +329,21 @@ template<typename BTYPE> void NXAttributeTest<APTYPE>::test_buffer_attribute()
     CPPUNIT_ASSERT(std::equal(read.begin(),read.end(),write.begin()));
 }
 
+//-----------------------------------------------------------------------------
+template<typename APTYPE> void NXAttributeTest<APTYPE>::test_array()
+{
+    PRINT_TEST_FUNCTION_SIG;
+    shape_t s{3};
+    DArray<String> data(s);
+    data[0] = "hello";
+    data[1] = "world this";
+    data[2] = "is a test";
+
+    array o1(data);
+    
+    _parent.template attr<String>("test",s).write(o1);
+    array o2 = DArray<String>(s);
+    _parent.attr("test").read(o2);
+
+}
 

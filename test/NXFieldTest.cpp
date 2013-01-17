@@ -376,8 +376,5 @@ void NXFieldTest::test_io_array()
         ++iter1,++iter2)
         check_equality(iter1->as<Float64>(),iter2->as<Float64>());
 
-
-
-    
 }
 

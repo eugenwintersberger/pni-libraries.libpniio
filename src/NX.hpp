@@ -32,7 +32,7 @@
 #include "NXField.hpp"
 #include "NXDeflateFilter.hpp"
 #include "NXAttribute.hpp"
-#include "NXSelection.hpp"
+//#include "NXSelection.hpp"
 
 #include "h5/H5AttributeObject.hpp"
 #include "h5/H5File.hpp"

@@ -34,6 +34,7 @@
 #include <pni/core/array.hpp>
 
 #include "NXExceptions.hpp"
+#include "io_utils.hpp"
 
 using namespace pni::core;
 
@@ -483,7 +484,7 @@ namespace nx{
                             "Array storage not allocated!");
 
                 //get the shape of the array to write
-                auto ashape = a.template shape<shape_t>();
+                shape_t ashape = a.shape();
 
                 //get the shape of this attribute
                 auto s = this->shape<shape_t>();
@@ -504,6 +505,16 @@ namespace nx{
                     }
                     ss<<") do not match!";
                     throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
+                }
+
+                try
+                {
+                    write_array(_imp,a);
+                }
+                catch(...)
+                {
+                    throw NXAttributeError(EXCEPTION_RECORD,
+                            "Error reading attribute!");
                 }
             }
 
@@ -592,6 +603,55 @@ namespace nx{
             {
                 ATTRIBUTE_READ_ARRAY(o);
             }
+            
+            //-----------------------------------------------------------------
+            void read(array &a) const
+            {
+                if(a.size()==0)
+                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                            "Array storage not allocated!");
+
+                auto ashape = a.template shape<shape_t>();
+                auto shape = this->template shape<shape_t>();
+                if(!std::equal(ashape.begin(),ashape.end(),shape.begin()))
+                {
+                    std::stringstream ss;
+                    ss<<"Array shape ( ";
+#ifdef NOFOREACH
+                    for(auto iter = ashape.begin();iter!=ashape.end();++iter)
+                    {
+                        auto v = *iter;
+#else
+                    for(auto v: ashape) 
+                    {
+#endif 
+                        ss<<v<<" ";
+                    }
+                    ss<<") and attribute shape ( ";
+#ifdef NOFOREACH
+                    for(auto iter = ashape.begin();iter!=ashape.end();++iter)
+                    {
+                        auto v = *iter;
+#else
+                    for(auto v: shape) 
+                    {
+#endif
+                        ss<<v<<" ";
+                    }
+                    ss<<") do not match!";
+                    throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
+                }
+
+                try
+                {
+                    read_array(_imp,a);
+                }
+                catch(...)
+                {
+                    throw NXAttributeError(EXCEPTION_RECORD,
+                            "Error reading to array!");
+                }
+            }
 
             //-----------------------------------------------------------------
             /*!
@@ -607,6 +667,7 @@ namespace nx{
             {
                 _imp.read(&value);
             }
+
 
             //============simple maintenance methods========================
             //! obtain attribute shape
