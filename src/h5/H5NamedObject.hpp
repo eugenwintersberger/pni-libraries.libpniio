@@ -24,7 +24,7 @@
  */
 #pragma once
 
-#include <pni/core/Types.hpp>
+#include <pni/core/types.hpp>
 #include "H5Object.hpp"
 
 
@@ -95,7 +95,7 @@ namespace h5{
             of this method is slightly different for a file object.
             \return name of the object
             */
-            virtual String name() const;
+            virtual string name() const;
 
             //-----------------------------------------------------------------
             /*! 
@@ -106,7 +106,7 @@ namespace h5{
             /scan_1/detector.
             \return base part of the objects path
             */
-            virtual String base() const;
+            virtual string base() const;
 
             //-----------------------------------------------------------------
             /*! 
@@ -115,7 +115,7 @@ namespace h5{
             This method returns the full path of an object.
             \return full object path
             */
-            virtual String path() const;
+            virtual string path() const;
 
 
     };

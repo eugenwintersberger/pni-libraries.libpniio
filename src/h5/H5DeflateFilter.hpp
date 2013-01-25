@@ -42,7 +42,7 @@ namespace h5 {
     class H5DeflateFilter:public H5Filter 
     {
         private:
-            UInt32 _comp_rate;   //!< compression rate
+            uint32 _comp_rate;   //!< compression rate
             bool   _shuffle;     //!< shuffle flag
         public:
             //====================constructor and destructor===================
@@ -59,7 +59,7 @@ namespace h5 {
 
             //-----------------------------------------------------------------
             //! constructor
-            H5DeflateFilter(UInt32 rate,bool shuffle);
+            H5DeflateFilter(uint32 rate,bool shuffle);
 
             //-----------------------------------------------------------------
             //! destructor
@@ -84,7 +84,7 @@ namespace h5 {
             Returns the value of the compression rate.
             \return compression rate
             */
-            UInt32 compression_rate() const;
+            uint32 compression_rate() const;
 
             //-----------------------------------------------------------------
             /*! 
@@ -94,7 +94,7 @@ namespace h5 {
             a higher value is passed an H5FilterError will be thrown.
             \param r compression rate (between 0 and 9).
             */
-            void compression_rate(UInt32 r);
+            void compression_rate(uint32 r);
 
             //-----------------------------------------------------------------
             /*!

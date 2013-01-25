@@ -25,7 +25,7 @@
 
 #include "H5NamedObject.hpp"
 #include "H5Exceptions.hpp"
-#include <pni/core/DBuffer.hpp>
+#include <pni/core/dbuffer.hpp>
 //#include "H5Group.hpp"
 
 namespace pni{
@@ -99,9 +99,9 @@ namespace h5{
     }
 
     //================implementation of name operations========================
-    String H5NamedObject::name() const
+    string H5NamedObject::name() const
     {
-        String p(H5NamedObject::path());
+        string p(H5NamedObject::path());
 
         //if the path is empty return an empty string
         if(p.empty()) return p;
@@ -110,39 +110,39 @@ namespace h5{
 
         //need to extract the the name information from the path
         size_t lpos = p.find_last_of("/");
-        String name = p;
-        if(lpos != p.npos) name = String(p,lpos+1,p.size()-lpos+1);
+        string name = p;
+        if(lpos != p.npos) name = string(p,lpos+1,p.size()-lpos+1);
 
         return name;
     }
     
     //-------------------------------------------------------------------------
-    String H5NamedObject::base() const
+    string H5NamedObject::base() const
     {
-        String p(H5NamedObject::path());
+        string p(H5NamedObject::path());
 
         if(p.empty()) return p;
 
         //if the string is of size 1 and has
         //only one / return this
-        String base;
-        if((p.size() == 1) && (p[0] == '/')) return String("/");
+        string base;
+        if((p.size() == 1) && (p[0] == '/')) return string("/");
 
         size_t lpos = p.find_last_of("/");
         if(lpos != p.npos)
         {
             //if the / has been found in the 
             //first position we can simply return this
-            if(lpos == 0) base = String("/");
+            if(lpos == 0) base = string("/");
             else
             {
                 //in all other cases a bit more work 
                 //is necessary
-                base = String(p,0,lpos+1);
+                base = string(p,0,lpos+1);
 
                 //remove a trailing /
                 if(base[base.size()-1] == '/'){
-                    base = String(base,0,base.size()-1);
+                    base = string(base,0,base.size()-1);
                 }
             }
         }
@@ -151,9 +151,9 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    String H5NamedObject::path() const
+    string H5NamedObject::path() const
     {
-        DBuffer<char> buffer;
+        dbuffer<char> buffer;
 
         if(is_valid()){
             //if the object has already been created return this value
@@ -162,11 +162,11 @@ namespace h5{
             buffer.allocate(bsize);
 
             H5Iget_name(id(),const_cast<char*>(buffer.ptr()),bsize);
-            String name(buffer.ptr());
+            string name(buffer.ptr());
             return name;
         }
 
-        return String("");
+        return string("");
     }
 
 

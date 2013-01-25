@@ -97,59 +97,59 @@ namespace h5{
     }
 
     //=================implementation of inquery methods=======================
-    TypeID H5Datatype::type_id() const
+    type_id_t H5Datatype::type_id() const
     {
-        if(H5DatatypeFactory::create_type<TypeID::UINT8>()==*this) 
-            return TypeID::UINT8;
+        if(H5DatatypeFactory::create_type<type_id_t::UINT8>()==*this) 
+            return type_id_t::UINT8;
 
-        if(H5DatatypeFactory::create_type<TypeID::INT8>() ==*this) 
-            return TypeID::INT8;
+        if(H5DatatypeFactory::create_type<type_id_t::INT8>() ==*this) 
+            return type_id_t::INT8;
 
-        if(H5DatatypeFactory::create_type<TypeID::UINT16>()==*this) 
-            return TypeID::UINT16;
-        if(H5DatatypeFactory::create_type<TypeID::INT16>() ==*this) 
-            return TypeID::INT16;
+        if(H5DatatypeFactory::create_type<type_id_t::UINT16>()==*this) 
+            return type_id_t::UINT16;
+        if(H5DatatypeFactory::create_type<type_id_t::INT16>() ==*this) 
+            return type_id_t::INT16;
 
-        if(H5DatatypeFactory::create_type<TypeID::UINT32>()==*this) 
-            return TypeID::UINT32;
+        if(H5DatatypeFactory::create_type<type_id_t::UINT32>()==*this) 
+            return type_id_t::UINT32;
 
-        if(H5DatatypeFactory::create_type<TypeID::INT32>() ==*this) 
-            return TypeID::INT32;
+        if(H5DatatypeFactory::create_type<type_id_t::INT32>() ==*this) 
+            return type_id_t::INT32;
         
-        if(H5DatatypeFactory::create_type<TypeID::UINT64>()==*this) 
-            return TypeID::UINT64;
+        if(H5DatatypeFactory::create_type<type_id_t::UINT64>()==*this) 
+            return type_id_t::UINT64;
 
-        if(H5DatatypeFactory::create_type<TypeID::INT64>() ==*this) 
-            return TypeID::INT64;
+        if(H5DatatypeFactory::create_type<type_id_t::INT64>() ==*this) 
+            return type_id_t::INT64;
         
-        if(H5DatatypeFactory::create_type<TypeID::FLOAT32>()==*this) 
-            return TypeID::FLOAT32;
+        if(H5DatatypeFactory::create_type<type_id_t::FLOAT32>()==*this) 
+            return type_id_t::FLOAT32;
         
-        if(H5DatatypeFactory::create_type<TypeID::FLOAT64>()==*this) 
-            return TypeID::FLOAT64;
+        if(H5DatatypeFactory::create_type<type_id_t::FLOAT64>()==*this) 
+            return type_id_t::FLOAT64;
         
-        if(H5DatatypeFactory::create_type<TypeID::FLOAT128>()==*this) 
-            return TypeID::FLOAT128;
+        if(H5DatatypeFactory::create_type<type_id_t::FLOAT128>()==*this) 
+            return type_id_t::FLOAT128;
         
-        if(H5DatatypeFactory::create_type<TypeID::COMPLEX32>()==*this) 
-            return TypeID::COMPLEX32;
+        if(H5DatatypeFactory::create_type<type_id_t::COMPLEX32>()==*this) 
+            return type_id_t::COMPLEX32;
         
-        if(H5DatatypeFactory::create_type<TypeID::COMPLEX64>()==*this) 
-            return TypeID::COMPLEX64;
+        if(H5DatatypeFactory::create_type<type_id_t::COMPLEX64>()==*this) 
+            return type_id_t::COMPLEX64;
         
-        if(H5DatatypeFactory::create_type<TypeID::COMPLEX128>()==*this) 
-            return TypeID::COMPLEX128;
+        if(H5DatatypeFactory::create_type<type_id_t::COMPLEX128>()==*this) 
+            return type_id_t::COMPLEX128;
 
-        if(H5DatatypeFactory::create_type<TypeID::BINARY>() == *this) 
-            return TypeID::BINARY;
+        if(H5DatatypeFactory::create_type<type_id_t::BINARY>() == *this) 
+            return type_id_t::BINARY;
 
-        if(H5DatatypeFactory::create_type<TypeID::STRING>() == *this) 
-            return TypeID::STRING;
+        if(H5DatatypeFactory::create_type<type_id_t::STRING>() == *this) 
+            return type_id_t::STRING;
 
-        if(H5DatatypeFactory::create_type<TypeID::BOOL>() == *this)
-            return TypeID::BOOL;
+        if(H5DatatypeFactory::create_type<type_id_t::BOOL>() == *this)
+            return type_id_t::BOOL;
 
-        return TypeID::NONE;
+        return type_id_t::NONE;
         
     }
 

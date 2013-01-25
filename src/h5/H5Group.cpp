@@ -73,7 +73,7 @@ namespace h5{
 
     //-------------------------------------------------------------------------
     //implementation of the standard constructor
-    H5Group::H5Group(const String &name,const H5Group &parent)
+    H5Group::H5Group(const string &name,const H5Group &parent)
     {
         hid_t link_pl = 0; //link creation property list
         hid_t cr_pl   = 0; //creation property list
@@ -82,7 +82,7 @@ namespace h5{
         link_pl = H5Pcreate(H5P_LINK_CREATE);
         if(link_pl < 0) 
         {
-            String estr = "Creation of link property list failed"
+            string estr = "Creation of link property list failed"
                 "for new group ["+name+"] under ["+parent.path()+
                 "]!";
             throw H5GroupError(EXCEPTION_RECORD,estr);
@@ -94,7 +94,7 @@ namespace h5{
 
         if(gid<0)
         {
-            String estr = "Error creating group ["+name+
+            string estr = "Error creating group ["+name+
                           "] under ["+parent.path()+"!";
             throw H5GroupError(EXCEPTION_RECORD,estr);
         }
@@ -178,7 +178,7 @@ namespace h5{
 
 
     //-------------------------------------------------------------------------
-    H5Object H5Group::open(const String &n) const
+    H5Object H5Group::open(const string &n) const
     {
         hid_t oid = H5Oopen(id(),n.c_str(),H5P_DEFAULT);
         if(oid<0)
@@ -196,7 +196,7 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    H5Object H5Group::operator[](const String &n) const
+    H5Object H5Group::operator[](const string &n) const
     {
         return this->open(n);
     }
@@ -209,7 +209,7 @@ namespace h5{
             std::stringstream sstream;
             sstream<<"Index ("<<i<<") exceeds number of child nodes ("
                 <<nchilds()<<")!";
-            throw IndexError(EXCEPTION_RECORD,sstream.str());
+            throw index_error(EXCEPTION_RECORD,sstream.str());
         }
 
         char name[1024];
@@ -220,7 +220,7 @@ namespace h5{
             throw H5GroupError(EXCEPTION_RECORD, 
                     "Error obtaining object name!");
 
-        return open(String(name));
+        return open(string(name));
     }
 
     //-------------------------------------------------------------------------
@@ -231,13 +231,13 @@ namespace h5{
 
 
     //-------------------------------------------------------------------------
-    bool H5Group::exists(const String &n) const
+    bool H5Group::exists(const string &n) const
     {
         htri_t retval;
-        std::vector<String> plist;
-        std::vector<String>::iterator iter;
+        std::vector<string> plist;
+        std::vector<string>::iterator iter;
         size_t spos1,spos2;
-        String path;
+        string path;
         bool is_abs = false;
 
         //remove a trailing slash
@@ -287,19 +287,19 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    void H5Group::link(const String &name) const
+    void H5Group::link(const string &name) const
     {
         H5Link::create(path(),*this,name);
     }
 
     //-------------------------------------------------------------------------
-    void H5Group::link(const H5Group &ref,const String &name) const
+    void H5Group::link(const H5Group &ref,const string &name) const
     {
         H5Link::create(path(),ref,name);
     }
 
     //-------------------------------------------------------------------------
-    void H5Group::link(const String &path,const String &name) const
+    void H5Group::link(const string &path,const string &name) const
     {
         H5Link::create(path,*this,name);
     }

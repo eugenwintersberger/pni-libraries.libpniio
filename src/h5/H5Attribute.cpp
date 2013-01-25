@@ -121,7 +121,7 @@ namespace h5{
     }
 
     //=========implementation of inquery methods===============================
-    TypeID H5Attribute::type_id() const
+    type_id_t H5Attribute::type_id() const
     {
         return _dtype.type_id();
     }
@@ -137,22 +137,22 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    String H5Attribute::name() const
+    string H5Attribute::name() const
     {
         char name[1024];
         H5Aget_name(id(),1024,name);
-        return String(name);
+        return string(name);
     }
 
     //-------------------------------------------------------------------------
-    String H5Attribute::base() const { return String(""); }
+    string H5Attribute::base() const { return string(""); }
 
     //-------------------------------------------------------------------------
-    String H5Attribute::path() const { return String(""); }
+    string H5Attribute::path() const { return string(""); }
     
     //-------------------------------------------------------------------------
     //implementation of write from String
-    void H5Attribute::write(const String *s) const
+    void H5Attribute::write(const string *s) const
     {
         typedef const char * char_ptr_t;
         
@@ -175,7 +175,7 @@ namespace h5{
 
     //-------------------------------------------------------------------------
     //implementation to read to string
-    void H5Attribute::read(String *s) const
+    void H5Attribute::read(string *s) const
     {
         typedef char * char_ptr_t;
 
@@ -196,7 +196,7 @@ namespace h5{
 
         for(size_t i = 0;i<size();i++)
         {
-            s[i] = String(ptr[i]);
+            s[i] = string(ptr[i]);
         }
         delete [] ptr;
     }

@@ -38,9 +38,9 @@ namespace h5 {
         H5ErrorStack *stack = (H5ErrorStack *)client_data;
 
         H5Error h5e;
-        if(eptr->file_name!=NULL) h5e.file_name(String(eptr->file_name));
-        if(eptr->func_name!=NULL) h5e.func_name(String(eptr->func_name));
-        if(eptr->desc != NULL) h5e.description(String(eptr->desc));
+        if(eptr->file_name!=NULL) h5e.file_name(string(eptr->file_name));
+        if(eptr->func_name!=NULL) h5e.func_name(string(eptr->func_name));
+        if(eptr->desc != NULL) h5e.description(string(eptr->desc));
         h5e.minor_number(eptr->min_num);
         h5e.major_number(eptr->maj_num);
         h5e.class_id(eptr->cls_id);

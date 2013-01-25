@@ -25,7 +25,7 @@
 
 #pragma once
 
-#include <pni/core/Types.hpp>
+#include <pni/core/types.hpp>
 
 using namespace pni::core;
 
@@ -80,7 +80,7 @@ namespace h5{
 
             //! Return the type id of the datatype. 
             //! \return type code
-            TypeID type_id() const;
+            type_id_t type_id() const;
             
             //! close the datatype
             virtual void close();

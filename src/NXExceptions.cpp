@@ -32,11 +32,11 @@ namespace io{
 namespace nx{
 
     //--------------------------------------------------------------------------
-    NXFieldError::NXFieldError():Exception("NXFieldError"){ }
+    NXFieldError::NXFieldError():exception("NXFieldError"){ }
 
     //--------------------------------------------------------------------------
-    NXFieldError::NXFieldError(const ExceptionRecord &i,const String &d)
-                 :Exception("NXFieldError",i,d)
+    NXFieldError::NXFieldError(const exception_record &i,const string &d)
+                 :exception("NXFieldError",i,d)
     { }
 
     //--------------------------------------------------------------------------
@@ -49,11 +49,11 @@ namespace nx{
     }
 
     //--------------------------------------------------------------------------
-    NXAttributeError::NXAttributeError():Exception("NXAttributeError"){ }
+    NXAttributeError::NXAttributeError():exception("NXAttributeError"){ }
 
     //--------------------------------------------------------------------------
-    NXAttributeError::NXAttributeError(const ExceptionRecord &i,const String &d)
-                     :Exception("NXAttributeError",i,d)
+    NXAttributeError::NXAttributeError(const exception_record &i,const string &d)
+                     :exception("NXAttributeError",i,d)
     { }
 
     //--------------------------------------------------------------------------
@@ -66,11 +66,11 @@ namespace nx{
     }
 
     //--------------------------------------------------------------------------
-    NXGroupError::NXGroupError():Exception("NXGroupError") { }
+    NXGroupError::NXGroupError():exception("NXGroupError") { }
 
     //--------------------------------------------------------------------------
-    NXGroupError::NXGroupError(const ExceptionRecord &i,const String &d)
-                 :Exception("NXGroupError",i,d)
+    NXGroupError::NXGroupError(const exception_record &i,const string &d)
+                 :exception("NXGroupError",i,d)
     { }
 
     //--------------------------------------------------------------------------

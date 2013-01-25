@@ -26,10 +26,10 @@
 #pragma once
 #include <vector>
 
-#include <pni/core/Types.hpp>
-#include <pni/core/Array.hpp>
-#include <pni/core/DBuffer.hpp>
-#include <pni/core/IDTypeMap.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
+#include <pni/core/dbuffer.hpp>
+#include <pni/core/id_type_map.hpp>
 
 #include "H5NamedObject.hpp"
 #include "H5Attribute.hpp"
@@ -68,7 +68,7 @@ namespace h5{
             \return H5Attribute instance
             */
             template<typename T> H5Attribute __create_attr
-                (const String &n, bool ov, const H5Dataspace &space) 
+                (const string &n, bool ov, const H5Dataspace &space) 
                 const;
 
         protected:
@@ -141,7 +141,7 @@ namespace h5{
             \return attribute object
             */
             template<typename T> H5Attribute 
-                attr(const String &n,bool ov=false) const;
+                attr(const string &n,bool ov=false) const;
 
             //-----------------------------------------------------------------
             /*! \brief create an array attribute
@@ -162,7 +162,7 @@ namespace h5{
                     template<typename ...> class CTYPE,
                     typename ...OTS> 
             H5Attribute 
-            attr(const String &n, const CTYPE<OTS...> &s,bool ov=false) const;
+            attr(const string &n, const CTYPE<OTS...> &s,bool ov=false) const;
 
             //------------------------------------------------------------------
             /*! \brief open attribute by name
@@ -174,7 +174,7 @@ namespace h5{
             \param n name of the attribute
             \return attribute object
             */
-            H5Attribute attr(const String &n) const;
+            H5Attribute attr(const string &n) const;
 
             //------------------------------------------------------------------
             /*! \brief open attribute by index
@@ -196,7 +196,7 @@ namespace h5{
             \param n name of the attribute to check for
             \return true if exists, false otherwise
             */
-            bool has_attr(const String &n) const;
+            bool has_attr(const string &n) const;
 
             //-----------------------------------------------------------------
             /*! Deletes an attribute
@@ -205,7 +205,7 @@ namespace h5{
             \throws H5AttributeError in case of errors 
             \param n name of the attribute
             */
-            void del_attr(const String &n) const;
+            void del_attr(const string &n) const;
 
             //-----------------------------------------------------------------
             /*! get number of attributes
@@ -216,13 +216,14 @@ namespace h5{
             */
             size_t nattr() const;
 
+            //-----------------------------------------------------------------
             template<typename H5ObjectT,typename ItemT> friend class
                 H5LinkIterator;
     };
 
     //===================implementation of template methods====================
     template<typename T> H5Attribute
-        H5AttributeObject::__create_attr(const String &n,
+        H5AttributeObject::__create_attr(const string &n,
                 bool ov,const H5Dataspace &space) const
     {
         H5Datatype type = H5DatatypeFactory::create_type<T>();
@@ -234,7 +235,7 @@ namespace h5{
             if(ov) del_attr(n);
             else
             {
-                String ss = "Attribute ["+n+"] already exists on "
+                string ss = "Attribute ["+n+"] already exists on "
                         "object ["+name()+"]!";
                 throw H5AttributeError(EXCEPTION_RECORD,ss);
             }
@@ -258,7 +259,7 @@ namespace h5{
     //-------------------------------------------------------------------------
     //implementation of the scalar attribute factory method
     template<typename T> H5Attribute 
-        H5AttributeObject::attr(const String &n,bool ov) const
+        H5AttributeObject::attr(const string &n,bool ov) const
     {
         H5Dataspace space;
         return __create_attr<T>(n,ov,space);   
@@ -269,7 +270,7 @@ namespace h5{
     //implementation of the array attribute factory method
     template<typename T,template<typename ...> class CTYPE,typename ...OTS> 
         H5Attribute 
-        H5AttributeObject::attr(const String &n,const CTYPE<OTS...> &s, bool ov) 
+        H5AttributeObject::attr(const string &n,const CTYPE<OTS...> &s, bool ov) 
         const
     {
         H5Dataspace space(s);

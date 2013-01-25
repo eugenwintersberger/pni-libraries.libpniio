@@ -31,161 +31,202 @@ namespace io{
 namespace nx{
 namespace h5{
 
-    H5Exception::H5Exception():Exception()
+    //-------------------------------------------------------------------------
+    H5Exception::H5Exception():exception()
     {
         _h5estack.fill();
     }
 
-    H5Exception::H5Exception(const String &n):Exception(n)
+    //-------------------------------------------------------------------------
+    H5Exception::H5Exception(const string &n):exception(n)
     {
         _h5estack.fill();
     }
 
-    H5Exception::H5Exception(const String &n,const ExceptionRecord &i,
-                             const String &d):
-        Exception(n,i,d)
+    //-------------------------------------------------------------------------
+    H5Exception::H5Exception(const string &n,const exception_record &i,
+                             const string &d):
+        exception(n,i,d)
     {
         _h5estack.fill();
     }
 
+    //-------------------------------------------------------------------------
     H5Exception::H5Exception(const H5Exception &e):
-        Exception(e)
+        exception(e)
     {
         _h5estack = e._h5estack;
     }
 
+    //-------------------------------------------------------------------------
     H5Exception::~H5Exception() throw() { }
 
+    //-------------------------------------------------------------------------
     std::ostream &H5Exception::print(std::ostream &o) const
     {
-        o<<Exception::print(o);
+        o<<exception::print(o);
         o<<_h5estack;
 
         return o;
     }
 
+    //-------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const H5Exception &e)
     {
         return e.print(o);
     }
 
+    //-------------------------------------------------------------------------
     H5DataTypeError::H5DataTypeError() :H5Exception("H5DataTypeError")
     {}
 
-    H5DataTypeError::H5DataTypeError(const ExceptionRecord &i,const String &d):
+    //-------------------------------------------------------------------------
+    H5DataTypeError::H5DataTypeError(const exception_record &i,const string &d):
         H5Exception("H5DataTypeError",i,d)
     { }
 
+    //-------------------------------------------------------------------------
     H5DataTypeError::~H5DataTypeError() throw(){ }
 
+    //-------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const H5DataTypeError &e)
     {
         return e.print(o);
     }
 
+    //-------------------------------------------------------------------------
     H5DataSetError::H5DataSetError():H5Exception("H5DataTypeError")
     { }
 
-    H5DataSetError::H5DataSetError(const ExceptionRecord &i,const String &d):
+    //-------------------------------------------------------------------------
+    H5DataSetError::H5DataSetError(const exception_record &i,const string &d):
         H5Exception("H5DataTypeError",i,d)
     { }
 
+    //-------------------------------------------------------------------------
     H5DataSetError::~H5DataSetError() throw(){ }
 
+    //-------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const H5DataSetError &e)
     {
         return e.print(o);
     }
 
+    //-------------------------------------------------------------------------
     H5DataSpaceError::H5DataSpaceError():H5Exception("H5DataSpaceError")
     { }
 
-    H5DataSpaceError::H5DataSpaceError(const ExceptionRecord &i,
-                                       const String &d):
+    //-------------------------------------------------------------------------
+    H5DataSpaceError::H5DataSpaceError(const exception_record &i,
+                                       const string &d):
         H5Exception("H5DataSpaceError",i,d)
     { }
 
+    //-------------------------------------------------------------------------
     H5DataSpaceError::~H5DataSpaceError() throw(){ }
 
+    //-------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const H5DataSpaceError &e)
     {
         return e.print(o);
     }
 
+    //-------------------------------------------------------------------------
     H5AttributeError::H5AttributeError():H5Exception("H5AttributeError")
     { }
 
-    H5AttributeError::H5AttributeError(const ExceptionRecord &i,const String &d):
+    //-------------------------------------------------------------------------
+    H5AttributeError::H5AttributeError(const exception_record &i,const string &d):
         H5Exception("H5AttributeError",i,d)
     { }
 
+    //-------------------------------------------------------------------------
     H5AttributeError::~H5AttributeError() throw(){ }
 
+    //-------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const H5AttributeError &e)
     {
         return e.print(o);
     }
 
+    //-------------------------------------------------------------------------
     H5FileError::H5FileError():H5Exception("H5FileError"){ }
 
-    H5FileError::H5FileError(const ExceptionRecord &i,const String &d):
+    //-------------------------------------------------------------------------
+    H5FileError::H5FileError(const exception_record &i,const string &d):
         H5Exception("H5FileError",i,d)
     { }
 
+    //-------------------------------------------------------------------------
     H5FileError::~H5FileError() throw(){ } 
 
+    //-------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const H5FileError &e)
     {
         return e.print(o);
     }
 
+    //-------------------------------------------------------------------------
     H5GroupError::H5GroupError():H5Exception("H5GroupError") { }
 
-    H5GroupError::H5GroupError(const ExceptionRecord &i,const String &d):
+    //-------------------------------------------------------------------------
+    H5GroupError::H5GroupError(const exception_record &i,const string &d):
         H5Exception("H5GroupError",i,d)
     { }
 
+    //-------------------------------------------------------------------------
     H5GroupError::~H5GroupError() throw(){ }
 
+    //-------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const H5GroupError &e)
     {
         return e.print(o);
     }
 
+    //-------------------------------------------------------------------------
     H5PropertyListError::H5PropertyListError():
         H5Exception("H5PropertyListError")
     { }
 
-    H5PropertyListError::H5PropertyListError(const ExceptionRecord &i,
-                                             const String &d):
+    //-------------------------------------------------------------------------
+    H5PropertyListError::H5PropertyListError(const exception_record &i,
+                                             const string &d):
         H5Exception("H5PropertyListError",i,d)
     { }
 
+    //-------------------------------------------------------------------------
     H5PropertyListError::~H5PropertyListError() throw(){ } 
 
+    //-------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const H5PropertyListError &e)
     {
         return e.print(o);
     }
 
+    //-------------------------------------------------------------------------
     H5FilterError::H5FilterError():H5Exception("H5FilterError"){ }
 
-    H5FilterError::H5FilterError(const ExceptionRecord &i,const String &d):
+    //-------------------------------------------------------------------------
+    H5FilterError::H5FilterError(const exception_record &i,const string &d):
         H5Exception("H5FilterError",i,d)
     { }
 
+    //-------------------------------------------------------------------------
     H5FilterError::~H5FilterError() throw(){ }
 
+    //-------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const H5FilterError &e)
     {
         return e.print(o);
     }
 
+    //-------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const H5ObjectError &e)
     {
         return e.print(o);
     }
 
+    //-------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const H5LinkError &e)
     {
         return e.print(o);

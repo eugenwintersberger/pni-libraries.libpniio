@@ -38,7 +38,7 @@ namespace h5 {
     { }
 
     //-------------------------------------------------------------------------
-    H5DeflateFilter::H5DeflateFilter(UInt32 rate,bool shuffle):
+    H5DeflateFilter::H5DeflateFilter(uint32 rate,bool shuffle):
         H5Filter(),
         _comp_rate(rate),
         _shuffle(shuffle)
@@ -101,13 +101,13 @@ namespace h5 {
     }
 
     //-------------------------------------------------------------------------
-    UInt32 H5DeflateFilter::compression_rate() const
+    uint32 H5DeflateFilter::compression_rate() const
     {
         return _comp_rate;
     }
 
     //-------------------------------------------------------------------------
-    void H5DeflateFilter::compression_rate(UInt32 r)
+    void H5DeflateFilter::compression_rate(uint32 r)
     {
         if(r<=9)
             _comp_rate = r;

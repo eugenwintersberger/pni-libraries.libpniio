@@ -27,11 +27,11 @@
 
 #include<sstream>
 
-#include <pni/core/Types.hpp>
-#include <pni/core/Array.hpp>
-#include <pni/core/DBuffer.hpp>
-#include <pni/core/SBuffer.hpp>
-#include <pni/core/RBuffer.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
+#include <pni/core/dbuffer.hpp>
+#include <pni/core/sbuffer.hpp>
+#include <pni/core/rbuffer.hpp>
 
 using namespace pni::core;
 
@@ -135,7 +135,7 @@ namespace h5{
             Write data to a string attribute.
             \param s string to write
             */
-            void write(const String *s) const;
+            void write(const string *s) const;
 
             //-----------------------------------------------------------------
             /*!
@@ -152,7 +152,7 @@ namespace h5{
             */
             void write(const char *s) const 
             {
-                String str(s);
+                string str(s);
                 write(&str);
             }
           
@@ -184,7 +184,7 @@ namespace h5{
             \throws H5AttributeError in case of general IO errors
             \param s string variable to which data will be written
             */
-            void read(String *s) const;
+            void read(string *s) const;
            
             //=================attribute inquery methods=======================
             /*! 
@@ -205,7 +205,7 @@ namespace h5{
             Return the ID of the datatype used for the attribute.
             \return type ID
             */
-            TypeID type_id() const;
+            type_id_t type_id() const;
 
             //-----------------------------------------------------------------
             /*! 
@@ -240,7 +240,7 @@ namespace h5{
             Returns an empty string since an attribute has no base name.
             \return empty string
             */
-            virtual String base() const;
+            virtual string base() const;
 
             //-----------------------------------------------------------------
             /*! 
@@ -249,7 +249,7 @@ namespace h5{
             Returns an empty string as an attribute has no path.
             \return empty string
             */
-            virtual String path() const; 
+            virtual string path() const; 
 
             //-----------------------------------------------------------------
             /*! 
@@ -258,7 +258,7 @@ namespace h5{
             Return the name of the attribute as string.
             \return attribute name
             */
-            virtual String name() const;
+            virtual string name() const;
     };
 
 

@@ -28,7 +28,7 @@
 #pragma once
 
 #include <iostream>
-#include <pni/core/Exceptions.hpp>
+#include <pni/core/exceptions.hpp>
 
 using namespace pni::core;
 
@@ -42,13 +42,13 @@ namespace nx{
 
     Raised if an error occured in one of the NXField methods.
     */
-    class NXFieldError:public Exception
+    class NXFieldError:public exception
     {
         public:
             //! default constructor
             explicit NXFieldError();
             //! constructor
-            explicit NXFieldError(const ExceptionRecord &i,const String &d);
+            explicit NXFieldError(const exception_record &i,const string &d);
             //! destructor
             ~NXFieldError() throw();
             
@@ -64,13 +64,13 @@ namespace nx{
 
     Raised in cases where reading or writing an attribute failed.
     */
-    class NXAttributeError:public Exception
+    class NXAttributeError:public exception
     {
         public:
             //! default constructor
             explicit NXAttributeError();
             //! constructor
-            explicit NXAttributeError(const ExceptionRecord &i,const String &d);
+            explicit NXAttributeError(const exception_record &i,const string &d);
             //! destructor
             ~NXAttributeError() throw();
             
@@ -86,13 +86,13 @@ namespace nx{
 
     Error in case of group operations.
     */
-    class NXGroupError:public Exception
+    class NXGroupError:public exception
     {
         public:
             //! default constructor
             explicit NXGroupError();
             //! constructor
-            explicit NXGroupError(const ExceptionRecord &i,const String &d);
+            explicit NXGroupError(const exception_record &i,const string &d);
             //! destructor
             ~NXGroupError() throw();
             //! output operator
@@ -107,15 +107,15 @@ namespace nx{
 
     File exception class.
     */
-    class NXFileError:public Exception 
+    class NXFileError:public exception 
     {
         public:
             //! default constructor
-            explicit NXFileError():Exception("NXFileError") {}
+            explicit NXFileError():exception("NXFileError") {}
 
             //! constructor
-            explicit NXFileError(const ExceptionRecord &i,const String &d)
-                :Exception("NXFileError",i,d)
+            explicit NXFileError(const exception_record &i,const string &d)
+                :exception("NXFileError",i,d)
             {}
 
             //! destructor
@@ -137,16 +137,16 @@ namespace nx{
 
     Selection exception class.
     */
-    class NXSelectionError:public Exception 
+    class NXSelectionError:public exception 
     {
         public:
             //! default constructor
-            explicit NXSelectionError():Exception("NXFilterError")
+            explicit NXSelectionError():exception("NXFilterError")
             {}
 
             //! constructor
-            explicit NXSelectionError(const ExceptionRecord &i,const String &d)
-                :Exception("NXFilterError",i,d)
+            explicit NXSelectionError(const exception_record &i,const string &d)
+                :exception("NXFilterError",i,d)
             {}
 
             //! destructor
@@ -168,16 +168,16 @@ namespace nx{
 
     Filter exception class.
     */
-    class NXFilterError:public Exception 
+    class NXFilterError:public exception 
     {
         public:
             //! default constructor
-            explicit NXFilterError():Exception("NXFilterError")
+            explicit NXFilterError():exception("NXFilterError")
             {}
 
             //! constructor
-            explicit NXFilterError(const ExceptionRecord &i,const String &d)
-                :Exception("NXFilterError",i,d)
+            explicit NXFilterError(const exception_record &i,const string &d)
+                :exception("NXFilterError",i,d)
             {}
 
             //! destructor

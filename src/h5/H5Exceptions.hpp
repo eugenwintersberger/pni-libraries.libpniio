@@ -24,8 +24,8 @@
 
 #pragma once
 
-#include <pni/core/Types.hpp>
-#include <pni/core/Exceptions.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/exceptions.hpp>
 extern "C"{
 #include <hdf5.h>
 }
@@ -48,7 +48,7 @@ using namespace pni::core;
     Exception class declared in libpniutils and adds managment for the HDF5
     error stack (H5ErrorStack).
     */
-    class H5Exception:public Exception
+    class H5Exception:public exception
     {
         protected:
             H5ErrorStack _h5estack;  //!< HDF5 error stack
@@ -64,7 +64,7 @@ using namespace pni::core;
 
             \param n name of the exception
             */
-            H5Exception(const String &n);
+            H5Exception(const string &n);
 
             //-----------------------------------------------------------------
             /*! 
@@ -74,7 +74,7 @@ using namespace pni::core;
             \param i exception issuer
             \param d exception description
             */
-            H5Exception(const String &n,const ExceptionRecord &i,const String &d);
+            H5Exception(const string &n,const exception_record &i,const string &d);
 
             //-----------------------------------------------------------------
             //! copy constructor
@@ -113,7 +113,7 @@ using namespace pni::core;
             \param i signature of the exception issuer
             \param d exception description
             */
-            H5DataTypeError(const ExceptionRecord &i,const String &d);
+            H5DataTypeError(const exception_record &i,const string &d);
 
             //-----------------------------------------------------------------
             //! destructor
@@ -147,7 +147,7 @@ using namespace pni::core;
             \param i signature of the exception issuer
             \param d exception description
             */
-            H5DataSetError(const ExceptionRecord &i,const String &d);
+            H5DataSetError(const exception_record &i,const string &d);
 
             //-----------------------------------------------------------------
             //! default destructor
@@ -180,7 +180,7 @@ using namespace pni::core;
             \param i signature of the exception issuer
             \param d description of the exception
             */
-            H5DataSpaceError(const ExceptionRecord &i,const String &d);
+            H5DataSpaceError(const exception_record &i,const string &d);
 
             //-----------------------------------------------------------------
             //! destructor
@@ -213,7 +213,7 @@ using namespace pni::core;
             \param i signature of the exception issuer
             \param d description of the error
             */
-            H5AttributeError(const ExceptionRecord &i,const String &d);
+            H5AttributeError(const exception_record &i,const string &d);
 
             //-----------------------------------------------------------------
             //! destructor
@@ -247,7 +247,7 @@ using namespace pni::core;
             \param i signature of the exception issuer
             \param d description of the error
             */
-            H5FileError(const ExceptionRecord &i,const String &d);
+            H5FileError(const exception_record &i,const string &d);
 
             //-----------------------------------------------------------------
             //! destructor
@@ -281,7 +281,7 @@ using namespace pni::core;
             \param i signature of the exception issuer
             \param d description of the error
             */
-            H5GroupError(const ExceptionRecord &i,const String &d);
+            H5GroupError(const exception_record &i,const string &d);
 
             //-----------------------------------------------------------------
             //! destructor
@@ -315,7 +315,7 @@ using namespace pni::core;
             \param i signature of the exception issuer
             \param d description of the error
             */
-            H5PropertyListError(const ExceptionRecord &i,const String &d);
+            H5PropertyListError(const exception_record &i,const string &d);
 
             //-----------------------------------------------------------------
             //! destructor
@@ -348,7 +348,7 @@ using namespace pni::core;
             \param i signature of the exception issuer
             \param d description of the error
             */
-            H5FilterError(const ExceptionRecord &i,const String &d);
+            H5FilterError(const exception_record &i,const string &d);
 
             //-----------------------------------------------------------------
             //! destructor
@@ -381,7 +381,7 @@ using namespace pni::core;
             \param i signature of the exception issuer
             \param d description of the error
             */
-            H5ObjectError(const ExceptionRecord &i,const String &d):
+            H5ObjectError(const exception_record &i,const string &d):
                 H5Exception("H5ObjectError",i,d)
             { }
 
@@ -416,7 +416,7 @@ using namespace pni::core;
             \param i signature of the exception issuer
             \param d description of the error
             */
-            H5LinkError(const ExceptionRecord &i,const String &d):
+            H5LinkError(const exception_record &i,const string &d):
                 H5Exception("H5LinkError",i,d)
             { }
 

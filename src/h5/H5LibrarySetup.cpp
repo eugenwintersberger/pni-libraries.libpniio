@@ -51,26 +51,26 @@ namespace h5 {
     }
 
     //--------------------------------------------------------------------------
-    String H5LibrarySetup::version_string() const
+    string H5LibrarySetup::version_string() const
     {
-        String vstr;
+        string vstr;
         return vstr;
     }
 
     //--------------------------------------------------------------------------
-    UInt32 H5LibrarySetup::major_number() const
+    uint32 H5LibrarySetup::major_number() const
     {
         return _major_version_number;
     }
 
     //--------------------------------------------------------------------------
-    UInt32 H5LibrarySetup::minor_number() const
+    uint32 H5LibrarySetup::minor_number() const
     {
         return _minor_version_number;
     }
 
     //--------------------------------------------------------------------------
-    UInt32 H5LibrarySetup::release_number() const
+    uint32 H5LibrarySetup::release_number() const
     {
         return _release_number;
     }

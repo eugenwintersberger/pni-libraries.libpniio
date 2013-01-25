@@ -35,12 +35,13 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
+
     //===============implementation of private methods=========================
-    void H5Link::__split_path(const String &path,String &file,String &opath)
+    void H5Link::__split_path(const string &path,string &file,string &opath)
     {
         size_t cpos = path.find_first_of(':');
 
-        if(cpos == String::npos)
+        if(cpos == string::npos)
         {
             //if there is no colon in the path the link should be 
             //internal
@@ -51,15 +52,15 @@ namespace h5{
         {
             //if the colon appears not in the first position of the 
             //path string this is most probably an external link
-            file = String(path,0,cpos);
-            opath = String(path,cpos+1);
+            file = string(path,0,cpos);
+            opath = string(path,cpos+1);
         }
         else throw H5LinkError(EXCEPTION_RECORD,"Invalid target string!");
     }
 
     //-------------------------------------------------------------------------
-    void H5Link::__create_ext_link(const String &file,const String &opath,
-                                   const H5Group &ref,const String &name)
+    void H5Link::__create_ext_link(const string &file,const string &opath,
+                                   const H5Group &ref,const string &name)
     {
         hid_t lcpl = H5Pcreate(H5P_LINK_CREATE);
         H5Pset_create_intermediate_group(lcpl,1);
@@ -73,8 +74,8 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    void H5Link::__create_int_link(const String &opath,const H5Group &ref,
-                                   const String &name)
+    void H5Link::__create_int_link(const string &opath,const H5Group &ref,
+                                   const string &name)
     {
         hid_t lcpl = H5Pcreate(H5P_LINK_CREATE);
         H5Pset_create_intermediate_group(lcpl,1);
@@ -87,9 +88,9 @@ namespace h5{
     }
 
     //================implementation of public methods=========================
-    void H5Link::create(const String &s,const H5Group &ref,const String &name)
+    void H5Link::create(const string &s,const H5Group &ref,const string &name)
     {
-        String filepath,opath;
+        string filepath,opath;
 
         __split_path(s,filepath,opath);
 
@@ -101,13 +102,13 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    void H5Link::create(const H5Group &g,const H5Group &ref,const String &name)
+    void H5Link::create(const H5Group &g,const H5Group &ref,const string &name)
     {
         __create_int_link(g.path(),ref,name);
     }
 
     //-------------------------------------------------------------------------
-    void H5Link::create(const H5Dataset &d,const H5Group &ref,const String &n)
+    void H5Link::create(const H5Dataset &d,const H5Group &ref,const string &n)
     {
         __create_int_link(d.path(),ref,n);
     }

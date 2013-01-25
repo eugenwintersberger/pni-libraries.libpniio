@@ -24,7 +24,7 @@
  */
 
 #include <boost/current_function.hpp>
-#include <pni/core/DBuffer.hpp>
+#include <pni/core/dbuffer.hpp>
 
 #include "H5Dataset.hpp"
 #include "H5ObjectType.hpp"
@@ -38,11 +38,11 @@ namespace nx{
 namespace h5{
     //============implementation of private methods====================
     //throw a ShapeMissmatchError exception if dataset not scalar
-    void H5Dataset::__throw_if_not_scalar(const ExceptionRecord &rec) const
+    void H5Dataset::__throw_if_not_scalar(const exception_record &rec) const
     {
-        String desc = "Dataset ["+this->name()+"] is not scalar!";
+        string desc = "Dataset ["+this->name()+"] is not scalar!";
         if(_fspace.size()!=1)
-            throw ShapeMissmatchError(rec,desc);
+            throw shape_missmatch_error(rec,desc);
     }
 
     //===implementation of constructors and destructors================
@@ -95,7 +95,7 @@ namespace h5{
 
     //-----------------------------------------------------------------
     //implementation of the constructor for a contigous array
-    H5Dataset::H5Dataset(const String &n,const H5Group &g,
+    H5Dataset::H5Dataset(const string &n,const H5Group &g,
             const H5Datatype &t,const H5Dataspace &s)
     {
         
@@ -210,10 +210,10 @@ namespace h5{
             std::stringstream ss;
             ss<<"Dimension index ("<<e<<") exceeds rank of ";
             ss<<"dataspace ["<<name()<<"] which is ("<<rank()<<")!";
-            throw IndexError(EXCEPTION_RECORD,ss.str());
+            throw index_error(EXCEPTION_RECORD,ss.str());
         }
 
-        DBuffer<hsize_t> b(_fspace.rank());
+        dbuffer<hsize_t> b(_fspace.rank());
 
         for(size_t i=0;i<_fspace.rank();i++) b[i] = _fspace[i];
         b[e] += n;
@@ -229,7 +229,7 @@ namespace h5{
     }
 
     //------------------------------------------------------------------
-    void H5Dataset::write(const String *sptr) const
+    void H5Dataset::write(const string *sptr) const
     {
         typedef const char * char_ptr_t;
         //select the proper memory data type
@@ -250,7 +250,7 @@ namespace h5{
     }
 
     //-----------------------------------------------------------------
-    void H5Dataset::read(String *sptr) const
+    void H5Dataset::read(string *sptr) const
     {
         typedef char * char_ptr_t;
         //select the proper memory data type
@@ -274,7 +274,7 @@ namespace h5{
         {
             try
             {
-                sptr[i] = String(ptr[i]);
+                sptr[i] = string(ptr[i]);
             }
             catch(...)
             {
@@ -287,13 +287,13 @@ namespace h5{
     }
 
     //-----------------------------------------------------------------
-    void H5Dataset::link(const String &linkname) const
+    void H5Dataset::link(const string &linkname) const
     {
         H5Link::create(path(),parent(),linkname);
     }
 
     //------------------------------------------------------------------
-    void H5Dataset::link(const H5Group &g,const String &n) const
+    void H5Dataset::link(const H5Group &g,const string &n) const
     {
         H5Link::create(path(),g,n);
     }

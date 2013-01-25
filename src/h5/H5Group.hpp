@@ -26,7 +26,7 @@
 
 #pragma once
 
-#include <pni/core/Types.hpp>
+#include <pni/core/types.hpp>
 
 using namespace pni::core;
 
@@ -75,7 +75,7 @@ namespace h5{
 
             //-----------------------------------------------------------------
             //! standard constructor
-            explicit H5Group(const String &name,const H5Group &p);
+            explicit H5Group(const string &name,const H5Group &p);
 
             //-----------------------------------------------------------------
             //! destructor
@@ -111,7 +111,7 @@ namespace h5{
             \param n object path
             \return HDF5 object 
             */
-            H5Object open(const String &n) const;
+            H5Object open(const string &n) const;
 
             //-----------------------------------------------------------------
             /*! 
@@ -122,7 +122,7 @@ namespace h5{
             \return H5Object addressed by n
             \sa H5Object open(const String &n) const
             */
-            H5Object operator[](const String &n) const;
+            H5Object operator[](const string &n) const;
 
             //-----------------------------------------------------------------
             /*! 
@@ -131,7 +131,7 @@ namespace h5{
             Opens a child object below this group by its index. Unlike
             open(const String &n) only objects linked to this group can be
             opened with this method.
-            \throws IndexError if index exceeds number of childs
+            \throws index_error if index exceeds number of childs
             \param i object index
             \return child object
             */
@@ -142,7 +142,7 @@ namespace h5{
             \brief open by index
 
             [] operator to obtain a child node by index;
-            \throws IndexError if index exceeds number of childs
+            \throws index_error if index exceeds number of childs
             \param i object index
             \return child node
             \sa open(size_t i)
@@ -156,7 +156,7 @@ namespace h5{
             This method removes an object of name n attached to this  group.
             \param n name of the object to remove
             */
-            void remove(const String &n);
+            void remove(const string &n);
 
             //-----------------------------------------------------------------
             /*! 
@@ -167,7 +167,7 @@ namespace h5{
             \param n path to the object 
             \return true if an object of name n exists
             */
-            bool exists(const String &n) const;
+            bool exists(const string &n) const;
 
             //-----------------------------------------------------------------
             //! close the object
@@ -191,7 +191,7 @@ namespace h5{
             group).
             \param path new link path
             */
-            void link(const String &path) const;
+            void link(const string &path) const;
 
             //-----------------------------------------------------------------
             /*! \brief create a link to this group
@@ -201,7 +201,7 @@ namespace h5{
             \param ref reference group
             \param path new link path
             */
-            void link(const H5Group &ref,const String &path) const;
+            void link(const H5Group &ref,const string &path) const;
 
             //-----------------------------------------------------------------
             /*! \brief creates a local or external link
@@ -212,7 +212,7 @@ namespace h5{
             \param path path to the object from which to link
             \param name name of the link with respect to this group
             */
-            void link(const String &path,const String &name) const;
+            void link(const string &path,const string &name) const;
 
             //-----------------------------------------------------------------
             /*! \brief number of child nodes

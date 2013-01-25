@@ -28,7 +28,7 @@
 #include<boost/date_time/posix_time/posix_time.hpp>
 #include<boost/date_time/local_time_adjustor.hpp>
 #include<boost/date_time/c_local_time_adjustor.hpp>
-#include <pni/core/Types.hpp>
+#include <pni/core/types.hpp>
 
 using namespace pni::core;
 using namespace boost::posix_time;
@@ -50,9 +50,9 @@ namespace nx {
     class NXDateTime {
         private:
             //! get date time from ptime 
-            static String __get_date_time_str(const ptime &t);
+            static string __get_date_time_str(const ptime &t);
             //! get delta to UTC as a string
-            static String __get_utc_delta();
+            static string __get_utc_delta();
         public:
             //-----------------------------------------------------------------
             /*! date-time now
@@ -60,7 +60,7 @@ namespace nx {
             Returns a string with a Nexus compliant date-time string for now.
             \return Nexus date-time string
             */
-            static String get_date_time_str();
+            static string get_date_time_str();
 
             //-----------------------------------------------------------------
             /*! date-time at t
@@ -69,7 +69,7 @@ namespace nx {
             \param t time as time_t
             \return Nexus date-time string
             */
-            static String get_date_time_str(const time_t &t);
+            static string get_date_time_str(const time_t &t);
     };
 
 //end of namepsace

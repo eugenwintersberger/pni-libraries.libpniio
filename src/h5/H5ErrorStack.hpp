@@ -33,8 +33,8 @@ extern "C"{
 #include <iostream>
 #include <vector>
 
-#include <pni/core/Types.hpp>
-#include <pni/core/Exceptions.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/exceptions.hpp>
 
 namespace pni {
 namespace io {
@@ -60,16 +60,16 @@ using namespace pni::core;
     {
         private:
             hid_t _class_id;       //!< error class
-            String _class_name;    //!< name of the error class
+            string _class_name;    //!< name of the error class
             hid_t _major_number;   //!< major number of the error
             hid_t _minor_number;   //!< minor number of the error
             //! name of the source file where the error occurred
-            String _file_name;    
+            string _file_name;    
             //! name of the HDF5 function where the error occurred
-            String _func_name;     
-            String _description;   //!< optional description of the error
-            String _minor_message; //!< minor message of the error
-            String _major_message; //!< major message of the error
+            string _func_name;     
+            string _description;   //!< optional description of the error
+            string _minor_message; //!< minor message of the error
+            string _major_message; //!< major message of the error
         public:
             //-----------------------------------------------------------------
             //! default constructor
@@ -125,35 +125,35 @@ using namespace pni::core;
 
             //-----------------------------------------------------------------
             //! get file name
-            String file_name() const;
+            string file_name() const;
 
             //-----------------------------------------------------------------
             //! get file name
-            void file_name(const String &n);
+            void file_name(const string &n);
 
             //-----------------------------------------------------------------
             //! get function name
-            String func_name() const;
+            string func_name() const;
 
             //-----------------------------------------------------------------
             //! set function name
-            void func_name(const String &n);
+            void func_name(const string &n);
 
             //-----------------------------------------------------------------
             //! get description
-            String description() const;
+            string description() const;
 
             //-----------------------------------------------------------------
             //! set description
-            void description(const String &n);
+            void description(const string &n);
            
             //-----------------------------------------------------------------
             //! get major message
-            String major_message() const;
+            string major_message() const;
 
             //-----------------------------------------------------------------
             //! get minor message
-            String minor_message() const;
+            string minor_message() const;
            
             //-----------------------------------------------------------------
             //! ouput stream operator

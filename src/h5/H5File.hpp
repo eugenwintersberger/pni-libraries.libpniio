@@ -88,7 +88,7 @@ namespace h5{
             \param ro if true file will be in read only mode
             \return instance of H5File
             */
-            static H5File open_file(const String &n,bool ro=true);
+            static H5File open_file(const string &n,bool ro=true);
 
             //-----------------------------------------------------------------
             /*! 
@@ -106,7 +106,7 @@ namespace h5{
             \param ssize split size
             \return instance of H5File
             */
-            static H5File create_file(const String &n,bool ow=false,
+            static H5File create_file(const string &n,bool ow=false,
                                       ssize_t ssize=0);
 
             //====================misc methods=================================
@@ -123,15 +123,15 @@ namespace h5{
 
             //-----------------------------------------------------------------
             //! obtain the path of the file
-            virtual String path() const;
+            virtual string path() const;
 
             //-----------------------------------------------------------------
             //! obtain the base part of the files path
-            virtual String base() const;
+            virtual string base() const;
 
             //-----------------------------------------------------------------
             //! obtain the name of the file (path without base)
-            virtual String name() const;
+            virtual string name() const;
 
             //-----------------------------------------------------------------
             /*!

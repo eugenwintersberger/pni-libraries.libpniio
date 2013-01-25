@@ -22,7 +22,7 @@
  *      Author: Eugen Wintersberger
  */
 
-#include <pni/core/Exceptions.hpp>
+#include <pni/core/exceptions.hpp>
 extern "C"{
 #include <hdf5.h>
 }
@@ -94,12 +94,12 @@ namespace h5{
         buffer_size = H5Eget_class_name(id,NULL,1)+1;
         ptr = new char[buffer_size];
         if(!ptr)
-            throw MemoryAllocationError(EXCEPTION_RECORD, 
+            throw memory_allocation_error(EXCEPTION_RECORD, 
                                         "Memory allocation failed!");
 
         //obtain error class
         H5Eget_class_name(id,ptr,buffer_size);
-        _class_name = String(ptr);
+        _class_name = string(ptr);
         //free memory
         if(ptr) delete [] ptr;
     }
@@ -126,12 +126,12 @@ namespace h5{
             //memory allocation
             ptr = new char[buffer_size+1];
             if(!ptr)
-                throw MemoryAllocationError(EXCEPTION_RECORD, 
+                throw memory_allocation_error(EXCEPTION_RECORD, 
                                             "Memory allocation failed!");
 
             //read error message
             H5Eget_msg(v,&msg_type,ptr,buffer_size+1);
-            _major_message = String(ptr);
+            _major_message = string(ptr);
 
             //free memory
             if(ptr) delete [] ptr;
@@ -161,12 +161,12 @@ namespace h5{
             //memory allocation
             ptr = new char[buffer_size+1];
             if(!ptr)
-                throw MemoryAllocationError(EXCEPTION_RECORD, 
+                throw memory_allocation_error(EXCEPTION_RECORD, 
                                             "Memory allocation failed!");
 
             //read minor number
             H5Eget_msg(v,&msg_type,ptr,buffer_size+1);
-            _minor_message = String(ptr);
+            _minor_message = string(ptr);
 
             //free memory	
             if(ptr) delete [] ptr;	
@@ -175,51 +175,51 @@ namespace h5{
     }
 
     //--------------------------------------------------------------------------
-    String H5Error::file_name() const
+    string H5Error::file_name() const
     {
         return _file_name;
     }
 
     //--------------------------------------------------------------------------
-    void H5Error::file_name(const String &n)
+    void H5Error::file_name(const string &n)
     {
         _file_name = n;
     }
 
     //--------------------------------------------------------------------------
-    String H5Error::func_name() const
+    string H5Error::func_name() const
     {
         return _func_name;
     }
 
     //--------------------------------------------------------------------------
-    void H5Error::func_name(const String &n)
+    void H5Error::func_name(const string &n)
     {
         _func_name = n;
     }
 
     //--------------------------------------------------------------------------
-    String H5Error::description() const
+    string H5Error::description() const
     {
         return _description;
     }
 
     //--------------------------------------------------------------------------
-    void H5Error::description(const String &n)
+    void H5Error::description(const string &n)
     {
         _description = n;
     }
 
 
     //--------------------------------------------------------------------------
-    String H5Error::major_message() const
+    string H5Error::major_message() const
     {
         return _major_message;
     }
 
 
     //--------------------------------------------------------------------------
-    String H5Error::minor_message() const
+    string H5Error::minor_message() const
     {
         return _minor_message;
     }

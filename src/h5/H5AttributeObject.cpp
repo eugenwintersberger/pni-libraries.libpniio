@@ -119,7 +119,7 @@ namespace h5{
 
     //=======implementation of attribute management methods====================
     //implementation of the attribute open method
-    H5Attribute H5AttributeObject::attr(const String &n) const 
+    H5Attribute H5AttributeObject::attr(const string &n) const 
     {
         if(H5Aexists(id(),n.c_str())<=0)
         {
@@ -150,7 +150,7 @@ namespace h5{
             std::stringstream ss;
             ss<<"Index ("<<i<<") exceeds number of attributes ("<<nattr();
             ss<<" on object ["<<name()<<"]!";
-            throw IndexError(EXCEPTION_RECORD,ss.str());
+            throw index_error(EXCEPTION_RECORD,ss.str());
         }
 
         hid_t aid = H5Aopen_by_idx(id(),".",H5_INDEX_NAME,
@@ -178,7 +178,7 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    bool H5AttributeObject::has_attr(const String &n) const
+    bool H5AttributeObject::has_attr(const string &n) const
     {
         htri_t ret = H5Aexists(id(),n.c_str());
         if(ret >0 ) return true;
@@ -193,7 +193,7 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    void H5AttributeObject::del_attr(const String &n) const
+    void H5AttributeObject::del_attr(const string &n) const
     {
         herr_t err = H5Adelete(id(),n.c_str());
         if(err < 0)

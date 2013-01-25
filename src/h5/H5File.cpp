@@ -119,20 +119,20 @@ namespace h5{
     }
     
     //-------------------------------------------------------------------------
-    H5File H5File::open_file(const String &n,bool ro)
+    H5File H5File::open_file(const string &n,bool ro)
     {
         hid_t fid;
         
         //check if the file is a valid HDF5 file
         if(!H5Fis_hdf5(n.c_str()))
             throw H5FileError(EXCEPTION_RECORD, 
-                  "File ["+String(n)+"] is not an HDF5 file!");
+                  "File ["+string(n)+"] is not an HDF5 file!");
 
         hid_t acc_plist = H5Pcreate(H5P_FILE_ACCESS);
         if(acc_plist<0)
             throw H5PropertyListError(EXCEPTION_RECORD, 
                   "Cannot create file access property list for file "
-                  "["+String(n)+"]!");
+                  "["+string(n)+"]!");
 
         //open the file in the appropriate mode
         if(ro)
@@ -142,7 +142,7 @@ namespace h5{
             {
                 H5Pclose(acc_plist);
                 throw H5FileError(EXCEPTION_RECORD, 
-                      "Error opening file "+String(n)+" in read only mode!");
+                      "Error opening file "+string(n)+" in read only mode!");
             }
         }
         else
@@ -152,7 +152,7 @@ namespace h5{
             {
                 H5Pclose(acc_plist);
                 throw H5FileError(EXCEPTION_RECORD,
-                      "Error opening file "+ String(n)+" in read/write mode!"); 
+                      "Error opening file "+ string(n)+" in read/write mode!"); 
             }
         }
 
@@ -165,7 +165,7 @@ namespace h5{
 
 
     //-------------------------------------------------------------------------
-    H5File H5File::create_file(const String &n,bool overwrite,ssize_t ssize)
+    H5File H5File::create_file(const string &n,bool overwrite,ssize_t ssize)
     {
         hid_t fid;
 
@@ -174,13 +174,13 @@ namespace h5{
         if(create_plist<0)
             throw H5PropertyListError(EXCEPTION_RECORD, 
                   "Cannot create file creation property list for file "
-                  "["+String(n)+"]!");
+                  "["+string(n)+"]!");
 
         hid_t acc_plist = H5Pcreate(H5P_FILE_ACCESS);
         if(acc_plist<0)
             throw H5PropertyListError(EXCEPTION_RECORD, 
                   "Cannot create file access property list for file "
-                  "["+String(n)+"]!");
+                  "["+string(n)+"]!");
 
         if(ssize > 0)
             //enable splitting
@@ -194,7 +194,7 @@ namespace h5{
                 H5Pclose(acc_plist);
                 H5Pclose(create_plist);
                 H5FileError error(EXCEPTION_RECORD,
-                "Error create file "+String(n)+" in overwrite mode!");
+                "Error create file "+string(n)+" in overwrite mode!");
                 std::cerr<<error<<std::endl;
                 throw error;
             }
@@ -207,7 +207,7 @@ namespace h5{
                 H5Pclose(acc_plist);
                 H5Pclose(create_plist);
                 H5FileError error(EXCEPTION_RECORD,
-                "Error create file "+String(n)+" file most probably already "
+                "Error create file "+string(n)+" file most probably already "
                 "exists - use overwrite!");
                 std::cerr<<error<<std::endl;
                 throw error;
@@ -223,8 +223,8 @@ namespace h5{
         std::ostringstream vstring;
         vstring<<major<<"."<<minor<<"."<<rel;
 
-        H5Attribute a = f.attr<String>("HDF5_version");
-        String version(vstring.str());
+        H5Attribute a = f.attr<string>("HDF5_version");
+        string version(vstring.str());
         a.write(&version);
         a.close();
 
@@ -242,9 +242,9 @@ namespace h5{
     }
     
     //-------------------------------------------------------------------------
-    String H5File::path() const 
+    string H5File::path() const 
     {
-        DBuffer<char> buffer;
+        dbuffer<char> buffer;
 
         if(is_valid())
         {
@@ -254,36 +254,36 @@ namespace h5{
             buffer.allocate(bsize);
 
             H5Fget_name(id(),const_cast<char *>(buffer.ptr()),bsize);
-            String name(buffer.ptr());
+            string name(buffer.ptr());
             return name;
         }
 
-        return String("");
+        return string("");
     }
 
     //-------------------------------------------------------------------------
-    String H5File::base() const
+    string H5File::base() const
     {
-        String p(H5File::path());
+        string p(H5File::path());
 
         
         //need to extract the the name information from the path
         size_t lpos = p.find_last_of("/");
-        String base = "";
-        if(lpos != p.npos) base = String(p,0,lpos+1);
+        string base = "";
+        if(lpos != p.npos) base = string(p,0,lpos+1);
 
         return base;
     }
 
     //-------------------------------------------------------------------------
-    String H5File::name() const
+    string H5File::name() const
     {
-        String p(H5File::path());
+        string p(H5File::path());
 
         //need to extract the the name information from the path
         size_t lpos = p.find_last_of("/");
-        String name = p;
-        if(lpos != p.npos) name = String(p,lpos+1,p.size()-lpos+1);
+        string name = p;
+        if(lpos != p.npos) name = string(p,lpos+1,p.size()-lpos+1);
 
         return name;
     }

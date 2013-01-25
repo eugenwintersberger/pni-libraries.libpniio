@@ -27,8 +27,8 @@
 
 #include <sstream>
 #include <algorithm>
-#include <pni/core/DBuffer.hpp>
-#include <pni/core/Array.hpp>
+#include <pni/core/dbuffer.hpp>
+#include <pni/core/arrays.hpp>
 
 using namespace pni::core;
 
@@ -65,9 +65,9 @@ namespace h5 {
     {
         private:
             //! maximum number of elements dimensions
-            DBuffer<hsize_t> _maxdims; 
+            dbuffer<hsize_t> _maxdims; 
             //! number of elements 
-            DBuffer<hsize_t> _dims;    
+            dbuffer<hsize_t> _dims;    
 
             //-----------------------------------------------------------------
             /*!
@@ -131,7 +131,7 @@ namespace h5 {
             std::list<size_t> shape{4,5,19};
             H5Dataspace space(shape);
             \endcode
-            \throws MemoryAllocationError if buffer allocation fails
+            \throws memory_allocation_error if buffer allocation fails
             \throws H5DataSpaceError if setup of the dataspace fails
             \tparam CTYPE container type for the shape
             \param s instance of CTYPE with the shape
@@ -161,8 +161,8 @@ namespace h5 {
             H5Dataspace space(shape,mshape);
             \endcode
 
-            \throws MemoryAllocationError if buffer allocation fails
-            \throws ShapeMissmatchError if the two containers have a different
+            \throws memory_allocation_error if buffer allocation fails
+            \throws shape_missmatch_error if the two containers have a different
             size and thus represent different ranks
             \throws H5DataSpaceError if setup of the dataspace fails
 
@@ -186,7 +186,7 @@ namespace h5 {
                     std::stringstream ss;
                     ss<<"Rank of actual shape ("<<s.size()<<") and of ";
                     ss<<"maximum shape ("<<ms.size()<<") do not match!";
-                    throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
+                    throw shape_missmatch_error(EXCEPTION_RECORD,ss.str());
                 }
 
                 std::copy(ms.begin(),ms.end(),_maxdims.begin());
@@ -208,7 +208,7 @@ namespace h5 {
             H5Dataspace space({1,2,3});
             \endcode
 
-            \throws MemoryAllocationError if buffer allocation fails
+            \throws memory_allocation_error if buffer allocation fails
             \throws H5DataSpaceError if data-space creation fails
 
             \param list initializer list
@@ -223,8 +223,8 @@ namespace h5 {
             Create a fixed size dataspace from two initializer lists. The
             created dataspace is a simple dataspace in HDF5 terminilogy.
 
-            \throws MemoryAllocationError if buffer allocation fails
-            \throws ShapeMissmatchError if the two lists are of different size
+            \throws memory_allocation_error if buffer allocation fails
+            \throws shape_missmatch_error if the two lists are of different size
             \throws H5DataSpaceError if dataspace setup fails
 
             \param dlist initializer list with actual shape values
@@ -272,7 +272,7 @@ namespace h5 {
             \sa CTYPE shape() const
             \sa void shape(CTYPE &c) const
             */
-            const DBuffer<hsize_t> &shape() const { return _dims; }
+            const dbuffer<hsize_t> &shape() const { return _dims; }
 
             //-----------------------------------------------------------------
             /*! 
@@ -317,7 +317,7 @@ namespace h5 {
             it has the appropriate size. If this is not the case an exception
             will be thrown. Since no memory must be allocated this method should
             be sufficiently quite fast.
-            \throw ShapeMissmatchError if size of container does not match the
+            \throw shape_missmatch_error if size of container does not match the
             rank of the dataspace
             \tparam CTYPE type of the container
             \param c reference to the container
@@ -329,7 +329,7 @@ namespace h5 {
                     std::stringstream ss;
                     ss<<"Container size ("<<c.size()<<") does not match the ";
                     ss<<"dataspace rank ("<<rank()<<")!";
-                    throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
+                    throw shape_missmatch_error(EXCEPTION_RECORD,ss.str());
                 }
 
                 std::copy(this->shape().begin(),this->shape().end(),c.begin());
@@ -343,7 +343,7 @@ namespace h5 {
             \return shape object 
              
             */
-            const DBuffer<hsize_t> &maxshape() const { return _maxdims; }
+            const dbuffer<hsize_t> &maxshape() const { return _maxdims; }
 
             //----------------------------------------------------------------
             /*!
@@ -380,7 +380,7 @@ namespace h5 {
             \endcode
             The method assumes that the container is of appropriate size. If
             this is not the case an exception will be thrown.
-            \throw ShapeMissmatchError if container size does not match the rank
+            \throw shape_missmatch_error if container size does not match the rank
             of the dataspace
             \tparam CTYPE container type
             \param c reference to container instance
@@ -392,7 +392,7 @@ namespace h5 {
                     std::stringstream ss;
                     ss<<"Container size ("<<c.size()<<") does not match the ";
                     ss<<"dataspace rank ("<<rank()<<")!";
-                    throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
+                    throw shape_missmatch_error(EXCEPTION_RECORD,ss.str());
                 }
 
                 std::copy(this->shape().begin(),this->shape().end(),c.begin());
@@ -413,7 +413,7 @@ namespace h5 {
             Returns the number of elements along dimension i. If the 
             dataspace is scalar 0 is returned independent of the value 
             of i.
-            \throws IndexError if i exceeds the dataspace rank
+            \throws index_error if i exceeds the dataspace rank
             \param i dimension index
             \return number of elements along i */
             size_t dim(size_t i) const;
@@ -424,7 +424,7 @@ namespace h5 {
             Returns the maximum number of dimension along dimension i. 
             If the dataspace is scalar 0 is returned independent of 
             the value of i.
-            \throws IndexError if i exceeds dataspace rank
+            \throws index_error if i exceeds dataspace rank
             \param i index of dimension
             \return maximum number of elements along dimension i */
             size_t max_dim(size_t i) const;
@@ -442,7 +442,7 @@ namespace h5 {
             /*! \brief number of elements
             
             Returns the number of elements along dimension i.
-            \throws IndexError if i exceeds dataspace rank
+            \throws index_error if i exceeds dataspace rank
             \param i dimension index
             \return number of elements along i */
             size_t operator[](size_t i) const;
@@ -493,8 +493,8 @@ namespace h5 {
             Using such a dataspace for dataset construction will lead to an
             resizeable dataset.
 
-            \throws MemoryAllocationError if buffer allocation fails
-            \throws ShapeMissmatchError if the ranks of the two shapes do not match
+            \throws memory_allocation_error if buffer allocation fails
+            \throws shape_missmatch_error if the ranks of the two shapes do not match
             \throws H5DataSpaceError if dataspace setup fails
 
             \param s initial shape of the dataspace
@@ -508,7 +508,7 @@ namespace h5 {
                     std::stringstream ss;
                     ss<<"Rank of actual shape ("<<s.size()<<") and of ";
                     ss<<"maximum shape ("<<ms.size()<<") do not match!";
-                    throw ShapeMissmatchError(EXCEPTION_RECORD,ss.str());
+                    throw shape_missmatch_error(EXCEPTION_RECORD,ss.str());
                 }
 
                 _dims.allocate(s.size());
@@ -528,9 +528,9 @@ namespace h5 {
             reduce typing work.  The rank of the resized dataspace is determined
             by the size of the tow lists. Both lists must be of equal size.
 
-            \throws MemoryAllocationError if buffer allocation fails
+            \throws memory_allocation_error if buffer allocation fails
             \throws H5DataSpaceError if dataspace setup fails
-            \throws ShapeMissmatchError if list sizes are not equal
+            \throws shape_missmatch_error if list sizes are not equal
 
             \param dlist list with actual number of elements
             \param mlist list with maximum number of elements */
@@ -544,7 +544,7 @@ namespace h5 {
             very simple method to enlarge a dataspace along a particular
             dimension. If dim is larger than the rank of the dataspace an
             exception will be thrown.
-            \throws IndexError if dim exceeds rank of dataspace
+            \throws index_error if dim exceeds rank of dataspace
             \param dim dimension along which to grow
             \param ext extend by which to grow */
             void grow(size_t dim=0,size_t ext=1) ;

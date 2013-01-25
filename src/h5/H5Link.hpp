@@ -29,7 +29,7 @@ extern "C"{
 #include <hdf5.h>
 }
 
-#include <pni/core/Types.hpp>
+#include <pni/core/types.hpp>
 
 using namespace pni::core;
 
@@ -63,8 +63,8 @@ namespace h5{
             \param file will hold the file portion of the path
             \param opath will hold the object portion of the path
             */
-            static void __split_path(const String &path,String &file,
-                    String &opath);
+            static void __split_path(const string &path,string &file,
+                    string &opath);
 
             //-----------------------------------------------------------------
             /*! 
@@ -76,9 +76,9 @@ namespace h5{
             \param ref reference object for the link
             \param name name of the new link
             */
-            static void __create_ext_link(const String &file,
-                    const String &opath,const H5Group &ref,
-                    const String &name);
+            static void __create_ext_link(const string &file,
+                    const string &opath,const H5Group &ref,
+                    const string &name);
 
             //-----------------------------------------------------------------
             /*! 
@@ -90,24 +90,24 @@ namespace h5{
             \param ref reference object in the file
             \param n name of the new link
             */
-            static void __create_int_link(const String &opath,
-                    const H5Group &ref,const String &n);
+            static void __create_int_link(const string &opath,
+                    const H5Group &ref,const string &n);
         public:
 
             //-----------------------------------------------------------------
             //! create a link
-            static void create(const String &s,const H5Group &ref,
-                    const String &name);
+            static void create(const string &s,const H5Group &ref,
+                    const string &name);
 
             //-----------------------------------------------------------------
             //! create a link from a group object
             static void create(const H5Group &g,const H5Group &ref,
-                    const String &name);
+                    const string &name);
 
             //-----------------------------------------------------------------
             //! create a link from a dataset object
             static void create(const H5Dataset &d,const H5Group &ref,
-                    const String &name);
+                    const string &name);
 
     };
 

@@ -28,7 +28,7 @@ extern "C"{
 #include <hdf5.h>
 }
 
-#include <pni/core/Types.hpp>
+#include <pni/core/types.hpp>
 
 using namespace pni::core;
 
@@ -47,11 +47,11 @@ namespace h5 {
     {
     private:
         //! major version number of the HDF5 library
-        UInt32 _major_version_number;
+        uint32 _major_version_number;
         //! minor version number of the HDF5 library
-        UInt32 _minor_version_number;
+        uint32 _minor_version_number;
         //! release version of the HDF5 library
-        UInt32 _release_number;       
+        uint32 _release_number;       
 
         bool _verbose;   //!< verbose flag
 
@@ -71,7 +71,7 @@ namespace h5 {
         \<major number\>.\<minor number\>.\<release number\>.
         \return version string
         */
-        String version_string() const;
+        string version_string() const;
 
         //---------------------------------------------------------------------
         /*! \brief get major number
@@ -80,7 +80,7 @@ namespace h5 {
         unsigned integer.
         \return major version number
         */
-        UInt32 major_number() const;
+        uint32 major_number() const;
 
         //---------------------------------------------------------------------
         /*! \brief get minor number
@@ -89,7 +89,7 @@ namespace h5 {
         unsigned integer
         \return minor version number
         */
-        UInt32 minor_number() const;
+        uint32 minor_number() const;
 
         //---------------------------------------------------------------------
         /*! \brief get release number
@@ -98,7 +98,7 @@ namespace h5 {
         integer.
         \return release version number
         */
-        UInt32 release_number() const;
+        uint32 release_number() const;
 
         //---------------------------------------------------------------------
         /*! \brief set verbosity flag

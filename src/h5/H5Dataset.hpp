@@ -27,9 +27,9 @@
 #pragma once
 
 #include <sstream>
-#include <pni/core/Types.hpp>
-#include <pni/core/Slice.hpp>
-#include <pni/core/ArraySelection.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/slice.hpp>
+#include <pni/core/array_selection.hpp>
 
 using namespace pni::core;
 
@@ -82,7 +82,7 @@ namespace h5{
             \throws ShapeMissmatchError if dataset is not scalar
             \param rec exception record
             */
-            void __throw_if_not_scalar(const ExceptionRecord &rec) const;
+            void __throw_if_not_scalar(const exception_record &rec) const;
 
 
         public:
@@ -134,7 +134,7 @@ namespace h5{
             \param t id of the data type
             \param s shape of the dataset
             */
-            explicit H5Dataset(const String &n, 
+            explicit H5Dataset(const string &n, 
                                const H5Group &g,
                                const H5Datatype &t, 
                                const H5Dataspace &s);
@@ -160,7 +160,7 @@ namespace h5{
             const H5Datatype &t, const H5Dataspace &s,const Shape &cs)
             */
             template<template<typename ...> class CTYPE,typename ...OTS>
-            explicit H5Dataset(const String &n,
+            explicit H5Dataset(const string &n,
                                const H5Group &g,
                                const H5Datatype &t, 
                                const H5Dataspace &s,
@@ -176,7 +176,7 @@ namespace h5{
                 if(cs.size() != 0)
                 {
                     H5Pset_layout(cpl,H5D_CHUNKED);
-                    DBuffer<hsize_t> cdims(cs.size());
+                    dbuffer<hsize_t> cdims(cs.size());
                     std::copy(cs.begin(),cs.end(),cdims.begin());
                     H5Pset_chunk(cpl,cs.size(),cdims.ptr());
                 }
@@ -218,7 +218,7 @@ namespace h5{
             const H5Datatype &t, const H5Dataspace &s,const Shape &cs)
             */
             template<template<typename ...> class CTYPE,typename ...OTS>
-            explicit H5Dataset(const String &n,
+            explicit H5Dataset(const string &n,
                                const H5Group &g,
                                const H5Datatype &t, 
                                const H5Dataspace &s,
@@ -235,7 +235,7 @@ namespace h5{
                 if(cs.size() != 0)
                 {
                     H5Pset_layout(cpl,H5D_CHUNKED);
-                    DBuffer<hsize_t> cdims(cs.size());
+                    dbuffer<hsize_t> cdims(cs.size());
                     std::copy(cs.begin(),cs.end(),cdims.begin());
                     H5Pset_chunk(cpl,cs.size(),cdims.ptr());
                 }
@@ -289,7 +289,7 @@ namespace h5{
             datatype to use and a shape object to describe the dataspace. The
             dataspaces created using this method are infinitely extensible in
             along all dimensions.
-            \throws ShapeMissmatchError if chunk and field shape do not have the
+            \throws shape_missmatch_error if chunk and field shape do not have the
             same rank
             \throws H5DatasetError in case of errors
             \param n name of the dataset
@@ -299,7 +299,7 @@ namespace h5{
             \return H5Dataset object
             */
             template<typename T,typename SCTYPE,typename CSCTYPE>
-            static H5Dataset create(const String &n,const H5Group &g,
+            static H5Dataset create(const string &n,const H5Group &g,
                                     const SCTYPE &s,const CSCTYPE &cs)
             {
                 //create the datatype
@@ -334,7 +334,7 @@ namespace h5{
                         estr<<v<<" ";
                     }
                     estr<<std::endl;
-                    throw ShapeMissmatchError(EXCEPTION_RECORD,estr.str());
+                    throw shape_missmatch_error(EXCEPTION_RECORD,estr.str());
                 }
 
                 //create the container with the maximum number of elements
@@ -357,7 +357,7 @@ namespace h5{
             &n,const H5Group &g,const Shape &s, const Shape &cs) despite the
             fact that it requires an additional argument describing the filter.
             \throws H5DatasetError in case of errors
-            \throws ShapeMissmatchError if chunk and dataset shape do not have
+            \throws shape_missmatch_error if chunk and dataset shape do not have
             equal rank
             \param n name of the dataset
             \param g group below which the dataset will be created
@@ -367,7 +367,7 @@ namespace h5{
             \return H5Dataset instance
             */
             template<typename T,typename SCTYPE,typename CSCTYPE>
-            static H5Dataset create(const String &n,const H5Group &g,
+            static H5Dataset create(const string &n,const H5Group &g,
                                     const SCTYPE &s,const CSCTYPE &cs,
                                     const H5Filter &filter)
             {
@@ -403,7 +403,7 @@ namespace h5{
                         estr<<v<<" ";
                     }
                     estr<<std::endl;
-                    throw ShapeMissmatchError(EXCEPTION_RECORD,estr.str());
+                    throw shape_missmatch_error(EXCEPTION_RECORD,estr.str());
                 }
 
                 //create the container with the maximum number of elements
@@ -472,10 +472,10 @@ namespace h5{
             template<typename CTYPE> void resize(const CTYPE &s)
             {
                 if(s.size() != _fspace.rank())
-                    throw ShapeMissmatchError(EXCEPTION_RECORD,
+                    throw shape_missmatch_error(EXCEPTION_RECORD,
                           "New shape does not have the same rank!");
 
-                DBuffer<hsize_t> b(s.size());
+                dbuffer<hsize_t> b(s.size());
                 std::copy(s.begin(),s.end(),b.begin());
 
                 herr_t err = H5Dset_extent(id(),b.ptr());
@@ -550,23 +550,23 @@ namespace h5{
             Datatype ID of the dataset. 
             \return type id of the datatype of the dataset
             */
-            TypeID type_id() const { return __obtain_datatype().type_id(); }
+            type_id_t type_id() const { return __obtain_datatype().type_id(); }
 
 
             //-----------------------------------------------------------------
             //! apply a selection
             template<typename CTYPE> void apply_selection(const CTYPE &s) 
             {
-                std::vector<Slice> sel(s.size());
+                std::vector<slice> sel(s.size());
                 std::copy(s.begin(),s.end(),sel.begin());
 
                 //create an array selection
-                ArraySelection asel = ArraySelection::create(sel);
+                array_selection asel = array_selection::create(sel);
 
                 //create buffers
-                auto offset = asel.offset<DBuffer<hsize_t> >();
-                auto stride = asel.stride<DBuffer<hsize_t> >();
-                auto count = asel.full_shape<DBuffer<hsize_t> >();
+                auto offset = asel.offset<dbuffer<hsize_t> >();
+                auto stride = asel.stride<dbuffer<hsize_t> >();
+                auto count = asel.full_shape<dbuffer<hsize_t> >();
 
                 //apply the selection
                 herr_t err = H5Sselect_hyperslab(_fspace.id(),
@@ -621,7 +621,7 @@ namespace h5{
             Read a single data value from the dataset. In order to succeed the
             dataset must be a scalar dataset or the total size of the dataset
             must be 1.
-            \throws ShapeMissmatchError if dataset is not scalar or the size of
+            \throws shape_missmatch_error if dataset is not scalar or the size of
             the dataset is not 1
             \throws H5DataSetError in all other error cases
             \param ptr pointer to memory where the data should be stored.
@@ -653,11 +653,11 @@ namespace h5{
             Read data to a String variable. This is a specialized version of the
             template method read(T &value). It is necessary since strings are
             handled slightly different from other objects.
-            \throws ShapeMissmatchError if the dataset is not scalar
+            \throws shape_missmatch_error if the dataset is not scalar
             \throws H5DataSetError in case of other IO errors
             \param sptr pointer to String objects
             */
-            void read(String *sptr) const;
+            void read(string *sptr) const;
 
             //===============writing data methods==============================
             /*! 
@@ -666,7 +666,7 @@ namespace h5{
             This method writes a single value of a particular type reading the
             data from variable value. This method works only if the dataspace of
             the dataset is scalar or the total dataspace size is 1.
-            \throws ShapeMissmatchError if the dataspace is not scalar
+            \throws shape_missmatch_error if the dataspace is not scalar
             \throws H5DataSetError in case of other errors
             \param ptr pointer to the memory region from which to read
             */
@@ -688,11 +688,11 @@ namespace h5{
             \brief write a String value
            
             Write data from a String variable to the dataset.
-            \throws ShapeMissmatchError if the dataset is not scalar
+            \throws shape_missmatch_error if the dataset is not scalar
             \throws H5DataSetError in the case of all other errors
             \param sptr pointer to String objects.
             */
-            void write(const String *sptr) const;
+            void write(const string *sptr) const;
 
             //-----------------------------------------------------------------
             /*! create a new link to this dataset
@@ -701,7 +701,7 @@ namespace h5{
             only a local link can be established.
             \param path name of the new link to this object
             */
-            void link(const String &path) const;
+            void link(const string &path) const;
 
             //-----------------------------------------------------------------
             /*! 
@@ -713,7 +713,7 @@ namespace h5{
             \param g group where the link should be placed
             \param n name of the new link
             */
-            void link(const H5Group &g,const String &n) const;
+            void link(const H5Group &g,const string &n) const;
 
             //-----------------------------------------------------------------
             /*!

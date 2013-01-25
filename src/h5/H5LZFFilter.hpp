@@ -30,7 +30,7 @@ extern "C"{
 #include <hdf5.h>
 }
 
-#include <pni/core/Types.hpp>
+#include <pni/core/types.hpp>
 
 #include "H5Filter.hpp"
 

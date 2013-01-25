@@ -25,7 +25,7 @@
 
 #pragma once
 
-#include <pni/core/Types.hpp>
+#include <pni/core/types.hpp>
 
 extern "C"{
 #include <hdf5.h>
@@ -58,21 +58,21 @@ namespace h5{
 
             //! \brief structure for 32Bit complex number
             typedef struct {
-                Float32 r;   //!< real part
-                Float32 i;   //!< imaginary part
+                float32 r;   //!< real part
+                float32 i;   //!< imaginary part
 
             } __struct_complex_32;  //!< C structure for a 32Bit complex type
 
             //! \brief structure for 64Bit complex numbers
             typedef struct {
-                Float64 r;   //!< real part
-                Float64 i;   //!< imaginary part
+                float64 r;   //!< real part
+                float64 i;   //!< imaginary part
             } __struct_complex_64;  //!< C structure for a 64Bit complex type
 
             //! \brief structure for 128Bit complex numbers
             typedef struct {
-                Float128 r;  //!< real part
-                Float128 i;  //!< imaginary part
+                float128 r;  //!< real part
+                float128 i;  //!< imaginary part
             } __struct_complex_128; //!< C structure for a 128Bit complex type
 
             //==========private static types provided by the factory===========
@@ -134,7 +134,7 @@ namespace h5{
             \throws H5DataTypeError if type creation was unsuccessful
             \return instance of H5Datatype
             */
-            template<TypeID ID> static H5Datatype create_type();
+            template<type_id_t ID> static H5Datatype create_type();
 
             //-----------------------------------------------------------------
             /*! \brief get data type 
@@ -153,7 +153,7 @@ namespace h5{
             \tparam ID type id of the required type
             \return reference to the corresponding HDF5 data type
             */
-            template<TypeID ID> const H5Datatype &get_type() const;
+            template<type_id_t ID> const H5Datatype &get_type() const;
     };
 
     static H5DatatypeFactory H5TFactory;
