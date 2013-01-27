@@ -27,7 +27,7 @@
 #pragma once
 
 #include <vector>
-#include <pni/core/Slice.hpp>
+#include <pni/core/slice.hpp>
 
 using namespace pni::core;
 
@@ -38,7 +38,7 @@ namespace nx{
     template<typename FTYPE> class NXSelection
     {
         private:
-            std::vector<Slice>  _selection;
+            std::vector<slice>  _selection;
             FTYPE &_field; //!< reference to the original field
 
             void apply_selection() const
@@ -52,7 +52,7 @@ namespace nx{
             }
         public:
             //=================public types====================================
-            typedef std::vector<Slice> selection_type;
+            typedef std::vector<slice> selection_type;
             //=============constructors and destructor=========================
             //! default constructor
             NXSelection(selection_type sel,FTYPE &field):
@@ -109,7 +109,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! get type id
-            TypeID type_id() const
+            type_id_t type_id() const
             {
                 return _field.type_id();
             }

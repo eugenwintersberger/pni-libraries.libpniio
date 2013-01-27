@@ -25,8 +25,8 @@
 
 #pragma once
 
-#include<pni/core/Types.hpp>
-#include<pni/core/TypeIDMap.hpp>
+#include<pni/core/types.hpp>
+#include<pni/core/type_id_map.hpp>
 
 #include "NXField.hpp"
 #include "NXGroup.hpp"
@@ -61,7 +61,7 @@ namespace nx{
     auto f = create_field(g,"test3",TypeID::UINT16,s,cs,deflate);
     \endcode
    
-    \throws TypeError if type ID does not exist
+    \throws type_error if type ID does not exist
     \param g group objecct in below which to create the field
     \param fname name of the field 
     \param tid type ID of the field
@@ -73,41 +73,41 @@ namespace nx{
     create_field(const GTYPE &g,const String &fname,const TypeID &tid,
                  ATYPES ...args)
     {
-        if(tid == TypeID::UINT8)
-            return g.create_field<UInt8>(fname,args...);
-        if(tid == TypeID::INT8)
-            return g.create_field<Int8>(fname,args...);
-        if(tid == TypeID::UINT16)
-            return g.create_field<UInt16>(fname,args...);
-        if(tid == TypeID::INT16)
-            return g.create_field<Int16>(fname,args...);
-        if(tid == TypeID::UINT32)
-            return g.create_field<UInt32>(fname,args...);
-        if(tid == TypeID::INT32)
-            return g.create_field<Int32>(fname,args...);
-        if(tid == TypeID::UINT64)
-            return g.create_field<UInt64>(fname,args...);
-        if(tid == TypeID::INT64)
-            return g.create_field<Int64>(fname,args...);
-        if(tid == TypeID::FLOAT32)
-            return g.create_field<Float32>(fname,args...);
-        if(tid == TypeID::FLOAT64)
-            return g.create_field<Float64>(fname,args...);
-        if(tid == TypeID::FLOAT128)
-            return g.create_field<Float128>(fname,args...);
-        if(tid == TypeID::COMPLEX32)
-            return g.create_field<Complex32>(fname,args...);
-        if(tid == TypeID::COMPLEX64)
-            return g.create_field<Complex64>(fname,args...);
-        if(tid == TypeID::COMPLEX128)
-            return g.create_field<Complex128>(fname,args...);
-        if(tid == TypeID::BINARY)
-            return g.create_field<Binary>(fname,args...);
-        if(tid == TypeID::STRING)
-            return g.create_field<String>(fname,args...);   
+        if(tid == type_id_t::UINT8)
+            return g.create_field<uint8>(fname,args...);
+        if(tid == type_id_t::INT8)
+            return g.create_field<int8>(fname,args...);
+        if(tid == type_id_t::UINT16)
+            return g.create_field<uint16>(fname,args...);
+        if(tid == type_id_t::INT16)
+            return g.create_field<int16>(fname,args...);
+        if(tid == type_id_t::UINT32)
+            return g.create_field<uint32>(fname,args...);
+        if(tid == type_id_t::INT32)
+            return g.create_field<int32>(fname,args...);
+        if(tid == type_id_t::UINT64)
+            return g.create_field<uint64>(fname,args...);
+        if(tid == type_id_t::INT64)
+            return g.create_field<int64>(fname,args...);
+        if(tid == type_id_t::FLOAT32)
+            return g.create_field<float32>(fname,args...);
+        if(tid == type_id_t::FLOAT64)
+            return g.create_field<float64>(fname,args...);
+        if(tid == type_id_t::FLOAT128)
+            return g.create_field<float128>(fname,args...);
+        if(tid == type_id_t::COMPLEX32)
+            return g.create_field<complex32>(fname,args...);
+        if(tid == type_id_t::COMPLEX64)
+            return g.create_field<complex64>(fname,args...);
+        if(tid == type_id_t::COMPLEX128)
+            return g.create_field<complex128>(fname,args...);
+        if(tid == type_id_t::BINARY)
+            return g.create_field<binary>(fname,args...);
+        if(tid == type_id_t::STRING)
+            return g.create_field<string>(fname,args...);   
         else
         {
-            throw TypeError(EXCEPTION_RECORD,"Unsupported data type!");
+            throw type_error(EXCEPTION_RECORD,"Unsupported data type!");
         }
 
     }

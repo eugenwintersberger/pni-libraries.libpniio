@@ -2,7 +2,7 @@
 
 
 //-----------------------------------------------------------------------------
-template<> String create_scalar_data<String>()
+template<> string create_scalar_data<string>()
 {
     return "hello world";
 }
@@ -14,9 +14,9 @@ template<> Bool create_scalar_data<Bool>()
 }
 
 //-----------------------------------------------------------------------------
-template<> std::vector<String> create_array_data(size_t n)
+template<> std::vector<string> create_array_data(size_t n)
 {
-    std::vector<String> v;
+    std::vector<string> v;
 
     std::stringstream ss;
     for(size_t i=0;i<n;i++)

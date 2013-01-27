@@ -8,9 +8,6 @@ CPPUNIT_TEST_SUITE_REGISTRATION(H5NamedObjectTest);
 void H5NamedObjectTest::setUp()
 {
     file = H5Fcreate("test.h5",H5F_ACC_TRUNC,H5P_DEFAULT,H5P_DEFAULT);
-
-
-
 }
 
 //-----------------------------------------------------------------------------

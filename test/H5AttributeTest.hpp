@@ -8,7 +8,7 @@ extern "C" {
 #include "common.hpp"
 #include "data.hpp"
 
-#include<pni/core/Array.hpp>
+#include<pni/core/arrays.hpp>
 
 #include "h5/H5File.hpp"
 #include "h5/H5Group.hpp"

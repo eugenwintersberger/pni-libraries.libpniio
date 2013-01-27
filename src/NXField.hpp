@@ -28,11 +28,11 @@
 
 #include <sstream>
 
-#include <pni/core/Types.hpp>
-#include <pni/core/Array.hpp>
-#include <pni/core/SBuffer.hpp>
-#include <pni/core/DBuffer.hpp>
-#include <pni/core/Slice.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
+#include <pni/core/dbuffer.hpp>
+#include <pni/core/sbuffer.hpp>
+#include <pni/core/slice.hpp>
 #include <pni/core/array.hpp>
 
 #include "NXObject.hpp"
@@ -51,11 +51,11 @@ namespace nx{
     {\
         this->_read_buffer(buffer);\
     }\
-    catch(MemoryNotAllocatedError &error)\
+    catch(memory_not_allocated_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(SizeMissmatchError &error)\
+    catch(size_missmatch_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
@@ -69,11 +69,11 @@ namespace nx{
     {\
         this->_write_buffer(b);\
     }\
-    catch(MemoryNotAllocatedError &error)\
+    catch(memory_not_allocated_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(SizeMissmatchError &error)\
+    catch(size_missmatch_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
@@ -87,11 +87,11 @@ namespace nx{
     {\
         this->_read_array(array);\
     }\
-    catch(MemoryNotAllocatedError &error)\
+    catch(memory_not_allocated_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(ShapeMissmatchError &error)\
+    catch(shape_missmatch_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
@@ -105,11 +105,11 @@ namespace nx{
     {\
         this->_write_array(array);\
     }\
-    catch(MemoryNotAllocatedError &error)\
+    catch(memory_not_allocated_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(ShapeMissmatchError &error)\
+    catch(shape_missmatch_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
@@ -208,15 +208,15 @@ namespace nx{
     DArray<UInt32> strip(shape_t{1024});
 
     //selection 1
-    field1(3,Slice(0,1024)).read(strip);
+    field1(3,slice(0,1024)).read(strip);
 
     //selection 2
     DArray<UInt32> block(shape_t{4,6});
-    field2(Slice(3,7),Slice(2,8)).read(block);
+    field2(slice(3,7),slice(2,8)).read(block);
 
     //selection 3
     DArray<UInt32> block2(shape_t{4,5});
-    field3(Slice(2,6),Slice(2,10,2)).read(block2);
+    field3(slice(2,6),slice(2,10,2)).read(block2);
 
     \endcode
     Under the hood the () operator of NXField applies a selection to the
@@ -236,7 +236,7 @@ namespace nx{
             \param fshape field shape
             \return error message
             */
-            static String _shape_missmatch_error_message(const shape_t
+            static string _shape_missmatch_error_message(const shape_t
                     &ashape,const shape_t &fshape) 
             {
                 std::stringstream ss;
@@ -271,8 +271,8 @@ namespace nx{
             /*!
             \brief read data to buffer
 
-            \throws MemoryNotAllocatedError if buffer size is 0
-            \throws SizeMissmatchError if buffer and field size do not match
+            \throws memory_not_allocated_error if buffer size is 0
+            \throws size_missmatch_error if buffer and field size do not match
             \throws NXFieldError in case of any other IO error
             \tparam BTYPE buffer type
             \param b reference to an instance of BTYPE
@@ -281,7 +281,7 @@ namespace nx{
             template<typename BTYPE> void _read_buffer(BTYPE &b) const
             {
                 if(b.size() == 0)
-                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                    throw memory_not_allocated_error(EXCEPTION_RECORD,
                                            "Target buffer not allocated!");
 
                 if(b.size() != this->imp().size())
@@ -289,7 +289,7 @@ namespace nx{
                     std::stringstream ss;
                     ss<<"Buffer size ("<<b.size()<<") and field size (";
                     ss<<this->size()<<") do not match!";
-                    throw SizeMissmatchError(EXCEPTION_RECORD,ss.str());
+                    throw size_missmatch_error(EXCEPTION_RECORD,ss.str());
                 }
                 
                 try
@@ -309,8 +309,8 @@ namespace nx{
             \brief write data from buffer
 
             Write data from a buffer to the file
-            \throws MemoryNotAllocatedError if buffer is not allocated
-            \throws SizeMissmatchError if field and buffer size do not match
+            \throws memory_not_allocated_error if buffer is not allocated
+            \throws size_missmatch_error if field and buffer size do not match
             \throws NXFieldError in case of any other error
             \tparam BTYPE buffer type
             \param b reference to an instance of BTYPE
@@ -318,7 +318,7 @@ namespace nx{
             template<typename BTYPE> void _write_buffer(const BTYPE &b) const
             {
                 if(b.size() == 0)
-                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                    throw memory_not_allocated_error(EXCEPTION_RECORD,
                                      "Source buffer not allocated!");
 
                 if(b.size() != this->size())
@@ -326,7 +326,7 @@ namespace nx{
                     std::stringstream ss;
                     ss<<"Source buffer size ("<<b.size()<<") does not match";
                     ss<<"target field size ("<<this->size()<<")!";
-                    throw SizeMissmatchError(EXCEPTION_RECORD,ss.str());
+                    throw size_missmatch_error(EXCEPTION_RECORD,ss.str());
                 }
 
                 try
@@ -343,8 +343,8 @@ namespace nx{
             /*!
             \brief read data to array
 
-            \throws MemoryNotAllocatedError if array buffer not allocated
-            \throws ShapeMissmatchError if shapes do not match
+            \throws memory_not_allocated_error if array buffer not allocated
+            \throws shape_missmatch_error if shapes do not match
             \throws NXFieldError in case of other errors
             \tparam ATYPE array type
             \param a reference to an instance fo ATYPE
@@ -352,7 +352,7 @@ namespace nx{
             template<typename ATYPE> void _read_array(ATYPE &a) const
             {
                 if(a.size() == 0)
-                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                    throw memory_not_allocated_error(EXCEPTION_RECORD,
                                      "Target array buffer not allocated!");
 
                 auto ashape = a.shape<shape_t>();
@@ -363,7 +363,7 @@ namespace nx{
                     //if array and field have the same rank we need to check the
                     //shape of each of the objects
                     if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
-                        throw ShapeMissmatchError(EXCEPTION_RECORD,
+                        throw shape_missmatch_error(EXCEPTION_RECORD,
                                 _shape_missmatch_error_message(ashape,fshape));
                 }
                 else
@@ -371,7 +371,7 @@ namespace nx{
                     //if the two components are of different size we have to
                     //throw an exception in any case
                     if(this->size() != a.size())
-                        throw ShapeMissmatchError(EXCEPTION_RECORD,
+                        throw shape_missmatch_error(EXCEPTION_RECORD,
                                 _shape_missmatch_error_message(ashape,fshape));
                 }
 
@@ -393,8 +393,8 @@ namespace nx{
             /*!
             \brief write data from array
 
-            \throws MemoryNotAllocatedError if array buffer not allocated
-            \throws ShapeMissmatchError if shapes do not match
+            \throws memory_not_allocated_error if array buffer not allocated
+            \throws shape_missmatch_error if shapes do not match
             \throws NXFieldError in case of other errors
             \tparam ATYPE array type
             \param a reference to an instance fo ATYPE
@@ -402,7 +402,7 @@ namespace nx{
             template<typename ATYPE> void _write_array(ATYPE &a) const
             {
                 if(a.size() == 0)
-                    throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+                    throw memory_not_allocated_error(EXCEPTION_RECORD,
                                      "Source array buffer not allocated!");
 
                 auto ashape = a.shape<shape_t>();
@@ -411,13 +411,13 @@ namespace nx{
                 if(ashape.size() == fshape.size())
                 {
                     if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
-                        throw ShapeMissmatchError(EXCEPTION_RECORD,
+                        throw shape_missmatch_error(EXCEPTION_RECORD,
                                 _shape_missmatch_error_message(ashape,fshape));
                 }
                 else
                 {
                     if(this->size() != a.size())
-                        throw ShapeMissmatchError(EXCEPTION_RECORD,
+                        throw shape_missmatch_error(EXCEPTION_RECORD,
                                _shape_missmatch_error_message(ashape,fshape));
                 }
 
@@ -431,7 +431,7 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            void apply_selection(const std::vector<Slice> &s) 
+            void apply_selection(const std::vector<slice> &s) 
             {
                 this->imp().apply_selection(s);
             }
@@ -540,9 +540,9 @@ namespace nx{
             Return the ID of the data type stored in the field.
             \return data type ID
             */
-            TypeID type_id() const 
+            type_id_t type_id() const 
             {
-                TypeID id = this->imp().type_id(); 
+                type_id_t id = this->imp().type_id(); 
                 return id;
             }
 
@@ -565,7 +565,7 @@ namespace nx{
             Resize the field to a new shape determined by s.  The rank of the
             old and the new shape must coincide otherwise an exception will be
             thrown.
-            \throws ShapeMissmatchError if ranks do not match
+            \throws shape_missmatch_error if ranks do not match
             \throws NXFieldError in case of other errors
             \param s describing the new shape of the field
             */
@@ -575,7 +575,7 @@ namespace nx{
                 {
                     this->imp().resize(s);
                 }
-                catch(ShapeMissmatchError &e)
+                catch(shape_missmatch_error &e)
                 {
                     e.append(EXCEPTION_RECORD); throw e;
                 }
@@ -594,7 +594,7 @@ namespace nx{
             pretty useful in cases where an arbitrary number of points shall be
             stored in a field and their number is not known when the field was
             created.
-            \throws IndexError if e exceeds the rank of the field
+            \throws index_error if e exceeds the rank of the field
             \throws NXFieldError in case of other errors
             \param e index of dimension along which to grow
             \param n number of elements by which to grow
@@ -605,7 +605,7 @@ namespace nx{
                 {
                     this->imp().grow(e,n);
                 }
-                catch(IndexError &e)
+                catch(index_error &e)
                 {
                     e.append(EXCEPTION_RECORD); throw e;
                 }
@@ -656,17 +656,17 @@ namespace nx{
             dataset must be a scalar dataset or the total size of the dataset
             must be 1.
             \code
-            UInt32 scalar;
+            uint32 scalar;
             field.read(scalar);
             \endcode
-            \throws ShapeMissmatchError if dataset is not scalar
+            \throws shape_missmatch_error if dataset is not scalar
             \throws NXFieldError in all other error cases
             \param value variable where to store the data
             */
             template<typename T> void read(T &value) const
             {
                 if(this->imp().size() != 1)
-                    throw ShapeMissmatchError(EXCEPTION_RECORD,
+                    throw shape_missmatch_error(EXCEPTION_RECORD,
                                               "Field is not scalar!");
 
                 try
@@ -690,17 +690,17 @@ namespace nx{
             object is not allocated.
 
             \code
-            SBuffer<UInt16> buffer(field.size());
+            sbuffer<uint16> buffer(field.size());
             field.read(buffer);
 
             \endcode
-            \throws MemoryAccessError if the buffer is not allocated
-            \throws SizeMissmatchError if sizes do not match
+            \throws memory_not_allocated_error if the buffer is not allocated
+            \throws size_missmatch_buffer if sizes do not match
             \throws NXFieldError in all other cases
             \param buffer buffer where to store data
             */
             template<typename T,size_t SIZE> 
-                void read(SBuffer<T,SIZE> &buffer) const
+                void read(sbuffer<T,SIZE> &buffer) const
             {
                 READ_BUFFER(buffer);
             }
@@ -709,12 +709,12 @@ namespace nx{
             /*!
             \brief read data to a reference buffer
 
-            \throws MemoryNotAllocatedError if buffer not allocated
-            \throws SizeMissmatchError if buffer and field size do not match
+            \throws memory_not_allocated_error if buffer not allocated
+            \throws size_missmatch_error if buffer and field size do not match
             \throws NXFieldError in case of any other errors
             \param buffer reference to an RBuffer instance
             */
-            template<typename T> void read(RBuffer<T> &buffer) const
+            template<typename T> void read(rbuffer<T> &buffer) const
             {
                 READ_BUFFER(buffer);
             }
@@ -723,13 +723,13 @@ namespace nx{
             /*!
             \brief read data to a dynamic buffer
 
-            \throws MemoryNotAllocatedError if buffer not allocated
-            \throws SizeMissmatchError if buffer and field size do not match
+            \throws memory_not_allocated_error if buffer not allocated
+            \throws size_missmatch_error if buffer and field size do not match
             \throws NXFieldError in case of any other errors
             \param buffer reference to an RBuffer instance
             */
             template<typename T,typename ALLOCATOR>
-                void read(DBuffer<T,ALLOCATOR> &buffer) const
+                void read(dbuffer<T,ALLOCATOR> &buffer) const
             {
                 READ_BUFFER(buffer);
             }
@@ -744,18 +744,18 @@ namespace nx{
             of the field.
             
             \code
-            DArray<Float32> a(field.shape<shape_t>());
+            darray<float32> a(field.shape<shape_t>());
             field.read(a);
             \endcode
 
-            \throws ShapeMissmatchError if field and array-shape do not
+            \throws shape_missmatch_error if field and array-shape do not
             match
-            \throws MemoryAccessError if array buffer not allocated
+            \throws memory_not_allocated_error if array buffer not allocated
             \throws NXFieldError in case of all other errors.
             \param array Array instance where to store the data
             */
             template<typename T,typename STORAGE,typename IMAP>
-                void read(DArray<T,STORAGE,IMAP> &array) const
+                void read(darray<T,STORAGE,IMAP> &array) const
             {
                 READ_ARRAY(array);
             }
@@ -766,14 +766,14 @@ namespace nx{
 
             Copy the field data to a static array. 
 
-            \throws ShapeMissmatchError if field and array-shape do not match
-            \throws MemoryNotAllocatedError if array-buffer is not allocated
+            \throws shape_missmatch_error if field and array-shape do not match
+            \throws memory_not_allocated_error if array-buffer is not allocated
             \throws NXFieldError in acase of any other IO error
             \tparam OTS template arguments for SArray
             \param array  instance of SArray
             */
             template<typename T,size_t ...INDICES>
-                void read(SArray<T,INDICES...> &array) const
+                void read(sarray<T,INDICES...> &array) const
             {
                 READ_ARRAY(array);
             }
@@ -783,8 +783,8 @@ namespace nx{
             \brief read data to a array instance
 
             This method reads data to an array type erasure. 
-            \throws ShapeMissmatchError if field and array-shape do not match
-            \throws MemoryNotAllocatedError if array-buffer is not allocated
+            \throws shape_missmatch_error if field and array-shape do not match
+            \throws memory_not_allocated_error if array-buffer is not allocated
             \throws NXFieldError in case of any other IO error
             \param a instance of the array
             */
@@ -794,14 +794,14 @@ namespace nx{
             /*!
             \brief read data to a numeric array
 
-            \throws MemoryNotAllocated if array buffer is not allocated
-            \throws ShapeMissmatchError if array and field shape do not match
+            \throws memory_not_allocated_error if array buffer is not allocated
+            \throws shape_missmatch_error if array and field shape do not match
             \throws NXFieldError in case of any other IO error
-            \tparam OTS template parameters for NumArray template
+            \tparam OTS template parameters for numarray template
             \param array instance of NumArray
             */
             template<typename ATYPE>
-                void read(NumArray<ATYPE> &array) const
+                void read(numarray<ATYPE> &array) const
             {
                 try
                 {
@@ -812,11 +812,11 @@ namespace nx{
                 //we do not need to explicitely release the selections here as
                 //this is already done by the read method when it throw an
                 //exception
-                catch(MemoryNotAllocatedError &error)
+                catch(memory_not_allocated_error &error)
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
-                catch(ShapeMissmatchError &error)
+                catch(shape_missmatch_error &error)
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
@@ -834,18 +834,18 @@ namespace nx{
             succeed only if the field can hold only a single value.
             
             \code
-            Float64 data = 1.2340;
+            float64 data = 1.2340;
             field.write(data);
             \endcode
 
-            \throws ShapeMissmatchError if the dataspace is not scalar
+            \throws shape_missmatch_error if the dataspace is not scalar
             \throws NXFieldError in case of other errors
             \param value value to write
             */
             template<typename T> void write(const T &value) const
             {
                 if(this->imp().size()!=1) 
-                    throw ShapeMissmatchError(EXCEPTION_RECORD,
+                    throw shape_missmatch_error(EXCEPTION_RECORD,
                                               "Field is not scalar!");
 
                 try
@@ -868,7 +868,7 @@ namespace nx{
             Writes a C-style string to disk. This method is a specialization of
             the write(const T &value) template mathod.
 
-            \throws ShapeMissmatchError if the field is not scalar
+            \throws shape_missmatch_error if the field is not scalar
             \throws NXFieldError in case of other errors
             \param value pointer to string data
             */
@@ -876,10 +876,10 @@ namespace nx{
             {
                 try
                 {
-                    String s(value);
+                    string s(value);
                     this->read(s);
                 }
-                catch(ShapeMissmatchError &error)
+                catch(shape_missmatch_error &error)
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
@@ -895,14 +895,14 @@ namespace nx{
             \brief write field from a DBuffer
 
             Write data form a DBuffer instance to the field.
-            \throws MemoryNotAllocatedError if buffer is not allocated
-            \throws SizeMissmatchError if buffer and field size do not match
+            \throws memory_not_allocated_error if buffer is not allocated
+            \throws size_missmatch_error if buffer and field size do not match
             \throws NXFieldError in case of any other IO error
             \tparam OTS template arguments to DBuffer
             \param b instance of DBuffer from which to write data
             */
             template<typename T,typename ALLOCATOR> 
-                void write(const DBuffer<T,ALLOCATOR> &b) const
+                void write(const dbuffer<T,ALLOCATOR> &b) const
             {
                 WRITE_BUFFER(b);
             }
@@ -912,14 +912,14 @@ namespace nx{
             \brief write field from a SBuffer
 
             Write data form a SBuffer instance to the field.
-            \throws MemoryNotAllocatedError if buffer is not allocated
-            \throws SizeMissmatchError if buffer and field size do not match
+            \throws memory_not_allocated_error if buffer is not allocated
+            \throws size_missmatch_error if buffer and field size do not match
             \throws NXFieldError in case of any other IO error
             \tparam OTS template arguments to SBuffer
             \param b instance of SBuffer from which to write data
             */
             template<typename T,size_t SIZE> 
-                void write(const SBuffer<T,SIZE> &b) const
+                void write(const sbuffer<T,SIZE> &b) const
             {
                 WRITE_BUFFER(b);
             }
@@ -929,13 +929,13 @@ namespace nx{
             \brief write field from a RBuffer
 
             Write data form a RBuffer instance to the field.
-            \throws MemoryNotAllocatedError if buffer is not allocated
-            \throws SizeMissmatchError if buffer and field size do not match
+            \throws memory_not_allocated_error if buffer is not allocated
+            \throws size_missmatch_error if buffer and field size do not match
             \throws NXFieldError in case of any other IO error
             \tparam OTS template arguments to RBuffer
             \param b instance of RBuffer from which to write data
             */
-            template<typename T> void write(const RBuffer<T> &b) const
+            template<typename T> void write(const rbuffer<T> &b) const
             {
                 WRITE_BUFFER(b);
             }
@@ -944,15 +944,15 @@ namespace nx{
             /*! 
             \brief write data form a DArray
 
-            Write data from an instance of DArray. 
-            \throws MemoryNotAllocatedError if array-buffer is not allocated
-            \throws ShapeMissmatchError if field and array shape do not match
+            Write data from an instance of darray. 
+            \throws memory_not_allocated_error if array-buffer is not allocated
+            \throws shape_missmatch_error if field and array shape do not match
             \throws NXFieldError in case of any other IO error
             \tparam OTS template arguments to DArray
             \param a instance of DArray
             */
             template<typename T,typename STORAGE,typename IMAP> 
-                void write(const DArray<T,STORAGE,IMAP> &a) const
+                void write(const darray<T,STORAGE,IMAP> &a) const
             {
                 WRITE_ARRAY(a);
             }
@@ -962,14 +962,14 @@ namespace nx{
             \brief write data form a SArray
 
             Write data from an instance of SArray. 
-            \throws MemoryNotAllocatedError if array-buffer is not allocated
-            \throws ShapeMissmatchError if field and array shape do not match
+            \throws memory_not_allocated_error if array-buffer is not allocated
+            \throws shape_missmatch_error if field and array shape do not match
             \throws NXFieldError in case of any other IO error
             \tparam OTS template arguments to SArray
             \param a instance of SArray
             */
             template<typename T,size_t ...INDICES> 
-                void write(const SArray<T,INDICES...> &a) const
+                void write(const sarray<T,INDICES...> &a) const
             {
                 WRITE_ARRAY(a);
             }
@@ -978,25 +978,25 @@ namespace nx{
             /*! 
             \brief write data from a NumArray instance
 
-            Write data form an instance of NumArray.
-            \throws MemoryNotAllocatedError if array-buffer is not allocated
-            \throws ShapeMissmatchError if field and array shape do not match
+            Write data form an instance of numarray.
+            \throws memory_not_allocated_error if array-buffer is not allocated
+            \throws shape_missmatch_error if field and array shape do not match
             \throws NXFieldError in case of any other IO error
             \tparam OTS template arguments to NumArray
             \param a instance of NumArray
             */
             template<typename ATYPE> 
-                void write(const NumArray<ATYPE> &a) const
+                void write(const numarray<ATYPE> &a) const
             {
                 try
                 {
                     this->write(a.storage());
                 }
-                catch(MemoryNotAllocatedError &error)
+                catch(memory_not_allocated_error &error)
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
-                catch(ShapeMissmatchError &error)
+                catch(shape_missmatch_error &error)
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
@@ -1018,10 +1018,10 @@ namespace nx{
             to this field. This can now be used to write data only to the
             selection of the array.
             \code
-            NXField f = g.create_field<UInt16>("frame",shape_t{1024,1024});
+            NXField f = g.create_field<uint16>("frame",shape_t{1024,1024});
             DArray<UInt16> spec(shape_t{1024});
 
-            f(100,Slice(0,1024)).read(spec)
+            f(100,slice(0,1024)).read(spec)
 
             \endcode
             The selection will be reset with every call to the read() or write
@@ -1036,7 +1036,7 @@ namespace nx{
                 typedef NXSelection<NXField<Imp> > sel_type;
                 typedef typename sel_type::selection_type container_type;
 
-                return sel_type(container_type({Slice(indices)...}),*this);
+                return sel_type(container_type({slice(indices)...}),*this);
             }
 
             //---------------------------------------------------------------
@@ -1044,13 +1044,13 @@ namespace nx{
             \brief set a selection on the field
 
             Operator to set a selection to the field. The selection is given by
-            a vector container of Slice objects.
+            a vector container of slice objects.
             The selection will be reset with each call to the read() or write()
             methods.
-            \param selection container with instances of Slice
+            \param selection container with instances of slice
             \return instance of NXField with selection set
             */
-            NXSelection<NXField<Imp> > operator()(const std::vector<Slice> &selection) 
+            NXSelection<NXField<Imp> > operator()(const std::vector<slice> &selection) 
             {
                 typedef NXSelection<NXField<Imp> > sel_type;
 
@@ -1065,7 +1065,7 @@ namespace nx{
     template<typename Imp> void NXField<Imp>::read(array &a) const
     {
         if(a.size() == 0)
-            throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+            throw memory_not_allocated_error(EXCEPTION_RECORD,
                              "Target array buffer not allocated!");
 
         shape_t ashape = a.shape();
@@ -1076,15 +1076,15 @@ namespace nx{
             //if array and field have the same rank we need to check the
             //shape of each of the objects
             if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
-                throw ShapeMissmatchError(EXCEPTION_RECORD,
-                        _shape_missmatch_error_message(ashape,fshape));
+                throw shape_missmatch_error(EXCEPTION_RECORD,
+                        shape_missmatch_error(ashape,fshape));
         }
         else
         {
             //if the two components are of different size we have to
             //throw an exception in any case
             if(this->size() != a.size())
-                throw ShapeMissmatchError(EXCEPTION_RECORD,
+                throw shape_missmatch_error(EXCEPTION_RECORD,
                         _shape_missmatch_error_message(ashape,fshape));
         }
 
@@ -1104,7 +1104,7 @@ namespace nx{
     {
 
         if(a.size() == 0)
-            throw MemoryNotAllocatedError(EXCEPTION_RECORD,
+            throw memory_not_allocated_error(EXCEPTION_RECORD,
                              "Source array buffer not allocated!");
 
         shape_t ashape = a.shape();
@@ -1113,13 +1113,13 @@ namespace nx{
         if(ashape.size() == fshape.size())
         {
             if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
-                throw ShapeMissmatchError(EXCEPTION_RECORD,
+                throw shape_missmatch_error(EXCEPTION_RECORD,
                         _shape_missmatch_error_message(ashape,fshape));
         }
         else
         {
             if(this->size() != a.size())
-                throw ShapeMissmatchError(EXCEPTION_RECORD,
+                throw shape_missmatch_error(EXCEPTION_RECORD,
                        _shape_missmatch_error_message(ashape,fshape));
         }
 
@@ -1128,7 +1128,7 @@ namespace nx{
         { 
             write_array(this->imp(),a);            
         }
-        catch(TypeError &error)
+        catch(type_error &error)
         {
             //in case of a type error we propagate the error to the next level
             error.append(EXCEPTION_RECORD);

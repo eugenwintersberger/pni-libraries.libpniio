@@ -24,8 +24,8 @@
 #pragma once
 
 #include <boost/current_function.hpp>
-#include <pni/core/Types.hpp>
-#include <pni/core/Array.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
 #include "NX.hpp"
 #include "EqualityCheck.hpp"
 
@@ -43,36 +43,36 @@ class NXSelectionTest:public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE(NXSelectionTest);
 
         //test scalar selections
-        CPPUNIT_TEST(test_scalar_selection<UInt8>);
-        CPPUNIT_TEST(test_scalar_selection<Int8>);
-        CPPUNIT_TEST(test_scalar_selection<UInt16>);
-        CPPUNIT_TEST(test_scalar_selection<Int16>);
-        CPPUNIT_TEST(test_scalar_selection<UInt32>);
-        CPPUNIT_TEST(test_scalar_selection<Int32>);
-        CPPUNIT_TEST(test_scalar_selection<UInt64>);
-        CPPUNIT_TEST(test_scalar_selection<Int64>);
-        CPPUNIT_TEST(test_scalar_selection<Float32>);
-        CPPUNIT_TEST(test_scalar_selection<Float64>);
-        CPPUNIT_TEST(test_scalar_selection<Float128>);
-        CPPUNIT_TEST(test_scalar_selection<Complex32>);
-        CPPUNIT_TEST(test_scalar_selection<Complex64>);
-        CPPUNIT_TEST(test_scalar_selection<Complex128>);
+        CPPUNIT_TEST(test_scalar_selection<uint8>);
+        CPPUNIT_TEST(test_scalar_selection<int8>);
+        CPPUNIT_TEST(test_scalar_selection<uint16>);
+        CPPUNIT_TEST(test_scalar_selection<int16>);
+        CPPUNIT_TEST(test_scalar_selection<uint32>);
+        CPPUNIT_TEST(test_scalar_selection<int32>);
+        CPPUNIT_TEST(test_scalar_selection<uint64>);
+        CPPUNIT_TEST(test_scalar_selection<int64>);
+        CPPUNIT_TEST(test_scalar_selection<float32>);
+        CPPUNIT_TEST(test_scalar_selection<float64>);
+        CPPUNIT_TEST(test_scalar_selection<float128>);
+        CPPUNIT_TEST(test_scalar_selection<complex32>);
+        CPPUNIT_TEST(test_scalar_selection<complex64>);
+        CPPUNIT_TEST(test_scalar_selection<complex128>);
 
         //test non-scalar selections using arrays and buffers for IO
-        CPPUNIT_TEST(test_array_selection<UInt8>);
-        CPPUNIT_TEST(test_array_selection<Int8>);
-        CPPUNIT_TEST(test_array_selection<UInt16>);
-        CPPUNIT_TEST(test_array_selection<Int16>);
-        CPPUNIT_TEST(test_array_selection<UInt32>);
-        CPPUNIT_TEST(test_array_selection<Int32>);
-        CPPUNIT_TEST(test_array_selection<UInt64>);
-        CPPUNIT_TEST(test_array_selection<Int64>);
-        CPPUNIT_TEST(test_array_selection<Float32>);
-        CPPUNIT_TEST(test_array_selection<Float64>);
-        CPPUNIT_TEST(test_array_selection<Float128>);
-        CPPUNIT_TEST(test_array_selection<Complex32>);
-        CPPUNIT_TEST(test_array_selection<Complex64>);
-        CPPUNIT_TEST(test_array_selection<Complex128>);
+        CPPUNIT_TEST(test_array_selection<uint8>);
+        CPPUNIT_TEST(test_array_selection<int8>);
+        CPPUNIT_TEST(test_array_selection<uint16>);
+        CPPUNIT_TEST(test_array_selection<int16>);
+        CPPUNIT_TEST(test_array_selection<uint32>);
+        CPPUNIT_TEST(test_array_selection<int32>);
+        CPPUNIT_TEST(test_array_selection<uint64>);
+        CPPUNIT_TEST(test_array_selection<int64>);
+        CPPUNIT_TEST(test_array_selection<float32>);
+        CPPUNIT_TEST(test_array_selection<float64>);
+        CPPUNIT_TEST(test_array_selection<float128>);
+        CPPUNIT_TEST(test_array_selection<complex32>);
+        CPPUNIT_TEST(test_array_selection<complex64>);
+        CPPUNIT_TEST(test_array_selection<complex128>);
 
         CPPUNIT_TEST_SUITE_END();
     private:
@@ -137,7 +137,7 @@ template<typename T> void NXSelectionTest::test_array_selection()
     shape_t shape{3,4};
     NXField field = file.create_field<T>("array",shape);
 
-    DArray<T> write(shape_t({3})),read(shape_t({3}));
+    darray<T> write(shape_t({3})),read(shape_t({3}));
     std::fill(write.begin(),write.end(),T(0));
     std::fill(read.begin(),read.end(),T(0));
 
@@ -146,16 +146,16 @@ template<typename T> void NXSelectionTest::test_array_selection()
         std::fill(write.begin(),write.end(),T(j));
         std::fill(read.begin(),read.end(),T(0));
         
-        field(Slice(0,3),j).write(write);
-        field(Slice(0,3),j).read(read);
+        field(slice(0,3),j).write(write);
+        field(slice(0,3),j).read(read);
 
         for(size_t i=0;i<write.size();i++) check_equality(read[i],write[i]);
     }
 
-    CPPUNIT_ASSERT_THROW(field(Slice(1,3),0).write(write),ShapeMissmatchError);
-    DBuffer<T> rbuff(2);
-    CPPUNIT_ASSERT_THROW(field(Slice(0,3),0).read(rbuff),SizeMissmatchError);
+    CPPUNIT_ASSERT_THROW(field(slice(1,3),0).write(write),shape_missmatch_error);
+    dbuffer<T> rbuff(2);
+    CPPUNIT_ASSERT_THROW(field(slice(0,3),0).read(rbuff),size_missmatch_error);
     rbuff.free();
-    CPPUNIT_ASSERT_THROW(field(Slice(0,3),0).read(rbuff),MemoryNotAllocatedError);
+    CPPUNIT_ASSERT_THROW(field(slice(0,3),0).read(rbuff),memory_not_allocated_error);
 }
 

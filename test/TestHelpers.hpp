@@ -2,7 +2,7 @@
 //Test development easier.
 
 #pragma once
-#include <pni/core/Types.hpp>
+#include <pni/core/types.hpp>
 using namespace pni::core;
 
 #include<cppunit/TestFixture.h>
@@ -22,7 +22,7 @@ template<typename T> void init_values(std::complex<T> &a,std::complex<T> &b)
     b = std::complex<T>(0,0);
 }
 
-template<> void init_values(String &a,String &b);
+template<> void init_values(string &a,string &b);
 
 template<typename T> void compare_values(T a,T b)
 {

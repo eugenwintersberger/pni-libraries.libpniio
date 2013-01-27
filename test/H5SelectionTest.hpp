@@ -4,8 +4,8 @@
 #include<cppunit/extensions/HelperMacros.h>
 #include<initializer_list>
 
-#include <pni/core/Types.hpp>
-#include <pni/core/Array.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
 
 #include "../src/h5/H5Selection.hpp"
 #include "../src/h5/H5Dataset.hpp"
@@ -145,7 +145,7 @@ template<typename T> void H5SelectionTest::test_io_scalar_no_ext()
     H5Dataset dset("scalar",_file,type,space);
     H5Selection sel = dset.selection();
         
-    Scalar<T> write,read;
+    scalar<T> write,read;
     init_values(write,read);
 #ifdef INITLISTBUG
     CPPUNIT_ASSERT_NO_THROW(sel.count(0,1));
@@ -196,7 +196,7 @@ template<typename T> void H5SelectionTest::test_io_buffer_no_ext()
     H5Dataset dset("scalar",_file,type,space);
     H5Selection sel = dset.selection();
         
-    Buffer<T> write(3),read(3);
+    dbuffer<T> write(3),read(3);
     init_values(write,read);
 #ifdef INITLISTBUG
     CPPUNIT_ASSERT_NO_THROW(sel.count(0,3));
@@ -246,7 +246,7 @@ template<typename T> void H5SelectionTest::test_io_array_no_ext()
     H5Dataset dset("scalar",_file,type,space);
     H5Selection sel = dset.selection();
        
-    Shape s = {5};
+    shape_t s = {5};
     auto write = ArrayFactory<T,Buffer>::create(s);
     write.name("write");write.unit("a.u");write.description("write data");
     auto read = ArrayFactory<T,Buffer>::create(s);

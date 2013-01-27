@@ -9,7 +9,7 @@ file_io_benchmark::file_io_benchmark():
 {}
 
 //-----------------------------------------------------------------------------
-file_io_benchmark::file_io_benchmark(const String &fname,size_t nx,size_t ny,size_t nframes):
+file_io_benchmark::file_io_benchmark(const string &fname,size_t nx,size_t ny,size_t nframes):
     _nx(nx),
     _ny(ny),
     _nframes(nframes),

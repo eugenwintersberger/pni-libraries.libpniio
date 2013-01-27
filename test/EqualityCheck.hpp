@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cppunit/extensions/HelperMacros.h>
-#include <pni/core/TypeInfo.hpp>
+#include <pni/core/type_info.hpp>
 
 using namespace pni::core;
 
@@ -38,9 +38,9 @@ template<typename T> class EqualityCheck<T,false,true>
 
 template<typename T> void check_equality(const T &a,const T &b)
 {
-    EqualityCheck<T,TypeInfo<T>::is_integer,TypeInfo<T>::is_complex>::check(a,b);
+    EqualityCheck<T,type_info<T>::is_integer,type_info<T>::is_complex>::check(a,b);
 }
 
-void check_equality(const String &a,const String &b);
-void check_equality(const Bool &a,const Bool &b);
+void check_equality(const string &a,const string &b);
+void check_equality(const bool &a,const bool &b);
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <pni/core/Types.hpp>
+#include <pni/core/types.hpp>
 #include <iostream>
 
 using namespace pni::core;
@@ -15,7 +15,7 @@ class file_io_benchmark
         //! number of frames to write
         size_t _nframes; 
         //! name of the output file
-        String _filename;
+        string _filename;
     public:
         //---------------------------------------------------------------------
         //! default constructor
@@ -23,7 +23,7 @@ class file_io_benchmark
 
         //---------------------------------------------------------------------
         //! constructor
-        file_io_benchmark(const String &fname,size_t nx,size_t ny,size_t nframes);
+        file_io_benchmark(const string &fname,size_t nx,size_t ny,size_t nframes);
 
         //=====================public member functions=========================
         //! get nx
@@ -51,11 +51,11 @@ class file_io_benchmark
 
         //---------------------------------------------------------------------
         //! get output file name
-        String filename() const { return _filename; }
+        string filename() const { return _filename; }
 
         //---------------------------------------------------------------------
         //! set output file
-        void filename(const String &f) { _filename = f; }
+        void filename(const string &f) { _filename = f; }
 
         //---------------------------------------------------------------------
         //the run function of the benchmark

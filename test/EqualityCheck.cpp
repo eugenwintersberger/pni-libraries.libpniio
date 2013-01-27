@@ -1,13 +1,13 @@
 #include "EqualityCheck.hpp"
 
 //-----------------------------------------------------------------------------
-void check_equality(const String &a,const String &b)
+void check_equality(const string &a,const string &b)
 {
     CPPUNIT_ASSERT(a == b);
 }
 
 //-----------------------------------------------------------------------------
-void check_equality(const Bool &a,const Bool &b)
+void check_equality(const bool &a,const bool &b)
 {
     CPPUNIT_ASSERT(a == b);
 }

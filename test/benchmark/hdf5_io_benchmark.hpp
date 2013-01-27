@@ -17,14 +17,14 @@ template<typename T> struct type2hdftype;
         }\
     }
 
-TC2HDFTYPEMAP(UInt8,H5T_NATIVE_UCHAR);
-TC2HDFTYPEMAP(Int8,H5T_NATIVE_SCHAR);
-TC2HDFTYPEMAP(UInt16,H5T_NATIVE_USHORT);
-TC2HDFTYPEMAP(Int16,H5T_NATIVE_SHORT);
-TC2HDFTYPEMAP(UInt32,H5T_NATIVE_UINT);
-TC2HDFTYPEMAP(Int32,H5T_NATIVE_INT);
-TC2HDFTYPEMAP(UInt64,H5T_NATIVE_ULONG);
-TC2HDFTYPEMAP(Int64,H5T_NATIVE_LONG);
+TC2HDFTYPEMAP(uint8,H5T_NATIVE_UCHAR);
+TC2HDFTYPEMAP(int8,H5T_NATIVE_SCHAR);
+TC2HDFTYPEMAP(uint16,H5T_NATIVE_USHORT);
+TC2HDFTYPEMAP(int16,H5T_NATIVE_SHORT);
+TC2HDFTYPEMAP(uint32,H5T_NATIVE_UINT);
+TC2HDFTYPEMAP(int32,H5T_NATIVE_INT);
+TC2HDFTYPEMAP(uint64,H5T_NATIVE_ULONG);
+TC2HDFTYPEMAP(int64,H5T_NATIVE_LONG);
 
 template<typename T> class hdf5_io_benchmark : public file_io_benchmark
 {
@@ -44,7 +44,7 @@ template<typename T> class hdf5_io_benchmark : public file_io_benchmark
 
         //---------------------------------------------------------------------
         //! constructor
-        hdf5_io_benchmark(const String &fname,size_t nx,size_t ny,size_t
+        hdf5_io_benchmark(const string &fname,size_t nx,size_t ny,size_t
                 nframes):
             file_io_benchmark(fname,nx,ny,nframes)
         {

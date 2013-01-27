@@ -2,9 +2,9 @@
 #include <functional>
 #include <chrono>
 #include <fstream>
-#include <pni/core/Types.hpp>
-#include <pni/core/benchmark/ChronoTimer.hpp>
-#include <pni/core/benchmark/BenchmarkRunner.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/benchmark/chrono_timer.hpp>
+#include <pni/core/benchmark/benchmark_runner.hpp>
 
 #include <pni/core/config/configuration.hpp>
 #include <pni/core/config/config_parser.hpp>
@@ -15,7 +15,7 @@ using namespace pni::core;
 
 int main(int argc,char **argv)
 {
-    typedef ChronoTimer<std::chrono::high_resolution_clock,
+    typedef chrono_timer<std::chrono::high_resolution_clock,
                         std::chrono::milliseconds> bm_timer_t;
     configuration config;
     //setup program configuration
@@ -56,16 +56,16 @@ int main(int argc,char **argv)
 
     //create the bechmark
     std::unique_ptr<file_io_benchmark> bmptr =
-        factory.create(config.value<String>("type"),
-                       config.value<String>("backend"));
+        factory.create(config.value<string>("type"),
+                       config.value<string>("backend"));
 
     //create the benchmark runner instance
-    BenchmarkRunner runner;
+    benchmark_runner runner;
 
-    BenchmarkRunner::function_t f = std::bind(&file_io_benchmark::run,bmptr.get());
-    BenchmarkRunner::function_t pre_run =
+    benchmark_runner::function_t f = std::bind(&file_io_benchmark::run,bmptr.get());
+    benchmark_runner::function_t pre_run =
         std::bind(&file_io_benchmark::create,bmptr.get());
-    BenchmarkRunner::function_t post_run = 
+    benchmark_runner::function_t post_run = 
         std::bind(&file_io_benchmark::close,bmptr.get());
 
     runner.prerun(pre_run);
@@ -84,11 +84,7 @@ int main(int argc,char **argv)
     }
 
     //need to evaluate the results
-    BenchmarkResult av_result = average(runner);
+    benchmark_result av_result = average(runner);
     std::cout<<av_result<<std::endl;
-    
-
-
-
     return 0;
 }

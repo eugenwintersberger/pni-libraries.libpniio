@@ -7,7 +7,7 @@ extern "C" {
 
 #include "common.hpp"
 
-#include<pni/core/Array.hpp>
+#include<pni/core/arrays.hpp>
 #include "h5/H5AttributeObject.hpp"
 
 
@@ -106,7 +106,7 @@ class H5AttributeObjectTest:public CppUnit::TestFixture
         \param name string object with the groups name
         \return HDF5 ID of the group
         */
-        hid_t create_group(hid_t pid,const String &name) const;
+        hid_t create_group(hid_t pid,const string &name) const;
 
         //---------------------------------------------------------------------
         /*! 

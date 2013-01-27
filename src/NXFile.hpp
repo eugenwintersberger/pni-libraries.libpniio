@@ -27,7 +27,7 @@
 
 #pragma once
 
-#include <pni/core/Types.hpp>
+#include <pni/core/types.hpp>
 #include <pni/core/service.hpp>
 
 #include "NXObject.hpp"
@@ -75,7 +75,7 @@ namespace nx{
             {
                 if((this->is_valid())&&(!this->is_readonly()))
                 {
-                    this->template attr<String>("file_update_time",true)
+                    this->template attr<string>("file_update_time",true)
                         .write(NXDateTime::get_date_time_str());
                 }
             }
@@ -107,7 +107,7 @@ namespace nx{
             \param ro open read only if true
             \return an instance of NXFile
             */
-            static NXFile<Imp> open_file(const String &n,bool ro=true)
+            static NXFile<Imp> open_file(const string &n,bool ro=true)
             {
                 NXFile<Imp> file;
 
@@ -136,7 +136,7 @@ namespace nx{
             \return instance of NXFile
             */
             static NXFile<Imp> 
-                create_file(const String &n,bool ow=false, ssize_t ssize = 0)
+                create_file(const string &n,bool ow=false, ssize_t ssize = 0)
             {
                 NXFile<Imp> file;
 
@@ -151,16 +151,16 @@ namespace nx{
                 
                 //set file specific attributes
                 file.template
-                    attr<String>("NX_class").write(String("NXroot"));
+                    attr<string>("NX_class").write(string("NXroot"));
                 file.template 
-                    attr<String>("file_time").write(NXDateTime::get_date_time_str());
+                    attr<string>("file_time").write(NXDateTime::get_date_time_str());
                 file.template 
-                    attr<String>("file_update_time").write(NXDateTime::get_date_time_str());
-                file.template attr<String>("file_name").write(n);
+                    attr<string>("file_update_time").write(NXDateTime::get_date_time_str());
+                file.template attr<string>("file_name").write(n);
 
                 //this should be taken from a configuration
                 file.template
-                    attr<String>("NeXus_version").write(String("4.3.0"));
+                    attr<string>("NeXus_version").write(string("4.3.0"));
 
                 //flush the files content
                 file.flush();
@@ -184,7 +184,7 @@ namespace nx{
             {
                 if((this->is_valid())&&(!this->is_readonly()))
                 {
-                    this->template attr<String>("file_update_time",true)
+                    this->template attr<string>("file_update_time",true)
                         .write(NXDateTime::get_date_time_str());
                 }
                 

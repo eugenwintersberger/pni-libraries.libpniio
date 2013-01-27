@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include <pni/core/Types.hpp>
+#include <pni/core/types.hpp>
 
 #include "file_io_benchmark.hpp"
 
@@ -17,7 +17,7 @@ class benchmark_factory
         //! total number of frames to write for each benchmark
         size_t _nframes;
         //! name of the output file
-        String _fname;
+        string _fname;
 
         std::unique_ptr<file_io_benchmark> 
             create_pninx_benchmark(const String &tc) const;
@@ -38,7 +38,7 @@ class benchmark_factory
         \param ny number of pixels in the second direction
         \param nframes number of frames to write
         */
-        benchmark_factory(const String &fname,size_t nx,size_t ny,size_t nframes);
+        benchmark_factory(const string &fname,size_t nx,size_t ny,size_t nframes);
 
         //---------------------------------------------------------------------
         /*! 
@@ -49,8 +49,8 @@ class benchmark_factory
         \param backend the backend to use
         \return unique pointer to the benchmark instance
         */
-        std::unique_ptr<file_io_benchmark> create(const String &type,
-                                                  const String &backend) const;
+        std::unique_ptr<file_io_benchmark> create(const string &type,
+                                                  const string &backend) const;
 
 
 };

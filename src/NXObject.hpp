@@ -29,9 +29,9 @@
 #include <memory>
 #include <iostream>
 
-#include <pni/core/Types.hpp>
-#include <pni/core/Array.hpp>
-#include <pni/core/Scalar.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
+#include <pni/core/scalar.hpp>
 
 #include "NXImpMap.hpp"
 #include "NXImpCodeMap.hpp"
@@ -165,7 +165,7 @@ namespace nx{
             This method returns the absolute path to this object.
             \return objects absolute path
             */
-            String path() const{ return _imp.path(); }
+            string path() const{ return _imp.path(); }
 
             //-----------------------------------------------------------------
             /*! 
@@ -176,7 +176,7 @@ namespace nx{
             return /scan_1/detector.
             \return base part of the absolute path
             */
-            String base() const{ return _imp.base(); }
+            string base() const{ return _imp.base(); }
 
             //-----------------------------------------------------------------
             /*! 
@@ -187,7 +187,7 @@ namespace nx{
             return data.
             \return name of the object
             */
-            String name() const{ return _imp.name(); }
+            string name() const{ return _imp.name(); }
 
             //=================attribute management methods====================
             /*! \brief create scalar attribute
@@ -202,7 +202,7 @@ namespace nx{
             \return an instance of NXAttribute
             */
             template<typename T> NXAttribute<MAPTYPE(Imp,AttributeImpl)>
-                attr(const String &n,bool ov=false) const
+                attr(const string &n,bool ov=false) const
             {
                 typedef NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr_type;
                 attr_type attr;
@@ -237,7 +237,7 @@ namespace nx{
             */
             template<typename T,typename CTYPE> 
             NXAttribute<MAPTYPE(Imp,AttributeImpl)>
-                attr(const String &n, const CTYPE &s,bool ov=true) const
+                attr(const string &n, const CTYPE &s,bool ov=true) const
             {
                 typedef NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr_type;
                 attr_type attr;
@@ -267,7 +267,7 @@ namespace nx{
             \param n name of the attribute
             \return instance of NXAttribute
             */
-            NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr(const String &n) const
+            NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr(const string &n) const
             {
                 typedef NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr_type;
                 attr_type attr;
@@ -324,7 +324,7 @@ namespace nx{
             \throws NXAttributeError in case of errors
             \param n name of the attribute
             */
-            void del_attr(const String &n) const
+            void del_attr(const string &n) const
             {
                 try
                 {
@@ -347,7 +347,7 @@ namespace nx{
             \param n name of the attribute
             \return true if n exists otherwise false
             */
-            bool has_attr(const String &n) const
+            bool has_attr(const string &n) const
             {
                 try
                 {
@@ -411,7 +411,7 @@ namespace nx{
             string.
             \return access time as date-time string
             */
-            String access_time() const
+            string access_time() const
             {
                 return NXDateTime::get_date_time_str(_imp.acc_time());
             }
@@ -423,7 +423,7 @@ namespace nx{
             date-time string.
             \return modification time as date-time string
             */
-            String modified_time() const
+            string modified_time() const
             {
                 return NXDateTime::get_date_time_str(_imp.mod_time());
             }
@@ -436,7 +436,7 @@ namespace nx{
             a Nexus date-time string (need to verify this). 
             \return change time as date-time string
             */
-            String change_time() const
+            string change_time() const
             {
                 return NXDateTime::get_date_time_str(_imp.chng_time());
             }
@@ -449,7 +449,7 @@ namespace nx{
             string. 
             \return creation time as date-time string
             */
-            String create_time() const
+            string create_time() const
             {
                 return NXDateTime::get_date_time_str(_imp.birth_time());
             }

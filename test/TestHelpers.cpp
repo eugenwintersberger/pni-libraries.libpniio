@@ -2,25 +2,25 @@
 
 
 //--------------------------------------------------
-template<> void compare_values(Float32 a,Float32 b)
+template<> void compare_values(float32 a,float32 b)
 {
     CPPUNIT_ASSERT_DOUBLES_EQUAL(a,b,1.e-6);
 }
 
 //--------------------------------------------------
-template<> void compare_values(Float64 a,Float64 b)
+template<> void compare_values(float64 a,float64 b)
 {
     CPPUNIT_ASSERT_DOUBLES_EQUAL(a,b,1.e-6);
 }
 
 //--------------------------------------------------
-template<> void compare_values(Float128 a,Float128 b)
+template<> void compare_values(float128 a,float128 b)
 {
     CPPUNIT_ASSERT_DOUBLES_EQUAL(a,b,1.e-6);
 }
 
 
-template<> void init_values(String &a,String &b)
+template<> void init_values(string &a,string &b)
 {
     a = "hello world";
     b = "";

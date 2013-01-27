@@ -5,7 +5,7 @@ extern "C"{
 }
 
 #include<boost/current_function.hpp>
-#include <pni/core/Types.hpp>
+#include <pni/core/types.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>

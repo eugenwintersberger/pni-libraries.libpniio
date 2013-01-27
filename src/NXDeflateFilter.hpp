@@ -57,7 +57,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! standard constructor
-            NXDeflateFilter(UInt32 r,bool s)
+            NXDeflateFilter(uint32 r,bool s)
                 :NXFilter<Imp>(Imp(r,s))
             { }
 
@@ -84,14 +84,14 @@ namespace nx{
 
             //==============filter attribute access methods====================
             //! set compression rate
-            void compression_rate(UInt32 r)
+            void compression_rate(uint32 r)
             {
                 this->imp().compression_rate(r);
             }
 
             //-----------------------------------------------------------------
             //! get compression rate
-            UInt32 compression_rate() const
+            uint32 compression_rate() const
             {
                 return this->imp().compression_rate();
             }

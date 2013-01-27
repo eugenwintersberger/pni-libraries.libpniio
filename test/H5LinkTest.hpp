@@ -4,7 +4,7 @@
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
-#include <pni/core/Types.hpp>
+#include <pni/core/types.hpp>
 
 
 #include "../src/h5/H5Link.hpp"

@@ -68,7 +68,7 @@ void H5LinkTest::test_external(){
     //create target in the first file
     H5Dataset dwrite("data",_file1,type,space);
     //write some data
-    Float64 wval = -1.25091;
+    float64 wval = -1.25091;
     CPPUNIT_ASSERT_NO_THROW(dwrite.write(wval));
 
     //create the external link in the second file
@@ -76,7 +76,7 @@ void H5LinkTest::test_external(){
     CPPUNIT_ASSERT_NO_THROW(H5Link::create("H5LinkTest1.h5:/data",
                 _file2,"external/data"));
 
-    Float64 read;
+    float64 read;
     H5Dataset dread = _file2.open("/external/data");
     CPPUNIT_ASSERT_NO_THROW(dread.read(read));
     CPPUNIT_ASSERT_DOUBLES_EQUAL(wval,read,1.e-6);

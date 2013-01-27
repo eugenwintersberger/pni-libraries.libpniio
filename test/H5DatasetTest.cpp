@@ -219,7 +219,7 @@ void H5DatasetTest::test_string_array_data()
 
     H5Dataset dset("sarray",_group,type,space,s);
 
-    DArray<String> swrite(s);
+    darray<string> swrite(s);
     swrite(0,0) = "hello"; swrite(0,1) = "world"; swrite(0,2) = "this";
     swrite(1,0) = "is"; swrite(1,1) = "a string"; swrite(1,2) = "array";
     
@@ -242,9 +242,9 @@ void H5DatasetTest::test_string_scalar_data()
 
     H5Dataset dset("sscalar",_group,type,space);
 
-    String write = "hello world";
+    string write = "hello world";
     dset.write(&write);
-    String read;
+    string read;
     dset.read(&read);
     CPPUNIT_ASSERT(read == write);
 }
@@ -301,8 +301,8 @@ void H5DatasetTest::test_string_selection()
     s = dset.shape<shape_t>();
     CPPUNIT_ASSERT(dset.size()==10*20);
 
-    DBuffer<String> writebuf(10);
-    DBuffer<String> readbuf(10);
+    dbuffer<string> writebuf(10);
+    dbuffer<string> readbuf(10);
 
     for(size_t i=0;i<10;i++)
     {
@@ -346,13 +346,13 @@ void H5DatasetTest::test_bool_selection()
     s = dset.shape<shape_t>();
     CPPUNIT_ASSERT(dset.size()==10*20);
 
-    DBuffer<Bool> writebuf(10);
-    DBuffer<Bool> readbuf(10);
+    dbuffer<bool> writebuf(10);
+    dbuffer<bool> readbuf(10);
 
     for(size_t i=0;i<10;i++)
     {
         //select regtion in the dataset
-        std::vector<Slice> selection({Slice(i),Slice(10,20)});
+        std::vector<slice> selection({slice(i),slice(10,20)});
         //set buffer value
         
         std::fill(writebuf.begin(),writebuf.end(),true);

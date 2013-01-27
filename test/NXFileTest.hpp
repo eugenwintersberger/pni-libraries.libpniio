@@ -26,15 +26,16 @@
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
-#include <pni/core/Types.hpp>
-#include <pni/core/Array.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
 
 #include "NX.hpp"
 
 using namespace pni::core;
 using namespace pni::io::nx::h5;
 
-class NXFileTest: public CppUnit::TestFixture {
+class NXFileTest: public CppUnit::TestFixture 
+{
 	CPPUNIT_TEST_SUITE(NXFileTest);
 	CPPUNIT_TEST(test_creation);
 	CPPUNIT_TEST(test_open);

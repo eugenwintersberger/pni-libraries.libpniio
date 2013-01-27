@@ -1,7 +1,7 @@
 #pragma once
 
-#include <pni/core/Types.hpp>
-#include <pni/core/DArray.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/darray.hpp>
 #include "file_io_benchmark.hpp"
 
 #include <pni/io/nx/NX.hpp>
@@ -13,7 +13,7 @@ template<typename T> class pniio_io_benchmark : public file_io_benchmark
 {
     private:
         //! array holding the buffer for the frame data
-        DArray<T> _frame_buffer; 
+        darray<T> _frame_buffer; 
         NXField   _field;
         NXFile    _file;
     public:
@@ -26,7 +26,7 @@ template<typename T> class pniio_io_benchmark : public file_io_benchmark
 
         //---------------------------------------------------------------------
         //! constructor
-        pniio_io_benchmark(const String &fname,size_t nx,size_t ny,size_t nframes):
+        pniio_io_benchmark(const string &fname,size_t nx,size_t ny,size_t nframes):
             file_io_benchmark(fname,nx,ny,nframes)
         {
             //create the frame buffer

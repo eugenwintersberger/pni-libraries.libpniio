@@ -27,7 +27,7 @@
 
 #pragma once
 
-#include <pni/core/Types.hpp>
+#include <pni/core/types.hpp>
 
 #include "NXObject.hpp"
 

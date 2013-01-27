@@ -5,8 +5,8 @@ extern "C"{
 #include <hdf5.h>
 }
 
-#include <pni/core/Types.hpp>
-#include <pni/core/Array.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
@@ -153,18 +153,18 @@ template<typename T> void H5DatasetTest::test_selection()
     s = dset.shape<shape_t>();
     CPPUNIT_ASSERT(dset.size()==10*20);
 
-    DBuffer<T> writebuf(10);
-    DBuffer<T> readbuf(10);
+    dbuffer<T> writebuf(10);
+    dbuffer<T> readbuf(10);
 
     //check single value selection
-    std::vector<Slice> selection({Slice(1),Slice(2)});
+    std::vector<slice> selection({slice(1),slice(2)});
     dset.apply_selection(selection);
     CPPUNIT_ASSERT(dset.size() == 1);
 
     for(size_t i=0;i<10;i++)
     {
         //select regtion in the dataset
-        std::vector<Slice> selection({Slice(i),Slice(10,20)});
+        std::vector<slice> selection({slice(i),slice(10,20)});
         //set buffer value
         std::fill(writebuf.begin(),writebuf.end(),T(i));
         

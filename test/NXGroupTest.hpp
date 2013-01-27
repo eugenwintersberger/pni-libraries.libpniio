@@ -50,7 +50,7 @@ class NXGroupTest: public CppUnit::TestFixture
     CPPUNIT_TEST(test_comparison);
 	CPPUNIT_TEST_SUITE_END();
 private:
-	String _fname;
+	string _fname;
 	NXFile _f;
 public:
 	void setUp();

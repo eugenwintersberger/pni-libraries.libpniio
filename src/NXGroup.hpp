@@ -26,7 +26,7 @@
  */
 #pragma once
 
-#include <pni/core/Types.hpp>
+#include <pni/core/types.hpp>
 
 #include "NXObject.hpp"
 #include "NXImpMap.hpp"
@@ -133,7 +133,7 @@ namespace nx{
             \return a new instance of NXGroup
             */
             NXGroup<MAPTYPE(Imp,GroupImpl)> 
-                create_group(const String &n,const String &type=String()) const
+                create_group(const string &n,const string &type=string()) const
             {
                 //we need to do here two things
                 //we have to check if the particular group type
@@ -146,7 +146,7 @@ namespace nx{
                 //if the type string is not empty we write the 
                 //appropriate attribute.
                 if(!type.empty())
-                    g.template attr<String>("NX_class").write(type);
+                    g.template attr<string>("NX_class").write(type);
 
                 return g;
             }
@@ -167,7 +167,7 @@ namespace nx{
             The chunk shape here is optional. If not given a default value will
             be generated from the original shape where the first dimension is
             set to one. 
-            \throws ShapeMissmatchError if chunk and field shape do not have the
+            \throws shape_missmatch_error if chunk and field shape do not have the
             same rank
             \throws NXGroupError in all other cases
             \tparam T data type of the field
@@ -181,7 +181,7 @@ namespace nx{
                      typename CTYPES=shape_t, 
                      typename CTYPEC=shape_t > 
             NXField<MAPTYPE(Imp,FieldImpl)>
-                create_field(const String &n,const CTYPES &shape=CTYPES(),
+                create_field(const string &n,const CTYPES &shape=CTYPES(),
                              const CTYPES &chunk=CTYPES()) const
             {
                 typedef NXField<MAPTYPE(Imp,FieldImpl)> FieldType;
@@ -218,7 +218,7 @@ namespace nx{
                     field = FieldType(FieldImp::template 
                                       create<T>(n,this->imp(),s,cs));
                 }
-                catch(ShapeMissmatchError &error)
+                catch(shape_missmatch_error &error)
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
@@ -256,7 +256,7 @@ namespace nx{
             */
             template<typename T,typename FilterImp,typename CTYPES> 
                 NXField<MAPTYPE(Imp,FieldImpl)>
-                create_field(const String &n,const CTYPES &s,
+                create_field(const string &n,const CTYPES &s,
                              const NXFilter<FilterImp> &filter) const
             {
                 typedef MAPTYPE(Imp,FieldImpl) FieldImp;
@@ -289,7 +289,7 @@ namespace nx{
             NXField field = g.create_field<UInt16>("data",shape,chunk,filter);
 
             \endcode
-            \throws ShapeMissmatchError if the rank of chunk and field shape do
+            \throws shape_missmatch_error if the rank of chunk and field shape do
             not share the same rank
             \tparam T data type of the field
             \tparam FilterImp filter implementation type
@@ -307,7 +307,7 @@ namespace nx{
                      typename CTYPEC
                     > 
             NXField<MAPTYPE(Imp,FieldImpl)>
-                create_field(const String &n,const CTYPES &s,const CTYPEC &cs,
+                create_field(const string &n,const CTYPES &s,const CTYPEC &cs,
                         const NXFilter<FilterImp> &filter) const
             {
                 typedef MAPTYPE(Imp,FieldImpl) FieldImp;
@@ -327,7 +327,7 @@ namespace nx{
             \param n path or name of the object to open
             \return object
             */
-            virtual NXObject<MAPTYPE(Imp,ObjectImpl)> open(const String &n)
+            virtual NXObject<MAPTYPE(Imp,ObjectImpl)> open(const string &n)
                 const
             {
                 typedef MAPTYPE(Imp,ObjectImpl) ObjectImp;
@@ -355,7 +355,7 @@ namespace nx{
             \param n name or path of the object
             \return object
             */
-            NXObject<MAPTYPE(Imp,ObjectImpl)> operator[](const String &n) const
+            NXObject<MAPTYPE(Imp,ObjectImpl)> operator[](const string &n) const
             {
                 return this->open(n);
             }
@@ -386,7 +386,7 @@ namespace nx{
             /*! 
             \brief open object by index
 
-            Unlike open(const String &n) here the object is addressed by its
+            Unlike open(const string &n) here the object is addressed by its
             index. Thus only objects directly linked below this group can be
             accessed.
             \throws IndexError if the index exceeds number of childs
@@ -421,7 +421,7 @@ namespace nx{
             \param n name of the link (object) to look for
             \return true if the object exist, false otherwise
             */
-            bool exists(const String &n) const{ return this->imp().exists(n); }
+            bool exists(const string &n) const{ return this->imp().exists(n); }
 
             //-----------------------------------------------------------------
             /*! \brief remove an object from the file
@@ -433,7 +433,7 @@ namespace nx{
             delete the object from the file.
             \param n name of the link to delete
             */
-            void remove(const String &n) const{ this->imp().remove(n); }
+            void remove(const string &n) const{ this->imp().remove(n); }
 
             //-----------------------------------------------------------------
             /*! \brief create link
@@ -452,7 +452,7 @@ namespace nx{
             This method can only be used to create file local links. 
             \param n name of the new link to this object
             */
-            void link(const String &n) const { this->imp().link(n); }
+            void link(const string &n) const { this->imp().link(n); }
 
             //-----------------------------------------------------------------
             /*! \brief create link
@@ -460,8 +460,8 @@ namespace nx{
             Another method to create a link. The method creates a new link to
             this object which will be available by the name n below group ref. 
             \code
-            String ipath = "/scan_1/instrument/";
-            String spath = "/scan_1/sample/";
+            string ipath = "/scan_1/instrument/";
+            string spath = "/scan_1/sample/";
             NXGroup cont = file.create_group(ipath+"motors","NXcontainer");
             NXGroup piezo = file.create_group(spath+"piezo","NXpositioner");
 
@@ -473,7 +473,7 @@ namespace nx{
             \param ref reference group below which the link shall be created
             \param n new name of the link
             */
-            void link(const NXGroup &ref,const String &n) const
+            void link(const NXGroup &ref,const string &n) const
             {
                 this->imp().link(ref.imp(),n);
             }
@@ -499,7 +499,7 @@ namespace nx{
             \param p path to the object to which the link refers to
             \param n name of the link
             */
-            void link(const String &p,const String &n) const
+            void link(const string &p,const string &n) const
             {
                 this->imp().link(p,n);
             }

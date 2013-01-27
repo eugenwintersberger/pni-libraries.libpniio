@@ -31,7 +31,7 @@
 #include <random>
 
 #include "NX.hpp"
-#include <pni/core/Array.hpp>
+#include <pni/core/arrays.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
@@ -50,58 +50,58 @@ class NXFieldTest:public CppUnit::TestFixture
     CPPUNIT_TEST(test_resize);
     CPPUNIT_TEST(test_parent);
     //testing scalar object IO
-    CPPUNIT_TEST(test_io_scalar<UInt8>);
-    CPPUNIT_TEST(test_io_scalar<Int8>);
-    CPPUNIT_TEST(test_io_scalar<UInt16>);
-    CPPUNIT_TEST(test_io_scalar<Int16>);
-    CPPUNIT_TEST(test_io_scalar<UInt32>);
-    CPPUNIT_TEST(test_io_scalar<Int32>);
-    CPPUNIT_TEST(test_io_scalar<UInt64>);
-    CPPUNIT_TEST(test_io_scalar<Int64>);
-    CPPUNIT_TEST(test_io_scalar<Float32>);
-    CPPUNIT_TEST(test_io_scalar<Float64>);
-    CPPUNIT_TEST(test_io_scalar<Float128>);
-    CPPUNIT_TEST(test_io_scalar<Complex32>);
-    CPPUNIT_TEST(test_io_scalar<Complex64>);
-    CPPUNIT_TEST(test_io_scalar<Complex128>);
-    CPPUNIT_TEST(test_io_scalar<Binary>);
+    CPPUNIT_TEST(test_io_scalar<uint8>);
+    CPPUNIT_TEST(test_io_scalar<int8>);
+    CPPUNIT_TEST(test_io_scalar<uint16>);
+    CPPUNIT_TEST(test_io_scalar<int16>);
+    CPPUNIT_TEST(test_io_scalar<uint32>);
+    CPPUNIT_TEST(test_io_scalar<int32>);
+    CPPUNIT_TEST(test_io_scalar<uint64>);
+    CPPUNIT_TEST(test_io_scalar<int64>);
+    CPPUNIT_TEST(test_io_scalar<float32>);
+    CPPUNIT_TEST(test_io_scalar<float64>);
+    CPPUNIT_TEST(test_io_scalar<float128>);
+    CPPUNIT_TEST(test_io_scalar<complex32>);
+    CPPUNIT_TEST(test_io_scalar<complex64>);
+    CPPUNIT_TEST(test_io_scalar<complex128>);
+    CPPUNIT_TEST(test_io_scalar<binary>);
     CPPUNIT_TEST(test_io_bool_scalar);
     CPPUNIT_TEST(test_io_string_scalar);
     //testing buffer io 
-    CPPUNIT_TEST(test_io_buffer<UInt8>);
-    CPPUNIT_TEST(test_io_buffer<Int8>);
-    CPPUNIT_TEST(test_io_buffer<UInt16>);
-    CPPUNIT_TEST(test_io_buffer<Int16>);
-    CPPUNIT_TEST(test_io_buffer<UInt32>);
-    CPPUNIT_TEST(test_io_buffer<Int32>);
-    CPPUNIT_TEST(test_io_buffer<UInt64>);
-    CPPUNIT_TEST(test_io_buffer<Int64>);
-    CPPUNIT_TEST(test_io_buffer<Binary>);
-    CPPUNIT_TEST(test_io_buffer<Float32>);
-    CPPUNIT_TEST(test_io_buffer<Float64>);
-    CPPUNIT_TEST(test_io_buffer<Float128>);
-    CPPUNIT_TEST(test_io_buffer<Complex32>);
-    CPPUNIT_TEST(test_io_buffer<Complex64>);
-    CPPUNIT_TEST(test_io_buffer<Complex128>);
-    CPPUNIT_TEST(test_io_buffer<Binary>);
+    CPPUNIT_TEST(test_io_buffer<uint8>);
+    CPPUNIT_TEST(test_io_buffer<int8>);
+    CPPUNIT_TEST(test_io_buffer<uint16>);
+    CPPUNIT_TEST(test_io_buffer<int16>);
+    CPPUNIT_TEST(test_io_buffer<uint32>);
+    CPPUNIT_TEST(test_io_buffer<int32>);
+    CPPUNIT_TEST(test_io_buffer<uint64>);
+    CPPUNIT_TEST(test_io_buffer<int64>);
+    CPPUNIT_TEST(test_io_buffer<binary>);
+    CPPUNIT_TEST(test_io_buffer<float32>);
+    CPPUNIT_TEST(test_io_buffer<float64>);
+    CPPUNIT_TEST(test_io_buffer<float128>);
+    CPPUNIT_TEST(test_io_buffer<complex32>);
+    CPPUNIT_TEST(test_io_buffer<complex64>);
+    CPPUNIT_TEST(test_io_buffer<complex128>);
+    CPPUNIT_TEST(test_io_buffer<binary>);
     CPPUNIT_TEST(test_io_bool_buffer);
     CPPUNIT_TEST(test_io_string_buffer);
     //testing array IO
-    CPPUNIT_TEST(test_io_array<UInt8>);
-    CPPUNIT_TEST(test_io_array<Int8>);
-    CPPUNIT_TEST(test_io_array<UInt16>);
-    CPPUNIT_TEST(test_io_array<Int16>);
-    CPPUNIT_TEST(test_io_array<UInt32>);
-    CPPUNIT_TEST(test_io_array<Int32>);
-    CPPUNIT_TEST(test_io_array<UInt64>);
-    CPPUNIT_TEST(test_io_array<Int64>);
-    CPPUNIT_TEST(test_io_array<Float32>);
-    CPPUNIT_TEST(test_io_array<Float64>);
-    CPPUNIT_TEST(test_io_array<Float128>);
-    CPPUNIT_TEST(test_io_array<Complex32>);
-    CPPUNIT_TEST(test_io_array<Complex64>);
-    CPPUNIT_TEST(test_io_array<Complex128>);
-    CPPUNIT_TEST(test_io_array<Binary>);
+    CPPUNIT_TEST(test_io_array<uint8>);
+    CPPUNIT_TEST(test_io_array<int8>);
+    CPPUNIT_TEST(test_io_array<uint16>);
+    CPPUNIT_TEST(test_io_array<int16>);
+    CPPUNIT_TEST(test_io_array<uint32>);
+    CPPUNIT_TEST(test_io_array<int32>);
+    CPPUNIT_TEST(test_io_array<uint64>);
+    CPPUNIT_TEST(test_io_array<int64>);
+    CPPUNIT_TEST(test_io_array<float32>);
+    CPPUNIT_TEST(test_io_array<float64>);
+    CPPUNIT_TEST(test_io_array<float128>);
+    CPPUNIT_TEST(test_io_array<complex32>);
+    CPPUNIT_TEST(test_io_array<complex64>);
+    CPPUNIT_TEST(test_io_array<complex128>);
+    CPPUNIT_TEST(test_io_array<binary>);
     CPPUNIT_TEST(test_io_bool_array);
     CPPUNIT_TEST(test_grow);
     CPPUNIT_TEST(test_io_string_array);
@@ -111,8 +111,8 @@ class NXFieldTest:public CppUnit::TestFixture
 	CPPUNIT_TEST_SUITE_END();
 private:
 	NXFile file;
-	static const UInt64 n=10;
-	UInt16 testdata[10];
+	static const uint64 n=10;
+	uint16 testdata[10];
 	shape_t  fshape;
 	size_t nx;
 	size_t ny;

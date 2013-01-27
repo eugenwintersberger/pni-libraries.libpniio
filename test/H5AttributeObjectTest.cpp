@@ -20,7 +20,7 @@ void H5AttributeObjectTest::tearDown()
 }
 
 //-----------------------------------------------------------------------------
-hid_t H5AttributeObjectTest::create_group(hid_t pid,const String &name) const
+hid_t H5AttributeObjectTest::create_group(hid_t pid,const string &name) const
 {
     return H5Gcreate2(pid,name.c_str(),H5P_DEFAULT,H5P_DEFAULT,H5P_DEFAULT);
 }
@@ -129,8 +129,8 @@ void H5AttributeObjectTest::test_inquery()
 
     H5AttributeObject o1(H5TestObject(create_group(file,"group")));
 
-    o1.attr<Float32>("test1");
-    o1.attr<UInt8>("test2");
+    o1.attr<float32>("test1");
+    o1.attr<uint8>("test2");
 
     CPPUNIT_ASSERT(o1.nattr() == 2);
     //check for existing attributes

@@ -1,6 +1,6 @@
 #pragma once
 #include<vector>
-#include<pni/core/Types.hpp>
+#include<pni/core/types.hpp>
 
 using namespace pni::core;
 
@@ -18,8 +18,8 @@ template<typename T> T create_scalar_data()
     return T(1);
 }
 
-template<> String create_scalar_data<String>();
-template<> Bool create_scalar_data<Bool>();
+template<> string create_scalar_data<string>();
+template<> bool create_scalar_data<bool>();
 
 //-----------------------------------------------------------------------------
 /*!
@@ -40,6 +40,6 @@ template<typename T> std::vector<T> create_array_data(size_t n)
     return v;
 }
 
-template<> std::vector<String> create_array_data(size_t n);
-template<> std::vector<Bool> create_array_data(size_t n);
+template<> std::vector<string> create_array_data(size_t n);
+template<> std::vector<bool> create_array_data(size_t n);
 
