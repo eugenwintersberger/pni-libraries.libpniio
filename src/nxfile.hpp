@@ -30,9 +30,9 @@
 #include <pni/core/types.hpp>
 #include <pni/core/service.hpp>
 
-#include "NXObject.hpp"
-#include "NXGroup.hpp"
-#include "NXDateTime.hpp"
+#include "nxobject.hpp"
+#include "nxgroup.hpp"
+#include "nxdate_time.hpp"
 
 using namespace pni::core;
 
@@ -48,30 +48,30 @@ namespace nx{
     data holding entity. You can use NXField to read from or write data to a
     file.
     */
-    template<typename Imp> class NXFile:public NXGroup<Imp> 
+    template<typename Imp> class nxfile:public nxgroup<Imp> 
     {
         public:
             //! shared pointer type for a file object
-            typedef std::shared_ptr<NXFile > shared_ptr; 
+            typedef std::shared_ptr<nxfile > shared_ptr; 
             //===============constructors and destructor========================
             //! default constructor
-            explicit NXFile():NXGroup<Imp>() { }
+            explicit nxfile():nxgroup<Imp>() { }
 
             //-----------------------------------------------------------------
             //! copy constrcutor
-            NXFile(const NXFile<Imp> &file):NXGroup<Imp>(file) { }
+            nxfile(const nxfile<Imp> &file):nxgroup<Imp>(file) { }
 
             //-----------------------------------------------------------------
             //! implemenetation move constructor
-            explicit NXFile(Imp &&imp):NXGroup<Imp>(std::move(imp)){ }
+            explicit nxfile(Imp &&imp):nxgroup<Imp>(std::move(imp)){ }
 
             //-----------------------------------------------------------------
             //! move constructor
-            NXFile(NXFile<Imp> &&f):NXGroup<Imp>(std::move(f)) { }
+            nxfile(nxfile<Imp> &&f):nxgroup<Imp>(std::move(f)) { }
 
             //-----------------------------------------------------------------
             //! destructor
-            ~NXFile()
+            ~nxfile()
             {
                 if((this->is_valid())&&(!this->is_readonly()))
                 {
@@ -82,18 +82,18 @@ namespace nx{
 
             //====================assignment operators=========================
             //! move assignment operator
-            NXFile<Imp> &operator=(NXFile<Imp> &&o)
+            nxfile<Imp> &operator=(nxfile<Imp> &&o)
             {
                 if(this == &o) return *this;
-                NXGroup<Imp>::operator=(std::move(o));
+                nxgroup<Imp>::operator=(std::move(o));
                 return *this;
             }
 
             //-----------------------------------------------------------------
             //! copy assignment operator
-            NXFile<Imp> &operator=(const NXFile<Imp> &o)
+            nxfile<Imp> &operator=(const nxfile<Imp> &o)
             {
-                if(this != &o) NXGroup<Imp>::operator=(o);
+                if(this != &o) nxgroup<Imp>::operator=(o);
                 return *this;
             }
 
@@ -102,22 +102,22 @@ namespace nx{
             \brief open file
 
             Static method opening an existing file.
-            \throws NXFileError in case of errors
+            \throws nxfile_error in case of errors
             \param n name of the file
             \param ro open read only if true
             \return an instance of NXFile
             */
-            static NXFile<Imp> open_file(const string &n,bool ro=true)
+            static nxfile<Imp> open_file(const string &n,bool ro=true)
             {
-                NXFile<Imp> file;
+                nxfile<Imp> file;
 
                 try
                 {
-                    file = NXFile<Imp>(Imp::open_file(n,ro));
+                    file = nxfile<Imp>(Imp::open_file(n,ro));
                 }
                 catch(...)
                 {
-                    throw NXFileError(EXCEPTION_RECORD,"Error opening file!");
+                    throw nxfile_error(EXCEPTION_RECORD,"Error opening file!");
                 }
 
 
@@ -129,24 +129,24 @@ namespace nx{
             \brief create file
             
             Static method to create a file. 
-            \throws NXFileError in case of errors
+            \throws nxfile_error in case of errors
             \param n name of the file to create
             \param ow overwrite existing file if true
             \param ssize split size (not implemented yet)
             \return instance of NXFile
             */
-            static NXFile<Imp> 
+            static nxfile<Imp> 
                 create_file(const string &n,bool ow=false, ssize_t ssize = 0)
             {
-                NXFile<Imp> file;
+                nxfile<Imp> file;
 
                 try
                 {
-                    file = NXFile<Imp>(Imp::create_file(n,ow,ssize));
+                    file = nxfile<Imp>(Imp::create_file(n,ow,ssize));
                 }
                 catch(...)
                 {
-                    throw NXFileError(EXCEPTION_RECORD,"Error creating file!");
+                    throw nxfile_error(EXCEPTION_RECORD,"Error creating file!");
                 }
                 
                 //set file specific attributes
@@ -189,7 +189,7 @@ namespace nx{
                 }
                 
                 this->imp().close();
-                NXObject<Imp>::close();
+                nxobject<Imp>::close();
             }
 
             //-----------------------------------------------------------------
