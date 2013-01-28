@@ -33,7 +33,7 @@
 #include <pni/core/types.hpp>
 #include <pni/core/array.hpp>
 
-#include "NXExceptions.hpp"
+#include "nxexceptions.hpp"
 #include "io_utils.hpp"
 
 using namespace pni::core;
@@ -117,11 +117,11 @@ namespace nx{
     \ingroup nexus_lowlevel
     \brief attribute object
 
-    NXAttribute represents an attribute which is attached to one of the Nexus 
+    nxattribute represents an attribute which is attached to one of the Nexus 
     objects. Objects of this type can be used to read and write attribute data 
     from and to an object.
     */
-    template<typename Imp> class NXAttribute
+    template<typename Imp> class nxattribute
     {
         private:
             Imp _imp;  //!< implementation of the attribute object
@@ -294,31 +294,31 @@ namespace nx{
         public:
             //==========constructors and destructors============================
             //! default constructor
-            explicit NXAttribute():_imp(){}
+            explicit nxattribute():_imp(){}
 
             //------------------------------------------------------------------
             //! copy constructor
-            NXAttribute(const NXAttribute<Imp> &a): _imp(a._imp) { }
+            nxattribute(const nxattribute<Imp> &a): _imp(a._imp) { }
 
             //------------------------------------------------------------------
             //! move constructor
-            NXAttribute(NXAttribute<Imp> &&a):_imp(std::move(a._imp)) { }
+            nxattribute(nxattribute<Imp> &&a):_imp(std::move(a._imp)) { }
 
             //------------------------------------------------------------------
             //! copy constructor from implementation
-            explicit NXAttribute(const Imp &i):_imp(i) { }
+            explicit nxattribute(const Imp &i):_imp(i) { }
 
             //------------------------------------------------------------------
             //! move constructor from implementation
-            explicit NXAttribute(Imp &&i):_imp(std::move(i)) { }
+            explicit nxattribute(Imp &&i):_imp(std::move(i)) { }
 
             //------------------------------------------------------------------
             //!destructor
-            ~NXAttribute(){ _imp.close(); }
+            ~nxattribute(){ _imp.close(); }
 
             //===================assignment operators===========================
             //! copy assignment operator
-            NXAttribute<Imp> &operator=(const NXAttribute<Imp> &a)
+            nxattribute<Imp> &operator=(const nxattribute<Imp> &a)
             {
                 if(this == &a) return *this;
 
@@ -328,7 +328,7 @@ namespace nx{
 
             //------------------------------------------------------------------
             //! move assignment operator
-            NXAttribute<Imp> &operator=(NXAttribute<Imp> &&a)
+            nxattribute<Imp> &operator=(nxattribute<Imp> &&a)
             {
                 if(this == &a) return *this;
                 _imp = std::move(a._imp);
@@ -342,7 +342,7 @@ namespace nx{
             Write data from an instance of the DBuffer template.
             \throws memory_not_allocated_error if buffer memory is not allocated
             \throws size_missmatch_error if buffer and attribute size do not match
-            \throws NXAttributeError in case of any other IO error
+            \throws nxattribute_error in case of any other IO error
             \tparam OTS template argumens to the DBuffer template
             \param buffer buffer from which to write data
             */
@@ -359,7 +359,7 @@ namespace nx{
             Write the data from a static buffer type. 
             \throws memory_not_allocated_error if buffer memory is not allocated
             \throws size_missmatch_error if buffer and attribute size do not match
-            \throws NXAttributeError in case of any other IO error
+            \throws nxattribute_error in case of any other IO error
             \tparam OTS template arguments to SBuffer
             \param buffer buffer from which to write data
             */
@@ -376,7 +376,7 @@ namespace nx{
             Write the data from a reference buffer template.
             \throws memory_not_allocated_error if buffer memory is not allocated
             \throws size_missmatch_error if buffer and attribute size do not match
-            \throws NXAttributeError in case of any other IO error
+            \throws nxattribute_error in case of any other IO error
             \tparam OTS template arguments to RBuffer
             \param buffer buffer from which to write data
             */
@@ -393,7 +393,7 @@ namespace nx{
             \throws memory_not_allocated_error if array buffer is not allocated
             \throws shape_missmatch_errror if array and attribute shape do not
             match
-            \throws NXAttributeError in case of any other IO error
+            \throws nxattribute_error in case of any other IO error
             \tparam OTS template arguments to DArray
             \param o instance of DArray from which to write data
             */
@@ -411,7 +411,7 @@ namespace nx{
             \throws memory_not_allocated_error if array buffer is not allocated
             \throws shape_missmatch_error if array and attribute shape do not
             match
-            \throws NXAttributeError in case of any other IO error
+            \throws nxattribute_error in case of any other IO error
             \tparam OTS template arguments to SArray template
             \param o instance SArray from which to write data
             */
@@ -429,7 +429,7 @@ namespace nx{
             Write a single scalar value. This throws an exception if the field
             is not scalar (size=1).
             \throws shape_missmatch_error if field is not scalar
-            \throws NXAttributeError in case of any other IO error
+            \throws nxattribute_error in case of any other IO error
             \tparam T data type of the scalar to write
             \param value reference to the value to write
             */
@@ -456,7 +456,7 @@ namespace nx{
 
             This is a special implementation of write for classical C-strings.
             \throws shape_missmatch_error if field is not scalar
-            \throws NXAttributeError in case of any other IO error
+            \throws nxattribute_error in case of any other IO error
             \param value pointer to a C-string
             */
             void write(const char *value) const
@@ -483,7 +483,7 @@ namespace nx{
             \throws memory_not_allocated_error if array not allocated
             \throws type_error if data type not supported
             \throws shape_missmatch_error if array shape does not match
-            \throws NXAttributeError in case of any other error
+            \throws nxattribute_error in case of any other error
             \param a instance of array
             */
             void write(const array &a) const
@@ -534,7 +534,7 @@ namespace nx{
             Read data to a DBuffer instance.
             \throws memory_not_allocated_error if buffer is not allocated
             \throws size_missmatch_error if buffer and attribute size do not match
-            \throws NXAttributeError in case of any other IO error
+            \throws nxattribute_error in case of any other IO error
             \tparam OTS template arguments to the DBuffer template
             \param buffer instance of DBuffer in which to store the data
             */
@@ -551,7 +551,7 @@ namespace nx{
             Read data to a SBuffer instance.
             \throws memory_not_allocated_error if buffer is not allocated
             \throws size_missmatch_error if buffer and attribute size do not match
-            \throws NXAttributeError in case of any other IO error
+            \throws nxattribute_error in case of any other IO error
             \tparam OTS template arguments to the SBuffer template
             \param buffer instance of SBuffer in which to store the data
             */
@@ -568,7 +568,7 @@ namespace nx{
             Read data to a RBuffer instance.
             \throws memory_not_allocated_error if buffer is not allocated
             \throws size_missmatch_error if buffer and attribute size do not match
-            \throws NXAttributeError in case of any other IO error
+            \throws nxattribute_error in case of any other IO error
             \tparam OTS template arguments to the RBuffer template
             \param buffer instance of RBuffer in which to store the data
             */
@@ -585,7 +585,7 @@ namespace nx{
             \throws memory_not_allocated_error if array buffer is not allocated
             \throws shape_missmatch_error if array and attribute shape do not
             match
-            \throws NXAttributeError in the case of any other IO error
+            \throws nxattribute_error in the case of any other IO error
             \tparam OTS template arguments to DArray
             \param o instance of DArray
             */
@@ -603,7 +603,7 @@ namespace nx{
             \throws memory_not_allocated_error if array buffer is not allocated
             \throws shape_missmatch_error if array and attribute shape do not
             match
-            \throws NXAttributeError in the case of any other IO error
+            \throws nxattribute_error in the case of any other IO error
             \tparam OTS template arguments to SArray
             \param o instance of SArray
             */
@@ -620,7 +620,7 @@ namespace nx{
             \throws memory_not_allocated_error if array not allocated
             \throws type_error if data type is not supported
             \throws shape_missmatch_error if array shape does not match
-            \throws NXAttributeError in case of any other IO error
+            \throws nxattribute_error in case of any other IO error
             \param a instance of array 
             */
             void read(array &a) const
@@ -677,7 +677,7 @@ namespace nx{
 
             Read a single scalar value.
             \throws shape_missmatch_error if the attribute is not scalar
-            \throws NXAttributeError in case of any other IO error
+            \throws nxattribute_error in case of any other IO error
             \tparam T type to read to
             \param value reference to an instance of T
             */
