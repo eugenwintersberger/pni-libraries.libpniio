@@ -35,9 +35,9 @@
 #include <pni/core/slice.hpp>
 #include <pni/core/array.hpp>
 
-#include "NXObject.hpp"
-#include "NXExceptions.hpp"
-#include "NXSelection.hpp"
+#include "nxobject.hpp"
+#include "nxexceptions.hpp"
+#include "nxselection.hpp"
 #include "io_utils.hpp"
 
 using namespace pni::core;
@@ -59,7 +59,7 @@ namespace nx{
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(NXFieldError &error)\
+    catch(nxfield_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }
@@ -77,7 +77,7 @@ namespace nx{
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(NXFieldError &error)\
+    catch(nxfield_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }
@@ -95,7 +95,7 @@ namespace nx{
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(NXFieldError &error)\
+    catch(nxfield_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }
@@ -113,19 +113,19 @@ namespace nx{
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(NXFieldError &error)\
+    catch(nxfield_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }
 
     /*! 
     \ingroup nexus_lowlevel
-    \brief NXfield base class
+    \brief nxfield base class
 
-    NXField is a type used to store multidimensional data in a file. The IO
+    nxfield is a type used to store multidimensional data in a file. The IO
     methods it provides support all the array templates provided by \c
     libpnicore. Partial IO is provided by the () operator (see below). 
-    The interface of NXField is quite similar to those of the array templates
+    The interface of nxfield is quite similar to those of the array templates
     provided by \c libpnicore. Like them it provides a shape() and  a size()
     method returning the number of elements along each dimension and the total
     number of elements in the field. rank() returns the number of dimensions of
@@ -170,7 +170,7 @@ namespace nx{
     is not known when the field is created
     \code
     //we start with a field of size 0 - no element
-    NXField field = group.create_field<Float32>("motor",shape_t{0}); 
+    nxfield field = group.create_field<float32>("motor",shape_t{0}); 
 
     size_t np = 0;
     while(true)
@@ -200,22 +200,22 @@ namespace nx{
     </table>
     </div>
 
-    As HDF5 datasets, NXField objects provide the possibility to read or write
+    As HDF5 datasets, nxfield objects provide the possibility to read or write
     only a part of the data.  The mechanism works pretty much as the array view
     selection in \c libpnicore. 
     Compare the following code with the figures on the right side
     \code
-    DArray<UInt32> strip(shape_t{1024});
+    darray<uint32> strip(shape_t{1024});
 
     //selection 1
     field1(3,slice(0,1024)).read(strip);
 
     //selection 2
-    DArray<UInt32> block(shape_t{4,6});
+    darray<uint32> block(shape_t{4,6});
     field2(slice(3,7),slice(2,8)).read(block);
 
     //selection 3
-    DArray<UInt32> block2(shape_t{4,5});
+    darray<uint32> block2(shape_t{4,5});
     field3(slice(2,6),slice(2,10,2)).read(block2);
 
     \endcode
@@ -224,7 +224,7 @@ namespace nx{
     Every call to read or write immediately after reading or writing the data
     removes this selections.
     */
-    template<typename Imp> class NXField:public NXObject<Imp> 
+    template<typename Imp> class nxfield:public nxobject<Imp> 
     {
         private:
             /*!
@@ -273,7 +273,7 @@ namespace nx{
 
             \throws memory_not_allocated_error if buffer size is 0
             \throws size_missmatch_error if buffer and field size do not match
-            \throws NXFieldError in case of any other IO error
+            \throws nxfield_error in case of any other IO error
             \tparam BTYPE buffer type
             \param b reference to an instance of BTYPE
             */
@@ -299,7 +299,7 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    throw NXFieldError(EXCEPTION_RECORD,
+                    throw nxfield_error(EXCEPTION_RECORD,
                                        "Cannot read to buffer!");
                 }
             }
@@ -311,7 +311,7 @@ namespace nx{
             Write data from a buffer to the file
             \throws memory_not_allocated_error if buffer is not allocated
             \throws size_missmatch_error if field and buffer size do not match
-            \throws NXFieldError in case of any other error
+            \throws nxfield_error in case of any other error
             \tparam BTYPE buffer type
             \param b reference to an instance of BTYPE
             */
@@ -335,7 +335,7 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    throw NXFieldError(EXCEPTION_RECORD,"Cannot write buffer!");
+                    throw nxfield_error(EXCEPTION_RECORD,"Cannot write buffer!");
                 }
             }
 
@@ -345,7 +345,7 @@ namespace nx{
 
             \throws memory_not_allocated_error if array buffer not allocated
             \throws shape_missmatch_error if shapes do not match
-            \throws NXFieldError in case of other errors
+            \throws nxfield_error in case of other errors
             \tparam ATYPE array type
             \param a reference to an instance fo ATYPE
             */
@@ -381,7 +381,7 @@ namespace nx{
                     this->imp().read(const_cast<typename ATYPE::value_type*>(
                                 a.storage().ptr()));
                 }
-                catch(pni::io::nx::NXFileError &error)
+                catch(nxfield_error &error)
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
@@ -395,7 +395,7 @@ namespace nx{
 
             \throws memory_not_allocated_error if array buffer not allocated
             \throws shape_missmatch_error if shapes do not match
-            \throws NXFieldError in case of other errors
+            \throws nxfield_error in case of other errors
             \tparam ATYPE array type
             \param a reference to an instance fo ATYPE
             */
@@ -425,7 +425,7 @@ namespace nx{
                 try { this->imp().write(a.storage().ptr()); }
                 catch(...)
                 {
-                    throw NXFieldError(EXCEPTION_RECORD,
+                    throw nxfield_error(EXCEPTION_RECORD,
                                      "Cannt write data from array!");
                 }
             }
@@ -444,65 +444,65 @@ namespace nx{
 
         public:
             //! shared pointer type for the field object
-            typedef std::shared_ptr<NXField<Imp> > shared_ptr; 
+            typedef std::shared_ptr<nxfield<Imp> > shared_ptr; 
             //============constructors and destructors=========================
             //! default constructor
-            explicit NXField():NXObject<Imp>() { }
+            explicit nxfield():nxobject<Imp>() { }
 
             //-----------------------------------------------------------------
             //! copy constructor
-            NXField(const NXField<Imp> &o):NXObject<Imp>(o) { }
+            nxfield(const nxfield<Imp> &o):nxobject<Imp>(o) { }
 
             //-----------------------------------------------------------------
             //! move constructor
-            NXField(NXField<Imp> &&o):NXObject<Imp>(std::move(o)) { }
+            nxfield(nxfield<Imp> &&o):nxobject<Imp>(std::move(o)) { }
 
             //-----------------------------------------------------------------
             //! copy constructor from implementation object
-            explicit NXField(const Imp &o):NXObject<Imp>(o) { }
+            explicit nxfield(const Imp &o):nxobject<Imp>(o) { }
 
             //-----------------------------------------------------------------
             //! move constructor from implementation object
-            explicit NXField(Imp &&o):NXObject<Imp>(std::move(o)){}
+            explicit nxfield(Imp &&o):nxobject<Imp>(std::move(o)){}
 
             //-----------------------------------------------------------------
             //! copy conversion constructor
-            template<typename ObjImp> NXField(const NXObject<ObjImp> &o)
-                :NXObject<Imp>(o)
+            template<typename ObjImp> nxfield(const nxobject<ObjImp> &o)
+                :nxobject<Imp>(o)
             { }
 
             //-----------------------------------------------------------------
             //!destructor
-            ~NXField()
+            ~nxfield()
             { 
                 this->imp().clear_selections();
             }
 
             //====================assignment operators=========================
             //! copy assignment
-            NXField<Imp> &operator=(const NXField<Imp> &o)
+            nxfield<Imp> &operator=(const nxfield<Imp> &o)
             {
                 if(this == &o) return *this;
-                NXObject<Imp>::operator=(o);
+                nxobject<Imp>::operator=(o);
                 return *this;
             }
 
             //-----------------------------------------------------------------
             //! copy conversion assignment
             template<typename ObjImp>
-            NXField<Imp> &operator=(const NXObject<ObjImp> &o)
+            nxfield<Imp> &operator=(const NXObject<ObjImp> &o)
             {
                 if((void *)this == (void *)&o) return *this;
-                NXObject<Imp>::operator=(o);
+                nxobject<Imp>::operator=(o);
                 return *this;
             }
 
             //-----------------------------------------------------------------
             //! move assignment
-            NXField<Imp> &operator=(NXField<Imp> &&o)
+            nxfield<Imp> &operator=(nxfield<Imp> &&o)
             {
                 if(this == &o) return *this;
-                NXObject<Imp>::operator=(std::move(o));
+                nxobject<Imp>::operator=(std::move(o));
                 return *this;
             }
 
@@ -553,9 +553,9 @@ namespace nx{
             Returns the parent object of the field.
             \return parent object
             */
-            NXObject<MAPTYPE(Imp,ObjectImpl)> parent() const
+            nxobject<MAPTYPE(Imp,ObjectImpl)> parent() const
             {
-                return NXObject<MAPTYPE(Imp,ObjectImpl)>(this->imp().parent());
+                return nxobject<MAPTYPE(Imp,ObjectImpl)>(this->imp().parent());
             }
             
             //-----------------------------------------------------------------
@@ -566,7 +566,7 @@ namespace nx{
             old and the new shape must coincide otherwise an exception will be
             thrown.
             \throws shape_missmatch_error if ranks do not match
-            \throws NXFieldError in case of other errors
+            \throws nxfield_error in case of other errors
             \param s describing the new shape of the field
             */
             template<typename CTYPE> void resize(const CTYPE &s)
@@ -581,7 +581,7 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    throw NXFieldError(EXCEPTION_RECORD,
+                    throw nxfield_error(EXCEPTION_RECORD,
                             "Error resizing field!");
                 }
             }
@@ -595,7 +595,7 @@ namespace nx{
             stored in a field and their number is not known when the field was
             created.
             \throws index_error if e exceeds the rank of the field
-            \throws NXFieldError in case of other errors
+            \throws nxfield_error in case of other errors
             \param e index of dimension along which to grow
             \param n number of elements by which to grow
             */
@@ -615,7 +615,7 @@ namespace nx{
                     ss<<"Growing field ["<<this->path();
                     ss<<"] along dimension"<<e<<" by "<<n<<" elements ";
                     ss<<"failed!";
-                    throw NXFieldError(EXCEPTION_RECORD,ss.str());
+                    throw nxfield_error(EXCEPTION_RECORD,ss.str());
                 }
             }
 
@@ -638,7 +638,7 @@ namespace nx{
 
             Returns the number of elements along dimension i. An exception is
             thrown if i exceeds the rank of the field.
-            \throws IndexError if i exceeds the rank of the field
+            \throws index_error if i exceeds the rank of the field
             \param i index of the dimension
             \return number of elements
             */
@@ -660,7 +660,7 @@ namespace nx{
             field.read(scalar);
             \endcode
             \throws shape_missmatch_error if dataset is not scalar
-            \throws NXFieldError in all other error cases
+            \throws nxfield_error in all other error cases
             \param value variable where to store the data
             */
             template<typename T> void read(T &value) const
@@ -675,7 +675,7 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    throw NXFieldError(EXCEPTION_RECORD,
+                    throw nxfield_error(EXCEPTION_RECORD,
                                        "Error reading data from field ["
                                        +this->path()+"]!");
                 }
@@ -696,7 +696,7 @@ namespace nx{
             \endcode
             \throws memory_not_allocated_error if the buffer is not allocated
             \throws size_missmatch_buffer if sizes do not match
-            \throws NXFieldError in all other cases
+            \throws nxfield_error in all other cases
             \param buffer buffer where to store data
             */
             template<typename T,size_t SIZE> 
@@ -711,7 +711,7 @@ namespace nx{
 
             \throws memory_not_allocated_error if buffer not allocated
             \throws size_missmatch_error if buffer and field size do not match
-            \throws NXFieldError in case of any other errors
+            \throws nxfield_error in case of any other errors
             \param buffer reference to an RBuffer instance
             */
             template<typename T> void read(rbuffer<T> &buffer) const
@@ -725,7 +725,7 @@ namespace nx{
 
             \throws memory_not_allocated_error if buffer not allocated
             \throws size_missmatch_error if buffer and field size do not match
-            \throws NXFieldError in case of any other errors
+            \throws nxfield_error in case of any other errors
             \param buffer reference to an RBuffer instance
             */
             template<typename T,typename ALLOCATOR>
@@ -751,7 +751,7 @@ namespace nx{
             \throws shape_missmatch_error if field and array-shape do not
             match
             \throws memory_not_allocated_error if array buffer not allocated
-            \throws NXFieldError in case of all other errors.
+            \throws nxfield_error in case of all other errors.
             \param array Array instance where to store the data
             */
             template<typename T,typename STORAGE,typename IMAP>
@@ -768,7 +768,7 @@ namespace nx{
 
             \throws shape_missmatch_error if field and array-shape do not match
             \throws memory_not_allocated_error if array-buffer is not allocated
-            \throws NXFieldError in acase of any other IO error
+            \throws nxfield_error in acase of any other IO error
             \tparam OTS template arguments for SArray
             \param array  instance of SArray
             */
@@ -785,7 +785,7 @@ namespace nx{
             This method reads data to an array type erasure. 
             \throws shape_missmatch_error if field and array-shape do not match
             \throws memory_not_allocated_error if array-buffer is not allocated
-            \throws NXFieldError in case of any other IO error
+            \throws nxfield_error in case of any other IO error
             \param a instance of the array
             */
             void read(array &a) const;
@@ -796,7 +796,7 @@ namespace nx{
 
             \throws memory_not_allocated_error if array buffer is not allocated
             \throws shape_missmatch_error if array and field shape do not match
-            \throws NXFieldError in case of any other IO error
+            \throws nxfield_error in case of any other IO error
             \tparam OTS template parameters for numarray template
             \param array instance of NumArray
             */
@@ -820,7 +820,7 @@ namespace nx{
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
-                catch(NXFieldError &error)
+                catch(nxfield_error &error)
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
@@ -839,7 +839,7 @@ namespace nx{
             \endcode
 
             \throws shape_missmatch_error if the dataspace is not scalar
-            \throws NXFieldError in case of other errors
+            \throws nxfield_error in case of other errors
             \param value value to write
             */
             template<typename T> void write(const T &value) const
@@ -854,7 +854,7 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    throw NXFieldError(EXCEPTION_RECORD,
+                    throw nxfield_error(EXCEPTION_RECORD,
                             "Error writing data to field ["
                             +this->path()+"]!");
                 }
@@ -869,7 +869,7 @@ namespace nx{
             the write(const T &value) template mathod.
 
             \throws shape_missmatch_error if the field is not scalar
-            \throws NXFieldError in case of other errors
+            \throws nxfield_error in case of other errors
             \param value pointer to string data
             */
             void write(const char *value) const
@@ -883,7 +883,7 @@ namespace nx{
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
-                catch(NXFieldError &error)
+                catch(nxfield_error &error)
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
@@ -897,7 +897,7 @@ namespace nx{
             Write data form a DBuffer instance to the field.
             \throws memory_not_allocated_error if buffer is not allocated
             \throws size_missmatch_error if buffer and field size do not match
-            \throws NXFieldError in case of any other IO error
+            \throws nxfield_error in case of any other IO error
             \tparam OTS template arguments to DBuffer
             \param b instance of DBuffer from which to write data
             */
@@ -914,7 +914,7 @@ namespace nx{
             Write data form a SBuffer instance to the field.
             \throws memory_not_allocated_error if buffer is not allocated
             \throws size_missmatch_error if buffer and field size do not match
-            \throws NXFieldError in case of any other IO error
+            \throws nxfield_error in case of any other IO error
             \tparam OTS template arguments to SBuffer
             \param b instance of SBuffer from which to write data
             */
@@ -931,7 +931,7 @@ namespace nx{
             Write data form a RBuffer instance to the field.
             \throws memory_not_allocated_error if buffer is not allocated
             \throws size_missmatch_error if buffer and field size do not match
-            \throws NXFieldError in case of any other IO error
+            \throws nxfield_error in case of any other IO error
             \tparam OTS template arguments to RBuffer
             \param b instance of RBuffer from which to write data
             */
@@ -947,7 +947,7 @@ namespace nx{
             Write data from an instance of darray. 
             \throws memory_not_allocated_error if array-buffer is not allocated
             \throws shape_missmatch_error if field and array shape do not match
-            \throws NXFieldError in case of any other IO error
+            \throws nxfield_error in case of any other IO error
             \tparam OTS template arguments to DArray
             \param a instance of DArray
             */
@@ -964,7 +964,7 @@ namespace nx{
             Write data from an instance of SArray. 
             \throws memory_not_allocated_error if array-buffer is not allocated
             \throws shape_missmatch_error if field and array shape do not match
-            \throws NXFieldError in case of any other IO error
+            \throws nxfield_error in case of any other IO error
             \tparam OTS template arguments to SArray
             \param a instance of SArray
             */
@@ -981,7 +981,7 @@ namespace nx{
             Write data form an instance of numarray.
             \throws memory_not_allocated_error if array-buffer is not allocated
             \throws shape_missmatch_error if field and array shape do not match
-            \throws NXFieldError in case of any other IO error
+            \throws nxfield_error in case of any other IO error
             \tparam OTS template arguments to NumArray
             \param a instance of NumArray
             */
@@ -1000,7 +1000,7 @@ namespace nx{
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
-                catch(NXFieldError &error)
+                catch(nxfield_error &error)
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
@@ -1018,8 +1018,8 @@ namespace nx{
             to this field. This can now be used to write data only to the
             selection of the array.
             \code
-            NXField f = g.create_field<uint16>("frame",shape_t{1024,1024});
-            DArray<UInt16> spec(shape_t{1024});
+            nxfield f = g.create_field<uint16>("frame",shape_t{1024,1024});
+            darray<uint16> spec(shape_t{1024});
 
             f(100,slice(0,1024)).read(spec)
 
@@ -1031,9 +1031,9 @@ namespace nx{
             \return field object with selection set
             */
             template<typename ...ITYPES>
-            NXSelection<NXField<Imp> > operator()(ITYPES ...indices)
+            nxselection<nxfield<Imp> > operator()(ITYPES ...indices)
             {
-                typedef NXSelection<NXField<Imp> > sel_type;
+                typedef nxselection<nxfield<Imp> > sel_type;
                 typedef typename sel_type::selection_type container_type;
 
                 return sel_type(container_type({slice(indices)...}),*this);
@@ -1050,19 +1050,19 @@ namespace nx{
             \param selection container with instances of slice
             \return instance of NXField with selection set
             */
-            NXSelection<NXField<Imp> > operator()(const std::vector<slice> &selection) 
+            nxselection<nxfield<Imp> > operator()(const std::vector<slice> &selection) 
             {
-                typedef NXSelection<NXField<Imp> > sel_type;
+                typedef nxselection<nxfield<Imp> > sel_type;
 
                 return sel_type(selection,*this);
             }
         
-            friend class NXSelection<NXField<Imp> >;
+            friend class nxselection<nxfield<Imp> >;
 
     };
 
     //-------------------------------------------------------------------------
-    template<typename Imp> void NXField<Imp>::read(array &a) const
+    template<typename Imp> void nxfield<Imp>::read(array &a) const
     {
         if(a.size() == 0)
             throw memory_not_allocated_error(EXCEPTION_RECORD,
@@ -1093,14 +1093,14 @@ namespace nx{
         {
             read_array(this->imp(),a);
         }
-        catch(NXFileError &error)
+        catch(nxfield_error &error)
         {
             error.append(EXCEPTION_RECORD); throw error;
         }
     }
 
     //-------------------------------------------------------------------------
-    template<typename Imp> void NXField<Imp>::write(const array &a) const
+    template<typename Imp> void nxfield<Imp>::write(const array &a) const
     {
 
         if(a.size() == 0)
@@ -1136,7 +1136,7 @@ namespace nx{
         }
         catch(...)
         {
-            throw NXFieldError(EXCEPTION_RECORD,
+            throw nxfield_error(EXCEPTION_RECORD,
                              "Cannt write data from array!");
         }
     }
