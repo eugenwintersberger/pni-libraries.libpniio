@@ -28,12 +28,12 @@
 
 #include <pni/core/types.hpp>
 
-#include "NXObject.hpp"
-#include "NXImpMap.hpp"
-#include "NXField.hpp"
-#include "NXFilter.hpp"
-#include "NXExceptions.hpp"
-#include "NXObjectIterator.hpp"
+#include "nxobject.hpp"
+#include "nximp_map.hpp"
+#include "nxfield.hpp"
+#include "nxfiler.hpp"
+#include "nxexceptions.hpp"
+#include "nxobject_iterator.hpp"
 
 using namespace pni::core;
 
@@ -45,20 +45,20 @@ namespace nx{
     \ingroup nexus_lowlevel
     \brief NXgroup object
     */
-    template<typename Imp> class NXGroup:public NXObject<Imp> 
+    template<typename Imp> class nxgroup:public nxobject<Imp> 
     {
         public:
             //===================public types==================================
             //! shared pointer type to a NXGroup type
-            typedef std::shared_ptr<NXGroup<Imp> > shared_ptr; 
-            typedef NXObjectIterator<NXGroup<Imp>,
-                                     NXObject<MAPTYPE(Imp,ObjectImpl)> > 
+            typedef std::shared_ptr<nxgroup<Imp> > shared_ptr; 
+            typedef nxobject_iterator<nxgroup<Imp>,
+                                     nxobject<MAPTYPE(Imp,ObjectImpl)> > 
                     iterator; //!< iterator type
             //! field type
-            typedef NXField<MAPTYPE(Imp,FieldImpl)> field_type; 
+            typedef nxfield<MAPTYPE(Imp,FieldImpl)> field_type; 
             //==============constructors and destructor========================
             //! default constructor
-            explicit NXGroup():NXObject<Imp>() { }
+            explicit nxgruop():nxobject<Imp>() { }
 
             //-----------------------------------------------------------------
             /*! \brief copy constructor
@@ -68,55 +68,55 @@ namespace nx{
             an object directly at its construction.
             \param o original group object 
             */
-            NXGroup(const NXGroup<Imp> &o):NXObject<Imp>(o) { }
+            nxgroup(const nxgroup<Imp> &o):nxobject<Imp>(o) { }
             
             //-----------------------------------------------------------------
             //! move constructor
-            NXGroup(NXGroup<Imp> &&o):NXObject<Imp>(std::move(o)) { }
+            nxgroup(nxgroup<Imp> &&o):nxobject<Imp>(std::move(o)) { }
            
             //-----------------------------------------------------------------
             //!copy construct from implementation object
-            NXGroup(const Imp &imp):NXObject<Imp>(imp) { }
+            nxgroup(const Imp &imp):nxobject<Imp>(imp) { }
 
             //-----------------------------------------------------------------
             //! move construct from implementation object
-            NXGroup(Imp &&imp):NXObject<Imp>(std::move(imp)) { }
+            nxgroup(Imp &&imp):nxobject<Imp>(std::move(imp)) { }
 
 
             //-----------------------------------------------------------------
             //! copy conversion constructor
             template<typename ObjImp>
-            NXGroup(const NXObject<ObjImp> &o):NXObject<Imp>(o)
+            nxgroup(const nxobject<ObjImp> &o):nxobject<Imp>(o)
             { }
 
             //-----------------------------------------------------------------
             //! destructor
-            virtual ~NXGroup(){ } 
+            virtual ~nxgroup(){ } 
 
             //=====================assignment operators========================
             //! copy assignment operator
-            NXGroup<Imp> &operator=(const NXGroup<Imp> &o)
+            nxgroup<Imp> &operator=(const nxgroup<Imp> &o)
             {
                 if(this == &o) return *this;
-                NXObject<Imp>::operator=(o);
+                nxobject<Imp>::operator=(o);
                 return *this;
             }
 
             //-----------------------------------------------------------------
             //! copy assignment conversion operator
             template<typename ObjImp>
-            NXGroup<Imp> &operator=(const NXObject<ObjImp> &o)
+            nxgroup<Imp> &operator=(const nxobject<ObjImp> &o)
             {
-                NXObject<Imp>::operator=(o);
+                nxobject<Imp>::operator=(o);
                 return *this;
             }
 
             //-----------------------------------------------------------------
             //! move assignment operator
-            NXGroup<Imp> &operator=(NXGroup<Imp> &&o)
+            nxgroup<Imp> &operator=(nxgroup<Imp> &&o)
             {
                 if(this == &o) return *this;
-                NXObject<Imp>::operator=(std::move(o));
+                nxobject<Imp>::operator=(std::move(o));
                 return *this;
             }
 
@@ -132,7 +132,7 @@ namespace nx{
             \param type nexus class type
             \return a new instance of NXGroup
             */
-            NXGroup<MAPTYPE(Imp,GroupImpl)> 
+            nxgroup<MAPTYPE(Imp,GroupImpl)> 
                 create_group(const string &n,const string &type=string()) const
             {
                 //we need to do here two things
@@ -141,7 +141,7 @@ namespace nx{
 
                 typedef MAPTYPE(Imp,GroupImpl) GroupImpl;
 
-                NXGroup<GroupImpl> g(GroupImpl(n,this->imp()));
+                nxgroup<GroupImpl> g(GroupImpl(n,this->imp()));
 
                 //if the type string is not empty we write the 
                 //appropriate attribute.
@@ -157,7 +157,7 @@ namespace nx{
 
             Create a new data field without a filter for compression.
             \code
-            NXGroup g = f["/scan_1/instrument/detector"];
+            nxgroup g = f["/scan_1/instrument/detector"];
 
             shape_t shape{0,1024,1024};
             shape_t chunk{0,128,1024};
@@ -169,7 +169,7 @@ namespace nx{
             set to one. 
             \throws shape_missmatch_error if chunk and field shape do not have the
             same rank
-            \throws NXGroupError in all other cases
+            \throws nxgroup_error in all other cases
             \tparam T data type of the field
             \tparam CTYPES container type for the shape and chunk shape
             \param n name (path) of the field
@@ -180,11 +180,11 @@ namespace nx{
             template<typename T, 
                      typename CTYPES=shape_t, 
                      typename CTYPEC=shape_t > 
-            NXField<MAPTYPE(Imp,FieldImpl)>
+            nxfield<MAPTYPE(Imp,FieldImpl)>
                 create_field(const string &n,const CTYPES &shape=CTYPES(),
                              const CTYPES &chunk=CTYPES()) const
             {
-                typedef NXField<MAPTYPE(Imp,FieldImpl)> FieldType;
+                typedef nxfield<MAPTYPE(Imp,FieldImpl)> FieldType;
                 typedef MAPTYPE(Imp,FieldImpl) FieldImp;
                 shape_t s,cs;
 
@@ -224,7 +224,7 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    throw NXGroupError(EXCEPTION_RECORD,
+                    throw nxgroup_error(EXCEPTION_RECORD,
                                        "Something went wrong!");
                 }
                 return field;
@@ -239,12 +239,12 @@ namespace nx{
             With this method the chunk shape for the field is determined
             automatically.
             \code
-            NXGroup g = file["/scan_1/instrument/detector"];
+            nxgruop g = file["/scan_1/instrument/detector"];
 
             shape_t shape{0,2048,2048};
-            NXDeflateFilter filter;
+            nxdeflate_filter filter;
 
-            NXField field = g.create_field<UInt16>("data",shape,filter);
+            nxfield field = g.create_field<uint16>("data",shape,filter);
             \endcode
             \tparam T data type for the filed
             \tparam FilterImp filter implementation (implicit)
@@ -255,12 +255,12 @@ namespace nx{
             \return instance of NXField
             */
             template<typename T,typename FilterImp,typename CTYPES> 
-                NXField<MAPTYPE(Imp,FieldImpl)>
+                nxfield<MAPTYPE(Imp,FieldImpl)>
                 create_field(const string &n,const CTYPES &s,
-                             const NXFilter<FilterImp> &filter) const
+                             const nxfilter<FilterImp> &filter) const
             {
                 typedef MAPTYPE(Imp,FieldImpl) FieldImp;
-                typedef NXField<FieldImp> FieldType;
+                typedef nxfield<FieldImp> FieldType;
 
                 //create a vector with the number of elements of the 
                 //shape and set the first dimension to 1
@@ -280,13 +280,13 @@ namespace nx{
 
             Create a field with filter and adjustable chunk shape.
             \code
-            NXGroup g = file.create_group("scan_1/instrument/detector");
+            nxgroup g = file.create_group("scan_1/instrument/detector");
 
             shape_t shape{0,1024,1024};
             shape_t chunk{100,1024,0};
-            NXDeflateFilter filter;
+            nxdeflate_filter filter;
 
-            NXField field = g.create_field<UInt16>("data",shape,chunk,filter);
+            nxfield field = g.create_field<uint16>("data",shape,chunk,filter);
 
             \endcode
             \throws shape_missmatch_error if the rank of chunk and field shape do
@@ -306,12 +306,12 @@ namespace nx{
                      typename CTYPES,
                      typename CTYPEC
                     > 
-            NXField<MAPTYPE(Imp,FieldImpl)>
+            nxfield<MAPTYPE(Imp,FieldImpl)>
                 create_field(const string &n,const CTYPES &s,const CTYPEC &cs,
-                        const NXFilter<FilterImp> &filter) const
+                        const nxfilter<FilterImp> &filter) const
             {
                 typedef MAPTYPE(Imp,FieldImpl) FieldImp;
-                typedef NXField<FieldImp> FieldType;
+                typedef nxfield<FieldImp> FieldType;
 
                 return FieldType(FieldImp::template
                         create<T>(n,this->imp(),s,cs,filter.imp()));
@@ -327,11 +327,11 @@ namespace nx{
             \param n path or name of the object to open
             \return object
             */
-            virtual NXObject<MAPTYPE(Imp,ObjectImpl)> open(const string &n)
+            virtual nxobject<MAPTYPE(Imp,ObjectImpl)> open(const string &n)
                 const
             {
                 typedef MAPTYPE(Imp,ObjectImpl) ObjectImp;
-                NXObject<ObjectImp> object;
+                nxobject<ObjectImp> object;
                
                 try
                 {
@@ -339,7 +339,7 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    throw NXGroupError(EXCEPTION_RECORD,
+                    throw nxgroup_error(EXCEPTION_RECORD,
                           "Error opening ["+n+"] below group ["+this->path()+
                           "]!");
                 }
@@ -355,7 +355,7 @@ namespace nx{
             \param n name or path of the object
             \return object
             */
-            NXObject<MAPTYPE(Imp,ObjectImpl)> operator[](const string &n) const
+            nxobject<MAPTYPE(Imp,ObjectImpl)> operator[](const string &n) const
             {
                 return this->open(n);
             }
@@ -376,9 +376,9 @@ namespace nx{
             Return the parent object of the gruop.
             \return parent object
             */
-            NXObject<MAPTYPE(Imp,ObjectImpl)> parent() const
+            nxobject<MAPTYPE(Imp,ObjectImpl)> parent() const
             {
-                NXObject<MAPTYPE(Imp,ObjectImpl)> g(this->imp().parent());
+                nxobject<MAPTYPE(Imp,ObjectImpl)> g(this->imp().parent());
                 return g;
             }
 
@@ -389,14 +389,14 @@ namespace nx{
             Unlike open(const string &n) here the object is addressed by its
             index. Thus only objects directly linked below this group can be
             accessed.
-            \throws IndexError if the index exceeds number of childs
+            \throws index_error if the index exceeds number of childs
             \param i index of the object
             \return object
             */
-            NXObject<MAPTYPE(Imp,ObjectImpl)> open(size_t i) const
+            nxobject<MAPTYPE(Imp,ObjectImpl)> open(size_t i) const
             {
                 return
-                    NXObject<MAPTYPE(Imp,ObjectImpl)>(this->imp().open(i));
+                    nxobject<MAPTYPE(Imp,ObjectImpl)>(this->imp().open(i));
             }
 
             //-----------------------------------------------------------------
@@ -404,11 +404,11 @@ namespace nx{
             \brief open object by index
 
             Opens an object by index using the [] operator. 
-            \throws IndexError if the index exceeds number of childs
+            \throws index_error if the index exceeds number of childs
             \param i index of the object
             \return object
             */
-            NXObject<MAPTYPE(Imp,ObjectImpl)> operator[](size_t i) const
+            nxobject<MAPTYPE(Imp,ObjectImpl)> operator[](size_t i) const
             {
                 return this->open(i);
             }
@@ -442,12 +442,12 @@ namespace nx{
             under the new name n. 
             \code
             //create the original group
-            NXGroup g1 = file.create_group("/scan_1/detector/module_01")
+            nxgroup g1 = file.create_group("/scan_1/detector/module_01")
             
             //create a new link to this group
             g1.link("/scan_1/modules/m01");
 
-            NXGroup g2 = file["/scan_1/modules/m01"];
+            nxgroup g2 = file["/scan_1/modules/m01"];
             \endcode
             This method can only be used to create file local links. 
             \param n name of the new link to this object
@@ -462,18 +462,18 @@ namespace nx{
             \code
             string ipath = "/scan_1/instrument/";
             string spath = "/scan_1/sample/";
-            NXGroup cont = file.create_group(ipath+"motors","NXcontainer");
-            NXGroup piezo = file.create_group(spath+"piezo","NXpositioner");
+            nxgroup cont = file.create_group(ipath+"motors","NXcontainer");
+            nxgroup piezo = file.create_group(spath+"piezo","NXpositioner");
 
             piezo.link(cont,"piezo_stage");
             //get piezo under its new name
-            NXGroup stage = cont["piezo_stage"];
+            nxgroup stage = cont["piezo_stage"];
             \endcode
             This method can only be used to create file local links.
             \param ref reference group below which the link shall be created
             \param n new name of the link
             */
-            void link(const NXGroup &ref,const string &n) const
+            void link(const nxgroup &ref,const string &n) const
             {
                 this->imp().link(ref.imp(),n);
             }
@@ -486,14 +486,14 @@ namespace nx{
             links. 
             Creating an internal link
             \code
-            NXGroup g1 = file.create_group("/test1/data");
-            NXGroup g2 = file.create_group("/test2/data");
+            nxgroup g1 = file.create_group("/test1/data");
+            nxgroup g2 = file.create_group("/test2/data");
             //create a link from g2 to /test1/data_2
             g1.link("/test2/data","/test1/data_2");
             \endcode
             Create an external link
             \code
-            NXGroup g1 = file.create_group("/scan_1/instrument/detector");
+            nxgroup g1 = file.create_group("/scan_1/instrument/detector");
             g1.link("detectordata.nx:/detector/data",g1.path()+"/data");
             \endcode
             \param p path to the object to which the link refers to
@@ -510,11 +510,11 @@ namespace nx{
             Return an iterator on the first child stored in below the group.
             \return iterator
             */
-            NXObjectIterator<NXGroup<Imp>,
-                NXObject<MAPTYPE(Imp,ObjectImpl)> > begin() const
+            nxobject_iterator<NXGroup<Imp>,
+                nxobject<MAPTYPE(Imp,ObjectImpl)> > begin() const
             {
-                return NXObjectIterator<NXGroup<Imp>,
-                       NXObject<MAPTYPE(Imp,ObjectImpl)> >(*this);
+                return nxobject_iterator<NXGroup<Imp>,
+                       nxobject<MAPTYPE(Imp,ObjectImpl)> >(*this);
             }
           
             //-----------------------------------------------------------------
@@ -523,11 +523,11 @@ namespace nx{
             Returns an iterator on the last+1 obejct stored in the group.
             \return iterator
             */
-            NXObjectIterator<NXGroup<Imp>,
-                NXObject<MAPTYPE(Imp,ObjectImpl)> > end() const
+            nxobject_iterator<NXGroup<Imp>,
+                nxobject<MAPTYPE(Imp,ObjectImpl)> > end() const
             {
-                return NXObjectIterator<NXGroup<Imp>,
-                       NXObject<MAPTYPE(Imp,ObjectImpl)> >(*this,
+                return nxobject_iterator<NXGroup<Imp>,
+                       nxobject<MAPTYPE(Imp,ObjectImpl)> >(*this,
                                this->nchilds());
             }
 
