@@ -490,7 +490,7 @@ namespace nx{
             //-----------------------------------------------------------------
             //! copy conversion assignment
             template<typename ObjImp>
-            nxfield<Imp> &operator=(const NXObject<ObjImp> &o)
+            nxfield<Imp> &operator=(const nxobject<ObjImp> &o)
             {
                 if((void *)this == (void *)&o) return *this;
                 nxobject<Imp>::operator=(o);

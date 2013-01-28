@@ -30,7 +30,7 @@
 #include <functional>
 #include <random>
 
-#include "NX.hpp"
+#include <pni/io/nx/nx.hpp>
 #include <pni/core/arrays.hpp>
 
 #include<cppunit/TestFixture.h>
@@ -110,7 +110,7 @@ class NXFieldTest:public CppUnit::TestFixture
 
 	CPPUNIT_TEST_SUITE_END();
 private:
-	NXFile file;
+	nxfile file;
 	static const uint64 n=10;
 	uint16 testdata[10];
 	shape_t  fshape;
@@ -156,7 +156,7 @@ template<typename T> void NXFieldTest::test_io_array()
     std::fill(write.begin(),write.end(),T(100));
     std::fill(write.begin(),write.end(),T(0));
 
-    NXField field1 = file.create_field<T>("array",s);
+    nxfield field1 = file.create_field<T>("array",s);
     CPPUNIT_ASSERT_NO_THROW(field1.write(write));
     CPPUNIT_ASSERT_NO_THROW(field1.read(read));
     CPPUNIT_ASSERT(write == read);
@@ -164,7 +164,7 @@ template<typename T> void NXFieldTest::test_io_array()
     field1 = file.create_field<T>("array2",{2,2});
     CPPUNIT_ASSERT_THROW(field1.write(write),shape_missmatch_error);
 
-    NXDeflateFilter deflate;
+    nxdeflate_filter deflate;
     deflate.compression_rate(9);
     deflate.shuffle(true);
 
@@ -186,7 +186,7 @@ template<typename T> void NXFieldTest::test_io_buffer()
     std::fill(write_buffer.begin(),write_buffer.end(),T(100));
     std::fill(read_buffer.begin(),read_buffer.end(),T(0));
 
-    NXField field1 = file.create_field<T>("buffer",s);
+    nxfield field1 = file.create_field<T>("buffer",s);
     CPPUNIT_ASSERT_NO_THROW(field1.write(write_buffer));
     CPPUNIT_ASSERT_NO_THROW(field1.read(read_buffer));
 
@@ -205,7 +205,7 @@ template<typename T> void NXFieldTest::test_io_buffer()
 template<typename T> void NXFieldTest::test_io_scalar()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    NXField field1 = file.create_field<T>("scalar");
+    nxfield field1 = file.create_field<T>("scalar");
 
     T write,read;
 

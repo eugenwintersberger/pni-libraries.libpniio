@@ -31,7 +31,7 @@
 #include "nxobject.hpp"
 #include "nximp_map.hpp"
 #include "nxfield.hpp"
-#include "nxfiler.hpp"
+#include "nxfilter.hpp"
 #include "nxexceptions.hpp"
 #include "nxobject_iterator.hpp"
 
@@ -58,7 +58,7 @@ namespace nx{
             typedef nxfield<MAPTYPE(Imp,FieldImpl)> field_type; 
             //==============constructors and destructor========================
             //! default constructor
-            explicit nxgruop():nxobject<Imp>() { }
+            explicit nxgroup():nxobject<Imp>() { }
 
             //-----------------------------------------------------------------
             /*! \brief copy constructor
@@ -130,7 +130,7 @@ namespace nx{
             in which case the NX_class attribute will not be written.
             \param n group name
             \param type nexus class type
-            \return a new instance of NXGroup
+            \return a new instance of nxgroup
             */
             nxgroup<MAPTYPE(Imp,GroupImpl)> 
                 create_group(const string &n,const string &type=string()) const
@@ -335,7 +335,7 @@ namespace nx{
                
                 try
                 {
-                   object = NXObject<ObjectImp>(this->imp().open(n));
+                   object = nxobject<ObjectImp>(this->imp().open(n));
                 }
                 catch(...)
                 {
@@ -510,10 +510,10 @@ namespace nx{
             Return an iterator on the first child stored in below the group.
             \return iterator
             */
-            nxobject_iterator<NXGroup<Imp>,
+            nxobject_iterator<nxgroup<Imp>,
                 nxobject<MAPTYPE(Imp,ObjectImpl)> > begin() const
             {
-                return nxobject_iterator<NXGroup<Imp>,
+                return nxobject_iterator<nxgroup<Imp>,
                        nxobject<MAPTYPE(Imp,ObjectImpl)> >(*this);
             }
           
@@ -523,10 +523,10 @@ namespace nx{
             Returns an iterator on the last+1 obejct stored in the group.
             \return iterator
             */
-            nxobject_iterator<NXGroup<Imp>,
+            nxobject_iterator<nxgroup<Imp>,
                 nxobject<MAPTYPE(Imp,ObjectImpl)> > end() const
             {
-                return nxobject_iterator<NXGroup<Imp>,
+                return nxobject_iterator<nxgroup<Imp>,
                        nxobject<MAPTYPE(Imp,ObjectImpl)> >(*this,
                                this->nchilds());
             }

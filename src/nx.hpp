@@ -57,7 +57,7 @@ namespace h5{
             typedef pni::io::nx::nxfilter<H5Filter>             nxfilter;
             typedef pni::io::nx::nxdeflate_filter<H5DeflateFilter> nxdeflate_filter;
             typedef pni::io::nx::nxattribute<H5Attribute>  nxattribute;
-            typedef pni::io::nx::nxselection<NXField> nxselection;
+            typedef pni::io::nx::nxselection<nxfield> nxselection;
 
 //end of namespace
 }

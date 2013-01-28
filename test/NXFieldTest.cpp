@@ -29,9 +29,9 @@
 
 #include<cppunit/extensions/HelperMacros.h>
 
-#include "NX.hpp"
-#include "NXExceptions.hpp"
-#include "NXFieldUtils.hpp"
+#include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/nxexceptions.hpp>
+#include <pni/io/nx/nxfield_utils.hpp>
 
 #include <pni/core/array.hpp>
 
@@ -40,7 +40,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(NXFieldTest);
 //------------------------------------------------------------------------------
 void NXFieldTest::setUp()
 {
-    file = NXFile::create_file("NXFieldTest.h5",true,0);
+    file = nxfile::create_file("NXFieldTest.h5",true,0);
 
 	for(size_t i=0;i<n;i++) testdata[i] = i+1;
 
@@ -57,7 +57,7 @@ void NXFieldTest::test_creation()
 {
 	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-	NXField field;
+	nxfield field;
 
 	CPPUNIT_ASSERT_NO_THROW(field = file.create_field<uint16>("test1"));
     CPPUNIT_ASSERT(field.is_valid());
@@ -65,21 +65,21 @@ void NXFieldTest::test_creation()
     CPPUNIT_ASSERT(field.size() == 1);
 
 	//check copy construction
-	NXField field2(field);
+	nxfield field2(field);
 	CPPUNIT_ASSERT(field.is_valid());
 	CPPUNIT_ASSERT(field2.is_valid());
     CPPUNIT_ASSERT(field2.rank()== 1);
     CPPUNIT_ASSERT(field2.size() == 1);
 
 	//check move construction
-	NXField field3 = std::move(field);
+	nxfield field3 = std::move(field);
 	CPPUNIT_ASSERT(field3.is_valid());
     CPPUNIT_ASSERT(field3.rank() == 1);
     CPPUNIT_ASSERT(field3.size() == 1);
 	CPPUNIT_ASSERT(!field.is_valid());
 
     //create fields with filters
-    NXDeflateFilter deflate(9,true);
+    nxdeflate_filter deflate(9,true);
    
     shape_t shape{100,100};
     field = file.create_field<float32>("test_defalte", shape,deflate);
@@ -112,9 +112,9 @@ void NXFieldTest::test_open()
 
 	file.create_field<uint32>("data1");
 
-	NXField f1 = file.open("data1");
+	nxfield f1 = file.open("data1");
 
-	NXField f2;
+	nxfield f2;
 	f2 = file.open("data1");
 }
 
@@ -123,8 +123,8 @@ void NXFieldTest::test_parent()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    NXField f = file.create_field<float64>("/detector/data");
-    NXGroup p = f.parent();
+    nxfield f = file.create_field<float64>("/detector/data");
+    nxgroup p = f.parent();
     CPPUNIT_ASSERT(p.is_valid());
     CPPUNIT_ASSERT(p.name() == "detector");
     f = file.create_field<uint16>("temperature");
@@ -136,10 +136,10 @@ void NXFieldTest::test_assignment()
 {
 	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-	NXField field = file.create_field<uint16>("test1");
+	nxfield field = file.create_field<uint16>("test1");
 	CPPUNIT_ASSERT(field.is_valid());
 
-	NXField field2;
+	nxfield field2;
 
 	//testing copy assignment
 	CPPUNIT_ASSERT_NO_THROW(field2 = field);
@@ -149,7 +149,7 @@ void NXFieldTest::test_assignment()
     CPPUNIT_ASSERT(field2.rank() == field.rank());
 
 	//move assignment
-	NXField field3;
+	nxfield field3;
 	CPPUNIT_ASSERT_NO_THROW(field3 = std::move(field2));
 	CPPUNIT_ASSERT(field3.is_valid());
 	CPPUNIT_ASSERT(!field2.is_valid());
@@ -166,7 +166,7 @@ void NXFieldTest::test_resize()
     shape_t s = {0,1024};
     shape_t cs = {1,1024};
 
-    NXField field = file.create_field<float32>("ds",s);
+    nxfield field = file.create_field<float32>("ds",s);
     CPPUNIT_ASSERT(field.is_valid());
     auto shape = field.shape<shape_t>();
     CPPUNIT_ASSERT(std::equal(shape.begin(),shape.end(),s.begin()));
@@ -182,7 +182,7 @@ void NXFieldTest::test_resize()
     shape = field.shape<shape_t>();
     CPPUNIT_ASSERT(std::equal(shape.begin(),shape.end(),s.begin()));
 
-    NXField field2 = file.create_field<string>("ss");
+    nxfield field2 = file.create_field<string>("ss");
     CPPUNIT_ASSERT(field2.rank() == 1);
     CPPUNIT_ASSERT(field2.size() == 1);
     CPPUNIT_ASSERT_NO_THROW(field2.grow(0));
@@ -202,7 +202,7 @@ void NXFieldTest::test_resize()
 void NXFieldTest::test_io_string_scalar()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    NXField field1 = file.create_field<string>("scalar");
+    nxfield field1 = file.create_field<string>("scalar");
 
     string write,read;
     write = "hello";
@@ -220,7 +220,7 @@ void NXFieldTest::test_io_string_scalar()
 void NXFieldTest::test_io_bool_scalar()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    NXField field1 = file.create_field<Bool>("scalar");
+    nxfield field1 = file.create_field<Bool>("scalar");
 
     Bool write,read;
     write = true;
@@ -244,7 +244,7 @@ void NXFieldTest::test_io_string_array()
     std::fill(write.begin(),write.end(),"Hello");
     std::fill(read.begin(),read.end(),"");
 
-    NXField field1 = file.create_field<string>("array",s);
+    nxfield field1 = file.create_field<string>("array",s);
     CPPUNIT_ASSERT_NO_THROW(field1.write(write));
     CPPUNIT_ASSERT_NO_THROW(field1.read(read));
     CPPUNIT_ASSERT(std::equal(write.begin(),write.end(),read.begin()));
@@ -252,7 +252,7 @@ void NXFieldTest::test_io_string_array()
     field1 = file.create_field<string>("array2",{2,2});
     CPPUNIT_ASSERT_THROW(field1.write(write),shape_missmatch_error);
 
-    NXDeflateFilter deflate;
+    nxdeflate_filter deflate;
     deflate.compression_rate(9);
     deflate.shuffle(true);
 
@@ -274,7 +274,7 @@ void NXFieldTest::test_io_bool_array()
     std::fill(write.begin(),write.end(),true);
     std::fill(write.begin(),write.end(),false);
 
-    NXField field1 = file.create_field<bool>("array",s);
+    nxfield field1 = file.create_field<bool>("array",s);
     CPPUNIT_ASSERT_NO_THROW(field1.write(write));
     CPPUNIT_ASSERT_NO_THROW(field1.read(read));
     CPPUNIT_ASSERT(std::equal(write.begin(),write.end(),read.begin()));
@@ -282,7 +282,7 @@ void NXFieldTest::test_io_bool_array()
     field1 = file.create_field<bool>("array2",{2,2});
     CPPUNIT_ASSERT_THROW(field1.write(write),shape_missmatch_error);
 
-    NXDeflateFilter deflate;
+    nxdeflate_filter deflate;
     deflate.compression_rate(9);
     deflate.shuffle(true);
 
@@ -300,7 +300,7 @@ void NXFieldTest::test_io_string_buffer()
     dbuffer<string> write_buffer({"Hello","world","this","is","a test"});
     dbuffer<string> read_buffer(5);
 
-    NXField field1 = file.create_field<string>("buffer",s);
+    nxfield field1 = file.create_field<string>("buffer",s);
     CPPUNIT_ASSERT_NO_THROW(field1.write(write_buffer));
     CPPUNIT_ASSERT_NO_THROW(field1.read(read_buffer));
 
@@ -323,7 +323,7 @@ void NXFieldTest::test_io_bool_buffer()
     dbuffer<bool> write_buffer({true,true,false,true,false});
     dbuffer<bool> read_buffer({false,false,false,false,false});
 
-    NXField field1 = file.create_field<bool>("buffer",s);
+    nxfield field1 = file.create_field<bool>("buffer",s);
     CPPUNIT_ASSERT_NO_THROW(field1.write(write_buffer));
     CPPUNIT_ASSERT_NO_THROW(field1.read(read_buffer));
 
@@ -343,7 +343,7 @@ void NXFieldTest::test_grow()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     shape_t s{0};
-    NXField field = file.create_field<bool>("flags",s);
+    nxfield field = file.create_field<bool>("flags",s);
     CPPUNIT_ASSERT(field.size() == 0);
 
     field.grow(0);
@@ -359,7 +359,7 @@ void NXFieldTest::test_io_array()
     darray<float64> data(shape_t({10,5}));
     array o(data);
 
-    NXField field = file.create_field<float64>("data",data.shape<shape_t>());
+    nxfield field = file.create_field<float64>("data",data.shape<shape_t>());
     double index = 0.;
     for(auto iter=o.begin();iter!=o.end();++iter)
         *iter = index++;

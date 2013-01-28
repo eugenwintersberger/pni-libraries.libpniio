@@ -55,7 +55,7 @@ namespace nx{
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(NXAttributeError &error)\
+    catch(nxattribute_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }
@@ -73,7 +73,7 @@ namespace nx{
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(NXAttributeError &error)\
+    catch(nxattribute_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }
@@ -90,7 +90,7 @@ namespace nx{
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(NXAttributeError &error)\
+    catch(nxattribute_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }
@@ -108,7 +108,7 @@ namespace nx{
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(NXAttributeError &error)\
+    catch(nxattribute_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }
@@ -445,7 +445,7 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    throw NXAttributeError(EXCEPTION_RECORD,
+                    throw nxattribute_error(EXCEPTION_RECORD,
                             "Error writing attribute!");
                 }
             }
@@ -470,7 +470,7 @@ namespace nx{
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
-                catch(NXFieldError &error)
+                catch(nxattribute_error &error)
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
@@ -522,7 +522,7 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    throw NXAttributeError(EXCEPTION_RECORD,
+                    throw nxattribute_error(EXCEPTION_RECORD,
                             "Error reading attribute!");
                 }
             }
@@ -666,7 +666,7 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    throw NXAttributeError(EXCEPTION_RECORD,
+                    throw nxattribute_error(EXCEPTION_RECORD,
                             "Error reading to array!");
                 }
             }

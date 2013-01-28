@@ -26,7 +26,7 @@
 #include <boost/current_function.hpp>
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
-#include "NX.hpp"
+#include <pni/io/nx/nx.hpp>
 #include "EqualityCheck.hpp"
 
 
@@ -76,7 +76,7 @@ class NXSelectionTest:public CppUnit::TestFixture
 
         CPPUNIT_TEST_SUITE_END();
     private:
-        NXFile file;
+        nxfile file;
     public:
         void setUp();
         void tearDown();
@@ -92,7 +92,7 @@ template<typename T> void NXSelectionTest::test_scalar_selection()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     shape_t shape{3,4};
-    NXField field = file.create_field<T>("array",shape);
+    nxfield field = file.create_field<T>("array",shape);
 
     T write=T(0),read=T(0);
     
@@ -135,7 +135,7 @@ template<typename T> void NXSelectionTest::test_array_selection()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     shape_t shape{3,4};
-    NXField field = file.create_field<T>("array",shape);
+    nxfield field = file.create_field<T>("array",shape);
 
     darray<T> write(shape_t({3})),read(shape_t({3}));
     std::fill(write.begin(),write.end(),T(0));

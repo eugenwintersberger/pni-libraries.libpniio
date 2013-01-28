@@ -76,7 +76,7 @@ namespace nx{
                 if((this->is_valid())&&(!this->is_readonly()))
                 {
                     this->template attr<string>("file_update_time",true)
-                        .write(NXDateTime::get_date_time_str());
+                        .write(nxdate_time::get_date_time_str());
                 }
             }
 
@@ -153,9 +153,9 @@ namespace nx{
                 file.template
                     attr<string>("NX_class").write(string("NXroot"));
                 file.template 
-                    attr<string>("file_time").write(NXDateTime::get_date_time_str());
+                    attr<string>("file_time").write(nxdate_time::get_date_time_str());
                 file.template 
-                    attr<string>("file_update_time").write(NXDateTime::get_date_time_str());
+                    attr<string>("file_update_time").write(nxdate_time::get_date_time_str());
                 file.template attr<string>("file_name").write(n);
 
                 //this should be taken from a configuration
@@ -185,7 +185,7 @@ namespace nx{
                 if((this->is_valid())&&(!this->is_readonly()))
                 {
                     this->template attr<string>("file_update_time",true)
-                        .write(NXDateTime::get_date_time_str());
+                        .write(nxdate_time::get_date_time_str());
                 }
                 
                 this->imp().close();

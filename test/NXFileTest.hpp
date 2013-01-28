@@ -29,7 +29,7 @@
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 
-#include "NX.hpp"
+#include <pni/io/nx/nx.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx::h5;

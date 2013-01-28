@@ -4,7 +4,7 @@
 #include <pni/core/darray.hpp>
 #include "file_io_benchmark.hpp"
 
-#include <pni/io/nx/NX.hpp>
+#include <pni/io/nx/nx.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx::h5;
@@ -14,8 +14,8 @@ template<typename T> class pniio_io_benchmark : public file_io_benchmark
     private:
         //! array holding the buffer for the frame data
         darray<T> _frame_buffer; 
-        NXField   _field;
-        NXFile    _file;
+        nxfield   _field;
+        nxfile    _file;
     public:
         //===================constructors and destructor=======================
         //! default constructor
@@ -52,7 +52,7 @@ template<typename T> class pniio_io_benchmark : public file_io_benchmark
 template<typename T> void pniio_io_benchmark<T>::create()
 {
     //create the file
-    _file = NXFile::create_file(filename(),true,0);
+    _file = nxfile::create_file(filename(),true,0);
     shape_t s{0,nx(),ny()};
     shape_t cs{1,nx(),ny()};
     _field = _file.template create_field<T>("data",s,cs);

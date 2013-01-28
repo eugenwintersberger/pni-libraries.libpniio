@@ -1,6 +1,6 @@
-#include<pni/nx/NX.hpp>
-#include<pni/utils/Types.hpp>
-#include<pni/utils/Array.hpp>
+#include<pni/io/nx/nx.hpp>
+#include<pni/utils/types.hpp>
+#include<pni/utils/arrays.hpp>
 #include<sstream>
 #include<iostream>
 #include<fstream>

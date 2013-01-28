@@ -29,8 +29,8 @@
 
 #include<cppunit/extensions/HelperMacros.h>
 
-#include "NX.hpp"
-#include "NXObjectType.hpp"
+#include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/nxobject_type.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION(NXGroupTest);
 
@@ -38,8 +38,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION(NXGroupTest);
 void NXGroupTest::setUp()
 {
 	_fname = "test.group.h5";
-    _f = NXFile::create_file("NXGroupTest.h5",true,0);
-    CPPUNIT_ASSERT(_f.object_type() == pni::io::nx::NXObjectType::NXGROUP);
+    _f = nxfile::create_file("NXGroupTest.h5",true,0);
+    CPPUNIT_ASSERT(_f.object_type() == pni::io::nx::nxobject_type::NXGROUP);
 
 }
 
@@ -54,15 +54,15 @@ void NXGroupTest::test_linking()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    NXGroup g = _f.create_group("/scan_1/detector/data");
+    nxgroup g = _f.create_group("/scan_1/detector/data");
     CPPUNIT_ASSERT_NO_THROW(g.link("/collection/detector/data"));
     CPPUNIT_ASSERT(_f.exists("/collection/detector/data"));
 
-    NXGroup ref = g.open("/scan_1");
+    nxgroup ref = g.open("/scan_1");
     CPPUNIT_ASSERT_NO_THROW(g.link(ref,"a_link"));
     CPPUNIT_ASSERT(_f.exists("/scan_1/a_link"));
 
-    NXFile file = NXFile::create_file("NXGroupTest2.h5",true,0);
+    nxfile file = nxfile::create_file("NXGroupTest2.h5",true,0);
     file.create_group("/test/data");
     CPPUNIT_ASSERT_NO_THROW(g.link("NXGroupTest2.h5:/test/data","/external/data"));
     CPPUNIT_ASSERT(_f.exists("/external/data"));
@@ -72,7 +72,7 @@ void NXGroupTest::test_linking()
 void NXGroupTest::test_creation()
 {
 	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-	NXGroup g;
+	nxgroup g;
     CPPUNIT_ASSERT(!g.is_valid());
 
 	g = _f.create_group("/hello/world");
@@ -87,13 +87,13 @@ void NXGroupTest::test_creation()
 
 
 	//test copy constructor
-	NXGroup g1(g);
+	nxgroup g1(g);
 	CPPUNIT_ASSERT(g1.is_valid());
 	CPPUNIT_ASSERT(g.is_valid());
 	CPPUNIT_ASSERT(g1.name() == g.name());
 
 	//test move constructor
-	NXGroup g2 = std::move(g1);
+	nxgroup g2 = std::move(g1);
 	CPPUNIT_ASSERT(!g1.is_valid());
 	CPPUNIT_ASSERT(g2.is_valid());
 }
@@ -103,8 +103,8 @@ void NXGroupTest::test_parent()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    NXGroup g = _f.create_group("detector/modules");
-    NXGroup p = g.parent();
+    nxgroup g = _f.create_group("detector/modules");
+    nxgroup p = g.parent();
     CPPUNIT_ASSERT(p.name() == "detector");
     CPPUNIT_ASSERT(p.parent().name() == "/");
 }
@@ -113,18 +113,18 @@ void NXGroupTest::test_parent()
 void NXGroupTest::test_open()
 {
 	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-	NXGroup g1,g2;
+	nxgroup g1,g2;
 
 	CPPUNIT_ASSERT_NO_THROW(g1 = _f.create_group("/directory1/data"));
 
 	CPPUNIT_ASSERT_NO_THROW(g2 = _f.open("/directory1"));
-	NXGroup g = g2.open("data");
-	NXGroup g3;
+	nxgroup g = g2.open("data");
+	nxgroup g3;
 	g3 = g2.open("data");
 
-	NXGroup g4 = _f.open("/directory1/data");
+	nxgroup g4 = _f.open("/directory1/data");
 
-	CPPUNIT_ASSERT_THROW(_f.open("directory2"),pni::io::nx::NXGroupError);
+	CPPUNIT_ASSERT_THROW(_f.open("directory2"),pni::io::nx::nxgroup_error);
 	CPPUNIT_ASSERT_NO_THROW(_f.open("directory1/data"));
 
 	g1.close();
@@ -142,8 +142,8 @@ void NXGroupTest::test_internal_links()
 void NXGroupTest::test_existance()
 {
 	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-	NXGroup g1,g2;
-	NXField f;
+	nxgroup g1,g2;
+	nxfield f;
 
 	g1 = _f.create_group("/scan_1/instrument");
 	g1 = _f.create_group("/scan_2/instrument/detector");
@@ -164,22 +164,22 @@ void NXGroupTest::test_existance()
 //------------------------------------------------------------------------------
 void NXGroupTest::test_remove()
 {
-	NXGroup g1;
-	NXField f;
+	nxgroup g1;
+	nxfield f;
 }
 
 //------------------------------------------------------------------------------
 void NXGroupTest::test_assignment()
 {
 	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-	NXGroup g1,g2;
+	nxgroup g1,g2;
 
 	CPPUNIT_ASSERT_NO_THROW(g1 = _f.create_group("test1"));
 	CPPUNIT_ASSERT_NO_THROW(g2 = g1);
 	CPPUNIT_ASSERT(g1.is_valid());
 	CPPUNIT_ASSERT(g2.is_valid());
 
-	NXGroup g3;
+	nxgroup g3;
 	CPPUNIT_ASSERT_NO_THROW(g3 = std::move(g2));
 	CPPUNIT_ASSERT(g3.is_valid());
 	CPPUNIT_ASSERT(!g2.is_valid());
@@ -190,8 +190,8 @@ void NXGroupTest::test_comparison()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    NXGroup g1 = _f.create_group("hello/world");
-    NXGroup g2 = _f["/hello/world"];
+    nxgroup g1 = _f.create_group("hello/world");
+    nxgroup g2 = _f["/hello/world"];
 
     CPPUNIT_ASSERT(g1 == g2);
 
@@ -209,7 +209,7 @@ void NXGroupTest::test_iterator()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    NXGroup g = _f.create_group("data");
+    nxgroup g = _f.create_group("data");
     g.create_group("dir1");
     g.create_group("dir2");
     g.create_group("dir3");

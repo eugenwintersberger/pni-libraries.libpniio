@@ -8,10 +8,10 @@
 #include<cppunit/extensions/HelperMacros.h>
 
 //headers from pniutils
-#include<pni/core/Types.hpp>
+#include<pni/core/types.hpp>
 
 //headers from pninx
-#include<pni/io/nx/NX.hpp>
+#include<pni/io/nx/nx.hpp>
 
 //local template for equality checks
 #include "EqualityCheck.hpp"

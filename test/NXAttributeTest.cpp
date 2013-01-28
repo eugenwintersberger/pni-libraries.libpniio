@@ -29,10 +29,9 @@
 
 #include<cppunit/extensions/HelperMacros.h>
 
-#include "NX.hpp"
 #include "NXAttributeTest.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(NXAttributeTest<NXFile>);
-CPPUNIT_TEST_SUITE_REGISTRATION(NXAttributeTest<NXGroup>);
-CPPUNIT_TEST_SUITE_REGISTRATION(NXAttributeTest<NXField>);
+CPPUNIT_TEST_SUITE_REGISTRATION(NXAttributeTest<nxfile>);
+CPPUNIT_TEST_SUITE_REGISTRATION(NXAttributeTest<nxgroup>);
+CPPUNIT_TEST_SUITE_REGISTRATION(NXAttributeTest<nxfield>);
 

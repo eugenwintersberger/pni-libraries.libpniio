@@ -144,15 +144,15 @@ template<typename APTYPE> class NXAttributeTest: public CppUnit::TestFixture
         
         CPPUNIT_TEST_SUITE_END();
     private:
-        NXFile _f;
+        nxfile _f;
         APTYPE _parent;
         shape_t _shape;
         size_t _size;
 
         //==========static functions to create parent objects==================
-        static void create_parent(const NXFile &f,NXFile &p);
-        static void create_parent(const NXFile &f,NXGroup &p);
-        static void create_parent(const NXFile &f,NXField &p);
+        static void create_parent(const nxfile &f,nxfile &p);
+        static void create_parent(const nxfile &f,nxgroup &p);
+        static void create_parent(const nxfile &f,nxfield &p);
 
         //==============static functions to create arrays======================
         template<typename T>
@@ -192,21 +192,21 @@ template<typename APTYPE> class NXAttributeTest: public CppUnit::TestFixture
 
 //-----------------------------------------------------------------------------
 template<typename APTYPE> 
-void NXAttributeTest<APTYPE>::create_parent(const NXFile &f,NXFile &p)
+void NXAttributeTest<APTYPE>::create_parent(const nxfile &f,nxfile &p)
 {
     p = f;
 }
 
 //-----------------------------------------------------------------------------
 template<typename APTYPE>
-void NXAttributeTest<APTYPE>::create_parent(const NXFile &f,NXGroup &p)
+void NXAttributeTest<APTYPE>::create_parent(const nxfile &f,nxgroup &p)
 {
     p = f.create_group("testgroup");
 }
 
 //-----------------------------------------------------------------------------
 template<typename APTYPE>
-void NXAttributeTest<APTYPE>::create_parent(const NXFile &f,NXField &p)
+void NXAttributeTest<APTYPE>::create_parent(const nxfile &f,nxfield &p)
 {
     p = f.create_field<string>("hello");
     p.write("hello world");
@@ -216,7 +216,7 @@ void NXAttributeTest<APTYPE>::create_parent(const NXFile &f,NXField &p)
 template<typename APTYPE> void NXAttributeTest<APTYPE>::setUp()
 {
     //create the file where to store data
-    _f = NXFile::create_file("NXAttributeTest.h5",true,0);
+    _f = nxfile::create_file("NXAttributeTest.h5",true,0);
 
     //create the attribute parrent
     create_parent(_f,_parent);
@@ -237,13 +237,13 @@ template<typename APTYPE> void NXAttributeTest<APTYPE>::tearDown()
 template<typename APTYPE> void NXAttributeTest<APTYPE>::test_creation()
 {
     //checking the default constructor
-    NXAttribute a;
+    nxattribute a;
     CPPUNIT_ASSERT(a.size()==1);
     CPPUNIT_ASSERT(!a.is_valid());
     CPPUNIT_ASSERT(a.rank() == 0);
 
     //creating a scalar attribute
-    NXAttribute a1(_parent.template attr<string>("attribute"));
+    nxattribute a1(_parent.template attr<string>("attribute"));
     CPPUNIT_ASSERT(a1.is_valid());
     CPPUNIT_ASSERT(a1.type_id() == type_id_t::STRING);
     CPPUNIT_ASSERT(a1.rank() == 0);
@@ -252,7 +252,7 @@ template<typename APTYPE> void NXAttributeTest<APTYPE>::test_creation()
     CPPUNIT_ASSERT(s.size() == 0);
 
     //create an array attribute
-    NXAttribute a2(_parent.template attr<bool>("array",_shape));
+    nxattribute a2(_parent.template attr<bool>("array",_shape));
     CPPUNIT_ASSERT(a2.is_valid());
     CPPUNIT_ASSERT(a2.type_id() == type_id_t::BOOL);
     CPPUNIT_ASSERT(a2.rank() == 2);
@@ -283,10 +283,10 @@ template<typename T> void NXAttributeTest<APTYPE>::test_scalar_attribute()
     //--------------------test some exceptions---------------------------------
     //try to recreate an attribute
     CPPUNIT_ASSERT_THROW(
-            _parent.template attr<T>("a1"),pni::io::nx::NXAttributeError);
+            _parent.template attr<T>("a1"),pni::io::nx::nxattribute_error);
 
     //try to open a non-existing attribute
-    CPPUNIT_ASSERT_THROW(_parent.attr("b1"),pni::io::nx::NXAttributeError);
+    CPPUNIT_ASSERT_THROW(_parent.attr("b1"),pni::io::nx::nxattribute_error);
 }
 
 //-----------------------------------------------------------------------------

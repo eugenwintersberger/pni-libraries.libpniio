@@ -26,7 +26,7 @@
 
 #pragma once
 
-#include "NX.hpp"
+#include <pni/io/nx/nx.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
@@ -51,7 +51,7 @@ class NXGroupTest: public CppUnit::TestFixture
 	CPPUNIT_TEST_SUITE_END();
 private:
 	string _fname;
-	NXFile _f;
+	nxfile _f;
 public:
 	void setUp();
 	void tearDown();
