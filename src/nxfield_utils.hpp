@@ -28,8 +28,8 @@
 #include<pni/core/types.hpp>
 #include<pni/core/type_id_map.hpp>
 
-#include "NXField.hpp"
-#include "NXGroup.hpp"
+#include "nxfield.hpp"
+#include "nxgroup.hpp"
 
 using namespace pni::core;
 
@@ -48,17 +48,17 @@ namespace nx{
     
     \code
     //create a default field of shape {1} and chunk shape {1}
-    auto f = create_field(g,"test",TypeID::STRING);
+    auto f = create_field(g,"test",type_id_t::STRING);
 
     //create a field with custom shape and chunk shape
     Shape s{0,1024,1024};
     Shape cs{1,1024,1024};
-    auto f = create_field(g,"test2",TypeID::UINT16,s,cs);
+    auto f = create_field(g,"test2",type_id_t::UINT16,s,cs);
 
     //create a field with a filter - in this case shape and chunk shape
     //must be provided 
-    NXDeflateFilter deflate(9,true);
-    auto f = create_field(g,"test3",TypeID::UINT16,s,cs,deflate);
+    nxdeflate_filter deflate(9,true);
+    auto f = create_field(g,"test3",type_id_t::UINT16,s,cs,deflate);
     \endcode
    
     \throws type_error if type ID does not exist
