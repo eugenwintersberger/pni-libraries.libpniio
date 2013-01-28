@@ -27,7 +27,7 @@
 
 #include<vector>
 #include<map>
-#include<pni/core/Types.hpp>
+#include<pni/core/types.hpp>
 
 using namespace pni::core;
 
@@ -55,38 +55,34 @@ namespace nx{
     configuration at runtime. This allows, for instance the installation of
     additional NXDL files while a program is running. 
     */
-    class NXConfiguration{
+    class nxconfiguration{
         private:
-            String __config_dir_root; //!< root directory of the library
+            string __config_dir_root; //!< root directory of the library
                                       //!< configuration
-            String __global_nxdl_dir; //!< global NXDL 
+            string __global_nxdl_dir; //!< global NXDL 
             std::vector<String> __base_classes; //!< base classes
             std::vector<String> __app_classes;  //!< application definitions
         public:
             //! default constructor
-            NXConfiguration();
+            nxconfiguration();
 
             //! destructor
-            ~NXConfiguration();
+            ~nxconfiguration();
 
             //! get global configuration directory
-            String global_config_dir() const;
+            string global_config_dir() const;
 
             //! get the global NXDL directory
-            String global_nxdl_dir() const;
+            string global_nxdl_dir() const;
 
             //! get base classes
-            const std::vector<String> &base_classes() const;
+            const std::vector<string> &base_classes() const;
 
             //! get application definitions
-            const std::vector<String> &app_classes() const;
+            const std::vector<string> &app_classes() const;
 
             //! reset
             void reset();
-
-
-
-
 
     };
 

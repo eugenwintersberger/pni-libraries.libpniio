@@ -36,7 +36,7 @@ namespace nx{
     This is a forward iterator that runs through all the attributes attached to
     an object.
     */
-    template<typename IterableT,typename ItemT> class NXAttributeIterator
+    template<typename IterableT,typename ItemT> class nxattribute_iterator
     {
         private:
             const IterableT *_parent; //!< parent object of the interator
@@ -50,7 +50,7 @@ namespace nx{
             typedef ItemT     item_type;     //!< item type
             //=============constructors and destructor=========================
             //! default constructor
-            NXAttributeIterator():
+            nxattribute_iterator():
                 _parent(nullptr),
                 _nattrs(0),
                 _index(0),
@@ -59,7 +59,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! copy constructor
-            NXAttributeIterator(const NXAttributeIterator<IterableT,ItemT> &i):
+            nxattribute_iterator(const nxattribute_iterator<IterableT,ItemT> &i):
                 _parent(i._parent),
                 _nattrs(i._nattrs),
                 _index(i._index),
@@ -68,7 +68,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! move constructor
-            NXAttributeIterator(NXAttributeIterator<IterableT,ItemT> &&i):
+            nxattribute_iterator(nxattribute_iterator<IterableT,ItemT> &&i):
                 _parent(i._parent),
                 _nattrs(i._nattrs),
                 _index(i._index),
@@ -81,7 +81,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! constructor from group object
-            NXAttributeIterator(const IterableT &g,size_t start_index=0):
+            nxattribute_iterator(const IterableT &g,size_t start_index=0):
                 _parent(&g),
                 _nattrs(g.nattr()),
                 _index(start_index),
@@ -92,7 +92,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! destructor
-            virtual ~NXAttributeIterator()
+            virtual ~nxattribute_iterator()
             {
                 _parent = nullptr;
                 _nattrs = 0;
@@ -102,8 +102,8 @@ namespace nx{
 
             //==================assignment operators===========================
             //! copy assignment operator
-            NXAttributeIterator<IterableT,ItemT> &
-                operator=(const NXAttributeIterator<IterableT,ItemT> &i)
+            nxattribute_iterator<IterableT,ItemT> &
+                operator=(const nxattribute_iterator<IterableT,ItemT> &i)
             {
                 if(this != &i)
                 {
@@ -117,8 +117,8 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! move assignment operator
-            NXAttributeIterator<IterableT,ItemT> &
-                operator=(NXAttributeIterator<IterableT,ItemT> &&i)
+            nxattribute_iterator<IterableT,ItemT> &
+                operator=(nxattribute_iterator<IterableT,ItemT> &&i)
             {
                 if(this != &i)
                 {
@@ -175,7 +175,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! postfix increment operator 
-            NXAttributeIterator<IterableT,ItemT> &operator++()
+            nxattribute_iterator<IterableT,ItemT> &operator++()
             {
                 //if the actual index is equal to the total number
                 //of links no increment is possible
@@ -187,7 +187,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! prefix increment operator
-            NXAttributeIterator<IterableT,ItemT> &operator++(int i)
+            nxattribute_iterator<IterableT,ItemT> &operator++(int i)
             {
                 //if the actual index is equal to the total number
                 //of links no increment is possible
@@ -199,7 +199,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! equality operator
-            bool operator==(const NXAttributeIterator<IterableT,ItemT> &o)
+            bool operator==(const nxattribute_iterator<IterableT,ItemT> &o)
                 const
             {
                 if(_parent != o._parent) return false;
@@ -210,7 +210,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! in-equalty operator
-            bool operator!=(const NXAttributeIterator<IterableT,ItemT> &o)
+            bool operator!=(const nxattribute_iterator<IterableT,ItemT> &o)
                 const
             {
                 if(*this == o) return false;
