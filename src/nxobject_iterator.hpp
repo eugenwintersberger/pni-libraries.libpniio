@@ -37,7 +37,7 @@ namespace nx{
     This is a forward iterator that runs through all the objects linked below a
     group. 
     */
-    template<typename IterableT,typename ItemT> class NXObjectIterator
+    template<typename IterableT,typename ItemT> class nxobject_iterator
     {
         private:
             const IterableT *_parent; //!< parent object of the interator
@@ -50,7 +50,7 @@ namespace nx{
             typedef ItemT     item_type;     //!< item type
             //================constructors and destructor======================
             //! default constructor
-            NXObjectIterator():
+            nxobject_iterator():
                 _parent(nullptr),
                 _nlinks(0),
                 _index(0),
@@ -59,7 +59,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! copy constructor
-            NXObjectIterator(const NXObjectIterator<IterableT,ItemT> &i):
+            nxobject_iterator(const nxobject_iterator<IterableT,ItemT> &i):
                 _parent(i._parent),
                 _nlinks(i._nlinks),
                 _index(i._index),
@@ -68,7 +68,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! move constructor
-            NXObjectIterator(NXObjectIterator<IterableT,ItemT> &&i):
+            nxobject_iterator(nxobject_iterator<IterableT,ItemT> &&i):
                 _parent(i._parent),
                 _nlinks(i._nlinks),
                 _index(i._index),
@@ -81,7 +81,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! constructor from group object
-            NXObjectIterator(const IterableT &g,size_t start_index=0):
+            nxobject_iterator(const IterableT &g,size_t start_index=0):
                 _parent(&g),
                 _nlinks(g.nchilds()),
                 _index(start_index),
@@ -92,7 +92,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! destructor
-            virtual ~NXObjectIterator(){
+            virtual ~nxobject_iterator(){
                 _parent = nullptr;
                 _nlinks = 0;
                 _index  = 0;
@@ -101,8 +101,8 @@ namespace nx{
 
             //=================assignment operators============================
             //! copy assignment operator
-            NXObjectIterator<IterableT,ItemT> &
-                operator=(const NXObjectIterator<IterableT,ItemT> &i)
+            nxobject_iterator<IterableT,ItemT> &
+                operator=(const nxobject_iterator<IterableT,ItemT> &i)
             {
                 if(this != &i){
                     _parent = i._parent;
@@ -115,8 +115,8 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! move assignment operator
-            NXObjectIterator<IterableT,ItemT> &
-                operator=(NXObjectIterator<IterableT,ItemT> &&i)
+            nxobject_iterator<IterableT,ItemT> &
+                operator=(nxobject_iterator<IterableT,ItemT> &&i)
             {
                 if(this != &i){
                     _parent = i._parent;
@@ -168,7 +168,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! increment operator
-            NXObjectIterator<IterableT,ItemT> &operator++()
+            nxobject_iterator<IterableT,ItemT> &operator++()
             {
                 //if the actual index is equal to the total number
                 //of links no increment is possible
@@ -181,7 +181,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! iterator increment
-            NXObjectIterator<IterableT,ItemT> &operator++(int i)
+            nxobject_iterator<IterableT,ItemT> &operator++(int i)
             {
                 //if the actual index is equal to the total number
                 //of links no increment is possible
@@ -196,7 +196,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! iterator comparison for equality
-            bool operator==(const NXObjectIterator<IterableT,ItemT> &o) const
+            bool operator==(const nxobject_iterator<IterableT,ItemT> &o) const
             {
                 if(_parent != o._parent) return false;
                 if(_index  != o._index)  return false;
@@ -206,7 +206,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! iterator comparison for inequality
-            bool operator!=(const NXObjectIterator<IterableT,ItemT> &o) const
+            bool operator!=(const nxobject_iterator<IterableT,ItemT> &o) const
             {
                 if(*this == o) return false;
                 return true;
