@@ -1,7 +1,7 @@
 //nxstrfield_ex2.cpp
 
-#include <pni/io/nx/NX.hpp>
-#include <pni/core/Types.hpp>
+#include <pni/io/nx/nx.hpp>
+#include <pni/core/types.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx::h5;
@@ -11,9 +11,10 @@ using namespace pni::io::nx::h5;
 #include <string>
 
 //-----------------------------------------------------------
-void write_log(const String &logfile,NXField &field){
+void write_log(const string &logfile,nxfield &field)
+{
     std::ifstream istream;
-    String line;
+    string line;
 
     istream.open(logfile,std::ifstream::in);
     
@@ -31,9 +32,9 @@ void write_log(const String &logfile,NXField &field){
 //-----------------------------------------------------------
 int main(int argc,char **argv)
 {
-    NXFile file = NXFile::create_file("nxstrfield_ex2.h5",true,0);
+    nxfile file = nxfile::create_file("nxstrfield_ex2.h5",true,0);
 
-    NXField field = file.create_field<String>("logfile",{0});
+    nxfield field = file.create_field<string>("logfile",{0});
     std::cout<<"Write log file ..."<<std::endl;
     write_log("nxstrfield_ex2.log",field);
    
@@ -41,7 +42,7 @@ int main(int argc,char **argv)
     std::cout<<"Read log file ..."<<std::endl;
     for(size_t i=0;i<field.size();i++)
     {
-        String line;
+        string line;
         field(i).read(line);
         std::cout<<line<<std::endl;
     }
@@ -52,7 +53,7 @@ int main(int argc,char **argv)
     std::cout<<"Read read partly ..."<<std::endl;
     for(size_t i=field.size()-20;i<field.size();i++)
     {
-        String line;
+        string line;
         field(i).read(line);
         std::cout<<"line "<<i<<" : "<<line<<std::endl;
     }

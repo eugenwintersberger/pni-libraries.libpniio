@@ -1,27 +1,27 @@
 //nxnumfield_ex2.cpp
-#include <pni/core/Types.hpp>
-#include <pni/core/Array.hpp>
-#include <pni/io/nx/NX.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
+#include <pni/io/nx/nx.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx::h5;
 
-typedef DArray<Float32> DataArray;
+typedef darray<float32> data_array;
 
-void create_data(String fname)
+void create_data(string fname)
 {
     shape_t shape{2,3};
 
-    DBuffer<UInt16> datab{1,2,3,4,5,6};
-    DBuffer<UInt16> bgb{1,2,0,0,1,0};
+    dbuffer<uint16> datab{1,2,3,4,5,6};
+    dbuffer<uint16> bgb{1,2,0,0,1,0};
 
-    DArray<UInt16> data(shape,datab);
-    DArray<UInt16> bg(shape,bgb);
+    darray<uint16> data(shape,datab);
+    darray<uint16> bg(shape,bgb);
 
-    NXFile file = NXFile::create_file(fname,true,0);
-    file.create_field<UInt16>("detector",shape).write(data);
-    file.create_field<UInt16>("background",shape).write(bg);
-    file.create_field<Float32>("ctime").write(1.23);
+    nxfile file = nxfile::create_file(fname,true,0);
+    file.create_field<uint16>("detector",shape).write(data);
+    file.create_field<uint16>("background",shape).write(bg);
+    file.create_field<float32>("ctime").write(1.23);
     file.close();
 }
 
@@ -43,17 +43,17 @@ int main(int argc,char **argv)
 {
     shape_t shape{2,3};
 
-    NumArray<DataArray> frame(shape);
-    NumArray<DataArray> background(shape);
-    NumArray<DataArray> cdata(shape);
-    Float32 ctime;
+    numarray<data_array> frame(shape);
+    numarray<data_array> background(shape);
+    numarray<data_array> cdata(shape);
+    float32 ctime;
 
     create_data("nxnumfield_ex4.h5");
 
     //reading data
-    NXFile file = NXFile::open_file("nxnumfield_ex4.h5",true);
+    nxfile file = nxfile::open_file("nxnumfield_ex4.h5",true);
 
-    NXField field = file["detector"];
+    nxfield field = file["detector"];
     field.read(frame);
 
     field = file["background"];
