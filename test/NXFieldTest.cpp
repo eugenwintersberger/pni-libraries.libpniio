@@ -110,7 +110,7 @@ void NXFieldTest::test_open()
 {
 	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-	file.create_field<UInt32>("data1");
+	file.create_field<uint32>("data1");
 
 	NXField f1 = file.open("data1");
 
@@ -123,11 +123,11 @@ void NXFieldTest::test_parent()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    NXField f = file.create_field<Float64>("/detector/data");
+    NXField f = file.create_field<float64>("/detector/data");
     NXGroup p = f.parent();
     CPPUNIT_ASSERT(p.is_valid());
     CPPUNIT_ASSERT(p.name() == "detector");
-    f = file.create_field<UInt16>("temperature");
+    f = file.create_field<uint16>("temperature");
     CPPUNIT_ASSERT(f.parent().name() == "/");
 }
 
@@ -136,7 +136,7 @@ void NXFieldTest::test_assignment()
 {
 	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-	NXField field = file.create_field<UInt16>("test1");
+	NXField field = file.create_field<uint16>("test1");
 	CPPUNIT_ASSERT(field.is_valid());
 
 	NXField field2;
@@ -202,9 +202,9 @@ void NXFieldTest::test_resize()
 void NXFieldTest::test_io_string_scalar()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    NXField field1 = file.create_field<String>("scalar");
+    NXField field1 = file.create_field<string>("scalar");
 
-    String write,read;
+    string write,read;
     write = "hello";
     read = "";
 
@@ -297,10 +297,10 @@ void NXFieldTest::test_io_string_buffer()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     shape_t s{5};
-    DBuffer<String> write_buffer({"Hello","world","this","is","a test"});
-    DBuffer<String> read_buffer(5);
+    dbuffer<string> write_buffer({"Hello","world","this","is","a test"});
+    dbuffer<string> read_buffer(5);
 
-    NXField field1 = file.create_field<String>("buffer",s);
+    NXField field1 = file.create_field<string>("buffer",s);
     CPPUNIT_ASSERT_NO_THROW(field1.write(write_buffer));
     CPPUNIT_ASSERT_NO_THROW(field1.read(read_buffer));
 
@@ -308,11 +308,11 @@ void NXFieldTest::test_io_string_buffer()
                               read_buffer.begin()));
 
     //check exceptions
-    CPPUNIT_ASSERT_NO_THROW(field1 = file.create_field<String>("buffer2",{200}));
+    CPPUNIT_ASSERT_NO_THROW(field1 = file.create_field<string>("buffer2",{200}));
     CPPUNIT_ASSERT_THROW(field1.write(write_buffer),size_missmatch_error);
 
     write_buffer.free();
-    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),memory_allocation_error);
+    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),memory_not_allocated_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -335,7 +335,7 @@ void NXFieldTest::test_io_bool_buffer()
     CPPUNIT_ASSERT_THROW(field1.write(write_buffer),size_missmatch_error);
 
     write_buffer.free();
-    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),memory_allocation_error);
+    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),memory_not_allocated_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -368,13 +368,14 @@ void NXFieldTest::test_io_array()
 
     //read back data
     array o2(data);
-    std::fill(o2.begin(),o2.end(),Float64(0));
+    std::fill(o2.begin(),o2.end(),float64(0));
+    
 
     field.read(o2);
     for(auto iter1=o.begin(),iter2=o2.begin();
         iter1!=o.end();
         ++iter1,++iter2)
-        check_equality(iter1->as<Float64>(),iter2->as<Float64>());
+        check_equality(iter1->as<float64>(),iter2->as<float64>());
 
 }
 

@@ -24,27 +24,27 @@ void H5DatasetTest::test_creation()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     shape_t s{10,50};
     H5Dataspace space(s);
-    H5Datatype type   = H5DatatypeFactory::create_type<TypeID::FLOAT32>();
+    H5Datatype type   = H5DatatypeFactory::create_type<type_id_t::FLOAT32>();
 
     //create contiguous dataset
     H5Dataset ds1("ds1",_group,type,space);
     CPPUNIT_ASSERT(ds1.is_valid());
-    CPPUNIT_ASSERT(ds1.type_id()==TypeID::FLOAT32);
+    CPPUNIT_ASSERT(ds1.type_id()==type_id_t::FLOAT32);
     CPPUNIT_ASSERT(ds1.rank() == 2);
     CPPUNIT_ASSERT(ds1.size() == 10*50);
 
     //create a chunked dataset
     shape_t cs{1,50};
-    type = H5DatatypeFactory::create_type<TypeID::UINT32>();
+    type = H5DatatypeFactory::create_type<type_id_t::UINT32>();
     H5Dataset ds2("ds2",_group,type,space,cs);
     CPPUNIT_ASSERT(ds2.is_valid());
-    CPPUNIT_ASSERT(ds2.type_id() == TypeID::UINT32);
+    CPPUNIT_ASSERT(ds2.type_id() == type_id_t::UINT32);
 
     //create a scalar dataset
-    type = H5DatatypeFactory::create_type<TypeID::FLOAT128>();
+    type = H5DatatypeFactory::create_type<type_id_t::FLOAT128>();
     H5Dataset ds3("ds3",_group,type,H5Dataspace());
     CPPUNIT_ASSERT(ds3.is_valid());
-    CPPUNIT_ASSERT(ds3.type_id() == TypeID::FLOAT128);
+    CPPUNIT_ASSERT(ds3.type_id() == type_id_t::FLOAT128);
     CPPUNIT_ASSERT(ds3.rank() == 0);
     CPPUNIT_ASSERT(ds3.size() == 1);
 
@@ -76,7 +76,7 @@ void H5DatasetTest::test_assignment()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     shape_t s{1024,512};
-    H5Datatype type = H5DatatypeFactory::create_type<TypeID::FLOAT32>();
+    H5Datatype type = H5DatatypeFactory::create_type<type_id_t::FLOAT32>();
     H5Dataspace space(s);
     H5Dataset ds("ds",_group,type,space);
 
@@ -105,12 +105,12 @@ void H5DatasetTest::test_inquery()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     shape_t s = {1024,512};
-    H5Datatype type = H5DatatypeFactory::create_type<Float128>();
+    H5Datatype type = H5DatatypeFactory::create_type<float128>();
     H5Dataspace space(s);
     H5Dataset ds("ds",_file,type,space);
 
     CPPUNIT_ASSERT(ds.is_valid());
-    CPPUNIT_ASSERT(ds.type_id() == TypeID::FLOAT128);
+    CPPUNIT_ASSERT(ds.type_id() == type_id_t::FLOAT128);
     CPPUNIT_ASSERT(std::equal(s.begin(),s.end(),ds.shape<shape_t>().begin()));
 
     H5Dataset ds2("/scan_1/detector/data",_file,type,space);
@@ -139,7 +139,7 @@ void H5DatasetTest::test_linking()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     //checking internal links
-    H5Datatype type = H5DatatypeFactory::create_type<Float128>();
+    H5Datatype type = H5DatatypeFactory::create_type<float128>();
     H5Dataspace space;
     H5Dataset d("/data/test/dir/data",_file,type,space);
     CPPUNIT_ASSERT_NO_THROW(d.link("/collection/data"));
@@ -157,7 +157,7 @@ void H5DatasetTest::test_parent()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    H5Datatype type = H5DatatypeFactory::create_type<UInt16>();
+    H5Datatype type = H5DatatypeFactory::create_type<uint16>();
     H5Dataspace space;
     H5Dataset d("/detector/data",_file,type,space);
 
@@ -175,7 +175,7 @@ void H5DatasetTest::test_resize()
     //create base shape
     shape_t s{0,1024};
     shape_t cs{1,1024};
-    H5Datatype type = H5DatatypeFactory::create_type<UInt32>();
+    H5Datatype type = H5DatatypeFactory::create_type<uint32>();
     H5Dataspace space({0,1024},{H5Dataspace::UNLIMITED,H5Dataspace::UNLIMITED});
 
     H5Dataset ds("ds",_group,type,space,cs);
@@ -191,7 +191,7 @@ void H5DatasetTest::test_resize()
 
     s = shape_t{0};
     cs = shape_t{1};
-    type = H5DatatypeFactory::create_type<String>();
+    type = H5DatatypeFactory::create_type<string>();
     CPPUNIT_ASSERT_NO_THROW(space = H5Dataspace({0},{H5Dataspace::UNLIMITED}));
     H5Dataset ss("ss",_group,type,space,cs);
     CPPUNIT_ASSERT(ss.rank() == 1);
@@ -214,7 +214,7 @@ void H5DatasetTest::test_string_array_data()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     shape_t s{2,3};
-    H5Datatype type = H5DatatypeFactory::create_type<String>();
+    H5Datatype type = H5DatatypeFactory::create_type<string>();
     H5Dataspace space(s);
 
     H5Dataset dset("sarray",_group,type,space,s);
@@ -225,9 +225,9 @@ void H5DatasetTest::test_string_array_data()
     
     CPPUNIT_ASSERT_NO_THROW(dset.write(swrite.storage().ptr()));
 
-    DArray<String> sread(s);
+    darray<string> sread(s);
 
-    CPPUNIT_ASSERT_NO_THROW(dset.read(const_cast<String*>(sread.storage().ptr())));
+    CPPUNIT_ASSERT_NO_THROW(dset.read(const_cast<string*>(sread.storage().ptr())));
 
     std::equal(swrite.begin(),swrite.end(),sread.begin());
 }
@@ -237,7 +237,7 @@ void H5DatasetTest::test_string_scalar_data()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    H5Datatype type = H5DatatypeFactory::create_type<String>();
+    H5Datatype type = H5DatatypeFactory::create_type<string>();
     H5Dataspace space;
 
     H5Dataset dset("sscalar",_group,type,space);
@@ -271,8 +271,8 @@ void H5DatasetTest::test_bool_scalar_data()
 void H5DatasetTest::test_bool_array_data()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    SArray<Bool,2,3> write_flags;
-    SArray<Bool,2,3> read_flags;
+    sarray<bool,2,3> write_flags;
+    sarray<bool,2,3> read_flags;
 
     write_flags(0,0) = true; write_flags(0,1) = false; write_flags(0,2)=true;
     write_flags(1,0) = false; write_flags(1,1) = true; write_flags(1,2)=false;
@@ -292,7 +292,7 @@ void H5DatasetTest::test_bool_array_data()
 void H5DatasetTest::test_string_selection() 
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    H5Datatype type = H5DatatypeFactory::create_type<String>();
+    H5Datatype type = H5DatatypeFactory::create_type<string>();
     shape_t shape({10,20});
     H5Dataspace space(shape);
     H5Dataset dset("text",_group,type,space);
@@ -309,11 +309,11 @@ void H5DatasetTest::test_string_selection()
         std::stringstream ss;
 
         //select regtion in the dataset
-        std::vector<Slice> selection({Slice(i),Slice(10,20)});
+        std::vector<slice> selection({slice(i),slice(10,20)});
         //set buffer value
         
         ss<<"bla "<<i;
-        std::fill(writebuf.begin(),writebuf.end(),String(ss.str()));
+        std::fill(writebuf.begin(),writebuf.end(),string(ss.str()));
         
         //apply selection
         dset.apply_selection(selection);
@@ -323,7 +323,7 @@ void H5DatasetTest::test_string_selection()
         dset.write(writebuf.ptr());
 
         //read data back
-        dset.read(const_cast<String*>(readbuf.ptr()));
+        dset.read(const_cast<string*>(readbuf.ptr()));
 
         //compare data
         CPPUNIT_ASSERT(std::equal(writebuf.begin(),writebuf.end(),readbuf.begin()));

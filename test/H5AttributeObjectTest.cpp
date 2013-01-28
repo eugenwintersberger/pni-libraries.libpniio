@@ -140,15 +140,15 @@ void H5AttributeObjectTest::test_inquery()
     CPPUNIT_ASSERT_THROW(o1.attr("bla"),H5AttributeError);
     CPPUNIT_ASSERT_NO_THROW(o1.attr(0));
     CPPUNIT_ASSERT_NO_THROW(o1.attr(1));
-    CPPUNIT_ASSERT_THROW(o1.attr(2),IndexError);
-    CPPUNIT_ASSERT_THROW(o1.attr(100),IndexError);
+    CPPUNIT_ASSERT_THROW(o1.attr(2),index_error);
+    CPPUNIT_ASSERT_THROW(o1.attr(100),index_error);
 
     //try to create a new one without overwrite
-    CPPUNIT_ASSERT_THROW(o1.attr<String>("test1"),H5AttributeError);
-    CPPUNIT_ASSERT_NO_THROW(o1.attr<String>("test1",true));
+    CPPUNIT_ASSERT_THROW(o1.attr<string>("test1"),H5AttributeError);
+    CPPUNIT_ASSERT_NO_THROW(o1.attr<string>("test1",true));
 
     CPPUNIT_ASSERT_NO_THROW(o1.del_attr("test1"));
-    CPPUNIT_ASSERT_NO_THROW(o1.attr<String>("test1"));
+    CPPUNIT_ASSERT_NO_THROW(o1.attr<string>("test1"));
 
 }
 
@@ -159,7 +159,7 @@ void H5AttributeObjectTest::test_attribute_open()
 
     H5AttributeObject o(H5TestObject(create_group(file,"group")));
 
-    CPPUNIT_ASSERT_NO_THROW(o.attr<Float32>("temp"));
+    CPPUNIT_ASSERT_NO_THROW(o.attr<float32>("temp"));
     CPPUNIT_ASSERT(o.has_attr("temp"));
     H5Attribute a;
     CPPUNIT_ASSERT_NO_THROW(a = o.attr("temp"));

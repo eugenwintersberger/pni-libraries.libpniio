@@ -70,7 +70,7 @@ namespace nx{
     */
     template<typename GTYPE,typename ...ATYPES>
     typename GTYPE::field_type
-    create_field(const GTYPE &g,const String &fname,const TypeID &tid,
+    create_field(const GTYPE &g,const string &fname,const type_id_t &tid,
                  ATYPES ...args)
     {
         if(tid == type_id_t::UINT8)

@@ -30,48 +30,48 @@ class H5AttributeObjectTest:public CppUnit::TestFixture
         
         CPPUNIT_TEST(test_attribute_open);
         //scalar attribute creation tests
-        CPPUNIT_TEST(test_scalar_attribute_create<UInt8>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Int8>);
-        CPPUNIT_TEST(test_scalar_attribute_create<UInt16>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Int16>);
-        CPPUNIT_TEST(test_scalar_attribute_create<UInt32>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Int32>);
-        CPPUNIT_TEST(test_scalar_attribute_create<UInt64>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Int64>);
+        CPPUNIT_TEST(test_scalar_attribute_create<uint8>);
+        CPPUNIT_TEST(test_scalar_attribute_create<int8>);
+        CPPUNIT_TEST(test_scalar_attribute_create<uint16>);
+        CPPUNIT_TEST(test_scalar_attribute_create<int16>);
+        CPPUNIT_TEST(test_scalar_attribute_create<uint32>);
+        CPPUNIT_TEST(test_scalar_attribute_create<int32>);
+        CPPUNIT_TEST(test_scalar_attribute_create<uint64>);
+        CPPUNIT_TEST(test_scalar_attribute_create<int64>);
 
-        CPPUNIT_TEST(test_scalar_attribute_create<Float32>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Float64>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Float128>);
+        CPPUNIT_TEST(test_scalar_attribute_create<float32>);
+        CPPUNIT_TEST(test_scalar_attribute_create<float64>);
+        CPPUNIT_TEST(test_scalar_attribute_create<float128>);
         
-        CPPUNIT_TEST(test_scalar_attribute_create<Complex32>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Complex64>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Complex128>);
+        CPPUNIT_TEST(test_scalar_attribute_create<complex32>);
+        CPPUNIT_TEST(test_scalar_attribute_create<complex64>);
+        CPPUNIT_TEST(test_scalar_attribute_create<complex128>);
 
-        CPPUNIT_TEST(test_scalar_attribute_create<String>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Binary>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Bool>);
+        CPPUNIT_TEST(test_scalar_attribute_create<string>);
+        CPPUNIT_TEST(test_scalar_attribute_create<binary>);
+        CPPUNIT_TEST(test_scalar_attribute_create<bool>);
 
         //array attribute creation tests
-        CPPUNIT_TEST(test_array_attribute_create<UInt8>);
-        CPPUNIT_TEST(test_array_attribute_create<Int8>);
-        CPPUNIT_TEST(test_array_attribute_create<UInt16>);
-        CPPUNIT_TEST(test_array_attribute_create<Int16>);
-        CPPUNIT_TEST(test_array_attribute_create<UInt32>);
-        CPPUNIT_TEST(test_array_attribute_create<Int32>);
-        CPPUNIT_TEST(test_array_attribute_create<UInt64>);
-        CPPUNIT_TEST(test_array_attribute_create<Int64>);
+        CPPUNIT_TEST(test_array_attribute_create<uint8>);
+        CPPUNIT_TEST(test_array_attribute_create<int8>);
+        CPPUNIT_TEST(test_array_attribute_create<uint16>);
+        CPPUNIT_TEST(test_array_attribute_create<int16>);
+        CPPUNIT_TEST(test_array_attribute_create<uint32>);
+        CPPUNIT_TEST(test_array_attribute_create<int32>);
+        CPPUNIT_TEST(test_array_attribute_create<uint64>);
+        CPPUNIT_TEST(test_array_attribute_create<int64>);
 
-        CPPUNIT_TEST(test_array_attribute_create<Float32>);
-        CPPUNIT_TEST(test_array_attribute_create<Float64>);
-        CPPUNIT_TEST(test_array_attribute_create<Float128>);
+        CPPUNIT_TEST(test_array_attribute_create<float32>);
+        CPPUNIT_TEST(test_array_attribute_create<float64>);
+        CPPUNIT_TEST(test_array_attribute_create<float128>);
         
-        CPPUNIT_TEST(test_array_attribute_create<Complex32>);
-        CPPUNIT_TEST(test_array_attribute_create<Complex64>);
-        CPPUNIT_TEST(test_array_attribute_create<Complex128>);
+        CPPUNIT_TEST(test_array_attribute_create<complex32>);
+        CPPUNIT_TEST(test_array_attribute_create<complex64>);
+        CPPUNIT_TEST(test_array_attribute_create<complex128>);
 
-        CPPUNIT_TEST(test_array_attribute_create<String>);
-        CPPUNIT_TEST(test_array_attribute_create<Binary>);
-        CPPUNIT_TEST(test_array_attribute_create<Bool>);
+        CPPUNIT_TEST(test_array_attribute_create<string>);
+        CPPUNIT_TEST(test_array_attribute_create<binary>);
+        CPPUNIT_TEST(test_array_attribute_create<bool>);
         CPPUNIT_TEST_SUITE_END();
     private:
         //-------------------local private members-----------------------------

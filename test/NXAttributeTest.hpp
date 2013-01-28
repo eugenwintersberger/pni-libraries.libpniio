@@ -172,12 +172,12 @@ template<typename APTYPE> class NXAttributeTest: public CppUnit::TestFixture
         template<typename T>
         static void create_buffer(const size_t &size,dbuffer<T> &b)
         {
-            b = DBuffer<T>(size);
+            b = dbuffer<T>(size);
         }
 
         //---------------------------------------------------------------------
         template<typename T,size_t SIZE>
-        static void create_buffer(const size_t &size,buffer<T,SIZE> &b)
+        static void create_buffer(const size_t &size,sbuffer<T,SIZE> &b)
         {
         }
     public:

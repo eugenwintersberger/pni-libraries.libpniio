@@ -20,10 +20,10 @@ class benchmark_factory
         string _fname;
 
         std::unique_ptr<file_io_benchmark> 
-            create_pninx_benchmark(const String &tc) const;
+            create_pninx_benchmark(const string &tc) const;
 
         std::unique_ptr<file_io_benchmark>
-            create_hdf5_benchmark(const String &tc) const;
+            create_hdf5_benchmark(const string &tc) const;
     public:
         //===============constructors and destructor===========================
         //! default constructor

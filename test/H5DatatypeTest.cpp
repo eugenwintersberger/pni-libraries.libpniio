@@ -36,7 +36,7 @@ void H5DatatypeTest::test_creation()
     H5Datatype t5 = std::move(t2);
     CPPUNIT_ASSERT(t5.is_valid());
     CPPUNIT_ASSERT(!t2.is_valid());
-    CPPUNIT_ASSERT(t5.type_id() == TypeID::UINT8);
+    CPPUNIT_ASSERT(t5.type_id() == type_id_t::UINT8);
     
 
 }

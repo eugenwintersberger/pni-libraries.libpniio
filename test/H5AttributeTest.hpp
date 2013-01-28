@@ -124,8 +124,8 @@ template<typename T> void H5AttributeTest::test_array_attribute()
     PRINT_TEST_FUNCTION_SIG;
 
     shape_t s{10,20};
-    DArray<T> write(s);
-    SArray<T,10,20> read;
+    darray<T> write(s);
+    sarray<T,10,20> read;
 
     std::vector<T> b = create_array_data<T>(write.size());
     std::copy(b.begin(),b.end(),write.begin());

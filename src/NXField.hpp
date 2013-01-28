@@ -1077,7 +1077,7 @@ namespace nx{
             //shape of each of the objects
             if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
                 throw shape_missmatch_error(EXCEPTION_RECORD,
-                        shape_missmatch_error(ashape,fshape));
+                        _shape_missmatch_error_message(ashape,fshape));
         }
         else
         {

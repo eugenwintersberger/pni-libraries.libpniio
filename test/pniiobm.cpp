@@ -19,21 +19,21 @@ int main(int argc,char **argv)
                         std::chrono::milliseconds> bm_timer_t;
     configuration config;
     //setup program configuration
-    config.add_option(config_option<String>("backend","b",
+    config.add_option(config_option<string>("backend","b",
                       "HDF5 or PNINX backend","pninx"));
     config.add_option(config_option<size_t>("nx","x",
                       "number of point along first dimension",1024));
     config.add_option(config_option<size_t>("ny","y",
                       "number of points along second dimension",1024));
-    config.add_option(config_option<String>("type","t",
+    config.add_option(config_option<string>("type","t",
                       "data type to use for writing","uint8"));
     config.add_option(config_option<size_t>("nframes","n",
                       "number of frames to write per run",10));
     config.add_option(config_option<size_t>("nruns","r",
                       "number of runs to perform for the benchmark",1));
-    config.add_option(config_option<String>("output","o",
+    config.add_option(config_option<string>("output","o",
                       "name of output file","pninxbm.h5"));
-    config.add_option(config_option<String>("logfile","l",
+    config.add_option(config_option<string>("logfile","l",
                       "name of a logfile"));
                      
    
@@ -49,7 +49,7 @@ int main(int argc,char **argv)
     }
 
     //create the benchmark factory
-    benchmark_factory factory(config.value<String>("output"),
+    benchmark_factory factory(config.value<string>("output"),
                               config.value<size_t>("nx"),
                               config.value<size_t>("ny"),
                               config.value<size_t>("nframes"));
@@ -75,7 +75,7 @@ int main(int argc,char **argv)
     if(config.has_option("logfile"))
     {
         //open log file for writting
-        std::ofstream logfile(config.value<String>("logfile"));
+        std::ofstream logfile(config.value<string>("logfile"));
         
         //write header
         logfile<<"#"<<runner.begin()->unit()<<std::endl;

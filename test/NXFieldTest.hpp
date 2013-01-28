@@ -150,8 +150,8 @@ template<typename T> void NXFieldTest::test_io_array()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     shape_t s{10,50};
-    DArray<T> write(s);
-    DArray<T> read(s);
+    darray<T> write(s);
+    darray<T> read(s);
 
     std::fill(write.begin(),write.end(),T(100));
     std::fill(write.begin(),write.end(),T(0));
@@ -162,7 +162,7 @@ template<typename T> void NXFieldTest::test_io_array()
     CPPUNIT_ASSERT(write == read);
 
     field1 = file.create_field<T>("array2",{2,2});
-    CPPUNIT_ASSERT_THROW(field1.write(write),ShapeMissmatchError);
+    CPPUNIT_ASSERT_THROW(field1.write(write),shape_missmatch_error);
 
     NXDeflateFilter deflate;
     deflate.compression_rate(9);
@@ -180,8 +180,8 @@ template<typename T> void NXFieldTest::test_io_buffer()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     shape_t s{1024};
-    DBuffer<T> write_buffer(1024);
-    DBuffer<T> read_buffer(1024);
+    dbuffer<T> write_buffer(1024);
+    dbuffer<T> read_buffer(1024);
 
     std::fill(write_buffer.begin(),write_buffer.end(),T(100));
     std::fill(read_buffer.begin(),read_buffer.end(),T(0));
@@ -195,10 +195,10 @@ template<typename T> void NXFieldTest::test_io_buffer()
 
     //check exceptions
     CPPUNIT_ASSERT_NO_THROW(field1 = file.create_field<T>("buffer2",{200}));
-    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),SizeMissmatchError);
+    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),size_missmatch_error);
 
     write_buffer.free();
-    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),MemoryNotAllocatedError);
+    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),memory_not_allocated_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -216,6 +216,6 @@ template<typename T> void NXFieldTest::test_io_scalar()
     compare_values(write,read);
 
     CPPUNIT_ASSERT_NO_THROW(field1.grow(0));
-    CPPUNIT_ASSERT_THROW(field1.write(write),ShapeMissmatchError);
+    CPPUNIT_ASSERT_THROW(field1.write(write),shape_missmatch_error);
 }
 

@@ -31,7 +31,7 @@ template<typename T> class pniio_io_benchmark : public file_io_benchmark
         {
             //create the frame buffer
             shape_t fshape{nx,ny};
-            _frame_buffer = DArray<T>(fshape);
+            _frame_buffer = darray<T>(fshape);
         }
 
         //---------------------------------------------------------------------
@@ -72,7 +72,7 @@ template<typename T> void pniio_io_benchmark<T>::run()
     for(size_t n = 0; n<nframes();n++)
     {
         _field.grow(0);
-        _field(n,Slice(0,nx()),Slice(0,ny())).write(_frame_buffer);
+        _field(n,slice(0,nx()),slice(0,ny())).write(_frame_buffer);
         _file.flush();
     }
 }
