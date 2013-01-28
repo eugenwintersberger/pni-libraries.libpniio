@@ -29,7 +29,7 @@
 
 #include <pni/core/types.hpp>
 
-#include "NXObject.hpp"
+#include "nxobject.hpp"
 
 using namespace pni::core;
 
@@ -43,7 +43,7 @@ namespace nx{
 
     Base class for all filter objects in the Nexus world.
     */
-    template<typename Imp> class NXFilter
+    template<typename Imp> class nxfilter
     {
         private:
             Imp _imp; //!< filter implementation object
@@ -62,42 +62,42 @@ namespace nx{
         public:
             //================constructors  and destructor======================
             //! default constructor
-            explicit NXFilter():_imp() { }
+            explicit nxfilter():_imp() { }
 
             //------------------------------------------------------------------
             //! copy constructor
-            NXFilter(const NXFilter<Imp> &f):_imp(f._imp) { }
+            nxfilter(const nxfilter<Imp> &f):_imp(f._imp) { }
             
             //------------------------------------------------------------------
             //! conversion copy constructor
             template<typename FImp>
-                NXFilter(const NXFilter<FImp> &f):_imp(f.imp()) { }
+                nxfilter(const nxfilter<FImp> &f):_imp(f.imp()) { }
 
             //------------------------------------------------------------------
             //! copy implementation constructor 
-            NXFilter(const Imp &i):_imp(i) { }
+            nxfilter(const Imp &i):_imp(i) { }
 
 
             //-----------------------------------------------------------------
             //! copy conversion implementation constructor
             template<typename FImp>
-                NXFilter(const FImp &i):_imp(i.imp()) { }
+                nxfilter(const FImp &i):_imp(i.imp()) { }
 
             //-----------------------------------------------------------------
             //! move constructor
-            NXFilter(NXFilter<Imp> &&f):_imp(std::move(f._imp)) { }
+            nxfilter(nxfilter<Imp> &&f):_imp(std::move(f._imp)) { }
             
             //-----------------------------------------------------------------
             //! move constructor from implementation
-            NXFilter(Imp &&i):_imp(std::move(i)) { }
+            nxfilter(Imp &&i):_imp(std::move(i)) { }
 
             //-----------------------------------------------------------------
             //! destructor
-            virtual ~NXFilter() { }
+            virtual ~nxfilter() { }
 
             //==================assignment operators===========================
             //! copy assignment operator
-            NXFilter<Imp> &operator=(const NXFilter<Imp> &f)
+            nxfilter<Imp> &operator=(const nxfilter<Imp> &f)
             {
                 if(this != &f) _imp = f._imp;
                 return *this;
@@ -105,7 +105,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! move assignment operator
-            NXFilter<Imp> &operator=(NXFilter<Imp> &&f)
+            nxfilter<Imp> &operator=(nxfilter<Imp> &&f)
             {
                 if(this != &f) _imp = std::move(f._imp);
                 return *this;

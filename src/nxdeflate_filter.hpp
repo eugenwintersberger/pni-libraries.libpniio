@@ -24,7 +24,7 @@
  */
 #pragma once
 
-#include "NXFilter.hpp"
+#include "nxfilter.hpp"
 
 namespace pni{
 namespace io {
@@ -36,49 +36,49 @@ namespace nx{
     This class provides an implementation of the simple deflate filter as it is
     implemented in zlib. 
     */
-    template<typename Imp> class NXDeflateFilter:public NXFilter<Imp>
+    template<typename Imp> class nxdeflate_filter:public nxfilter<Imp>
     {
         public:
             //====================constructors and destructor==================
             //! default constructor
-            explicit NXDeflateFilter():NXFilter<Imp>() { }
+            explicit nxdeflate_filter():nxfilter<Imp>() { }
 
             //-----------------------------------------------------------------
             //! copy constructor
-            NXDeflateFilter(const NXDeflateFilter<Imp> &f)
-                :NXFilter<Imp>(f)
+            nxdeflate_filter(const nxdeflate_filter<Imp> &f)
+                :nxfilter<Imp>(f)
             { }
 
             //-----------------------------------------------------------------
             //! move constructor
-            NXDeflateFilter(NXDeflateFilter<Imp> &&f)
-                :NXFilter<Imp>(std::move(f))
+            nxdeflate_filter(nxdeflate_filter<Imp> &&f)
+                :nxfilter<Imp>(std::move(f))
             { }
 
             //-----------------------------------------------------------------
             //! standard constructor
-            NXDeflateFilter(uint32 r,bool s)
-                :NXFilter<Imp>(Imp(r,s))
+            nxdeflate_filter(uint32 r,bool s)
+                :nxfilter<Imp>(Imp(r,s))
             { }
 
             //-----------------------------------------------------------------
             //! destructor
-            ~NXDeflateFilter() { }
+            ~nxdeflate_filter() { }
 
             //====================assignment operators=========================
             //! copy assignment operator
-            NXDeflateFilter<Imp> &
-                operator=(const NXDeflateFilter<Imp> &f)
+            nxdeflate_filter<Imp> &
+                operator=(const nxdeflate_filter<Imp> &f)
             {
-                if(this != &f) NXFilter<Imp>::operator=(f);
+                if(this != &f) nxfilter<Imp>::operator=(f);
                 return *this;
             }
 
             //-----------------------------------------------------------------
             //! move assignment operator
-            NXDeflateFilter<Imp> &operator=(NXDeflateFilter<Imp> &&f)
+            nxdeflate_filter<Imp> &operator=(nxdeflate_filter<Imp> &&f)
             {
-                if(this != &f) NXFilter<Imp>::operator=(std::move(f));
+                if(this != &f) nxfilter<Imp>::operator=(std::move(f));
                 return *this;
             }
 
