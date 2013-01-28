@@ -1,7 +1,7 @@
 from os import path
 
 Import("build_env")
-src_list = ["NXExceptions.cpp","NXDateTime.cpp"]
+src_list = Glob("*.cpp")
 
 #compile sources
 shared_objects = build_env.SharedObject(src_list)

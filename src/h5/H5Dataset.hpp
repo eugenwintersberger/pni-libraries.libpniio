@@ -39,7 +39,7 @@ using namespace pni::core;
 #include "H5Group.hpp"
 #include "H5ObjectType.hpp"
 #include "H5Filter.hpp"
-#include "../NXExceptions.hpp"
+#include "../nxexceptions.hpp"
 
 
 namespace pni{
@@ -79,7 +79,7 @@ namespace h5{
             This private method throws an exception in a particular 
             method if the dataset is not scalar (if the size of the
             dataset is not 1).
-            \throws ShapeMissmatchError if dataset is not scalar
+            \throws shape_missmatch_error if dataset is not scalar
             \param rec exception record
             */
             void __throw_if_not_scalar(const exception_record &rec) const;
@@ -641,7 +641,7 @@ namespace h5{
                     ss<<"Error writing data to dataset ["+this->name()+"]!";
                     ss<<std::endl<<"HDF5 error report:"<<std::endl;
                     ss<<estack;
-                    throw pni::io::nx::NXFieldError(EXCEPTION_RECORD, 
+                    throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
                           ss.str());
                 }
             }

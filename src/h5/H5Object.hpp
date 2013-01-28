@@ -30,7 +30,7 @@ extern "C"{
 }
 
 #include "H5ObjectType.hpp"
-#include "../NXObjectType.hpp"
+#include "../nxobject_type.hpp"
 
 namespace pni{
 namespace io{
@@ -186,10 +186,10 @@ namespace h5{
             \brief return the Nexus object type
 
             Returns the Nexus object type of an object.  This can be either
-            NXObjecType::NXFIELD or NXObjectType::NXGROUP. 
+            nxobject_type::NXFIELD or nxobject_type::NXGROUP. 
             \return Nexus object type
             */
-            pni::io::nx::NXObjectType nxobject_type() const;
+            pni::io::nx::nxobject_type nxobject_type() const;
 
             //-----------------------------------------------------------------
             /*! 
