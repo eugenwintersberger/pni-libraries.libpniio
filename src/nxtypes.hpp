@@ -28,12 +28,14 @@
 #pragma once
 
 namespace pni{
+namespace io{
 namespace nx{
 
-enum NXObjectClass {NXNONE,NXFIELD,NXGROUP,NXFILE};
+enum nxobject_class {NXNONE,NXFIELD,NXGROUP,NXFILE};
 
 
 
 //end of namespace
+}
 }
 }

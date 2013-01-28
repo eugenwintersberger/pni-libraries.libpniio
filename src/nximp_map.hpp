@@ -27,7 +27,7 @@
 
 #pragma once
 
-#include "NXImpCode.hpp"
+#include "nximp_code.hpp"
 
 #include "h5/H5AttributeObject.hpp"
 #include "h5/H5File.hpp"
@@ -47,7 +47,7 @@ namespace nx{
     For each backend a particular class must be provided to implement one of the
     low level nexus objects.
     */
-    template<ImpCode c> class NXImpMap
+    template<nximp_code c> class nximp_map
     {
         public:
             typedef void ObjectImpl;     //!< implementation type for NXObject
@@ -62,7 +62,8 @@ namespace nx{
     //! \cond NO_API_DOC
 
     //set implementation types for the HDF5 implementation
-    template<> class NXImpMap<ImpCode::HDF5>{
+    template<> class nximp_map<nximp_code::HDF5>
+    {
         public:
             typedef pni::io::nx::h5::H5AttributeObject  ObjectImpl;
             typedef pni::io::nx::h5::H5File             FileImpl;
