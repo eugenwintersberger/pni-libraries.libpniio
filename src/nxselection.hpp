@@ -35,7 +35,7 @@ namespace pni{
 namespace io{
 namespace nx{
 
-    template<typename FTYPE> class NXSelection
+    template<typename FTYPE> class nxselection
     {
         private:
             std::vector<slice>  _selection;
@@ -55,21 +55,21 @@ namespace nx{
             typedef std::vector<slice> selection_type;
             //=============constructors and destructor=========================
             //! default constructor
-            NXSelection(selection_type sel,FTYPE &field):
+            nxselection(selection_type sel,FTYPE &field):
                 _selection(sel),
                 _field(field)
             {}
 
             //-----------------------------------------------------------------
             //! copy constructor
-            NXSelection(const NXSelection<FTYPE> &sel):
+            nxselection(const nxselection<FTYPE> &sel):
                 _selection(sel._selection),
                 _field(sel._field)
             {}
 
             //-----------------------------------------------------------------
             //! destructor
-            ~NXSelection()  
+            ~nxselection()  
             {
                 //need to remove all eventual selections in case that something 
                 //goes wrong and the selection gets destroyed
@@ -77,7 +77,7 @@ namespace nx{
             }
 
             //=================assignment operators============================
-            NXSelection<FTYPE> &operator=(const NXSelection<FTYPE> &sel)
+            nxselection<FTYPE> &operator=(const nxselection<FTYPE> &sel)
             {
                 if(this == &sel) return *this;
                 _selection = sel._selection;
