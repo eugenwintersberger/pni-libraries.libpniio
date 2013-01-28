@@ -22,14 +22,14 @@
  *      Author: eugen
  */
 
-#include "NXDateTime.hpp"
+#include "nxdate_time.hpp"
 
 namespace pni {
 namespace io {
 namespace nx {
 
     //---------------------------------------------------------------------
-    string NXDateTime::__get_utc_delta()
+    string nxdate_time::__get_utc_delta()
     {
         typedef boost::date_time::c_local_adjustor<ptime> local_adj;
         //get utc time
@@ -48,7 +48,7 @@ namespace nx {
     }
 
     //---------------------------------------------------------------------
-    string NXDateTime::__get_date_time_str(const ptime &t)
+    string nxdate_time::__get_date_time_str(const ptime &t)
     {
 
         string dtime = to_iso_extended_string(t);
@@ -57,14 +57,14 @@ namespace nx {
     }
 
     //---------------------------------------------------------------------
-    string NXDateTime::get_date_time_str(){
+    string nxdate_time::get_date_time_str(){
         ptime t = microsec_clock::local_time();
         return __get_date_time_str(t);
 
     }
 
     //---------------------------------------------------------------------
-    string NXDateTime::get_date_time_str(const time_t &t)
+    string nxdate_time::get_date_time_str(const time_t &t)
     {
         return __get_date_time_str(from_time_t(t));
     }

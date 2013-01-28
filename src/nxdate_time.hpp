@@ -47,7 +47,8 @@ namespace nx {
     can come either directly from the host machine the program is running on or
     can be configured manually if this setup is not correct. 
     */
-    class NXDateTime {
+    class nxdate_time 
+    {
         private:
             //! get date time from ptime 
             static string __get_date_time_str(const ptime &t);
