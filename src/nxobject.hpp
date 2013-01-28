@@ -33,19 +33,19 @@
 #include <pni/core/arrays.hpp>
 #include <pni/core/scalar.hpp>
 
-#include "NXImpMap.hpp"
-#include "NXImpCodeMap.hpp"
-#include "NXAttribute.hpp"
-#include "NXObjectType.hpp"
-#include "NXDateTime.hpp"
-#include "NXAttributeIterator.hpp"
+#include "nximp_map.hpp"
+#include "nximp_code_map.hpp"
+#include "nxattribute.hpp"
+#include "nxobject_type.hpp"
+#include "nxdate_time.hpp"
+#include "nxattribute_iterator.hpp"
 
 using namespace pni::core;
 
 //selects a particular implementation depending on an other 
 //implementation
 #define MAPTYPE(type,implname)\
-    typename NXImpMap<NXImpCodeMap<type>::icode>::implname
+    typename nximp_map<nximp_code_map<type>::icode>::implname
 
 //creates a type with a particular implementation using 
 //depending on a particular implementation type.
@@ -66,7 +66,7 @@ namespace nx{
     tree, methods to set and get attributes, creation of links to an object.
     Methods for creating links to this objects are also included.
     */
-    template<typename Imp> class NXObject 
+    template<typename Imp> class nxobject 
     {
         private:
             Imp _imp;	//!< implementation object
@@ -82,19 +82,19 @@ namespace nx{
         public:
             //=====================public types================================
             //! shared poitner type to an NXObject
-            typedef std::shared_ptr<NXObject<Imp> > shared_ptr; 
+            typedef std::shared_ptr<nxobject<Imp> > shared_ptr; 
 
             //! attribute iterator type
-            typedef NXAttributeIterator<NXObject<Imp>,
-                   NXAttribute<MAPTYPE(Imp,AttributeImpl)> > 
+            typedef nxattribute_iterator<nxobject<Imp>,
+                   nxattribute<MAPTYPE(Imp,AttributeImpl)> > 
                        attr_iterator; //!< attribute iterator type
             //==================constructors and destructors===================
             //! default constructor
-            NXObject(){ }
+            nxobject(){ }
 
             //-----------------------------------------------------------------
             //! copy constructor
-            NXObject(const NXObject<Imp> &o):_imp(o._imp)
+            nxobject(const nxobject<Imp> &o):_imp(o._imp)
             {
                 //here we nothing to do - the default constructor
                 //of the implementation object has already been 
@@ -103,37 +103,37 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! copy constructor from implementation
-            NXObject(const Imp &imp):_imp(imp) { }
+            nxobject(const Imp &imp):_imp(imp) { }
 
             //-----------------------------------------------------------------
             //! move constructor 
-            NXObject(NXObject<Imp> &&o):_imp(std::move(o._imp)) { }
+            nxobject(nxobject<Imp> &&o):_imp(std::move(o._imp)) { }
 
             //-----------------------------------------------------------------
             //! move constructor from implementation instance
-            NXObject(Imp &&imp):_imp(std::move(imp)) { }
+            nxobject(Imp &&imp):_imp(std::move(imp)) { }
 
             //-----------------------------------------------------------------
             /*! 
             \brief copy constructor 
 
             Does copy construction from an arbitrary different implementation of
-            NXObject<>. This implies that the two implementation instances are
+            nxobject<>. This implies that the two implementation instances are
             convertible.
-            \tparam PImp implementation type of the original NXObject instance
+            \tparam PImp implementation type of the original nxobject instance
             \param o original instance of the object
             */
-            template<typename PImp> NXObject(const NXObject<PImp> &o):
+            template<typename PImp> nxobject(const nxobject<PImp> &o):
                 _imp(o.imp())
             { }
            
             //-----------------------------------------------------------------
             //! destructor
-            virtual ~NXObject() { }
+            virtual ~nxobject() { }
 
             //============assignment operators=================================
             //! copy assignment operator
-            NXObject<Imp> &operator=(const NXObject<Imp> &o)
+            nxobject<Imp> &operator=(const nxobject<Imp> &o)
             {
                 if(this == &o) return *this;
                 this->_imp = o._imp;
@@ -142,8 +142,8 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! copy assignment operator for different implementations
-            template<typename PImp> NXObject<Imp> &
-                operator=(const NXObject<PImp> &o)
+            template<typename PImp> nxobject<Imp> &
+                operator=(const nxobject<PImp> &o)
             {
                 this->_imp = o.imp();
                 return *this;
@@ -151,7 +151,7 @@ namespace nx{
                     
             //-----------------------------------------------------------------
             //! move assignment operator
-            NXObject<Imp> &operator=(NXObject<Imp> &&o)
+            nxobject<Imp> &operator=(nxobject<Imp> &&o)
             {
                 if(this == &o) return *this;
                 this->_imp = std::move(o._imp);
@@ -196,15 +196,15 @@ namespace nx{
             exception is raised if an attribute of same name already exists. If
             ov=true the existing attribute will be overwritten and no exeption
             will be thrown.
-            \throws NXAttributeError in case of errors
+            \throws nxattribute_error in case of errors
             \param n name of the attribute
             \param ov overwrite flag
-            \return an instance of NXAttribute
+            \return an instance of nxattribute
             */
-            template<typename T> NXAttribute<MAPTYPE(Imp,AttributeImpl)>
+            template<typename T> nxattribute<MAPTYPE(Imp,AttributeImpl)>
                 attr(const string &n,bool ov=false) const
             {
-                typedef NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr_type;
+                typedef nxattribute<MAPTYPE(Imp,AttributeImpl)> attr_type;
                 attr_type attr;
 
                 try
@@ -213,7 +213,7 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    throw NXAttributeError(EXCEPTION_RECORD,
+                    throw nxattribute_error(EXCEPTION_RECORD,
                             "Error creating attribute ["+n+"] for object"
                             " ["+this->path()+"]!");
                 }
@@ -229,17 +229,17 @@ namespace nx{
             shape s. By default an exception will be thrown if an attribute of
             same name already exists. If ov=true an existing attribute will be
             overwritten
-            \throws NXAttributeError in case of errors
+            \throws nxattribute_error in case of errors
             \param n name of the attribute
             \param s shape of the array
             \param ov overwrite flag
-            \return instance of NXAttribute
+            \return instance of nxattribute
             */
             template<typename T,typename CTYPE> 
-            NXAttribute<MAPTYPE(Imp,AttributeImpl)>
+            nxattribute<MAPTYPE(Imp,AttributeImpl)>
                 attr(const string &n, const CTYPE &s,bool ov=true) const
             {
-                typedef NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr_type;
+                typedef nxattribute<MAPTYPE(Imp,AttributeImpl)> attr_type;
                 attr_type attr;
 
                 try
@@ -248,7 +248,7 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    throw NXAttributeError(EXCEPTION_RECORD,
+                    throw nxattribute_error(EXCEPTION_RECORD,
                             "Cannot create attribute ["+n+"] for object "
                             "["+this->path()+"]!");
                 }
@@ -261,15 +261,15 @@ namespace nx{
             \brief open an existing attribute by name
            
             Opens an existing attribute of name n and returns an instance of
-            NXAttribute<> to the callee. An exception will be thrown if the
+            nxattribute<> to the callee. An exception will be thrown if the
             attribute does not exist.
-            \throws NXAttributeError in case of problems
+            \throws nxattribute_error in case of problems
             \param n name of the attribute
-            \return instance of NXAttribute
+            \return instance of nxattribute
             */
-            NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr(const string &n) const
+            nxattribute<MAPTYPE(Imp,AttributeImpl)> attr(const string &n) const
             {
-                typedef NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr_type;
+                typedef nxattribute<MAPTYPE(Imp,AttributeImpl)> attr_type;
                 attr_type attr;
 
                 try
@@ -278,7 +278,7 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    throw NXAttributeError(EXCEPTION_RECORD,
+                    throw nxattribute_error(EXCEPTION_RECORD,
                             "Cannot open attribute ["+n+"] from object ["
                             +this->path()+"]!");
                 }
@@ -292,13 +292,13 @@ namespace nx{
             Opens an existing attribute by its index. If the index exceeds the
             total number of attributes attached to this object an exception will
             be thrown.
-            \throws NXAttributeError in case of errors
+            \throws nxattribute_error in case of errors
             \param i index of the attribute
-            \return instance of NXAttribute
+            \return instance of nxattribute
             */
-            NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr(size_t i) const
+            nxattribute<MAPTYPE(Imp,AttributeImpl)> attr(size_t i) const
             {
-                typedef NXAttribute<MAPTYPE(Imp,AttributeImpl)> attr_type;
+                typedef nxattribute<MAPTYPE(Imp,AttributeImpl)> attr_type;
                 attr_type attr;
 
                 try
@@ -310,7 +310,7 @@ namespace nx{
                     std::stringstream istr;
                     istr<<"Cannot open attribute ["<<i<<"] from object [";
                     istr<<this->path()+"]!";
-                    throw NXAttributeError(EXCEPTION_RECORD,istr.str());
+                    throw nxattribute_error(EXCEPTION_RECORD,istr.str());
                 }
 
                 return attr;
@@ -321,7 +321,7 @@ namespace nx{
             \brief delete an attribute
 
             Deletes an attribute attached to this object.
-            \throws NXAttributeError in case of errors
+            \throws nxattribute_error in case of errors
             \param n name of the attribute
             */
             void del_attr(const string &n) const
@@ -332,7 +332,7 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    throw NXAttributeError(EXCEPTION_RECORD,
+                    throw nxattribute_error(EXCEPTION_RECORD,
                             "Error deleting attribute ["+n+"]!");
                 }
             }
@@ -343,7 +343,7 @@ namespace nx{
 
             Checks whether or not an attribute with a particular name exits. If
             it does true is returned otherwise false.
-            \throws NXAttributeError in case of errors
+            \throws nxattribute_error in case of errors
             \param n name of the attribute
             \return true if n exists otherwise false
             */
@@ -355,7 +355,7 @@ namespace nx{
                 }
                 catch(...)
                 {
-                    throw NXAttributeError(EXCEPTION_RECORD,
+                    throw nxattribute_error(EXCEPTION_RECORD,
                             "Error checking for attribute ["+n+"]!");
                 }
                 return false;
@@ -401,7 +401,7 @@ namespace nx{
             group and field object.
             \return object identifier
             */
-            NXObjectType object_type() const { return _imp.nxobject_type(); }
+            nxobject_type object_type() const { return _imp.nxobject_type(); }
 
             //-----------------------------------------------------------------
             /*! 
@@ -413,7 +413,7 @@ namespace nx{
             */
             string access_time() const
             {
-                return NXDateTime::get_date_time_str(_imp.acc_time());
+                return nxdate_time::get_date_time_str(_imp.acc_time());
             }
 
             //-----------------------------------------------------------------
@@ -425,7 +425,7 @@ namespace nx{
             */
             string modified_time() const
             {
-                return NXDateTime::get_date_time_str(_imp.mod_time());
+                return nxdate_time::get_date_time_str(_imp.mod_time());
             }
             
             //-----------------------------------------------------------------
@@ -438,7 +438,7 @@ namespace nx{
             */
             string change_time() const
             {
-                return NXDateTime::get_date_time_str(_imp.chng_time());
+                return nxdate_time::get_date_time_str(_imp.chng_time());
             }
             
             //-----------------------------------------------------------------
@@ -451,7 +451,7 @@ namespace nx{
             */
             string create_time() const
             {
-                return NXDateTime::get_date_time_str(_imp.birth_time());
+                return nxdate_time::get_date_time_str(_imp.birth_time());
             }
 
             //-----------------------------------------------------------------
@@ -479,14 +479,14 @@ namespace nx{
 
     //=============comparison operators====================================
     template<typename ImpA,typename ImpB>
-        bool operator==(const NXObject<ImpA> &a,const NXObject<ImpB> &b)
+        bool operator==(const nxobject<ImpA> &a,const nxobject<ImpB> &b)
     {
         if(a.imp() == b.imp()) return true;
         return false;
     }
 
     template<typename ImpA,typename ImpB>
-        bool operator!=(const NXObject<ImpA> &a,const NXObject<ImpB> &b)
+        bool operator!=(const nxobject<ImpA> &a,const nxobject<ImpB> &b)
     {
         if(a == b) return false;
         return true;
