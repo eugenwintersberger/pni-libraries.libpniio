@@ -26,12 +26,12 @@
  */
 #pragma once
 
-#include "NXObject.hpp"
-#include "NXFile.hpp"
-#include "NXGroup.hpp"
-#include "NXField.hpp"
-#include "NXDeflateFilter.hpp"
-#include "NXAttribute.hpp"
+#include "nxobject.hpp"
+#include "nxfile.hpp"
+#include "nxgroup.hpp"
+#include "nxfield.hpp"
+#include "nxdeflate_filter.hpp"
+#include "nxattribute.hpp"
 //#include "NXSelection.hpp"
 
 #include "h5/H5AttributeObject.hpp"
@@ -50,14 +50,14 @@ namespace io{
 namespace nx{
 namespace h5{
 
-            typedef pni::io::nx::NXObject<H5AttributeObject>    NXObject;
-            typedef pni::io::nx::NXFile<H5File>                 NXFile;
-            typedef pni::io::nx::NXGroup<H5Group>               NXGroup;
-            typedef pni::io::nx::NXField<H5Dataset>             NXField;
-            typedef pni::io::nx::NXFilter<H5Filter>             NXFilter;
-            typedef pni::io::nx::NXDeflateFilter<H5DeflateFilter> NXDeflateFilter;
-            typedef pni::io::nx::NXAttribute<H5Attribute>  NXAttribute;
-            typedef pni::io::nx::NXSelection<NXField> NXSelection;
+            typedef pni::io::nx::nxobject<H5AttributeObject>    nxobject;
+            typedef pni::io::nx::nxfile<H5File>                 nxfile;
+            typedef pni::io::nx::nxgroup<H5Group>               nxgroup;
+            typedef pni::io::nx::nxfield<H5Dataset>             nxfield;
+            typedef pni::io::nx::nxfilter<H5Filter>             nxfilter;
+            typedef pni::io::nx::nxdeflate_filter<H5DeflateFilter> nxdeflate_filter;
+            typedef pni::io::nx::nxattribute<H5Attribute>  nxattribute;
+            typedef pni::io::nx::nxselection<NXField> nxselection;
 
 //end of namespace
 }
