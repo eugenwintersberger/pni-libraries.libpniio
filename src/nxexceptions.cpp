@@ -25,59 +25,59 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#include "NXExceptions.hpp"
+#include "nxexceptions.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
 
     //--------------------------------------------------------------------------
-    NXFieldError::NXFieldError():exception("NXFieldError"){ }
+    nxfield_error::nxfield_error():exception("nxfield_error"){ }
 
     //--------------------------------------------------------------------------
-    NXFieldError::NXFieldError(const exception_record &i,const string &d)
-                 :exception("NXFieldError",i,d)
+    nxfield_error::nxfield_error(const exception_record &i,const string &d)
+                 :exception("nxfield_error",i,d)
     { }
 
     //--------------------------------------------------------------------------
-    NXFieldError::~NXFieldError() throw() { }
+    nxfield_error::~nxfield_error() throw() { }
 
     //--------------------------------------------------------------------------
-    std::ostream &operator<<(std::ostream &o,const NXFieldError &e)
+    std::ostream &operator<<(std::ostream &o,const nxfield_error &e)
     {
         return e.print(o);
     }
 
     //--------------------------------------------------------------------------
-    NXAttributeError::NXAttributeError():exception("NXAttributeError"){ }
+    nxattribute_error::nxattribute_error():exception("nxattribute_error"){ }
 
     //--------------------------------------------------------------------------
-    NXAttributeError::NXAttributeError(const exception_record &i,const string &d)
-                     :exception("NXAttributeError",i,d)
+    nxattribute_error::nxattribute_error(const exception_record &i,const string &d)
+                     :exception("nxattribute_error",i,d)
     { }
 
     //--------------------------------------------------------------------------
-    NXAttributeError::~NXAttributeError() throw() { }
+    nxattribute_error::~nxattribute_error() throw() { }
 
     //--------------------------------------------------------------------------
-    std::ostream &operator<<(std::ostream &o,const NXAttributeError &e)
+    std::ostream &operator<<(std::ostream &o,const nxattribute_error &e)
     {
         return e.print(o);
     }
 
     //--------------------------------------------------------------------------
-    NXGroupError::NXGroupError():exception("NXGroupError") { }
+    nxgroup_error::nxgroup_error():exception("nxgroup_error") { }
 
     //--------------------------------------------------------------------------
-    NXGroupError::NXGroupError(const exception_record &i,const string &d)
-                 :exception("NXGroupError",i,d)
+    nxgroup_error::nxgroup_error(const exception_record &i,const string &d)
+                 :exception("nxgroup_error",i,d)
     { }
 
     //--------------------------------------------------------------------------
-    NXGroupError::~NXGroupError() throw() { }
+    nxgroup_error::~nxgroup_error() throw() { }
 
     //--------------------------------------------------------------------------
-    std::ostream &operator<<(std::ostream &o,const NXGroupError &e)
+    std::ostream &operator<<(std::ostream &o,const nxgroup_error &e)
     {
         return e.print(o);
     }

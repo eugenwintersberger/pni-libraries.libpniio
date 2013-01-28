@@ -42,19 +42,25 @@ namespace nx{
 
     Raised if an error occured in one of the NXField methods.
     */
-    class NXFieldError:public exception
+    class nxfield_error:public exception
     {
         public:
+            //-----------------------------------------------------------------
             //! default constructor
-            explicit NXFieldError();
+            explicit nxfield_error();
+
+            //-----------------------------------------------------------------
             //! constructor
-            explicit NXFieldError(const exception_record &i,const string &d);
+            explicit nxfield_error(const exception_record &i,const string &d);
+
+            //-----------------------------------------------------------------
             //! destructor
-            ~NXFieldError() throw();
-            
+            ~nxfield_error() throw();
+           
+            //-----------------------------------------------------------------
             //! output operator
             friend std::ostream &operator<<(std::ostream &o,
-                                            const NXFieldError &e);
+                                            const nxfield_error &e);
     };
 
     //-------------------------------------------------------------------------
@@ -64,19 +70,25 @@ namespace nx{
 
     Raised in cases where reading or writing an attribute failed.
     */
-    class NXAttributeError:public exception
+    class nxattribute_error:public exception
     {
         public:
+            //-----------------------------------------------------------------
             //! default constructor
-            explicit NXAttributeError();
+            explicit nxattribute_error();
+
+            //-----------------------------------------------------------------
             //! constructor
-            explicit NXAttributeError(const exception_record &i,const string &d);
+            explicit nxattribute_error(const exception_record &i,const string &d);
+
+            //-----------------------------------------------------------------
             //! destructor
-            ~NXAttributeError() throw();
-            
+            ~nxattribute_error() throw();
+           
+            //-----------------------------------------------------------------
             //! output operator
             friend std::ostream &operator<<(std::ostream &o,
-                                            const NXAttributeError &e);
+                                            const nxattribute_error &e);
     };
 
     //-------------------------------------------------------------------------
@@ -86,18 +98,25 @@ namespace nx{
 
     Error in case of group operations.
     */
-    class NXGroupError:public exception
+    class nxgroup_error:public exception
     {
         public:
+            //-----------------------------------------------------------------
             //! default constructor
-            explicit NXGroupError();
+            explicit nxgroup_error();
+
+            //-----------------------------------------------------------------
             //! constructor
-            explicit NXGroupError(const exception_record &i,const string &d);
+            explicit nxgroup_error(const exception_record &i,const string &d);
+
+            //-----------------------------------------------------------------
             //! destructor
-            ~NXGroupError() throw();
+            ~nxgroup_error() throw();
+
+            //-----------------------------------------------------------------
             //! output operator
             friend std::ostream &operator<<(std::ostream &o,
-                                            const NXGroupError &e);
+                                            const nxgroup_error &e);
     };
 
     //--------------------------------------------------------------------------
@@ -107,24 +126,28 @@ namespace nx{
 
     File exception class.
     */
-    class NXFileError:public exception 
+    class nxfile_error:public exception 
     {
         public:
+            //-----------------------------------------------------------------
             //! default constructor
-            explicit NXFileError():exception("NXFileError") {}
+            explicit nxfile_error():exception("nxfile_error") {}
 
+            //-----------------------------------------------------------------
             //! constructor
-            explicit NXFileError(const exception_record &i,const string &d)
-                :exception("NXFileError",i,d)
+            explicit nxfile_error(const exception_record &i,const string &d)
+                :exception("nxfile_error",i,d)
             {}
 
+            //-----------------------------------------------------------------
             //! destructor
-            ~NXFileError() throw() 
+            ~nxfile_error() throw() 
             {}
 
+            //-----------------------------------------------------------------
             //! output operator
             friend std::ostream &operator<<(std::ostream &o,
-                                            const NXFileError &e)
+                                            const nxfile_error &e)
             {
                 return e.print(o);
             }
@@ -137,25 +160,29 @@ namespace nx{
 
     Selection exception class.
     */
-    class NXSelectionError:public exception 
+    class nxselection_error:public exception 
     {
         public:
+            //-----------------------------------------------------------------
             //! default constructor
-            explicit NXSelectionError():exception("NXFilterError")
+            explicit nxselection_error():exception("nxselection_error")
             {}
 
+            //-----------------------------------------------------------------
             //! constructor
-            explicit NXSelectionError(const exception_record &i,const string &d)
-                :exception("NXFilterError",i,d)
+            explicit nxselection_error(const exception_record &i,const string &d)
+                :exception("nxselection_error",i,d)
             {}
 
+            //-----------------------------------------------------------------
             //! destructor
-            ~NXSelectionError() throw() 
+            ~nxselection_error() throw() 
             {}
 
+            //-----------------------------------------------------------------
             //! output operator
             friend std::ostream &operator<<(std::ostream &o,
-                                            const NXSelectionError &e)
+                                            const nxselection_error &e)
             {
                 return e.print(o);
             }
@@ -168,25 +195,29 @@ namespace nx{
 
     Filter exception class.
     */
-    class NXFilterError:public exception 
+    class nxfilter_error:public exception 
     {
         public:
+            //-----------------------------------------------------------------
             //! default constructor
-            explicit NXFilterError():exception("NXFilterError")
+            explicit nxfilter_error():exception("nxfilter_error")
             {}
 
+            //-----------------------------------------------------------------
             //! constructor
-            explicit NXFilterError(const exception_record &i,const string &d)
-                :exception("NXFilterError",i,d)
+            explicit nxfilter_error(const exception_record &i,const string &d)
+                :exception("nxfilter_error",i,d)
             {}
 
+            //-----------------------------------------------------------------
             //! destructor
-            ~NXFilterError() throw() 
+            ~nxfilter_error() throw() 
             {}
 
+            //-----------------------------------------------------------------
             //! output operator
             friend std::ostream &operator<<(std::ostream &o,
-                                            const NXFilterError &e){
+                                            const nxfilter_error &e){
                 return e.print(o);
             }
     };
