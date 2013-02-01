@@ -28,7 +28,7 @@
 #include <memory>
 #include <iostream>
 #include <fstream>
-#include "../types.hpp"
+#include <pni/io/core/types.hpp>
 
 using namespace pni::core;
 

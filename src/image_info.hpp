@@ -29,8 +29,8 @@
 #include<vector>
 #include<numeric>
 
-#include "../types.hpp"
-#include "../exceptions.hpp"
+#include <pni/io/core/types.hpp>
+#include <pni/io/core/exceptions.hpp>
 #include "image_channel_info.hpp"
 
 using namespace pni::core;

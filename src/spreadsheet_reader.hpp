@@ -27,8 +27,8 @@
 
 #include <vector>
 #include <boost/current_function.hpp>
-#include "../types.hpp"
-#include "../exceptions.hpp"
+#include <pni/io/core/types.hpp>
+#include <pni/io/core/exceptions.hpp>
 #include "data_reader.hpp"
 #include "column_info.hpp"
 

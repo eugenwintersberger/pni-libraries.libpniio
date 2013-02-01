@@ -24,9 +24,9 @@
  *
  */
 
-#include<boost/regex.hpp>
+#include <boost/regex.hpp>
+#include <pni/io/core/exceptions.hpp>
 #include "dectris_reader.hpp"
-#include "../../exceptions.hpp"
 
 
 namespace pni{

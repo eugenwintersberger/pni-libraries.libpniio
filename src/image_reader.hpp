@@ -32,7 +32,7 @@
 #include<string>
 #include<vector>
 
-#include "../types.hpp"
+#include <pni/io/core/types.hpp>
 #include "data_reader.hpp"
 #include "image_info.hpp"
 

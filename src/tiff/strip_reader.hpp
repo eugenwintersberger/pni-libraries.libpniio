@@ -35,8 +35,8 @@
 #include "ifd.hpp"
 #include "../image_info.hpp"
 
-#include "../../types.hpp"
-#include "../../dbuffer.hpp"
+#include <pni/io/core/types.hpp>
+#include <pni/io/core/dbuffer.hpp>
 
 using namespace pni::core;
 

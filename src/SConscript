@@ -2,6 +2,7 @@ from os import path
 
 Import("build_env")
 src_list = Glob("*.cpp")
+src_list.extend(Glob(nx/*.cp
 
 #compile sources
 shared_objects = build_env.SharedObject(src_list)

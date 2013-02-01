@@ -38,7 +38,7 @@
 
 #include<boost/regex.hpp>
 
-#include "../types.hpp"
+#include <pni/io/core/types.hpp>
 
 #include "image_reader.hpp"
 #include "cbf/dectris_reader.hpp"

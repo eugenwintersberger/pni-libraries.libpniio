@@ -32,8 +32,8 @@
 #include <map>
 #include <boost/current_function.hpp>
 
-#include "../../types.hpp"
-#include "../../exceptions.hpp"
+#include <pni/io/core/types.hpp>
+#include <pni/io/core/exceptions.hpp>
 #include "rational.hpp"
 #include "ifd_entry_reader.hpp"
 
