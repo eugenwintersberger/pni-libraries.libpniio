@@ -1,5 +1,5 @@
 #include "H5AttributeObjectTest.hpp"
-#include "h5/H5Exceptions.hpp"
+#include <pni/io/nx/h5/H5Exceptions.hpp>
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(H5AttributeObjectTest);

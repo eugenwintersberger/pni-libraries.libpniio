@@ -11,8 +11,8 @@ extern "C"{
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
-#include "../src/h5/H5File.hpp"
-#include "../src/h5/H5Group.hpp"
+#include <pni/io/nx/h5/H5File.hpp>
+#include <pni/io/nx/h5/H5Group.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx::h5;

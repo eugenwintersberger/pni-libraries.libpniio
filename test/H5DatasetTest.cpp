@@ -1,6 +1,6 @@
 #include "H5DatasetTest.hpp"
 #include <boost/current_function.hpp>
-#include "../src/h5/H5DeflateFilter.hpp"
+#include <pni/io/nx/h5/H5DeflateFilter.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION(H5DatasetTest);
 

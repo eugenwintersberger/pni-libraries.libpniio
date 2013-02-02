@@ -27,8 +27,8 @@
  */
 
 #pragma once
-#include <pni/io/core/types.hpp>
-#include <pni/io/core/exceptions.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/exceptions.hpp>
 
 using namespace pni::core;
 

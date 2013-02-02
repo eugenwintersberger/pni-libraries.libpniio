@@ -29,7 +29,7 @@
 #pragma once
 
 #include <map>
-#include <pni/io/core/types.hpp>
+#include <pni/core/types.hpp>
 
 namespace pni{
 namespace io{

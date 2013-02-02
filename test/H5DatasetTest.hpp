@@ -11,9 +11,9 @@ extern "C"{
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
-#include "h5/H5File.hpp"
-#include "h5/H5Group.hpp"
-#include "h5/H5Dataset.hpp"
+#include <pni/io/nx/h5/H5File.hpp>
+#include <pni/io/nx/h5/H5Group.hpp>
+#include <pni/io/nx/h5/H5Dataset.hpp>
 
 #include "EqualityCheck.hpp"
 

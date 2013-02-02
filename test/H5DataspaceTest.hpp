@@ -9,8 +9,8 @@ extern "C"{
 #include<cppunit/extensions/HelperMacros.h>
 #include<boost/current_function.hpp>
 
-#include "h5/H5Dataspace.hpp"
-#include "h5/H5Exceptions.hpp"
+#include <pni/io/nx/h5/H5Dataspace.hpp>
+#include <pni/io/nx/h5/H5Exceptions.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx::h5;

@@ -33,7 +33,7 @@
 #include <fstream>
 #include <iostream>
 
-#include <pni/io/core/types.hpp>
+#include <pni/core/types.hpp>
 
 #include "ifd_entry.hpp"
 

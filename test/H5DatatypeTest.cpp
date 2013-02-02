@@ -1,6 +1,6 @@
 #include "H5DatatypeTest.hpp"
 #include <boost/current_function.hpp>
-#include "../src/h5/H5DatatypeFactory.hpp"
+#include <pni/io/nx/h5/H5DatatypeFactory.hpp>
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(H5DatatypeTest);

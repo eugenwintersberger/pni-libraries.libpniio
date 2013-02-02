@@ -10,7 +10,7 @@ extern "C" {
 #include<cppunit/extensions/HelperMacros.h>
 #include<boost/current_function.hpp>
 
-#include "h5/H5NamedObject.hpp"
+#include <pni/io/nx/h5/H5NamedObject.hpp>
 
 using namespace pni::io::nx::h5;
 

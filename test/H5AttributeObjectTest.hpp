@@ -7,8 +7,8 @@ extern "C" {
 
 #include "common.hpp"
 
-#include<pni/core/arrays.hpp>
-#include "h5/H5AttributeObject.hpp"
+#include <pni/core/arrays.hpp>
+#include <pni/io/nx/h5/H5AttributeObject.hpp>
 
 
 

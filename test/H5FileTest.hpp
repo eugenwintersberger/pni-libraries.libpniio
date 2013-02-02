@@ -6,10 +6,10 @@ extern "C"{
 #include <hdf5.h>
 }
 
-#include<cppunit/TestFixture.h>
-#include<cppunit/extensions/HelperMacros.h>
+#include <cppunit/TestFixture.h>
+#include <cppunit/extensions/HelperMacros.h>
 
-#include "h5/H5File.hpp"
+#include <pni/io/nx/h5/H5File.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx::h5;

@@ -29,8 +29,8 @@
 
 #include "cbf_reader.hpp"
 #include "strutils.hpp"
-#include <pni/io/core/exceptions.hpp>
-#include <pni/io/core/types.hpp>
+#include <pni/core/exceptions.hpp>
+#include <pni/core/types.hpp>
 
 //need to use regular expressions from boost
 #include<boost/regex.hpp>

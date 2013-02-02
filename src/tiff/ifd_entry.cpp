@@ -26,7 +26,7 @@
 
 
 
-#include "../../exceptions.hpp"
+#include <pni/core/exceptions.hpp>
 #include "ifd_entry.hpp"
 #include "standard.hpp"
 

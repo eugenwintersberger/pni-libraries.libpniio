@@ -10,7 +10,7 @@ extern "C"{
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
-#include "../src/h5/H5Datatype.hpp"
+#include <pni/io/nx/h5/H5Datatype.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx::h5;
