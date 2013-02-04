@@ -63,7 +63,7 @@ int main(int argc,char **argv)
     //parse commmand line options 
     try
     {
-        parse(config,argc,(const char**)argv);
+        parse(config,cliargs2vector(argc,argv));
     }
     catch(cli_help_request &error)
     {
@@ -102,8 +102,8 @@ int main(int argc,char **argv)
         
         //write header
         logfile<<"#"<<runner.begin()->unit()<<std::endl;
-        for(auto res: runner)
-            logfile<<res.time()<<std::endl;
+        for(auto iter=runner.begin();iter!=runner.end();++iter)
+            logfile<<iter->time()<<std::endl;
     }
 
     //need to evaluate the results

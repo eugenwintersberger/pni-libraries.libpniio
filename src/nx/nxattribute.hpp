@@ -503,15 +503,13 @@ namespace nx{
                 {
                     std::stringstream ss;
                     ss<<"Array shape ( ";
-                    for(auto v: ashape)
-                    {
-                        ss<<v<<" ";
-                    }
+                    for(auto iter=ashape.begin();iter!=ashape.end();++iter)
+                        ss<<*iter<<" ";
+
                     ss<<") and attribute shape ( ";
-                    for(auto v: s) 
-                    {
-                        ss<<v<<" ";
-                    }
+                    for(auto iter=s.begin();iter!=s.end();++iter)
+                        ss<<*iter<<" ";
+
                     ss<<") do not match!";
                     throw shape_missmatch_error(EXCEPTION_RECORD,ss.str());
                 }

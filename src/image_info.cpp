@@ -86,7 +86,7 @@ namespace io{
 #ifdef NOFOREACH
         for(auto iter = _channel_info.begin(); iter != _channel_info.end();iter++)
         {
-            image_channle_info c = *iter;
+            image_channel_info c = *iter;
 #else
         for(auto c: _channel_info) 
         {

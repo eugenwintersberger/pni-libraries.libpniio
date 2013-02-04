@@ -63,7 +63,7 @@ benchmark_factory::create_pninx_benchmark(const string &tc) const
     //if we arrived here something went wrong and we need to 
     //throw an exception
 
-    return nullptr;
+    return std::unique_ptr<file_io_benchmark>();
 }
 
 //-----------------------------------------------------------------------------
@@ -85,7 +85,7 @@ benchmark_factory::create_hdf5_benchmark(const string &tc) const
     if(tc == "int32")
         return ptr_t(new hdf5_io_benchmark<int32>(_fname,_nx,_ny,_nframes));
 
-    return nullptr;
+    return std::unique_ptr<file_io_benchmark>();
 }
 
 
@@ -99,5 +99,5 @@ benchmark_factory::create(const string &type,const string &backend) const
         return create_hdf5_benchmark(type);
     
     //if we came until here throw an exception
-    return nullptr;
+    return std::unique_ptr<file_io_benchmark>();
 }
