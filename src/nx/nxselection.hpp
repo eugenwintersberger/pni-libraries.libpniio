@@ -35,23 +35,51 @@ namespace pni{
 namespace io{
 namespace nx{
 
+    /*!
+    \ingroup nexus_lowlevel
+    \brief selection template
+
+    This template implements a selection applied to a particular field. It acts
+    as a kind of guard object holding a reference to the field onto which the
+    selection should be applied. It can be also considered as a kind of delegate
+    which provides virtually the same interface as nxfield. However, whenever a
+    method is called the selection is applied before the original field method
+    is called. 
+    */
     template<typename FTYPE> class nxselection
     {
         private:
+            //! the current selection as vector of slices
             std::vector<slice>  _selection;
+
             FTYPE &_field; //!< reference to the original field
 
+            /*!
+            \brief applies the current selection 
+
+            Applies the current selection to the data field. This method is
+            called ususally everytime before a particular request to the wrapped
+            field is made.
+            */
             void apply_selection() const
             {
                 _field.apply_selection(_selection);
             }
 
+            //-----------------------------------------------------------------
+            /*!
+            \brief reset selection
+
+            Remove the selection from the wrapped field. This is typically
+            called after the request to the wrapped field.
+            */
             void reset_selection() const
             {
                 _field.reset_selection();
             }
         public:
             //=================public types====================================
+            //! container type holding the selection
             typedef std::vector<slice> selection_type;
             //=============constructors and destructor=========================
             //! default constructor
@@ -77,6 +105,7 @@ namespace nx{
             }
 
             //=================assignment operators============================
+            //! copy assignemnt operator
             nxselection<FTYPE> &operator=(const nxselection<FTYPE> &sel)
             {
                 if(this == &sel) return *this;

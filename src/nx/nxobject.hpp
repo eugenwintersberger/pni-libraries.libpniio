@@ -52,8 +52,6 @@ using namespace pni::core;
 #define OBJTYPE(nxname,type,implname)\
     (nxname)<MAPTYPE(type,implname) >
 
-
-
 namespace pni{
 namespace io{
 namespace nx{
@@ -160,7 +158,8 @@ namespace nx{
 
 
             //=============methods managing object names========================
-            /*! retrieve objects path
+            /*! 
+            \brief retrieve objects path
 
             This method returns the absolute path to this object.
             \return objects absolute path
@@ -362,14 +361,13 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            /*! get number of attributes
+            /*! 
+            \brief get number of attributes
 
             Returns the number of attributes attached to this object.
-            \returns number of attributes
+            \return number of attributes
             */
             size_t nattr() const { return this->imp().nattr(); }
-
-
           
             //==================+misc methods===================================
             //! close the object

@@ -479,7 +479,8 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            /*! create link
+            /*! 
+            \brief create link
 
             Create a new link to an object determined by the path p under the
             new path n. With this method it is possible to even create external

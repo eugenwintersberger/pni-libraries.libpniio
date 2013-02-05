@@ -56,7 +56,8 @@ namespace nx {
             static string __get_utc_delta();
         public:
             //-----------------------------------------------------------------
-            /*! date-time now
+            /*! 
+            \brief date-time now
 
             Returns a string with a Nexus compliant date-time string for now.
             \return Nexus date-time string
@@ -64,7 +65,8 @@ namespace nx {
             static string get_date_time_str();
 
             //-----------------------------------------------------------------
-            /*! date-time at t
+            /*! 
+            \brief date-time at t
 
             Converts a given time in time_t format to a Nexus date-time string.
             \param t time as time_t

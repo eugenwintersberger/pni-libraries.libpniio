@@ -49,7 +49,8 @@ namespace nx{
             Imp _imp; //!< filter implementation object
         protected:
 
-            /*! get non-const ref
+            /*! 
+            \brief get non-const ref
 
             This returns a non constant refernce to the implementation.  This is
             necessary for derived classes that want to export some functionality

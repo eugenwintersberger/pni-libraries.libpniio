@@ -431,12 +431,23 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
+            /*!
+            \brief apply selection
+
+            Apply a selection to the field.
+            \param s selection container
+            */
             void apply_selection(const std::vector<slice> &s) 
             {
                 this->imp().apply_selection(s);
             }
 
             //-----------------------------------------------------------------
+            /*! 
+            \brief remove a selection
+
+            Removes a selection previously applied with apply_selection.
+            */
             void reset_selection() 
             {
                 this->imp().clear_selections();
@@ -828,7 +839,8 @@ namespace nx{
 
            
             //=================methods for writing data========================
-            /*! write a single value
+            /*! 
+            \brief write a single value
 
             Writs a single value of type T to the field. This method will 
             succeed only if the field can hold only a single value.
@@ -1007,6 +1019,14 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
+            /*!
+            \brief write array erasure
+
+            Write the data stored by an array erasure. 
+            \throws memory_not_allocated_error array instance nof allocated
+            \throws shape_missmatch_error shapes do not match
+            \param a reference to array erasure
+            */
             void write(const array &a) const;
 
 
