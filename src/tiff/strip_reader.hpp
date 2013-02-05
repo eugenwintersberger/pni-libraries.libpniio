@@ -117,7 +117,7 @@ namespace tiff {
             This static factory method creates a StripReader object from the IFD
             of an image and its ImageInfo structure. 
             \param stream input stream from which to read data
-            \param ifd IFD of the image for which the reader should be created
+            \param image_dir IFD of the image for which the reader should be created
             \param info ImageInfo object for the image
             \return instance of type StripReader
             */

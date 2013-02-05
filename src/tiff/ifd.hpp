@@ -180,7 +180,7 @@ namespace tiff{
             Thiss operator can be used to dump the content of an IFD to standard
             out.
             \param o output stream
-            \param idf Image directory to print
+            \param image_dir Image directory to print
             \return output stream
             */
             friend std::ostream &operator<<(std::ostream &o,const ifd &image_dir);
