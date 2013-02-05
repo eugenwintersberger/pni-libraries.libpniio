@@ -56,7 +56,8 @@ namespace h5{
     class H5AttributeObject:public H5NamedObject
     {
         private:
-            /*! create attribute
+            /*! 
+            \brief create attribute
             
             Creates an attribute of type T. If the ov flag is true
             the method overwrites an existing attribute of same name.
@@ -177,7 +178,8 @@ namespace h5{
             H5Attribute attr(const string &n) const;
 
             //------------------------------------------------------------------
-            /*! \brief open attribute by index
+            /*! 
+            \brief open attribute by index
 
             Opens an attribute reference by index i. If i exceeds the number of
             attributes attached to this object an exception will be thrown.
@@ -188,7 +190,8 @@ namespace h5{
             H5Attribute attr(size_t i) const;
 
             //-----------------------------------------------------------------
-            /*! checks for an attributes existence
+            /*! 
+            \brief checks for an attributes existence
 
             Checks if an attribute exists and returns true if it does.
             Otherwise false will be returned.
@@ -199,7 +202,8 @@ namespace h5{
             bool has_attr(const string &n) const;
 
             //-----------------------------------------------------------------
-            /*! Deletes an attribute
+            /*! 
+            \brief Deletes an attribute
 
             Deletes an attribute from the object. 
             \throws H5AttributeError in case of errors 
@@ -208,7 +212,8 @@ namespace h5{
             void del_attr(const string &n) const;
 
             //-----------------------------------------------------------------
-            /*! get number of attributes
+            /*! 
+            \brief get number of attributes
 
             Method returns the number of attributes attached to this 
             object.

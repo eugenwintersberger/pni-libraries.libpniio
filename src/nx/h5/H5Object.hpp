@@ -58,7 +58,8 @@ namespace h5{
             hid_t _id; //!< ID of the object
         protected:
             //-----------------------------------------------------------------
-            /*! construct from HDF5 ID
+            /*! 
+            \brief construct from HDF5 ID
 
             This constructor can be used to construct an instance of H5Object
             from an HDF5 ID. The constructor does not increase the reference

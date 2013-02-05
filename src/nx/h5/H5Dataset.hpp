@@ -695,7 +695,8 @@ namespace h5{
             void write(const string *sptr) const;
 
             //-----------------------------------------------------------------
-            /*! create a new link to this dataset
+            /*! 
+            \brief create a new link to this dataset
 
             This method creates a new link to this dataset.  With this method
             only a local link can be established.
