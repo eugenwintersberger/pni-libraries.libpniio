@@ -292,7 +292,40 @@ namespace nx{
             }
     };
 
+    //-------------------------------------------------------------------------
+    /*!
+    \brief error_classes
+    \brief object error
 
+    Exception thrown in case of a general object error.
+    */
+    class nxobject_error:public exception
+    {
+        public:
+            //-----------------------------------------------------------------
+            //! default constructor
+            explicit nxobject_error():exception("nxobject_error")
+            {}
+
+            //-----------------------------------------------------------------
+            //! constructor
+            explicit nxobject_error(const exception_record &i,const string &d)
+                :exception("nxobject_error",i,d)
+            {}
+
+            //-----------------------------------------------------------------
+            //! destructor
+            ~nxobject_error() throw()
+            {}
+
+            //-----------------------------------------------------------------
+            //! output operator
+            friend std::ostream &operator<<(std::ostream &o,
+                                            const nxobject_error &e)
+            {
+                return e.print(o);
+            }
+    };
 
 
 //end of namespace

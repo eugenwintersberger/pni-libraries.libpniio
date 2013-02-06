@@ -22,7 +22,11 @@
  *      Author: Eugen Wintersberger
  */
 #pragma once
+
+#include <pni/core/types.hpp>
 #include "H5Filter.hpp"
+
+using namespace pni::core;
 
 namespace pni {
 namespace io {

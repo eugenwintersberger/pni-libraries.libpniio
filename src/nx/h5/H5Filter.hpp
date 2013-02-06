@@ -28,9 +28,6 @@ extern "C"{
 #include<hdf5.h>
 }
 
-#include "H5Exceptions.hpp"
-
-
 namespace pni{
 namespace io{
 namespace nx {
@@ -80,9 +77,9 @@ namespace h5{
 
             This virtual setup method must be implemented by the concrete filter
             classes. The only argument of this method is the ID of the dataset
-            creation property list. In cases of errors H5FilterError should be
-            thrown.
-            \throw H5FilterError in case of errors
+            creation property list. In cases of errors
+            pni::io::nx::nxfilter_error should be thrown.
+            \throw pni::io::nx::nxfilter_error in case of errors
             \param id id of the
             */
             virtual void setup(hid_t id) const{}

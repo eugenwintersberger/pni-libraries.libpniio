@@ -23,7 +23,8 @@
  */
 
 #include "H5DeflateFilter.hpp"
-#include "H5Exceptions.hpp"
+#include "h5_error_stack.hpp"
+#include "../nxexceptions.hpp"
 
 namespace pni {
 namespace io {
@@ -92,12 +93,14 @@ namespace h5 {
     {
 
         if(H5Pset_shuffle(id)<0)
-            throw H5FilterError(EXCEPTION_RECORD, 
-                                "Error setting up shuffle filter for deflate!");
+            throw pni::io::nx::nxfilter_error(EXCEPTION_RECORD, 
+                "Error setting up shuffle filter for deflate!\n\n"+
+                get_h5_error_string());
 
         if((H5Pset_deflate(id,_comp_rate))<0)
-            throw H5FilterError(EXCEPTION_RECORD,
-                                "Cannot setup deflate filter!");
+            throw pni::io::nx::nxfilter_error(EXCEPTION_RECORD,
+                "Cannot setup deflate filter!\n\n"+
+                get_h5_error_string());
     }
 
     //-------------------------------------------------------------------------
@@ -112,9 +115,9 @@ namespace h5 {
         if(r<=9)
             _comp_rate = r;
         else
-            throw H5FilterError(EXCEPTION_RECORD,
-                                "Compression level for " 
-                                "deflate filter must be between 0 and 9!");
+            throw pni::io::nx::nxfilter_error(EXCEPTION_RECORD,
+                "Compression level for deflate filter must be between "
+                "0 and 9!\n\n"+get_h5_error_string());
     }
 
     //------------------------------------------------------------------
