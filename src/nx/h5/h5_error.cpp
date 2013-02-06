@@ -27,7 +27,7 @@ extern "C"{
 #include <hdf5.h>
 }
 
-#include "H5ErrorStack.hpp"
+#include "h5_error.hpp"
 
 
 namespace pni{
@@ -36,27 +36,36 @@ namespace nx{
 namespace h5{
 
     //--------------------------------------------------------------------------
-    H5Error::H5Error() { }
+    h5_error::h5_error():
+        _class_id(0),
+        _class_name(),
+        _major_number(0),
+        _minor_number(0),
+        _file_name(),
+        _func_name(),
+        _description(),
+        _minor_message(),
+        _major_message()
+    { }
 
     //--------------------------------------------------------------------------
-    H5Error::H5Error(const H5Error &e)
-    {
-        _class_id = e._class_id;
-        _class_name = e._class_name;
-        _major_number = e._major_number;
-        _minor_number = e._minor_number;
-        _file_name = e._file_name;
-        _func_name = e._func_name;
-        _description = e._description;
-        _minor_message = e._minor_message;
-        _major_message = e._major_message;
-    }
+    h5_error::h5_error(const h5_error &e):
+        _class_id(e._class_id),
+        _class_name(e._class_name),
+        _major_number(e._major_number),
+        _minor_number(e._minor_number),
+        _file_name(e._file_name),
+        _func_name(e._func_name),
+        _description(e._description),
+        _minor_message(e._minor_message),
+        _major_message(e._major_message)
+    { }
 
     //--------------------------------------------------------------------------
-    H5Error::~H5Error(){ }
+    h5_error::~h5_error(){ }
 
     //--------------------------------------------------------------------------
-    H5Error &H5Error::operator=(const H5Error &e)
+    h5_error &h5_error::operator=(const h5_error &e)
     {
         if(this != &e)
         {
@@ -75,13 +84,13 @@ namespace h5{
     }
 
     //--------------------------------------------------------------------------
-    hid_t H5Error::class_id() const
+    hid_t h5_error::class_id() const
     {
         return _class_id;
     }
 
     //--------------------------------------------------------------------------
-    void H5Error::class_id(hid_t id)
+    void h5_error::class_id(hid_t id)
     {
         char *ptr = nullptr;
         size_t buffer_size = 0;
@@ -105,13 +114,13 @@ namespace h5{
     }
 
     //--------------------------------------------------------------------------
-    hid_t H5Error::major_number() const
+    hid_t h5_error::major_number() const
     {
         return _major_number;
     }
 
     //--------------------------------------------------------------------------
-    void H5Error::major_number(hid_t v)
+    void h5_error::major_number(hid_t v)
     {
         char *ptr = nullptr;
         size_t buffer_size = 0;
@@ -140,13 +149,13 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    hid_t H5Error::minor_number() const
+    hid_t h5_error::minor_number() const
     {
         return _minor_number;
     }
 
     //--------------------------------------------------------------------------
-    void H5Error::minor_number(hid_t v)
+    void h5_error::minor_number(hid_t v)
     {
         char *ptr = nullptr;
         size_t buffer_size = 0;
@@ -175,57 +184,57 @@ namespace h5{
     }
 
     //--------------------------------------------------------------------------
-    string H5Error::file_name() const
+    string h5_error::file_name() const
     {
         return _file_name;
     }
 
     //--------------------------------------------------------------------------
-    void H5Error::file_name(const string &n)
+    void h5_error::file_name(const string &n)
     {
         _file_name = n;
     }
 
     //--------------------------------------------------------------------------
-    string H5Error::func_name() const
+    string h5_error::func_name() const
     {
         return _func_name;
     }
 
     //--------------------------------------------------------------------------
-    void H5Error::func_name(const string &n)
+    void h5_error::func_name(const string &n)
     {
         _func_name = n;
     }
 
     //--------------------------------------------------------------------------
-    string H5Error::description() const
+    string h5_error::description() const
     {
         return _description;
     }
 
     //--------------------------------------------------------------------------
-    void H5Error::description(const string &n)
+    void h5_error::description(const string &n)
     {
         _description = n;
     }
 
 
     //--------------------------------------------------------------------------
-    string H5Error::major_message() const
+    string h5_error::major_message() const
     {
         return _major_message;
     }
 
 
     //--------------------------------------------------------------------------
-    string H5Error::minor_message() const
+    string h5_error::minor_message() const
     {
         return _minor_message;
     }
 
     //--------------------------------------------------------------------------
-    std::ostream &operator<<(std::ostream &o,const H5Error &e)
+    std::ostream &operator<<(std::ostream &o,const h5_error &e)
     {
         o<<e._class_name<<" - Error in: "<<e._func_name<<" ("<<e._file_name
          <<")"<<std::endl;

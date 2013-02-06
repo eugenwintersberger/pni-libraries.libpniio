@@ -1,7 +1,5 @@
 /*
- * Declaration of Nexus specific exceptions
- *
- * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ * (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
  *
  * This file is part of libpniio.
  *
@@ -18,13 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
- * H5ErrorStack.hpp
- *
- *  Created on: Jul 28, 2011
- *      Author: eugen
+ *  Created on: Feb 6, 2013
+ *      Author: Eugen Wintersberger
  */
-
-#pragma once
 
 extern "C"{
 #include <hdf5.h>
@@ -36,15 +30,12 @@ extern "C"{
 #include <pni/core/types.hpp>
 #include <pni/core/exceptions.hpp>
 
+using namespace pni::core;
+
 namespace pni {
 namespace io {
 namespace nx {
 namespace h5 {
-
-//Walker functins to read over error messages
-extern "C" herr_t _error_walker(unsigned n,const H5E_error2_t *eptr,void *client_data);
-
-using namespace pni::core;
 
     /*! 
     \ingroup nxh5_error_classes
@@ -56,7 +47,7 @@ using namespace pni::core;
     occurred. Along with this the name of the HDF5 source file where the
     function is defined is stored.
     */
-    class H5Error
+    class h5_error
     {
         private:
             hid_t _class_id;       //!< error class
@@ -73,19 +64,19 @@ using namespace pni::core;
         public:
             //-----------------------------------------------------------------
             //! default constructor
-            H5Error();
+            h5_error();
 
             //-----------------------------------------------------------------
             //! copy constructor
-            H5Error(const H5Error &e);
+            h5_error(const h5_error &e);
 
             //-----------------------------------------------------------------
             //! default destructor
-            virtual ~H5Error();
+            virtual ~h5_error();
 
             //-----------------------------------------------------------------
             //! assignment operator
-            H5Error &operator=(const H5Error &e);
+            h5_error &operator=(const h5_error &e);
            
             //-----------------------------------------------------------------
             /*! 
@@ -157,83 +148,7 @@ using namespace pni::core;
            
             //-----------------------------------------------------------------
             //! ouput stream operator
-            friend std::ostream &operator<<(std::ostream &o,const H5Error &e);
-    };
-
-    /*! 
-    \ingroup nxh5_error_classes
-    \brief HDF5 error stack
-
-    Class HDF5ErrorStack provides a simple object oriented interface to the HDF5
-    error stack.
-    */
-    class H5ErrorStack 
-    {
-        private:
-            //! id of the error stack
-            hid_t _stack_id;      
-            //! vector with error records on this stack
-            std::vector<H5Error> _errors; 
-
-        public:
-            //-----------------------------------------------------------------
-            //! default constructor
-            H5ErrorStack();
-
-            //-----------------------------------------------------------------
-            //! copy constructor
-            H5ErrorStack(const H5ErrorStack &s);
-
-            //-----------------------------------------------------------------
-            //! default destructor
-            virtual ~H5ErrorStack();
-
-            //-----------------------------------------------------------------
-            //! copy constructor
-            H5ErrorStack &operator=(const H5ErrorStack &s);
-
-            //-----------------------------------------------------------------
-            /*! 
-            \brief get number of errors
-
-            Returns the total number of HDF5 errors in the stack.
-            \return number of errors
-            */
-            ssize_t number_of_errors() const{ return _errors.size(); }
-
-            //-----------------------------------------------------------------
-            /*! 
-            \brief fill stack
-
-            Reads error messages from the current HDF5 error stack and add them
-            to the stack.	
-            */
-            void fill();
-
-            //-----------------------------------------------------------------
-            /*! 
-            \brief append error
-
-            Appends a single error to the stack.
-            \param e HDF5 error record
-            */
-            void append(const H5Error &e);
-
-            //-----------------------------------------------------------------
-            //! ostream operator
-            friend std::ostream &operator<<(std::ostream &o,const H5ErrorStack &s);
-
-            //-----------------------------------------------------------------
-            /*! 
-            \brief walker function
-
-            This function is used to walk through the HDF5 error stack. 
-            \param n undocumented
-            \param eptr pointer to error stack
-            \param client_data data passed by the client to the walker code
-            \return HDF5 error code
-            */
-            friend herr_t _error_walker(unsigned n,const H5E_error2_t *eptr,void *client_data);
+            friend std::ostream &operator<<(std::ostream &o,const h5_error &e);
     };
 
 
@@ -242,3 +157,4 @@ using namespace pni::core;
 }
 }
 }
+

@@ -22,9 +22,10 @@
  *      Author: Eugen Wintersberger
  */
 
-#include "H5ErrorStack.hpp"
+#include "h5_error_stack.hpp"
 #include <cstdio>
 #include <cstdlib>
+#include <sstream>
 
 namespace pni {
 namespace io {
@@ -35,9 +36,9 @@ namespace h5 {
     //--------------------------------------------------------------------------
     herr_t _error_walker(unsigned n,const H5E_error2_t *eptr,void *client_data)
     {
-        H5ErrorStack *stack = (H5ErrorStack *)client_data;
+        h5_error_stack *stack = (h5_error_stack *)client_data;
 
-        H5Error h5e;
+        h5_error h5e;
         if(eptr->file_name!=NULL) h5e.file_name(string(eptr->file_name));
         if(eptr->func_name!=NULL) h5e.func_name(string(eptr->func_name));
         if(eptr->desc != NULL) h5e.description(string(eptr->desc));
@@ -50,10 +51,10 @@ namespace h5 {
     }
 
     //--------------------------------------------------------------------------
-    H5ErrorStack::H5ErrorStack() { } 
+    h5_error_stack::h5_error_stack() { } 
 
     //--------------------------------------------------------------------------
-    void H5ErrorStack::fill()
+    void h5_error_stack::fill()
     {
         //fill the stack with error messages
         _stack_id = H5Eget_current_stack();
@@ -61,14 +62,14 @@ namespace h5 {
     }
 
     //--------------------------------------------------------------------------
-    H5ErrorStack::H5ErrorStack(const H5ErrorStack &s)
+    h5_error_stack::h5_error_stack(const h5_error_stack &s)
     {
         _stack_id = s._stack_id;
         _errors = std::vector<H5Error>(s._errors);
     }
 
     //--------------------------------------------------------------------------
-    H5ErrorStack &H5ErrorStack::operator=(const H5ErrorStack &s)
+    h5_error_stack &h5_error_stack::operator=(const h5_error_stack &s)
     {
         if(this != &s){
             _stack_id = s._stack_id;
@@ -79,7 +80,7 @@ namespace h5 {
     }
 
     //--------------------------------------------------------------------------
-    H5ErrorStack::~H5ErrorStack() 
+    h5_error_stack::~h5_error_stack() 
     {
         _errors.clear();
         H5Eclear2(_stack_id);
@@ -87,12 +88,12 @@ namespace h5 {
     }
 
     //--------------------------------------------------------------------------
-    void H5ErrorStack::append(const H5Error &e){ _errors.push_back(e); }
+    void h5_error_stack::append(const h5_error &e){ _errors.push_back(e); }
 
     //--------------------------------------------------------------------------
-    std::ostream &operator<<(std::ostream &o,const H5ErrorStack &s)
+    std::ostream &operator<<(std::ostream &o,const h5_error_stack &s)
     {
-        std::vector<H5Error>::const_iterator iter;
+        std::vector<h5_error>::const_iterator iter;
 
         o<<"HDF5 Errors ("<<s.number_of_errors()<<" error records):"
          <<std::endl;
@@ -101,6 +102,18 @@ namespace h5 {
             o<<*iter<<std::endl;
 
         return o;
+    }
+
+    //-------------------------------------------------------------------------
+    string get_h5_error_string()
+    {
+        h5_error_stack stack;
+        stack.fill();
+
+        std::stringstream ss;
+        ss<<stack<<std::endl;
+
+        return ss.str();
     }
 
 //end of namespace
