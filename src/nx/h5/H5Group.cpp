@@ -91,7 +91,11 @@ namespace h5{
                 "]!\n\n"+get_h5_error_string();
             throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD,estr);
         }
-        H5Pset_create_intermediate_group(link_pl,1);
+        if(H5Pset_create_intermediate_group(link_pl,1)<0)
+            throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD,
+                    "Cannot set intermediate group property for "
+                    " group ["+name+"] under ["+parent.path()+"]!\n\n"
+                    +get_h5_error_string());
 
         hid_t gid = H5Gcreate2(parent.id(),name.c_str(),
                 link_pl,cr_pl,H5P_DEFAULT);
@@ -194,6 +198,11 @@ namespace h5{
 
         //determine the object type
         H5I_type_t tid = H5Iget_type(oid);
+        if(tid==H5I_BADID)
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    "Error obtaining object type for ["+n+"]!\n\n"+
+                    get_h5_error_string());
+
         H5Object o;
         if(tid == H5I_GROUP) o = std::move(H5Group(oid)); 
         else if(tid == H5I_DATASET) o = std::move(H5Dataset(oid));

@@ -170,16 +170,41 @@ namespace h5{
                 
                 //create the link creation property list
                 hid_t lpl = H5Pcreate(H5P_LINK_CREATE);
-                H5Pset_create_intermediate_group(lpl,1);
+                if(lpl == -1)
+                    throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
+                            "Error creating link property list for dataset ["+
+                            n+"] below ["+g.path()+"]!\n\n"+
+                            get_h5_error_string());
+
+
+                if(H5Pset_create_intermediate_group(lpl,1)<0)
+                    throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
+                            "Error setting intermediate group property for "
+                            "dataset ["+n+"] below ["+g.path()+"]!\n\n"+
+                            get_h5_error_string());
                 
                 //create the dataset creation property list
                 hid_t cpl = H5Pcreate(H5P_DATASET_CREATE);
+                if(cpl == -1)
+                    throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
+                            "Error creating dataset create property list for ["+
+                            n+"] below ["+g.path()+"]!\n\n"+
+                            get_h5_error_string());
+
                 if(cs.size() != 0)
                 {
-                    H5Pset_layout(cpl,H5D_CHUNKED);
+                    if(H5Pset_layout(cpl,H5D_CHUNKED)<0)
+                        throw pni::io::nx::nxfile_error(EXCEPTION_RECORD,
+                        "Error setting dataset layout for ["+n+"] below "
+                        "["+g.path()+"] to chunked!\n\n"+
+                        get_h5_error_string());
+
                     dbuffer<hsize_t> cdims(cs.size());
                     std::copy(cs.begin(),cs.end(),cdims.begin());
-                    H5Pset_chunk(cpl,cs.size(),cdims.ptr());
+                    if(H5Pset_chunk(cpl,cs.size(),cdims.ptr())<0)
+                        throw pni::io::nx::nxfile_error(EXCEPTION_RECORD,
+                        "Error setting chunk size for ["+n+"] below "
+                        "["+g.path()+"]!\n\n"+ get_h5_error_string());
                 }
 
                 //create the datase
@@ -230,16 +255,41 @@ namespace h5{
 
                 //create the link creation property list
                 hid_t lpl = H5Pcreate(H5P_LINK_CREATE);
-                H5Pset_create_intermediate_group(lpl,1);
+                if(lpl == -1)
+                    throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
+                            "Error creating link property list for dataset ["+
+                            n+"] below ["+g.path()+"]!\n\n"+
+                            get_h5_error_string());
+
+                if(H5Pset_create_intermediate_group(lpl,1)<0)
+                    throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
+                            "Error setting intermediate group property for "
+                            "dataset ["+n+"] below ["+g.path()+"]!\n\n"+
+                            get_h5_error_string());
                 
                 //create the dataset creation property list
                 hid_t cpl = H5Pcreate(H5P_DATASET_CREATE);
+                if(cpl == -1)
+                    throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
+                            "Error creating dataset create property list for ["+
+                            n+"] below ["+g.path()+"]!\n\n"+
+                            get_h5_error_string());
+
                 if(cs.size() != 0)
                 {
-                    H5Pset_layout(cpl,H5D_CHUNKED);
+                    if(H5Pset_layout(cpl,H5D_CHUNKED)<0)
+                        throw pni::io::nx::nxfile_error(EXCEPTION_RECORD,
+                        "Error setting dataset layout for ["+n+"] below "
+                        "["+g.path()+"] to chunked!\n\n"+
+                        get_h5_error_string());
+
                     dbuffer<hsize_t> cdims(cs.size());
                     std::copy(cs.begin(),cs.end(),cdims.begin());
-                    H5Pset_chunk(cpl,cs.size(),cdims.ptr());
+                    if(H5Pset_chunk(cpl,cs.size(),cdims.ptr())<0)
+                        throw pni::io::nx::nxfile_error(EXCEPTION_RECORD,
+                        "Error setting chunk size for ["+n+"] below "
+                        "["+g.path()+"]!\n\n"+ get_h5_error_string());
+
                 }
 
                 //setup the filter
