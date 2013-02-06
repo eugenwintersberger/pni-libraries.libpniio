@@ -62,7 +62,7 @@ namespace h5{
             Creates an attribute of type T. If the ov flag is true
             the method overwrites an existing attribute of same name.
             Otherwise an exception will be thrown.
-            \throw H5AttributeError in case of errors
+            \throw pni::io::nxattribute_error in case of errors
             \param n name of the attribute
             \param ov overwrite flag 
             \param space dataspace to use for the attribute
@@ -136,7 +136,7 @@ namespace h5{
             attribute of name n already exists an exception will be thrown
             unless ov in the parameter list of the method is set to true. In
             this case the existing attribute will be overwritten.
-            \throws H5AttributeError if attribute exists or in case of errors
+            \throws pni::io::nx::nxattribute_error if attribute exists or in case of errors
             \param n name of the attribute
             \param ov overwrite attribute if true
             \return attribute object
@@ -153,7 +153,7 @@ namespace h5{
             an exception will be thrown unless ov is set to true.
             In the later case the existing attribute will be
             overwritten.
-            \throws H5AttributeError if the attribute exists or in case of errors
+            \throws pni::io::nx::nxattribute_error if the attribute exists or in case of errors
             \param n name of the attribute
             \param s shape of the array
             \param ov overwrite attribute if true
@@ -170,8 +170,8 @@ namespace h5{
             
             Open an existing attribute and returns it to the callee.  If the
             attribute does not exist or an other error occurs during attribute
-            creation H5AttributeError is thrown.
-            \throws H5AttributeError if attribute does not exist or creation error
+            creation pni::io::nx::nxattribute_error is thrown.
+            \throws pni::io::nx::nxattribute_error if attribute does not exist or creation error
             \param n name of the attribute
             \return attribute object
             */
@@ -183,7 +183,7 @@ namespace h5{
 
             Opens an attribute reference by index i. If i exceeds the number of
             attributes attached to this object an exception will be thrown.
-            \throws IndexError if i exceeds 
+            \throws index_error if i exceeds 
             \param i index of the attribute
             \returns instance of H5Attribute
             */
@@ -195,7 +195,7 @@ namespace h5{
 
             Checks if an attribute exists and returns true if it does.
             Otherwise false will be returned.
-            \throws H5AttributeError in case of errors
+            \throws pni::io::nx::nxattribute_error in case of errors
             \param n name of the attribute to check for
             \return true if exists, false otherwise
             */
@@ -206,7 +206,7 @@ namespace h5{
             \brief Deletes an attribute
 
             Deletes an attribute from the object. 
-            \throws H5AttributeError in case of errors 
+            \throws pni::io::nx::nxattribute_error in case of errors 
             \param n name of the attribute
             */
             void del_attr(const string &n) const;
@@ -241,8 +241,8 @@ namespace h5{
             else
             {
                 string ss = "Attribute ["+n+"] already exists on "
-                        "object ["+name()+"]!";
-                throw H5AttributeError(EXCEPTION_RECORD,ss);
+                        "object ["+name()+"]!\n\n"+get_h5_error_string();
+                throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD,ss);
             }
         }
 
@@ -250,7 +250,8 @@ namespace h5{
                 H5P_DEFAULT,H5P_DEFAULT);
         if(aid < 0)
         {
-            H5AttributeError error(EXCEPTION_RECORD,"Cannot create attribute!");
+            pni::io::nx::nxattribute_error error(EXCEPTION_RECORD,
+                    "Cannot create attribute!\n\n"+get_h5_error_string());
             std::cout<<H5Tget_size(type.id())<<std::endl;
             std::cout<<space.size()<<std::endl;
             throw error;

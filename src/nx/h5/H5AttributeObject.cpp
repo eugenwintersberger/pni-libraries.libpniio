@@ -25,7 +25,6 @@
 
 
 #include "H5AttributeObject.hpp"
-#include "H5Exceptions.hpp"
 
 
 
@@ -125,7 +124,8 @@ namespace h5{
         {
             std::stringstream ss;
             ss<<"Object ["<<name()<<"] has no attribute ["<<n<<"]!";
-            throw H5AttributeError(EXCEPTION_RECORD,ss.str());
+            throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD,ss.str()+
+                    get_h5_error_string());
         }
 
         hid_t aid = H5Aopen(id(),n.c_str(),H5P_DEFAULT);
@@ -134,7 +134,8 @@ namespace h5{
             std::stringstream ss;
             ss<<"Error opening attribute ["<<n<<"] from object [";
             ss<<name()<<"]!";
-            throw H5AttributeError(EXCEPTION_RECORD,ss.str());
+            throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD,ss.str()+
+                    get_h5_error_string());
         }
 
         H5Attribute a(aid);
@@ -160,7 +161,8 @@ namespace h5{
             std::stringstream ss;
             ss<<"Error opening attribute with index ("<<i<<") on object ";
             ss<<"["<<name()<<"]!";
-            throw H5AttributeError(EXCEPTION_RECORD,ss.str());
+            throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD,ss.str()+
+                    get_h5_error_string());
         }
 
         H5Attribute a(aid);
@@ -188,7 +190,8 @@ namespace h5{
             std::stringstream ss;
             ss<<"Error checking for existence of attribute ";
             ss<<"["<<n<<"] on object ["<<name()<<"]!";
-            throw H5AttributeError(EXCEPTION_RECORD,ss.str());
+            throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD,ss.str()+
+                    get_h5_error_string());
         }
     }
 
@@ -201,7 +204,8 @@ namespace h5{
             std::stringstream ss;
             ss<<"Error deleteing attribute ["<<n<<"] from ";
             ss<<"object ["<<name()<<"]!";
-            throw H5AttributeError(EXCEPTION_RECORD,ss.str());
+            throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD,ss.str()+
+                    get_h5_error_string());
         }
     }
 

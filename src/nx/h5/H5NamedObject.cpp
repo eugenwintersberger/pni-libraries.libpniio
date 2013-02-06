@@ -24,9 +24,7 @@
  */
 
 #include "H5NamedObject.hpp"
-#include "H5Exceptions.hpp"
 #include <pni/core/dbuffer.hpp>
-//#include "H5Group.hpp"
 
 namespace pni{
 namespace io{
