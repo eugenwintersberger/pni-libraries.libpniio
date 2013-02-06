@@ -367,7 +367,7 @@ namespace nx{
             Returns the total number of childs linke below this group.
             \return number of childs
             */
-            size_t nchilds() const { return this->imp().nchilds(); }
+            size_t nchildren() const { return this->imp().nchildren(); }
 
             //-----------------------------------------------------------------
             /*!
@@ -529,7 +529,7 @@ namespace nx{
             {
                 return nxobject_iterator<nxgroup<Imp>,
                        nxobject<MAPTYPE(Imp,ObjectImpl)> >(*this,
-                               this->nchilds());
+                               this->nchildren());
             }
 
     };

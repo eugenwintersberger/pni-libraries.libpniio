@@ -21,7 +21,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 #include "H5NamedObjectTest.hpp"
-#include <pni/io/nx/h5/H5Exceptions.hpp>
+#include <pni/io/nx/nxexceptions.hpp>
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(H5NamedObjectTest);
@@ -46,8 +46,8 @@ void H5NamedObjectTest::test_creation()
     //default constructor
     H5NamedObject o;
     CPPUNIT_ASSERT(!o.is_valid());
-    CPPUNIT_ASSERT_THROW(o.object_type(),H5ObjectError);
-    CPPUNIT_ASSERT_THROW(H5TestObject(-1),H5ObjectError);
+    CPPUNIT_ASSERT_THROW(o.object_type(),pni::io::nx::nxobject_error);
+    CPPUNIT_ASSERT_THROW(H5TestObject(-1),pni::io::nx::nxobject_error);
   
     //test constructor from new object
     H5TestObject

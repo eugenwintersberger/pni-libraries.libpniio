@@ -29,6 +29,7 @@ extern "C" {
 #include "common.hpp"
 
 #include <pni/core/arrays.hpp>
+#include <pni/io/nx/nxexceptions.hpp>
 #include <pni/io/nx/h5/H5AttributeObject.hpp>
 
 
@@ -239,7 +240,7 @@ template<typename T> void H5AttributeObjectTest::test_scalar_attribute_create()
 
     CPPUNIT_ASSERT_NO_THROW(o.attr<T>("a1"));
     //test invalid creation
-    CPPUNIT_ASSERT_THROW(o.attr<T>("a1"),H5AttributeError);
+    CPPUNIT_ASSERT_THROW(o.attr<T>("a1"),pni::io::nx::nxattribute_error);
     //but
     CPPUNIT_ASSERT_NO_THROW(o.attr<T>("a1",true));
 }
@@ -254,7 +255,7 @@ template<typename T> void H5AttributeObjectTest::test_array_attribute_create()
     shape_t s{10,3};
 
     CPPUNIT_ASSERT_NO_THROW(o.attr<T>("a1",s));
-    CPPUNIT_ASSERT_THROW(o.attr<T>("a1",s),H5AttributeError);
+    CPPUNIT_ASSERT_THROW(o.attr<T>("a1",s),pni::io::nx::nxattribute_error);
     CPPUNIT_ASSERT_NO_THROW(o.attr<T>("a1",s,true));
 }
 

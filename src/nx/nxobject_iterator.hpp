@@ -83,7 +83,7 @@ namespace nx{
             //! constructor from group object
             nxobject_iterator(const IterableT &g,size_t start_index=0):
                 _parent(&g),
-                _nlinks(g.nchilds()),
+                _nlinks(g.nchildren()),
                 _index(start_index),
                 _item()
             {

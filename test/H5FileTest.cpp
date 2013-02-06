@@ -43,11 +43,11 @@ void H5FileTest::test_creation()
     H5File file;
 
     //should raise an exception because the file is not an HDF5 file
-    CPPUNIT_ASSERT_THROW(H5File::open_file("H5FileTest.cpp",false),H5FileError);
-    CPPUNIT_ASSERT_THROW(H5File::open_file("H5FileTest.cpp",true),H5FileError);
+    CPPUNIT_ASSERT_THROW(H5File::open_file("H5FileTest.cpp",false),pni::io::nx::nxfile_error);
+    CPPUNIT_ASSERT_THROW(H5File::open_file("H5FileTest.cpp",true),pni::io::nx::nxfile_error);
     //should throw an exception because the file does not exist.
-    CPPUNIT_ASSERT_THROW(H5File::open_file("blablabla.h5",false),H5FileError);
-    CPPUNIT_ASSERT_THROW(H5File::open_file("blablabla.h5",true),H5FileError);
+    CPPUNIT_ASSERT_THROW(H5File::open_file("blablabla.h5",false),pni::io::nx::nxfile_error);
+    CPPUNIT_ASSERT_THROW(H5File::open_file("blablabla.h5",true),pni::io::nx::nxfile_error);
 
     //create a file
     CPPUNIT_ASSERT_NO_THROW(file = H5File::create_file("H5FileTest.h5",true,0));
