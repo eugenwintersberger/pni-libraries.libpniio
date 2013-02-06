@@ -239,7 +239,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! constructor
-            explicit nxlink_error(const exceptoin_record &i,const String &d)
+            explicit nxlink_error(const exception_record &i,const string &d)
                 :exception("nxlink_error",i,d)
             {}
 
@@ -274,7 +274,7 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! constructor
-            explicit nxbackend_error(const exceptoin_record &i,const String &d)
+            explicit nxbackend_error(const exception_record &i,const string &d)
                 :exception("nxbackend_error",i,d)
             {}
 

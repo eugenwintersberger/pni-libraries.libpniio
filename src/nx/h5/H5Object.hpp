@@ -53,7 +53,8 @@ namespace h5{
     H5Object cannot be constructed directly but only through the constructors of
     its child classes implementing a concrete HDF5 type. 
     */
-    class H5Object{
+    class H5Object
+    {
         private:
             hid_t _id; //!< ID of the object
         protected:
@@ -71,7 +72,7 @@ namespace h5{
             ...
             \endcode
             An exception is thrown if the ID passed is negative.
-            \throws H5ObjectError if id<0
+            \throws pni::io::nx::nxbackend_error if id<0
             \param id HDF5 object ID.
             */
             explicit H5Object(const hid_t &id);
@@ -177,7 +178,7 @@ namespace h5{
             Returns the HDF5 type of the object which can be used to identify
             the kind of object one is dealing with. If the object is not valid
             an exception will be thrown.
-            \throws H5ObjectError if object is not valid
+            \throws pni::io::nx::nxbackend_error if object is not valid
             \return HDF type
             */
             H5ObjectType object_type() const;
@@ -198,6 +199,7 @@ namespace h5{
 
             Returns the last time the object was accessed. The time is returned
             as a time_t structure.
+            \throws pni::io::nx::nxbackend_error if cannot obtain time
             \return access time
             */
             time_t acc_time() const;
@@ -208,6 +210,7 @@ namespace h5{
 
             Returns the time when the object was last mofified. The time is
             returned as a time_t structure.
+            \throws pni::io::nx::nxbackend_error if cannot obtain time
             \return modification time
             */
             time_t mod_time() const;
@@ -218,6 +221,7 @@ namespace h5{
 
             Returns the time when the object was changed last.  The time value
             is returned as a time_t struct.
+            \throws pni::io::nx::nxbackend_error if cannot obtain time
             \return change time
             */
             time_t chng_time() const;
@@ -228,6 +232,7 @@ namespace h5{
 
             Returns the time when the object was created. The time value is
             returned as time_t structure.
+            \throws pni::io::nx::nxbackend_error if cannot obtain time
             \return birth time
             */
             time_t birth_time() const;
@@ -242,6 +247,7 @@ namespace h5{
     Operator checks if two HDF5 object are equal. This check is done by
     comparing the address of the objects in the file.  If they share the same
     address the objects should be equal.
+    \throws pni::io::nx::nxbackend_error in case of an error 
     \param a lhs value of the operator
     \param b rhs value of the operator
     \return true if equal, false otherwise
@@ -254,6 +260,7 @@ namespace h5{
     \brief inequality operator
 
     Simply the inverse of the equality operator.
+    \throws pni::io::nx::nxbackend_error in case of an error 
     \param a lhs value of the operator
     \param b rhs value of the operator
     \return true if not equal, false otherwise

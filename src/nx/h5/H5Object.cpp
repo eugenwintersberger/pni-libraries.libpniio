@@ -25,7 +25,8 @@
 
 #include <iostream>
 #include "H5Object.hpp"
-#include "H5Exceptions.hpp"
+#include "h5_exception_stack.hpp"
+#include "../nxexceptions.hpp"
 
 namespace pni{
 namespace io{
@@ -35,8 +36,8 @@ namespace h5{
     H5Object::H5Object(const hid_t &sid) :_id(sid)
     {
         if(id()<0)
-            throw H5ObjectError(EXCEPTION_RECORD,
-                    "Object ID < 0, object creation failed!");
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    "HDF5 object ID < 0, object creation failed!");
     }
     
     //-------------------------------------------------------------------------
@@ -124,7 +125,8 @@ namespace h5{
     {
 
         if(!is_valid())
-            throw H5ObjectError(EXCEPTION_RECORD,"Invalid HDF5 object!");
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    "Invalid HDF5 object!");
 
         H5I_type_t tid = H5Iget_type(_id);
         switch(tid)
@@ -146,7 +148,8 @@ namespace h5{
 
         herr_t err = H5Oget_info(id(),&info);
         if(err < 0)
-            throw H5ObjectError(EXCEPTION_RECORD,"Cannot obtain object info!");
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    "Cannot obtain object info!\n\n"+get_h5_error_string());
 
         return info.atime;
     }
@@ -158,7 +161,8 @@ namespace h5{
 
         herr_t err = H5Oget_info(id(),&info);
         if(err < 0)
-            throw H5ObjectError(EXCEPTION_RECORD,"Cannot obtain object info!");
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    "Cannot obtain object info!\n\n"+get_h5_error_string());
 
         return info.mtime;
     }
@@ -170,7 +174,8 @@ namespace h5{
 
         herr_t err = H5Oget_info(id(),&info);
         if(err < 0)
-            throw H5ObjectError(EXCEPTION_RECORD,"Cannot obtain object info!");
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    "Cannot obtain object info!\n\n"+get_h5_error_string());
 
         return info.ctime;
     }
@@ -182,7 +187,8 @@ namespace h5{
 
         herr_t err = H5Oget_info(id(),&info);
         if(err < 0)
-            throw H5ObjectError(EXCEPTION_RECORD,"Cannot obtain object info!");
+            throw pni::io::nxbackend_error(EXCEPTION_RECORD,
+                    "Cannot obtain object info!\n\n"+get_h5_error_string());
 
         return info.btime;
     }
@@ -210,14 +216,16 @@ namespace h5{
         //obtain HDF5 info structure of first object
         herr_t err = H5Oget_info(a.id(),&ia);
         if(err < 0)
-            throw H5ObjectError(EXCEPTION_RECORD,"Cannot obtain object info of"
-                                "first object!");
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    "Cannot obtain object info of first object!\n\n" + 
+                    get_h5_error_string());
 
         //obtain HDF5 info structure of second object
         err = H5Oget_info(b.id(),&ib);
         if(err < 0)
-            throw H5ObjectError(EXCEPTION_RECORD,"Cannot obtain object info of"
-                                "second object!");
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    "Cannot obtain object info of second object!\n\n" + 
+                    get_h5_error_string());
 
         //if the addresses in the file are equal return 
         //true
