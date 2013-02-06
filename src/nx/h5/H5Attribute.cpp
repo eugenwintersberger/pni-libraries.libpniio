@@ -24,7 +24,6 @@
  */
 
 #include "H5Attribute.hpp"
-#include "H5Exceptions.hpp"
 
 
 namespace pni{
@@ -166,8 +165,9 @@ namespace h5{
         delete [] ptr;
 
         if(err < 0)
-            throw H5AttributeError(EXCEPTION_RECORD, 
-                    "Error writing attribute ["+name()+"]!");
+            throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD, 
+                    "Error writing attribute ["+name()+"]!\n\n"+
+                    get_h5_error_string());
 
         //close the data type
         H5Tclose(element_type);
@@ -187,8 +187,9 @@ namespace h5{
         if(err<0)
         {
             delete [] ptr;
-            throw H5AttributeError(EXCEPTION_RECORD, 
-                    "Error reading attribute ["+name()+"]!");
+            throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD, 
+                    "Error reading attribute ["+name()+"]!\n\n"+
+                    get_h5_error_string());
         }
 
         //close the data type

@@ -38,8 +38,10 @@ using namespace pni::core;
 #include "H5NamedObject.hpp"
 #include "H5Dataspace.hpp"
 #include "H5Datatype.hpp"
-#include "H5Exceptions.hpp"
 #include "H5DatatypeFactory.hpp"
+
+#include "h5_error_stack.hpp"
+#include "../nxexceptions.hpp"
 
 namespace pni{
 namespace io{
@@ -116,7 +118,7 @@ namespace h5{
             Private method writing data from memory addressed by 
             ptr to the attribute.
             \tparam T data type in memory
-            \throws H5AttributeError in case of IO errors
+            \throws pni::io::nx::nxattribute_error in case of IO errors
             \param ptr pointer to memory
             */
             template<typename T> void write(const T *ptr) const
@@ -124,8 +126,9 @@ namespace h5{
                 const H5Datatype &mem_type = H5TFactory.get_type<T>();
                 herr_t err = H5Awrite(id(),mem_type.id(),(void *)ptr);
                 if(err<0)
-                    throw H5AttributeError(EXCEPTION_RECORD, 
-                        "Error writing attribute ["+this->name()+"]!");
+                    throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD, 
+                        "Error writing attribute ["+this->name()+"]!\n\n"+
+                        get_h5_error_string());
             }
 
             //-----------------------------------------------------------------
@@ -163,7 +166,7 @@ namespace h5{
             Private method reading data form the attribute to a memory region
             addressed by ptr. An exception is thrown if an error occurs
             \tparam T type of data in memory
-            \throws H5AttributeError in case of IO errors
+            \throws pni::io::nx::nxattribute_error in case of IO errors
             \param ptr pointer to memory
             */
             template<typename T> void read(T *ptr) const
@@ -171,8 +174,9 @@ namespace h5{
                 const H5Datatype &mem_type = H5TFactory.get_type<T>();
                 herr_t err = H5Aread(id(),mem_type.id(),(void *)ptr);
                 if(err < 0)
-                    throw H5AttributeError(EXCEPTION_RECORD,
-                            "Error reading attribute ["+this->name()+"]!");
+                    throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD,
+                            "Error reading attribute ["+this->name()+"]!\n\n"+
+                            get_h5_error_string());
             }
 
             //-----------------------------------------------------------------
@@ -180,7 +184,7 @@ namespace h5{
             \brief read to string
 
             Reads a string value from an attribute.
-            \throws ShapeMissmatchError if attribute is not scalar
+            \throws shape_missmatch_error if attribute is not scalar
             \throws H5AttributeError in case of general IO errors
             \param s string variable to which data will be written
             */
