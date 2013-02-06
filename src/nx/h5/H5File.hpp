@@ -80,9 +80,9 @@ namespace h5{
             
             Static method to open an exing file. Using the ro flag one can open
             the file either for read/write or for read-only acess.
-            \throws H5FileError if the file is not an HDF5 file or an error
+            \throws pni::io::nx::nxfile_error if the file is not an HDF5 file or an error
             occured during opening the file.
-            \throws H5PropertyListError if an error occurs during property list
+            \throws pni::io::nx::nxbackend_error if an error occurs during property list
             creation
             \param n name of the file
             \param ro if true file will be in read only mode
@@ -99,8 +99,8 @@ namespace h5{
             overwrite flag ow to true the existing file will be overwriten and
             all data in this file is lost. In addition files can be split into
             smaller portions. The split size can be set with ssize.
-            \throws H5FileError for all file related errors
-            \throws H5PropertyListError for errors during property list creation
+            \throws pni::io::nx::nxfile_error for all file related errors
+            \throws pni::io::nx::nxbackend_error for errors during property list creation
             \param n file name
             \param ow overwrite existing file if true
             \param ssize split size

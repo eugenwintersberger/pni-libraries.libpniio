@@ -59,6 +59,7 @@ namespace h5{
             part. If the former one is an empty string the like that must be
             created is an internal link.  Otherwise an external link will be
             created.
+            \throws pni::io::nx::nxlink_error in case of errors
             \param path target path provided by the user
             \param file will hold the file portion of the path
             \param opath will hold the object portion of the path
@@ -71,6 +72,7 @@ namespace h5{
             \brief create an external link
 
             Create an external link to an object.
+            \throws pni::io::nx::nxlink_error in case of errors
             \param file path to the file where to find the target
             \param opath path of the object in the external file
             \param ref reference object for the link
@@ -86,6 +88,7 @@ namespace h5{
 
             Creates and internal link to an object in the same file as the ref
             object.
+            \throws pni::io::nx::nxlink_error in case of errors
             \param opath path to the target object
             \param ref reference object in the file
             \param n name of the new link

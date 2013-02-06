@@ -23,7 +23,9 @@
 
 #include "H5File.hpp"
 #include "H5Attribute.hpp"
-#include "H5Exceptions.hpp"
+
+#include "h5_error_stack.hpp"
+#include "../nxexceptions.hpp"
 
 #include <sstream>
 
@@ -125,14 +127,15 @@ namespace h5{
         
         //check if the file is a valid HDF5 file
         if(!H5Fis_hdf5(n.c_str()))
-            throw H5FileError(EXCEPTION_RECORD, 
-                  "File ["+string(n)+"] is not an HDF5 file!");
+            throw pni::io::nx::nxfile_error(EXCEPTION_RECORD, 
+                  "File ["+string(n)+"] is not an HDF5 file!\n\n"+
+                  get_h5_error_string());
 
         hid_t acc_plist = H5Pcreate(H5P_FILE_ACCESS);
         if(acc_plist<0)
-            throw H5PropertyListError(EXCEPTION_RECORD, 
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD, 
                   "Cannot create file access property list for file "
-                  "["+string(n)+"]!");
+                  "["+string(n)+"]!\n\n"+get_h5_error_string());
 
         //open the file in the appropriate mode
         if(ro)
@@ -141,8 +144,9 @@ namespace h5{
             if(fid<0)
             {
                 H5Pclose(acc_plist);
-                throw H5FileError(EXCEPTION_RECORD, 
-                      "Error opening file "+string(n)+" in read only mode!");
+                throw pni::io::nx::nxfile_error(EXCEPTION_RECORD, 
+                      "Error opening file "+string(n)+" in read only mode!\n\n"+
+                      get_h5_error_string());
             }
         }
         else
@@ -151,8 +155,9 @@ namespace h5{
             if(fid<0)
             {
                 H5Pclose(acc_plist);
-                throw H5FileError(EXCEPTION_RECORD,
-                      "Error opening file "+ string(n)+" in read/write mode!"); 
+                throw pni::io::nx::nxfile_error(EXCEPTION_RECORD,
+                      "Error opening file "+ string(n)+
+                      " in read/write mode!\n\n"+get_h5_error_string()); 
             }
         }
 
@@ -172,15 +177,15 @@ namespace h5{
         //create property lists for file creation an access
         hid_t create_plist = H5Pcreate(H5P_FILE_CREATE);
         if(create_plist<0)
-            throw H5PropertyListError(EXCEPTION_RECORD, 
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD, 
                   "Cannot create file creation property list for file "
-                  "["+string(n)+"]!");
+                  "["+string(n)+"]!\n\n"+get_h5_error_string());
 
         hid_t acc_plist = H5Pcreate(H5P_FILE_ACCESS);
         if(acc_plist<0)
-            throw H5PropertyListError(EXCEPTION_RECORD, 
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD, 
                   "Cannot create file access property list for file "
-                  "["+string(n)+"]!");
+                  "["+string(n)+"]!\n\n"+get_h5_error_string());
 
         if(ssize > 0)
             //enable splitting
@@ -193,8 +198,9 @@ namespace h5{
             {
                 H5Pclose(acc_plist);
                 H5Pclose(create_plist);
-                H5FileError error(EXCEPTION_RECORD,
-                "Error create file "+string(n)+" in overwrite mode!");
+                pni::io::nx::nxfile_error error(EXCEPTION_RECORD,
+                "Error create file "+string(n)+" in overwrite mode!\n\n"+
+                get_h5_error_string());
                 std::cerr<<error<<std::endl;
                 throw error;
             }
@@ -206,9 +212,9 @@ namespace h5{
             {
                 H5Pclose(acc_plist);
                 H5Pclose(create_plist);
-                H5FileError error(EXCEPTION_RECORD,
+                pni::io::nx::nxfile_error error(EXCEPTION_RECORD,
                 "Error create file "+string(n)+" file most probably already "
-                "exists - use overwrite!");
+                "exists - use overwrite!\n\n"+get_h5_error_string());
                 std::cerr<<error<<std::endl;
                 throw error;
             }

@@ -24,12 +24,13 @@
  */
 
 
-#include "H5Exceptions.hpp"
 #include "H5Dataset.hpp"
 #include "H5Group.hpp"
 #include "H5File.hpp"
-
 #include "H5Link.hpp"
+
+#include "h5_error_stack.hpp"
+#include "../nxexceptions.hpp"
 
 namespace pni{
 namespace io{
@@ -55,7 +56,8 @@ namespace h5{
             file = string(path,0,cpos);
             opath = string(path,cpos+1);
         }
-        else throw H5LinkError(EXCEPTION_RECORD,"Invalid target string!");
+        else throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
+                "Invalid target string!\n\n"+get_h5_error_string());
     }
 
     //-------------------------------------------------------------------------
@@ -68,8 +70,8 @@ namespace h5{
         herr_t err = H5Lcreate_external(file.c_str(),opath.c_str(),
                 ref.id(),name.c_str(),lcpl,H5P_DEFAULT);
         if(err < 0)
-            throw H5LinkError(EXCEPTION_RECORD,
-                    "Error creating external link!");
+            throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
+                    "Error creating external link!\n\n"+get_h5_error_string());
 
     }
 
@@ -83,8 +85,9 @@ namespace h5{
         herr_t err = H5Lcreate_soft(opath.c_str(),ref.id(),name.c_str(),
                 lcpl,H5P_DEFAULT);
         if(err < 0)
-            throw H5LinkError(EXCEPTION_RECORD,
-                    "Error creating internal link!");
+            throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
+                    "Error creating internal link!\n\n"+
+                    get_h5_error_string());
     }
 
     //================implementation of public methods=========================
