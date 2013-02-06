@@ -162,7 +162,7 @@ namespace nx{
             shape_t shape{0,1024,1024};
             shape_t chunk{0,128,1024};
 
-            NField field = g.create_field<UInt16>("data",shape,chunk);
+            nxfield field = g.create_field<uint16>("data",shape,chunk);
             \endcode
             The chunk shape here is optional. If not given a default value will
             be generated from the original shape where the first dimension is
@@ -175,7 +175,7 @@ namespace nx{
             \param n name (path) of the field
             \param shape shape of the field
             \param chunk chunk shape of the field
-            \return instane of an NXFIeld object
+            \return instane of an nxfield object
             */
             template<typename T, 
                      typename CTYPES=shape_t, 
