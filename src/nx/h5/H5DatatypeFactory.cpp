@@ -136,7 +136,7 @@ namespace h5{
                     estr+"\n\n"+get_h5_error_string());
 
         if(H5Tinsert(tid,"r",HOFFSET(__struct_complex_64,r),H5T_NATIVE_DOUBLE)<0)
-            throw pni::io::nx::nxbackend_error((EXCEPTION_RECORD,
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
                         estr+"\n\n"+get_h5_error_string());
 
         if(H5Tinsert(tid,"i",HOFFSET(__struct_complex_64,i),H5T_NATIVE_DOUBLE)<0)

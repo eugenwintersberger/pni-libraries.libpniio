@@ -108,6 +108,7 @@ namespace h5{
 
             The path can be either an absolute path or relative to the group
             instance calling this method. Both methods work as expected.
+            \throws pni::io::nx::nxobject_error in case of errors
             \param n object path
             \return HDF5 object 
             */
@@ -132,6 +133,7 @@ namespace h5{
             open(const String &n) only objects linked to this group can be
             opened with this method.
             \throws index_error if index exceeds number of childs
+            \throws pni::io::nx::nxgroup_error in case of errors
             \param i object index
             \return child object
             */
@@ -164,6 +166,7 @@ namespace h5{
 
             Checks whether or not an object determined by n exists.  n can be
             either a path relative to this object or an absolute path. 
+            \throws pni::io::nx::nxgroup_error in case of errors
             \param n path to the object 
             \return true if an object of name n exists
             */
@@ -219,9 +222,10 @@ namespace h5{
 
             Returns the number of child nodes (groups and datasets) linked below
             this group.
+            \throws pni::io::nx::nxgroup_error in case of errors
             \return number of child nodes
             */
-            size_t nchilds() const;
+            size_t nchildren() const;
 
             
             friend class H5Dataset;                   

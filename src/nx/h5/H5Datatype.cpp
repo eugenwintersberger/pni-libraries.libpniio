@@ -26,7 +26,7 @@
 #include "H5Datatype.hpp"
 #include "H5DatatypeFactory.hpp"
 #include "../nxexceptions.hpp"
-#include "h5_exception_stack.hpp"
+#include "h5_error_stack.hpp"
 
 
 namespace pni{

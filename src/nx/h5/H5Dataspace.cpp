@@ -25,7 +25,8 @@
 
 
 #include "H5Dataspace.hpp"
-#include "H5Exceptions.hpp"
+#include "h5_error_stack.hpp"
+#include "../nxexceptions.hpp"
 
 
 namespace pni{

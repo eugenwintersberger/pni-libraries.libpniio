@@ -31,8 +31,10 @@ extern "C"{
 
 #include "H5Group.hpp"
 #include "H5Dataset.hpp"
-#include "H5Exceptions.hpp"
 #include "H5Link.hpp"
+
+#include "h5_error_stack.hpp"
+#include "../nxexceptions.hpp"
 
 namespace pni{
 namespace io{
@@ -53,8 +55,9 @@ namespace h5{
     {
 
         if(object_type()!=H5ObjectType::GROUP)
-            throw H5GroupError(EXCEPTION_RECORD,
-                    "Object is not a group object!");
+            throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD,
+                    "Object is not a group object!\n\n"+
+                    get_h5_error_string());
     }
 
     //-------------------------------------------------------------------------
@@ -67,8 +70,9 @@ namespace h5{
     {
 
         if(object_type() != H5ObjectType::GROUP)
-            throw H5GroupError(EXCEPTION_RECORD,
-                    "Object is not a group object!");
+            throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD,
+                    "Object is not a group object!\n\n"+
+                    get_h5_error_string());
     }
 
     //-------------------------------------------------------------------------
@@ -84,19 +88,19 @@ namespace h5{
         {
             string estr = "Creation of link property list failed"
                 "for new group ["+name+"] under ["+parent.path()+
-                "]!";
-            throw H5GroupError(EXCEPTION_RECORD,estr);
+                "]!\n\n"+get_h5_error_string();
+            throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD,estr);
         }
         H5Pset_create_intermediate_group(link_pl,1);
 
         hid_t gid = H5Gcreate2(parent.id(),name.c_str(),
                 link_pl,cr_pl,H5P_DEFAULT);
-
         if(gid<0)
         {
             string estr = "Error creating group ["+name+
-                          "] under ["+parent.path()+"!";
-            throw H5GroupError(EXCEPTION_RECORD,estr);
+                          "] under ["+parent.path()+"!\n\n"+
+                          get_h5_error_string();
+            throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD,estr);
         }
 
         *this = H5Group(gid); 
@@ -140,8 +144,9 @@ namespace h5{
     {
 
         if(o.object_type() != H5ObjectType::GROUP)
-            throw H5GroupError(EXCEPTION_RECORD,
-                    "Object is not a group object!");
+            throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD,
+                    "Object is not a group object!\n\n"+
+                    get_h5_error_string());
 
         if(this == &o) return *this;
 
@@ -167,8 +172,9 @@ namespace h5{
     {
 
         if(o.object_type() != H5ObjectType::GROUP)
-            throw H5GroupError(EXCEPTION_RECORD,
-                    "Object is not a group object!");
+            throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD,
+                    "Object is not a group object!\n\n"+
+                    get_h5_error_string());
 
         if(this == &o) return *this;
         H5AttributeObject::operator=(std::move(o));
@@ -182,8 +188,9 @@ namespace h5{
     {
         hid_t oid = H5Oopen(id(),n.c_str(),H5P_DEFAULT);
         if(oid<0)
-            throw H5ObjectError(EXCEPTION_RECORD, 
-                    "Error opening object ["+n+"]!");
+            throw pni::io::nx::nxobject_error(EXCEPTION_RECORD, 
+                    "Error opening object ["+n+"]!\n\n"+
+                    get_h5_error_string());
 
         //determine the object type
         H5I_type_t tid = H5Iget_type(oid);
@@ -217,8 +224,9 @@ namespace h5{
                 i,name,1024,H5P_DEFAULT);
 
         if(size < 0)
-            throw H5GroupError(EXCEPTION_RECORD, 
-                    "Error obtaining object name!");
+            throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD, 
+                    "Error obtaining object name!\n\n"+
+                    get_h5_error_string());
 
         return open(string(name));
     }
@@ -273,8 +281,9 @@ namespace h5{
             //std::cout<<path<<std::endl;
             retval = H5Lexists(id(),path.c_str(),H5P_DEFAULT);
             if(retval<0) 
-                throw H5GroupError(EXCEPTION_RECORD, 
-                        "Cannot check existance of objec ["+n+"]!");
+                throw pni::io::nx::nxgrou_error(EXCEPTION_RECORD, 
+                        "Cannot check existance of objec ["+n+"]!\n\n"+
+                        get_h5_error_string());
 
             if(!retval) return false;
 
@@ -305,13 +314,14 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    size_t H5Group::nchilds() const
+    size_t H5Group::nchildren() const
     {
         H5G_info_t ginfo;
         herr_t err = H5Gget_info(id(),&ginfo);
         if(err < 0)
-            throw H5GroupError(EXCEPTION_RECORD,
-                    "Cannot obtain group information!");
+            throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD,
+                    "Cannot obtain group information!\n\n"+
+                    get_h5_error_string());
 
         return ginfo.nlinks;
     }            
