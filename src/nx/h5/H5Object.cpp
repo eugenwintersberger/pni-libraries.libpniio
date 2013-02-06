@@ -25,7 +25,7 @@
 
 #include <iostream>
 #include "H5Object.hpp"
-#include "h5_exception_stack.hpp"
+#include "h5_error_stack.hpp"
 #include "../nxexceptions.hpp"
 
 namespace pni{
@@ -187,7 +187,7 @@ namespace h5{
 
         herr_t err = H5Oget_info(id(),&info);
         if(err < 0)
-            throw pni::io::nxbackend_error(EXCEPTION_RECORD,
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
                     "Cannot obtain object info!\n\n"+get_h5_error_string());
 
         return info.btime;

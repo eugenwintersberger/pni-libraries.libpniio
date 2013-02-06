@@ -211,11 +211,11 @@ namespace h5{
     //-------------------------------------------------------------------------
     H5Object H5Group::open(size_t i) const
     {
-        if(i >= nchilds())
+        if(i >= nchildren())
         {
             std::stringstream sstream;
             sstream<<"Index ("<<i<<") exceeds number of child nodes ("
-                <<nchilds()<<")!";
+                <<nchildren()<<")!";
             throw index_error(EXCEPTION_RECORD,sstream.str());
         }
 
@@ -281,7 +281,7 @@ namespace h5{
             //std::cout<<path<<std::endl;
             retval = H5Lexists(id(),path.c_str(),H5P_DEFAULT);
             if(retval<0) 
-                throw pni::io::nx::nxgrou_error(EXCEPTION_RECORD, 
+                throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD, 
                         "Cannot check existance of objec ["+n+"]!\n\n"+
                         get_h5_error_string());
 

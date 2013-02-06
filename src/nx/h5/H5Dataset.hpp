@@ -39,6 +39,7 @@ using namespace pni::core;
 #include "H5Group.hpp"
 #include "H5ObjectType.hpp"
 #include "H5Filter.hpp"
+#include "h5_error_stack.hpp"
 #include "../nxexceptions.hpp"
 
 
@@ -100,7 +101,7 @@ namespace h5{
             This constructor allows the conversion of a general H5Object to a
             dataset. If the H5Object does not refer to an HDF5 dataset an
             exception will be thrown.
-            \throws H5DatasetError if H5Object is not a dataset
+            \throws pni::io::nx::nxfield_error if H5Object is not a dataset
             \param o reference to an H5Object
             */
             H5Dataset(const H5Object &o);
@@ -115,7 +116,7 @@ namespace h5{
             
             Allows move conversion from an HDF5Object to an HDF5 dataset. If the
             object does not refer to a dataset an exception will be thrown.
-            \throws H5DatasetError if o does not refer to a dataset
+            \throws pni::io::nx::nxfield_error if o does not refer to a dataset
             \param o move reference to an H5Object
             */
             H5Dataset(H5Object &&o);
@@ -128,7 +129,7 @@ namespace h5{
             the simplest form of a dataset. Such a dataset cannot be resized.
             The shape of the dataspace is determined by the argument s which is
             the intial as well as the maximum size of the dataspace.
-            \throws H5DatasetError in case of all kinds of errors
+            \throws pni::io::nx::nxfield_error in case of all kinds of errors
             \param n name of the dataset
             \param g parent group
             \param t id of the data type
@@ -148,7 +149,7 @@ namespace h5{
             several chunks. Furthermore chunked datasets can be compressed.
             Where the compression algorithm is applied to individual chunks not
             on the entire dataset.
-            \throws H5DatasetError in case of errors 
+            \throws pni::io::nx::nxfield_error in case of errors 
             \param n dataset name
             \param g parent group
             \param t ID of the data type
@@ -189,8 +190,9 @@ namespace h5{
                     //close property lists before throw exceptions
                     H5Pclose(lpl);
                     H5Pclose(cpl);
-                    throw H5DataSetError(EXCEPTION_RECORD, 
-                          "Cannot create dataset ["+n+"] below ["+g.path()+"]!");
+                    throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
+                          "Cannot create dataset ["+n+"] below ["+g.path()+
+                          "]!\n\n"+ get_h5_error_string());
                 };
 
                 
@@ -207,7 +209,7 @@ namespace h5{
             Constructor for a chunked dataset with a filter. Actually only a
             deflate filter is supported. To use filters a dataset must be a
             chunked dataset. Thus a proper chunk-size must be provided.
-            \throws H5DatasetError in case of errors
+            \throws pni::io::nx::nxfield_error in case of errors
             \param n name of the dataset
             \param g group below which to create the dataset
             \param t datatype to use
@@ -251,8 +253,9 @@ namespace h5{
                     //close property lists before throw exceptions
                     H5Pclose(lpl);
                     H5Pclose(cpl);
-                    throw H5DataSetError(EXCEPTION_RECORD, 
-                         "Cannot create dataset ["+n+"] below ["+g.path()+"]!");
+                    throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
+                         "Cannot create dataset ["+n+"] below ["+g.path()+"]!"+
+                         get_h5_error_string());
                 }
 
                 *this = H5Dataset(did);
@@ -268,7 +271,7 @@ namespace h5{
             Constructor can use an HDF5 object ID directly to instantiate an
             HDF5 dataset. If the ID does not refer to a dataset an exception
             will  be thrown.
-            \throws H5DatasetError if oid does not refer to a dataset
+            \throws pni::io::nx::nxfield_error if oid does not refer to a dataset
             \param oid HDF5 object id
             */
             explicit H5Dataset(const hid_t &oid);
@@ -291,7 +294,7 @@ namespace h5{
             along all dimensions.
             \throws shape_missmatch_error if chunk and field shape do not have the
             same rank
-            \throws H5DatasetError in case of errors
+            \throws pni::io::nx::nxfield_error in case of errors
             \param n name of the dataset
             \param g group below which the dataset will be created
             \param s shape describing the dataset
@@ -356,7 +359,7 @@ namespace h5{
             method behaves exactly like static H5Dataset create( const String
             &n,const H5Group &g,const Shape &s, const Shape &cs) despite the
             fact that it requires an additional argument describing the filter.
-            \throws H5DatasetError in case of errors
+            \throws pni::io::nx::nxfield_error in case of errors
             \throws shape_missmatch_error if chunk and dataset shape do not have
             equal rank
             \param n name of the dataset
@@ -427,7 +430,7 @@ namespace h5{
             Allows the assignment conversion from a plain H5Object to a dataset.
             If the object does not refer to a dataset an exception will be
             thrown.
-            \throws H5DatasetError if H5Object is not a dataset
+            \throws pni::io::nx::nxfield_error if H5Object is not a dataset
             \param o H5Object to convert to H5Datatype
             \return instance of H5Dataset
             */
@@ -444,7 +447,7 @@ namespace h5{
             Allows move conversion assignment from a plain H5Object to a
             H5Dataset object. If H5Object does not refer to a dataset an
             exception will be thrown. 
-            \throws H5DatasetError if H5Object is not a dataset
+            \throws pni::io::nx::nxfield_error if H5Object is not a dataset
             \param o H5Object to convert to H5Dataset
             \return instance of H5Dataset
             */
@@ -464,9 +467,9 @@ namespace h5{
 
             If this requirements are not met by s an exception will be
             thrown.
-            \throws ShapeMissmatchError if rank of s is not equal to the rank of
+            \throws shape_missmatch_error if rank of s is not equal to the rank of
             the dataset
-            \throws H5DataSetError in case of other errors during resizeing
+            \throws pni::io::nx::nxfield_error in case of other errors during resizeing
             \param s shape object describing the new shape of the dataset
             */
             template<typename CTYPE> void resize(const CTYPE &s)
@@ -480,8 +483,9 @@ namespace h5{
 
                 herr_t err = H5Dset_extent(id(),b.ptr());
                 if(err < 0)
-                    throw H5DataSetError(EXCEPTION_RECORD, 
-                         "Resizing of dataset ["+name()+"] failed!");
+                    throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
+                         "Resizing of dataset ["+name()+"] failed!\n\n"+
+                         get_h5_error_string());
 
                 //re-fetch data space
                 _fspace = __obtain_dataspace();
@@ -494,8 +498,8 @@ namespace h5{
 
             Extends the size of the dataset along a single dimension.  This
             command can be quite useful for writing data sequentially. 
-            \throws IndexError if e exceeds the rank of the dataset
-            \throws H5DataSetError in case of other errors
+            \throws index_error if e exceeds the rank of the dataset
+            \throws pni::io::nx::nxfield_error in case of other errors
             \param e index of the extend dimension
             \param n number of elements by which the dimension shall be
             extended
@@ -537,7 +541,7 @@ namespace h5{
             \brief number of elements
 
             Returns the number of elements along dimension i. 
-            \throws IndexError if i exceeds dataset rank
+            \throws index_error if i exceeds dataset rank
             \param i index of the dimension
             \return number of elements along i
             */
@@ -573,8 +577,9 @@ namespace h5{
                         H5S_SELECT_SET,offset.ptr(),stride.ptr(),count.ptr(),
                         nullptr);
                 if(err<0)
-                    throw H5DataSetError(EXCEPTION_RECORD,
-                            "Error applying selection to dataset!");
+                    throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
+                            "Error applying selection to dataset!\n\n"+
+                            get_h5_error_string());
 
                 //need to set the memory dataspace to the effective shape of the
                 //selection
@@ -623,7 +628,7 @@ namespace h5{
             must be 1.
             \throws shape_missmatch_error if dataset is not scalar or the size of
             the dataset is not 1
-            \throws H5DataSetError in all other error cases
+            \throws pni::io::nx::nxfield_error in all other error cases
             \param ptr pointer to memory where the data should be stored.
             */
             template<typename T> void read(T *ptr) const
@@ -636,13 +641,11 @@ namespace h5{
                                       H5P_DEFAULT,(void *)ptr);
                 if(err<0)
                 {
-                    H5ErrorStack estack;
                     std::stringstream ss;
                     ss<<"Error writing data to dataset ["+this->name()+"]!";
                     ss<<std::endl<<"HDF5 error report:"<<std::endl;
-                    ss<<estack;
                     throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
-                          ss.str());
+                          ss.str()+get_h5_error_string());
                 }
             }
 
@@ -654,7 +657,7 @@ namespace h5{
             template method read(T &value). It is necessary since strings are
             handled slightly different from other objects.
             \throws shape_missmatch_error if the dataset is not scalar
-            \throws H5DataSetError in case of other IO errors
+            \throws pni::io::nx::nxfield_error in case of other IO errors
             \param sptr pointer to String objects
             */
             void read(string *sptr) const;
@@ -667,7 +670,7 @@ namespace h5{
             data from variable value. This method works only if the dataspace of
             the dataset is scalar or the total dataspace size is 1.
             \throws shape_missmatch_error if the dataspace is not scalar
-            \throws H5DataSetError in case of other errors
+            \throws pni::io::nx::nxfield_error in case of other errors
             \param ptr pointer to the memory region from which to read
             */
             template<typename T> void write(const T *ptr) const
@@ -679,8 +682,9 @@ namespace h5{
                 herr_t err = H5Dwrite(id(),mem_type.id(),_mspace.id(),_fspace.id(),
                                       H5P_DEFAULT,(const void *)ptr);
                 if(err<0)
-                    throw H5DataSetError(EXCEPTION_RECORD, 
-                        "Error writing data to dataset ["+this->name()+"]!");
+                    throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
+                        "Error writing data to dataset ["+this->name()+"]!\n\n"+
+                        get_h5_error_string());
             }
 
             //-----------------------------------------------------------------
@@ -689,7 +693,7 @@ namespace h5{
            
             Write data from a String variable to the dataset.
             \throws shape_missmatch_error if the dataset is not scalar
-            \throws H5DataSetError in the case of all other errors
+            \throws pni::io::nx::nxfield_error in the case of all other errors
             \param sptr pointer to String objects.
             */
             void write(const string *sptr) const;

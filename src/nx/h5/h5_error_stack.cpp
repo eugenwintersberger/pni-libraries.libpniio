@@ -65,7 +65,7 @@ namespace h5 {
     h5_error_stack::h5_error_stack(const h5_error_stack &s)
     {
         _stack_id = s._stack_id;
-        _errors = std::vector<H5Error>(s._errors);
+        _errors = std::vector<h5_error>(s._errors);
     }
 
     //--------------------------------------------------------------------------
@@ -73,7 +73,7 @@ namespace h5 {
     {
         if(this != &s){
             _stack_id = s._stack_id;
-            _errors = std::vector<H5Error>(s._errors);
+            _errors = std::vector<h5_error>(s._errors);
         }
 
         return *this;

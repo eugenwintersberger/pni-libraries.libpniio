@@ -28,7 +28,6 @@
 
 #include "H5Dataset.hpp"
 #include "H5ObjectType.hpp"
-#include "H5Exceptions.hpp"
 #include "H5Link.hpp"
 
 
@@ -63,8 +62,9 @@ namespace h5{
     {
         //check if the type is ok for conversion
         if(object_type() != H5ObjectType::DATASET)
-            throw H5DataSetError(EXCEPTION_RECORD,
-                    "Object is not a dataset!");
+            throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
+                    "Object is not a dataset!\n\n"+
+                    get_h5_error_string());
 
         //copy the datatype and dataspace
         _fspace = __obtain_dataspace();
@@ -85,8 +85,9 @@ namespace h5{
     {
 
         if(object_type() != H5ObjectType::DATASET)
-            throw H5DataSetError(EXCEPTION_RECORD, 
-                                "Object is not a dataset!");
+            throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
+                                "Object is not a dataset!\n\n"+
+                                get_h5_error_string());
 
         //move datatype and data space
         _fspace = __obtain_dataspace();
@@ -107,8 +108,9 @@ namespace h5{
         hid_t did = H5Dcreate2(g.id(),n.c_str(),t.id(),s.id(),
                 lpl,H5P_DEFAULT,H5P_DEFAULT);
         if(did<0)
-            throw H5DataSetError(EXCEPTION_RECORD, 
-            "Cannot create dataset ["+n+"] below ["+path()+"]!");
+            throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
+            "Cannot create dataset ["+n+"] below ["+path()+"]!\n\n"+
+            get_h5_error_string());
 
         //set id
         *this = H5Dataset(did);
@@ -123,8 +125,9 @@ namespace h5{
     {
 
         if(object_type() != H5ObjectType::DATASET)
-            throw H5DataSetError(EXCEPTION_RECORD,
-                "Object ID does not belong to a dataset!");
+            throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
+                "Object ID does not belong to a dataset!\n\n"+
+                get_h5_error_string());
 
         _fspace = H5Dataspace(H5Dget_space(id()));
         _mspace = _fspace;
@@ -158,8 +161,9 @@ namespace h5{
     H5Dataset &H5Dataset::operator=(const H5Object &o)
     {
         if(o.object_type()!=H5ObjectType::DATASET)
-            throw H5DataSetError(EXCEPTION_RECORD,
-                    "Object is not a dataset!");
+            throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
+                    "Object is not a dataset!\n\n"+
+                    get_h5_error_string());
 
         if(this != &o)
         {
@@ -189,8 +193,8 @@ namespace h5{
     H5Dataset &H5Dataset::operator=(H5Object &&o)
     {
         if(o.object_type() != H5ObjectType::DATASET)
-            throw H5DataSetError(EXCEPTION_RECORD, 
-                                 "Object is not a dataset!");
+            throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
+                  "Object is not a dataset!\n\n"+get_h5_error_string());
 
         if(this != &o)
         {
@@ -220,8 +224,9 @@ namespace h5{
 
         herr_t err = H5Dset_extent(id(),b.ptr());
         if(err < 0)
-            throw H5DataSetError(EXCEPTION_RECORD, 
-                  "Grow of dataset ["+name()+"] failed!");
+            throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
+                  "Grow of dataset ["+name()+"] failed!\n\n"+
+                  get_h5_error_string());
 
         //re-fetch the new dataspace
         _fspace.grow(e,n);
@@ -245,8 +250,9 @@ namespace h5{
 
         delete [] ptr; //free memory
         if(err<0)
-            throw H5DataSetError(EXCEPTION_RECORD, 
-                    "Error writing data to dataset!");
+            throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
+                    "Error writing data to dataset!\n\n"+
+                    get_h5_error_string());
     }
 
     //-----------------------------------------------------------------
@@ -265,8 +271,9 @@ namespace h5{
         if(err<0)
         {
             delete [] ptr; //free memory
-            H5DataSetError error(EXCEPTION_RECORD, 
-                    "Error writing data to dataset ["+name()+"]!");
+            pni::io::nx::nxfield_error error(EXCEPTION_RECORD, 
+                    "Error writing data to dataset ["+name()+"]!\n\n"+
+                    get_h5_error_string());
             throw error;
         }
 
