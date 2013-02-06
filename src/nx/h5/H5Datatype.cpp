@@ -25,7 +25,8 @@
 
 #include "H5Datatype.hpp"
 #include "H5DatatypeFactory.hpp"
-#include "H5Exceptions.hpp"
+#include "../nxexceptions.hpp"
+#include "h5_exception_stack.hpp"
 
 
 namespace pni{
@@ -172,7 +173,8 @@ namespace h5{
         if(res == 0) return false;
 
         if(res < 0)
-            throw H5DataTypeError(EXCEPTION_RECORD,"Cannot compare types!");
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    "Cannot compare types!\n\n" + get_h5_error_string());
 
         return false;
     }

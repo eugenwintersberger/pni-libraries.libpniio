@@ -26,6 +26,9 @@
 #include "H5DatatypeFactory.hpp"
 #include <sstream>
 
+#include "../nxexceptions.hpp"
+#include "h5_error_stack.hpp"
+
 namespace pni{
 namespace io{
 namespace nx{
@@ -40,7 +43,7 @@ namespace h5{
                 ss<<"Error creating ";\
                 ss<<STR(hdftype);\
                 ss<<" type!";\
-                throw H5DataTypeError(EXCEPTION_RECORD,ss.str());\
+                throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,ss.str());\
             }\
             return H5Datatype(t)
 
@@ -103,13 +106,16 @@ namespace h5{
         string estr = "Cannot create COMPLEX_32 type!";
         hid_t tid = H5Tcreate(H5T_COMPOUND,sizeof(__struct_complex_32));
         if(tid<0)
-            throw H5DataTypeError(EXCEPTION_RECORD,estr);
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    estr+"\n\n"+get_h5_error_string());
 
         if(H5Tinsert(tid,"r",HOFFSET(__struct_complex_32,r),H5T_NATIVE_FLOAT)<0)
-            throw H5DataTypeError(EXCEPTION_RECORD,estr);
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    estr+"\n\n"+get_h5_error_string());
         
         if(H5Tinsert(tid,"i",HOFFSET(__struct_complex_32,i),H5T_NATIVE_FLOAT)<0)
-            throw H5DataTypeError(EXCEPTION_RECORD,estr);
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    estr+"\n\n"+get_h5_error_string());
 
         return H5Datatype(tid);
     }
@@ -126,13 +132,16 @@ namespace h5{
         string estr = "Error creating COMPLEX_64 type!";
         hid_t tid = H5Tcreate(H5T_COMPOUND,sizeof(__struct_complex_64));
         if(tid<0)
-            throw H5DataTypeError(EXCEPTION_RECORD,estr);
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    estr+"\n\n"+get_h5_error_string());
 
         if(H5Tinsert(tid,"r",HOFFSET(__struct_complex_64,r),H5T_NATIVE_DOUBLE)<0)
-            throw H5DataTypeError(EXCEPTION_RECORD,estr);
+            throw pni::io::nx::nxbackend_error((EXCEPTION_RECORD,
+                        estr+"\n\n"+get_h5_error_string());
 
         if(H5Tinsert(tid,"i",HOFFSET(__struct_complex_64,i),H5T_NATIVE_DOUBLE)<0)
-            throw H5DataTypeError(EXCEPTION_RECORD,estr);
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                estr+"\n\n"+get_h5_error_string());
 
         return H5Datatype(tid);
     }
@@ -150,13 +159,17 @@ namespace h5{
 
         hid_t tid = H5Tcreate(H5T_COMPOUND,sizeof(__struct_complex_128));
         if(tid<0)
-            throw H5DataTypeError(EXCEPTION_RECORD,estr);
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    estr+"\n\n"+get_h5_error_string());
         
         if(H5Tinsert(tid,"r",HOFFSET(__struct_complex_128,r),H5T_NATIVE_LDOUBLE)<0)
-            throw H5DataTypeError(EXCEPTION_RECORD,estr);
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    estr+"\n\n"+get_h5_error_string());
         
         if(H5Tinsert(tid,"i",HOFFSET(__struct_complex_128,i),H5T_NATIVE_LDOUBLE)<0)
-            throw H5DataTypeError(EXCEPTION_RECORD,estr);
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    estr+"\n\n"+get_h5_error_string());
+
         return H5Datatype(tid);
     }
    
@@ -173,17 +186,22 @@ namespace h5{
         string estr = "Error creating STRING type!";
 
         tid = H5Tcopy(H5T_C_S1);
-        if(tid<0) throw H5DataTypeError(EXCEPTION_RECORD,estr); 
+        if(tid<0) 
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    estr+"\n\n"+get_h5_error_string()); 
 
         if(H5Tset_strpad(tid,H5T_STR_NULLTERM)<0)
-            throw H5DataTypeError(EXCEPTION_RECORD,estr);
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    estr+"\n\n"+get_h5_error_string());
 
         if(H5Tset_cset(tid,H5T_CSET_UTF8)<0)
-            throw H5DataTypeError(EXCEPTION_RECORD,estr);
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    estr+"\n\n"+get_h5_error_string());
 
         //always use variable strings 
         if(H5Tset_size(tid,H5T_VARIABLE)<0)
-            throw H5DataTypeError(EXCEPTION_RECORD,estr);
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    estr+"\n\n"+get_h5_error_string());
 
         return H5Datatype(tid);
     }
@@ -200,7 +218,8 @@ namespace h5{
         string estr = "Error creating binary type!";
         hid_t t = H5Tcreate(H5T_OPAQUE,1);
         if(t<0)
-            throw H5DataTypeError(EXCEPTION_RECORD,estr); 
+            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
+                    estr+"\n\n"+get_h5_error_string()); 
 
         return H5Datatype(t);
     }

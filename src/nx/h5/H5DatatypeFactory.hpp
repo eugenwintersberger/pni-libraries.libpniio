@@ -32,7 +32,6 @@ extern "C"{
 }
 
 #include "H5Datatype.hpp"
-#include "H5Exceptions.hpp"
 
 using namespace pni::core;
 
@@ -110,13 +109,13 @@ namespace h5{
 
             This static template method can be used to create a H5Datatype
             object from a particular type T. T must be a type defined in
-            pni/utils/Types.hpp. 
+            pni/core/types.hpp. 
 
             \code
-            H5Datatype t = H5DatatypeFactor::create_type<Float32>();
+            H5Datatype t = H5DatatypeFactor::create_type<float32>();
             \endcode
 
-            \throws H5DataTypeError if type creation was unsuccessful 
+            \throws pni::io::nx::nxbackend_error if type creation was unsuccessful 
             \return instance of H5Datatype 
             */
             template<typename T> static H5Datatype create_type();
@@ -128,10 +127,10 @@ namespace h5{
             PNI type id. 
 
             \code
-            H5Datatype t = H5DatatypeFactor::create_type<TypeID::UINT8>();
+            H5Datatype t = H5DatatypeFactor::create_type<type_id_t::UINT8>();
             \endcode
 
-            \throws H5DataTypeError if type creation was unsuccessful
+            \throws pni::io::nx::nxbackend_error if type creation was unsuccessful
             \return instance of H5Datatype
             */
             template<type_id_t ID> static H5Datatype create_type();

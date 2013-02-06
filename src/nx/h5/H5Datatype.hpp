@@ -90,6 +90,7 @@ namespace h5{
             /*! 
             \brief equality comparison
 
+            \throws pni::io::nx::nxbackend_error if comparison fails
             \param a lhs value of the operator
             \param b rhs value of the operator
             \return true if types are equal
@@ -100,6 +101,7 @@ namespace h5{
             /*! 
             \brief inequality 
 
+            \throws pni::io::nx::nxbackend_error if comparison fails
             \param a lhs value of the operator
             \param b rhs value of the operator
             \return true if not equal
