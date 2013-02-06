@@ -75,6 +75,7 @@ namespace h5 {
 
             This method will setup a dataspace according to the values of its
             member variables.
+            \throws pni::io::nx::nxbackend_error in case of errors
             */
             void __setup_dataspace();
 
@@ -132,7 +133,7 @@ namespace h5 {
             H5Dataspace space(shape);
             \endcode
             \throws memory_allocation_error if buffer allocation fails
-            \throws H5DataSpaceError if setup of the dataspace fails
+            \throws pni::io::nx::nxbackend_error if setup of the dataspace fails
             \tparam CTYPE container type for the shape
             \param s instance of CTYPE with the shape
             \sa H5Dataspace(const CTYPE1 &s,const CTYPE2 &ms)
@@ -164,7 +165,7 @@ namespace h5 {
             \throws memory_allocation_error if buffer allocation fails
             \throws shape_missmatch_error if the two containers have a different
             size and thus represent different ranks
-            \throws H5DataSpaceError if setup of the dataspace fails
+            \throws pni::io::nx::nxbackend_error if setup of the dataspace fails
 
             \tparam CTYPE1 container type for the actual shape
             \tparam CTYPE2 container type for the maximum shape
@@ -209,7 +210,7 @@ namespace h5 {
             \endcode
 
             \throws memory_allocation_error if buffer allocation fails
-            \throws H5DataSpaceError if data-space creation fails
+            \throws pni::io::nx::nxbackend_error if data-space creation fails
 
             \param list initializer list
             \sa H5Dataspace(const Shape &s)
@@ -225,7 +226,7 @@ namespace h5 {
 
             \throws memory_allocation_error if buffer allocation fails
             \throws shape_missmatch_error if the two lists are of different size
-            \throws H5DataSpaceError if dataspace setup fails
+            \throws pni::io::nx::nxbackend_error if dataspace setup fails
 
             \param dlist initializer list with actual shape values
             \param mlist initializer list with maximum shape values
@@ -495,7 +496,7 @@ namespace h5 {
 
             \throws memory_allocation_error if buffer allocation fails
             \throws shape_missmatch_error if the ranks of the two shapes do not match
-            \throws H5DataSpaceError if dataspace setup fails
+            \throws pni::io::nx::nxbackend_error if dataspace setup fails
 
             \param s initial shape of the dataspace
             \param ms maximum shape of the dataspace 
@@ -529,7 +530,7 @@ namespace h5 {
             by the size of the tow lists. Both lists must be of equal size.
 
             \throws memory_allocation_error if buffer allocation fails
-            \throws H5DataSpaceError if dataspace setup fails
+            \throws pni::io::nx::nxbackend_error if dataspace setup fails
             \throws shape_missmatch_error if list sizes are not equal
 
             \param dlist list with actual number of elements

@@ -56,8 +56,9 @@ namespace h5 {
                         
         if(err<0)
         {
-            H5DataSpaceError error(EXCEPTION_RECORD,
-                    "Cannot create HDF5 dataspace!");
+            pni::io::nx::nxbackend_error error(EXCEPTION_RECORD,
+                    "Cannot create HDF5 dataspace!\n\n"+
+                    get_h5_error_string());
 #ifdef DEBUG
             std::cerr<<error<<std::endl;
 #endif
@@ -252,8 +253,9 @@ namespace h5 {
         ssize_t size = H5Sget_select_npoints(id());
         if(size<0) 
         {
-            H5DataSpaceError error( EXCEPTION_RECORD,
-                    "Could not determine dataspace size");
+            pni::io::nx::nxbackend_error error( EXCEPTION_RECORD,
+                    "Could not determine dataspace size\n\n"+
+                    get_h5_error_string());
             std::cerr<<error<<std::endl;
             throw error;
         }
