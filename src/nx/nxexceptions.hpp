@@ -222,6 +222,78 @@ namespace nx{
             }
     };
 
+    //-------------------------------------------------------------------------
+    /*!
+    \brief error_classes
+    \brief link error
+
+    Exception thrown in case of link related errors.
+    */
+    class nxlink_error:public exception
+    {
+        public:
+            //-----------------------------------------------------------------
+            //! default constructor
+            explicit nxlink_error():exception("nxlink_error")
+            {}
+
+            //-----------------------------------------------------------------
+            //! constructor
+            explicit nxlink_error(const exceptoin_record &i,const String &d)
+                :exception("nxlink_error",i,d)
+            {}
+
+            //-----------------------------------------------------------------
+            //! destructor
+            ~nxlink_error() throw()
+            {}
+
+            //-----------------------------------------------------------------
+            //! output operator
+            friend std::ostream &operator<<(std::ostream &o,
+                                            const nxlink_error &e)
+            {
+                return e.print(o);
+            }
+    };
+
+    //-------------------------------------------------------------------------
+    /*!
+    \brief error_classes
+    \brief backend error
+
+    Exception thrown in case of a general backend error.
+    */
+    class nxbackend_error:public exception
+    {
+        public:
+            //-----------------------------------------------------------------
+            //! default constructor
+            explicit nxbackend_error():exception("nxbackend_error")
+            {}
+
+            //-----------------------------------------------------------------
+            //! constructor
+            explicit nxbackend_error(const exceptoin_record &i,const String &d)
+                :exception("nxbackend_error",i,d)
+            {}
+
+            //-----------------------------------------------------------------
+            //! destructor
+            ~nxbackend_error() throw()
+            {}
+
+            //-----------------------------------------------------------------
+            //! output operator
+            friend std::ostream &operator<<(std::ostream &o,
+                                            const nxbackend_error &e)
+            {
+                return e.print(o);
+            }
+    };
+
+
+
 
 //end of namespace
 }
