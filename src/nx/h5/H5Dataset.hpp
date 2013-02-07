@@ -643,8 +643,11 @@ namespace h5{
             {
                 //this should be quite easy - there is nothing special we have
                 ///to do.
-                H5Sselect_all(_fspace.id());
-                _mspace = _fspace;
+                if(_fspace.is_valid())
+                {
+                    H5Sselect_all(_fspace.id());
+                    _mspace = _fspace;
+                }
             }
 
             //-----------------------------------------------------------------
