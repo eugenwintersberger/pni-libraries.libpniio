@@ -195,7 +195,8 @@ namespace nx{
             exception is raised if an attribute of same name already exists. If
             ov=true the existing attribute will be overwritten and no exeption
             will be thrown.
-            \throws nxattribute_error in case of errors
+            \throws nxattribute_error in case of attribute related errors
+            \throws nxbackend_error in case of any other error
             \param n name of the attribute
             \param ov overwrite flag
             \return an instance of nxattribute
@@ -210,12 +211,18 @@ namespace nx{
                 {
                     attr = attr_type(this->imp().template attr<T>(n,ov));
                 }
+                catch(nxattribute_error &error)
+                {
+                    error.append(EXCEPTION_RECORD);
+                    throw error;
+                }
                 catch(...)
                 {
                     throw nxattribute_error(EXCEPTION_RECORD,
                             "Error creating attribute ["+n+"] for object"
                             " ["+this->path()+"]!");
                 }
+
                 return attr;
             }
 

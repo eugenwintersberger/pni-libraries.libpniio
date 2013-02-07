@@ -38,7 +38,6 @@
 #include "h5/H5File.hpp"
 #include "h5/H5Group.hpp"
 #include "h5/H5Dataset.hpp"
-#include "h5/H5Exceptions.hpp"
 #include "h5/H5Attribute.hpp"
 #include "h5/H5LibrarySetup.hpp"
 #include "h5/H5Filter.hpp"

@@ -241,7 +241,7 @@ namespace h5{
             else
             {
                 string ss = "Attribute ["+n+"] already exists on "
-                        "object ["+name()+"]!\n\n"+get_h5_error_string();
+                        "object ["+path()+"]!\n\n"+get_h5_error_string();
                 throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD,ss);
             }
         }
@@ -251,9 +251,8 @@ namespace h5{
         if(aid < 0)
         {
             pni::io::nx::nxattribute_error error(EXCEPTION_RECORD,
-                    "Cannot create attribute!\n\n"+get_h5_error_string());
-            std::cout<<H5Tget_size(type.id())<<std::endl;
-            std::cout<<space.size()<<std::endl;
+                    "Cannot create attribute ["+n+"] on object ["
+                    +path()+"]!\n\n" +get_h5_error_string());
             throw error;
         }
 
