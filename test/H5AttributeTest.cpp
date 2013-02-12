@@ -21,7 +21,6 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 #include "H5AttributeTest.hpp"
-#include <pni/io/nx/h5/H5Exceptions.hpp>
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(H5AttributeTest);

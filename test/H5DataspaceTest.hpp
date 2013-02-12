@@ -32,7 +32,6 @@ extern "C"{
 #include<boost/current_function.hpp>
 
 #include <pni/io/nx/h5/H5Dataspace.hpp>
-#include <pni/io/nx/h5/H5Exceptions.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx::h5;
