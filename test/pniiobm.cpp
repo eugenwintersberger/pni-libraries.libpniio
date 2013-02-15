@@ -42,6 +42,7 @@ int main(int argc,char **argv)
                         std::chrono::milliseconds> bm_timer_t;
     configuration config;
     //setup program configuration
+    config.add_option(config_option<bool>("help","h","show help",false));
     config.add_option(config_option<string>("backend","b",
                       "HDF5 or PNINX backend","pninx"));
     config.add_option(config_option<size_t>("nx","x",
@@ -55,17 +56,16 @@ int main(int argc,char **argv)
     config.add_option(config_option<size_t>("nruns","r",
                       "number of runs to perform for the benchmark",1));
     config.add_option(config_option<string>("output","o",
-                      "name of output file","pninxbm.h5"));
+                      "name of output file","pniiobm.h5"));
     config.add_option(config_option<string>("logfile","l",
                       "name of a logfile"));
+    config.add_option(config_option<bool>("random-fill","f",
+                      "fill array with random data",false));
                      
    
     //parse commmand line options 
-    try
-    {
-        parse(config,cliargs2vector(argc,argv));
-    }
-    catch(cli_help_request &error)
+    parse(config,cliargs2vector(argc,argv));
+    if(config.value<bool>("help"))
     {
         std::cerr<<config<<std::endl;
         return 1;
@@ -80,7 +80,8 @@ int main(int argc,char **argv)
     //create the bechmark
     std::unique_ptr<file_io_benchmark> bmptr =
         factory.create(config.value<string>("type"),
-                       config.value<string>("backend"));
+                       config.value<string>("backend"),
+                       config.value<bool>("random-fill"));
 
     //create the benchmark runner instance
     benchmark_runner runner;

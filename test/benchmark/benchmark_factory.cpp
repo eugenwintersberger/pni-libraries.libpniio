@@ -44,21 +44,21 @@ benchmark_factory::benchmark_factory(const string &fname,size_t nx,size_t ny,siz
 
 //-----------------------------------------------------------------------------
 std::unique_ptr<file_io_benchmark> 
-benchmark_factory::create_pninx_benchmark(const string &tc) const
+benchmark_factory::create_pninx_benchmark(const string &tc,bool random_fill) const
 {
     typedef std::unique_ptr<file_io_benchmark> ptr_t;
     if(tc == "uint8")
-        return ptr_t(new pniio_io_benchmark<uint8>(_fname,_nx,_ny,_nframes));
+        return ptr_t(new pniio_io_benchmark<uint8>(_fname,_nx,_ny,_nframes,random_fill));
     if(tc == "int8")
-        return ptr_t(new pniio_io_benchmark<int8>(_fname,_nx,_ny,_nframes));
+        return ptr_t(new pniio_io_benchmark<int8>(_fname,_nx,_ny,_nframes,random_fill));
     if(tc == "uint16")
-        return ptr_t(new pniio_io_benchmark<uint16>(_fname,_nx,_ny,_nframes));
+        return ptr_t(new pniio_io_benchmark<uint16>(_fname,_nx,_ny,_nframes,random_fill));
     if(tc == "int16")
-        return ptr_t(new pniio_io_benchmark<int16>(_fname,_nx,_ny,_nframes));
+        return ptr_t(new pniio_io_benchmark<int16>(_fname,_nx,_ny,_nframes,random_fill));
     if(tc == "uint32")
-        return ptr_t(new pniio_io_benchmark<uint32>(_fname,_nx,_ny,_nframes));
+        return ptr_t(new pniio_io_benchmark<uint32>(_fname,_nx,_ny,_nframes,random_fill));
     if(tc == "int32")
-        return ptr_t(new pniio_io_benchmark<int32>(_fname,_nx,_ny,_nframes));
+        return ptr_t(new pniio_io_benchmark<int32>(_fname,_nx,_ny,_nframes,random_fill));
 
     //if we arrived here something went wrong and we need to 
     //throw an exception
@@ -68,22 +68,22 @@ benchmark_factory::create_pninx_benchmark(const string &tc) const
 
 //-----------------------------------------------------------------------------
 std::unique_ptr<file_io_benchmark>
-benchmark_factory::create_hdf5_benchmark(const string &tc) const
+benchmark_factory::create_hdf5_benchmark(const string &tc,bool random_fill) const
 {
     typedef std::unique_ptr<file_io_benchmark> ptr_t;
 
     if(tc == "uint8")
-        return ptr_t(new hdf5_io_benchmark<uint8>(_fname,_nx,_ny,_nframes));
+        return ptr_t(new hdf5_io_benchmark<uint8>(_fname,_nx,_ny,_nframes,random_fill));
     if(tc == "int8")
-        return ptr_t(new hdf5_io_benchmark<int8>(_fname,_nx,_ny,_nframes));
+        return ptr_t(new hdf5_io_benchmark<int8>(_fname,_nx,_ny,_nframes,random_fill));
     if(tc == "uint16")
-        return ptr_t(new hdf5_io_benchmark<uint16>(_fname,_nx,_ny,_nframes));
+        return ptr_t(new hdf5_io_benchmark<uint16>(_fname,_nx,_ny,_nframes,random_fill));
     if(tc == "int16")
-        return ptr_t(new hdf5_io_benchmark<int16>(_fname,_nx,_ny,_nframes));
+        return ptr_t(new hdf5_io_benchmark<int16>(_fname,_nx,_ny,_nframes,random_fill));
     if(tc == "uint32")
-        return ptr_t(new hdf5_io_benchmark<uint32>(_fname,_nx,_ny,_nframes));
+        return ptr_t(new hdf5_io_benchmark<uint32>(_fname,_nx,_ny,_nframes,random_fill));
     if(tc == "int32")
-        return ptr_t(new hdf5_io_benchmark<int32>(_fname,_nx,_ny,_nframes));
+        return ptr_t(new hdf5_io_benchmark<int32>(_fname,_nx,_ny,_nframes,random_fill));
 
     return std::unique_ptr<file_io_benchmark>();
 }
@@ -91,12 +91,13 @@ benchmark_factory::create_hdf5_benchmark(const string &tc) const
 
 //-----------------------------------------------------------------------------
 std::unique_ptr<file_io_benchmark> 
-benchmark_factory::create(const string &type,const string &backend) const
+benchmark_factory::create(const string &type,
+                          const string &backend,bool random_fill) const
 {
     if(backend == "pninx")
-        return create_pninx_benchmark(type);
+        return create_pninx_benchmark(type,random_fill);
     else if(backend == "hdf5")
-        return create_hdf5_benchmark(type);
+        return create_hdf5_benchmark(type,random_fill);
     
     //if we came until here throw an exception
     return std::unique_ptr<file_io_benchmark>();

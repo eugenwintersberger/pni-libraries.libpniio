@@ -23,6 +23,7 @@
 #pragma once
 
 #include "file_io_benchmark.hpp"
+#include "../uniform_distribution.hpp"
 
 extern "C" {
     #include <hdf5.h>
@@ -66,11 +67,20 @@ template<typename T> class hdf5_io_benchmark : public file_io_benchmark
 
         //---------------------------------------------------------------------
         //! constructor
-        hdf5_io_benchmark(const string &fname,size_t nx,size_t ny,size_t
-                nframes):
+        hdf5_io_benchmark(const string &fname,size_t nx,size_t ny,
+                          size_t nframes,bool random_fill):
             file_io_benchmark(fname,nx,ny,nframes)
         {
             _frame_data = new T[nx*ny]; 
+
+            if(random_fill)
+            {
+                uniform_distribution<T> random_dist;
+                for(size_t i=0;i<nx*ny;++i)
+                    _frame_data[i] = random_dist();
+            }
+            else
+                for(size_t i=0;i<nx*ny;++i) _frame_data[i] = T(0);
         }
 
         //---------------------------------------------------------------------

@@ -28,6 +28,8 @@
 
 #include <pni/io/nx/nx.hpp>
 
+#include "../uniform_distribution.hpp"
+
 using namespace pni::core;
 using namespace pni::io::nx::h5;
 
@@ -48,12 +50,24 @@ template<typename T> class pniio_io_benchmark : public file_io_benchmark
 
         //---------------------------------------------------------------------
         //! constructor
-        pniio_io_benchmark(const string &fname,size_t nx,size_t ny,size_t nframes):
+        pniio_io_benchmark(const string &fname,size_t nx,size_t ny,
+                           size_t nframes,bool random_fill):
             file_io_benchmark(fname,nx,ny,nframes)
         {
             //create the frame buffer
             shape_t fshape{nx,ny};
             _frame_buffer = darray<T>(fshape);
+
+            if(random_fill)
+            {
+                uniform_distribution<T> random_dist;
+                for(auto iter = _frame_buffer.begin();iter!=_frame_buffer.end();
+                         ++iter)
+                    *iter = random_dist();
+            }
+            else
+                std::fill(_frame_buffer.begin(),_frame_buffer.end(),T(0));
+
         }
 
         //---------------------------------------------------------------------

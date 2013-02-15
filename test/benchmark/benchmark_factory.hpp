@@ -42,10 +42,10 @@ class benchmark_factory
         string _fname;
 
         std::unique_ptr<file_io_benchmark> 
-            create_pninx_benchmark(const string &tc) const;
+            create_pninx_benchmark(const string &tc,bool random_fill) const;
 
         std::unique_ptr<file_io_benchmark>
-            create_hdf5_benchmark(const string &tc) const;
+            create_hdf5_benchmark(const string &tc,bool random_fill) const;
     public:
         //===============constructors and destructor===========================
         //! default constructor
@@ -66,13 +66,16 @@ class benchmark_factory
         /*! 
         \brief create a benchmark
 
-        Create a benchmark for a particular data type and backend
+        Create a benchmark for a particular data type and backend. If the
+        random_fill argument is true, random data will be written to disk.
         \param type data type
         \param backend the backend to use
+        \param random_fill write random data 
         \return unique pointer to the benchmark instance
         */
         std::unique_ptr<file_io_benchmark> create(const string &type,
-                                                  const string &backend) const;
+                                                  const string &backend,
+                                                  bool random_fill) const;
 
 
 };
