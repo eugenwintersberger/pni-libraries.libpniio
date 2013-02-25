@@ -41,7 +41,7 @@ debug = ARGUMENTS.get("DEBUG",0)
 
 AddOption("--enable-mpi",dest="with_mpi",action="store_true",default=False)
 
-var = Variables('BuildConfig.py')
+var = Variables()
 var.Add(PathVariable("PREFIX","set installation prefix","/usr"))
 var.Add(PathVariable("BOOSTINCDIR","installation directory of boost headers","/usr/include"))
 var.Add(PathVariable("BOOSTLIBDIR","installation directory of boost libraries","/usr/include"))
@@ -51,8 +51,8 @@ var.Add(PathVariable("MPILIBDIR","Directory where MPI libraries are installed","
 var.Add(PathVariable("MPIINCDIR","Directory where MPI headers are installed","/usr/include"))
 
 var.Add("H5LIBNAME","HDF5 library name","hdf5")
-var.Add("VERSION","library version","0.0.0")
-var.Add("LIBNAME","library name","pnicore")
+var.Add("VERSION","library version","1.0.0")
+var.Add("LIBNAME","library name","pniio")
 var.Add("SOVERSION","SOVersion of the library (binary interface version)","0")
 var.Add("CXX","set the compiler to use","g++")
 var.Add("MAINTAINER","package maintainer for the project","Eugen Wintersberger")
