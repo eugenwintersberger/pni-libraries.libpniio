@@ -1,4 +1,5 @@
 #python module manging the configuration of the sources.
+import os
 
 #======================check for nullptr=======================================
 #This test checks whether or not the compiler supports the nullptr idiom of
@@ -72,6 +73,15 @@ CustomChecks["CheckForTemplateAlias"] = CheckForTemplateAlias
 CustomChecks["CheckForEnumBug"] = CheckForEnumBug
 
 Import('env')
+env["ENV"]["PKG_CONFIG_PATH"] = os.environ["PKG_CONFIG_PATH"]
+env["ENV"]["PATH"] = os.environ["PATH"]
+
+try:
+    env.ParseConfig('pkg-config --libs --cflags pnicore')
+except:
+    Exit(1)
+
+    
 #start with configuration
 conf = Configure(env,custom_tests = CustomChecks)
 
@@ -206,53 +216,73 @@ build_env = env.Clone()
 test_env  = env.Clone()
 
 #============================start configuration for tests=====================
-test_conf = Configure(test_env)
 
-if not test_conf.CheckCXXHeader("cppunit/TestFixture.h"):
-    print "CPPUNIT header TestFixture.h does not exist!"
-    Exit(1)
-    
-if not test_conf.CheckCXXHeader("cppunit/TestRunner.h"):
-    print "CPPUNIT header TestRunner.h does not exist!"
-    Exit(1)
-    
-if not test_conf.CheckCXXHeader("cppunit/extensions/HelperMacros.h"):
-    print "CPPUNIT header HelperMacros.h does not exist!"
-    Exit(1)
-    
-if not test_conf.CheckCXXHeader("cppunit/TestCaller.h"):
-    print "CPPUNIT header TestCaller.h does not exist!"
-    Exit(1)
-    
-if not test_conf.CheckCXXHeader(["string","cppunit/TestResult.h"]):
-    print "CPPUNIT header TestResult.h does not exist!"
-    Exit(1)
-    
-if not test_conf.CheckCXXHeader("cppunit/TextTestProgressListener.h"):
-    print "CPPUNIT header TextTestProgressListener.h does not exist!"
-    Exit(1)
-    
-if not test_conf.CheckCXXHeader("cppunit/ui/text/TextTestRunner.h"):
-    print "CPPUNIT header TextTestRunner.h does not exist!"
-    Exit(1)
-
-#check for mandatory libraries
-if not test_conf.CheckLib("cppunit",language="C++"):
-    test_env.AppendUnique(LIBS=["dl"])
-    if not test_conf.CheckLib('cppunit',language='C++'):
-        print "CPPUNIT unit test libraray is not installed!"
+if 'test' in COMMAND_LINE_TARGETS:
+    try:
+        test_env.ParseConfig('pkg-config --cflags --libs pniio')
+    except:
         Exit(1)
 
-if not test_conf.CheckLib("boost_program_options",language="C++"):
-    print "BOOST program options library not installed!"
-    Exit(1)
+    try:
+        test_env.ParseConfig('pkg-config --cflags --libs cppunit')
+    except:
+        Exit(1)
 
-if not test_conf.CheckLib("boost_system",language="C++"):
-    print "BOOST system library not installed!"
-    Exit(1)
+    test_conf = Configure(test_env)
+
+    if not test_conf.CheckCXXHeader("cppunit/TestFixture.h"):
+        print "CPPUNIT header TestFixture.h does not exist!"
+        Exit(1)
+        
+    if not test_conf.CheckCXXHeader("cppunit/TestRunner.h"):
+        print "CPPUNIT header TestRunner.h does not exist!"
+        Exit(1)
+        
+    if not test_conf.CheckCXXHeader("cppunit/extensions/HelperMacros.h"):
+        print "CPPUNIT header HelperMacros.h does not exist!"
+        Exit(1)
+        
+    if not test_conf.CheckCXXHeader("cppunit/TestCaller.h"):
+        print "CPPUNIT header TestCaller.h does not exist!"
+        Exit(1)
+        
+    if not test_conf.CheckCXXHeader(["string","cppunit/TestResult.h"]):
+        print "CPPUNIT header TestResult.h does not exist!"
+        Exit(1)
+        
+    if not test_conf.CheckCXXHeader("cppunit/TextTestProgressListener.h"):
+        print "CPPUNIT header TextTestProgressListener.h does not exist!"
+        Exit(1)
+        
+    if not test_conf.CheckCXXHeader("cppunit/ui/text/TextTestRunner.h"):
+        print "CPPUNIT header TextTestRunner.h does not exist!"
+        Exit(1)
+
+    #check for mandatory libraries
+    if not test_conf.CheckLib("cppunit",language="C++"):
+        test_env.AppendUnique(LIBS=["dl"])
+        if not test_conf.CheckLib('cppunit',language='C++'):
+            print "CPPUNIT unit test libraray is not installed!"
+            Exit(1)
+
+    if not test_conf.CheckLib("boost_program_options",language="C++"):
+        print "BOOST program options library not installed!"
+        Exit(1)
+
+    if not test_conf.CheckLib("boost_system",language="C++"):
+        print "BOOST system library not installed!"
+        Exit(1)
+
+    if not test_conf.CheckLib("pniio",language="C++"):
+        print "PNIIO library not installed!"
+        Exit(1)
+
+    if not test_conf.CheckLib("pnicore",language="C++"):
+        print "PNICORE library not installed!"
+        Exit(1)
 
 
-test_env = test_conf.Finish()
+    test_env = test_conf.Finish()
 
 
 Return('build_env test_env')
