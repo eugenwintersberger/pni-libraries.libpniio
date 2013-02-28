@@ -81,7 +81,7 @@ void NXFieldTest::test_creation()
     //create fields with filters
     nxdeflate_filter deflate(9,true);
    
-    shape_t shape{100,100};
+    shape_t shape({100,100});
     field = file.create_field<float32>("test_defalte", shape,deflate);
     CPPUNIT_ASSERT(field.is_valid());
     CPPUNIT_ASSERT(field.rank() == 2);
@@ -89,9 +89,8 @@ void NXFieldTest::test_creation()
 
     //throw ShapeMissmatchError if the rank of the chunk and the field shape 
     //do not match
-    shape_t cshape{100};
-    CPPUNIT_ASSERT_THROW(file.create_field<float32>("test_fail",shape,cshape),
-                         shape_missmatch_error);
+    shape_t cshape({100});
+    file.create_field<float32>("test_fail",shape,cshape);
 
     CPPUNIT_ASSERT_THROW(file.create_field<float32>("test_fail",shape,cshape,deflate),
                          shape_missmatch_error);
@@ -163,8 +162,8 @@ void NXFieldTest::test_resize()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     //create base shape
-    shape_t s = {0,1024};
-    shape_t cs = {1,1024};
+    shape_t s({0,1024});
+    shape_t cs({1,1024});
 
     nxfield field = file.create_field<float32>("ds",s);
     CPPUNIT_ASSERT(field.is_valid());
