@@ -90,7 +90,8 @@ void NXFieldTest::test_creation()
     //throw ShapeMissmatchError if the rank of the chunk and the field shape 
     //do not match
     shape_t cshape({100});
-    file.create_field<float32>("test_fail",shape,cshape);
+    CPPUNIT_ASSERT_THROW(file.create_field<float32>("test_fail",shape,cshape),
+                         shape_missmatch_error);
 
     CPPUNIT_ASSERT_THROW(file.create_field<float32>("test_fail",shape,cshape,deflate),
                          shape_missmatch_error);
