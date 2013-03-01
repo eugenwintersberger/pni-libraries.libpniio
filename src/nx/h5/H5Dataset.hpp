@@ -391,8 +391,12 @@ namespace h5{
                 }
 
                 //create the container with the maximum number of elements
+                dbuffer<hsize_t> ms(s.size());                 
+                std::fill(ms.begin(),ms.end(),H5Dataspace::UNLIMITED);
+                /*
                 SCTYPE ms(s.size());
                 std::fill(ms.begin(),ms.end(),(typename SCTYPE::value_type)H5Dataspace::UNLIMITED);
+                */
 
                 //create the dataspace
                 H5Dataspace space(s,ms);
