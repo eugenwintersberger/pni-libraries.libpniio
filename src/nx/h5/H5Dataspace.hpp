@@ -90,7 +90,7 @@ namespace h5 {
             void __setup_buffers();
         public:
             //! static data member describing an unlimited dimension. 
-            static const hsize_t UNLIMITED = H5S_UNLIMITED;
+            //static const hsize_t UNLIMITED = H5S_UNLIMITED;
 
             //==============constructors and destructor========================
             /*! 

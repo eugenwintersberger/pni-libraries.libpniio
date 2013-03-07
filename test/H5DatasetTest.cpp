@@ -198,7 +198,7 @@ void H5DatasetTest::test_resize()
     shape_t s{0,1024};
     shape_t cs{1,1024};
     H5Datatype type = H5DatatypeFactory::create_type<uint32>();
-    H5Dataspace space({0,1024},{H5Dataspace::UNLIMITED,H5Dataspace::UNLIMITED});
+    H5Dataspace space({0,1024},{H5S_UNLIMITED,H5S_UNLIMITED});
 
     H5Dataset ds("ds",_group,type,space,cs);
 
@@ -214,7 +214,7 @@ void H5DatasetTest::test_resize()
     s = shape_t{0};
     cs = shape_t{1};
     type = H5DatatypeFactory::create_type<string>();
-    CPPUNIT_ASSERT_NO_THROW(space = H5Dataspace({0},{H5Dataspace::UNLIMITED}));
+    CPPUNIT_ASSERT_NO_THROW(space = H5Dataspace({0},{H5S_UNLIMITED}));
     H5Dataset ss("ss",_group,type,space,cs);
     CPPUNIT_ASSERT(ss.rank() == 1);
     CPPUNIT_ASSERT(ss.size() == 0);
