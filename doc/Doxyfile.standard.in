@@ -62,7 +62,7 @@ WARN_NO_PARAMDOC       = YES
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = ../src/ mainpage installation usage h5_implementation_classes
+INPUT                  = ../src/ mainpage h5_implementation_classes
 RECURSIVE              = YES
 EXCLUDE_SYMLINKS       = NO
 EXAMPLE_PATH           = examples

@@ -15,14 +15,10 @@ doxyfile_source.extend(["Doxyfile.extension.in"])
 
 doxyfile = build_env.Substfile(target="Doxyfile",source= doxyfile_source,
                                SUBST_DICT=doxygen_dict,SUBSTFILESUFFIX="")             
-instfile = build_env.Substfile(target="installation",source="installation.in",
-                               SUBSTFILESUFFIX="")
-usagefile = build_env.Substfile(target="usage",source="usage.in",
-                                SUBST_DICT=doxygen_dict,SUBSTFILESUFFIX="")
-            
+
 doxygen_doc = build_env.Command(["html"],doxyfile,
                                     "cd doc; doxygen $SOURCE.file")
-build_env.Depends(doxygen_doc,[doxygen_mainpage,instfile,usagefile])
+build_env.Depends(doxygen_doc,[doxygen_mainpage])
 build_env.Depends(doxygen_doc,Glob('../src/*.hpp'))
 build_env.Depends(doxygen_doc,Glob('../src/h5/*.hpp'))
 
