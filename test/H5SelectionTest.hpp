@@ -1,12 +1,33 @@
-#ifndef __H5DATASETTEST_HPP__
-#define __H5DATASETTEST_HPP__
+/*
+ * (c) Copyright 2012 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpniio.
+ *
+ * libpniio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpniio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
+ *
+ * Created on: Jan 31, 2012
+ *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+ */
+#pragma once
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 #include<initializer_list>
 
-#include <pni/utils/Types.hpp>
-#include <pni/utils/Array.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
 
 #include "../src/h5/H5Selection.hpp"
 #include "../src/h5/H5Dataset.hpp"
@@ -15,8 +36,8 @@
 
 #include "TestHelpers.hpp"
 
-using namespace pni::utils;
-using namespace pni::nx::h5;
+using namespace pni::core;
+using namespace pni::io::nx::h5;
 
 
 
@@ -146,7 +167,7 @@ template<typename T> void H5SelectionTest::test_io_scalar_no_ext()
     H5Dataset dset("scalar",_file,type,space);
     H5Selection sel = dset.selection();
         
-    Scalar<T> write,read;
+    scalar<T> write,read;
     init_values(write,read);
 #ifdef INITLISTBUG
     CPPUNIT_ASSERT_NO_THROW(sel.count(0,1));
@@ -197,7 +218,7 @@ template<typename T> void H5SelectionTest::test_io_buffer_no_ext()
     H5Dataset dset("scalar",_file,type,space);
     H5Selection sel = dset.selection();
         
-    Buffer<T> write(3),read(3);
+    dbuffer<T> write(3),read(3);
     init_values(write,read);
 #ifdef INITLISTBUG
     CPPUNIT_ASSERT_NO_THROW(sel.count(0,3));
@@ -247,7 +268,7 @@ template<typename T> void H5SelectionTest::test_io_array_no_ext()
     H5Dataset dset("scalar",_file,type,space);
     H5Selection sel = dset.selection();
        
-    Shape s = {5};
+    shape_t s = {5};
     auto write = ArrayFactory<T,Buffer>::create(s);
     write.name("write");write.unit("a.u");write.description("write data");
     auto read = ArrayFactory<T,Buffer>::create(s);
@@ -289,4 +310,3 @@ template<typename T> void H5SelectionTest::test_io_array_no_ext()
     }
 }
 
-#endif

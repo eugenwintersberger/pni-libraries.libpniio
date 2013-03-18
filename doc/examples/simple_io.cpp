@@ -1,19 +1,19 @@
-#include<pni/utils/Types.hpp>
-#include<pni/utils/Array.hpp>
-#include<pni/nx/NX.hpp>
+#include<pni/core/types.hpp>
+#include<pni/core/arrays.hpp>
+#include<pni/io/nx/nx.hpp>
 
-using namespace pni::utils;
-using namespace pni::nx::h5;
+using namespace pni::core;
+using namespace pni::io::nx::h5;
 
 
-void write_data(String fname,size_t np,size_t nx,size_t ny)
+void write_data(string fname,size_t np,size_t nx,size_t ny)
 {
-    DArray<UInt32> frame(shape_t{nx,ny});
+    darray<uint32> frame(shape_t{nx,ny});
 
-    NXFile file = NXFile::create_file(fname,true,0);
+    nxfile file = nxfile::create_file(fname,true,0);
 
-    NXGroup g = file.create_group("/scan_1/instrument/detector","NXdetector");
-    NXField data = g.create_field<UInt32>("data",shape_t{0,nx,ny});
+    nxgroup g = file.create_group("/scan_1/instrument/detector","NXdetector");
+    nxfield data = g.create_field<uint32>("data",shape_t{0,nx,ny});
 
     for(size_t i=0;i<np;i++)
     {
@@ -21,7 +21,7 @@ void write_data(String fname,size_t np,size_t nx,size_t ny)
         std::fill(frame.begin(),frame.end(),i);
         //extend field
         data.grow(0);
-        data(i,Slice(0,nx),Slice(0,ny)).write(frame);
+        data(i,slice(0,nx),slice(0,ny)).write(frame);
     }
 
     //close everything
@@ -30,16 +30,16 @@ void write_data(String fname,size_t np,size_t nx,size_t ny)
     file.close();
 }
 
-void read_data(String fname,size_t np,size_t nx,size_t ny)
+void read_data(string fname,size_t np,size_t nx,size_t ny)
 {
-    DArray<Float64> data(shape_t{np,ny});
+    darray<float64> data(shape_t{np,ny});
 
-    NXFile file = NXFile::open_file(fname,false);
-    NXField field = file["/scan_1/instrument/detector/data"];
+    nxfile file = nxfile::open_file(fname,false);
+    nxfield field = file["/scan_1/instrument/detector/data"];
 
     for(size_t i=0;i<nx;i++)
     {
-        field(Slice(0,np),i,Slice(0,ny)).read(data);
+        field(slice(0,np),i,slice(0,ny)).read(data);
     }
 
     //close everything
@@ -49,7 +49,7 @@ void read_data(String fname,size_t np,size_t nx,size_t ny)
 
 int main(int argc,char **argv)
 {
-    String fname="simple_io.h5";
+    string fname="simple_io.h5";
     size_t nx = 10;
     size_t ny = 20;
     size_t np = 100;

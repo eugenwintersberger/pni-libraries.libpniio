@@ -1,5 +1,27 @@
+/*
+ * (c) Copyright 2012 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpniio.
+ *
+ * libpniio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpniio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
+ *
+ * Created on: Aug 13, 2012
+ *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+ */
 #include "H5NamedObjectTest.hpp"
-#include "h5/H5Exceptions.hpp"
+#include <pni/io/nx/nxexceptions.hpp>
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(H5NamedObjectTest);
@@ -8,9 +30,6 @@ CPPUNIT_TEST_SUITE_REGISTRATION(H5NamedObjectTest);
 void H5NamedObjectTest::setUp()
 {
     file = H5Fcreate("test.h5",H5F_ACC_TRUNC,H5P_DEFAULT,H5P_DEFAULT);
-
-
-
 }
 
 //-----------------------------------------------------------------------------
@@ -27,8 +46,8 @@ void H5NamedObjectTest::test_creation()
     //default constructor
     H5NamedObject o;
     CPPUNIT_ASSERT(!o.is_valid());
-    CPPUNIT_ASSERT_THROW(o.object_type(),H5ObjectError);
-    CPPUNIT_ASSERT_THROW(H5TestObject(-1),H5ObjectError);
+    CPPUNIT_ASSERT_THROW(o.object_type(),pni::io::nx::nxobject_error);
+    CPPUNIT_ASSERT_THROW(H5TestObject(-1),pni::io::nx::nxobject_error);
   
     //test constructor from new object
     H5TestObject

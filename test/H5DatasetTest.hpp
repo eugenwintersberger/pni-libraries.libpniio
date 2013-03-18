@@ -1,85 +1,106 @@
-
-#ifndef __H5DATASETTEST_HPP__
-#define __H5DATASETTEST_HPP__
+/*
+ * (c) Copyright 2012 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpniio.
+ *
+ * libpniio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpniio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
+ *
+ * Created on: Jan 17, 2012
+ *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+ */
+#pragma once
 
 extern "C"{
 #include <hdf5.h>
 }
 
-#include <pni/utils/Types.hpp>
-#include <pni/utils/Array.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
-#include "h5/H5File.hpp"
-#include "h5/H5Group.hpp"
-#include "h5/H5Dataset.hpp"
+#include <pni/io/nx/h5/H5File.hpp>
+#include <pni/io/nx/h5/H5Group.hpp>
+#include <pni/io/nx/h5/H5Dataset.hpp>
 
 #include "EqualityCheck.hpp"
 
-using namespace pni::utils;
-using namespace pni::nx::h5;
+using namespace pni::core;
+using namespace pni::io::nx::h5;
 
-class H5DatasetTest:public CppUnit::TestFixture{
+class H5DatasetTest:public CppUnit::TestFixture
+{
         CPPUNIT_TEST_SUITE(H5DatasetTest);
         CPPUNIT_TEST(test_creation); 
         CPPUNIT_TEST(test_assignment);
         CPPUNIT_TEST(test_inquery);
         CPPUNIT_TEST(test_resize);
         CPPUNIT_TEST(test_parent);
-        CPPUNIT_TEST(test_scalar_data<UInt8>);
-        CPPUNIT_TEST(test_scalar_data<Int8>);
-        CPPUNIT_TEST(test_scalar_data<UInt16>);
-        CPPUNIT_TEST(test_scalar_data<Int16>);
-        CPPUNIT_TEST(test_scalar_data<UInt32>);
-        CPPUNIT_TEST(test_scalar_data<Int32>);
-        CPPUNIT_TEST(test_scalar_data<UInt64>);
-        CPPUNIT_TEST(test_scalar_data<Int64>);
-        CPPUNIT_TEST(test_scalar_data<Float32>);
-        CPPUNIT_TEST(test_scalar_data<Float64>);
-        CPPUNIT_TEST(test_scalar_data<Float128>);
-        CPPUNIT_TEST(test_scalar_data<Complex32>);
-        CPPUNIT_TEST(test_scalar_data<Complex64>);
-        CPPUNIT_TEST(test_scalar_data<Complex128>);
-        CPPUNIT_TEST(test_scalar_data<Binary>);
+        CPPUNIT_TEST(test_scalar_data<uint8>);
+        CPPUNIT_TEST(test_scalar_data<int8>);
+        CPPUNIT_TEST(test_scalar_data<uint16>);
+        CPPUNIT_TEST(test_scalar_data<int16>);
+        CPPUNIT_TEST(test_scalar_data<uint32>);
+        CPPUNIT_TEST(test_scalar_data<int32>);
+        CPPUNIT_TEST(test_scalar_data<uint64>);
+        CPPUNIT_TEST(test_scalar_data<int64>);
+        CPPUNIT_TEST(test_scalar_data<float32>);
+        CPPUNIT_TEST(test_scalar_data<float64>);
+        CPPUNIT_TEST(test_scalar_data<float128>);
+        CPPUNIT_TEST(test_scalar_data<complex32>);
+        CPPUNIT_TEST(test_scalar_data<complex64>);
+        CPPUNIT_TEST(test_scalar_data<complex128>);
+        CPPUNIT_TEST(test_scalar_data<binary>);
         CPPUNIT_TEST(test_string_scalar_data);
         CPPUNIT_TEST(test_bool_scalar_data);
 
-        CPPUNIT_TEST(test_array_data<UInt8>);
-        CPPUNIT_TEST(test_array_data<Int8>);
-        CPPUNIT_TEST(test_array_data<UInt16>);
-        CPPUNIT_TEST(test_array_data<Int16>);
-        CPPUNIT_TEST(test_array_data<UInt32>);
-        CPPUNIT_TEST(test_array_data<Int32>);
-        CPPUNIT_TEST(test_array_data<UInt64>);
-        CPPUNIT_TEST(test_array_data<Int64>);
-        CPPUNIT_TEST(test_array_data<Float32>);
-        CPPUNIT_TEST(test_array_data<Float64>);
-        CPPUNIT_TEST(test_array_data<Float128>);
-        CPPUNIT_TEST(test_array_data<Complex32>);
-        CPPUNIT_TEST(test_array_data<Complex64>);
-        CPPUNIT_TEST(test_array_data<Complex128>);
-        CPPUNIT_TEST(test_array_data<Binary>);
+        CPPUNIT_TEST(test_array_data<uint8>);
+        CPPUNIT_TEST(test_array_data<int8>);
+        CPPUNIT_TEST(test_array_data<uint16>);
+        CPPUNIT_TEST(test_array_data<int16>);
+        CPPUNIT_TEST(test_array_data<uint32>);
+        CPPUNIT_TEST(test_array_data<int32>);
+        CPPUNIT_TEST(test_array_data<uint64>);
+        CPPUNIT_TEST(test_array_data<int64>);
+        CPPUNIT_TEST(test_array_data<float32>);
+        CPPUNIT_TEST(test_array_data<float64>);
+        CPPUNIT_TEST(test_array_data<float128>);
+        CPPUNIT_TEST(test_array_data<complex32>);
+        CPPUNIT_TEST(test_array_data<complex64>);
+        CPPUNIT_TEST(test_array_data<complex128>);
+        CPPUNIT_TEST(test_array_data<binary>);
         CPPUNIT_TEST(test_string_array_data);
         CPPUNIT_TEST(test_bool_array_data);
         //CPPUNIT_TEST(test_linking);
 
-        CPPUNIT_TEST(test_selection<UInt8>);
-        CPPUNIT_TEST(test_selection<Int8>);
-        CPPUNIT_TEST(test_selection<UInt16>);
-        CPPUNIT_TEST(test_selection<Int16>);
-        CPPUNIT_TEST(test_selection<UInt32>);
-        CPPUNIT_TEST(test_selection<Int32>);
-        CPPUNIT_TEST(test_selection<UInt64>);
-        CPPUNIT_TEST(test_selection<Int64>);
-        CPPUNIT_TEST(test_selection<Float32>);
-        CPPUNIT_TEST(test_selection<Float64>);
-        CPPUNIT_TEST(test_selection<Float128>);
-        CPPUNIT_TEST(test_selection<Complex32>);
-        CPPUNIT_TEST(test_selection<Complex64>);
-        CPPUNIT_TEST(test_selection<Complex128>);
-        CPPUNIT_TEST(test_selection<Binary>);
+        CPPUNIT_TEST(test_selection<uint8>);
+        CPPUNIT_TEST(test_selection<int8>);
+        CPPUNIT_TEST(test_selection<uint16>);
+        CPPUNIT_TEST(test_selection<int16>);
+        CPPUNIT_TEST(test_selection<uint32>);
+        CPPUNIT_TEST(test_selection<int32>);
+        CPPUNIT_TEST(test_selection<uint64>);
+        CPPUNIT_TEST(test_selection<int64>);
+        CPPUNIT_TEST(test_selection<float32>);
+        CPPUNIT_TEST(test_selection<float64>);
+        CPPUNIT_TEST(test_selection<float128>);
+        CPPUNIT_TEST(test_selection<complex32>);
+        CPPUNIT_TEST(test_selection<complex64>);
+        CPPUNIT_TEST(test_selection<complex128>);
+        CPPUNIT_TEST(test_selection<binary>);
         CPPUNIT_TEST(test_bool_selection);
         CPPUNIT_TEST(test_string_selection);
         CPPUNIT_TEST_SUITE_END();
@@ -129,8 +150,8 @@ template<typename T> void H5DatasetTest::test_array_data()
     shape_t s{3,3};
     shape_t cs{1,3}; 
     H5Dataset ds("array_dataset",_group,type,H5Dataspace(s),cs);
-    DArray<T> write(s);
-    DArray<T> read(s);
+    darray<T> write(s);
+    darray<T> read(s);
     std::fill(write.begin(),write.end(),T(1));
 
     CPPUNIT_ASSERT_NO_THROW(ds.write(write.storage().ptr()));
@@ -153,18 +174,18 @@ template<typename T> void H5DatasetTest::test_selection()
     s = dset.shape<shape_t>();
     CPPUNIT_ASSERT(dset.size()==10*20);
 
-    DBuffer<T> writebuf(10);
-    DBuffer<T> readbuf(10);
+    dbuffer<T> writebuf(10);
+    dbuffer<T> readbuf(10);
 
     //check single value selection
-    std::vector<Slice> selection({Slice(1),Slice(2)});
+    std::vector<slice> selection({slice(1),slice(2)});
     dset.apply_selection(selection);
     CPPUNIT_ASSERT(dset.size() == 1);
 
     for(size_t i=0;i<10;i++)
     {
         //select regtion in the dataset
-        std::vector<Slice> selection({Slice(i),Slice(10,20)});
+        std::vector<slice> selection({slice(i),slice(10,20)});
         //set buffer value
         std::fill(writebuf.begin(),writebuf.end(),T(i));
         
@@ -190,4 +211,3 @@ template<typename T> void H5DatasetTest::test_selection()
     }
 
 }
-#endif

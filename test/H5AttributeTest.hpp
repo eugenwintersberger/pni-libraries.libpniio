@@ -1,6 +1,26 @@
-
-#ifndef __H5OBJECTTEST_HPP__
-#define __H5OBJECTTEST_HPP__
+/*
+ * (c) Copyright 2012 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpniio.
+ *
+ * libpniio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpniio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
+ *
+ * Created on: Sep 13, 2012
+ *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+ */
+#pragma once
 
 extern "C" {
 #include <hdf5.h>
@@ -9,10 +29,10 @@ extern "C" {
 #include "common.hpp"
 #include "data.hpp"
 
-#include<pni/utils/Array.hpp>
+#include<pni/core/arrays.hpp>
 
-#include "h5/H5File.hpp"
-#include "h5/H5Group.hpp"
+#include <pni/io/nx/h5/H5File.hpp>
+#include <pni/io/nx/h5/H5Group.hpp>
 
 
 /*!
@@ -28,39 +48,39 @@ class H5AttributeTest:public CppUnit::TestFixture
         CPPUNIT_TEST(test_assignment);
         CPPUNIT_TEST(test_inquery);
 
-        CPPUNIT_TEST(test_scalar_attribute<UInt8>);
-        CPPUNIT_TEST(test_scalar_attribute<Int8>);
-        CPPUNIT_TEST(test_scalar_attribute<UInt16>);
-        CPPUNIT_TEST(test_scalar_attribute<Int16>);
-        CPPUNIT_TEST(test_scalar_attribute<UInt32>);
-        CPPUNIT_TEST(test_scalar_attribute<Int32>);
-        CPPUNIT_TEST(test_scalar_attribute<UInt64>);
-        CPPUNIT_TEST(test_scalar_attribute<Int64>);
-        CPPUNIT_TEST(test_scalar_attribute<Float32>);
-        CPPUNIT_TEST(test_scalar_attribute<Float64>);
-        CPPUNIT_TEST(test_scalar_attribute<Float128>);
-        CPPUNIT_TEST(test_scalar_attribute<Complex32>);
-        CPPUNIT_TEST(test_scalar_attribute<Complex64>);
-        CPPUNIT_TEST(test_scalar_attribute<Complex128>);
-        CPPUNIT_TEST(test_scalar_attribute<String>);
-        CPPUNIT_TEST(test_scalar_attribute<Bool>);
+        CPPUNIT_TEST(test_scalar_attribute<uint8>);
+        CPPUNIT_TEST(test_scalar_attribute<int8>);
+        CPPUNIT_TEST(test_scalar_attribute<uint16>);
+        CPPUNIT_TEST(test_scalar_attribute<int16>);
+        CPPUNIT_TEST(test_scalar_attribute<uint32>);
+        CPPUNIT_TEST(test_scalar_attribute<int32>);
+        CPPUNIT_TEST(test_scalar_attribute<uint64>);
+        CPPUNIT_TEST(test_scalar_attribute<int64>);
+        CPPUNIT_TEST(test_scalar_attribute<float32>);
+        CPPUNIT_TEST(test_scalar_attribute<float64>);
+        CPPUNIT_TEST(test_scalar_attribute<float128>);
+        CPPUNIT_TEST(test_scalar_attribute<complex32>);
+        CPPUNIT_TEST(test_scalar_attribute<complex64>);
+        CPPUNIT_TEST(test_scalar_attribute<complex128>);
+        CPPUNIT_TEST(test_scalar_attribute<string>);
+        CPPUNIT_TEST(test_scalar_attribute<bool>);
 
-        CPPUNIT_TEST(test_array_attribute<UInt8>);
-        CPPUNIT_TEST(test_array_attribute<Int8>);
-        CPPUNIT_TEST(test_array_attribute<UInt16>);
-        CPPUNIT_TEST(test_array_attribute<Int16>);
-        CPPUNIT_TEST(test_array_attribute<UInt32>);
-        CPPUNIT_TEST(test_array_attribute<Int32>);
-        CPPUNIT_TEST(test_array_attribute<UInt64>);
-        CPPUNIT_TEST(test_array_attribute<Int64>);
-        CPPUNIT_TEST(test_array_attribute<Float32>);
-        CPPUNIT_TEST(test_array_attribute<Float64>);
-        CPPUNIT_TEST(test_array_attribute<Float128>);
-        CPPUNIT_TEST(test_array_attribute<Complex32>);
-        CPPUNIT_TEST(test_array_attribute<Complex64>);
-        CPPUNIT_TEST(test_array_attribute<Complex128>);
-        CPPUNIT_TEST(test_array_attribute<String>);
-        CPPUNIT_TEST(test_array_attribute<Bool>);
+        CPPUNIT_TEST(test_array_attribute<uint8>);
+        CPPUNIT_TEST(test_array_attribute<int8>);
+        CPPUNIT_TEST(test_array_attribute<uint16>);
+        CPPUNIT_TEST(test_array_attribute<int16>);
+        CPPUNIT_TEST(test_array_attribute<uint32>);
+        CPPUNIT_TEST(test_array_attribute<int32>);
+        CPPUNIT_TEST(test_array_attribute<uint64>);
+        CPPUNIT_TEST(test_array_attribute<int64>);
+        CPPUNIT_TEST(test_array_attribute<float32>);
+        CPPUNIT_TEST(test_array_attribute<float64>);
+        CPPUNIT_TEST(test_array_attribute<float128>);
+        CPPUNIT_TEST(test_array_attribute<complex32>);
+        CPPUNIT_TEST(test_array_attribute<complex64>);
+        CPPUNIT_TEST(test_array_attribute<complex128>);
+        CPPUNIT_TEST(test_array_attribute<string>);
+        CPPUNIT_TEST(test_array_attribute<bool>);
         CPPUNIT_TEST_SUITE_END();
     private:
         H5File file;   //!< file object
@@ -125,8 +145,8 @@ template<typename T> void H5AttributeTest::test_array_attribute()
     PRINT_TEST_FUNCTION_SIG;
 
     shape_t s{10,20};
-    DArray<T> write(s);
-    SArray<T,10,20> read;
+    darray<T> write(s);
+    sarray<T,10,20> read;
 
     std::vector<T> b = create_array_data<T>(write.size());
     std::copy(b.begin(),b.end(),write.begin());
@@ -141,4 +161,3 @@ template<typename T> void H5AttributeTest::test_array_attribute()
     for(size_t i=0;i<a.size();i++) check_equality(read[i],write[i]);
 }
 
-#endif

@@ -1,7 +1,26 @@
-
-#ifndef __H5OBJECTTEST_HPP__
-#define __H5OBJECTTEST_HPP__
-
+/*
+ * (c) Copyright 2012 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpniio.
+ *
+ * libpniio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpniio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
+ *
+ * Created on: Aug 9, 2012
+ *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+ */
+#pragma once
 extern "C" {
 #include <hdf5.h>
 }
@@ -11,9 +30,9 @@ extern "C" {
 #include<cppunit/extensions/HelperMacros.h>
 #include<boost/current_function.hpp>
 
-#include "h5/H5Object.hpp"
+#include <pni/io/nx/h5/H5Object.hpp>
 
-using namespace pni::nx::h5;
+using namespace pni::io::nx::h5;
 
 //cannot construct an H5Object type directly so we need a small helper class
 class H5TestObject:public H5Object
@@ -45,4 +64,3 @@ class H5ObjectTest:public CppUnit::TestFixture{
         void test_comparison();
 };
 
-#endif

@@ -1,6 +1,28 @@
+/*
+ * (c) Copyright 2012 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpniio.
+ *
+ * libpniio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpniio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
+ *
+ * Created on: Jan 11, 2012
+ *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+ */
 #include "H5DatatypeTest.hpp"
 #include <boost/current_function.hpp>
-#include "../src/h5/H5DatatypeFactory.hpp"
+#include <pni/io/nx/h5/H5DatatypeFactory.hpp>
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(H5DatatypeTest);
@@ -20,11 +42,11 @@ void H5DatatypeTest::test_creation()
     //per default no type is created
     CPPUNIT_ASSERT(!t1.is_valid());
 
-    H5Datatype t2 = H5DatatypeFactory::create_type<UInt8>();
+    H5Datatype t2 = H5DatatypeFactory::create_type<uint8>();
     CPPUNIT_ASSERT(t2.is_valid());
 
     //create a datatype using a type and the factory method
-    H5Datatype t3 = H5DatatypeFactory::create_type<Float32>();
+    H5Datatype t3 = H5DatatypeFactory::create_type<float32>();
     
     //copy constructor
     H5Datatype t4 = t2;
@@ -36,7 +58,7 @@ void H5DatatypeTest::test_creation()
     H5Datatype t5 = std::move(t2);
     CPPUNIT_ASSERT(t5.is_valid());
     CPPUNIT_ASSERT(!t2.is_valid());
-    CPPUNIT_ASSERT(t5.type_id() == TypeID::UINT8);
+    CPPUNIT_ASSERT(t5.type_id() == type_id_t::UINT8);
     
 
 }
@@ -45,7 +67,7 @@ void H5DatatypeTest::test_assignment()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    H5Datatype t1 = H5DatatypeFactory::create_type<TypeID::FLOAT32>();
+    H5Datatype t1 = H5DatatypeFactory::create_type<type_id_t::FLOAT32>();
     CPPUNIT_ASSERT(t1.is_valid());
     H5Datatype t2;
     CPPUNIT_ASSERT(!t2.is_valid());
@@ -72,66 +94,66 @@ void H5DatatypeTest::test_inquery()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     H5Datatype type;
 
-    type = H5DatatypeFactory::create_type<TypeID::UINT8>();
-    CPPUNIT_ASSERT(type.type_id() == TypeID::UINT8);
-    type = H5DatatypeFactory::create_type<TypeID::INT8>();
-    CPPUNIT_ASSERT(type.type_id() == TypeID::INT8);
+    type = H5DatatypeFactory::create_type<type_id_t::UINT8>();
+    CPPUNIT_ASSERT(type.type_id() == type_id_t::UINT8);
+    type = H5DatatypeFactory::create_type<type_id_t::INT8>();
+    CPPUNIT_ASSERT(type.type_id() == type_id_t::INT8);
     
-    type = H5DatatypeFactory::create_type<TypeID::INT16>();
-    CPPUNIT_ASSERT(type.type_id() == TypeID::INT16);
-    type = H5DatatypeFactory::create_type<TypeID::UINT16>();
-    CPPUNIT_ASSERT(type.type_id() == TypeID::UINT16);
+    type = H5DatatypeFactory::create_type<type_id_t::INT16>();
+    CPPUNIT_ASSERT(type.type_id() == type_id_t::INT16);
+    type = H5DatatypeFactory::create_type<type_id_t::UINT16>();
+    CPPUNIT_ASSERT(type.type_id() == type_id_t::UINT16);
     
-    type = H5DatatypeFactory::create_type<TypeID::INT32>();
-    CPPUNIT_ASSERT(type.type_id() == TypeID::INT32);
-    type = H5DatatypeFactory::create_type<TypeID::UINT32>();
-    CPPUNIT_ASSERT(type.type_id() == TypeID::UINT32);
+    type = H5DatatypeFactory::create_type<type_id_t::INT32>();
+    CPPUNIT_ASSERT(type.type_id() == type_id_t::INT32);
+    type = H5DatatypeFactory::create_type<type_id_t::UINT32>();
+    CPPUNIT_ASSERT(type.type_id() == type_id_t::UINT32);
     
-    type = H5DatatypeFactory::create_type<TypeID::INT64>();
-    CPPUNIT_ASSERT(type.type_id() == TypeID::INT64);
-    type = H5DatatypeFactory::create_type<TypeID::UINT64>();
-    CPPUNIT_ASSERT(type.type_id() == TypeID::UINT64);
+    type = H5DatatypeFactory::create_type<type_id_t::INT64>();
+    CPPUNIT_ASSERT(type.type_id() == type_id_t::INT64);
+    type = H5DatatypeFactory::create_type<type_id_t::UINT64>();
+    CPPUNIT_ASSERT(type.type_id() == type_id_t::UINT64);
     
-    type = H5DatatypeFactory::create_type<TypeID::FLOAT32>();
-    CPPUNIT_ASSERT(type.type_id() == TypeID::FLOAT32);
+    type = H5DatatypeFactory::create_type<type_id_t::FLOAT32>();
+    CPPUNIT_ASSERT(type.type_id() == type_id_t::FLOAT32);
     
-    type = H5DatatypeFactory::create_type<TypeID::FLOAT64>();
-    CPPUNIT_ASSERT(type.type_id() == TypeID::FLOAT64);
+    type = H5DatatypeFactory::create_type<type_id_t::FLOAT64>();
+    CPPUNIT_ASSERT(type.type_id() == type_id_t::FLOAT64);
     
-    type = H5DatatypeFactory::create_type<TypeID::FLOAT128>();
-    CPPUNIT_ASSERT(type.type_id() == TypeID::FLOAT128);
+    type = H5DatatypeFactory::create_type<type_id_t::FLOAT128>();
+    CPPUNIT_ASSERT(type.type_id() == type_id_t::FLOAT128);
     
-    type = H5DatatypeFactory::create_type<TypeID::COMPLEX32>();
-    CPPUNIT_ASSERT(type.type_id() == TypeID::COMPLEX32);
+    type = H5DatatypeFactory::create_type<type_id_t::COMPLEX32>();
+    CPPUNIT_ASSERT(type.type_id() == type_id_t::COMPLEX32);
     
-    type = H5DatatypeFactory::create_type<TypeID::COMPLEX64>();
-    CPPUNIT_ASSERT(type.type_id() == TypeID::COMPLEX64);
+    type = H5DatatypeFactory::create_type<type_id_t::COMPLEX64>();
+    CPPUNIT_ASSERT(type.type_id() == type_id_t::COMPLEX64);
     
-    type = H5DatatypeFactory::create_type<TypeID::COMPLEX128>();
-    CPPUNIT_ASSERT(type.type_id() == TypeID::COMPLEX128);
+    type = H5DatatypeFactory::create_type<type_id_t::COMPLEX128>();
+    CPPUNIT_ASSERT(type.type_id() == type_id_t::COMPLEX128);
 
-    type = H5DatatypeFactory::create_type<TypeID::STRING>();
-    CPPUNIT_ASSERT(type.type_id() == TypeID::STRING);
+    type = H5DatatypeFactory::create_type<type_id_t::STRING>();
+    CPPUNIT_ASSERT(type.type_id() == type_id_t::STRING);
 
-    type = H5DatatypeFactory::create_type<TypeID::BINARY>();
-    CPPUNIT_ASSERT(type.type_id() == TypeID::BINARY);
+    type = H5DatatypeFactory::create_type<type_id_t::BINARY>();
+    CPPUNIT_ASSERT(type.type_id() == type_id_t::BINARY);
 
-    type = H5DatatypeFactory::create_type<TypeID::BOOL>();
+    type = H5DatatypeFactory::create_type<type_id_t::BOOL>();
     std::cout<<type.type_id()<<std::endl;
-    CPPUNIT_ASSERT(type.type_id() == TypeID::BOOL);
+    CPPUNIT_ASSERT(type.type_id() == type_id_t::BOOL);
 
 }
 
 void H5DatatypeTest::test_comparison()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    H5Datatype t1 = H5DatatypeFactory::create_type<TypeID::FLOAT32>();
-    H5Datatype t2 = H5DatatypeFactory::create_type<TypeID::INT32>();
+    H5Datatype t1 = H5DatatypeFactory::create_type<type_id_t::FLOAT32>();
+    H5Datatype t2 = H5DatatypeFactory::create_type<type_id_t::INT32>();
 
     CPPUNIT_ASSERT(t1 != t2);
     CPPUNIT_ASSERT(!(t1 == t2));
 
-    t2 = H5DatatypeFactory::create_type<TypeID::FLOAT32>();
+    t2 = H5DatatypeFactory::create_type<type_id_t::FLOAT32>();
     CPPUNIT_ASSERT(!(t1 != t2));
     CPPUNIT_ASSERT(t1 == t2);
 }
@@ -139,34 +161,34 @@ void H5DatatypeTest::test_comparison()
 void H5DatatypeTest::test_global_factory()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    CPPUNIT_ASSERT(H5TFactory.get_type<Bool>().type_id()==TypeID::BOOL);
-    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::BOOL>().type_id()==TypeID::BOOL);
+    CPPUNIT_ASSERT(H5TFactory.get_type<bool>().type_id()==type_id_t::BOOL);
+    CPPUNIT_ASSERT(H5TFactory.get_type<type_id_t::BOOL>().type_id()==type_id_t::BOOL);
 
-    CPPUNIT_ASSERT(H5TFactory.get_type<UInt8>().type_id()==TypeID::UINT8);
-    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::UINT8>().type_id()==TypeID::UINT8);
-    CPPUNIT_ASSERT(H5TFactory.get_type<UInt16>().type_id()==TypeID::UINT16);
-    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::UINT16>().type_id()==TypeID::UINT16);
-    CPPUNIT_ASSERT(H5TFactory.get_type<UInt32>().type_id()==TypeID::UINT32);
-    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::UINT32>().type_id()==TypeID::UINT32);
-    CPPUNIT_ASSERT(H5TFactory.get_type<UInt64>().type_id()==TypeID::UINT64);
-    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::UINT64>().type_id()==TypeID::UINT64);
+    CPPUNIT_ASSERT(H5TFactory.get_type<uint8>().type_id()==type_id_t::UINT8);
+    CPPUNIT_ASSERT(H5TFactory.get_type<type_id_t::UINT8>().type_id()==type_id_t::UINT8);
+    CPPUNIT_ASSERT(H5TFactory.get_type<uint16>().type_id()==type_id_t::UINT16);
+    CPPUNIT_ASSERT(H5TFactory.get_type<type_id_t::UINT16>().type_id()==type_id_t::UINT16);
+    CPPUNIT_ASSERT(H5TFactory.get_type<uint32>().type_id()==type_id_t::UINT32);
+    CPPUNIT_ASSERT(H5TFactory.get_type<type_id_t::UINT32>().type_id()==type_id_t::UINT32);
+    CPPUNIT_ASSERT(H5TFactory.get_type<uint64>().type_id()==type_id_t::UINT64);
+    CPPUNIT_ASSERT(H5TFactory.get_type<type_id_t::UINT64>().type_id()==type_id_t::UINT64);
 
-    CPPUNIT_ASSERT(H5TFactory.get_type<Float32>().type_id()==TypeID::FLOAT32);
-    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::FLOAT32>().type_id()==TypeID::FLOAT32);
-    CPPUNIT_ASSERT(H5TFactory.get_type<Float64>().type_id()==TypeID::FLOAT64);
-    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::FLOAT64>().type_id()==TypeID::FLOAT64);
-    CPPUNIT_ASSERT(H5TFactory.get_type<Float128>().type_id()==TypeID::FLOAT128);
-    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::FLOAT128>().type_id()==TypeID::FLOAT128);
+    CPPUNIT_ASSERT(H5TFactory.get_type<float32>().type_id()==type_id_t::FLOAT32);
+    CPPUNIT_ASSERT(H5TFactory.get_type<type_id_t::FLOAT32>().type_id()==type_id_t::FLOAT32);
+    CPPUNIT_ASSERT(H5TFactory.get_type<float64>().type_id()==type_id_t::FLOAT64);
+    CPPUNIT_ASSERT(H5TFactory.get_type<type_id_t::FLOAT64>().type_id()==type_id_t::FLOAT64);
+    CPPUNIT_ASSERT(H5TFactory.get_type<float128>().type_id()==type_id_t::FLOAT128);
+    CPPUNIT_ASSERT(H5TFactory.get_type<type_id_t::FLOAT128>().type_id()==type_id_t::FLOAT128);
 
-    CPPUNIT_ASSERT(H5TFactory.get_type<Complex32>().type_id()==TypeID::COMPLEX32);
-    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::COMPLEX32>().type_id()==TypeID::COMPLEX32);
-    CPPUNIT_ASSERT(H5TFactory.get_type<Complex64>().type_id()==TypeID::COMPLEX64);
-    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::COMPLEX64>().type_id()==TypeID::COMPLEX64);
-    CPPUNIT_ASSERT(H5TFactory.get_type<Complex128>().type_id()==TypeID::COMPLEX128);
-    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::COMPLEX128>().type_id()==TypeID::COMPLEX128);
+    CPPUNIT_ASSERT(H5TFactory.get_type<complex32>().type_id()==type_id_t::COMPLEX32);
+    CPPUNIT_ASSERT(H5TFactory.get_type<type_id_t::COMPLEX32>().type_id()==type_id_t::COMPLEX32);
+    CPPUNIT_ASSERT(H5TFactory.get_type<complex64>().type_id()==type_id_t::COMPLEX64);
+    CPPUNIT_ASSERT(H5TFactory.get_type<type_id_t::COMPLEX64>().type_id()==type_id_t::COMPLEX64);
+    CPPUNIT_ASSERT(H5TFactory.get_type<complex128>().type_id()==type_id_t::COMPLEX128);
+    CPPUNIT_ASSERT(H5TFactory.get_type<type_id_t::COMPLEX128>().type_id()==type_id_t::COMPLEX128);
 
-    CPPUNIT_ASSERT(H5TFactory.get_type<String>().type_id() == TypeID::STRING);
-    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::STRING>().type_id()==TypeID::STRING);
-    CPPUNIT_ASSERT(H5TFactory.get_type<Binary>().type_id() == TypeID::BINARY);
-    CPPUNIT_ASSERT(H5TFactory.get_type<TypeID::BINARY>().type_id()==TypeID::BINARY);
+    CPPUNIT_ASSERT(H5TFactory.get_type<string>().type_id() == type_id_t::STRING);
+    CPPUNIT_ASSERT(H5TFactory.get_type<type_id_t::STRING>().type_id()==type_id_t::STRING);
+    CPPUNIT_ASSERT(H5TFactory.get_type<binary>().type_id() == type_id_t::BINARY);
+    CPPUNIT_ASSERT(H5TFactory.get_type<type_id_t::BINARY>().type_id()==type_id_t::BINARY);
 }

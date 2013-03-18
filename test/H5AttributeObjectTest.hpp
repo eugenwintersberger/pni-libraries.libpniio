@@ -1,6 +1,26 @@
-
-#ifndef __H5OBJECTTEST_HPP__
-#define __H5OBJECTTEST_HPP__
+/*
+ * (c) Copyright 2012 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpniio.
+ *
+ * libpniio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpniio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
+ *
+ * Created on: Aug 15, 2012
+ *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+ */
+#pragma once
 
 extern "C" {
 #include <hdf5.h>
@@ -8,8 +28,9 @@ extern "C" {
 
 #include "common.hpp"
 
-#include<pni/utils/Array.hpp>
-#include "h5/H5AttributeObject.hpp"
+#include <pni/core/arrays.hpp>
+#include <pni/io/nx/nxexceptions.hpp>
+#include <pni/io/nx/h5/H5AttributeObject.hpp>
 
 
 
@@ -31,48 +52,48 @@ class H5AttributeObjectTest:public CppUnit::TestFixture
         
         CPPUNIT_TEST(test_attribute_open);
         //scalar attribute creation tests
-        CPPUNIT_TEST(test_scalar_attribute_create<UInt8>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Int8>);
-        CPPUNIT_TEST(test_scalar_attribute_create<UInt16>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Int16>);
-        CPPUNIT_TEST(test_scalar_attribute_create<UInt32>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Int32>);
-        CPPUNIT_TEST(test_scalar_attribute_create<UInt64>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Int64>);
+        CPPUNIT_TEST(test_scalar_attribute_create<uint8>);
+        CPPUNIT_TEST(test_scalar_attribute_create<int8>);
+        CPPUNIT_TEST(test_scalar_attribute_create<uint16>);
+        CPPUNIT_TEST(test_scalar_attribute_create<int16>);
+        CPPUNIT_TEST(test_scalar_attribute_create<uint32>);
+        CPPUNIT_TEST(test_scalar_attribute_create<int32>);
+        CPPUNIT_TEST(test_scalar_attribute_create<uint64>);
+        CPPUNIT_TEST(test_scalar_attribute_create<int64>);
 
-        CPPUNIT_TEST(test_scalar_attribute_create<Float32>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Float64>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Float128>);
+        CPPUNIT_TEST(test_scalar_attribute_create<float32>);
+        CPPUNIT_TEST(test_scalar_attribute_create<float64>);
+        CPPUNIT_TEST(test_scalar_attribute_create<float128>);
         
-        CPPUNIT_TEST(test_scalar_attribute_create<Complex32>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Complex64>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Complex128>);
+        CPPUNIT_TEST(test_scalar_attribute_create<complex32>);
+        CPPUNIT_TEST(test_scalar_attribute_create<complex64>);
+        CPPUNIT_TEST(test_scalar_attribute_create<complex128>);
 
-        CPPUNIT_TEST(test_scalar_attribute_create<String>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Binary>);
-        CPPUNIT_TEST(test_scalar_attribute_create<Bool>);
+        CPPUNIT_TEST(test_scalar_attribute_create<string>);
+        CPPUNIT_TEST(test_scalar_attribute_create<binary>);
+        CPPUNIT_TEST(test_scalar_attribute_create<bool>);
 
         //array attribute creation tests
-        CPPUNIT_TEST(test_array_attribute_create<UInt8>);
-        CPPUNIT_TEST(test_array_attribute_create<Int8>);
-        CPPUNIT_TEST(test_array_attribute_create<UInt16>);
-        CPPUNIT_TEST(test_array_attribute_create<Int16>);
-        CPPUNIT_TEST(test_array_attribute_create<UInt32>);
-        CPPUNIT_TEST(test_array_attribute_create<Int32>);
-        CPPUNIT_TEST(test_array_attribute_create<UInt64>);
-        CPPUNIT_TEST(test_array_attribute_create<Int64>);
+        CPPUNIT_TEST(test_array_attribute_create<uint8>);
+        CPPUNIT_TEST(test_array_attribute_create<int8>);
+        CPPUNIT_TEST(test_array_attribute_create<uint16>);
+        CPPUNIT_TEST(test_array_attribute_create<int16>);
+        CPPUNIT_TEST(test_array_attribute_create<uint32>);
+        CPPUNIT_TEST(test_array_attribute_create<int32>);
+        CPPUNIT_TEST(test_array_attribute_create<uint64>);
+        CPPUNIT_TEST(test_array_attribute_create<int64>);
 
-        CPPUNIT_TEST(test_array_attribute_create<Float32>);
-        CPPUNIT_TEST(test_array_attribute_create<Float64>);
-        CPPUNIT_TEST(test_array_attribute_create<Float128>);
+        CPPUNIT_TEST(test_array_attribute_create<float32>);
+        CPPUNIT_TEST(test_array_attribute_create<float64>);
+        CPPUNIT_TEST(test_array_attribute_create<float128>);
         
-        CPPUNIT_TEST(test_array_attribute_create<Complex32>);
-        CPPUNIT_TEST(test_array_attribute_create<Complex64>);
-        CPPUNIT_TEST(test_array_attribute_create<Complex128>);
+        CPPUNIT_TEST(test_array_attribute_create<complex32>);
+        CPPUNIT_TEST(test_array_attribute_create<complex64>);
+        CPPUNIT_TEST(test_array_attribute_create<complex128>);
 
-        CPPUNIT_TEST(test_array_attribute_create<String>);
-        CPPUNIT_TEST(test_array_attribute_create<Binary>);
-        CPPUNIT_TEST(test_array_attribute_create<Bool>);
+        CPPUNIT_TEST(test_array_attribute_create<string>);
+        CPPUNIT_TEST(test_array_attribute_create<binary>);
+        CPPUNIT_TEST(test_array_attribute_create<bool>);
         CPPUNIT_TEST_SUITE_END();
     private:
         //-------------------local private members-----------------------------
@@ -107,7 +128,7 @@ class H5AttributeObjectTest:public CppUnit::TestFixture
         \param name string object with the groups name
         \return HDF5 ID of the group
         */
-        hid_t create_group(hid_t pid,const String &name) const;
+        hid_t create_group(hid_t pid,const string &name) const;
 
         //---------------------------------------------------------------------
         /*! 
@@ -219,7 +240,7 @@ template<typename T> void H5AttributeObjectTest::test_scalar_attribute_create()
 
     CPPUNIT_ASSERT_NO_THROW(o.attr<T>("a1"));
     //test invalid creation
-    CPPUNIT_ASSERT_THROW(o.attr<T>("a1"),H5AttributeError);
+    CPPUNIT_ASSERT_THROW(o.attr<T>("a1"),pni::io::nx::nxattribute_error);
     //but
     CPPUNIT_ASSERT_NO_THROW(o.attr<T>("a1",true));
 }
@@ -234,9 +255,7 @@ template<typename T> void H5AttributeObjectTest::test_array_attribute_create()
     shape_t s{10,3};
 
     CPPUNIT_ASSERT_NO_THROW(o.attr<T>("a1",s));
-    CPPUNIT_ASSERT_THROW(o.attr<T>("a1",s),H5AttributeError);
+    CPPUNIT_ASSERT_THROW(o.attr<T>("a1",s),pni::io::nx::nxattribute_error);
     CPPUNIT_ASSERT_NO_THROW(o.attr<T>("a1",s,true));
 }
 
-
-#endif

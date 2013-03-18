@@ -41,7 +41,7 @@ debug = ARGUMENTS.get("DEBUG",0)
 
 AddOption("--enable-mpi",dest="with_mpi",action="store_true",default=False)
 
-var = Variables('BuildConfig.py')
+var = Variables()
 var.Add(PathVariable("PREFIX","set installation prefix","/usr"))
 var.Add(PathVariable("BOOSTINCDIR","installation directory of boost headers","/usr/include"))
 var.Add(PathVariable("BOOSTLIBDIR","installation directory of boost libraries","/usr/include"))
@@ -51,8 +51,8 @@ var.Add(PathVariable("MPILIBDIR","Directory where MPI libraries are installed","
 var.Add(PathVariable("MPIINCDIR","Directory where MPI headers are installed","/usr/include"))
 
 var.Add("H5LIBNAME","HDF5 library name","hdf5")
-var.Add("VERSION","library version","0.0.0")
-var.Add("LIBNAME","library name","pniutils")
+var.Add("VERSION","library version","0.9.0")
+var.Add("LIBNAME","library name","pniio")
 var.Add("SOVERSION","SOVersion of the library (binary interface version)","0")
 var.Add("CXX","set the compiler to use","g++")
 var.Add("MAINTAINER","package maintainer for the project","Eugen Wintersberger")
@@ -70,10 +70,6 @@ var.Add("LIBDIR","library installation path","")
 
 #create the build environment
 env = Environment(variables=var,tools=['default','packaging','textfile'])
-env["ENV"]["PKG_CONFIG_PATH"] = os.environ["PKG_CONFIG_PATH"]
-env["ENV"]["PATH"] = os.environ["PATH"]
-env.ParseConfig('pkg-config --libs --cflags pniutils')
-env.ParseConfig('pkg-config --libs --cflags cppunit')
 env.Replace(CXX = env["CXX"])
 
             
@@ -98,7 +94,7 @@ if not env["DOCDIR"]:
 env.Replace(CXX = env["CXX"])
 
 #set default compiler flags
-env.Append(CXXFLAGS = ["-Wall","-std=c++0x","-fno-deduce-init-list"])
+env.Append(CXXFLAGS = ["-Wall","-std=c++0x","-fno-deduce-init-list","-pedantic"])
 if debug:
     env.Append(CXXFLAGS=["-DDEBUG"])
 
@@ -132,11 +128,10 @@ else:
     build_env.Append(CXXFLAGS=["-O2"])
     test_env.Append(CXXFLAGS=["-O2"])
     
-test_build_env = build_env.Clone()
 build_env.Append(LINKFLAGS=["-Wl,-h"+libname.so_name(env)]) 
     
 Export("build_env")
-Export("test_build_env")
+Export("test_env")
 
 
 SConscript(["src/SConscript"])

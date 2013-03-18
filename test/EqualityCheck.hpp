@@ -1,10 +1,31 @@
-#ifndef __EQUALITYCHECK_HPP__
-#define __EQUALITYCHECK_HPP__
+/*
+ * (c) Copyright 2012 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpniio.
+ *
+ * libpniio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpniio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
+ *
+ * Created on: Aug 15, 2012
+ *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+ */
+#pragma once
 
 #include <cppunit/extensions/HelperMacros.h>
-#include <pni/utils/TypeInfo.hpp>
+#include <pni/core/type_info.hpp>
 
-using namespace pni::utils;
+using namespace pni::core;
 
 template<typename T,bool is_int,bool is_complex> class EqualityCheck;
 
@@ -39,10 +60,9 @@ template<typename T> class EqualityCheck<T,false,true>
 
 template<typename T> void check_equality(const T &a,const T &b)
 {
-    EqualityCheck<T,TypeInfo<T>::is_integer,TypeInfo<T>::is_complex>::check(a,b);
+    EqualityCheck<T,type_info<T>::is_integer,type_info<T>::is_complex>::check(a,b);
 }
 
-void check_equality(const String &a,const String &b);
-void check_equality(const Bool &a,const Bool &b);
+void check_equality(const string &a,const string &b);
+void check_equality(const bool &a,const bool &b);
 
-#endif

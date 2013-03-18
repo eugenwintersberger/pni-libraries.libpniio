@@ -7,28 +7,28 @@
 #include<queue>
 #include<vector>
 
-#include<pni/utils/Types.hpp>
-#include<pni/nx/NX.hpp>
-#include<pni/nx/NXDateTime.hpp>
+#include<pni/core/types.hpp>
+#include<pni/io/nx/nx.hpp>
+#include<pni/io/nx/nxdate_time.hpp>
 
-using namespace pni::utils;
-using namespace pni::nx;
+using namespace pni::core;
+using namespace pni::io::nx;
 
-class IOQueue
+class io_queue
 {
     private:
         std::mutex _mutex;
-        std::queue<String> _queue;
+        std::queue<string> _queue;
         std::condition_variable _data_ready;
     public:
-        void push(const String &value)
+        void push(const string &value)
         {
             std::lock_guard<std::mutex> guard(_mutex);
             _queue.push(value);
             _data_ready.notify_one();
         }
 
-        void blocking_pop(String &value)
+        void blocking_pop(string &value)
         {
             std::unique_lock<std::mutex> lock(_mutex);
             _data_ready.wait(lock,[this]{ return !_queue.empty(); });
@@ -38,22 +38,23 @@ class IOQueue
 };
 
 
-class Writer{
+class writer
+{
     private:
-        String _filename;
-        IOQueue &_queue;
-        h5::NXFile  _log_file;
-        h5::NXField _log_data;
-        h5::NXField _log_time;
+        string _filename;
+        io_queue &_queue;
+        h5::nxfile  _log_file;
+        h5::nxfield _log_data;
+        h5::nxfield _log_time;
 
         //private method writing a single log entry
-        void __write_entry(const String &s){
+        void __write_entry(const string &s){
             //grow the data fields by one element
             _log_time.grow(0);
             _log_data.grow(0);
 
             //write the data
-            _log_time(_log_time.dim(0)-1).write(NXDateTime::get_date_time_str());
+            _log_time(_log_time.dim(0)-1).write(nxdate_time::get_date_time_str());
             _log_data(_log_data.dim(0)-1).write(s);
 
             //flush the new log entry
@@ -67,19 +68,19 @@ class Writer{
 
             //create a field with holding the timestamp when the 
             //log was created
-            g.create_field<String>("created")
-                .write(NXDateTime::get_date_time_str());
+            g.create_field<string>("created")
+                .write(nxdate_time::get_date_time_str());
 
             
             //create log data and timestamp field
-            _log_data = g.create_field<String>("data",{0});
-            _log_time = g.create_field<String>("timestamp",{0}); 
+            _log_data = g.create_field<string>("data",{0});
+            _log_time = g.create_field<string>("timestamp",{0}); 
 
             //flush the file after initialization
             _log_file.flush();
         }
     public:
-        Writer(const String &fname,IOQueue &q):
+        writer(const string &fname,io_queue &q):
             _filename(fname),
             _queue(q)
         { }
@@ -87,7 +88,7 @@ class Writer{
         void operator()(){
             std::cout<<"create file"<<std::endl;
             //works with HDF5
-            _log_file = h5::NXFile::create_file(_filename,true);
+            _log_file = h5::nxfile::create_file(_filename,true);
 
             //initialize the log
             __init_log();
@@ -97,12 +98,15 @@ class Writer{
 
             while(true)
             {
-                String log_entry;
+                string log_entry;
                 _queue.blocking_pop(log_entry);
                 if(log_entry == "quit") break;
-                try{
+                try
+                {
                     __write_entry(log_entry);
-                }catch(ShapeMissmatchError &e){
+                }
+                catch(shape_missmatch_error &e)
+                {
                     std::cout<<e<<std::endl;
                     break;
                 }
@@ -115,19 +119,22 @@ class Writer{
         }
 };
 
-class CLIReader{
+class cli_reader
+{
     private:
-        String _prompt;
-        IOQueue &_queue;
+        string _prompt;
+        io_queue &_queue;
     public:
-        CLIReader(const String &prompt,IOQueue &q):
+        cli_reader(const string &prompt,io_queue &q):
             _prompt(prompt),
             _queue(q)
         { }
 
-        void operator()(){
-            String input;
-            while(true){
+        void operator()()
+        {
+            string input;
+            while(true)
+            {
                 std::cout<<_prompt;
                 std::getline(std::cin,input);
                 _queue.push(input);
@@ -139,10 +146,10 @@ class CLIReader{
 
 int main(int argc,char **argv)
 {
-    IOQueue q;
-    Writer writer("userlog.nx",q);
-    CLIReader cli("Nexus log $>",q);
-    std::thread wthread(writer);
+    io_queue q;
+    writer write("userlog.nx",q);
+    cli_reader cli("Nexus log $>",q);
+    std::thread wthread(write);
     std::thread clithread(cli);
 
     //in the very end we need to join the thread

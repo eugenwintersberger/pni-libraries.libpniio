@@ -1,21 +1,19 @@
 from os import path
 
 Import("build_env")
-src_list = ["NXExceptions.cpp","NXDateTime.cpp"]
+
+#collect source files to build the library
+src_list = Glob("*.cpp")
+src_list.extend(Glob("tiff/*.cpp"))
+src_list.extend(Glob("cbf/*.cpp"))
+src_list.extend(Glob("nx/*.cpp"));
+src_list.extend(Glob("nx/h5/*.cpp"))
+src_list.extend(Glob("nx/h5/filters/*.c"))
+
 
 #compile sources
 shared_objects = build_env.SharedObject(src_list)
 static_objects = build_env.StaticObject(src_list)
-
-#get code for the HDF5 implementation
-(h5_shared_objects,h5_static_objects) = build_env.SConscript("h5/SConscript")
-shared_objects.append(h5_shared_objects)
-static_objects.append(h5_static_objects)
-
-#create base classes
-#(bc_shared_objects,bc_static_objects) = build_env.SConscript("base_classes/SConscript")
-#shared_objects.append(bc_shared_objects)
-#static_objects.append(bc_static_objects)
 
 #link the shared library
 lib_suffix = build_env["SHLIBSUFFIX"]+"."+build_env["SOVERSION"]+"."+build_env["VERSION"]
@@ -36,7 +34,7 @@ shared_library_so = build_env.Command("$LIBSONAME",shared_library,
 static_library = build_env.StaticLibrary(build_env["LIBNAME"],static_objects)
 
 #------------------------Package config file creation--------------------------
-pkg_config_file = build_env.Substfile(source=["pninx.pc.in"],
+pkg_config_file = build_env.Substfile(source=["pniio.pc.in"],
 				 SUBST_DICT={"@PREFIX@":"$PREFIX","@LIBNAME@":"$LIBNAME",
 				             "@VERSION@":"$VERSION",
                              "@INCDIR@":"$INCDIR",
@@ -55,7 +53,6 @@ build_env.Alias("library",[temp_shared_library,shared_library,static_library,
                            shared_library_link,shared_library_so])
                            
 #--------------------------Installation targets--------------------------------
-hdr_inst_path = path.join(build_env["INCDIR"],"pni/nx")
 
 shared_library_install = build_env.Install("$LIBDIR",[shared_library])
 shared_library_link_install = build_env.Command("${SOURCE.dir}/$LIBLINKNAME",shared_library_install,
@@ -66,8 +63,18 @@ shared_library_so_install = build_env.Command("${SOURCE.dir}/$LIBSONAME",shared_
 static_library_install = build_env.Install("$LIBDIR",[static_library])
 
 pkgc_inst = build_env.Install(path.join(build_env["LIBDIR"],"pkgconfig"),[pkg_config_file])
-incpniutils_inst = build_env.Install(hdr_inst_path,Glob("*.hpp"))
+
+#-----------------------install header files-----------------------------------
+hdr_inst_path = path.join(build_env["INCDIR"],"pni/io/")
+build_env.Alias("install",build_env.Install(hdr_inst_path,Glob("*.hpp")))
+build_env.Alias("install",build_env.Install(path.join(hdr_inst_path,"tiff"),Glob("tiff/*.hpp")))
+build_env.Alias("install",build_env.Install(path.join(hdr_inst_path,"cbf"),Glob("cbf/*.hpp")))
+
+build_env.Alias("install",build_env.Install(path.join(hdr_inst_path,"nx"),Glob("nx/*.hpp")))
+build_env.Alias("install",build_env.Install(path.join(hdr_inst_path,"nx/h5"),Glob("nx/h5/*.hpp")))
+build_env.Alias("install",build_env.Install(path.join(hdr_inst_path,"nx/h5/filters"),Glob("nx/h5/filters/*.h")))
+
 
 build_env.Alias("install",[shared_library_install,static_library_install,
                            shared_library_link_install,shared_library_so_install,
-                           incpniutils_inst,pkgc_inst])
+                           pkgc_inst])

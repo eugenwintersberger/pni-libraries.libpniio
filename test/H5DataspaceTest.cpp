@@ -1,3 +1,25 @@
+/*
+ * (c) Copyright 2012 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpniio.
+ *
+ * libpniio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpniio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
+ *
+ * Created on: Jan 11, 2012
+ *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+ */
 #include "H5DataspaceTest.hpp"
 
 
@@ -24,7 +46,7 @@ void H5DataspaceTest::test_creation(){
     //create a dataspace from a shape object
     //this should lead to a constant dataspace which cannot be extended
     shape_t s({10,3,45});
-    std::vector<UInt64> uls({H5Dataspace::UNLIMITED,H5Dataspace::UNLIMITED,H5Dataspace::UNLIMITED});
+    std::vector<uint64> uls({H5S_UNLIMITED,H5S_UNLIMITED,H5S_UNLIMITED});
     size_t s_size = 10*3*45;
     H5Dataspace s2(s);
     CPPUNIT_ASSERT(s2.is_valid());
@@ -127,8 +149,8 @@ void H5DataspaceTest::test_inquery()
     CPPUNIT_ASSERT(std::equal(s1.maxshape().begin(),s1.maxshape().end(),slist.begin()));
 
     slist = std::list<size_t>(s1.rank()+1);
-    CPPUNIT_ASSERT_THROW(s1.shape(slist),ShapeMissmatchError);
-    CPPUNIT_ASSERT_THROW(s1.maxshape(slist),ShapeMissmatchError);
+    CPPUNIT_ASSERT_THROW(s1.shape(slist),shape_missmatch_error);
+    CPPUNIT_ASSERT_THROW(s1.maxshape(slist),shape_missmatch_error);
 
     auto list = s1.shape<std::list<size_t> >();
     auto mlist = s1.maxshape<std::list<size_t> >();
@@ -155,7 +177,7 @@ void H5DataspaceTest::test_resize()
     CPPUNIT_ASSERT(std::equal(space.maxshape().begin(),space.maxshape().end(),s2.begin()));
 
     shape_t maxshape{100,2,12};
-    CPPUNIT_ASSERT_THROW(space.resize(s2,maxshape),ShapeMissmatchError);
+    CPPUNIT_ASSERT_THROW(space.resize(s2,maxshape),shape_missmatch_error);
     maxshape = shape_t{100,20};
     CPPUNIT_ASSERT_NO_THROW(space.resize(s2,maxshape));
     CPPUNIT_ASSERT(std::equal(space.shape().begin(),space.shape().end(),s2.begin()));

@@ -1,5 +1,26 @@
-
-#include <pni/utils/Array.hpp>
+/*
+ * (c) Copyright 2012 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpniio.
+ *
+ * libpniio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpniio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
+ *
+ * Created on: Jan 12, 2012
+ *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+ */
+#include <pni/core/arrays.hpp>
 #include <boost/current_function.hpp>
 #include "H5FileTest.hpp"
 
@@ -22,11 +43,11 @@ void H5FileTest::test_creation()
     H5File file;
 
     //should raise an exception because the file is not an HDF5 file
-    CPPUNIT_ASSERT_THROW(H5File::open_file("H5FileTest.cpp",false),H5FileError);
-    CPPUNIT_ASSERT_THROW(H5File::open_file("H5FileTest.cpp",true),H5FileError);
+    CPPUNIT_ASSERT_THROW(H5File::open_file("H5FileTest.cpp",false),pni::io::nx::nxfile_error);
+    CPPUNIT_ASSERT_THROW(H5File::open_file("H5FileTest.cpp",true),pni::io::nx::nxfile_error);
     //should throw an exception because the file does not exist.
-    CPPUNIT_ASSERT_THROW(H5File::open_file("blablabla.h5",false),H5FileError);
-    CPPUNIT_ASSERT_THROW(H5File::open_file("blablabla.h5",true),H5FileError);
+    CPPUNIT_ASSERT_THROW(H5File::open_file("blablabla.h5",false),pni::io::nx::nxfile_error);
+    CPPUNIT_ASSERT_THROW(H5File::open_file("blablabla.h5",true),pni::io::nx::nxfile_error);
 
     //create a file
     CPPUNIT_ASSERT_NO_THROW(file = H5File::create_file("H5FileTest.h5",true,0));
