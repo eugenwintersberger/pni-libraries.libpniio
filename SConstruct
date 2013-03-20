@@ -101,14 +101,14 @@ if debug:
 #need to link explicit against libdl because some compilers 
 #are not doing this by default
 #set paths for Boost and HDF5
-if env["H5LIBDIR"]: env.AppendUnique(LIBPATH = env['H5LIBDIR'])
-if env["H5INCDIR"]: env.AppendUnique(CPPPATH = env['H5INCDIR'])
-if env['BOOSTINCDIR']: env.AppendUnique(CPPPATH = env['BOOSTINCDIR'])
-if env['BOOSTLIBDIR']: env.AppendUnique(LIBPATH = env['BOOSTLIBDIR'])
+if env["H5LIBDIR"]: env.AppendUnique(LIBPATH = [env['H5LIBDIR']])
+if env["H5INCDIR"]: env.AppendUnique(CPPPATH = [env['H5INCDIR']])
+if env['BOOSTINCDIR']: env.AppendUnique(CPPPATH = [env['BOOSTINCDIR']])
+if env['BOOSTLIBDIR']: env.AppendUnique(LIBPATH = [env['BOOSTLIBDIR']])
 
 if GetOption("with_mpi"):
-    env.AppendUnique(LIBPATH=env["MPILIBDIR"])
-    env.AppendUnique(CPPPATH=env["MPIINCDIR"])
+    env.AppendUnique(LIBPATH=[env["MPILIBDIR"]])
+    env.AppendUnique(CPPPATH=[env["MPIINCDIR"]])
 
 #========================custom tests for compiler capabilties=================
 
