@@ -31,12 +31,13 @@ extern "C"{
 
 #include <pni/core/types.hpp>
 
-using namespace pni::core;
 
 namespace pni{
 namespace io {
 namespace nx{
 namespace h5{
+
+    using namespace pni::core;
     //avoid namespace collisions with std
     using pni::core::exception;
     using pni::core::string;

@@ -33,7 +33,6 @@
 #include <pni/core/sbuffer.hpp>
 #include <pni/core/rbuffer.hpp>
 
-using namespace pni::core;
 
 #include "H5NamedObject.hpp"
 #include "H5Dataspace.hpp"
@@ -47,6 +46,7 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
+    using namespace pni::core;
     //avoid namespace collisions with std
     using pni::core::exception;
     using pni::core::string;

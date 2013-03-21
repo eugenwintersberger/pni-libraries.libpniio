@@ -32,6 +32,7 @@ namespace pni{
 namespace io{
 namespace nx {
 namespace h5{
+
     //avoid namespace collisions with std
     using pni::core::string;
 

@@ -31,7 +31,6 @@
 #include <pni/core/slice.hpp>
 #include <pni/core/array_selection.hpp>
 
-using namespace pni::core;
 
 #include "H5AttributeObject.hpp"
 #include "H5Datatype.hpp"
@@ -47,6 +46,8 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
+
+    using namespace pni::core;
     //avoid namespace collisions with std
     using pni::core::exception;
     using pni::core::string;
