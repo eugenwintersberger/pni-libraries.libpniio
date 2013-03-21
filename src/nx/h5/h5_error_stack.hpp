@@ -48,7 +48,6 @@ extern "C" herr_t _error_walker(unsigned n,const H5E_error2_t *eptr,void *client
 
 using namespace pni::core;
 //avoid namespace collisions with std
-using pni::core::array;
 using pni::core::exception;
 using pni::core::string;
 

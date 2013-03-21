@@ -29,6 +29,7 @@ extern "C"{
 #include <hdf5.h>
 }
 
+#include <pni/core/types.hpp>
 #include "H5ObjectType.hpp"
 #include "../nxobject_type.hpp"
 
@@ -37,8 +38,6 @@ namespace io{
 namespace nx{
 namespace h5{
     //avoid namespace collisions with std
-    using pni::core::array;
-    using pni::core::exception;
     using pni::core::string;
 
     /*! 

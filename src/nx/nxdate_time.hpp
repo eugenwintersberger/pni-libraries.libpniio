@@ -38,9 +38,7 @@ namespace pni {
 namespace io {
 namespace nx {
     //need this here to avoid name collisions with tango headers.
-    using pni::core::array;
     using pni::core::string;
-    using pni::core::exception;
 
     /*! \ingroup util_classes
     \brief date time factory

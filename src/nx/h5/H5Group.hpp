@@ -38,7 +38,6 @@ namespace io{
 namespace nx{
 namespace h5{
     //avoid namespace collisions with std
-    using pni::core::array;
     using pni::core::exception;
     using pni::core::string;
     //class forward declarations            
