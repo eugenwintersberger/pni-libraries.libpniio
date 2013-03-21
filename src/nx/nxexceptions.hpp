@@ -36,6 +36,9 @@ namespace pni{
 namespace io{
 namespace nx{
 
+    using pni::core::exception;
+    using pni::core::string;
+
     /*! 
     \ingroup error_classes
     \brief field exception

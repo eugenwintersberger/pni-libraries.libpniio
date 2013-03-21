@@ -34,6 +34,9 @@ namespace pni{
 namespace io{
 namespace nx{
 
+    using pni::core::array;
+    using pni::core::string;
+
     /*!
     \brief write array to object
 
