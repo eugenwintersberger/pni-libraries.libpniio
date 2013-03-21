@@ -31,11 +31,11 @@
 
 #include "nxobject.hpp"
 
-using namespace pni::core;
 
 namespace pni{
 namespace io{
 namespace nx{
+    using namespace pni::core;
     //need this here to avoid name collisions with tango headers.
     using pni::core::array;
     using pni::core::string;

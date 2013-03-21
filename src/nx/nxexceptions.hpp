@@ -35,7 +35,7 @@ using namespace pni::core;
 namespace pni{
 namespace io{
 namespace nx{
-
+    using namespace pni::core;
     using pni::core::exception;
     using pni::core::string;
 

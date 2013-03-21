@@ -30,13 +30,13 @@
 #include<boost/date_time/c_local_time_adjustor.hpp>
 #include <pni/core/types.hpp>
 
-using namespace pni::core;
-using namespace boost::posix_time;
-using namespace boost::gregorian;
-
 namespace pni {
 namespace io {
 namespace nx {
+    using namespace pni::core;
+    using namespace boost::posix_time;
+    using namespace boost::gregorian;
+
     //need this here to avoid name collisions with tango headers.
     using pni::core::string;
 

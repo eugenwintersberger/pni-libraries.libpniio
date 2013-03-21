@@ -29,11 +29,12 @@
 #include<map>
 #include<pni/core/types.hpp>
 
-using namespace pni::core;
 
 namespace pni{
 namespace io{
 namespace nx{
+
+    using namespace pni::core;
 
     /*! 
     \brief library configuration class

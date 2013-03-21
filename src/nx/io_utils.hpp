@@ -28,12 +28,12 @@
 #include <pni/core/arrays.hpp>
 #include <pni/core/exceptions.hpp>
 
-using namespace pni::core;
 
 namespace pni{
 namespace io{
 namespace nx{
 
+    using namespace pni::core;
     using pni::core::array;
     using pni::core::string;
 

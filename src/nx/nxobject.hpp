@@ -40,8 +40,6 @@
 #include "nxdate_time.hpp"
 #include "nxattribute_iterator.hpp"
 
-using namespace pni::core;
-
 //selects a particular implementation depending on an other 
 //implementation
 #define MAPTYPE(type,implname)\
@@ -55,6 +53,8 @@ using namespace pni::core;
 namespace pni{
 namespace io{
 namespace nx{
+    using namespace pni::core;
+
     //need this here to avoid name collisions with tango headers
     using pni::core::array;
     using pni::core::string;
