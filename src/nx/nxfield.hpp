@@ -45,6 +45,10 @@ using namespace pni::core;
 namespace pni{
 namespace io{
 namespace nx{
+    //need this here to avoid name collisions with tango headers.
+    using pni::core::array;
+    using pni::core::string;
+    using pni::core::exception;
 
 #define READ_BUFFER(buffer)\
     try\
