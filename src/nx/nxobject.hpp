@@ -26,7 +26,7 @@
  */
 #pragma once
 
-#include <memory>
+//#include <memory>
 #include <iostream>
 
 #include <pni/core/types.hpp>

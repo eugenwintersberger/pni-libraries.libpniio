@@ -30,8 +30,6 @@
 #include <iostream>
 #include <pni/core/exceptions.hpp>
 
-using namespace pni::core;
-
 namespace pni{
 namespace io{
 namespace nx{
