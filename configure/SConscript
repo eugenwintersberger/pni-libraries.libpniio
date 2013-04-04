@@ -73,7 +73,11 @@ CustomChecks["CheckForTemplateAlias"] = CheckForTemplateAlias
 CustomChecks["CheckForEnumBug"] = CheckForEnumBug
 
 Import('env')
-env["ENV"]["PKG_CONFIG_PATH"] = os.environ["PKG_CONFIG_PATH"]
+try:
+    env["ENV"]["PKG_CONFIG_PATH"] = os.environ["PKG_CONFIG_PATH"]
+except:
+    pass
+
 env["ENV"]["PATH"] = os.environ["PATH"]
 
 try:
