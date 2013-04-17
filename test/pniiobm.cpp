@@ -99,7 +99,7 @@ int main(int argc,char **argv)
     if(config.has_option("logfile"))
     {
         //open log file for writting
-        std::ofstream logfile(config.value<string>("logfile"));
+        std::ofstream logfile(config.value<string>("logfile").c_str());
         
         //write header
         logfile<<"#"<<runner.begin()->unit()<<std::endl;

@@ -43,9 +43,9 @@ namespace io{
             "Cannot allocate memory for stream object!");
 
         if(_is_binary)
-            stream->open(fname);
+            stream->open(fname.c_str());
         else
-            stream->open(fname,std::ifstream::binary);
+            stream->open(fname.c_str(),std::ifstream::binary);
 
         return stream;
     }
