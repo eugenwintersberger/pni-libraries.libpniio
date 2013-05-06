@@ -24,48 +24,45 @@
 
 #pragma once
 
-#include<pni/core/types.hpp>
-#include<pni/core/value.hpp>
-#include<vector>
+#include <pni/core/types.hpp>
+#include <pni/core/slice.hpp>
 
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
 
 namespace pni{
 namespace io{
-   
+
     /*!
     \ingroup parser_classes
-    \brief value parser
+    \brief slice parser
 
-    Parser reading an integer or floating point number from a string and stores
-    it into an instance of pni::core::value. The parser is able of infering the
-    appropriate data type from its string representation. 
-    Currently all integers are interpreted as INT32 and all floating point
-    numbers as FLOAT64 types.
-    \tparam ITERT iterator type
+    This parser reads slice objects from a string. 
+    
+    \tparam ITERT iterator type for the parser
     */
     template<typename ITERT>
-    struct value_parser: public boost::spirit::qi::grammar<ITERT,pni::core::value()>
+    struct slice_parser: boost::spirit::qi::grammar<ITERT,
+                                                    boost::spirit::qi::locals<size_t,size_t,size_t>,
+                                                    pni::core::slice()>
     {
-        //!value reading rule
-        boost::spirit::qi::rule<ITERT,pni::core::value()> value_rule;
+        boost::spirit::qi::rule<ITERT,boost::spirit::qi::locals<size_t,size_t,size_t>,
+                                pni::core::slice()
+                                > slice_rule;
 
-        //!default constructor
-        value_parser() : value_parser::base_type(value_rule)
+        slice_parser() : slice_parser::base_type(slice_rule)
         {
-            using namespace pni::core;
             using namespace boost::spirit::qi;
             using namespace boost::fusion;
             using namespace boost::phoenix;
-            value_rule = (
-                         (int_>>!(char_('.')|char_('e')))[_val = _1] 
-                          || 
-                          double_[_val = _1]
-                          );
+            slice_rule = eps[_a=0,_b=0,_c=1]>>(
+                (int_[_a = _1,_b=_1+1]>> -(':' >>int_[_b = _1]>> -(':' >>
+                                                                 int_[_c=_1]))) 
+                |
+                ( ':' >> int_[_b = _1]>> -(':'>>int_[_c = _1]))
+              )[_val = construct<pni::core::slice>(_a,_b,_c)];
         }
     };
-
 //end of namespace
 }
 }

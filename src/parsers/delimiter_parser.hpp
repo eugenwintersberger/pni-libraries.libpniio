@@ -21,49 +21,58 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  *
  */
-
 #pragma once
 
-#include<pni/core/types.hpp>
-#include<pni/core/value.hpp>
-#include<vector>
 
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
 
 namespace pni{
 namespace io{
-   
+
     /*!
     \ingroup parser_classes
-    \brief value parser
+    \brief delimiter parser
 
-    Parser reading an integer or floating point number from a string and stores
-    it into an instance of pni::core::value. The parser is able of infering the
-    appropriate data type from its string representation. 
-    Currently all integers are interpreted as INT32 and all floating point
-    numbers as FLOAT64 types.
-    \tparam ITERT iterator type
+    This parser is used for delimiters which for instance separate columns in a
+    CSV file. By default the separator is at least one blank symbol. 
+    Alternatively one can define a special single character as a delimiter. 
+    This character can be preceded and followed by an arbitrary number of
+    blanks. 
+
+    \tparam ITERT iterator type for the parser
     */
-    template<typename ITERT>
-    struct value_parser: public boost::spirit::qi::grammar<ITERT,pni::core::value()>
+    template<typename ITERT >
+    struct delimiter_parser : boost::spirit::qi::grammar<ITERT,pni::core::string()>
     {
-        //!value reading rule
-        boost::spirit::qi::rule<ITERT,pni::core::value()> value_rule;
+        boost::spirit::qi::rule<ITERT,pni::core::string()> delimiter;
 
-        //!default constructor
-        value_parser() : value_parser::base_type(value_rule)
+        //default constructor
+        delimiter_parser() : 
+            delimiter_parser::base_type(delimiter)
         {
             using namespace pni::core;
             using namespace boost::spirit::qi;
             using namespace boost::fusion;
             using namespace boost::phoenix;
-            value_rule = (
-                         (int_>>!(char_('.')|char_('e')))[_val = _1] 
-                          || 
-                          double_[_val = _1]
-                          );
+            //default behavior - at least one whitespace is a valid delimiter
+            delimiter = +blank;
         }
+        //more elaborate constructor
+
+        delimiter_parser(char symbol):
+            delimiter_parser::base_type(delimiter)
+        {
+            using namespace pni::core;
+            using namespace boost::spirit::qi;
+            using namespace boost::fusion;
+            using namespace boost::phoenix;
+            if(symbol == ' ')
+                delimiter = +blank;
+            else
+                delimiter = *blank>>char_(symbol)>>*blank;
+        }
+
     };
 
 //end of namespace
