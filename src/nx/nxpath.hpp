@@ -132,9 +132,17 @@ namespace nx{
             const_iterator end() const   { return _groups.end();   }
     };
 
+    //--------------------------------------------------------------------------
     /*!
     \brief parser for group elements
 
+    This parser handles a single group element of the group portion of a Nexus
+    path. A group element has the syntax
+    \code
+    <groupname>:<groupclass>
+    \endcode
+
+    \tparam ITERT iterator type for the parser
     */
     template<typename ITERT>
     struct element_parser :
@@ -142,11 +150,15 @@ namespace nx{
                                boost::spirit::locals<string,string>, 
                                nxpath::group_element_t()>
     {
+        //! rule for a single component
         boost::spirit::qi::rule<ITERT,string()> component_rule;
+
+        //! rule for a group element
         boost::spirit::qi::rule<ITERT,
                                 boost::spirit::locals<string,string>, 
                                 nxpath::group_element_t()> group_element_rule;
 
+        //! default constructor
         element_parser() : element_parser::base_type(group_element_rule)
         {
             using namespace boost::spirit::qi;
@@ -165,17 +177,28 @@ namespace nx{
     };
 
 
+    //-------------------------------------------------------------------------
     /*!
     \brief parser for group path
 
+    Parser for the group portion of a Nexus path. The group portion has the
+    structure
+    \code
+    <name>:<class>/<name>:<class>/....
+    \endcode
+    
+    \tparam ITERT iterator type for the parser
     */
     template<typename ITERT>
     struct nxpath_parser :
         boost::spirit::qi::grammar<ITERT,nxpath::group_path_t()>
     {
+        //! rule for the entire group portion
         boost::spirit::qi::rule<ITERT,nxpath::group_path_t()> path_rule;
+        //! group element parser
         element_parser<ITERT> element_; 
 
+        //! default constructor
         nxpath_parser() : nxpath_parser::base_type(path_rule)
         {
             using namespace boost::spirit::qi;
@@ -190,8 +213,40 @@ namespace nx{
     };
 
 
+    //-------------------------------------------------------------------------
+    /*!
+    \brief split nexus path
+
+    This is a service function used by path_from_string. It takes the complete
+    Nexus path as a string and splits it into three pieces at the :// and the @
+    token
+
+    \li the filename
+    \li the group path
+    \li the attribute name
+
+    This function was implemented in order to keep the parsers for the different
+    components of the path as easy as possible. In other words this is something
+    like a very simple lexxer. 
+
+    \param input the full Nexus path
+    \param file the filename 
+    \param groups the group portion of the path
+    \param attribute the attribute name
+    */
     void split_path(const string &input, string &file,string &groups,string
             &attribute);
+
+    //-------------------------------------------------------------------------
+    /*!
+    \brief creates a path from a string
+
+    This function takes a full Nexus path as its input argument, parses it and
+    constructs a nxpath instance out of it.
+
+    \param p full Nexus path as string
+    \return instance of nxpath
+    */
     nxpath path_from_string(const string &p);
 //end of namespace
 }
