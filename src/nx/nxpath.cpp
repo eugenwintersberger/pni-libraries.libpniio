@@ -36,12 +36,62 @@ namespace nx{
     {}
 
     //-------------------------------------------------------------------------
-    nxpath::nxpath(const string &file,const group_path_t &groups,
+    nxpath::nxpath(const string &file,const nxpath::group_path_t &groups,
                    const string &attr):
         _file_name(file),
         _attribute_name(attr),
         _groups(groups)
     {}
+
+    //-------------------------------------------------------------------------
+    void split_path(const string &input,
+                    string &file,string &groups,string &attribute)
+    {
+        //start with file portion
+        file = string();
+        groups = string();
+        attribute = string();
+
+        string::size_type file_pos  = input.find("://");
+        if(file_pos != string::npos)
+        {
+            file = input.substr(0,file_pos);
+            file_pos += 3;    
+        }
+        else
+            file_pos = 0;
+
+        //search for attributes
+        string::size_type attr_pos = input.find("@");
+        if(attr_pos != string::npos)
+        {
+            attribute = input.substr(attr_pos+1,input.size()-attr_pos);
+        }
+        else
+            attr_pos = input.size();
+
+        groups = input.substr(file_pos,attr_pos-file_pos);
+    }
+
+    //-------------------------------------------------------------------------
+    nxpath path_from_string(const string &p)
+    {
+        typedef string::const_iterator iterator_t;
+        typedef nxpath_parser<iterator_t> nxpath_parser_t;
+
+        //split the path entered by the user
+        string filename,attribute_name,groups;
+        split_path(p,filename,groups,attribute_name);
+
+        //parse the group section
+        nxpath_parser_t parser;
+        iterator_t start = groups.begin();
+        iterator_t stop  = groups.end();
+        nxpath::group_path_t gpath; 
+        parse(start,stop,parser,gpath);
+
+        return nxpath(filename,gpath,attribute_name);
+    }
 
 //end of namespace
 }

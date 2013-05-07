@@ -27,6 +27,17 @@
 #include <pni/core/types.hpp>
 #include <list>
 
+#include <boost/spirit/include/qi.hpp>
+#include <boost/spirit/include/phoenix.hpp>
+#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/spirit/include/phoenix_object.hpp>
+#include <boost/fusion/include/adapt_struct.hpp>
+#include <boost/fusion/include/io.hpp>
+#include <boost/variant.hpp>
+#include <boost/fusion/include/std_pair.hpp>
+#include <boost/optional/optional.hpp>
+
 
 namespace pni{
 namespace io{
@@ -80,21 +91,108 @@ namespace nx{
                    const string &attr);
            
             //===============public member methods=============================
+            /*!
+            \brief true if has filename
+
+            Returns true if the path contains a file name. 
+            \return true if filename exists
+            */
             bool has_filename() const  { return !_file_name.empty(); }
+
+            //-----------------------------------------------------------------
+            /*!
+            \brief true if has attribute
+
+            Returns true if the path contains an attribute name.
+            \return true if path has attribute
+            */
             bool has_attribute() const { return !_attribute_name.empty(); }
 
+            //-----------------------------------------------------------------
+            //! return the filename
+            string filename() const { return _file_name; }
 
+            //-----------------------------------------------------------------
+            //! return the attribute name
+            string attribute() const { return _attribute_name; }
 
-            
 
 
             //===================iterators======================================
+            //! get iterator to first element
             iterator begin() { return _groups.begin(); }
+
+            //! get iterator to last+1 element
             iterator end()   { return _groups.end();   }
+
+            //! get const iterator to first element
             const_iterator begin() const { return _groups.begin(); }
+
+            //! get const iterator to last+1 element
             const_iterator end() const   { return _groups.end();   }
     };
 
+    /*!
+    \brief parser for group elements
+
+    */
+    template<typename ITERT>
+    struct element_parser :
+    boost::spirit::qi::grammar<ITERT,
+                               boost::spirit::locals<string,string>, 
+                               nxpath::group_element_t()>
+    {
+        boost::spirit::qi::rule<ITERT,string()> component_rule;
+        boost::spirit::qi::rule<ITERT,
+                                boost::spirit::locals<string,string>, 
+                                nxpath::group_element_t()> group_element_rule;
+
+        element_parser() : element_parser::base_type(group_element_rule)
+        {
+            using namespace boost::spirit::qi;
+            using namespace boost::fusion;
+            using namespace boost::phoenix;
+
+            component_rule = +char_("-_a-zA-z0-9.");
+            group_element_rule =  eps[_a="",_b=""]>>(
+                                  (component_rule[_a=_1]>>-(':'>component_rule[_b=_1]))                              |
+                                  (':'>component_rule)[_b = _1]
+                    )[_val = construct<nxpath::group_element_t>(_a,_b)];
+
+        }
+
+
+    };
+
+
+    /*!
+    \brief parser for group path
+
+    */
+    template<typename ITERT>
+    struct nxpath_parser :
+        boost::spirit::qi::grammar<ITERT,nxpath::group_path_t()>
+    {
+        boost::spirit::qi::rule<ITERT,nxpath::group_path_t()> path_rule;
+        element_parser<ITERT> element_; 
+
+        nxpath_parser() : nxpath_parser::base_type(path_rule)
+        {
+            using namespace boost::spirit::qi;
+            using namespace boost::fusion;
+            using namespace boost::phoenix;
+
+            path_rule = ('/'>>element_ % '/') | ( element_ % '/');
+
+        }
+
+
+    };
+
+
+    void split_path(const string &input, string &file,string &groups,string
+            &attribute);
+    nxpath path_from_string(const string &p);
 //end of namespace
 }
 }
