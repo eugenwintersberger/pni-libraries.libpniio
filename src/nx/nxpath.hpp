@@ -116,7 +116,9 @@ namespace nx{
             //! return the attribute name
             string attribute() const { return _attribute_name; }
 
-
+            //------------------------------------------------------------------
+            //! return number of group entries
+            size_t size() const { return _groups.size(); }
 
             //===================iterators======================================
             //! get iterator to first element
@@ -248,6 +250,16 @@ namespace nx{
     \return instance of nxpath
     */
     nxpath path_from_string(const string &p);
+
+    //-------------------------------------------------------------------------
+    /*!
+    \brief split group path
+
+    Splits a path at a given position. 
+    
+    */
+
+
 //end of namespace
 }
 }

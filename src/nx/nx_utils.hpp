@@ -34,6 +34,7 @@ namespace nx{
     using namespace pni::core;
 
     /*!
+    \ingroup nexus_utility_functions
     \brief search for group by class
 
     Search for a child group below p for a group with a particular class name
@@ -84,6 +85,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     /*!
+    \ingroup nexus_utility_functions
     \brief search for group names
 
     Search for a child group with a particular name. The function returns true
@@ -127,11 +129,19 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     /*!
+    \ingroup nexus_utility_functions
     \brief find group by class and name
 
     Find a child group with a particular name and class. If the search succeeds 
     the function returns true, false otherwise. 
 
+    \tparam PTYPE parent type
+    \tparam GTYPE target group type
+    \param p parent instance
+    \param gname group name
+    \param gclass class name
+    \param g target group
+    \return true if found, false otherwise
     */
     template<typename PTYPE,typename GTYPE>
     bool find_group_by_name_and_class(const PTYPE &p,const string &gname,
@@ -148,6 +158,37 @@ namespace nx{
         }
 
         return false;
+    }
+
+    //-------------------------------------------------------------------------
+    /*!
+    \brief create a group
+
+    Creates a group of type GTYPE below a group of type GTYPE. 
+    
+    \throws pni::io::nx::nxgroup_error 
+    \throws pni::io::nx::nxattribute_error
+    \tparam PTYPE type of parent group
+    \tparam GTYPE type of target group
+    \param p parent groupt
+    \param gname name of the new group
+    \param gclass class of the new group
+    \param g target group
+    */
+    template<typename PTYPE,typename GTYPE>
+    void create_group(const PTYPE &p,const string &gname,const string &gclass,
+                      GTYPE &g)
+    {
+        g=p.create_group(gname,gclass);
+    }
+
+    //-------------------------------------------------------------------------
+    template<typename PTYPE,typename GTYPE>
+    void create_group(const PTYPE &p,const string &spath,GTYPE &g)
+    {
+        nxpath path = path_from_string(spath);
+
+
     }
 //end of namespace
 }
