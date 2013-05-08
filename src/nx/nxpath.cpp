@@ -43,6 +43,36 @@ namespace nx{
         _groups(groups)
     {}
 
+    //--------------------------------------------------------------------------
+    void nxpath::append(const string &gname,const string &gclass)
+    {
+        group_element_t element(gname,gclass);
+        _groups.push_back(element);
+    }
+
+    //-------------------------------------------------------------------------
+    void nxpath::prepend(const string &gname,const string &gclass)
+    {
+        group_element_t element(gname,gclass);
+        _groups.push_front(element);
+    }
+
+    //-------------------------------------------------------------------------
+    group_element_t nxpath::pop_front()
+    {
+        group_element_t element = *(_groups.begin());
+        _groups.pop_front();
+        return element;
+    }
+
+    //-------------------------------------------------------------------------
+    group_element_t nxpath::pop_back()
+    {
+        group_element_t element = *(_groups.rbegin());
+        _groups.pop_back();
+        return element;
+    }
+
     //-------------------------------------------------------------------------
     void split_path(const string &input,
                     string &file,string &groups,string &attribute)
@@ -91,6 +121,24 @@ namespace nx{
         parse(start,stop,parser,gpath);
 
         return nxpath(filename,gpath,attribute_name);
+    }
+
+    //-------------------------------------------------------------------------
+    nxpath split(size_t i,nxpath &p)
+    {
+        string file_name = p.filename();
+        string attribute_name = p.attribute();
+
+        //now we have to split the elements
+        nxpath path(p.filename(),nxpath::group_path_t(p.size()-i),
+                    p.attribute());
+    }
+
+    //--------------------------------------------------------------------------
+    void split(const nxpath &p,size_t i,nxpath &p1,nxpath &p2)
+    {
+        p1 = p;
+        p2 = split(i,p1);
     }
 
 //end of namespace

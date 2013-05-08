@@ -116,6 +116,31 @@ namespace nx{
             //! return the attribute name
             string attribute() const { return _attribute_name; }
 
+            //-----------------------------------------------------------------
+            /*! 
+            \brief append group element 
+
+            Append a group element to the end of the groups list. 
+            \param gname name of the group
+            \param gclass class of the group
+            */
+            void append(const string &gname,const string &gclass);
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief add group element 
+
+            Prepend a group element to the beginning of the list.
+            \param gname name of the group
+            \param gclass class of the group
+            */
+            void prepend(const string &gname,const string &gclass);
+
+            //------------------------------------------------------------------
+            group_element_t pop_front();
+
+            group_element_t pop_back();
+
             //------------------------------------------------------------------
             //! return number of group entries
             size_t size() const { return _groups.size(); }
@@ -258,6 +283,9 @@ namespace nx{
     Splits a path at a given position. 
     
     */
+    nxpath split(size_t i,nxpath &p);
+
+    void split(const nxpath &p, size_t i,nxpath &p1,nxpath &p2);
 
 
 //end of namespace
