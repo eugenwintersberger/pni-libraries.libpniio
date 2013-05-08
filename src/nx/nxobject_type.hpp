@@ -39,6 +39,8 @@ namespace nx{
     */
     enum class nxobject_type { NXFIELD, //!< NXField identifier
                               NXGROUP, //!< NXGroup identifier
+                              NXFILE,  //!< NXFile identifier
+                              NXATTRIBUTE, //!< attribute identifier
                               NXNONE   //!< no valid Nexus object
                             };
 
