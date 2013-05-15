@@ -62,20 +62,20 @@ namespace nx{
     template<typename PTYPE, typename GTYPE> 
     bool find_group_by_class(const PTYPE &p,const string &gclass,GTYPE &g)
     {
-        for(auto o: p)
+        for(auto iter=p.begin();iter!=p.end();++iter)
         {
             //continue the loop if the object is not a group
-            if(o.object_type() != nxobject_type::NXGROUP) continue;
+            if(iter->object_type() != nxobject_type::NXGROUP) continue;
 
             //if the group object has no NX_class attribute just go ahead
-            if(!o.has_attr("NX_class")) continue;
+            if(!iter->has_attr("NX_class")) continue;
 
             //here we can do the check
             string buffer;
-            o.attr("NX_class").read(buffer);
+            iter->attr("NX_class").read(buffer);
             if(buffer == gclass) 
             {
-                g = o;
+                g = *iter;
                 return true;
             }
         }
@@ -111,15 +111,16 @@ namespace nx{
     template<typename PTYPE,typename GTYPE>
     bool find_group_by_name(const PTYPE &p,const string &gname,GTYPE &g)
     {
-        for(auto o: p)
+        auto iter = p.begin();
+        for(auto iter=p.begin();iter!=p.end();++iter)
         {
             //continue with the loop of the object is not a group
-            if(o.object_type() != nxobject_type::NXGROUP) continue;
+            if(iter->object_type() != nxobject_type::NXGROUP) continue;
 
             //check name
-            if(o.name() == gname) 
+            if(iter->name() == gname) 
             {
-                g = o;
+                g = *iter;
                 return true;
             }
         }
