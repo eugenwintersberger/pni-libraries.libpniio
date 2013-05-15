@@ -58,7 +58,7 @@ namespace nx{
     }
 
     //-------------------------------------------------------------------------
-    group_element_t nxpath::pop_front()
+    nxpath::group_element_t nxpath::pop_front()
     {
         group_element_t element = *(_groups.begin());
         _groups.pop_front();
@@ -66,7 +66,7 @@ namespace nx{
     }
 
     //-------------------------------------------------------------------------
-    group_element_t nxpath::pop_back()
+    nxpath::group_element_t nxpath::pop_back()
     {
         group_element_t element = *(_groups.rbegin());
         _groups.pop_back();
