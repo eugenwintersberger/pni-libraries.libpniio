@@ -26,6 +26,7 @@
  */
 #pragma once
 
+#include <sstream>
 #include <pni/core/types.hpp>
 
 #include "nxobject.hpp"
@@ -132,6 +133,8 @@ namespace nx{
             Create a new group. The optional argument type determines the Nexus
             object type the group represents. By default type is an empty string
             in which case the NX_class attribute will not be written.
+            \throws pni::io::nx::nxgroup_error in case of group creation errors
+            \throws pni::io::nx::nxattribute_error in case of attribute problems
             \param n group name
             \param type nexus class type
             \return a new instance of nxgroup
@@ -145,12 +148,47 @@ namespace nx{
 
                 typedef MAPTYPE(Imp,GroupImpl) GroupImpl;
 
-                nxgroup<GroupImpl> g(GroupImpl(n,this->imp()));
+                nxgroup<GroupImpl> g;
+                try
+                {
+                    g = nxgroup<GroupImpl>(GroupImpl(n,this->imp()));
+                }
+                catch(nxgroup_error &e)
+                {
+                    //a known error from the underlying implementation is 
+                    //forwarded 
+                    e.append(EXCEPTION_RECORD);
+                    throw e;
+                }
+                catch(...)
+                {
+                    //in case of an unknown error throw a new one
+                    std::stringstream ss;
+                    ss<<"Error creating group ["<<n<<"] below ["<<
+                                  this->path()<<"]!";
+                    throw nxgroup_error(EXCEPTION_RECORD,ss.str());
+                }
 
                 //if the type string is not empty we write the 
                 //appropriate attribute.
-                if(!type.empty())
-                    g.template attr<string>("NX_class").write(type);
+                try
+                {
+                    if(!type.empty())
+                        g.template attr<string>("NX_class").write(type);
+                }
+                catch(nxattribute_error &e)
+                {
+                    e.append(EXCEPTION_RECORD);
+                    throw e;
+                }
+                catch(...)
+                {
+                    std::stringstream ss;
+                    ss<<"Error creating attribute [NX_class] on";
+                    ss<<" group"<<this->path()<<"!";
+                    throw nxattribute_error(EXCEPTION_RECORD,ss.str());
+                         
+                }
 
                 return g;
             }

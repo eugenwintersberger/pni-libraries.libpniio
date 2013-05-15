@@ -26,9 +26,16 @@ sources_list.append("H5FileTest.cpp")
 sources_list.append("H5GroupTest.cpp")
 sources_list.append("H5DatasetTest.cpp")
 sources_list.append("H5AttributeTest.cpp")
+sources_list.append("value_parser_test.cpp")
+sources_list.append("slice_parser_test.cpp")
+sources_list.append("array_parser_test.cpp")
+sources_list.append("record_parser_test.cpp")
+sources_list.append("nxutils_test.cpp")
+sources_list.append("nxpath_test.cpp")
 #sources_list.append("H5SelectionTest.cpp")
 #sources_list.append("H5LinkTest.cpp")
 #sources_list.append("TestHelpers.cpp")
+
 
 #sources for benchmark code
 bmsources_list = ["pniiobm.cpp"]
