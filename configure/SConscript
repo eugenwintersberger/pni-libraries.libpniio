@@ -190,9 +190,9 @@ if GetOption("with_mpi"):
     
 
 #check for boost regular expressions library
-if not conf.CheckLib("boost_regex",language="C++"):
+if not conf.CheckLib("boost_regex",language="C++",autoadd=0):
     env.AppendUnique(LIBS=['dl'])
-    if not conf.CheckLib("boost_regex",language="C++"):
+    if not conf.CheckLib("boost_regex",language="C++",autoadd=0):
         print "BOOST regular expression library not found"
         Exit(1)
 
@@ -204,7 +204,7 @@ if not conf.CheckLib("hdf5"):
     print "HDF5 library not installed!"
     Exit(1)
 
-if not conf.CheckLib("pnicore",language="C++"):
+if not conf.CheckLib("pnicore",language="C++",autoadd=0):
     print "libpniutils not installed!"
     Exit(1)
 
@@ -263,25 +263,25 @@ if 'test' in COMMAND_LINE_TARGETS:
         Exit(1)
 
     #check for mandatory libraries
-    if not test_conf.CheckLib("cppunit",language="C++"):
+    if not test_conf.CheckLib("cppunit",language="C++",autoadd=0):
         test_env.AppendUnique(LIBS=["dl"])
-        if not test_conf.CheckLib('cppunit',language='C++'):
+        if not test_conf.CheckLib('cppunit',language='C++',autoadd=0):
             print "CPPUNIT unit test libraray is not installed!"
             Exit(1)
 
-    if not test_conf.CheckLib("boost_program_options",language="C++"):
+    if not test_conf.CheckLib("boost_program_options",language="C++",autoadd=0):
         print "BOOST program options library not installed!"
         Exit(1)
 
-    if not test_conf.CheckLib("boost_system",language="C++"):
+    if not test_conf.CheckLib("boost_system",language="C++",autoadd=0):
         print "BOOST system library not installed!"
         Exit(1)
 
-    if not test_conf.CheckLib("pniio",language="C++"):
+    if not test_conf.CheckLib("pniio",language="C++",autoadd=0):
         print "PNIIO library not installed!"
         Exit(1)
 
-    if not test_conf.CheckLib("pnicore",language="C++"):
+    if not test_conf.CheckLib("pnicore",language="C++",autoadd=0):
         print "PNICORE library not installed!"
         Exit(1)
 
