@@ -37,8 +37,32 @@ namespace io{
     \ingroup parser_classes
     \brief slice parser
 
-    This parser reads slice objects from a string. 
-    
+    This parser reads slice objects from a string. A slice is represented by
+    three numbers: the start index, the last index, and a stride. 
+    In string representation these three values are written as
+    \code
+    start:stop:stride
+    \endcode
+    where a \c : is used as separator between the numbers. There are several
+    flavors of strings that can be used to denote a slice 
+    \li \c start - here stop is assumed to be start+1 and stride=1.
+    \li \c start:stop - where stride is assumed to be 1
+    \li \c :stop - where start=0 and stride = 1
+    \li \c :stop:stride - where start is assumed to be 0
+
+    This parser is capable of managing all these variations. It can be used like
+    this
+    \code 
+    typedef string::iterator iterator_t;
+    typedef slice_parser<iterator_t> parser_t;
+
+    string slice_str = "1:100:2";
+    slice s;
+    parser_t parser; //generate a parser instance
+    parse(slice_str.begin(),slice_str.end(),parser,s);
+
+    \endcode
+
     \tparam ITERT iterator type for the parser
     */
     template<typename ITERT>
@@ -46,10 +70,12 @@ namespace io{
                                                     boost::spirit::qi::locals<size_t,size_t,size_t>,
                                                     pni::core::slice()>
     {
+        //! rule to parse a slice string
         boost::spirit::qi::rule<ITERT,boost::spirit::qi::locals<size_t,size_t,size_t>,
                                 pni::core::slice()
                                 > slice_rule;
 
+        //! default constructor
         slice_parser() : slice_parser::base_type(slice_rule)
         {
             using namespace boost::spirit::qi;

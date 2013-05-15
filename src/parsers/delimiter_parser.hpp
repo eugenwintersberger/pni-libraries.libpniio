@@ -40,14 +40,18 @@ namespace io{
     This character can be preceded and followed by an arbitrary number of
     blanks. 
 
+    This parser itself is hardly usefull. However, it is a quite handy component
+    in connection with other parser.
+
     \tparam ITERT iterator type for the parser
     */
     template<typename ITERT >
     struct delimiter_parser : boost::spirit::qi::grammar<ITERT,pni::core::string()>
     {
+        //! main parser rule
         boost::spirit::qi::rule<ITERT,pni::core::string()> delimiter;
 
-        //default constructor
+        //!default constructor
         delimiter_parser() : 
             delimiter_parser::base_type(delimiter)
         {
@@ -58,8 +62,8 @@ namespace io{
             //default behavior - at least one whitespace is a valid delimiter
             delimiter = +blank;
         }
-        //more elaborate constructor
 
+        //! constructor
         delimiter_parser(char symbol):
             delimiter_parser::base_type(delimiter)
         {
