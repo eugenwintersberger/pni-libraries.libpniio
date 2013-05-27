@@ -893,7 +893,7 @@ namespace nx{
                 try
                 {
                     string s(value);
-                    this->read(s);
+                    this->write(s);
                 }
                 catch(shape_missmatch_error &error)
                 {
