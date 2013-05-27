@@ -216,6 +216,12 @@ void NXFieldTest::test_io_string_scalar()
 
     CPPUNIT_ASSERT_NO_THROW(field1.grow(0));
     CPPUNIT_ASSERT_THROW(field1.write(write),shape_missmatch_error);
+
+    //try to write a literal
+    nxfield field2 = file.create_field<string>("scalar_2");
+    CPPUNIT_ASSERT_NO_THROW(field2.write("hello world"));
+    CPPUNIT_ASSERT_NO_THROW(field2.read(read));
+    CPPUNIT_ASSERT(read == "hello world");
 }
 
 //------------------------------------------------------------------------------
