@@ -52,7 +52,11 @@ namespace io{
 
     //====================Implementation of constructors=======================
     //implementation of the default constructor
-    data_reader::data_reader() {}
+    data_reader::data_reader():
+        _fname(),
+        _is_binary(true),
+        _istream(nullptr)
+    {}
 
     //-------------------------------------------------------------------------
     //implementation of the standard constructor
@@ -109,14 +113,15 @@ namespace io{
     //-------------------------------------------------------------------------
     void data_reader::close()
     {
-        if(_istream->is_open()) _istream->close();
+        if(_istream)
+            if(_istream->is_open()) _istream->close();
     }
 
     //-------------------------------------------------------------------------
     void data_reader::open()
     {
         close(); //close the file if it is already open
-        _istream = _open_stream(filename());
+        if(_istream) _istream = _open_stream(filename());
     }
 
 //end of namespace
