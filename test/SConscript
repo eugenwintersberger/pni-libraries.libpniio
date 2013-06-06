@@ -38,13 +38,8 @@ sources_list.append("nxpath_test.cpp")
 
 
 #sources for benchmark code
-bmsources_list = ["pniiobm.cpp"]
-bmsources_list.append(["benchmark/file_io_benchmark.cpp"])
-bmsources_list.append(["benchmark/benchmark_factory.cpp"])
-
 
 pninx_test = test_env.Program("pniiotest",sources_list)
-benchmark = test_env.Program("pniiobm",bmsources_list)
 
 
-test_env.Alias("test",[pninx_test,benchmark])
+test_env.Alias("test",[pninx_test])
