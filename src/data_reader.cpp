@@ -121,7 +121,7 @@ namespace io{
     void data_reader::open()
     {
         close(); //close the file if it is already open
-        if(_istream) _istream = _open_stream(filename());
+        _istream = _open_stream(filename());
     }
 
 //end of namespace
