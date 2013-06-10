@@ -89,7 +89,23 @@ namespace nx{
             file_pos += 3;    
         }
         else
+        {
+            //if there is no file separator there are two possibilities
+            //1.) the path is only for groups and no file
+            //2.) if it is only a file than there must be at least one 
+            //    '.' period that separates the filename from its extension
+            //    though this is rather unsave it is the best chance we have 
+            //    to distinguish these two situations.
             file_pos = 0;
+            if(input.find(".")!=string::npos)
+            {
+                //found the period - and return to the calling function
+                file = input;
+                return;
+            }
+            //if there is no period for a file extension we have to assume that
+            //the path refers only to Nexus groups and we continue
+        }
 
         //search for attributes
         string::size_type attr_pos = input.find("@");

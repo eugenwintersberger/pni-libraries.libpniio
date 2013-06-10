@@ -50,6 +50,7 @@ class nxpath_test : public CppUnit::TestFixture
         string path_1;
         string path_2;
         string path_3;
+        string path_4;
 
     public:
         void setUp();

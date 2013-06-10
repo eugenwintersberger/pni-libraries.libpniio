@@ -31,6 +31,7 @@ void nxpath_test::setUp()
     path_1 = "/home/data/file.h5:///entry:NXentry/:NXinstrument/:NXdetector/data";
     path_2 = "/entry:NXentry/:NXinstrument/:NXdetector/data";
     path_3 = "/:NXentry/:NXinstrument/:NXdetector/data@time";
+    path_4 = "/home/data/file.h5";
 }
 
 //-----------------------------------------------------------------------------
@@ -49,17 +50,22 @@ void nxpath_test::test_split_string()
     split_path(path_1,file,group,attribute);
     CPPUNIT_ASSERT(file=="/home/data/file.h5");
     CPPUNIT_ASSERT(group=="/entry:NXentry/:NXinstrument/:NXdetector/data");
-    CPPUNIT_ASSERT(attribute=="");
+    CPPUNIT_ASSERT(attribute.empty());
 
     split_path(path_2,file,group,attribute);
-    CPPUNIT_ASSERT(file=="");
+    CPPUNIT_ASSERT(file.empty());
     CPPUNIT_ASSERT(group=="/entry:NXentry/:NXinstrument/:NXdetector/data");
-    CPPUNIT_ASSERT(attribute=="");
+    CPPUNIT_ASSERT(attribute.empty());
     
     split_path(path_3,file,group,attribute);
-    CPPUNIT_ASSERT(file=="");
+    CPPUNIT_ASSERT(file.empty());
     CPPUNIT_ASSERT(group=="/:NXentry/:NXinstrument/:NXdetector/data");
     CPPUNIT_ASSERT(attribute=="time");
+
+    split_path(path_4,file,group,attribute);
+    CPPUNIT_ASSERT(file==path_4);
+    CPPUNIT_ASSERT(group.empty());
+    CPPUNIT_ASSERT(attribute.empty());
 
 }
 
@@ -99,5 +105,9 @@ void nxpath_test::test_parse()
     CPPUNIT_ASSERT(iter->first == "data");
     CPPUNIT_ASSERT(iter->second == "");
     
+    path = path_from_string(path_4);
+    CPPUNIT_ASSERT(path.filename()==path_4);
+    CPPUNIT_ASSERT(path.size() == 0);
+    CPPUNIT_ASSERT(path.attribute().empty());
 
 }
