@@ -77,6 +77,7 @@ namespace io{
         boost::regex header_convention("^_array_data.header_convention.*");
         boost::regex regex_sls("SLS");
         boost::regex regex_dectris("DECTRIS");
+        boost::regex regex_pilatus("PILATUS");
         boost::regex quoted_text("\".*\"");
         boost::cmatch match;
 
@@ -88,7 +89,8 @@ namespace io{
                 //convention
                 boost::regex_search(linebuffer,match,quoted_text);
                 if(boost::regex_search(match.str(0),regex_sls)||
-                   boost::regex_search(match.str(0),regex_dectris))
+                   boost::regex_search(match.str(0),regex_dectris) ||
+                   boost::regex_search(match.str(0),regex_pilatus))
                 {
                     _data_offset = cbf::dectris_reader::read_header(_istream,
                             _image_info,_compression_type);
