@@ -297,7 +297,7 @@ namespace io{
 
         //assume here that the image is stored using strips
         tiff::strip_reader reader(tiff::strip_reader::create(stream,ifd,this->info(i)));
-        std::cout<<reader<<std::endl;
+        //std::cout<<reader<<std::endl;
 
         reader.read(c,stream,data);
         
