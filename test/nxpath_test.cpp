@@ -32,12 +32,22 @@ void nxpath_test::setUp()
     path_2 = "/entry:NXentry/:NXinstrument/:NXdetector/data";
     path_3 = "/:NXentry/:NXinstrument/:NXdetector/data@time";
     path_4 = "/home/data/file.h5";
+    path_5 = ".././../data";
 }
 
 //-----------------------------------------------------------------------------
 void nxpath_test::tearDown()
 {
 
+}
+
+//-----------------------------------------------------------------------------
+void nxpath_test::test_path_check()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    CPPUNIT_ASSERT(is_file_path(path_4));
+    CPPUNIT_ASSERT(!is_file_path(path_5));
 }
 
 //-----------------------------------------------------------------------------
@@ -66,6 +76,11 @@ void nxpath_test::test_split_string()
     CPPUNIT_ASSERT(file==path_4);
     CPPUNIT_ASSERT(group.empty());
     CPPUNIT_ASSERT(attribute.empty());
+
+    split_path(path_5,file,group,attribute);
+    CPPUNIT_ASSERT(file=="");
+    CPPUNIT_ASSERT(group==path_5);
+    CPPUNIT_ASSERT(attribute=="");
 
 }
 
@@ -109,5 +124,10 @@ void nxpath_test::test_parse()
     CPPUNIT_ASSERT(path.filename()==path_4);
     CPPUNIT_ASSERT(path.size() == 0);
     CPPUNIT_ASSERT(path.attribute().empty());
+
+    path = path_from_string(path_5);
+    CPPUNIT_ASSERT(path.filename()=="");
+    CPPUNIT_ASSERT(path.size() == 4);
+    CPPUNIT_ASSERT(path.attribute() == "");
 
 }

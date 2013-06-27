@@ -22,12 +22,19 @@
  */
 
 #include "nxpath.hpp"
+#include <boost/filesystem.hpp>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/predicate.hpp>
+#include <boost/algorithm/string/find.hpp>
+#include <boost/algorithm/string/classification.hpp>
+
 
 namespace pni{
 namespace io{
 namespace nx{
 
-   
+    namespace fs   = boost::filesystem;
+    namespace algo = boost::algorithm; 
     //-------------------------------------------------------------------------
     nxpath::nxpath():
         _file_name(),
@@ -74,49 +81,80 @@ namespace nx{
     }
 
     //-------------------------------------------------------------------------
+    bool is_file_path(const string &s)
+    {
+        fs::path p(s);
+
+        //if the path has no extension we assume it to be an object path
+        if(extension(p).empty()) return false;
+
+        return true;
+        
+    }
+
+    //-------------------------------------------------------------------------
+    void split_object_path(const string &input,string &groups,
+                           string &attributes)
+    {
+        //define a string container 
+        typedef std::vector<string> str_cont_t;
+
+        str_cont_t result;
+        algo::split(result,input,algo::is_any_of("@"));
+
+        groups = string();
+        attributes = string();
+        
+        for(size_t i=0;i<result.size();++i)
+        {
+            if(i==0) groups = result[i];
+            else if(i==1) attributes = result[i];
+            else
+            {
+                //throw an exception here.
+            }
+        }
+
+
+    }
+
+    //-------------------------------------------------------------------------
     void split_path(const string &input,
                     string &file,string &groups,string &attribute)
     {
+        //define a string container 
+        typedef std::vector<string> str_cont_t;
+
         //start with file portion
         file = string();
         groups = string();
         attribute = string();
 
-        string::size_type file_pos  = input.find("://");
-        if(file_pos != string::npos)
+         
+        if(algo::contains(input,"://"))
         {
-            file = input.substr(0,file_pos);
-            file_pos += 3;    
+            //here it is easy we know that which part of the path is the file
+            //section and which the object path within the file 
+            auto result = algo::find_first(input,"://");
+            file = string(input.begin(),result.begin());
+            split_object_path(string(result.end(),input.end()),groups,
+                              attribute);
+             
         }
         else
         {
-            //if there is no file separator there are two possibilities
-            //1.) the path is only for groups and no file
-            //2.) if it is only a file than there must be at least one 
-            //    '.' period that separates the filename from its extension
-            //    though this is rather unsave it is the best chance we have 
-            //    to distinguish these two situations.
-            file_pos = 0;
-            if(input.find(".")!=string::npos)
+            //here we need some additional check - in this case the string can
+            //be either a file path or an object path
+            if(is_file_path(input)) file = input;
+            else
             {
-                //found the period - and return to the calling function
-                file = input;
-                return;
+                //in this case the string is an object path and we have to check
+                //for a possible attribute
+                split_object_path(input,groups,attribute);
+
             }
-            //if there is no period for a file extension we have to assume that
-            //the path refers only to Nexus groups and we continue
-        }
 
-        //search for attributes
-        string::size_type attr_pos = input.find("@");
-        if(attr_pos != string::npos)
-        {
-            attribute = input.substr(attr_pos+1,input.size()-attr_pos);
         }
-        else
-            attr_pos = input.size();
-
-        groups = input.substr(file_pos,attr_pos-file_pos);
     }
 
     //-------------------------------------------------------------------------

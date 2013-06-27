@@ -239,6 +239,25 @@ namespace nx{
 
     };
 
+    //-------------------------------------------------------------------------
+    /*!
+    \brief check if path is fs path
+
+    This function checks if a string represents a path to a file on the
+    filesystem. For this check it assumes that the last element of the path is
+    the name of the file which has the form
+    \code
+    [basename].[extension]
+    \endcode
+    This function is necessary for splitting a nexus path. In cases where only
+    the filename or the object path is given we need a way to distinguish
+    between these two types of paths. 
+
+    \param s the path as string
+    \return true of s represents a file path
+    */
+    bool is_file_path(const string &s);
+
 
     //-------------------------------------------------------------------------
     /*!

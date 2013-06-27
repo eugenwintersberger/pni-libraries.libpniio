@@ -43,6 +43,7 @@ class nxpath_test : public CppUnit::TestFixture
 {
     private:
         CPPUNIT_TEST_SUITE(nxpath_test);
+        CPPUNIT_TEST(test_path_check);
         CPPUNIT_TEST(test_split_string);
         CPPUNIT_TEST(test_parse);
         CPPUNIT_TEST_SUITE_END();
@@ -51,11 +52,13 @@ class nxpath_test : public CppUnit::TestFixture
         string path_2;
         string path_3;
         string path_4;
+        string path_5;
 
     public:
         void setUp();
         void tearDown();
 
+        void test_path_check();
         void test_split_string();
         void test_parse();
 
