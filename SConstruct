@@ -51,9 +51,9 @@ var.Add(PathVariable("MPILIBDIR","Directory where MPI libraries are installed","
 var.Add(PathVariable("MPIINCDIR","Directory where MPI headers are installed","/usr/include"))
 
 var.Add("H5LIBNAME","HDF5 library name","hdf5")
-var.Add("VERSION","library version","0.9.1")
+var.Add("VERSION","library version","0.9.2")
 var.Add("LIBNAME","library name","pniio")
-var.Add("SOVERSION","SOVersion of the library (binary interface version)","0")
+var.Add("SOVERSION","SOVersion of the library (binary interface version)","1")
 var.Add("CXX","set the compiler to use","g++")
 var.Add("MAINTAINER","package maintainer for the project","Eugen Wintersberger")
 var.Add("MAINTAINER_MAIL","e-mail of the package maintainer","eugen.wintersberger@desy.de")
