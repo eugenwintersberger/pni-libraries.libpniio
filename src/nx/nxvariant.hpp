@@ -29,3 +29,4 @@
 #include "variant_algo/is_valid.hpp"
 #include "variant_algo/get_name.hpp"
 #include "variant_algo/get_attribute.hpp"
+#include "variant_algo/get_class.hpp"
