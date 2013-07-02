@@ -24,85 +24,106 @@
 #include "../nxvariant_traits.hpp"
 #include "nxvariant_algo_helper.hpp"
 
+
 namespace pni{
 namespace io{
 namespace nx{
 
     /*!
     \ingroup variant_code
-    \brief check field visitor
+    \brief check object validity
 
-    This visitor checks a variant type if the object stored is a field. 
-    In this case true is returned.
-    
+    This visitor checks a Nexus object stored in a variant type for its
+    validity. You will hardly ever use this visitory directly but rather the
+    is_valid wrapper function.
     \tparam VTYPE variant type
+    \sa is_valid
     */
     template<typename VTYPE> 
-    class is_field_visitor : public boost::static_visitor<bool>
+    class is_valid_visitor : public boost::static_visitor<bool>
     {
         public:
-            //! first type of the variant 
-            typedef typename GETVMEMBER(VTYPE,0) first_type;
+            //! first type of VTYPE
+            typedef typename GETVMEMBER(VTYPE,0) first_member;
             //! result type (bool)
-            typedef bool result_type;   
+            typedef bool result_type;
             //! Nexus group type
-            DEFINE_NXGROUP(first_type) group_type;
+            DEFINE_NXGROUP(first_member) group_type;
             //! Nexus field type
-            DEFINE_NXFIELD(first_type) field_type;
+            DEFINE_NXFIELD(first_member) field_type;
             //! Nexus attribute type
-            DEFINE_NXATTRIBUTE(first_type) attribute_type;
-           
+            DEFINE_NXATTRIBUTE(first_member) attribute_type;
+          
             //-----------------------------------------------------------------
             /*!
             \brief process group instances
 
-            \param g reference to group instance
-            \return false
+            Checks a group instance for its validity. If the group is valid
+            true is returned, otherwise false. 
+            \param g group instance
+            \return true if valid, false otherwise
             */
             result_type operator()(const group_type &g) const
             {
-                return false;
+                return g.is_valid();
             }
 
             //-----------------------------------------------------------------
             /*!
             \brief process field instances
 
-            \param f reference to field instance
-            \return true
+            Checks a field instance for its validity. If the field is valid
+            true is returned, otherwise false. 
+            \param f field instance
+            \return true if valid, false otherwise
             */
             result_type operator()(const field_type &f) const
             {
-                return true;
+                return f.is_valid();
             }
 
             //-----------------------------------------------------------------
             /*!
             \brief process attribute instances
 
-            \param a reference to attribute instance
-            \return false
+            Checks a attribute instance for its validity. If the attribute is
+            valid true is returned, otherwise false. 
+            \param a attribute instance
+            \return true if valid, false otherwise
             */
             result_type operator()(const attribute_type &a) const
             {
-                return false;
+                return a.is_valid();
             }
     };
 
     /*!
     \ingroup variant_code
-    \brief check if field
+    \brief is_valid wrapper 
 
-    Wrapper function around the is_field_visitor. The function returns true if
-    the object stored in the variant type is a field type.
-    \tparam VTYPE Nexus object variant type
-    \param o instance of VTYPE
-    \return true if the object is a field
+    This function acts as a wrapper around the is_valid_visitor. It returns true
+    if the object stored in the variant type VTYPE is valid  and false
+    otherwise.
+    
+    \code{.cpp}
+    typedef nxvariant_trait<h5::nxfile>::object_types object_types;
+
+    object_types o = ....;
+    if(!is_valid(o))
+    {
+        std::cerr<<"Nexus object is not valid - abort program!"<<std::endl;
+        return -1;
+    }
+    \endcode
+
+    \tparam VTYPE
+    \param o reference to instance of VTYPE
+    \return true if valid, false otherwise
     */
     template<typename VTYPE> 
-    typename is_field_visitor<VTYPE>::result_type is_field(const VTYPE &o)
+    typename is_valid_visitor<VTYPE>::result_type is_valid(const VTYPE &o)
     {
-        return boost::apply_visitor(is_field_visitor<VTYPE>(),o);
+        return boost::apply_visitor(is_valid_visitor<VTYPE>(),o);
     }
 
 //end of namespace

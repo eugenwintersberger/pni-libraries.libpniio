@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
- * Created on: Jun 28, 2013
+ * Created on: Jul 1, 2013
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 #pragma once
@@ -26,83 +26,87 @@
 namespace pni{
 namespace io{
 namespace nx{
+
+
     /*!
     \ingroup variant_code
-    \brief check if group
+    \brief get name visitor
 
-    Check if the object stored in a variant is a group. The return value of the
-    () operator of this visitor is bool.
+    This visitor retrieves the name of an object stored in a variant type. 
+    The class is not intended to be directly used. Rather use the get_name
+    wrapper template function.
     \tparam VTYPE variant type
-    \return true if the object is a group, false otherwise
+    \sa get_name
     */
     template<typename VTYPE> 
-    class is_group_visitor : public boost::static_visitor<bool>
+    class get_name_visitor : public boost::static_visitor<string>
     {
         public:
-            //! first type of the variant 
+            //! first type of the variant type
             typedef typename nxvariant_member_type<VTYPE,0>::type first_member;
-            //! result type 
-            typedef bool result_type;
+            //! result type
+            typedef string result_type;
             //! Nexus group type
             DEFINE_NXGROUP(first_member) group_type;
             //! Nexus field type
             DEFINE_NXFIELD(first_member) field_type;
             //! Nexus attribute type
             DEFINE_NXATTRIBUTE(first_member) attribute_type;
-          
-            //----------------------------------------------------------------
-            /*!
-            \brief process group objects
 
-            \param g reference to group instance
-            \return true
-            */
+            //-----------------------------------------------------------------
+            /*!
+            \brief process group instances
+
+            Retrieve the name from a group instance.
+            \param g group instance
+            \return string with the group name
+            */ 
             result_type operator()(const group_type &g) const
             {
-                return true;
+                return g.name();
             }
 
             //-----------------------------------------------------------------
             /*!
-            \brief process field objects
+            \brief process field instances
 
-            \param f reference to field instance
-            \return false
+            Retrieve the name of a field instance.
+            \param f field instance
+            \return name of the field
             */
             result_type operator()(const field_type &f) const
             {
-                return false;
+                return f.name();
             }
 
             //-----------------------------------------------------------------
             /*!
-            \brief process attribute objects
+            \brief process attribute instances
 
-            \param a reference to attribute instance
-            \return false
+            Retrieve the name of an attribute instance.
+            \param a attribute instance
+            \return name of the attribute
             */
             result_type operator()(const attribute_type &a) const
             {
-                return false;
+                return a.name();
             }
     };
 
     /*!
     \ingroup variant_code
-    \brief check for group
+    \brief get name wrapper
 
-    This template function is a wrapper around the is_group_visitor visitor
-    template. It checks if the object stored in a variant type is a group and
-    returns true if this is the case. In all other cases false is returned.
-    
-    \tparam VTYPE variant type
-    \param o reference to VTYPE instance
-    \return true if object is a group, false otherwise
+    Wrapper function for the get_name_visitor template. Use this function
+    instead of get_name_visitor directly. 
+    \tparam VTYPE
+    \param o instance of VTYPE
+    \return a string with the name of the object
     */
     template<typename VTYPE> 
-    typename is_group_visitor<VTYPE>::result_type is_group(const VTYPE &o)
+    typename get_name_visitor<VTYPE>::result_type get_name(const VTYPE &o)
     {
-        return boost::apply_visitor(is_group_visitor<VTYPE>(),o);
+        return boost::apply_visitor(get_name_visitor<VTYPE>(),o);
     }
 
 //end of namespace
