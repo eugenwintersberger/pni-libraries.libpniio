@@ -25,4 +25,4 @@
 
 #include "variant_algo/is_group.hpp"
 #include "variant_algo/is_field.hpp"
-
+#include "variant_algo/is_attribute.hpp"
