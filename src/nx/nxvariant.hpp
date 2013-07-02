@@ -35,3 +35,4 @@
 #include "variant_algo/set_unit.hpp"
 #include "variant_algo/get_unit.hpp"
 #include "variant_algo/get_parent.hpp"
+#include "variant_algo/get_child.hpp"

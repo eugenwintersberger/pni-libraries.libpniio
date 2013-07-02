@@ -1,0 +1,192 @@
+/*
+ * (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *
+ * This file is part of libpniio.
+ *
+ * libpniio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * libpniio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+ *************************************************************************
+ * Created on: Jul 1, 2013
+ *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+ */
+#pragma once
+
+#include "../nxvariant_traits.hpp"
+#include "is_group.hpp"
+#include "is_field.hpp"
+#include "get_name.hpp"
+#include "is_class.hpp"
+#include "is_valid.hpp"
+
+namespace pni{
+namespace io{
+namespace nx{
+
+
+    /*!
+    \ingroup variant_code
+    \brief get child visitor
+    
+    Retrieves a child object form an object stored in a variant type. Virtually
+    the only object where this will work are groups. Children can be selected by
+    two criteria: their name and their class. Though, the class name is only
+    evaluated if we are looking for a group.
+    \tparam VTYPE variant type
+    */
+    template<typename VTYPE> 
+    class get_child_visitor : public boost::static_visitor<
+                              typename nxvariant_traits<typename nxvariant_member_type<VTYPE,0>::type>::child_types>
+    {
+        private: 
+            string _name;  //!< name of the object
+            string _class; //!< object class (in case of a group)
+        public:
+            //! first type of the variant type
+            typedef typename nxvariant_member_type<VTYPE,0>::type first_member;
+            //! result type
+            typedef typename nxvariant_traits<first_member>::child_types result_type;
+            //! Nexus group type
+            DEFINE_NXGROUP(first_member) group_type;
+            //! Nexus field type
+            DEFINE_NXFIELD(first_member) field_type;
+            //! Nexus attribute type
+            DEFINE_NXATTRIBUTE(first_member) attribute_type;
+
+            //-----------------------------------------------------------------
+            /*!
+            \brief constructor
+
+            \param n name of the child
+            \param c Nexus class of the child
+            */
+            get_child_visitor(const string &n,const string &c):
+                _name(n),
+                _class(c)
+            {}
+           
+            //-----------------------------------------------------------------
+            /*!
+            \brief process groups
+
+            Groups are currently the only objects that can have children. This
+            method iterates over all children of a group and checks if the
+            criteria (name and class) match. If the child is a field only the
+            name is of importance. In case of a group also the class will be
+            checked. If none of the child objects matches the criteria an
+            invalid object will be returned.
+            \param g group instance
+            \return child object
+            */
+            result_type operator()(const group_type &g) const
+            {
+                //here comes the interesting part
+                result_type result; 
+
+                for(auto child: g)
+                {
+                    if(child.object_type() == nxobject_type::NXGROUP)
+                        result = group_type(child);
+                    else if(child.object_type() == nxobject_type::NXFIELD)
+                        result = field_type(child);
+                    else 
+                        continue; //maybe one should throw an exception here
+
+                    if(is_group(result))
+                    {
+                        //check here for name and type
+                        if(_name.empty())
+                        {
+                            //we only need to check for the class
+                            if(is_class(result,_class)) return result;
+                        }
+                        else 
+                        {
+                            //we definitly need to check the name
+                            if(get_name(result) == _name)
+                            {
+                                if(_class.empty()) return result;
+                                else if(is_class(result,_class))
+                                    return result;
+                            }
+                        }
+                        continue;
+                    }
+                    else if(is_field(result))
+                    {
+                        //check here only for the name
+                        if(get_name(result)!=_name) continue;
+
+                        return result;
+                    }
+                }
+
+                //in the worst case we return an invalid object
+                return result_type();
+            }
+
+            //-----------------------------------------------------------------
+            /*!
+            \brief process fields
+
+            Fields cannot have children - throw an exception here.
+            \throws nxfield_error no children for fields
+            \param f field instance
+            \return to be ignored
+            */
+            result_type operator()(const field_type &f) const
+            {
+                throw nxfield_error(EXCEPTION_RECORD,
+                        "Fields do not have children!");
+            }
+
+            //-----------------------------------------------------------------
+            /*!
+            \brief process attributes
+
+            Like fields attributes cannot have children - throw an exception
+            here.
+            \throws nxattribute_error no children for attributes
+            \param a attribute instance
+            \return to be ignored
+            */
+            result_type operator()(const attribute_type &a) const
+            {
+                throw nxattribute_error(EXCEPTION_RECORD,
+                        "Attributes do not have children!");
+
+            }
+    };
+
+    /*!
+    \ingroup variant_code
+    \brief get child wrapper
+
+    Wrapper function for the get_child_visitor template. 
+    \throws nxfield_error if the stored object is a field
+    \throws nxattribute_error if the stored object is an attribute
+    \tparam VTYPE variant type
+    \param n name of the child
+    \param c class of the child (only for groups)
+    \return child object
+    */
+    template<typename VTYPE> 
+    typename get_child_visitor<VTYPE>::result_type
+    get_child(const VTYPE &o,const string &n,const string &c)
+    {
+        return boost::apply_visitor(get_child_visitor<VTYPE>(n,c),o);
+    }
+
+//end of namespace
+}
+}
+}
