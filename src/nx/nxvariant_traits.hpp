@@ -109,6 +109,7 @@ namespace nx{
     */
     template<typename VTYPE,int i> struct nxvariant_member_type
     {
+        //! the requested type of the variant
         typedef typename boost::mpl::at<typename VTYPE::types,boost::mpl::int_<0> >::type type; 
     };
 

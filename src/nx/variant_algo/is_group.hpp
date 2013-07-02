@@ -54,6 +54,7 @@ namespace nx{
             /*!
             \brief process group objects
 
+            \param g reference to group instance
             \return true
             */
             result_type operator()(const group_type &g) const
@@ -65,6 +66,7 @@ namespace nx{
             /*!
             \brief process field objects
 
+            \param f reference to field instance
             \return false
             */
             result_type operator()(const field_type &f) const
@@ -76,6 +78,7 @@ namespace nx{
             /*!
             \brief process attribute objects
 
+            \param a reference to attribute instance
             \return false
             */
             result_type operator()(const attribute_type &a) const
@@ -92,6 +95,7 @@ namespace nx{
     template. It checks if the object stored in a variant type is a group and
     returns true if this is the case. In all other cases false is returned.
     \tparam VTYPE variant type
+    \param o reference to VTYPE instance
     \return true if object is a group, false otherwise
     */
     template<typename VTYPE> 

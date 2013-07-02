@@ -55,6 +55,7 @@ namespace nx{
             /*!
             \brief process group instances
 
+            \param g reference to group instance
             \return false
             */
             result_type operator()(const group_type &g) const
@@ -66,6 +67,7 @@ namespace nx{
             /*!
             \brief process field instances
 
+            \param f reference to field instance
             \return true
             */
             result_type operator()(const field_type &f) const
@@ -77,6 +79,7 @@ namespace nx{
             /*!
             \brief process attribute instances
 
+            \param a reference to attribute instance
             \return false
             */
             result_type operator()(const attribute_type &a) const
