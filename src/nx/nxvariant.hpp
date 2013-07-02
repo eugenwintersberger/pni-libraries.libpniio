@@ -31,3 +31,4 @@
 #include "variant_algo/get_attribute.hpp"
 #include "variant_algo/get_class.hpp"
 #include "variant_algo/set_class.hpp"
+#include "variant_algo/is_class.hpp"
