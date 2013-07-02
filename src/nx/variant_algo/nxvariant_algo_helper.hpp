@@ -16,21 +16,22 @@
  * You should have received a copy of the GNU General Public License
  * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
- * Created on: Jul 2,2013
+ * Created on: Jul 2, 2013
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 #pragma once
 
-#include "nxvariant_traits.hpp"
+#include "../nxvariant_traits.hpp"
 
-#include "variant_algo/is_group.hpp"
-#include "variant_algo/is_field.hpp"
-#include "variant_algo/is_attribute.hpp"
-#include "variant_algo/is_valid.hpp"
-#include "variant_algo/get_name.hpp"
-#include "variant_algo/get_attribute.hpp"
-#include "variant_algo/get_class.hpp"
-#include "variant_algo/set_class.hpp"
-#include "variant_algo/is_class.hpp"
-#include "variant_algo/set_unit.hpp"
-#include "variant_algo/get_unit.hpp"
+namespace pni{
+namespace io{
+namespace nx{
+
+#define GETVMEMBER(vtype,index) nxvariant_member_type<vtype,index>::type
+
+#define GETVTYPE(dtype,type_name) nxvariant_traits<dtype>::type_name 
+
+//end of namespace
+}
+}
+}

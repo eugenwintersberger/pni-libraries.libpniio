@@ -27,117 +27,100 @@ namespace pni{
 namespace io{
 namespace nx{
 
-    
     /*!
     \ingroup variant_code
-    \brief set class visitor
+    \brief get unit visitor
 
-    This visitor sets the class on a Nexus group stored in a variant type.
+    Retrieves the unit string of a field stored in the variant type.
     \tparam VTYPE variant type
-    \sa set_class
     */
     template<typename VTYPE> 
-    class set_class_visitor : public boost::static_visitor<void>
+    class get_unit_visitor : public boost::static_visitor<string>
     {
-        private:
-            string _class; //!< Nexus class
         public:
-            //! first type of the variant type
+            //! first member type of VTYPE
             typedef typename nxvariant_member_type<VTYPE,0>::type first_member;
             //! result type
-            typedef void result_type;
+            typedef string result_type;
             //! Nexus group type
             DEFINE_NXGROUP(first_member) group_type;
             //! Nexus field type
             DEFINE_NXFIELD(first_member) field_type;
             //! Nexus attribute type
             DEFINE_NXATTRIBUTE(first_member) attribute_type;
-
-            //-----------------------------------------------------------------
-            /*!
-            \brief constructor
-
-            \param s class type as string
-            */
-            set_class_visitor(const string &s):_class(s) {}
-
+    
             //-----------------------------------------------------------------
             /*!
             \brief process groups
 
-            Set the NX_class attribute on a group instance. If setting the
-            attribute fails an exception will be thrown. 
-            \throws nxgroup_error if setting the class fails
+            Groups have no units thus an exception is thrown.
+            \throws nxgroup_error groups have no unit
             \param g group instance
-            \return nothing
+            \return an empty string - to be ignored
             */
             result_type operator()(const group_type &g) const
             {
-                try
-                {
-                    g.template attr<string>("NX_class",true).write(_class);
-                }
-                catch(...)
-                {
-                    throw nxgroup_error(EXCEPTION_RECORD,
-                            "Error writing NX_class attribute to group "
-                            +g.path()+"!");
-                }
-
+                throw nxgroup_error(EXCEPTION_RECORD,
+                        "Groups do not have units!");
+                return result_type();
             }
 
             //-----------------------------------------------------------------
             /*!
             \brief process fields
 
-            As fields cannot have a Nexus class an exception will be thrown if a
-            field is stored in the variant type passed to this visitor.
-            \throws nxfield_error fields do not have a class
+            Retrieve the value of the fields unit attribute. If the field does
+            not have a units attribute an empty string is returned.
+            \throws nxattribute_error in case of problems with attribute access
             \param f field instance
-            \return nothing
+            \return unit string
             */
             result_type operator()(const field_type &f) const
             {
-                throw nxfield_error(EXCEPTION_RECORD,
-                        "Fields do not have a class!");
+                string buffer;
+
+                if(f.has_attr("units"))
+                    f.attr("units").read(buffer);
+
+                return buffer;
+                    
             }
 
             //-----------------------------------------------------------------
             /*!
             \brief process attributes
 
-            Attributes have no Nexus class. Thus an exception is thrown if the
-            object stored in the variant passed to this visitor is an attribute.
-            \throws nxattribute_error attributes do not have a class
+            Attributes do not posses units - an exception will be thrown.
+            \throw nxattribute_error attributes do not have units
             \param a attribute instance
-            \return nothing
+            \return an empty string - to be ignored
             */
             result_type operator()(const attribute_type &a) const
             {
                 throw nxattribute_error(EXCEPTION_RECORD,
-                        "Attributes do not have a class!");
+                        "Attributes do not have units!");
+                return result_type();
             }
     };
 
     /*!
     \ingroup variant_code
-    \brief set class wrapper
+    \brief get unit wrapper
 
-    This function is a wrapper for the set_class_visitor template. 
-
-    \throws nxgroup_error cannot set an attribute on the group
-    \throws nxfield_error fields do not have a class
-    \throws nxattribute_error attributes do not have a class
+    Wrapper function for the get_unit_visitor. It returns the the unit string
+    associated with a field stored in the variant type. If the object stored is
+    not a field exceptions are thrown. 
+    \throws nxgroup_error if the stored object is a group
+    \throws nxattribute_error if there are IO errors with attributes or the
+    stored object is an attribute
     \tparam VTYPE variant type
     \param o instance of VTYPE
-    \param c class as string
-    \return nothing
+    \return unit string
     */
     template<typename VTYPE> 
-    typename set_class_visitor<VTYPE>::result_type 
-    set_class(const VTYPE &o,const string &c)
+    typename get_unit_visitor<VTYPE>::result_type get_unit(const VTYPE &o)
     {
-         boost::apply_visitor(set_class_visitor<VTYPE>(c),o);
+        return boost::apply_visitor(get_unit_visitor<VTYPE>(),o);
     }
 
 //end of namespace
