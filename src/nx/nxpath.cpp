@@ -39,46 +39,31 @@ namespace nx{
     nxpath::nxpath():
         _file_name(),
         _attribute_name(),
-        _groups()
+        _objects()
     {}
 
     //-------------------------------------------------------------------------
-    nxpath::nxpath(const string &file,const nxpath::group_path_t &groups,
+    nxpath::nxpath(const string &file,const nxpath::object_path_t &objects,
                    const string &attr):
         _file_name(file),
         _attribute_name(attr),
-        _groups(groups)
+        _objects(objects)
     {}
 
     //--------------------------------------------------------------------------
     void nxpath::append(const string &gname,const string &gclass)
     {
-        group_element_t element(gname,gclass);
-        _groups.push_back(element);
+        object_element_t element(gname,gclass);
+        _objects.push_back(element);
     }
 
     //-------------------------------------------------------------------------
     void nxpath::prepend(const string &gname,const string &gclass)
     {
-        group_element_t element(gname,gclass);
-        _groups.push_front(element);
+        object_element_t element(gname,gclass);
+        _objects.push_front(element);
     }
 
-    //-------------------------------------------------------------------------
-    nxpath::group_element_t nxpath::pop_front()
-    {
-        group_element_t element = *(_groups.begin());
-        _groups.pop_front();
-        return element;
-    }
-
-    //-------------------------------------------------------------------------
-    nxpath::group_element_t nxpath::pop_back()
-    {
-        group_element_t element = *(_groups.rbegin());
-        _groups.pop_back();
-        return element;
-    }
 
     //-------------------------------------------------------------------------
     bool is_file_path(const string &s)
@@ -171,29 +156,12 @@ namespace nx{
         nxpath_parser_t parser;
         iterator_t start = groups.begin();
         iterator_t stop  = groups.end();
-        nxpath::group_path_t gpath; 
+        nxpath::object_path_t gpath; 
         parse(start,stop,parser,gpath);
 
         return nxpath(filename,gpath,attribute_name);
     }
 
-    //-------------------------------------------------------------------------
-    nxpath split(size_t i,nxpath &p)
-    {
-        string file_name = p.filename();
-        string attribute_name = p.attribute();
-
-        //now we have to split the elements
-        nxpath path(p.filename(),nxpath::group_path_t(p.size()-i),
-                    p.attribute());
-    }
-
-    //--------------------------------------------------------------------------
-    void split(const nxpath &p,size_t i,nxpath &p1,nxpath &p2)
-    {
-        p1 = p;
-        p2 = split(i,p1);
-    }
 
 //end of namespace
 }

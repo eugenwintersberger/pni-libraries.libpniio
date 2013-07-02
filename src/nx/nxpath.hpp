@@ -45,6 +45,7 @@ namespace nx{
 
     using namespace pni::core;
     /*!
+    \ingroup nxpath_code
     \brief Nexus path class
 
     This class represents a full Nexus path. Such a path describes the position
@@ -65,14 +66,14 @@ namespace nx{
     class nxpath
     {
         public: 
-            //! group element (groupname:class)
-            typedef std::pair<string,string> group_element_t;
-            //! a list of subsequent groups 
-            typedef std::list<group_element_t> group_path_t;
+            //! object element (groupname:class)
+            typedef std::pair<string,string> object_element_t;
+            //! a list of subsequent objects
+            typedef std::list<object_element_t> object_path_t;
             //! iterator over elements
-            typedef group_path_t::iterator iterator;
+            typedef object_path_t::iterator iterator;
             //! const iterator over elements
-            typedef group_path_t::const_iterator const_iterator;
+            typedef object_path_t::const_iterator const_iterator;
 
         private:
             //! name of the file
@@ -80,14 +81,14 @@ namespace nx{
             //! name of an attribute
             string _attribute_name;
             //! list of groups
-            group_path_t _groups;
+            object_path_t _objects;
         public:
             //===============constructors and destructor=======================
             //! default constructor
             nxpath();
             //-----------------------------------------------------------------
             //! constructor
-            nxpath(const string &file,const group_path_t &groups,
+            nxpath(const string &file,const object_path_t &groups,
                    const string &attr);
            
             //===============public member methods=============================
@@ -137,30 +138,26 @@ namespace nx{
             void prepend(const string &gname,const string &gclass);
 
             //------------------------------------------------------------------
-            group_element_t pop_front();
-
-            group_element_t pop_back();
-
-            //------------------------------------------------------------------
             //! return number of group entries
-            size_t size() const { return _groups.size(); }
+            size_t size() const { return _objects.size(); }
 
             //===================iterators======================================
             //! get iterator to first element
-            iterator begin() { return _groups.begin(); }
+            iterator begin() { return _objects.begin(); }
 
             //! get iterator to last+1 element
-            iterator end()   { return _groups.end();   }
+            iterator end()   { return _objects.end();   }
 
             //! get const iterator to first element
-            const_iterator begin() const { return _groups.begin(); }
+            const_iterator begin() const { return _objects.begin(); }
 
             //! get const iterator to last+1 element
-            const_iterator end() const   { return _groups.end();   }
+            const_iterator end() const   { return _objects.end();   }
     };
 
     //--------------------------------------------------------------------------
     /*!
+    \ingroup nxpath_code
     \brief parser for group elements
 
     This parser handles a single group element of the group portion of a Nexus
@@ -175,7 +172,7 @@ namespace nx{
     struct element_parser :
     boost::spirit::qi::grammar<ITERT,
                                boost::spirit::locals<string,string>, 
-                               nxpath::group_element_t()>
+                               nxpath::object_element_t()>
     {
         //! rule for a single component
         boost::spirit::qi::rule<ITERT,string()> component_rule;
@@ -183,20 +180,20 @@ namespace nx{
         //! rule for a group element
         boost::spirit::qi::rule<ITERT,
                                 boost::spirit::locals<string,string>, 
-                                nxpath::group_element_t()> group_element_rule;
+                                nxpath::object_element_t()> object_element_rule;
 
         //! default constructor
-        element_parser() : element_parser::base_type(group_element_rule)
+        element_parser() : element_parser::base_type(object_element_rule)
         {
             using namespace boost::spirit::qi;
             using namespace boost::fusion;
             using namespace boost::phoenix;
 
             component_rule = +char_("-_a-zA-z0-9.");
-            group_element_rule =  eps[_a="",_b=""]>>(
+            object_element_rule =  eps[_a="",_b=""]>>(
                                   (component_rule[_a=_1]>>-(':'>component_rule[_b=_1]))                              |
                                   (':'>component_rule)[_b = _1]
-                    )[_val = construct<nxpath::group_element_t>(_a,_b)];
+                    )[_val = construct<nxpath::object_element_t>(_a,_b)];
 
         }
 
@@ -206,6 +203,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     /*!
+    \ingroup nxpath_code
     \brief parser for group path
 
     Parser for the group portion of a Nexus path. The group portion has the
@@ -218,10 +216,10 @@ namespace nx{
     */
     template<typename ITERT>
     struct nxpath_parser :
-        boost::spirit::qi::grammar<ITERT,nxpath::group_path_t()>
+        boost::spirit::qi::grammar<ITERT,nxpath::object_path_t()>
     {
         //! rule for the entire group portion
-        boost::spirit::qi::rule<ITERT,nxpath::group_path_t()> path_rule;
+        boost::spirit::qi::rule<ITERT,nxpath::object_path_t()> path_rule;
         //! group element parser
         element_parser<ITERT> element_; 
 
@@ -241,6 +239,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     /*!
+    \ingroup nxpath_code
     \brief check if path is fs path
 
     This function checks if a string represents a path to a file on the
@@ -249,9 +248,9 @@ namespace nx{
     \code
     [basename].[extension]
     \endcode
-    This function is necessary for splitting a nexus path. In cases where only
-    the filename or the object path is given we need a way to distinguish
-    between these two types of paths. 
+    This function is necessary for splitting the string representation of a
+    nexus path. In cases where only the filename or the object path is given we
+    need a way to distinguish between these two types of paths. 
 
     \param s the path as string
     \return true of s represents a file path
@@ -261,6 +260,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     /*!
+    \ingroup nxpath_code
     \brief split nexus path
 
     This is a service function used by path_from_string. It takes the complete
@@ -268,7 +268,7 @@ namespace nx{
     token
 
     \li the filename
-    \li the group path
+    \li the object path
     \li the attribute name
 
     This function was implemented in order to keep the parsers for the different
@@ -285,6 +285,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     /*!
+    \ingroup nxpath_code
     \brief creates a path from a string
 
     This function takes a full Nexus path as its input argument, parses it and
@@ -294,17 +295,6 @@ namespace nx{
     \return instance of nxpath
     */
     nxpath path_from_string(const string &p);
-
-    //-------------------------------------------------------------------------
-    /*!
-    \brief split group path
-
-    Splits a path at a given position. 
-    
-    */
-    nxpath split(size_t i,nxpath &p);
-
-    void split(const nxpath &p, size_t i,nxpath &p1,nxpath &p2);
 
 
 //end of namespace
