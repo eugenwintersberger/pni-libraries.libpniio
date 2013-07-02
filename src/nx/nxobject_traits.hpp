@@ -24,8 +24,6 @@
  */
 #pragma once
 
-#include "nx.hpp"
-
 namespace pni{
 namespace io{
 namespace nx{
