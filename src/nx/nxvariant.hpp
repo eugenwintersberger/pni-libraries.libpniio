@@ -34,3 +34,4 @@
 #include "variant_algo/is_class.hpp"
 #include "variant_algo/set_unit.hpp"
 #include "variant_algo/get_unit.hpp"
+#include "variant_algo/get_parent.hpp"
