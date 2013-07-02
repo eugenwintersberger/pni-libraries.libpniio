@@ -33,6 +33,7 @@
 #include "nxdeflate_filter.hpp"
 #include "nxattribute.hpp"
 //#include "NXSelection.hpp"
+#include "nxobject_traits.hpp"
 
 #include "h5/H5AttributeObject.hpp"
 #include "h5/H5File.hpp"
@@ -49,17 +50,42 @@ namespace io{
 namespace nx{
 namespace h5{
 
-            typedef pni::io::nx::nxobject<H5AttributeObject>    nxobject;
-            typedef pni::io::nx::nxfile<H5File>                 nxfile;
-            typedef pni::io::nx::nxgroup<H5Group>               nxgroup;
-            typedef pni::io::nx::nxfield<H5Dataset>             nxfield;
-            typedef pni::io::nx::nxfilter<H5Filter>             nxfilter;
-            typedef pni::io::nx::nxdeflate_filter<H5DeflateFilter> nxdeflate_filter;
-            typedef pni::io::nx::nxattribute<H5Attribute>  nxattribute;
-            typedef pni::io::nx::nxselection<nxfield> nxselection;
+    typedef pni::io::nx::nxobject<H5AttributeObject>    nxobject;
+    typedef pni::io::nx::nxfile<H5File>                 nxfile;
+    typedef pni::io::nx::nxgroup<H5Group>               nxgroup;
+    typedef pni::io::nx::nxfield<H5Dataset>             nxfield;
+    typedef pni::io::nx::nxfilter<H5Filter>             nxfilter;
+    typedef pni::io::nx::nxdeflate_filter<H5DeflateFilter> nxdeflate_filter;
+    typedef pni::io::nx::nxattribute<H5Attribute>  nxattribute;
+    typedef pni::io::nx::nxselection<nxfield> nxselection;
 
 //end of namespace
 }
+}
+}
+}
+
+namespace pni{
+namespace io{
+namespace nx{
+
+    DECLARE_NXOBJECT_TRAITS(h5::nxobject,h5::nxobject,h5::nxgroup,
+                            h5::nxfile,h5::nxfield,h5::nxattribute,
+                            h5::nxselection);
+    DECLARE_NXOBJECT_TRAITS(h5::nxgroup,h5::nxobject,h5::nxgroup,
+                            h5::nxfile,h5::nxfield,h5::nxattribute,
+                            h5::nxselection);
+    DECLARE_NXOBJECT_TRAITS(h5::nxfile,h5::nxobject,h5::nxgroup,h5::nxfile,
+                            h5::nxfield,h5::nxattribute,h5::nxselection);
+    DECLARE_NXOBJECT_TRAITS(h5::nxfield,h5::nxobject,h5::nxgroup,h5::nxfile,
+                            h5::nxfield,h5::nxattribute,h5::nxselection);
+    DECLARE_NXOBJECT_TRAITS(h5::nxattribute,h5::nxobject,h5::nxgroup,
+                            h5::nxfile,h5::nxfield,h5::nxattribute,
+                            h5::nxselection);
+    DECLARE_NXOBJECT_TRAITS(h5::nxselection,h5::nxobject,h5::nxgroup,
+                            h5::nxfile,h5::nxfield,h5::nxattribute,
+                            h5::nxselection);
+//end of namespace
 }
 }
 }
