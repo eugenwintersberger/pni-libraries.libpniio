@@ -61,12 +61,33 @@ void get_object_test::test_absolute()
     CPPUNIT_ASSERT(is_valid(get_object(root,p)));
     CPPUNIT_ASSERT(is_group(get_object(root,p)));
     CPPUNIT_ASSERT(get_name(get_object(root,p))=="detector");
+
+
+    CPPUNIT_ASSERT(is_valid(get_object(root,p)));
+    CPPUNIT_ASSERT(is_group(get_object(root,p)));
+    CPPUNIT_ASSERT(get_name(get_object(root,p))=="detector");
+
+    p = path_from_string(":NXentry/instrument/:NXdetector");
+    CPPUNIT_ASSERT(is_valid(get_object(root,p)));
+    CPPUNIT_ASSERT(is_group(get_object(root,p)));
+    CPPUNIT_ASSERT(get_name(get_object(root,p))=="detector");
 }
 
 //-----------------------------------------------------------------------------
 void get_object_test::test_relative()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    object_types root = h5::nxgroup(file["/"]);
+    nxpath p = path_from_string("../instrument/detector");
+    CPPUNIT_ASSERT(!p.is_absolute());
+
+    object_types ig = get_object(root,path_from_string("/group/instrument"));
+    CPPUNIT_ASSERT(get_name(ig) == "instrument");
+    object_types d  = get_object(ig,p);
+    CPPUNIT_ASSERT(get_name(d) == "detector");
+
+
 
 }
 

@@ -87,8 +87,13 @@ namespace nx{
 
         split_last(path,group_path,target_path);
 
-        //loop over all parent groups
-        object_types parent = p;
+        //get the parent object 
+        object_types parent;
+        if(group_path.is_absolute())
+            parent = get_root(p);
+        else
+            parent = p;
+
         for(auto element: group_path)
         {
             if(element.first == ".") continue;
