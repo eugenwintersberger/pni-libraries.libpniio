@@ -30,23 +30,23 @@ namespace nx{
 
     /*!
     \ingroup variant_code
-    \brief get shape visitor
+    \brief get rank visitor
 
-    This visitor retrieves the shape of an attribute or a field. If the object
-    stored in the variant is a group an exception will be thrown.
-    wrapper template function.
+    This visitor retrieves the rank (the number of dimensions) of a field or
+    attribute stored in a variant type.  If the object stored in the variant is
+    a group an exception will be thrown.
     \tparam CTYPE container type for the shape
     \tparam VTYPE variant type
-    \sa get_shape
+    \sa get_rank
     */
-    template<typename CTYPE,typename VTYPE> 
-    class get_shape_visitor : public boost::static_visitor<CTYPE>
+    template<typename VTYPE> 
+    class get_rank_visitor : public boost::static_visitor<size_t>
     {
         public:
             //! first type of the variant type
             typedef typename nxvariant_member_type<VTYPE,0>::type first_member;
             //! result type
-            typedef CTYPE result_type;
+            typedef size_t result_type;
             //! Nexus group type
             DEFINE_NXGROUP(first_member) group_type;
             //! Nexus field type
@@ -58,53 +58,53 @@ namespace nx{
             /*!
             \brief process group instances
 
-            Throw an exception as a group cannot have a shape.
-            \throws nxgroup_error groups do not have shapes
+            Throw an exception as a group cannot have a rank.
+            \throws nxgroup_error groups do not have a rank
             \param g group instance
-            \return empty instance of CTYPE
+            \return 0
             */ 
             result_type operator()(const group_type &g) const
             {
                 throw nxgroup_error(EXCEPTION_RECORD,
                         "A group does not have a shape!");
-                return CTYPE();
+                return size_t(0);
             }
 
             //-----------------------------------------------------------------
             /*!
             \brief process field instances
 
-            Returns the shape of a field.
+            Returns the rank of a field.
             \param f field instance
-            \return instance of CTYPE with elements per dimension
+            \return number of dimensions
             */
             result_type operator()(const field_type &f) const
             {
-                return f.template shape<CTYPE>();
+                return f.rank();
             }
 
             //-----------------------------------------------------------------
             /*!
             \brief process attribute instances
 
-            Returns the shape of the attribute.
+            Returns the rank of the attribute.
             \param a attribute instance
-            \return instance of CTYPE with elements per dimension
+            \return number of dimensions
             */
             result_type operator()(const attribute_type &a) const
             {
-                return a.template shape<CTYPE>();
+                return a.rank();
             }
     };
 
     /*!
     \ingroup variant_code
-    \brief get shape wrapper
+    \brief get rank wrapper
 
-    Wrapper function for the get_shape_visitor template. This function returns
-    the shape (number of elements along each dimension) of a field or an
-    attribute stored in the variant type. 
-    If the stored object is a group type an exception will be thrown.
+    Wrapper function for the get_rank_visitor template. This function returns
+    the rank (number of dimensions) of a field or an attribute stored in the
+    variant type.  If the stored object is a group type an exception will be
+    thrown.
 
     \code{.cpp}
     object_types field = get_object(root,path_to_field);
@@ -115,12 +115,12 @@ namespace nx{
     \tparam CTYPE container type for the shape
     \tparam VTYPE variant type
     \param o instance of VTYPE
-    \return an instance of CTYPE with the elements for each dimension
+    \return number of dimensions
     */
-    template<typename CTYPE,typename VTYPE> 
-    typename get_shape_visitor<CTYPE,VTYPE>::result_type get_shape(const VTYPE &o)
+    template<typename VTYPE> 
+    typename get_rank_visitor<VTYPE>::result_type get_rank(const VTYPE &o)
     {
-        return boost::apply_visitor(get_shape_visitor<CTYPE,VTYPE>(),o);
+        return boost::apply_visitor(get_rank_visitor<VTYPE>(),o);
     }
 
 //end of namespace
