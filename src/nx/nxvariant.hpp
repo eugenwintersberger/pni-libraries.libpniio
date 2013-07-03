@@ -42,3 +42,4 @@
 #include "variant_algo/get_rank.hpp"
 #include "variant_algo/as_field.hpp"
 #include "variant_algo/as_group.hpp"
+#include "variant_algo/as_attribute.hpp"

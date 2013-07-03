@@ -30,7 +30,7 @@ namespace nx{
 
     /*!
     \ingroup variant_code
-    \brief get rank visitor
+    \brief as group visitor
 
     This visitor return the object stored in a variant as a group object.
     Obviously this will only work if the object is really a group object. 

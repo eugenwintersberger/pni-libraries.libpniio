@@ -30,18 +30,18 @@ namespace nx{
 
     /*!
     \ingroup variant_code
-    \brief as field visitor
+    \brief as attribute visitor
 
-    This visitor return the object stored in a variant as a field object.
-    Obviously this will only work if the object is really a field object. 
-    If the stored object is a group or an attribute object an exception will be
+    This visitor return the object stored in a variant as a attribute object.
+    Obviously this will only work if the object is really an attribute object. 
+    If the stored object is a field or a group object an exception will be
     thrown.
     \tparam VTYPE variant type
-    \sa as_field
+    \sa as_attribute
     */
     template<typename VTYPE> 
-    class as_field_visitor : public boost::static_visitor<
-                             typename nxobject_traits<typename nxvariant_member_type<VTYPE,0>::type>::field_type
+    class as_attribute_visitor : public boost::static_visitor<
+                             typename nxobject_traits<typename nxvariant_member_type<VTYPE,0>::type>::attribute_type
                              >
     {
         public:
@@ -54,77 +54,77 @@ namespace nx{
             //! Nexus attribute type
             DEFINE_NXATTRIBUTE(first_member) attribute_type;
             //! result type
-            typedef field_type result_type;
+            typedef attribute_type result_type;
 
             //-----------------------------------------------------------------
             /*!
             \brief process group instances
 
-            Throws an exception as the stored object is not a field.
-            \throws nxfield_error groups do not have a rank
+            Throws an exception as the stored object is not an attribute type.
+            \throws nxattribute_error object not an attribute
             \param g group instance
-            \return invalid field instance
+            \return invalid attribute instance
             */ 
             result_type operator()(const group_type &g) const
             {
-                throw nxfield_error(EXCEPTION_RECORD,
-                        "Object is a group and not a field!");
-                return field_type();
+                throw nxattribute_error(EXCEPTION_RECORD,
+                        "Object is not an attribute but a group!");
+                return result_type();
             }
 
             //-----------------------------------------------------------------
             /*!
             \brief process field instances
 
-            Returns the field stored in the variant.
+            Throw an exception as the object is not an attribute type instance
+            \throws nxattribute_error instance not a group type
             \param f field instance
-            \return field instance
+            \return invalid attribute instance
             */
             result_type operator()(const field_type &f) const
             {
-                return f;
+                throw nxattribute_error(EXCEPTION_RECORD,
+                        "Object is a field but not an attribute instance!");
+                return result_type();
             }
 
             //-----------------------------------------------------------------
             /*!
             \brief process attribute instances
 
-            Throw an exception as the object is not a field object.
-            \throws nxfield_error no field instance
+            Returns the atttribute instance.
             \param a attribute instance
-            \return invalid field instance
+            \return attribute instance
             */
             result_type operator()(const attribute_type &a) const
             {
-                throw nxfield_error(EXCEPTION_RECORD,
-                        "Object is an attribute not a field!");
-                return field_type();
+                return a;
             }
     };
 
     /*!
     \ingroup variant_code
-    \brief as field wrapper
+    \brief as attribute wrapper
 
-    Wrapper function for the as_field_visitor template. This function takes a
-    variant object and returns a field object if the stored object is an
-    instance of a field type. In other cases an exception will be thrown.
+    Wrapper function for the as_attribute_visitor template. This function takes
+    a variant object and returns an attribute object if the stored object is an
+    instance of an attribute type. In other cases an exception will be thrown.
 
     \code{.cpp}
-    object_types field_obj = get_object(root,path_to_field);
-    auto f = as_field(field_obj);
+    object_types attr_obj = get_object(root,path_to_atribute);
+    auto a = as_attribute(attr_obj);
     \endcode
 
-    \throws nxfield_error if stored object is not a field type
+    \throws nxattribute_error if stored object is not a attribute type
     \tparam VTYPE variant type
     \param o instance of VTYPE
-    \return instance of a field type
+    \return instance of a attribute type
     */
     template<typename VTYPE> 
-    typename nxobject_traits<typename nxvariant_member_type<VTYPE,0>::type>::field_type
-    as_field(const VTYPE &o)
+    typename nxobject_traits<typename nxvariant_member_type<VTYPE,0>::type>::attribute_type
+    as_attribute(const VTYPE &o)
     {
-        return boost::apply_visitor(as_field_visitor<VTYPE>(),o);
+        return boost::apply_visitor(as_attribute_visitor<VTYPE>(),o);
     }
 
 //end of namespace
