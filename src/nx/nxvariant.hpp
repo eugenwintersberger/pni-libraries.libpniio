@@ -41,3 +41,4 @@
 #include "variant_algo/get_type.hpp"
 #include "variant_algo/get_rank.hpp"
 #include "variant_algo/as_field.hpp"
+#include "variant_algo/as_group.hpp"
