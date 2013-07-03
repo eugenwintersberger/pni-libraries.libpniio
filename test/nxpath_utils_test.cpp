@@ -53,18 +53,21 @@ void nxpath_utils_test::test_path_input()
     CPPUNIT_ASSERT(p.size()==4);
     CPPUNIT_ASSERT(p.filename() == "/home/wintersb/file.nx2");
     CPPUNIT_ASSERT(p.attribute() == "");
+    CPPUNIT_ASSERT(p.is_absolute());
 
     std::stringstream is2(p2);
     is2>>p;
     CPPUNIT_ASSERT(p.size()==5);
     CPPUNIT_ASSERT(p.filename() == "");
     CPPUNIT_ASSERT(p.attribute() == "time");
+    CPPUNIT_ASSERT(!p.is_absolute());
 
     std::stringstream is3(p3);
     is3>>p;
     CPPUNIT_ASSERT(p.size()==4);
     CPPUNIT_ASSERT(p.filename() == "file.nx2");
     CPPUNIT_ASSERT(p.attribute() == "");
+    CPPUNIT_ASSERT(p.is_absolute());
 
 }
 
@@ -126,6 +129,8 @@ void nxpath_utils_test::test_path_split()
 
     CPPUNIT_ASSERT(path1.filename() == p1_1.filename());
     CPPUNIT_ASSERT(p1_2.filename() == "");
+    CPPUNIT_ASSERT(p1_1.is_absolute());
+    CPPUNIT_ASSERT(!p1_2.is_absolute());
 
     std::cout<<p1_1<<std::endl;
     std::cout<<p1_2<<std::endl;
@@ -133,6 +138,8 @@ void nxpath_utils_test::test_path_split()
     nxpath p;
     CPPUNIT_ASSERT_THROW(split_last(p,p1_1,p1_2),index_error);
     CPPUNIT_ASSERT_THROW(split_path(path1,10,p1_1,p1_2),index_error);
+    CPPUNIT_ASSERT(p1_1.is_absolute());
+    CPPUNIT_ASSERT(!p1_2.is_absolute());
 
 
 }

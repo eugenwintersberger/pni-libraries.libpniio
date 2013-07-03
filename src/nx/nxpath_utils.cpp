@@ -41,7 +41,9 @@ namespace nx{
         std::copy(p.begin(),split_iter,gp1.begin());
         std::copy(split_iter,p.end(),gp2.begin());
 
-        p1 = nxpath(p.filename(),gp1,"");
+        //if the original path was absolute also the first part of the two 
+        //must be absolute
+        p1 = nxpath(p.filename(),gp1,"",p.is_absolute());
         p2 = nxpath("",gp2,p2.attribute());
     }
 
@@ -56,7 +58,9 @@ namespace nx{
     {
         string ostr;
         if(!p.filename().empty())
-            ostr += p.filename()+":///";
+            ostr += p.filename()+"://";
+
+        if(p.is_absolute()) ostr += "/";
 
         //dump groups
         auto slash_iter = p.begin();
