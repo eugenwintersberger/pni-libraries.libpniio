@@ -93,6 +93,7 @@ void nxpath_test::test_parse()
     CPPUNIT_ASSERT(path.filename() == "/home/data/file.h5");
     CPPUNIT_ASSERT(path.attribute() == "");
     CPPUNIT_ASSERT(path.size() == 4);
+    CPPUNIT_ASSERT(path.is_absolute());
     auto iter = path.begin();
     CPPUNIT_ASSERT(iter->first == "entry");
     CPPUNIT_ASSERT(iter->second == "NXentry");
@@ -107,6 +108,7 @@ void nxpath_test::test_parse()
     CPPUNIT_ASSERT(iter->second == "");
 
     path = path_from_string(path_3);
+    CPPUNIT_ASSERT(path.is_absolute());
     iter = path.begin();
     CPPUNIT_ASSERT(iter->first == "");
     CPPUNIT_ASSERT(iter->second == "NXentry");
@@ -121,11 +123,13 @@ void nxpath_test::test_parse()
     CPPUNIT_ASSERT(iter->second == "");
     
     path = path_from_string(path_4);
+    CPPUNIT_ASSERT(!path.is_absolute());
     CPPUNIT_ASSERT(path.filename()==path_4);
     CPPUNIT_ASSERT(path.size() == 0);
     CPPUNIT_ASSERT(path.attribute().empty());
 
     path = path_from_string(path_5);
+    CPPUNIT_ASSERT(!path.is_absolute());
     CPPUNIT_ASSERT(path.filename()=="");
     CPPUNIT_ASSERT(path.size() == 4);
     CPPUNIT_ASSERT(path.attribute() == "");

@@ -39,15 +39,17 @@ namespace nx{
     nxpath::nxpath():
         _file_name(),
         _attribute_name(),
-        _objects()
+        _objects(),
+        _is_absolute()
     {}
 
     //-------------------------------------------------------------------------
     nxpath::nxpath(const string &file,const nxpath::object_path_t &objects,
-                   const string &attr):
+                   const string &attr,bool absolute):
         _file_name(file),
         _attribute_name(attr),
-        _objects(objects)
+        _objects(objects),
+        _is_absolute(absolute)
     {}
 
     //--------------------------------------------------------------------------
@@ -159,7 +161,9 @@ namespace nx{
         nxpath::object_path_t gpath; 
         parse(start,stop,parser,gpath);
 
-        return nxpath(filename,gpath,attribute_name);
+        bool absolute_path = groups[0] == '/';
+
+        return nxpath(filename,gpath,attribute_name,absolute_path);
     }
 
 
