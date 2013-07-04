@@ -88,11 +88,9 @@ namespace nx{
                         group = g.create_group(_name);
                 }
                 else
-                {
                     //you have to at least provide a name
                     throw nxgroup_error(EXCEPTION_RECORD,
                             "No name provided for the new group!");
-                }
 
                 return result_type(group);
 
@@ -132,17 +130,24 @@ namespace nx{
             }
     };
 
+    //-------------------------------------------------------------------------
     /*!
     \ingroup variant_code
     \brief create_group wrapper
 
-    Wrapper function for the create_group_visitor. 
+    Wrapper function for the create_group_visitor. This wrapper creates a new
+    group of a particular name and class directly below the parent group.
+    In order to successfully create a group at least the name argument must be
+    non-empty. If an empty string is passed as the groups class then the
+    NX_class attribute will not be set.
 
 
     \throws nxgroup_error if stored object is a group
     \tparam VTYPE variant type
-    \param o instance of VTYPE
-    \return value of type_id_t
+    \param o instance of VTYPE with the parent group
+    \param n name of the new group
+    \param c Nexus class of the group
+    \return object_types with the newly created group
     */
     template<typename VTYPE> 
     typename create_group_visitor<VTYPE>::result_type 
@@ -151,10 +156,21 @@ namespace nx{
         return boost::apply_visitor(create_group_visitor<VTYPE>(n,c),o);
     }
 
+    //-------------------------------------------------------------------------
     /*!
     \ingroup variant_code
     \brief create_group wrapper
 
+    Wrapper for the create_group_visitor. This wrapper creates a new group whose
+    location, name, and class is described by a Nexus path. The template assumes
+    that all intermediate groups exist. An exception will be thrown if this is
+    not the case.
+
+    \throws nxgroup_error in case of errors
+    \tparam VTYPE variant type
+    \param o instance of VTYPE with the parent group
+    \param p path to the new group
+    \return instance of object_types with the new group
     */
     template<typename VTYPE>
     typename create_group_visitor<VTYPE>::result_type
