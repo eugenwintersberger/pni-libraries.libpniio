@@ -263,9 +263,10 @@ namespace nx{
     \tparam STYPE container type for the shape (default is shape_t)
     \tparam CSTYPE container type for the chunk shape (default is shape_t)
     \param o instance of VTYPE with the parent group
-    \param n name of the new group
-    \param c Nexus class of the group
-    \return object_types with the newly created group
+    \param n name of the new field
+    \param s the shape of the field
+    \param cs the chunk shape of the field
+    \return object_types with the newly created field
     */
     template<typename T,
              typename VTYPE,
@@ -308,10 +309,11 @@ namespace nx{
     \tparam CSTYPE container type for the chunk shape (default is shape_t)
     \tparam FTYPE filter type
     \param o instance of VTYPE with the parent group
-    \param n name of the new group
-    \param c Nexus class of the group
+    \param n name of the new field
+    \param s shape of the field
+    \param cs chunk shape of the field
     \param filter instance of FTYPE
-    \return object_types with the newly created group
+    \return object_types with the newly created field
     */
     template<typename T,
              typename VTYPE,
@@ -357,7 +359,8 @@ namespace nx{
     \tparam CSTYPE container type for the chunk shape (default is shape_t)
     \param o instance of VTYPE with the parent group
     \param path Nexus path to the field
-    \param c Nexus class of the group
+    \param s shape of the new field
+    \param cs chunk shape of the field
     \return object_types with the newly created group
     */
     template<typename T,
@@ -412,7 +415,8 @@ namespace nx{
     \tparam FTYPE filter type
     \param o instance of VTYPE with the parent group
     \param path the path to the new location of the field
-    \param c Nexus class of the group
+    \param s shape of the field
+    \param cs chunk shape of the field
     \param filter instance of FTYPE
     \return object_types with the newly created group
     */
