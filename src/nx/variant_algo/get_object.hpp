@@ -73,7 +73,8 @@ namespace nx{
 
     Return an object specified by a Nexus path. From the nature of a nexus file we
     can assume that every object in the path except the last one has to be a group
-    as it must hold other objects 
+    as it must hold other objects.
+    \throws nxgroup_error if parent object cannot be found
     */
     template<typename VTYPE> 
     typename nxvariant_traits<typename nxvariant_member_type<VTYPE,0>::type>::object_types 
@@ -85,6 +86,7 @@ namespace nx{
         nxpath target_path;
         object_types result;
 
+
         split_last(path,group_path,target_path);
 
         //get the parent object 
@@ -93,6 +95,12 @@ namespace nx{
             parent = get_root(p);
         else
             parent = p;
+
+        if(!is_valid(parent))
+        {
+            throw nxgroup_error(EXCEPTION_RECORD,
+                    "Object parent is not a valid Nexus object!");
+        }
 
         for(auto element: group_path)
         {
@@ -103,12 +111,23 @@ namespace nx{
                 continue;
             }
 
-            parent = get_child(parent,element.first,element.second);
+            if(!is_valid(parent = get_child(parent,element.first,element.second)))
+            {
+                throw nxgroup_error(EXCEPTION_RECORD,
+                        "Cannot find parent object "
+                        +string_from_path(group_path)+"!");
+            }
         }
 
         //having obtained the parent object we have to look now into it
-        result = get_child(parent,target_path.begin()->first,
-                                  target_path.begin()->second);
+        if(!is_valid(result = get_child(parent,target_path.begin()->first,
+                                  target_path.begin()->second)))
+        {
+            throw nxgroup_error(EXCEPTION_RECORD,
+                    "Requested object is not valid!");
+        }
+
+        
 
         if(!target_path.attribute().empty())
             result = get_attribute(result,target_path.attribute());

@@ -17,29 +17,33 @@
  * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  *
- *  Created on: Jun 28, 2013
+ *  Created on: Jul 3, 2013
  *      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
 #include <boost/current_function.hpp>
 #include<cppunit/extensions/HelperMacros.h>
 
-#include "get_parent_test.hpp"
+#include "create_group_test.hpp"
 
 
-CPPUNIT_TEST_SUITE_REGISTRATION(get_parent_test);
+CPPUNIT_TEST_SUITE_REGISTRATION(create_group_test);
 
 //-----------------------------------------------------------------------------
-void get_parent_test::setUp()
+void create_group_test::setUp()
 {
+    field_shape = shape_t{0,10,10};
+    attr_shape  = shape_t{4,4};
+
     file = h5::nxfile::create_file("is_valid.nx",true,0);
     group = file.create_group("group","NXentry");
     group.create_group("instrument","NXinstrument");
-    field = file.create_field<uint32>("data");
+    field = file.create_field<uint32>("data",field_shape);
+    field.attr<float32>("temp",attr_shape);
 }
 
 //-----------------------------------------------------------------------------
-void get_parent_test::tearDown() 
+void create_group_test::tearDown() 
 { 
     field.close();
     group.close();
@@ -48,34 +52,53 @@ void get_parent_test::tearDown()
 
 
 //-----------------------------------------------------------------------------
-void get_parent_test::test_group()
+void create_group_test::test_group()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-        
-    object_types object = h5::nxgroup(group["instrument"]);
-    CPPUNIT_ASSERT(is_valid(get_parent(object)));
-    CPPUNIT_ASSERT(get_name(get_parent(object)) == "group");
-    CPPUNIT_ASSERT(get_name(get_parent(object_types(group))) == "/");
-    
-    CPPUNIT_ASSERT(get_name(get_parent(get_parent(object_types(group))))=="/");
+
+    auto gi = get_child(object_types(group),"instrument","");
+    object_types ng;
+    CPPUNIT_ASSERT_NO_THROW(ng = create_group(gi,"detector","NXdetector"));
+    CPPUNIT_ASSERT(is_valid(ng));
+    CPPUNIT_ASSERT(get_name(ng)=="detector");
+    CPPUNIT_ASSERT(is_group(ng));
 }
 
 //-----------------------------------------------------------------------------
-void get_parent_test::test_field()
+void create_group_test::test_group_from_path()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    auto gi = get_child(object_types(group),"instrument","");
+    object_types ng;
+    CPPUNIT_ASSERT_NO_THROW(ng = create_group(gi,
+                            path_from_string("log:NXlog")));
+    CPPUNIT_ASSERT(is_valid(ng));
+    CPPUNIT_ASSERT(is_group(ng));
+    CPPUNIT_ASSERT(get_name(ng) == "log");
+    CPPUNIT_ASSERT(is_class(ng,"NXlog"));
+
+    CPPUNIT_ASSERT_NO_THROW(ng = create_group(gi,
+                path_from_string("../../entry2:NXentry")));
+}
+
+//-----------------------------------------------------------------------------
+void create_group_test::test_field()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     object_types object = field;
 
-    CPPUNIT_ASSERT(get_name(get_parent(object)) == "/");
-
+    CPPUNIT_ASSERT_THROW(create_group(object,"g1","NXlog"),nxgroup_error);
+    CPPUNIT_ASSERT_THROW(create_group(object,"g2","NXlog"),nxgroup_error);
 }
 
 //-----------------------------------------------------------------------------
-void get_parent_test::test_attribute()
+void create_group_test::test_attribute()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT_THROW(get_parent(object_types(group.attr("NX_class"))),
-                         nxattribute_error);
+
+    object_types object = field.attr("temp");
+    CPPUNIT_ASSERT_THROW(create_group(object,"g1","NXlog"),nxgroup_error);
+    CPPUNIT_ASSERT_THROW(create_group(object,"g2","NXlog"),nxgroup_error);
 }
 

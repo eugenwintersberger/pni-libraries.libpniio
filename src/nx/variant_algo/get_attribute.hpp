@@ -34,7 +34,8 @@ namespace nx{
     \ingroup variant_code
     \brief get attribute visitor
 
-    Visitor obtaining an attribute from a variant instance. 
+    Visitor obtaining an attribute from an object stored in a variant type and
+    returns it as an objects_type.
     \tparam VTYPE variant type to act on
     */
     template<typename VTYPE> 

@@ -45,7 +45,8 @@ namespace nx{
     */
     template<typename VTYPE> 
     class get_child_visitor : public boost::static_visitor<
-                              typename nxvariant_traits<typename nxvariant_member_type<VTYPE,0>::type>::child_types>
+                              typename nxvariant_traits<typename
+                              nxvariant_member_type<VTYPE,0>::type>::object_types>
     {
         private: 
             string _name;  //!< name of the object
@@ -54,7 +55,7 @@ namespace nx{
             //! first type of the variant type
             typedef typename nxvariant_member_type<VTYPE,0>::type first_member;
             //! result type
-            typedef typename nxvariant_traits<first_member>::child_types result_type;
+            typedef typename nxvariant_traits<first_member>::object_types result_type;
             //! Nexus group type
             DEFINE_NXGROUP(first_member) group_type;
             //! Nexus field type
@@ -91,6 +92,11 @@ namespace nx{
             {
                 //here comes the interesting part
                 result_type result; 
+
+                //need to do some treatment for the special cases . and .. as
+                //child names 
+                if(_name == ".") return result_type(g);
+                if(_name == "..") return result_type(group_type(g.parent()));
 
                 for(auto child: g)
                 {
