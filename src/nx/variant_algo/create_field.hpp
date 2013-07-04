@@ -32,6 +32,44 @@ namespace nx{
     
     using namespace pni::core;
 
+    template<typename FTYPE> struct field_creator
+    {
+        template<typename T,
+                 typename FT,
+                 typename GTYPE,
+                 typename STYPE,
+                 typename CSTYPE
+                 >
+        static FT create_field(const GTYPE &g,
+                               const string &name, 
+                               const STYPE &s,
+                               const CSTYPE &cs,
+                               const FTYPE &filter)
+        {
+            return g.template create_field<T>(name,s,cs,filter);
+        }
+    };
+
+    template<> struct field_creator<int>
+    {
+        template<typename T,
+                 typename FT,
+                 typename GTYPE,
+                 typename STYPE,
+                 typename CSTYPE
+                >
+        static FT create_field(const GTYPE &g,
+                               const string &name,
+                               const STYPE &s,
+                               const CSTYPE &cs,
+                               const int &filter)
+        {
+
+            return g.template create_field<T>(name,s,cs);
+        }
+
+    };
+
     /*!
     \ingroup variant_code
     \brief create field visitor
@@ -42,12 +80,14 @@ namespace nx{
     \tparam T data type of the field
     \tparam STYPE container type for the shape
     \tparam CSTYPE container type for the chunk shape
+    \tparam FTYPE filter type
     \sa create_group
     */
     template<typename VTYPE,
              typename T,
              typename STYPE,
-             typename CSTYPE
+             typename CSTYPE,
+             typename FTYPE
             > 
     class create_field_visitor : public boost::static_visitor<
                                  typename nxvariant_traits<
@@ -59,6 +99,7 @@ namespace nx{
             string _name;  //!< the name of the field
             STYPE _shape;  //!< shape of field
             CSTYPE _cshape; //!< chunk shape of the field
+            FTYPE _filter;  //!< filter type
         public:
             //! first type of the variant type
             typedef typename nxvariant_member_type<VTYPE,0>::type first_member;
@@ -71,10 +112,12 @@ namespace nx{
             //! Nexus attribute type
             DEFINE_NXATTRIBUTE(first_member) attribute_type;
 
-            create_field_visitor(const string &n,const STYPE &s,const CSTYPE &cs):
+            create_field_visitor(const string &n,const STYPE &s,const CSTYPE
+                    &cs,const FTYPE &filter):
                 _name(n),
                 _shape(s),
-                _cshape(cs)
+                _cshape(cs),
+                _filter(filter)
             {}
 
             //-----------------------------------------------------------------
@@ -89,7 +132,9 @@ namespace nx{
             */ 
             result_type operator()(const group_type &g) const
             {
-                field_type f = g.template create_field<T>(_name,_shape,_cshape);
+                typedef field_creator<FTYPE> creator_t;
+                auto f = creator_t::template create_field<T,field_type>(g,_name,_shape,_cshape,_filter);
+
                 return result_type(f);
 
             }
@@ -149,53 +194,31 @@ namespace nx{
     template<typename T,
              typename VTYPE,
              typename STYPE = shape_t,
-             typename CSTYPE = shape_t
+             typename CSTYPE = shape_t,
+             typename FTYPE = int
              > 
-    typename create_field_visitor<VTYPE,T,STYPE,CSTYPE>::result_type 
+    typename create_field_visitor<VTYPE,T,STYPE,CSTYPE,FTYPE>::result_type 
     create_field(const VTYPE &o,const string &n,const STYPE &s=STYPE(),
                  const CSTYPE &cs=CSTYPE())
     {
-        return boost::apply_visitor(
-               create_field_visitor<VTYPE,T,STYPE,CSTYPE>(n,s,cs),o
-               );
+        typedef create_field_visitor<VTYPE,T,STYPE,CSTYPE,FTYPE> visitor_t;
+        return boost::apply_visitor(visitor_t(n,s,cs,int(0)),o);
     }
-
-    //-------------------------------------------------------------------------
-    /*!
-    \ingroup variant_code
-    \brief create_group wrapper
-
-    Wrapper for the create_group_visitor. This wrapper creates a new group whose
-    location, name, and class is described by a Nexus path. The template assumes
-    that all intermediate groups exist. An exception will be thrown if this is
-    not the case.
-
-    \throws nxgroup_error in case of errors
-    \tparam VTYPE variant type
-    \param o instance of VTYPE with the parent group
-    \param p path to the new group
-    \return instance of object_types with the new group
-    */
-    /*
-    template<typename VTYPE>
-    typename create_group_visitor<VTYPE>::result_type
-    create_group(const VTYPE &o,const nxpath &p)
+    
+    template<typename T,
+             typename VTYPE,
+             typename STYPE,
+             typename CSTYPE,
+             typename FTYPE
+             > 
+    typename create_field_visitor<VTYPE,T,STYPE,CSTYPE,FTYPE>::result_type 
+    create_field(const VTYPE &o,const string &n,const STYPE &s,
+                 const CSTYPE &cs,const FTYPE &filter)
     {
-        typedef typename create_group_visitor<VTYPE>::result_type object_types;
-        nxpath parent_path,group_path;
-        split_last(p,parent_path,group_path);
-   
-       
-        object_types parent;
-        if(parent_path.size())
-            parent = get_object(o,parent_path);
-        else
-            parent = o;
-
-        return create_group(parent,group_path.begin()->first,
-                            group_path.begin()->second);
+        typedef create_field_visitor<VTYPE,T,STYPE,CSTYPE,FTYPE> visitor_t;
+        return boost::apply_visitor( visitor_t(n,s,cs,filter),o);
     }
-    */
+
 //end of namespace
 }
 }
