@@ -68,12 +68,54 @@ void create_field_test::test_group()
 }
 
 //-----------------------------------------------------------------------------
+void create_field_test::test_group_from_path()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    object_types gi = h5::nxgroup(file["/group/instrument"]);
+    nxpath p = path_from_string("/:NXentry/:NXinstrument/data");
+
+    
+    object_types f;
+    CPPUNIT_ASSERT_NO_THROW(f=create_field<float32>(gi,p));
+    CPPUNIT_ASSERT(is_valid(f));
+    CPPUNIT_ASSERT(is_field(f));
+    CPPUNIT_ASSERT(get_name(f)=="data");
+    CPPUNIT_ASSERT(get_rank(f)==1);
+    CPPUNIT_ASSERT(get_type(f) == type_id_t::FLOAT32);
+    auto s = get_shape<shape_t>(f);
+    CPPUNIT_ASSERT(s[0] == 1);
+    
+    CPPUNIT_ASSERT_THROW(create_field<uint16>(gi,
+                path_from_string("./:NXdetector/data")),nxgroup_error);
+
+}
+
+//-----------------------------------------------------------------------------
 void create_field_test::test_group_filter()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxdeflate_filter filter(2,true);
     object_types root = h5::nxgroup(file["/"]);
+    
+    object_types f;
+    CPPUNIT_ASSERT(is_valid(f=create_field<float32>(root,"test2",
+                               field_shape,cs_shape,filter)));
+    CPPUNIT_ASSERT(is_field(f));
+    CPPUNIT_ASSERT(get_name(f)=="test2");
+    CPPUNIT_ASSERT(get_rank(f)==3);
+    CPPUNIT_ASSERT(get_type(f) == type_id_t::FLOAT32);
+    auto s = get_shape<shape_t>(f);
+    CPPUNIT_ASSERT(s[0] == 0);
+}
+
+//-----------------------------------------------------------------------------
+void create_field_test::test_group_filter_from_path()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    h5::nxdeflate_filter filter(2,true);
+    object_types root = h5::nxgroup(file["/group"]);
     
     object_types f;
     CPPUNIT_ASSERT(is_valid(f=create_field<float32>(root,"test2",

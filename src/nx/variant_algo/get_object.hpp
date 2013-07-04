@@ -62,7 +62,7 @@ namespace nx{
         do
         {
             root = get_parent(root);
-        }while(get_name(root)=="/");
+        }while(get_name(root)!="/");
 
         return root;
 

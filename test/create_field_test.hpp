@@ -39,6 +39,8 @@ class create_field_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_field);
         CPPUNIT_TEST(test_group);
         CPPUNIT_TEST(test_group_filter);
+        CPPUNIT_TEST(test_group_from_path);
+        CPPUNIT_TEST(test_group_filter_from_path);
         CPPUNIT_TEST(test_attribute);
         CPPUNIT_TEST_SUITE_END();
 
@@ -57,6 +59,8 @@ class create_field_test : public CppUnit::TestFixture
         void test_field();
         void test_group();
         void test_group_filter();
+        void test_group_from_path();
+        void test_group_filter_from_path();
         void test_attribute();
 
 };
