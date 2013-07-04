@@ -43,6 +43,8 @@ namespace nx{
     Return the root group of an object. This is quite usefull in cases where 
     an absolute path is used. 
 
+    This function throws no exceptions.
+
     \tparam VTYPE variant type
     \param p reference to an instance of VTYPE
     \return an instance of object_types holding the root group
@@ -73,8 +75,35 @@ namespace nx{
 
     Return an object specified by a Nexus path. From the nature of a nexus file we
     can assume that every object in the path except the last one has to be a group
-    as it must hold other objects.
+    as it must hold other objects. The function ignores the filename part of the
+    nexus path. 
+
+    It is crucial to understand how the function treates the nexus path. We
+    start with the following path structure
+    \code
+    path = [object section][last object][@ attribute section]
+    \endcode
+    In the first step the function splits the path in two parts
+    \code
+    path1 = [object section]
+    path2 = [last object][@ attribute section]
+    \endcode
+    This is done for the following reason: from the first object section we know
+    that all of these objects must be groups (as they are containers). path1 is
+    thus describing a group path to the last object which is described by path2. 
+    The object referred to by path2 can be either a group or a field and the
+    requested object can now either be the last object itself or an attribute
+    attached to it. 
+
+    If an attribute is requested nxattribute_error is thrown if the attribute
+    does not exist.
+
+    \throws attribute_error if the requested attribute was not found
     \throws nxgroup_error if parent object cannot be found
+    \tparam VTYPE variant type
+    \param p reference to instance of VTYPE
+    \param path the nexus path to the object
+    \return requested object
     */
     template<typename VTYPE> 
     typename nxvariant_traits<typename nxvariant_member_type<VTYPE,0>::type>::object_types 
@@ -86,22 +115,27 @@ namespace nx{
         nxpath target_path;
         object_types result;
 
-
+        //split the original path into two sections
         split_last(path,group_path,target_path);
 
-        //get the parent object 
+        //---------------------------------------------------------------------
+        // Retrieve the group object referred to by group_path
+        //---------------------------------------------------------------------
+        //get the parent object - if the group_path is an absolute path the
+        //parent object passed by the user is ignored and instead the root group
+        //of the Nexus tree is used
         object_types parent;
         if(group_path.is_absolute())
             parent = get_root(p);
         else
             parent = p;
-
+        
+        //check validity of the parent object
         if(!is_valid(parent))
-        {
             throw nxgroup_error(EXCEPTION_RECORD,
                     "Object parent is not a valid Nexus object!");
-        }
 
+        //walk through the group_path
         for(auto element: group_path)
         {
             if(element.first == ".") continue;
@@ -111,24 +145,28 @@ namespace nx{
                 continue;
             }
 
+            //check the validity of the newly obtained parent and throw an
+            //exception if it is not valid
             if(!is_valid(parent = get_child(parent,element.first,element.second)))
-            {
                 throw nxgroup_error(EXCEPTION_RECORD,
                         "Cannot find parent object "
                         +string_from_path(group_path)+"!");
-            }
         }
 
-        //having obtained the parent object we have to look now into it
+        //---------------------------------------------------------------------
+        // Retrieve the child object described by target_path from the parent
+        // object referred to by group_path
+        //---------------------------------------------------------------------
+
+        //retrieve the child object and throw an exception if it cannot be found
         if(!is_valid(result = get_child(parent,target_path.begin()->first,
                                   target_path.begin()->second)))
-        {
             throw nxgroup_error(EXCEPTION_RECORD,
                     "Requested object is not valid!");
-        }
 
-        
-
+        //if target_path points to the attribute attached to the last object we
+        //need to grab it - this section of code will throw nxattribute_error if
+        //the requested attribute does not exist.
         if(!target_path.attribute().empty())
             result = get_attribute(result,target_path.attribute());
 

@@ -85,6 +85,13 @@ namespace nx{
             name is of importance. In case of a group also the class will be
             checked. If none of the child objects matches the criteria an
             invalid object will be returned.
+
+            There are two special group names '.' and '..' which are treated in
+            a special way. In the former case the current group is returned (in
+            other words nothing is done) while in the latter case the parent
+            group of the current group is returned. 
+
+            This method should throw no exceptions. 
             \param g group instance
             \return child object
             */
