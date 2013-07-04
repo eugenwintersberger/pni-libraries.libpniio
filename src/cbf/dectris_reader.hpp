@@ -90,7 +90,7 @@ namespace cbf{
     {
 
         //unsigned long i;
-        size_t ecnt = 0; // element counter
+        //size_t ecnt = 0; // element counter
         CBFT buffer = 0; // single element buffer
 
         //initializing the container with 0
