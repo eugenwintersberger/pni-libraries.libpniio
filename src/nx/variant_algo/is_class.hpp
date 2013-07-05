@@ -66,8 +66,8 @@ namespace nx{
 
             Check the class of the group stored in the variant type. 
             If the groups class and the _class match the method returns true,
-            false otherwise. If the group does not have an NX_class attribute an
-            exception will be thrown.
+            false otherwise. If the group does not have an NX_class attribute
+            false will be returnd.
             \throws nxgroup_error if NX_class attribute does not exist
             \param g group instance
             \return true if class types match, false otherwise
@@ -78,8 +78,7 @@ namespace nx{
                 if(g.has_attr("NX_class"))
                     g.attr("NX_class").read(buffer);
                 else
-                    throw nxgroup_error(EXCEPTION_RECORD,
-                            "Group "+g.path()+" has no class attribute!");
+                    return false;
 
                 return buffer==_class;
 

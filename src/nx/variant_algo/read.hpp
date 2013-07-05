@@ -198,6 +198,13 @@ namespace nx{
         return boost::apply_visitor(read_visitor<ATYPE,VTYPE>(a,sel),o);
     }
 
+    template<typename ATYPE,typename VTYPE>
+    typename read_visitor<ATYPE,VTYPE>::result_type
+    read(VTYPE &o,ATYPE &a,const std::vector<slice> &sel)
+    {
+        return boost::apply_visitor(read_visitor<ATYPE,VTYPE>(a,sel),o);
+    }
+
 //end of namespace
 }
 }

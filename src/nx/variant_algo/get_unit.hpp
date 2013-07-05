@@ -110,6 +110,7 @@ namespace nx{
     Wrapper function for the get_unit_visitor. It returns the the unit string
     associated with a field stored in the variant type. If the object stored is
     not a field exceptions are thrown. 
+    If a field does not posses a unit attribute an empty string is returned.
     \throws nxgroup_error if the stored object is a group
     \throws nxattribute_error if there are IO errors with attributes or the
     stored object is an attribute
