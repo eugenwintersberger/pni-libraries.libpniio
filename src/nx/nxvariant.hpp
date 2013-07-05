@@ -47,3 +47,4 @@
 #include "variant_algo/create_group.hpp"
 #include "variant_algo/create_field.hpp"
 #include "variant_algo/create_attribute.hpp"
+#include "variant_algo/grow.hpp"
