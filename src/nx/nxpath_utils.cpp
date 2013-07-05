@@ -44,7 +44,7 @@ namespace nx{
         //if the original path was absolute also the first part of the two 
         //must be absolute
         p1 = nxpath(p.filename(),gp1,"",p.is_absolute());
-        p2 = nxpath("",gp2,p2.attribute());
+        p2 = nxpath("",gp2,p.attribute());
     }
 
     //--------------------------------------------------------------------------

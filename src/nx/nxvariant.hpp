@@ -45,3 +45,4 @@
 #include "variant_algo/as_attribute.hpp"
 #include "variant_algo/create_group.hpp"
 #include "variant_algo/create_field.hpp"
+#include "variant_algo/create_attribute.hpp"
