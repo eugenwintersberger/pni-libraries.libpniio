@@ -61,7 +61,7 @@ namespace nx{
             result_type operator()(const group_type &g) const
             {
                 throw nxgroup_error(EXCEPTION_RECORD,
-                        "Groups do not have units!");
+                        "Group ["+g.path()+"] does not have a unit!");
                 return result_type();
             }
 
@@ -98,7 +98,7 @@ namespace nx{
             result_type operator()(const attribute_type &a) const
             {
                 throw nxattribute_error(EXCEPTION_RECORD,
-                        "Attributes do not have units!");
+                        "Attribute ["+a.name()+"] does  not have a unit!");
                 return result_type();
             }
     };
