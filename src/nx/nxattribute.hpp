@@ -130,6 +130,47 @@ namespace nx{
     {
         private:
             Imp _imp;  //!< implementation of the attribute object
+           
+            //-----------------------------------------------------------------
+            /*!
+            \brief gernerate error message
+
+            Generate the error message for a shape missmatch error between a
+            field and an array type. 
+            \param ashape array shape
+            \param fshape field shape
+            \return error message
+            */
+            static string _shape_missmatch_error_message(const shape_t
+                    &ashape,const shape_t &fshape) 
+            {
+                std::stringstream ss;
+                ss<<"Array shape ( ";
+#ifdef NOFOREACH
+                for(auto iter = ashape.begin();iter!=ashape.end();++iter)
+                {
+                    auto v = *iter;
+#else
+                for(auto v: ashape) 
+                {
+#endif
+                    ss<<v<<" ";
+                }
+                ss<<") and attribute shape ( ";
+#ifdef NOFOREACH
+                for(auto iter = fshape.begin();iter!=fshape.end();++iter)
+                {
+                    auto v = *iter;
+#else
+                for(auto v: fshape) 
+                {
+#endif 
+                    ss<<v<<" ";
+                }
+                ss<<") do not match!";
+
+                return ss.str();
+            }
 
             //------------------------------------------------------------------
             /*! 
@@ -210,35 +251,19 @@ namespace nx{
                 //get the shape of this attribute
                 auto s = this->shape<shape_t>();
 
-                if((s.size()!=ashape.size())||
-                   (!std::equal(ashape.begin(),ashape.end(),s.begin())))
+                if(s.size() == ashape.size())
                 {
-                    std::stringstream ss;
-                    ss<<"Array shape ( ";
-#ifdef NOFOREACH
-                    for(auto iter=ashape.begin();iter!=ashape.end();++iter)
-                    {
-                        auto v = *iter;
-#else
-                    for(auto v: ashape)
-                    {
-#endif
-                        ss<<v<<" ";
-                    }
-                    ss<<") and attribute shape ( ";
-#ifdef NOFOREACH
-                    for(auto iter = s.begin();iter!=s.end();++iter)
-                    {
-                        auto v = *iter;
-#else
-                    for(auto v: s) 
-                    {
-#endif 
-                        ss<<v<<" ";
-                    }
-                    ss<<") do not match!";
-                    throw shape_missmatch_error(EXCEPTION_RECORD,ss.str());
+                    if(!std::equal(ashape.begin(),ashape.end(),s.begin()))
+                        throw shape_missmatch_error(EXCEPTION_RECORD,
+                                _shape_missmatch_error_message(ashape,s));
                 }
+                else
+                {
+                    if(a.size() != this->size())
+                        throw shape_missmatch_error(EXCEPTION_RECORD,
+                                _shape_missmatch_error_message(ashape,s));
+                }
+
 
                 this->_imp.write(a.storage().ptr());
             }
@@ -263,34 +288,19 @@ namespace nx{
 
                 auto ashape = a.template shape<shape_t>();
                 auto shape = this->template shape<shape_t>();
-                if(!std::equal(ashape.begin(),ashape.end(),shape.begin()))
+                if(shape.size() == ashape.size())  
                 {
-                    std::stringstream ss;
-                    ss<<"Array shape ( ";
-#ifdef NOFOREACH
-                    for(auto iter = ashape.begin();iter!=ashape.end();++iter)
-                    {
-                        auto v = *iter;
-#else
-                    for(auto v: ashape) 
-                    {
-#endif 
-                        ss<<v<<" ";
-                    }
-                    ss<<") and attribute shape ( ";
-#ifdef NOFOREACH
-                    for(auto iter = ashape.begin();iter!=ashape.end();++iter)
-                    {
-                        auto v = *iter;
-#else
-                    for(auto v: shape) 
-                    {
-#endif
-                        ss<<v<<" ";
-                    }
-                    ss<<") do not match!";
-                    throw shape_missmatch_error(EXCEPTION_RECORD,ss.str());
+                    if(!std::equal(ashape.begin(),ashape.end(),shape.begin()))
+                        throw shape_missmatch_error(EXCEPTION_RECORD,
+                                _shape_missmatch_error_message(ashape,shape));
                 }
+                else
+                {
+                    if(this->size() != a.size())
+                        throw shape_missmatch_error(EXCEPTION_RECORD,
+                                _shape_missmatch_error_message(ashape,shape));
+                }
+
 
                 this->_imp.read(const_cast<typename ATYPE::value_type*>
                                  (a.storage().ptr()));
@@ -503,21 +513,19 @@ namespace nx{
                 //get the shape of this attribute
                 auto s = this->shape<shape_t>();
 
-                if((s.size()!=ashape.size())||
-                   (!std::equal(ashape.begin(),ashape.end(),s.begin())))
+                if(s.size()==ashape.size())
                 {
-                    std::stringstream ss;
-                    ss<<"Array shape ( ";
-                    for(auto iter=ashape.begin();iter!=ashape.end();++iter)
-                        ss<<*iter<<" ";
-
-                    ss<<") and attribute shape ( ";
-                    for(auto iter=s.begin();iter!=s.end();++iter)
-                        ss<<*iter<<" ";
-
-                    ss<<") do not match!";
-                    throw shape_missmatch_error(EXCEPTION_RECORD,ss.str());
+                    if(!std::equal(ashape.begin(),ashape.end(),s.begin()))
+                        throw shape_missmatch_error(EXCEPTION_RECORD,
+                                _shape_missmatch_error_message(ashape,s));
                 }
+                else
+                {
+                    if(a.size() != this->size())
+                        throw shape_missmatch_error(EXCEPTION_RECORD,
+                                _shape_missmatch_error_message(ashape,s));
+                }
+                        
 
                 try
                 {
@@ -634,33 +642,18 @@ namespace nx{
 
                 auto ashape = a.template shape<shape_t>();
                 auto shape = this->template shape<shape_t>();
-                if(!std::equal(ashape.begin(),ashape.end(),shape.begin()))
+
+                if(shape.size()==ashape.size())
                 {
-                    std::stringstream ss;
-                    ss<<"Array shape ( ";
-#ifdef NOFOREACH
-                    for(auto iter = ashape.begin();iter!=ashape.end();++iter)
-                    {
-                        auto v = *iter;
-#else
-                    for(auto v: ashape) 
-                    {
-#endif 
-                        ss<<v<<" ";
-                    }
-                    ss<<") and attribute shape ( ";
-#ifdef NOFOREACH
-                    for(auto iter = ashape.begin();iter!=ashape.end();++iter)
-                    {
-                        auto v = *iter;
-#else
-                    for(auto v: shape) 
-                    {
-#endif
-                        ss<<v<<" ";
-                    }
-                    ss<<") do not match!";
-                    throw shape_missmatch_error(EXCEPTION_RECORD,ss.str());
+                    if(!std::equal(ashape.begin(),ashape.end(),shape.begin()))
+                        throw shape_missmatch_error(EXCEPTION_RECORD,
+                                _shape_missmatch_error_message(ashape,shape));
+                }
+                else
+                {
+                    if(a.size() != this->size())
+                        throw shape_missmatch_error(EXCEPTION_RECORD,
+                                _shape_missmatch_error_message(ashape,shape));
                 }
 
                 try
