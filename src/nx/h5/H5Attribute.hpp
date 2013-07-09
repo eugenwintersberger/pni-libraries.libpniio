@@ -188,7 +188,7 @@ namespace h5{
             \brief read to string
 
             Reads a string value from an attribute.
-            \throws shape_missmatch_error if attribute is not scalar
+            \throws shape_mismatch_error if attribute is not scalar
             \throws H5AttributeError in case of general IO errors
             \param s string variable to which data will be written
             */

@@ -59,7 +59,7 @@ namespace nx{
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(size_missmatch_error &error)\
+    catch(size_mismatch_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
@@ -77,7 +77,7 @@ namespace nx{
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(size_missmatch_error &error)\
+    catch(size_mismatch_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
@@ -95,7 +95,7 @@ namespace nx{
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(shape_missmatch_error &error)\
+    catch(shape_mismatch_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
@@ -113,7 +113,7 @@ namespace nx{
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(shape_missmatch_error &error)\
+    catch(shape_mismatch_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
@@ -234,13 +234,13 @@ namespace nx{
             /*!
             \brief gernerate error message
 
-            Generate the error message for a shape missmatch error between a
+            Generate the error message for a shape mismatch error between a
             field and an array type. 
             \param ashape array shape
             \param fshape field shape
             \return error message
             */
-            static string _shape_missmatch_error_message(const shape_t
+            static string _shape_mismatch_error_message(const shape_t
                     &ashape,const shape_t &fshape) 
             {
                 std::stringstream ss;
@@ -276,7 +276,7 @@ namespace nx{
             \brief read data to buffer
 
             \throws memory_not_allocated_error if buffer size is 0
-            \throws size_missmatch_error if buffer and field size do not match
+            \throws size_mismatch_error if buffer and field size do not match
             \throws nxfield_error in case of any other IO error
             \tparam BTYPE buffer type
             \param b reference to an instance of BTYPE
@@ -293,7 +293,7 @@ namespace nx{
                     std::stringstream ss;
                     ss<<"Buffer size ("<<b.size()<<") and field size (";
                     ss<<this->size()<<") do not match!";
-                    throw size_missmatch_error(EXCEPTION_RECORD,ss.str());
+                    throw size_mismatch_error(EXCEPTION_RECORD,ss.str());
                 }
                 
                 try
@@ -314,7 +314,7 @@ namespace nx{
 
             Write data from a buffer to the file
             \throws memory_not_allocated_error if buffer is not allocated
-            \throws size_missmatch_error if field and buffer size do not match
+            \throws size_mismatch_error if field and buffer size do not match
             \throws nxfield_error in case of any other error
             \tparam BTYPE buffer type
             \param b reference to an instance of BTYPE
@@ -330,7 +330,7 @@ namespace nx{
                     std::stringstream ss;
                     ss<<"Source buffer size ("<<b.size()<<") does not match";
                     ss<<"target field size ("<<this->size()<<")!";
-                    throw size_missmatch_error(EXCEPTION_RECORD,ss.str());
+                    throw size_mismatch_error(EXCEPTION_RECORD,ss.str());
                 }
 
                 try
@@ -348,7 +348,7 @@ namespace nx{
             \brief read data to array
 
             \throws memory_not_allocated_error if array buffer not allocated
-            \throws shape_missmatch_error if shapes do not match
+            \throws shape_mismatch_error if shapes do not match
             \throws nxfield_error in case of other errors
             \tparam ATYPE array type
             \param a reference to an instance fo ATYPE
@@ -367,16 +367,16 @@ namespace nx{
                     //if array and field have the same rank we need to check the
                     //shape of each of the objects
                     if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
-                        throw shape_missmatch_error(EXCEPTION_RECORD,
-                                _shape_missmatch_error_message(ashape,fshape));
+                        throw shape_mismatch_error(EXCEPTION_RECORD,
+                                _shape_mismatch_error_message(ashape,fshape));
                 }
                 else
                 {
                     //if the two components are of different size we have to
                     //throw an exception in any case
                     if(this->size() != a.size())
-                        throw shape_missmatch_error(EXCEPTION_RECORD,
-                                _shape_missmatch_error_message(ashape,fshape));
+                        throw shape_mismatch_error(EXCEPTION_RECORD,
+                                _shape_mismatch_error_message(ashape,fshape));
                 }
 
                 //finally we read the data
@@ -398,7 +398,7 @@ namespace nx{
             \brief write data from array
 
             \throws memory_not_allocated_error if array buffer not allocated
-            \throws shape_missmatch_error if shapes do not match
+            \throws shape_mismatch_error if shapes do not match
             \throws nxfield_error in case of other errors
             \tparam ATYPE array type
             \param a reference to an instance fo ATYPE
@@ -415,14 +415,14 @@ namespace nx{
                 if(ashape.size() == fshape.size())
                 {
                     if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
-                        throw shape_missmatch_error(EXCEPTION_RECORD,
-                                _shape_missmatch_error_message(ashape,fshape));
+                        throw shape_mismatch_error(EXCEPTION_RECORD,
+                                _shape_mismatch_error_message(ashape,fshape));
                 }
                 else
                 {
                     if(this->size() != a.size())
-                        throw shape_missmatch_error(EXCEPTION_RECORD,
-                               _shape_missmatch_error_message(ashape,fshape));
+                        throw shape_mismatch_error(EXCEPTION_RECORD,
+                               _shape_mismatch_error_message(ashape,fshape));
                 }
 
 
@@ -580,7 +580,7 @@ namespace nx{
             Resize the field to a new shape determined by s.  The rank of the
             old and the new shape must coincide otherwise an exception will be
             thrown.
-            \throws shape_missmatch_error if ranks do not match
+            \throws shape_mismatch_error if ranks do not match
             \throws nxfield_error in case of other errors
             \param s describing the new shape of the field
             */
@@ -590,7 +590,7 @@ namespace nx{
                 {
                     this->imp().resize(s);
                 }
-                catch(shape_missmatch_error &e)
+                catch(shape_mismatch_error &e)
                 {
                     e.append(EXCEPTION_RECORD); throw e;
                 }
@@ -674,14 +674,14 @@ namespace nx{
             uint32 scalar;
             field.read(scalar);
             \endcode
-            \throws shape_missmatch_error if dataset is not scalar
+            \throws shape_mismatch_error if dataset is not scalar
             \throws nxfield_error in all other error cases
             \param value variable where to store the data
             */
             template<typename T> void read(T &value) const
             {
                 if(this->imp().size() != 1)
-                    throw shape_missmatch_error(EXCEPTION_RECORD,
+                    throw shape_mismatch_error(EXCEPTION_RECORD,
                                               "Field is not scalar!");
 
                 try
@@ -710,7 +710,7 @@ namespace nx{
 
             \endcode
             \throws memory_not_allocated_error if the buffer is not allocated
-            \throws size_missmatch_buffer if sizes do not match
+            \throws size_mismatch_buffer if sizes do not match
             \throws nxfield_error in all other cases
             \param buffer buffer where to store data
             */
@@ -725,7 +725,7 @@ namespace nx{
             \brief read data to a reference buffer
 
             \throws memory_not_allocated_error if buffer not allocated
-            \throws size_missmatch_error if buffer and field size do not match
+            \throws size_mismatch_error if buffer and field size do not match
             \throws nxfield_error in case of any other errors
             \param buffer reference to an RBuffer instance
             */
@@ -739,7 +739,7 @@ namespace nx{
             \brief read data to a dynamic buffer
 
             \throws memory_not_allocated_error if buffer not allocated
-            \throws size_missmatch_error if buffer and field size do not match
+            \throws size_mismatch_error if buffer and field size do not match
             \throws nxfield_error in case of any other errors
             \param buffer reference to an RBuffer instance
             */
@@ -763,7 +763,7 @@ namespace nx{
             field.read(a);
             \endcode
 
-            \throws shape_missmatch_error if field and array-shape do not
+            \throws shape_mismatch_error if field and array-shape do not
             match
             \throws memory_not_allocated_error if array buffer not allocated
             \throws nxfield_error in case of all other errors.
@@ -781,7 +781,7 @@ namespace nx{
 
             Copy the field data to a static array. 
 
-            \throws shape_missmatch_error if field and array-shape do not match
+            \throws shape_mismatch_error if field and array-shape do not match
             \throws memory_not_allocated_error if array-buffer is not allocated
             \throws nxfield_error in acase of any other IO error
             \tparam OTS template arguments for SArray
@@ -798,7 +798,7 @@ namespace nx{
             \brief read data to a array instance
 
             This method reads data to an array type erasure. 
-            \throws shape_missmatch_error if field and array-shape do not match
+            \throws shape_mismatch_error if field and array-shape do not match
             \throws memory_not_allocated_error if array-buffer is not allocated
             \throws nxfield_error in case of any other IO error
             \param a instance of the array
@@ -810,7 +810,7 @@ namespace nx{
             \brief read data to a numeric array
 
             \throws memory_not_allocated_error if array buffer is not allocated
-            \throws shape_missmatch_error if array and field shape do not match
+            \throws shape_mismatch_error if array and field shape do not match
             \throws nxfield_error in case of any other IO error
             \tparam OTS template parameters for numarray template
             \param array instance of NumArray
@@ -831,7 +831,7 @@ namespace nx{
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
-                catch(shape_missmatch_error &error)
+                catch(shape_mismatch_error &error)
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
@@ -854,14 +854,14 @@ namespace nx{
             field.write(data);
             \endcode
 
-            \throws shape_missmatch_error if the dataspace is not scalar
+            \throws shape_mismatch_error if the dataspace is not scalar
             \throws nxfield_error in case of other errors
             \param value value to write
             */
             template<typename T> void write(const T &value) const
             {
                 if(this->imp().size()!=1) 
-                    throw shape_missmatch_error(EXCEPTION_RECORD,
+                    throw shape_mismatch_error(EXCEPTION_RECORD,
                                               "Field is not scalar!");
 
                 try
@@ -884,7 +884,7 @@ namespace nx{
             Writes a C-style string to disk. This method is a specialization of
             the write(const T &value) template mathod.
 
-            \throws shape_missmatch_error if the field is not scalar
+            \throws shape_mismatch_error if the field is not scalar
             \throws nxfield_error in case of other errors
             \param value pointer to string data
             */
@@ -895,7 +895,7 @@ namespace nx{
                     string s(value);
                     this->write(s);
                 }
-                catch(shape_missmatch_error &error)
+                catch(shape_mismatch_error &error)
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
@@ -912,7 +912,7 @@ namespace nx{
 
             Write data form a DBuffer instance to the field.
             \throws memory_not_allocated_error if buffer is not allocated
-            \throws size_missmatch_error if buffer and field size do not match
+            \throws size_mismatch_error if buffer and field size do not match
             \throws nxfield_error in case of any other IO error
             \tparam OTS template arguments to DBuffer
             \param b instance of DBuffer from which to write data
@@ -929,7 +929,7 @@ namespace nx{
 
             Write data form a SBuffer instance to the field.
             \throws memory_not_allocated_error if buffer is not allocated
-            \throws size_missmatch_error if buffer and field size do not match
+            \throws size_mismatch_error if buffer and field size do not match
             \throws nxfield_error in case of any other IO error
             \tparam OTS template arguments to SBuffer
             \param b instance of SBuffer from which to write data
@@ -946,7 +946,7 @@ namespace nx{
 
             Write data form a RBuffer instance to the field.
             \throws memory_not_allocated_error if buffer is not allocated
-            \throws size_missmatch_error if buffer and field size do not match
+            \throws size_mismatch_error if buffer and field size do not match
             \throws nxfield_error in case of any other IO error
             \tparam OTS template arguments to RBuffer
             \param b instance of RBuffer from which to write data
@@ -962,7 +962,7 @@ namespace nx{
 
             Write data from an instance of darray. 
             \throws memory_not_allocated_error if array-buffer is not allocated
-            \throws shape_missmatch_error if field and array shape do not match
+            \throws shape_mismatch_error if field and array shape do not match
             \throws nxfield_error in case of any other IO error
             \tparam OTS template arguments to DArray
             \param a instance of DArray
@@ -979,7 +979,7 @@ namespace nx{
 
             Write data from an instance of SArray. 
             \throws memory_not_allocated_error if array-buffer is not allocated
-            \throws shape_missmatch_error if field and array shape do not match
+            \throws shape_mismatch_error if field and array shape do not match
             \throws nxfield_error in case of any other IO error
             \tparam OTS template arguments to SArray
             \param a instance of SArray
@@ -996,7 +996,7 @@ namespace nx{
 
             Write data form an instance of numarray.
             \throws memory_not_allocated_error if array-buffer is not allocated
-            \throws shape_missmatch_error if field and array shape do not match
+            \throws shape_mismatch_error if field and array shape do not match
             \throws nxfield_error in case of any other IO error
             \tparam OTS template arguments to NumArray
             \param a instance of NumArray
@@ -1012,7 +1012,7 @@ namespace nx{
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
-                catch(shape_missmatch_error &error)
+                catch(shape_mismatch_error &error)
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
@@ -1028,7 +1028,7 @@ namespace nx{
 
             Write the data stored by an array erasure. 
             \throws memory_not_allocated_error array instance nof allocated
-            \throws shape_missmatch_error shapes do not match
+            \throws shape_mismatch_error shapes do not match
             \param a reference to array erasure
             */
             void write(const array &a) const;
@@ -1100,16 +1100,16 @@ namespace nx{
             //if array and field have the same rank we need to check the
             //shape of each of the objects
             if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
-                throw shape_missmatch_error(EXCEPTION_RECORD,
-                        _shape_missmatch_error_message(ashape,fshape));
+                throw shape_mismatch_error(EXCEPTION_RECORD,
+                        _shape_mismatch_error_message(ashape,fshape));
         }
         else
         {
             //if the two components are of different size we have to
             //throw an exception in any case
             if(this->size() != a.size())
-                throw shape_missmatch_error(EXCEPTION_RECORD,
-                        _shape_missmatch_error_message(ashape,fshape));
+                throw shape_mismatch_error(EXCEPTION_RECORD,
+                        _shape_mismatch_error_message(ashape,fshape));
         }
 
         //finally we read the data
@@ -1137,14 +1137,14 @@ namespace nx{
         if(ashape.size() == fshape.size())
         {
             if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
-                throw shape_missmatch_error(EXCEPTION_RECORD,
-                        _shape_missmatch_error_message(ashape,fshape));
+                throw shape_mismatch_error(EXCEPTION_RECORD,
+                        _shape_mismatch_error_message(ashape,fshape));
         }
         else
         {
             if(this->size() != a.size())
-                throw shape_missmatch_error(EXCEPTION_RECORD,
-                       _shape_missmatch_error_message(ashape,fshape));
+                throw shape_mismatch_error(EXCEPTION_RECORD,
+                       _shape_mismatch_error_message(ashape,fshape));
         }
 
 

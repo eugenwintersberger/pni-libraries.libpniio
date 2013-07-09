@@ -259,7 +259,7 @@ namespace io{
             method is that memory allocation must be done only once before this
             method is called. This increases performance dramatically in
             particular if many images of equal size should be read.
-            \throws size_missmatch_error if the size of the container does not
+            \throws size_mismatch_error if the size of the container does not
             match the number of pixels stored in the image
             \param data instance of CTYPE where data will be stored
             \param i index of the image in the file
@@ -274,7 +274,7 @@ namespace io{
                     std::stringstream ss;
                     ss<<"Container size ("<<data.size()<<") does not match";
                     ss<<"number of pixels ("<<info.npixels()<<")!";
-                    throw size_missmatch_error(EXCEPTION_RECORD,ss.str());
+                    throw size_mismatch_error(EXCEPTION_RECORD,ss.str());
                 }
 
                 //read data

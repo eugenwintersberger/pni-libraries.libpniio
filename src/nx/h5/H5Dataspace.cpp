@@ -131,7 +131,7 @@ namespace h5 {
             std::stringstream ss;
             ss<<"Rank of actual shape ("<<dlist.size()<<") and of ";
             ss<<"maximum shape ("<<mlist.size()<<") do not match!";
-            throw shape_missmatch_error(EXCEPTION_RECORD,ss.str());
+            throw shape_mismatch_error(EXCEPTION_RECORD,ss.str());
         }
 
         //finally resize the dataspace
@@ -300,7 +300,7 @@ namespace h5 {
             std::stringstream ss;
             ss<<"Rank of actual shape ("<<dlist.size()<<") and of ";
             ss<<"maximum shape ("<<mlist.size()<<") do not match!";
-            throw shape_missmatch_error(EXCEPTION_RECORD,ss.str());
+            throw shape_mismatch_error(EXCEPTION_RECORD,ss.str());
         }
         std::copy(dlist.begin(),dlist.end(),_dims.begin());
         std::copy(mlist.begin(),mlist.end(),_maxdims.begin());

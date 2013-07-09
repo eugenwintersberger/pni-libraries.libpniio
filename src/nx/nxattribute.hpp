@@ -56,7 +56,7 @@ namespace nx{
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(size_missmatch_error &error)\
+    catch(size_mismatch_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
@@ -74,7 +74,7 @@ namespace nx{
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(size_missmatch_error &error)\
+    catch(size_mismatch_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
@@ -91,7 +91,7 @@ namespace nx{
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(shape_missmatch_error &error)\
+    catch(shape_mismatch_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
@@ -109,7 +109,7 @@ namespace nx{
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
-    catch(shape_missmatch_error &error)\
+    catch(shape_mismatch_error &error)\
     {\
         error.append(EXCEPTION_RECORD); throw error;\
     }\
@@ -135,13 +135,13 @@ namespace nx{
             /*!
             \brief gernerate error message
 
-            Generate the error message for a shape missmatch error between a
+            Generate the error message for a shape mismatch error between a
             field and an array type. 
             \param ashape array shape
             \param fshape field shape
             \return error message
             */
-            static string _shape_missmatch_error_message(const shape_t
+            static string _shape_mismatch_error_message(const shape_t
                     &ashape,const shape_t &fshape) 
             {
                 std::stringstream ss;
@@ -178,7 +178,7 @@ namespace nx{
 
             Write attribute from a buffer type. 
             \throws memory_not_allocated_error if the buffer is not allocated
-            \throws size_missmatch_error if the buffer and the attribute size do
+            \throws size_mismatch_error if the buffer and the attribute size do
             not match
             \tparam BTYPE buffer type
             \param b instance of BTYPE with the data
@@ -194,7 +194,7 @@ namespace nx{
                     std::stringstream ss;
                     ss<<"Buffer size ("<<b.size()<<") and attribute size (";
                     ss<<this->size()<<") do not match!";
-                    throw size_missmatch_error(EXCEPTION_RECORD,ss.str());
+                    throw size_mismatch_error(EXCEPTION_RECORD,ss.str());
                 }
 
                 this->_imp.write(b.ptr());
@@ -206,7 +206,7 @@ namespace nx{
 
             Read attribute data from the file and store it to a buffer object.
             \throws memory_not_allocated_error if buffer is not allocated
-            \throws size_missmatch_error if attribute and buffer size do not match
+            \throws size_mismatch_error if attribute and buffer size do not match
             \tparam BTYPE buffer type 
             \param b instance of BTYPE
             */
@@ -221,7 +221,7 @@ namespace nx{
                     std::stringstream ss;
                     ss<<"Buffer size ("<<b.size()<<") and attribute size (";
                     ss<<this->size()<<") do not match!";
-                    throw size_missmatch_error(EXCEPTION_RECORD,ss.str());
+                    throw size_mismatch_error(EXCEPTION_RECORD,ss.str());
                 }
 
                 this->_imp.read(const_cast<typename BTYPE::value_type *>
@@ -234,7 +234,7 @@ namespace nx{
 
             Read data from an array type and store it in the attribute.
             \throws memory_not_allocated_error if the array buffer is not allocated
-            \throws shape_missmatch_error if the shapes of the array and the
+            \throws shape_mismatch_error if the shapes of the array and the
             attribute do not match
             \tparam ATYPE array type
             \param a instance of ATYPE
@@ -254,14 +254,14 @@ namespace nx{
                 if(s.size() == ashape.size())
                 {
                     if(!std::equal(ashape.begin(),ashape.end(),s.begin()))
-                        throw shape_missmatch_error(EXCEPTION_RECORD,
-                                _shape_missmatch_error_message(ashape,s));
+                        throw shape_mismatch_error(EXCEPTION_RECORD,
+                                _shape_mismatch_error_message(ashape,s));
                 }
                 else
                 {
                     if(a.size() != this->size())
-                        throw shape_missmatch_error(EXCEPTION_RECORD,
-                                _shape_missmatch_error_message(ashape,s));
+                        throw shape_mismatch_error(EXCEPTION_RECORD,
+                                _shape_mismatch_error_message(ashape,s));
                 }
 
 
@@ -275,7 +275,7 @@ namespace nx{
             Read attribute data from the file and store it to the array.
             \throws memory_not_allocated_error if the arrays buffer is not
             allocated
-            \throws shape_missmatch_error if the shapes of the array and the
+            \throws shape_mismatch_error if the shapes of the array and the
             attribute do not match
             \tparam ATYPE array type
             \param a instance of ATYPE
@@ -291,14 +291,14 @@ namespace nx{
                 if(shape.size() == ashape.size())  
                 {
                     if(!std::equal(ashape.begin(),ashape.end(),shape.begin()))
-                        throw shape_missmatch_error(EXCEPTION_RECORD,
-                                _shape_missmatch_error_message(ashape,shape));
+                        throw shape_mismatch_error(EXCEPTION_RECORD,
+                                _shape_mismatch_error_message(ashape,shape));
                 }
                 else
                 {
                     if(this->size() != a.size())
-                        throw shape_missmatch_error(EXCEPTION_RECORD,
-                                _shape_missmatch_error_message(ashape,shape));
+                        throw shape_mismatch_error(EXCEPTION_RECORD,
+                                _shape_mismatch_error_message(ashape,shape));
                 }
 
 
@@ -356,7 +356,7 @@ namespace nx{
 
             Write data from an instance of the DBuffer template.
             \throws memory_not_allocated_error if buffer memory is not allocated
-            \throws size_missmatch_error if buffer and attribute size do not match
+            \throws size_mismatch_error if buffer and attribute size do not match
             \throws nxattribute_error in case of any other IO error
             \tparam OTS template argumens to the DBuffer template
             \param buffer buffer from which to write data
@@ -373,7 +373,7 @@ namespace nx{
 
             Write the data from a static buffer type. 
             \throws memory_not_allocated_error if buffer memory is not allocated
-            \throws size_missmatch_error if buffer and attribute size do not match
+            \throws size_mismatch_error if buffer and attribute size do not match
             \throws nxattribute_error in case of any other IO error
             \tparam OTS template arguments to SBuffer
             \param buffer buffer from which to write data
@@ -390,7 +390,7 @@ namespace nx{
 
             Write the data from a reference buffer template.
             \throws memory_not_allocated_error if buffer memory is not allocated
-            \throws size_missmatch_error if buffer and attribute size do not match
+            \throws size_mismatch_error if buffer and attribute size do not match
             \throws nxattribute_error in case of any other IO error
             \tparam OTS template arguments to RBuffer
             \param buffer buffer from which to write data
@@ -406,7 +406,7 @@ namespace nx{
 
             Write data from a dynamic array template. 
             \throws memory_not_allocated_error if array buffer is not allocated
-            \throws shape_missmatch_errror if array and attribute shape do not
+            \throws shape_mismatch_errror if array and attribute shape do not
             match
             \throws nxattribute_error in case of any other IO error
             \tparam OTS template arguments to DArray
@@ -424,7 +424,7 @@ namespace nx{
 
             Write data form a static array template.
             \throws memory_not_allocated_error if array buffer is not allocated
-            \throws shape_missmatch_error if array and attribute shape do not
+            \throws shape_mismatch_error if array and attribute shape do not
             match
             \throws nxattribute_error in case of any other IO error
             \tparam OTS template arguments to SArray template
@@ -443,7 +443,7 @@ namespace nx{
 
             Write a single scalar value. This throws an exception if the field
             is not scalar (size=1).
-            \throws shape_missmatch_error if field is not scalar
+            \throws shape_mismatch_error if field is not scalar
             \throws nxattribute_error in case of any other IO error
             \tparam T data type of the scalar to write
             \param value reference to the value to write
@@ -451,7 +451,7 @@ namespace nx{
             template<typename T> void write(const T &value) const
             {
                 if(this->size()!=1)
-                    throw shape_missmatch_error(EXCEPTION_RECORD,
+                    throw shape_mismatch_error(EXCEPTION_RECORD,
                             "Field is not scalar!");
 
                 try
@@ -470,7 +470,7 @@ namespace nx{
             \brief write a C-string
 
             This is a special implementation of write for classical C-strings.
-            \throws shape_missmatch_error if field is not scalar
+            \throws shape_mismatch_error if field is not scalar
             \throws nxattribute_error in case of any other IO error
             \param value pointer to a C-string
             */
@@ -481,7 +481,7 @@ namespace nx{
                     string s(value);
                     this->write(s);
                 }
-                catch(shape_missmatch_error &error)
+                catch(shape_mismatch_error &error)
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
@@ -497,7 +497,7 @@ namespace nx{
 
             \throws memory_not_allocated_error if array not allocated
             \throws type_error if data type not supported
-            \throws shape_missmatch_error if array shape does not match
+            \throws shape_mismatch_error if array shape does not match
             \throws nxattribute_error in case of any other error
             \param a instance of array
             */
@@ -516,14 +516,14 @@ namespace nx{
                 if(s.size()==ashape.size())
                 {
                     if(!std::equal(ashape.begin(),ashape.end(),s.begin()))
-                        throw shape_missmatch_error(EXCEPTION_RECORD,
-                                _shape_missmatch_error_message(ashape,s));
+                        throw shape_mismatch_error(EXCEPTION_RECORD,
+                                _shape_mismatch_error_message(ashape,s));
                 }
                 else
                 {
                     if(a.size() != this->size())
-                        throw shape_missmatch_error(EXCEPTION_RECORD,
-                                _shape_missmatch_error_message(ashape,s));
+                        throw shape_mismatch_error(EXCEPTION_RECORD,
+                                _shape_mismatch_error_message(ashape,s));
                 }
                         
 
@@ -544,7 +544,7 @@ namespace nx{
 
             Read data to a DBuffer instance.
             \throws memory_not_allocated_error if buffer is not allocated
-            \throws size_missmatch_error if buffer and attribute size do not match
+            \throws size_mismatch_error if buffer and attribute size do not match
             \throws nxattribute_error in case of any other IO error
             \tparam OTS template arguments to the DBuffer template
             \param buffer instance of DBuffer in which to store the data
@@ -561,7 +561,7 @@ namespace nx{
 
             Read data to a SBuffer instance.
             \throws memory_not_allocated_error if buffer is not allocated
-            \throws size_missmatch_error if buffer and attribute size do not match
+            \throws size_mismatch_error if buffer and attribute size do not match
             \throws nxattribute_error in case of any other IO error
             \tparam OTS template arguments to the SBuffer template
             \param buffer instance of SBuffer in which to store the data
@@ -578,7 +578,7 @@ namespace nx{
 
             Read data to a RBuffer instance.
             \throws memory_not_allocated_error if buffer is not allocated
-            \throws size_missmatch_error if buffer and attribute size do not match
+            \throws size_mismatch_error if buffer and attribute size do not match
             \throws nxattribute_error in case of any other IO error
             \tparam OTS template arguments to the RBuffer template
             \param buffer instance of RBuffer in which to store the data
@@ -594,7 +594,7 @@ namespace nx{
 
             Read data to an DArray instance.
             \throws memory_not_allocated_error if array buffer is not allocated
-            \throws shape_missmatch_error if array and attribute shape do not
+            \throws shape_mismatch_error if array and attribute shape do not
             match
             \throws nxattribute_error in the case of any other IO error
             \tparam OTS template arguments to DArray
@@ -612,7 +612,7 @@ namespace nx{
 
             Read data to an SArray instance.
             \throws memory_not_allocated_error if array buffer is not allocated
-            \throws shape_missmatch_error if array and attribute shape do not
+            \throws shape_mismatch_error if array and attribute shape do not
             match
             \throws nxattribute_error in the case of any other IO error
             \tparam OTS template arguments to SArray
@@ -630,7 +630,7 @@ namespace nx{
 
             \throws memory_not_allocated_error if array not allocated
             \throws type_error if data type is not supported
-            \throws shape_missmatch_error if array shape does not match
+            \throws shape_mismatch_error if array shape does not match
             \throws nxattribute_error in case of any other IO error
             \param a instance of array 
             */
@@ -646,14 +646,14 @@ namespace nx{
                 if(shape.size()==ashape.size())
                 {
                     if(!std::equal(ashape.begin(),ashape.end(),shape.begin()))
-                        throw shape_missmatch_error(EXCEPTION_RECORD,
-                                _shape_missmatch_error_message(ashape,shape));
+                        throw shape_mismatch_error(EXCEPTION_RECORD,
+                                _shape_mismatch_error_message(ashape,shape));
                 }
                 else
                 {
                     if(a.size() != this->size())
-                        throw shape_missmatch_error(EXCEPTION_RECORD,
-                                _shape_missmatch_error_message(ashape,shape));
+                        throw shape_mismatch_error(EXCEPTION_RECORD,
+                                _shape_mismatch_error_message(ashape,shape));
                 }
 
                 try
@@ -672,7 +672,7 @@ namespace nx{
             \brief read a single scalar value
 
             Read a single scalar value.
-            \throws shape_missmatch_error if the attribute is not scalar
+            \throws shape_mismatch_error if the attribute is not scalar
             \throws nxattribute_error in case of any other IO error
             \tparam T type to read to
             \param value reference to an instance of T

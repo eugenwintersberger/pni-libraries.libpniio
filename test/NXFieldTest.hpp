@@ -162,7 +162,7 @@ template<typename T> void NXFieldTest::test_io_array()
     CPPUNIT_ASSERT(write == read);
 
     field1 = file.create_field<T>("array2",{2,2});
-    CPPUNIT_ASSERT_THROW(field1.write(write),shape_missmatch_error);
+    CPPUNIT_ASSERT_THROW(field1.write(write),shape_mismatch_error);
 
     nxdeflate_filter deflate;
     deflate.compression_rate(9);
@@ -195,7 +195,7 @@ template<typename T> void NXFieldTest::test_io_buffer()
 
     //check exceptions
     CPPUNIT_ASSERT_NO_THROW(field1 = file.create_field<T>("buffer2",{200}));
-    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),size_missmatch_error);
+    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),size_mismatch_error);
 
     write_buffer.free();
     CPPUNIT_ASSERT_THROW(field1.write(write_buffer),memory_not_allocated_error);
@@ -216,6 +216,6 @@ template<typename T> void NXFieldTest::test_io_scalar()
     compare_values(write,read);
 
     CPPUNIT_ASSERT_NO_THROW(field1.grow(0));
-    CPPUNIT_ASSERT_THROW(field1.write(write),shape_missmatch_error);
+    CPPUNIT_ASSERT_THROW(field1.write(write),shape_mismatch_error);
 }
 

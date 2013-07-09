@@ -149,8 +149,8 @@ void H5DataspaceTest::test_inquery()
     CPPUNIT_ASSERT(std::equal(s1.maxshape().begin(),s1.maxshape().end(),slist.begin()));
 
     slist = std::list<size_t>(s1.rank()+1);
-    CPPUNIT_ASSERT_THROW(s1.shape(slist),shape_missmatch_error);
-    CPPUNIT_ASSERT_THROW(s1.maxshape(slist),shape_missmatch_error);
+    CPPUNIT_ASSERT_THROW(s1.shape(slist),shape_mismatch_error);
+    CPPUNIT_ASSERT_THROW(s1.maxshape(slist),shape_mismatch_error);
 
     auto list = s1.shape<std::list<size_t> >();
     auto mlist = s1.maxshape<std::list<size_t> >();
@@ -177,7 +177,7 @@ void H5DataspaceTest::test_resize()
     CPPUNIT_ASSERT(std::equal(space.maxshape().begin(),space.maxshape().end(),s2.begin()));
 
     shape_t maxshape{100,2,12};
-    CPPUNIT_ASSERT_THROW(space.resize(s2,maxshape),shape_missmatch_error);
+    CPPUNIT_ASSERT_THROW(space.resize(s2,maxshape),shape_mismatch_error);
     maxshape = shape_t{100,20};
     CPPUNIT_ASSERT_NO_THROW(space.resize(s2,maxshape));
     CPPUNIT_ASSERT(std::equal(space.shape().begin(),space.shape().end(),s2.begin()));

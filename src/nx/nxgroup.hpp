@@ -209,7 +209,7 @@ namespace nx{
             The chunk shape here is optional. If not given a default value will
             be generated from the original shape where the first dimension is
             set to one. 
-            \throws shape_missmatch_error if chunk and field shape do not have the
+            \throws shape_mismatch_error if chunk and field shape do not have the
             same rank
             \throws nxgroup_error in all other cases
             \tparam T data type of the field
@@ -260,7 +260,7 @@ namespace nx{
                     field = FieldType(FieldImp::template 
                                       create<T>(n,this->imp(),s,cs));
                 }
-                catch(shape_missmatch_error &error)
+                catch(shape_mismatch_error &error)
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
@@ -331,7 +331,7 @@ namespace nx{
             nxfield field = g.create_field<uint16>("data",shape,chunk,filter);
 
             \endcode
-            \throws shape_missmatch_error if the rank of chunk and field shape do
+            \throws shape_mismatch_error if the rank of chunk and field shape do
             not share the same rank
             \tparam T data type of the field
             \tparam FilterImp filter implementation type

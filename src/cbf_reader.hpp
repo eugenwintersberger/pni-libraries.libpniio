@@ -223,7 +223,7 @@ namespace io{
             std::stringstream ss;
             ss<<"Container size ("<<data.size()<<") does not match image ";
             ss<<"size ("<<inf.npixels()<<")!";
-            throw size_missmatch_error(EXCEPTION_RECORD,ss.str());
+            throw size_mismatch_error(EXCEPTION_RECORD,ss.str());
         }
 
         //load the channel information
