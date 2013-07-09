@@ -75,6 +75,7 @@ build_env.Alias("install",build_env.Install(path.join(hdr_inst_path,"nx"),Glob("
 build_env.Alias("install",build_env.Install(path.join(hdr_inst_path,"nx/h5"),Glob("nx/h5/*.hpp")))
 build_env.Alias("install",build_env.Install(path.join(hdr_inst_path,"nx/h5/filters"),Glob("nx/h5/filters/*.h")))
 build_env.Alias("install",build_env.Install(path.join(hdr_inst_path,"nx/variant_algo"),Glob("nx/variant_algo/*.hpp")))
+build_env.Alias("install",build_env.Install(path.join(hdr_inst_path,"nx/utils"),Glob("nx/utils/*.hpp")))
 
 
 build_env.Alias("install",[shared_library_install,static_library_install,

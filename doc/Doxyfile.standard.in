@@ -62,7 +62,9 @@ WARN_NO_PARAMDOC       = YES
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = ../src/ mainpage h5_implementation_classes nxpath_code variant_code
+INPUT                  = ../src/ mainpage h5_implementation_classes \
+                         nxpath_code variant_code xml_code \
+                         nexus_utilities
 RECURSIVE              = YES
 EXCLUDE_SYMLINKS       = NO
 EXAMPLE_PATH           = examples

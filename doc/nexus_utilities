@@ -1,0 +1,8 @@
+/*!
+\defgroup nexus_utilities Nexus uility functions
+
+This module provides a couple of functions and data types that make working with
+the Nexus API much easier. 
+
+
+*/
