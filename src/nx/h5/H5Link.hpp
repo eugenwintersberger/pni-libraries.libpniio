@@ -30,6 +30,7 @@ extern "C"{
 }
 
 #include <pni/core/types.hpp>
+#include <pni/core/exceptions.hpp>
 
 
 namespace pni{
