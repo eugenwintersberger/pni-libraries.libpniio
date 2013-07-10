@@ -29,23 +29,26 @@ CPPUNIT_TEST_SUITE_REGISTRATION(value_parser_test);
 //-----------------------------------------------------------------------------
 void value_parser_test::setUp() 
 {
+    int_str1 = "1023";
+    int_str2 = "  1023 ";
+    float_str1 = "1.234";
+    float_str2 = "  1.234 ";
+    float_str3 = "-1.e-8";
+    float_str4 = "  -1.e-8    ";
 }
 
 //-----------------------------------------------------------------------------
 void value_parser_test::tearDown() {}
 
 //-----------------------------------------------------------------------------
-void value_parser_test::test_integer_parser()
+void value_parser_test::test_integer1_parser()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    string v1_str = "1023";
-    iterator_t start,stop;
-    value v;
+    start_iter = int_str1.begin();
+    stop_iter  = int_str1.end();
 
-    start = v1_str.begin();
-    stop = v1_str.end();
-    parse(start,stop,parser,v);
+    parse(start_iter,stop_iter,parser,v);
 
     CPPUNIT_ASSERT(v.type_id() == type_id_t::INT32);
     CPPUNIT_ASSERT(v.as<int32>() == 1023);
@@ -53,24 +56,72 @@ void value_parser_test::test_integer_parser()
 }
 
 //-----------------------------------------------------------------------------
-void value_parser_test::test_float_parser()
+void value_parser_test::test_integer2_parser()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    string v1_str = "1.234";
-    string v2_str = "-1.e-8";
-    iterator_t start,stop;
-    value v;
+    start_iter = int_str2.begin();
+    stop_iter  = int_str2.end();
 
-    start = v1_str.begin();
-    stop  = v1_str.end();
-    parse(start,stop,parser,v);
+    parse(start_iter,stop_iter,parser,v);
+
+    CPPUNIT_ASSERT(v.type_id() == type_id_t::INT32);
+    CPPUNIT_ASSERT(v.as<int32>() == 1023);
+
+}
+//-----------------------------------------------------------------------------
+void value_parser_test::test_float1_parser()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    start_iter = float_str1.begin();
+    stop_iter  = float_str1.end();
+
+    parse(start_iter,stop_iter,parser,v);
+
     CPPUNIT_ASSERT(v.type_id() == type_id_t::FLOAT64);
     check_equality(v.as<float64>(),1.234);
-    
-    start = v2_str.begin();
-    stop  = v2_str.end();
-    parse(start,stop,parser,v);
+}
+
+//-----------------------------------------------------------------------------
+void value_parser_test::test_float2_parser()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    start_iter = float_str2.begin();
+    stop_iter  = float_str2.end();
+
+    parse(start_iter,stop_iter,parser,v);
+
+    CPPUNIT_ASSERT(v.type_id() == type_id_t::FLOAT64);
+    check_equality(v.as<float64>(),1.234);
+}
+
+//-----------------------------------------------------------------------------
+void value_parser_test::test_float3_parser()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    start_iter = float_str3.begin();
+    stop_iter  = float_str3.end();
+
+    parse(start_iter,stop_iter,parser,v);
+
     CPPUNIT_ASSERT(v.type_id() == type_id_t::FLOAT64);
     check_equality(v.as<float64>(),-1.e-8);
 }
+
+//-----------------------------------------------------------------------------
+void value_parser_test::test_float4_parser()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    start_iter = float_str4.begin();
+    stop_iter  = float_str4.end();
+
+    parse(start_iter,stop_iter,parser,v);
+
+    CPPUNIT_ASSERT(v.type_id() == type_id_t::FLOAT64);
+    check_equality(v.as<float64>(),-1.e-8);
+}
+

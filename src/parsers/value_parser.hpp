@@ -58,11 +58,11 @@ namespace io{
             using namespace boost::spirit::qi;
             using namespace boost::fusion;
             using namespace boost::phoenix;
-            value_rule = (
+            value_rule = (*blank>>(
                          (int_>>!(char_('.')|char_('e')))[_val = _1] 
                           || 
                           double_[_val = _1]
-                          );
+                        ));
         }
     };
 

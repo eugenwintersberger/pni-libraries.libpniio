@@ -33,11 +33,11 @@ void array_parser_test::setUp()
     int_str1 = "[1,2,3,4,5]";
     int_str2 = "(1;2;3;4;5)";
     int_str3 = "1;2;3;4;5";
-    int_str4 = "1 2    3 4   5"; 
+    int_str4 = "   1 2    3 4   5"; 
     float_str1 = "[1.34,-2.e+2,3.342,4.,5.34]";
     float_str2 = "(1.34;-2.e+2;3.342;4.;5.34)";
     float_str3 = "1.34;-2.e+2;3.342;4.;5.34";
-    float_str4 = "   1.34 -2.e+2  3.342 4  5.34 ";
+    float_str4 = "   1.34 -2.e+2  3.342 4.  5.34 ";
 
     //seting upt the integer vector
     int_vec = std::vector<int32>{1,2,3,4,5};
@@ -120,6 +120,51 @@ void array_parser_test::test_float1_array()
     start_iter = float_str1.begin();
     stop_iter = float_str1.end();
     parse(start_iter,stop_iter,array_parser_t(),a);
+
+    auto viter = float_vec.begin();
+    auto aiter = a.begin();
+    while(aiter != a.end())
+        check_equality((aiter++)->as<float64>(),*(viter++));
+}
+
+//-----------------------------------------------------------------------------
+void array_parser_test::test_float2_array()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    start_iter = float_str2.begin();
+    stop_iter = float_str2.end();
+    parse(start_iter,stop_iter,array_parser_t('(',')',';'),a);
+
+    auto viter = float_vec.begin();
+    auto aiter = a.begin();
+    while(aiter != a.end())
+        check_equality((aiter++)->as<float64>(),*(viter++));
+}
+
+//-----------------------------------------------------------------------------
+void array_parser_test::test_float3_array()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    start_iter = float_str3.begin();
+    stop_iter = float_str3.end();
+    parse(start_iter,stop_iter,array_parser_t(';'),a);
+
+    auto viter = float_vec.begin();
+    auto aiter = a.begin();
+    while(aiter != a.end())
+        check_equality((aiter++)->as<float64>(),*(viter++));
+}
+
+//-----------------------------------------------------------------------------
+void array_parser_test::test_float4_array()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    start_iter = float_str4.begin();
+    stop_iter = float_str4.end();
+    parse(start_iter,stop_iter,array_parser_t(' '),a);
 
     auto viter = float_vec.begin();
     auto aiter = a.begin();

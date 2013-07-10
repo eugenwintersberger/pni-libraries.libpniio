@@ -38,18 +38,36 @@ using namespace pni::io;
 class value_parser_test:public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(value_parser_test);
-    CPPUNIT_TEST(test_integer_parser);
-    CPPUNIT_TEST(test_float_parser);
+    CPPUNIT_TEST(test_integer1_parser);
+    CPPUNIT_TEST(test_integer2_parser);
+    CPPUNIT_TEST(test_float1_parser);
+    CPPUNIT_TEST(test_float2_parser);
+    CPPUNIT_TEST(test_float3_parser);
+    CPPUNIT_TEST(test_float4_parser);
 	CPPUNIT_TEST_SUITE_END();
 
     typedef string::const_iterator iterator_t;
     typedef value_parser<iterator_t> value_parser_t;
     value_parser_t parser;
+
+    iterator_t start_iter,stop_iter;
+
+    string int_str1;
+    string int_str2;
+    string float_str1;
+    string float_str2;
+    string float_str3;
+    string float_str4;
+    value v;
 public:
 	void setUp();
 	void tearDown();
-	void test_integer_parser();
-    void test_float_parser();
+	void test_integer1_parser();
+	void test_integer2_parser();
+    void test_float1_parser();
+    void test_float2_parser();
+    void test_float3_parser();
+    void test_float4_parser();
 };
 
 
