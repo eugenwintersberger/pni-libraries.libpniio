@@ -34,10 +34,16 @@ void array_parser_test::setUp()
     int_str2 = "(1;2;3;4;5)";
     int_str3 = "1;2;3;4;5";
     int_str4 = "1 2    3 4   5"; 
+    float_str1 = "[1.34,-2.e+2,3.342,4.,5.34]";
+    float_str2 = "(1.34;-2.e+2;3.342;4.;5.34)";
+    float_str3 = "1.34;-2.e+2;3.342;4.;5.34";
+    float_str4 = "   1.34 -2.e+2  3.342 4  5.34 ";
 
     //seting upt the integer vector
     int_vec = std::vector<int32>{1,2,3,4,5};
-  
+
+    //setting up the float vector
+    float_vec = std::vector<float64>{1.34,-2.e+2,3.342,4,5.34};
 }
 
 //-----------------------------------------------------------------------------
@@ -107,23 +113,16 @@ void array_parser_test::test_int4_array()
 
 }
 //-----------------------------------------------------------------------------
-void array_parser_test::test_float_array()
+void array_parser_test::test_float1_array()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    std::vector<float64> v{1.34,-2.e+2,3.342,4,5.34};
-    string s1 = "[1.34,-2.e+2,3.342,4.,5.34]";
-    iterator_t start,stop;
-    array a;
 
-    start = s1.begin();
-    stop = s1.end();
-    parse(start,stop,array_parser_t(),a);
+    start_iter = float_str1.begin();
+    stop_iter = float_str1.end();
+    parse(start_iter,stop_iter,array_parser_t(),a);
 
-    auto viter = v.begin();
+    auto viter = float_vec.begin();
     auto aiter = a.begin();
     while(aiter != a.end())
         check_equality((aiter++)->as<float64>(),*(viter++));
-
-
 }

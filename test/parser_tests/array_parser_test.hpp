@@ -51,7 +51,7 @@ class array_parser_test:public CppUnit::TestFixture
     CPPUNIT_TEST(test_int2_array);
     CPPUNIT_TEST(test_int3_array);
     CPPUNIT_TEST(test_int4_array);
-    CPPUNIT_TEST(test_float_array);
+    CPPUNIT_TEST(test_float1_array);
 	CPPUNIT_TEST_SUITE_END();
 
     //! the string iterator type
@@ -70,8 +70,10 @@ class array_parser_test:public CppUnit::TestFixture
     string float_str1;
     string float_str2;
     string float_str3;
+    string float_str4;
 
     std::vector<int32> int_vec;
+    std::vector<float64> float_vec;
     array a;
     
 public:
@@ -81,7 +83,7 @@ public:
 	void test_int2_array();
 	void test_int3_array();
 	void test_int4_array();
-    void test_float_array();
+    void test_float1_array();
 };
 
 
