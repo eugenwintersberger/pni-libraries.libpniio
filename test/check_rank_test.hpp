@@ -17,7 +17,7 @@
  * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  *
- *  Created on: Jul 9, 2013
+ *  Created on: Jul 10, 2013
  *      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 #pragma once
@@ -52,9 +52,9 @@ has a size member function.
 \tparam TB container type 2
 */
 template<typename TA,typename TB>
-class check_size_test : public CppUnit::TestFixture
+class check_rank_test : public CppUnit::TestFixture
 {
-        typedef check_size_test<TA,TB> this_test_t;
+        typedef check_rank_test<TA,TB> this_test_t;
         CPPUNIT_TEST_SUITE(this_test_t);
         CPPUNIT_TEST(test_throw);
         CPPUNIT_TEST(test_no_throw);
@@ -72,24 +72,17 @@ class check_size_test : public CppUnit::TestFixture
         TA a1,a2;
         TB b1,b2;
 
-        //this should work for most of the STL container
-        template<typename CT> 
-        static void create_container(size_t n,CT &c)
-        {
-             c = CT(n);
-        }
-
         //need some special functions 
         template<typename ...OTYPES>
-        static void create_container(size_t n,darray<OTYPES...> &a)
+        static void create_container(const shape_t &s,darray<OTYPES...> &a)
         {
-            a = darray<OTYPES...>(shape_t{n});
+            a = darray<OTYPES...>(s);
         }
 
         template<typename ATYPE>
-        static void create_container(size_t n,numarray<ATYPE> &a )
+        static void create_container(const shape_t &s,numarray<ATYPE> &a )
         {
-            a = numarray<ATYPE>(shape_t{n});
+            a = numarray<ATYPE>(s);
         }
         
     public:
@@ -101,10 +94,10 @@ class check_size_test : public CppUnit::TestFixture
 };
 
 //-----------------------------------------------------------------------------
-template<typename TA,typename TB> void check_size_test<TA,TB>::setUp()
+template<typename TA,typename TB> void check_rank_test<TA,TB>::setUp()
 {
-    s1 = shape_t{5,5};
-    s2 = shape_t{6,6};
+    s1 = shape_t{6,5};
+    s2 = shape_t{6};
     size_1 = 25;
     size_2 = 36;
 
@@ -114,15 +107,15 @@ template<typename TA,typename TB> void check_size_test<TA,TB>::setUp()
     attribute1 = field1.attr<float32>("attr",s1);
     attribute2 = field2.attr<int64>("attr",s2);
 
-    create_container(size_1,a1);
-    create_container(size_2,a2);
-    create_container(size_1,b1);
-    create_container(size_2,b2);
+    create_container(s1,a1);
+    create_container(s2,a2);
+    create_container(s1,b1);
+    create_container(s2,b2);
 
 }
 
 //-----------------------------------------------------------------------------
-template<typename TA,typename TB> void check_size_test<TA,TB>::tearDown()
+template<typename TA,typename TB> void check_rank_test<TA,TB>::tearDown()
 {
     //close all Nexus objects
     attribute1.close();
@@ -136,55 +129,55 @@ template<typename TA,typename TB> void check_size_test<TA,TB>::tearDown()
 }
 
 //-----------------------------------------------------------------------------
-template<typename TA,typename TB> void check_size_test<TA,TB>::test_throw()
+template<typename TA,typename TB> void check_rank_test<TA,TB>::test_throw()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
    
     //check the two container types among each other
-    CPPUNIT_ASSERT(check_size(a1,b1));
-    CPPUNIT_ASSERT(!check_size(a1,b2));
+    CPPUNIT_ASSERT(check_rank(a1,b1));
+    CPPUNIT_ASSERT(!check_rank(a1,b2));
     //check with selection
-    CPPUNIT_ASSERT(check_size(a2(slice(0,5),slice(0,5)),b1));
+    CPPUNIT_ASSERT(check_rank(a1(slice(0,6),0),b2));
 
     //check here for fields and attribute with an array type
-    CPPUNIT_ASSERT(check_size(a1,field1));
-    CPPUNIT_ASSERT(check_size(a1,attribute1));
-    CPPUNIT_ASSERT(!check_size(a2,field1));
-    CPPUNIT_ASSERT(!check_size(a2,attribute1));
-    CPPUNIT_ASSERT(check_size(a1,field2(slice(0,5),slice(0,5))));
-    CPPUNIT_ASSERT(check_size(a2(slice(0,5),slice(0,5)),field1));
+    CPPUNIT_ASSERT(check_rank(a1,field1));
+    CPPUNIT_ASSERT(check_rank(a1,attribute1));
+    CPPUNIT_ASSERT(!check_rank(a2,field1));
+    CPPUNIT_ASSERT(!check_rank(a2,attribute1));
+    CPPUNIT_ASSERT(check_rank(a1(slice(0,6),1),field2));
+    CPPUNIT_ASSERT(check_rank(a2,field1(slice(0,6),1)));
 
     //check here for fields and attribute for a standard container type
-    CPPUNIT_ASSERT(check_size(b2,field2));
-    CPPUNIT_ASSERT(check_size(b2,attribute2));
-    CPPUNIT_ASSERT(!check_size(b1,field2));
-    CPPUNIT_ASSERT(!check_size(b1,attribute2));
+    CPPUNIT_ASSERT(check_rank(b2,field2));
+    CPPUNIT_ASSERT(check_rank(b2,attribute2));
+    CPPUNIT_ASSERT(!check_rank(b1,field2));
+    CPPUNIT_ASSERT(!check_rank(b1,attribute2));
 
 }
 
 //-----------------------------------------------------------------------------
-template<typename TA,typename TB> void check_size_test<TA,TB>::test_no_throw()
+template<typename TA,typename TB> void check_rank_test<TA,TB>::test_no_throw()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     //check the two container types among each other
-    CPPUNIT_ASSERT_NO_THROW(check_size(a1,b1,EXCEPTION_RECORD));
-    CPPUNIT_ASSERT_THROW(check_size(a1,b2,EXCEPTION_RECORD),size_mismatch_error);
+    CPPUNIT_ASSERT_NO_THROW(check_rank(a1,b1,EXCEPTION_RECORD));
+    CPPUNIT_ASSERT_THROW(check_rank(a1,b2,EXCEPTION_RECORD),shape_mismatch_error);
     //check with selection
-    CPPUNIT_ASSERT_NO_THROW(check_size(a2(slice(0,5),slice(0,5)),b1,EXCEPTION_RECORD));
+    CPPUNIT_ASSERT_NO_THROW(check_rank(a2,b1(slice(0,6),1),EXCEPTION_RECORD));
 
     //check here for fields and attribute with an array type
-    CPPUNIT_ASSERT_NO_THROW(check_size(a1,field1,EXCEPTION_RECORD));
-    CPPUNIT_ASSERT_NO_THROW(check_size(a1,attribute1,EXCEPTION_RECORD));
-    CPPUNIT_ASSERT_THROW(check_size(a2,field1,EXCEPTION_RECORD),size_mismatch_error);
-    CPPUNIT_ASSERT_THROW(check_size(a2,attribute1,EXCEPTION_RECORD),size_mismatch_error);
-    CPPUNIT_ASSERT_NO_THROW(check_size(a1,field2(slice(0,5),slice(0,5)),EXCEPTION_RECORD));
-    CPPUNIT_ASSERT_NO_THROW(check_size(a2(slice(0,5),slice(0,5)),field1,EXCEPTION_RECORD));
+    CPPUNIT_ASSERT_NO_THROW(check_rank(a1,field1,EXCEPTION_RECORD));
+    CPPUNIT_ASSERT_NO_THROW(check_rank(a1,attribute1,EXCEPTION_RECORD));
+    CPPUNIT_ASSERT_THROW(check_rank(a2,field1,EXCEPTION_RECORD),shape_mismatch_error);
+    CPPUNIT_ASSERT_THROW(check_rank(a2,attribute1,EXCEPTION_RECORD),shape_mismatch_error);
+    CPPUNIT_ASSERT_NO_THROW(check_rank(a1(slice(0,6),0),field2,EXCEPTION_RECORD));
+    CPPUNIT_ASSERT_NO_THROW(check_rank(a2,field1(slice(0,6),0),EXCEPTION_RECORD));
 
     //check here for fields and attribute for a standard container type
-    CPPUNIT_ASSERT_NO_THROW(check_size(b2,field2,EXCEPTION_RECORD));
-    CPPUNIT_ASSERT_NO_THROW(check_size(b2,attribute2,EXCEPTION_RECORD));
-    CPPUNIT_ASSERT_THROW(check_size(b1,field2,EXCEPTION_RECORD),size_mismatch_error);
-    CPPUNIT_ASSERT_THROW(check_size(b1,attribute2,EXCEPTION_RECORD),size_mismatch_error);
+    CPPUNIT_ASSERT_NO_THROW(check_rank(b2,field2,EXCEPTION_RECORD));
+    CPPUNIT_ASSERT_NO_THROW(check_rank(b2,attribute2,EXCEPTION_RECORD));
+    CPPUNIT_ASSERT_THROW(check_rank(b1,field2,EXCEPTION_RECORD),shape_mismatch_error);
+    CPPUNIT_ASSERT_THROW(check_rank(b1,attribute2,EXCEPTION_RECORD),shape_mismatch_error);
 }
 

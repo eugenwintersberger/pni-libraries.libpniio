@@ -17,13 +17,21 @@
  * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  *
- * Created on: Jul 9, 2013
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+ *  Created on: Jul 9, 2013
+ *      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
-#pragma once
 
-#include "utils/types.hpp"
-#include "utils/check_type.hpp"
-#include "utils/check_size.hpp"
-#include "utils/check_rank.hpp"
-//#include "utils/check_shape.hpp"
+#include <boost/current_function.hpp>
+#include<cppunit/extensions/HelperMacros.h>
+
+#include <vector>
+#include <list>
+#include "check_rank_test.hpp"
+
+typedef darray<uint32> darray_t;
+typedef numarray<darray_t> narray_t;
+
+typedef check_rank_test<darray_t,narray_t> test1_t;
+
+CPPUNIT_TEST_SUITE_REGISTRATION(test1_t);
+
