@@ -17,15 +17,7 @@ sources_list.append("NXSelectionTest.cpp")
 sources_list.append("NXAttributeTest.cpp")
 
 #tests for the HDF5 implementation backend
-sources_list.append("H5ObjectTest.cpp")
-sources_list.append("H5DataspaceTest.cpp")
-sources_list.append("H5DatatypeTest.cpp")
-sources_list.append("H5NamedObjectTest.cpp")
-sources_list.append("H5AttributeObjectTest.cpp")
-sources_list.append("H5FileTest.cpp")
-sources_list.append("H5GroupTest.cpp")
-sources_list.append("H5DatasetTest.cpp")
-sources_list.append("H5AttributeTest.cpp")
+sources_list.extend(Glob("hdf5_implementation_tests/*.cpp"))
 sources_list.append("value_parser_test.cpp")
 sources_list.append("slice_parser_test.cpp")
 sources_list.append("array_parser_test.cpp")
@@ -64,9 +56,6 @@ sources_list.append("check_type_test.cpp")
 sources_list.append("check_size_test.cpp")
 sources_list.append("check_rank_test.cpp")
 sources_list.append("check_shape_test.cpp")
-#sources_list.append("H5SelectionTest.cpp")
-#sources_list.append("H5LinkTest.cpp")
-#sources_list.append("TestHelpers.cpp")
 
 
 #sources for benchmark code
