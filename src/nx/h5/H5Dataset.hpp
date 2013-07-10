@@ -84,7 +84,7 @@ namespace h5{
             This private method throws an exception in a particular 
             method if the dataset is not scalar (if the size of the
             dataset is not 1).
-            \throws shape_missmatch_error if dataset is not scalar
+            \throws shape_mismatch_error if dataset is not scalar
             \param rec exception record
             */
             void __throw_if_not_scalar(const exception_record &rec) const;
@@ -346,7 +346,7 @@ namespace h5{
             datatype to use and a shape object to describe the dataspace. The
             dataspaces created using this method are infinitely extensible in
             along all dimensions.
-            \throws shape_missmatch_error if chunk and field shape do not have the
+            \throws shape_mismatch_error if chunk and field shape do not have the
             same rank
             \throws pni::io::nx::nxfield_error in case of errors
             \param n name of the dataset
@@ -391,7 +391,7 @@ namespace h5{
                         estr<<v<<" ";
                     }
                     estr<<std::endl;
-                    throw shape_missmatch_error(EXCEPTION_RECORD,estr.str());
+                    throw shape_mismatch_error(EXCEPTION_RECORD,estr.str());
                 }
 
                 //create the container with the maximum number of elements
@@ -418,7 +418,7 @@ namespace h5{
             &n,const H5Group &g,const Shape &s, const Shape &cs) despite the
             fact that it requires an additional argument describing the filter.
             \throws pni::io::nx::nxfield_error in case of errors
-            \throws shape_missmatch_error if chunk and dataset shape do not have
+            \throws shape_mismatch_error if chunk and dataset shape do not have
             equal rank
             \param n name of the dataset
             \param g group below which the dataset will be created
@@ -464,7 +464,7 @@ namespace h5{
                         estr<<v<<" ";
                     }
                     estr<<std::endl;
-                    throw shape_missmatch_error(EXCEPTION_RECORD,estr.str());
+                    throw shape_mismatch_error(EXCEPTION_RECORD,estr.str());
                 }
 
                 //create the container with the maximum number of elements
@@ -525,7 +525,7 @@ namespace h5{
 
             If this requirements are not met by s an exception will be
             thrown.
-            \throws shape_missmatch_error if rank of s is not equal to the rank of
+            \throws shape_mismatch_error if rank of s is not equal to the rank of
             the dataset
             \throws pni::io::nx::nxfield_error in case of other errors during resizeing
             \param s shape object describing the new shape of the dataset
@@ -533,7 +533,7 @@ namespace h5{
             template<typename CTYPE> void resize(const CTYPE &s)
             {
                 if(s.size() != _fspace.rank())
-                    throw shape_missmatch_error(EXCEPTION_RECORD,
+                    throw shape_mismatch_error(EXCEPTION_RECORD,
                           "New shape does not have the same rank!");
 
                 dbuffer<hsize_t> b(s.size());
@@ -687,7 +687,7 @@ namespace h5{
             Read a single data value from the dataset. In order to succeed the
             dataset must be a scalar dataset or the total size of the dataset
             must be 1.
-            \throws shape_missmatch_error if dataset is not scalar or the size of
+            \throws shape_mismatch_error if dataset is not scalar or the size of
             the dataset is not 1
             \throws pni::io::nx::nxfield_error in all other error cases
             \param ptr pointer to memory where the data should be stored.
@@ -717,7 +717,7 @@ namespace h5{
             Read data to a String variable. This is a specialized version of the
             template method read(T &value). It is necessary since strings are
             handled slightly different from other objects.
-            \throws shape_missmatch_error if the dataset is not scalar
+            \throws shape_mismatch_error if the dataset is not scalar
             \throws pni::io::nx::nxfield_error in case of other IO errors
             \param sptr pointer to String objects
             */
@@ -730,7 +730,7 @@ namespace h5{
             This method writes a single value of a particular type reading the
             data from variable value. This method works only if the dataspace of
             the dataset is scalar or the total dataspace size is 1.
-            \throws shape_missmatch_error if the dataspace is not scalar
+            \throws shape_mismatch_error if the dataspace is not scalar
             \throws pni::io::nx::nxfield_error in case of other errors
             \param ptr pointer to the memory region from which to read
             */
@@ -753,7 +753,7 @@ namespace h5{
             \brief write a String value
            
             Write data from a String variable to the dataset.
-            \throws shape_missmatch_error if the dataset is not scalar
+            \throws shape_mismatch_error if the dataset is not scalar
             \throws pni::io::nx::nxfield_error in the case of all other errors
             \param sptr pointer to String objects.
             */

@@ -41,7 +41,7 @@ namespace h5{
     {
         string desc = "Dataset ["+this->name()+"] is not scalar!";
         if(_fspace.size()!=1)
-            throw shape_missmatch_error(rec,desc);
+            throw shape_mismatch_error(rec,desc);
     }
 
     //===implementation of constructors and destructors================

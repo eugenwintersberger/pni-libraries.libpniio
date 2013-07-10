@@ -52,7 +52,7 @@ namespace nx{
         be used. 
 
         \throws nxgroup_error in case that field creation fails
-        \throws shape_missmatch_error in case the field shape and chunk shape do
+        \throws shape_mismatch_error in case the field shape and chunk shape do
         not match
         \tparam T data type of the field
         \tparam FT field type
@@ -101,7 +101,7 @@ namespace nx{
         be used. 
 
         \throws nxgroup_error in case that field creation fails
-        \throws shape_missmatch_error in case the field shape and chunk shape do
+        \throws shape_mismatch_error in case the field shape and chunk shape do
         not match
         \tparam T data type of the field
         \tparam FT field type
@@ -191,7 +191,7 @@ namespace nx{
             Create a new group of name _name and class _class below the parent
             group g. The new group will be stored as object_types variant.
             \throws nxgroup_error in case of errors
-            \throws shape_missmatch_error if the chunk shape and the field shape
+            \throws shape_mismatch_error if the chunk shape and the field shape
             do not match
             \param g parent group instance
             \return new group stored as object_types
@@ -253,7 +253,7 @@ namespace nx{
     \endcode
 
     \throws nxgroup_error if stored object is a group or if field creation fails
-    \throws shape_missmatch_error if the chunk shape and the field shape do not
+    \throws shape_mismatch_error if the chunk shape and the field shape do not
     match
     \throws nxfield_error if the object stored in the variant is a field
     \throws nxattribute_error if the object stored in the variant is an
@@ -298,7 +298,7 @@ namespace nx{
     \endcode
 
     \throws nxgroup_error if stored object is a group or if field creation fails
-    \throws shape_missmatch_error if the chunk shape and the field shape do not
+    \throws shape_mismatch_error if the chunk shape and the field shape do not
     match
     \throws nxfield_error if the object stored in the variant is a field
     \throws nxattribute_error if the object stored in the variant is an
@@ -348,7 +348,7 @@ namespace nx{
     \endcode
 
     \throws nxgroup_error if stored object is a group or if field creation fails
-    \throws shape_missmatch_error if the chunk shape and the field shape do not
+    \throws shape_mismatch_error if the chunk shape and the field shape do not
     match
     \throws nxfield_error if the object stored in the variant is a field
     \throws nxattribute_error if the object stored in the variant is an
@@ -403,7 +403,7 @@ namespace nx{
     \endcode
 
     \throws nxgroup_error if stored object is a group or if field creation fails
-    \throws shape_missmatch_error if the chunk shape and the field shape do not
+    \throws shape_mismatch_error if the chunk shape and the field shape do not
     match
     \throws nxfield_error if the object stored in the variant is a field
     \throws nxattribute_error if the object stored in the variant is an

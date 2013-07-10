@@ -93,9 +93,9 @@ void NXFieldTest::test_creation()
     //file.create_field<float32>("test_fail",shape,cshape);
     /*
     CPPUNIT_ASSERT_THROW(file.create_field<float32>("test_fail",shape,cshape),
-                         shape_missmatch_error);
+                         shape_mismatch_error);
     CPPUNIT_ASSERT_THROW(file.create_field<float32>("test_fail",shape,cshape,deflate),
-                         shape_missmatch_error);
+                         shape_mismatch_error);
                          */
 
     //create a field with a utilty function
@@ -215,7 +215,7 @@ void NXFieldTest::test_io_string_scalar()
     CPPUNIT_ASSERT(write == read);
 
     CPPUNIT_ASSERT_NO_THROW(field1.grow(0));
-    CPPUNIT_ASSERT_THROW(field1.write(write),shape_missmatch_error);
+    CPPUNIT_ASSERT_THROW(field1.write(write),shape_mismatch_error);
 
     //try to write a literal
     nxfield field2 = file.create_field<string>("scalar_2");
@@ -239,7 +239,7 @@ void NXFieldTest::test_io_bool_scalar()
     CPPUNIT_ASSERT(write == read);
 
     CPPUNIT_ASSERT_NO_THROW(field1.grow(0));
-    CPPUNIT_ASSERT_THROW(field1.write(write),shape_missmatch_error);
+    CPPUNIT_ASSERT_THROW(field1.write(write),shape_mismatch_error);
 }
 //------------------------------------------------------------------------------
 void NXFieldTest::test_io_string_array()
@@ -258,7 +258,7 @@ void NXFieldTest::test_io_string_array()
     CPPUNIT_ASSERT(std::equal(write.begin(),write.end(),read.begin()));
 
     field1 = file.create_field<string>("array2",{2,2});
-    CPPUNIT_ASSERT_THROW(field1.write(write),shape_missmatch_error);
+    CPPUNIT_ASSERT_THROW(field1.write(write),shape_mismatch_error);
 
     nxdeflate_filter deflate;
     deflate.compression_rate(9);
@@ -288,7 +288,7 @@ void NXFieldTest::test_io_bool_array()
     CPPUNIT_ASSERT(std::equal(write.begin(),write.end(),read.begin()));
 
     field1 = file.create_field<bool>("array2",{2,2});
-    CPPUNIT_ASSERT_THROW(field1.write(write),shape_missmatch_error);
+    CPPUNIT_ASSERT_THROW(field1.write(write),shape_mismatch_error);
 
     nxdeflate_filter deflate;
     deflate.compression_rate(9);
@@ -317,7 +317,7 @@ void NXFieldTest::test_io_string_buffer()
 
     //check exceptions
     CPPUNIT_ASSERT_NO_THROW(field1 = file.create_field<string>("buffer2",{200}));
-    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),size_missmatch_error);
+    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),size_mismatch_error);
 
     write_buffer.free();
     CPPUNIT_ASSERT_THROW(field1.write(write_buffer),memory_not_allocated_error);
@@ -340,7 +340,7 @@ void NXFieldTest::test_io_bool_buffer()
 
     //check exceptions
     CPPUNIT_ASSERT_NO_THROW(field1 = file.create_field<bool>("buffer2",{200}));
-    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),size_missmatch_error);
+    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),size_mismatch_error);
 
     write_buffer.free();
     CPPUNIT_ASSERT_THROW(field1.write(write_buffer),memory_not_allocated_error);

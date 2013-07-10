@@ -167,7 +167,7 @@ namespace h5 {
             \endcode
 
             \throws memory_allocation_error if buffer allocation fails
-            \throws shape_missmatch_error if the two containers have a different
+            \throws shape_mismatch_error if the two containers have a different
             size and thus represent different ranks
             \throws pni::io::nx::nxbackend_error if setup of the dataspace fails
 
@@ -191,7 +191,7 @@ namespace h5 {
                     std::stringstream ss;
                     ss<<"Rank of actual shape ("<<s.size()<<") and of ";
                     ss<<"maximum shape ("<<ms.size()<<") do not match!";
-                    throw shape_missmatch_error(EXCEPTION_RECORD,ss.str());
+                    throw shape_mismatch_error(EXCEPTION_RECORD,ss.str());
                 }
 
                 std::copy(ms.begin(),ms.end(),_maxdims.begin());
@@ -229,7 +229,7 @@ namespace h5 {
             created dataspace is a simple dataspace in HDF5 terminilogy.
 
             \throws memory_allocation_error if buffer allocation fails
-            \throws shape_missmatch_error if the two lists are of different size
+            \throws shape_mismatch_error if the two lists are of different size
             \throws pni::io::nx::nxbackend_error if dataspace setup fails
 
             \param dlist initializer list with actual shape values
@@ -322,7 +322,7 @@ namespace h5 {
             it has the appropriate size. If this is not the case an exception
             will be thrown. Since no memory must be allocated this method should
             be sufficiently quite fast.
-            \throw shape_missmatch_error if size of container does not match the
+            \throw shape_mismatch_error if size of container does not match the
             rank of the dataspace
             \tparam CTYPE type of the container
             \param c reference to the container
@@ -334,7 +334,7 @@ namespace h5 {
                     std::stringstream ss;
                     ss<<"Container size ("<<c.size()<<") does not match the ";
                     ss<<"dataspace rank ("<<rank()<<")!";
-                    throw shape_missmatch_error(EXCEPTION_RECORD,ss.str());
+                    throw shape_mismatch_error(EXCEPTION_RECORD,ss.str());
                 }
 
                 std::copy(this->shape().begin(),this->shape().end(),c.begin());
@@ -385,7 +385,7 @@ namespace h5 {
             \endcode
             The method assumes that the container is of appropriate size. If
             this is not the case an exception will be thrown.
-            \throw shape_missmatch_error if container size does not match the rank
+            \throw shape_mismatch_error if container size does not match the rank
             of the dataspace
             \tparam CTYPE container type
             \param c reference to container instance
@@ -397,7 +397,7 @@ namespace h5 {
                     std::stringstream ss;
                     ss<<"Container size ("<<c.size()<<") does not match the ";
                     ss<<"dataspace rank ("<<rank()<<")!";
-                    throw shape_missmatch_error(EXCEPTION_RECORD,ss.str());
+                    throw shape_mismatch_error(EXCEPTION_RECORD,ss.str());
                 }
 
                 std::copy(this->shape().begin(),this->shape().end(),c.begin());
@@ -499,7 +499,7 @@ namespace h5 {
             resizeable dataset.
 
             \throws memory_allocation_error if buffer allocation fails
-            \throws shape_missmatch_error if the ranks of the two shapes do not match
+            \throws shape_mismatch_error if the ranks of the two shapes do not match
             \throws pni::io::nx::nxbackend_error if dataspace setup fails
 
             \param s initial shape of the dataspace
@@ -513,7 +513,7 @@ namespace h5 {
                     std::stringstream ss;
                     ss<<"Rank of actual shape ("<<s.size()<<") and of ";
                     ss<<"maximum shape ("<<ms.size()<<") do not match!";
-                    throw shape_missmatch_error(EXCEPTION_RECORD,ss.str());
+                    throw shape_mismatch_error(EXCEPTION_RECORD,ss.str());
                 }
 
                 _dims.allocate(s.size());
@@ -535,7 +535,7 @@ namespace h5 {
 
             \throws memory_allocation_error if buffer allocation fails
             \throws pni::io::nx::nxbackend_error if dataspace setup fails
-            \throws shape_missmatch_error if list sizes are not equal
+            \throws shape_mismatch_error if list sizes are not equal
 
             \param dlist list with actual number of elements
             \param mlist list with maximum number of elements */

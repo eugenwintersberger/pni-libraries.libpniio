@@ -125,8 +125,8 @@ template<typename T> void NXSelectionTest::test_scalar_selection()
         }
     }
 
-    CPPUNIT_ASSERT_THROW(field(slice(1,3)).write(write),shape_missmatch_error);
-    CPPUNIT_ASSERT_THROW(field(slice(0,4)).read(read),shape_missmatch_error);
+    CPPUNIT_ASSERT_THROW(field(slice(1,3)).write(write),shape_mismatch_error);
+    CPPUNIT_ASSERT_THROW(field(slice(0,4)).read(read),shape_mismatch_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -152,9 +152,9 @@ template<typename T> void NXSelectionTest::test_array_selection()
         for(size_t i=0;i<write.size();i++) check_equality(read[i],write[i]);
     }
 
-    CPPUNIT_ASSERT_THROW(field(slice(1,3),0).write(write),shape_missmatch_error);
+    CPPUNIT_ASSERT_THROW(field(slice(1,3),0).write(write),shape_mismatch_error);
     dbuffer<T> rbuff(2);
-    CPPUNIT_ASSERT_THROW(field(slice(0,3),0).read(rbuff),size_missmatch_error);
+    CPPUNIT_ASSERT_THROW(field(slice(0,3),0).read(rbuff),size_mismatch_error);
     rbuff.free();
     CPPUNIT_ASSERT_THROW(field(slice(0,3),0).read(rbuff),memory_not_allocated_error);
 }
