@@ -22,7 +22,7 @@
  */
 
 #include "array_parser_test.hpp"
-#include "EqualityCheck.hpp"
+#include "../EqualityCheck.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(array_parser_test);
 

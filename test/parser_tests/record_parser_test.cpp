@@ -22,7 +22,7 @@
  */
 
 #include "record_parser_test.hpp"
-#include "EqualityCheck.hpp"
+#include "../EqualityCheck.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(record_parser_test);
 

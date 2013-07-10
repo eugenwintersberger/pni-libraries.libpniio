@@ -22,7 +22,7 @@
  */
 
 #include "slice_parser_test.hpp"
-#include "EqualityCheck.hpp"
+#include "../EqualityCheck.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(slice_parser_test);
 

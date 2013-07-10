@@ -31,7 +31,7 @@
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
-#include "TestHelpers.hpp"
+#include "../TestHelpers.hpp"
 
 using namespace pni::core;
 using namespace pni::io;
