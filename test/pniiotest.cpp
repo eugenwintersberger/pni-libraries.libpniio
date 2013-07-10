@@ -1,6 +1,4 @@
 /*
- * Declaration of Nexus object template.
- *
  * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
  *
  * This file is part of libpniio.
@@ -27,6 +25,7 @@
 #include<cppunit/TestCaller.h>
 #include<cppunit/TestResult.h>
 #include<cppunit/TestRunner.h>
+#include<cppunit/XmlOutputter.h>
 #include<cppunit/TextTestProgressListener.h>
 #include<cppunit/ui/text/TextTestRunner.h>
 #include<cppunit/extensions/TestFactoryRegistry.h>
@@ -43,12 +42,11 @@ int main(int argc,char **argv)
     runner.addTest(registry.makeTest());
     runner.eventManager().addListener(&progress);
     
+    std::ofstream os("pniiotest.xml");
+    runner.setOutputter(new CppUnit::XmlOutputter(&runner.result(),os));
     
-    runner.run();
+    bool result = runner.run();
 
-    std::cout<<"done!"<<std::endl;
-
-
-    return 0;
+    return result ? 0 : 1;
 }
 
