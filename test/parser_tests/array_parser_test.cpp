@@ -28,33 +28,84 @@ CPPUNIT_TEST_SUITE_REGISTRATION(array_parser_test);
 
 //-----------------------------------------------------------------------------
 void array_parser_test::setUp() 
-{
+{ 
+    //setting up the integer strings
+    int_str1 = "[1,2,3,4,5]";
+    int_str2 = "(1;2;3;4;5)";
+    int_str3 = "1;2;3;4;5";
+    int_str4 = "1 2    3 4   5"; 
+
+    //seting upt the integer vector
+    int_vec = std::vector<int32>{1,2,3,4,5};
+  
 }
 
 //-----------------------------------------------------------------------------
 void array_parser_test::tearDown() {}
 
 //-----------------------------------------------------------------------------
-void array_parser_test::test_int_array()
+void array_parser_test::test_int1_array()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    std::vector<int32> v{1,2,3,4,5};
-    string s1 = "[1,2,3,4,5]";
-    iterator_t start,stop;
-    array a;
+    start_iter = int_str1.begin();
+    stop_iter  = int_str1.end();
+    parse(start_iter,stop_iter,array_parser_t(),a);
 
-    start = s1.begin();
-    stop = s1.end();
-    parse(start,stop,parser,a);
-
-    auto viter = v.begin();
+    auto viter = int_vec.begin();
     auto aiter = a.begin();
     while(aiter != a.end())
         check_equality((aiter++)->as<int32>(),*(viter++));
 
 }
 
+//-----------------------------------------------------------------------------
+void array_parser_test::test_int2_array()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    start_iter = int_str2.begin();
+    stop_iter  = int_str2.end();
+    parse(start_iter,stop_iter,array_parser_t('(',')',';'),a);
+
+    auto viter = int_vec.begin();
+    auto aiter = a.begin();
+    while(aiter != a.end())
+        check_equality((aiter++)->as<int32>(),*(viter++));
+
+}
+
+//-----------------------------------------------------------------------------
+void array_parser_test::test_int3_array()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    start_iter = int_str3.begin();
+    stop_iter  = int_str3.end();
+    parse(start_iter,stop_iter,array_parser_t(';'),a);
+
+    auto viter = int_vec.begin();
+    auto aiter = a.begin();
+    while(aiter != a.end())
+        check_equality((aiter++)->as<int32>(),*(viter++));
+
+}
+
+//-----------------------------------------------------------------------------
+void array_parser_test::test_int4_array()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    start_iter = int_str4.begin();
+    stop_iter  = int_str4.end();
+    parse(start_iter,stop_iter,array_parser_t(' '),a);
+
+    auto viter = int_vec.begin();
+    auto aiter = a.begin();
+    while(aiter != a.end())
+        check_equality((aiter++)->as<int32>(),*(viter++));
+
+}
 //-----------------------------------------------------------------------------
 void array_parser_test::test_float_array()
 {
@@ -67,7 +118,7 @@ void array_parser_test::test_float_array()
 
     start = s1.begin();
     stop = s1.end();
-    parse(start,stop,parser,a);
+    parse(start,stop,array_parser_t(),a);
 
     auto viter = v.begin();
     auto aiter = a.begin();

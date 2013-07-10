@@ -287,6 +287,26 @@ namespace io{
             init();
         }
 
+        //---------------------------------------------------------------------
+        /*!
+        \brief constructor
+
+        Using this constructor is setting up the array parser in a way so that
+        no start and stop symbol are required.
+        \param del delimiter symbol
+        */
+        array_parser(char del):
+            array_parser::base_type(array_rule)
+        {
+            using namespace pni::core;
+            using namespace boost::spirit::qi;
+            using namespace boost::fusion;
+            using namespace boost::phoenix;
+
+            data_rule = value_ % delimiter_;    
+            array_rule = (data_rule)[_val = array_construction(_1)];
+        }
+
 
         //---------------------------------------------------------------------
         //! Initialization function used by all constructors

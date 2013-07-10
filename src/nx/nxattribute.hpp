@@ -34,7 +34,7 @@
 #include <pni/core/array.hpp>
 
 #include "nxexceptions.hpp"
-#include "io_utils.hpp"
+#include "utils/io_utils.hpp"
 
 
 namespace pni{

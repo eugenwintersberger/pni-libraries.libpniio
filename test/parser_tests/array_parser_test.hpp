@@ -36,20 +36,51 @@
 using namespace pni::core;
 using namespace pni::io;
 
+/*!
+\brief testing the array parser
+
+The parser should read int or float values with different start/stop symbols and
+value delimiters. We also should test the case where we only want to parse a
+bunch of values without start/stop symbols.
+
+*/
 class array_parser_test:public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(array_parser_test);
-    CPPUNIT_TEST(test_int_array);
+    CPPUNIT_TEST(test_int1_array);
+    CPPUNIT_TEST(test_int2_array);
+    CPPUNIT_TEST(test_int3_array);
+    CPPUNIT_TEST(test_int4_array);
     CPPUNIT_TEST(test_float_array);
 	CPPUNIT_TEST_SUITE_END();
 
+    //! the string iterator type
     typedef string::const_iterator iterator_t;
+    //! the parser type
     typedef array_parser<iterator_t> array_parser_t;
-    array_parser_t parser;
+    //! instance of the parser
+    array_parser_t parser1,parser2,parser3,parser4;
+
+    iterator_t start_iter,stop_iter;
+    
+    string int_str1;
+    string int_str2;
+    string int_str3;
+    string int_str4;
+    string float_str1;
+    string float_str2;
+    string float_str3;
+
+    std::vector<int32> int_vec;
+    array a;
+    
 public:
 	void setUp();
 	void tearDown();
-	void test_int_array();
+	void test_int1_array();
+	void test_int2_array();
+	void test_int3_array();
+	void test_int4_array();
     void test_float_array();
 };
 
