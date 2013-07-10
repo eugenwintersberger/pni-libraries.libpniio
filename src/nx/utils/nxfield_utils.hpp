@@ -28,8 +28,9 @@
 #include<pni/core/types.hpp>
 #include<pni/core/type_id_map.hpp>
 
-#include "nxfield.hpp"
-#include "nxgroup.hpp"
+#include "types.hpp"
+#include "../nxobject_traits.hpp"
+
 
 
 namespace pni{
@@ -42,13 +43,15 @@ namespace nx{
     using pni::core::exception;
 
     /*!
-    \ingroup nexus_lowlevel
-    \brief create a field from a TypeID
+    \ingroup nexus_utilities
+    \brief create a field from a type id
 
     A utility function that creates a field dynamically using a type ID to
     identify the data type to use. This function is intended for situations
     where the types ID is a runtime parameter rather than a comiple time
-    constant.  
+    constant. The function template takes a variable number of arguments in
+    order to provide the full functionality that the appropriate group member
+    functions for creating fields.
     
     \code
     //create a default field of shape {1} and chunk shape {1}
@@ -64,6 +67,17 @@ namespace nx{
     nxdeflate_filter deflate(9,true);
     auto f = create_field(g,"test3",type_id_t::UINT16,s,cs,deflate);
     \endcode
+
+    Using the type utilities like the str2typeid map one can use this function
+    also to create a field from the string representation of a type. 
+    \code
+    auto f = create_field(g,"test",str2typeid["int8"]);
+    \endcode
+    which makes it a very flexible tool for field creation. Additional arguments
+    can be again passed like in the previous examples.
+
+    The field type returned is inferred from the group type (which is a template
+    parameter) by means of the nxobject_traits type trait.
    
     \throws type_error if type ID does not exist
     \param g group objecct in below which to create the field
@@ -73,7 +87,7 @@ namespace nx{
     \return field type 
     */
     template<typename GTYPE,typename ...ATYPES>
-    typename GTYPE::field_type
+    typename nxobject_traits<GTYPE>::field_type 
     create_field(const GTYPE &g,const string &fname,const type_id_t &tid,
                  ATYPES ...args)
     {
@@ -113,7 +127,6 @@ namespace nx{
         {
             throw type_error(EXCEPTION_RECORD,"Unsupported data type!");
         }
-
     }
 
 
