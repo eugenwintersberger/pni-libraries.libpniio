@@ -25,7 +25,7 @@
  */
 
 #include "NXFieldTest.hpp"
-#include "EqualityCheck.hpp"
+#include "../EqualityCheck.hpp"
 
 #include<cppunit/extensions/HelperMacros.h>
 

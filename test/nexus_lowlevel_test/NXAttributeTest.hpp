@@ -26,8 +26,8 @@
 
 
 #pragma once
-#include "common.hpp"
-#include "data.hpp"
+#include "../common.hpp"
+#include "../data.hpp"
 #include <pni/core/arrays.hpp>
 
 #define SARRAY( type ) sarray<type,10,20>

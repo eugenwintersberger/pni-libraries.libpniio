@@ -27,10 +27,10 @@
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 #include <pni/io/nx/nx.hpp>
-#include "EqualityCheck.hpp"
+#include "../EqualityCheck.hpp"
 
 
-#include "TestHelpers.hpp"
+#include "../TestHelpers.hpp"
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
