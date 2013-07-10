@@ -12,21 +12,11 @@ sources_list.append("EqualityCheck.cpp")
 sources_list.append("pniiotest.cpp")
 
 #tests for the HDF5 implementation backend
+sources_list.extend(Glob("utils_tests/*.cpp"))
+sources_list.extend(Glob("parser_tests/*.cpp"))
 sources_list.extend(Glob("nxvariant_tests/*.cpp"))
 sources_list.extend(Glob("hdf5_implementation_tests/*.cpp"))
 sources_list.extend(Glob("nexus_lowlevel_test/*.cpp"))
-sources_list.append("value_parser_test.cpp")
-sources_list.append("slice_parser_test.cpp")
-sources_list.append("array_parser_test.cpp")
-sources_list.append("record_parser_test.cpp")
-sources_list.append("nxutils_test.cpp")
-sources_list.append("nxpath_test.cpp")
-sources_list.append("nxpath_utils_test.cpp")
-sources_list.append("utils_test.cpp")
-sources_list.append("check_type_test.cpp")
-sources_list.append("check_size_test.cpp")
-sources_list.append("check_rank_test.cpp")
-sources_list.append("check_shape_test.cpp")
 
 
 #sources for benchmark code
