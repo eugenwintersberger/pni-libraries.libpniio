@@ -37,10 +37,10 @@ namespace nx{
 
     /*!
     \ingroup nexus_utilities
-    \brief check the rank of two array objects 
+    \brief check the shape of two array objects 
 
-    Checks the number of dimensions of two objects. If they match return true,
-    false otherwise. 
+    Compares the number of elements along each dimension. If they are equal true
+    is returned, otherwise false.
     \tparam AT1 array type 1
     \tparam AT2 array type 2
     \param o1 instance of AT1
@@ -50,6 +50,8 @@ namespace nx{
     template<typename AT1,typename AT2>
     bool check_shape(const AT1 &o1,const AT2 &o2)
     {
+        //we first have to check the rank - if this does not match no further
+        //investigation should be done
         if(!check_rank(o1,o2)) return false;
 
         auto s1=o1.template shape<shape_t>();
@@ -64,10 +66,13 @@ namespace nx{
     //-------------------------------------------------------------------------
     /*!
     \ingroup nexus_utilities
-    \brief check the rank of two arrays
+    \brief check the shape of two arrays
 
-    Checks the number of dimensions of two objects and throws an exception if
-    they do not match. 
+    Compares the number of elements along each dimension. If they are not equal
+    an exception is thrown. The exception record is passed as the last argument
+    of the function template and thus can be set to point to the location in the
+    code where the check was made rather than the location in this function. 
+
     \throws shape_mismatch_error
     \tparam AT1 first array type
     \tparam AT2 second array type
@@ -78,16 +83,16 @@ namespace nx{
     template<typename AT1,typename AT2>
     void check_shape(const AT1 &o1,const AT2 &o2,const exception_record &r)
     {
-        if(!check_rank(o1,o2))
+        if(!check_shape(o1,o2))
         {
             auto s1 = o1.template shape<shape_t>();
             auto s2 = o1.template shape<shape_t>();
             std::stringstream ss;
             ss<<"Objects have different shape ( ";
-            for(auto s: s1)
-                ss<<s<<" "
-            <<o1.rank();
-            ss<<" and "<<o2.rank()<<")!";
+            for(auto s: s1) ss<<s<<" ";
+            ss<<") and ( ";
+            for(auto s: s2) ss<<s<<" ";
+            ss<<")!";
             throw shape_mismatch_error(r,ss.str());
         }
     }
