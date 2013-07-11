@@ -17,6 +17,7 @@ sources_list.extend(Glob("parser_tests/*.cpp"))
 sources_list.extend(Glob("nxvariant_tests/*.cpp"))
 sources_list.extend(Glob("hdf5_implementation_tests/*.cpp"))
 sources_list.extend(Glob("nexus_lowlevel_test/*.cpp"))
+sources_list.extend(Glob("xml_test/*.cpp"))
 
 
 #sources for benchmark code
