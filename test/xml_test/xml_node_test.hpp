@@ -40,6 +40,7 @@ using namespace pni::io::nx;
 
 static const string node_from_string_str = "<node>\n<group> </group>\n<group>"
                                     " </group>\n<group> </group>\n </node>";
+static const string node_from_bad_str = "this has to fail";
 
 
 class xml_node_test : public CppUnit::TestFixture
