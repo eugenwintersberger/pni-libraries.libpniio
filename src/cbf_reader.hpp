@@ -51,7 +51,7 @@ namespace io{
 
 
     /*! 
-    \ingroup io_classes
+    \ingroup image_io_cbf
     \brief base clase for CBF readers
 
     CBFReader is the base class for all readers of data stored in binary CIF format.

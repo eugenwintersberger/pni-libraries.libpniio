@@ -44,7 +44,7 @@ namespace pni {
 namespace io {
 namespace tiff {
 
-    //! \ingroup io_classes
+    //! \ingroup image_io_tiff
     //! \brief reader for strip data in a TIFF file
     class strip_reader 
     {

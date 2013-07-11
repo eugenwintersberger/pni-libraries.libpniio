@@ -39,7 +39,7 @@ namespace pni{
 namespace io{
        
     /*! 
-    \ingroup io_classes
+    \ingroup image_io
     \brief image information type
 
     ImageInfo holds basic information about a particular image. 

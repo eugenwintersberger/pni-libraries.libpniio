@@ -54,7 +54,7 @@ namespace tiff{
 #endif
 
     /*!
-    \ingroup io_classes
+    \ingroup image_io_tiff
     \brief class for IFD entries
 
     This class can manage the content of a single IFDEntry. 

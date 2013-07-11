@@ -64,7 +64,7 @@ WARN_NO_PARAMDOC       = YES
 #---------------------------------------------------------------------------
 INPUT                  = ../src/ mainpage h5_implementation_classes \
                          nxpath_code variant_code xml_code \
-                         nexus_utilities nexus_io
+                         nexus_utilities nexus_io image_io ascii_io general_io
 RECURSIVE              = YES
 EXCLUDE_SYMLINKS       = NO
 EXAMPLE_PATH           = examples

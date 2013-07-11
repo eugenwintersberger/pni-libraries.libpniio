@@ -39,7 +39,7 @@ namespace io{
 namespace tiff{
 
 
-    /*! \ingroup io_classes
+    /*! \ingroup image_io_tiff
     \brief rational type for TIFF IFD entries
 
     IFD entries in TIFF files can consist of a rational number. This class

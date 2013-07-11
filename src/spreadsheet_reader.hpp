@@ -35,7 +35,7 @@
 namespace pni{
 namespace io{
 
-    /*! \ingroup io_classes
+    /*! \ingroup ascii_io
     \brief base class for spreadsheet reader
 
     This class is the basement for all readers dealing with spreadsheet like

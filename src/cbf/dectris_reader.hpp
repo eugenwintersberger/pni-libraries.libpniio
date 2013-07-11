@@ -40,7 +40,7 @@ namespace io{
 namespace cbf{
     
     /*! 
-    \ingroup io_classes
+    \ingroup image_io_cbf
     \brief reader for DECTRIS detector data
 
     This type provides static method to read data from CBF files written by

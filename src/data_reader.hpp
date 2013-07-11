@@ -35,7 +35,7 @@ using namespace pni::core;
 namespace pni{
 namespace io{
 
-    /*! \ingroup io_classes
+    /*! \ingroup general_io
     \brief base class for data readers
 
     This is the base class for all data readers. Actually this class only

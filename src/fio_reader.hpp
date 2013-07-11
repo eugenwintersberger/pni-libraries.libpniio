@@ -37,7 +37,7 @@
 namespace pni{
 namespace io{
    
-    /*! \ingroup io_classes
+    /*! \ingroup ascii_io
     \brief FIO data reader
 
     FIO files are written by ONLINE a data acquisition and experiment control

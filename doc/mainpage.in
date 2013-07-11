@@ -50,11 +50,6 @@ interface of HDF5 to make it possible to read and write data in parallel.
  
 */
 
-/*! \defgroup parser_classes Parsers for object creation from strings 
-    
-These classes are dedicated for generating objects from strings using the boost
-spirit parser framework.
-*/
 
 
 

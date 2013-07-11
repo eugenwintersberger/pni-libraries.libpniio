@@ -42,7 +42,7 @@ namespace pni{
 namespace io{
 
     /*! 
-    \ingroup io_classes
+    \ingroup image_io
     \brief base class for image readers
 
     The image_reader class provides the basic functionality for all other

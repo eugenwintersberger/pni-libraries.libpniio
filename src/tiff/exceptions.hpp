@@ -37,7 +37,7 @@ namespace io{
 namespace tiff{
 
     /*! 
-    \ingroup error_classes
+    \ingroup image_io_tiff
     \brief error during TIFF reading
 
     This exception is thrown in cases where errors occur during reading TIFF

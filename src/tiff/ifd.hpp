@@ -43,7 +43,7 @@ namespace tiff{
 
 
     /*! 
-      \ingroup io_classes
+      \ingroup image_io_tiff
     \brief IFD - Image File Directory class
 
     This class describes an Image File Directory (IFD) block in a TIFF file.

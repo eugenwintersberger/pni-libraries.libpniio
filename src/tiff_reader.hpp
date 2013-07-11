@@ -42,7 +42,7 @@ namespace pni{
 namespace io{
 
     /*! 
-    \ingroup io_classes
+    \ingroup image_io_tiff
     \brief TIFF file reader
 
     TIFFReader is an implementation of the Reader class for reading TIFF

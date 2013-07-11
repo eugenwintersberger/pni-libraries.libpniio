@@ -35,7 +35,7 @@ using namespace pni::core;
 namespace pni{
 namespace io{
 
-    /*! \ingroup io_classes
+    /*! \ingroup ascii_io
     \brief Spreadsheet column information
 
     This class holds the basic information about a column stored in a
