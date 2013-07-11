@@ -24,6 +24,7 @@
 #include <sstream>
 #include <pni/core/types.hpp>
 #include <pni/core/array.hpp>
+#include <pni/core/exceptions.hpp>
 #include "../nx.hpp"
 #include "../nexus_utils.hpp"
 #include "../nxobject_traits.hpp"
@@ -43,9 +44,45 @@ namespace xml{
     //--------------------------------------------------------------------------
     /*!
     \ingroup xml_lowlevel_utils
+    \brief read an XML attribute from a node
+
+    Reads an attribute from an XML node and returns it as a value of type T. 
+    If the attribute string cannot be converted to T or the node does not
+    posses this attribute an exception will be thrown. 
+   
+    \throws parser_error in case of errors
+    \tparam T value type 
+    \param n node instancen
+    \param a name of the attribute
+    \return attribute value as instance of T
+    */
+    template<typename T> T read_xml_attribute(const node &n,const string &a)
+    {
+        T value;
+        try
+        {
+            value = n.get<T>("<xmlattr>."+a);
+        }
+        catch(...)
+        {
+            throw pni::io::parser_error(EXCEPTION_RECORD,
+                    "Attribute '"+a+"' does not exist or has inappropriate"
+                    " value!");
+        }
+
+        return value;
+    }
+
+    //--------------------------------------------------------------------------
+    /*!
+    \ingroup xml_lowlevel_utils
     \brief create shape form dimensions tag
 
     Create a shape container from the dimensions tag in the XML file. 
+    
+    \throws parser_error in case of problems
+    \throws shape_mismatch_error if rank attribute and number of 'dim' entries
+    do not match
     \tparam CTYPE container type for the shape (default is shape_t)
     \param dims node instance to the dimensions tag
     \return instance of shape_t with the shapea
@@ -53,19 +90,31 @@ namespace xml{
     template<typename CTYPE = shape_t>
     CTYPE dim2shape(const node &dims)
     {
-        size_t rank = dims.get<size_t>("<xmlattr>.rank");
+        auto rank = read_xml_attribute<size_t>(dims,"rank");
         CTYPE s(rank);
 
         //initialize the shape with zero
         std::fill(s.begin(),s.end(),0);
 
+        size_t valid_indices = 0;
         for(auto dim: dims)
         {
-            if(dim.first != "dim") continue;
+            if(dim.first != "dim") continue; //omit all non 'dim' tags
 
-            auto index = dim.second.get<size_t>("<xmlattr>.index");
-            auto value = dim.second.get<size_t>("<xmlattr>.value");
+            //reading the index attribute
+            auto index = read_xml_attribute<size_t>(dim.second,"index");
+            auto value = read_xml_attribute<size_t>(dim.second,"value");
+
             s[index-1] = value;
+            valid_indices++;
+        }
+
+        if(valid_indices!=rank)
+        {
+            std::stringstream ss;
+            ss<<"The value of rank ("<<rank<<") does not match that of";
+            ss<<" the number of 'dim' tags ("<<valid_indices<<")!";
+            throw shape_mismatch_error(EXCEPTION_RECORD,ss.str());
         }
 
         return s;
