@@ -1,4 +1,5 @@
 /*!
+\ingroup nexus_io
 \defgroup variant_code Nexus and BOOST::variant 
 
 Nexus files can be considered as a heterogeneous container (a container holding

@@ -42,7 +42,7 @@ namespace nx{
     using pni::core::exception;
 
     /*! 
-    \ingroup util_classes
+    \ingroup nexus_utilities
     \brief Filter object
 
     Base class for all filter objects in the Nexus world.

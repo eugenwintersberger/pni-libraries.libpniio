@@ -40,7 +40,7 @@ namespace nx {
     //need this here to avoid name collisions with tango headers.
     using pni::core::string;
 
-    /*! \ingroup util_classes
+    /*! \ingroup nexus_utilities
     \brief date time factory
 
     NXDateTime provides static methods to create date-time strings which are

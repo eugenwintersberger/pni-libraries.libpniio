@@ -30,7 +30,7 @@ namespace nx{
 
 
     /*!
-    \ingroup common_devel
+    \ingroup nexus_lowlevel
     \brief nexus object traits
 
     This traits maps a type to the Nexus low level object types. The most
@@ -40,7 +40,7 @@ namespace nx{
     template<typename OTYPE> struct nxobject_traits {};
 
     /*!
-    \ingroup common_devel
+    \ingroup nexus_lowlevel
     \brief macro for nxobject_traits declaration
 
     This macro helps in the declaration of a single nxobject_trait.
@@ -64,7 +64,7 @@ namespace nx{
         }
 
     /*!
-    \ingroup common_devel 
+    \ingroup nexus_lowlevel 
     \brief define a Nexus object type
     */
 #define DEFINE_NXOBJECT(otype) \

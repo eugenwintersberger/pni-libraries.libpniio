@@ -35,7 +35,7 @@ namespace nx{
     using pni::core::exception;
 
     /*! 
-    \ingroup util_classes
+    \ingroup nexus_utilities
     \brief Nexus deflate filter
 
     This class provides an implementation of the simple deflate filter as it is

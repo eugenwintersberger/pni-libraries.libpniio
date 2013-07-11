@@ -30,7 +30,7 @@ namespace io{
 namespace nx{
 
     /*! 
-    \ingroup util_classes
+    \ingroup nexus_lowlevel
     \brief Nexus typd ids
 
     This enumeration class provides identifiers for different Nexus types.

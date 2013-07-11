@@ -56,21 +56,6 @@ These classes are dedicated for generating objects from strings using the boost
 spirit parser framework.
 */
 
-/*! \defgroup nexus_lowlevel Nexus low level objects
-    This classes implement the basic components from which each nexus object
-    is created. 
-*/
-
-/*! \defgroup util_classes Nexus utility classes
-    General purpose utiltiy classes used throughout the code to make 
-    life easier.
-*/
-
-/*! \defgroup error_classes Nexus exception classes
-    Exceptions related to the library.
-*/
-
-
 
 
 

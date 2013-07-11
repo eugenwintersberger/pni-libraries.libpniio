@@ -41,7 +41,7 @@ namespace io{
 namespace nx{
 
     /*! 
-    \ingroup util_classes
+    \ingroup nexus_lowlevel
     \brief implementation map
 
     For each backend a particular class must be provided to implement one of the

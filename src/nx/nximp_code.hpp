@@ -31,7 +31,7 @@ namespace io{
 namespace nx{
 
         /*! 
-        \ingroup util_classes
+        \ingroup nexus_lowlevel
         \brief implementation codes
 
         This codes identify a particular implementation for the Nexus classes.

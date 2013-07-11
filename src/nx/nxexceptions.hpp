@@ -38,7 +38,7 @@ namespace nx{
     using pni::core::string;
 
     /*! 
-    \ingroup error_classes
+    \ingroup nexus_error_classes
     \brief field exception
 
     Raised if an error occured in one of the NXField methods.
@@ -66,7 +66,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     /*! 
-    \ingroup error_classes
+    \ingroup nexus_error_classes
     \brief Attribute Error
 
     Raised in cases where reading or writing an attribute failed.
@@ -94,7 +94,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     /*! 
-    \ingroup error_classes
+    \ingroup nexus_error_classes
     \brief Group Error
 
     Error in case of group operations.
@@ -122,7 +122,7 @@ namespace nx{
 
     //--------------------------------------------------------------------------
     /*! 
-    \ingroup error_classes
+    \ingroup nexus_error_classes
     \brief File Error
 
     File exception class.
@@ -156,7 +156,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     /*! 
-    \ingroup error_classes
+    \ingroup nexus_error_classes
     \brief Selection Error
 
     Selection exception class.
@@ -191,7 +191,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     /*! 
-    \ingroup error_classes
+    \ingroup nexus_error_classes
     \brief Filter Error
 
     Filter exception class.
@@ -225,7 +225,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     /*!
-    \brief error_classes
+    \brief nexus_error_classes
     \brief link error
 
     Exception thrown in case of link related errors.
@@ -260,7 +260,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     /*!
-    \brief error_classes
+    \brief nexus_error_classes
     \brief backend error
 
     Exception thrown in case of a general backend error.
@@ -295,7 +295,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     /*!
-    \brief error_classes
+    \brief nexus_error_classes
     \brief object error
 
     Exception thrown in case of a general object error.

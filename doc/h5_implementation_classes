@@ -1,4 +1,6 @@
-/*! \defgroup nxh5_classes HDF5 implementation classes
+/*! 
+\ingroup nexus_io
+\defgroup nxh5_classes HDF5 implementation classes
     HDF5 implementation of the Nexus file format. This module describes the 
     implementation classes which are used to instantiate the low level 
     class templates.
