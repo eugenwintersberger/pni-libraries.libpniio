@@ -36,7 +36,7 @@ void xml_node_test::test_node_from_file()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    xml::node n = xml::node::create_from_file("xml_test/node_from_str.xml");
+    xml::node n = xml::create_from_file("xml_test/node_from_str.xml");
     CPPUNIT_ASSERT(!n.empty());
     CPPUNIT_ASSERT(n.size() == 1);
 
@@ -48,7 +48,7 @@ void xml_node_test::test_node_from_string()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    xml::node n = xml::node::create_from_string(node_from_string_str);
+    xml::node n = xml::create_from_string(node_from_string_str);
 
     CPPUNIT_ASSERT(!n.empty());
     CPPUNIT_ASSERT(n.size() == 1);

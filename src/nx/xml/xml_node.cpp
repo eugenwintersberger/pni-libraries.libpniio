@@ -20,36 +20,52 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#pragma once
-
-#include <iostream>
-#include <sstream>
-#include <fstream>
-#include <pni/core/types.hpp>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/xml_parser.hpp>
-
-#include "../../parsers/exceptions.hpp"
+#include "xml_node.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
 namespace xml{
 
-    using namespace pni::core;
+    node create_from_string(const string &s)
+    {
+        std::stringstream stream(s);
+        node t;
+        try
+        {
+            read_xml(stream,t);
+        }
+        catch(...)
+        {
+            //whatever exception is thrown here is related to parsing
+            throw pni::io::parser_error(EXCEPTION_RECORD,
+                    "Error parsing XML string!");
+        }
 
-    /*!
-    \ingroup xml_lowlevel_utils
-    \brief alias for ptree
+        return t;
+    }
 
-    This alias creates the new type name node which can be used within the xml
-    namespace instread of boost::property_tree::ptree;
-    */
-    using node = boost::property_tree::ptree;
+    //-------------------------------------------------------------------------
+    node create_from_file(const string &s)
+    {
+        std::ifstream stream(s);
+        if(!stream.is_open())
+            throw file_error(EXCEPTION_RECORD,
+                    "Error opening "+s+" for reading!");
 
-    node create_from_string(const string &s);
+        node t;
+        try
+        {
+            read_xml(stream,t);
+        }
+        catch(...)
+        {
+            throw pni::io::parser_error(EXCEPTION_RECORD,
+                    "Error parsing XML file "+s+"!");
+        }
 
-    node create_from_file(const string &s);
+        return t;
+    }
 
 
 //end of namespace

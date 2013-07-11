@@ -7,7 +7,9 @@ src_list = Glob("*.cpp")
 src_list.extend(Glob("tiff/*.cpp"))
 src_list.extend(Glob("cbf/*.cpp"))
 src_list.extend(Glob("nx/*.cpp"));
+src_list.extend(Glob("nx/xml/*.cpp"))
 src_list.extend(Glob("nx/h5/*.cpp"))
+src_list.extend(Glob("parsers/*.cpp"))
 src_list.extend(Glob("nx/h5/filters/*.c"))
 
 
