@@ -58,6 +58,7 @@ namespace io{
             using namespace boost::spirit::qi;
             using namespace boost::fusion;
             using namespace boost::phoenix;
+            using boost::spirit::qi::_1;
             value_rule = (*blank>>(
                          (int_>>!(char_('.')|char_('e')))[_val = _1] 
                           || 

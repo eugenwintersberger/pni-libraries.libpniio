@@ -48,6 +48,8 @@ class xml_lowlevel_test : public CppUnit::TestFixture
     private:
         CPPUNIT_TEST_SUITE(xml_lowlevel_test);
         CPPUNIT_TEST(test_read_xml_attribute);
+        CPPUNIT_TEST(test_read_xml_data_str);
+        CPPUNIT_TEST(test_read_xml_array_blank);
         CPPUNIT_TEST_SUITE_END();
 
         string xml_str1;
@@ -56,5 +58,7 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         void tearDown();
         
         void test_read_xml_attribute();
+        void test_read_xml_data_str();
+        void test_read_xml_array_blank();
 
 };

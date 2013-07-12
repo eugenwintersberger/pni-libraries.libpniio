@@ -16,65 +16,72 @@
  * You should have received a copy of the GNU General Public License
  * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
- * Created on: Jul 11, 2013
+ * Created on: Jul 12, 2013
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#include <sstream>
-#include <fstream>
-#include <boost/property_tree/xml_parser.hpp>
-
-#include "../../parsers/exceptions.hpp"
-#include "xml_node.hpp"
+#include "xml_lowlevel.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
 namespace xml{
 
-    node create_from_string(const string &s)
+    array read_xml_array_data(const node &n)
     {
-        std::stringstream stream(s);
-        node t;
+        using boost::spirit::qi::parse;
+        typedef string::const_iterator iterator_t;
+        typedef pni::io::array_parser<iterator_t> array_parser_t;;
+
+        //define iterators
+        iterator_t start_iter,stop_iter;
+
+        //first we need to read the data as plain text
+        string text = read_xml_data<string>(n);
+        start_iter = text.begin();
+        stop_iter  = text.end();
+
+        array a;
+
+        //now we need to try vor several delimiters
         try
         {
-            read_xml(stream,t);
+            //here we try an array separated by whitespaces
+            parse(start_iter,stop_iter,array_parser_t(' '),a);
+            return a;
+        }
+        catch(...)
+        {}
+
+        try
+        {
+            //try a comma as a separator
+            parse(start_iter,stop_iter,array_parser_t(','),a);
+            return a;
+        }
+        catch(...)
+        { }
+
+        try
+        {
+            //try with a semi-colon
+            parse(start_iter,stop_iter,array_parser_t(';'),a);
+            return a;
         }
         catch(...)
         {
-            //whatever exception is thrown here is related to parsing
+            //ok this was the last try - throw an exception here.
             throw pni::io::parser_error(EXCEPTION_RECORD,
-                    "Error parsing XML string!");
+                    "Could not parse array data!");
         }
 
-        return t;
+        //just to make the compiler happy
+        return a;
     }
-
-    //-------------------------------------------------------------------------
-    node create_from_file(const string &s)
-    {
-        std::ifstream stream(s);
-        if(!stream.is_open())
-            throw file_error(EXCEPTION_RECORD,
-                    "Error opening "+s+" for reading!");
-
-        node t;
-        try
-        {
-            read_xml(stream,t);
-        }
-        catch(...)
-        {
-            throw pni::io::parser_error(EXCEPTION_RECORD,
-                    "Error parsing XML file "+s+"!");
-        }
-
-        return t;
-    }
-
 
 //end of namespace
 }
 }
 }
 }
+

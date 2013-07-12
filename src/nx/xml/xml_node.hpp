@@ -22,14 +22,8 @@
 
 #pragma once
 
-#include <iostream>
-#include <sstream>
-#include <fstream>
 #include <pni/core/types.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/xml_parser.hpp>
-
-#include "../../parsers/exceptions.hpp"
 
 namespace pni{
 namespace io{
@@ -47,8 +41,20 @@ namespace xml{
     */
     using node = boost::property_tree::ptree;
 
+    //-------------------------------------------------------------------------
+    /*!
+    \ingroup xml_lowlevel_utils
+    \brief create xml node from string
+
+    */
     node create_from_string(const string &s);
 
+    //-------------------------------------------------------------------------
+    /*!
+    \ingroup xml_lowlevel_utils
+    \brief create xml node from file
+
+    */
     node create_from_file(const string &s);
 
 

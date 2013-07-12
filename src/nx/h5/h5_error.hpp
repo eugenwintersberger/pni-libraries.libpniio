@@ -19,6 +19,7 @@
  *  Created on: Feb 6, 2013
  *      Author: Eugen Wintersberger
  */
+#pragma once
 
 extern "C"{
 #include <hdf5.h>

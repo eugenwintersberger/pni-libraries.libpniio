@@ -50,4 +50,29 @@ void xml_lowlevel_test::test_read_xml_attribute()
                          pni::io::parser_error);
 }
 
+//-----------------------------------------------------------------------------
+void xml_lowlevel_test::test_read_xml_data_str()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    xml::node n = xml::create_from_string("<test> hello world </test>");
+
+    string v;
+    CPPUNIT_ASSERT_NO_THROW(v = xml::read_xml_data<string>(n.get_child("test")));
+    std::cout<<v<<std::endl;
+    CPPUNIT_ASSERT(v == " hello world ");
+}
+
+//-----------------------------------------------------------------------------
+void xml_lowlevel_test::test_read_xml_array_blank()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    xml::node n = xml::create_from_string("<test> 1  2 3 4 5 6 10</test>");
+
+    array v;
+    CPPUNIT_ASSERT_NO_THROW(v = xml::read_xml_array_data(n.get_child("test")));
+    CPPUNIT_ASSERT(v.type_id() == type_id_t::INT32);
+    CPPUNIT_ASSERT(v.size() == 7);
+}
 

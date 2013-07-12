@@ -300,6 +300,7 @@ namespace io{
         {
             using namespace pni::core;
             using namespace boost::spirit::qi;
+            using boost::spirit::qi::_1;
             using namespace boost::fusion;
             using namespace boost::phoenix;
 
@@ -316,6 +317,7 @@ namespace io{
             using namespace boost::spirit::qi;
             using namespace boost::fusion;
             using namespace boost::phoenix;
+            using boost::spirit::qi::_1;
 
             data_rule = value_ % delimiter_;    
             array_rule = (_start_sign>data_rule>_stop_sign)
