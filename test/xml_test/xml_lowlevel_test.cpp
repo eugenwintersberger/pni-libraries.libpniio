@@ -64,7 +64,7 @@ void xml_lowlevel_test::test_read_xml_data_str()
 }
 
 //-----------------------------------------------------------------------------
-void xml_lowlevel_test::test_read_xml_array_blank()
+void xml_lowlevel_test::test_read_xml_array_int_blank()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
@@ -76,3 +76,40 @@ void xml_lowlevel_test::test_read_xml_array_blank()
     CPPUNIT_ASSERT(v.size() == 7);
 }
 
+//-----------------------------------------------------------------------------
+void xml_lowlevel_test::test_read_xml_array_int_comma()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    xml::node n = xml::create_from_string("<test> 1 , 2 ,3  ,4 ,5, 6, 10 </test>");
+
+    array v;
+    CPPUNIT_ASSERT_NO_THROW(v = xml::read_xml_array_data(n.get_child("test")));
+    CPPUNIT_ASSERT(v.type_id() == type_id_t::INT32);
+    std::cout<<v.size()<<std::endl;
+    CPPUNIT_ASSERT(v.size() == 7);
+}
+
+//-----------------------------------------------------------------------------
+void xml_lowlevel_test::test_read_xml_array_int_semicolon()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    xml::node n = xml::create_from_string("<test> 1 ; 2 ;3  ;4 ;5; 6; 10</test>");
+
+    array v;
+    CPPUNIT_ASSERT_NO_THROW(v = xml::read_xml_array_data(n.get_child("test")));
+    CPPUNIT_ASSERT(v.type_id() == type_id_t::INT32);
+    CPPUNIT_ASSERT(v.size() == 7);
+}
+//-----------------------------------------------------------------------------
+void xml_lowlevel_test::test_read_xml_array_int_fail()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    xml::node n = xml::create_from_string("<test> a stupid text </test>");
+
+    array v;
+    CPPUNIT_ASSERT_THROW(v = xml::read_xml_array_data(n.get_child("test")),
+            pni::io::parser_error);
+}

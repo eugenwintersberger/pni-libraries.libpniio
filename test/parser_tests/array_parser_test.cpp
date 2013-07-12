@@ -30,11 +30,11 @@ CPPUNIT_TEST_SUITE_REGISTRATION(array_parser_test);
 void array_parser_test::setUp() 
 { 
     //setting up the integer strings
-    int_str1 = "[1,2,3,4,5]";
-    int_str2 = "(1;2;3;4;5)";
-    int_str3 = "1;2;3;4;5";
+    int_str1 = "[ 1 ,2,  3 ,   4   ,5]";
+    int_str2 = "(1 ;2; 3   ;4;  5)";
+    int_str3 = " 1;   2;3;4  ;5";
     int_str4 = "   1 2    3 4   5"; 
-    float_str1 = "[1.34,-2.e+2,3.342,4.,5.34]";
+    float_str1 = "[ 1.34, -2.e+2   , 3.342,  4.,5.34]";
     float_str2 = "(1.34;-2.e+2;3.342;4.;5.34)";
     float_str3 = "1.34;-2.e+2;3.342;4.;5.34";
     float_str4 = "   1.34 -2.e+2  3.342 4.  5.34 ";

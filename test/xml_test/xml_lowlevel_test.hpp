@@ -49,7 +49,10 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE(xml_lowlevel_test);
         CPPUNIT_TEST(test_read_xml_attribute);
         CPPUNIT_TEST(test_read_xml_data_str);
-        CPPUNIT_TEST(test_read_xml_array_blank);
+        CPPUNIT_TEST(test_read_xml_array_int_blank);
+        CPPUNIT_TEST(test_read_xml_array_int_comma);
+        CPPUNIT_TEST(test_read_xml_array_int_semicolon);
+        CPPUNIT_TEST(test_read_xml_array_int_fail);
         CPPUNIT_TEST_SUITE_END();
 
         string xml_str1;
@@ -59,6 +62,9 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         
         void test_read_xml_attribute();
         void test_read_xml_data_str();
-        void test_read_xml_array_blank();
+        void test_read_xml_array_int_blank();
+        void test_read_xml_array_int_comma();
+        void test_read_xml_array_int_semicolon();
+        void test_read_xml_array_int_fail();
 
 };
