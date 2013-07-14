@@ -31,21 +31,22 @@ namespace xml{
     {
         using boost::spirit::qi::parse;
         typedef string::const_iterator iterator_t;
-        typedef pni::io::array_parser<iterator_t> array_parser_t;;
+        typedef pni::io::array_parser<iterator_t> array_parser_t;
 
         //define iterators
         iterator_t start_iter,stop_iter;
 
         //first we need to read the data as plain text
         string text = read_xml_data<string>(n);
-        start_iter = text.begin();
-        stop_iter  = text.end();
 
-        array a;
 
         //now we need to try vor several delimiters
         try
         {
+            std::cout<<text<<std::endl;
+            array a;
+            start_iter = text.begin();
+            stop_iter  = text.end();
             //here we try an array separated by whitespaces
             parse(start_iter,stop_iter,array_parser_t(' '),a);
             return a;
@@ -53,8 +54,13 @@ namespace xml{
         catch(...)
         {}
 
+
         try
         {
+            std::cout<<text<<std::endl;
+            array a;
+            start_iter = text.begin();
+            stop_iter  = text.end();
             //try a comma as a separator
             parse(start_iter,stop_iter,array_parser_t(','),a);
             return a;
@@ -64,6 +70,10 @@ namespace xml{
 
         try
         {
+            std::cout<<text<<std::endl;
+            array a;
+            start_iter = text.begin();
+            stop_iter  = text.end();
             //try with a semi-colon
             parse(start_iter,stop_iter,array_parser_t(';'),a);
             return a;
@@ -76,7 +86,7 @@ namespace xml{
         }
 
         //just to make the compiler happy
-        return a;
+        return array();
     }
 
 //end of namespace
