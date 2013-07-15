@@ -33,7 +33,8 @@ void array_parser_test::setUp()
     int_str1 = "[ 1 ,2,  3 ,   4   ,5]";
     int_str2 = "(1 ;2; 3   ;4;  5)";
     int_str3 = " 1;   2;3;4  ;5";
-    int_str4 = "   1 2    3 4   5"; 
+    int_str4 = "   1 2    3 4   5";  
+    int_str5 = " 2 , 2 ,3  ,4 ,5, 6, 10 ";
     float_str1 = "[ 1.34, -2.e+2   , 3.342,  4.,5.34]";
     float_str2 = "(1.34;-2.e+2;3.342;4.;5.34)";
     float_str3 = "1.34;-2.e+2;3.342;4.;5.34";
@@ -112,6 +113,24 @@ void array_parser_test::test_int4_array()
         check_equality((aiter++)->as<int32>(),*(viter++));
 
 }
+
+//-----------------------------------------------------------------------------
+void array_parser_test::test_int5_array()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    start_iter = int_str5.begin();
+    stop_iter  = int_str5.end();
+    parse(start_iter,stop_iter,array_parser_t(','),a);
+
+    std::vector<int> v{2,2,3,4,5,6,10};
+    auto viter = v.begin();
+    auto aiter = a.begin();
+    while(aiter != a.end())
+        check_equality((aiter++)->as<int32>(),*(viter++));
+
+}
+
 //-----------------------------------------------------------------------------
 void array_parser_test::test_float1_array()
 {

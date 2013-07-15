@@ -31,8 +31,8 @@
 #include <pni/io/nx/xml.hpp>
 #include <pni/core/arrays.hpp>
 
-#include<cppunit/TestFixture.h>
-#include<cppunit/extensions/HelperMacros.h>
+#include <cppunit/TestFixture.h>
+#include <cppunit/extensions/HelperMacros.h>
 
 
 using namespace pni::core;
@@ -56,6 +56,7 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE_END();
 
         string xml_str1;
+        std::vector<int32> int_vec;
     public:
         void setUp();
         void tearDown();

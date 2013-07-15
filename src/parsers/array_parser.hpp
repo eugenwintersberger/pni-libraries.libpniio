@@ -296,7 +296,8 @@ namespace io{
         \param del delimiter symbol
         */
         array_parser(char del):
-            array_parser::base_type(array_rule)
+            array_parser::base_type(array_rule),
+            delimiter_(del)
         {
             using namespace pni::core;
             using namespace boost::spirit::qi;

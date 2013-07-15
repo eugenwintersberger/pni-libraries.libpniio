@@ -27,58 +27,48 @@ namespace io{
 namespace nx{
 namespace xml{
 
-    array read_xml_array_data(const node &n)
+    //private code
+    bool read_xml_array_data(const string &text,array &a,char sep)
     {
         using boost::spirit::qi::parse;
         typedef string::const_iterator iterator_t;
         typedef pni::io::array_parser<iterator_t> array_parser_t;
-
         //define iterators
-        iterator_t start_iter,stop_iter;
+        iterator_t start_iter = text.begin();
+        iterator_t stop_iter  = text.end();
+
+        try
+        {
+            std::cout<<text<<std::endl;
+            parse(start_iter,stop_iter,array_parser_t(sep),a);
+            return true;
+        }
+        catch(...)
+        {
+            return false;
+        }
+
+
+    }
+
+    //-------------------------------------------------------------------------
+    array read_xml_array_data(const node &n)
+    {
 
         //first we need to read the data as plain text
         string text = read_xml_data<string>(n);
-
+        array a;
 
         //now we need to try vor several delimiters
-        try
-        {
-            std::cout<<text<<std::endl;
-            array a;
-            start_iter = text.begin();
-            stop_iter  = text.end();
-            //here we try an array separated by whitespaces
-            parse(start_iter,stop_iter,array_parser_t(' '),a);
+        if(read_xml_array_data(text,a,' '))
             return a;
-        }
-        catch(...)
-        {}
 
-
-        try
-        {
-            std::cout<<text<<std::endl;
-            array a;
-            start_iter = text.begin();
-            stop_iter  = text.end();
-            //try a comma as a separator
-            parse(start_iter,stop_iter,array_parser_t(','),a);
+        if(read_xml_array_data(text,a,','))
             return a;
-        }
-        catch(...)
-        { }
 
-        try
-        {
-            std::cout<<text<<std::endl;
-            array a;
-            start_iter = text.begin();
-            stop_iter  = text.end();
-            //try with a semi-colon
-            parse(start_iter,stop_iter,array_parser_t(';'),a);
+        if(read_xml_array_data(text,a,';'))
             return a;
-        }
-        catch(...)
+        else
         {
             //ok this was the last try - throw an exception here.
             throw pni::io::parser_error(EXCEPTION_RECORD,

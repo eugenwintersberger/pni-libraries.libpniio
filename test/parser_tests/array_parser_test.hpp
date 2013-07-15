@@ -51,6 +51,7 @@ class array_parser_test:public CppUnit::TestFixture
     CPPUNIT_TEST(test_int2_array);
     CPPUNIT_TEST(test_int3_array);
     CPPUNIT_TEST(test_int4_array);
+    CPPUNIT_TEST(test_int5_array);
     CPPUNIT_TEST(test_float1_array);
     CPPUNIT_TEST(test_float2_array);
     CPPUNIT_TEST(test_float3_array);
@@ -70,6 +71,7 @@ class array_parser_test:public CppUnit::TestFixture
     string int_str2;
     string int_str3;
     string int_str4;
+    string int_str5;
     string float_str1;
     string float_str2;
     string float_str3;
@@ -86,6 +88,7 @@ public:
 	void test_int2_array();
 	void test_int3_array();
 	void test_int4_array();
+    void test_int5_array();
     void test_float1_array();
     void test_float2_array();
     void test_float3_array();
