@@ -40,17 +40,18 @@ void xml_lowlevel_test::test_read_xml_attribute()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    xml::node n = xml::create_from_string("<test attr=\"value\"/>");
+    xml::node root = xml::create_from_string("<test attr=\"value\"/>");
+    xml::node test = root.get_child("test");
    
     string v;
-    CPPUNIT_ASSERT_NO_THROW(v = xml::read_xml_attribute<string>(n.get_child("test"),"attr"));
+    CPPUNIT_ASSERT_NO_THROW(v = xml::attribute_data<string>::read(test,"attr"));
 
     //wont work because not convertible types
-    CPPUNIT_ASSERT_THROW(xml::read_xml_attribute<double>(n.get_child("test"),"attr"),
+    CPPUNIT_ASSERT_THROW(xml::attribute_data<double>::read(test,"attr"),
                          pni::io::parser_error);
 
     //attribute does not exist
-    CPPUNIT_ASSERT_THROW(xml::read_xml_attribute<string>(n.get_child("test"),"bla"),
+    CPPUNIT_ASSERT_THROW(xml::attribute_data<string>::read(test,"bla"),
                          pni::io::parser_error);
 }
 

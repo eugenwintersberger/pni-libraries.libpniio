@@ -33,6 +33,7 @@
 
 #include "xml_node.hpp"
 #include "node_data.hpp"
+#include "attribute_data.hpp"
 
 
 namespace pni{
@@ -41,43 +42,7 @@ namespace nx{
 namespace xml{
 
     using namespace pni::core;
-    //using namespace pni::io::nx;
 
-    //--------------------------------------------------------------------------
-    /*!
-    \ingroup xml_lowlevel_utils
-    \brief read an XML attribute from a node
-
-    Reads an attribute from an XML node and returns it as a value of type T. 
-    If the attribute string cannot be converted to T or the node does not
-    posses this attribute an exception will be thrown. 
-   
-    \throws parser_error in case of errors
-    \tparam T value type 
-    \param n node instancen
-    \param a name of the attribute
-    \return attribute value as instance of T
-    */
-    template<typename T> T read_xml_attribute(const node &n,const string &a)
-    {
-        T value;
-        try
-        {
-            value = n.get<T>("<xmlattr>."+a);
-        }
-        catch(...)
-        {
-            throw pni::io::parser_error(EXCEPTION_RECORD,
-                    "Attribute '"+a+"' does not exist or has inappropriate"
-                    " value!");
-        }
-
-        return value;
-    }
-
-
-
-    //--------------------------------------------------------------------------
     /*!
     \ingroup xml_lowlevel_utils
     \brief create shape form dimensions tag
@@ -94,7 +59,7 @@ namespace xml{
     template<typename CTYPE = shape_t>
     CTYPE dim2shape(const node &dims)
     {
-        auto rank = read_xml_attribute<size_t>(dims,"rank");
+        auto rank = attribute_data<size_t>::read(dims,"rank");
         CTYPE s(rank);
 
         //initialize the shape with zero
@@ -106,8 +71,8 @@ namespace xml{
             if(dim.first != "dim") continue; //omit all non 'dim' tags
 
             //reading the index attribute
-            auto index = read_xml_attribute<size_t>(dim.second,"index");
-            auto value = read_xml_attribute<size_t>(dim.second,"value");
+            auto index = attribute_data<size_t>::read(dim.second,"index");
+            auto value = attribute_data<size_t>::read(dim.second,"value");
 
             s[index-1] = value;
             valid_indices++;
@@ -134,6 +99,7 @@ namespace xml{
     created below an instance of PTYPE. 
 
     \throws nxgroup_error in the case of errors
+    \throws parser_error in case of errors in parsing XML attributes
     \tparam PTYPE paren type
     \param parent the parent instancen
     \param t XML node instance
@@ -145,8 +111,8 @@ namespace xml{
     {
         typedef typename nxobject_traits<PTYPE>::group_type group_type; 
         //create the group and call the function recursively
-        auto name = t.template get<string>("<xmlattr>.name");
-        auto type = t.template get<string>("<xmlattr>.type");
+        auto name = attribute_data<string>::read(t,"name");
+        auto type = attribute_data<string>::read(t,"type");
 
         group_type g = parent.create_group(name,type);
         return g;
@@ -191,7 +157,7 @@ namespace xml{
         //------------------try to write units attribute--------------------
         try
         {
-            auto units = t.template get<string>("<xmlattr>.units");
+            auto units = attribute_data<string>::read(t,"units");
             f.template attr<string>("units").write(units);
         }
         catch(...)
@@ -200,7 +166,7 @@ namespace xml{
         //-------------------try to write long_name attribute--------------
         try
         {
-            auto lname = t.template get<string>("<xmlattr>.long_name");
+            auto lname = attribute_data<string>::read(t,"long_name");
             f.template attr<string>("long_name").write(lname);
         }
         catch(...)
@@ -235,8 +201,8 @@ namespace xml{
             }
             else if(child.first == "link")
             {
-                auto name = child.second.template get<string>("<xmlattr>.name");
-                auto target = child.second.template get<string>("<xmlattr>.target");
+                auto name = attribute_data<string>::read(child.second,"name");
+                auto target = attribute_data<string>::read(child.second,"target");
                 parent.link(name,target);
             }
         }
