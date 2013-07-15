@@ -34,6 +34,7 @@
 #include<pni/core/array.hpp>
 #include<vector>
 
+#include "exceptions.hpp"
 #include "value_parser.hpp"
 #include "delimiter_parser.hpp"
 
@@ -328,6 +329,47 @@ namespace io{
 
 
     };
+
+
+    /*!
+    \ingroup parser_classes
+    \brief extract array data from string 
+
+    This template function can be used to extract an array from a string using a
+    parser type. Most naturally this parser would be an instance of
+    array_parser. An exception is thrown either when the string represents data
+    that cannot be parsed by the parser or when the resulting array has a
+    length 0.
+
+    \throws parser_error in case of errors
+    \tparam PTYPE parser type
+    \param s string to parse
+    \param p parser instance
+    \return array instance
+    */
+    template<typename PTYPE>
+    pni::core::array array_from_string(const pni::core::string &s,const PTYPE &p)
+    {
+        using namespace pni::core;
+        typedef typename PTYPE::iterator_type iterator_t;
+
+        iterator_t start_iter = s.begin();
+        iterator_t stop_iter  = s.end();
+
+        array a;
+        try
+        {
+            parse(start_iter,stop_iter,p,a);
+        }
+        catch(...)
+        {
+            throw parser_error(EXCEPTION_RECORD,
+                    "Cannot parse array data from string: "
+                    "\""+s+"\"!");
+        }
+
+        return a;
+    }
 
 //end of namespace
 }

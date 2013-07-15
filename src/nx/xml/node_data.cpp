@@ -50,27 +50,26 @@ namespace xml{
         //read the node data as a string
         auto text = node_data<string>::read(node);
 
-        //define iterators
-        iterator_t start_iter = text.begin();
-        iterator_t stop_iter  = text.end();
-
         array a;
         try
         {
-            std::cout<<text<<std::endl;
-            parse(start_iter,stop_iter,p,a);
-            std::cout<<"data: "<<a<<std::endl;
+            a= array_from_string(text,p);
         }
-        catch(...) 
-        { 
+        catch(...)
+        {
             throw parser_error(EXCEPTION_RECORD,
-                    "Error parsing node data ("+text+")!");
+                    "Error parsing string \""+text+"\" to an array!");
         }
 
-        if(a.size() == 0)
+        try
+        {
+            a.size();
+        }
+        catch(...)
+        {
             throw parser_error(EXCEPTION_RECORD,
-                    "Array has size 0 - maybe illegal array data in: \n"
-                    ""+text);
+                    "Error parsing string \""+text+"\" to an array!");
+        }
 
         return a;
     }
