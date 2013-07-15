@@ -59,10 +59,11 @@ void xml_lowlevel_test::test_read_xml_data_str()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    xml::node n = xml::create_from_string("<test> hello world </test>");
+    xml::node root = xml::create_from_string("<test> hello world </test>");
+    xml::node test = root.get_child("test");
 
     string v;
-    CPPUNIT_ASSERT_NO_THROW(v = xml::read_xml_data<string>(n.get_child("test")));
+    CPPUNIT_ASSERT_NO_THROW(v = xml::node_data<string>::read(test));
     std::cout<<v<<std::endl;
     CPPUNIT_ASSERT(v == " hello world ");
 }

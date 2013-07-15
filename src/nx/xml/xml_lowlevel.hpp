@@ -32,6 +32,7 @@
 
 
 #include "xml_node.hpp"
+#include "node_data.hpp"
 
 
 namespace pni{
@@ -74,48 +75,7 @@ namespace xml{
         return value;
     }
 
-    //--------------------------------------------------------------------------
-    /*!
-    \ingroup xml_lowlevel_utils
-    \brief read XML data from a node
 
-    Reads the text data from an xml node and returns it as a string. This
-    function is merely a wrapper around the data() method provided by node.
-    Virtually it is only translating ptree exceptions to libpniio exceptions. 
-
-    \throws parser_error in case of problems
-    \param n node object
-    \return string with data
-    */
-    template<typename T> T read_xml_data(const node &n)
-    {
-        T value;
-        try
-        {
-            value = n.template get_value<T>();
-        }
-        catch(...)
-        {
-            throw parser_error(EXCEPTION_RECORD,
-                    "Node data does not exist or if of incompatible type!");
-        }
-        return value;
-    }
-
-    //--------------------------------------------------------------------------
-    /*!
-    \ingroup xml_lowlevel_utils
-    \brief read XML data to array
-
-    Reads XML data to a numeric array. The elements can be separated either by
-    blanks or by colons, or semicolons. However, if non of the separator
-    characters worked an exception will be thrown. 
-
-    \throws parser_error in case of any parsing problem
-    \param n XML node from which to read data
-    \return instance of array with the data
-    */
-    array read_xml_array_data(const node &n);
 
     //--------------------------------------------------------------------------
     /*!
