@@ -28,12 +28,18 @@ CPPUNIT_TEST_SUITE_REGISTRATION(xml_lowlevel_test);
 
 //-----------------------------------------------------------------------------
 void xml_lowlevel_test::setUp() 
-{ 
+{
+    file = h5::nxfile::create_file("xml_lowlevel_test.nx",true);
+    root_group = file["/"];
     int_vec = std::vector<int32>{1,2,3,4,5,6,10};
 }
 
 //-----------------------------------------------------------------------------
-void xml_lowlevel_test::tearDown() { } 
+void xml_lowlevel_test::tearDown() 
+{ 
+    root_group.close();
+    file.close();
+} 
 
 //-----------------------------------------------------------------------------
 void xml_lowlevel_test::test_read_xml_attribute()
@@ -136,4 +142,18 @@ void xml_lowlevel_test::test_read_xml_array_int_fail()
     array v;
     CPPUNIT_ASSERT_THROW(v = xml::node_data<array>::read(test,' '),
             pni::io::parser_error);
+}
+
+//-----------------------------------------------------------------------------
+void xml_lowlevel_test::test_create_group()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    xml::node root = xml::create_from_string("<group name=\"entry\""
+                                             "       type=\"NXentry\""
+                                             "/>");
+    xml::node group = root.get_child("group");
+    h5::nxgroup g = xml::create_group(root_group,group);
+
+
 }

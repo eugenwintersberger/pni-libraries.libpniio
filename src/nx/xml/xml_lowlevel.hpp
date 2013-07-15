@@ -97,6 +97,14 @@ namespace xml{
 
     Creates a grou from the data stored in an XML node. The group will be
     created below an instance of PTYPE. 
+    A group tag has in general the following form 
+    \code{.xml}
+    <group name="entry" type="NXentry"> </group>
+    \endcode
+    Wile the \c type attribute is optional the \c name attribute is absolutely
+    mandatory as you cannot create a group without a name. The content of the \c
+    type attribute goes to the \c NX_class attribute of the newly create group
+    and determines the Nexus base class the new gruop belongs too. 
 
     \throws nxgroup_error in the case of errors
     \throws parser_error in case of errors in parsing XML attributes
@@ -110,10 +118,24 @@ namespace xml{
     create_group(const PTYPE &parent,node &t)
     {
         typedef typename nxobject_traits<PTYPE>::group_type group_type; 
-        //create the group and call the function recursively
-        auto name = attribute_data<string>::read(t,"name");
-        auto type = attribute_data<string>::read(t,"type");
 
+        //this attribute is absolutely mandatory - an exception will be thrown
+        //if it does not exist
+        auto name = attribute_data<string>::read(t,"name");
+
+        string type;
+        try
+        {
+            //the type is optional
+            type = attribute_data<string>::read(t,"type");
+        }
+        catch(...)
+        {}
+
+        /* create the gruop
+           This will throw an exception in case of any IO error. One possibility
+           would be that a group with this name already exists.
+        */
         group_type g = parent.create_group(name,type);
         return g;
     }

@@ -48,6 +48,7 @@ class xml_lowlevel_test : public CppUnit::TestFixture
     private:
         CPPUNIT_TEST_SUITE(xml_lowlevel_test);
         CPPUNIT_TEST(test_read_xml_attribute);
+        CPPUNIT_TEST(test_create_group);
         CPPUNIT_TEST(test_read_xml_data_str);
         CPPUNIT_TEST(test_read_xml_array_int_blank);
         CPPUNIT_TEST(test_read_xml_array_int_comma);
@@ -55,8 +56,12 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_read_xml_array_int_fail);
         CPPUNIT_TEST_SUITE_END();
 
+        h5::nxfile file;
+        h5::nxgroup root_group;
+
         string xml_str1;
         std::vector<int32> int_vec;
+        std::vector<float64> float_vec;
     public:
         void setUp();
         void tearDown();
@@ -67,5 +72,6 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         void test_read_xml_array_int_comma();
         void test_read_xml_array_int_semicolon();
         void test_read_xml_array_int_fail();
+        void test_create_group();
 
 };
