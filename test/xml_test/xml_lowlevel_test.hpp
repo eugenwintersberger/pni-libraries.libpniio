@@ -53,6 +53,7 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_dim2shape_2);
         CPPUNIT_TEST(test_dim2shape_3);
         CPPUNIT_TEST(test_dim2shape_4);
+        CPPUNIT_TEST(test_dim2shape_5);
         CPPUNIT_TEST(test_read_xml_data_str);
         CPPUNIT_TEST(test_read_xml_array_int_blank);
         CPPUNIT_TEST(test_read_xml_array_int_comma);
@@ -86,5 +87,6 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         void test_dim2shape_2();
         void test_dim2shape_3();
         void test_dim2shape_4();
+        void test_dim2shape_5();
 
 };

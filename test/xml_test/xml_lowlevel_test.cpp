@@ -227,3 +227,14 @@ void xml_lowlevel_test::test_dim2shape_4()
 
     CPPUNIT_ASSERT_THROW(xml::dim2shape<shape_t>(child),pni::io::parser_error);
 }
+
+//-----------------------------------------------------------------------------
+void xml_lowlevel_test::test_dim2shape_5()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    root = xml::create_from_file("dim5.xml");
+    child = root.get_child("dimensions");
+
+    CPPUNIT_ASSERT_THROW(xml::dim2shape<shape_t>(child),pni::io::parser_error);
+}
