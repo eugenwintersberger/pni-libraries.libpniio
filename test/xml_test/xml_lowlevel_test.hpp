@@ -58,6 +58,7 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_createfield_2);
         CPPUNIT_TEST(test_createfield_3);
         CPPUNIT_TEST(test_createfield_4);
+        CPPUNIT_TEST(test_createfield_5);
         CPPUNIT_TEST(test_read_xml_data_str);
         CPPUNIT_TEST(test_read_xml_array_int_blank);
         CPPUNIT_TEST(test_read_xml_array_int_comma);
@@ -96,5 +97,6 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         void test_createfield_2();
         void test_createfield_3();
         void test_createfield_4();
+        void test_createfield_5();
 
 };

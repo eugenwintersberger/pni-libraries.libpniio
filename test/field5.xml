@@ -1,0 +1,7 @@
+<field name="data" type="float32" units="m" long_name="motor along x-axis">
+    <dimensions rank="3">
+        <dim index="3" value="10"/>
+        <dim index="1" value="100"/>
+        <dim index="2" value="55"/>
+    </dimensions>
+</field>

@@ -294,3 +294,22 @@ void xml_lowlevel_test::test_createfield_4()
 
     CPPUNIT_ASSERT_THROW(xml::create_field(root_group,child),pni::io::parser_error);
 }
+
+//-----------------------------------------------------------------------------
+void xml_lowlevel_test::test_createfield_5()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    root = xml::create_from_file("field5.xml");
+    child = root.get_child("field");
+
+    CPPUNIT_ASSERT_NO_THROW(f = xml::create_field(root_group,child));
+    CPPUNIT_ASSERT(f.is_valid());
+    CPPUNIT_ASSERT(f.rank() == 3);
+    CPPUNIT_ASSERT(f.size() == 55000);
+    CPPUNIT_ASSERT(f.type_id() == type_id_t::FLOAT32);
+    auto shape = f.shape<shape_t>();
+    CPPUNIT_ASSERT(shape[0] == 100);
+    CPPUNIT_ASSERT(shape[1] == 55);
+    CPPUNIT_ASSERT(shape[2] == 10);
+}
