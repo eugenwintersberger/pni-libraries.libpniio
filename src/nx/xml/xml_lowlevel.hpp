@@ -159,7 +159,25 @@ namespace xml{
     \ingroup xml_lowlevel_utils
     \brief create field from XML node
 
+    Field objects are described in XML as follows
+    \code{.xml}
+    <field name="data" type="float64" unit="m" long_name="detector data">
+        <dimensions ....>
+
+        </dimensions>
+    </field>
+    \endcode
+    The \c name and the \c type attribute are mandatory. Thus, a parser_error is
+    thrown if they do not exist. The \c dimensions tag is optional and must be
+    used only when a multidimensional field is created.
+    
+    The \c field tag itself has two optional attributes \c unit and \c
+    long_name. The former one is a string attribute with the string
+    representation of the physical unit of the data. The latter one is a string
+    attribute too with a more detailed description of the data. 
+
     \throws nxfield_error in case of errors
+    \throws parser_error in case of missing attributes
     \tparam PTYPE parent type
     \param parent the parent object
     \param t the XML node

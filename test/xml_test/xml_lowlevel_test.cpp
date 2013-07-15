@@ -238,3 +238,59 @@ void xml_lowlevel_test::test_dim2shape_5()
 
     CPPUNIT_ASSERT_THROW(xml::dim2shape<shape_t>(child),pni::io::parser_error);
 }
+
+//-----------------------------------------------------------------------------
+void xml_lowlevel_test::test_createfield_1()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    root = xml::create_from_file("field1.xml");
+    child = root.get_child("field");
+
+    CPPUNIT_ASSERT_NO_THROW(f = xml::create_field(root_group,child));
+    CPPUNIT_ASSERT(f.is_valid());
+    CPPUNIT_ASSERT(f.rank() == 1);
+    CPPUNIT_ASSERT(f.size() == 1);
+    CPPUNIT_ASSERT(f.type_id() == type_id_t::FLOAT32);
+    f.attr("units").read(buffer);
+    CPPUNIT_ASSERT(buffer == "m");
+    f.attr("long_name").read(buffer);
+    CPPUNIT_ASSERT(buffer == "motor along x-axis");
+}
+
+//-----------------------------------------------------------------------------
+void xml_lowlevel_test::test_createfield_2()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    root = xml::create_from_file("field1.xml");
+    child = root.get_child("field");
+
+    CPPUNIT_ASSERT_NO_THROW(f = xml::create_field(root_group,child));
+    CPPUNIT_ASSERT(f.is_valid());
+    CPPUNIT_ASSERT(f.rank() == 1);
+    CPPUNIT_ASSERT(f.size() == 1);
+    CPPUNIT_ASSERT(f.type_id() == type_id_t::FLOAT32);
+}
+
+//-----------------------------------------------------------------------------
+void xml_lowlevel_test::test_createfield_3()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    root = xml::create_from_file("field3.xml");
+    child = root.get_child("field");
+
+    CPPUNIT_ASSERT_THROW(xml::create_field(root_group,child),pni::io::parser_error);
+}
+
+//-----------------------------------------------------------------------------
+void xml_lowlevel_test::test_createfield_4()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    root = xml::create_from_file("field4.xml");
+    child = root.get_child("field");
+
+    CPPUNIT_ASSERT_THROW(xml::create_field(root_group,child),pni::io::parser_error);
+}
