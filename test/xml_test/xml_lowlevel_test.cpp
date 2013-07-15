@@ -38,6 +38,8 @@ void xml_lowlevel_test::setUp()
 void xml_lowlevel_test::tearDown() 
 { 
     root_group.close();
+    g.close();
+    f.close();
     file.close();
 } 
 
@@ -46,18 +48,18 @@ void xml_lowlevel_test::test_read_xml_attribute()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    xml::node root = xml::create_from_string("<test attr=\"value\"/>");
-    xml::node test = root.get_child("test");
+    root = xml::create_from_string("<test attr=\"value\"/>");
+    child = root.get_child("test");
    
     string v;
-    CPPUNIT_ASSERT_NO_THROW(v = xml::attribute_data<string>::read(test,"attr"));
+    CPPUNIT_ASSERT_NO_THROW(v = xml::attribute_data<string>::read(child,"attr"));
 
     //wont work because not convertible types
-    CPPUNIT_ASSERT_THROW(xml::attribute_data<double>::read(test,"attr"),
+    CPPUNIT_ASSERT_THROW(xml::attribute_data<double>::read(child,"attr"),
                          pni::io::parser_error);
 
     //attribute does not exist
-    CPPUNIT_ASSERT_THROW(xml::attribute_data<string>::read(test,"bla"),
+    CPPUNIT_ASSERT_THROW(xml::attribute_data<string>::read(child,"bla"),
                          pni::io::parser_error);
 }
 
@@ -66,12 +68,11 @@ void xml_lowlevel_test::test_read_xml_data_str()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    xml::node root = xml::create_from_string("<test> hello world </test>");
-    xml::node test = root.get_child("test");
+    root = xml::create_from_string("<test> hello world </test>");
+    child = root.get_child("test");
 
     string v;
-    CPPUNIT_ASSERT_NO_THROW(v = xml::node_data<string>::read(test));
-    std::cout<<v<<std::endl;
+    CPPUNIT_ASSERT_NO_THROW(v = xml::node_data<string>::read(child));
     CPPUNIT_ASSERT(v == " hello world ");
 }
 
@@ -80,11 +81,11 @@ void xml_lowlevel_test::test_read_xml_array_int_blank()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    xml::node root = xml::create_from_string("<test> 1  2 3 4 5 6 10</test>");
-    xml::node test = root.get_child("test");
+    root = xml::create_from_string("<test> 1  2 3 4 5 6 10</test>");
+    child = root.get_child("test");
 
     array v;
-    CPPUNIT_ASSERT_NO_THROW(v = xml::node_data<array>::read(test,' '));
+    CPPUNIT_ASSERT_NO_THROW(v = xml::node_data<array>::read(child,' '));
     CPPUNIT_ASSERT(v.type_id() == type_id_t::INT32);
     CPPUNIT_ASSERT(v.size() == 7);
 
@@ -99,11 +100,11 @@ void xml_lowlevel_test::test_read_xml_array_int_comma()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    xml::node root = xml::create_from_string("<test> 1 , 2 ,3  ,4 ,5, 6, 10 </test>");
-    xml::node test = root.get_child("test");
+    root = xml::create_from_string("<test> 1 , 2 ,3  ,4 ,5, 6, 10 </test>");
+    child = root.get_child("test");
 
     array v;
-    CPPUNIT_ASSERT_NO_THROW(v = xml::node_data<array>::read(test,','));
+    CPPUNIT_ASSERT_NO_THROW(v = xml::node_data<array>::read(child,','));
     CPPUNIT_ASSERT(v.type_id() == type_id_t::INT32);
     CPPUNIT_ASSERT(v.size() == 7);
 
@@ -118,11 +119,11 @@ void xml_lowlevel_test::test_read_xml_array_int_semicolon()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    xml::node root = xml::create_from_string("<test> 1 ; 2 ;3  ;4 ;5; 6; 10</test>");
-    xml::node test = root.get_child("test");
+    root = xml::create_from_string("<test> 1 ; 2 ;3  ;4 ;5; 6; 10</test>");
+    child = root.get_child("test");
 
     array v;
-    CPPUNIT_ASSERT_NO_THROW(v = xml::node_data<array>::read(test,';'));
+    CPPUNIT_ASSERT_NO_THROW(v = xml::node_data<array>::read(child,';'));
     CPPUNIT_ASSERT(v.type_id() == type_id_t::INT32);
     CPPUNIT_ASSERT(v.size() == 7);
 
@@ -131,16 +132,17 @@ void xml_lowlevel_test::test_read_xml_array_int_semicolon()
     while(aiter!=v.end())
         CPPUNIT_ASSERT(*(diter++) == (aiter++)->as<int32>());
 }
+
 //-----------------------------------------------------------------------------
 void xml_lowlevel_test::test_read_xml_array_int_fail()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    xml::node root = xml::create_from_string("<test> a stupid text </test>");
-    xml::node test = root.get_child("test");
+    root = xml::create_from_string("<test> a stupid text </test>");
+    child = root.get_child("test");
 
     array v;
-    CPPUNIT_ASSERT_THROW(v = xml::node_data<array>::read(test,' '),
+    CPPUNIT_ASSERT_THROW(v = xml::node_data<array>::read(child,' '),
             pni::io::parser_error);
 }
 
@@ -148,12 +150,41 @@ void xml_lowlevel_test::test_read_xml_array_int_fail()
 void xml_lowlevel_test::test_create_group()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+   
+    //test creation with full specification
+    root = xml::create_from_string("<group name=\"entry\" type=\"NXentry\"/>");
+    child = root.get_child("group");
+    g = xml::create_group(root_group,child);
+    CPPUNIT_ASSERT(g.name() == "entry");
+    g.attr("NX_class").read(buffer);
+    CPPUNIT_ASSERT(buffer == "NXentry");
+    CPPUNIT_ASSERT(g.is_valid());
+
+    //test test creation without NX_class
+    root = xml::create_from_string("<group name=\"entry2\"> </group>");
+    child = root.get_child("group");
+    g = xml::create_group(root_group,child);
+    CPPUNIT_ASSERT(g.name() == "entry2");
+    CPPUNIT_ASSERT(g.is_valid());
+
+    //test exception without name
+    root = xml::create_from_string("<group type=\"entry2\"> </group>");
+    child = root.get_child("group");
+    CPPUNIT_ASSERT_THROW(xml::create_group(root_group,child),
+            pni::io::parser_error);
+
+    //test creation of an already existing group
+    root = xml::create_from_string("<group name=\"entry2\"> </group>");
+    child = root.get_child("group");
+    CPPUNIT_ASSERT_THROW(xml::create_group(root_group,child),
+            nxgroup_error);
+
+}
+
+//-----------------------------------------------------------------------------
+void xml_lowlevel_test::test_dim2shape()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
     
-    xml::node root = xml::create_from_string("<group name=\"entry\""
-                                             "       type=\"NXentry\""
-                                             "/>");
-    xml::node group = root.get_child("group");
-    h5::nxgroup g = xml::create_group(root_group,group);
-
-
 }
