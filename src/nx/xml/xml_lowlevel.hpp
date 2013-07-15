@@ -47,7 +47,21 @@ namespace xml{
     \ingroup xml_lowlevel_utils
     \brief create shape form dimensions tag
 
-    Create a shape container from the dimensions tag in the XML file. 
+    Create a shape container from the dimensions tag in the XML file. A
+    dimension tag has the structure
+    \code{.xml}
+    <dimensions rank="3">
+        <dim value="100" index="1" />
+        <dim value="123" index="2" />
+        <dim value="5"   index="3" />
+    </dimensions>
+    \endcode
+    All attributes appearing here are mandatory and hence, if one of them is
+    missing a parser_error exception will be thrown. Furthermore, the function
+    checks if the number of valid \c dim entries in \c dimensions matches the \c
+    rank attribute of the \c dimensions tag. If this is not the case a
+    shape_mismatch_error will be thrown to indicate that there is an error in
+    the setup of this tag.
     
     \throws parser_error in case of problems
     \throws shape_mismatch_error if rank attribute and number of 'dim' entries
@@ -157,8 +171,8 @@ namespace xml{
     {
         typedef typename nxobject_traits<PTYPE>::group_type group_type;
         //obtain the name and the type of the field
-        auto name = t.template get<string>("<xmlattr>.name");
-        auto type = t.template get<string>("<xmlattr>.type");
+        auto name = attribute_data<string>::read(t,"name");
+        auto type = attribute_data<string>::read(t,"type");
 
         //read the shape of the field if it got one
         shape_t shape;

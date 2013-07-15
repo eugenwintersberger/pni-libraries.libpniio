@@ -182,9 +182,48 @@ void xml_lowlevel_test::test_create_group()
 }
 
 //-----------------------------------------------------------------------------
-void xml_lowlevel_test::test_dim2shape()
+void xml_lowlevel_test::test_dim2shape_1()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-
     
+    root = xml::create_from_file("dim1.xml");
+    child = root.get_child("dimensions");
+
+    auto shape = xml::dim2shape<shape_t>(child);
+    CPPUNIT_ASSERT(shape.size()==2);
+    CPPUNIT_ASSERT(shape[0] == 55);
+    CPPUNIT_ASSERT(shape[1] == 100);
+}
+
+//-----------------------------------------------------------------------------
+void xml_lowlevel_test::test_dim2shape_2()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    root = xml::create_from_file("dim2.xml");
+    child = root.get_child("dimensions");
+
+    CPPUNIT_ASSERT_THROW(xml::dim2shape<shape_t>(child),shape_mismatch_error);
+}
+
+//-----------------------------------------------------------------------------
+void xml_lowlevel_test::test_dim2shape_3()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    root = xml::create_from_file("dim3.xml");
+    child = root.get_child("dimensions");
+
+    CPPUNIT_ASSERT_THROW(xml::dim2shape<shape_t>(child),pni::io::parser_error);
+}
+
+//-----------------------------------------------------------------------------
+void xml_lowlevel_test::test_dim2shape_4()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    root = xml::create_from_file("dim4.xml");
+    child = root.get_child("dimensions");
+
+    CPPUNIT_ASSERT_THROW(xml::dim2shape<shape_t>(child),pni::io::parser_error);
 }
