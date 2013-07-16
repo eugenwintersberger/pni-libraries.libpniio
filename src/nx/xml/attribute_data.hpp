@@ -22,6 +22,10 @@
 
 #pragma once
 
+#include <pni/core/types.hpp>
+#include <pni/core/array.hpp>
+#include "../../parsers/array_parser.hpp"
+#include "../../parsers/exceptions.hpp"
 #include "xml_node.hpp"
 
 
@@ -36,7 +40,7 @@ namespace xml{
     \ingroup xml_lowlevel_utils
     \brief XML attribute data
 
-     
+    Provide a single static read method to read data from an attribute.
     */
     template<typename T> struct attribute_data
     {
@@ -60,16 +64,111 @@ namespace xml{
             {
                 value = n.get<T>("<xmlattr>."+a);
             }
+            catch(boost::property_tree::ptree_bad_path &error)
+            {
+                throw pni::io::parser_error(EXCEPTION_RECORD,
+                        "Attribute \""+a+"\" does not exist!");
+            }
+            catch(boost::property_tree::ptree_bad_data &error)
+            {
+                throw pni::io::parser_error(EXCEPTION_RECORD,
+                        "Error parsing attribute \""+a+"\"!");
+            }
             catch(...)
             {
                 throw pni::io::parser_error(EXCEPTION_RECORD,
-                        "Attribute '"+a+"' does not exist or has inappropriate"
-                        " value!");
+                        "Unknown error during parsing of attribute \""+a+"\"!");
             }
 
             return value;
         }
     };
+
+    //-------------------------------------------------------------------------
+    /*!
+    \ingroup xml_lowlevel_utils
+    \brief read array data from attribute
+
+    Provide several static methods to read array data from an attribute. 
+    */
+    template<> struct attribute_data<array>
+    {
+        
+        //!< iterator type for parsing array data
+        typedef string::const_iterator iterator_t;
+        //!< parser type 
+        typedef pni::io::array_parser<iterator_t> array_parser_t;
+
+        /*!
+        \brief reading array data
+
+        Reading array data from a string without start and stop character but
+        with a single element separator.
+
+        \param n XML node holding the attribute
+        \param name name of the attribute
+        \param sep separator character.
+        \return array with data
+        */
+        static array read(const node &n,const string &name,char sep);
+
+        //---------------------------------------------------------------------
+        /*!
+        \brief reading array data
+
+        Reading array data not only using a separator character but also a start
+        and a stop character. 
+
+        \param n XML node holding theattribute
+        \param name name of the attribute to read data from
+        \param start start symbol for the array
+        \param stop stop symbol for the array
+        \param sep element separator symbol
+        \return instance of array with node data
+        */
+        static array read(const node &n,const string &name,
+                          char start,char stop,char sep);
+
+        //---------------------------------------------------------------------
+        /*!
+        \brief reading array data
+
+        Read array data using a custom reader. In this case you can setup the
+        parser in your own code.
+
+        \param node XML node from which to read data
+        \param p parser 
+        \return array with node data
+        */
+        static array read(const node &n,const string &name,
+                          const array_parser_t &p);
+
+    };
+
+    //-------------------------------------------------------------------------
+    /*!
+    \ingroup xml_lowlevel_utils
+    \brief check for attributes existance
+
+    Returns true if an attribute exists on a node. 
+    \param n node instance 
+    \param name name of the attribute
+    \return true if attribute exists, false otherwise
+    */
+    bool has_attribute(const node &n,const string &name) noexcept;
+
+    //-------------------------------------------------------------------------
+    /*!
+    \ingroup xml_lowlevel_utils
+    \brief check if an attribute has non-empty data
+
+    Returns true if the attribute contains data. Use this function in order to
+    check if one should read data or not.
+    \param n node holding the attribute
+    \param name name of the attribute
+    \return true if attribute contains data, false otherwise
+    */
+    bool has_data(const node &n,const string &name);
 
 
 //end of namespace
