@@ -74,6 +74,13 @@ void xml_lowlevel_test::test_read_xml_data_str()
     string v;
     CPPUNIT_ASSERT_NO_THROW(v = xml::node_data<string>::read(child));
     CPPUNIT_ASSERT(v == " hello world ");
+
+    root = xml::create_from_string("<test></test>");
+    child = root.get_child("test");
+
+    CPPUNIT_ASSERT_NO_THROW(v = xml::node_data<string>::read(child));
+    CPPUNIT_ASSERT(v.empty());
+    CPPUNIT_ASSERT_THROW(xml::node_data<double>::read(child),pni::io::parser_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -312,4 +319,15 @@ void xml_lowlevel_test::test_createfield_5()
     CPPUNIT_ASSERT(shape[0] == 100);
     CPPUNIT_ASSERT(shape[1] == 55);
     CPPUNIT_ASSERT(shape[2] == 10);
+}
+
+//-----------------------------------------------------------------------------
+void xml_lowlevel_test::test_create_objects_1()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    root = xml::create_from_file("object_tree1.xml");
+    
+    CPPUNIT_ASSERT_NO_THROW(xml::create_objects(root_group,root));
+    
 }

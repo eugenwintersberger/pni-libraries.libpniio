@@ -64,6 +64,7 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_read_xml_array_int_comma);
         CPPUNIT_TEST(test_read_xml_array_int_semicolon);
         CPPUNIT_TEST(test_read_xml_array_int_fail);
+        CPPUNIT_TEST(test_create_objects_1);
         CPPUNIT_TEST_SUITE_END();
 
         xml::node root;
@@ -98,5 +99,6 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         void test_createfield_3();
         void test_createfield_4();
         void test_createfield_5();
+        void test_create_objects_1();
 
 };

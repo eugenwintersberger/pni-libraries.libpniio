@@ -1,0 +1,29 @@
+<group name="entry" type="NXentry">
+    <!--- define some default fields -->
+    <field name="title" type="string">
+        A test experiment
+    </field>
+
+    <field name="experiment_identifier" type="string"> </field>
+    <field name="experiment_description" type="string"> </field>
+
+    <field name="start_time" type="string"/>
+    <field name="end_time" type="string"/>
+
+
+    <group name="instrument" type="NXinstrument">
+
+    </group>
+
+
+    <group name="sample" type="NXsample">
+
+
+    </group>
+
+    <group name="data" type="NXdata"/>
+
+    <group name="control" type="NXmonitor">
+
+    </group>
+</group>

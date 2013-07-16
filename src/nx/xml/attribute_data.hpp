@@ -41,6 +41,9 @@ namespace xml{
     \brief XML attribute data
 
     Provide a single static read method to read data from an attribute.
+    There is currently an issue with unsigned data types that produce an
+    overflow wen parsing a number with a negative sign. This should be fixed
+    in future. See issue #26.
     */
     template<typename T> struct attribute_data
     {

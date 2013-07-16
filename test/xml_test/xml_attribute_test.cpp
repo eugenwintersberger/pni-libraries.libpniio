@@ -103,6 +103,10 @@ void xml_attribute_test::test_read_data_int()
     child = root.get_child("group4");
     CPPUNIT_ASSERT_THROW(value = xml::attribute_data<int32>::read(child,"value"),
             pni::io::parser_error);
+
+    //---------should not work as the attribute does not exist-----------------
+    CPPUNIT_ASSERT_THROW(value = xml::attribute_data<int32>::read(child,"name"),
+            pni::io::parser_error);
     
 }
 
@@ -111,6 +115,36 @@ void xml_attribute_test::test_read_data_uint()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
+    root = xml::create_from_string("<group1 value=\"12\"/>"
+                                   "<group2 value=\"-12\"/>"
+                                   "<group3 value=\"bla\"/>"
+                                   "<group4 value=\"12.3\"/>");
+    child = root.get_child("group1");
+
+    //----------------------this should work-----------------------------------
+    uint32 value;
+    CPPUNIT_ASSERT_NO_THROW(value = xml::attribute_data<uint32>::read(child,"value"));
+    CPPUNIT_ASSERT(value == 12);
+
+    //------------------------this should not work too ----------------------------
+    // see issue 26 for this porblem
+    child = root.get_child("group2");
+    value = xml::attribute_data<uint32>::read(child,"value");
+    std::cout<<value<<std::endl;
+
+    //-----------should not work as you cannot convert a string to an int------
+    child = root.get_child("group3");
+    CPPUNIT_ASSERT_THROW(xml::attribute_data<uint32>::read(child,"value"),
+                         pni::io::parser_error);
+   
+    //-----------should not work as you cannot convert a float to an int ------
+    child = root.get_child("group4");
+    CPPUNIT_ASSERT_THROW(xml::attribute_data<uint32>::read(child,"value"),
+                         pni::io::parser_error);
+
+    //---------should not work as the attribute does not exist-----------------
+    CPPUNIT_ASSERT_THROW(xml::attribute_data<uint32>::read(child,"name"),
+                         pni::io::parser_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -118,5 +152,34 @@ void xml_attribute_test::test_read_data_float()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
+    root = xml::create_from_string("<group1 value=\"12.234\"/>"
+                                   "<group2 value=\"-1.234e-13\"/>"
+                                   "<group3 value=\"bla\"/>"
+                                   "<group4 value=\"12\"/>");
+    child = root.get_child("group1");
+
+    //----------------------this should work-----------------------------------
+    float64 value;
+    CPPUNIT_ASSERT_NO_THROW(value = xml::attribute_data<float64>::read(child,"value"));
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(value,12.234,1.e-8);
+
+    //------------------------this should work too ----------------------------
+    child = root.get_child("group2");
+    CPPUNIT_ASSERT_NO_THROW(value = xml::attribute_data<float64>::read(child,"value"));
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(value,-1.234e-13,1.e-8);
+
+    //-----------should not work as you cannot convert a string to an int------
+    child = root.get_child("group3");
+    CPPUNIT_ASSERT_THROW(value = xml::attribute_data<float64>::read(child,"value"),
+            pni::io::parser_error);
+   
+    //-----------should not work as you cannot convert a float to an int ------
+    child = root.get_child("group4");
+    CPPUNIT_ASSERT_NO_THROW(value = xml::attribute_data<float64>::read(child,"value"));
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(value,12,1.e-8);
+
+    //---------should not work as the attribute does not exist-----------------
+    CPPUNIT_ASSERT_THROW(value = xml::attribute_data<float64>::read(child,"name"),
+            pni::io::parser_error);
 }
 

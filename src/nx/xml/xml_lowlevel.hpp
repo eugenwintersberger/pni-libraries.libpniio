@@ -29,11 +29,12 @@
 #include "../nxobject_traits.hpp"
 #include "../../parsers/exceptions.hpp"
 #include "../../parsers/array_parser.hpp"
-
+#include <boost/lexical_cast.hpp>
 
 #include "xml_node.hpp"
 #include "node_data.hpp"
 #include "attribute_data.hpp"
+
 
 
 namespace pni{
@@ -154,6 +155,55 @@ namespace xml{
         return g;
     }
 
+    template<typename T,typename FTYPE>
+    void copy_node_to_field(const node &n,const FTYPE &f)
+    {
+        if(f.size() == 1)
+        {
+            string buffer = node_data<string>::read(n);
+        }
+        else
+        {
+            //manage multidimensional data
+            auto buffer = node_data<array>::read(n,',');
+            f.write(buffer);
+        }
+    }
+
+    template<typename FTYPE>
+    void copy_node_to_field(const node &n,const FTYPE &f)
+    {
+        if(f.type_id() == type_id_t::UINT8)
+            copy_node_to_field<uint8>(n,f);
+        else if(f.type_id() == type_id_t::INT8)
+            copy_node_to_field<int8>(n,f);
+        
+        else if(f.type_id() == type_id_t::UINT8)
+            copy_node_to_field<uint16>(n,f);
+        else if(f.type_id() == type_id_t::INT8)
+            copy_node_to_field<int16>(n,f);
+
+        else if(f.type_id() == type_id_t::UINT32)
+            copy_node_to_field<uint32>(n,f);
+        else if(f.type_id() == type_id_t::INT32)
+            copy_node_to_field<int32>(n,f);
+        
+        else if(f.type_id() == type_id_t::UINT64)
+            copy_node_to_field<uint64>(n,f);
+        else if(f.type_id() == type_id_t::INT64)
+            copy_node_to_field<int64>(n,f);
+
+        else if(f.type_id() == type_id_t::FLOAT32)
+            copy_node_to_field<float32>(n,f);
+        else if(f.type_id() == type_id_t::FLOAT64)
+            copy_node_to_field<float64>(n,f);
+        else if(f.type_id() == type_id_t::FLOAT128)
+            copy_node_to_field<float128>(n,f);
+
+        else if(f.type_id() == type_id_t::STRING)
+            copy_node_to_field<string>(n,f);
+    }
+
     //--------------------------------------------------------------------------
     /*!
     \ingroup xml_lowlevel_utils
@@ -209,19 +259,23 @@ namespace xml{
         //OK - in the next step we try to gather some optional information that
         //might be stored in the field.
         //------------------try to write units attribute--------------------
-        try
+        if(has_attribute(t,"units"))
         {
             auto units = attribute_data<string>::read(t,"units");
             f.template attr<string>("units").write(units);
         }
-        catch(...)
-        {}
 
         //-------------------try to write long_name attribute--------------
-        try
+        if(has_attribute(t,"long_name"))
         {
             auto lname = attribute_data<string>::read(t,"long_name");
             f.template attr<string>("long_name").write(lname);
+        }
+
+        //now we read the data from the field  and write it
+        try
+        {
+            copy_node_to_field(t,f);
         }
         catch(...)
         {}
@@ -235,6 +289,9 @@ namespace xml{
     \brief create objects from XML
 
     Recursively creates the objects as described in the XML file below parent.
+    \throws parser_error in case of XML parsing problems
+    \throws nxgroup_error in case of group creation or access issues
+    \throws nxfield_error in case of field creation issues
     \tparam PTYPE parent type
     \param parent instance of PTYPE
     \param t ptree instance with the XML data
@@ -247,6 +304,7 @@ namespace xml{
             if(child.first == "group")
             {
                 auto g = create_group(parent,child.second);
+                //recursive call of create_objects
                 create_objects(g,child.second);
             }
             else if(child.first == "field")

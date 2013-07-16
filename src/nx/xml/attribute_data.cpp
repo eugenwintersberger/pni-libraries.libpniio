@@ -51,6 +51,52 @@ namespace xml{
         return !value.empty();
 
     }
+    
+    //-------------------------------------------------------------------------
+    array attribute_data<array>::read(const xml::node &node,const string &name,
+                                      char sep)
+    {
+        return read(node,name,array_parser_t(sep));
+    }
+   
+    //--------------------------------------------------------------------------
+    array attribute_data<array>::read(const xml::node &node,const string &name,
+                                      char start,char stop, char sep)
+    {
+        return read(node,name,array_parser_t(start,stop,sep));
+    }
+
+    //-------------------------------------------------------------------------
+    array attribute_data<array>::read(const xml::node &node,const string &name,
+                                      const array_parser_t &p)
+    {
+        using boost::spirit::qi::parse;
+        //read the node data as a string
+        auto text = attribute_data<string>::read(node,name);
+
+        array a;
+        try
+        {
+            a= array_from_string(text,p);
+        }
+        catch(...)
+        {
+            throw parser_error(EXCEPTION_RECORD,
+                    "Error parsing string \""+text+"\" to an array!");
+        }
+
+        try
+        {
+            a.size();
+        }
+        catch(...)
+        {
+            throw parser_error(EXCEPTION_RECORD,
+                    "Error parsing string \""+text+"\" to an array!");
+        }
+
+        return a;
+    }
 //end of namespace
 }
 }
