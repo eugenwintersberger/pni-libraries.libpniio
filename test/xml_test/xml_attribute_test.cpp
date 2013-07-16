@@ -66,12 +66,57 @@ void xml_attribute_test::test_has_data()
     child = root.get_child("group");
 
     CPPUNIT_ASSERT(!xml::has_data(child,"name"));
+    
+    root = xml::create_from_string("<group/>");
+    child = root.get_child("group");
+
+    CPPUNIT_ASSERT_THROW(xml::has_data(child,"name"),pni::io::parser_error);
 }
 
 //-----------------------------------------------------------------------------
-void xml_attribute_test::test_read_xml_attribute()
+void xml_attribute_test::test_read_data_int()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    root = xml::create_from_string("<group1 value=\"12\"/>"
+                                   "<group2 value=\"-12\"/>"
+                                   "<group3 value=\"bla\"/>"
+                                   "<group4 value=\"12.3\"/>");
+    child = root.get_child("group1");
+
+    //----------------------this should work-----------------------------------
+    int32 value;
+    CPPUNIT_ASSERT_NO_THROW(value = xml::attribute_data<int32>::read(child,"value"));
+    CPPUNIT_ASSERT(value == 12);
+
+    //------------------------this should work too ----------------------------
+    child = root.get_child("group2");
+    CPPUNIT_ASSERT_NO_THROW(value = xml::attribute_data<int32>::read(child,"value"));
+    CPPUNIT_ASSERT(value == -12);
+
+    //-----------should not work as you cannot convert a string to an int------
+    child = root.get_child("group3");
+    CPPUNIT_ASSERT_THROW(value = xml::attribute_data<int32>::read(child,"value"),
+            pni::io::parser_error);
+   
+    //-----------should not work as you cannot convert a float to an int ------
+    child = root.get_child("group4");
+    CPPUNIT_ASSERT_THROW(value = xml::attribute_data<int32>::read(child,"value"),
+            pni::io::parser_error);
     
+}
+
+//------------------------------------------------------------------------------
+void xml_attribute_test::test_read_data_uint()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+}
+
+//-----------------------------------------------------------------------------
+void xml_attribute_test::test_read_data_float()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
 }
 

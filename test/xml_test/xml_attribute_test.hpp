@@ -51,7 +51,9 @@ class xml_attribute_test : public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE(xml_attribute_test);
         CPPUNIT_TEST(test_has_attribute);
         CPPUNIT_TEST(test_has_data);
-        CPPUNIT_TEST(test_read_xml_attribute);
+        CPPUNIT_TEST(test_read_data_int);
+        CPPUNIT_TEST(test_read_data_uint);
+        CPPUNIT_TEST(test_read_data_float);
         CPPUNIT_TEST_SUITE_END();
 
         xml::node root;
@@ -63,7 +65,9 @@ class xml_attribute_test : public CppUnit::TestFixture
        
         void test_has_attribute();
         void test_has_data();
-        void test_read_xml_attribute();
+        void test_read_data_int();
+        void test_read_data_uint();
+        void test_read_data_float();
 
 
 };
