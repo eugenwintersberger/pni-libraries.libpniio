@@ -17,7 +17,7 @@
  * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  *
- *  Created on: Jul 11, 2013
+ *  Created on: Jul 16, 2013
  *      Author: Eugen Wintersberger
  */
 
@@ -38,55 +38,45 @@
 using namespace pni::core;
 using namespace pni::io::nx;
 
-static const string node_from_string_str = "<node>\n<group> </group>\n<group>"
-                                    " </group>\n<group> </group>\n </node>";
-static const string node_from_bad_str = "this has to fail";
 
+/*!
+\brief test for XML data operations
 
-class xml_lowlevel_test : public CppUnit::TestFixture
+Test checks operations on XML node data. 
+*/
+class xml_node_data_test : public CppUnit::TestFixture
 {
     private:
-        CPPUNIT_TEST_SUITE(xml_lowlevel_test);
-        CPPUNIT_TEST(test_create_group);
-        CPPUNIT_TEST(test_dim2shape_1);
-        CPPUNIT_TEST(test_dim2shape_2);
-        CPPUNIT_TEST(test_dim2shape_3);
-        CPPUNIT_TEST(test_dim2shape_4);
-        CPPUNIT_TEST(test_dim2shape_5);
-        CPPUNIT_TEST(test_createfield_1);
-        CPPUNIT_TEST(test_createfield_2);
-        CPPUNIT_TEST(test_createfield_3);
-        CPPUNIT_TEST(test_createfield_4);
-        CPPUNIT_TEST(test_createfield_5);
-        CPPUNIT_TEST(test_create_objects_1);
+        CPPUNIT_TEST_SUITE(xml_node_data_test);
+        CPPUNIT_TEST(test_has_data);
+        CPPUNIT_TEST(test_read_data_int);
+        CPPUNIT_TEST(test_read_data_uint);
+        CPPUNIT_TEST(test_read_data_float);
+        CPPUNIT_TEST(test_read_array_int_blank);
+        CPPUNIT_TEST(test_read_array_int_comma);
+        CPPUNIT_TEST(test_read_array_int_semicolon);
+        CPPUNIT_TEST(test_read_array_int_fail);
+        CPPUNIT_TEST(test_read_array_float);
         CPPUNIT_TEST_SUITE_END();
 
         xml::node root;
         xml::node child;
-        string buffer;
-        h5::nxfile file;
-        h5::nxgroup root_group;
-        h5::nxgroup g;
-        h5::nxfield f;
 
-        string xml_str1;
         std::vector<int32> int_vec;
         std::vector<float64> float_vec;
     public:
         void setUp();
         void tearDown();
-        
-        void test_create_group();
-        void test_dim2shape_1();
-        void test_dim2shape_2();
-        void test_dim2shape_3();
-        void test_dim2shape_4();
-        void test_dim2shape_5();
-        void test_createfield_1();
-        void test_createfield_2();
-        void test_createfield_3();
-        void test_createfield_4();
-        void test_createfield_5();
-        void test_create_objects_1();
+       
+        void test_has_data();
+        void test_read_array_int_blank();
+        void test_read_array_int_comma();
+        void test_read_array_int_semicolon();
+        void test_read_array_int_fail();
+        void test_read_data_int();
+        void test_read_data_uint();
+        void test_read_data_float();
+        void test_read_array_float();
+
 
 };

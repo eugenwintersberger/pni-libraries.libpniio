@@ -74,6 +74,14 @@ namespace xml{
         return a;
     }
 
+    //-------------------------------------------------------------------------
+    bool has_data(const node &n)
+    {
+        auto value = node_data<string>::read(n);
+        
+        return !value.empty();
+    }
+
 
 //end of namespace
 }

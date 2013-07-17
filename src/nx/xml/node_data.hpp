@@ -23,6 +23,7 @@
 #pragma once
 
 #include "../../parsers/exceptions.hpp"
+#include "../nexus_utils.hpp"
 #include <pni/core/array.hpp>
 #include "xml_node.hpp"
 
@@ -64,11 +65,21 @@ namespace xml{
             {
                 value = node.template get_value<T>();
             }
+            catch(boost::property_tree::ptree_bad_data &error)
+            {
+                type_id_t id = type_id_map<T>::type_id;
+                auto buffer = node.template get_value<string>();
+                throw parser_error(EXCEPTION_RECORD,
+                        "Node data \""+buffer+"\" cannot be converted to"
+                        +typeid2str[id]+"!");
+            }
             catch(...)
             {
+                auto buffer = node.template get_value<string>();
                 throw parser_error(EXCEPTION_RECORD,
-                        "Node data does not exist or if of incompatible type!");
+                        "Unknown error when parsing node data \""+buffer+"\"!");
             }
+
             return value;
         }
 
@@ -134,7 +145,19 @@ namespace xml{
         */
         static array read(const xml::node &node,const array_parser_t &p);
     };
-   
+
+
+    //-------------------------------------------------------------------------
+    /*!
+    \ingroup xml_lowlevel_utils
+    \brief check node data
+
+    Returns true if a node contains any data. False otherwise.
+    \param n node instance
+    \return true if node contains data, false otherwise
+    */
+    bool has_data(const node &n);
+
 
 
 //end of namespace
