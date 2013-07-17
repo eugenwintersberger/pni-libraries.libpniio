@@ -183,3 +183,47 @@ void xml_attribute_test::test_read_data_float()
             pni::io::parser_error);
 }
 
+//-----------------------------------------------------------------------------
+void xml_attribute_test::test_read_array_int()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    root = xml::create_from_string("<group1 data=\"1 2 3  3 4\"/>");
+    child = root.get_child("group1");
+    std::vector<int32> int_vec{1,2,3,3,4};
+
+    //-------------------------------------------------------------------------
+    array a;
+    CPPUNIT_ASSERT_NO_THROW(a = xml::attribute_data<array>::read(child,"data",' '));
+    CPPUNIT_ASSERT(a.type_id() == type_id_t::INT32);
+    CPPUNIT_ASSERT(a.size() == 5);
+    auto aiter = a.begin();
+    auto viter = int_vec.begin();
+
+    while(aiter!=a.end())
+        CPPUNIT_ASSERT((aiter++)->as<int32>() == *(viter++));
+
+}
+
+//-----------------------------------------------------------------------------
+void xml_attribute_test::test_read_array_float()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    root = xml::create_from_string("<group1 data=\"1. 2. 3.  3. 4.\"/>");
+    child = root.get_child("group1");
+    std::vector<float64> int_vec{1.,2.,3.,3.,4.};
+
+    //-------------------------------------------------------------------------
+    array a;
+    CPPUNIT_ASSERT_NO_THROW(a = xml::attribute_data<array>::read(child,"data",' '));
+    CPPUNIT_ASSERT(a.type_id() == type_id_t::FLOAT64);
+    CPPUNIT_ASSERT(a.size() == 5);
+    auto aiter = a.begin();
+    auto viter = int_vec.begin();
+
+    while(aiter!=a.end())
+        CPPUNIT_ASSERT_DOUBLES_EQUAL((aiter++)->as<float64>(),*(viter++),1.e-8);
+
+}
+
