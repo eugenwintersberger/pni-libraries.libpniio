@@ -30,6 +30,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(xml_lowlevel_test);
 void xml_lowlevel_test::setUp() 
 {
     file = h5::nxfile::create_file("xml_lowlevel_test.nx",true);
+    root_group = h5::nxgroup(file["/"]);
     int_vec = std::vector<int32>{1,2,3,4,5,6,10};
 }
 
@@ -38,7 +39,7 @@ void xml_lowlevel_test::tearDown()
 { 
     close(group);
     close(root_group);
-    f.close();
+    close(field);
     file.close();
 } 
 
@@ -47,7 +48,6 @@ void xml_lowlevel_test::tearDown()
 void xml_lowlevel_test::test_create_group()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    root_group = h5::nxgroup(file["/"]); 
     //test creation with full specification
     root = xml::create_from_string("<group name=\"entry\" type=\"NXentry\"/>");
     child = root.get_child("group");
@@ -135,7 +135,6 @@ void xml_lowlevel_test::test_dim2shape_5()
     CPPUNIT_ASSERT_THROW(xml::dim2shape<shape_t>(child),pni::io::parser_error);
 }
 
-/*
 //-----------------------------------------------------------------------------
 void xml_lowlevel_test::test_createfield_1()
 {
@@ -144,17 +143,18 @@ void xml_lowlevel_test::test_createfield_1()
     root = xml::create_from_file("field1.xml");
     child = root.get_child("field");
 
-    CPPUNIT_ASSERT_NO_THROW(f = xml::create_field(root_group,child));
-    CPPUNIT_ASSERT(f.is_valid());
-    CPPUNIT_ASSERT(f.rank() == 1);
-    CPPUNIT_ASSERT(f.size() == 1);
-    CPPUNIT_ASSERT(f.type_id() == type_id_t::FLOAT32);
-    f.attr("units").read(buffer);
-    CPPUNIT_ASSERT(buffer == "m");
-    f.attr("long_name").read(buffer);
+    CPPUNIT_ASSERT_NO_THROW(field = xml::create_field(root_group,child));
+    CPPUNIT_ASSERT(is_valid(field));
+    CPPUNIT_ASSERT(get_rank(field) == 1);
+    CPPUNIT_ASSERT(get_size(field) == 1);
+    CPPUNIT_ASSERT(get_type(field) == type_id_t::FLOAT32);
+    CPPUNIT_ASSERT(get_unit(field) == "m");
+    auto attr = get_attribute(field,"long_name");
+    read(attr,buffer);
     CPPUNIT_ASSERT(buffer == "motor along x-axis");
 }
 
+/*
 //-----------------------------------------------------------------------------
 void xml_lowlevel_test::test_createfield_2()
 {

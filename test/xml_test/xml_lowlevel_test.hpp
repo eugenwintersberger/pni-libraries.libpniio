@@ -54,7 +54,7 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_dim2shape_3);
         CPPUNIT_TEST(test_dim2shape_4);
         CPPUNIT_TEST(test_dim2shape_5);
-//        CPPUNIT_TEST(test_createfield_1);
+        CPPUNIT_TEST(test_createfield_1);
 //        CPPUNIT_TEST(test_createfield_2);
 //        CPPUNIT_TEST(test_createfield_3);
 //        CPPUNIT_TEST(test_createfield_4);
@@ -66,11 +66,11 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         xml::node child;
         string buffer;
         h5::nxfile file;
-        h5::nxfield f; 
 
         typedef nxvariant_traits<h5::nxfile>::object_types nxobject_t;
         nxobject_t root_group;
         nxobject_t group;
+        nxobject_t field;
 
         string xml_str1;
         std::vector<int32> int_vec;
@@ -85,7 +85,7 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         void test_dim2shape_3();
         void test_dim2shape_4();
         void test_dim2shape_5();
-//        void test_createfield_1();
+        void test_createfield_1();
 //        void test_createfield_2();
 //        void test_createfield_3();
 //        void test_createfield_4();
