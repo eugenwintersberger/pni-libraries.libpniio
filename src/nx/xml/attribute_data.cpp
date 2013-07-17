@@ -21,6 +21,7 @@
  */
 
 #include "attribute_data.hpp"
+#include <boost/algorithm/string.hpp>
 
 namespace pni{
 namespace io{
@@ -46,8 +47,10 @@ namespace xml{
     //-------------------------------------------------------------------------
     bool has_data(const node &n,const string &name)
     {
+        using boost::algorithm::trim;
         auto value = attribute_data<string>::read(n,name);
-        
+        trim(value);
+         
         return !value.empty();
 
     }
@@ -71,8 +74,11 @@ namespace xml{
                                       const array_parser_t &p)
     {
         using boost::spirit::qi::parse;
+        using boost::algorithm::trim;
+        
         //read the node data as a string
         auto text = attribute_data<string>::read(node,name);
+        trim(text);
 
         array a;
         try

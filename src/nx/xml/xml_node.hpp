@@ -46,6 +46,9 @@ namespace xml{
     \ingroup xml_lowlevel_utils
     \brief create xml node from string
 
+    \throws parser_error in case of parsing problems
+    \param s string from which to read the data
+    \return node instance
     */
     node create_from_string(const string &s);
 
@@ -54,6 +57,10 @@ namespace xml{
     \ingroup xml_lowlevel_utils
     \brief create xml node from file
 
+    \throws pni::io::parser_error in case of parsing issues
+    \throws file_error in case of problems opening the file
+    \param s name of the file
+    \return node instance
     */
     node create_from_file(const string &s);
 

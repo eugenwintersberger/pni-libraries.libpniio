@@ -169,6 +169,10 @@ void xml_lowlevel_test::test_createfield_2()
     CPPUNIT_ASSERT(f.rank() == 1);
     CPPUNIT_ASSERT(f.size() == 1);
     CPPUNIT_ASSERT(f.type_id() == type_id_t::FLOAT32);
+
+    float32 buffer;
+    f.read(buffer);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(buffer,1.,1.e-8);
 }
 
 //-----------------------------------------------------------------------------
@@ -201,7 +205,15 @@ void xml_lowlevel_test::test_createfield_5()
     root = xml::create_from_file("field5.xml");
     child = root.get_child("field");
 
-    CPPUNIT_ASSERT_NO_THROW(f = xml::create_field(root_group,child));
+    try
+    {
+        f = xml::create_field(root_group,child);
+    }
+    catch(pni::io::parser_error &error)
+    {
+        std::cerr<<error<<std::endl;
+    }
+
     CPPUNIT_ASSERT(f.is_valid());
     CPPUNIT_ASSERT(f.rank() == 3);
     CPPUNIT_ASSERT(f.size() == 55000);

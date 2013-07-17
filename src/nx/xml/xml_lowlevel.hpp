@@ -160,7 +160,8 @@ namespace xml{
     {
         if(f.size() == 1)
         {
-            string buffer = node_data<string>::read(n);
+            T buffer = node_data<T>::read(n);
+            f.write(buffer);
         }
         else
         {
@@ -273,12 +274,8 @@ namespace xml{
         }
 
         //now we read the data from the field  and write it
-        try
-        {
+        if(has_data(t))
             copy_node_to_field(t,f);
-        }
-        catch(...)
-        {}
 
         return f;      
     }

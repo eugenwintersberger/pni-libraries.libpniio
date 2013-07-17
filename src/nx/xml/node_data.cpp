@@ -23,6 +23,7 @@
 
 #include "../../parsers/array_parser.hpp"
 #include "node_data.hpp"
+#include <boost/algorithm/string.hpp>
 
 namespace pni{
 namespace io{
@@ -47,8 +48,10 @@ namespace xml{
     array node_data<array>::read(const xml::node &node,const array_parser_t &p)
     {
         using boost::spirit::qi::parse;
+        using boost::algorithm::trim;
         //read the node data as a string
         auto text = node_data<string>::read(node);
+        trim(text);
 
         array a;
         try
@@ -77,7 +80,9 @@ namespace xml{
     //-------------------------------------------------------------------------
     bool has_data(const node &n)
     {
+        using boost::algorithm::trim;
         auto value = node_data<string>::read(n);
+        trim(value);
         
         return !value.empty();
     }

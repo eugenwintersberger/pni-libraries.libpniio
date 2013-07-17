@@ -1,2 +1,3 @@
 <field name="data" type="float32" units="m" long_name="motor along x-axis">
+    1.
 </field>
