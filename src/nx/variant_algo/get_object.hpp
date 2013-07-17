@@ -159,8 +159,15 @@ namespace nx{
         //---------------------------------------------------------------------
 
         //retrieve the child object and throw an exception if it cannot be found
-        if(!is_valid(result = get_child(parent,target_path.begin()->first,
-                                  target_path.begin()->second)))
+        string target_name;
+        string target_class;
+        if(target_path.size())
+        {
+            target_name = target_path.begin()->first;
+            target_class = target_path.begin()->second;
+        }
+
+        if(!is_valid(result = get_child(parent,target_name,target_class)))
             throw nxgroup_error(EXCEPTION_RECORD,
                     "Requested object is not valid!");
 

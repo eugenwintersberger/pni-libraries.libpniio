@@ -100,6 +100,9 @@ namespace nx{
                 //here comes the interesting part
                 result_type result; 
 
+                if(_name.empty() && _class.empty())
+                    return result_type();
+
                 //need to do some treatment for the special cases . and .. as
                 //child names 
                 if(_name == ".") return result_type(g);
