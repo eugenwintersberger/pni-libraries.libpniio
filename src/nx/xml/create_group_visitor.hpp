@@ -147,6 +147,16 @@ namespace xml{
     object_types group  = xml::create_group(parent,child);
     \endcode
 
+    All the information about the new group is drawn from XML data which is of
+    form 
+    \code{.xml}
+    <group name="entry" type="NXentry"> </group>
+    \endcode
+    Wile the \c type attribute is optional the \c name attribute is absolutely
+    mandatory as you cannot create a group without a name. The content of the \c
+    type attribute goes to the \c NX_class attribute of the newly create group
+    and determines the Nexus base class the new gruop belongs too. 
+
     \throws nxgroup_error in case of group creation errors
     \throws nxfield_error if the parent object is a field
     \throws nxattribute_error if the parent object is an attribute

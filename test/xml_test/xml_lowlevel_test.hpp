@@ -55,11 +55,11 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_dim2shape_4);
         CPPUNIT_TEST(test_dim2shape_5);
         CPPUNIT_TEST(test_createfield_1);
-//        CPPUNIT_TEST(test_createfield_2);
-//        CPPUNIT_TEST(test_createfield_3);
-//        CPPUNIT_TEST(test_createfield_4);
-//        CPPUNIT_TEST(test_createfield_5);
-//        CPPUNIT_TEST(test_create_objects_1);
+        CPPUNIT_TEST(test_createfield_2);
+        CPPUNIT_TEST(test_createfield_3);
+        CPPUNIT_TEST(test_createfield_4);
+        CPPUNIT_TEST(test_createfield_5);
+        CPPUNIT_TEST(test_create_objects_1);
         CPPUNIT_TEST_SUITE_END();
 
         xml::node root;
@@ -86,10 +86,10 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         void test_dim2shape_4();
         void test_dim2shape_5();
         void test_createfield_1();
-//        void test_createfield_2();
-//        void test_createfield_3();
-//        void test_createfield_4();
-//        void test_createfield_5();
-//        void test_create_objects_1();
+        void test_createfield_2();
+        void test_createfield_3();
+        void test_createfield_4();
+        void test_createfield_5();
+        void test_create_objects_1();
 
 };

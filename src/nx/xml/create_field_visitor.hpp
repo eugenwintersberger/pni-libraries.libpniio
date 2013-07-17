@@ -54,6 +54,22 @@ namespace xml{
         private: 
             node _xml_node; //!< XML node data
 
+            //-----------------------------------------------------------------
+            /*!
+            \brief copy typed data to a field
+            
+            This template takes the data stored in a field and copies it to an
+            to a field. If the size of the field is 1 we assume the data to be
+            scalar and read only one element. If the size is larger than one an
+            array is used to write the data.
+
+            \throws parser_error in case of parsing issues
+            \throws nxfield_error if case of IO problems
+            \tparam T data type
+            \tparam FTYPE field type
+            \param n the XML node with the data
+            \param f instance of a Nexus field
+            */
             template<typename T,typename FTYPE>
             void copy_node_to_field(const node &n,const FTYPE &f) const
             {
@@ -70,6 +86,21 @@ namespace xml{
                 }
             }
 
+            //-----------------------------------------------------------------
+            /*!
+            \brief dispatch copy process
+
+            This template takes a field instance and dispatches the copy process
+            according to the data type of the field. This certainly requires
+            that the data stored in the node can be converted to this very data
+            type.
+            
+            \throws parser_error if the data cannot be parsed properly
+            \throws nxfield_error  if there are some other IO problems
+            \tparam FTYPE field tyep
+            \param n XML node from which to read the data
+            \param f instance of FTYPE to where the data shall be writen 
+            */
             template<typename FTYPE>
             void copy_node_to_field(const node &n,const FTYPE &f) const
             {
@@ -131,7 +162,10 @@ namespace xml{
             \brief process group instances
 
             Create a new group according to the XML data below the parent group
-            passed by the user.
+            passed by the user. If the XML node contains data it will be written
+            to the field. 
+            \throws parser_error in case of any parsing issues
+            \throws nxfield_error in case of data IO problems
             \throws nxgroup_error in case of errors
             \param g group instance
             \return the new group instance as a variant
@@ -143,6 +177,8 @@ namespace xml{
                 auto type = attribute_data<string>::read(_xml_node,"type");
 
                 //read the shape of the field if it got one
+                //All exceptions will be cought as this is not a mandatory
+                //information.
                 shape_t shape;
                 try
                 {
@@ -212,10 +248,36 @@ namespace xml{
             }
     };
 
+    //-------------------------------------------------------------------------
     /*!
     \ingroup xml_lowlevel_utils
     \brief create_field wrapper function
+    
+    Creates a field from an XML node. In XML fields are written as follows 
+    \code{.xml}
+    <field name="data" type="float64" unit="m" long_name="detector data">
+        <dimensions ....>
 
+        </dimensions>
+    </field>
+    \endcode
+    The \c name and the \c type attribute are mandatory. Thus, a parser_error is
+    thrown if they do not exist. The \c dimensions tag is optional and must be
+    used only when a multidimensional field is created.
+    
+    The \c field tag itself has two optional attributes \c unit and \c
+    long_name. The former one is a string attribute with the string
+    representation of the physical unit of the data. The latter one is a string
+    attribute too with a more detailed description of the data. 
+
+    \throws parser_error in case of missing attributes
+    \throws nxattribute_error if the parent object is an attribute
+    \throws nxfield_error if the parent is a field or in case of IO problems
+    \throws nxgroup_error in case of problems during field creation
+    \tparam VTYPE variant type with the parent object
+    \param o the parent object
+    \param n the XML node
+    \return a field instancen as a variant
     */
     template<typename VTYPE> 
     typename create_field_visitor<VTYPE>::result_type 
