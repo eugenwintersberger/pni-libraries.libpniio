@@ -115,6 +115,9 @@ namespace nx{
         nxpath target_path;
         object_types result;
 
+        //if the path has a zero size we return the same object
+        if(!path.size()) return p;
+
         //split the original path into two sections
         split_last(path,group_path,target_path);
 
@@ -138,7 +141,10 @@ namespace nx{
         //walk through the group_path
         for(auto element: group_path)
         {
+            //stay in this group
             if(element.first == ".") continue;
+
+            //change to one group level above
             if(element.first == "..")
             {
                 parent = get_parent(parent);

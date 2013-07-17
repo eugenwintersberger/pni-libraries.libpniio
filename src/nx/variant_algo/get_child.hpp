@@ -100,8 +100,13 @@ namespace nx{
                 //here comes the interesting part
                 result_type result; 
 
+                //searching does not make too much sense if we have neither a
+                //name or a class
                 if(_name.empty() && _class.empty())
-                    return result_type();
+                    return result_type(field_type());
+
+                //if the group has no children at all searching is futile
+                if(!g.nchildren()) return result_type(field_type());
 
                 //need to do some treatment for the special cases . and .. as
                 //child names 

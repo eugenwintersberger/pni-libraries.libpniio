@@ -20,6 +20,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
+#include <sstream>
 #include "nxpath_utils.hpp"
 
 
@@ -32,8 +33,12 @@ namespace nx{
     {
 
         if(s>=p.size())
-            throw index_error(EXCEPTION_RECORD,
-                    "Split index exceeds size of input path!");
+        {
+            std::stringstream ss;
+            ss<<"Split index "<<s<<" exceeds input path size ";
+            ss<<p.size()<<"!";
+            throw index_error(EXCEPTION_RECORD,ss.str());
+        }
         auto split_iter = p.begin();
         std::advance(split_iter,s);
 
