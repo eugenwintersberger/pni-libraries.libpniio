@@ -194,6 +194,7 @@ namespace nx{
             using namespace boost::spirit::qi;
             using namespace boost::fusion;
             using namespace boost::phoenix;
+            using boost::spirit::qi::_1;
 
             component_rule = +char_("-_a-zA-z0-9.");
             object_element_rule =  eps[_a="",_b=""]>>(

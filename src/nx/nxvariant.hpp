@@ -50,3 +50,4 @@
 #include "variant_algo/grow.hpp"
 #include "variant_algo/write.hpp"
 #include "variant_algo/read.hpp"
+#include "variant_algo/close.hpp"

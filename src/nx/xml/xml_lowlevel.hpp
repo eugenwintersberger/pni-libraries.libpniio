@@ -29,11 +29,13 @@
 #include "../nxobject_traits.hpp"
 #include "../../parsers/exceptions.hpp"
 #include "../../parsers/array_parser.hpp"
-#include <boost/lexical_cast.hpp>
 
 #include "xml_node.hpp"
 #include "node_data.hpp"
 #include "attribute_data.hpp"
+#include "create_group_visitor.hpp"
+#include "create_field_visitor.hpp"
+#include "dim2shape.hpp"
 
 
 
@@ -43,67 +45,6 @@ namespace nx{
 namespace xml{
 
     using namespace pni::core;
-
-    /*!
-    \ingroup xml_lowlevel_utils
-    \brief create shape form dimensions tag
-
-    Create a shape container from the dimensions tag in the XML file. A
-    dimension tag has the structure
-    \code{.xml}
-    <dimensions rank="3">
-        <dim value="100" index="1" />
-        <dim value="123" index="2" />
-        <dim value="5"   index="3" />
-    </dimensions>
-    \endcode
-    All attributes appearing here are mandatory and hence, if one of them is
-    missing a parser_error exception will be thrown. Furthermore, the function
-    checks if the number of valid \c dim entries in \c dimensions matches the \c
-    rank attribute of the \c dimensions tag. If this is not the case a
-    shape_mismatch_error will be thrown to indicate that there is an error in
-    the setup of this tag.
-    
-    \throws parser_error in case of problems
-    \throws shape_mismatch_error if rank attribute and number of 'dim' entries
-    do not match
-    \tparam CTYPE container type for the shape (default is shape_t)
-    \param dims node instance to the dimensions tag
-    \return instance of shape_t with the shapea
-    */
-    template<typename CTYPE = shape_t>
-    CTYPE dim2shape(const node &dims)
-    {
-        auto rank = attribute_data<size_t>::read(dims,"rank");
-        CTYPE s(rank);
-
-        //initialize the shape with zero
-        std::fill(s.begin(),s.end(),0);
-
-        size_t valid_indices = 0;
-        for(auto dim: dims)
-        {
-            if(dim.first != "dim") continue; //omit all non 'dim' tags
-
-            //reading the index attribute
-            auto index = attribute_data<size_t>::read(dim.second,"index");
-            auto value = attribute_data<size_t>::read(dim.second,"value");
-
-            s[index-1] = value;
-            valid_indices++;
-        }
-
-        if(valid_indices!=rank)
-        {
-            std::stringstream ss;
-            ss<<"The value of rank ("<<rank<<") does not match that of";
-            ss<<" the number of 'dim' tags ("<<valid_indices<<")!";
-            throw shape_mismatch_error(EXCEPTION_RECORD,ss.str());
-        }
-
-        return s;
-    }
-
 
     //--------------------------------------------------------------------------
     /*!
@@ -128,6 +69,7 @@ namespace xml{
     \param t XML node instance
     \return a new group object
     */
+    /*
     template<typename PTYPE>
     typename nxobject_traits<PTYPE>::group_type
     create_group(const PTYPE &parent,node &t)
@@ -147,63 +89,14 @@ namespace xml{
         catch(...)
         {}
 
-        /* create the gruop
-           This will throw an exception in case of any IO error. One possibility
-           would be that a group with this name already exists.
-        */
+        // create the gruop
+        // This will throw an exception in case of any IO error. One possibility
+        // would be that a group with this name already exists.
+        //
         group_type g = parent.create_group(name,type);
         return g;
-    }
+    }*/
 
-    template<typename T,typename FTYPE>
-    void copy_node_to_field(const node &n,const FTYPE &f)
-    {
-        if(f.size() == 1)
-        {
-            T buffer = node_data<T>::read(n);
-            f.write(buffer);
-        }
-        else
-        {
-            //manage multidimensional data
-            auto buffer = node_data<array>::read(n,',');
-            f.write(buffer);
-        }
-    }
-
-    template<typename FTYPE>
-    void copy_node_to_field(const node &n,const FTYPE &f)
-    {
-        if(f.type_id() == type_id_t::UINT8)
-            copy_node_to_field<uint8>(n,f);
-        else if(f.type_id() == type_id_t::INT8)
-            copy_node_to_field<int8>(n,f);
-        
-        else if(f.type_id() == type_id_t::UINT8)
-            copy_node_to_field<uint16>(n,f);
-        else if(f.type_id() == type_id_t::INT8)
-            copy_node_to_field<int16>(n,f);
-
-        else if(f.type_id() == type_id_t::UINT32)
-            copy_node_to_field<uint32>(n,f);
-        else if(f.type_id() == type_id_t::INT32)
-            copy_node_to_field<int32>(n,f);
-        
-        else if(f.type_id() == type_id_t::UINT64)
-            copy_node_to_field<uint64>(n,f);
-        else if(f.type_id() == type_id_t::INT64)
-            copy_node_to_field<int64>(n,f);
-
-        else if(f.type_id() == type_id_t::FLOAT32)
-            copy_node_to_field<float32>(n,f);
-        else if(f.type_id() == type_id_t::FLOAT64)
-            copy_node_to_field<float64>(n,f);
-        else if(f.type_id() == type_id_t::FLOAT128)
-            copy_node_to_field<float128>(n,f);
-
-        else if(f.type_id() == type_id_t::STRING)
-            copy_node_to_field<string>(n,f);
-    }
 
     //--------------------------------------------------------------------------
     /*!
@@ -234,6 +127,7 @@ namespace xml{
     \param t the XML node
     \return a field instancen
     */
+    /*
     template<typename PTYPE>
     typename nxobject_traits<PTYPE>::field_type
     create_field(const PTYPE &parent,node &t)
@@ -278,7 +172,7 @@ namespace xml{
             copy_node_to_field(t,f);
 
         return f;      
-    }
+    }*/
 
     //--------------------------------------------------------------------------
     /*!
@@ -312,7 +206,7 @@ namespace xml{
             {
                 auto name = attribute_data<string>::read(child.second,"name");
                 auto target = attribute_data<string>::read(child.second,"target");
-                parent.link(name,target);
+                //parent.link(name,target);
             }
         }
     }

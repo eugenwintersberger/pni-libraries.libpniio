@@ -30,6 +30,7 @@
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/xml.hpp>
 #include <pni/core/arrays.hpp>
+#include <pni/io/nx/nxvariant.hpp>
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -53,21 +54,23 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_dim2shape_3);
         CPPUNIT_TEST(test_dim2shape_4);
         CPPUNIT_TEST(test_dim2shape_5);
-        CPPUNIT_TEST(test_createfield_1);
-        CPPUNIT_TEST(test_createfield_2);
-        CPPUNIT_TEST(test_createfield_3);
-        CPPUNIT_TEST(test_createfield_4);
-        CPPUNIT_TEST(test_createfield_5);
-        CPPUNIT_TEST(test_create_objects_1);
+//        CPPUNIT_TEST(test_createfield_1);
+//        CPPUNIT_TEST(test_createfield_2);
+//        CPPUNIT_TEST(test_createfield_3);
+//        CPPUNIT_TEST(test_createfield_4);
+//        CPPUNIT_TEST(test_createfield_5);
+//        CPPUNIT_TEST(test_create_objects_1);
         CPPUNIT_TEST_SUITE_END();
 
         xml::node root;
         xml::node child;
         string buffer;
         h5::nxfile file;
-        h5::nxgroup root_group;
-        h5::nxgroup g;
-        h5::nxfield f;
+        h5::nxfield f; 
+
+        typedef nxvariant_traits<h5::nxfile>::object_types nxobject_t;
+        nxobject_t root_group;
+        nxobject_t group;
 
         string xml_str1;
         std::vector<int32> int_vec;
@@ -82,11 +85,11 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         void test_dim2shape_3();
         void test_dim2shape_4();
         void test_dim2shape_5();
-        void test_createfield_1();
-        void test_createfield_2();
-        void test_createfield_3();
-        void test_createfield_4();
-        void test_createfield_5();
-        void test_create_objects_1();
+//        void test_createfield_1();
+//        void test_createfield_2();
+//        void test_createfield_3();
+//        void test_createfield_4();
+//        void test_createfield_5();
+//        void test_create_objects_1();
 
 };
