@@ -36,17 +36,37 @@ namespace nx{
 
     /*!
     \ingroup variant_code
-    \brief get children visitor
-   
-    Returns a container with children of a group stored in a variant type.
+    \brief get attributes visitor
+  
+    Adds all attributes of an object to a container.
     \tparam VTYPE variant type
-    \tparam CTEMP container template
+    \tparam CTYPE container template
     */
     template<typename VTYPE,typename CTYPE> 
-    class get_children_visitor : public boost::static_visitor<void>
+    class get_attributes_visitor : public boost::static_visitor<void>
     {
         private:
             CTYPE &_container; //!< container holding the children
+
+            /*!
+            \brief append attributes
+
+            Groups as well as fields have the same interface to retrieve
+            attributes. Thus, a single template function can be used to append
+            the attributes to the container.
+            \tparam NXTYPE nexus object type
+            \param o reference to the nexus object
+            */
+            template<typename NXTYPE> 
+            void append_attributes(const NXTYPE &o) const
+            {
+                for(auto iter = o.attr_begin(); iter!=o.attr_end();++iter)
+                {
+                    _container.push_back(VTYPE(*iter));
+                }
+
+            }
+
         public:
             //! first type of the variant type
             typedef typename nxvariant_member_type<VTYPE,0>::type first_member;
@@ -61,58 +81,45 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! constructor
-            get_children_visitor(CTYPE &c):_container(c) {}
+            get_attributes_visitor(CTYPE &c):_container(c) {}
 
             //-----------------------------------------------------------------
             /*!
             \brief process groups
-            
-            As groups are the only objects that can have children this is the
-            only method which needs implementation.
+          
+            Append group attributes to the attribute container.
             \param g group instance
             \return child object
             */
-            result_type operator()(const group_type &g) const 
+            result_type operator()(const group_type &g) const
             {
-                for(auto iter = g.begin();iter!=g.end();++iter)
-                {
-                    if(iter->object_type() == nxobject_type::NXFIELD)
-                        _container.push_back(VTYPE(field_type(*iter)));
-                    else if(iter->object_type() == nxobject_type::NXGROUP)
-                        _container.push_back(VTYPE(group_type(*iter)));
-                    else
-                        throw type_error(EXCEPTION_RECORD,
-                                "Object is neither a group nor a field!");
-                }
-
+                append_attributes(g);
             }
 
             //-----------------------------------------------------------------
             /*!
             \brief process fields
 
-            Fields cannot have children - throw an exception here.
-            \throws nxfield_error no children for fields
+            Append field attributes to the container.
             \param f field instance
             \return to be ignored
             */
             result_type operator()(const field_type &f) const
             {
-                throw nxfield_error(EXCEPTION_RECORD,
-                        "Fields do not have children!");
+                append_attributes(f);
             }
 
             //-----------------------------------------------------------------
             /*!
             \brief process attributes
 
-            Like fields attributes cannot have children - throw an exception
-            here.
+            Attributes cannot have other attributes - thus an exception will be
+            thrown here.
             \throws nxattribute_error no children for attributes
             \param a attribute instance
             \return to be ignored
             */
-            result_type operator()(const attribute_type &a) const 
+            result_type operator()(const attribute_type &a) const
             {
                 throw nxattribute_error(EXCEPTION_RECORD,
                         "Attributes do not have children!");
@@ -122,32 +129,30 @@ namespace nx{
 
     /*!
     \ingroup variant_code
-    \brief get children wrapper
+    \brief get attributes wrapper
 
-    Wrapper function for the get_children_visitor template. The parent object
-    from which to retrieve its children is passed as the first argument. 
-    The second argument is the container within which the children will be
+    Wrapper function for the get_attributes_visitor template. The parent object
+    from which to retrieve its attributes is passed as the first argument. 
+    The second argument is the container within which the attributes will be
     stored. The value_type of the container must match the variant type of the
     parent. If this is not the case an error will be raised during compilation.
 
-    \throws nxfield_error if the stored object is a field
     \throws nxattribute_error if the stored object is an attribute
-    \throws type_error if one of the stored objects is not a nexus object
     \tparam VTYPE variant type
     \tparam CTYPE container type for the children
     \param o parent object as instance of VTYPE
     \param c container as instance of CTYPE
-    \return container with children
+    \return container with attributes
     */
     template<typename VTYPE,typename CTYPE> 
-    void get_children(const VTYPE &o,CTYPE &c)
+    void get_attributes(const VTYPE &o,CTYPE &c)
     {
         //check if the container type is of same type is the variant type
         static_assert(std::is_same<typename CTYPE::value_type,VTYPE>::value,
                       "The target container value type must be the same as the"
                       " variant type!");
 
-        return boost::apply_visitor(get_children_visitor<VTYPE,CTYPE>(c),o);
+        return boost::apply_visitor(get_attributes_visitor<VTYPE,CTYPE>(c),o);
     }
 
 //end of namespace
