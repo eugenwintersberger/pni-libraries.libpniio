@@ -100,10 +100,10 @@ namespace nx{
                 //here comes the interesting part
                 result_type result; 
 
-                object_type o = g[i];
-                if(o.object_type() ==  nxobject_type::GROUP)
+                object_type o = g[_index];
+                if(o.object_type() ==  nxobject_type::NXGROUP)
                     return result_type(group_type(o));
-                else if(o.object_type() == nxobject_type::FIELD)
+                else if(o.object_type() == nxobject_type::NXFIELD)
                     return result_type(field_type(o));
                 else
                     throw type_error(EXCEPTION_RECORD,
