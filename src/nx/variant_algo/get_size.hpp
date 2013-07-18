@@ -35,7 +35,8 @@ namespace nx{
     \brief get size visitor
 
     Return the size (the total number of elements stored) of a field or
-    attribute stored in a variant type.
+    attribute stored in a variant type. In the case of a group the number of
+    childs attached to this group is returned.
     \tparam VTYPE variant type
     \sa get_size
     */
@@ -58,16 +59,14 @@ namespace nx{
             /*!
             \brief process group instances
 
-            Throw an exception as a group cannot have a size.
+            Return the number of children attached to this group.
             \throws nxgroup_error groups do not have type
             \param g group instance
-            \return NONE type code - can be safely ignored 
+            \return number of children
             */ 
             result_type operator()(const group_type &g) const
             {
-                throw nxgroup_error(EXCEPTION_RECORD,
-                        "A group does not have a type!");
-                return size_t(0);
+                return g.nchildren();
             }
 
             //-----------------------------------------------------------------

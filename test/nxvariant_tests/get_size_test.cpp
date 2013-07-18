@@ -58,7 +58,7 @@ void get_size_test::test_group()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     object_types object = h5::nxgroup(file["/"]);
-    CPPUNIT_ASSERT_THROW(get_type(object),nxgroup_error);
+    CPPUNIT_ASSERT(get_size(object)==2);
 
 }
 
