@@ -21,14 +21,13 @@
  */
 #pragma once
 
-#include <sstream>
+#include <type_traits>
 #include "../nxvariant_traits.hpp"
 #include "is_group.hpp"
 #include "is_field.hpp"
 #include "get_name.hpp"
 #include "is_class.hpp"
 #include "is_valid.hpp"
-#include "get_size.hpp"
 
 namespace pni{
 namespace io{
@@ -37,26 +36,22 @@ namespace nx{
 
     /*!
     \ingroup variant_code
-    \brief get child by index visitor
+    \brief get children visitor
    
-    Retrieves the child of a group according to its index. Clearly this works
-    only for groups. In case of attributes and fields an exception is thrown.
+    Returns a container with children of a group stored in a variant type.
     \tparam VTYPE variant type
+    \tparam CTEMP container template
     */
-    template<typename VTYPE> 
-    class get_child_by_index_visitor : public boost::static_visitor<
-                              typename nxvariant_traits<typename
-                              nxvariant_member_type<VTYPE,0>::type>::object_types>
+    template<typename VTYPE,typename CTYPE> 
+    class get_children_visitor : public boost::static_visitor<void>
     {
-        private: 
-            size_t _index;
+        private:
+            CTYPE &_container; //!< container holding the children
         public:
             //! first type of the variant type
             typedef typename nxvariant_member_type<VTYPE,0>::type first_member;
             //! result type
-            typedef typename nxvariant_traits<first_member>::object_types result_type;
-            //! Nexus object type
-            DEFINE_NXOBJECT(first_member) object_type;
+            typedef void result_type;
             //! Nexus group type
             DEFINE_NXGROUP(first_member) group_type;
             //! Nexus field type
@@ -65,53 +60,31 @@ namespace nx{
             DEFINE_NXATTRIBUTE(first_member) attribute_type;
 
             //-----------------------------------------------------------------
-            /*!
-            \brief constructor
+            //! constructor
+            get_children_visitor(CTYPE &c):_container(c) {}
 
-            \param index the index of the element
-            */
-            get_child_by_index_visitor(size_t index): _index(index) {}
-           
             //-----------------------------------------------------------------
             /*!
             \brief process groups
             
-            Returns the child of a group identified by its index. If the index
-            exceeds the total number of elements an index_error exception will
-            be thrown.
-
-            \throws pni::core::index_error if index exceeds total number of
-            children
+            As groups are the only objects that can have children this is the
+            only method which needs implementation.
             \param g group instance
             \return child object
             */
             result_type operator()(const group_type &g) const
             {
-                if(_index>=g.nchildren())
+                for(auto iter = g.begin();iter!=g.end();++iter)
                 {
-                    std::stringstream ss;
-                    ss<<"Index "<<_index<<" exceeds total number of group ";
-                    ss<<" children "<<g.nchildren()<<"!";
-
-                    throw index_error(EXCEPTION_RECORD,ss.str());
+                    if(iter->object_type() == nxobject_type::NXFIELD)
+                        _container.push_back(VTYPE(field_type(*iter)));
+                    else if(iter->object_type() == nxobject_type::NXGROUP)
+                        _container.push_back(VTYPE(group_type(*iter)));
+                    else
+                        throw type_error(EXCEPTION_RECORD,
+                                "Object is neither a group nor a field!");
                 }
 
-
-                //here comes the interesting part
-                result_type result; 
-
-                object_type o = g[_index];
-                if(o.object_type() ==  nxobject_type::NXGROUP)
-                    return result_type(group_type(o));
-                else if(o.object_type() == nxobject_type::NXFIELD)
-                    return result_type(field_type(o));
-                else
-                    throw type_error(EXCEPTION_RECORD,
-                            "Child has unkown Nexus type!");
-
-
-                //in the worst case we return an invalid object
-                return result_type();
             }
 
             //-----------------------------------------------------------------
@@ -149,23 +122,32 @@ namespace nx{
 
     /*!
     \ingroup variant_code
-    \brief get child by index wrapper
+    \brief get children wrapper
 
-    Wrapper function for the get_child_visitor template. 
+    Wrapper function for the get_children_visitor template. The parent object
+    from which to retrieve its children is passed as the first argument. 
+    The second argument is the container within which the children will be
+    stored. The value_type of the container must match the variant type of the
+    parent. If this is not the case an error will be raised during compilation.
+
     \throws nxfield_error if the stored object is a field
     \throws nxattribute_error if the stored object is an attribute
-    \throws index_error if the index exceeds the number of children
-    \throws type_error if the Nexus object is of unknown type
+    \throws type_error if one of the stored objects is not a nexus object
     \tparam VTYPE variant type
-    \param n name of the child
-    \param c class of the child (only for groups)
-    \return child object
+    \tparam CTYPE container type for the children
+    \param o parent object as instance of VTYPE
+    \param c container as instance of CTYPE
+    \return container with children
     */
-    template<typename VTYPE> 
-    typename get_child_by_index_visitor<VTYPE>::result_type
-    get_child(const VTYPE &o,size_t i)
+    template<typename VTYPE,typename CTYPE> 
+    void get_children(const VTYPE &o,CTYPE &c)
     {
-        return boost::apply_visitor(get_child_by_index_visitor<VTYPE>(i),o);
+        //check if the container type is of same type is the variant type
+        static_assert(std::is_same<typename CTYPE::value_type,VTYPE>::value,
+                      "The target container value type must be the same as the"
+                      " variant type!");
+
+        return boost::apply_visitor(get_children_visitor<VTYPE,CTYPE>(c),o);
     }
 
 //end of namespace
