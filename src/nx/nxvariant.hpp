@@ -36,6 +36,7 @@
 #include "variant_algo/get_unit.hpp"
 #include "variant_algo/get_parent.hpp"
 #include "variant_algo/get_child.hpp"
+#include "variant_algo/get_child_by_index.hpp"
 #include "variant_algo/get_object.hpp"
 #include "variant_algo/get_shape.hpp"
 #include "variant_algo/get_type.hpp"
