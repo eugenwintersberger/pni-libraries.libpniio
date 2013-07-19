@@ -43,16 +43,14 @@ namespace nx{
     class is_valid_visitor : public boost::static_visitor<bool>
     {
         public:
-            //! first type of VTYPE
-            typedef typename GETVMEMBER(VTYPE,0) first_member;
             //! result type (bool)
             typedef bool result_type;
             //! Nexus group type
-            DEFINE_NXGROUP(first_member) group_type;
+            typedef typename nxvariant_group_type<VTYPE>::type group_type;
             //! Nexus field type
-            DEFINE_NXFIELD(first_member) field_type;
+            typedef typename nxvariant_field_type<VTYPE>::type field_type;
             //! Nexus attribute type
-            DEFINE_NXATTRIBUTE(first_member) attribute_type;
+            typedef typename nxvariant_attribute_type<VTYPE>::type attribute_type;
           
             //-----------------------------------------------------------------
             /*!

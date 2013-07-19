@@ -21,6 +21,7 @@
  */
 #pragma once
 
+#include "nximp_code_map.hpp"
 #include "nxobject_traits.hpp"
 
 #include <boost/variant.hpp>
@@ -54,11 +55,17 @@ namespace nx{
     template<typename OTYPE> struct nxvariant_traits
     {
         //! local group type
-        typedef typename nxobject_traits<OTYPE>::group_type group_type;
+        typedef typename nxobject_traits<
+                         nximp_code_map<OTYPE>::icode
+                         >::group_type group_type;
         //! local field type
-        typedef typename nxobject_traits<OTYPE>::field_type field_type;
+        typedef typename nxobject_traits<
+                         nximp_code_map<OTYPE>::icode
+                         >::field_type field_type;
         //! local attribute type
-        typedef typename nxobject_traits<OTYPE>::attribute_type attribute_type;
+        typedef typename nxobject_traits<
+                         nximp_code_map<OTYPE>::icode
+                         >::attribute_type attribute_type;
 
         //---------------------------------------------------------------------
         /*!
@@ -111,6 +118,21 @@ namespace nx{
     {
         //! the requested type of the variant
         typedef typename boost::mpl::at<typename VTYPE::types,boost::mpl::int_<0> >::type type; 
+    };
+
+    template<typename VTYPE> struct nxvariant_group_type
+    {
+        typedef typename boost::mpl::at<typename VTYPE::types,boost::mpl::int_<0> >::type type;
+    };
+
+    template<typename VTYPE> struct nxvariant_field_type
+    {
+        typedef typename boost::mpl::at<typename VTYPE::types,boost::mpl::int_<1> >::type type;
+    };
+
+    template<typename VTYPE> struct nxvariant_attribute_type
+    {
+        typedef typename boost::mpl::at<typename VTYPE::types,boost::mpl::int_<2> >::type type;
     };
 
 //end of namespace

@@ -49,16 +49,11 @@ namespace nx{
     \param p reference to an instance of VTYPE
     \return an instance of object_types holding the root group
     */
-    template<typename VTYPE>
-    typename nxvariant_traits<typename nxvariant_member_type<VTYPE,0>::type>::object_types
-    get_root(const VTYPE &p)
+    template<typename VTYPE> VTYPE get_root(const VTYPE &p)
     {
-        typedef typename nxvariant_member_type<VTYPE,0>::type first_type;
-        typedef typename nxvariant_traits<first_type>::object_types object_types;
-
         if(get_name(p)=="/") return p;
 
-        object_types root = p;
+        VTYPE root = p;
         do
         {
             root = get_parent(root);
@@ -105,15 +100,11 @@ namespace nx{
     \param path the nexus path to the object
     \return requested object
     */
-    template<typename VTYPE> 
-    typename nxvariant_traits<typename nxvariant_member_type<VTYPE,0>::type>::object_types 
-    get_object(const VTYPE &p,const nxpath &path)
+    template<typename VTYPE> VTYPE get_object(const VTYPE &p,const nxpath &path)
     {
-        typedef typename nxvariant_member_type<VTYPE,0>::type first_type;
-        typedef typename nxvariant_traits<first_type>::object_types object_types;
         nxpath group_path;
         nxpath target_path;
-        object_types result;
+        VTYPE result;
 
         //if the path has a zero size we return the same object
         if(!path.size()) return p;
@@ -127,7 +118,7 @@ namespace nx{
         //get the parent object - if the group_path is an absolute path the
         //parent object passed by the user is ignored and instead the root group
         //of the Nexus tree is used
-        object_types parent;
+        VTYPE parent;
         if(group_path.is_absolute())
             parent = get_root(p);
         else

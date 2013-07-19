@@ -24,6 +24,9 @@
  */
 #pragma once
 
+#include "nximp_code.hpp"
+#include "nximp_code_map.hpp"
+
 namespace pni{
 namespace io{
 namespace nx{
@@ -37,14 +40,14 @@ namespace nx{
     important application for this is to find for one Nexus object type the
     other types belonging to its implementation.
     */
-    template<typename OTYPE> struct nxobject_traits {};
+    template<nximp_code id> struct nxobject_traits {};
 
     /*!
     \ingroup nexus_lowlevel
     \brief macro for nxobject_traits declaration
 
     This macro helps in the declaration of a single nxobject_trait.
-    \param otype the original type
+    \param id       the ID code of the implementation
     \param object_t the Nexus object type
     \param group_t  the Nexus group type
     \param file_t   the Nexus file type
@@ -52,8 +55,8 @@ namespace nx{
     \param attr_t   the Nexus attribute type
     \param sel_t    the Nexus selection type
     */
-#define DECLARE_NXOBJECT_TRAITS(otype,object_t,group_t,file_t,field_t,attr_t,sel_t)\
-        template<> struct nxobject_traits<otype>\
+#define DECLARE_NXOBJECT_TRAITS(id,object_t,group_t,file_t,field_t,attr_t,sel_t)\
+        template<> struct nxobject_traits<id>\
         {\
             typedef object_t object_type;\
             typedef group_t  group_type; \
@@ -68,22 +71,22 @@ namespace nx{
     \brief define a Nexus object type
     */
 #define DEFINE_NXOBJECT(otype) \
-        typedef typename nxobject_traits<otype>::object_type
+        typedef typename nxobject_traits<nximp_code_map<otype>::idcode>::object_type
 
 #define DEFINE_NXGROUP(otype) \
-        typedef typename nxobject_traits<otype>::group_type
+        typedef typename nxobject_traits<nximp_code_map<otype>::idcode>::group_type
 
 #define DEFINE_NXFILE(otype) \
-        typedef typename nxobject_traits<otype>::file_type
+        typedef typename nxobject_traits<nximp_code_map<otype>::idcode>::file_type
 
 #define DEFINE_NXFIELD(otype) \
-        typedef typename nxobject_traits<otype>::field_type
+        typedef typename nxobject_traits<nximp_code_map<otype>::idcode>::field_type
 
 #define DEFINE_NXATTRIBUTE(otype) \
-        typedef typename nxobject_traits<otype>::attribute_type
+        typedef typename nxobject_traits<nximp_code_map<otype>::idcode>::attribute_type
 
 #define DEFINE_NXSELECTION(otype) \
-        typedef typename nxobject_traits<otype>::selection_type
+        typedef typename nxobject_traits<nximp_code_map<otype>::idcode>::selection_type
 
 
 #define DEFINE_NEXUS_TYPES(otype)\

@@ -41,18 +41,16 @@ namespace nx{
     */
     template<typename VTYPE> 
     class as_group_visitor : public boost::static_visitor<
-                             typename nxobject_traits<typename nxvariant_member_type<VTYPE,0>::type>::group_type
+                             typename nxvariant_group_type<VTYPE>::type
                              >
     {
         public:
-            //! first type of the variant type
-            typedef typename nxvariant_member_type<VTYPE,0>::type first_member;
             //! Nexus group type
-            DEFINE_NXGROUP(first_member) group_type;
+            typedef typename nxvariant_group_type<VTYPE>::type group_type;
             //! Nexus field type
-            DEFINE_NXFIELD(first_member) field_type;
+            typedef typename nxvariant_field_type<VTYPE>::type field_type;
             //! Nexus attribute type
-            DEFINE_NXATTRIBUTE(first_member) attribute_type;
+            typedef typename nxvariant_attribute_type<VTYPE>::type attribute_type;
             //! result type
             typedef group_type result_type;
 
@@ -121,7 +119,7 @@ namespace nx{
     \return instance of a group type
     */
     template<typename VTYPE> 
-    typename nxobject_traits<typename nxvariant_member_type<VTYPE,0>::type>::group_type
+    typename nxvariant_group_type<VTYPE>::type
     as_group(const VTYPE &o)
     {
         return boost::apply_visitor(as_group_visitor<VTYPE>(),o);

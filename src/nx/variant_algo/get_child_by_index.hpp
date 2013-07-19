@@ -22,6 +22,7 @@
 #pragma once
 
 #include <sstream>
+#include "../nximp_code_map.hpp"
 #include "../nxvariant_traits.hpp"
 #include "is_group.hpp"
 #include "is_field.hpp"
@@ -44,25 +45,23 @@ namespace nx{
     \tparam VTYPE variant type
     */
     template<typename VTYPE> 
-    class get_child_by_index_visitor : public boost::static_visitor<
-                              typename nxvariant_traits<typename
-                              nxvariant_member_type<VTYPE,0>::type>::object_types>
+    class get_child_by_index_visitor : public boost::static_visitor<VTYPE>
     {
         private: 
             size_t _index;
         public:
-            //! first type of the variant type
-            typedef typename nxvariant_member_type<VTYPE,0>::type first_member;
             //! result type
-            typedef typename nxvariant_traits<first_member>::object_types result_type;
-            //! Nexus object type
-            DEFINE_NXOBJECT(first_member) object_type;
+            typedef VTYPE result_type;
+             
             //! Nexus group type
-            DEFINE_NXGROUP(first_member) group_type;
+            typedef typename nxvariant_group_type<VTYPE>::type group_type;
             //! Nexus field type
-            DEFINE_NXFIELD(first_member) field_type;
+            typedef typename nxvariant_field_type<VTYPE>::type field_type;
             //! Nexus attribute type
-            DEFINE_NXATTRIBUTE(first_member) attribute_type;
+            typedef typename nxvariant_attribute_type<VTYPE>::type attribute_type;
+            //! Nexus object type
+            typedef typename nxobject_traits<nximp_code_map<group_type>::icode>::object_type
+                object_type;
 
             //-----------------------------------------------------------------
             /*!

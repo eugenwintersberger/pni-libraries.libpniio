@@ -40,27 +40,3 @@
 #include "nx_hdf5_implementation.hpp"
 
 
-namespace pni{
-namespace io{
-namespace nx{
-
-    DECLARE_NXOBJECT_TRAITS(h5::nxobject,h5::nxobject,h5::nxgroup,
-                            h5::nxfile,h5::nxfield,h5::nxattribute,
-                            h5::nxselection);
-    DECLARE_NXOBJECT_TRAITS(h5::nxgroup,h5::nxobject,h5::nxgroup,
-                            h5::nxfile,h5::nxfield,h5::nxattribute,
-                            h5::nxselection);
-    DECLARE_NXOBJECT_TRAITS(h5::nxfile,h5::nxobject,h5::nxgroup,h5::nxfile,
-                            h5::nxfield,h5::nxattribute,h5::nxselection);
-    DECLARE_NXOBJECT_TRAITS(h5::nxfield,h5::nxobject,h5::nxgroup,h5::nxfile,
-                            h5::nxfield,h5::nxattribute,h5::nxselection);
-    DECLARE_NXOBJECT_TRAITS(h5::nxattribute,h5::nxobject,h5::nxgroup,
-                            h5::nxfile,h5::nxfield,h5::nxattribute,
-                            h5::nxselection);
-    DECLARE_NXOBJECT_TRAITS(h5::nxselection,h5::nxobject,h5::nxgroup,
-                            h5::nxfile,h5::nxfield,h5::nxattribute,
-                            h5::nxselection);
-//end of namespace
-}
-}
-}

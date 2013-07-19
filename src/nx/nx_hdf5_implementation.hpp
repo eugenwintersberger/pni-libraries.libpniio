@@ -88,6 +88,10 @@ namespace nx{
     NXIMPCODEMAPDECL(h5::nxattribute,nximp_code::HDF5);
     NXIMPCODEMAPDECL(h5::nxselection,nximp_code::HDF5);
 
+    //declare the central type trait for the HDF5 implementation
+    DECLARE_NXOBJECT_TRAITS(nximp_code::HDF5,h5::nxobject,h5::nxgroup,
+                            h5::nxfile,h5::nxfield,h5::nxattribute,
+                            h5::nxselection);
 
 //need to setup the implementation code maps
 }

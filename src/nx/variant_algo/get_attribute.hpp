@@ -39,25 +39,19 @@ namespace nx{
     \tparam VTYPE variant type to act on
     */
     template<typename VTYPE> 
-    class get_attribute_visitor : public boost::static_visitor<
-                               typename GETVTYPE(
-                                       typename GETVMEMBER(VTYPE,0),
-                                       object_types)
-                               >
+    class get_attribute_visitor : public boost::static_visitor<VTYPE>
     {
         private:
             string _attribute; //!< name of the attribute to retrieve
         public:
-            //! first type of variant type
-            typedef typename GETVMEMBER(VTYPE,0) first_member;
-            //! return type
-            typedef typename GETVTYPE(first_member,object_types) result_type;
+            //! result type
+            typedef VTYPE result_type;
             //! Nexus group type
-            DEFINE_NXGROUP(first_member) group_type;
+            typedef typename nxvariant_group_type<VTYPE>::type group_type;
             //! Nexus field type
-            DEFINE_NXFIELD(first_member) field_type;
+            typedef typename nxvariant_field_type<VTYPE>::type field_type;
             //! Nexus attribute type
-            DEFINE_NXATTRIBUTE(first_member) attribute_type;
+            typedef typename nxvariant_attribute_type<VTYPE>::type attribute_type;
       
             //-----------------------------------------------------------------
             /*!

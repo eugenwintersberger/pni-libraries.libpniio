@@ -40,16 +40,14 @@ namespace nx{
     class close_visitor : public boost::static_visitor<void>
     {
         public:
-            //! first type of the variant 
-            typedef typename GETVMEMBER(VTYPE,0) first_type;
             //! result type (bool)
             typedef void result_type;   
             //! Nexus group type
-            DEFINE_NXGROUP(first_type) group_type;
+            typedef typename nxvariant_group_type<VTYPE>::type group_type;
             //! Nexus field type
-            DEFINE_NXFIELD(first_type) field_type;
+            typedef typename nxvariant_field_type<VTYPE>::type field_type;
             //! Nexus attribute type
-            DEFINE_NXATTRIBUTE(first_type) attribute_type;
+            typedef typename nxvariant_attribute_type<VTYPE>::type attribute_type;
            
             //-----------------------------------------------------------------
             /*!

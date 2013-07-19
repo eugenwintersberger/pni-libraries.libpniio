@@ -27,10 +27,10 @@
 
 #include<pni/core/types.hpp>
 #include<pni/core/type_id_map.hpp>
+#include "../nximp_code_map.hpp"
 
 #include "types.hpp"
 #include "../nxobject_traits.hpp"
-
 
 
 namespace pni{
@@ -87,7 +87,7 @@ namespace nx{
     \return field type 
     */
     template<typename GTYPE,typename ...ATYPES>
-    typename nxobject_traits<GTYPE>::field_type 
+    typename nxobject_traits<nximp_code_map<GTYPE>::icode>::field_type 
     create_field(const GTYPE &g,const string &fname,const type_id_t &tid,
                  ATYPES ...args)
     {
