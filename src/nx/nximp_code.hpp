@@ -30,15 +30,18 @@ namespace pni{
 namespace io{
 namespace nx{
 
-        /*! 
-        \ingroup nexus_lowlevel
-        \brief implementation codes
+    /*! 
+    \ingroup nexus_lowlevel
+    \brief implementation codes
 
-        This codes identify a particular implementation for the Nexus classes.
-        */
-        enum class nximp_code {HDF5 //!< HDF5 implementation code
+    This codes identify a particular implementation for the Nexus classes. As
+    simple as this seems this value is particularly important as it is the
+    central quanityt that identifies all the types belonging to a particular
+    implementation. 
+    */
+    enum class nximp_code {HDF5 //!< HDF5 implementation code
 
-        };
+    };
 
 //end of namespace
 }

@@ -45,9 +45,8 @@ namespace nx{
 
     This type map maps a particular implementation type to a type code.
     */
-    template<typename T> class nximp_code_map
+    template<typename T> struct nximp_code_map
     {
-        public:
             static const nximp_code icode; //!< implementation code
     };
 

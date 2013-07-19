@@ -32,7 +32,8 @@
 #include "nxfield.hpp"
 #include "nxdeflate_filter.hpp"
 #include "nxattribute.hpp"
-//#include "NXSelection.hpp"
+#include "nximp_code.hpp"
+#include "nximp_code.map"
 #include "nxobject_traits.hpp"
 
 #include "h5/H5AttributeObject.hpp"
