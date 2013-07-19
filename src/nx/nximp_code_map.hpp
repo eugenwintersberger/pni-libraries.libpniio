@@ -27,13 +27,14 @@
 
 #pragma once
 #include "nximp_code.hpp"
-
+/*
 #include "h5/H5AttributeObject.hpp"
 #include "h5/H5File.hpp"
 #include "h5/H5Group.hpp"
 #include "h5/H5Dataset.hpp"
 #include "h5/H5Filter.hpp"
 #include "h5/H5Attribute.hpp"
+*/
 
 namespace pni{
 namespace io{
@@ -56,16 +57,6 @@ namespace nx{
         public:\
             static const nximp_code icode = impcode;\
     }
-
-    //! \cond NO_API_DOC
-    //specialization for the HDF5 Implementation
-    NXIMPCODEMAPDECL(pni::io::nx::h5::H5AttributeObject,nximp_code::HDF5);
-    NXIMPCODEMAPDECL(pni::io::nx::h5::H5File,nximp_code::HDF5);
-    NXIMPCODEMAPDECL(pni::io::nx::h5::H5Group,nximp_code::HDF5);
-    NXIMPCODEMAPDECL(pni::io::nx::h5::H5Dataset,nximp_code::HDF5);
-    NXIMPCODEMAPDECL(pni::io::nx::h5::H5Filter,nximp_code::HDF5);
-    NXIMPCODEMAPDECL(pni::io::nx::h5::H5Attribute,nximp_code::HDF5);
-    //! \endcond
 
 //end of namespace
 }

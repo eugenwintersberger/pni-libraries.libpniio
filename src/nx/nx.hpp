@@ -33,38 +33,12 @@
 #include "nxdeflate_filter.hpp"
 #include "nxattribute.hpp"
 #include "nximp_code.hpp"
-#include "nximp_code.map"
+#include "nximp_code_map.hpp"
 #include "nxobject_traits.hpp"
 
-#include "h5/H5AttributeObject.hpp"
-#include "h5/H5File.hpp"
-#include "h5/H5Group.hpp"
-#include "h5/H5Dataset.hpp"
-#include "h5/H5Attribute.hpp"
-#include "h5/H5LibrarySetup.hpp"
-#include "h5/H5Filter.hpp"
-#include "h5/H5DeflateFilter.hpp"
 
+#include "nx_hdf5_implementation.hpp"
 
-namespace pni{
-namespace io{
-namespace nx{
-namespace h5{
-
-    typedef pni::io::nx::nxobject<H5AttributeObject>    nxobject;
-    typedef pni::io::nx::nxfile<H5File>                 nxfile;
-    typedef pni::io::nx::nxgroup<H5Group>               nxgroup;
-    typedef pni::io::nx::nxfield<H5Dataset>             nxfield;
-    typedef pni::io::nx::nxfilter<H5Filter>             nxfilter;
-    typedef pni::io::nx::nxdeflate_filter<H5DeflateFilter> nxdeflate_filter;
-    typedef pni::io::nx::nxattribute<H5Attribute>  nxattribute;
-    typedef pni::io::nx::nxselection<nxfield> nxselection;
-
-//end of namespace
-}
-}
-}
-}
 
 namespace pni{
 namespace io{
