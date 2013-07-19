@@ -64,6 +64,15 @@ namespace xml{
     */
     node create_from_file(const string &s);
 
+    //-------------------------------------------------------------------------
+    /*!
+    \ingroup xml_lowlevel_utils
+    \brief XML stream output
+
+    Write property tree structure as XML to an output stream.
+    */
+    std::ostream &operator<<(std::ostream &o,const node &n);
+
 
 //end of namespace
 }

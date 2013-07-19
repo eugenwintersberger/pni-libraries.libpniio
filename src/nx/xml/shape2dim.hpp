@@ -23,6 +23,7 @@
 
 #include <pni/core/exceptions.hpp>
 #include <sstream>
+#include <utility>
 #include "xml_node.hpp"
 #include "attribute_data.hpp"
 
@@ -73,7 +74,7 @@ namespace xml{
             dim.put("<xmlattr>.index",index++);
             dim.put("<xmlattr>.value",s);
 
-            dimensions.push_back("dim",dim);
+            dimensions.push_back(std::make_pair("dim",dim));
         }
 
         return dimensions;

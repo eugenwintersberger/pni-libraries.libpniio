@@ -22,6 +22,7 @@
 
 #include <sstream>
 #include <fstream>
+#include <locale>
 #include <boost/property_tree/xml_parser.hpp>
 
 #include "../../parsers/exceptions.hpp"
@@ -70,6 +71,14 @@ namespace xml{
         }
 
         return t;
+    }
+    //------------------------------------------------------------------------
+    std::ostream &operator<<(std::ostream &o,const node &n)
+    {
+        boost::property_tree::xml_writer_settings<char> settings('\t',1);
+
+        boost::property_tree::write_xml(o,n,settings);
+        return o;
     }
 
 

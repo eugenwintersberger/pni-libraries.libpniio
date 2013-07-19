@@ -24,3 +24,4 @@
 #include "xml/xml_node.hpp"
 #include "xml/xml_lowlevel.hpp"
 #include "xml/node_data.hpp"
+#include "xml/nexus2xml.hpp"

@@ -22,9 +22,11 @@
 #pragma once
 
 #include <vector>
+#include <utility>
 #include "xml_node.hpp"
-#include "../nxvariants.hpp"
+#include "../nxvariant.hpp"
 #include "../utils/types.hpp"
+#include "shape2dim.hpp"
 
 namespace pni{
 namespace io{
@@ -44,7 +46,7 @@ namespace xml{
         field_node.put("<xmlattr>.name",field_name);
         field_node.put("<xmlattr>.type",field_type);
 
-        auto shape = get_shape(field);
+        auto shape = get_shape<shape_t>(field);
         if(shape.size())
             field_node.add_child("dimensions",shape2dim(shape));
 
@@ -61,35 +63,56 @@ namespace xml{
         group_node.put("<xmlattr>.name",group_name);
         group_node.put("<xmlattr>.type",group_class);
 
-        return node;
+        return group_node;
     }
 
     //-------------------------------------------------------------------------
     template<typename VTYPE> node attribute2xml(const VTYPE &attr)
     {
+        node attr_node;
 
+        auto attr_name = get_name(attr);
+        string attr_type = typeid2str[get_type(attr)];
+
+        attr_node.put("<xmlattr>.name",attr_name);
+        attr_node.put("<xmlattr>.type",attr_type);
+
+        return attr_node;
     }
 
     //-------------------------------------------------------------------------
-    template<typename VTYPE> void write_objects(const VTYPE &p,node &n)
+    /*!
+    \ingroup xml_lowleve_utils
+    \brief nexus to XML conversion
+
+    Converts the structure of a Nexus tree as stored below p into a XML tree
+    strucure and stores it below n. 
+    \tparam VTYPE variant type with the root object
+    \param p parent object 
+    \param n XML node
+    */
+    template<typename VTYPE> void nexus2xml(const VTYPE &p,node &n)
     {
         typedef std::vector<VTYPE> vector_t;
         node child;
+        string key;
         if(is_field(p))
         {
+            key = "field";
             child = n.add_child("field",field2xml(p));
         }
         else if(is_group(p))
         {
+            key = "group";
             //add the actual group to the parent node
-           child =  n.add_child("group",group2xml(p));
+            child =  group2xml(p);
 
-           //obtain al child nodes
-           vector_t objects;
-           get_children(p,objects);
+            //obtain al child nodes
+            vector_t objects;
+            get_children(p,objects);
 
-           //iterate over the children 
-           for(auto o: objects) write_objects(o,child);
+            //iterate over the children 
+            for(auto o: objects) nexus2xml(o,child);
         }
 
         //in the end we have to add attributes
@@ -97,8 +120,9 @@ namespace xml{
         get_attributes(p,attributes);
         for(auto a: attributes)
             child.add_child("attribute",attribute2xml(a));
-        
-
+            
+        //now everything is done and we have to 
+        n.add_child(key,child);
     }
 
 //end of namespace
