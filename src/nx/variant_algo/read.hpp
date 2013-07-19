@@ -119,7 +119,7 @@ namespace nx{
             \param a attribute instance
             \return nothing
             */
-            result_type operator()(attribute_type &a) const
+            result_type operator()(const attribute_type &a) const
             {
                 if(_selection.size())
                     throw nxattribute_error(EXCEPTION_RECORD,

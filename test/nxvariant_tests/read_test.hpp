@@ -40,6 +40,7 @@ class read_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_field_partial);
         CPPUNIT_TEST(test_group);
         CPPUNIT_TEST(test_attribute_full);
+        CPPUNIT_TEST(test_attribute_string);
         CPPUNIT_TEST_SUITE_END();
 
         h5::nxfile file;
@@ -66,6 +67,6 @@ class read_test : public CppUnit::TestFixture
         void test_field_partial();
         void test_group();
         void test_attribute_full();
-
+        void test_attribute_string();
 };
 

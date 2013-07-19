@@ -126,6 +126,7 @@ void read_test::test_attribute_full()
     std::fill(attr_rdata.begin(),attr_rdata.end(),0);
 
     CPPUNIT_ASSERT_NO_THROW(write(object,attr_wdata));
+    CPPUNIT_ASSERT_NO_THROW(read(object,attr_rdata));
 
     attribute.read(attr_rdata);
     for(size_t i=0;i<attr_wdata.size();++i)
@@ -135,3 +136,15 @@ void read_test::test_attribute_full()
     
 }
 
+//-----------------------------------------------------------------------------
+void read_test::test_attribute_string()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    object_types object = field.attr<string>("test_string");;
+
+    CPPUNIT_ASSERT_NO_THROW(write(object,"hello world"));
+    string buffer;
+    CPPUNIT_ASSERT_NO_THROW(read(object,buffer));
+    CPPUNIT_ASSERT(buffer == "hello world");
+}

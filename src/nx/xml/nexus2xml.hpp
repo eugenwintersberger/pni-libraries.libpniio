@@ -21,6 +21,7 @@
  */
 #pragma once
 
+#include <iostream>
 #include <vector>
 #include <utility>
 #include "xml_node.hpp"
@@ -77,6 +78,16 @@ namespace xml{
         attr_node.put("<xmlattr>.name",attr_name);
         attr_node.put("<xmlattr>.type",attr_type);
 
+        //read scalar string attributes
+        if((get_rank(attr)==0) && 
+           (get_type(attr)==type_id_t::STRING))
+        {
+            string buffer;
+            read(attr,buffer);
+            std::cout<<buffer<<std::endl;
+            attr_node.put_value(buffer);
+        }
+
         return attr_node;
     }
 
@@ -119,7 +130,10 @@ namespace xml{
         vector_t attributes;
         get_attributes(p,attributes);
         for(auto a: attributes)
+        {
+            if(get_name(a) == "NX_class") continue;
             child.add_child("attribute",attribute2xml(a));
+        }
             
         //now everything is done and we have to 
         n.add_child(key,child);
