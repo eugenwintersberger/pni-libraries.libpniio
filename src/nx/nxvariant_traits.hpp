@@ -85,23 +85,6 @@ namespace nx{
                                field_type,
                                attribute_type> object_types;
 
-        //--------------------------------------------------------------------
-        /*!
-        \brief child types
-
-        The primary container in a Nexus file is a group. This variant consists
-        of a group and a field type as the only possible child types of a group.
-        */
-        typedef boost::variant<group_type,field_type> child_types;
-
-        //---------------------------------------------------------------------
-        /*!
-        \brief IO types
-
-        Finally this variant collates all types in the Nexus universe that are
-        capable of doing data IO. This are fields and attributes. 
-        */
-        typedef boost::variant<field_type,attribute_type> io_types;
     };
 
     //-------------------------------------------------------------------------
