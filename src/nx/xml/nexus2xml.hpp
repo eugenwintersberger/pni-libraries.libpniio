@@ -37,7 +37,7 @@ namespace xml{
     using namespace pni::core;
     using namespace pni::io::nx;
 
-    template<typename VTYPE> node  field2xml(const VTYPE &field)
+    template<typename VTYPE> node  field2xml(VTYPE &field)
     {
         node field_node;
         auto field_name = get_name(field);
@@ -50,6 +50,13 @@ namespace xml{
         auto shape = get_shape<shape_t>(field);
         if(shape.size())
             field_node.add_child("dimensions",shape2dim(shape));
+
+        if((get_rank(field)==1)&&(get_type(field)==type_id_t::STRING))
+        {
+            string buffer;
+            read(field,buffer);
+            field_node.put_value(buffer);
+        }
 
         return field_node;
     }
