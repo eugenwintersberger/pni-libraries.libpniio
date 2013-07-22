@@ -40,10 +40,14 @@ namespace nx{
     original object has been set up
     \li external link - a link pointing to an object in an external file
 
+    Attributes to not have a link type. However, we define one to make the
+    interfaces more consistent. The link type ATTRIBUTE thus tells a user that
+    the object he is dealing with is an attribute attached to an object.
     */
     enum class nxlink_type { HARD,    //!< denotes a hard link
                              SOFT,    //!< denotes a soft link
-                             EXTERNAL //!< denotes an external link
+                             EXTERNAL,//!< denotes an external link
+                             ATTRIBUTE //!< returned by attributes
                            };
 //end of namespace
 }
