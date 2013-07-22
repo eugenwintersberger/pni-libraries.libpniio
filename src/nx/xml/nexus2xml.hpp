@@ -28,6 +28,7 @@
 #include "../nxvariant.hpp"
 #include "../utils/types.hpp"
 #include "shape2dim.hpp"
+#include <boost/algorithm/string.hpp>
 
 namespace pni{
 namespace io{
@@ -39,6 +40,11 @@ namespace xml{
 
     template<typename VTYPE> node  field2xml(VTYPE &field)
     {
+        std::cout<<"converting a field!"<<std::endl;
+        if(!is_field(field))
+            throw pni::core::type_error(EXCEPTION_RECORD,
+                    "["+get_path(field)+"] is not a field!");
+
         node field_node;
         auto field_name = get_name(field);
         string field_type = typeid2str[get_type(field)];
@@ -54,7 +60,8 @@ namespace xml{
         if((get_rank(field)==1)&&(get_type(field)==type_id_t::STRING))
         {
             string buffer;
-            read(field,buffer);
+            read(field,buffer); 
+            boost::algorithm::trim(buffer);
             field_node.put_value(buffer);
         }
 
@@ -75,7 +82,7 @@ namespace xml{
     }
 
     //-------------------------------------------------------------------------
-    template<typename VTYPE> node attribute2xml(const VTYPE &attr)
+    template<typename VTYPE> node attribute2xml(VTYPE &attr)
     {
         node attr_node;
 
@@ -117,7 +124,7 @@ namespace xml{
         if(is_field(p))
         {
             key = "field";
-            child = n.add_child("field",field2xml(p));
+            child = field2xml(const_cast<VTYPE&>(p));
         }
         else if(is_group(p))
         {

@@ -78,7 +78,7 @@ try:
 except:
     pass
 
-env["ENV"]["PATH"] = os.environ["PATH"]
+env["ENV"]["PATH"] = "/usr/lib/ccache:"+os.environ["PATH"]
 
 try:
     env.ParseConfig('pkg-config --libs --cflags pnicore')

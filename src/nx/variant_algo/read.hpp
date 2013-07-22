@@ -98,7 +98,7 @@ namespace nx{
             \param f field instance
             \return nothing
             */
-            result_type operator()(field_type &f) const
+            result_type operator()(field_type &f) 
             {
                 if(_selection.size())
                     f(_selection).read(_data);
@@ -119,7 +119,7 @@ namespace nx{
             \param a attribute instance
             \return nothing
             */
-            result_type operator()(const attribute_type &a) const
+            result_type operator()(const attribute_type &a) 
             {
                 if(_selection.size())
                     throw nxattribute_error(EXCEPTION_RECORD,
@@ -192,15 +192,19 @@ namespace nx{
     typename read_visitor<ATYPE,VTYPE>::result_type 
     read(VTYPE &o,ATYPE &a,ITYPES ...indices)
     {
+        typedef read_visitor<ATYPE,VTYPE> visitor_t;
         std::vector<slice> sel{slice(indices)...};
-        return boost::apply_visitor(read_visitor<ATYPE,VTYPE>(a,sel),o);
+        visitor_t visitor(a,sel);
+        return boost::apply_visitor(visitor,o);
     }
 
     template<typename ATYPE,typename VTYPE>
     typename read_visitor<ATYPE,VTYPE>::result_type
     read(VTYPE &o,ATYPE &a,const std::vector<slice> &sel)
     {
-        return boost::apply_visitor(read_visitor<ATYPE,VTYPE>(a,sel),o);
+        typedef read_visitor<ATYPE,VTYPE> visitor_t;
+        visitor_t visitor(a,sel);
+        return boost::apply_visitor(visitor,o);
     }
 
 //end of namespace

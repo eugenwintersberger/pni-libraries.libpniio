@@ -66,7 +66,15 @@ namespace h5{
             H5Group(const H5Group &o);
 
             //-----------------------------------------------------------------
-            //! copy conversion constructor
+            /*! 
+            \brief copy conversion constructor
+
+            This constructor builds a group object from a general H5Object. If
+            the original object is not a group instance an exception will be
+            thrown.
+            \throws nxgroup_error if o is not a group object
+            \param o reference to the original object
+            */
             H5Group(const H5Object &o);
 
             //-----------------------------------------------------------------
@@ -74,7 +82,15 @@ namespace h5{
             H5Group(H5Group &&o);
 
             //-----------------------------------------------------------------
-            //! move conversion constructor
+            /*! 
+            \brief move conversion constructor
+            
+            This constructor builds a group object from a general H5Object. If
+            the original object is not a group instance an exception will be
+            thrown.
+            \throws nxgroup_error if o is not a group object
+            \param o reference to the original object
+            */
             H5Group(H5Object &&o);
 
             //-----------------------------------------------------------------
