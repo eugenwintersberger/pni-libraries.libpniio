@@ -167,6 +167,12 @@ namespace h5{
         return string("");
     }
 
+    //-------------------------------------------------------------------------
+    pni::io::nx::nxlink_type H5NamedObject::link_type() const
+    {
+        H5L_info_t info;
+    }
+
 
 //end of namespace
 }
