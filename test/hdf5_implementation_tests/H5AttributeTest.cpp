@@ -21,6 +21,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 #include "H5AttributeTest.hpp"
+#include <pni/io/nx/nxdate_time.hpp>
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(H5AttributeTest);
@@ -42,6 +43,7 @@ void H5AttributeTest::tearDown()
 //-----------------------------------------------------------------------------
 void H5AttributeTest::test_creation()
 {
+    using pni::io::nx::nxdate_time;
     PRINT_TEST_FUNCTION_SIG;
 
     //default constructor
@@ -63,6 +65,7 @@ void H5AttributeTest::test_creation()
     H5Attribute a3(std::move(a2));
     CPPUNIT_ASSERT(a3.is_valid());
     CPPUNIT_ASSERT(!a2.is_valid());
+
 }
 
 //-----------------------------------------------------------------------------

@@ -202,6 +202,7 @@ namespace h5{
 
             Returns the last time the object was accessed. The time is returned
             as a time_t structure.
+            \warning  THIS METHOD WILL BE REMOVED IN ONE OF THE FUTURE RELEASES
             \throws pni::io::nx::nxbackend_error if cannot obtain time
             \return access time
             */
@@ -213,6 +214,7 @@ namespace h5{
 
             Returns the time when the object was last mofified. The time is
             returned as a time_t structure.
+            \warning  THIS METHOD WILL BE REMOVED IN ONE OF THE FUTURE RELEASES
             \throws pni::io::nx::nxbackend_error if cannot obtain time
             \return modification time
             */
@@ -224,6 +226,7 @@ namespace h5{
 
             Returns the time when the object was changed last.  The time value
             is returned as a time_t struct.
+            \warning THIS METHOD WILL BE REMOVED IN ONE OF THE FUTURE RELEASES
             \throws pni::io::nx::nxbackend_error if cannot obtain time
             \return change time
             */
@@ -235,6 +238,7 @@ namespace h5{
 
             Returns the time when the object was created. The time value is
             returned as time_t structure.
+            \warning THIS METHOD WILL BE REMOVED IN ONE OF THE FUTURE RELEASES
             \throws pni::io::nx::nxbackend_error if cannot obtain time
             \return birth time
             */

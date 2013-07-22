@@ -27,6 +27,7 @@
 #include "H5Object.hpp"
 #include "h5_error_stack.hpp"
 #include "../nxexceptions.hpp"
+#include "../../deprecation_warning.hpp"
 
 namespace pni{
 namespace io{
@@ -144,6 +145,8 @@ namespace h5{
     //-------------------------------------------------------------------------
     time_t H5Object::acc_time() const
     {
+        REMOVE_FUNCTION(BOOST_CURRENT_FUNCTION);
+        //TO BE REMOVED
         H5O_info_t info;
 
         herr_t err = H5Oget_info(id(),&info);
@@ -157,6 +160,8 @@ namespace h5{
     //-------------------------------------------------------------------------
     time_t H5Object::mod_time() const
     {
+        REMOVE_FUNCTION(BOOST_CURRENT_FUNCTION);
+        //TO BE REMOVED
         H5O_info_t info;
 
         herr_t err = H5Oget_info(id(),&info);
@@ -170,6 +175,8 @@ namespace h5{
     //-------------------------------------------------------------------------
     time_t H5Object::chng_time() const
     {
+        REMOVE_FUNCTION(BOOST_CURRENT_FUNCTION);
+        //TO BE REMOVED
         H5O_info_t info;
 
         herr_t err = H5Oget_info(id(),&info);
@@ -183,6 +190,8 @@ namespace h5{
     //--------------------------------------------------------------------------
     time_t H5Object::birth_time() const
     {
+        REMOVE_FUNCTION(BOOST_CURRENT_FUNCTION);
+        //TO BE REMOVED
         H5O_info_t info;
 
         herr_t err = H5Oget_info(id(),&info);

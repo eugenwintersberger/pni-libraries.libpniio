@@ -39,6 +39,7 @@
 #include "nxobject_type.hpp"
 #include "nxdate_time.hpp"
 #include "nxattribute_iterator.hpp"
+#include "../deprecation_warning.hpp"
 
 //selects a particular implementation depending on an other 
 //implementation
@@ -418,10 +419,12 @@ namespace nx{
 
             Return the time the object was accessed last as Nexus date-time
             string.
+            \warning THIS METHOD WILL BE REMOVED!
             \return access time as date-time string
             */
             string access_time() const
             {
+                REMOVE_FUNCTION(BOOST_CURRENT_FUNCTION);
                 return nxdate_time::get_date_time_str(_imp.acc_time());
             }
 
@@ -430,10 +433,12 @@ namespace nx{
 
             Return the time when the object was last modified as a Nexus
             date-time string.
+            \warning THIS METHOD WILL BE REMOVED!
             \return modification time as date-time string
             */
             string modified_time() const
             {
+                REMOVE_FUNCTION(BOOST_CURRENT_FUNCTION);
                 return nxdate_time::get_date_time_str(_imp.mod_time());
             }
             
@@ -443,10 +448,12 @@ namespace nx{
             
             Return the time when the data held by the object was last changed as
             a Nexus date-time string (need to verify this). 
+            \warning THIS METHOD WILL BE REMOVED!
             \return change time as date-time string
             */
             string change_time() const
             {
+                REMOVE_FUNCTION(BOOST_CURRENT_FUNCTION);
                 return nxdate_time::get_date_time_str(_imp.chng_time());
             }
             
@@ -456,10 +463,12 @@ namespace nx{
 
             Return the time when the object was created as Nexus date-time
             string. 
+            \warning THIS METHOD WILL BE REMOVED!
             \return creation time as date-time string
             */
             string create_time() const
             {
+                REMOVE_FUNCTION(BOOST_CURRENT_FUNCTION);
                 return nxdate_time::get_date_time_str(_imp.birth_time());
             }
 
