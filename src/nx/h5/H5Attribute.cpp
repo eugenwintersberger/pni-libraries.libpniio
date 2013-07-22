@@ -144,10 +144,29 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    string H5Attribute::base() const { return string(""); }
+    string H5Attribute::base() const 
+    { 
+        dbuffer<char> buffer;
+
+        if(is_valid())
+        {
+            //first we need to retrieve the path to the parent object
+            hsize_t bsize;
+            bsize = H5Iget_name(id(),NULL,1)+1;
+            buffer.allocate(bsize);
+
+            H5Iget_name(id(),const_cast<char*>(buffer.ptr()),bsize);
+            string parent(buffer.ptr());
+            return parent;
+        }
+        return string();
+    }
 
     //-------------------------------------------------------------------------
-    string H5Attribute::path() const { return string(""); }
+    string H5Attribute::path() const 
+    { 
+       return base()+"@"+name();
+    }
     
     //-------------------------------------------------------------------------
     //implementation of write from String
