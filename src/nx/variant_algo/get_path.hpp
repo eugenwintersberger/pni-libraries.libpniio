@@ -69,7 +69,7 @@ namespace nx{
 
             Retrieve the path of a field instance.
             \param f field instance
-            \return name of the field
+            \return path to the field
             */
             result_type operator()(const field_type &f) const
             {
@@ -80,17 +80,13 @@ namespace nx{
             /*!
             \brief process attribute instances
 
-            Throw an exception as we currently cannot retrieve the full path
-            from an attribute.
-            \throws nxattribute_error
+            Return the path of an attribute.
             \param a attribute instance
-            \return name of the attribute
+            \return path to the attribute
             */
             result_type operator()(const attribute_type &a) const
             {
-                throw nxattribute_error(EXCEPTION_RECORD,
-                        "Attributes currently do not support path!");
-                return result_type();
+                return a.path();
             }
     };
 

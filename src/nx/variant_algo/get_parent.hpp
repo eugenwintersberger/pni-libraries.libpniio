@@ -81,15 +81,25 @@ namespace nx{
             /*!
             \brief process attribute
 
-            Currently parent retrieval is not supported for attributes. An
-            exception will be thrown.
+            Retrieve the type of an object.
             \throws nxattribute_error parent retrieval not supported
             \return to be ignored
             */
             result_type operator()(const attribute_type &a) const
             {
-                throw nxattribute_error(EXCEPTION_RECORD,
-                        "Parent access currently not implemented for attribute!");
+                auto object = a.parent();
+               
+                //the situation is a bit more difficult here as an attribute can
+                //have either a field or a group as its parent.
+                if(object.object_type() == nxobject_type::NXFIELD)
+                    return result_type(field_type(object));
+                else if(object.object_type() == nxobject_type::NXGROUP)
+                    return result_type(group_type(object));
+                else
+                    throw nxattribute_error(EXCEPTION_RECORD,
+                            "Parent is of unknown type!");
+
+                //just to make the compiler happy
                 return result_type();
             }
     };

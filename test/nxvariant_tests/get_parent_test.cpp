@@ -75,7 +75,11 @@ void get_parent_test::test_attribute()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    CPPUNIT_ASSERT_THROW(get_parent(object_types(group.attr("NX_class"))),
-                         nxattribute_error);
+    object_types a(group.attr("NX_class"));
+
+    auto p = get_parent(a);
+    CPPUNIT_ASSERT(is_group(p));
+    CPPUNIT_ASSERT(is_valid(p));
+    CPPUNIT_ASSERT(get_name(p)=="group");
 }
 
