@@ -716,8 +716,33 @@ namespace nx{
             bool is_valid() const { return _imp.is_valid(); }
 
             //---------------------------------------------------------------
-            //! get attribute name
+            /*! 
+            \brief get attribute name
+
+            Obtain the name of the attribute. With this name it can be
+            identified at a particular object.
+            \return string with the attributes name
+            */
             string name() const { return _imp.name(); }
+
+            //---------------------------------------------------------------
+            /*! 
+            \brief get attribute base
+
+            This is basically the path to the parent object of an attribute
+            \return path to parent object
+            */
+            string base() const { return _imp.base(); }
+
+            //---------------------------------------------------------------
+            /*!
+            \brief get attribute path
+
+            Return the full path of an attribute. This is virtually the base
+            name and the attribute name concatenated by an "@" sign.
+            \return full path to the attribute
+            */
+            string path() const { return _imp.path(); }
 
     };
 
