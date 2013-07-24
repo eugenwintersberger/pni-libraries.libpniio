@@ -267,6 +267,16 @@ namespace h5{
             \return attribute name
             */
             virtual string name() const;
+
+            //-----------------------------------------------------------------
+            /*!
+            \brief get parent
+
+            Return an instance of H5Object with the parent object of the
+            attribute.
+            \return H5Object instance
+            */
+            H5Object parent() const;
     };
 
 

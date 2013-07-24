@@ -23,6 +23,8 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
+#include "H5Group.hpp"
+#include "H5Dataset.hpp"
 #include "H5Attribute.hpp"
 
 
@@ -166,6 +168,18 @@ namespace h5{
     string H5Attribute::path() const 
     { 
        return base()+"@"+name();
+    }
+
+    //-------------------------------------------------------------------------
+    H5Object H5Attribute::parent() const
+    {
+        hid_t pid;
+
+        //attempt to retrieve the parent object
+        pid = H5Oopen(id(),".",H5P_DEFAULT);
+
+
+        return H5Object(pid); 
     }
     
     //-------------------------------------------------------------------------

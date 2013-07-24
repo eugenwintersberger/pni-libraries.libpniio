@@ -116,6 +116,10 @@ void H5AttributeTest::test_inquery()
     CPPUNIT_ASSERT(a2.type_id() == type_id_t::FLOAT32);
     auto ashape = a2.shape<shape_t>();
     CPPUNIT_ASSERT(std::equal(shape.begin(),shape.end(),ashape.begin()));
+
+    H5Group parent = a1.parent();
+    CPPUNIT_ASSERT(parent.is_valid());
+    CPPUNIT_ASSERT(parent.name() == "group");
 }
 
 

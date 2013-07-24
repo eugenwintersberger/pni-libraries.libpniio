@@ -61,7 +61,16 @@ namespace h5{
         private:
             hid_t _id; //!< ID of the object
         protected:
+
             //-----------------------------------------------------------------
+            /*! 
+            \brief reset the ID
+
+            Reset the ID of the object to zero and thus renders it as invalid.
+            */
+            void reset_id() { _id = 0; }
+        public:
+            //================constructors and destructors=====================
             /*! 
             \brief construct from HDF5 ID
 
@@ -81,14 +90,6 @@ namespace h5{
             explicit H5Object(const hid_t &id);
 
             //-----------------------------------------------------------------
-            /*! 
-            \brief reset the ID
-
-            Reset the ID of the object to zero and thus renders it as invalid.
-            */
-            void reset_id() { _id = 0; }
-        public:
-            //================constructors and destructors=====================
             //! default constructor
             explicit H5Object();
 
