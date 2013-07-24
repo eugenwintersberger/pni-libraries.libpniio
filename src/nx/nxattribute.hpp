@@ -34,6 +34,7 @@
 #include <pni/core/array.hpp>
 
 #include "nxexceptions.hpp"
+#include "nxobject_traits.hpp"
 #include "utils/io_utils.hpp"
 
 
@@ -128,6 +129,9 @@ namespace nx{
     */
     template<typename Imp> class nxattribute
     {
+        public:
+            //! define the actual type of this object
+            typedef nxattribute<Imp> attribute_type;
         private:
             Imp _imp;  //!< implementation of the attribute object
            
@@ -313,11 +317,11 @@ namespace nx{
 
             //------------------------------------------------------------------
             //! copy constructor
-            nxattribute(const nxattribute<Imp> &a): _imp(a._imp) { }
+            nxattribute(const attribute_type &a): _imp(a._imp) { }
 
             //------------------------------------------------------------------
             //! move constructor
-            nxattribute(nxattribute<Imp> &&a):_imp(std::move(a._imp)) { }
+            nxattribute(attribute_type &&a):_imp(std::move(a._imp)) { }
 
             //------------------------------------------------------------------
             //! copy constructor from implementation
@@ -333,7 +337,7 @@ namespace nx{
 
             //===================assignment operators===========================
             //! copy assignment operator
-            nxattribute<Imp> &operator=(const nxattribute<Imp> &a)
+            attribute_type &operator=(const attribute_type &a)
             {
                 if(this == &a) return *this;
 
@@ -343,7 +347,7 @@ namespace nx{
 
             //------------------------------------------------------------------
             //! move assignment operator
-            nxattribute<Imp> &operator=(nxattribute<Imp> &&a)
+            attribute_type &operator=(attribute_type &&a)
             {
                 if(this == &a) return *this;
                 _imp = std::move(a._imp);
@@ -743,6 +747,22 @@ namespace nx{
             \return full path to the attribute
             */
             string path() const { return _imp.path(); }
+
+            //-----------------------------------------------------------------
+            /*!
+            \brief return parent object
+
+            This method returns the parent object of a 
+            */
+            typename nxobject_traits<nximp_code_map<attribute_type>::icode>::object_type
+            parent() const
+            {
+                typedef typename
+                    nxobject_traits<nximp_code_map<attribute_type>::icode>::object_type
+                    object_type;
+
+                return object_type(_imp.parent());
+            }
 
     };
 

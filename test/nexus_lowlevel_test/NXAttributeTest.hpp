@@ -254,6 +254,11 @@ template<typename APTYPE> void NXAttributeTest<APTYPE>::test_creation()
     CPPUNIT_ASSERT(a1.name() == "attribute");
     CPPUNIT_ASSERT(a1.path() == _parent.path()+"@attribute");
 
+    APTYPE p;
+    CPPUNIT_ASSERT_NO_THROW(p = a1.parent());
+    CPPUNIT_ASSERT(p.is_valid());
+    CPPUNIT_ASSERT(p.path() == a1.base());
+
     //create an array attribute
     nxattribute a2(_parent.template attr<bool>("array",_shape));
     CPPUNIT_ASSERT(a2.is_valid());
