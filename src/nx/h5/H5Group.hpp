@@ -206,41 +206,6 @@ namespace h5{
             virtual H5Group parent() const { return open(base()); }
 
             //-----------------------------------------------------------------
-            /*! \brief create a link to this group
-
-            Creates a file local link pointing to this group. The new
-            path under which this group can be accessed is given by path. This
-            may either be an absolute or relative path (with respect to this
-            group).
-            \warning This function is deprecated and will be removed in one of
-            the next releases!
-            \warning use the nlink function template for linking!
-            \param path new link path
-            */
-            //void link(const string &path) const;
-
-            //-----------------------------------------------------------------
-            /*! \brief create a link to this group
-
-            Creates a file local link to this group. The location of the link is
-            given by path which is relative to the group object ref.
-            \param ref reference group
-            \param path new link path
-            */
-            //void link(const H5Group &ref,const string &path) const;
-
-            //-----------------------------------------------------------------
-            /*! \brief creates a local or external link
-
-            This method creates a link below this group from an object
-            determined by path. The name of the link is given by name. With this
-            method also external links are possible.
-            \param path path to the object from which to link
-            \param name name of the link with respect to this group
-            */
-            //void link(const string &path,const string &name) const;
-
-            //-----------------------------------------------------------------
             /*! \brief number of child nodes
 
             Returns the number of child nodes (groups and datasets) linked below
