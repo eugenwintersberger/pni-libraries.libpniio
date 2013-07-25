@@ -168,7 +168,7 @@ void H5DatasetTest::test_parent()
     H5Group p(d.parent());
     CPPUNIT_ASSERT(p.name() == "detector");
     H5Dataset t("temperature",_file,type,space);
-    CPPUNIT_ASSERT(t.parent().name() == "/");
+    CPPUNIT_ASSERT(H5Group(t.parent()).name() == "/");
 }
 
 //-----------------------------------------------------------------------------

@@ -23,6 +23,7 @@
 
 #include <pni/io/nx/nxpath.hpp>
 #include <pni/io/nx/nxpath_utils.hpp>
+#include <pni/io/nx/nxlink_type.hpp>
 #include <boost/current_function.hpp>
 #include "H5LinkTest.hpp"
 
@@ -45,6 +46,8 @@ void H5LinkTest::test_internal()
 {
     using pni::io::nx::nxpath;
     using pni::io::nx::path_from_string;
+    using pni::io::nx::nxlink_type;
+
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     H5Group root_group(_file1.open("/"));
@@ -54,6 +57,8 @@ void H5LinkTest::test_internal()
     nxpath target = path_from_string(g.path());
     CPPUNIT_ASSERT_NO_THROW(h5link::create_internal_link(target,root_group,"link_1"));
     CPPUNIT_ASSERT(root_group.exists("link_1"));
+    H5Group lg = root_group.open("link_1");
+    CPPUNIT_ASSERT(lg.link_type()==nxlink_type::SOFT);
 
     //check for exceptions
     target = path_from_string("test.nx:///test/data");
@@ -90,4 +95,5 @@ void H5LinkTest::test_external()
     CPPUNIT_ASSERT_THROW(h5link::create_external_link(target,root_group,"external"),
             pni::core::value_error);
 }
+
 

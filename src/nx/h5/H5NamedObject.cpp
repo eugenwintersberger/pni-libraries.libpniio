@@ -190,6 +190,12 @@ namespace h5{
         
     }
 
+    H5Object H5NamedObject::parent() const
+    {
+
+        return H5Object();
+    }
+
 
 //end of namespace
 }

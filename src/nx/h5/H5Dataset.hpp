@@ -677,7 +677,7 @@ namespace h5{
             Method returns the parent group of the dataset. 
             \return parent group.
             */
-            H5Group parent() const;
+            virtual H5Object parent() const;
 
 
             //===================reading data methods==========================

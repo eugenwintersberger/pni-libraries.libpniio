@@ -131,6 +131,8 @@ namespace h5{
             */
             pni::io::nx::nxlink_type link_type() const;
 
+            virtual H5Object parent() const;
+
     };
 
 //end of namespace

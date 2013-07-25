@@ -203,7 +203,7 @@ namespace h5{
             Returns the parent group und which this group object is linked.
             \return parent group 
             */
-            virtual H5Group parent() const { return open(base()); }
+            virtual H5Object parent() const { return open(base()); }
 
             //-----------------------------------------------------------------
             /*! \brief number of child nodes

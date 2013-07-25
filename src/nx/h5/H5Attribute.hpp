@@ -276,7 +276,7 @@ namespace h5{
             attribute.
             \return H5Object instance
             */
-            H5Object parent() const;
+            virtual H5Object parent() const;
     };
 
 

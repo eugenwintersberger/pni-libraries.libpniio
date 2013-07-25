@@ -162,8 +162,8 @@ void H5GroupTest::test_parent()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     H5Group g1("group1/data",file);
-    CPPUNIT_ASSERT(g1.parent().name() == "group1");
+    CPPUNIT_ASSERT(H5Group(g1.parent()).name() == "group1");
     H5Group p(g1.parent());
 
-    CPPUNIT_ASSERT(p.parent().name() == "/");
+    CPPUNIT_ASSERT(H5Group(p.parent()).name() == "/");
 }
