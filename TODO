@@ -1,14 +1,11 @@
-Todo list for libpninx
+Todo list for libpniio
 =======================
 
-23.11.2010:
-----------
--> implement locks to make the library thread-safe!!!!
--> add support for uninterpreted binary data
--> add selection object for partial io
--> documentation unfinished
--> add example program
--> add python interface
--> complete licensing
--> implement iterator
--> implement caching to improve IO performance
+TODO for new relase libpniio1.0.9.5
+-----------------------------------
+1.) get linking right
+2.) get common functionality for low level and variant types
+3.) get partial IO for attributes
+4.) improve testing
+
+
