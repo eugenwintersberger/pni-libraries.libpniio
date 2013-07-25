@@ -21,7 +21,7 @@ src_list.append("H5AttributeObject.cpp")
 src_list.append("H5Group.cpp")
 src_list.append("H5Dataset.cpp")
 src_list.append("H5File.cpp")
-src_list.append("H5Link.cpp")
+src_list.append("h5link.cpp")
            
 #building shared and static objects
 shared_objects = build_env.SharedObject(src_list)

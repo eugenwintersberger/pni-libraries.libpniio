@@ -84,7 +84,6 @@ class H5DatasetTest:public CppUnit::TestFixture
         CPPUNIT_TEST(test_array_data<binary>);
         CPPUNIT_TEST(test_string_array_data);
         CPPUNIT_TEST(test_bool_array_data);
-        //CPPUNIT_TEST(test_linking);
 
         CPPUNIT_TEST(test_selection<uint8>);
         CPPUNIT_TEST(test_selection<int8>);
@@ -120,7 +119,6 @@ class H5DatasetTest:public CppUnit::TestFixture
         void test_string_scalar_data();
         void test_bool_scalar_data();
         void test_bool_array_data();
-        void test_linking();
         template<typename T> void test_selection();
         void test_string_selection();
         void test_bool_selection();

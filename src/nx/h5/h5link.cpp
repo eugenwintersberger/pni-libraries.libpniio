@@ -27,7 +27,7 @@
 #include "H5Dataset.hpp"
 #include "H5Group.hpp"
 #include "H5File.hpp"
-#include "H5Link.hpp"
+#include "h5link.hpp"
 
 #include "h5_error_stack.hpp"
 #include "../nxexceptions.hpp"
@@ -38,37 +38,51 @@ namespace nx{
 namespace h5{
 
     //===============implementation of private methods=========================
-    void H5Link::__split_path(const string &path,string &file,string &opath)
+    string h5link::_nx2hdf5path(const nxpath &p)
     {
-        size_t cpos = path.find_first_of(':');
+        string h5p;
 
-        if(cpos == string::npos)
+        if(p.is_absolute())
+            h5p = "/";
+
+        size_t index = 0;
+        for(auto iter = p.begin();iter!=p.end();++iter,++index)
         {
-            //if there is no colon in the path the link should be 
-            //internal
-            file = "";
-            opath = path;
+            string element = iter->first;
+            if(element.empty())
+                throw pni::core::value_error(EXCEPTION_RECORD,
+                        "The Nexus path ["+string_from_path(p)+"]"
+                        " contains element without a name!");
+
+            //add element
+            h5p += element;
+
+            //need a trailing / for all objects except the last one
+            if(index != p.size()-1) h5p += "/";
         }
-        else if(cpos != 0)
-        {
-            //if the colon appears not in the first position of the 
-            //path string this is most probably an external link
-            file = string(path,0,cpos);
-            opath = string(path,cpos+1);
-        }
-        else throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
-                "Invalid target string!\n\n"+get_h5_error_string());
+
+        return h5p;
     }
 
-    //-------------------------------------------------------------------------
-    void H5Link::__create_ext_link(const string &file,const string &opath,
-                                   const H5Group &ref,const string &name)
-    {
-        hid_t lcpl = H5Pcreate(H5P_LINK_CREATE);
-        H5Pset_create_intermediate_group(lcpl,1);
 
-        herr_t err = H5Lcreate_external(file.c_str(),opath.c_str(),
-                ref.id(),name.c_str(),lcpl,H5P_DEFAULT);
+    //-------------------------------------------------------------------------
+    void h5link::create_external_link(const nxpath &path,const H5Group &loc,
+                                      const string &name)
+    {
+        if(path.filename().empty())
+            throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
+                    "For an external link a target filename must be provided!");
+
+        if(!path.is_absolute())
+            throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
+                    "For an external link the target path must be absolute!");
+
+        //convert the user provided path to an HDF5 path
+        string h5path = _nx2hdf5path(path);
+
+        herr_t err = H5Lcreate_external(path.filename().c_str(),h5path.c_str(),
+                                        loc.id(),name.c_str(),
+                                        H5P_DEFAULT,H5P_DEFAULT);
         if(err < 0)
             throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
                     "Error creating external link!\n\n"+get_h5_error_string());
@@ -76,45 +90,25 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    void H5Link::__create_int_link(const string &opath,const H5Group &ref,
-                                   const string &name)
+    void h5link::create_internal_link(const nxpath &target,const H5Group &loc,
+                                      const string &name)
     {
-        hid_t lcpl = H5Pcreate(H5P_LINK_CREATE);
-        H5Pset_create_intermediate_group(lcpl,1);
+        if(!target.filename().empty())
+            throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
+                    "Target paths for internal links must not contain a "
+                    "filename!");
 
-        herr_t err = H5Lcreate_soft(opath.c_str(),ref.id(),name.c_str(),
-                lcpl,H5P_DEFAULT);
+        string target_path = _nx2hdf5path(target);
+
+
+        herr_t err = H5Lcreate_soft(target_path.c_str(),loc.id(),
+                                    name.c_str(),H5P_DEFAULT,H5P_DEFAULT);
         if(err < 0)
             throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
                     "Error creating internal link!\n\n"+
                     get_h5_error_string());
     }
 
-    //================implementation of public methods=========================
-    void H5Link::create(const string &s,const H5Group &ref,const string &name)
-    {
-        string filepath,opath;
-
-        __split_path(s,filepath,opath);
-
-        if(filepath != "")
-            //create an external link
-            __create_ext_link(filepath,opath,ref,name);
-        else
-            __create_int_link(opath,ref,name);
-    }
-
-    //-------------------------------------------------------------------------
-    void H5Link::create(const H5Group &g,const H5Group &ref,const string &name)
-    {
-        __create_int_link(g.path(),ref,name);
-    }
-
-    //-------------------------------------------------------------------------
-    void H5Link::create(const H5Dataset &d,const H5Group &ref,const string &n)
-    {
-        __create_int_link(d.path(),ref,n);
-    }
 
 
 //end of namespace

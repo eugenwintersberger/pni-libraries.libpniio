@@ -129,7 +129,7 @@ namespace h5{
             necessary for other object types.
             \return link type
             */
-            pni::io::nx::link_type link_type() const;
+            pni::io::nx::nxlink_type link_type() const;
 
     };
 

@@ -28,7 +28,9 @@
 
 #include "H5Dataset.hpp"
 #include "H5ObjectType.hpp"
-#include "H5Link.hpp"
+#include "h5link.hpp"
+#include "../nxpath.hpp"
+#include "../nxpath_utils.hpp"
 
 
 namespace pni{
@@ -294,16 +296,31 @@ namespace h5{
     }
 
     //-----------------------------------------------------------------
+    /*
     void H5Dataset::link(const string &linkname) const
     {
-        H5Link::create(path(),parent(),linkname);
+        using pni::io::nx::nxpath;
+        using pni::io::nx::path_from_string;
+
+        nxpath target_path = path_from_string(path());
+        nxpath local_path  = path_from_string(linkname);
+
+        h5link::create_internal_link(target_path,parent(),local_path);
     }
+    */
 
     //------------------------------------------------------------------
+    /*
     void H5Dataset::link(const H5Group &g,const string &n) const
     {
-        H5Link::create(path(),g,n);
+        using pni::io::nx::nxpath;
+        using pni::io::nx::path_from_string;
+
+        nxpath target_path = path_from_string(path());
+        nxpath local_path  = path_from_string(n);
+        h5link::create_internal_link(target_path,g,local_path);
     }
+    */
 
     //------------------------------------------------------------------
     H5Group H5Dataset::parent() const

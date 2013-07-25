@@ -31,10 +31,12 @@ extern "C"{
 
 #include "H5Group.hpp"
 #include "H5Dataset.hpp"
-#include "H5Link.hpp"
+#include "h5link.hpp"
 
 #include "h5_error_stack.hpp"
 #include "../nxexceptions.hpp"
+#include "../nxpath.hpp"
+#include "../nxpath_utils.hpp"
 
 namespace pni{
 namespace io{
@@ -305,22 +307,50 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
+    /*
     void H5Group::link(const string &name) const
     {
-        H5Link::create(path(),*this,name);
+        using pni::io::nx::nxpath;
+        using pni::io::nx::path_from_string;
+
+        //ok - this is the location of this group within the file
+        nxpath target_path = path_from_string(path());
+        nxpath local_path = path_from_string(name);
+
+        h5link::create_internal_link(target_path,*this,local_path);
     }
+    */
 
     //-------------------------------------------------------------------------
+    /*
     void H5Group::link(const H5Group &ref,const string &name) const
     {
-        H5Link::create(path(),ref,name);
+        using pni::io::nx::nxpath;
+        using pni::io::nx::path_from_string;
+
+        nxpath target_path = path_from_string(path());
+        nxpath local_path  = path_from_string(name);
+        h5link::create_internal_link(target_path,ref,local_path);
     }
+    */
 
     //-------------------------------------------------------------------------
+    /*
     void H5Group::link(const string &path,const string &name) const
     {
-        H5Link::create(path,*this,name);
+        using pni::io::nx::nxpath;
+        using pni::io::nx::path_from_string;
+        
+        //need to add a bit more brain here
+        nxpath target_path = path_from_string(path);
+        nxpath local_path  = path_from_string(name);
+    
+        if(target_path.filename().empty())
+            h5link::create_internal_link(target_path,*this,local_path);
+        else
+            h5link::create_external_link(target_path,*this,local_path);
     }
+    */
 
     //-------------------------------------------------------------------------
     size_t H5Group::nchildren() const

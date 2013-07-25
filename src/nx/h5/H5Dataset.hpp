@@ -767,7 +767,7 @@ namespace h5{
             only a local link can be established.
             \param path name of the new link to this object
             */
-            void link(const string &path) const;
+            //void link(const string &path) const;
 
             //-----------------------------------------------------------------
             /*! 
@@ -779,7 +779,7 @@ namespace h5{
             \param g group where the link should be placed
             \param n name of the new link
             */
-            void link(const H5Group &g,const string &n) const;
+            //void link(const H5Group &g,const string &n) const;
 
             //-----------------------------------------------------------------
             /*!

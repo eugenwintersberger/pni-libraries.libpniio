@@ -32,6 +32,8 @@ extern "C"{
 #include <pni/core/types.hpp>
 #include <pni/core/exceptions.hpp>
 
+#include "../nxpath.hpp"
+#include "../nxpath_utils.hpp"
 
 namespace pni{
 namespace io {
@@ -42,10 +44,8 @@ namespace h5{
     //avoid namespace collisions with std
     using pni::core::exception;
     using pni::core::string;
+    using pni::io::nx::nxpath;
 
-    //some forward declarations
-    class H5File;
-    class H5Dataset;
     class H5Group;
    
     /*! 
@@ -54,70 +54,73 @@ namespace h5{
     This class holds only static methods which can be used
     to create internal and external links. 
     */
-    class H5Link
+    class h5link
     {
         private:
-            /*! 
-            \brief split the target path
+            /*!
+            \brief convert a Nexus path to an HDF5 path
 
-            This method splits the target path into a file and a object-path
-            part. If the former one is an empty string the like that must be
-            created is an internal link.  Otherwise an external link will be
-            created.
-            \throws pni::io::nx::nxlink_error in case of errors
-            \param path target path provided by the user
-            \param file will hold the file portion of the path
-            \param opath will hold the object portion of the path
+            This static method converts a Nexus path to an HDF5 path. HDF5
+            requires that all group and field names are given. Thus, one cannot
+            use just the groups class to identify a group. 
+            If the name of a group or field is not given a
+            pni::core::value_error is thrown.
+
+            \throws pni::core::value_error if element name is missing
+            \param p Nexus path object
+            \return HDF5 path as a string
             */
-            static void __split_path(const string &path,string &file,
-                    string &opath);
+            static string _nx2hdf5path(const nxpath &p);
 
-            //-----------------------------------------------------------------
+
+        public:
+
             /*! 
             \brief create an external link
 
-            Create an external link to an object.
-            \throws pni::io::nx::nxlink_error in case of errors
-            \param file path to the file where to find the target
-            \param opath path of the object in the external file
-            \param ref reference object for the link
-            \param name name of the new link
+            The target path for an external link must be a full Nexus path
+            including a filename. If it does not contain a filename nxlink_error
+            will be thrown. name determines the name of the link as a child of
+            loc. The target path must not contain element without a name (HDF5
+            cannot handle such situations) otherwise a value_error exception
+            will be thrown.
+
+            \throws pni::io::nx::nxlink_error in case of all errors
+            \throws pni::core::value_error for path elements wihtout name
+            \param target path of the links target
+            \param loc location where the link should be created
+            \param name linkname below loc
             */
-            static void __create_ext_link(const string &file,
-                    const string &opath,const H5Group &ref,
-                    const string &name);
+            static void create_external_link(const nxpath &target,
+                                             const H5Group &loc,
+                                             const string &name);
 
             //-----------------------------------------------------------------
-            /*! 
+            /*!
             \brief create an internal link
 
-            Creates and internal link to an object in the same file as the ref
-            object.
-            \throws pni::io::nx::nxlink_error in case of errors
-            \param opath path to the target object
-            \param ref reference object in the file
-            \param n name of the new link
+            Unlike for external links in the target path can be either absolute
+            in the file or relative to loc. name determines the name of the link
+            below loc. target_path must not have elements without a name. In
+            such a case a value_error will be thrown. In addition the
+            target_path Nexus path must not contain a file name.
+
+            \throws pni::core::value_error if the target path contains elements
+            without an object name
+            \throws pni::io::nx::nxlink_error if linking fails
+            \param target path to the links target
+            \param loc location for the new link
+            \param name name of the object below loc
             */
-            static void __create_int_link(const string &opath,
-                    const H5Group &ref,const string &n);
-        public:
+            static void create_internal_link(const nxpath &target,
+                                             const H5Group &loc,
+                                             const string &name);
+                                 
 
-            //-----------------------------------------------------------------
-            //! create a link
-            static void create(const string &s,const H5Group &ref,
-                    const string &name);
-
-            //-----------------------------------------------------------------
-            //! create a link from a group object
-            static void create(const H5Group &g,const H5Group &ref,
-                    const string &name);
-
-            //-----------------------------------------------------------------
-            //! create a link from a dataset object
-            static void create(const H5Dataset &d,const H5Group &ref,
-                    const string &name);
 
     };
+
+
 
 //end of namespace
 }

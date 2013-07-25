@@ -212,9 +212,12 @@ namespace h5{
             path under which this group can be accessed is given by path. This
             may either be an absolute or relative path (with respect to this
             group).
+            \warning This function is deprecated and will be removed in one of
+            the next releases!
+            \warning use the nlink function template for linking!
             \param path new link path
             */
-            void link(const string &path) const;
+            //void link(const string &path) const;
 
             //-----------------------------------------------------------------
             /*! \brief create a link to this group
@@ -224,7 +227,7 @@ namespace h5{
             \param ref reference group
             \param path new link path
             */
-            void link(const H5Group &ref,const string &path) const;
+            //void link(const H5Group &ref,const string &path) const;
 
             //-----------------------------------------------------------------
             /*! \brief creates a local or external link
@@ -235,7 +238,7 @@ namespace h5{
             \param path path to the object from which to link
             \param name name of the link with respect to this group
             */
-            void link(const string &path,const string &name) const;
+            //void link(const string &path,const string &name) const;
 
             //-----------------------------------------------------------------
             /*! \brief number of child nodes

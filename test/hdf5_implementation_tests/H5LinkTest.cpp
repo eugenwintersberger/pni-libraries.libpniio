@@ -21,6 +21,8 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
+#include <pni/io/nx/nxpath.hpp>
+#include <pni/io/nx/nxpath_utils.hpp>
 #include <boost/current_function.hpp>
 #include "H5LinkTest.hpp"
 
@@ -39,70 +41,32 @@ void H5LinkTest::tearDown(){
     _file2.close();
 }
 
+void H5LinkTest::test_groups_internal()
+{
+    using pni::io::nx::nxpath;
+    using pni::io::nx::path_from_string;
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    H5Group root_group(_file1.open("/"));
+    H5Group g("/test/data",_file1);
+
+    //straight forward - the link name is just a single name
+    CPPUNIT_ASSERT_NO_THROW(
+    h5link::create_internal_link(
+        path_from_string(g.path()),
+        root_group,"link_1")
+            );
+    CPPUNIT_ASSERT(root_group.exists("link_1"));
+}
+
 //------------------------------------------------------------------------------
 void H5LinkTest::test_internal()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    H5Datatype type = H5DatatypeFactory::create_type<float64>();
-    H5Dataspace space;
-    H5Dataset ds("data",_file1,type,space);
-    float64 value = 100.1234;
-    CPPUNIT_ASSERT_NO_THROW(ds.write(&value));
-
-    CPPUNIT_ASSERT_NO_THROW(H5Link::create("/data",_file1,"data_1_link_1"));
-    CPPUNIT_ASSERT_NO_THROW(H5Link::create("data",_file1,"data_1_link_2"));
-    CPPUNIT_ASSERT_NO_THROW(H5Link::create(ds,_file1,"data_1_link_3"));
-
-    H5Dataset dread;
-    CPPUNIT_ASSERT_NO_THROW(dread = _file1.open("data_1_link_1"));
-    float64 read;
-    CPPUNIT_ASSERT_NO_THROW(dread.read(&read));
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(value,read,1.e-6);
-    
-    CPPUNIT_ASSERT_NO_THROW(dread = _file1.open("data_1_link_2"));
-    CPPUNIT_ASSERT_NO_THROW(dread.read(&read));
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(value,read,1.e-6);
-
-    CPPUNIT_ASSERT_NO_THROW(dread = _file1.open("data_1_link_3"));
-    CPPUNIT_ASSERT_NO_THROW(dread.read(&read));
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(value,read,1.e-6);
-
-    //links can also be created in advance
-    CPPUNIT_ASSERT_NO_THROW(H5Link::create("/detector/counts",_file1,"detdat"));
-    type = H5DatatypeFactory::create_type<uint16>();
-    CPPUNIT_ASSERT_NO_THROW(ds=H5Dataset("/detector/counts",_file1,type,space));
-    uint16 scalar = 1024;
-    uint16 sread = 0;
-    CPPUNIT_ASSERT_NO_THROW(ds.write(&scalar));
-    dread = _file1.open("detdat");
-    CPPUNIT_ASSERT_NO_THROW(dread.read(&sread));
-    CPPUNIT_ASSERT(sread == scalar);
 }
 
 //------------------------------------------------------------------------------
 void H5LinkTest::test_external()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    H5Datatype type = H5DatatypeFactory::create_type<float64>();
-    H5Dataspace space;
-
-    //create target in the first file
-    H5Dataset dwrite("data",_file1,type,space);
-    //write some data
-    float64 wval = -1.25091;
-    CPPUNIT_ASSERT_NO_THROW(dwrite.write(&wval));
-
-    //create the external link in the second file
-
-    CPPUNIT_ASSERT_NO_THROW(H5Link::create("H5LinkTest1.h5:/data",
-                _file2,"external/data"));
-
-    float64 read;
-    H5Dataset dread = _file2.open("/external/data");
-    CPPUNIT_ASSERT_NO_THROW(dread.read(&read));
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(wval,read,1.e-6);
 
 }
 

@@ -171,6 +171,23 @@ namespace h5{
     pni::io::nx::nxlink_type H5NamedObject::link_type() const
     {
         H5L_info_t info;
+
+
+        if(H5Lget_info(id(),NULL,&info,H5P_DEFAULT)<0)
+        {
+            //throw an exception here
+        }
+
+        if(info.type == H5L_TYPE_HARD)
+            return pni::io::nx::nxlink_type::HARD;
+        else if(info.type == H5L_TYPE_SOFT)
+            return pni::io::nx::nxlink_type::SOFT;
+        else if(info.type == H5L_TYPE_EXTERNAL)
+            return pni::io::nx::nxlink_type::EXTERNAL;
+        else 
+            throw pni::core::type_error(EXCEPTION_RECORD,
+                    "Link is of unknown type!");
+        
     }
 
 
