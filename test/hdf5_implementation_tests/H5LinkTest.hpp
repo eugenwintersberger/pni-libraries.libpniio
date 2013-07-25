@@ -42,7 +42,6 @@ using namespace pni::io::nx::h5;
 
 class H5LinkTest:public CppUnit::TestFixture{
         CPPUNIT_TEST_SUITE(H5LinkTest);
-        CPPUNIT_TEST(test_groups_internal);
         CPPUNIT_TEST(test_internal);
         CPPUNIT_TEST(test_external);
         CPPUNIT_TEST_SUITE_END();
@@ -52,7 +51,6 @@ class H5LinkTest:public CppUnit::TestFixture{
     public:
         void setUp();
         void tearDown();
-        void test_groups_internal();
         void test_internal();
         void test_external();
 };

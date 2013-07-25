@@ -41,7 +41,7 @@ void H5LinkTest::tearDown(){
     _file2.close();
 }
 
-void H5LinkTest::test_groups_internal()
+void H5LinkTest::test_internal()
 {
     using pni::io::nx::nxpath;
     using pni::io::nx::path_from_string;
@@ -51,22 +51,43 @@ void H5LinkTest::test_groups_internal()
     H5Group g("/test/data",_file1);
 
     //straight forward - the link name is just a single name
-    CPPUNIT_ASSERT_NO_THROW(
-    h5link::create_internal_link(
-        path_from_string(g.path()),
-        root_group,"link_1")
-            );
+    nxpath target = path_from_string(g.path());
+    CPPUNIT_ASSERT_NO_THROW(h5link::create_internal_link(target,root_group,"link_1"));
     CPPUNIT_ASSERT(root_group.exists("link_1"));
-}
 
-//------------------------------------------------------------------------------
-void H5LinkTest::test_internal()
-{
+    //check for exceptions
+    target = path_from_string("test.nx:///test/data");
+    CPPUNIT_ASSERT_THROW(h5link::create_internal_link(target,root_group,"link_2"),
+                         pni::io::nx::nxlink_error);
+
+    target = path_from_string("/:NXentry/data");
+    CPPUNIT_ASSERT_THROW(h5link::create_internal_link(target,root_group,"link_3"),
+                         pni::core::value_error);
 }
 
 //------------------------------------------------------------------------------
 void H5LinkTest::test_external()
 {
+    using pni::io::nx::nxpath;
+    using pni::io::nx::path_from_string;
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
+    H5Group g("/test/data",_file1);
+
+    H5Group root_group(_file2.open("/"));
+    //create a link to the group data in the first file
+    nxpath target = path_from_string("H5LinkTest1.h5:///test/data");
+    CPPUNIT_ASSERT_NO_THROW(h5link::create_external_link(target,root_group,"external"));
+    CPPUNIT_ASSERT(root_group.exists("external"));
+
+    //echeck exceptions
+    target = path_from_string("/test/data");
+    CPPUNIT_ASSERT_THROW(h5link::create_external_link(target,root_group,"ext2"),
+            pni::io::nx::nxlink_error);
+
+
+    target = path_from_string("H5LinkTest1.h5:///:NXentry/data");
+    CPPUNIT_ASSERT_THROW(h5link::create_external_link(target,root_group,"external"),
+            pni::core::value_error);
 }
 
