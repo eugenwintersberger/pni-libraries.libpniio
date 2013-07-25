@@ -173,7 +173,7 @@ namespace h5{
         H5L_info_t info;
 
 
-        if(H5Lget_info(id(),NULL,&info,H5P_DEFAULT)<0)
+        if(H5Lget_info(parent().id(),name().c_str(),&info,H5P_DEFAULT)<0)
         {
             //throw an exception here
         }
