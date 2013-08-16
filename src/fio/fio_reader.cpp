@@ -26,7 +26,7 @@
 
 #include <sstream>
 #include <string>
-#include "fio_reader.hpp"
+#include <pni/io/fio/fio_reader.hpp>
 
 namespace pni{
 namespace io{

@@ -24,7 +24,7 @@
  *
  */
 
-#include "ifd_entry_reader.hpp"
+#include <pni/io/tiff/ifd_entry_reader.hpp>
 
 namespace pni{
 namespace io{

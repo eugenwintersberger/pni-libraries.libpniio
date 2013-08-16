@@ -27,8 +27,8 @@
  *
  */
 
-#include "cbf_reader.hpp"
-#include "strutils.hpp"
+#include <pni/io/cbf/cbf_reader.hpp>
+#include <pni/io/strutils.hpp>
 #include <pni/core/exceptions.hpp>
 #include <pni/core/types.hpp>
 

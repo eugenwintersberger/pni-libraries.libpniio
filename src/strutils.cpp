@@ -7,7 +7,7 @@
 
 #include<string>
 
-#include "strutils.hpp"
+#include <pni/io/strutils.hpp>
 
 std::string strip(std::string &s,const char *begrem,const char *endrem){
     size_t start,stop;

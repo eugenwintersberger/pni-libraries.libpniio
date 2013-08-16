@@ -25,7 +25,7 @@
  */
 
 
-#include "column_info.hpp"
+#include <pni/io/column_info.hpp>
 
 namespace pni{
 namespace io{

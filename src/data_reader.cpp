@@ -26,7 +26,7 @@
 
 
 #include <pni/core/exceptions.hpp>
-#include "data_reader.hpp"
+#include <pni/io/data_reader.hpp>
 
 
 namespace pni{

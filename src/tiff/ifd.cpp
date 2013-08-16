@@ -26,8 +26,8 @@
  *
  */
 
-#include "ifd.hpp"
-#include "ifd_entry.hpp"
+#include <pni/io/tiff/ifd.hpp>
+#include <pni/io/tiff/ifd_entry.hpp>
 
 namespace pni{
 namespace io{

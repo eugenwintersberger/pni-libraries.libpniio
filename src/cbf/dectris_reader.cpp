@@ -26,7 +26,7 @@
 
 #include <boost/regex.hpp>
 #include <pni/core/exceptions.hpp>
-#include "dectris_reader.hpp"
+#include <pni/io/cbf/dectris_reader.hpp>
 
 
 namespace pni{
