@@ -26,11 +26,11 @@
 #include <boost/current_function.hpp>
 #include <pni/core/dbuffer.hpp>
 
-#include "H5Dataset.hpp"
-#include "H5ObjectType.hpp"
-#include "h5link.hpp"
-#include "../nxpath.hpp"
-#include "../nxpath_utils.hpp"
+#include <pni/io/nx/h5/H5Dataset.hpp>
+#include <pni/io/nx/h5/H5ObjectType.hpp>
+#include <pni/io/nx/h5/h5link.hpp>
+#include <pni/io/nx/nxpath.hpp>
+#include <pni/io/nx/nxpath_utils.hpp>
 
 
 namespace pni{

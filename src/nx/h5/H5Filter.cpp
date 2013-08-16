@@ -25,7 +25,7 @@
 #include <pni/core/exceptions.hpp>
 
 
-#include "H5Filter.hpp"
+#include <pni/io/nx/h5/H5Filter.hpp>
 
 namespace pni {
 namespace io {

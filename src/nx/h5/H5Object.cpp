@@ -24,9 +24,9 @@
  */
 
 #include <iostream>
-#include "H5Object.hpp"
-#include "h5_error_stack.hpp"
-#include "../nxexceptions.hpp"
+#include <pni/io/nx/h5/H5Object.hpp>
+#include <pni/io/nx/h5/h5_error_stack.hpp>
+#include <pni/io/nx/nxexceptions.hpp>
 #include "../../deprecation_warning.hpp"
 
 namespace pni{

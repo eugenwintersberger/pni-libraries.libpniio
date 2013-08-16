@@ -24,7 +24,7 @@
  */
 
 
-#include "H5AttributeObject.hpp"
+#include <pni/io/nx/h5/H5AttributeObject.hpp>
 
 
 

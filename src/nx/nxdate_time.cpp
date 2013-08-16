@@ -22,7 +22,7 @@
  *      Author: eugen
  */
 
-#include "nxdate_time.hpp"
+#include <pni/io/nx/nxdate_time.hpp>
 
 namespace pni {
 namespace io {

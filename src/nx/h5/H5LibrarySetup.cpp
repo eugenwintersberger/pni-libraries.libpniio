@@ -22,9 +22,9 @@
  *      Author: Eugen Wintersberger
  */
 
-#include "H5LibrarySetup.hpp"
+#include <pni/io/nx/h5/H5LibrarySetup.hpp>
 
-#include "filters/lzf_filter.h"
+#include <pni/io/nx/h5/filters/lzf_filter.h>
 
 namespace pni {
 namespace io {

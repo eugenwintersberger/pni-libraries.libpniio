@@ -22,9 +22,9 @@
  *      Author: Eugen Wintersberger
  */
 
-#include "H5DeflateFilter.hpp"
-#include "h5_error_stack.hpp"
-#include "../nxexceptions.hpp"
+#include <pni/io/nx/h5/H5DeflateFilter.hpp>
+#include <pni/io/nx/h5/h5_error_stack.hpp>
+#include <pni/io/nx/nxexceptions.hpp>
 
 namespace pni {
 namespace io {

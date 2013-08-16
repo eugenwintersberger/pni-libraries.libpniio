@@ -25,8 +25,8 @@
 #include <locale>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include "../../parsers/exceptions.hpp"
-#include "xml_node.hpp"
+#include <pni/io/parsers/exceptions.hpp>
+#include <pni/io/nx/xml/xml_node.hpp>
 
 namespace pni{
 namespace io{

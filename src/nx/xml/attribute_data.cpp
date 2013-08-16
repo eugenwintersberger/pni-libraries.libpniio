@@ -20,7 +20,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#include "attribute_data.hpp"
+#include <pni/io/nx/xml/attribute_data.hpp>
 #include <boost/algorithm/string.hpp>
 
 namespace pni{

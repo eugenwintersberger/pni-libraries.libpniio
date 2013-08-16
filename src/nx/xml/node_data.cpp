@@ -21,8 +21,8 @@
  */
 
 
-#include "../../parsers/array_parser.hpp"
-#include "node_data.hpp"
+#include <pni/io/parsers/array_parser.hpp>
+#include <pni/io/nx/xml/node_data.hpp>
 #include <boost/algorithm/string.hpp>
 
 namespace pni{

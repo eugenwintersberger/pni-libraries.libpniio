@@ -23,11 +23,11 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#include "H5DatatypeFactory.hpp"
+#include <pni/io/nx/h5/H5DatatypeFactory.hpp>
 #include <sstream>
 
-#include "../nxexceptions.hpp"
-#include "h5_error_stack.hpp"
+#include <pni/io/nx/nxexceptions.hpp>
+#include <pni/io/nx/h5/h5_error_stack.hpp>
 
 namespace pni{
 namespace io{
