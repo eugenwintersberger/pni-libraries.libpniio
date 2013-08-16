@@ -32,7 +32,7 @@
 #include<boost/current_function.hpp>
 
 #include <pni/core/darray.hpp>
-#include "spreadsheet_reader.hpp"
+#include "../spreadsheet_reader.hpp"
 
 namespace pni{
 namespace io{

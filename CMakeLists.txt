@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 include(GNUInstallDirs)
-project(PNIIO)
+project(PNICORE)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
 #===========================provide some user options==========================
@@ -27,6 +27,6 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}/include")
 add_subdirectory("configure")
 add_subdirectory("include")
 add_subdirectory("src")
-add_subdirectory("doc")
-add_subdirectory("test")
+#add_subdirectory("doc")
+#add_subdirectory("test")
 

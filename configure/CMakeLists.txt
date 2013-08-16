@@ -116,5 +116,8 @@ endif(NOT TEMPLATE_ALIAS_TEST)
 
 #==========================check for libraries=====================================
 #the only thing we have to do here is to check for pnicore
-pkg_search_module(PNIIO_BUILD REQUIRED pnicore)
+pkg_search_module(PNICORE_PKG REQUIRED pnicore)
+pkg_search_module(CPPUNIT_PKG REQUIRED cppunit)
+
+link_directories(${CPPUNIT_PKG_LIBRARY_DIRS})
 
