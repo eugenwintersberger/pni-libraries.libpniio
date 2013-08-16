@@ -1,11 +1,11 @@
-prefix = @PREFIX@ 
+prefix = @CMAKE_INSTALL_PREFIX@ 
 exec_prefix = ${prefix}
-includedir = @INCDIR@
+includedir = ${prefix}/include
 libdir = ${prefix}/lib
 
-Name: @LIBNAME@
-Description: PNI Nexus library
-Version: @VERSION@
-Cflags: -I${includedir} @INCPATH@ @DEFINES@
+Name: @CMAKE_PROJECT_NAME@
+Description: PNI IO library
+Version: @LIBRARY_VERSION@
+Cflags: -I${includedir} 
 Requires: pnicore
-Libs: -L${libdir} -l@LIBNAME@ @LIBPATH@ @LIBS@
+Libs: -L${libdir} -lpniio
