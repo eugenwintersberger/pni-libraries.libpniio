@@ -1,0 +1,42 @@
+from os import path
+
+Import("build_env")
+
+#sources which must be compiled
+src_list = []
+src_list.append("H5LibrarySetup.cpp")
+src_list.append("H5Exceptions.cpp")
+src_list.append("H5ErrorStack.cpp")
+src_list.append("H5Error.cpp")
+src_list.append("H5Filter.cpp")
+src_list.append("H5LZFFilter.cpp")
+src_list.append("H5DeflateFilter.cpp")
+src_list.append("H5Object.cpp")
+src_list.append("H5Dataspace.cpp")
+src_list.append("H5Datatype.cpp")
+src_list.append("H5DatatypeFactory.cpp")
+src_list.append("H5NamedObject.cpp")
+src_list.append("H5Attribute.cpp")
+src_list.append("H5AttributeObject.cpp")
+src_list.append("H5Group.cpp")
+src_list.append("H5Dataset.cpp")
+src_list.append("H5File.cpp")
+src_list.append("h5link.cpp")
+           
+#building shared and static objects
+shared_objects = build_env.SharedObject(src_list)
+static_objects = build_env.StaticObject(src_list)
+
+#build filter codes
+(filter_shared_objects,filter_static_objects) = SConscript("filters/SConscript")
+
+#add filter objects to the list of shared and static objects
+shared_objects.extend(filter_shared_objects)
+static_objects.extend(filter_static_objects)
+
+#manage header installation
+inch5_inst = build_env.Install(path.join(build_env["INCDIR"],"pni/io/nx/h5"),Glob("*.hpp"))
+build_env.Alias("install",[inch5_inst])
+
+#return the shared and static objects to the calling SConscript
+Return("shared_objects static_objects")
