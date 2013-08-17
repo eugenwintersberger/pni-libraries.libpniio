@@ -1,6 +1,8 @@
 include(CheckTypeSize)
 include(CheckCXXSourceCompiles)
 include(FindPkgConfig)
+include(FindHDF5)
+
 
 #===================================check the size of data types===============
 check_type_size(uint8_t UINT8_SIZE)
