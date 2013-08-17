@@ -8,4 +8,4 @@ Description: PNI IO library
 Version: @LIBRARY_VERSION@
 Cflags: -I${includedir} 
 Requires: pnicore
-Libs: -L${libdir} -lpniio
+Libs: -L${libdir} -lpniio -lhdf5 -lz -lboost_filesystem
