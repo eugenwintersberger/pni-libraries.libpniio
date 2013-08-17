@@ -36,14 +36,14 @@ void xml_node_test::test_node_from_file()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    xml::node n = xml::create_from_file("xml_test/node_from_str.xml");
+    xml::node n = xml::create_from_file("node_from_str.xml");
     CPPUNIT_ASSERT(!n.empty());
     CPPUNIT_ASSERT(n.size() == 1);
 
-    CPPUNIT_ASSERT_THROW(xml::create_from_file("xml_test/bla.xml"),
+    CPPUNIT_ASSERT_THROW(xml::create_from_file("bla.xml"),
                          file_error);
 
-    CPPUNIT_ASSERT_THROW(xml::create_from_file("xml_test/node_from_bad_file.xml"),
+    CPPUNIT_ASSERT_THROW(xml::create_from_file("node_from_bad_file.xml"),
             pni::io::parser_error);
 
     
