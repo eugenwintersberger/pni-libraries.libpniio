@@ -1,6 +1,6 @@
 
 NO_API_DOC           = YES
-PROJECT_NAME           = @LIBPREFIX@@LIBNAME@
+PROJECT_NAME           = @CMAKE_PROJECT_NAME@
 PROJECT_NUMBER         =
 OUTPUT_DIRECTORY       = ./
 CREATE_SUBDIRS         = NO
@@ -62,7 +62,7 @@ WARN_NO_PARAMDOC       = YES
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = ../src/ mainpage h5_implementation_classes \
+INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/../include mainpage h5_implementation_classes \
                          nxpath_code variant_code xml_code \
                          nexus_utilities nexus_io image_io ascii_io general_io
 RECURSIVE              = YES
@@ -105,7 +105,6 @@ HTML_FOOTER            =
 HTML_STYLESHEET        =
 HTML_ALIGN_MEMBERS     = YES
 GENERATE_HTMLHELP      = YES
-CHM_FILE               =@LIBPREFIX@@LIBNAME@-@VERSION@.chm 
 HHC_LOCATION           =
 GENERATE_CHI           = NO
 BINARY_TOC             = NO
@@ -166,3 +165,40 @@ GENERATE_LEGEND        = YES
 DOT_CLEANUP            = YES
 
 GENERATE_LATEX = NO
+
+DOXYFILE_ENCODING      = UTF-8
+TYPEDEF_HIDES_STRUCT   = NO
+SYMBOL_CACHE_SIZE      = 0
+EXTRACT_ANON_NSPACES   = NO
+FORCE_LOCAL_INCLUDES   = NO
+SORT_MEMBERS_CTORS_1ST = NO
+SORT_GROUP_NAMES       = NO
+SHOW_FILES             = YES
+SHOW_NAMESPACES        = YES
+INPUT_ENCODING         = UTF-8
+EXCLUDE_SYMBOLS        = 
+HTML_COLORSTYLE_HUE    = 220
+HTML_COLORSTYLE_SAT    = 100
+HTML_COLORSTYLE_GAMMA  = 80
+HTML_TIMESTAMP         = YES
+HTML_DYNAMIC_SECTIONS  = NO
+GENERATE_DOCSET        = NO
+DOCSET_FEEDNAME        = 'Documentation for @CMAKE_PROJECT_NAME@ @LIBRARY_VERSION@'
+DOCSET_BUNDLE_ID       = org.doxygen.@CMAKE_PROJECT_NAME@-@LIBARAY_VERSION@
+DOCSET_PUBLISHER_ID    = org.doxygen.DESY
+DOCSET_PUBLISHER_NAME  = DESY                      
+GENERATE_QHP           = NO
+USE_INLINE_TREES       = YES
+EXT_LINKS_IN_WINDOW    = NO
+FORMULA_FONTSIZE       = 10
+FORMULA_TRANSPARENT    = YES
+SERVER_BASED_SEARCH    = NO
+LATEX_SOURCE_CODE      = NO
+MSCGEN_PATH            =
+DOT_NUM_THREADS        = 0
+DOT_FONTNAME           = FreeSans.ttf
+DOT_FONTSIZE           = 10
+DOT_FONTPATH           =
+DOT_GRAPH_MAX_NODES    = 50
+USE_MATHJAX = YES
+WARN_FORMAT            = '$file:$line: $text'
