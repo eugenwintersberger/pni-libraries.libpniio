@@ -21,11 +21,11 @@
  *      Author: Eugen Wintersberger
  */
 
-#include "H5File.hpp"
-#include "H5Attribute.hpp"
+#include <pni/io/nx/h5/H5File.hpp>
+#include <pni/io/nx/h5/H5Attribute.hpp>
 
-#include "h5_error_stack.hpp"
-#include "../nxexceptions.hpp"
+#include <pni/io/nx/h5/h5_error_stack.hpp>
+#include <pni/io/nx/nxexceptions.hpp>
 
 #include <sstream>
 

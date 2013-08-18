@@ -25,7 +25,7 @@
  */
             
 
-#include "spreadsheet_reader.hpp"
+#include <pni/io/spreadsheet_reader.hpp>
 
 namespace pni{
 namespace io{

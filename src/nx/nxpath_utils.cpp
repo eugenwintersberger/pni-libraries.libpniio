@@ -21,7 +21,7 @@
  */
 
 #include <sstream>
-#include "nxpath_utils.hpp"
+#include <pni/io/nx/nxpath_utils.hpp>
 
 
 namespace pni{

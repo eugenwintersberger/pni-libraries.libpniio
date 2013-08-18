@@ -40,9 +40,9 @@
 
 #include <pni/core/types.hpp>
 
-#include "image_reader.hpp"
-#include "cbf/dectris_reader.hpp"
-#include "cbf/types.hpp"
+#include "../image_reader.hpp"
+#include "dectris_reader.hpp"
+#include "types.hpp"
 
 using namespace pni::core;
 

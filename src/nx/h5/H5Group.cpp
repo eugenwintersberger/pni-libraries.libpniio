@@ -29,14 +29,14 @@ extern "C"{
 #include<hdf5.h>
 }
 
-#include "H5Group.hpp"
-#include "H5Dataset.hpp"
-#include "h5link.hpp"
+#include <pni/io/nx/h5/H5Group.hpp>
+#include <pni/io/nx/h5/H5Dataset.hpp>
+#include <pni/io/nx/h5/h5link.hpp>
 
-#include "h5_error_stack.hpp"
-#include "../nxexceptions.hpp"
-#include "../nxpath.hpp"
-#include "../nxpath_utils.hpp"
+#include <pni/io/nx/h5/h5_error_stack.hpp>
+#include <pni/io/nx/nxexceptions.hpp>
+#include <pni/io/nx/nxpath.hpp>
+#include <pni/io/nx/nxpath_utils.hpp>
 
 namespace pni{
 namespace io{

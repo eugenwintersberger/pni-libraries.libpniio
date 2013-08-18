@@ -1,4 +1,4 @@
-/*! \mainpage libpninx @VERSION@ documentation
+/*! \mainpage @CMAKE_PROJECT_NAME@ @LIBRARY_VERSION@ documentation
 
 \section Introduction
 \c libpninx is a C++ implementation of the Nexus file format. Althoug the NIAC

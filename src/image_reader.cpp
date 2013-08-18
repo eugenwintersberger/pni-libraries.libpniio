@@ -26,7 +26,7 @@
  */
 
 
-#include "image_reader.hpp"
+#include <pni/io/image_reader.hpp>
 
 namespace pni{
 namespace io{

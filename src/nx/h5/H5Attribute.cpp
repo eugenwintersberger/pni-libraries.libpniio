@@ -23,9 +23,9 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#include "H5Group.hpp"
-#include "H5Dataset.hpp"
-#include "H5Attribute.hpp"
+#include <pni/io/nx/h5/H5Group.hpp>
+#include <pni/io/nx/h5/H5Dataset.hpp>
+#include <pni/io/nx/h5/H5Attribute.hpp>
 
 
 namespace pni{

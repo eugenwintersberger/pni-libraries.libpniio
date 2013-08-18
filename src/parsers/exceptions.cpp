@@ -21,7 +21,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#include "exceptions.hpp"
+#include <pni/io/parsers/exceptions.hpp>
 
 namespace pni{
 namespace io{

@@ -22,7 +22,7 @@
  *      Author: Eugen Wintersberger
  */
 
-#include "h5_error_stack.hpp"
+#include <pni/io/nx/h5/h5_error_stack.hpp>
 #include <cstdio>
 #include <cstdlib>
 #include <sstream>

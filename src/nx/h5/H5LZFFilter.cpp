@@ -22,7 +22,7 @@
  *      Author: Eugen Wintersberger
  */
 
-#include "H5LZFFilter.hpp"
+#include <pni/io/nx/h5/H5LZFFilter.hpp>
 extern "C"{
 #include "filters/lzf_filter.h"
 }

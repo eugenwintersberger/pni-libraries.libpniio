@@ -30,11 +30,11 @@
 #include<vector>
 #include<boost/current_function.hpp>
 
-#include "image_reader.hpp"
-#include "image_info.hpp"
-#include "tiff/ifd.hpp"
-#include "tiff/ifd_entry.hpp"
-#include "tiff/strip_reader.hpp"
+#include "../image_reader.hpp"
+#include "../image_info.hpp"
+#include "ifd.hpp"
+#include "ifd_entry.hpp"
+#include "strip_reader.hpp"
 
 using namespace pni::core;
 

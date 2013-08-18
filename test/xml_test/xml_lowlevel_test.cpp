@@ -82,7 +82,7 @@ void xml_lowlevel_test::test_dim2shape_1()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    root = xml::create_from_file("xml_test/dim1.xml");
+    root = xml::create_from_file("dim1.xml");
     child = root.get_child("dimensions");
 
     auto shape = xml::dim2shape<shape_t>(child);
@@ -96,7 +96,7 @@ void xml_lowlevel_test::test_dim2shape_2()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    root = xml::create_from_file("xml_test/dim2.xml");
+    root = xml::create_from_file("dim2.xml");
     child = root.get_child("dimensions");
 
     CPPUNIT_ASSERT_THROW(xml::dim2shape<shape_t>(child),shape_mismatch_error);
@@ -107,7 +107,7 @@ void xml_lowlevel_test::test_dim2shape_3()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    root = xml::create_from_file("xml_test/dim3.xml");
+    root = xml::create_from_file("dim3.xml");
     child = root.get_child("dimensions");
 
     CPPUNIT_ASSERT_THROW(xml::dim2shape<shape_t>(child),pni::io::parser_error);
@@ -118,7 +118,7 @@ void xml_lowlevel_test::test_dim2shape_4()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    root = xml::create_from_file("xml_test/dim4.xml");
+    root = xml::create_from_file("dim4.xml");
     child = root.get_child("dimensions");
 
     CPPUNIT_ASSERT_THROW(xml::dim2shape<shape_t>(child),pni::io::parser_error);
@@ -129,7 +129,7 @@ void xml_lowlevel_test::test_dim2shape_5()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    root = xml::create_from_file("xml_test/dim5.xml");
+    root = xml::create_from_file("dim5.xml");
     child = root.get_child("dimensions");
 
     CPPUNIT_ASSERT_THROW(xml::dim2shape<shape_t>(child),pni::io::parser_error);
@@ -140,7 +140,7 @@ void xml_lowlevel_test::test_createfield_1()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    root = xml::create_from_file("xml_test/field1.xml");
+    root = xml::create_from_file("field1.xml");
     child = root.get_child("field");
 
     CPPUNIT_ASSERT_NO_THROW(field = xml::create_field(root_group,child));
@@ -159,7 +159,7 @@ void xml_lowlevel_test::test_createfield_2()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    root = xml::create_from_file("xml_test/field2.xml");
+    root = xml::create_from_file("field2.xml");
     child = root.get_child("field");
 
     CPPUNIT_ASSERT_NO_THROW(field = xml::create_field(root_group,child));
@@ -178,7 +178,7 @@ void xml_lowlevel_test::test_createfield_3()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    root = xml::create_from_file("xml_test/field3.xml");
+    root = xml::create_from_file("field3.xml");
     child = root.get_child("field");
 
     CPPUNIT_ASSERT_THROW(xml::create_field(root_group,child),pni::io::parser_error);
@@ -189,7 +189,7 @@ void xml_lowlevel_test::test_createfield_4()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    root = xml::create_from_file("xml_test/field4.xml");
+    root = xml::create_from_file("field4.xml");
     child = root.get_child("field");
 
     CPPUNIT_ASSERT_THROW(xml::create_field(root_group,child),pni::io::parser_error);
@@ -200,7 +200,7 @@ void xml_lowlevel_test::test_createfield_5()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    root = xml::create_from_file("xml_test/field5.xml");
+    root = xml::create_from_file("field5.xml");
     child = root.get_child("field");
 
     CPPUNIT_ASSERT_NO_THROW(field = xml::create_field(root_group,child));
@@ -220,7 +220,7 @@ void xml_lowlevel_test::test_create_objects_1()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    root = xml::create_from_file("xml_test/object_tree1.xml");
+    root = xml::create_from_file("object_tree1.xml");
     
     CPPUNIT_ASSERT_NO_THROW(xml::create_objects(root_group,root));
     

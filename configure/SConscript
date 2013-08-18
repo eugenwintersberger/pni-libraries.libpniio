@@ -11,6 +11,25 @@ def CheckNullPtr(context):
     context.Result(result)
     return result
 
+#====================check for bind============================================
+#Check for std::bind 
+
+def CheckBind(context):
+    context.Message("Checking for std::bind function support ...")
+    result = context.TryCompile(open('src/bind_test.cpp').read(),".cpp")
+    context.Result(result)
+    return result
+
+
+#==============================================================================
+##this test checks for lambda-function support of the C++ compiler
+#
+def CheckLambdaFunctions(context):
+    context.Message("Checking for lambda function support ...")
+    result = context.TryCompile(open('src/lambda_function_test.cpp').read(),".cpp")
+    context.Result(result)
+    return result
+
 #==================check for-each construction=================================
 #Test checking for for(auto v: container) construction support
 
@@ -71,26 +90,24 @@ CustomChecks["CheckForCppRandom"] = CheckForCppRandom
 CustomChecks["CheckForConstExpr"] = CheckForConstExpr
 CustomChecks["CheckForTemplateAlias"] = CheckForTemplateAlias
 CustomChecks["CheckForEnumBug"] = CheckForEnumBug
+CustomChecks["CheckLambdaFunctions"] = CheckLambdaFunctions
+CustomChecks["CheckBind"] = CheckBind
 
 Import('env')
-try:
-    env["ENV"]["PKG_CONFIG_PATH"] = os.environ["PKG_CONFIG_PATH"]
-except:
-    pass
-
-env["ENV"]["PATH"] = "/usr/lib/ccache:"+os.environ["PATH"]
-
-try:
-    env.ParseConfig('pkg-config --libs --cflags pnicore')
-except:
-    Exit(1)
-
-    
 #start with configuration
 conf = Configure(env,custom_tests = CustomChecks)
 
 
 #checking compiler capabilities
+#
+if not conf.CheckLambdaFunctions():
+    print "lambda functions are not supported by this compiler ...!"
+    env.AppendUnique(CPPDEFINES=['NO_LAMBDA_FUNC'])
+
+if not conf.CheckBind():
+    print "std::bind not supported by this compiler ...!"
+    env.AppendUnique(CPPDEFINES=['NO_STD_BIND'])
+
 if not conf.CheckNullPtr():
     print "nullptr not supported - use NULL"
     env.AppendUnique(CPPDEFINES=[('nullptr','NULL')])
@@ -121,7 +138,7 @@ if not conf.CheckForEnumBug():
 
 #check type sizes
 if not conf.CheckTypeSize('int8_t',"#include<cstdint>",language="C++",expect=1):
-    print "int8_t size does not fit ..."
+    print "int8_t size does not fit ..." 
     Exit(1)
 
 if not conf.CheckTypeSize('uint8_t',"#include<cstdint>",language="C++",expect=1):
@@ -153,18 +170,29 @@ if not conf.CheckTypeSize('uint64_t',"#include<cstdint>",language="C++",expect=8
     Exit(1)
 
 if not conf.CheckTypeSize('float',language="C++",expect=4):
-    print "float size does not match ..."
+    print "float size does not fit ..."
     Exit(1)
 
 if not conf.CheckTypeSize('double',language="C++",expect=8):
-    print "double size does not match ..."
+    print "double size does not fit ..."
     Exit(1)
 
 if not conf.CheckTypeSize('long double',language="C++",expect = 16):
+    #in this case we are on 32Bit PC platform
     if not conf.CheckTypeSize('long double',language="C++",expect=12):
-        print "long double size does not match ..."
+        print "long double size does not fit ..."
         Exit(1)
 
+
+#check for mandatory header files
+if not conf.CheckCXXHeader("boost/numeric/conversion/cast.hpp"):
+    print "BOOST header file cast.hpp does not exist!"
+    Exit(1)
+    
+if not conf.CheckCXXHeader("boost/shared_ptr.hpp"):
+    print "BOOST header shared_ptr.hpp does not exist!"
+    Exit(1)
+    
 if not conf.CheckCXXHeader("boost/static_assert.hpp"):
     print "BOOST header static_assert.hpp does not exist!"
     Exit(1)
@@ -179,42 +207,32 @@ if not conf.CheckCXXHeader("boost/current_function.hpp"):
     print "BOOST current_function.hpp not found!"
     Exit(1)
 
-if GetOption("with_mpi"):
-    if not conf.CheckHeader("mpi.h"):
-        print "MPI header file not found!"
-        Exit(1)
-
-    if not conf.CheckLib("mpi"):
-        print "MPI library not found!"
-        Exit(1)
+if not conf.CheckCXXHeader("boost/program_options.hpp"):
+    print "BOOST program options headers not installed"
+    Exit(1)
     
 
 #check for boost regular expressions library
-if not conf.CheckLib("boost_regex",language="C++",autoadd=0):
-    env.AppendUnique(LIBS=['dl'])
-    if not conf.CheckLib("boost_regex",language="C++",autoadd=0):
-        print "BOOST regular expression library not found"
+if not conf.CheckLib("boost_regex",language="C++"):
+    print "BOOST regular expression library not found"
+    Exit(1)
+
+if not conf.CheckLib("boost_program_options",language="C++"):
+    print "BOOST program options library not installed!"
+    Exit(1)
+
+if not conf.CheckLib("boost_system",language="C++"):
+    print "BOOST system library not installed!"
+    Exit(1)
+
+if GetOption("with_gperf"):
+    if not conf.CheckLib("profiler",language="C++"):
+        print "Google CPU profiling library not installed!"
         Exit(1)
 
-if not conf.CheckCHeader("hdf5.h"):
-    print "HDF5 header files are missing!"
-    Exit(1)
-
-if not conf.CheckLib("hdf5"):
-    print "HDF5 library not installed!"
-    Exit(1)
-
-if not conf.CheckLib("pnicore",language="C++",autoadd=0):
-    print "libpniutils not installed!"
-    Exit(1)
-
-if not conf.CheckLib("boost_date_time",language="C++"):
-    print "boost_date_time library not installed!"
-    Exit(1)
-
-if not conf.CheckLib("boost_filesystem",language="C++"):
-    print "boost_filesystem library not installed!"
-    Exit(1)
+    if not conf.CheckLib("tcmalloc",language="C++"):
+        print "Google HEAP profiler not installed!"
+        Exit(1)
 
 
 env = conf.Finish()
@@ -223,11 +241,17 @@ env = conf.Finish()
 build_env = env.Clone()
 test_env  = env.Clone()
 
-#============================start configuration for tests=====================
-
-if 'test' in COMMAND_LINE_TARGETS:
+if ('test' in COMMAND_LINE_TARGETS) or ('test_install' in COMMAND_LINE_TARGETS)\
+    or ('benchmarks' in COMMAND_LINE_TARGETS):
+    # do nothing in the case that the user has no local PKG_CONFIG_PATH variable
+    # set
     try:
-        test_env.ParseConfig('pkg-config --cflags --libs pniio')
+        test_env["ENV"]["PKG_CONFIG_PATH"] = os.environ["PKG_CONFIG_PATH"]
+    except:
+        test_env["ENV"]["PKG_CONFIG_PATH"] = os.path.join(test_env["PREFIX"],"lib","pkgconfig")
+        
+    try:
+        test_env.ParseConfig('pkg-config --cflags --libs pnicore')
     except:
         Exit(1)
 
@@ -236,6 +260,7 @@ if 'test' in COMMAND_LINE_TARGETS:
     except:
         Exit(1)
 
+    #============================start configuration for tests=====================
     test_conf = Configure(test_env)
 
     if not test_conf.CheckCXXHeader("cppunit/TestFixture.h"):
@@ -267,27 +292,12 @@ if 'test' in COMMAND_LINE_TARGETS:
         Exit(1)
 
     #check for mandatory libraries
-    if not test_conf.CheckLib("cppunit",language="C++",autoadd=0):
+    if not test_conf.CheckLib("cppunit",language="C++"):
+        #check if it is enough to add dl to the linker 
         test_env.AppendUnique(LIBS=["dl"])
-        if not test_conf.CheckLib('cppunit',language='C++',autoadd=0):
+        if not test_conf.CheckLib("cppunit",language="C++"):
             print "CPPUNIT unit test libraray is not installed!"
             Exit(1)
-
-    if not test_conf.CheckLib("boost_program_options",language="C++",autoadd=0):
-        print "BOOST program options library not installed!"
-        Exit(1)
-
-    if not test_conf.CheckLib("boost_system",language="C++",autoadd=0):
-        print "BOOST system library not installed!"
-        Exit(1)
-
-    if not test_conf.CheckLib("pniio",language="C++",autoadd=0):
-        print "PNIIO library not installed!"
-        Exit(1)
-
-    if not test_conf.CheckLib("pnicore",language="C++",autoadd=0):
-        print "PNICORE library not installed!"
-        Exit(1)
 
 
     test_env = test_conf.Finish()

@@ -24,13 +24,13 @@
  */
 
 
-#include "H5Dataset.hpp"
-#include "H5Group.hpp"
-#include "H5File.hpp"
-#include "h5link.hpp"
+#include <pni/io/nx/h5/H5Dataset.hpp>
+#include <pni/io/nx/h5/H5Group.hpp>
+#include <pni/io/nx/h5/H5File.hpp>
+#include <pni/io/nx/h5/h5link.hpp>
 
-#include "h5_error_stack.hpp"
-#include "../nxexceptions.hpp"
+#include <pni/io/nx/h5/h5_error_stack.hpp>
+#include <pni/io/nx/nxexceptions.hpp>
 
 namespace pni{
 namespace io{

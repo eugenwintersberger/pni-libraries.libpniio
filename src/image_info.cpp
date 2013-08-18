@@ -24,7 +24,7 @@
  *
  */
 
-#include "image_info.hpp"
+#include <pni/io/image_info.hpp>
 
 namespace pni{
 namespace io{

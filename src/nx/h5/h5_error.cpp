@@ -27,7 +27,7 @@ extern "C"{
 #include <hdf5.h>
 }
 
-#include "h5_error.hpp"
+#include <pni/io/nx/h5/h5_error.hpp>
 
 
 namespace pni{

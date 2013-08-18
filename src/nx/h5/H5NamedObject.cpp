@@ -23,7 +23,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#include "H5NamedObject.hpp"
+#include <pni/io/nx/h5/H5NamedObject.hpp>
 #include <pni/core/dbuffer.hpp>
 
 namespace pni{

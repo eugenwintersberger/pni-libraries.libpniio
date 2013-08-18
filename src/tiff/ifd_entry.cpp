@@ -27,8 +27,8 @@
 
 
 #include <pni/core/exceptions.hpp>
-#include "ifd_entry.hpp"
-#include "standard.hpp"
+#include <pni/io/tiff/ifd_entry.hpp>
+#include <pni/io/tiff/standard.hpp>
 
 
 namespace pni{

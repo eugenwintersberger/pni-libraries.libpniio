@@ -25,7 +25,7 @@
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#include "nxexceptions.hpp"
+#include <pni/io/nx/nxexceptions.hpp>
 
 namespace pni{
 namespace io{

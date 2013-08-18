@@ -27,7 +27,7 @@
  */
 
 
-#include "exceptions.hpp"
+#include <pni/io/tiff/exceptions.hpp>
 
 namespace pni{
 namespace io{
