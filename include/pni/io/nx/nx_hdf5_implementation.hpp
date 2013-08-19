@@ -36,6 +36,7 @@
 #include "nximp_code_map.hpp"
 #include "nxobject_traits.hpp"
 
+#include "h5/h5link.hpp"
 #include "h5/H5AttributeObject.hpp"
 #include "h5/H5File.hpp"
 #include "h5/H5Group.hpp"
@@ -91,7 +92,7 @@ namespace nx{
     //declare the central type trait for the HDF5 implementation
     DECLARE_NXOBJECT_TRAITS(nximp_code::HDF5,h5::nxobject,h5::nxgroup,
                             h5::nxfile,h5::nxfield,h5::nxattribute,
-                            h5::nxselection);
+                            h5::nxselection,h5::h5link);
 
 //need to setup the implementation code maps
 }

@@ -115,13 +115,7 @@ namespace h5{
             static void create_internal_link(const nxpath &target,
                                              const H5Group &loc,
                                              const string &name);
-                                 
-
-
     };
-
-
-
 //end of namespace
 }
 }

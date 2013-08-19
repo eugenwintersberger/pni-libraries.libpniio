@@ -27,14 +27,6 @@
 
 #pragma once
 #include "nximp_code.hpp"
-/*
-#include "h5/H5AttributeObject.hpp"
-#include "h5/H5File.hpp"
-#include "h5/H5Group.hpp"
-#include "h5/H5Dataset.hpp"
-#include "h5/H5Filter.hpp"
-#include "h5/H5Attribute.hpp"
-*/
 
 namespace pni{
 namespace io{

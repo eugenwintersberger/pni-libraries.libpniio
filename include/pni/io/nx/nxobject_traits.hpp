@@ -55,7 +55,7 @@ namespace nx{
     \param attr_t   the Nexus attribute type
     \param sel_t    the Nexus selection type
     */
-#define DECLARE_NXOBJECT_TRAITS(id,object_t,group_t,file_t,field_t,attr_t,sel_t)\
+#define DECLARE_NXOBJECT_TRAITS(id,object_t,group_t,file_t,field_t,attr_t,sel_t,link_t)\
         template<> struct nxobject_traits<id>\
         {\
             typedef object_t object_type;\
@@ -64,6 +64,7 @@ namespace nx{
             typedef field_t  field_type; \
             typedef attr_t   attribute_type; \
             typedef sel_t    selection_type;\
+            typedef link_t   link_type;\
         }
 
     /*!
