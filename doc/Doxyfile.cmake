@@ -62,9 +62,17 @@ WARN_NO_PARAMDOC       = YES
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/../include mainpage h5_implementation_classes \
-                         nxpath_code variant_code xml_code \
-                         nexus_utilities nexus_io image_io ascii_io general_io
+INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/../include \
+                         @CMAKE_CURRENT_SOURCE_DIR@/mainpage \
+                         @CMAKE_CURRENT_SOURCE_DIR@/h5_implementation_classes \
+                         @CMAKE_CURRENT_SOURCE_DIR@/nxpath_code \
+                         @CMAKE_CURRENT_SOURCE_DIR@/variant_code \
+                         @CMAKE_CURRENT_SOURCE_DIR@/xml_code \
+                         @CMAKE_CURRENT_SOURCE_DIR@/nexus_utilities \
+                         @CMAKE_CURRENT_SOURCE_DIR@/nexus_io \
+                         @CMAKE_CURRENT_SOURCE_DIR@/image_io \
+                         @CMAKE_CURRENT_SOURCE_DIR@/ascii_io \
+                         @CMAKE_CURRENT_SOURCE_DIR@/general_io
 RECURSIVE              = YES
 EXCLUDE_SYMLINKS       = NO
 EXAMPLE_PATH           = examples

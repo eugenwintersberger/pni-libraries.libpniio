@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 include(GNUInstallDirs)
-project(PNICORE)
+project(PNIIO)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
 #===========================provide some user options==========================
