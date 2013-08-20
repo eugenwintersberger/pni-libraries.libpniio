@@ -23,7 +23,7 @@
 
 #include <iostream>
 #include <pni/core/types.hpp>
-#include "nx.hpp"
+//#include "nx.hpp"
 #include "nxpath.hpp"
 
 
