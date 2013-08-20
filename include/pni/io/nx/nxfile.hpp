@@ -31,6 +31,7 @@
 #include <pni/core/service.hpp>
 
 #include "nxobject.hpp"
+#include "nxobject_traits.hpp"
 #include "nxgroup.hpp"
 #include "nxdate_time.hpp"
 
@@ -210,6 +211,23 @@ namespace nx{
             \return number of open fields
             */
             size_t open_fields() const { return this->imp().open_fields(); }
+
+            //------------------------------------------------------------------
+            /*!
+            \brief get root group
+
+            Return the root group of the file.
+            */
+            typename nxobject_traits<nximp_code_map<nxfile<Imp>>::icode>::group_type
+            root_group() const
+            {
+                typedef nximp_code_map<nxfile<Imp>> imp_code_map;
+                typedef typename nxobject_traits<imp_code_map::icode>::group_type group_type;
+
+                return group_type(this->open("/"));
+            }
+
+
     };
 
 

@@ -23,9 +23,9 @@
 
 #pragma once
 
-#include "nxpath.hpp"
-#include "nximp_code_map.hpp"
 #include "nxobject_traits.hpp"
+#include "nxpath.hpp"
+#include "nxpath_utils.hpp"
 
 namespace pni{
 namespace io{
@@ -48,9 +48,9 @@ namespace nx{
     {
 
         //determine the utility class perfroming linking
-        typedef typename nximp_code_map<GTYPE> code_map;
-        typedef typename nobject_traits<code_map::icode> object_traits;
-        typedef object_traits::link_type link_type;
+        typedef nximp_code_map<GTYPE> code_map;
+        typedef nxobject_traits<code_map::icode> object_traits;
+        typedef typename object_traits::link_type link_type;
 
         if(!target.filename().empty())
         {
@@ -82,7 +82,14 @@ namespace nx{
     template<typename GTYPE>
     void link(const string &target,const GTYPE &g,const string &name)
     {
+        nxpath path = path_from_string(target);
+        link(path,g,name);
+    }
 
+    template<typename GTYPE>
+    void link(const char *target,const GTYPE &g,const string &name)
+    {
+        link(string(target),g,name);
     }
 
     //-------------------------------------------------------------------------
@@ -102,7 +109,7 @@ namespace nx{
              typename GTYPE>
     void link(const STYPE &target,const GTYPE &g,const string &name)
     {
-
+        link(target.path(),g,name);
     }
 
 //end of namespace
