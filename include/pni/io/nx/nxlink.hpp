@@ -37,7 +37,9 @@ namespace nx{
     \brief create a link
 
     Creates a link to an object referenced by target. The new link is created
-    below g with name. 
+    below g with name. If the location and the target reside within the same
+    file or the target path has no filename set an internal link will be
+    created.  
     \tparam GTYPE group type
     \param target path to the original object
     \param g group where to create the link
@@ -98,7 +100,8 @@ namespace nx{
     \brief create a link
 
     Create a new link to the target object. The new link will be created below g
-    with name name.
+    with name name. This function can currently only create internal links as it
+    assumes that the target and g reside within the same file.
     \tparam STYPE type of the target object
     \tparam GTYPE group type
     \param target object to which the new link should point
