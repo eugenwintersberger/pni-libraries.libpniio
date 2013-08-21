@@ -27,6 +27,10 @@
 #include "xml_node.hpp"
 #include "attribute_data.hpp"
 
+#ifdef NOFOREACH
+#include <boost/foreach.hpp>
+#endif
+
 namespace pni{
 namespace io{
 namespace nx{
@@ -68,7 +72,11 @@ namespace xml{
         dimensions.put("<xmlattr>.rank",shape.size());
 
         size_t index = 1;
+#ifdef NOFOREACH
+        BOOST_FOREACH(auto s,shape)
+#else
         for(auto s: shape)
+#endif
         {
             node dim;
             dim.put("<xmlattr>.index",index++);

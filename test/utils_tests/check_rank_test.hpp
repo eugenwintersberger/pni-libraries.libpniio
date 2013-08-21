@@ -73,10 +73,10 @@ class check_rank_test : public CppUnit::TestFixture
         TB b1,b2;
 
         //need some special functions 
-        template<typename ...OTYPES>
-        static void create_container(const shape_t &s,darray<OTYPES...> &a)
+        template<typename T,typename STORAGE,typename IMAP>
+        static void create_container(const shape_t &s,darray<T,STORAGE,IMAP> &a)
         {
-            a = darray<OTYPES...>(s);
+            a = darray<T,STORAGE,IMAP>(s);
         }
 
         template<typename ATYPE>

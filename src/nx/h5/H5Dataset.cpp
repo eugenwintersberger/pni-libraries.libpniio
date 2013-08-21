@@ -28,7 +28,6 @@
 
 #include <pni/io/nx/h5/H5Dataset.hpp>
 #include <pni/io/nx/h5/H5ObjectType.hpp>
-#include <pni/io/nx/h5/h5link.hpp>
 #include <pni/io/nx/nxpath.hpp>
 #include <pni/io/nx/nxpath_utils.hpp>
 

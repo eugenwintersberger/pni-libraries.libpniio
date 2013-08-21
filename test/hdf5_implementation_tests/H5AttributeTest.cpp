@@ -101,6 +101,8 @@ void H5AttributeTest::test_inquery()
 
     CPPUNIT_ASSERT(a1.is_valid());
     CPPUNIT_ASSERT(a1.name() == "a1");
+    std::cout<<a1.filename()<<std::endl;
+    CPPUNIT_ASSERT(a1.filename() == string("H5AttributeTest.h5"));
     CPPUNIT_ASSERT(a1.size() == 1);
     CPPUNIT_ASSERT(a1.rank() == 0);
     CPPUNIT_ASSERT(a1.type_id() == type_id_t::FLOAT32);
@@ -111,6 +113,7 @@ void H5AttributeTest::test_inquery()
 
     CPPUNIT_ASSERT(a2.is_valid());
     CPPUNIT_ASSERT(a2.name() == "a2");
+    CPPUNIT_ASSERT(a2.filename() == "H5AttributeTest.h5");
     CPPUNIT_ASSERT(a2.size() == 20);
     CPPUNIT_ASSERT(a2.rank() == 2);
     CPPUNIT_ASSERT(a2.type_id() == type_id_t::FLOAT32);

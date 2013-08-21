@@ -1,7 +1,5 @@
 /*
- * Declaration Nexus implementation type maps
- *
- * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+ * (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
  *
  * This file is part of libpniio.
  *
@@ -19,38 +17,47 @@
  * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
  *************************************************************************
  *
- * Definition of the implementation code map.
- *
- * Created on: Feb 11, 2012
+ * Created on: Aug 20, 2013
  *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
-#pragma once
-#include "nximp_code.hpp"
+extern "C" { 
+#include <hdf5.h>
+}
+
+#include <pni/core/types.hpp>
 
 namespace pni{
 namespace io{
 namespace nx{
-       
-    /*! 
-    \ingroup nexus_lowlevel
-    \brief implementation code type map
+namespace h5{
 
-    This type map maps a particular implementation type to a type code.
+    using namespace pni::core;
+
+
+    /*!
+    \brief get object filename
+
+    Returns the name of a file a dataset, attribute, or group object belongs to.
+    If the filename cannot be obtained an empty string is returned.
+    \param id HDF5 id of the object
+    \return string with the file name
     */
-    template<typename T> struct nximp_code_map
-    {
-            static const nximp_code icode; //!< implementation code
-    };
+    string get_filename(hid_t id);
 
-#define NXIMPCODEMAPDECL(type,impcode)\
-    template<> class nximp_code_map<type>\
-    {\
-        public:\
-            static const nximp_code icode = impcode;\
-    }
+    //-------------------------------------------------------------------------
+    /*!
+    \brief get object path
+
+    Return the path of an HDF5 object as a string. The object can be either an
+    attribute, a field, or a group. 
+    \param id of the object
+    \return path as string
+    */
+    string get_object_path(hid_t id);
 
 //end of namespace
+}
 }
 }
 }

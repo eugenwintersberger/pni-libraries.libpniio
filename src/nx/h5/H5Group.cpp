@@ -31,7 +31,6 @@ extern "C"{
 
 #include <pni/io/nx/h5/H5Group.hpp>
 #include <pni/io/nx/h5/H5Dataset.hpp>
-#include <pni/io/nx/h5/h5link.hpp>
 
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 #include <pni/io/nx/nxexceptions.hpp>

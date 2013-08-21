@@ -50,6 +50,7 @@ void H5GroupTest::test_creation()
     //create directly using the constructor
     H5Group g1("group1",file);
     CPPUNIT_ASSERT(g1.is_valid());
+    CPPUNIT_ASSERT(g1.filename() == "H5GroupTest.h5");
     CPPUNIT_ASSERT(g1.name()=="group1");
     CPPUNIT_ASSERT(g1.path()=="/group1");
     CPPUNIT_ASSERT(g1.base()=="/");

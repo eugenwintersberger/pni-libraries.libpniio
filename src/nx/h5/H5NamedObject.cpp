@@ -26,6 +26,8 @@
 #include <pni/io/nx/h5/H5NamedObject.hpp>
 #include <pni/core/dbuffer.hpp>
 
+#include "hdf5_utilities.hpp"
+
 namespace pni{
 namespace io{
 namespace nx{
@@ -151,20 +153,16 @@ namespace h5{
     //-------------------------------------------------------------------------
     string H5NamedObject::path() const
     {
-        dbuffer<char> buffer;
-
-        if(is_valid()){
-            //if the object has already been created return this value
-            hsize_t bsize;
-            bsize = H5Iget_name(id(),NULL,1)+1;
-            buffer.allocate(bsize);
-
-            H5Iget_name(id(),const_cast<char*>(buffer.ptr()),bsize);
-            string name(buffer.ptr());
-            return name;
-        }
+        if(is_valid())
+            return get_object_path(id()); 
 
         return string("");
+    }
+
+    //-------------------------------------------------------------------------
+    string H5NamedObject::filename() const
+    {
+        return get_filename(id());
     }
 
     //-------------------------------------------------------------------------

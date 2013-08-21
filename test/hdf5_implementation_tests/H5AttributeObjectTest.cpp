@@ -155,6 +155,8 @@ void H5AttributeObjectTest::test_inquery()
     o1.attr<float32>("test1");
     o1.attr<uint8>("test2");
 
+    CPPUNIT_ASSERT(o1.filename() == "H5AttributeObjectTest.h5");
+
     CPPUNIT_ASSERT(o1.nattr() == 2);
     //check for existing attributes
     CPPUNIT_ASSERT(o1.has_attr("test1"));

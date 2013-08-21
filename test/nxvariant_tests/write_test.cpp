@@ -24,6 +24,10 @@
 #include <boost/current_function.hpp>
 #include<cppunit/extensions/HelperMacros.h>
 
+#ifdef NOFOREACH
+#include <boost/foreach.hpp>
+#endif
+
 #include "write_test.hpp"
 
 
@@ -101,11 +105,29 @@ void write_test::test_field_partial()
 
     //read data back
     field(0,slice(0,3),slice(0,5)).read(field_rdata);
+#ifdef NO_LAMBDA_FUNC
+#ifdef NOFOREACH
+    BOOST_FOREACH(auto value, field_rdata)
+#else 
+    for(auto value: field_rdata)
+#endif
+        CPPUNIT_ASSERT(value==0);
+#else
     CPPUNIT_ASSERT(std::all_of(field_rdata.begin(),field_rdata.end(),
                    [](uint32 i){ return i == 0; }));
+#endif
     field(1,slice(0,3),slice(0,5)).read(field_rdata);
+#ifdef NO_LAMBDA_FUNC
+#ifdef NOFOREACH
+    BOOST_FOREACH(auto value,field_rdata)
+#else
+    for(auto value: field_rdata)
+#endif
+        CPPUNIT_ASSERT(value == 1);
+#else
     CPPUNIT_ASSERT(std::all_of(field_rdata.begin(),field_rdata.end(),
                    [](uint32 i){ return i == 1; }));
+#endif
 
 
 

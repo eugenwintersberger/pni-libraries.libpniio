@@ -30,7 +30,9 @@
 #include "get_attribute.hpp"
 #include "get_child.hpp"
 
-
+#ifdef NOFOREACH
+#include <boost/foreach.hpp>
+#endif
 
 namespace pni{
 namespace io{
@@ -130,7 +132,11 @@ namespace nx{
                     "Object parent is not a valid Nexus object!");
 
         //walk through the group_path
+#ifdef NOFOREACH
+        BOOST_FOREACH(auto element,group_path)
+#else
         for(auto element: group_path)
+#endif
         {
             //stay in this group
             if(element.first == ".") continue;

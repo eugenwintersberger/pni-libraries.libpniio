@@ -132,6 +132,7 @@ void H5DatasetTest::test_inquery()
     H5Dataset ds("ds",_file,type,space);
 
     CPPUNIT_ASSERT(ds.is_valid());
+    CPPUNIT_ASSERT(ds.filename() == "H5DatasetTest.h5");
     CPPUNIT_ASSERT(ds.type_id() == type_id_t::FLOAT128);
     CPPUNIT_ASSERT(std::equal(s.begin(),s.end(),ds.shape<shape_t>().begin()));
 

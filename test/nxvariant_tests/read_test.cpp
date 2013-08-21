@@ -26,6 +26,10 @@
 
 #include "read_test.hpp"
 
+#ifdef NOFOREACH
+#include <boost/foreach.hpp>
+#endif
+
 
 CPPUNIT_TEST_SUITE_REGISTRATION(read_test);
 
@@ -101,11 +105,30 @@ void read_test::test_field_partial()
     //read data back
     object_types object = field;
     CPPUNIT_ASSERT_NO_THROW(read(object,field_rdata,0,slice(0,3),slice(0,5)));
+#ifdef NO_LAMBDA_FUNC
+#ifdef NOFOREACH    
+    BOOST_FOREACH(auto d, field_rdata)
+#else
+    for(auto d: field_rdata)
+#endif
+        CPPUNIT_ASSERT(d==0);
+#else
     CPPUNIT_ASSERT(std::all_of(field_rdata.begin(),field_rdata.end(),
                    [](uint32 i){ return i == 0; }));
+#endif
     CPPUNIT_ASSERT_NO_THROW(read(object,field_rdata,1,slice(0,3),slice(0,5)));
+
+#ifdef NO_LAMBDA_FUNC
+#ifdef NOFOREACH
+    BOOST_FOREACH(auto d, field_rdata)
+#else
+    for(auto d: field_rdata)
+#endif
+        CPPUNIT_ASSERT(d==1);
+#else
     CPPUNIT_ASSERT(std::all_of(field_rdata.begin(),field_rdata.end(),
                    [](uint32 i){ return i == 1; }));
+#endif
 
 
 

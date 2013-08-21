@@ -22,6 +22,7 @@
 
 #include <sstream>
 #include <pni/io/nx/nxpath_utils.hpp>
+#include <pni/core/exceptions.hpp>
 
 
 namespace pni{

@@ -122,6 +122,15 @@ namespace h5{
 
             //-----------------------------------------------------------------
             /*!
+            \brief return filename
+
+            Returns the name of the file this object belongs to.
+            \return file name
+            */
+            virtual string filename() const;
+
+            //-----------------------------------------------------------------
+            /*!
             \brief return the link type
 
             Return the type of link that is used for this object. This class

@@ -158,7 +158,7 @@ namespace xml{
     \param name name of the attribute
     \return true if attribute exists, false otherwise
     */
-    bool has_attribute(const node &n,const string &name) noexcept;
+    bool has_attribute(const node &n,const string &name) ;
 
     //-------------------------------------------------------------------------
     /*!

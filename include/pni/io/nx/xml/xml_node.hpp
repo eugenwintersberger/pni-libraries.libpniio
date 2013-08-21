@@ -39,7 +39,12 @@ namespace xml{
     This alias creates the new type name node which can be used within the xml
     namespace instread of boost::property_tree::ptree;
     */
+#ifdef NOTMPALIAS
+    typedef boost::property_tree::ptree node;
+#else
     using node = boost::property_tree::ptree;
+#endif
+
 
     //-------------------------------------------------------------------------
     /*!

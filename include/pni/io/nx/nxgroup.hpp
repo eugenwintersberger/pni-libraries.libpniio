@@ -35,6 +35,7 @@
 #include "nxfilter.hpp"
 #include "nxexceptions.hpp"
 #include "nxobject_iterator.hpp"
+#include "nxlink.hpp"
 
 
 namespace pni{
