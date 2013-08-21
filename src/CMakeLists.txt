@@ -9,7 +9,7 @@ add_library(pniio SHARED ${SOURCES})
 add_dependencies(pniio config.hpp)
 set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"
                                        SOVERSION "${SO_VERSION}")
-target_link_libraries(pniio hdf5 z boost_filesystem ${PNICORE_PKG_LIBRARIES})
+target_link_libraries(pniio hdf5 z boost_date_time boost_filesystem ${PNICORE_PKG_LIBRARIES})
 
 #install code
 install(TARGETS pniio LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}")
