@@ -37,6 +37,10 @@
 #include "create_field_visitor.hpp"
 #include "dim2shape.hpp"
 
+#ifdef NOFOREACH
+#include <boost/foreach.hpp>
+#endif
+
 
 
 namespace pni{
@@ -62,7 +66,11 @@ namespace xml{
     template<typename PTYPE>
     void create_objects(const PTYPE &parent,node &t)
     {
+#ifdef NOFOREACH
+        BOOST_FOREACH(auto child,t)
+#else
         for(auto child: t)
+#endif
         {
             if(child.first == "group")
             {

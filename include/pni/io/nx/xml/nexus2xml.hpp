@@ -30,6 +30,10 @@
 #include "shape2dim.hpp"
 #include <boost/algorithm/string.hpp>
 
+#ifdef NOFOREACH
+#include <boost/foreach.hpp>
+#endif
+
 namespace pni{
 namespace io{
 namespace nx{
@@ -137,13 +141,22 @@ namespace xml{
             get_children(p,objects);
 
             //iterate over the children 
-            for(auto o: objects) nexus2xml(o,child);
+#ifdef NOFOREACH
+            BOOST_FOREACH(auto o,objects)
+#else
+            for(auto o: objects) 
+#endif
+                nexus2xml(o,child);
         }
 
         //in the end we have to add attributes
         vector_t attributes;
         get_attributes(p,attributes);
+#ifdef NOFOREACH
+        BOOST_FOREACH(auto a,attributes)
+#else
         for(auto a: attributes)
+#endif
         {
             if(get_name(a) == "NX_class") continue;
             child.add_child("attribute",attribute2xml(a));

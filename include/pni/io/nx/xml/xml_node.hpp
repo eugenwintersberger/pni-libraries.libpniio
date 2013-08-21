@@ -40,7 +40,7 @@ namespace xml{
     namespace instread of boost::property_tree::ptree;
     */
 #ifdef NOTMPALIAS
-#define node boost::property_tree::ptree
+    typedef boost::property_tree::ptree node;
 #else
     using node = boost::property_tree::ptree;
 #endif

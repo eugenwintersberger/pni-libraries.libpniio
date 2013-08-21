@@ -26,6 +26,10 @@
 #include "xml_node.hpp"
 #include "attribute_data.hpp"
 
+#ifdef NOFOREACH
+#include <boost/foreach.hpp>
+#endif
+
 namespace pni{
 namespace io{
 namespace nx{
@@ -72,7 +76,11 @@ namespace xml{
         std::fill(s.begin(),s.end(),0);
 
         size_t valid_indices = 0;
+#ifdef NOFOREACH
+        BOOST_FOREACH(auto dim,dims)
+#else
         for(auto dim: dims)
+#endif
         {
             if(dim.first != "dim") continue; //omit all non 'dim' tags
 

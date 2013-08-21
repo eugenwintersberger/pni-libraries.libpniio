@@ -124,7 +124,7 @@ void read_test::test_field_partial()
 #else
     for(auto d: field_rdata)
 #endif
-        CPPUNIT_ASSERT(d==0);
+        CPPUNIT_ASSERT(d==1);
 #else
     CPPUNIT_ASSERT(std::all_of(field_rdata.begin(),field_rdata.end(),
                    [](uint32 i){ return i == 1; }));
