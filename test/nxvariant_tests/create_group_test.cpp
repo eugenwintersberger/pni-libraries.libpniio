@@ -76,14 +76,14 @@ void create_group_test::test_group_from_path()
     CPPUNIT_ASSERT(is_valid(ng));
     CPPUNIT_ASSERT(is_group(ng));
     CPPUNIT_ASSERT(get_name(ng) == "log");
-    CPPUNIT_ASSERT(is_class(ng,"NXlog"));
+    CPPUNIT_ASSERT(pni::io::nx::is_class(ng,"NXlog"));
 
     CPPUNIT_ASSERT_NO_THROW(ng = create_group(gi,
                 path_from_string("../../entry2:NXentry")));
     CPPUNIT_ASSERT(is_valid(ng));
     CPPUNIT_ASSERT(is_group(ng));
     CPPUNIT_ASSERT(get_name(ng) == "entry2");
-    CPPUNIT_ASSERT(is_class(ng,"NXentry"));
+    CPPUNIT_ASSERT(pni::io::nx::is_class(ng,"NXentry"));
 }
 
 //-----------------------------------------------------------------------------

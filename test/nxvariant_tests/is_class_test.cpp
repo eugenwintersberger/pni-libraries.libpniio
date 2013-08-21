@@ -52,8 +52,8 @@ void is_class_test::test_group()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     object_types object = group;
-    CPPUNIT_ASSERT(is_class(object,"NXentry"));
-    CPPUNIT_ASSERT(!is_class(object,"NXlog"));
+    CPPUNIT_ASSERT(pni::io::nx::is_class(object,"NXentry"));
+    CPPUNIT_ASSERT(!pni::io::nx::is_class(object,"NXlog"));
 }
 
 //-----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ void is_class_test::test_field()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     object_types object = field;
-    CPPUNIT_ASSERT_THROW(is_class(object,"NXentry"),nxfield_error);
+    CPPUNIT_ASSERT_THROW(pni::io::nx::is_class(object,"NXentry"),nxfield_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -71,7 +71,6 @@ void is_class_test::test_attribute()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     object_types object = group.attr("NX_class");
-    CPPUNIT_ASSERT_THROW(is_class(object,"NXentry"),nxattribute_error);
-   
+    CPPUNIT_ASSERT_THROW(pni::io::nx::is_class(object,"NXentry"),nxattribute_error);
 }
 

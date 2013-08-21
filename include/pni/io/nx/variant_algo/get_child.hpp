@@ -28,6 +28,10 @@
 #include "is_class.hpp"
 #include "is_valid.hpp"
 
+#ifdef NOFOREACH
+#include <boost/foreach.hpp>
+#endif
+
 namespace pni{
 namespace io{
 namespace nx{
@@ -93,6 +97,10 @@ namespace nx{
             */
             result_type operator()(const group_type &g) const
             {
+#ifdef NOFOREACH
+                typedef nximp_code_map<group_type> code_map;
+                typedef typename nxobject_traits<code_map::icode>::object_type otype;
+#endif
                 //here comes the interesting part
                 result_type result; 
 
@@ -109,8 +117,14 @@ namespace nx{
                 if(_name == ".") return result_type(g);
                 if(_name == "..") return result_type(group_type(g.parent()));
 
+#ifdef NOFOREACH
+                for(auto iter = g.begin();iter!=g.end();++iter)
+                {
+                    auto child = *iter;
+#else
                 for(auto child: g)
                 {
+#endif
                     if(child.object_type() == nxobject_type::NXGROUP)
                         result = group_type(child);
                     else if(child.object_type() == nxobject_type::NXFIELD)
@@ -124,7 +138,7 @@ namespace nx{
                         if(_name.empty())
                         {
                             //we only need to check for the class
-                            if(is_class(result,_class)) return result;
+                            if(pni::io::nx::is_class(result,_class)) return result;
                         }
                         else 
                         {
@@ -132,7 +146,7 @@ namespace nx{
                             if(get_name(result) == _name)
                             {
                                 if(_class.empty()) return result;
-                                else if(is_class(result,_class))
+                                else if(pni::io::nx::is_class(result,_class))
                                     return result;
                             }
                         }
