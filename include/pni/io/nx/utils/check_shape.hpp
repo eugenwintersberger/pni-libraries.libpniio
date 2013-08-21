@@ -31,6 +31,10 @@
 #include "types.hpp"
 #include "check_rank.hpp"
 
+#ifdef NOFOREACH
+#include <boost/foreach.hpp>
+#endif
+
 namespace pni{
 namespace io{
 namespace nx{
@@ -89,9 +93,19 @@ namespace nx{
             auto s2 = o1.template shape<shape_t>();
             std::stringstream ss;
             ss<<"Objects have different shape ( ";
-            for(auto s: s1) ss<<s<<" ";
+#ifdef NOFOREACH
+            BOOST_FOREACH(auto s, s1)
+#else
+            for(auto s: s1) 
+#endif
+                ss<<s<<" ";
             ss<<") and ( ";
-            for(auto s: s2) ss<<s<<" ";
+#ifdef NOFOREACH
+            BOOST_FOREACH(auto s, s2)
+#else
+            for(auto s: s2) 
+#endif 
+                ss<<s<<" ";
             ss<<")!";
             throw shape_mismatch_error(r,ss.str());
         }

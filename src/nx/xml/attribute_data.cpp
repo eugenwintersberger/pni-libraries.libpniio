@@ -30,7 +30,7 @@ namespace xml{
 
 
     //-------------------------------------------------------------------------
-    bool has_attribute(const node &n,const string &name) noexcept
+    bool has_attribute(const node &n,const string &name) 
     {
         try
         {
@@ -56,28 +56,28 @@ namespace xml{
     }
     
     //-------------------------------------------------------------------------
-    array attribute_data<array>::read(const xml::node &node,const string &name,
+    array attribute_data<array>::read(const node &dnode,const string &name,
                                       char sep)
     {
-        return read(node,name,array_parser_t(sep));
+        return read(dnode,name,array_parser_t(sep));
     }
    
     //--------------------------------------------------------------------------
-    array attribute_data<array>::read(const xml::node &node,const string &name,
+    array attribute_data<array>::read(const node &dnode,const string &name,
                                       char start,char stop, char sep)
     {
-        return read(node,name,array_parser_t(start,stop,sep));
+        return read(dnode,name,array_parser_t(start,stop,sep));
     }
 
     //-------------------------------------------------------------------------
-    array attribute_data<array>::read(const xml::node &node,const string &name,
+    array attribute_data<array>::read(const node &dnode,const string &name,
                                       const array_parser_t &p)
     {
         using boost::spirit::qi::parse;
         using boost::algorithm::trim;
         
         //read the node data as a string
-        auto text = attribute_data<string>::read(node,name);
+        auto text = attribute_data<string>::read(dnode,name);
         trim(text);
 
         array a;

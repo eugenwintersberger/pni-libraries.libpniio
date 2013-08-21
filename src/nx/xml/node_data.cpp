@@ -32,25 +32,25 @@ namespace xml{
 
 
     //-------------------------------------------------------------------------
-    array node_data<array>::read(const xml::node &node,char sep)
+    array node_data<array>::read(const node &dnode,char sep)
     {
-        return read(node,array_parser_t(sep));
+        return read(dnode,array_parser_t(sep));
     }
    
     //--------------------------------------------------------------------------
-    array node_data<array>::read(const xml::node &node,char start,char stop,
+    array node_data<array>::read(const node &dnode,char start,char stop,
                                  char sep)
     {
-        return read(node,array_parser_t(start,stop,sep));
+        return read(dnode,array_parser_t(start,stop,sep));
     }
 
     //-------------------------------------------------------------------------
-    array node_data<array>::read(const xml::node &node,const array_parser_t &p)
+    array node_data<array>::read(const node &dnode,const array_parser_t &p)
     {
         using boost::spirit::qi::parse;
         using boost::algorithm::trim;
         //read the node data as a string
-        auto text = node_data<string>::read(node);
+        auto text = node_data<string>::read(dnode);
         trim(text);
 
         array a;

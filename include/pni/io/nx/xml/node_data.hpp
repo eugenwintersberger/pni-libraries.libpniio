@@ -55,27 +55,27 @@ namespace xml{
         type T. An exception is thrown in case of errors. 
 
         \throws parser_error 
-        \param node node from which to read data
+        \param dnode node from which to read data
         \return instance of T with the data
         */
-        static T read(const xml::node &node)
+        static T read(const node &dnode)
         {
             T value;
             try
             {
-                value = node.template get_value<T>();
+                value = dnode.template get_value<T>();
             }
             catch(boost::property_tree::ptree_bad_data &error)
             {
                 type_id_t id = type_id_map<T>::type_id;
-                auto buffer = node.template get_value<string>();
+                auto buffer = dnode.template get_value<string>();
                 throw parser_error(EXCEPTION_RECORD,
                         "Node data \""+buffer+"\" cannot be converted to"
                         +typeid2str[id]+"!");
             }
             catch(...)
             {
-                auto buffer = node.template get_value<string>();
+                auto buffer = dnode.template get_value<string>();
                 throw parser_error(EXCEPTION_RECORD,
                         "Unknown error when parsing node data \""+buffer+"\"!");
             }
@@ -111,11 +111,11 @@ namespace xml{
         Reading array data from a string without start and stop character but
         with a single element separator.
 
-        \param node XML node to read data from
+        \param dnode XML node to read data from
         \param sep separator character.
         \return array with data
         */
-        static array read(const xml::node &node,char sep);
+        static array read(const node &dnode,char sep);
 
         //---------------------------------------------------------------------
         /*!
@@ -124,13 +124,13 @@ namespace xml{
         Reading array data not only using a separator character but also a start
         and a stop character. 
 
-        \param node XML node where to read data from
+        \param dnode XML node where to read data from
         \param start start symbol for the array
         \param stop stop symbol for the array
         \param sep element separator symbol
         \return instance of array with node data
         */
-        static array read(const xml::node &node,char start,char stop,char sep);
+        static array read(const node &dnode,char start,char stop,char sep);
 
         //---------------------------------------------------------------------
         /*!
@@ -139,11 +139,11 @@ namespace xml{
         Read array data using a custom reader. In this case you can setup the
         parser in your own code.
 
-        \param node XML node from which to read data
+        \param dnode XML node from which to read data
         \param p parser 
         \return array with node data
         */
-        static array read(const xml::node &node,const array_parser_t &p);
+        static array read(const node &dnode,const array_parser_t &p);
     };
 
 
