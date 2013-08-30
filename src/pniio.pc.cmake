@@ -6,6 +6,6 @@ libdir = ${prefix}/lib
 Name: @CMAKE_PROJECT_NAME@
 Description: PNI IO library
 Version: @LIBRARY_VERSION@
-Cflags: -I${includedir} 
+Cflags: -I${includedir} -I@HDF5_INCLUDE_DIRS@
 Requires: pnicore
-Libs: -L${libdir} -lpniio -lhdf5 -lz -lboost_filesystem
+Libs: -L${libdir} -L@HDF5_LIBRARY_DIRS@ -lpniio -lhdf5 -lz -lboost_filesystem

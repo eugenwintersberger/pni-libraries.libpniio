@@ -6,7 +6,7 @@ Installation instructions
 
 Required software to build libpninx:
 -> gcc >= 4.4.1
--> scons >= 2.0.0
+-> cmake >= 2.6.0
 
 To build the documentation some additional programs are required
 -> doxygen
