@@ -3,6 +3,11 @@ include(CheckCXXSourceCompiles)
 include(FindPkgConfig)
 include(FindHDF5)
 
+if(NOT HDF5_FOUND)
+    message("HDF5 not found:")
+    message(FATAL "Please set HDF5_C_INCLUDE_DIRS and HDF5_LIBRARY_DIRS manually!")
+endif()
+
 #set the default compiler flags
 set(GCC_COMPILER_RELEASE_FLAGS "-O3")
 
