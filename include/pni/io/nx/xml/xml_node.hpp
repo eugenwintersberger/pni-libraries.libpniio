@@ -75,6 +75,9 @@ namespace xml{
     \brief XML stream output
 
     Write property tree structure as XML to an output stream.
+    \param o reference output stream
+    \param n node to write to the output stream
+    \return modified output stream
     */
     std::ostream &operator<<(std::ostream &o,const node &n);
 

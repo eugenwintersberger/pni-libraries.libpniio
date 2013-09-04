@@ -140,6 +140,13 @@ namespace h5{
             */
             pni::io::nx::nxlink_type link_type() const;
 
+            /*!
+            \brief return the parent object
+
+            Returns the parent object. This might be either a group (in the case
+            of a field or group) or a field.
+            \return object instance of the parent
+            */
             virtual H5Object parent() const;
 
     };

@@ -97,9 +97,9 @@ namespace xml{
     template<> struct attribute_data<array>
     {
         
-        //!< iterator type for parsing array data
+        //! iterator type for parsing array data
         typedef string::const_iterator iterator_t;
-        //!< parser type 
+        //! parser type 
         typedef pni::io::array_parser<iterator_t> array_parser_t;
 
         /*!
@@ -139,7 +139,8 @@ namespace xml{
         Read array data using a custom reader. In this case you can setup the
         parser in your own code.
 
-        \param node XML node from which to read data
+        \param n XML node from which to read data
+        \param name attribute name
         \param p parser 
         \return array with node data
         */

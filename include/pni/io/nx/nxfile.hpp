@@ -217,6 +217,7 @@ namespace nx{
             \brief get root group
 
             Return the root group of the file.
+            \return root group of the file
             */
             typename nxobject_traits<nximp_code_map<nxfile<Imp>>::icode>::group_type
             root_group() const

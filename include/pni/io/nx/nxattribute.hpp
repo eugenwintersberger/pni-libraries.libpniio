@@ -753,6 +753,7 @@ namespace nx{
             \brief return parent object
 
             This method returns the parent object of a 
+            \return parent object
             */
             typename nxobject_traits<nximp_code_map<attribute_type>::icode>::object_type
             parent() const

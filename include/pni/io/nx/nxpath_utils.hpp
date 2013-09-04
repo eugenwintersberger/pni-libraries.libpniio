@@ -60,7 +60,7 @@ namespace nx{
     \param p1 first part of the path
     \param p2 second part of the path
     */
-    void split_path(const nxpath &p,size_t s,nxpath &p1,nxpath &n2);
+    void split_path(const nxpath &p,size_t s,nxpath &p1,nxpath &p2);
 
     //--------------------------------------------------------------------------
     /*!

@@ -206,6 +206,7 @@ namespace nx{
     \throws nxfield_error if the stored object is a field
     \throws nxattribute_error if the stored object is an attribute
     \tparam VTYPE variant type
+    \param o instance of VTYPE
     \param n name of the child
     \param c class of the child (only for groups)
     \return child object

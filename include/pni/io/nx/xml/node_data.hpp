@@ -100,9 +100,9 @@ namespace xml{
     */
     template<> struct node_data<array>
     {
-        //!< iterator type for parsing array data
+        //! iterator type for parsing array data
         typedef string::const_iterator iterator_t;
-        //!< parser type 
+        //! parser type 
         typedef pni::io::array_parser<iterator_t> array_parser_t;
 
         /*!

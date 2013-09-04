@@ -83,6 +83,7 @@ namespace nx{
 
             Retrieve the type of an object.
             \throws nxattribute_error parent retrieval not supported
+            \param a attribute instance
             \return to be ignored
             */
             result_type operator()(const attribute_type &a) const
