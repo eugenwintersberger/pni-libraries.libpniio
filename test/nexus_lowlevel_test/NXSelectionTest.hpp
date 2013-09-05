@@ -91,7 +91,7 @@ class NXSelectionTest:public CppUnit::TestFixture
 template<typename T> void NXSelectionTest::test_scalar_selection()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    shape_t shape{3,4};
+    shape_t shape({3,4});
     nxfield field = file.create_field<T>("array",shape);
 
     T write=T(0),read=T(0);
