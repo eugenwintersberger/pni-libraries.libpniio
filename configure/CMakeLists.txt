@@ -1,8 +1,14 @@
 include(CheckTypeSize)
 include(CheckCXXSourceCompiles)
 include(FindPkgConfig)
-include(FindHDF5)
 
+if("${CMAKE_FAMILY_VERSION}" EQUAL "2.6")
+    find_library(HDF5_FOUND hdf5 ${HDF5_C_LIBRARY_DIRS})
+    include_directories(${HDF5_INCLUDE_DIRS}) 
+else()
+    include(FindHDF5)
+endif()
+    
 if(NOT HDF5_FOUND)
     message("HDF5 not found:")
     message(FATAL "Please set HDF5_C_INCLUDE_DIRS and HDF5_LIBRARY_DIRS manually!")
@@ -88,8 +94,9 @@ if(NOT ${FLOAT64_SIZE} EQUAL 8)
 endif()
 
 check_type_size("long double" FLOAT128_SIZE)
-if(NOT ${FLOAT128_SIZE} EQUAL 16)
-    message(FATAL_ERROR "long double size is not 16Byte!")
+if((NOT ${FLOAT128_SIZE} EQUAL 16) AND (NOT ${FLOAT128_SIZE} EQUAL 12))
+    message("Long Double is of size ${FLOAT128_SIZE}")
+    message(FATAL_ERROR "long double size is not 16Byte or 12Byte!")
 endif()
 
 #=================try to figure out some compiler capabilities=================
