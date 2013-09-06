@@ -45,9 +45,13 @@ namespace nx{
                              >
     {
         public:
+            //! field type
             typedef typename nxvariant_field_type<VTYPE>::type field_type;
+            //! group type
             typedef typename nxvariant_group_type<VTYPE>::type group_type;
+            //! attribute type
             typedef typename nxvariant_attribute_type<VTYPE>::type attribute_type;
+            //! result type of the visitor
             typedef field_type result_type;
 
             //-----------------------------------------------------------------

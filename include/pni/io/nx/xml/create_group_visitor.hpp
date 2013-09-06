@@ -44,6 +44,7 @@ namespace xml{
     class create_group_visitor : public boost::static_visitor<VTYPE>
     {
         private: 
+            //! the XML node storing the data
             node _xml_node;
         public:
             //! result type
@@ -155,6 +156,7 @@ namespace xml{
     \throws nxattribute_error if the parent object is an attribute
     \tparam VTYPE variant type
     \param o instance of VTYPE
+    \param n name of the group
     \return size of the object
     */
     template<typename VTYPE> 

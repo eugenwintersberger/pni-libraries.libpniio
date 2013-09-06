@@ -56,6 +56,13 @@ namespace nx{
             //! Nexus attribute type
             typedef typename nxvariant_attribute_type<VTYPE>::type attribute_type;
 
+            /*!
+            \brief constructor
+
+            Constructor of the visitor.
+            \param n name of the group
+            \param c class of the group
+            */
             create_group_visitor(const string &n,const string &c):
                 _name(n),
                 _class(c)

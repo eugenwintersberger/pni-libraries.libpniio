@@ -48,6 +48,7 @@ namespace nx{
     class get_child_by_index_visitor : public boost::static_visitor<VTYPE>
     {
         private: 
+            //! index of the child
             size_t _index;
         public:
             //! result type
@@ -156,8 +157,8 @@ namespace nx{
     \throws index_error if the index exceeds the number of children
     \throws type_error if the Nexus object is of unknown type
     \tparam VTYPE variant type
-    \param n name of the child
-    \param c class of the child (only for groups)
+    \param o instance of VTYPE
+    \param i index of the child
     \return child object
     */
     template<typename VTYPE> 

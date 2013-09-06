@@ -103,18 +103,45 @@ namespace nx{
         typedef typename boost::mpl::at<typename VTYPE::types,boost::mpl::int_<0> >::type type; 
     };
 
+    //-------------------------------------------------------------------------
+    /*!
+    \ingroup variant_code
+    \brief get group type
+
+    Obtains the group type of a variant type.
+    \tparam VTYPE variant type
+    */
     template<typename VTYPE> struct nxvariant_group_type
     {
+        //! group type
         typedef typename boost::mpl::at<typename VTYPE::types,boost::mpl::int_<0> >::type type;
     };
 
+    //-------------------------------------------------------------------------
+    /*!
+    \ingroup variant_code
+    \brief get field type
+
+    Obtains the field type of a variant type
+    \tparam VTYPE variant type
+    */
     template<typename VTYPE> struct nxvariant_field_type
     {
+        //! field type
         typedef typename boost::mpl::at<typename VTYPE::types,boost::mpl::int_<1> >::type type;
     };
 
+    //-------------------------------------------------------------------------
+    /*!
+    \ingroup variant_code
+    \brief get attribute type
+
+    Retrieves the attribute type from a varian type.
+    \tparam VTYPE
+    */
     template<typename VTYPE> struct nxvariant_attribute_type
     {
+        //! attribute type
         typedef typename boost::mpl::at<typename VTYPE::types,boost::mpl::int_<2> >::type type;
     };
 

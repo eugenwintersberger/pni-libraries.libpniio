@@ -170,6 +170,15 @@ namespace nx{
             //! Nexus attribute type
             typedef typename nxvariant_attribute_type<VTYPE>::type attribute_type;
 
+            /*!
+            \brief constructor
+
+            Visitor constructor
+            \param n name of the field
+            \param s shape 
+            \param cs chunk shape
+            \param filter filter instance to use
+            */
             create_field_visitor(const string &n,const STYPE &s,const CSTYPE
                     &cs,const FTYPE &filter):
                 _name(n),

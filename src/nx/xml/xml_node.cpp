@@ -35,7 +35,7 @@ namespace xml{
 
     node create_from_string(const string &s)
     {
-        std::stringstream stream(s);
+        std::stringstream stream(s.c_str());
         node t;
         try
         {
@@ -54,7 +54,7 @@ namespace xml{
     //-------------------------------------------------------------------------
     node create_from_file(const string &s)
     {
-        std::ifstream stream(s);
+        std::ifstream stream(s.c_str());
         if(!stream.is_open())
             throw file_error(EXCEPTION_RECORD,
                     "Error opening "+s+" for reading!");

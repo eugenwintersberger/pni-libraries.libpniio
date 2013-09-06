@@ -46,6 +46,7 @@ namespace nx{
     class read_visitor : public boost::static_visitor<void>
     {
         public: 
+            //! selection type for partial IO
             typedef std::vector<slice> selection_t;
         private:
             //! reference to the data holding object
@@ -181,7 +182,7 @@ namespace nx{
     \tparam VTYPE variant type
     \tparam ITPYES index types
     \param o instance of VTYPE
-    \param data instance of ATYPE with the data
+    \param a instance of ATYPE with the data
     \param indices index type instances
     \return nothing
     */

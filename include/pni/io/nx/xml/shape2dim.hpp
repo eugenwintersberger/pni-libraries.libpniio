@@ -62,7 +62,7 @@ namespace xml{
     \endcode
     
     \tparam CTYPE container type for the shape (default is shape_t)
-    \param dims node instance to the dimensions tag
+    \param shape shape which to convert to XML
     \return instance of shape_t with the shapea
     */
     template<typename CTYPE> node shape2dim(const CTYPE &shape)
