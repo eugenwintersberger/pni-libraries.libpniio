@@ -125,6 +125,7 @@ template<typename T> void NXSelectionTest::test_scalar_selection()
         }
     }
 
+    field(slice(1,3)).write(write);
     CPPUNIT_ASSERT_THROW(field(slice(1,3)).write(write),shape_mismatch_error);
     CPPUNIT_ASSERT_THROW(field(slice(0,4)).read(read),shape_mismatch_error);
 }
