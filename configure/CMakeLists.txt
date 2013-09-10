@@ -1,6 +1,12 @@
 include(CheckTypeSize)
+include(CheckCXXCompilerFlag)
 include(CheckCXXSourceCompiles)
+include(FindBoost)
 include(FindPkgConfig)
+
+if(NOT PKG_CONFIG_FOUND)
+    message("Could not find pkg-config ... try without it!")
+endif()
 
 if("${CMAKE_FAMILY_VERSION}" EQUAL "2.6")
     find_library(HDF5_FOUND hdf5 ${HDF5_C_LIBRARY_DIRS})
@@ -13,9 +19,22 @@ if(NOT HDF5_FOUND)
     message("HDF5 not found:")
     message(FATAL "Please set HDF5_C_INCLUDE_DIRS and HDF5_LIBRARY_DIRS manually!")
 endif()
+if(NOT CMAKE_BUILD_TYPE)
+    message("No build type specified - default is RELEASE")
+    set(CMAKE_BUILD_TYPE RELEASE)
+endif()
 
-#set the default compiler flags
-set(GCC_COMPILER_RELEASE_FLAGS "-O3")
+#setup for GNU CXX compiler
+if(CMAKE_COMPILER_IS_GNUCXX)
+    message("found GNU compiler ...")
+    if(CMAKE_BUILD_TYPE MATCHES RELEASE)
+        message("setup for release build ...")
+        add_definitions(-O3)
+    elseif(CMAKE_BUILD_TYPE MATCHES DEBUG)
+        message("setup for debug build ...")
+        add_definitions(-O0 -g)
+    endif()
+endif()
 
 #=====================need to check compiler flags=============================
 #check for supported c++11 flags
@@ -158,7 +177,15 @@ endif()
 #==========================check for libraries=====================================
 #the only thing we have to do here is to check for pnicore
 pkg_search_module(PNICORE_PKG REQUIRED pnicore)
-pkg_search_module(CPPUNIT_PKG REQUIRED cppunit)
+
+set(Boost_USE_STATIC_LIBS OFF)
+set(Boost_USE_MULTITHREADED OFF)
+set(Boost_USE_STATIC_RUNTIME OFF)
+find_package(Boost 1.41 COMPONENTS program_options system regex)
+
+if(PKG_CONFIG_FOUND)
+    pkg_search_module(CPPUNIT REQUIRED cppunit)
+endif()
 
 link_directories(${CPPUNIT_PKG_LIBRARY_DIRS})
 

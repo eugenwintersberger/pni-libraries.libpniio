@@ -9,6 +9,11 @@ set(CMAKE_INSTALL_INCLUDEDIR "${CMAKE_INSTALL_PREFIX}/include")
 
 set(CMAKE_FAMILY_VERSION "${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}")
 
+if(NOT CMAKE_BUILD_TYPE)
+    message("No build type specified - default is RELEASE")
+    set(CMAKE_BUILD_TYPE RELEASE)
+endif()
+
 #===========================provide some user options==========================
 option(BOOST_PREFIX "installation prefix of the local BOOST installation" "/usr")
 
