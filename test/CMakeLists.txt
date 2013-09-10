@@ -7,7 +7,17 @@ include_directories(${PNICORE_PKG_INCLUDE_DIRS} ${HDF5_INCLUDE_DIRS})
 link_directories("${CMAKE_CURRENT_BINARY_DIR}/../src")
 include_directories(${PNICORE_PKG_INCLUDE_DIRS})
 add_executable(pniiotest ${TEST_SOURCES})
-target_link_libraries(pniiotest pniio dl ${CPPUNIT_PKG_LIBRARIES})
+
+if(CPPUNIT_FOUND)
+    #add include directories
+    include_directories(${CPPUNIT_INCLUDE_DIRS})
+
+    #add libraries
+    target_link_libraries(pniiotest ${CPPUNIT_LIBRARIES})
+
+endif()
+
+target_link_libraries(pniiotest pniio dl)
 
 add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
     ${CMAKE_CURRENT_SOURCE_DIR}/xml_test/dim1.xml ${CMAKE_CURRENT_BINARY_DIR})

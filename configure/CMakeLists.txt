@@ -187,5 +187,4 @@ if(PKG_CONFIG_FOUND)
     pkg_search_module(CPPUNIT REQUIRED cppunit)
 endif()
 
-link_directories(${CPPUNIT_PKG_LIBRARY_DIRS})
 
