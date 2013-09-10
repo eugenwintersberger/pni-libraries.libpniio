@@ -29,6 +29,7 @@
 #include <sstream>
 #include <pni/core/types.hpp>
 #include <pni/core/slice.hpp>
+#include <pni/core/exceptions.hpp>
 #include <pni/core/array_selection.hpp>
 
 
@@ -50,6 +51,7 @@ namespace h5{
     using namespace pni::core;
     //avoid namespace collisions with std
     using pni::core::exception;
+    using pni::core::shape_mismatch_error;
     using pni::core::string;
 
     /*! 
@@ -624,11 +626,17 @@ namespace h5{
 
                 //create an array selection
                 array_selection asel = array_selection::create(sel);
-
+                
                 //create buffers
                 auto offset = asel.offset<dbuffer<hsize_t> >();
                 auto stride = asel.stride<dbuffer<hsize_t> >();
                 auto count = asel.full_shape<dbuffer<hsize_t> >();
+
+                //need to throw an exception if the rank of the selection and
+                //that of the 
+                if(offset.size() != _fspace.rank())
+                    throw shape_mismatch_error(EXCEPTION_RECORD,
+                            "Selection and field rank do not match!");
 
                 //apply the selection
                 herr_t err = H5Sselect_hyperslab(_fspace.id(),
