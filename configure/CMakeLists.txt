@@ -8,16 +8,37 @@ if(NOT PKG_CONFIG_FOUND)
 endif()
 
 if("${CMAKE_FAMILY_VERSION}" EQUAL "2.6")
-    find_library(HDF5_FOUND hdf5 ${HDF5_C_LIBRARY_DIRS})
+    #first we have to find the c-library
+    if(HDF5_C_LIBRARY_DIRS)
+        #user provided HDF5_C_LIBRARY_DIRS
+        find_library(HDF5_FOUND hdf5 ${HDF5_C_LIBRARY_DIRS})
+    else()
+        #without use provided HDF5_C_LIBARY_DIRS
+        find_library(HDF5_FOUND hdf5)
+    endif()
+
+    message(${HDF5_FOUND}) 
+    get_filename_component(HDF5_C_LIBRARY_DIRS ${HDF5_FOUND} PATH)
+    string(REPLACE "lib" "include" HDF5_INCLUDE_DIRS "${HDF5_C_LIBRARY_DIRS}")
+    message(${HDF5_C_LIBRARY_DIRS})
+    message(${HDF5_INCLUDE_DIRS})
+
+    #now we have to look for the header file
+    find_file(HEADER "hdf5.h" ${HDF5_INCLUDE_DIRS} "${HDF5_INCLUDE_DIRS}/hdf5")
+    get_filename_component(HDF5_INCLUDE_DIRS ${HEADER} PATH)
+    message(${HDF5_INCLUDE_DIRS})
     include_directories(${HDF5_INCLUDE_DIRS}) 
 else()
     include(FindHDF5)
 endif()
-    
+
 if(NOT HDF5_FOUND)
+    #could not find HDF5 - stop configuration step
     message("HDF5 not found:")
     message(FATAL "Please set HDF5_C_INCLUDE_DIRS and HDF5_LIBRARY_DIRS manually!")
 endif()
+
+#=================================================================================
 if(NOT CMAKE_BUILD_TYPE)
     message("No build type specified - default is RELEASE")
     set(CMAKE_BUILD_TYPE RELEASE)
