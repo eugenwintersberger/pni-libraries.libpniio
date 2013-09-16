@@ -32,7 +32,7 @@ if("${CMAKE_FAMILY_VERSION}" EQUAL "2.6")
     #However, as the time of writing this, the only systems that are available
     #that do not run cmake 2.8 are old RHEL 6 and 5 systems. Thus we can set the 
     #default to lib64 in case of 64Bit systems and to lib in case of 32Bit
-    if(CMAKE_SIZE_OF_VOID_P EUQAL 8)
+    if(CMAKE_SIZEOF_VOID_P EUQAL 8)
         set(CMAKE_INSTALL_LIBDIR "${CMAKE_INSTALL_PREFIX}/lib64")
     else()
         set(CMAKE_INSTALL_LIBDIR "${CMAKE_INSTALL_PREFIX}/lib")
