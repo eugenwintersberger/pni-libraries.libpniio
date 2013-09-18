@@ -91,6 +91,28 @@ namespace h5{
             */
             void __throw_if_not_scalar(const exception_record &rec) const;
 
+            //-----------------------------------------------------------------
+            /*!
+            \brief read variable length strings
+
+            Read a dataset with variable length strings.
+            \throws nxfield_error in case of IO errors
+            \param s pointer to targe strings
+            \param stype file data type
+            */
+            void _read_vl_strings(string *s,H5Datatype &stype) const;
+
+            //-----------------------------------------------------------------
+            /*!
+            \brief read static length strings
+
+            Read array with static length strings. This function is mainly to
+            support legacy files which do not use variable length strings.
+            \throws nxfield_error in case of IO errors
+            \param s pointer to target strings
+            \param stype file data type
+            */
+            void _read_static_strings(string *s,H5Datatype &stype) const;
 
         public:
             //===================Constructors and destructors==================

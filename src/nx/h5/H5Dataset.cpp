@@ -259,21 +259,31 @@ namespace h5{
     //-----------------------------------------------------------------
     void H5Dataset::read(string *sptr) const
     {
-        typedef char * char_ptr_t;
         //select the proper memory data type
-        
         H5Datatype mem_type(H5Dget_type(id()));
-        char_ptr_t *ptr = new char_ptr_t[size()];
+        
+        if(H5Tis_variable_str(mem_type.id()))
+            _read_vl_strings(sptr,mem_type);
+        else
+            _read_static_strings(sptr,mem_type);
+    }
+
+    //-------------------------------------------------------------------------
+    void H5Dataset::_read_vl_strings(string *s,H5Datatype &stype) const
+    {
+        std::vector<char *> ptrs(size());
+
+        //need here a more general guard for HDF5 objects
         hid_t xfer_plist = H5Pcreate(H5P_DATASET_XFER);
 
-        //write data to disk
-        herr_t err = H5Dread(id(),mem_type.id(),_mspace.id(),_fspace.id(),
-                              xfer_plist,(void *)ptr);
+        //read data from disk
+        herr_t err = H5Dread(id(),stype.id(),_mspace.id(),_fspace.id(),
+                              xfer_plist,(void *)ptrs.data());
         if(err<0)
         {
-            delete [] ptr; //free memory
+            H5Pclose(xfer_plist); //close the transfer property list
             pni::io::nx::nxfield_error error(EXCEPTION_RECORD, 
-                    "Error writing data to dataset ["+name()+"]!\n\n"+
+                    "Error reading data to dataset ["+name()+"]!\n\n"+
                     get_h5_error_string());
             throw error;
         }
@@ -282,16 +292,38 @@ namespace h5{
         {
             try
             {
-                sptr[i] = string(ptr[i]);
+                s[i] = string(ptrs[i]);
             }
             catch(...)
             {
-                sptr[i] = "";
+                s[i] = "";
             }
         }
 
-        H5Dvlen_reclaim(mem_type.id(),_mspace.id(),xfer_plist,ptr);
-        delete [] ptr;
+        H5Dvlen_reclaim(stype.id(),_mspace.id(),xfer_plist,ptrs.data());
+        H5Pclose(xfer_plist); //close the transfer property list
+    }
+
+    //-------------------------------------------------------------------------
+    void H5Dataset::_read_static_strings(string *s,H5Datatype &stype) const
+    {
+        size_t strsize = H5Tget_size(stype.id());
+
+        std::vector<char> ptrs(strsize*size());
+
+        //read data from disk
+        herr_t err = H5Dread(id(),stype.id(),_mspace.id(),_fspace.id(),
+                              H5P_DEFAULT,(void *)ptrs.data());
+        if(err<0)
+        {
+            pni::io::nx::nxfield_error error(EXCEPTION_RECORD, 
+                    "Error reading data to dataset ["+name()+"]!\n\n"+
+                    get_h5_error_string());
+            throw error;
+        }
+
+        for(size_t i=0;i<size();i++)
+            s[i] = string(ptrs.data()+i*strsize,strsize);
     }
 
 
