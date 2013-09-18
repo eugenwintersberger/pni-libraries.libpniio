@@ -87,7 +87,7 @@ namespace h5{
             \param s pointer to target strings
             \stype stype string type
             */
-            void _read_vl_strings(string *s,hid_t stype) const; 
+            void _read_vl_strings(string *s,H5Datatype &stype) const; 
 
             //------------------------------------------------------------------
             /*!
@@ -98,7 +98,7 @@ namespace h5{
             \param s pointer to target strings
             \param stype string type
             */
-            void _read_static_strings(string *s,hid_t stype) const;
+            void _read_static_strings(string *s,H5Datatype &stype) const;
 
 
         public:

@@ -214,36 +214,30 @@ namespace h5{
     void H5Attribute::read(string *s) const
     {
         //get the type of the string data stored
-        hid_t element_type = H5Aget_type(id());
+        H5Datatype element_type(H5Aget_type(id()));
 
         //if the type is not a variable length string memory must be allocated
         //for each string in the attribute
-        if(!H5Tis_variable_str(element_type))
+        if(!H5Tis_variable_str(element_type.id()))
             _read_static_strings(s,element_type);
         else
             _read_vl_strings(s,element_type);
 
-        //close the data type
-        H5Tclose(element_type);
-
     }
 
     //-------------------------------------------------------------------------
-    void H5Attribute::_read_vl_strings(string *s,hid_t stype) const
+    void H5Attribute::_read_vl_strings(string *s,H5Datatype &stype) const
     {
         size_t nstrings = size();
 
         //allocate a vector of pointers each holding an individual string
         std::vector<char*> str_pointers(nstrings);
             
-        herr_t err = H5Aread(id(),stype,(void *)str_pointers.data());
+        herr_t err = H5Aread(id(),stype.id(),(void *)str_pointers.data());
         if(err<0)
-        {
-            H5Tclose(stype);
             throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD, 
                     "Error reading attribute ["+name()+"]!\n\n"+
                     get_h5_error_string());
-        }
 
         //copy the strings
         for(size_t i = 0;i<nstrings;i++)
@@ -252,24 +246,21 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    void H5Attribute::_read_static_strings(string *s,hid_t stype) const
+    void H5Attribute::_read_static_strings(string *s,H5Datatype &stype) const
     {
         //total number of strings stored
         size_t nstrings = size(); 
         //determine the length of the strings
-        size_t ssize    = H5Tget_size(stype);
+        size_t ssize    = H5Tget_size(stype.id());
 
         //allocate memory
         std::vector<char> str_data(nstrings*ssize);
 
-        herr_t err = H5Aread(id(),stype,(void *)str_data.data());
+        herr_t err = H5Aread(id(),stype.id(),(void *)str_data.data());
         if(err<0)
-        {
-            H5Tclose(stype);
             throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD, 
                     "Error reading attribute ["+name()+"]!\n\n"+
                     get_h5_error_string());
-        }
 
         //copy the strings
         for(size_t i = 0;i<nstrings;++i)
