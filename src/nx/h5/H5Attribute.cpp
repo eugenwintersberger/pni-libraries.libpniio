@@ -186,27 +186,18 @@ namespace h5{
     //implementation of write from String
     void H5Attribute::write(const string *s) const
     {
-        typedef const char * char_ptr_t;
-        
-        char_ptr_t *ptr = new char_ptr_t[size()];
-        for(size_t i=0;i<size();i++) ptr[i] = s[i].c_str();
+        std::vector<const char*> ptrs(size());
+
+        for(size_t i=0;i<size();i++) ptrs[i] = s[i].data();
 
         //get element type
-        hid_t element_type = H5Aget_type(id()); 
+        H5Datatype element_type(H5Aget_type(id())); 
 
-        herr_t err = H5Awrite(id(),element_type,ptr);
-        delete [] ptr;
-
+        herr_t err = H5Awrite(id(),element_type.id(),(void *)ptrs.data());
         if(err < 0)
-        {
-            H5Tclose(element_type);
             throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD, 
                     "Error writing attribute ["+name()+"]!\n\n"+
                     get_h5_error_string());
-        }
-
-        //close the data type
-        H5Tclose(element_type);
     }
 
     //-------------------------------------------------------------------------
