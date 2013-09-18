@@ -39,6 +39,14 @@ namespace io{
 namespace nx{
 namespace xml{
 
+    /*
+    We need to specify some things here
+    .) how do we handle non-Nexus groups? This are groups without an NX_class
+    attribute
+    .) how do we handle data - read it or not.
+
+       */
+
     using namespace pni::core;
     using namespace pni::io::nx;
 
@@ -73,6 +81,12 @@ namespace xml{
     }
 
     //-------------------------------------------------------------------------
+    /*!
+    \brief convert group to XML
+
+    Converts a stored Nexus group to its XML representation.
+
+    */
     template<typename VTYPE> node group2xml(const VTYPE &group)
     {
         node group_node;
