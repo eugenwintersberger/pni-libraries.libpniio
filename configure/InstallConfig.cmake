@@ -16,11 +16,18 @@
 # This module is not available on cmake 2.6 and thus we have to define this 
 # variables manually
 # 
+message("${CMAKE_VERSION}")
 if(("${CMAKE_FAMILY_VERSION}" EQUAL "2.6") OR ("${CMAKE_VERSION}" EQUAL "2.8.4"))
+    
+    #==========================================================================
+    # FIRST WE HAVE TO DEFINE ALL THE RELATIVE PATHS
+    #==========================================================================
     #most of the paths are canonic and thus easy to define
-    set(CMAKE_INSTALL_SYSCONFDIR "${CMAKE_INSTALL_PREFIX}/etc")
-    set(CMAKE_INSTALL_DOCDIR "${CMAKE_INSTALL_PREFIX}/share/doc")
-    set(CMAKE_INSTALL_INCLUDEDIR "${CMAKE_INSTALL_PREFIX}/include")
+    set(CMAKE_INSTALL_SYSCONFDIR "etc")
+    set(CMAKE_INSTALL_DATAROOTDIR "share")
+    set(CMAKE_INSTALL_DATADIR "${CMAKE_INSTALL_DATAROOT_DIR}")
+    set(CMAKE_INSTALL_DOCDIR "doc/libpnicore")
+    set(CMAKE_INSTALL_INCLUDEDIR "include")
 
     #the library installation path is more difficult as we have several options
     #here
@@ -37,6 +44,18 @@ if(("${CMAKE_FAMILY_VERSION}" EQUAL "2.6") OR ("${CMAKE_VERSION}" EQUAL "2.8.4")
     else()
         set(CMAKE_INSTALL_LIBDIR "${CMAKE_INSTALL_PREFIX}/lib")
     endif()
+    
+    #==========================================================================
+    # NOW WE DEFINE THE FULL PATH VARIABLES
+    #==========================================================================
+    set(CMAKE_INSTALL_FULL_SYSCONFDIR 
+        "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_SYSCONDIR}")
+    set(CMAKE_INSTALL_FULL_DOCDIR
+        "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DOCDIR}")
+    set(CMAKE_INSTALL_FULL_INCLUDEDIR
+        "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}")
+    set(CMAKE_INSTALL_FULL_LIBDIR
+        "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
 else()
     include(GNUInstallDirs)
 endif()

@@ -12,10 +12,11 @@ add_library(pniio SHARED ${SOURCES})
 add_dependencies(pniio config.hpp)
 set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"
                                        SOVERSION "${SO_VERSION}")
-target_link_libraries(pniio hdf5 z boost_date_time boost_filesystem ${PNICORE_PKG_LIBRARIES})
+target_link_libraries(pniio hdf5 z boost_date_time 
+                      boost_filesystem ${PNICORE_PKG_LIBRARIES})
 
 #install code
-install(TARGETS pniio LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}")
+install(TARGETS pniio LIBRARY DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}")
 
 #have to create the pkg-config file
 if("${CMAKE_FAMILY_VERSION}" EQUAL "2.6")
@@ -24,6 +25,7 @@ else()
     CONFIGURE_FILE(pniio.pc.cmake pniio.pc @ONLY)
 endif()
 
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pniio.pc" DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pniio.pc" 
+        DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}/pkgconfig")
 
 
