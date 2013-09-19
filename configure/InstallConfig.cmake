@@ -16,7 +16,7 @@
 # This module is not available on cmake 2.6 and thus we have to define this 
 # variables manually
 # 
-if("${CMAKE_FAMILY_VERSION}" EQUAL "2.6")
+if(("${CMAKE_FAMILY_VERSION}" EQUAL "2.6") OR ("${CMAKE_VERSION}" EQUAL "2.8.4"))
     #most of the paths are canonic and thus easy to define
     set(CMAKE_INSTALL_SYSCONFDIR "${CMAKE_INSTALL_PREFIX}/etc")
     set(CMAKE_INSTALL_DOCDIR "${CMAKE_INSTALL_PREFIX}/share/doc")

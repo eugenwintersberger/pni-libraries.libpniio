@@ -7,11 +7,11 @@ if(NOT PKG_CONFIG_FOUND)
     message("Could not find pkg-config ... try without it!")
 endif()
 
-if("${CMAKE_FAMILY_VERSION}" EQUAL "2.6")
+if("${CMAKE_FAMILY_VERSION}" EQUAL "2.6" OR "${CMAKE_VERSION}" EQUAL "2.8.4")
     #first we have to find the c-library
     if(HDF5_C_LIBRARY_DIRS)
         #user provided HDF5_C_LIBRARY_DIRS
-        find_library(HDF5_FOUND hdf5 ${HDF5_C_LIBRARY_DIRS})
+        find_library(HDF5_FOUND hdf5 "${HDF5_C_LIBRARY_DIRS}")
     else()
         #without use provided HDF5_C_LIBARY_DIRS
         find_library(HDF5_FOUND hdf5)
@@ -19,7 +19,7 @@ if("${CMAKE_FAMILY_VERSION}" EQUAL "2.6")
 
     message(${HDF5_FOUND}) 
     get_filename_component(HDF5_C_LIBRARY_DIRS ${HDF5_FOUND} PATH)
-    string(REPLACE "lib" "include" HDF5_INCLUDE_DIRS "${HDF5_C_LIBRARY_DIRS}")
+    string(REGEX REPLACE "lib(64)*" "include" HDF5_INCLUDE_DIRS "${HDF5_C_LIBRARY_DIRS}")
     message(${HDF5_C_LIBRARY_DIRS})
     message(${HDF5_INCLUDE_DIRS})
 
