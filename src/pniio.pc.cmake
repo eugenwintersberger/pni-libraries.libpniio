@@ -1,7 +1,7 @@
 prefix = @CMAKE_INSTALL_PREFIX@ 
 exec_prefix = ${prefix}
 includedir = ${prefix}/include
-libdir = @CMAKE_INSTALL_LIBDIR@
+libdir = ${prefix}/@CMAKE_INSTALL_LIBDIR@
 
 Name: @CMAKE_PROJECT_NAME@
 Description: PNI IO library

@@ -2,13 +2,13 @@
 include(FindDoxygen)
 
 #generate the mainpage input file
-if("${CMAKE_FAMILY_VERSION}" EQUAL "2.6")
+if("${CMAKE_FAMILY_VERSION}" STREQUAL "2.6")
     configure_file(mainpage.cmake ./doc/mainpage @ONLY)
 else()
     configure_file(mainpage.cmake mainpage @ONLY)
 endif()
 
-if("${CMAKE_FAMILY_VERSION}" EQUAL "2.6")
+if("${CMAKE_FAMILY_VERSION}" STREQUAL "2.6")
     configure_file(Doxyfile.cmake ./doc/Doxyfile @ONLY)
 else()
     configure_file(Doxyfile.cmake Doxyfile @ONLY)

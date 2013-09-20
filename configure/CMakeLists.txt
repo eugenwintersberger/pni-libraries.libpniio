@@ -7,7 +7,7 @@ if(NOT PKG_CONFIG_FOUND)
     message("Could not find pkg-config ... try without it!")
 endif()
 
-if("${CMAKE_FAMILY_VERSION}" EQUAL "2.6" OR "${CMAKE_VERSION}" EQUAL "2.8.4")
+if("${CMAKE_FAMILY_VERSION}" STREQUAL "2.6" OR "${CMAKE_VERSION}" STREQUAL "2.8.4")
     #first we have to find the c-library
     if(HDF5_C_LIBRARY_DIRS)
         #user provided HDF5_C_LIBRARY_DIRS

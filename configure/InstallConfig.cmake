@@ -17,7 +17,8 @@
 # variables manually
 # 
 message("${CMAKE_VERSION}")
-if(("${CMAKE_FAMILY_VERSION}" EQUAL "2.6") OR ("${CMAKE_VERSION}" EQUAL "2.8.4"))
+if(("${CMAKE_FAMILY_VERSION}" STREQUAL "2.6") OR ("${CMAKE_VERSION}" STREQUAL "2.8.4"))
+    message("custom installtion setup ...")
     
     #==========================================================================
     # FIRST WE HAVE TO DEFINE ALL THE RELATIVE PATHS
@@ -26,7 +27,7 @@ if(("${CMAKE_FAMILY_VERSION}" EQUAL "2.6") OR ("${CMAKE_VERSION}" EQUAL "2.8.4")
     set(CMAKE_INSTALL_SYSCONFDIR "etc")
     set(CMAKE_INSTALL_DATAROOTDIR "share")
     set(CMAKE_INSTALL_DATADIR "${CMAKE_INSTALL_DATAROOT_DIR}")
-    set(CMAKE_INSTALL_DOCDIR "doc/libpnicore")
+    set(CMAKE_INSTALL_DOCDIR "doc/libpniio")
     set(CMAKE_INSTALL_INCLUDEDIR "include")
 
     #the library installation path is more difficult as we have several options
@@ -40,9 +41,9 @@ if(("${CMAKE_FAMILY_VERSION}" EQUAL "2.6") OR ("${CMAKE_VERSION}" EQUAL "2.8.4")
     #that do not run cmake 2.8 are old RHEL 6 and 5 systems. Thus we can set the 
     #default to lib64 in case of 64Bit systems and to lib in case of 32Bit
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set(CMAKE_INSTALL_LIBDIR "${CMAKE_INSTALL_PREFIX}/lib64")
+        set(CMAKE_INSTALL_LIBDIR "lib64")
     else()
-        set(CMAKE_INSTALL_LIBDIR "${CMAKE_INSTALL_PREFIX}/lib")
+        set(CMAKE_INSTALL_LIBDIR "lib")
     endif()
     
     #==========================================================================
