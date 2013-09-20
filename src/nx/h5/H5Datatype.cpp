@@ -144,8 +144,10 @@ namespace h5{
         if(H5DatatypeFactory::create_type<type_id_t::BINARY>() == *this) 
             return type_id_t::BINARY;
 
-        if(H5DatatypeFactory::create_type<type_id_t::STRING>() == *this) 
-            return type_id_t::STRING;
+        
+        //if((H5DatatypeFactory::create_type<type_id_t::STRING>() == *this) || 
+        //   (H5Datatype(H) == *this)) 
+        if(H5Tget_class(id()) == H5T_STRING) return type_id_t::STRING;
 
         if(H5DatatypeFactory::create_type<type_id_t::BOOL>() == *this)
             return type_id_t::BOOL;

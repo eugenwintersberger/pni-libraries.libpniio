@@ -39,12 +39,19 @@ namespace io{
 namespace nx{
 namespace xml{
 
+    /*
+    We need to specify some things here
+    .) how do we handle non-Nexus groups? This are groups without an NX_class
+    attribute
+    .) how do we handle data - read it or not.
+
+       */
+
     using namespace pni::core;
     using namespace pni::io::nx;
 
     template<typename VTYPE> node  field2xml(VTYPE &field)
     {
-        std::cout<<"converting a field!"<<std::endl;
         if(!is_field(field))
             throw pni::core::type_error(EXCEPTION_RECORD,
                     "["+get_path(field)+"] is not a field!");
@@ -73,11 +80,23 @@ namespace xml{
     }
 
     //-------------------------------------------------------------------------
+    /*!
+    \brief convert group to XML
+
+    Converts a stored Nexus group to its XML representation.
+    \throws nxgroup_error if the group has no class attribute
+    \param group variant type with the group to convert
+    \return XML node
+    */
     template<typename VTYPE> node group2xml(const VTYPE &group)
     {
         node group_node;
         auto group_name = get_name(group);
-        auto group_class = get_class(group);
+        string group_class;
+        if(get_path(group) == "/") 
+            group_class == "NXroot";
+        else
+            group_class = get_class(group);
 
         group_node.put("<xmlattr>.name",group_name);
         group_node.put("<xmlattr>.type",group_class);
@@ -133,8 +152,19 @@ namespace xml{
         else if(is_group(p))
         {
             key = "group";
+
             //add the actual group to the parent node
-            child =  group2xml(p);
+            try
+            {
+                child =  group2xml(p);
+            }
+            catch(nxgroup_error &error)
+            {
+                //break this branch and return to the calling instance. This
+                //situation will typically occur if the group does not have a
+                //NX_class attribute and thus is not a Nexus class.
+                return; 
+            }
 
             //obtain al child nodes
             vector_t objects;

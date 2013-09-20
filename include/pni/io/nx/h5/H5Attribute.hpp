@@ -79,6 +79,28 @@ namespace h5{
             */
             void __set_space_type();
 
+            //------------------------------------------------------------------
+            /*!
+            \brief read variable length string attributes
+
+            Read an attribute with variable length strings. 
+            \param s pointer to target strings
+            \stype stype string type
+            */
+            void _read_vl_strings(string *s,H5Datatype &stype) const; 
+
+            //------------------------------------------------------------------
+            /*!
+            \brief read static length string attribute
+
+            Read an attribute with static string attributes (strings of constant
+            size).
+            \param s pointer to target strings
+            \param stype string type
+            */
+            void _read_static_strings(string *s,H5Datatype &stype) const;
+
+
         public:
             //==============-====constructors and destructors===================
             //! default constructor

@@ -186,53 +186,77 @@ namespace h5{
     //implementation of write from String
     void H5Attribute::write(const string *s) const
     {
-        typedef const char * char_ptr_t;
-        
-        char_ptr_t *ptr = new char_ptr_t[size()];
-        for(size_t i=0;i<size();i++) ptr[i] = s[i].c_str();
+        std::vector<const char*> ptrs(size());
+
+        for(size_t i=0;i<size();i++) ptrs[i] = s[i].data();
 
         //get element type
-        hid_t element_type = H5Aget_type(id()); 
+        H5Datatype element_type(H5Aget_type(id())); 
 
-        herr_t err = H5Awrite(id(),element_type,ptr);
-        delete [] ptr;
-
+        herr_t err = H5Awrite(id(),element_type.id(),(void *)ptrs.data());
         if(err < 0)
             throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD, 
                     "Error writing attribute ["+name()+"]!\n\n"+
                     get_h5_error_string());
-
-        //close the data type
-        H5Tclose(element_type);
     }
 
     //-------------------------------------------------------------------------
     //implementation to read to string
     void H5Attribute::read(string *s) const
     {
-        typedef char * char_ptr_t;
+        //get the type of the string data stored
+        H5Datatype element_type(H5Aget_type(id()));
 
-        hid_t element_type = H5Aget_type(id());
+        //if the type is not a variable length string memory must be allocated
+        //for each string in the attribute
+        if(!H5Tis_variable_str(element_type.id()))
+            _read_static_strings(s,element_type);
+        else
+            _read_vl_strings(s,element_type);
 
-        char_ptr_t *ptr = new char_ptr_t[size()];
+    }
 
-        herr_t err = H5Aread(id(),element_type,ptr);
+    //-------------------------------------------------------------------------
+    void H5Attribute::_read_vl_strings(string *s,H5Datatype &stype) const
+    {
+        size_t nstrings = size();
+
+        //allocate a vector of pointers each holding an individual string
+        std::vector<char*> str_pointers(nstrings);
+            
+        herr_t err = H5Aread(id(),stype.id(),(void *)str_pointers.data());
         if(err<0)
-        {
-            delete [] ptr;
             throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD, 
                     "Error reading attribute ["+name()+"]!\n\n"+
                     get_h5_error_string());
-        }
 
-        //close the data type
-        H5Tclose(element_type);
+        //copy the strings
+        for(size_t i = 0;i<nstrings;i++)
+            s[i] = string(str_pointers[i]);
 
-        for(size_t i = 0;i<size();i++)
-        {
-            s[i] = string(ptr[i]);
-        }
-        delete [] ptr;
+    }
+
+    //-------------------------------------------------------------------------
+    void H5Attribute::_read_static_strings(string *s,H5Datatype &stype) const
+    {
+        //total number of strings stored
+        size_t nstrings = size(); 
+        //determine the length of the strings
+        size_t ssize    = H5Tget_size(stype.id());
+
+        //allocate memory
+        std::vector<char> str_data(nstrings*ssize);
+
+        herr_t err = H5Aread(id(),stype.id(),(void *)str_data.data());
+        if(err<0)
+            throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD, 
+                    "Error reading attribute ["+name()+"]!\n\n"+
+                    get_h5_error_string());
+
+        //copy the strings
+        for(size_t i = 0;i<nstrings;++i)
+            s[i] = string(str_data.data()+i*ssize,ssize);
+
     }
            
 
