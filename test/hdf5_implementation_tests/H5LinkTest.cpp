@@ -52,12 +52,15 @@ void H5LinkTest::test_internal()
 
     H5Group root_group(_file1.open("/"));
     H5Group g("/test/data",_file1);
+    //the original group should be a hard link
+    CPPUNIT_ASSERT(g.link_type() == nxlink_type::HARD);
 
     //straight forward - the link name is just a single name
     nxpath target = path_from_string(g.path());
     CPPUNIT_ASSERT_NO_THROW(h5link::create_internal_link(target,root_group,"link_1"));
     CPPUNIT_ASSERT(root_group.exists("link_1"));
     H5Group lg = root_group.open("link_1");
+    //this should be now a soft link
     CPPUNIT_ASSERT(lg.link_type()==nxlink_type::SOFT);
 
     //check for exceptions
@@ -75,14 +78,18 @@ void H5LinkTest::test_external()
 {
     using pni::io::nx::nxpath;
     using pni::io::nx::path_from_string;
+    using pni::io::nx::nxlink_type;
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     H5Group g("/test/data",_file1);
+    CPPUNIT_ASSERT(g.link_type() == nxlink_type::HARD);
 
     H5Group root_group(_file2.open("/"));
     //create a link to the group data in the first file
     nxpath target = path_from_string("H5LinkTest1.h5:///test/data");
     CPPUNIT_ASSERT_NO_THROW(h5link::create_external_link(target,root_group,"external"));
+    H5Group gext = root_group["external"];
+    CPPUNIT_ASSERT(gext.link_type() == nxlink_type::EXTERNAL);
     CPPUNIT_ASSERT(root_group.exists("external"));
 
     //echeck exceptions
