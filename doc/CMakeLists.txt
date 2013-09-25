@@ -1,22 +1,26 @@
 #build documentation
 include(FindDoxygen)
 
-#generate the mainpage input file
-if("${CMAKE_FAMILY_VERSION}" STREQUAL "2.6")
-    configure_file(mainpage.cmake ./doc/mainpage @ONLY)
-else()
-    configure_file(mainpage.cmake mainpage @ONLY)
-endif()
+if(DOXYGEN_FOUND)
+    #generate the mainpage input file
+    if("${CMAKE_FAMILY_VERSION}" STREQUAL "2.6")
+        configure_file(mainpage.cmake ./doc/mainpage @ONLY)
+    else()
+        configure_file(mainpage.cmake mainpage @ONLY)
+    endif()
 
-if("${CMAKE_FAMILY_VERSION}" STREQUAL "2.6")
-    configure_file(Doxyfile.cmake ./doc/Doxyfile @ONLY)
-else()
-    configure_file(Doxyfile.cmake Doxyfile @ONLY)
-endif()
+    if("${CMAKE_FAMILY_VERSION}" STREQUAL "2.6")
+        configure_file(Doxyfile.cmake ./doc/Doxyfile @ONLY)
+    else()
+        configure_file(Doxyfile.cmake Doxyfile @ONLY)
+    endif()
 
-#run doxygen
-add_custom_command(OUTPUT html COMMAND ${DOXYGEN_EXECUTABLE} Doxyfile)
-add_custom_target(documentation ALL SOURCES "html")
-install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/html" 
-    DESTINATION "${CMAKE_INSTALL_FULL_DOCDIR}")
+    #run doxygen
+    add_custom_command(OUTPUT html COMMAND ${DOXYGEN_EXECUTABLE} Doxyfile)
+    add_custom_target(documentation ALL SOURCES "html")
+    install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/html"
+        DESTINATION "${CMAKE_INSTALL_FULL_DOCDIR}")
+else(DOXYGEN_FOUND)
+    message("--- Disable building documentation")
+endif(DOXYGEN_FOUND)
 
