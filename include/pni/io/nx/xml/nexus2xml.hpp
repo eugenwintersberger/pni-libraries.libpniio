@@ -121,7 +121,6 @@ namespace xml{
         {
             string buffer;
             read(attr,buffer);
-            std::cout<<buffer<<std::endl;
             attr_node.put_value(buffer);
         }
 
