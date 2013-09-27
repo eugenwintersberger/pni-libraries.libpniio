@@ -187,7 +187,7 @@ namespace xml{
     \param anode attribute XML node
     */
     template<typename T,typename PTYPE> 
-    void create_attribute(const PTYPE &parent,const string &name,const node &anode)
+    void create_attribute_from_node(const PTYPE &parent,const string &name,const node &anode)
     {
         //create the attribute
         auto attribute = parent.template attr<T>(name);
@@ -225,35 +225,35 @@ namespace xml{
                 auto type = attribute_data<string>::read(child.second,"type");
 
                 if(type == "uint8") 
-                    create_attribute<uint8>(p,name,child);
+                    create_attribute_from_node<uint8>(p,name,child.second);
                 else if(type == "int8") 
-                    create_attribute<int8>(p,name,child);
+                    create_attribute_from_node<int8>(p,name,child.second);
                 else if(type == "uint16") 
-                    create_attribute<uint16>(p,name,child);
+                    create_attribute_from_node<uint16>(p,name,child.second);
                 else if(type == "int16") 
-                    create_attribute<int16>(p,name,child);
+                    create_attribute_from_node<int16>(p,name,child.second);
                 else if(type == "uint32") 
-                    create_attribute<uint32>(p,name,child);
+                    create_attribute_from_node<uint32>(p,name,child.second);
                 else if(type == "int32")  
-                    create_attribute<int32>(p,name,child);
+                    create_attribute_from_node<int32>(p,name,child.second);
                 else if(type == "uint64") 
-                    create_attribute<uint64>(p,name,child);
+                    create_attribute_from_node<uint64>(p,name,child.second);
                 else if(type == "int64")  
-                    create_attribute<int64>(p,name,child);
+                    create_attribute_from_node<int64>(p,name,child.second);
                 else if(type == "float32") 
-                    create_attribute<float32>(p,name,child);
+                    create_attribute_from_node<float32>(p,name,child.second);
                 else if(type == "float64") 
-                    create_attribute<float64>(p,name,child);
+                    create_attribute_from_node<float64>(p,name,child.second);
                 else if(type == "float128") 
-                    create_attribute<float128>(p,name,child);
+                    create_attribute_from_node<float128>(p,name,child.second);
                 else if(type == "complex32") 
-                    create_attribute<complex32>(p,name,child);
+                    create_attribute_from_node<complex32>(p,name,child.second);
                 else if(type == "complex64") 
-                    create_attribute<complex64>(p,name,child);
+                    create_attribute_from_node<complex64>(p,name,child.second);
                 else if(type == "complex128") 
-                    create_attribute<complex128>(p,name,child);
+                    create_attribute_from_node<complex128>(p,name,child.second);
                 else if(type == "string") 
-                    create_attribute<string>(p,name,child);
+                    create_attribute_from_node<string>(p,name,child.second);
                 else
                 {
                     string error_message = "Unknown data type ["+type+"]!";

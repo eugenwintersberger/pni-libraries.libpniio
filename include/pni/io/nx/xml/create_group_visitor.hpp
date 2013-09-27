@@ -71,9 +71,9 @@ namespace xml{
             \brief process group instances
 
             Create a new group according to the XML data below the parent group
-            g passed by the user.
+            passed by the user.
             \throws nxgroup_error in case of errors
-            \param g parent group
+            \param g group instance
             \return the new group instance as a variant
             */ 
             result_type operator()(const group_type &g) const
@@ -91,7 +91,9 @@ namespace xml{
                    This will throw an exception in case of any IO error. One possibility
                    would be that a group with this name already exists.
                 */
-                return result_type(g.create_group(name,type));
+                auto group = g.create_group(name,type);
+                create_attributes(group,_xml_node);
+                return result_type(group);
             }
 
             //-----------------------------------------------------------------
