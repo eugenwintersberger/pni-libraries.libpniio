@@ -205,6 +205,8 @@ namespace xml{
                 if(has_data(_xml_node))
                     copy_node_to_field(_xml_node,f);
 
+                create_attributes(f,_xml_node);
+
                 return result_type(f);      
             }
 

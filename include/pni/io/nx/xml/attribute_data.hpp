@@ -27,6 +27,7 @@
 #include "../../parsers/array_parser.hpp"
 #include "../../parsers/exceptions.hpp"
 #include "xml_node.hpp"
+#include "node_data.hpp"
 
 
 namespace pni{
@@ -173,6 +174,97 @@ namespace xml{
     \return true if attribute contains data, false otherwise
     */
     bool has_data(const node &n,const string &name);
+   
+    //---------------------------------------------------------------------------
+    /*!
+    \brief create a single attribute
+
+    Creates a single attribute of type T at a parent object. 
+    \tparam T data type of the attribute
+    \tparam PTYPE parent type
+    \param parent instance of the parent 
+    \param name name of the attribute
+    \param anode attribute XML node
+    */
+    template<typename T,typename PTYPE> 
+    void create_attribute_from_node(const PTYPE &parent,const string &name,const node &anode)
+    {
+        //create the attribute
+        auto attribute = parent.template attr<T>(name);
+        if(has_data(anode))
+        {
+            //write data 
+            T buffer = node_data<T>::read(anode);
+            attribute.write(buffer);
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    /*!
+    \ingroup xml_lowlevel_utils
+    \brief create attributes below a parent
+
+    Loop over all children in a parent and search for attribute tags. Every
+    attribute found is attached to the parent object. 
+    \tparam PTYPE parent type
+    \param p parent as instance of PTYPE
+    \param pnode parent node
+    */
+    template<typename PTYPE>
+    void create_attributes(const PTYPE &p,const node &pnode)
+    {
+#ifdef NOFOREACH
+        BOOST_FOREACH(auto child, pnode)
+#else
+        for(auto child: pnode)
+#endif
+        {
+            if(child.first == "attribute")
+            {
+                auto name = attribute_data<string>::read(child.second,"name");
+                auto type = attribute_data<string>::read(child.second,"type");
+
+                if(type == "uint8") 
+                    create_attribute_from_node<uint8>(p,name,child.second);
+                else if(type == "int8") 
+                    create_attribute_from_node<int8>(p,name,child.second);
+                else if(type == "uint16") 
+                    create_attribute_from_node<uint16>(p,name,child.second);
+                else if(type == "int16") 
+                    create_attribute_from_node<int16>(p,name,child.second);
+                else if(type == "uint32") 
+                    create_attribute_from_node<uint32>(p,name,child.second);
+                else if(type == "int32")  
+                    create_attribute_from_node<int32>(p,name,child.second);
+                else if(type == "uint64") 
+                    create_attribute_from_node<uint64>(p,name,child.second);
+                else if(type == "int64")  
+                    create_attribute_from_node<int64>(p,name,child.second);
+                else if(type == "float32") 
+                    create_attribute_from_node<float32>(p,name,child.second);
+                else if(type == "float64") 
+                    create_attribute_from_node<float64>(p,name,child.second);
+                else if(type == "float128") 
+                    create_attribute_from_node<float128>(p,name,child.second);
+                else if(type == "complex32") 
+                    create_attribute_from_node<complex32>(p,name,child.second);
+                else if(type == "complex64") 
+                    create_attribute_from_node<complex64>(p,name,child.second);
+                else if(type == "complex128") 
+                    create_attribute_from_node<complex128>(p,name,child.second);
+                else if(type == "string") 
+                    create_attribute_from_node<string>(p,name,child.second);
+                else
+                {
+                    string error_message = "Unknown data type ["+type+"]!";
+                    throw type_error(EXCEPTION_RECORD,error_message);
+                }
+
+            }
+        }
+
+    }
+
 
 
 //end of namespace

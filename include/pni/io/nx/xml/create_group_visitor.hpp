@@ -91,7 +91,9 @@ namespace xml{
                    This will throw an exception in case of any IO error. One possibility
                    would be that a group with this name already exists.
                 */
-                return result_type(g.create_group(name,type));
+                auto group = g.create_group(name,type);
+                create_attributes(group,_xml_node);
+                return result_type(group);
             }
 
             //-----------------------------------------------------------------
