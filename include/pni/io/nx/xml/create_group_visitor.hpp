@@ -71,9 +71,9 @@ namespace xml{
             \brief process group instances
 
             Create a new group according to the XML data below the parent group
-            passed by the user.
+            g passed by the user.
             \throws nxgroup_error in case of errors
-            \param g group instance
+            \param g parent group
             \return the new group instance as a variant
             */ 
             result_type operator()(const group_type &g) const
