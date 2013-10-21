@@ -1,6 +1,5 @@
 
-install(DIRECTORY . DESTINATION "${CMAKE_INSTALL_FULL_INCLUDEDIR}" 
-    FILES_MATCHING PATTERN "*.hpp")
+add_subdirectory("pni")
 
 
 

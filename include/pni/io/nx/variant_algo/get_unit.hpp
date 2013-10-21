@@ -28,6 +28,21 @@ namespace io{
 namespace nx{
 
     /*!
+    \brief get the unit of a field
+
+    Return the unit string for a field 
+    */
+    template<typename FTYPE> string get_unit(const FTYPE &field)
+    {
+        string buffer;
+
+        if(field.has_attr("units"))
+            field.attr("units").read(buffer);
+
+        return buffer;
+    }
+
+    /*!
     \ingroup variant_code
     \brief get unit visitor
 
@@ -75,13 +90,7 @@ namespace nx{
             */
             result_type operator()(const field_type &f) const
             {
-                string buffer;
-
-                if(f.has_attr("units"))
-                    f.attr("units").read(buffer);
-
-                return buffer;
-                    
+                return get_unit(f);
             }
 
             //-----------------------------------------------------------------
@@ -116,10 +125,11 @@ namespace nx{
     \param o instance of VTYPE
     \return unit string
     */
-    template<typename VTYPE> 
-    typename get_unit_visitor<VTYPE>::result_type get_unit(const VTYPE &o)
+    template<typename ...TYPES> 
+    typename get_unit_visitor<boost::variant<TYPES...>>::result_type 
+    get_unit(const boost::variant<TYPES...> &o)
     {
-        return boost::apply_visitor(get_unit_visitor<VTYPE>(),o);
+        return boost::apply_visitor(get_unit_visitor<boost::variant<TYPES...>>(),o);
     }
 
 //end of namespace
