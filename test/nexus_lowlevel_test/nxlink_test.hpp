@@ -39,6 +39,7 @@ class nxlink_test: public CppUnit::TestFixture
     CPPUNIT_TEST(test_field_external_link);
     CPPUNIT_TEST(test_group_internal_link);
     CPPUNIT_TEST(test_group_external_link);
+    CPPUNIT_TEST(test_hard_type);
 	CPPUNIT_TEST_SUITE_END();
 private:
     h5::nxfile target_file;
@@ -52,5 +53,6 @@ public:
     void test_field_external_link();
     void test_group_internal_link();
     void test_group_external_link();
+    void test_hard_type();
 };
 

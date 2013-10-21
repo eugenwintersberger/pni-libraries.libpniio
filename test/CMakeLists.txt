@@ -1,6 +1,68 @@
 
 #need to define the version of the library
-file(GLOB_RECURSE TEST_SOURCES *.cpp)
+set(TEST_SOURCES 
+    ./nxvariant_tests/is_valid_test.cpp
+    ./nxvariant_tests/get_attribute_test.cpp
+    ./nxvariant_tests/get_class_test.cpp
+    ./nxvariant_tests/get_size_test.cpp
+    ./nxvariant_tests/get_type_test.cpp
+    ./nxvariant_tests/read_test.cpp
+    ./nxvariant_tests/get_unit_test.cpp
+    ./nxvariant_tests/grow_test.cpp
+    ./nxvariant_tests/get_object_test.cpp
+    ./nxvariant_tests/is_class_test.cpp
+    ./nxvariant_tests/is_group_test.cpp
+    ./nxvariant_tests/get_shape_test.cpp
+    ./nxvariant_tests/as_field_test.cpp
+    ./nxvariant_tests/write_test.cpp
+    ./nxvariant_tests/create_group_test.cpp
+    ./nxvariant_tests/as_group_test.cpp
+    ./nxvariant_tests/set_class_test.cpp
+    ./nxvariant_tests/get_rank_test.cpp
+    ./nxvariant_tests/is_field_test.cpp
+    ./nxvariant_tests/set_unit_test.cpp
+    ./nxvariant_tests/as_attribute_test.cpp
+    ./nxvariant_tests/create_field_test.cpp
+    ./nxvariant_tests/create_attribute_test.cpp
+    ./nxvariant_tests/get_child_test.cpp
+    ./nxvariant_tests/is_attribute_test.cpp
+    ./nxvariant_tests/get_parent_test.cpp
+    ./data.cpp
+    ./TestHelpers.cpp
+    ./nexus_lowlevel_test/NXFieldTest.cpp
+    ./nexus_lowlevel_test/NXAttributeTest.cpp
+    ./nexus_lowlevel_test/nxlink_test.cpp
+    ./nexus_lowlevel_test/NXSelectionTest.cpp
+    ./nexus_lowlevel_test/NXGroupTest.cpp
+    ./nexus_lowlevel_test/NXFileTest.cpp
+    ./utils_tests/check_rank_test.cpp
+    ./utils_tests/nxpath_utils_test.cpp
+    ./utils_tests/utils_test.cpp
+    ./utils_tests/check_shape_test.cpp
+    ./utils_tests/check_type_test.cpp
+    ./utils_tests/nxpath_test.cpp
+    ./utils_tests/check_size_test.cpp
+    ./xml_test/xml_node_data_test.cpp
+    ./xml_test/xml_node_test.cpp
+    ./xml_test/xml_lowlevel_test.cpp
+    ./xml_test/xml_attribute_test.cpp
+    ./parser_tests/value_parser_test.cpp
+    ./parser_tests/slice_parser_test.cpp
+    ./parser_tests/array_parser_test.cpp
+    ./parser_tests/record_parser_test.cpp
+    ./pniiotest.cpp
+    ./hdf5_implementation_tests/H5DatasetTest.cpp
+    ./hdf5_implementation_tests/H5AttributeTest.cpp
+    ./hdf5_implementation_tests/H5NamedObjectTest.cpp
+    ./hdf5_implementation_tests/H5LinkTest.cpp
+    ./hdf5_implementation_tests/H5ObjectTest.cpp
+    ./hdf5_implementation_tests/H5DatatypeTest.cpp
+    ./hdf5_implementation_tests/H5GroupTest.cpp
+    ./hdf5_implementation_tests/H5DataspaceTest.cpp
+    ./hdf5_implementation_tests/H5FileTest.cpp
+    ./hdf5_implementation_tests/H5AttributeObjectTest.cpp
+    ./EqualityCheck.cpp
+)
 
 link_directories(${PNICORE_PKG_LIBRARY_DIRS} ${HDF5_LIBRARY_DIRS})
 include_directories(${PNICORE_PKG_INCLUDE_DIRS} ${HDF5_INCLUDE_DIRS})

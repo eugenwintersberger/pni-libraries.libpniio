@@ -26,7 +26,6 @@
 
 #include <pni/core/types.hpp>
 #include "H5Object.hpp"
-#include "../nxlink_type.hpp"
 
 
 namespace pni{
@@ -129,16 +128,6 @@ namespace h5{
             */
             virtual string filename() const;
 
-            //-----------------------------------------------------------------
-            /*!
-            \brief return the link type
-
-            Return the type of link that is used for this object. This class
-            provides a default implementation. Specializations might be
-            necessary for other object types.
-            \return link type
-            */
-            pni::io::nx::nxlink_type link_type() const;
 
             /*!
             \brief return the parent object

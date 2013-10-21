@@ -32,6 +32,7 @@ extern "C"{
 #include <pni/core/types.hpp>
 #include <pni/core/exceptions.hpp>
 
+#include "../nxlink_type.hpp"
 #include "../nxpath.hpp"
 #include "../nxpath_utils.hpp"
 
@@ -115,6 +116,22 @@ namespace h5{
             static void create_internal_link(const nxpath &target,
                                              const H5Group &loc,
                                              const string &name);
+
+            //-----------------------------------------------------------------
+            /*!
+            \brief get link type
+
+            Returns the link type of a child of loc identified by its name. 
+            \throws pni::core::key_error if the child could not be found
+            \throws pni::io::nx::nxlink_error if the link type could not be
+            retrieved 
+            \throws pni::core::type_error if the link type is unkown
+            \param loc parent group
+            \param name the name of the child 
+            \return link type
+            */
+            static pni::io::nx::nxlink_type link_type(const H5Group &loc, 
+                                                      const string &name);
     };
 //end of namespace
 }
