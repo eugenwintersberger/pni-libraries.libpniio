@@ -44,6 +44,7 @@ class H5LinkTest:public CppUnit::TestFixture{
         CPPUNIT_TEST_SUITE(H5LinkTest);
         CPPUNIT_TEST(test_internal);
         CPPUNIT_TEST(test_external);
+        CPPUNIT_TEST(test_link_type);
         CPPUNIT_TEST_SUITE_END();
     private:
         H5File _file1;
@@ -53,4 +54,5 @@ class H5LinkTest:public CppUnit::TestFixture{
         void tearDown();
         void test_internal();
         void test_external();
+        void test_link_type();
 };

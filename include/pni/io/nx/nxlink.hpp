@@ -26,6 +26,7 @@
 #include "nxobject_traits.hpp"
 #include "nxpath.hpp"
 #include "nxpath_utils.hpp"
+#include "nxlink_type.hpp"
 
 namespace pni{
 namespace io{
@@ -40,6 +41,28 @@ namespace nx{
     below g with name. If the location and the target reside within the same
     file or the target path has no filename set an internal link will be
     created.  
+    Consider the following example. Here we want to create a link from the data
+    stored in a detector field (all within the same file).
+
+    \code
+    nxpath path = path_from_string("/entry/instrument/detector/data");
+    nxgroup data_group = ....;
+    link(path,data_group,"data"); 
+    \endcode
+    
+    In the next example the same link should be created but this time the
+    detector data is stored in an external file.
+
+    \code
+    nxpath path =
+    path_from_string("detector_file.nxs://entry/instrument/detector/data");
+    nxgroup data_group = ...;
+    link(path,data_group,"data");
+    \endcode
+
+    The sequence of calls is the same as in the latter examples except that
+    the path includes a file name.
+
     \tparam GTYPE group type
     \param target path to the original object
     \param g group where to create the link
@@ -55,18 +78,11 @@ namespace nx{
         typedef typename object_traits::link_type link_type;
 
         if(!target.filename().empty())
-        {
             //create an external link
             link_type::create_external_link(target,g.imp(),name);
-
-        }
         else
-        {
             //create an internal link
             link_type::create_internal_link(target,g.imp(),name);
-
-        }
-
     }
 
     //-------------------------------------------------------------------------
@@ -113,6 +129,81 @@ namespace nx{
     void link(const STYPE &target,const GTYPE &g,const string &name)
     {
         link(target.path(),g,name);
+    }
+
+    //-------------------------------------------------------------------------
+    /*!
+    \brief return link type
+
+    Returns the type of link used for child name below parent. 
+    \throws pni::core::key_error if parent has no child with name
+    \throws pni::io::nx::nxlink_error if link type could not be obtained
+    \throws pni::core::type_error if the link type is unkown
+    \tparam GTYPE parent object type
+    \param parent instance of GTYPE
+    \param name of the child
+    \return link type
+    */
+    template<typename GTYPE>
+    nxlink_type link_type(const GTYPE &parent,const string &name)
+    {
+        //determine the utility class perfroming linking
+        typedef nximp_code_map<GTYPE> code_map;
+        typedef nxobject_traits<code_map::icode> object_traits;
+        typedef typename object_traits::link_type link_type;
+
+        return link_type::link_type(parent.imp(),name);
+    }
+
+    //-------------------------------------------------------------------------
+    /*!
+    \brief return true if link is external
+
+    Returns true if the link used for child name below parent is an external
+    one. 
+    \tparam GTYPE parent type
+    \param parent instance of GTYPE
+    \param name child name
+    \return true if link is external, false otherwise
+    */
+    template<typename GTYPE>
+    bool is_external_link(const GTYPE &parent,const string &name)
+    {
+        return link_type(parent,name)==nxlink_type::EXTERNAL;
+    }
+
+    //-------------------------------------------------------------------------
+    /*!
+    \brief return true if link is soft
+
+    Returns true if the link used for child name below parent is an soft
+    one. 
+    \tparam GTYPE parent type
+    \param parent instance of GTYPE
+    \param name child name
+    \return true if link is soft, false otherwise
+    */
+    template<typename GTYPE>
+    bool is_soft_link(const GTYPE &parent,const string &name)
+    {
+        return link_type(parent,name) == nxlink_type::SOFT;
+    }
+
+    //-------------------------------------------------------------------------
+    /*!
+    \brief return true if link is hard
+
+    Returns true if the link used for child name below parent is an hard
+    one. 
+    \tparam GTYPE parent type
+    \param parent instance of GTYPE
+    \param name child name
+    \return true if link is hard, false otherwise
+    */
+    template<typename GTYPE>
+    bool is_hard_link(const GTYPE &parent,const string &name)
+    {
+        return link_type(parent,name) == nxlink_type::HARD;
     }
 
 //end of namespace

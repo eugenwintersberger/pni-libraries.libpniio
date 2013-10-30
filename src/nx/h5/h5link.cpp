@@ -107,7 +107,35 @@ namespace h5{
                     get_h5_error_string());
     }
 
+    
+    //-------------------------------------------------------------------------
+    pni::io::nx::nxlink_type h5link::link_type(const H5Group &loc,
+                                               const string &name)
+    {
+        H5L_info_t info;
 
+        if(!loc.exists(name))
+            throw key_error(EXCEPTION_RECORD,
+                    "Group ["+loc.path()+"] does not have a child ["+name+
+                    "]!");
+
+        if(H5Lget_info(loc.id(),name.c_str(),&info,H5P_DEFAULT)<0)
+        {
+            throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
+                    "Error obtaining link type for child ["+name+"] of group"+
+                    "["+loc.path()+"]!");
+        }
+
+        if(info.type == H5L_TYPE_EXTERNAL)
+            return pni::io::nx::nxlink_type::EXTERNAL;
+        else if(info.type == H5L_TYPE_HARD)
+            return pni::io::nx::nxlink_type::HARD;
+        else if(info.type == H5L_TYPE_SOFT)
+            return pni::io::nx::nxlink_type::SOFT;
+        else 
+            throw pni::core::type_error(EXCEPTION_RECORD,
+                    "Link is of unknown type!");
+    }
 
 //end of namespace
 }

@@ -44,6 +44,24 @@ void nxlink_test::setUp()
 }
 
 //------------------------------------------------------------------------------
+void nxlink_test::test_hard_type()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    h5::nxgroup root_group = target_file.root_group();
+    //test for group
+    CPPUNIT_ASSERT(link_type(root_group,"links")==nxlink_type::HARD);
+    CPPUNIT_ASSERT(is_hard_link(root_group,"links"));
+    CPPUNIT_ASSERT(!is_soft_link(root_group,"links"));
+    CPPUNIT_ASSERT(!is_external_link(root_group,"links"));
+
+    h5::nxgroup p = target_field.parent();
+    CPPUNIT_ASSERT(link_type(p,"data")==nxlink_type::HARD);
+    CPPUNIT_ASSERT(is_hard_link(p,"data"));
+    CPPUNIT_ASSERT(!is_soft_link(p,"data"));
+    CPPUNIT_ASSERT(!is_external_link(p,"data"));
+}
+
+//------------------------------------------------------------------------------
 void nxlink_test::tearDown()
 {
     target_field.close();
@@ -62,6 +80,10 @@ void nxlink_test::test_field_internal_link()
     link(p,location,"detector_data_1");
 
     link("/entry/detector/data",location,"detector_data_2");
+    CPPUNIT_ASSERT(link_type(location,"detector_data_2")==nxlink_type::SOFT);
+    CPPUNIT_ASSERT(is_soft_link(location,"detector_data_2"));
+    CPPUNIT_ASSERT(!is_hard_link(location,"detector_data_2"));
+    CPPUNIT_ASSERT(!is_external_link(location,"detector_data_2"));
 
     link(target_field,location,"detector_data_3");
 
@@ -92,6 +114,10 @@ void nxlink_test::test_field_external_link()
 
     nxpath p = path_from_string("nxlink_target_test.h5:///entry/detector/data");
     link(p,root_group,"data_1");
+    CPPUNIT_ASSERT(link_type(root_group,"data_1")==nxlink_type::EXTERNAL);
+    CPPUNIT_ASSERT(!is_soft_link(root_group,"data_1"));
+    CPPUNIT_ASSERT(!is_hard_link(root_group,"data_1"));
+    CPPUNIT_ASSERT(is_external_link(root_group,"data_1"));
 
     link("nxlink_taret_test.h5:///entry/detector/data",root_group,"data_2");
 
@@ -116,6 +142,10 @@ void nxlink_test::test_group_internal_link()
     link(p,location,"detector_1");
 
     link("/entry/detector",location,"detector_2");
+    CPPUNIT_ASSERT(link_type(location,"detector_2")==nxlink_type::SOFT);
+    CPPUNIT_ASSERT(is_soft_link(location,"detector_2"));
+    CPPUNIT_ASSERT(!is_hard_link(location,"detector_2"));
+    CPPUNIT_ASSERT(!is_external_link(location,"detector_2"));
 
     link(target_group,location,"detector_3");
     
@@ -147,6 +177,10 @@ void nxlink_test::test_group_external_link()
 
     nxpath p = path_from_string("nxlink_target_test.h5:///entry/detector");
     link(p,root_group,"detector_1");
+    CPPUNIT_ASSERT(link_type(root_group,"detector_1")==nxlink_type::EXTERNAL);
+    CPPUNIT_ASSERT(is_external_link(root_group,"detector_1"));
+    CPPUNIT_ASSERT(!is_hard_link(root_group,"detector_1"));
+    CPPUNIT_ASSERT(!is_soft_link(root_group,"detector_1"));
 
     link("nxlink_taret_test.h5:///entry/detector",root_group,"detector_2");
 
