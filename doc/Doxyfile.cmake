@@ -63,7 +63,7 @@ WARN_NO_PARAMDOC       = YES
 # configuration options related to the input files
 #---------------------------------------------------------------------------
 INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/../include \
-                         @CMAKE_CURRENT_SOURCE_DIR@/mainpage \
+                         mainpage \
                          @CMAKE_CURRENT_SOURCE_DIR@/h5_implementation_classes \
                          @CMAKE_CURRENT_SOURCE_DIR@/nxpath_code \
                          @CMAKE_CURRENT_SOURCE_DIR@/variant_code \
