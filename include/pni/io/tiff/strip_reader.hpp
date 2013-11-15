@@ -54,6 +54,7 @@ namespace tiff {
             std::vector<size_t> _bits_per_channel; //!< number of bits per channel
             std::vector<type_id_t> _channel_types; //!< type ids of channel data
 
+            //-----------------------------------------------------------------
             /*! \brief template to read interlace data 
 
             This template method reads image data distributed over several
@@ -179,46 +180,39 @@ namespace tiff {
         void strip_reader::_read_interlace(size_t channel,
                 std::ifstream &stream,CTYPE &data) const
     {
-        //we can assume here that the buffer is already properly allocated
-        size_t tot_bits_per_pix = std::accumulate(this->_bits_per_channel.begin(),
-                                                  this->_bits_per_channel.end(),0);
+        typedef typename CTYPE::value_type value_type;
+        //compute the size of a pixel in bytes
+        size_t pixel_size = std::accumulate(_bits_per_channel.begin(),
+                                            _bits_per_channel.end(),0)/8;
+       
+        //compute the offset from the begining of a pixel to the requested
+        //sample. The offset is given in bytes
+        size_t sample_offset = std::accumulate(_bits_per_channel.begin(),
+                                               _bits_per_channel.begin()+channel,
+                                               0)/8;
+
+        //size of the sample type
+        size_t sample_size = sizeof(IT);
+
+        IT sample_buffer; 
 
         typename CTYPE::iterator piter = data.begin(); //pixel iterator
         while(piter != data.end())
         {
             //loop over all strips
-            for(size_t strip=0;strip<this->_offsets.size();strip++)
+            for(size_t strip=0;strip<_offsets.size();strip++)
             {
-                //set stream to the starting position of the strip
-                stream.seekg(this->_offsets[strip],std::ios::beg);
+                size_t npixels = _byte_cnts[strip]/pixel_size;
 
-                //create strip buffer
-                dbuffer<char> strip_buffer(this->_byte_cnts[strip]);
-
-                //read strip data to the buffer
-                stream.read(const_cast<char *>(strip_buffer.ptr()),strip_buffer.size());
-
-                //now as we have all the strip data in the memory we need to select
-                //the proper channel data from it
-
-                //compute the number of pixels in the strip
-                size_t npix = (8*this->_byte_cnts[strip])/tot_bits_per_pix;
-                //loop over all pixels
-                char *ptr = const_cast<char *>(strip_buffer.ptr());
+                //set the stream to the offset of the actual strip
+                stream.seekg(_offsets[strip]+sample_offset,std::ios::beg);
 
                 //loop over all pixels in the strip
-                for(size_t i=0;i<npix;i++)
+                for(size_t i=0;i<npixels; ++i)
                 {
-                    //loop over all channels
-                    for(size_t c=0;c<this->_bits_per_channel.size();c++)
-                    {
-                        //extract data from the stream
-                        if(c==channel) 
-                            *piter++ =  typename CTYPE::value_type(IT(*ptr));
-
-                        //continue with the pointer
-                        ptr += this->_bits_per_channel[c]/8;
-                    }
+                    stream.read(reinterpret_cast<char*>(&sample_buffer),sample_size);
+                    stream.seekg(pixel_size-sample_size,std::ios::cur);
+                    *piter++ = value_type(sample_buffer);
                 }
             }
         }
