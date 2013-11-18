@@ -39,6 +39,7 @@ class tiff_reader_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_read_data_ui8);
         CPPUNIT_TEST(test_read_data_i8);
         CPPUNIT_TEST(test_read_data_i32);
+        CPPUNIT_TEST(test_read_data_float64);
         CPPUNIT_TEST_SUITE_END();
 
         
@@ -50,5 +51,6 @@ class tiff_reader_test : public CppUnit::TestFixture
         void test_read_data_ui8();
         void test_read_data_i8();
         void test_read_data_i32();
+        void test_read_data_float64();
 };
 

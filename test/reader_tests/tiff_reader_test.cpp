@@ -98,4 +98,17 @@ void tiff_reader_test::test_read_data_i32()
     CPPUNIT_ASSERT(std::equal(image.begin(),image.end(),data.begin()));
 }
 
+//-----------------------------------------------------------------------------
+void tiff_reader_test::test_read_data_float64()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    std::vector<float64> data{-100,200,-300,400,
+                            200,-400,600,-800};
 
+    tiff_reader reader("ii32.tiff");
+    auto image = reader.image<std::vector<float64>>(0);
+
+    CPPUNIT_ASSERT(image.size()==data.size());
+    CPPUNIT_ASSERT(std::equal(image.begin(),image.end(),data.begin()));
+}
