@@ -14,75 +14,42 @@ To build the documentation some additional programs are required
 -> pygmented
 
 Library dependencies:
--> libpniutils
--> boost
--> HDF5
--> cppunit
+-> libpnicore >= 0.9.4
+-> boost      >= 1.46
+-> HDF5       >= 1.5.8
+-> cppunit 
 
-libpninx relies on C++11 standard so you need a compliant compiler. 
-The code is developed with gcc-4.6. gcc-4.5 works too. There is a compiler bug
-in gcc 4.4.0 which messed up some of the binary operators for strongly typed 
-enums. Thus the code does not work with gcc 4.4.0 for the moment. Any higher
-release of gcc (4.4.1 or higher) should work.
-
+As libpniio relies on several C++11 features a rather recent compiler is
+required. Thus gcc >= 4.4 is required to build the code. 
 
 2.) Build and installation
     ----------------------
 
-2.1.) Building on Linux
-      -----------------
+libpniio uses CMAKE for building. Thus, out of place builds (in a separate
+directory) are recommended. After downloading and unpacking the source tree 
+create a new directory (not within the source tree) somewhere on your file
+system and change into it 
 
-If everything is installed under standard locations you only need to run 
-scons in the root directory of the source directory.
+$> mkdir libpniio-build
+$> cd libpniio-build
 
-$> scons
+From this directory call cmake with 
 
-If you want to use a different C++ compiler than the default system compiler use
-the CXX build variable like this
+$> cmake /path/to/source/dir
 
-$> scons CXX=/usr/local/bin/g++-4.6
+CMAKE is doing all the configuration work for you like finding libraries and
+header files and setting the include and linker paths correctly. If you
+installation does not differ too much from the Linux File System standard no
+special actions from you are required instead setting the installation prefix.
+By default the software is installed to /usr which requires you to have root
+permissions at least for the installation step. 
+In order to change the installation prefix you can set the CMAKE_INSTALL_PREFIX
+variable when calling cmake with
 
-SCons tries to do some auto-configuration before the build. If it finds all the
-required libraries by itself you are well off and the build will run. 
-However, in situations where required libraries are installed in non-standard
-locations, or in locations not known by the linker you have to use special build
-variables to pass this information to scons.
+$> cmake -DCMAKE_INSTALL_PREFIX=/your/prefix /path/to/sources
 
-If BOOST is not in a standard location you can use the BOOSTPREFIX build
-variable
+Once cmake has finished its run the installation is straight forwared
 
-$> scons BOOSTPREFIX=/usr/local/boost 
-
-which assumes that libraries and headers are installed und BOOSTPREFIX/lib and 
-BOOSTPREFIX/include respectively. The prefix variables for HDF5 (HDF5PREFIX) and 
-libpniutils (PNIUPREFIX) behave in the same manner. 
-
-To build only the documentation (which resides under the doc directory 
-in the source tree simply type
-
-$> scons doc
-
-To cleanup the source directory use 
-
-$> scons -c
-
-
-2.1.) Installation on Linux
-      ---------------------
-
-For the installation you have basically two possibilities: you can either
-install the libraries directly from the source tree to your system, or, if you
-use a Debian system (or any derived system like Ubuntu) you can build an
-appropriate package for installation.
-
-To install directly from the sources you simply type 
-
-$> scons install
-
-in the root directory of the code tree. In this case the scons tries to install
-the software under the default prefix /usr. This implies that you need root
-permissions to install.
-To install libpninx under a different location use
-
-$> scons PREFIX=/opt/pninx install
+$> make 
+$> make install
 
