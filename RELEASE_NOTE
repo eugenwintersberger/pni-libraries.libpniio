@@ -1,3 +1,8 @@
+Release notes for version 0.9.5
+===============================
+
+* Fixed TIFF reader bug (issue #52)
+
 Release notes for version 0.9.4
 ===============================
 

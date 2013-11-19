@@ -14,17 +14,13 @@ To build the documentation some additional programs are required
 -> pygmented
 
 Library dependencies:
--> libpniutils
--> boost
--> HDF5
--> cppunit
+-> libpnicore >= 0.9.4
+-> boost      >= 1.46
+-> HDF5       >= 1.5.8
+-> cppunit 
 
-libpninx relies on C++11 standard so you need a compliant compiler. 
-The code is developed with gcc-4.6. gcc-4.5 works too. There is a compiler bug
-in gcc 4.4.0 which messed up some of the binary operators for strongly typed 
-enums. Thus the code does not work with gcc 4.4.0 for the moment. Any higher
-release of gcc (4.4.1 or higher) should work.
-
+As libpniio relies on several C++11 features a rather recent compiler is
+required. Thus gcc >= 4.4 is required to build the code. 
 
 2.) Build and installation
     ----------------------
