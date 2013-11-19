@@ -110,3 +110,10 @@ add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy
 add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
     ${CMAKE_CURRENT_SOURCE_DIR}/xml_test/object_tree1.xml ${CMAKE_CURRENT_BINARY_DIR})
 
+add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
+    ${CMAKE_CURRENT_SOURCE_DIR}/reader_tests/iui8.tiff ${CMAKE_CURRENT_BINARY_DIR})
+add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
+    ${CMAKE_CURRENT_SOURCE_DIR}/reader_tests/ii8.tiff ${CMAKE_CURRENT_BINARY_DIR})
+add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
+    ${CMAKE_CURRENT_SOURCE_DIR}/reader_tests/ii32.tiff ${CMAKE_CURRENT_BINARY_DIR})
+

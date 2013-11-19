@@ -42,9 +42,23 @@ using namespace pni::core;
 namespace pni{
 namespace io{
 namespace tiff{
-    
-    enum class ifd_entry_type_id { BYTE, ASCII,SHORT,LONG,RATIONAL,SBYTE,UNDEFINED,
-                                  SSHORT,SLONG,SRATIONAL,FLOAT,DOUBLE};
+   
+    //possible data values of an IFD entry according to the TIFF standard
+    enum class ifd_entry_type_id 
+    { 
+        BYTE,  //!< 8Bit unsigned int
+        ASCII, //!< string of 8Bit values with binary terminated with a binary 0
+        SHORT, //!< 16Bit unsigned integer
+        LONG,  //!< 32Bit unsigned integer
+        RATIONAL,  //!< two LONG values
+        SBYTE,     //!< 8Bit signed integer
+        UNDEFINED, //! as said: undefined 
+        SSHORT,    //!< 16Bit signed integer
+        SLONG,     //!< 32Bit signed integer
+        SRATIONAL, //!< like RATIONAL but signed
+        FLOAT,     //!< 4Byte IEEE float
+        DOUBLE     //!< 8Byte IEEE float
+    };
 
 #ifdef ENUMBUG
     bool operator<(ifd_entry_type_id a,ifd_entry_type_id b);

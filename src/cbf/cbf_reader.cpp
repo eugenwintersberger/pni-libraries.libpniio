@@ -102,6 +102,10 @@ namespace io{
                 }
             }
         }
+
+        if(_istream.eof())
+            throw file_error(EXCEPTION_RECORD,
+                    "File is most probably not a CBF file");
     }
 
 

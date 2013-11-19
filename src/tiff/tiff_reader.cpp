@@ -30,6 +30,10 @@
 #include <pni/core/types.hpp>
 #include <pni/io/tiff/tiff_reader.hpp>
 
+#ifdef NOFOREACH
+#include <boost/foreach.hpp>
+#endif
+
 namespace pni{
 namespace io{
 
@@ -124,15 +128,12 @@ namespace io{
             //the next IFD is stored.
             tiff::ifd ifd(_read_ifd_size(stream));
 #ifdef NOFOREACH
-            for(auto iter=ifd.begin();iter!=ifd.end();iter++)
-            {
-                tiff::ifd_entry &entry = *iter;
+            BOOST_FOREACH(tiff::ifd_entry &entry,ifd)
 #else
             for(tiff::ifd_entry &entry: ifd) 
-            {
 #endif
                 entry = std::move(tiff::ifd_entry::create_from_stream(stream));
-            }
+            
             //store the IFD
             _ifds.push_back(ifd);
 
@@ -332,15 +333,12 @@ namespace io{
         o<<"TIFFReader for file: "<<r.filename()<<std::endl;
         o<<"File contains: "<<r.nimages()<<" images"<<std::endl; 
 #ifdef NOFOREACH
-        for(auto iter=r._ifds.begin();iter!=r._ifds.end();iter++)
-        {
-            auto ifd = *iter;
+        BOOST_FOREACH(auto ifd,r._ifds)
 #else
         for(auto ifd: r._ifds)
-        {
 #endif
             o<<ifd;
-        }
+        
         return o;
     }
 

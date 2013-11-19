@@ -29,6 +29,10 @@
 #include<fstream>
 #include<vector>
 
+#ifdef NOFOREACH
+#include <boost/foreach.hpp>
+#endif
+
 #include <pni/core/types.hpp>
 
 using namespace pni::core;
@@ -80,13 +84,11 @@ namespace tiff{
 
         //read the data
 #ifdef NOFOREACH
-        for(auto iter = r.begin();iter!=r.end();iter++)
-        {
-            RTYPE &value = *iter;
+        BOOST_FOREACH(RTYPE &value,r)
 #else
         for(RTYPE &value: r)
-        {
 #endif
+        {
             stream.read((char*)(&buffer),sizeof(ETYPE));
             value = (RTYPE)(buffer);
         }
