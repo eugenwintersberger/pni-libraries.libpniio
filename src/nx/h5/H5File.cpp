@@ -34,6 +34,13 @@ namespace io{
 namespace nx{
 namespace h5{
 
+    //=================private functions=======================================
+    bool is_family_filename(const string &fname)
+    {
+        if(fname.find("%")!=string::npos) return true;
+        return false;
+    }
+
 
     //=========Implementation fo constructors an destructors===================
     //implementation of the default constructor
@@ -134,6 +141,12 @@ namespace h5{
             throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD, 
                   "Cannot create file access property list for file "
                   "["+string(n)+"]!\n\n"+get_h5_error_string());
+
+        //need to determine the file driver used to create the file: 
+        //A possible solution would be to check the file name (could reuse the 
+        //testing code from above).
+        if(is_family_filename(n))
+            H5Pset_fapl_family(acc_plist,H5F_FAMILY_DEFAULT,H5P_DEFAULT);
 
         //open the file in the appropriate mode
         if(ro)
