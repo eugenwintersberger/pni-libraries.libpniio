@@ -34,6 +34,13 @@ namespace io{
 namespace nx{
 namespace h5{
 
+    //=================private functions=======================================
+    bool is_family_filename(const string &fname)
+    {
+        if(fname.find("%")!=string::npos) return true;
+        return false;
+    }
+
 
     //=========Implementation fo constructors an destructors===================
     //implementation of the default constructor
@@ -57,7 +64,6 @@ namespace h5{
     {
         if(is_valid())
         {
-            /*
             std::cerr<<"File: "<<name()<<std::endl;
             std::cerr<<"Open files:      "<<
                 H5Fget_obj_count(id(),H5F_OBJ_FILE)<<std::endl;
@@ -69,10 +75,10 @@ namespace h5{
                 H5Fget_obj_count(id(),H5F_OBJ_DATATYPE)<<std::endl;
             std::cerr<<"Open attributes: "<<
                 H5Fget_obj_count(id(),H5F_OBJ_ATTR)<<std::endl;
-            */
             H5Fflush(id(),H5F_SCOPE_GLOBAL);
             H5Fclose(id());
             H5Object::reset_id();
+            H5garbage_collect();
         }
     }
 
@@ -100,7 +106,6 @@ namespace h5{
         //check for open objects in the file
         if(is_valid())
         {
-            /*
             std::cerr<<"File: "<<name()<<std::endl;
             std::cerr<<"Open files:      "<<
                 H5Fget_obj_count(id(),H5F_OBJ_FILE)<<std::endl;
@@ -112,10 +117,10 @@ namespace h5{
                 H5Fget_obj_count(id(),H5F_OBJ_DATATYPE)<<std::endl;
             std::cerr<<"Open attributes: "<<
                 H5Fget_obj_count(id(),H5F_OBJ_ATTR)<<std::endl;
-            */
             H5Fflush(id(),H5F_SCOPE_GLOBAL);
             H5Fclose(id());
             H5Object::reset_id();
+            H5garbage_collect();
         }
 
     }
@@ -136,6 +141,12 @@ namespace h5{
             throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD, 
                   "Cannot create file access property list for file "
                   "["+string(n)+"]!\n\n"+get_h5_error_string());
+
+        //need to determine the file driver used to create the file: 
+        //A possible solution would be to check the file name (could reuse the 
+        //testing code from above).
+        if(is_family_filename(n))
+            H5Pset_fapl_family(acc_plist,H5F_FAMILY_DEFAULT,H5P_DEFAULT);
 
         //open the file in the appropriate mode
         if(ro)
