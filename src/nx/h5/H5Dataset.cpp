@@ -24,7 +24,6 @@
  */
 
 #include <boost/current_function.hpp>
-#include <pni/core/dbuffer.hpp>
 
 #include <pni/io/nx/h5/H5Dataset.hpp>
 #include <pni/io/nx/h5/H5ObjectType.hpp>
@@ -218,12 +217,12 @@ namespace h5{
             throw index_error(EXCEPTION_RECORD,ss.str());
         }
 
-        dbuffer<hsize_t> b(_fspace.rank());
+        size_vector_t b(_fspace.rank());
 
         for(size_t i=0;i<_fspace.rank();i++) b[i] = _fspace[i];
         b[e] += n;
 
-        herr_t err = H5Dset_extent(id(),b.ptr());
+        herr_t err = H5Dset_extent(id(),b.data());
         if(err < 0)
             throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
                   "Grow of dataset ["+name()+"] failed!\n\n"+

@@ -36,7 +36,7 @@
 #include "../image_info.hpp"
 
 #include <pni/core/types.hpp>
-#include <pni/core/dbuffer.hpp>
+#include <pni/core/arrays.hpp>
 
 using namespace pni::core;
 

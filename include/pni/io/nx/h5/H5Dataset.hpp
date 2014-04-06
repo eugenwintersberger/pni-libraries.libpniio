@@ -26,11 +26,11 @@
 
 #pragma once
 
+#include <vector>
 #include <sstream>
 #include <pni/core/types.hpp>
-#include <pni/core/slice.hpp>
-#include <pni/core/exceptions.hpp>
-#include <pni/core/array_selection.hpp>
+#include <pni/core/arrays.hpp>
+#include <pni/core/error.hpp>
 
 
 #include "H5AttributeObject.hpp"
@@ -63,6 +63,7 @@ namespace h5{
     class H5Dataset:public H5AttributeObject
     {
         private:
+            typedef std::vector<hsize_t> size_vector_t;
             H5Dataspace _fspace; //!< file dataspace of the dataset
             mutable H5Dataspace _mspace; //!< memory dataspace
 
@@ -227,9 +228,9 @@ namespace h5{
                         "["+g.path()+"] to chunked!\n\n"+
                         get_h5_error_string());
 
-                    dbuffer<hsize_t> cdims(cs.size());
+                    std::vector<hsize_t> cdims(cs.size());
                     std::copy(cs.begin(),cs.end(),cdims.begin());
-                    if(H5Pset_chunk(cpl,cs.size(),cdims.ptr())<0)
+                    if(H5Pset_chunk(cpl,cs.size(),cdims.data())<0)
                         throw pni::io::nx::nxfile_error(EXCEPTION_RECORD,
                         "Error setting chunk size for ["+n+"] below "
                         "["+g.path()+"]!\n\n"+ get_h5_error_string());
@@ -311,9 +312,9 @@ namespace h5{
                         "["+g.path()+"] to chunked!\n\n"+
                         get_h5_error_string());
 
-                    dbuffer<hsize_t> cdims(cs.size());
+                    std::vector<hsize_t> cdims(cs.size());
                     std::copy(cs.begin(),cs.end(),cdims.begin());
-                    if(H5Pset_chunk(cpl,cs.size(),cdims.ptr())<0)
+                    if(H5Pset_chunk(cpl,cs.size(),cdims.data())<0)
                         throw pni::io::nx::nxfile_error(EXCEPTION_RECORD,
                         "Error setting chunk size for ["+n+"] below "
                         "["+g.path()+"]!\n\n"+ get_h5_error_string());
@@ -419,7 +420,7 @@ namespace h5{
                 }
 
                 //create the container with the maximum number of elements
-                dbuffer<hsize_t> ms(s.size());                 
+                std::vector<hsize_t> ms(s.size());                 
                 std::fill(ms.begin(),ms.end(),H5S_UNLIMITED);
                 /*
                 SCTYPE ms(s.size());
@@ -492,7 +493,7 @@ namespace h5{
                 }
 
                 //create the container with the maximum number of elements
-                dbuffer<hsize_t> ms(s.size());
+                std::vector<hsize_t> ms(s.size());
                 std::fill(ms.begin(),ms.end(),H5S_UNLIMITED);
                 //create the dataspace
                 H5Dataspace space(s,ms);
@@ -560,10 +561,10 @@ namespace h5{
                     throw shape_mismatch_error(EXCEPTION_RECORD,
                           "New shape does not have the same rank!");
 
-                dbuffer<hsize_t> b(s.size());
+                std::vector<hsize_t> b(s.size());
                 std::copy(s.begin(),s.end(),b.begin());
 
-                herr_t err = H5Dset_extent(id(),b.ptr());
+                herr_t err = H5Dset_extent(id(),b.data());
                 if(err < 0)
                     throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
                          "Resizing of dataset ["+name()+"] failed!\n\n"+
@@ -650,9 +651,9 @@ namespace h5{
                 array_selection asel = array_selection::create(sel);
                 
                 //create buffers
-                auto offset = asel.offset<dbuffer<hsize_t> >();
-                auto stride = asel.stride<dbuffer<hsize_t> >();
-                auto count = asel.full_shape<dbuffer<hsize_t> >();
+                auto offset = asel.offset<std::vector<hsize_t> >();
+                auto stride = asel.stride<std::vector<hsize_t> >();
+                auto count = asel.full_shape<std::vector<hsize_t> >();
 
                 //need to throw an exception if the rank of the selection and
                 //that of the 
@@ -662,7 +663,7 @@ namespace h5{
 
                 //apply the selection
                 herr_t err = H5Sselect_hyperslab(_fspace.id(),
-                        H5S_SELECT_SET,offset.ptr(),stride.ptr(),count.ptr(),
+                        H5S_SELECT_SET,offset.data(),stride.data(),count.data(),
                         nullptr);
                 if(err<0)
                     throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
@@ -671,7 +672,7 @@ namespace h5{
 
                 //need to set the memory dataspace to the effective shape of the
                 //selection
-                _mspace = H5Dataspace(asel.shape());
+                _mspace = H5Dataspace(asel.shape<std::vector<size_t>>());
 
             }
 

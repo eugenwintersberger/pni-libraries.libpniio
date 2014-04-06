@@ -71,19 +71,6 @@ class check_rank_test : public CppUnit::TestFixture
 
         TA a1,a2;
         TB b1,b2;
-
-        //need some special functions 
-        template<typename T,typename STORAGE,typename IMAP>
-        static void create_container(const shape_t &s,darray<T,STORAGE,IMAP> &a)
-        {
-            a = darray<T,STORAGE,IMAP>(s);
-        }
-
-        template<typename ATYPE>
-        static void create_container(const shape_t &s,numarray<ATYPE> &a )
-        {
-            a = numarray<ATYPE>(s);
-        }
         
     public:
         void setUp();
@@ -107,10 +94,10 @@ template<typename TA,typename TB> void check_rank_test<TA,TB>::setUp()
     attribute1 = field1.attr<float32>("attr",s1);
     attribute2 = field2.attr<int64>("attr",s2);
 
-    create_container(s1,a1);
-    create_container(s2,a2);
-    create_container(s1,b1);
-    create_container(s2,b2);
+    a1 = TA::create(s1);
+    a2 = TA::create(s2);
+    b1 = TB::create(b1);
+    b2 = TB::create(s2);
 
 }
 

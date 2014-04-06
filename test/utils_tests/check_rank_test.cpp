@@ -28,10 +28,10 @@
 #include <list>
 #include "check_rank_test.hpp"
 
-typedef darray<uint32> darray_t;
-typedef numarray<darray_t> narray_t;
+typedef dynamic_array<uint32> darray_t;
+typedef dynamic_array<uint8>  uarray_t;
 
-typedef check_rank_test<darray_t,narray_t> test1_t;
+typedef check_rank_test<darray_t,uarray_t> test1_t;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(test1_t);
 

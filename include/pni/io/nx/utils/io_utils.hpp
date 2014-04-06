@@ -26,7 +26,8 @@
 
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
-#include <pni/core/exceptions.hpp>
+#include <pni/core/type_erasures.hpp>
+#include <pni/core/error.hpp>
 
 
 namespace pni{

@@ -25,7 +25,7 @@
  */
 
 
-#include <pni/core/exceptions.hpp>
+#include <pni/core/error.hpp>
 #include <pni/io/data_reader.hpp>
 
 

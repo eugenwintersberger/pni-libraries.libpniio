@@ -25,8 +25,8 @@
 #pragma once
 #include<iostream>
 #include<pni/core/types.hpp>
-#include<pni/core/value.hpp>
-#include<pni/core/array.hpp>
+#include<pni/core/type_erasures.hpp>
+#include<pni/core/arrays.hpp>
 #include<vector>
 
 #include <boost/variant.hpp>

@@ -26,7 +26,7 @@
 #include <boost/current_function.hpp>
 #include <pni/io/parsers/slice_parser.hpp>
 #include <pni/core/types.hpp>
-#include <pni/core/slice.hpp>
+#include <pni/core/arrays.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>

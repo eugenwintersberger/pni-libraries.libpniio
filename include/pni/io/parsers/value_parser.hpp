@@ -25,7 +25,7 @@
 #pragma once
 
 #include<pni/core/types.hpp>
-#include<pni/core/value.hpp>
+#include<pni/core/type_erasures.hpp>
 #include<vector>
 
 #include <boost/spirit/include/qi.hpp>

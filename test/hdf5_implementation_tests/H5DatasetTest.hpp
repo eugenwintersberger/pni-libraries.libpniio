@@ -83,7 +83,6 @@ class H5DatasetTest:public CppUnit::TestFixture
         CPPUNIT_TEST(test_array_data<complex128>);
         CPPUNIT_TEST(test_array_data<binary>);
         CPPUNIT_TEST(test_string_array_data);
-        CPPUNIT_TEST(test_bool_array_data);
 
         CPPUNIT_TEST(test_selection<uint8>);
         CPPUNIT_TEST(test_selection<int8>);
@@ -100,7 +99,6 @@ class H5DatasetTest:public CppUnit::TestFixture
         CPPUNIT_TEST(test_selection<complex64>);
         CPPUNIT_TEST(test_selection<complex128>);
         CPPUNIT_TEST(test_selection<binary>);
-        CPPUNIT_TEST(test_bool_selection);
         CPPUNIT_TEST(test_string_selection);
         CPPUNIT_TEST_SUITE_END();
     private:
@@ -148,12 +146,12 @@ template<typename T> void H5DatasetTest::test_array_data()
     shape_t s{3,3};
     shape_t cs{1,3}; 
     H5Dataset ds("array_dataset",_group,type,H5Dataspace(s),cs);
-    darray<T> write(s);
-    darray<T> read(s);
+    auto write = dynamic_array<T>::create(s);
+    auto read  = dynamic_array<T>::create(s);
     std::fill(write.begin(),write.end(),T(1));
 
-    CPPUNIT_ASSERT_NO_THROW(ds.write(write.storage().ptr()));
-    CPPUNIT_ASSERT_NO_THROW(ds.read(const_cast<T*>(read.storage().ptr())));
+    CPPUNIT_ASSERT_NO_THROW(ds.write(data(write)));
+    CPPUNIT_ASSERT_NO_THROW(ds.read(const_cast<T*>(data(read))));
     
     //check equality
     for(size_t i=0;i<write.size();i++) check_equality(write[i],read[i]);
@@ -172,8 +170,8 @@ template<typename T> void H5DatasetTest::test_selection()
     s = dset.shape<shape_t>();
     CPPUNIT_ASSERT(dset.size()==10*20);
 
-    dbuffer<T> writebuf(10);
-    dbuffer<T> readbuf(10);
+    std::vector<T> writebuf(10);
+    std::vector<T> readbuf(10);
 
     //check single value selection
     std::vector<slice> selection({slice(1),slice(2)});
@@ -198,10 +196,10 @@ template<typename T> void H5DatasetTest::test_selection()
         CPPUNIT_ASSERT(sel_s[0] == 10);
 
         //write data
-        dset.write(writebuf.ptr());
+        dset.write(writebuf.data());
 
         //read data back
-        dset.read(const_cast<T*>(readbuf.ptr()));
+        dset.read(const_cast<T*>(readbuf.data()));
 
         //compare data
         CPPUNIT_ASSERT(std::equal(writebuf.begin(),writebuf.end(),readbuf.begin()));

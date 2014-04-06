@@ -25,7 +25,7 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include <pni/core/slice.hpp>
+#include <pni/core/arrays.hpp>
 
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>

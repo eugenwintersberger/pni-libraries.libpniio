@@ -27,7 +27,7 @@
 #pragma once
 
 #include <vector>
-#include <pni/core/slice.hpp>
+#include <pni/core/arrays.hpp>
 
 
 namespace pni{

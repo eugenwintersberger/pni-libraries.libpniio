@@ -21,7 +21,7 @@
  */
 #pragma once
 
-#include <pni/core/exceptions.hpp>
+#include <pni/core/error.hpp>
 #include <sstream>
 #include "xml_node.hpp"
 #include "attribute_data.hpp"

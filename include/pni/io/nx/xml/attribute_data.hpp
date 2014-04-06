@@ -23,7 +23,7 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include <pni/core/array.hpp>
+#include <pni/core/arrays.hpp>
 #include "../../parsers/array_parser.hpp"
 #include "../../parsers/exceptions.hpp"
 #include "xml_node.hpp"

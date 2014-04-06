@@ -28,10 +28,9 @@
 #include <sstream>
 
 #include<pni/core/types.hpp>
-#include<pni/core/exceptions.hpp>
-#include<pni/core/value.hpp>
-#include<pni/core/darray.hpp>
-#include<pni/core/array.hpp>
+#include<pni/core/error.hpp>
+#include<pni/core/type_erasures.hpp>
+#include<pni/core/arrays.hpp>
 #include<vector>
 
 #include "exceptions.hpp"
@@ -72,7 +71,8 @@ namespace io{
         template<typename ATYPE,typename ...ARGT>
         pni::core::array create_array(ARGT ...args) const
         {
-            return pni::core::array(std::move(ATYPE(args...)));
+            ATYPE a = ATYPE::create(args...);
+            return pni::core::array(std::move(a));
         }
 
         //---------------------------------------------------------------------
@@ -114,28 +114,28 @@ namespace io{
             using namespace pni::core;
 
             if(tid == type_id_t::UINT8)
-                return create_array<darray<uint8>>(shape);
+                return create_array<dynamic_array<uint8>>(shape);
             else if(tid == type_id_t::INT8)
-                return create_array<darray<int8>>(shape);
+                return create_array<dynamic_array<int8>>(shape);
             else if(tid == type_id_t::UINT16)
-                return create_array<darray<uint16>>(shape);
+                return create_array<dynamic_array<uint16>>(shape);
             else if(tid == type_id_t::INT16)
-                return create_array<darray<int16>>(shape);
+                return create_array<dynamic_array<int16>>(shape);
             else if(tid == type_id_t::UINT32)
-                return create_array<darray<uint32>>(shape);
+                return create_array<dynamic_array<uint32>>(shape);
             else if(tid == type_id_t::INT32)
-                return create_array<darray<int32>>(shape);
+                return create_array<dynamic_array<int32>>(shape);
             else if(tid == type_id_t::UINT64)
-                return create_array<darray<uint64>>(shape);
+                return create_array<dynamic_array<uint64>>(shape);
             else if(tid == type_id_t::INT64)
-                return create_array<darray<int64>>(shape);
+                return create_array<dynamic_array<int64>>(shape);
 
             else if(tid == type_id_t::FLOAT32)
-                return create_array<darray<float32>>(shape);
+                return create_array<dynamic_array<float32>>(shape);
             else if(tid == type_id_t::FLOAT64)
-                return create_array<darray<float64>>(shape);
+                return create_array<dynamic_array<float64>>(shape);
             else if(tid == type_id_t::FLOAT128)
-                return create_array<darray<float128>>(shape);
+                return create_array<dynamic_array<float128>>(shape);
             else
             {
                 std::stringstream ss;
@@ -145,7 +145,7 @@ namespace io{
 
             //this is just a dummy return - the code here will never be reached
             //as an exception is thrown if the type code cannot be handled.
-            return create_array<darray<float128>>(shape);
+            return create_array<dynamic_array<float128>>(shape);
 
 
         }

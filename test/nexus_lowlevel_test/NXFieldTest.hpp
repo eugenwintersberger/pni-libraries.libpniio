@@ -67,25 +67,6 @@ class NXFieldTest:public CppUnit::TestFixture
     CPPUNIT_TEST(test_io_scalar<binary>);
     CPPUNIT_TEST(test_io_bool_scalar);
     CPPUNIT_TEST(test_io_string_scalar);
-    //testing buffer io 
-    CPPUNIT_TEST(test_io_buffer<uint8>);
-    CPPUNIT_TEST(test_io_buffer<int8>);
-    CPPUNIT_TEST(test_io_buffer<uint16>);
-    CPPUNIT_TEST(test_io_buffer<int16>);
-    CPPUNIT_TEST(test_io_buffer<uint32>);
-    CPPUNIT_TEST(test_io_buffer<int32>);
-    CPPUNIT_TEST(test_io_buffer<uint64>);
-    CPPUNIT_TEST(test_io_buffer<int64>);
-    CPPUNIT_TEST(test_io_buffer<binary>);
-    CPPUNIT_TEST(test_io_buffer<float32>);
-    CPPUNIT_TEST(test_io_buffer<float64>);
-    CPPUNIT_TEST(test_io_buffer<float128>);
-    CPPUNIT_TEST(test_io_buffer<complex32>);
-    CPPUNIT_TEST(test_io_buffer<complex64>);
-    CPPUNIT_TEST(test_io_buffer<complex128>);
-    CPPUNIT_TEST(test_io_buffer<binary>);
-    CPPUNIT_TEST(test_io_bool_buffer);
-    CPPUNIT_TEST(test_io_string_buffer);
     //testing array IO
     CPPUNIT_TEST(test_io_array<uint8>);
     CPPUNIT_TEST(test_io_array<int8>);
@@ -102,7 +83,7 @@ class NXFieldTest:public CppUnit::TestFixture
     CPPUNIT_TEST(test_io_array<complex64>);
     CPPUNIT_TEST(test_io_array<complex128>);
     CPPUNIT_TEST(test_io_array<binary>);
-    CPPUNIT_TEST(test_io_bool_array);
+    //CPPUNIT_TEST(test_io_bool_array);
     CPPUNIT_TEST(test_grow);
     CPPUNIT_TEST(test_io_string_array);
 
@@ -128,12 +109,9 @@ public:
     template<typename T> void test_io_scalar();
     void test_io_string_scalar();
     void test_io_bool_scalar();
-    template<typename T> void test_io_buffer();
-    void test_io_string_buffer();
-    void test_io_bool_buffer();
     template<typename T> void test_io_array();
     void test_io_string_array();
-    void test_io_bool_array();
+    //void test_io_bool_array();
     void test_io_string();
 
     template<typename T> void test_scalar_selection();
@@ -150,8 +128,8 @@ template<typename T> void NXFieldTest::test_io_array()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     shape_t s{10,50};
-    darray<T> write(s);
-    darray<T> read(s);
+    auto write = dynamic_array<T>::create(s);
+    auto read  = dynamic_array<T>::create(s);
 
     std::fill(write.begin(),write.end(),T(100));
     std::fill(write.begin(),write.end(),T(0));
@@ -175,31 +153,6 @@ template<typename T> void NXFieldTest::test_io_array()
 
 }
 
-//-----------------------------------------------------------------------------
-template<typename T> void NXFieldTest::test_io_buffer()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    shape_t s{1024};
-    dbuffer<T> write_buffer(1024);
-    dbuffer<T> read_buffer(1024);
-
-    std::fill(write_buffer.begin(),write_buffer.end(),T(100));
-    std::fill(read_buffer.begin(),read_buffer.end(),T(0));
-
-    nxfield field1 = file.create_field<T>("buffer",s);
-    CPPUNIT_ASSERT_NO_THROW(field1.write(write_buffer));
-    CPPUNIT_ASSERT_NO_THROW(field1.read(read_buffer));
-
-    for(size_t i=0;i<1024;i++) 
-        compare_values(write_buffer[i],read_buffer[i]);
-
-    //check exceptions
-    CPPUNIT_ASSERT_NO_THROW(field1 = file.create_field<T>("buffer2",{200}));
-    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),size_mismatch_error);
-
-    write_buffer.free();
-    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),memory_not_allocated_error);
-}
 
 //-----------------------------------------------------------------------------
 template<typename T> void NXFieldTest::test_io_scalar()

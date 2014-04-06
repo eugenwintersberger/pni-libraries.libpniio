@@ -261,18 +261,17 @@ namespace h5{
     //-------------------------------------------------------------------------
     string H5File::path() const 
     {
-        dbuffer<char> buffer;
+        string buffer;
 
         if(is_valid())
         {
             //if the object has already been created return this value
             hsize_t bsize;
             bsize = H5Fget_name(id(),NULL,1)+1;
-            buffer.allocate(bsize);
+            buffer = string(bsize,' ');
 
-            H5Fget_name(id(),const_cast<char *>(buffer.ptr()),bsize);
-            string name(buffer.ptr());
-            return name;
+            H5Fget_name(id(),const_cast<char *>(buffer.data()),bsize);
+            return buffer;
         }
 
         return string("");

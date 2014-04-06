@@ -26,7 +26,6 @@
 #pragma once
 
 #include<pni/core/types.hpp>
-#include<pni/core/type_id_map.hpp>
 #include "../nximp_code_map.hpp"
 
 #include "types.hpp"

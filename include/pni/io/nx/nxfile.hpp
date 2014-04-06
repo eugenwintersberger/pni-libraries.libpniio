@@ -28,7 +28,7 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include <pni/core/service.hpp>
+#include <pni/core/utilities.hpp>
 
 #include "nxobject.hpp"
 #include "nxobject_traits.hpp"

@@ -33,7 +33,7 @@
 #include <pni/io/nx/nxexceptions.hpp>
 #include <pni/io/nx/nexus_utils.hpp>
 
-#include <pni/core/array.hpp>
+#include <pni/core/arrays.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION(NXFieldTest);
 
@@ -246,8 +246,8 @@ void NXFieldTest::test_io_string_array()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     shape_t s{3,4};
-    darray<string> write(s);
-    darray<string> read(s);
+    auto write = dynamic_array<string>::create(s);
+    auto read  = dynamic_array<string>::create(s);
 
     std::fill(write.begin(),write.end(),"Hello");
     std::fill(read.begin(),read.end(),"");
@@ -272,6 +272,7 @@ void NXFieldTest::test_io_string_array()
 }
 
 //------------------------------------------------------------------------------
+/*
 void NXFieldTest::test_io_bool_array()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
@@ -300,51 +301,7 @@ void NXFieldTest::test_io_bool_array()
     CPPUNIT_ASSERT(std::equal(write.begin(),write.end(),read.begin()));
 
 }
-//-----------------------------------------------------------------------------
-void NXFieldTest::test_io_string_buffer()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    shape_t s{5};
-    dbuffer<string> write_buffer({"Hello","world","this","is","a test"});
-    dbuffer<string> read_buffer(5);
-
-    nxfield field1 = file.create_field<string>("buffer",s);
-    CPPUNIT_ASSERT_NO_THROW(field1.write(write_buffer));
-    CPPUNIT_ASSERT_NO_THROW(field1.read(read_buffer));
-
-    CPPUNIT_ASSERT(std::equal(write_buffer.begin(),write_buffer.end(),
-                              read_buffer.begin()));
-
-    //check exceptions
-    CPPUNIT_ASSERT_NO_THROW(field1 = file.create_field<string>("buffer2",{200}));
-    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),size_mismatch_error);
-
-    write_buffer.free();
-    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),memory_not_allocated_error);
-}
-
-//-----------------------------------------------------------------------------
-void NXFieldTest::test_io_bool_buffer()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    shape_t s{5};
-    dbuffer<bool> write_buffer({true,true,false,true,false});
-    dbuffer<bool> read_buffer({false,false,false,false,false});
-
-    nxfield field1 = file.create_field<bool>("buffer",s);
-    CPPUNIT_ASSERT_NO_THROW(field1.write(write_buffer));
-    CPPUNIT_ASSERT_NO_THROW(field1.read(read_buffer));
-
-    CPPUNIT_ASSERT(std::equal(write_buffer.begin(),write_buffer.end(),
-                              read_buffer.begin()));
-
-    //check exceptions
-    CPPUNIT_ASSERT_NO_THROW(field1 = file.create_field<bool>("buffer2",{200}));
-    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),size_mismatch_error);
-
-    write_buffer.free();
-    CPPUNIT_ASSERT_THROW(field1.write(write_buffer),memory_not_allocated_error);
-}
+*/
 
 //-----------------------------------------------------------------------------
 void NXFieldTest::test_grow()
@@ -364,7 +321,7 @@ void NXFieldTest::test_grow()
 void NXFieldTest::test_io_array()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    darray<float64> data(shape_t({10,5}));
+    auto data = dynamic_array<float64>::create(shape_t({10,5}));
     array o(data);
 
     nxfield field = file.create_field<float64>("data",data.shape<shape_t>());

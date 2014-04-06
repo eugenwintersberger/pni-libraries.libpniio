@@ -37,7 +37,7 @@ using namespace pni::core;
 using namespace pni::io;
 
 //need a few visitors to do the job
-class get_type_id : public boost::static_visitor<type_id_t>
+class get_type_id_vis : public boost::static_visitor<type_id_t>
 {
     public:
         type_id_t operator()(const value &v) const
@@ -52,7 +52,7 @@ class get_type_id : public boost::static_visitor<type_id_t>
 };
 
 template<typename T,size_t i=0> 
-class get_value : public boost::static_visitor<T>
+class get_value_vis : public boost::static_visitor<T>
 {
     public:
         T operator()(const value &v) const

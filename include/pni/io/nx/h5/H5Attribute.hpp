@@ -29,9 +29,6 @@
 
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
-#include <pni/core/dbuffer.hpp>
-#include <pni/core/sbuffer.hpp>
-#include <pni/core/rbuffer.hpp>
 
 
 #include "H5NamedObject.hpp"
@@ -51,18 +48,19 @@ namespace h5{
     using pni::core::exception;
     using pni::core::string;
 
-    /*! 
-    \ingroup nxh5_classes
-    \brief HDF5 attribute object
-
-    An HDF5 attribute behaves basically like a dataset with the exception that
-    (for obvious reasons) no other attributes can be attached to it. In addition
-    attributes cannot use compression nor can they be used along with a chunked
-    layout.  Attribute objects are derived from H5NamedObject. However, the
-    semantics of the name(), base(), and path() methods is slightly different.
-    name() returns the name of the attribute while base() and path() return
-    emtpy strings as an attribute
-    */ 
+    //! 
+    //! \ingroup nxh5_classes
+    //! \brief HDF5 attribute object
+    //! 
+    //! An HDF5 attribute behaves basically like a dataset with the exception 
+    //! that (for obvious reasons) no other attributes can be attached to it. 
+    //! In addition attributes cannot use compression nor can they be used 
+    //! along with a chunked layout.  Attribute objects are derived from 
+    //! H5NamedObject. However, the semantics of the name(), base(), and 
+    //! path() methods is slightly different.  name() returns the name of 
+    //! the attribute while base() and path() return emtpy strings as an 
+    //! attribute
+    //!  
     class H5Attribute:public H5NamedObject
     {
         private:
@@ -156,6 +154,7 @@ namespace h5{
                         "Error writing attribute ["+this->name()+"]!\n\n"+
                         get_h5_error_string());
             }
+
 
             //-----------------------------------------------------------------
             /*!

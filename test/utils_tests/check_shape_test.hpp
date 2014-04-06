@@ -82,18 +82,6 @@ class check_shape_test : public CppUnit::TestFixture
         TA a1,a2,a3,a4;
         TB b1,b2,b3,b4;
 
-        //need some special functions 
-        template<typename T,typename STORAGE,typename IMAP>
-        static void create_container(const shape_t &s,darray<T,STORAGE,IMAP> &a)
-        {
-            a = darray<T,STORAGE,IMAP>(s);
-        }
-
-        template<typename ATYPE>
-        static void create_container(const shape_t &s,numarray<ATYPE> &a )
-        {
-            a = numarray<ATYPE>(s);
-        }
         
     public:
         void setUp();
@@ -165,15 +153,15 @@ template<typename TA,typename TB> void check_shape_test<TA,TB>::setUp()
     attribute3 = field3.attr<int8>("attr",s3);
     attribute4 = field4.attr<string>("attr",s4);
 
-    create_container(s1,a1);
-    create_container(s2,a2);
-    create_container(s3,a3);
-    create_container(s4,a4);
+    a1 = TA::create(s1); 
+    a2 = TA::create(s2);
+    a3 = TA::create(s3);
+    a4 = TA::create(s4);
 
-    create_container(s1,b1);
-    create_container(s2,b2);
-    create_container(s3,b3);
-    create_container(s4,b4);
+    b1 = TB::create(s1);
+    b2 = TB::create(s2);
+    b3 = TB::create(s3);
+    b4 = TB::create(s4);
 
 }
 

@@ -26,8 +26,7 @@
 
 #include <sstream>
 #include <pni/core/types.hpp>
-#include <pni/core/exceptions.hpp>
-#include <pni/core/type_id_map.hpp>
+#include <pni/core/error.hpp>
 #include "types.hpp"
 #include "check_rank.hpp"
 

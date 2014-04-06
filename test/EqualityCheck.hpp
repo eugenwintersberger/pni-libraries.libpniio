@@ -23,7 +23,7 @@
 #pragma once
 
 #include <cppunit/extensions/HelperMacros.h>
-#include <pni/core/type_info.hpp>
+#include <pni/core/types.hpp>
 
 using namespace pni::core;
 

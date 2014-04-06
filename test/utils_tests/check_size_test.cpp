@@ -28,8 +28,8 @@
 #include <list>
 #include "check_size_test.hpp"
 
-typedef darray<uint32> darray_t;
-typedef numarray<darray_t> narray_t;
+typedef dynamic_array<uint32> darray_t;
+typedef dynamic_array<uint16> narray_t;
 typedef std::vector<complex128> vector_t;
 typedef std::list<string> list_t;
 

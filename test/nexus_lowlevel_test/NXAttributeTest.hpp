@@ -30,8 +30,7 @@
 #include "../data.hpp"
 #include <pni/core/arrays.hpp>
 
-#define SARRAY( type ) sarray<type,10,20>
-#define SBUFFER( type ) sbuffer<type,200>
+template<typename T> using sarray = static_array<T,10,20>;
 
 /*!
 \ingroup test_classes
@@ -66,79 +65,42 @@ template<typename APTYPE> class NXAttributeTest: public CppUnit::TestFixture
         CPPUNIT_TEST(test_scalar_attribute<bool>);
         CPPUNIT_TEST(test_scalar_attribute<binary>);
 
-        //testing buffer io
-        CPPUNIT_TEST(test_buffer_attribute<dbuffer<uint8> >);
-        CPPUNIT_TEST(test_buffer_attribute<dbuffer<int8> >);
-        CPPUNIT_TEST(test_buffer_attribute<dbuffer<uint16> >);
-        CPPUNIT_TEST(test_buffer_attribute<dbuffer<int16> >);
-        CPPUNIT_TEST(test_buffer_attribute<dbuffer<uint32> >);
-        CPPUNIT_TEST(test_buffer_attribute<dbuffer<int32> >);
-        CPPUNIT_TEST(test_buffer_attribute<dbuffer<uint64> >);
-        CPPUNIT_TEST(test_buffer_attribute<dbuffer<int64> >);
-        CPPUNIT_TEST(test_buffer_attribute<dbuffer<float32> >);
-        CPPUNIT_TEST(test_buffer_attribute<dbuffer<float64> >);
-        CPPUNIT_TEST(test_buffer_attribute<dbuffer<float128> >);
-        CPPUNIT_TEST(test_buffer_attribute<dbuffer<complex32> >);
-        CPPUNIT_TEST(test_buffer_attribute<dbuffer<complex64> >);
-        CPPUNIT_TEST(test_buffer_attribute<dbuffer<complex128> >);
-        CPPUNIT_TEST(test_buffer_attribute<dbuffer<string> >);
-        CPPUNIT_TEST(test_buffer_attribute<dbuffer<bool> >);
-        CPPUNIT_TEST(test_buffer_attribute<dbuffer<binary> >);
-
-        CPPUNIT_TEST(test_buffer_attribute<SBUFFER(uint8) >);
-        CPPUNIT_TEST(test_buffer_attribute<SBUFFER(int8) >);
-        CPPUNIT_TEST(test_buffer_attribute<SBUFFER(uint16) >);
-        CPPUNIT_TEST(test_buffer_attribute<SBUFFER(int16) >);
-        CPPUNIT_TEST(test_buffer_attribute<SBUFFER(uint32) >);
-        CPPUNIT_TEST(test_buffer_attribute<SBUFFER(int32) >);
-        CPPUNIT_TEST(test_buffer_attribute<SBUFFER(uint64) >);
-        CPPUNIT_TEST(test_buffer_attribute<SBUFFER(int64) >);
-        CPPUNIT_TEST(test_buffer_attribute<SBUFFER(float32) >);
-        CPPUNIT_TEST(test_buffer_attribute<SBUFFER(float64) >);
-        CPPUNIT_TEST(test_buffer_attribute<SBUFFER(float128) >);
-        CPPUNIT_TEST(test_buffer_attribute<SBUFFER(complex32) >);
-        CPPUNIT_TEST(test_buffer_attribute<SBUFFER(complex64) >);
-        CPPUNIT_TEST(test_buffer_attribute<SBUFFER(complex128) >);
-        CPPUNIT_TEST(test_buffer_attribute<SBUFFER(bool) >);
-        CPPUNIT_TEST(test_buffer_attribute<SBUFFER(binary) >);
-        CPPUNIT_TEST(test_buffer_attribute<SBUFFER(string) >);
-
         //testing array io
-        CPPUNIT_TEST(test_array_attribute<darray<uint8> >);
-        CPPUNIT_TEST(test_array_attribute<darray<int8> >);
-        CPPUNIT_TEST(test_array_attribute<darray<uint16> >);
-        CPPUNIT_TEST(test_array_attribute<darray<int16> >);
-        CPPUNIT_TEST(test_array_attribute<darray<uint32> >);
-        CPPUNIT_TEST(test_array_attribute<darray<int32> >);
-        CPPUNIT_TEST(test_array_attribute<darray<uint64> >);
-        CPPUNIT_TEST(test_array_attribute<darray<int64> >);
-        CPPUNIT_TEST(test_array_attribute<darray<float32> >);
-        CPPUNIT_TEST(test_array_attribute<darray<float64> >);
-        CPPUNIT_TEST(test_array_attribute<darray<float128> >);
-        CPPUNIT_TEST(test_array_attribute<darray<complex32> >);
-        CPPUNIT_TEST(test_array_attribute<darray<complex64> >);
-        CPPUNIT_TEST(test_array_attribute<darray<complex128> >);
-        CPPUNIT_TEST(test_array_attribute<darray<bool> >);
-        CPPUNIT_TEST(test_array_attribute<darray<string> >);
-        CPPUNIT_TEST(test_array_attribute<darray<binary> >);
+        CPPUNIT_TEST(test_array_attribute<dynamic_array<uint8> >);
+        CPPUNIT_TEST(test_array_attribute<dynamic_array<int8> >);
+        CPPUNIT_TEST(test_array_attribute<dynamic_array<uint16> >);
+        CPPUNIT_TEST(test_array_attribute<dynamic_array<int16> >);
+        CPPUNIT_TEST(test_array_attribute<dynamic_array<uint32> >);
+        CPPUNIT_TEST(test_array_attribute<dynamic_array<int32> >);
+        CPPUNIT_TEST(test_array_attribute<dynamic_array<uint64> >);
+        CPPUNIT_TEST(test_array_attribute<dynamic_array<int64> >);
+        CPPUNIT_TEST(test_array_attribute<dynamic_array<float32> >);
+        CPPUNIT_TEST(test_array_attribute<dynamic_array<float64> >);
+        CPPUNIT_TEST(test_array_attribute<dynamic_array<float128> >);
+        CPPUNIT_TEST(test_array_attribute<dynamic_array<complex32> >);
+        CPPUNIT_TEST(test_array_attribute<dynamic_array<complex64> >);
+        CPPUNIT_TEST(test_array_attribute<dynamic_array<complex128> >);
+//        CPPUNIT_TEST(test_array_attribute<dynamic_array<bool> >);
+        CPPUNIT_TEST(test_array_attribute<dynamic_array<string> >);
+        CPPUNIT_TEST(test_array_attribute<dynamic_array<binary> >);
 
-        CPPUNIT_TEST(test_array_attribute<SARRAY(uint8) >);
-        CPPUNIT_TEST(test_array_attribute<SARRAY(int8) >);
-        CPPUNIT_TEST(test_array_attribute<SARRAY(uint16) >);
-        CPPUNIT_TEST(test_array_attribute<SARRAY(int16) >);
-        CPPUNIT_TEST(test_array_attribute<SARRAY(uint32) >);
-        CPPUNIT_TEST(test_array_attribute<SARRAY(int32) >);
-        CPPUNIT_TEST(test_array_attribute<SARRAY(uint64) >);
-        CPPUNIT_TEST(test_array_attribute<SARRAY(int64) >);
-        CPPUNIT_TEST(test_array_attribute<SARRAY(float32) >);
-        CPPUNIT_TEST(test_array_attribute<SARRAY(float64) >);
-        CPPUNIT_TEST(test_array_attribute<SARRAY(float128) >);
-        CPPUNIT_TEST(test_array_attribute<SARRAY(complex32) >);
-        CPPUNIT_TEST(test_array_attribute<SARRAY(complex64) >);
-        CPPUNIT_TEST(test_array_attribute<SARRAY(complex128) >);
-        CPPUNIT_TEST(test_array_attribute<SARRAY(bool) >);
-        CPPUNIT_TEST(test_array_attribute<SARRAY(binary) >);
-        CPPUNIT_TEST(test_array_attribute<SARRAY(string) >);
+        CPPUNIT_TEST(test_array_attribute<sarray<uint8> >);
+        CPPUNIT_TEST(test_array_attribute<sarray<int8> >);
+        CPPUNIT_TEST(test_array_attribute<sarray<uint16> >);
+        CPPUNIT_TEST(test_array_attribute<sarray<int16> >);
+        CPPUNIT_TEST(test_array_attribute<sarray<uint32> >);
+        CPPUNIT_TEST(test_array_attribute<sarray<int32> >);
+        CPPUNIT_TEST(test_array_attribute<sarray<uint64> >);
+        CPPUNIT_TEST(test_array_attribute<sarray<int64> >);
+        CPPUNIT_TEST(test_array_attribute<sarray<float32> >);
+        CPPUNIT_TEST(test_array_attribute<sarray<float64> >);
+        CPPUNIT_TEST(test_array_attribute<sarray<float128> >);
+        CPPUNIT_TEST(test_array_attribute<sarray<complex32> >);
+        CPPUNIT_TEST(test_array_attribute<sarray<complex64> >);
+        CPPUNIT_TEST(test_array_attribute<sarray<complex128> >);
+        //CPPUNIT_TEST(test_array_attribute<sarray<bool> >);
+        CPPUNIT_TEST(test_array_attribute<sarray<binary> >);
+        CPPUNIT_TEST(test_array_attribute<sarray<string> >);
 
         CPPUNIT_TEST(test_array);
         
@@ -155,31 +117,13 @@ template<typename APTYPE> class NXAttributeTest: public CppUnit::TestFixture
         static void create_parent(const nxfile &f,nxfield &p);
 
         //==============static functions to create arrays======================
-        template<typename T>
-        static void create_array(const shape_t &s,darray<T> &a)
+        template<typename ATYPE>
+        static void create_array(const shape_t &s,ATYPE &a)
         {
-            a = darray<T>(s);
+            a = ATYPE::create(s);
         }
 
-        //---------------------------------------------------------------------
-        template<typename T,size_t ...DIMS>
-        static void create_array(const shape_t &s,sarray<T,DIMS...> &a)
-        {
-            //there is nothing to do here
-        }
 
-        //---------------------------------------------------------------------
-        template<typename T>
-        static void create_buffer(const size_t &size,dbuffer<T> &b)
-        {
-            b = dbuffer<T>(size);
-        }
-
-        //---------------------------------------------------------------------
-        template<typename T,size_t SIZE>
-        static void create_buffer(const size_t &size,sbuffer<T,SIZE> &b)
-        {
-        }
     public:
         void setUp();
         void tearDown();
@@ -187,7 +131,6 @@ template<typename APTYPE> class NXAttributeTest: public CppUnit::TestFixture
         void test_array();
         template<typename T> void test_scalar_attribute();
         template<typename ATYPE> void test_array_attribute();
-        template<typename BTYPE> void test_buffer_attribute();
 };
 
 //-----------------------------------------------------------------------------
@@ -318,31 +261,11 @@ template<typename ATYPE> void NXAttributeTest<APTYPE>::test_array_attribute()
 }
 
 //-----------------------------------------------------------------------------
-template<typename APTYPE>
-template<typename BTYPE> void NXAttributeTest<APTYPE>::test_buffer_attribute()
-{
-    PRINT_TEST_FUNCTION_SIG;
-    typedef typename BTYPE::value_type value_t;
-
-    BTYPE write;
-    create_buffer(_size,write);
-    BTYPE read(write); 
-
-    std::vector<value_t> data(create_array_data<value_t>(write.size()));
-    std::copy(data.begin(),data.end(),write.begin());
-
-    _parent.template attr<value_t>("a2",_shape).write(write);
-    _parent.attr("a2").read(read);
-
-    CPPUNIT_ASSERT(std::equal(read.begin(),read.end(),write.begin()));
-}
-
-//-----------------------------------------------------------------------------
 template<typename APTYPE> void NXAttributeTest<APTYPE>::test_array()
 {
     PRINT_TEST_FUNCTION_SIG;
     shape_t s{3};
-    darray<string> data(s);
+    auto data = dynamic_array<string>::create(s);
     data[0] = "hello";
     data[1] = "world this";
     data[2] = "is a test";
@@ -350,7 +273,7 @@ template<typename APTYPE> void NXAttributeTest<APTYPE>::test_array()
     array o1(data);
     
     _parent.template attr<string>("test",s).write(o1);
-    array o2 = darray<string>(s);
+    array o2 = dynamic_array<string>::create(s);
     _parent.attr("test").read(o2);
 
 }

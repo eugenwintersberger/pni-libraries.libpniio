@@ -224,15 +224,15 @@ void H5DatasetTest::test_string_array_data()
 
     H5Dataset dset("sarray",_group,type,space,s);
 
-    darray<string> swrite(s);
+    auto swrite = dynamic_array<string>::create(s);
     swrite(0,0) = "hello"; swrite(0,1) = "world"; swrite(0,2) = "this";
     swrite(1,0) = "is"; swrite(1,1) = "a string"; swrite(1,2) = "array";
     
-    CPPUNIT_ASSERT_NO_THROW(dset.write(swrite.storage().ptr()));
+    CPPUNIT_ASSERT_NO_THROW(dset.write(data(swrite)));
 
-    darray<string> sread(s);
+    auto sread = dynamic_array<string>::create(s);
 
-    CPPUNIT_ASSERT_NO_THROW(dset.read(const_cast<string*>(sread.storage().ptr())));
+    CPPUNIT_ASSERT_NO_THROW(dset.read(const_cast<string*>(data(sread))));
 
     std::equal(swrite.begin(),swrite.end(),sread.begin());
 }
@@ -272,25 +272,6 @@ void H5DatasetTest::test_bool_scalar_data()
 
 }
 
-//-----------------------------------------------------------------------------
-void H5DatasetTest::test_bool_array_data()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    sarray<bool,2,3> write_flags;
-    sarray<bool,2,3> read_flags;
-
-    write_flags(0,0) = true; write_flags(0,1) = false; write_flags(0,2)=true;
-    write_flags(1,0) = false; write_flags(1,1) = true; write_flags(1,2)=false;
-
-    H5Datatype type = H5DatatypeFactory::create_type<Bool>();
-    H5Dataspace space(write_flags.shape<shape_t>());
-    H5Dataset dset("flags",_group,type,space);
-
-    dset.write(write_flags.storage().ptr());
-    dset.read(const_cast<Bool*>(read_flags.storage().ptr()));
-
-    CPPUNIT_ASSERT(std::equal(write_flags.begin(),write_flags.end(),read_flags.begin()));
-}
 
 
 //-----------------------------------------------------------------------------
@@ -306,8 +287,8 @@ void H5DatasetTest::test_string_selection()
     s = dset.shape<shape_t>();
     CPPUNIT_ASSERT(dset.size()==10*20);
 
-    dbuffer<string> writebuf(10);
-    dbuffer<string> readbuf(10);
+    std::vector<string> writebuf(10);
+    std::vector<string> readbuf(10);
 
     for(size_t i=0;i<10;i++)
     {
@@ -325,10 +306,10 @@ void H5DatasetTest::test_string_selection()
         CPPUNIT_ASSERT(dset.size()==10);
 
         //write data
-        dset.write(writebuf.ptr());
+        dset.write(data(writebuf));
 
         //read data back
-        dset.read(const_cast<string*>(readbuf.ptr()));
+        dset.read(const_cast<string*>(data(readbuf)));
 
         //compare data
         CPPUNIT_ASSERT(std::equal(writebuf.begin(),writebuf.end(),readbuf.begin()));
@@ -338,46 +319,5 @@ void H5DatasetTest::test_string_selection()
 
 }
 
-//-----------------------------------------------------------------------------
-void H5DatasetTest::test_bool_selection() 
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    H5Datatype type = H5DatatypeFactory::create_type<Bool>();
-    shape_t shape({10,20});
-    H5Dataspace space(shape);
-    H5Dataset dset("text",_group,type,space);
-
-    shape_t s;
-    s = dset.shape<shape_t>();
-    CPPUNIT_ASSERT(dset.size()==10*20);
-
-    dbuffer<bool> writebuf(10);
-    dbuffer<bool> readbuf(10);
-
-    for(size_t i=0;i<10;i++)
-    {
-        //select regtion in the dataset
-        std::vector<slice> selection({slice(i),slice(10,20)});
-        //set buffer value
-        
-        std::fill(writebuf.begin(),writebuf.end(),true);
-        
-        //apply selection
-        dset.apply_selection(selection);
-        CPPUNIT_ASSERT(dset.size()==10);
-
-        //write data
-        dset.write(writebuf.ptr());
-
-        //read data back
-        dset.read(const_cast<Bool*>(readbuf.ptr()));
-
-        //compare data
-        CPPUNIT_ASSERT(std::equal(writebuf.begin(),writebuf.end(),readbuf.begin()));
-        dset.clear_selections();
-        CPPUNIT_ASSERT(dset.size() == 10*20);
-    }
-
-}
 
 

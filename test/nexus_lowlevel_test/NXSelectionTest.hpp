@@ -137,7 +137,8 @@ template<typename T> void NXSelectionTest::test_array_selection()
     shape_t shape{3,4};
     nxfield field = file.create_field<T>("array",shape);
 
-    darray<T> write(shape_t({3})),read(shape_t({3}));
+    auto write = dynamic_array<T>::create(shape_t({3}));
+    auto read  = dynamic_array<T>::create(shape_t({3}));
     std::fill(write.begin(),write.end(),T(0));
     std::fill(read.begin(),read.end(),T(0));
 
@@ -153,9 +154,11 @@ template<typename T> void NXSelectionTest::test_array_selection()
     }
 
     CPPUNIT_ASSERT_THROW(field(slice(1,3),0).write(write),shape_mismatch_error);
+    /*
     dbuffer<T> rbuff(2);
     CPPUNIT_ASSERT_THROW(field(slice(0,3),0).read(rbuff),size_mismatch_error);
     rbuff.free();
     CPPUNIT_ASSERT_THROW(field(slice(0,3),0).read(rbuff),memory_not_allocated_error);
+    */
 }
 

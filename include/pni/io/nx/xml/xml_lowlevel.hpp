@@ -23,7 +23,7 @@
 #pragma once
 #include <sstream>
 #include <pni/core/types.hpp>
-#include <pni/core/array.hpp>
+#include <pni/core/arrays.hpp>
 #include "../nx.hpp"
 #include "../nexus_utils.hpp"
 #include "../nxobject_traits.hpp"

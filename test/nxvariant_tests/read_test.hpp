@@ -50,8 +50,8 @@ class read_test : public CppUnit::TestFixture
 
         shape_t field_shape,attr_shape;
 
-        typedef darray<uint32> farray_t;
-        typedef darray<int16> aarray_t;
+        typedef dynamic_array<uint32> farray_t;
+        typedef dynamic_array<int16> aarray_t;
         typedef nxvariant_traits<h5::nxfile>::object_types object_types;
         farray_t field_wdata;
         farray_t field_rdata;

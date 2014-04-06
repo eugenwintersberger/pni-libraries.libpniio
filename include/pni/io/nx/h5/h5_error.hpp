@@ -29,7 +29,7 @@ extern "C"{
 #include <vector>
 
 #include <pni/core/types.hpp>
-#include <pni/core/exceptions.hpp>
+#include <pni/core/error.hpp>
 
 
 namespace pni {

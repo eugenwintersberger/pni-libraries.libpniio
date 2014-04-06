@@ -28,10 +28,7 @@
 #pragma once
 
 #include <pni/core/arrays.hpp>
-#include <pni/core/dbuffer.hpp>
-#include <pni/core/sbuffer.hpp>
 #include <pni/core/types.hpp>
-#include <pni/core/array.hpp>
 
 #include "nxexceptions.hpp"
 #include "nxobject_traits.hpp"
@@ -48,76 +45,7 @@ namespace nx{
     using pni::core::string;
     using pni::core::exception;
 
-#define ATTRIBUTE_WRITE_BUFFER(buffer)\
-    try\
-    {\
-        this->_write_buffer(buffer);\
-    }\
-    catch(memory_not_allocated_error &error)\
-    {\
-        error.append(EXCEPTION_RECORD); throw error;\
-    }\
-    catch(size_mismatch_error &error)\
-    {\
-        error.append(EXCEPTION_RECORD); throw error;\
-    }\
-    catch(nxattribute_error &error)\
-    {\
-        error.append(EXCEPTION_RECORD); throw error;\
-    }
-       
-#define ATTRIBUTE_READ_BUFFER(buffer)\
-    try\
-    {\
-        this->_read_buffer(buffer);\
-    }\
-    catch(memory_not_allocated_error &error)\
-    {\
-        error.append(EXCEPTION_RECORD); throw error;\
-    }\
-    catch(size_mismatch_error &error)\
-    {\
-        error.append(EXCEPTION_RECORD); throw error;\
-    }\
-    catch(nxattribute_error &error)\
-    {\
-        error.append(EXCEPTION_RECORD); throw error;\
-    }
-#define ATTRIBUTE_WRITE_ARRAY(array)\
-    try\
-    {\
-        this->_write_array(o);\
-    }\
-    catch(memory_not_allocated_error &error)\
-    {\
-        error.append(EXCEPTION_RECORD); throw error;\
-    }\
-    catch(shape_mismatch_error &error)\
-    {\
-        error.append(EXCEPTION_RECORD); throw error;\
-    }\
-    catch(nxattribute_error &error)\
-    {\
-        error.append(EXCEPTION_RECORD); throw error;\
-    }
-
 #define ATTRIBUTE_READ_ARRAY(array)\
-    try\
-    {\
-        this->_read_array(o);\
-    }\
-    catch(memory_not_allocated_error &error)\
-    {\
-        error.append(EXCEPTION_RECORD); throw error;\
-    }\
-    catch(shape_mismatch_error &error)\
-    {\
-        error.append(EXCEPTION_RECORD); throw error;\
-    }\
-    catch(nxattribute_error &error)\
-    {\
-        error.append(EXCEPTION_RECORD); throw error;\
-    }
 
     /*! 
     \ingroup nexus_lowlevel
@@ -176,61 +104,7 @@ namespace nx{
                 return ss.str();
             }
 
-            //------------------------------------------------------------------
-            /*! 
-            \brief write attribute from a buffer
-
-            Write attribute from a buffer type. 
-            \throws memory_not_allocated_error if the buffer is not allocated
-            \throws size_mismatch_error if the buffer and the attribute size do
-            not match
-            \tparam BTYPE buffer type
-            \param b instance of BTYPE with the data
-            */
-            template<typename BTYPE> void _write_buffer(const BTYPE &b) const
-            {
-                if(b.size() == 0)
-                    throw memory_not_allocated_error(EXCEPTION_RECORD,
-                            "Source buffer not allocated!");
-
-                if(this->size()!=b.size())
-                {
-                    std::stringstream ss;
-                    ss<<"Buffer size ("<<b.size()<<") and attribute size (";
-                    ss<<this->size()<<") do not match!";
-                    throw size_mismatch_error(EXCEPTION_RECORD,ss.str());
-                }
-
-                this->_imp.write(b.ptr());
-            }
             
-            //------------------------------------------------------------------
-            /*! 
-            \brief read attribute to buffer
-
-            Read attribute data from the file and store it to a buffer object.
-            \throws memory_not_allocated_error if buffer is not allocated
-            \throws size_mismatch_error if attribute and buffer size do not match
-            \tparam BTYPE buffer type 
-            \param b instance of BTYPE
-            */
-            template<typename BTYPE> void _read_buffer(BTYPE &b) const
-            {
-                if(b.size() == 0)
-                    throw memory_not_allocated_error(EXCEPTION_RECORD,
-                            "Target buffer not allocated!");
-
-                if(this->size()!=b.size())
-                {
-                    std::stringstream ss;
-                    ss<<"Buffer size ("<<b.size()<<") and attribute size (";
-                    ss<<this->size()<<") do not match!";
-                    throw size_mismatch_error(EXCEPTION_RECORD,ss.str());
-                }
-
-                this->_imp.read(const_cast<typename BTYPE::value_type *>
-                               (b.ptr()));
-            }
 
             //-----------------------------------------------------------------
             /*!
@@ -250,7 +124,7 @@ namespace nx{
                             "Array storage not allocated!");
 
                 //get the shape of the array to write
-                auto ashape = a.template shape<shape_t>();
+                auto ashape = shape<shape_t>(a);
 
                 //get the shape of this attribute
                 auto s = this->shape<shape_t>();
@@ -269,7 +143,7 @@ namespace nx{
                 }
 
 
-                this->_imp.write(a.storage().ptr());
+                this->_imp.write(data(a));
             }
             
             //-----------------------------------------------------------------
@@ -306,8 +180,8 @@ namespace nx{
                 }
 
 
-                this->_imp.read(const_cast<typename ATYPE::value_type*>
-                                 (a.storage().ptr()));
+                this->_imp.read(const_cast<typename
+                        ATYPE::value_type*>(data(a)));
             }
 
         public:
@@ -356,56 +230,6 @@ namespace nx{
 
             //====================IO methods====================================
             /*! 
-            \brief write data from a DBuffer template
-
-            Write data from an instance of the DBuffer template.
-            \throws memory_not_allocated_error if buffer memory is not allocated
-            \throws size_mismatch_error if buffer and attribute size do not match
-            \throws nxattribute_error in case of any other IO error
-            \tparam OTS template argumens to the DBuffer template
-            \param buffer buffer from which to write data
-            */
-            template<typename T,typename ALLOCATOR> 
-                void write(const dbuffer<T,ALLOCATOR> &buffer) const
-            {
-                ATTRIBUTE_WRITE_BUFFER(buffer);
-            }
-
-            //-----------------------------------------------------------------
-            /*!
-            \brief write data from a SBuffer template
-
-            Write the data from a static buffer type. 
-            \throws memory_not_allocated_error if buffer memory is not allocated
-            \throws size_mismatch_error if buffer and attribute size do not match
-            \throws nxattribute_error in case of any other IO error
-            \tparam OTS template arguments to SBuffer
-            \param buffer buffer from which to write data
-            */
-            template<typename T,size_t SIZE>
-                void write(const sbuffer<T,SIZE> &buffer) const
-            {
-                ATTRIBUTE_WRITE_BUFFER(buffer);
-            }
-
-            //-----------------------------------------------------------------
-            /*! 
-            \brief write data from reference buffer
-
-            Write the data from a reference buffer template.
-            \throws memory_not_allocated_error if buffer memory is not allocated
-            \throws size_mismatch_error if buffer and attribute size do not match
-            \throws nxattribute_error in case of any other IO error
-            \tparam OTS template arguments to RBuffer
-            \param buffer buffer from which to write data
-            */
-            template<typename T> void write(const rbuffer<T> &buffer) const
-            {
-                ATTRIBUTE_WRITE_BUFFER(buffer);
-            }
-
-            //-----------------------------------------------------------------
-            /*! 
             \brief write data from a DArray template
 
             Write data from a dynamic array template. 
@@ -416,28 +240,29 @@ namespace nx{
             \tparam OTS template arguments to DArray
             \param o instance of DArray from which to write data
             */
-            template<typename T,typename STORAGE,typename IMAP>
-                void write(const darray<T,STORAGE,IMAP> &o) const
+            template<
+                     typename STORAGE,
+                     typename IMAP,
+                     typename IPA
+                    >
+            void write(const mdarray<STORAGE,IMAP,IMAP> &o) const
             {
-                ATTRIBUTE_WRITE_ARRAY(o);
-            }
-
-            //-----------------------------------------------------------------
-            /*!
-            \brief write data from a static array
-
-            Write data form a static array template.
-            \throws memory_not_allocated_error if array buffer is not allocated
-            \throws shape_mismatch_error if array and attribute shape do not
-            match
-            \throws nxattribute_error in case of any other IO error
-            \tparam OTS template arguments to SArray template
-            \param o instance SArray from which to write data
-            */
-            template<typename T,size_t ...INDICES>
-                void write(const sarray<T,INDICES...> &o) const
-            {
-                ATTRIBUTE_WRITE_ARRAY(o);
+                try
+                {
+                    this->_write_array(o);
+                }
+                catch(memory_not_allocated_error &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+                catch(shape_mismatch_error &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+                catch(nxattribute_error &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
             }
 
 
@@ -544,56 +369,6 @@ namespace nx{
 
             //-----------------------------------------------------------------
             /*!
-            \brief read data to a buffer
-
-            Read data to a DBuffer instance.
-            \throws memory_not_allocated_error if buffer is not allocated
-            \throws size_mismatch_error if buffer and attribute size do not match
-            \throws nxattribute_error in case of any other IO error
-            \tparam OTS template arguments to the DBuffer template
-            \param buffer instance of DBuffer in which to store the data
-            */
-            template<typename T,typename ALLOCATOR> 
-                void read(dbuffer<T,ALLOCATOR> &buffer) const
-            {
-                ATTRIBUTE_READ_BUFFER(buffer);
-            }
-
-            //-----------------------------------------------------------------
-            /*!
-            \brief read data to a buffer
-
-            Read data to a SBuffer instance.
-            \throws memory_not_allocated_error if buffer is not allocated
-            \throws size_mismatch_error if buffer and attribute size do not match
-            \throws nxattribute_error in case of any other IO error
-            \tparam OTS template arguments to the SBuffer template
-            \param buffer instance of SBuffer in which to store the data
-            */
-            template<typename T,size_t SIZE> 
-                void read(sbuffer<T,SIZE> &buffer) const
-            {
-                ATTRIBUTE_READ_BUFFER(buffer);
-            }
-
-            //-----------------------------------------------------------------
-            /*!
-            \brief read data to a buffer
-
-            Read data to a RBuffer instance.
-            \throws memory_not_allocated_error if buffer is not allocated
-            \throws size_mismatch_error if buffer and attribute size do not match
-            \throws nxattribute_error in case of any other IO error
-            \tparam OTS template arguments to the RBuffer template
-            \param buffer instance of RBuffer in which to store the data
-            */
-            template<typename T> void read(rbuffer<T> &buffer) const
-            {
-                ATTRIBUTE_READ_BUFFER(buffer);
-            }
-
-            //-----------------------------------------------------------------
-            /*!
             \brief read data to an array
 
             Read data to an DArray instance.
@@ -604,28 +379,29 @@ namespace nx{
             \tparam OTS template arguments to DArray
             \param o instance of DArray
             */
-            template<typename T,typename STORAGE,typename IMAP> 
-                void read(darray<T,STORAGE,IMAP> &o) const
+            template<
+                     typename STORAGE,
+                     typename IMAP,
+                     typename IPA
+                    > 
+            void read(mdarray<STORAGE,IMAP,IPA> &o) const
             {
-                ATTRIBUTE_READ_ARRAY(o);
-            }
-
-            //-----------------------------------------------------------------
-            /*!
-            \brief read data to an array
-
-            Read data to an SArray instance.
-            \throws memory_not_allocated_error if array buffer is not allocated
-            \throws shape_mismatch_error if array and attribute shape do not
-            match
-            \throws nxattribute_error in the case of any other IO error
-            \tparam OTS template arguments to SArray
-            \param o instance of SArray
-            */
-            template<typename T,size_t ...INDICES> 
-                void read(sarray<T,INDICES...> &o) const
-            {
-                ATTRIBUTE_READ_ARRAY(o);
+                try
+                {
+                    this->_read_array(o);
+                }
+                catch(memory_not_allocated_error &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+                catch(shape_mismatch_error &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+                catch(nxattribute_error &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
             }
             
             //-----------------------------------------------------------------

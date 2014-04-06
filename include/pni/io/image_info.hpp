@@ -30,7 +30,7 @@
 #include<numeric>
 
 #include <pni/core/types.hpp>
-#include <pni/core/exceptions.hpp>
+#include <pni/core/error.hpp>
 #include "image_channel_info.hpp"
 
 using namespace pni::core;

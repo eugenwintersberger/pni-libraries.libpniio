@@ -22,7 +22,7 @@
  *      Author: Eugen Wintersberger
  */
 
-#include <pni/core/exceptions.hpp>
+#include <pni/core/error.hpp>
 extern "C"{
 #include <hdf5.h>
 }

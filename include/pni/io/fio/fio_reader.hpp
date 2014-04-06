@@ -31,7 +31,7 @@
 #include<boost/regex.hpp>
 #include<boost/current_function.hpp>
 
-#include <pni/core/darray.hpp>
+#include <pni/core/arrays.hpp>
 #include "../spreadsheet_reader.hpp"
 
 namespace pni{

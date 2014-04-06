@@ -27,7 +27,6 @@
 
 #include <sstream>
 #include <algorithm>
-#include <pni/core/dbuffer.hpp>
 #include <pni/core/arrays.hpp>
 
 
@@ -68,10 +67,11 @@ namespace h5 {
     class H5Dataspace:public H5Object
     {
         private:
+            typedef std::vector<hsize_t> size_vector_t;
             //! maximum number of elements dimensions
-            dbuffer<hsize_t> _maxdims; 
+            size_vector_t _maxdims; 
             //! number of elements 
-            dbuffer<hsize_t> _dims;    
+            size_vector_t _dims;    
 
             //-----------------------------------------------------------------
             /*!
@@ -277,7 +277,7 @@ namespace h5 {
             \sa CTYPE shape() const
             \sa void shape(CTYPE &c) const
             */
-            const dbuffer<hsize_t> &shape() const { return _dims; }
+            const size_vector_t &shape() const { return _dims; }
 
             //-----------------------------------------------------------------
             /*! 
@@ -348,7 +348,7 @@ namespace h5 {
             \return shape object 
              
             */
-            const dbuffer<hsize_t> &maxshape() const { return _maxdims; }
+            const size_vector_t &maxshape() const { return _maxdims; }
 
             //----------------------------------------------------------------
             /*!
@@ -471,8 +471,8 @@ namespace h5 {
             \param s new dataspace shape */
             template<typename CTYPE> void resize(const CTYPE &s)
             {
-                _dims.allocate(s.size());
-                _maxdims.allocate(s.size());
+                _dims = size_vector_t(s.size());
+                _maxdims = size_vector_t(s.size());
                 
                 std::copy(s.begin(),s.end(),_dims.begin());
                 std::copy(s.begin(),s.end(),_maxdims.begin());
@@ -516,8 +516,8 @@ namespace h5 {
                     throw shape_mismatch_error(EXCEPTION_RECORD,ss.str());
                 }
 
-                _dims.allocate(s.size());
-                _maxdims.allocate(ms.size());
+                _dims = size_vector_t(s.size());
+                _maxdims = size_vector_t(ms.size());
 
                 std::copy(s.begin(),s.end(),_dims.begin());
                 std::copy(ms.begin(),ms.end(),_maxdims.begin());

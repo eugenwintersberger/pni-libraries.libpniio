@@ -24,7 +24,7 @@
 #pragma once
 
 #include <iostream>
-#include <pni/core/exceptions.hpp>
+#include <pni/core/error.hpp>
 
 namespace pni{
 namespace io{

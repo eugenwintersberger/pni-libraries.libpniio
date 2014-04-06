@@ -29,7 +29,7 @@
 
 #include <pni/io/cbf/cbf_reader.hpp>
 #include <pni/io/strutils.hpp>
-#include <pni/core/exceptions.hpp>
+#include <pni/core/error.hpp>
 #include <pni/core/types.hpp>
 
 //need to use regular expressions from boost

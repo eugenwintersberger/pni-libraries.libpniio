@@ -72,8 +72,8 @@ void read_test::test_field_full()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    field_wdata = farray_t(field_shape);
-    field_rdata = farray_t(field_shape);
+    field_wdata = farray_t::create(field_shape);
+    field_rdata = farray_t::create(field_shape);
     for(size_t i=0;i<field_wdata.size();++i) field_wdata[i] = i;
     std::fill(field_rdata.begin(),field_rdata.end(),0);
     field.write(field_wdata);
@@ -92,8 +92,8 @@ void read_test::test_field_partial()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    field_wdata = farray_t(shape_t{1,3,5});
-    field_rdata = farray_t(shape_t{1,3,5});
+    field_wdata = farray_t::create(shape_t{1,3,5});
+    field_rdata = farray_t::create(shape_t{1,3,5});
 
     //write data
     for(size_t i=0;i<2;++i)
@@ -142,8 +142,8 @@ void read_test::test_attribute_full()
     
     object_types object = attribute;
 
-    attr_wdata = aarray_t(shape_t{2,3});
-    attr_rdata = aarray_t(shape_t{2,3});
+    attr_wdata = aarray_t::create(shape_t{2,3});
+    attr_rdata = aarray_t::create(shape_t{2,3});
 
     for(size_t i=0;i<attr_wdata.size();++i) attr_wdata[i] = i;
     std::fill(attr_rdata.begin(),attr_rdata.end(),0);

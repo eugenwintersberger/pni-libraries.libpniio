@@ -26,7 +26,7 @@
  *
  */
 
-#include <pni/core/exceptions.hpp>
+#include <pni/core/error.hpp>
 #include <pni/io/tiff/strip_reader.hpp>
 
 namespace pni {

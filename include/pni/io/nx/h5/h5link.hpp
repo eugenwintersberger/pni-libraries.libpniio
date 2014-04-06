@@ -30,7 +30,7 @@ extern "C"{
 }
 
 #include <pni/core/types.hpp>
-#include <pni/core/exceptions.hpp>
+#include <pni/core/error.hpp>
 
 #include "../nxlink_type.hpp"
 #include "../nxpath.hpp"

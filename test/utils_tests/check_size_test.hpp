@@ -80,17 +80,12 @@ class check_size_test : public CppUnit::TestFixture
         }
 
         //need some special functions 
-        template<typename T,typename STORAGE,typename IMAP>
-        static void create_container(size_t n,darray<T,STORAGE,IMAP> &a)
+        template<typename STORAGE,typename IMAP,typename IPA>
+        static void create_container(size_t n,mdarray<STORAGE,IMAP,IPA> &a)
         {
-            a = darray<T,STORAGE,IMAP>(shape_t{n});
+            a = mdarray<STORAGE,IMAP,IPA>::create(shape_t{n});
         }
 
-        template<typename ATYPE>
-        static void create_container(size_t n,numarray<ATYPE> &a )
-        {
-            a = numarray<ATYPE>(shape_t{n});
-        }
         
     public:
         void setUp();

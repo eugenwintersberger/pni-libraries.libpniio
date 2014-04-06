@@ -31,7 +31,6 @@
 
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
-#include <pni/core/scalar.hpp>
 
 #include "nximp_map.hpp"
 #include "nximp_code_map.hpp"

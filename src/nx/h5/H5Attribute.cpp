@@ -148,18 +148,17 @@ namespace h5{
     //-------------------------------------------------------------------------
     string H5Attribute::base() const 
     { 
-        dbuffer<char> buffer;
+        string buffer;
 
         if(is_valid())
         {
             //first we need to retrieve the path to the parent object
             hsize_t bsize;
             bsize = H5Iget_name(id(),NULL,1)+1;
-            buffer.allocate(bsize);
+            buffer = string(bsize,' ');
 
-            H5Iget_name(id(),const_cast<char*>(buffer.ptr()),bsize);
-            string parent(buffer.ptr());
-            return parent;
+            H5Iget_name(id(),const_cast<char*>(buffer.data()),bsize);
+            return buffer;
         }
         return string();
     }

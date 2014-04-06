@@ -26,7 +26,7 @@
 
 #include <numeric>
 
-#include <pni/core/exceptions.hpp>
+#include <pni/core/error.hpp>
 #include <pni/core/types.hpp>
 #include <pni/io/tiff/tiff_reader.hpp>
 

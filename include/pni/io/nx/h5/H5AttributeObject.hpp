@@ -28,8 +28,6 @@
 
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
-#include <pni/core/dbuffer.hpp>
-#include <pni/core/id_type_map.hpp>
 
 #include "H5NamedObject.hpp"
 #include "H5Attribute.hpp"

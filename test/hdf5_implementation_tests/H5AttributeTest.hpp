@@ -80,7 +80,6 @@ class H5AttributeTest:public CppUnit::TestFixture
         CPPUNIT_TEST(test_array_attribute<complex64>);
         CPPUNIT_TEST(test_array_attribute<complex128>);
         CPPUNIT_TEST(test_array_attribute<string>);
-        CPPUNIT_TEST(test_array_attribute<bool>);
         CPPUNIT_TEST_SUITE_END();
     private:
         H5File file;   //!< file object
@@ -145,17 +144,17 @@ template<typename T> void H5AttributeTest::test_array_attribute()
     PRINT_TEST_FUNCTION_SIG;
 
     shape_t s{10,20};
-    darray<T> write(s);
-    sarray<T,10,20> read;
+    auto write = dynamic_array<T>::create(s);
+    static_array<T,10,20> read;
 
     std::vector<T> b = create_array_data<T>(write.size());
     std::copy(b.begin(),b.end(),write.begin());
     
     H5Attribute a = group.attr<T>("a1",s);
     //write data
-    a.write(write.storage().ptr());
+    a.write(data(write));
     //read data back
-    a.read(const_cast<T*>(read.storage().ptr()));
+    a.read(const_cast<T*>(data(read)));
 
     //compare data
     for(size_t i=0;i<a.size();i++) check_equality(read[i],write[i]);
