@@ -155,6 +155,8 @@ namespace h5{
                         get_h5_error_string());
             }
 
+            void write(type_id_t tid,const void *ptr) const;
+
 
             //-----------------------------------------------------------------
             /*!
@@ -203,6 +205,8 @@ namespace h5{
                             "Error reading attribute ["+this->name()+"]!\n\n"+
                             get_h5_error_string());
             }
+
+            void read(type_id_t tid,void *ptr) const;
 
             //-----------------------------------------------------------------
             /*! 

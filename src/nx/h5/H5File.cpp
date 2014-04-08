@@ -267,10 +267,10 @@ namespace h5{
         {
             //if the object has already been created return this value
             hsize_t bsize;
-            bsize = H5Fget_name(id(),NULL,1)+1;
+            bsize = H5Fget_name(id(),NULL,1);
             buffer = string(bsize,' ');
 
-            H5Fget_name(id(),const_cast<char *>(buffer.data()),bsize);
+            H5Fget_name(id(),const_cast<char *>(buffer.data()),bsize+1);
             return buffer;
         }
 

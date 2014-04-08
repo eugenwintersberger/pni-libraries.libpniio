@@ -295,6 +295,48 @@ namespace h5{
     CREATE_TYPE_GET_METHOD(string,type_id_t::STRING,_string_t)
     CREATE_TYPE_GET_METHOD(binary,type_id_t::BINARY,_binary_t)
 
+    //-------------------------------------------------------------------------
+    const H5Datatype &H5DatatypeFactory::get_type(type_id_t tid) const
+    {
+        if(tid == type_id_t::BOOL)
+            return _bool_t;
+        else if(tid == type_id_t::UINT8)
+            return _uint8_t;
+        else if(tid == type_id_t::INT8)
+            return _int8_t;
+        else if(tid == type_id_t::UINT16)
+            return _uint16_t;
+        else if(tid == type_id_t::INT16)
+            return _int16_t;
+        else if(tid == type_id_t::UINT32)
+            return _uint32_t;
+        else if(tid == type_id_t::INT32)
+            return _int32_t;
+        else if(tid == type_id_t::UINT64)
+            return _uint64_t;
+        else if(tid == type_id_t::INT64)
+            return _int64_t;
+        else if(tid == type_id_t::FLOAT32)
+            return _float32_t;
+        else if(tid == type_id_t::FLOAT64)
+            return _float64_t;
+        else if(tid == type_id_t::FLOAT128)
+            return _float128_t;
+        else if(tid == type_id_t::COMPLEX32)
+            return _cmplx32_t;
+        else if(tid == type_id_t::COMPLEX64)
+            return _cmplx64_t;
+        else if(tid == type_id_t::COMPLEX128)
+            return _cmplx128_t;
+        else if(tid == type_id_t::STRING)
+            return _string_t;
+        else if(tid == type_id_t::BINARY)
+            return _binary_t;
+        else
+            throw type_error(EXCEPTION_RECORD,
+                    "Unknown type ID!");
+    }
+
 
 //end of namespace
 }

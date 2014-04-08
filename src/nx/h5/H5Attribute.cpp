@@ -154,10 +154,10 @@ namespace h5{
         {
             //first we need to retrieve the path to the parent object
             hsize_t bsize;
-            bsize = H5Iget_name(id(),NULL,1)+1;
+            bsize = H5Iget_name(id(),NULL,1);
             buffer = string(bsize,' ');
 
-            H5Iget_name(id(),const_cast<char*>(buffer.data()),bsize);
+            H5Iget_name(id(),const_cast<char*>(buffer.data()),bsize+1);
             return buffer;
         }
         return string();
@@ -197,6 +197,17 @@ namespace h5{
             throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD, 
                     "Error writing attribute ["+name()+"]!\n\n"+
                     get_h5_error_string());
+    }
+
+    //-------------------------------------------------------------------------
+    void H5Attribute::write(type_id_t tid,const void *ptr) const
+    {
+        const H5Datatype &mem_type = H5TFactory.get_type(tid);
+        herr_t err = H5Awrite(id(),mem_type.id(),ptr);
+        if(err<0)
+            throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD, 
+                "Error writing attribute ["+this->name()+"]!\n\n"+
+                get_h5_error_string());
     }
 
     //-------------------------------------------------------------------------

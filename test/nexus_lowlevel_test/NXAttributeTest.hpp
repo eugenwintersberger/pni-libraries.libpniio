@@ -193,6 +193,8 @@ template<typename APTYPE> void NXAttributeTest<APTYPE>::test_creation()
     CPPUNIT_ASSERT(a1.size() == 1);
     auto s = a1.shape<shape_t>();
     CPPUNIT_ASSERT(s.size() == 0);
+    string b1 = a1.base();
+    string b2 = _parent.path();
     CPPUNIT_ASSERT(a1.base() == _parent.path());
     CPPUNIT_ASSERT(a1.name() == "attribute");
     CPPUNIT_ASSERT(a1.path() == _parent.path()+"@attribute");

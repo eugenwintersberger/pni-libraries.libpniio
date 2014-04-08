@@ -30,19 +30,23 @@ namespace nx{
     
     using namespace pni::core;
 
-    /*!
-    \ingroup variant_code
-    \brief read visitor
-
-    This visitor reads data from a field or an attribute. Partial IO is
-    supported only for fields. If partial IO is tried on an attribute object a
-    selection will be thrown. As one cannot write data to a group an exception
-    will be thrown if the stored type is a group type.
-
-    \tparam VTYPE variant type
-    \sa read
-    */
-    template<typename ATYPE,typename VTYPE> 
+    //!
+    //! \ingroup variant_code
+    //! \brief read visitor
+    //!
+    //! This visitor reads data from a field or an attribute. Partial IO is
+    //! supported only for fields. If partial IO is tried on an attribute 
+    //! object a selection will be thrown. As one cannot write data to a group 
+    //! an exception will be thrown if the stored type is a group type.
+    //!
+    //! \tparam ATYPE target array type
+    //! \tparam VTYPE variant type
+    //! \sa read
+    //!
+    template<
+             typename ATYPE,
+             typename VTYPE
+            > 
     class read_visitor : public boost::static_visitor<void>
     {
         public: 

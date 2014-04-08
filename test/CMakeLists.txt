@@ -35,13 +35,10 @@ set(TEST_SOURCES
     ./nexus_lowlevel_test/NXSelectionTest.cpp
     ./nexus_lowlevel_test/NXGroupTest.cpp
     ./nexus_lowlevel_test/NXFileTest.cpp
-    ./utils_tests/check_rank_test.cpp
     ./utils_tests/nxpath_utils_test.cpp
     ./utils_tests/utils_test.cpp
-    ./utils_tests/check_shape_test.cpp
     ./utils_tests/check_type_test.cpp
     ./utils_tests/nxpath_test.cpp
-    ./utils_tests/check_size_test.cpp
     ./xml_test/xml_node_data_test.cpp
     ./xml_test/xml_node_test.cpp
     ./xml_test/xml_lowlevel_test.cpp

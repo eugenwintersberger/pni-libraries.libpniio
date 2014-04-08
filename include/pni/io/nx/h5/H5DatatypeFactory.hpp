@@ -43,15 +43,15 @@ namespace h5{
     //avoid namespace collisions with std
     using pni::core::string;
 
-    /*! 
-    \ingroup nxh5_classes
-    \brief data type factory
-
-    This class acts as a factory for H5Datatype objects. For complex
-    data a compound data type is used. The naming convention of the
-    structure memebers follows those of h5py (in order to produce files
-    which can be opened easily from Python). 
-    */
+    //! 
+    //! \ingroup nxh5_classes
+    //! \brief data type factory
+    //! 
+    //! This class acts as a factory for H5Datatype objects. For complex
+    //! data a compound data type is used. The naming convention of the
+    //! structure memebers follows those of h5py (in order to produce files
+    //! which can be opened easily from Python). 
+    //!
     class H5DatatypeFactory
     {
         private:
@@ -108,54 +108,75 @@ namespace h5{
             ~H5DatatypeFactory();
 
             //==================public class methods===========================
-            /*! \brief create from type
-
-            This static template method can be used to create a H5Datatype
-            object from a particular type T. T must be a type defined in
-            pni/core/types.hpp. 
-
+            //! \brief create from type
+            //!
+            //! This static template method can be used to create a H5Datatype
+            //! object from a particular type T. T must be a type defined in
+            //! pni/core/types.hpp. 
+            /*!
             \code
             H5Datatype t = H5DatatypeFactor::create_type<float32>();
             \endcode
-
-            \throws pni::io::nx::nxbackend_error if type creation was unsuccessful 
-            \return instance of H5Datatype 
             */
-            template<typename T> static H5Datatype create_type();
+            //!
+            //! \throws pni::io::nx::nxbackend_error if type creation was 
+            //! unsuccessful 
+            //! \return instance of H5Datatype 
+            //!
+            template<typename T> 
+            static H5Datatype create_type();
 
             //-----------------------------------------------------------------
-            /*! \brief create from type id
-
-            Static template method to create an instance of H5Datatype from a
-            PNI type id. 
-
+            //! \brief create from type id
+            //!
+            //! Static template method to create an instance of H5Datatype 
+            //! from a PNI type id. 
+            /*!
             \code
             H5Datatype t = H5DatatypeFactor::create_type<type_id_t::UINT8>();
             \endcode
-
-            \throws pni::io::nx::nxbackend_error if type creation was unsuccessful
-            \return instance of H5Datatype
             */
-            template<type_id_t ID> static H5Datatype create_type();
+            //!
+            //! \throws pni::io::nx::nxbackend_error if type creation was 
+            //! unsuccessful
+            //! \return instance of H5Datatype
+            //!
+            template<type_id_t ID> 
+            static H5Datatype create_type();
 
             //-----------------------------------------------------------------
-            /*! \brief get data type 
-
-            Returns a reference to an already existing data type.
-            \tparam T data type to select
-            \return reference to the corresponding HDF5 data type
-            */
-            template<typename T> const H5Datatype &get_type() const;
+            //! \brief get data type 
+            //!
+            //! Returns a reference to an already existing data type.
+            //! \tparam T data type to select
+            //! \return reference to the corresponding HDF5 data type
+            //!
+            template<typename T> 
+            const H5Datatype &get_type() const;
 
             //-----------------------------------------------------------------
-            /*!
-            \brief get data type 
-
-            Return a reference to a predefined HDF5 data type. 
-            \tparam ID type id of the required type
-            \return reference to the corresponding HDF5 data type
-            */
-            template<type_id_t ID> const H5Datatype &get_type() const;
+            //!
+            //! \brief get data type 
+            //!
+            //! Return a reference to a predefined HDF5 data type. 
+            //! \tparam ID type id of the required type
+            //! \return reference to the corresponding HDF5 data type
+            //!
+            template<type_id_t ID> 
+            const H5Datatype &get_type() const;
+            
+            //-----------------------------------------------------------------
+            //!
+            //! \brief get data tyep
+            //!
+            //! Return a erference to an existing data type determined by the
+            //! type id passed as the argument to this method. 
+            //!
+            //! \param tid type id of the requested type
+            //! 
+            //! \return reference to the type
+            //!
+            const H5Datatype &get_type(type_id_t tid) const;
     };
 
     static H5DatatypeFactory H5TFactory;

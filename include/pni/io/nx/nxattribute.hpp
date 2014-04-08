@@ -29,6 +29,7 @@
 
 #include <pni/core/arrays.hpp>
 #include <pni/core/types.hpp>
+#include <pni/core/error.hpp>
 
 #include "nxexceptions.hpp"
 #include "nxobject_traits.hpp"
@@ -45,17 +46,16 @@ namespace nx{
     using pni::core::string;
     using pni::core::exception;
 
-#define ATTRIBUTE_READ_ARRAY(array)\
-
-    /*! 
-    \ingroup nexus_lowlevel
-    \brief attribute object
-
-    nxattribute represents an attribute which is attached to one of the Nexus 
-    objects. Objects of this type can be used to read and write attribute data 
-    from and to an object.
-    */
-    template<typename Imp> class nxattribute
+    //! 
+    //! \ingroup nexus_lowlevel
+    //! \brief attribute object
+    //! 
+    //! nxattribute represents an attribute which is attached to one of the 
+    //! Nexus objects. Objects of this type can be used to read and write 
+    //! attribute data from and to an object.
+    //!
+    template<typename Imp> 
+    class nxattribute
     {
         public:
             //! define the actual type of this object
@@ -64,120 +64,43 @@ namespace nx{
             Imp _imp;  //!< implementation of the attribute object
            
             //-----------------------------------------------------------------
-            /*!
-            \brief gernerate error message
-
-            Generate the error message for a shape mismatch error between a
-            field and an array type. 
-            \param ashape array shape
-            \param fshape field shape
-            \return error message
-            */
-            static string _shape_mismatch_error_message(const shape_t
-                    &ashape,const shape_t &fshape) 
+            //!
+            //! \brief write data from array
+            //!
+            //! Read data from an array type and store it in the attribute.
+            //! \throws memory_not_allocated_error if the array buffer is not allocated
+            //! \throws shape_mismatch_error if the shapes of the array and the
+            //! attribute do not match
+            //! \tparam ATYPE array type
+            //! \param a instance of ATYPE
+            //!
+            template<typename ATYPE> 
+            void _write_array(const ATYPE &a) const
             {
-                std::stringstream ss;
-                ss<<"Array shape ( ";
-#ifdef NOFOREACH
-                for(auto iter = ashape.begin();iter!=ashape.end();++iter)
-                {
-                    auto v = *iter;
-#else
-                for(auto v: ashape) 
-                {
-#endif
-                    ss<<v<<" ";
-                }
-                ss<<") and attribute shape ( ";
-#ifdef NOFOREACH
-                for(auto iter = fshape.begin();iter!=fshape.end();++iter)
-                {
-                    auto v = *iter;
-#else
-                for(auto v: fshape) 
-                {
-#endif 
-                    ss<<v<<" ";
-                }
-                ss<<") do not match!";
+                check_allocation_state(a,EXCEPTION_RECORD);
+                check_equal_shape(a,*this,EXCEPTION_RECORD);
 
-                return ss.str();
-            }
-
-            
-
-            //-----------------------------------------------------------------
-            /*!
-            \brief write data from array
-
-            Read data from an array type and store it in the attribute.
-            \throws memory_not_allocated_error if the array buffer is not allocated
-            \throws shape_mismatch_error if the shapes of the array and the
-            attribute do not match
-            \tparam ATYPE array type
-            \param a instance of ATYPE
-            */
-            template<typename ATYPE> void _write_array(const ATYPE &a) const
-            {
-                if(a.size()==0)
-                    throw memory_not_allocated_error(EXCEPTION_RECORD,
-                            "Array storage not allocated!");
-
-                //get the shape of the array to write
-                auto ashape = shape<shape_t>(a);
-
-                //get the shape of this attribute
-                auto s = this->shape<shape_t>();
-
-                if(s.size() == ashape.size())
-                {
-                    if(!std::equal(ashape.begin(),ashape.end(),s.begin()))
-                        throw shape_mismatch_error(EXCEPTION_RECORD,
-                                _shape_mismatch_error_message(ashape,s));
-                }
-                else
-                {
-                    if(a.size() != this->size())
-                        throw shape_mismatch_error(EXCEPTION_RECORD,
-                                _shape_mismatch_error_message(ashape,s));
-                }
-
-
-                this->_imp.write(data(a));
+                this->_imp.write(pni::core::type_id(a),(void*)data(a));
             }
             
             //-----------------------------------------------------------------
-            /*!
-            \brief read data to array
-
-            Read attribute data from the file and store it to the array.
-            \throws memory_not_allocated_error if the arrays buffer is not
-            allocated
-            \throws shape_mismatch_error if the shapes of the array and the
-            attribute do not match
-            \tparam ATYPE array type
-            \param a instance of ATYPE
-            */
-            template<typename ATYPE> void _read_array(ATYPE &a) const
+            //!
+            //! \brief read data to array
+            //!
+            //! Read attribute data from the file and store it to the array.
+            //! \throws memory_not_allocated_error if the arrays buffer is not
+            //! allocated
+            //! \throws shape_mismatch_error if the shapes of the array and the
+            //! attribute do not match
+            //! 
+            //! \tparam ATYPE array type
+            //! \param a instance of ATYPE
+            //!
+            template<typename ATYPE> 
+            void _read_array(ATYPE &a) const
             {
-                if(a.size()==0)
-                    throw memory_not_allocated_error(EXCEPTION_RECORD,
-                            "Array storage not allocated!");
-
-                auto ashape = a.template shape<shape_t>();
-                auto shape = this->template shape<shape_t>();
-                if(shape.size() == ashape.size())  
-                {
-                    if(!std::equal(ashape.begin(),ashape.end(),shape.begin()))
-                        throw shape_mismatch_error(EXCEPTION_RECORD,
-                                _shape_mismatch_error_message(ashape,shape));
-                }
-                else
-                {
-                    if(this->size() != a.size())
-                        throw shape_mismatch_error(EXCEPTION_RECORD,
-                                _shape_mismatch_error_message(ashape,shape));
-                }
+                check_allocation_state(a,EXCEPTION_RECORD);
+                check_equal_shape(a,*this,EXCEPTION_RECORD);
 
 
                 this->_imp.read(const_cast<typename
@@ -229,23 +152,28 @@ namespace nx{
             }
 
             //====================IO methods====================================
-            /*! 
-            \brief write data from a DArray template
-
-            Write data from a dynamic array template. 
-            \throws memory_not_allocated_error if array buffer is not allocated
-            \throws shape_mismatch_errror if array and attribute shape do not
-            match
-            \throws nxattribute_error in case of any other IO error
-            \tparam OTS template arguments to DArray
-            \param o instance of DArray from which to write data
-            */
+            //! 
+            //! \brief write data from an mdarray instance
+            //!
+            //! Write data from an mdarray instance to the attribute object
+            //!
+            //! \throws memory_not_allocated_error if array buffer is not 
+            //! allocated
+            //! \throws shape_mismatch_errror if array and attribute shape 
+            //! do not match
+            //! \throws nxattribute_error in case of any other IO error
+            //!
+            //! \tparam STORAGE storage type of the mdarray
+            //! \tparam IMAP index map type of the mdarray
+            //! \tparam IPA inplace arithmetic type of the mdarray
+            //! \param o instance of DArray from which to write data
+            //!
             template<
                      typename STORAGE,
                      typename IMAP,
                      typename IPA
                     >
-            void write(const mdarray<STORAGE,IMAP,IMAP> &o) const
+            void write(const mdarray<STORAGE,IMAP,IPA> &o) const
             {
                 try
                 {
@@ -267,17 +195,19 @@ namespace nx{
 
 
             //-----------------------------------------------------------------
-            /*! 
-            \brief write a single scalar value
-
-            Write a single scalar value. This throws an exception if the field
-            is not scalar (size=1).
-            \throws shape_mismatch_error if field is not scalar
-            \throws nxattribute_error in case of any other IO error
-            \tparam T data type of the scalar to write
-            \param value reference to the value to write
-            */
-            template<typename T> void write(const T &value) const
+            //! 
+            //! \brief write a single scalar value
+            //!
+            //! Write a single scalar value. This throws an exception if the 
+            //! field is not scalar (size=1).
+            //!
+            //! \throws shape_mismatch_error if field is not scalar
+            //! \throws nxattribute_error in case of any other IO error
+            //! \tparam T data type of the scalar to write
+            //! \param value reference to the value to write
+            //!
+            template<typename T> 
+            void write(const T &value) const
             {
                 if(this->size()!=1)
                     throw shape_mismatch_error(EXCEPTION_RECORD,
@@ -295,14 +225,16 @@ namespace nx{
             }
 
             //------------------------------------------------------------------
-            /*! 
-            \brief write a C-string
-
-            This is a special implementation of write for classical C-strings.
-            \throws shape_mismatch_error if field is not scalar
-            \throws nxattribute_error in case of any other IO error
-            \param value pointer to a C-string
-            */
+            //! 
+            //! \brief write a C-string
+            //!
+            //! This is a special implementation of write for classical 
+            //! C-strings.
+            //! 
+            //! \throws shape_mismatch_error if field is not scalar
+            //! \throws nxattribute_error in case of any other IO error
+            //! \param value pointer to a C-string
+            //!
             void write(const char *value) const
             {
                 try
@@ -321,41 +253,17 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            /*!
-            \brief write array type erasure data
-
-            \throws memory_not_allocated_error if array not allocated
-            \throws type_error if data type not supported
-            \throws shape_mismatch_error if array shape does not match
-            \throws nxattribute_error in case of any other error
-            \param a instance of array
-            */
+            //!
+            //! \brief write array type erasure data
+            //!
+            //! \throws memory_not_allocated_error if array not allocated
+            //! \throws type_error if data type not supported
+            //! \throws shape_mismatch_error if array shape does not match
+            //! \throws nxattribute_error in case of any other error
+            //! \param a instance of array
+            //!
             void write(const array &a) const
             {
-                if(a.size()==0)
-                    throw memory_not_allocated_error(EXCEPTION_RECORD,
-                            "Array storage not allocated!");
-
-                //get the shape of the array to write
-                shape_t ashape = a.shape();
-
-                //get the shape of this attribute
-                auto s = this->shape<shape_t>();
-
-                if(s.size()==ashape.size())
-                {
-                    if(!std::equal(ashape.begin(),ashape.end(),s.begin()))
-                        throw shape_mismatch_error(EXCEPTION_RECORD,
-                                _shape_mismatch_error_message(ashape,s));
-                }
-                else
-                {
-                    if(a.size() != this->size())
-                        throw shape_mismatch_error(EXCEPTION_RECORD,
-                                _shape_mismatch_error_message(ashape,s));
-                }
-                        
-
                 try
                 {
                     write_array(_imp,a);
@@ -368,17 +276,18 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            /*!
-            \brief read data to an array
-
-            Read data to an DArray instance.
-            \throws memory_not_allocated_error if array buffer is not allocated
-            \throws shape_mismatch_error if array and attribute shape do not
-            match
-            \throws nxattribute_error in the case of any other IO error
-            \tparam OTS template arguments to DArray
-            \param o instance of DArray
-            */
+            //!
+            //! \brief read data to an array
+            //!
+            //! Read data to an DArray instance.
+            //! \throws memory_not_allocated_error if array buffer is not 
+            //! allocated
+            //! \throws shape_mismatch_error if array and attribute shape do 
+            //! not match
+            //! \throws nxattribute_error in the case of any other IO error
+            //! \tparam OTS template arguments to DArray
+            //! \param o instance of DArray
+            //!
             template<
                      typename STORAGE,
                      typename IMAP,
@@ -405,36 +314,19 @@ namespace nx{
             }
             
             //-----------------------------------------------------------------
-            /*!
-            \brief read data to array
-
-            \throws memory_not_allocated_error if array not allocated
-            \throws type_error if data type is not supported
-            \throws shape_mismatch_error if array shape does not match
-            \throws nxattribute_error in case of any other IO error
-            \param a instance of array 
-            */
+            //!
+            //! \brief read data to array
+            //!
+            //! \throws memory_not_allocated_error if array not allocated
+            //! \throws type_error if data type is not supported
+            //! \throws shape_mismatch_error if array shape does not match
+            //! \throws nxattribute_error in case of any other IO error
+            //! \param a instance of array 
+            //!
             void read(array &a) const
             {
-                if(a.size()==0)
-                    throw memory_not_allocated_error(EXCEPTION_RECORD,
-                            "Array storage not allocated!");
-
-                auto ashape = a.template shape<shape_t>();
-                auto shape = this->template shape<shape_t>();
-
-                if(shape.size()==ashape.size())
-                {
-                    if(!std::equal(ashape.begin(),ashape.end(),shape.begin()))
-                        throw shape_mismatch_error(EXCEPTION_RECORD,
-                                _shape_mismatch_error_message(ashape,shape));
-                }
-                else
-                {
-                    if(a.size() != this->size())
-                        throw shape_mismatch_error(EXCEPTION_RECORD,
-                                _shape_mismatch_error_message(ashape,shape));
-                }
+                check_allocation_state(a,EXCEPTION_RECORD);
+                check_equal_shape(a,*this,EXCEPTION_RECORD);
 
                 try
                 {
@@ -448,16 +340,17 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            /*!
-            \brief read a single scalar value
-
-            Read a single scalar value.
-            \throws shape_mismatch_error if the attribute is not scalar
-            \throws nxattribute_error in case of any other IO error
-            \tparam T type to read to
-            \param value reference to an instance of T
-            */
-            template<typename T> void read(T &value) const
+            //!
+            //! \brief read a single scalar value
+            //!
+            //! Read a single scalar value.
+            //! \throws shape_mismatch_error if the attribute is not scalar
+            //! \throws nxattribute_error in case of any other IO error
+            //! \tparam T type to read to
+            //! \param value reference to an instance of T
+            //!
+            template<typename T> 
+            void read(T &value) const
             {
                 _imp.read(&value);
             }
@@ -465,7 +358,8 @@ namespace nx{
 
             //============simple maintenance methods========================
             //! obtain attribute shape
-            template<typename CTYPE> CTYPE shape() const
+            template<typename CTYPE> 
+            CTYPE shape() const
             {
                 return _imp.template shape<CTYPE>();
             }
@@ -479,12 +373,12 @@ namespace nx{
             size_t size() const { return _imp.size(); }
 
             //--------------------------------------------------------------
-            /*! 
-            \brief obtain type id
-
-            Returns the type ID of the data stored in the attribute.
-            \return type id of the elements stored in the field
-            */
+            //! 
+            //! \brief obtain type id
+            //!
+            //! Returns the type ID of the data stored in the attribute.
+            //! \return type id of the elements stored in the field
+            //!
             type_id_t type_id() const { return _imp.type_id(); }
 
             //--------------------------------------------------------------
@@ -496,41 +390,44 @@ namespace nx{
             bool is_valid() const { return _imp.is_valid(); }
 
             //---------------------------------------------------------------
-            /*! 
-            \brief get attribute name
-
-            Obtain the name of the attribute. With this name it can be
-            identified at a particular object.
-            \return string with the attributes name
-            */
+            //! 
+            //! \brief get attribute name
+            //!
+            //! Obtain the name of the attribute. With this name it can be
+            //! identified at a particular object.
+            //! \return string with the attributes name
+            //!
             string name() const { return _imp.name(); }
 
             //---------------------------------------------------------------
-            /*! 
-            \brief get attribute base
-
-            This is basically the path to the parent object of an attribute
-            \return path to parent object
-            */
+            //! 
+            //! \brief get attribute base
+            //!
+            //! This is basically the path to the parent object of an 
+            //! attribute
+            //!
+            //! \return path to parent object
+            //!
             string base() const { return _imp.base(); }
 
             //---------------------------------------------------------------
-            /*!
-            \brief get attribute path
-
-            Return the full path of an attribute. This is virtually the base
-            name and the attribute name concatenated by an "@" sign.
-            \return full path to the attribute
-            */
+            //!
+            //! \brief get attribute path
+            //!
+            //! Return the full path of an attribute. This is virtually the 
+            //! base name and the attribute name concatenated by an "@" 
+            //! sign.
+            //! \return full path to the attribute
+            //!
             string path() const { return _imp.path(); }
 
             //-----------------------------------------------------------------
-            /*!
-            \brief return parent object
-
-            This method returns the parent object of a 
-            \return parent object
-            */
+            //!
+            //! \brief return parent object
+            //! 
+            //! This method returns the parent object of a 
+            //! \return parent object
+            //!
             typename nxobject_traits<nximp_code_map<attribute_type>::icode>::object_type
             parent() const
             {
