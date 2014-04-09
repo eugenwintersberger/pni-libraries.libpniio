@@ -1,3 +1,8 @@
+Release notes for version 0.9.6
+===============================
+
+* Fixed feature for splitting files - the previous implementation did not work
+
 Release notes for version 0.9.5
 ===============================
 
