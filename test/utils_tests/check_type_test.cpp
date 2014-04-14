@@ -43,5 +43,5 @@ CPPUNIT_TEST_SUITE_REGISTRATION(check_type_test<complex64>);
 CPPUNIT_TEST_SUITE_REGISTRATION(check_type_test<complex128>);
 CPPUNIT_TEST_SUITE_REGISTRATION(check_type_test<string>);
 CPPUNIT_TEST_SUITE_REGISTRATION(check_type_test<binary>);
-CPPUNIT_TEST_SUITE_REGISTRATION(check_type_test<bool>);
+CPPUNIT_TEST_SUITE_REGISTRATION(check_type_test<bool_t>);
 

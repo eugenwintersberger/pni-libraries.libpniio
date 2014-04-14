@@ -68,7 +68,7 @@ namespace h5{
     }
 
     //-------------------create boolean data type------------------------------
-    template<> H5Datatype H5DatatypeFactory::create_type<bool>()
+    template<> H5Datatype H5DatatypeFactory::create_type<bool_t>()
     {
         //we need to create a special bool type here as there is nothing like
         //this in HDF5. The reason is that HDF5 is implemented in C which does
@@ -84,7 +84,7 @@ namespace h5{
     //---------------------create boolean data type----------------------------
     template<> H5Datatype H5DatatypeFactory::create_type<type_id_t::BOOL>()
     {
-        return create_type<bool>();
+        return create_type<bool_t>();
     }
           
     //------------create integer data types------------------------------------
@@ -232,7 +232,7 @@ namespace h5{
 
     //-------------------------------------------------------------------------
     H5DatatypeFactory::H5DatatypeFactory():
-        _bool_t(H5DatatypeFactory::create_type<bool>()),
+        _bool_t(H5DatatypeFactory::create_type<bool_t>()),
         _uint8_t(H5DatatypeFactory::create_type<uint8>()),
         _int8_t(H5DatatypeFactory::create_type<int8>()),
         _uint16_t(H5DatatypeFactory::create_type<uint16>()),
@@ -277,7 +277,7 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    CREATE_TYPE_GET_METHOD(bool,type_id_t::BOOL,_bool_t)
+    CREATE_TYPE_GET_METHOD(bool_t,type_id_t::BOOL,_bool_t)
     CREATE_TYPE_GET_METHOD(uint8,type_id_t::UINT8,_uint8_t)
     CREATE_TYPE_GET_METHOD(int8,type_id_t::INT8,_int8_t)
     CREATE_TYPE_GET_METHOD(uint16,type_id_t::UINT16,_uint16_t)

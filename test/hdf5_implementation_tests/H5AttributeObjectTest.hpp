@@ -71,7 +71,7 @@ class H5AttributeObjectTest:public CppUnit::TestFixture
 
         CPPUNIT_TEST(test_scalar_attribute_create<string>);
         CPPUNIT_TEST(test_scalar_attribute_create<binary>);
-        CPPUNIT_TEST(test_scalar_attribute_create<bool>);
+        CPPUNIT_TEST(test_scalar_attribute_create<bool_t>);
 
         //array attribute creation tests
         CPPUNIT_TEST(test_array_attribute_create<uint8>);
@@ -93,7 +93,7 @@ class H5AttributeObjectTest:public CppUnit::TestFixture
 
         CPPUNIT_TEST(test_array_attribute_create<string>);
         CPPUNIT_TEST(test_array_attribute_create<binary>);
-        CPPUNIT_TEST(test_array_attribute_create<bool>);
+        CPPUNIT_TEST(test_array_attribute_create<bool_t>);
         CPPUNIT_TEST_SUITE_END();
     private:
         //-------------------local private members-----------------------------

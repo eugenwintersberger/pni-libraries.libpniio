@@ -228,9 +228,9 @@ void NXFieldTest::test_io_string_scalar()
 void NXFieldTest::test_io_bool_scalar()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    nxfield field1 = file.create_field<Bool>("scalar");
+    nxfield field1 = file.create_field<bool_t>("scalar");
 
-    Bool write,read;
+    bool_t write,read;
     write = true;
     read = false;
 
@@ -308,7 +308,7 @@ void NXFieldTest::test_grow()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     shape_t s{0};
-    nxfield field = file.create_field<bool>("flags",s);
+    nxfield field = file.create_field<bool_t>("flags",s);
     CPPUNIT_ASSERT(field.size() == 0);
 
     field.grow(0);

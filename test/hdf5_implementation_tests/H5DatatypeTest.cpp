@@ -1,25 +1,25 @@
-/*
- * (c) Copyright 2012 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- *
- * Created on: Jan 11, 2012
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- */
+//
+// (c) Copyright 2012 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ============================================================================
+//
+// Created on: Jan 11, 2012
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
 #include "H5DatatypeTest.hpp"
 #include <boost/current_function.hpp>
 #include <pni/io/nx/h5/H5DatatypeFactory.hpp>
@@ -161,7 +161,7 @@ void H5DatatypeTest::test_comparison()
 void H5DatatypeTest::test_global_factory()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    CPPUNIT_ASSERT(H5TFactory.get_type<bool>().type_id()==type_id_t::BOOL);
+    CPPUNIT_ASSERT(H5TFactory.get_type<bool_t>().type_id()==type_id_t::BOOL);
     CPPUNIT_ASSERT(H5TFactory.get_type<type_id_t::BOOL>().type_id()==type_id_t::BOOL);
 
     CPPUNIT_ASSERT(H5TFactory.get_type<uint8>().type_id()==type_id_t::UINT8);

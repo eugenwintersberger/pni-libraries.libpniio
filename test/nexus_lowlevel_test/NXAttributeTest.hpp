@@ -62,7 +62,7 @@ template<typename APTYPE> class NXAttributeTest: public CppUnit::TestFixture
         CPPUNIT_TEST(test_scalar_attribute<complex128>);
 
         CPPUNIT_TEST(test_scalar_attribute<string>);
-        CPPUNIT_TEST(test_scalar_attribute<bool>);
+        CPPUNIT_TEST(test_scalar_attribute<bool_t>);
         CPPUNIT_TEST(test_scalar_attribute<binary>);
 
         //testing array io
@@ -205,7 +205,7 @@ template<typename APTYPE> void NXAttributeTest<APTYPE>::test_creation()
     CPPUNIT_ASSERT(p.path() == a1.base());
 
     //create an array attribute
-    nxattribute a2(_parent.template attr<bool>("array",_shape));
+    nxattribute a2(_parent.template attr<bool_t>("array",_shape));
     CPPUNIT_ASSERT(a2.is_valid());
     CPPUNIT_ASSERT(a2.type_id() == type_id_t::BOOL);
     CPPUNIT_ASSERT(a2.rank() == 2);

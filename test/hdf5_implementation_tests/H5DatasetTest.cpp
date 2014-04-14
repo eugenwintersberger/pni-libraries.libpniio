@@ -258,9 +258,9 @@ void H5DatasetTest::test_string_scalar_data()
 void H5DatasetTest::test_bool_scalar_data()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    Bool read_flag,write_flag;
+    bool_t read_flag,write_flag;
 
-    H5Datatype type = H5DatatypeFactory::create_type<Bool>();
+    H5Datatype type = H5DatatypeFactory::create_type<bool_t>();
     H5Dataspace space;
 
     H5Dataset dset("flag",_group,type,space);
@@ -271,8 +271,6 @@ void H5DatasetTest::test_bool_scalar_data()
     CPPUNIT_ASSERT(read_flag == write_flag);
 
 }
-
-
 
 //-----------------------------------------------------------------------------
 void H5DatasetTest::test_string_selection() 

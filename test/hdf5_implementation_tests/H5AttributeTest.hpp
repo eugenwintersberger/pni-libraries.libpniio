@@ -63,7 +63,7 @@ class H5AttributeTest:public CppUnit::TestFixture
         CPPUNIT_TEST(test_scalar_attribute<complex64>);
         CPPUNIT_TEST(test_scalar_attribute<complex128>);
         CPPUNIT_TEST(test_scalar_attribute<string>);
-        CPPUNIT_TEST(test_scalar_attribute<bool>);
+        CPPUNIT_TEST(test_scalar_attribute<bool_t>);
 
         CPPUNIT_TEST(test_array_attribute<uint8>);
         CPPUNIT_TEST(test_array_attribute<int8>);
