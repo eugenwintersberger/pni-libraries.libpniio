@@ -150,8 +150,8 @@ template<typename T> void H5DatasetTest::test_array_data()
     auto read  = dynamic_array<T>::create(s);
     std::fill(write.begin(),write.end(),T(1));
 
-    CPPUNIT_ASSERT_NO_THROW(ds.write(data(write)));
-    CPPUNIT_ASSERT_NO_THROW(ds.read(const_cast<T*>(data(read))));
+    CPPUNIT_ASSERT_NO_THROW(ds.write(write.data()));
+    CPPUNIT_ASSERT_NO_THROW(ds.read(read.data()));
     
     //check equality
     for(size_t i=0;i<write.size();i++) check_equality(write[i],read[i]);
@@ -199,7 +199,7 @@ template<typename T> void H5DatasetTest::test_selection()
         dset.write(writebuf.data());
 
         //read data back
-        dset.read(const_cast<T*>(readbuf.data()));
+        dset.read(readbuf.data());
 
         //compare data
         CPPUNIT_ASSERT(std::equal(writebuf.begin(),writebuf.end(),readbuf.begin()));

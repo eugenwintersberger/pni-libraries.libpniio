@@ -212,7 +212,7 @@ namespace nx{
                     throw memory_not_allocated_error(EXCEPTION_RECORD,
                                      "Target array buffer not allocated!");
 
-                auto ashape = pni::core::shape<shape_t>(a);
+                auto ashape = a.shape<shape_t>();
                 auto fshape = this->shape<shape_t>();
                 
                 if(ashape.size() == fshape.size())
@@ -235,8 +235,7 @@ namespace nx{
                 //finally we read the data
                 try
                 {
-                    this->imp().read(const_cast<typename ATYPE::value_type*>(
-                                data(a)));
+                    this->imp().read( a.data());
                 }
                 catch(nxfield_error &error)
                 {
@@ -262,7 +261,7 @@ namespace nx{
                     throw memory_not_allocated_error(EXCEPTION_RECORD,
                                      "Source array buffer not allocated!");
 
-                auto ashape = pni::core::shape<shape_t>(a);
+                auto ashape = a.shape<shape_t>();
                 auto fshape = this->shape<shape_t>();
 
                 if(ashape.size() == fshape.size())
@@ -279,7 +278,7 @@ namespace nx{
                 }
 
 
-                try { this->imp().write(data(a)); }
+                try { this->imp().write(a.data()); }
                 catch(...)
                 {
                     throw nxfield_error(EXCEPTION_RECORD,

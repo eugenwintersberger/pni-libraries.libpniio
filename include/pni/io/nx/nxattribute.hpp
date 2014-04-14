@@ -80,7 +80,7 @@ namespace nx{
                 check_allocation_state(a,EXCEPTION_RECORD);
                 check_equal_shape(a,*this,EXCEPTION_RECORD);
 
-                this->_imp.write(pni::core::type_id(a),(void*)data(a));
+                this->_imp.write(pni::core::type_id(a),a.data());
             }
             
             //-----------------------------------------------------------------
@@ -103,8 +103,7 @@ namespace nx{
                 check_equal_shape(a,*this,EXCEPTION_RECORD);
 
 
-                this->_imp.read(const_cast<typename
-                        ATYPE::value_type*>(data(a)));
+                this->_imp.read(a.data());
             }
 
         public:

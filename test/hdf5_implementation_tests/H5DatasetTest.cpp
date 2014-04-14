@@ -228,11 +228,11 @@ void H5DatasetTest::test_string_array_data()
     swrite(0,0) = "hello"; swrite(0,1) = "world"; swrite(0,2) = "this";
     swrite(1,0) = "is"; swrite(1,1) = "a string"; swrite(1,2) = "array";
     
-    CPPUNIT_ASSERT_NO_THROW(dset.write(data(swrite)));
+    CPPUNIT_ASSERT_NO_THROW(dset.write(swrite.data()));
 
     auto sread = dynamic_array<string>::create(s);
 
-    CPPUNIT_ASSERT_NO_THROW(dset.read(const_cast<string*>(data(sread))));
+    CPPUNIT_ASSERT_NO_THROW(dset.read(sread.data()));
 
     std::equal(swrite.begin(),swrite.end(),sread.begin());
 }
@@ -306,10 +306,10 @@ void H5DatasetTest::test_string_selection()
         CPPUNIT_ASSERT(dset.size()==10);
 
         //write data
-        dset.write(data(writebuf));
+        dset.write(writebuf.data());
 
         //read data back
-        dset.read(const_cast<string*>(data(readbuf)));
+        dset.read(readbuf.data());
 
         //compare data
         CPPUNIT_ASSERT(std::equal(writebuf.begin(),writebuf.end(),readbuf.begin()));

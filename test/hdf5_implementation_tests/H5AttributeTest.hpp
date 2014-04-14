@@ -152,9 +152,9 @@ template<typename T> void H5AttributeTest::test_array_attribute()
     
     H5Attribute a = group.attr<T>("a1",s);
     //write data
-    a.write(data(write));
+    a.write(write.data());
     //read data back
-    a.read(const_cast<T*>(data(read)));
+    a.read(read.data());
 
     //compare data
     for(size_t i=0;i<a.size();i++) check_equality(read[i],write[i]);
