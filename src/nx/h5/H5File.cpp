@@ -64,6 +64,7 @@ namespace h5{
     {
         if(is_valid())
         {
+#ifdef DEBUG
             std::cerr<<"File: "<<name()<<std::endl;
             std::cerr<<"Open files:      "<<
                 H5Fget_obj_count(id(),H5F_OBJ_FILE)<<std::endl;
@@ -75,6 +76,7 @@ namespace h5{
                 H5Fget_obj_count(id(),H5F_OBJ_DATATYPE)<<std::endl;
             std::cerr<<"Open attributes: "<<
                 H5Fget_obj_count(id(),H5F_OBJ_ATTR)<<std::endl;
+#endif
             H5Fflush(id(),H5F_SCOPE_GLOBAL);
             H5Fclose(id());
             H5Object::reset_id();
@@ -106,6 +108,7 @@ namespace h5{
         //check for open objects in the file
         if(is_valid())
         {
+#ifdef DEBUG
             std::cerr<<"File: "<<name()<<std::endl;
             std::cerr<<"Open files:      "<<
                 H5Fget_obj_count(id(),H5F_OBJ_FILE)<<std::endl;
@@ -117,6 +120,7 @@ namespace h5{
                 H5Fget_obj_count(id(),H5F_OBJ_DATATYPE)<<std::endl;
             std::cerr<<"Open attributes: "<<
                 H5Fget_obj_count(id(),H5F_OBJ_ATTR)<<std::endl;
+#endif
             H5Fflush(id(),H5F_SCOPE_GLOBAL);
             H5Fclose(id());
             H5Object::reset_id();
