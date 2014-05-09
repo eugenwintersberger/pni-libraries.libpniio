@@ -203,7 +203,7 @@ void xml_lowlevel_test::test_createfield_5()
     root = xml::create_from_file("field5.xml");
     child = root.get_child("field");
 
-    CPPUNIT_ASSERT_NO_THROW(field = xml::create_field(root_group,child));
+    field = xml::create_field(root_group,child);
 
     CPPUNIT_ASSERT(is_valid(field));
     CPPUNIT_ASSERT(get_rank(field) == 3);

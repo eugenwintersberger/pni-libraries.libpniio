@@ -547,6 +547,23 @@ namespace nx{
                                        +this->path()+"]!");
                 }
             }
+           
+            //----------------------------------------------------------------
+            template<typename T> 
+            void read(T *values) const
+            {
+                try
+                {
+                    this->imp().read(values);
+                }
+                catch(...)
+                {
+                    throw nxfield_error(EXCEPTION_RECORD,
+                                       "Error reading data from field ["
+                                       +this->path()+"]!");
+                }
+            }
+
 
             //-----------------------------------------------------------------
             /*! 
@@ -624,6 +641,7 @@ namespace nx{
             */
             template<typename T> void write(const T &value) const
             {
+                static_assert(!std::is_pointer<T>::value,"no pointer");
                 if(this->imp().size()!=1) 
                     throw shape_mismatch_error(EXCEPTION_RECORD,
                                               "Field is not scalar!");
@@ -641,6 +659,24 @@ namespace nx{
 
             }
 
+            //----------------------------------------------------------------
+            template<typename T> void write(const T *value) const
+            {
+
+                try
+                {
+                    this->imp().write(value);
+                }
+                catch(...)
+                {
+                    throw nxfield_error(EXCEPTION_RECORD,
+                            "Error writing data to field ["
+                            +this->path()+"]!");
+                }
+
+            }
+
+            //----------------------------------------------------------------
             template<
                      typename STORAGE,
                      typename IMAP,

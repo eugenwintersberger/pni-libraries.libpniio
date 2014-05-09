@@ -192,6 +192,21 @@ namespace nx{
                 }
             }
 
+            //----------------------------------------------------------------
+            template<typename T>
+            void write(const T *data) const
+            {
+                static_assert(!std::is_pointer<T>::value,"no const pointer");
+                try
+                {
+                    this->_imp.write(data);
+                }
+                catch(...)
+                {
+                    throw nxattribute_error(EXCEPTION_RECORD,
+                            "Error writing attribute!");
+                }
+            }
 
             //-----------------------------------------------------------------
             //! 
@@ -205,9 +220,10 @@ namespace nx{
             //! \tparam T data type of the scalar to write
             //! \param value reference to the value to write
             //!
-            template<typename T> 
+            template<typename T > 
             void write(const T &value) const
             {
+                static_assert(!std::is_pointer<T>::value,"no const pointer");
                 if(this->size()!=1)
                     throw shape_mismatch_error(EXCEPTION_RECORD,
                             "Field is not scalar!");
@@ -222,6 +238,7 @@ namespace nx{
                             "Error writing attribute!");
                 }
             }
+
 
             //------------------------------------------------------------------
             //! 
@@ -352,6 +369,12 @@ namespace nx{
             void read(T &value) const
             {
                 _imp.read(&value);
+            }
+
+            template<typename T>
+            void read(T *value) const
+            {
+                _imp.read(value);
             }
 
 

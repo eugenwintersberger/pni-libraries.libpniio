@@ -39,10 +39,6 @@ set(TEST_SOURCES
     ./utils_tests/utils_test.cpp
     ./utils_tests/check_type_test.cpp
     ./utils_tests/nxpath_test.cpp
-    ./xml_test/xml_node_data_test.cpp
-    ./xml_test/xml_node_test.cpp
-    ./xml_test/xml_lowlevel_test.cpp
-    ./xml_test/xml_attribute_test.cpp
     ./parser_tests/value_parser_test.cpp
     ./parser_tests/slice_parser_test.cpp
     ./parser_tests/array_parser_test.cpp
@@ -78,34 +74,8 @@ endif()
 
 target_link_libraries(pniiotest pniio dl)
 
-add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
-    ${CMAKE_CURRENT_SOURCE_DIR}/xml_test/dim1.xml ${CMAKE_CURRENT_BINARY_DIR})
-add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
-    ${CMAKE_CURRENT_SOURCE_DIR}/xml_test/dim2.xml ${CMAKE_CURRENT_BINARY_DIR})
-add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
-    ${CMAKE_CURRENT_SOURCE_DIR}/xml_test/dim3.xml ${CMAKE_CURRENT_BINARY_DIR})
-add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
-    ${CMAKE_CURRENT_SOURCE_DIR}/xml_test/dim4.xml ${CMAKE_CURRENT_BINARY_DIR})
-add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
-    ${CMAKE_CURRENT_SOURCE_DIR}/xml_test/dim5.xml ${CMAKE_CURRENT_BINARY_DIR})
+add_subdirectory(xml_test)
 
-add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
-    ${CMAKE_CURRENT_SOURCE_DIR}/xml_test/field1.xml ${CMAKE_CURRENT_BINARY_DIR})
-add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
-    ${CMAKE_CURRENT_SOURCE_DIR}/xml_test/field2.xml ${CMAKE_CURRENT_BINARY_DIR})
-add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
-    ${CMAKE_CURRENT_SOURCE_DIR}/xml_test/field3.xml ${CMAKE_CURRENT_BINARY_DIR})
-add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
-    ${CMAKE_CURRENT_SOURCE_DIR}/xml_test/field4.xml ${CMAKE_CURRENT_BINARY_DIR})
-add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
-    ${CMAKE_CURRENT_SOURCE_DIR}/xml_test/field5.xml ${CMAKE_CURRENT_BINARY_DIR})
-
-add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
-    ${CMAKE_CURRENT_SOURCE_DIR}/xml_test/node_from_bad_file.xml ${CMAKE_CURRENT_BINARY_DIR})
-add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
-    ${CMAKE_CURRENT_SOURCE_DIR}/xml_test/node_from_str.xml ${CMAKE_CURRENT_BINARY_DIR})
-add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
-    ${CMAKE_CURRENT_SOURCE_DIR}/xml_test/object_tree1.xml ${CMAKE_CURRENT_BINARY_DIR})
 
 add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
     ${CMAKE_CURRENT_SOURCE_DIR}/reader_tests/iui8.tiff ${CMAKE_CURRENT_BINARY_DIR})

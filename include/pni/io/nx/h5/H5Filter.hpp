@@ -85,7 +85,10 @@ namespace h5{
             \throw pni::io::nx::nxfilter_error in case of errors
             \param id id of the
             */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             virtual void setup(hid_t id) const{}
+#pragma GCC diagnostic pop
 
     };
 

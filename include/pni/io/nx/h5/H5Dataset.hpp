@@ -371,7 +371,7 @@ namespace h5{
             datatype to use and a shape object to describe the dataspace. The
             dataspaces created using this method are infinitely extensible in
             along all dimensions.
-            \throws shape_mismatch_error if chunk and field shape do not have the
+            \throws size_mismatch_error if chunk and field shape do not have the
             same rank
             \throws pni::io::nx::nxfield_error in case of errors
             \param n name of the dataset
@@ -387,45 +387,19 @@ namespace h5{
                 //create the datatype
                 H5Datatype type = H5DatatypeFactory::create_type<T>();
 
-                if(s.size() != cs.size())
-                {
-                    std::stringstream estr;
-                    estr<<"Chunk shape and field shape must be";
-                    estr<<" equal!"<<std::endl;
-                    estr<<"Field shape: ";
-#ifdef NOFOREACH
-                    for(auto iter = s.begin();iter!=s.end();++iter)
-                    {
-                        auto v = *iter;
-#else
-                    for(auto v: s)
-                    {
-#endif 
-                        estr<<v<<" ";
-                    }
-                    estr<<std::endl;
-                    estr<<"Chunk shape: ";
-#ifdef NOFOREACH
-                    for(auto iter = cs.begin();iter!=cs.end();++iter)
-                    {
-                        auto v = *iter;
-#else
-                    for(auto v: cs) 
-                    {
-#endif
-                        estr<<v<<" ";
-                    }
-                    estr<<std::endl;
-                    throw shape_mismatch_error(EXCEPTION_RECORD,estr.str());
-                }
+                if(!s.size())
+                    throw size_mismatch_error(EXCEPTION_RECORD,
+                            "Field shape must not be empty!");
+
+                if(!cs.size())
+                    throw size_mismatch_error(EXCEPTION_RECORD,
+                            "Field chunk shape must not be empty!");
+
+                check_equal_size(s,cs,EXCEPTION_RECORD);
 
                 //create the container with the maximum number of elements
                 std::vector<hsize_t> ms(s.size());                 
                 std::fill(ms.begin(),ms.end(),H5S_UNLIMITED);
-                /*
-                SCTYPE ms(s.size());
-                std::fill(ms.begin(),ms.end(),(typename SCTYPE::value_type)H5Dataspace::UNLIMITED);
-                */
 
                 //create the dataspace
                 H5Dataspace space(s,ms);
@@ -443,7 +417,7 @@ namespace h5{
             &n,const H5Group &g,const Shape &s, const Shape &cs) despite the
             fact that it requires an additional argument describing the filter.
             \throws pni::io::nx::nxfield_error in case of errors
-            \throws shape_mismatch_error if chunk and dataset shape do not have
+            \throws size_mismatch_error if chunk and dataset shape do not have
             equal rank
             \param n name of the dataset
             \param g group below which the dataset will be created
@@ -460,37 +434,15 @@ namespace h5{
                 //create the datatype
                 H5Datatype type = H5DatatypeFactory::create_type<T>();
                 
-                if(s.size() != cs.size())
-                {
-                    std::stringstream estr;
-                    estr<<"Chunk shape and field shape must be";
-                    estr<<" equal!"<<std::endl;
-                    estr<<"Field shape: ";
-#ifdef NOFOREACH
-                    for(auto iter = s.begin();iter!=s.end();++iter)
-                    {
-                        auto v = *iter;
-#else
-                    for(auto v: s) 
-                    {
-#endif
-                        estr<<v<<" ";
-                    }
-                    estr<<std::endl;
-                    estr<<"Chunk shape: ";
-#ifdef NOFOREACH
-                    for(auto iter = cs.begin();iter!=cs.end();++iter)
-                    {
-                        auto v = *iter;
-#else
-                    for(auto v: cs) 
-                    {
-#endif
-                        estr<<v<<" ";
-                    }
-                    estr<<std::endl;
-                    throw shape_mismatch_error(EXCEPTION_RECORD,estr.str());
-                }
+                if(!s.size())
+                    throw size_mismatch_error(EXCEPTION_RECORD,
+                            "Field shape must not be empty!");
+
+                if(!cs.size())
+                    throw size_mismatch_error(EXCEPTION_RECORD,
+                            "Field chunk shape must not be empty!");
+
+                check_equal_size(s,cs,EXCEPTION_RECORD);
 
                 //create the container with the maximum number of elements
                 std::vector<hsize_t> ms(s.size());

@@ -1,25 +1,25 @@
-/*
- * (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- *
- *  Created on: Jul 3, 2013
- *      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- */
+//
+// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+//  Created on: Jul 3, 2013
+//      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
 
 #include <boost/current_function.hpp>
 #include<cppunit/extensions/HelperMacros.h>
@@ -57,7 +57,8 @@ void create_field_test::test_group()
     object_types root = h5::nxgroup(file["/"]);
     
     object_types f;
-    CPPUNIT_ASSERT(is_valid(f=create_field<float32>(root,"test1")));
+    f=create_field<float32>(root,"test1");
+    CPPUNIT_ASSERT(is_valid(f));
     CPPUNIT_ASSERT(is_field(f));
     CPPUNIT_ASSERT(get_name(f)=="test1");
     CPPUNIT_ASSERT(get_rank(f)==1);

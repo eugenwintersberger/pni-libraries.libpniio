@@ -80,7 +80,7 @@ template<typename APTYPE> class NXAttributeTest: public CppUnit::TestFixture
         CPPUNIT_TEST(test_array_attribute<dynamic_array<complex32> >);
         CPPUNIT_TEST(test_array_attribute<dynamic_array<complex64> >);
         CPPUNIT_TEST(test_array_attribute<dynamic_array<complex128> >);
-//        CPPUNIT_TEST(test_array_attribute<dynamic_array<bool> >);
+        CPPUNIT_TEST(test_array_attribute<dynamic_array<bool_t> >);
         CPPUNIT_TEST(test_array_attribute<dynamic_array<string> >);
         CPPUNIT_TEST(test_array_attribute<dynamic_array<binary> >);
 
@@ -98,7 +98,7 @@ template<typename APTYPE> class NXAttributeTest: public CppUnit::TestFixture
         CPPUNIT_TEST(test_array_attribute<sarray<complex32> >);
         CPPUNIT_TEST(test_array_attribute<sarray<complex64> >);
         CPPUNIT_TEST(test_array_attribute<sarray<complex128> >);
-        //CPPUNIT_TEST(test_array_attribute<sarray<bool> >);
+        CPPUNIT_TEST(test_array_attribute<sarray<bool_t> >);
         CPPUNIT_TEST(test_array_attribute<sarray<binary> >);
         CPPUNIT_TEST(test_array_attribute<sarray<string> >);
 
@@ -225,12 +225,19 @@ template<typename T> void NXAttributeTest<APTYPE>::test_scalar_attribute()
 
     //write data
     T write_value = create_scalar_data<T>();
+    //write from object
     _parent.template attr<T>("a1").write(write_value);
+    _parent.attr("a1").write((const T *)&write_value);
+    //write from pointer
     _f.flush();
        
     //read data
     T read_value;
+    //read to object
     _parent.attr("a1").read(read_value);
+    //read to memory
+    _parent.attr("a1").read(&read_value);
+
     check_equality(write_value,read_value);
 
     //--------------------test some exceptions---------------------------------

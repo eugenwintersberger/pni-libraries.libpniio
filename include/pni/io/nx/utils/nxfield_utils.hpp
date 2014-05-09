@@ -1,27 +1,25 @@
-/*
- * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- *
- * Utilty functions and function templates concerning NXField objects.
- *
- * Created on: Jul 2, 2012
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- */
+//
+// (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+// Created on: Jul 2, 2012
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
 
 #pragma once
 
@@ -41,17 +39,17 @@ namespace nx{
     using pni::core::string;
     using pni::core::exception;
 
-    /*!
-    \ingroup nexus_utilities
-    \brief create a field from a type id
-
-    A utility function that creates a field dynamically using a type ID to
-    identify the data type to use. This function is intended for situations
-    where the types ID is a runtime parameter rather than a comiple time
-    constant. The function template takes a variable number of arguments in
-    order to provide the full functionality that the appropriate group member
-    functions for creating fields.
-    
+    //!
+    //! \ingroup nexus_utilities
+    //! \brief create a field from a type id
+    //!
+    //! A utility function that creates a field dynamically using a type ID 
+    //! to identify the data type to use. This function is intended for 
+    //! situations where the types ID is a runtime parameter rather than a 
+    //! comiple time constant. The function template takes a variable number 
+    //! of arguments in order to provide the full functionality that the 
+    //! appropriate group member functions for creating fields.
+    /*! 
     \code
     //create a default field of shape {1} and chunk shape {1}
     auto f = create_field(g,"test",type_id_t::STRING);
@@ -66,26 +64,34 @@ namespace nx{
     nxdeflate_filter deflate(9,true);
     auto f = create_field(g,"test3",type_id_t::UINT16,s,cs,deflate);
     \endcode
-
-    Using the type utilities like the str2typeid map one can use this function
-    also to create a field from the string representation of a type. 
+    */
+    //!
+    //! Using the type utilities like the str2typeid map one can use this 
+    //! function also to create a field from the string representation of 
+    //! a type. 
+    /*!
     \code
     auto f = create_field(g,"test",str2typeid["int8"]);
     \endcode
-    which makes it a very flexible tool for field creation. Additional arguments
-    can be again passed like in the previous examples.
-
-    The field type returned is inferred from the group type (which is a template
-    parameter) by means of the nxobject_traits type trait.
-   
-    \throws type_error if type ID does not exist
-    \param g group objecct in below which to create the field
-    \param fname name of the field 
-    \param tid type ID of the field
-    \param args optional arguments (see code example above) 
-    \return field type 
     */
-    template<typename GTYPE,typename ...ATYPES>
+    //!
+    //! which makes it a very flexible tool for field creation. Additional 
+    //! arguments can be again passed like in the previous examples.
+    //!
+    //! The field type returned is inferred from the group type (which is a 
+    //! template parameter) by means of the nxobject_traits type trait.
+    //! 
+    //! \throws type_error if type ID does not exist
+    //! \param g group objecct in below which to create the field
+    //! \param fname name of the field 
+    //! \param tid type ID of the field
+    //! \param args optional arguments (see code example above) 
+    //! \return field type 
+    //!
+    template<
+             typename GTYPE,
+             typename ...ATYPES
+            >
     typename nxobject_traits<nximp_code_map<GTYPE>::icode>::field_type 
     create_field(const GTYPE &g,const string &fname,const type_id_t &tid,
                  ATYPES ...args)

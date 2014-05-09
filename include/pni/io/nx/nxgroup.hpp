@@ -1,33 +1,30 @@
-/*
- * Declaration of the NXGroup template
- *
- * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- *
- * Declaration of the NXGroup template
- *
- * Created on: Jul 1, 2011
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- */
+//
+// (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+// Created on: Jul 1, 2011
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
 #pragma once
 
 #include <sstream>
 #include <pni/core/types.hpp>
+#include <pni/core/utilities.hpp>
 
 #include "nxobject.hpp"
 #include "nximp_map.hpp"
@@ -47,33 +44,117 @@ namespace nx{
     using pni::core::string;
     using pni::core::exception;
 
-    /*! 
-    \ingroup nexus_lowlevel
-    \brief NXgroup object
-    */
+    //! 
+    //! \ingroup nexus_lowlevel
+    //! \brief NXgroup object
+    //! 
     template<typename Imp> class nxgroup:public nxobject<Imp> 
     {
+            
         public:
             //===================public types==================================
-            //! shared pointer type to a NXGroup type
-            typedef std::shared_ptr<nxgroup<Imp> > shared_ptr; 
             typedef nxobject_iterator<nxgroup<Imp>,
                                      nxobject<MAPTYPE(Imp,ObjectImpl)> > 
                     iterator; //!< iterator type
             //! field type
             typedef nxfield<MAPTYPE(Imp,FieldImpl)> field_type; 
+        private:
+            //===================private types================================
+            //! field implementation type
+            typedef MAPTYPE(Imp,FieldImpl) field_imp_type;
+
+            //! group implementation type
+            typedef MAPTYPE(Imp,GroupImpl) group_imp_type;
+
+            //===================private functions============================
+
+            template<typename CTYPE,typename STYPE> 
+            CTYPE _create_auto_chunk(const STYPE &shape) const
+            {
+                auto chunk = container_utils<CTYPE>::create(shape.size());
+
+                std::copy(shape.begin(),shape.end(),chunk.begin());
+                chunk.front()=1;
+
+                return chunk;
+            }
+
+            //----------------------------------------------------------------
+            //! 
+            //! \brief field creation function
+            //! 
+            //! This member function template is doing the real work on 
+            //! creating a field. The frontend functions provided by the 
+            //! public interface take only care about the shape and 
+            //! chunk shape configuration. 
+            //!
+            //! \throws shape_mismatch_error if shape and chunk shape do 
+            //! not match
+            //! \throws nxgroup_error in case of other errors
+            //! \tparam T data type of the field to create
+            //! \tparam CTYPE container type for shape and chunk shape
+            //! \param n name of the field
+            //! \param shape container with shape information
+            //! \param chunk container with chunk shape data
+            //! \return field instance
+            //!
+            template<
+                     typename T,
+                     typename CTYPE
+                    >
+            field_type _create_field(const string &n,const CTYPE &shape,
+                                     const CTYPE &chunk) const
+            {
+                field_type field;
+                try
+                {
+                    field = field_type(field_imp_type::template 
+                                       create<T>(n,this->imp(),shape,chunk));
+                }
+                catch(shape_mismatch_error &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+                catch(...)
+                {
+                    throw nxgroup_error(EXCEPTION_RECORD,
+                                       "Something went wrong!");
+                }
+                return field;
+
+            }
+           
+            //----------------------------------------------------------------
+            template<
+                      typename T,
+                      typename FilterImp,
+                      typename CHUNKT,
+                      typename SHAPET
+                    > 
+            field_type
+            _create_field(const string &n,const SHAPET &shape,
+                         const CHUNKT &chunk,
+                         const nxfilter<FilterImp> &filter) const
+            {
+
+                return field_type(field_imp_type::template
+                        create<T>(n,this->imp(),shape,chunk,filter.imp()));
+            }
+        public:
             //==============constructors and destructor========================
             //! default constructor
             explicit nxgroup():nxobject<Imp>() { }
 
             //-----------------------------------------------------------------
-            /*! \brief copy constructor
-
-            The copy constructor is doing exactly the same as the assignment
-            operator. Thus it can be used to assign
-            an object directly at its construction.
-            \param o original group object 
-            */
+            //!
+            //! \brief copy constructor
+            //! 
+            //! The copy constructor is doing exactly the same as the 
+            //! assignment operator. Thus it can be used to assign
+            //! an object directly at its construction.
+            //!
+            //! \param o original group object 
+            //!
             nxgroup(const nxgroup<Imp> &o):nxobject<Imp>(o) { }
             
             //-----------------------------------------------------------------
@@ -128,20 +209,24 @@ namespace nx{
 
 
             //====================group creation methods=======================
-            /*! 
-            \brief create a group as nexus class
-
-            Create a new group. The optional argument type determines the Nexus
-            object type the group represents. By default type is an empty string
-            in which case the NX_class attribute will not be written.
-            \throws pni::io::nx::nxgroup_error in case of group creation errors
-            \throws pni::io::nx::nxattribute_error in case of attribute problems
-            \param n group name
-            \param type nexus class type
-            \return a new instance of nxgroup
-            */
+            //! 
+            //! \brief create a group as nexus class
+            //!
+            //! Create a new group. The optional argument type determines 
+            //! the Nexus object type the group represents. By default type 
+            //! is an empty string in which case the NX_class attribute will 
+            //! not be written.
+            //!
+            //! \throws pni::io::nx::nxgroup_error in case of group creation 
+            //! errors
+            //! \throws pni::io::nx::nxattribute_error in case of attribute 
+            //! problems
+            //! \param n group name
+            //! \param type nexus class type
+            //! \return a new instance of nxgroup
+            //!
             nxgroup<MAPTYPE(Imp,GroupImpl)> 
-                create_group(const string &n,const string &type=string()) const
+            create_group(const string &n,const string &type=string()) const
             {
                 //we need to do here two things
                 //we have to check if the particular group type
@@ -194,84 +279,92 @@ namespace nx{
                 return g;
             }
 
-            //-----------------------------------------------------------------
-            /*! 
-            \brief create a field without filter
+            //----------------------------------------------------------------
+            //!
+            //! \brief create a field
+            //!
+            //! Create a field. The shape of the field can be specified by the 
+            //! optional shape argument. By default this is set to {1} which
+            //! means that an expandable scalar field will be created. 
+            //! The chunk size for the field is automatically derived by the 
+            //! method by replacing the first element of the shape with 1. 
+            //! As an example consider the following shape for the field
+            //! {100,1024,3}. This would yield a chunk size of {1,1024,3}.
+            //! 
+            //! If the user passes a container with shape information the 
+            //! container must not be empty. Otherwise an exception 
+            //! will be thrown.
+            //! 
+            //! \throw size_mismatch_error if shape is an empty container
+            //! \throw shape_mismatch_error if chunk and shape do not match
+            //! \throw nxgroup_error in case of a general error
+            //! \tparam T data type of the field
+            //! \tparam CTYPE container type for the shape
+            //! \param n name of the field
+            //! \param shape optional shape argument
+            //! \return instance of nxfield
+            //!
+            template<
+                     typename T,
+                     typename CTYPE = shape_t
+                    >
+            nxfield<MAPTYPE(Imp,FieldImpl)>
+            create_field(const string &n,
+                         const CTYPE &shape={1}) const
+            {
+                if(!shape.size())
+                    throw size_mismatch_error(EXCEPTION_RECORD,
+                            "Shape container must not be empty!");
 
-            Create a new data field without a filter for compression.
+                auto chunk = _create_auto_chunk<shape_t>(shape);
+    
+                return this->_create_field<T>(n,shape,chunk);
+                
+            }
+
+            //-----------------------------------------------------------------
+            //! 
+            //! \brief create a field 
+            //!
+            //! Create a new data field without a filter for compression.
+            /*!
             \code
             nxgroup g = f["/scan_1/instrument/detector"];
 
             shape_t shape{0,1024,1024};
-            shape_t chunk{0,128,1024};
+            shape_t chunk{1,128,1024};
 
             nxfield field = g.create_field<uint16>("data",shape,chunk);
             \endcode
-            The chunk shape here is optional. If not given a default value will
-            be generated from the original shape where the first dimension is
-            set to one. 
-            \throws shape_mismatch_error if chunk and field shape do not have the
-            same rank
-            \throws nxgroup_error in all other cases
-            \tparam T data type of the field
-            \tparam CTYPES container type for the shape and chunk shape
-            \param n name (path) of the field
-            \param shape shape of the field
-            \param chunk chunk shape of the field
-            \return instane of an nxfield object
             */
-            template<typename T, 
-                     typename CTYPES=shape_t, 
-                     typename CTYPEC=shape_t > 
+            //! The chunk shape here is optional. If not given a default 
+            //! value will be generated from the original shape where the 
+            //! first dimension is set to one. 
+            //!
+            //! \throws size_mismatch_error if chunk and field shape do not 
+            //! have the same rank
+            //! \throws nxgroup_error in all other cases
+            //! 
+            //! \tparam T data type of the field
+            //! \tparam CTYPE container type for the shape and chunk
+            //! \param n name (path) of the field
+            //! \param shape shape of the field
+            //! \param chunk chunk shape of the field
+            //! \return instane of an nxfield object
+            //!
+            template<
+                     typename T, 
+                     typename CTYPE=shape_t
+                    > 
             nxfield<MAPTYPE(Imp,FieldImpl)>
-                create_field(const string &n,const CTYPES &shape=CTYPES(),
-                             const CTYPES &chunk=CTYPES()) const
+            create_field(const string &n,
+                         const CTYPE &shape,
+                         const CTYPE &chunk) const
             {
-                typedef nxfield<MAPTYPE(Imp,FieldImpl)> FieldType;
-                typedef MAPTYPE(Imp,FieldImpl) FieldImp;
-                shape_t s,cs;
-
-                if(shape.size() == 0)
-                {
-                    //here we create a field for scalar data
-                    s = shape_t({1});
-                    cs = s;
-                }
-                else
-                {
-                    //a multidimensional field shall be created
-                    s = shape_t(shape.size());
-                    std::copy(shape.begin(),shape.end(),s.begin());
-                    cs = s;
-                    
-                    if(chunk.size() == 0)
-                        //no chunk size from user
-                        cs[0] = 1;
-                    else
-                    {
-                        //chunk size provided by the user
-                        cs = shape_t(chunk.size());
-                        std::copy(chunk.begin(),chunk.end(),cs.begin());
-                    }
-                }
-
-                FieldType field;
-                try
-                {
-                    field = FieldType(FieldImp::template 
-                                      create<T>(n,this->imp(),s,cs));
-                }
-                catch(shape_mismatch_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(...)
-                {
-                    throw nxgroup_error(EXCEPTION_RECORD,
-                                       "Something went wrong!");
-                }
-                return field;
+                return _create_field<T>(n,shape,chunk);
             }
+
+
             
 
             //------------------------------------------------------------------
@@ -297,23 +390,23 @@ namespace nx{
             \param filter implementation
             \return instance of NXField
             */
-            template<typename T,typename FilterImp,typename CTYPES> 
-                nxfield<MAPTYPE(Imp,FieldImpl)>
-                create_field(const string &n,const CTYPES &s,
-                             const nxfilter<FilterImp> &filter) const
+            template<
+                     typename T,
+                     typename FilterImp,
+                     typename CTYPES
+                    > 
+            nxfield<MAPTYPE(Imp,FieldImpl)>
+            create_field(const string &n,const CTYPES &shape,
+                         const nxfilter<FilterImp> &filter) const
             {
-                typedef MAPTYPE(Imp,FieldImpl) FieldImp;
-                typedef nxfield<FieldImp> FieldType;
+                if(!shape.size())
+                    throw size_mismatch_error(EXCEPTION_RECORD,
+                            "Shape must not be empty!");
 
-                //create a vector with the number of elements of the 
-                //shape and set the first dimension to 1
-                shape_t cs(s.size());
-                std::copy(s.begin(),s.end(),cs.begin());
-                cs[0] = 1;
+                auto chunk = _create_auto_chunk<shape_t>(shape);
 
-                FieldType field(FieldImp::template
-                        create<T>(n,this->imp(),s,cs,filter.imp()));
-                return field;
+                return _create_field<T>(n,shape,chunk,filter);
+
             }
 
            
@@ -350,14 +443,10 @@ namespace nx{
                      typename CTYPEC
                     > 
             nxfield<MAPTYPE(Imp,FieldImpl)>
-                create_field(const string &n,const CTYPES &s,const CTYPEC &cs,
+            create_field(const string &n,const CTYPES &s,const CTYPEC &cs,
                         const nxfilter<FilterImp> &filter) const
             {
-                typedef MAPTYPE(Imp,FieldImpl) FieldImp;
-                typedef nxfield<FieldImp> FieldType;
-
-                return FieldType(FieldImp::template
-                        create<T>(n,this->imp(),s,cs,filter.imp()));
+                return _create_field<T>(n,s,cs,filter);
             }
 
 

@@ -166,15 +166,36 @@ namespace nx{
                 this->_field.read(data);
                 this->reset_selection();
             }
+           
+            //-----------------------------------------------------------------
+            //! read data to pointer
+            template<typename T> void read(T *data) const
+            {
+                this->apply_selection();
+                this->_field.read(data);
+                this->reset_selection();
+            }
+
 
             //-----------------------------------------------------------------
             //! write data
             template<typename DTYPE> void write(const DTYPE &data) const
             {
+                static_assert(!std::is_pointer<DTYPE>::value,"no pointer");
                 this->apply_selection();
                 this->_field.write(data);
                 this->reset_selection();
             }
+
+            //----------------------------------------------------------------
+            //! write data from pointer
+            template<typename T> void write(const T *data) const
+            {
+                this->apply_selection();
+                this->_field.write(data);
+                this->reset_selection();
+            }
+
     };
 
 
