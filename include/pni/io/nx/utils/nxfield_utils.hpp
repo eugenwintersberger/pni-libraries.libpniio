@@ -98,36 +98,38 @@ namespace nx{
     {
         if(tid == type_id_t::UINT8)
             return g.create_field<uint8>(fname,args...);
-        if(tid == type_id_t::INT8)
+        else if(tid == type_id_t::INT8)
             return g.create_field<int8>(fname,args...);
-        if(tid == type_id_t::UINT16)
+        else if(tid == type_id_t::UINT16)
             return g.create_field<uint16>(fname,args...);
-        if(tid == type_id_t::INT16)
+        else if(tid == type_id_t::INT16)
             return g.create_field<int16>(fname,args...);
-        if(tid == type_id_t::UINT32)
+        else if(tid == type_id_t::UINT32)
             return g.create_field<uint32>(fname,args...);
-        if(tid == type_id_t::INT32)
+        else if(tid == type_id_t::INT32)
             return g.create_field<int32>(fname,args...);
-        if(tid == type_id_t::UINT64)
+        else if(tid == type_id_t::UINT64)
             return g.create_field<uint64>(fname,args...);
-        if(tid == type_id_t::INT64)
+        else if(tid == type_id_t::INT64)
             return g.create_field<int64>(fname,args...);
-        if(tid == type_id_t::FLOAT32)
+        else if(tid == type_id_t::FLOAT32)
             return g.create_field<float32>(fname,args...);
-        if(tid == type_id_t::FLOAT64)
+        else if(tid == type_id_t::FLOAT64)
             return g.create_field<float64>(fname,args...);
-        if(tid == type_id_t::FLOAT128)
+        else if(tid == type_id_t::FLOAT128)
             return g.create_field<float128>(fname,args...);
-        if(tid == type_id_t::COMPLEX32)
+        else if(tid == type_id_t::COMPLEX32)
             return g.create_field<complex32>(fname,args...);
-        if(tid == type_id_t::COMPLEX64)
+        else if(tid == type_id_t::COMPLEX64)
             return g.create_field<complex64>(fname,args...);
-        if(tid == type_id_t::COMPLEX128)
+        else if(tid == type_id_t::COMPLEX128)
             return g.create_field<complex128>(fname,args...);
-        if(tid == type_id_t::BINARY)
+        else if(tid == type_id_t::BINARY)
             return g.create_field<binary>(fname,args...);
-        if(tid == type_id_t::STRING)
+        else if(tid == type_id_t::STRING)
             return g.create_field<string>(fname,args...);   
+        else if(tid == type_id_t::BOOL)
+            return g.create_field<bool_t>(fname,args...);
         else
         {
             throw type_error(EXCEPTION_RECORD,"Unsupported data type!");

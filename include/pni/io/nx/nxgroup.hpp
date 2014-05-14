@@ -115,6 +115,18 @@ namespace nx{
                 {
                     error.append(EXCEPTION_RECORD); throw error;
                 }
+                catch(size_mismatch_error &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+                catch(nxfield_error &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+                catch(type_error &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
                 catch(...)
                 {
                     throw nxgroup_error(EXCEPTION_RECORD,
@@ -136,9 +148,35 @@ namespace nx{
                          const CHUNKT &chunk,
                          const nxfilter<FilterImp> &filter) const
             {
+                field_type field;
 
-                return field_type(field_imp_type::template
-                        create<T>(n,this->imp(),shape,chunk,filter.imp()));
+                try
+                {
+                    field =  field_type(field_imp_type::template
+                              create<T>(n,this->imp(),shape,chunk,filter.imp()));
+                }
+                catch(shape_mismatch_error &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+                catch(size_mismatch_error &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+                catch(nxfield_error &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+                catch(type_error &error)
+                {
+                    error.append(EXCEPTION_RECORD); throw error;
+                }
+                catch(...)
+                {
+                    throw nxgroup_error(EXCEPTION_RECORD,
+                                       "Something went wrong!");
+                }
+                return field;
             }
         public:
             //==============constructors and destructor========================

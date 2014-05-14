@@ -54,7 +54,8 @@ namespace nx{
     //! \param sel_t    the Nexus selection type
     //! \param link_t   the Nexus link type
     //!
-#define DECLARE_NXOBJECT_TRAITS(id,object_t,group_t,file_t,field_t,attr_t,sel_t,link_t)\
+#define DECLARE_NXOBJECT_TRAITS(id,object_t,group_t,file_t,field_t,attr_t,\
+                                sel_t,link_t,deflate_t)\
         template<> struct nxobject_traits<id>\
         {\
             typedef object_t object_type;\
@@ -64,14 +65,41 @@ namespace nx{
             typedef attr_t   attribute_type; \
             typedef sel_t    selection_type;\
             typedef link_t   link_type;\
+            typedef deflate_t deflate_type;\
         }
+
+
+template<typename OTYPE>
+using trait_type = nxobject_traits<nximp_code_map<OTYPE>::icode>;
+
+template<typename OTYPE>
+using object_type = typename trait_type<OTYPE>::object_type;
+
+template<typename OTYPE>
+using group_type  = typename trait_type<OTYPE>::group_type;
+
+template<typename OTYPE>
+using file_type  = typename trait_type<OTYPE>::file_type;
+
+template<typename OTYPE>
+using field_type = typename trait_type<OTYPE>::field_type;
+
+template<typename OTYPE>
+using attribute_type = typename trait_type<OTYPE>::attribute_type;
+
+template<typename OTYPE>
+using selection_type = typename trait_type<OTYPE>::selection_type;
+
+template<typename OTYPE>
+using deflate_type = typename trait_type<OTYPE>::deflate_type;
+
 
     //!
     //! \ingroup nexus_lowlevel 
     //! \brief define a Nexus object type
     //!
 #define DEFINE_NXOBJECT(otype) \
-        typedef typename nxobject_traits<nximp_code_map<otype>::idcode>::object_type
+        typedef typename pni::io::nx::nxobject_traits<nximp_code_map<otype>::idcode>::object_type
 
 #define DEFINE_NXGROUP(otype) \
         typedef typename nxobject_traits<nximp_code_map<otype>::idcode>::group_type
@@ -87,6 +115,9 @@ namespace nx{
 
 #define DEFINE_NXSELECTION(otype) \
         typedef typename nxobject_traits<nximp_code_map<otype>::idcode>::selection_type
+
+#define DEFINE_NXDEFLATE(otype)\
+        typedef typename nxobject_traits<nximp_code_map<otype>::idcode>::deflate_type
 
 
 #define DEFINE_NEXUS_TYPES(otype)\

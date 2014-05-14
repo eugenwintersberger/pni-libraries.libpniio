@@ -307,7 +307,7 @@ namespace h5{
                 if(cs.size() != 0)
                 {
                     if(H5Pset_layout(cpl,H5D_CHUNKED)<0)
-                        throw pni::io::nx::nxfile_error(EXCEPTION_RECORD,
+                        throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
                         "Error setting dataset layout for ["+n+"] below "
                         "["+g.path()+"] to chunked!\n\n"+
                         get_h5_error_string());
@@ -315,7 +315,7 @@ namespace h5{
                     std::vector<hsize_t> cdims(cs.size());
                     std::copy(cs.begin(),cs.end(),cdims.begin());
                     if(H5Pset_chunk(cpl,cs.size(),cdims.data())<0)
-                        throw pni::io::nx::nxfile_error(EXCEPTION_RECORD,
+                        throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
                         "Error setting chunk size for ["+n+"] below "
                         "["+g.path()+"]!\n\n"+ get_h5_error_string());
 
