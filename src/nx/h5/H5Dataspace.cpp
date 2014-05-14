@@ -1,27 +1,25 @@
-/*
- * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- *
- * Implementation of a general HDF5 Dataspace object.
- *
- * Created on: Jan 10, 2012
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- */
+//
+// (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+// Created on: Jan 10, 2012
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
 
 
 #include <pni/io/nx/h5/H5Dataspace.hpp>
@@ -41,8 +39,8 @@ namespace h5 {
     {
         if(!is_scalar())
         {
-            _maxdims = size_vector_t(rank());
-            _dims    = size_vector_t(rank());
+            _maxdims = dim_vector_type(rank());
+            _dims    = dim_vector_type(rank());
             H5Sget_simple_extent_dims(id(),
                     const_cast<hsize_t*>(_dims.data()),
                     const_cast<hsize_t*>(_maxdims.data()));
@@ -281,8 +279,8 @@ namespace h5 {
     //-------------------------------------------------------------------------
     void H5Dataspace::resize(const std::initializer_list<hsize_t> &list)
     {
-        _dims    = size_vector_t(list.size());
-        _maxdims = size_vector_t(list.size());
+        _dims    = dim_vector_type(list.size());
+        _maxdims = dim_vector_type(list.size());
 
         std::copy(list.begin(),list.end(),_dims.begin());
         std::copy(list.begin(),list.end(),_maxdims.begin());
