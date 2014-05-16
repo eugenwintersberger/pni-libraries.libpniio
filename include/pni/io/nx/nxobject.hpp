@@ -193,6 +193,40 @@ namespace nx{
             string name() const{ return _imp.name(); }
 
             //=================attribute management methods====================
+            /*! 
+            \brief create an array attribute
+
+            Template method creating a multidimensional attribute of type T and
+            shape s. By default an exception will be thrown if an attribute of
+            same name already exists. If ov=true an existing attribute will be
+            overwritten
+            \throws nxattribute_error in case of errors
+            \param n name of the attribute
+            \param s shape of the array
+            \param ov overwrite flag
+            \return instance of nxattribute
+            */
+            template<typename T,typename CTYPE> 
+            nxattribute<MAPTYPE(Imp,AttributeImpl)>
+            attr(const string &n, const CTYPE &s,bool ov=true) const
+            {
+                typedef nxattribute<MAPTYPE(Imp,AttributeImpl)> attr_type;
+                attr_type attr;
+
+                try
+                {
+                    attr = attr_type(this->imp().template attr<T>(n,s,ov));
+                }
+                catch(...)
+                {
+                    throw nxattribute_error(EXCEPTION_RECORD,
+                            "Cannot create attribute ["+n+"] for object "
+                            "["+this->path()+"]!");
+                }
+                return attr;
+            }
+
+            //-----------------------------------------------------------------
             /*! \brief create scalar attribute
 
             Template method creating a scalar atribute of type T. By default an
@@ -206,7 +240,8 @@ namespace nx{
             \return an instance of nxattribute
             */
             template<typename T> nxattribute<MAPTYPE(Imp,AttributeImpl)>
-                attr(const string &n,bool ov=false) const
+            attr(const string &n,bool ov=false) const
+            /*
             {
                 typedef nxattribute<MAPTYPE(Imp,AttributeImpl)> attr_type;
                 attr_type attr;
@@ -229,41 +264,12 @@ namespace nx{
 
                 return attr;
             }
-
-
-            //-----------------------------------------------------------------
-            /*! 
-            \brief create an array attribute
-
-            Template method creating a multidimensional attribute of type T and
-            shape s. By default an exception will be thrown if an attribute of
-            same name already exists. If ov=true an existing attribute will be
-            overwritten
-            \throws nxattribute_error in case of errors
-            \param n name of the attribute
-            \param s shape of the array
-            \param ov overwrite flag
-            \return instance of nxattribute
             */
-            template<typename T,typename CTYPE> 
-            nxattribute<MAPTYPE(Imp,AttributeImpl)>
-                attr(const string &n, const CTYPE &s,bool ov=true) const
             {
-                typedef nxattribute<MAPTYPE(Imp,AttributeImpl)> attr_type;
-                attr_type attr;
-
-                try
-                {
-                    attr = attr_type(this->imp().template attr<T>(n,s,ov));
-                }
-                catch(...)
-                {
-                    throw nxattribute_error(EXCEPTION_RECORD,
-                            "Cannot create attribute ["+n+"] for object "
-                            "["+this->path()+"]!");
-                }
-                return attr;
+                return attr<T>(n,shape_t{1},ov);
             }
+
+
 
 
             //-----------------------------------------------------------------

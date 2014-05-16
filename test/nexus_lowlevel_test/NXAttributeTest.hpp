@@ -189,10 +189,10 @@ template<typename APTYPE> void NXAttributeTest<APTYPE>::test_creation()
     nxattribute a1(_parent.template attr<string>("attribute"));
     CPPUNIT_ASSERT(a1.is_valid());
     CPPUNIT_ASSERT(a1.type_id() == type_id_t::STRING);
-    CPPUNIT_ASSERT(a1.rank() == 0);
+    CPPUNIT_ASSERT(a1.rank() == 1);
     CPPUNIT_ASSERT(a1.size() == 1);
     auto s = a1.shape<shape_t>();
-    CPPUNIT_ASSERT(s.size() == 0);
+    CPPUNIT_ASSERT(s.size() == 1);
     string b1 = a1.base();
     string b2 = _parent.path();
     CPPUNIT_ASSERT(a1.base() == _parent.path());
