@@ -21,7 +21,7 @@
 //
 #pragma once
 
-#include "../nxvariant_traits.hpp"
+#include "../nxobject_traits.hpp"
 #include "is_group.hpp"
 #include "is_field.hpp"
 #include "get_name.hpp"
@@ -58,11 +58,11 @@ namespace nx{
             //! result type
             typedef VTYPE result_type;
             //! Nexus group type
-            typedef typename nxvariant_group_type<VTYPE>::type group_type;
+            typedef typename nxobject_group<VTYPE>::type group_type;
             //! Nexus field type
-            typedef typename nxvariant_field_type<VTYPE>::type field_type;
+            typedef typename nxobject_field<VTYPE>::type field_type;
             //! Nexus attribute type
-            typedef typename nxvariant_attribute_type<VTYPE>::type attribute_type;
+            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
 
             //-----------------------------------------------------------------
             //!
@@ -99,10 +99,6 @@ namespace nx{
             //!
             result_type operator()(const group_type &g) const
             {
-#ifdef NOFOREACH
-                typedef nximp_code_map<group_type> code_map;
-                typedef typename nxobject_traits<code_map::icode>::object_type otype;
-#endif
                 //here comes the interesting part
                 result_type result; 
 
@@ -117,49 +113,37 @@ namespace nx{
                 //need to do some treatment for the special cases . and .. as
                 //child names 
                 if(_name == ".") return result_type(g);
-                if(_name == "..") return result_type(group_type(g.parent()));
+                if(_name == "..") return result_type(g.parent());
 
-#ifdef NOFOREACH
-                for(auto iter = g.begin();iter!=g.end();++iter)
-                {
-                    auto child = *iter;
-#else
                 for(auto child: g)
                 {
-#endif
-                    if(child.object_type() == nxobject_type::NXGROUP)
-                        result = group_type(child);
-                    else if(child.object_type() == nxobject_type::NXFIELD)
-                        result = field_type(child);
-                    else 
-                        continue; //maybe one should throw an exception here
-
-                    if(is_group(result))
+                    if(is_group(child))
                     {
                         //check here for name and type
                         if(_name.empty())
                         {
                             //we only need to check for the class
-                            if(pni::io::nx::is_class(result,_class)) return result;
+                            if(pni::io::nx::is_class(child,_class)) 
+                                return child;
                         }
                         else 
                         {
                             //we definitly need to check the name
-                            if(get_name(result) == _name)
+                            if(get_name(child) == _name)
                             {
-                                if(_class.empty()) return result;
-                                else if(pni::io::nx::is_class(result,_class))
-                                    return result;
+                                if(_class.empty()) return child;
+                                else if(pni::io::nx::is_class(child,_class))
+                                    return child;
                             }
                         }
                         continue;
                     }
-                    else if(is_field(result))
+                    else if(is_field(child))
                     {
                         //check here only for the name
-                        if(get_name(result)!=_name) continue;
+                        if(get_name(child)!=_name) continue;
 
-                        return result;
+                        return child;
                     }
                 }
 
@@ -168,14 +152,14 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            /*!
-            \brief process fields
-
-            Fields cannot have children - throw an exception here.
-            \throws nxfield_error no children for fields
-            \param f field instance
-            \return to be ignored
-            */
+            //!
+            //! \brief process fields
+            //!
+            //! Fields cannot have children - throw an exception here.
+            //! \throws nxfield_error no children for fields
+            //! \param f field instance
+            //! \return to be ignored
+            //!
             result_type operator()(const field_type &f) const
             {
                 throw nxfield_error(EXCEPTION_RECORD,
@@ -183,15 +167,16 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            /*!
-            \brief process attributes
-
-            Like fields attributes cannot have children - throw an exception
-            here.
-            \throws nxattribute_error no children for attributes
-            \param a attribute instance
-            \return to be ignored
-            */
+            //!
+            //! \brief process attributes
+            //!
+            //! Like fields attributes cannot have children - throw an 
+            //! exception here.
+            //!
+            //! \throws nxattribute_error no children for attributes
+            //! \param a attribute instance
+            //! \return to be ignored
+            //!
             result_type operator()(const attribute_type &a) const
             {
                 throw nxattribute_error(EXCEPTION_RECORD,
@@ -200,19 +185,20 @@ namespace nx{
             }
     };
 
-    /*!
-    \ingroup variant_code
-    \brief get child wrapper
-
-    Wrapper function for the get_child_visitor template. 
-    \throws nxfield_error if the stored object is a field
-    \throws nxattribute_error if the stored object is an attribute
-    \tparam VTYPE variant type
-    \param o instance of VTYPE
-    \param n name of the child
-    \param c class of the child (only for groups)
-    \return child object
-    */
+    //!
+    //! \ingroup variant_code
+    //! \brief get child wrapper
+    //!
+    //! Wrapper function for the get_child_visitor template. 
+    //!
+    //! \throws nxfield_error if the stored object is a field
+    //! \throws nxattribute_error if the stored object is an attribute
+    //! \tparam VTYPE variant type
+    //! \param o instance of VTYPE
+    //! \param n name of the child
+    //! \param c class of the child (only for groups)
+    //! \return child object
+    //!
     template<typename VTYPE> 
     typename get_child_visitor<VTYPE>::result_type
     get_child(const VTYPE &o,const string &n,const string &c)

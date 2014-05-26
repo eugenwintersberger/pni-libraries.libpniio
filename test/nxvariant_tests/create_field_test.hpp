@@ -45,13 +45,11 @@ class create_field_test : public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE_END();
 
         h5::nxfile file;
-        h5::nxgroup group;
+        h5::nxgroup group,root;
         h5::nxfield field;
 
         shape_t field_shape,cs_shape;
 
-        typedef nxvariant_traits<h5::nxfile>::object_types object_types;
-        
     public:
         void setUp();
         void tearDown();

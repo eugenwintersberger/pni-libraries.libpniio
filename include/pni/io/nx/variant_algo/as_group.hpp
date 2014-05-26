@@ -21,7 +21,7 @@
 //
 #pragma once
 
-#include "../nxvariant_traits.hpp"
+#include "../nxobject_traits.hpp"
 
 namespace pni{
 namespace io{
@@ -42,16 +42,16 @@ namespace nx{
     //!
     template<typename VTYPE> 
     class as_group_visitor : public boost::static_visitor<
-                             typename nxvariant_group_type<VTYPE>::type
+                             typename nxobject_group<VTYPE>::type
                              >
     {
         public:
             //! Nexus group type
-            typedef typename nxvariant_group_type<VTYPE>::type group_type;
+            typedef typename nxobject_group<VTYPE>::type     group_type;
             //! Nexus field type
-            typedef typename nxvariant_field_type<VTYPE>::type field_type;
+            typedef typename nxobject_field<VTYPE>::type     field_type;
             //! Nexus attribute type
-            typedef typename nxvariant_attribute_type<VTYPE>::type attribute_type;
+            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
             //! result type
             typedef group_type result_type;
 
@@ -122,8 +122,7 @@ namespace nx{
     //! \return instance of a group type
     //!
     template<typename VTYPE> 
-    typename nxvariant_group_type<VTYPE>::type
-    as_group(const VTYPE &o)
+    typename nxobject_group<VTYPE>::type as_group(const VTYPE &o)
     {
         return boost::apply_visitor(as_group_visitor<VTYPE>(),o);
     }

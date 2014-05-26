@@ -22,6 +22,11 @@
 //
 #pragma once
 
+#include <boost/variant.hpp>
+#include <boost/mpl/begin_end.hpp>
+#include <boost/mpl/deref.hpp>
+#include <boost/mpl/at.hpp>
+#include <boost/mpl/int.hpp>
 #include "nximp_code.hpp"
 #include "nximp_code_map.hpp"
 
@@ -38,37 +43,55 @@ namespace nx{
     //! important application for this is to find for one Nexus object type the
     //! other types belonging to its implementation.
     //!
-    template<nximp_code id> struct nxobject_traits {};
-
-    //!
-    //! \ingroup nexus_lowlevel
-    //! \brief macro for nxobject_traits declaration
-    //!
-    //! This macro helps in the declaration of a single nxobject_trait.
-    //! \param id       the ID code of the implementation
-    //! \param object_t the Nexus object type
-    //! \param group_t  the Nexus group type
-    //! \param file_t   the Nexus file type
-    //! \param field_t  the Nexus field type
-    //! \param attr_t   the Nexus attribute type
-    //! \param sel_t    the Nexus selection type
-    //! \param link_t   the Nexus link type
-    //!
-#define DECLARE_NXOBJECT_TRAITS(id,object_t,group_t,file_t,field_t,attr_t,\
-                                sel_t,link_t,deflate_t)\
-        template<> struct nxobject_traits<id>\
-        {\
-            typedef object_t object_type;\
-            typedef group_t  group_type; \
-            typedef file_t   file_type;  \
-            typedef field_t  field_type; \
-            typedef attr_t   attribute_type; \
-            typedef sel_t    selection_type;\
-            typedef link_t   link_type;\
-            typedef deflate_t deflate_type;\
-        }
+    template<nximp_code id> struct nxobject_trait;
 
 
+    template<typename VTYPE,int i>
+    using nxobject_element = boost::mpl::at<typename VTYPE::types,boost::mpl::int_<i>>;
+    
+    //-------------------------------------------------------------------------
+    /*!
+    \ingroup variant_code
+    \brief get group type
+
+    Obtains the group type of a variant type.
+    \tparam VTYPE variant type
+    */
+    template<typename VTYPE> struct nxobject_group
+    {
+        //! group type
+        typedef typename nxobject_element<VTYPE,0>::type type;
+    };
+
+    //-------------------------------------------------------------------------
+    /*!
+    \ingroup variant_code
+    \brief get field type
+
+    Obtains the field type of a variant type
+    \tparam VTYPE variant type
+    */
+    template<typename VTYPE> struct nxobject_field
+    {
+        //! field type
+        typedef typename nxobject_element<VTYPE,1>::type type;
+    };
+
+    //-------------------------------------------------------------------------
+    /*!
+    \ingroup variant_code
+    \brief get attribute type
+
+    Retrieves the attribute type from a varian type.
+    \tparam VTYPE
+    */
+    template<typename VTYPE> struct nxobject_attribute
+    {
+        //! attribute type
+        typedef typename nxobject_element<VTYPE,2>::type type;
+    };
+
+    /*
 template<typename OTYPE>
 using trait_type = nxobject_traits<nximp_code_map<OTYPE>::icode>;
 
@@ -92,12 +115,13 @@ using selection_type = typename trait_type<OTYPE>::selection_type;
 
 template<typename OTYPE>
 using deflate_type = typename trait_type<OTYPE>::deflate_type;
-
+*/
 
     //!
     //! \ingroup nexus_lowlevel 
     //! \brief define a Nexus object type
     //!
+    /*
 #define DEFINE_NXOBJECT(otype) \
         typedef typename pni::io::nx::nxobject_traits<nximp_code_map<otype>::idcode>::object_type
 
@@ -127,7 +151,7 @@ using deflate_type = typename trait_type<OTYPE>::deflate_type;
         DEFINE_NXFIELD(otype)  field_type;\
         DEFINE_NXATTRIBUTE(otype) attribute_type;\
         DEFINE_NXSELECTION(otype) selection_type
-
+*/
 //end of namespace
 }
 }

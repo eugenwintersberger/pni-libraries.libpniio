@@ -1,26 +1,25 @@
-/*
- * (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- *
- *  Created on: Jul 11, 2013
- *      Author: Eugen Wintersberger
- */
-
+//
+// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+//  Created on: Jul 11, 2013
+//      Author: Eugen Wintersberger
+//
 #pragma once
 
 #include <boost/current_function.hpp>
@@ -67,10 +66,9 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         string buffer;
         h5::nxfile file;
 
-        typedef nxvariant_traits<h5::nxfile>::object_types nxobject_t;
-        nxobject_t root_group;
-        nxobject_t group;
-        nxobject_t field;
+        h5::nxobject root_group;
+        h5::nxobject group;
+        h5::nxobject field;
 
         string xml_str1;
         std::vector<int32> int_vec;

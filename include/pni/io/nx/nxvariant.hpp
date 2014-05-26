@@ -21,7 +21,7 @@
  */
 #pragma once
 
-#include "nxvariant_traits.hpp"
+//#include "nxvariant_traits.hpp"
 
 #include "variant_algo/is_group.hpp"
 #include "variant_algo/is_field.hpp"

@@ -1,28 +1,27 @@
-/*
- * Declaration of Nexus object template.
- *
- * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- * NXAttributeTest.hpp
- *
- *  Created on: Sep 13, 2012
- *      Author: Eugen Wintersberger
- */
+//
+// Declaration of Nexus object template.
+//
+// (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+//  Created on: Sep 13, 2012
+//      Author: Eugen Wintersberger
+//
 
 
 #pragma once
@@ -107,12 +106,12 @@ template<typename APTYPE> class NXAttributeTest: public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE_END();
     private:
         nxfile _f;
+        nxgroup _root;
         APTYPE _parent;
         shape_t _shape;
         size_t _size;
 
         //==========static functions to create parent objects==================
-        static void create_parent(const nxfile &f,nxfile &p);
         static void create_parent(const nxfile &f,nxgroup &p);
         static void create_parent(const nxfile &f,nxfield &p);
 
@@ -133,25 +132,19 @@ template<typename APTYPE> class NXAttributeTest: public CppUnit::TestFixture
         template<typename ATYPE> void test_array_attribute();
 };
 
-//-----------------------------------------------------------------------------
-template<typename APTYPE> 
-void NXAttributeTest<APTYPE>::create_parent(const nxfile &f,nxfile &p)
-{
-    p = f;
-}
 
 //-----------------------------------------------------------------------------
 template<typename APTYPE>
 void NXAttributeTest<APTYPE>::create_parent(const nxfile &f,nxgroup &p)
 {
-    p = f.create_group("testgroup");
+    p = f.root().create_group("testgroup");
 }
 
 //-----------------------------------------------------------------------------
 template<typename APTYPE>
 void NXAttributeTest<APTYPE>::create_parent(const nxfile &f,nxfield &p)
 {
-    p = f.create_field<string>("hello");
+    p = f.root().create_field<string>("hello");
     p.write("hello world");
 }
 

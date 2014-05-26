@@ -1,25 +1,25 @@
-/*
- * (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- *
- * Created on: Jul 22, 2013
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- */
+//
+// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+// Created on: Jul 22, 2013
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
 
 #pragma once
 
@@ -68,14 +68,16 @@ namespace nx{
     \param g group where to create the link
     \param name the new name of the link
     */
-    template<typename GTYPE> 
-    void link(const nxpath &target,const GTYPE &g,const string &name)
+    template<
+             template<nximp_code> class GTYPE,
+             nximp_code IMPID
+            > 
+    void link(const nxpath &target,const GTYPE<IMPID> &g,
+              const string &name)
     {
 
         //determine the utility class perfroming linking
-        typedef nximp_code_map<GTYPE> code_map;
-        typedef nxobject_traits<code_map::icode> object_traits;
-        typedef typename object_traits::link_type link_type;
+        typedef typename nxobject_trait<IMPID>::link_type link_type;
 
         if(!target.filename().empty())
             //create an external link
@@ -124,8 +126,10 @@ namespace nx{
     \param g group where to create the link
     \param name the new name of the link
     */
-    template<typename STYPE,
-             typename GTYPE>
+    template< 
+             typename STYPE,
+             typename GTYPE
+            >
     void link(const STYPE &target,const GTYPE &g,const string &name)
     {
         link(target.path(),g,name);
@@ -144,13 +148,13 @@ namespace nx{
     \param name of the child
     \return link type
     */
-    template<typename GTYPE>
-    nxlink_type link_type(const GTYPE &parent,const string &name)
+    template<
+             template<nximp_code> class GTYPE,
+             nximp_code IMPID
+            >
+    nxlink_type link_type(const GTYPE<IMPID> &parent,const string &name)
     {
-        //determine the utility class perfroming linking
-        typedef nximp_code_map<GTYPE> code_map;
-        typedef nxobject_traits<code_map::icode> object_traits;
-        typedef typename object_traits::link_type link_type;
+        typedef typename nxobject_trait<IMPID>::link_type link_type;
 
         return link_type::link_type(parent.imp(),name);
     }

@@ -89,6 +89,7 @@ class NXFieldTest:public CppUnit::TestFixture
 	CPPUNIT_TEST_SUITE_END();
 private:
 	nxfile file;
+    nxgroup root;
 	static const uint64 n=10;
 	uint16 testdata[10];
 	shape_t  fshape;
@@ -131,19 +132,19 @@ template<typename T> void NXFieldTest::test_io_array()
     std::fill(write.begin(),write.end(),T(100));
     std::fill(write.begin(),write.end(),T(0));
 
-    nxfield field1 = file.create_field<T>("array",s);
+    nxfield field1 = root.create_field<T>("array",s);
     CPPUNIT_ASSERT_NO_THROW(field1.write(write));
     CPPUNIT_ASSERT_NO_THROW(field1.read(read));
     CPPUNIT_ASSERT(write == read);
 
-    field1 = file.create_field<T>("array2",{2,2});
+    field1 = root.create_field<T>("array2",{2,2});
     CPPUNIT_ASSERT_THROW(field1.write(write),shape_mismatch_error);
 
     nxdeflate_filter deflate;
     deflate.compression_rate(9);
     deflate.shuffle(true);
 
-    field1 = file.create_field<T>("array2_delfate",s,deflate);
+    field1 = root.create_field<T>("array2_delfate",s,deflate);
     CPPUNIT_ASSERT_NO_THROW(field1.write(write));
     CPPUNIT_ASSERT_NO_THROW(field1.read(read));
     CPPUNIT_ASSERT(write == read);
@@ -155,7 +156,7 @@ template<typename T> void NXFieldTest::test_io_array()
 template<typename T> void NXFieldTest::test_io_scalar()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    nxfield field1 = file.create_field<T>("scalar");
+    nxfield field1 = root.create_field<T>("scalar");
 
     T write,read;
 

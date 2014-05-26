@@ -52,6 +52,7 @@ namespace nx{
 
     \tparam OTYPE object type
     */
+    /*
     template<typename OTYPE> struct nxvariant_traits
     {
         //! local group type
@@ -81,11 +82,12 @@ namespace nx{
         from the file. 
         \sa get_object
         */
+    /*
         typedef boost::variant<group_type,
                                field_type,
                                attribute_type> object_types;
 
-    };
+    };*/
 
     //-------------------------------------------------------------------------
     /*!
@@ -97,11 +99,12 @@ namespace nx{
     \tparam VTYPE variant type
     \tparam i type index
     */
+    /*
     template<typename VTYPE,int i> struct nxvariant_member_type
     {
         //! the requested type of the variant
         typedef typename boost::mpl::at<typename VTYPE::types,boost::mpl::int_<0> >::type type; 
-    };
+    };*/
 
     //-------------------------------------------------------------------------
     /*!
@@ -111,11 +114,12 @@ namespace nx{
     Obtains the group type of a variant type.
     \tparam VTYPE variant type
     */
+    /*
     template<typename VTYPE> struct nxvariant_group_type
     {
         //! group type
         typedef typename boost::mpl::at<typename VTYPE::types,boost::mpl::int_<0> >::type type;
-    };
+    };*/
 
     //-------------------------------------------------------------------------
     /*!
@@ -125,11 +129,12 @@ namespace nx{
     Obtains the field type of a variant type
     \tparam VTYPE variant type
     */
+    /*
     template<typename VTYPE> struct nxvariant_field_type
     {
         //! field type
         typedef typename boost::mpl::at<typename VTYPE::types,boost::mpl::int_<1> >::type type;
-    };
+    };*/
 
     //-------------------------------------------------------------------------
     /*!
@@ -139,12 +144,13 @@ namespace nx{
     Retrieves the attribute type from a varian type.
     \tparam VTYPE
     */
+    /*
     template<typename VTYPE> struct nxvariant_attribute_type
     {
         //! attribute type
         typedef typename boost::mpl::at<typename VTYPE::types,boost::mpl::int_<2> >::type type;
     };
-
+*/
 //end of namespace
 }
 }

@@ -36,7 +36,8 @@ void create_field_test::setUp()
     cs_shape  = shape_t{1,10,10};
 
     file = h5::nxfile::create_file("create_field_test.nx",true,0);
-    group = file.create_group("group","NXentry");
+    root = file.root();
+    group = root.create_group("group","NXentry");
     group.create_group("instrument","NXinstrument");
     field = group.create_field<int32>("test");
 }
@@ -46,6 +47,7 @@ void create_field_test::tearDown()
 { 
     field.close();
     group.close();
+    root.close();
     file.close();
 }
 
@@ -54,10 +56,10 @@ void create_field_test::tearDown()
 void create_field_test::test_group()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    object_types root = h5::nxgroup(file["/"]);
+    h5::nxobject root_group = root;
     
-    object_types f;
-    f=create_field<float32>(root,"test1");
+    h5::nxobject f;
+    f=create_field<float32>(root_group,"test1");
     CPPUNIT_ASSERT(is_valid(f));
     CPPUNIT_ASSERT(is_field(f));
     CPPUNIT_ASSERT(get_name(f)=="test1");
@@ -72,11 +74,11 @@ void create_field_test::test_group()
 void create_field_test::test_group_from_path()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    object_types gi = h5::nxgroup(file["/group/instrument"]);
+    h5::nxobject gi = root["/group/instrument"];
     nxpath p = path_from_string("/:NXentry/:NXinstrument/data");
 
     
-    object_types f;
+    h5::nxobject f;
     CPPUNIT_ASSERT_NO_THROW(f=create_field<float32>(gi,p));
     CPPUNIT_ASSERT(is_valid(f));
     CPPUNIT_ASSERT(is_field(f));
@@ -97,10 +99,10 @@ void create_field_test::test_group_filter()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxdeflate_filter filter(2,true);
-    object_types root = h5::nxgroup(file["/"]);
+    h5::nxobject root_group = root;
     
-    object_types f;
-    CPPUNIT_ASSERT(is_valid(f=create_field<float32>(root,"test2",
+    h5::nxobject f;
+    CPPUNIT_ASSERT(is_valid(f=create_field<float32>(root_group,"test2",
                                field_shape,cs_shape,filter)));
     CPPUNIT_ASSERT(is_field(f));
     CPPUNIT_ASSERT(get_name(f)=="test2");
@@ -116,10 +118,10 @@ void create_field_test::test_group_filter_from_path()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxdeflate_filter filter(2,true);
-    object_types root = h5::nxgroup(file["/group"]);
+    h5::nxobject root_group = root;
     
-    object_types f;
-    CPPUNIT_ASSERT(is_valid(f=create_field<float32>(root,"test2",
+    h5::nxobject f;
+    CPPUNIT_ASSERT(is_valid(f=create_field<float32>(root_group,"test2",
                                field_shape,cs_shape,filter)));
     CPPUNIT_ASSERT(is_field(f));
     CPPUNIT_ASSERT(get_name(f)=="test2");
@@ -133,7 +135,7 @@ void create_field_test::test_group_filter_from_path()
 void create_field_test::test_field()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    object_types object = field;
+    h5::nxobject object = field;
 
     CPPUNIT_ASSERT_THROW(create_field<float32>(object,"g1"),nxfield_error);
 }
@@ -143,7 +145,7 @@ void create_field_test::test_attribute()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    object_types object = group.attr("NX_class");
+    h5::nxobject object = group.attr("NX_class");
     CPPUNIT_ASSERT_THROW(create_field<float32>(object,"g1"),nxattribute_error);
 }
 

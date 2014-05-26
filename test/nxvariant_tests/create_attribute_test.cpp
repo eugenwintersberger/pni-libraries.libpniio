@@ -1,25 +1,25 @@
-/*
- * (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- *
- *  Created on: Jul 5, 2013
- *      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- */
+//
+// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+//  Created on: Jul 5, 2013
+//      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
 
 #include <boost/current_function.hpp>
 #include<cppunit/extensions/HelperMacros.h>
@@ -36,7 +36,8 @@ void create_attribute_test::setUp()
     cs_shape  = shape_t{1,10,10};
 
     file = h5::nxfile::create_file("create_attribute_test.nx",true,0);
-    group = file.create_group("group","NXentry");
+    root = file.root();
+    group = root.create_group("group","NXentry");
     group.create_group("instrument","NXinstrument");
     field = group.create_field<int32>("test");
     attr  = field.attr<float32>("temperature");
@@ -48,6 +49,7 @@ void create_attribute_test::tearDown()
     attr.close();
     field.close();
     group.close();
+    root.close();
     file.close();
 }
 
@@ -56,10 +58,10 @@ void create_attribute_test::tearDown()
 void create_attribute_test::test_group()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    object_types root = h5::nxgroup(file["/"]);
+    h5::nxobject root_group = root;
     
-    object_types f;
-    CPPUNIT_ASSERT(is_valid(f=create_attribute<float32>(root,"test1")));
+    h5::nxobject f;
+    CPPUNIT_ASSERT(is_valid(f=create_attribute<float32>(root_group,"test1")));
     CPPUNIT_ASSERT(is_attribute(f));
     CPPUNIT_ASSERT(get_name(f)=="test1");
     CPPUNIT_ASSERT(get_rank(f)==0);
@@ -67,7 +69,7 @@ void create_attribute_test::test_group()
     auto s = get_shape<shape_t>(f);
     CPPUNIT_ASSERT(s.size()== 0);
 
-    CPPUNIT_ASSERT(is_valid(f=create_attribute<float32>(root,"test2",shape_t{4,3})));
+    CPPUNIT_ASSERT(is_valid(f=create_attribute<float32>(root_group,"test2",shape_t{4,3})));
     CPPUNIT_ASSERT(is_attribute(f));
     CPPUNIT_ASSERT(get_name(f)=="test2");
     CPPUNIT_ASSERT(get_rank(f)==2);
@@ -82,12 +84,12 @@ void create_attribute_test::test_group()
 void create_attribute_test::test_group_from_path()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    object_types root = h5::nxgroup(file["/"]);
+    h5::nxobject root_group = root;
     nxpath p = path_from_string("/:NXentry/:NXinstrument@time");
 
     
-    object_types f;
-    CPPUNIT_ASSERT_NO_THROW(f=create_attribute<float32>(root,p));
+    h5::nxobject f;
+    CPPUNIT_ASSERT_NO_THROW(f=create_attribute<float32>(root_group,p));
     CPPUNIT_ASSERT(is_valid(f));
     CPPUNIT_ASSERT(is_attribute(f));
     CPPUNIT_ASSERT(get_name(f)=="time");
@@ -96,7 +98,7 @@ void create_attribute_test::test_group_from_path()
     auto s = get_shape<shape_t>(f);
     CPPUNIT_ASSERT(s.size() == 0);
     
-    CPPUNIT_ASSERT_THROW(create_attribute<uint16>(root,
+    CPPUNIT_ASSERT_THROW(create_attribute<uint16>(root_group,
                 path_from_string("./:NXdetector@data")),nxattribute_error);
 
 }
@@ -106,10 +108,10 @@ void create_attribute_test::test_group_from_path()
 void create_attribute_test::test_field()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    object_types root = field;
+    h5::nxobject parent = field;
     
-    object_types f;
-    CPPUNIT_ASSERT(is_valid(f=create_attribute<string>(root,"test2")));    
+    h5::nxobject f;
+    CPPUNIT_ASSERT(is_valid(f=create_attribute<string>(parent,"test2")));    
     CPPUNIT_ASSERT(is_attribute(f));
     CPPUNIT_ASSERT(get_name(f)=="test2");
     CPPUNIT_ASSERT(get_rank(f)==0);
@@ -123,7 +125,7 @@ void create_attribute_test::test_attribute()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    object_types object = group.attr("NX_class");
+    h5::nxobject object = group.attr("NX_class");
     CPPUNIT_ASSERT_THROW(create_attribute<float32>(object,"g1"),nxattribute_error);
 }
 

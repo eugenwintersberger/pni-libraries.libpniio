@@ -1,29 +1,29 @@
-/*
- * Declaration of the NXfield template
- *
- * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- *
- * Declaration of the NXfield template
- *
- * Created on: Jul 3, 2011
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- */
+//
+// Declaration of the NXfield template
+//
+// (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+//************************************************************************
+//
+// Declaration of the NXfield template
+//
+// Created on: Jul 3, 2011
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
 #pragma once
 
 #include <sstream>
@@ -31,15 +31,20 @@
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 
-#include "nxobject.hpp"
+#include "nximp_map.hpp"
+#include "nxobject_traits.hpp"
 #include "nxexceptions.hpp"
 #include "nxselection.hpp"
 #include "utils/io_utils.hpp"
+#include "nxattribute.hpp"
+#include "nxattribute_iterator.hpp"
+#include "nxvariant.hpp"
 
 
 namespace pni{
 namespace io{
 namespace nx{
+
     using namespace pni::core;
     //need this here to avoid name collisions with tango headers.
     using pni::core::array;
@@ -152,9 +157,18 @@ namespace nx{
     Every call to read or write immediately after reading or writing the data
     removes this selections.
     */
-    template<typename Imp> class nxfield:public nxobject<Imp> 
+    template<nximp_code IMPID> class nxfield
     {
+        public:
+            typedef typename nximp_map<IMPID>::field_imp imp_type;
+            typedef nxfield<IMPID>              field_type;
+            typedef typename nxobject_trait<IMPID>::attribute_type
+                attribute_type;
+            typedef nxattribute_iterator<field_type,attribute_type>
+                attr_iterator;
         private:
+            //! field implementation
+            imp_type _imp;
             /*!
             \brief gernerate error message
 
@@ -235,7 +249,7 @@ namespace nx{
                 //finally we read the data
                 try
                 {
-                    this->imp().read( a.data());
+                    _imp.read( a.data());
                 }
                 catch(nxfield_error &error)
                 {
@@ -278,7 +292,7 @@ namespace nx{
                 }
 
 
-                try { this->imp().write(a.data()); }
+                try { _imp.write(a.data()); }
                 catch(...)
                 {
                     throw nxfield_error(EXCEPTION_RECORD,
@@ -295,7 +309,7 @@ namespace nx{
             */
             void apply_selection(const std::vector<slice> &s) 
             {
-                this->imp().apply_selection(s);
+                _imp.apply_selection(s);
             }
 
             //-----------------------------------------------------------------
@@ -306,70 +320,63 @@ namespace nx{
             */
             void reset_selection() 
             {
-                this->imp().clear_selections();
+                _imp.clear_selections();
             }
 
         public:
-            //! shared pointer type for the field object
-            typedef std::shared_ptr<nxfield<Imp> > shared_ptr; 
             //============constructors and destructors=========================
             //! default constructor
-            explicit nxfield():nxobject<Imp>() { }
+            explicit nxfield(){ }
 
             //-----------------------------------------------------------------
             //! copy constructor
-            nxfield(const nxfield<Imp> &o):nxobject<Imp>(o) { }
+            nxfield(const field_type &o):_imp(o._imp) { }
 
             //-----------------------------------------------------------------
             //! move constructor
-            nxfield(nxfield<Imp> &&o):nxobject<Imp>(std::move(o)) { }
+            nxfield(field_type &&o):_imp(std::move(o._imp)) { }
 
             //-----------------------------------------------------------------
             //! copy constructor from implementation object
-            explicit nxfield(const Imp &o):nxobject<Imp>(o) { }
+            explicit nxfield(const imp_type &o):_imp(o) { }
 
             //-----------------------------------------------------------------
             //! move constructor from implementation object
-            explicit nxfield(Imp &&o):nxobject<Imp>(std::move(o)){}
+            explicit nxfield(imp_type &&o):_imp(std::move(o)){}
 
             //-----------------------------------------------------------------
-            //! copy conversion constructor
-            template<typename ObjImp> nxfield(const nxobject<ObjImp> &o)
-                :nxobject<Imp>(o)
-            { }
+            nxfield(const typename nxobject_trait<IMPID>::object_type &o):
+                _imp()
+            {
+                *this = o;
+            }
+
 
             //-----------------------------------------------------------------
             //!destructor
-            ~nxfield()
-            { 
-                this->imp().clear_selections();
+            ~nxfield() { _imp.clear_selections(); }
+            
+            //===============assignment operator===============================
+            field_type &operator=(const field_type &f)
+            {
+                if(this == &f) return *this;
+
+                _imp = f._imp;
+                return *this;
             }
 
-            //====================assignment operators=========================
-            //! copy assignment
-            nxfield<Imp> &operator=(const nxfield<Imp> &o)
+            field_type &operator=(field_type &&f)
             {
-                if(this == &o) return *this;
-                nxobject<Imp>::operator=(o);
+                if(this == &f) return *this;
+                
+                _imp = std::move(f._imp);
                 return *this;
             }
 
             //-----------------------------------------------------------------
-            //! copy conversion assignment
-            template<typename ObjImp>
-            nxfield<Imp> &operator=(const nxobject<ObjImp> &o)
+            field_type &operator=(const typename nxobject_trait<IMPID>::object_type &o)
             {
-                if((void *)this == (void *)&o) return *this;
-                nxobject<Imp>::operator=(o);
-                return *this;
-            }
-
-            //-----------------------------------------------------------------
-            //! move assignment
-            nxfield<Imp> &operator=(nxfield<Imp> &&o)
-            {
-                if(this == &o) return *this;
-                nxobject<Imp>::operator=(std::move(o));
+                *this = as_field(o);
                 return *this;
             }
 
@@ -383,8 +390,7 @@ namespace nx{
             */
             template<typename CTYPE> CTYPE shape() const 
             { 
-                auto shape = this->imp().template shape<CTYPE>(); 
-                return shape;
+                return _imp.template shape<CTYPE>(); 
             }
 
             //-----------------------------------------------------------------
@@ -394,11 +400,7 @@ namespace nx{
             Return the size (number of elements) in the field.
             \return total number of elements in the field
             */
-            size_t size() const 
-            { 
-                size_t s = this->imp().size(); 
-                return s;
-            }
+            size_t size() const { return _imp.size(); }
 
             //-----------------------------------------------------------------
             /*! 
@@ -407,11 +409,7 @@ namespace nx{
             Return the ID of the data type stored in the field.
             \return data type ID
             */
-            type_id_t type_id() const 
-            {
-                type_id_t id = this->imp().type_id(); 
-                return id;
-            }
+            type_id_t type_id() const { _imp.type_id(); }
 
             //-----------------------------------------------------------------
             /*!
@@ -420,9 +418,12 @@ namespace nx{
             Returns the parent object of the field.
             \return parent object
             */
-            nxobject<MAPTYPE(Imp,ObjectImpl)> parent() const
+            typename nxobject_trait<IMPID>::object_type parent() const
             {
-                return nxobject<MAPTYPE(Imp,ObjectImpl)>(this->imp().parent());
+                typedef typename nxobject_trait<IMPID>::group_type group_type;
+                typedef typename nximp_map<IMPID>::group_imp group_imp_type;
+
+                return group_type(group_imp_type(_imp.parent()));
             }
             
             //-----------------------------------------------------------------
@@ -440,7 +441,7 @@ namespace nx{
             {
                 try
                 {
-                    this->imp().resize(s);
+                    _imp.resize(s);
                 }
                 catch(shape_mismatch_error &e)
                 {
@@ -470,7 +471,7 @@ namespace nx{
             {
                 try
                 {
-                    this->imp().grow(e,n);
+                    _imp.grow(e,n);
                 }
                 catch(index_error &e)
                 {
@@ -493,27 +494,7 @@ namespace nx{
             Returns the number of dimensions of the field.
             \return number of dimensions
             */
-            size_t rank() const
-            { 
-                size_t r = this->imp().rank(); 
-                return r;
-            }
-
-            //-----------------------------------------------------------------
-            /*! 
-            \brief number of elements along dimension
-
-            Returns the number of elements along dimension i. An exception is
-            thrown if i exceeds the rank of the field.
-            \throws index_error if i exceeds the rank of the field
-            \param i index of the dimension
-            \return number of elements
-            */
-            size_t dim(size_t i) const
-            { 
-                size_t d = this->imp().dim(i); 
-                return d;
-            }
+            size_t rank() const { return _imp.rank(); }
 
             //=============methods for reading data============================
             /*! 
@@ -532,13 +513,13 @@ namespace nx{
             */
             template<typename T> void read(T &value) const
             {
-                if(this->imp().size() != 1)
+                if(_imp.size() != 1)
                     throw shape_mismatch_error(EXCEPTION_RECORD,
                                               "Field is not scalar!");
 
                 try
                 {
-                    this->imp().read(&value);
+                    _imp.read(&value);
                 }
                 catch(...)
                 {
@@ -554,7 +535,7 @@ namespace nx{
             {
                 try
                 {
-                    this->imp().read(values);
+                    _imp.read(values);
                 }
                 catch(...)
                 {
@@ -642,13 +623,13 @@ namespace nx{
             template<typename T> void write(const T &value) const
             {
                 static_assert(!std::is_pointer<T>::value,"no pointer");
-                if(this->imp().size()!=1) 
+                if(_imp.size()!=1) 
                     throw shape_mismatch_error(EXCEPTION_RECORD,
                                               "Field is not scalar!");
 
                 try
                 {
-                    this->imp().write(&value);
+                    _imp.write(&value);
                 }
                 catch(...)
                 {
@@ -665,7 +646,7 @@ namespace nx{
 
                 try
                 {
-                    this->imp().write(value);
+                    _imp.write(value);
                 }
                 catch(...)
                 {
@@ -784,9 +765,9 @@ namespace nx{
             \return field object with selection set
             */
             template<typename ...ITYPES>
-            nxselection<nxfield<Imp> > operator()(ITYPES ...indices)
+            nxselection<field_type> operator()(ITYPES ...indices)
             {
-                typedef nxselection<nxfield<Imp> > sel_type;
+                typedef nxselection<field_type> sel_type;
                 typedef typename sel_type::selection_type container_type;
 
                 return sel_type(container_type({slice(indices)...}),*this);
@@ -803,19 +784,233 @@ namespace nx{
             \param selection container with instances of slice
             \return instance of NXField with selection set
             */
-            nxselection<nxfield<Imp> > operator()(const std::vector<slice> &selection) 
+            nxselection<field_type> operator()(const std::vector<slice> &selection) 
             {
-                typedef nxselection<nxfield<Imp> > sel_type;
+                typedef nxselection<field_type> sel_type;
 
                 return sel_type(selection,*this);
             }
         
-            friend class nxselection<nxfield<Imp> >;
+            friend class nxselection<field_type>;
+
+            //----------------------------------------------------------------
+            string path() const { return _imp.path(); }
+
+            //----------------------------------------------------------------
+            string base() const { return _imp.base(); }
+
+            //---------------------------------------------------------------
+            string name() const { return _imp.name(); }
+
+            //---------------------------------------------------------------
+            void close() { _imp.close(); }
+
+            //---------------------------------------------------------------
+            bool is_valid() const { return _imp.is_valid(); }
+
+            //---------------------------------------------------------------
+            const imp_type &imp() const { return _imp; }
+
+            //---------------------------------------------------------------
+            nxobject_type object_type() const { return _imp.nxobject_type(); }
+
+            //=================attribute management methods====================
+            /*! 
+            \brief create an array attribute
+
+            Template method creating a multidimensional attribute of type T and
+            shape s. By default an exception will be thrown if an attribute of
+            same name already exists. If ov=true an existing attribute will be
+            overwritten
+            \throws nxattribute_error in case of errors
+            \param n name of the attribute
+            \param s shape of the array
+            \param ov overwrite flag
+            \return instance of nxattribute
+            */
+            template<
+                     typename T,
+                     typename CTYPE
+                    > 
+            attribute_type attr(const string &n, const CTYPE &s,bool ov=true) const
+            {
+                attribute_type attr;
+
+                try
+                {
+                    attr = attribute_type(_imp.template attr<T>(n,s,ov));
+                }
+                catch(...)
+                {
+                    throw nxattribute_error(EXCEPTION_RECORD,
+                            "Cannot create attribute ["+n+"] for object "
+                            "["+this->path()+"]!");
+                }
+                return attr;
+            }
+
+            //-----------------------------------------------------------------
+            /*! \brief create scalar attribute
+
+            Template method creating a scalar atribute of type T. By default an
+            exception is raised if an attribute of same name already exists. If
+            ov=true the existing attribute will be overwritten and no exeption
+            will be thrown.
+            \throws nxattribute_error in case of attribute related errors
+            \throws nxbackend_error in case of any other error
+            \param n name of the attribute
+            \param ov overwrite flag
+            \return an instance of nxattribute
+            */
+            template<typename T> 
+            attribute_type attr(const string &n,bool ov=false) const
+            {
+                return attr<T>(n,shape_t{1},ov);
+            }
+
+
+
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief open an existing attribute by name
+           
+            Opens an existing attribute of name n and returns an instance of
+            nxattribute<> to the callee. An exception will be thrown if the
+            attribute does not exist.
+            \throws nxattribute_error in case of problems
+            \param n name of the attribute
+            \return instance of nxattribute
+            */
+            attribute_type attr(const string &n) const
+            {
+                attribute_type attr;
+
+                try
+                {
+                    attr = attribute_type(_imp.attr(n));
+                }
+                catch(...)
+                {
+                    throw nxattribute_error(EXCEPTION_RECORD,
+                            "Cannot open attribute ["+n+"] from object ["
+                            +this->path()+"]!");
+                }
+                return attr;
+            }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief open an attribute by index
+           
+            Opens an existing attribute by its index. If the index exceeds the
+            total number of attributes attached to this object an exception will
+            be thrown.
+            \throws nxattribute_error in case of errors
+            \param i index of the attribute
+            \return instance of nxattribute
+            */
+            attribute_type attr(size_t i) const
+            {
+                attribute_type attr;
+
+                try
+                {
+                    attr = attribute_type(_imp.attr(i));
+                }
+                catch(...)
+                {
+                    std::stringstream istr;
+                    istr<<"Cannot open attribute ["<<i<<"] from object [";
+                    istr<<this->path()+"]!";
+                    throw nxattribute_error(EXCEPTION_RECORD,istr.str());
+                }
+
+                return attr;
+            }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief delete an attribute
+
+            Deletes an attribute attached to this object.
+            \throws nxattribute_error in case of errors
+            \param n name of the attribute
+            */
+            void del_attr(const string &n) const
+            {
+                try
+                {
+                    _imp.del_attr(n);
+                }
+                catch(...)
+                {
+                    throw nxattribute_error(EXCEPTION_RECORD,
+                            "Error deleting attribute ["+n+"]!");
+                }
+            }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief checks for attribute existance
+
+            Checks whether or not an attribute with a particular name exits. If
+            it does true is returned otherwise false.
+            \throws nxattribute_error in case of errors
+            \param n name of the attribute
+            \return true if n exists otherwise false
+            */
+            bool has_attr(const string &n) const
+            {
+                try
+                {
+                    return _imp.has_attr(n);
+                }
+                catch(...)
+                {
+                    throw nxattribute_error(EXCEPTION_RECORD,
+                            "Error checking for attribute ["+n+"]!");
+                }
+                return false;
+            }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief get number of attributes
+
+            Returns the number of attributes attached to this object.
+            \return number of attributes
+            */
+            size_t nattr() const { return _imp.nattr(); }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief iterator to frist attribute
+
+            Return an iterator to the first attribute attached to the object.
+            \return iterator to first attribute
+            */
+            attr_iterator attr_begin() const { return attr_iterator(*this); }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief iterator to last attribute
+
+            Return an iterator to the last attribute attached to the object.
+            \return iterator to last attribute
+            */
+            attr_iterator attr_end() const
+            {
+                return attr_iterator(*this,this->nattr());
+            }
+
+
+
 
     };
 
     //-------------------------------------------------------------------------
-    template<typename Imp> void nxfield<Imp>::read(array &a) const
+    template<nximp_code IMPID> void nxfield<IMPID>::read(array &a) const
     {
         if(a.size() == 0)
             throw memory_not_allocated_error(EXCEPTION_RECORD,
@@ -844,7 +1039,7 @@ namespace nx{
         //finally we read the data
         try
         {
-            read_array(this->imp(),a);
+            read_array(_imp,a);
         }
         catch(nxfield_error &error)
         {
@@ -853,7 +1048,7 @@ namespace nx{
     }
 
     //-------------------------------------------------------------------------
-    template<typename Imp> void nxfield<Imp>::write(const array &a) const
+    template<nximp_code IMPID> void nxfield<IMPID>::write(const array &a) const
     {
 
         if(a.size() == 0)
@@ -879,7 +1074,7 @@ namespace nx{
 
         try 
         { 
-            write_array(this->imp(),a);            
+            write_array(_imp,a);            
         }
         catch(type_error &error)
         {

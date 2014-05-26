@@ -25,7 +25,7 @@
 #include <pni/io/nx/nxpath.hpp>
 
 #include "../nxpath_utils.hpp"
-#include "../nxvariant_traits.hpp"
+#include "../nxobject_traits.hpp"
 #include "get_parent.hpp"
 #include "get_attribute.hpp"
 #include "get_child.hpp"

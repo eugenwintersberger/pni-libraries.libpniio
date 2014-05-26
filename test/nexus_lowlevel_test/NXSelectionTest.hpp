@@ -1,26 +1,25 @@
-/*
- * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- * NXSelectionTest.hpp
- *
- *  Created on: Feb 14, 2012
- *      Author: Eugen Wintersberger
- */
+//
+// (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+//  Created on: Feb 14, 2012
+//      Author: Eugen Wintersberger
+//
 #pragma once
 
 #include <boost/current_function.hpp>
@@ -77,6 +76,7 @@ class NXSelectionTest:public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE_END();
     private:
         nxfile file;
+        nxgroup root;
     public:
         void setUp();
         void tearDown();
@@ -92,7 +92,7 @@ template<typename T> void NXSelectionTest::test_scalar_selection()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     shape_t shape({3,4});
-    nxfield field = file.create_field<T>("array",shape);
+    nxfield field = root.create_field<T>("array",shape);
 
     T write=T(0),read=T(0);
     
@@ -135,7 +135,7 @@ template<typename T> void NXSelectionTest::test_array_selection()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     shape_t shape{3,4};
-    nxfield field = file.create_field<T>("array",shape);
+    nxfield field = root.create_field<T>("array",shape);
 
     auto write = dynamic_array<T>::create(shape_t({3}));
     auto read  = dynamic_array<T>::create(shape_t({3}));

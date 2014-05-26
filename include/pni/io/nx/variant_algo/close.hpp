@@ -22,7 +22,7 @@
 #pragma once
 
 #include <boost/variant.hpp>
-#include "../nxvariant_traits.hpp"
+#include "../nxobject_traits.hpp"
 #include "nxvariant_algo_helper.hpp"
 
 namespace pni{
@@ -58,11 +58,11 @@ namespace nx{
             //! result type (bool)
             typedef void result_type;   
             //! Nexus group type
-            typedef typename nxvariant_group_type<VTYPE>::type group_type;
+            typedef typename nxobject_group<VTYPE>::type group_type;
             //! Nexus field type
-            typedef typename nxvariant_field_type<VTYPE>::type field_type;
+            typedef typename nxobject_field<VTYPE>::type field_type;
             //! Nexus attribute type
-            typedef typename nxvariant_attribute_type<VTYPE>::type attribute_type;
+            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
            
             //-----------------------------------------------------------------
             //!

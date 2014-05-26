@@ -89,11 +89,12 @@ namespace nx{
     //! \return field type 
     //!
     template<
-             typename GTYPE,
+             template<nximp_code> class GTYPE,
+             nximp_code IMPID,
              typename ...ATYPES
             >
-    typename nxobject_traits<nximp_code_map<GTYPE>::icode>::field_type 
-    create_field(const GTYPE &g,const string &fname,const type_id_t &tid,
+    typename nxobject_trait<IMPID>::field_type 
+    create_field(const GTYPE<IMPID> &g,const string &fname,const type_id_t &tid,
                  ATYPES ...args)
     {
         if(tid == type_id_t::UINT8)

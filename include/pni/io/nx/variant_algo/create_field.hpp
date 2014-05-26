@@ -24,7 +24,7 @@
 
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
-#include "../nxvariant_traits.hpp"
+#include "../nxobject_traits.hpp"
 #include "get_object.hpp"
 
 namespace pni{
@@ -72,13 +72,12 @@ namespace nx{
                  typename T,
                  typename FT,
                  typename GTYPE,
-                 typename STYPE,
-                 typename CSTYPE
+                 typename STYPE
                  >
         static FT create_field(const GTYPE &g,
                                const string &name, 
                                const STYPE &s,
-                               const CSTYPE &cs,
+                               const STYPE &cs,
                                const FTYPE &filter)
         {
             return g.template create_field<T>(name,s,cs,filter);
@@ -171,11 +170,11 @@ namespace nx{
             //! result type
             typedef VTYPE result_type;
             //! Nexus group type
-            typedef typename nxvariant_group_type<VTYPE>::type group_type;
+            typedef typename nxobject_group<VTYPE>::type group_type;
             //! Nexus field type
-            typedef typename nxvariant_field_type<VTYPE>::type field_type;
+            typedef typename nxobject_field<VTYPE>::type field_type;
             //! Nexus attribute type
-            typedef typename nxvariant_attribute_type<VTYPE>::type attribute_type;
+            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
 
             //----------------------------------------------------------------
             //!

@@ -1,27 +1,25 @@
-/*
- * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- *
- * Definition of the NXDeflateFilter class.
- *
- * Created on: Feb 16, 2012
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- */
+//
+// (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+// Created on: Feb 16, 2012
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
 #pragma once
 
 #include "nxfilter.hpp"
@@ -41,29 +39,28 @@ namespace nx{
     This class provides an implementation of the simple deflate filter as it is
     implemented in zlib. 
     */
-    template<typename Imp> class nxdeflate_filter:public nxfilter<Imp>
+    template<typename FIMP> class nxdeflate_filter:public nxfilter<FIMP>
     {
         public:
+            typedef FIMP imp_type;
+            typedef nxdeflate_filter<FIMP> filter_type;
             //====================constructors and destructor==================
             //! default constructor
-            explicit nxdeflate_filter():nxfilter<Imp>() { }
+            explicit nxdeflate_filter():nxfilter<FIMP>() { }
 
             //-----------------------------------------------------------------
             //! copy constructor
-            nxdeflate_filter(const nxdeflate_filter<Imp> &f)
-                :nxfilter<Imp>(f)
+            nxdeflate_filter(const filter_type &f):nxfilter<FIMP>(f)
             { }
 
             //-----------------------------------------------------------------
             //! move constructor
-            nxdeflate_filter(nxdeflate_filter<Imp> &&f)
-                :nxfilter<Imp>(std::move(f))
+            nxdeflate_filter(filter_type &&f):nxfilter<FIMP>(std::move(f))
             { }
 
             //-----------------------------------------------------------------
             //! standard constructor
-            nxdeflate_filter(uint32 r,bool s)
-                :nxfilter<Imp>(Imp(r,s))
+            nxdeflate_filter(uint32 r,bool s):nxfilter<FIMP>(imp_type(r,s))
             { }
 
             //-----------------------------------------------------------------
@@ -72,18 +69,17 @@ namespace nx{
 
             //====================assignment operators=========================
             //! copy assignment operator
-            nxdeflate_filter<Imp> &
-                operator=(const nxdeflate_filter<Imp> &f)
+            filter_type &operator=(const filter_type &f)
             {
-                if(this != &f) nxfilter<Imp>::operator=(f);
+                if(this != &f) nxfilter<FIMP>::operator=(f);
                 return *this;
             }
 
             //-----------------------------------------------------------------
             //! move assignment operator
-            nxdeflate_filter<Imp> &operator=(nxdeflate_filter<Imp> &&f)
+            filter_type &operator=(filter_type &&f)
             {
-                if(this != &f) nxfilter<Imp>::operator=(std::move(f));
+                if(this != &f) nxfilter<FIMP>::operator=(std::move(f));
                 return *this;
             }
 

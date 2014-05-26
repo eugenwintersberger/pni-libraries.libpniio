@@ -29,9 +29,12 @@
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
 
+#include "nximp_map.hpp"
 #include "nxexceptions.hpp"
 #include "nxobject_traits.hpp"
+#include "nxobject_type.hpp"
 #include "utils/io_utils.hpp"
+#include "nxvariant.hpp"
 
 
 namespace pni{
@@ -52,14 +55,16 @@ namespace nx{
     //! Nexus objects. Objects of this type can be used to read and write 
     //! attribute data from and to an object.
     //!
-    template<typename Imp> 
+    template<nximp_code IMPID> 
     class nxattribute
     {
         public:
+            typedef typename nximp_map<IMPID>::attribute_imp   implementation_type;
             //! define the actual type of this object
-            typedef nxattribute<Imp> attribute_type;
+            typedef nxattribute<IMPID>                attribute_type;
         private:
-            Imp _imp;  //!< implementation of the attribute object
+            //! implementation of the attribute object
+            implementation_type _imp;  
            
             //-----------------------------------------------------------------
             //!
@@ -119,11 +124,18 @@ namespace nx{
 
             //------------------------------------------------------------------
             //! copy constructor from implementation
-            explicit nxattribute(const Imp &i):_imp(i) { }
+            explicit nxattribute(const implementation_type &i):_imp(i) { }
 
             //------------------------------------------------------------------
             //! move constructor from implementation
-            explicit nxattribute(Imp &&i):_imp(std::move(i)) { }
+            explicit nxattribute(implementation_type &&i):_imp(std::move(i)) { }
+
+            //! conversion constructor
+            nxattribute(const typename nxobject_trait<IMPID>::object_type &o):
+                _imp()
+            {
+                *this = o;
+            }
 
             //------------------------------------------------------------------
             //!destructor
@@ -145,6 +157,14 @@ namespace nx{
             {
                 if(this == &a) return *this;
                 _imp = std::move(a._imp);
+                return *this;
+            }
+
+            //------------------------------------------------------------------
+            attribute_type &operator=(const typename
+                    nxobject_trait<IMPID>::object_type &o)
+            {
+                *this = as_attribute(o);
                 return *this;
             }
 
@@ -449,14 +469,23 @@ namespace nx{
             //! This method returns the parent object of a 
             //! \return parent object
             //!
-            typename nxobject_traits<nximp_code_map<attribute_type>::icode>::object_type
-            parent() const
+            typename nxobject_trait<IMPID>::object_type parent() const
             {
-                typedef typename
-                    nxobject_traits<nximp_code_map<attribute_type>::icode>::object_type
-                    object_type;
+                typedef typename nxobject_trait<IMPID>::group_type group_type;
+                typedef typename nxobject_trait<IMPID>::field_type field_type;
+                typedef typename nximp_map<IMPID>::group_imp group_imp_type;
+                typedef typename nximp_map<IMPID>::field_imp field_imp_type;
 
-                return object_type(_imp.parent());
+                typename nximp_map<IMPID>::object_imp p = _imp.parent();
+
+                if(p.nxobject_type() == nxobject_type::NXFIELD)
+                    return field_type(field_imp_type(p));
+                else if(p.nxobject_type() == nxobject_type::NXGROUP)
+                    return group_type(group_imp_type(p));
+                else
+                    throw type_error(EXCEPTION_RECORD,
+                             "Cannot convert parent type");
+
             }
 
     };

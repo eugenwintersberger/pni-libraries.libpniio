@@ -1,28 +1,28 @@
-/*
- * (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- * Created on: Jul 5, 2013
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- */
+//
+// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+// Created on: Jul 5, 2013
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
 #pragma once
 
 #include <pni/core/types.hpp>
-#include "../nxvariant_traits.hpp"
+#include "../nxobject_traits.hpp"
 
 namespace pni{
 namespace io{
@@ -30,15 +30,15 @@ namespace nx{
     
     using namespace pni::core;
 
-    /*!
-    \ingroup variant_code
-    \brief grow visitor
-
-    This visitor grows a field along a particular dimensions. Exceptions will be
-    thrown for group and attribute objects.
-    \tparam VTYPE variant type
-    \sa grow
-    */
+    //!
+    //! \ingroup variant_code
+    //! \brief grow visitor
+    //!
+    //!  This visitor grows a field along a particular dimensions. 
+    //! Exceptions will be thrown for group and attribute objects.
+    //! \tparam VTYPE variant type
+    //! \sa grow
+    //!
     template<typename VTYPE> 
     class grow_visitor : public boost::static_visitor<void>
     {
@@ -51,33 +51,33 @@ namespace nx{
             //! result type
             typedef void result_type;
             //! Nexus group type
-            typedef typename nxvariant_group_type<VTYPE>::type group_type;
+            typedef typename nxobject_group<VTYPE>::type group_type;
             //! Nexus field type
-            typedef typename nxvariant_field_type<VTYPE>::type field_type;
+            typedef typename nxobject_field<VTYPE>::type field_type;
             //! Nexus attribute type
-            typedef typename nxvariant_attribute_type<VTYPE>::type attribute_type;
+            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
 
             //-----------------------------------------------------------------
-            /*!
-            \brief constructor
-
-            \param d index of dimension along which to grow
-            \param e number of elements about which to grow
-            */
+            //!
+            //! \brief constructor
+            //!
+            //! \param d index of dimension along which to grow
+            //! \param e number of elements about which to grow
+            //!
             grow_visitor(size_t d,size_t e):
                 _dim(d),
                 _extent(e)
             {}
 
             //-----------------------------------------------------------------
-            /*!
-            \brief process group instances
-
-            A group cannot grow - thus an exception is thrown.
-            \throws nxgroup_error 
-            \param g group instance
-            \return nothing
-            */ 
+            //!
+            //! \brief process group instances
+            //!
+            //! A group cannot grow - thus an exception is thrown.
+            //! \throws nxgroup_error 
+            //! \param g group instance
+            //! \return nothing
+            //!
             result_type operator()(const group_type &g) const
             {
                 throw nxgroup_error(EXCEPTION_RECORD,
@@ -85,27 +85,27 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            /*!
-            \brief process field instances
-
-            Grows the field along a particular dimenension.
-            \param f field instance
-            \return nothing
-            */
+            //!
+            //! \brief process field instances
+            //!
+            //! Grows the field along a particular dimenension.
+            //! \param f field instance
+            //! \return nothing
+            //!
             result_type operator()(field_type &f) const
             {
                 f.grow(_dim,_extent);
             }
 
             //-----------------------------------------------------------------
-            /*!
-            \brief process attribute instances
-
-            Throw an exception as an attribute cannot grow.
-            \throw nxattribute_error
-            \param a attribute instance
-            \return nothing
-            */
+            //!
+            //! \brief process attribute instances
+            //!
+            //! Throw an exception as an attribute cannot grow.
+            //! \throw nxattribute_error
+            //! \param a attribute instance
+            //! \return nothing
+            //!
             result_type operator()(const attribute_type &a) const
             {
                 throw nxattribute_error(EXCEPTION_RECORD,
@@ -113,29 +113,32 @@ namespace nx{
             }
     };
 
+    //!
+    //! \ingroup variant_code
+    //! \brief grow wrapper
+    //!
+    //! This function is a wrapper to the grow_visitor. It grows a field 
+    //! along a particular dimension. As groups and attribute cannot be 
+    //! grown exceptions will be thrown if the stored type is of a group or 
+    //! attribute type.
     /*!
-    \ingroup variant_code
-    \brief grow wrapper
-
-    This function is a wrapper to the grow_visitor. It grows a field along a
-    particular dimension. As groups and attribute cannot be grown exceptions
-    will be thrown if the stored type is of a group or attribute type.
-
     \code{.cpp}
     object_types field = get_object(root,path_to_field);
     grow(field,1,10);
     \endcode
-    If called without specifying the dimension and the extend by which to grow
-    the field will be extended by one element along the first dimension.
-
-    \throws nxgroup_error if stored object is a group
-    \throws nxattribute_error if the stored object is an attribute type
-    \tparam VTYPE variant type
-    \param o instance of VTYPE
-    \param d dimension along which to grow
-    \param e extent by which to grow along d
-    \return nothing
     */
+    //! If called without specifying the dimension and the extend by which to 
+    //! grow the field will be extended by one element along the first 
+    //! dimension.
+    //!
+    //! \throws nxgroup_error if stored object is a group
+    //! \throws nxattribute_error if the stored object is an attribute type
+    //! \tparam VTYPE variant type
+    //! \param o instance of VTYPE
+    //! \param d dimension along which to grow
+    //! \param e extent by which to grow along d
+    //! \return nothing
+    //!
     template<typename VTYPE> 
     typename grow_visitor<VTYPE>::result_type 
     grow(VTYPE &o,size_t d=0,size_t e=1)

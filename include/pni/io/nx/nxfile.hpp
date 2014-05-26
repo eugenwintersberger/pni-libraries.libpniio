@@ -26,7 +26,7 @@
 #include <pni/core/types.hpp>
 #include <pni/core/utilities.hpp>
 
-#include "nxobject.hpp"
+#include "nximp_map.hpp"
 #include "nxobject_traits.hpp"
 #include "nxgroup.hpp"
 #include "nxdate_time.hpp"
@@ -50,54 +50,62 @@ namespace nx{
     data holding entity. You can use NXField to read from or write data to a
     file.
     */
-    template<typename Imp> class nxfile:public nxgroup<Imp> 
+    template<nximp_code IMPID> class nxfile
     {
         public:
-            //! shared pointer type for a file object
-            typedef std::shared_ptr<nxfile > shared_ptr; 
+            typedef typename nximp_map<IMPID>::file_imp imp_type;
+            typedef nxfile<IMPID>              file_type;
+        private:
+            //! implementation instance
+            imp_type _imp; 
+        public:
             //===============constructors and destructor========================
             //! default constructor
-            explicit nxfile():nxgroup<Imp>() { }
+            explicit nxfile():_imp() { }
 
             //-----------------------------------------------------------------
             //! copy constrcutor
-            nxfile(const nxfile<Imp> &file):nxgroup<Imp>(file) { }
+            nxfile(const file_type &file):_imp(file._imp) { }
 
             //-----------------------------------------------------------------
             //! implemenetation move constructor
-            explicit nxfile(Imp &&imp):nxgroup<Imp>(std::move(imp)){ }
+            explicit nxfile(imp_type &&imp):_imp(std::move(imp)){ }
 
             //-----------------------------------------------------------------
             //! move constructor
-            nxfile(nxfile<Imp> &&f):nxgroup<Imp>(std::move(f)) { }
+            nxfile(file_type &&f):_imp(std::move(f._imp)) { }
 
             //-----------------------------------------------------------------
             //! destructor
             ~nxfile()
             {
-                if((this->is_valid())&&(!this->is_readonly()))
+                if((_imp.is_valid())&&(!_imp.is_readonly()))
                 {
-                    this->template attr<string>("file_update_time",true)
+                    auto r = root();
+                    r.template attr<string>("file_update_time",true)
                         .write(nxdate_time::get_date_time_str());
+                    r.close();
                 }
             }
 
-            //====================assignment operators=========================
-            //! move assignment operator
-            nxfile<Imp> &operator=(nxfile<Imp> &&o)
+            //================assigment operator===============================
+            file_type &operator=(const file_type &f)
             {
-                if(this == &o) return *this;
-                nxgroup<Imp>::operator=(std::move(o));
+                if(this == &f) return *this;
+                
+                _imp = f._imp;
+
                 return *this;
             }
 
-            //-----------------------------------------------------------------
-            //! copy assignment operator
-            nxfile<Imp> &operator=(const nxfile<Imp> &o)
+            file_type &operator=(file_type &&f)
             {
-                if(this != &o) nxgroup<Imp>::operator=(o);
+                if(this == &f) return *this;
+
+                _imp = std::move(f._imp);
                 return *this;
             }
+                
 
             //================factory methods==================================
             /*! 
@@ -109,21 +117,17 @@ namespace nx{
             \param ro open read only if true
             \return an instance of NXFile
             */
-            static nxfile<Imp> open_file(const string &n,bool ro=true)
+            static file_type open_file(const string &n,bool ro=true)
             {
-                nxfile<Imp> file;
-
                 try
                 {
-                    file = nxfile<Imp>(Imp::open_file(n,ro));
+                    return file_type(imp_type::open_file(n,ro));
                 }
                 catch(...)
                 {
                     throw nxfile_error(EXCEPTION_RECORD,"Error opening file!");
                 }
 
-
-                return file;
             }
 
             //-----------------------------------------------------------------
@@ -137,32 +141,34 @@ namespace nx{
             \param ssize split size (not implemented yet)
             \return instance of NXFile
             */
-            static nxfile<Imp> 
-                create_file(const string &n,bool ow=false, ssize_t ssize = 0)
+            static file_type
+            create_file(const string &n,bool ow=false, ssize_t ssize = 0)
             {
-                nxfile<Imp> file;
+                file_type file;
 
                 try
                 {
-                    file = nxfile<Imp>(Imp::create_file(n,ow,ssize));
+                    file = file_type(imp_type::create_file(n,ow,ssize));
                 }
                 catch(...)
                 {
                     throw nxfile_error(EXCEPTION_RECORD,"Error creating file!");
                 }
+
+                auto root_group = file.root();
                 
                 //set file specific attributes
-                file.template
-                    attr<string>("NX_class").write(string("NXroot"));
-                file.template 
-                    attr<string>("file_time").write(nxdate_time::get_date_time_str());
-                file.template 
-                    attr<string>("file_update_time").write(nxdate_time::get_date_time_str());
-                file.template attr<string>("file_name").write(n);
+                root_group.template
+                    attr<string>("NX_class",true).write(string("NXroot"));
+                root_group.template 
+                    attr<string>("file_time",true).write(nxdate_time::get_date_time_str());
+                root_group.template 
+                    attr<string>("file_update_time",true).write(nxdate_time::get_date_time_str());
+                root_group.template attr<string>("file_name",true).write(n);
 
                 //this should be taken from a configuration
-                file.template
-                    attr<string>("NeXus_version").write(string("4.3.0"));
+                root_group.template
+                    attr<string>("NeXus_version",true).write(string("4.3.0"));
 
                 //flush the files content
                 file.flush();
@@ -173,11 +179,11 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! flush the file
-            void flush() const{ this->imp().flush(); }
+            void flush() const{ _imp.flush(); }
             
             //-----------------------------------------------------------------
             //! check read only
-            bool is_readonly() const { return this->imp().is_readonly(); }
+            bool is_readonly() const { return _imp.is_readonly(); }
 
 
             //-----------------------------------------------------------------
@@ -186,12 +192,14 @@ namespace nx{
             {
                 if((this->is_valid())&&(!this->is_readonly()))
                 {
-                    this->template attr<string>("file_update_time",true)
+                    auto r = root();
+                    r.template attr<string>("file_update_time",true)
                         .write(nxdate_time::get_date_time_str());
+                    r.close();
                 }
                 
-                this->imp().close();
-                nxobject<Imp>::close();
+                _imp.close();
+                //nxobject<Imp>::close();
             }
 
             //-----------------------------------------------------------------
@@ -215,15 +223,28 @@ namespace nx{
             Return the root group of the file.
             \return root group of the file
             */
-            typename nxobject_traits<nximp_code_map<nxfile<Imp>>::icode>::group_type
-            root_group() const
+            typename nxobject_trait<IMPID>::group_type
+            root() const
             {
-                typedef nximp_code_map<nxfile<Imp>> imp_code_map;
-                typedef typename nxobject_traits<imp_code_map::icode>::group_type group_type;
+                typedef typename nximp_map<IMPID>::group_imp group_imp_type;
+                typedef typename nxobject_trait<IMPID>::group_type group_type;
 
-                return group_type(this->open("/"));
+                return group_type(group_imp_type(_imp.open("/")));
             }
 
+            bool is_valid() const
+            {
+                return _imp.is_valid(); 
+            }
+
+            //----------------------------------------------------------------
+            string path() const { return _imp.path(); }
+
+            //----------------------------------------------------------------
+            string base() const { return _imp.base(); }
+
+            //---------------------------------------------------------------
+            string name() const { return _imp.name(); }
 
     };
 

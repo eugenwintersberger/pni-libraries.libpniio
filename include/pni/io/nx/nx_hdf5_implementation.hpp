@@ -26,7 +26,6 @@
 //
 #pragma once
 
-#include "nxobject.hpp"
 #include "nxfile.hpp"
 #include "nxgroup.hpp"
 #include "nxfield.hpp"
@@ -52,14 +51,14 @@ namespace nx{
 namespace h5{
     //========need to define the implementation types==========================
 
-    typedef pni::io::nx::nxobject<H5AttributeObject>    nxobject;
-    typedef pni::io::nx::nxfile<H5File>                 nxfile;
-    typedef pni::io::nx::nxgroup<H5Group>               nxgroup;
-    typedef pni::io::nx::nxfield<H5Dataset>             nxfield;
-    typedef pni::io::nx::nxfilter<H5Filter>             nxfilter;
-    typedef pni::io::nx::nxdeflate_filter<H5DeflateFilter> nxdeflate_filter;
-    typedef pni::io::nx::nxattribute<H5Attribute>  nxattribute;
+    typedef pni::io::nx::nxfile<nximp_code::HDF5>                 nxfile;
+    typedef pni::io::nx::nxgroup<nximp_code::HDF5>               nxgroup;
+    typedef pni::io::nx::nxfield<nximp_code::HDF5>             nxfield;
+    typedef pni::io::nx::nxfilter<nximp_map<nximp_code::HDF5>::filter_imp>             nxfilter;
+    typedef pni::io::nx::nxdeflate_filter<nximp_map<nximp_code::HDF5>::deflate_imp> nxdeflate_filter;
+    typedef pni::io::nx::nxattribute<nximp_code::HDF5>  nxattribute;
     typedef pni::io::nx::nxselection<nxfield> nxselection;
+    typedef boost::variant<nxgroup,nxfield,nxattribute> nxobject;
 //end of namespace
 }
 }
@@ -70,29 +69,18 @@ namespace pni{
 namespace io{
 namespace nx{
 
-    //-------------------------------------------------------------------------
-    //map all relevant types belonging to the HDF5 implementation to the
-    //appropriate implementation code
-    //-------------------------------------------------------------------------
-    NXIMPCODEMAPDECL(h5::H5AttributeObject,nximp_code::HDF5);
-    NXIMPCODEMAPDECL(h5::H5File,nximp_code::HDF5);
-    NXIMPCODEMAPDECL(h5::H5Group,nximp_code::HDF5);
-    NXIMPCODEMAPDECL(h5::H5Dataset,nximp_code::HDF5);
-    NXIMPCODEMAPDECL(h5::H5Filter,nximp_code::HDF5);
-    NXIMPCODEMAPDECL(h5::H5Attribute,nximp_code::HDF5);
+    template<> struct nxobject_trait<nximp_code::HDF5>
+    {
+        typedef h5::nxfile file_type;
+        typedef h5::nxgroup group_type;
+        typedef h5::nxfield field_type;
+        typedef h5::nxattribute attribute_type;
+        typedef h5::nxselection selection_type;
+        typedef h5::h5link link_type;
+        typedef h5::nxdeflate_filter deflate_type;
+        typedef h5::nxobject object_type;
+    };
 
-    NXIMPCODEMAPDECL(h5::nxobject,nximp_code::HDF5);
-    NXIMPCODEMAPDECL(h5::nxfile,nximp_code::HDF5);
-    NXIMPCODEMAPDECL(h5::nxgroup,nximp_code::HDF5);
-    NXIMPCODEMAPDECL(h5::nxfield,nximp_code::HDF5);
-    NXIMPCODEMAPDECL(h5::nxdeflate_filter,nximp_code::HDF5);
-    NXIMPCODEMAPDECL(h5::nxattribute,nximp_code::HDF5);
-    NXIMPCODEMAPDECL(h5::nxselection,nximp_code::HDF5);
-
-    //declare the central type trait for the HDF5 implementation
-    DECLARE_NXOBJECT_TRAITS(nximp_code::HDF5,h5::nxobject,h5::nxgroup,
-                            h5::nxfile,h5::nxfield,h5::nxattribute,
-                            h5::nxselection,h5::h5link,h5::nxdeflate_filter);
 
 //need to setup the implementation code maps
 }

@@ -1,28 +1,27 @@
-/*
- * Declaration of Nexus object template.
- *
- * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- * NXNumericFieldTest.cpp
- *
- *  Created on: Dec 3, 2011
- *      Author: Eugen Wintersberger
- */
+//
+// Declaration of Nexus object template.
+//
+// (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+//  Created on: Dec 3, 2011
+//      Author: Eugen Wintersberger
+//
 
 #include "NXFieldTest.hpp"
 #include "../EqualityCheck.hpp"
@@ -32,6 +31,7 @@
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/nxexceptions.hpp>
 #include <pni/io/nx/nexus_utils.hpp>
+#include <pni/io/nx/nxvariant.hpp>
 
 #include <pni/core/arrays.hpp>
 
@@ -41,6 +41,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(NXFieldTest);
 void NXFieldTest::setUp()
 {
     file = nxfile::create_file("NXFieldTest.h5",true,0);
+    root = file.root();
 
 	for(size_t i=0;i<n;i++) testdata[i] = i+1;
 
@@ -50,7 +51,11 @@ void NXFieldTest::setUp()
 }
 
 //------------------------------------------------------------------------------
-void NXFieldTest::tearDown(){ file.close(); }
+void NXFieldTest::tearDown()
+{ 
+    root.close();
+    file.close(); 
+}
 
 //------------------------------------------------------------------------------
 void NXFieldTest::test_creation()
@@ -59,7 +64,7 @@ void NXFieldTest::test_creation()
 
 	nxfield field;
 
-	CPPUNIT_ASSERT_NO_THROW(field = file.create_field<uint16>("test1"));
+	CPPUNIT_ASSERT_NO_THROW(field = root.create_field<uint16>("test1"));
     CPPUNIT_ASSERT(field.is_valid());
     CPPUNIT_ASSERT(field.rank()==1);
     CPPUNIT_ASSERT(field.size() == 1);
@@ -82,7 +87,7 @@ void NXFieldTest::test_creation()
     nxdeflate_filter deflate(9,true);
    
     shape_t shape({100,100});
-    field = file.create_field<float32>("test_defalte", shape,deflate);
+    field = root.create_field<float32>("test_defalte", shape,deflate);
     CPPUNIT_ASSERT(field.is_valid());
     CPPUNIT_ASSERT(field.rank() == 2);
     CPPUNIT_ASSERT(field.size() == 100*100);
@@ -99,10 +104,10 @@ void NXFieldTest::test_creation()
                          */
 
     //create a field with a utilty function
-    field = create_field(file,"test_util", type_id_t::UINT32);
-    field = create_field(file,"test_util2",type_id_t::FLOAT128,
+    field = create_field(root,"test_util", type_id_t::UINT32);
+    field = create_field(root,"test_util2",type_id_t::FLOAT128,
                          shape_t{0,1024,1024},shape_t{1,1024,1024});
-    field = create_field(file,"test_util3",type_id_t::FLOAT128,
+    field = create_field(root,"test_util3",type_id_t::FLOAT128,
                          shape_t{0,1024,1024},shape_t{1,1024,1024},deflate);
 
 }
@@ -112,12 +117,12 @@ void NXFieldTest::test_open()
 {
 	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-	file.create_field<uint32>("data1");
+	root.create_field<uint32>("data1");
 
-	nxfield f1 = file.open("data1");
+	nxfield f1 = as_field(root.open("data1"));
 
 	nxfield f2;
-	f2 = file.open("data1");
+	f2 = as_field(root.open("data1"));
 }
 
 //------------------------------------------------------------------------------
@@ -125,12 +130,12 @@ void NXFieldTest::test_parent()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    nxfield f = file.create_field<float64>("/detector/data");
+    nxfield f = root.create_field<float64>("/detector/data");
     nxgroup p = f.parent();
     CPPUNIT_ASSERT(p.is_valid());
     CPPUNIT_ASSERT(p.name() == "detector");
-    f = file.create_field<uint16>("temperature");
-    CPPUNIT_ASSERT(f.parent().name() == "/");
+    f = root.create_field<uint16>("temperature");
+    CPPUNIT_ASSERT(get_name(f.parent()) == "/");
 }
 
 //------------------------------------------------------------------------------
@@ -138,7 +143,7 @@ void NXFieldTest::test_assignment()
 {
 	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-	nxfield field = file.create_field<uint16>("test1");
+	nxfield field = root.create_field<uint16>("test1");
 	CPPUNIT_ASSERT(field.is_valid());
 
 	nxfield field2;
@@ -168,7 +173,7 @@ void NXFieldTest::test_resize()
     shape_t s({0,1024});
     shape_t cs({1,1024});
 
-    nxfield field = file.create_field<float32>("ds",s);
+    nxfield field = root.create_field<float32>("ds",s);
     CPPUNIT_ASSERT(field.is_valid());
     auto shape = field.shape<shape_t>();
     CPPUNIT_ASSERT(std::equal(shape.begin(),shape.end(),s.begin()));
@@ -184,7 +189,7 @@ void NXFieldTest::test_resize()
     shape = field.shape<shape_t>();
     CPPUNIT_ASSERT(std::equal(shape.begin(),shape.end(),s.begin()));
 
-    nxfield field2 = file.create_field<string>("ss");
+    nxfield field2 = root.create_field<string>("ss");
     CPPUNIT_ASSERT(field2.rank() == 1);
     CPPUNIT_ASSERT(field2.size() == 1);
     CPPUNIT_ASSERT_NO_THROW(field2.grow(0));
@@ -204,7 +209,7 @@ void NXFieldTest::test_resize()
 void NXFieldTest::test_io_string_scalar()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    nxfield field1 = file.create_field<string>("scalar");
+    nxfield field1 = root.create_field<string>("scalar");
 
     string write,read;
     write = "hello";
@@ -218,7 +223,7 @@ void NXFieldTest::test_io_string_scalar()
     CPPUNIT_ASSERT_THROW(field1.write(write),shape_mismatch_error);
 
     //try to write a literal
-    nxfield field2 = file.create_field<string>("scalar_2");
+    nxfield field2 = root.create_field<string>("scalar_2");
     CPPUNIT_ASSERT_NO_THROW(field2.write("hello world"));
     CPPUNIT_ASSERT_NO_THROW(field2.read(read));
     CPPUNIT_ASSERT(read == "hello world");
@@ -228,7 +233,7 @@ void NXFieldTest::test_io_string_scalar()
 void NXFieldTest::test_io_bool_scalar()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    nxfield field1 = file.create_field<bool_t>("scalar");
+    nxfield field1 = root.create_field<bool_t>("scalar");
 
     bool_t write,read;
     write = true;
@@ -252,19 +257,19 @@ void NXFieldTest::test_io_string_array()
     std::fill(write.begin(),write.end(),"Hello");
     std::fill(read.begin(),read.end(),"");
 
-    nxfield field1 = file.create_field<string>("array",s);
+    nxfield field1 = root.create_field<string>("array",s);
     CPPUNIT_ASSERT_NO_THROW(field1.write(write));
     CPPUNIT_ASSERT_NO_THROW(field1.read(read));
     CPPUNIT_ASSERT(std::equal(write.begin(),write.end(),read.begin()));
 
-    field1 = file.create_field<string>("array2",{2,2});
+    field1 = root.create_field<string>("array2",{2,2});
     CPPUNIT_ASSERT_THROW(field1.write(write),shape_mismatch_error);
 
     nxdeflate_filter deflate;
     deflate.compression_rate(9);
     deflate.shuffle(true);
 
-    field1 = file.create_field<string>("array2_delfate",s,deflate);
+    field1 = root.create_field<string>("array2_delfate",s,deflate);
     CPPUNIT_ASSERT_NO_THROW(field1.write(write));
     CPPUNIT_ASSERT_NO_THROW(field1.read(read));
     CPPUNIT_ASSERT(std::equal(write.begin(),write.end(),read.begin()));
@@ -308,7 +313,7 @@ void NXFieldTest::test_grow()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     shape_t s{0};
-    nxfield field = file.create_field<bool_t>("flags",s);
+    nxfield field = root.create_field<bool_t>("flags",s);
     CPPUNIT_ASSERT(field.size() == 0);
 
     field.grow(0);
@@ -324,7 +329,7 @@ void NXFieldTest::test_io_array()
     auto data = dynamic_array<float64>::create(shape_t({10,5}));
     array o(data);
 
-    nxfield field = file.create_field<float64>("data",data.shape<shape_t>());
+    nxfield field = root.create_field<float64>("data",data.shape<shape_t>());
     double index = 0.;
     for(auto iter=o.begin();iter!=o.end();++iter)
         *iter = index++;

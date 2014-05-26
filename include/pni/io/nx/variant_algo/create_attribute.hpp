@@ -24,7 +24,6 @@
 #include <boost/variant.hpp>
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
-#include "../nxvariant_traits.hpp"
 #include "../nxobject_traits.hpp"
 #include "get_object.hpp"
 
@@ -58,11 +57,13 @@ namespace nx{
     //!
     template<
              typename T,
-             typename PTYPE,
+             template<nximp_code> class PTYPE,
+             nximp_code IMPID,
              typename STYPE = shape_t
             > 
-    attribute_type<PTYPE>
-    create_attribute(const PTYPE &o,const string &n,const STYPE &s=STYPE())
+    typename nxobject_trait<IMPID>::attribute_type
+    create_attribute(const PTYPE<IMPID> &o,const string &n,
+                     const STYPE &s=STYPE())
     {
         return o.template attr<T>(n,s);
     }
@@ -94,11 +95,13 @@ namespace nx{
     //!
     template<
              typename T,
-             typename PTYPE,
+             template<nximp_code> class PTYPE,
+             nximp_code IMPID,
              typename STYPE = shape_t
             > 
-    attribute_type<PTYPE>
-    create_attribute(const PTYPE &o,const nxpath &path,const STYPE &s=STYPE())
+    typename nxobject_trait<IMPID>::attribute_type
+    create_attribute(const PTYPE<IMPID> &o,const nxpath &path,
+                     const STYPE &s=STYPE())
     {
         nxpath group_path,target_path;
 
@@ -109,7 +112,7 @@ namespace nx{
 
         split_last(path,group_path,target_path);
 
-        PTYPE parent = get_object(o,group_path);
+        PTYPE<IMPID> parent = get_object(o,group_path);
         parent = get_child(parent,target_path.begin()->first,
                            target_path.begin()->second);
 
@@ -119,11 +122,12 @@ namespace nx{
     //------------------------------------------------------------------------
     template<
              typename T,
-             typename PTYPE,
+             template<nximp_code> class PTYPE,
+             nximp_code IMPID,
              typename ...ARGTS
             >
-    attribute_type<PTYPE> 
-    create_attribute(const PTYPE &o,type_id_t tid,ARGTS ...args)
+    typename nxobject_trait<IMPID>::attribute_type
+    create_attribute(const PTYPE<IMPID> &o,type_id_t tid,ARGTS ...args)
     {
         if(tid == type_id_t::UINT8)
             return create_attribute<uint8>(o,args...);
@@ -191,11 +195,11 @@ namespace nx{
             //! result type
             typedef VTYPE result_type;
             //! Nexus group type
-            typedef typename nxvariant_group_type<VTYPE>::type group_type;
+            typedef typename nxobject_group<VTYPE>::type group_type;
             //! Nexus field type
-            typedef typename nxvariant_field_type<VTYPE>::type field_type;
+            typedef typename nxobject_field<VTYPE>::type field_type;
             //! Nexus attribute type
-            typedef typename nxvariant_attribute_type<VTYPE>::type attribute_type;
+            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
 
             //-----------------------------------------------------------------
             //!

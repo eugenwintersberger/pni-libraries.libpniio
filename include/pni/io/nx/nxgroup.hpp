@@ -26,13 +26,15 @@
 #include <pni/core/types.hpp>
 #include <pni/core/utilities.hpp>
 
-#include "nxobject.hpp"
 #include "nximp_map.hpp"
 #include "nxfield.hpp"
 #include "nxfilter.hpp"
 #include "nxexceptions.hpp"
 #include "nxobject_iterator.hpp"
 #include "nxlink.hpp"
+#include "nxattribute.hpp"
+#include "nxattribute_iterator.hpp"
+#include "nxvariant.hpp"
 
 
 namespace pni{
@@ -48,23 +50,27 @@ namespace nx{
     //! \ingroup nexus_lowlevel
     //! \brief NXgroup object
     //! 
-    template<typename Imp> class nxgroup:public nxobject<Imp> 
+    template<nximp_code IMPID> class nxgroup
     {
             
         public:
             //===================public types==================================
-            typedef nxobject_iterator<nxgroup<Imp>,
-                                     nxobject<MAPTYPE(Imp,ObjectImpl)> > 
-                    iterator; //!< iterator type
-            //! field type
-            typedef nxfield<MAPTYPE(Imp,FieldImpl)> field_type; 
-        private:
-            //===================private types================================
-            //! field implementation type
-            typedef MAPTYPE(Imp,FieldImpl) field_imp_type;
+            typedef typename nximp_map<IMPID>::group_imp imp_type;
+            typedef nxgroup<IMPID> group_type;
 
-            //! group implementation type
-            typedef MAPTYPE(Imp,GroupImpl) group_imp_type;
+            typedef nxobject_iterator<group_type,
+                    typename nxobject_trait<IMPID>::object_type 
+                    > iterator; //!< iterator type
+            //! field type
+            typedef typename nxobject_trait<IMPID>::field_type field_type; 
+            typedef typename nxobject_trait<IMPID>::attribute_type
+                attribute_type;
+            typedef nxattribute_iterator<field_type,attribute_type>
+                attr_iterator;
+        private:
+            typedef typename nximp_map<IMPID>::field_imp field_imp_type;
+            typedef typename nximp_map<IMPID>::object_imp object_imp_type;
+            imp_type _imp;
 
             //===================private functions============================
 
@@ -109,7 +115,7 @@ namespace nx{
                 try
                 {
                     field = field_type(field_imp_type::template 
-                                       create<T>(n,this->imp(),shape,chunk));
+                                       create<T>(n,_imp,shape,chunk));
                 }
                 catch(shape_mismatch_error &error)
                 {
@@ -139,21 +145,21 @@ namespace nx{
             //----------------------------------------------------------------
             template<
                       typename T,
-                      typename FilterImp,
                       typename CHUNKT,
-                      typename SHAPET
+                      typename SHAPET,
+                      typename FIMP
                     > 
             field_type
             _create_field(const string &n,const SHAPET &shape,
                          const CHUNKT &chunk,
-                         const nxfilter<FilterImp> &filter) const
+                         const nxfilter<FIMP> &filter) const
             {
                 field_type field;
 
                 try
                 {
                     field =  field_type(field_imp_type::template
-                              create<T>(n,this->imp(),shape,chunk,filter.imp()));
+                              create<T>(n,_imp,shape,chunk,filter.imp()));
                 }
                 catch(shape_mismatch_error &error)
                 {
@@ -181,7 +187,7 @@ namespace nx{
         public:
             //==============constructors and destructor========================
             //! default constructor
-            explicit nxgroup():nxobject<Imp>() { }
+            explicit nxgroup():_imp() { }
 
             //-----------------------------------------------------------------
             //!
@@ -193,56 +199,56 @@ namespace nx{
             //!
             //! \param o original group object 
             //!
-            nxgroup(const nxgroup<Imp> &o):nxobject<Imp>(o) { }
+            nxgroup(const group_type &o):_imp(o._imp) { }
             
             //-----------------------------------------------------------------
             //! move constructor
-            nxgroup(nxgroup<Imp> &&o):nxobject<Imp>(std::move(o)) { }
+            nxgroup(group_type &&o):_imp(std::move(o._imp)) { }
            
             //-----------------------------------------------------------------
             //!copy construct from implementation object
-            nxgroup(const Imp &imp):nxobject<Imp>(imp) { }
+            explicit nxgroup(const imp_type &imp):_imp(imp) { }
 
             //-----------------------------------------------------------------
             //! move construct from implementation object
-            nxgroup(Imp &&imp):nxobject<Imp>(std::move(imp)) { }
-
+            explicit nxgroup(imp_type &&imp):_imp(std::move(imp)) { }
 
             //-----------------------------------------------------------------
-            //! copy conversion constructor
-            template<typename ObjImp>
-            nxgroup(const nxobject<ObjImp> &o):nxobject<Imp>(o)
-            { }
+            //! conversion constructor
+            nxgroup(const typename nxobject_trait<IMPID>::object_type &o):_imp()
+            {
+                *this = o;
+            }
+        
 
             //-----------------------------------------------------------------
             //! destructor
-            virtual ~nxgroup(){ } 
+            ~nxgroup(){ } 
 
-            //=====================assignment operators========================
-            //! copy assignment operator
-            nxgroup<Imp> &operator=(const nxgroup<Imp> &o)
+            //========================assignment operators=====================
+            group_type &operator=(const group_type &g)
             {
-                if(this == &o) return *this;
-                nxobject<Imp>::operator=(o);
+                if(this == &g) return *this;
+
+                _imp = g._imp;
+                return *this;
+            }
+
+            group_type &operator=(group_type &&g)
+            {
+                if(this == &g) return *this;
+
+                _imp = std::move(g._imp);
+
                 return *this;
             }
 
             //-----------------------------------------------------------------
-            //! copy assignment conversion operator
-            template<typename ObjImp>
-            nxgroup<Imp> &operator=(const nxobject<ObjImp> &o)
+            group_type &operator=(const typename
+                    nxobject_trait<IMPID>::object_type &o)
             {
-                nxobject<Imp>::operator=(o);
-                return *this;
-            }
-
-            //-----------------------------------------------------------------
-            //! move assignment operator
-            nxgroup<Imp> &operator=(nxgroup<Imp> &&o)
-            {
-                if(this == &o) return *this;
-                nxobject<Imp>::operator=(std::move(o));
-                return *this;
+                *this = as_group(o);
+                return  *this;
             }
 
 
@@ -263,19 +269,17 @@ namespace nx{
             //! \param type nexus class type
             //! \return a new instance of nxgroup
             //!
-            nxgroup<MAPTYPE(Imp,GroupImpl)> 
-            create_group(const string &n,const string &type=string()) const
+            group_type create_group(const string &n,
+                                    const string &type=string()) const
             {
                 //we need to do here two things
                 //we have to check if the particular group type
                 //exists and add a check object to the class
 
-                typedef MAPTYPE(Imp,GroupImpl) GroupImpl;
-
-                nxgroup<GroupImpl> g;
+                group_type g;
                 try
                 {
-                    g = nxgroup<GroupImpl>(GroupImpl(n,this->imp()));
+                    g = group_type(imp_type(n,_imp));
                 }
                 catch(nxgroup_error &e)
                 {
@@ -346,9 +350,8 @@ namespace nx{
                      typename T,
                      typename CTYPE = shape_t
                     >
-            nxfield<MAPTYPE(Imp,FieldImpl)>
-            create_field(const string &n,
-                         const CTYPE &shape={1}) const
+            field_type create_field(const string &n,
+                                    const CTYPE &shape={1}) const
             {
                 if(!shape.size())
                     throw size_mismatch_error(EXCEPTION_RECORD,
@@ -394,16 +397,12 @@ namespace nx{
                      typename T, 
                      typename CTYPE=shape_t
                     > 
-            nxfield<MAPTYPE(Imp,FieldImpl)>
-            create_field(const string &n,
-                         const CTYPE &shape,
-                         const CTYPE &chunk) const
+            field_type create_field(const string &n,
+                                    const CTYPE &shape,
+                                    const CTYPE &chunk) const
             {
                 return _create_field<T>(n,shape,chunk);
             }
-
-
-            
 
             //------------------------------------------------------------------
             /*! 
@@ -421,7 +420,6 @@ namespace nx{
             nxfield field = g.create_field<uint16>("data",shape,filter);
             \endcode
             \tparam T data type for the filed
-            \tparam FilterImp filter implementation (implicit)
             \tparam CTYPES container type for the field shape
             \param n name of the field
             \param s shape of the field
@@ -430,12 +428,11 @@ namespace nx{
             */
             template<
                      typename T,
-                     typename FilterImp,
-                     typename CTYPES
+                     typename CTYPES,
+                     typename FIMP
                     > 
-            nxfield<MAPTYPE(Imp,FieldImpl)>
-            create_field(const string &n,const CTYPES &shape,
-                         const nxfilter<FilterImp> &filter) const
+            field_type create_field(const string &n,const CTYPES &shape,
+                                    const nxfilter<FIMP> &filter) const
             {
                 if(!shape.size())
                     throw size_mismatch_error(EXCEPTION_RECORD,
@@ -466,7 +463,6 @@ namespace nx{
             \throws shape_mismatch_error if the rank of chunk and field shape do
             not share the same rank
             \tparam T data type of the field
-            \tparam FilterImp filter implementation type
             \tparam CTYPES container type for the shape
             \tparam CTYPEC container type for the chunk shape
             \param n name or path of the field
@@ -476,13 +472,13 @@ namespace nx{
             \return instance of NXField
             */
             template<typename T,
-                     typename FilterImp,
                      typename CTYPES,
-                     typename CTYPEC
+                     typename CTYPEC,
+                     typename FIMP
                     > 
-            nxfield<MAPTYPE(Imp,FieldImpl)>
-            create_field(const string &n,const CTYPES &s,const CTYPEC &cs,
-                        const nxfilter<FilterImp> &filter) const
+            field_type create_field(const string &n,const CTYPES &s,
+                                    const CTYPEC &cs,
+                                    const nxfilter<FIMP> &filter) const
             {
                 return _create_field<T>(n,s,cs,filter);
             }
@@ -497,15 +493,13 @@ namespace nx{
             \param n path or name of the object to open
             \return object
             */
-            virtual nxobject<MAPTYPE(Imp,ObjectImpl)> open(const string &n)
-                const
+            virtual 
+            typename nxobject_trait<IMPID>::object_type open(const string &n) const
             {
-                typedef MAPTYPE(Imp,ObjectImpl) ObjectImp;
-                nxobject<ObjectImp> object;
-               
+                object_imp_type object; 
                 try
                 {
-                   object = nxobject<ObjectImp>(this->imp().open(n));
+                   object = _imp.open(n);
                 }
                 catch(...)
                 {
@@ -514,7 +508,14 @@ namespace nx{
                           "]!");
                 }
 
-                return object;
+                if(object.nxobject_type() == nxobject_type::NXFIELD)
+                    return field_type(field_imp_type(object));
+                else if(object.nxobject_type() == nxobject_type::NXGROUP)
+                    return group_type(imp_type(object));
+                else
+                    throw type_error(EXCEPTION_RECORD,
+                                     "Unknown Nexus object type!");
+
             }
 
             //-----------------------------------------------------------------
@@ -525,7 +526,8 @@ namespace nx{
             \param n name or path of the object
             \return object
             */
-            nxobject<MAPTYPE(Imp,ObjectImpl)> operator[](const string &n) const
+            typename nxobject_trait<IMPID>::object_type 
+            operator[](const string &n) const
             {
                 return this->open(n);
             }
@@ -537,7 +539,7 @@ namespace nx{
             Returns the total number of childs linke below this group.
             \return number of childs
             */
-            size_t nchildren() const { return this->imp().nchildren(); }
+            size_t nchildren() const { return _imp.nchildren(); }
 
             //-----------------------------------------------------------------
             /*!
@@ -546,9 +548,9 @@ namespace nx{
             Return the parent object of the gruop.
             \return parent object
             */
-            nxobject<MAPTYPE(Imp,ObjectImpl)> parent() const
+            group_type parent() const
             {
-                nxobject<MAPTYPE(Imp,ObjectImpl)> g(this->imp().parent());
+                group_type g(imp_type(_imp.parent()));
                 return g;
             }
 
@@ -563,10 +565,18 @@ namespace nx{
             \param i index of the object
             \return object
             */
-            nxobject<MAPTYPE(Imp,ObjectImpl)> open(size_t i) const
+            typename nxobject_trait<IMPID>::object_type open(size_t i) const
             {
-                return
-                    nxobject<MAPTYPE(Imp,ObjectImpl)>(this->imp().open(i));
+                object_imp_type obj_imp; 
+                obj_imp = _imp.open(i);
+
+                if(obj_imp.nxobject_type() == nxobject_type::NXFIELD)
+                    return field_type(field_imp_type(obj_imp));
+                else if(obj_imp.nxobject_type() == nxobject_type::NXGROUP)
+                    return group_type(imp_type(obj_imp));
+                else 
+                    throw type_error(EXCEPTION_RECORD,
+                                     "Unkown NEXUS object type!");
             }
 
             //-----------------------------------------------------------------
@@ -578,7 +588,7 @@ namespace nx{
             \param i index of the object
             \return object
             */
-            nxobject<MAPTYPE(Imp,ObjectImpl)> operator[](size_t i) const
+            typename nxobject_trait<IMPID>::object_type operator[](size_t i) const
             {
                 return this->open(i);
             }
@@ -591,7 +601,7 @@ namespace nx{
             \param n name of the link (object) to look for
             \return true if the object exist, false otherwise
             */
-            bool exists(const string &n) const{ return this->imp().exists(n); }
+            bool exists(const string &n) const{ return _imp.exists(n); }
 
             //-----------------------------------------------------------------
             /*! \brief remove an object from the file
@@ -603,7 +613,7 @@ namespace nx{
             delete the object from the file.
             \param n name of the link to delete
             */
-            void remove(const string &n) const{ this->imp().remove(n); }
+            void remove(const string &n) const{ _imp.remove(n); }
 
             //-----------------------------------------------------------------
             /*! \brief create link
@@ -622,7 +632,7 @@ namespace nx{
             This method can only be used to create file local links. 
             \param n name of the new link to this object
             */
-            void link(const string &n) const { this->imp().link(n); }
+            void link(const string &n) const { _imp.link(n); }
 
             //-----------------------------------------------------------------
             /*! \brief create link
@@ -645,7 +655,7 @@ namespace nx{
             */
             void link(const nxgroup &ref,const string &n) const
             {
-                this->imp().link(ref.imp(),n);
+                _imp.link(ref.imp(),n);
             }
 
             //-----------------------------------------------------------------
@@ -672,7 +682,7 @@ namespace nx{
             */
             void link(const string &p,const string &n) const
             {
-                this->imp().link(p,n);
+                _imp.link(p,n);
             }
 
             //-----------------------------------------------------------------
@@ -681,11 +691,9 @@ namespace nx{
             Return an iterator on the first child stored in below the group.
             \return iterator
             */
-            nxobject_iterator<nxgroup<Imp>,
-                nxobject<MAPTYPE(Imp,ObjectImpl)> > begin() const
+            iterator begin() const
             {
-                return nxobject_iterator<nxgroup<Imp>,
-                       nxobject<MAPTYPE(Imp,ObjectImpl)> >(*this);
+                return iterator(*this);
             }
           
             //-----------------------------------------------------------------
@@ -694,15 +702,237 @@ namespace nx{
             Returns an iterator on the last+1 obejct stored in the group.
             \return iterator
             */
-            nxobject_iterator<nxgroup<Imp>,
-                nxobject<MAPTYPE(Imp,ObjectImpl)> > end() const
+            iterator end() const
             {
-                return nxobject_iterator<nxgroup<Imp>,
-                       nxobject<MAPTYPE(Imp,ObjectImpl)> >(*this,
-                               this->nchildren());
+                return iterator(*this, this->nchildren());
             }
 
+            //----------------------------------------------------------------
+            string path() const { return _imp.path(); }
+
+            //----------------------------------------------------------------
+            string base() const { return _imp.base(); }
+
+            //---------------------------------------------------------------
+            string name() const { return _imp.name(); }
+
+            //---------------------------------------------------------------
+            void close() { _imp.close(); }
+
+            //---------------------------------------------------------------
+            bool is_valid() const { return _imp.is_valid(); }
+
+            //---------------------------------------------------------------
+            const imp_type &imp() const { return _imp; }
+
+            //---------------------------------------------------------------
+            nxobject_type object_type() const { return _imp.nxobject_type(); }
+
+            //=================attribute management methods====================
+            /*! 
+            \brief create an array attribute
+
+            Template method creating a multidimensional attribute of type T and
+            shape s. By default an exception will be thrown if an attribute of
+            same name already exists. If ov=true an existing attribute will be
+            overwritten
+            \throws nxattribute_error in case of errors
+            \param n name of the attribute
+            \param s shape of the array
+            \param ov overwrite flag
+            \return instance of nxattribute
+            */
+            template<
+                     typename T,
+                     typename CTYPE
+                    > 
+            attribute_type attr(const string &n, const CTYPE &s,bool ov=true) const
+            {
+                attribute_type attr;
+
+                try
+                {
+                    attr = attribute_type(_imp.template attr<T>(n,s,ov));
+                }
+                catch(...)
+                {
+                    throw nxattribute_error(EXCEPTION_RECORD,
+                            "Cannot create attribute ["+n+"] for object "
+                            "["+this->path()+"]!");
+                }
+                return attr;
+            }
+
+            //-----------------------------------------------------------------
+            /*! \brief create scalar attribute
+
+            Template method creating a scalar atribute of type T. By default an
+            exception is raised if an attribute of same name already exists. If
+            ov=true the existing attribute will be overwritten and no exeption
+            will be thrown.
+            \throws nxattribute_error in case of attribute related errors
+            \throws nxbackend_error in case of any other error
+            \param n name of the attribute
+            \param ov overwrite flag
+            \return an instance of nxattribute
+            */
+            template<typename T> 
+            attribute_type attr(const string &n,bool ov=false) const
+            {
+                return attr<T>(n,shape_t{1},ov);
+            }
+
+
+
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief open an existing attribute by name
+           
+            Opens an existing attribute of name n and returns an instance of
+            nxattribute<> to the callee. An exception will be thrown if the
+            attribute does not exist.
+            \throws nxattribute_error in case of problems
+            \param n name of the attribute
+            \return instance of nxattribute
+            */
+            attribute_type attr(const string &n) const
+            {
+                attribute_type attr;
+
+                try
+                {
+                    attr = attribute_type(_imp.attr(n));
+                }
+                catch(...)
+                {
+                    throw nxattribute_error(EXCEPTION_RECORD,
+                            "Cannot open attribute ["+n+"] from object ["
+                            +this->path()+"]!");
+                }
+                return attr;
+            }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief open an attribute by index
+           
+            Opens an existing attribute by its index. If the index exceeds the
+            total number of attributes attached to this object an exception will
+            be thrown.
+            \throws nxattribute_error in case of errors
+            \param i index of the attribute
+            \return instance of nxattribute
+            */
+            attribute_type attr(size_t i) const
+            {
+                attribute_type attr;
+
+                try
+                {
+                    attr = attribute_type(_imp.attr(i));
+                }
+                catch(...)
+                {
+                    std::stringstream istr;
+                    istr<<"Cannot open attribute ["<<i<<"] from object [";
+                    istr<<this->path()+"]!";
+                    throw nxattribute_error(EXCEPTION_RECORD,istr.str());
+                }
+
+                return attr;
+            }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief delete an attribute
+
+            Deletes an attribute attached to this object.
+            \throws nxattribute_error in case of errors
+            \param n name of the attribute
+            */
+            void del_attr(const string &n) const
+            {
+                try
+                {
+                    _imp.del_attr(n);
+                }
+                catch(...)
+                {
+                    throw nxattribute_error(EXCEPTION_RECORD,
+                            "Error deleting attribute ["+n+"]!");
+                }
+            }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief checks for attribute existance
+
+            Checks whether or not an attribute with a particular name exits. If
+            it does true is returned otherwise false.
+            \throws nxattribute_error in case of errors
+            \param n name of the attribute
+            \return true if n exists otherwise false
+            */
+            bool has_attr(const string &n) const
+            {
+                try
+                {
+                    return _imp.has_attr(n);
+                }
+                catch(...)
+                {
+                    throw nxattribute_error(EXCEPTION_RECORD,
+                            "Error checking for attribute ["+n+"]!");
+                }
+                return false;
+            }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief get number of attributes
+
+            Returns the number of attributes attached to this object.
+            \return number of attributes
+            */
+            size_t nattr() const { return _imp.nattr(); }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief iterator to frist attribute
+
+            Return an iterator to the first attribute attached to the object.
+            \return iterator to first attribute
+            */
+            attr_iterator attr_begin() const { return attr_iterator(*this); }
+
+            //-----------------------------------------------------------------
+            /*! 
+            \brief iterator to last attribute
+
+            Return an iterator to the last attribute attached to the object.
+            \return iterator to last attribute
+            */
+            attr_iterator attr_end() const
+            {
+                return attr_iterator(*this,this->nattr());
+            }
     };
+
+    //=============comparison operators====================================
+    template<nximp_code IMPID>
+    bool operator==(const nxgroup<IMPID> &a,const nxgroup<IMPID> &b)
+    {
+        if(a.imp() == b.imp()) return true;
+        return false;
+    }
+
+    template<nximp_code IMPID>
+    bool operator!=(const nxgroup<IMPID> &a,const nxgroup<IMPID> &b)
+    {
+        if(a == b) return false;
+        return true;
+    }
 
 
 //end of namespace
