@@ -1,24 +1,24 @@
-/*
- * (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- * Created on: Jul 1, 2013
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- */
+//
+// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+// Created on: Jul 1, 2013
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
 #pragma once
 
 #include "../nxvariant_traits.hpp"
@@ -37,16 +37,17 @@ namespace io{
 namespace nx{
 
 
-    /*!
-    \ingroup variant_code
-    \brief get child visitor
-    
-    Retrieves a child object form an object stored in a variant type. Virtually
-    the only object where this will work are groups. Children can be selected by
-    two criteria: their name and their class. Though, the class name is only
-    evaluated if we are looking for a group.
-    \tparam VTYPE variant type
-    */
+    //!
+    //! \ingroup variant_code
+    //! \brief get child visitor
+    //! 
+    //! Retrieves a child object form an object stored in a variant type. 
+    //! Virtually the only object where this will work are groups. 
+    //! Children can be selected by two criteria: their name and their 
+    //! class. Though, the class name is only evaluated if we are 
+    //! looking for a group.
+    //! \tparam VTYPE variant type
+    //!
     template<typename VTYPE> 
     class get_child_visitor : public boost::static_visitor<VTYPE>
     {
@@ -64,37 +65,38 @@ namespace nx{
             typedef typename nxvariant_attribute_type<VTYPE>::type attribute_type;
 
             //-----------------------------------------------------------------
-            /*!
-            \brief constructor
-
-            \param n name of the child
-            \param c Nexus class of the child
-            */
+            //!
+            //! \brief constructor
+            //!
+            //! \param n name of the child
+            //! \param c Nexus class of the child
+            //!
             get_child_visitor(const string &n,const string &c):
                 _name(n),
                 _class(c)
             {}
            
             //-----------------------------------------------------------------
-            /*!
-            \brief process groups
-
-            Groups are currently the only objects that can have children. This
-            method iterates over all children of a group and checks if the
-            criteria (name and class) match. If the child is a field only the
-            name is of importance. In case of a group also the class will be
-            checked. If none of the child objects matches the criteria an
-            invalid object will be returned.
-
-            There are two special group names '.' and '..' which are treated in
-            a special way. In the former case the current group is returned (in
-            other words nothing is done) while in the latter case the parent
-            group of the current group is returned. 
-
-            This method should throw no exceptions. 
-            \param g group instance
-            \return child object
-            */
+            //!
+            //!\brief process groups
+            //!
+            //! Groups are currently the only objects that can have children. 
+            //! This method iterates over all children of a group and checks 
+            //! if the criteria (name and class) match. If the child is a 
+            //! field only the name is of importance. In case of a group 
+            //! also the class will be checked. If none of the child objects 
+            //! matches the criteria an invalid object will be returned.
+            //!
+            //! There are two special group names '.' and '..' which are 
+            //! treated in a special way. In the former case the current 
+            //! group is returned (in other words nothing is done) while in 
+            //! the latter case the parent group of the current group is 
+            //! returned. 
+            //!
+            //! This method should throw no exceptions. 
+            //! \param g group instance
+            //! \return child object
+            //!
             result_type operator()(const group_type &g) const
             {
 #ifdef NOFOREACH

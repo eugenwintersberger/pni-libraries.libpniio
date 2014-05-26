@@ -1,24 +1,24 @@
-/*
- * (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- * Created on: Jul 2, 2013
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- */
+//
+// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+// Created on: Jul 2, 2013
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
 #pragma once
 
 #include <pni/core/types.hpp>
@@ -38,45 +38,46 @@ namespace pni{
 namespace io{
 namespace nx{
 
-    /*!
-    \ingroup variant_code
-    \brief get root 
-
-    Return the root group of an object. This is quite usefull in cases where 
-    an absolute path is used. 
-
-    This function throws no exceptions.
-
-    \tparam VTYPE variant type
-    \param p reference to an instance of VTYPE
-    \return an instance of object_types holding the root group
-    */
+    //!
+    //! \ingroup variant_code
+    //! \brief get root 
+    //!
+    //! Return the root group of an object. This is quite usefull in cases 
+    //! where an absolute path is used. 
+    //!
+    //! This function throws no exceptions.
+    //!
+    //! \tparam VTYPE variant type
+    //! \param p reference to an instance of VTYPE
+    //! \return an instance of object_types holding the root group
+    //!
     template<typename VTYPE> VTYPE get_root(const VTYPE &p)
     {
+        //if the object is already the root group we can return immediately
         if(get_name(p)=="/") return p;
 
         VTYPE root = p;
         do
-        {
             root = get_parent(root);
-        }while(get_name(root)!="/");
+        while(get_name(root)!="/");
 
         return root;
 
     }
 
     //----------------------------------------------------------------------------
+    //!
+    //! \ingroup variant_code
+    //! \brief get object by name
+    //!
+    //! Return an object specified by a Nexus path. From the nature of a nexus 
+    //! file we can assume that every object in the path except the last one 
+    //! has to be a group as it must hold other objects. The function ignores 
+    //! the filename part of the nexus path. 
+    //!
+    //! It is crucial to understand how the function treates the nexus path. We
+    //! start with the following path structure
     /*!
-    \ingroup variant_code
-    \brief get object by name
-
-    Return an object specified by a Nexus path. From the nature of a nexus file we
-    can assume that every object in the path except the last one has to be a group
-    as it must hold other objects. The function ignores the filename part of the
-    nexus path. 
-
-    It is crucial to understand how the function treates the nexus path. We
-    start with the following path structure
     \code
     path = [object section][last object][@ attribute section]
     \endcode
@@ -85,23 +86,24 @@ namespace nx{
     path1 = [object section]
     path2 = [last object][@ attribute section]
     \endcode
-    This is done for the following reason: from the first object section we know
-    that all of these objects must be groups (as they are containers). path1 is
-    thus describing a group path to the last object which is described by path2. 
-    The object referred to by path2 can be either a group or a field and the
-    requested object can now either be the last object itself or an attribute
-    attached to it. 
-
-    If an attribute is requested nxattribute_error is thrown if the attribute
-    does not exist.
-
-    \throws attribute_error if the requested attribute was not found
-    \throws nxgroup_error if parent object cannot be found
-    \tparam VTYPE variant type
-    \param p reference to instance of VTYPE
-    \param path the nexus path to the object
-    \return requested object
     */
+    //! This is done for the following reason: from the first object section we 
+    //! know that all of these objects must be groups (as they are 
+    //! containers). path1 is thus describing a group path to the last object 
+    //! which is described by path2.  The object referred to by path2 can be 
+    //! either a group or a field and the requested object can now either be 
+    //! the last object itself or an attribute attached to it. 
+    //!
+    //! If an attribute is requested nxattribute_error is thrown if the 
+    //! attribute does not exist.
+    //!
+    //! \throws attribute_error if the requested attribute was not found
+    //! \throws nxgroup_error if parent object cannot be found
+    //! \tparam VTYPE variant type
+    //! \param p reference to instance of VTYPE
+    //! \param path the nexus path to the object
+    //! \return requested object
+    //!
     template<typename VTYPE> VTYPE get_object(const VTYPE &p,const nxpath &path)
     {
         nxpath group_path;
@@ -132,11 +134,7 @@ namespace nx{
                     "Object parent is not a valid Nexus object!");
 
         //walk through the group_path
-#ifdef NOFOREACH
-        BOOST_FOREACH(auto element,group_path)
-#else
         for(auto element: group_path)
-#endif
         {
             //stay in this group
             if(element.first == ".") continue;

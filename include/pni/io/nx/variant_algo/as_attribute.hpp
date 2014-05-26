@@ -1,24 +1,24 @@
-/*
- * (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- * Created on: Jul 3, 2013
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- */
+//
+// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+// Created on: Jul 3, 2013
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
 #pragma once
 
 #include "../nxvariant_traits.hpp"
@@ -28,17 +28,18 @@ namespace io{
 namespace nx{
 
 
-    /*!
-    \ingroup variant_code
-    \brief as attribute visitor
-
-    This visitor return the object stored in a variant as a attribute object.
-    Obviously this will only work if the object is really an attribute object. 
-    If the stored object is a field or a group object an exception will be
-    thrown.
-    \tparam VTYPE variant type
-    \sa as_attribute
-    */
+    //!
+    //! \ingroup variant_code
+    //! \brief as attribute visitor
+    //!
+    //! This visitor return the object stored in a variant as a attribute 
+    //! object.  Obviously this will only work if the object is really an 
+    //! attribute object.  If the stored object is a field or a group object 
+    //! an exception will be thrown.
+    //!
+    //! \tparam VTYPE variant type
+    //! \sa as_attribute
+    //!
     template<typename VTYPE> 
     class as_attribute_visitor : public boost::static_visitor<
                              typename nxvariant_attribute_type<VTYPE>::type
@@ -55,14 +56,15 @@ namespace nx{
             typedef attribute_type result_type;
 
             //-----------------------------------------------------------------
-            /*!
-            \brief process group instances
-
-            Throws an exception as the stored object is not an attribute type.
-            \throws nxattribute_error object not an attribute
-            \param g group instance
-            \return invalid attribute instance
-            */ 
+            //!
+            //! \brief process group instances
+            //!
+            //! Throws an exception as the stored object is not an attribute 
+            //! type.
+            //! \throws nxattribute_error object not an attribute
+            //! \param g group instance
+            //! \return invalid attribute instance
+            //!
             result_type operator()(const group_type &g) const
             {
                 throw nxattribute_error(EXCEPTION_RECORD,
@@ -71,14 +73,15 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            /*!
-            \brief process field instances
-
-            Throw an exception as the object is not an attribute type instance
-            \throws nxattribute_error instance not a group type
-            \param f field instance
-            \return invalid attribute instance
-            */
+            //!
+            //! \brief process field instances
+            //!
+            //! Throw an exception as the object is not an attribute type 
+            //! instance
+            //! \throws nxattribute_error instance not a group type
+            //! \param f field instance
+            //! \return invalid attribute instance
+            //!
             result_type operator()(const field_type &f) const
             {
                 throw nxattribute_error(EXCEPTION_RECORD,
@@ -87,37 +90,39 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            /*!
-            \brief process attribute instances
-
-            Returns the atttribute instance.
-            \param a attribute instance
-            \return attribute instance
-            */
+            //!
+            //! \brief process attribute instances
+            //!
+            //! Returns the atttribute instance.
+            //! \param a attribute instance
+            //! \return attribute instance
+            //!
             result_type operator()(const attribute_type &a) const
             {
                 return a;
             }
     };
 
+    //!
+    //! \ingroup variant_code
+    //! \brief as attribute wrapper
+    //!
+    //! Wrapper function for the as_attribute_visitor template. This function 
+    //! takes a variant object and returns an attribute object if the stored 
+    //! object is an instance of an attribute type. In other cases an 
+    //! exception will be thrown.
     /*!
-    \ingroup variant_code
-    \brief as attribute wrapper
-
-    Wrapper function for the as_attribute_visitor template. This function takes
-    a variant object and returns an attribute object if the stored object is an
-    instance of an attribute type. In other cases an exception will be thrown.
-
     \code{.cpp}
     object_types attr_obj = get_object(root,path_to_atribute);
     auto a = as_attribute(attr_obj);
     \endcode
-
-    \throws nxattribute_error if stored object is not a attribute type
-    \tparam VTYPE variant type
-    \param o instance of VTYPE
-    \return instance of a attribute type
     */
+    //!
+    //! \throws nxattribute_error if stored object is not a attribute type
+    //! \tparam VTYPE variant type
+    //! \param o instance of VTYPE
+    //! \return instance of a attribute type
+    //!
     template<typename VTYPE> 
     typename nxvariant_attribute_type<VTYPE>::type
     as_attribute(const VTYPE &o)
