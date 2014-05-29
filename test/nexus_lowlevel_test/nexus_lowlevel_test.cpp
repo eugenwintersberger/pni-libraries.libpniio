@@ -42,7 +42,7 @@ int main(int argc,char **argv)
     runner.addTest(registry.makeTest());
     runner.eventManager().addListener(&progress);
     
-    std::ofstream os("hdf5_imp_test.xml");
+    std::ofstream os("nexus_lowlevel_test.xml");
     runner.setOutputter(new CppUnit::XmlOutputter(&runner.result(),os));
     
     bool result = runner.run();
