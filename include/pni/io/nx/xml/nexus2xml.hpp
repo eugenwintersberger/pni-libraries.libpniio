@@ -1,24 +1,24 @@
-/*
- * (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- * Created on: Jul 19, 2013
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- */
+//
+// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+// Created on: Jul 19, 2013
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
 #pragma once
 
 #include <iostream>
@@ -26,7 +26,6 @@
 #include <utility>
 #include "xml_node.hpp"
 #include "../nxvariant.hpp"
-#include "../utils/types.hpp"
 #include "shape2dim.hpp"
 #include <boost/algorithm/string.hpp>
 
@@ -58,7 +57,7 @@ namespace xml{
 
         node field_node;
         auto field_name = get_name(field);
-        string field_type = typeid2str[get_type(field)];
+        string field_type = str_from_type_id(get_type(field));
 
         
         field_node.put("<xmlattr>.name",field_name);
@@ -80,14 +79,14 @@ namespace xml{
     }
 
     //-------------------------------------------------------------------------
-    /*!
-    \brief convert group to XML
-
-    Converts a stored Nexus group to its XML representation.
-    \throws nxgroup_error if the group has no class attribute
-    \param group variant type with the group to convert
-    \return XML node
-    */
+    //!
+    //! \brief convert group to XML
+    //! 
+    //! Converts a stored Nexus group to its XML representation.
+    //! \throws nxgroup_error if the group has no class attribute
+    //! \param group variant type with the group to convert
+    //! \return XML node
+    //!
     template<typename VTYPE> node group2xml(const VTYPE &group)
     {
         node group_node;
@@ -110,7 +109,7 @@ namespace xml{
         node attr_node;
 
         auto attr_name = get_name(attr);
-        string attr_type = typeid2str[get_type(attr)];
+        string attr_type = str_from_type_id(get_type(attr));
 
         attr_node.put("<xmlattr>.name",attr_name);
         attr_node.put("<xmlattr>.type",attr_type);
@@ -128,16 +127,16 @@ namespace xml{
     }
 
     //-------------------------------------------------------------------------
-    /*!
-    \ingroup xml_lowleve_utils
-    \brief nexus to XML conversion
-
-    Converts the structure of a Nexus tree as stored below p into a XML tree
-    strucure and stores it below n. 
-    \tparam VTYPE variant type with the root object
-    \param p parent object 
-    \param n XML node
-    */
+    //!
+    //! \ingroup xml_lowleve_utils
+    //! \brief nexus to XML conversion
+    //! 
+    //! Converts the structure of a Nexus tree as stored below p into a XML 
+    //! tree strucure and stores it below n. 
+    //! \tparam VTYPE variant type with the root object
+    //! \param p parent object 
+    //! \param n XML node
+    //!
     template<typename VTYPE> void nexus2xml(const VTYPE &p,node &n)
     {
         typedef std::vector<VTYPE> vector_t;
@@ -170,22 +169,14 @@ namespace xml{
             get_children(p,objects);
 
             //iterate over the children 
-#ifdef NOFOREACH
-            BOOST_FOREACH(auto o,objects)
-#else
-            for(auto o: objects) 
-#endif
-                nexus2xml(o,child);
+            for(auto o: objects) nexus2xml(o,child);
         }
 
         //in the end we have to add attributes
         vector_t attributes;
         get_attributes(p,attributes);
-#ifdef NOFOREACH
-        BOOST_FOREACH(auto a,attributes)
-#else
+
         for(auto a: attributes)
-#endif
         {
             if(get_name(a) == "NX_class") continue;
             child.add_child("attribute",attribute2xml(a));

@@ -26,7 +26,6 @@
 #include<pni/core/types.hpp>
 #include "../nximp_code_map.hpp"
 
-#include "types.hpp"
 #include "../nxobject_traits.hpp"
 
 

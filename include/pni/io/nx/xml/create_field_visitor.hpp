@@ -144,11 +144,11 @@ namespace xml{
             typedef typename nxobject_attribute<VTYPE>::type attribute_type;
 
             //-----------------------------------------------------------------
-            /*!
-            \brief constructor
-
-            \param n xml node from which to create the group
-            */
+            //!
+            //! \brief constructor
+            //! 
+            //! \param n xml node from which to create the group
+            //!
             create_field_visitor(const node &n):
                 _xml_node(n)
             {}
@@ -187,7 +187,7 @@ namespace xml{
 
                 //at this point we should have gathered enough information in order to
                 //create the field.
-                type_id_t type_id = str2typeid[type];
+                type_id_t type_id = type_id_from_str(type);
                 auto f = pni::io::nx::create_field(g,name,type_id,shape);
 
 

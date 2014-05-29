@@ -232,6 +232,7 @@ namespace nx{
                 return group_type(group_imp_type(_imp.open("/")));
             }
 
+            //----------------------------------------------------------------
             bool is_valid() const
             {
                 return _imp.is_valid(); 

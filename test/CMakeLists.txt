@@ -36,7 +36,6 @@ set(TEST_SOURCES
     ./nexus_lowlevel_test/NXGroupTest.cpp
     ./nexus_lowlevel_test/NXFileTest.cpp
     ./utils_tests/nxpath_utils_test.cpp
-    ./utils_tests/utils_test.cpp
     ./utils_tests/check_type_test.cpp
     ./utils_tests/nxpath_test.cpp
     ./parser_tests/value_parser_test.cpp
