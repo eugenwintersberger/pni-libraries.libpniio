@@ -23,4 +23,4 @@ set(XMLFILES dim1.xml
 add_executable(xml_test ${SOURCES})
 target_link_libraries(xml_test pniio ${CPPUNIT_LIBRARIES})
 file(COPY ${XMLFILES} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-
+add_test(xml_test xml_test)

@@ -1,8 +1,0 @@
-Import("build_env")
-
-sources = ["lzf_c.c","lzf_d.c","lzf_filter.c"]
-
-shared_objects = build_env.SharedObject(sources)
-static_objects = build_env.StaticObject(sources)
-
-Return("shared_objects static_objects")

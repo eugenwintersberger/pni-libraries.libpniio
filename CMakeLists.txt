@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 project(libpniio)
+include(CTest)
 
 set(CMAKE_FAMILY_VERSION "${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}")
 

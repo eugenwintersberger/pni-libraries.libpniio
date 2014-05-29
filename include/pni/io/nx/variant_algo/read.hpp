@@ -88,11 +88,14 @@ namespace nx{
             //! \param g group instance
             //! \return nothing
             //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
                 throw nxgroup_error(EXCEPTION_RECORD,
                         "One cannot read data to a group object!");
             }
+#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
             //!

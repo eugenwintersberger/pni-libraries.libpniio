@@ -13,4 +13,5 @@ set(SOURCES H5AttributeObjectTest.cpp
 
 add_executable(hdf5_imp_test ${SOURCES} $<TARGET_OBJECTS:test_common>)
 target_link_libraries(hdf5_imp_test pniio ${CPPUNIT_LIBRARIES})
+add_test(hdf5_imp_test hdf5_imp_test)
 

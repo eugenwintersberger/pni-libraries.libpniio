@@ -409,7 +409,7 @@ namespace nx{
             Return the ID of the data type stored in the field.
             \return data type ID
             */
-            type_id_t type_id() const { _imp.type_id(); }
+            type_id_t type_id() const { return _imp.type_id(); }
 
             //-----------------------------------------------------------------
             /*!

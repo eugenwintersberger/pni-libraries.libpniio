@@ -23,7 +23,6 @@
 #pragma once
 
 #include "../nxobject_traits.hpp"
-#include "nxvariant_algo_helper.hpp"
 
 
 namespace pni{

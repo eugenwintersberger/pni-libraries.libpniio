@@ -9,4 +9,5 @@ set(SOURCES nexus_lowlevel_test.cpp
 
 add_executable(nexus_lowlevel_test ${SOURCES} $<TARGET_OBJECTS:test_common>)
 target_link_libraries(nexus_lowlevel_test pniio ${CPPUNIT_LIBRARIES})
+add_test(nexus_lowlevel_test nexus_lowlevel_test)
 

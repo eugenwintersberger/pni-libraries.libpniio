@@ -96,11 +96,14 @@ namespace nx{
             //! \param f field instance
             //! \return nothing
             //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
                 throw nxfield_error(EXCEPTION_RECORD,
                         "Fields do not have a class!");
             }
+#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
             //!
@@ -114,11 +117,14 @@ namespace nx{
             //! \param a attribute instance
             //! \return nothing
             //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
                 throw nxattribute_error(EXCEPTION_RECORD,
                         "Attributes do not have a class!");
             }
+#pragma GCC diagnostic pop
     };
 
     //!

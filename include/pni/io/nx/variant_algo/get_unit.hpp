@@ -71,12 +71,15 @@ namespace nx{
             //! \param g group instance
             //! \return an empty string - to be ignored
             //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
                 throw nxgroup_error(EXCEPTION_RECORD,
                         "Group ["+g.path()+"] does not have a unit!");
                 return result_type();
             }
+#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
             //!
@@ -104,12 +107,15 @@ namespace nx{
             //! \param a attribute instance
             //! \return an empty string - to be ignored
             //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
                 throw nxattribute_error(EXCEPTION_RECORD,
                         "Attribute ["+a.name()+"] does  not have a unit!");
                 return result_type();
             }
+#pragma GCC diagnostic pop
     };
 
     //!

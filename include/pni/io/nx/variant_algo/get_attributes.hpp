@@ -120,12 +120,15 @@ namespace nx{
             //! \param a attribute instance
             //! \return to be ignored
             //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
                 throw nxattribute_error(EXCEPTION_RECORD,
                         "Attributes do not have children!");
 
             }
+#pragma GCC diagnostic pop
     };
 
     //!

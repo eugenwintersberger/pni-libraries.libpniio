@@ -23,7 +23,6 @@
 
 #include <boost/variant.hpp>
 #include "../nxobject_traits.hpp"
-#include "nxvariant_algo_helper.hpp"
 
 namespace pni{
 namespace io{

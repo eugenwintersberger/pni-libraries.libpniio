@@ -31,6 +31,8 @@
 #include<cppunit/extensions/TestFactoryRegistry.h>
 
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
 int main(int argc,char **argv)
 {
 
@@ -49,4 +51,4 @@ int main(int argc,char **argv)
 
     return result ? 0 : 1;
 }
-
+#pragma GCC diagnostic pop

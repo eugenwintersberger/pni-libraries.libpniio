@@ -251,12 +251,15 @@ namespace nx{
             //! \param a attribute instance
             //! \return an empty result type
             //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
                 throw nxattribute_error(EXCEPTION_RECORD,
                         "Cannot create a group below an attribute!");
                 return result_type();
             }
+#pragma GCC diagnostic pop
     };
 
     //-------------------------------------------------------------------------

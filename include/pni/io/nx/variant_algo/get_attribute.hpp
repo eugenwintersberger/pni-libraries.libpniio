@@ -22,7 +22,6 @@
 #pragma once
 
 #include "../nxobject_traits.hpp"
-#include "nxvariant_algo_helper.hpp"
 
 
 namespace pni{
@@ -103,12 +102,15 @@ namespace nx{
             //! \param a instance of an attribute type
             //! \return instance of object_types with attribute
             //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
                 throw nxattribute_error(EXCEPTION_RECORD,
                         "Attributes cannot have attributes by themself!");
                 return result_type();
             }
+#pragma GCC diagnostic pop
     };
 
     //!

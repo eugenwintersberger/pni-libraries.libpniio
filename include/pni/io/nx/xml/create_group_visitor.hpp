@@ -107,12 +107,15 @@ namespace xml{
             //! \param f field instance
             //! \return nothin
             //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
                 throw nxfield_error(EXCEPTION_RECORD,
                         "Cannot create a group below a field!");
                 return result_type();
             }
+#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
             //!
@@ -125,12 +128,15 @@ namespace xml{
             //! \param a attribute instance
             //! \return size of the attribute
             //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
                 throw nxattribute_error(EXCEPTION_RECORD,
                         "Cannot create a group below an attribute!");
                 return result_type();
             }
+#pragma GCC diagnostic pop
     };
 
     //!

@@ -65,12 +65,15 @@ namespace nx{
             //! \param g group instance
             //! \return invalid attribute instance
             //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
                 throw nxattribute_error(EXCEPTION_RECORD,
                         "Object is not an attribute but a group!");
                 return result_type();
             }
+#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
             //!
@@ -82,12 +85,15 @@ namespace nx{
             //! \param f field instance
             //! \return invalid attribute instance
             //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
                 throw nxattribute_error(EXCEPTION_RECORD,
                         "Object is a field but not an attribute instance!");
                 return result_type();
             }
+#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
             //!

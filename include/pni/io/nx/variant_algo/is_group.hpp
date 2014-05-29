@@ -51,54 +51,64 @@ namespace nx{
             typedef typename nxobject_attribute<VTYPE>::type attribute_type;
           
             //----------------------------------------------------------------
-            /*!
-            \brief process group objects
-
-            \param g reference to group instance
-            \return true
-            */
+            //!
+            //! \brief process group objects
+            //!
+            //! \param g reference to group instance
+            //! \return true
+            //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
                 return true;
             }
+#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
-            /*!
-            \brief process field objects
-
-            \param f reference to field instance
-            \return false
-            */
+            //!
+            //! \brief process field objects
+            //!
+            //! \param f reference to field instance
+            //! \return false
+            //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
                 return false;
             }
+#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
-            /*!
-            \brief process attribute objects
-
-            \param a reference to attribute instance
-            \return false
-            */
+            //!
+            //! \brief process attribute objects
+            //! 
+            //! \param a reference to attribute instance
+            //! \return false
+            //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
                 return false;
             }
+#pragma GCC diagnostic pop
     };
 
-    /*!
-    \ingroup variant_code
-    \brief check for group
-
-    This template function is a wrapper around the is_group_visitor visitor
-    template. It checks if the object stored in a variant type is a group and
-    returns true if this is the case. In all other cases false is returned.
-    
-    \tparam VTYPE variant type
-    \param o reference to VTYPE instance
-    \return true if object is a group, false otherwise
-    */
+    //!
+    //! \ingroup variant_code
+    //! \brief check for group
+    //!
+    //! This template function is a wrapper around the is_group_visitor 
+    //! visitor template. It checks if the object stored in a variant type is 
+    //! a group and returns true if this is the case. In all other cases 
+    //! false is returned.
+    //! 
+    //! \tparam VTYPE variant type
+    //! \param o reference to VTYPE instance
+    //! \return true if object is a group, false otherwise
+    //!
     template<typename VTYPE> 
     typename is_group_visitor<VTYPE>::result_type is_group(const VTYPE &o)
     {

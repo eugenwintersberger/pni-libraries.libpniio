@@ -23,21 +23,20 @@
 #pragma once
 
 #include "../nxobject_traits.hpp"
-#include "nxvariant_algo_helper.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
 
-    /*!
-    \ingroup variant_code
-    \brief check field visitor
-
-    This visitor checks a variant type if the object stored is a field. 
-    In this case true is returned.
-    
-    \tparam VTYPE variant type
-    */
+    //!
+    //! \ingroup variant_code
+    //! \brief check field visitor
+    //!
+    //! This visitor checks a variant type if the object stored is a field. 
+    //! In this case true is returned.
+    //! 
+    //! \tparam VTYPE variant type
+    //!
     template<typename VTYPE> 
     class is_field_visitor : public boost::static_visitor<bool>
     {
@@ -52,52 +51,62 @@ namespace nx{
             typedef typename nxobject_attribute<VTYPE>::type attribute_type;
            
             //-----------------------------------------------------------------
-            /*!
-            \brief process group instances
-
-            \param g reference to group instance
-            \return false
-            */
+            //!
+            //! \brief process group instances
+            //!
+            //! \param g reference to group instance
+            //! \return false
+            //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
                 return false;
             }
+#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
-            /*!
-            \brief process field instances
-
-            \param f reference to field instance
-            \return true
-            */
+            //!
+            //! \brief process field instances
+            //!
+            //! \param f reference to field instance
+            //! \return true
+            //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
                 return true;
             }
+#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
-            /*!
-            \brief process attribute instances
-
-            \param a reference to attribute instance
-            \return false
-            */
+            //!
+            //! \brief process attribute instances
+            //!
+            //! \param a reference to attribute instance
+            //! \return false
+            //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
                 return false;
             }
+#pragma GCC diagnostic pop
     };
 
-    /*!
-    \ingroup variant_code
-    \brief check if field
-
-    Wrapper function around the is_field_visitor. The function returns true if
-    the object stored in the variant type is a field type.
-    \tparam VTYPE Nexus object variant type
-    \param o instance of VTYPE
-    \return true if the object is a field
-    */
+    //!
+    //! \ingroup variant_code
+    //! \brief check if field
+    //!
+    //! Wrapper function around the is_field_visitor. The function returns 
+    //! true if the object stored in the variant type is a field type.
+    //! 
+    //! \tparam VTYPE Nexus object variant type
+    //! \param o instance of VTYPE
+    //! \return true if the object is a field
+    //!
     template<typename VTYPE> 
     typename is_field_visitor<VTYPE>::result_type is_field(const VTYPE &o)
     {

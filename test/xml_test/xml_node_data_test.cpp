@@ -64,7 +64,7 @@ void xml_node_data_test::test_read_data_int()
     child = root.get_child("group1");
 
     //----------------------this should work-----------------------------------
-    int32 value;
+    int32 value = 0;
     CPPUNIT_ASSERT_NO_THROW(value = xml::node_data<int32>::read(child));
     CPPUNIT_ASSERT(value == 12);
 

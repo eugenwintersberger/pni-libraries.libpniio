@@ -29,4 +29,5 @@ set(SOURCES as_attribute_test.cpp
 
 add_executable(algorithm_test ${SOURCES} $<TARGET_OBJECTS:test_common>)
 target_link_libraries(algorithm_test pniio ${CPPUNIT_LIBRARIES})
+add_test(algorithm_test algorithm_test)
 

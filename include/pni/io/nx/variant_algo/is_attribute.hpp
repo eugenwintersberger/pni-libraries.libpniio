@@ -22,7 +22,7 @@
 //
 #pragma once
 
-#include "../nxvariant_traits.hpp"
+#include "../nxobject_traits.hpp"
 
 namespace pni{
 namespace io{
@@ -52,40 +52,49 @@ namespace nx{
             typedef typename nxobject_attribute<VTYPE>::type attribute_type;
           
             //-----------------------------------------------------------------
-            /*!
-            \brief process group instances
-
-            \param g refernece to group instance
-            \return false
-            */
-            result_type operator()(const group_type &g) const
-            {
-                return false;
+            //!
+            //! \brief process group instances
+            //!
+            //! \param g refernece to group instance
+            //! \return false
+            //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+            result_type operator()(const group_type &g) const 
+            { 
+                return false; 
             }
+#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
-            /*!
-            \brief process field instances
-
-            \param f reference to field instance
-            \return false
-            */
-            result_type operator()(const field_type &f) const
-            {
-                return false;
+            //!
+            //! \brief process field instances
+            //!
+            //! \param f reference to field instance
+            //! \return false
+            //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+            result_type operator()(const field_type &f) const 
+            { 
+                return false; 
             }
+#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
-            /*!
-            \brief process attribute instances
-
-            \param a reference to attribute instance
-            \return true
-            */
-            result_type operator()(const attribute_type &a) const
-            {
-                return true;
+            //!
+            //! \brief process attribute instances
+            //!
+            //! \param a reference to attribute instance
+            //! \return true
+            //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+            result_type operator()(const attribute_type &a) const 
+            { 
+                return true; 
             }
+#pragma GCC diagnostic pop
     };
 
     /*!

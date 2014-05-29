@@ -65,12 +65,15 @@ namespace nx{
             //! \param g group instance
             //! \return empty instance of CTYPE
             //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
                 throw nxgroup_error(EXCEPTION_RECORD,
                         "A group does not have a shape!");
                 return CTYPE();
             }
+#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
             //!

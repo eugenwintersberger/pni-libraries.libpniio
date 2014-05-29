@@ -1,26 +1,25 @@
-/*
- * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- * H5LZFFilter.cpp
- *
- *  Created on: Aug 10, 2011
- *      Author: Eugen Wintersberger
- */
+//
+// (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+//  Created on: Aug 10, 2011
+//      Author: Eugen Wintersberger
+//
 
 #include <pni/io/nx/h5/H5LZFFilter.hpp>
 extern "C"{
@@ -36,7 +35,10 @@ namespace h5 {
     H5LZFFilter::H5LZFFilter():H5Filter() { }
 
     //--------------------------------------------------------------------------
-    H5LZFFilter::H5LZFFilter(const H5LZFFilter &o){ } 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+    H5LZFFilter::H5LZFFilter(const H5LZFFilter &o):H5Filter(){ } 
+#pragma GCC diagnostic pop
 
     //--------------------------------------------------------------------------
     H5LZFFilter::~H5LZFFilter() { } 

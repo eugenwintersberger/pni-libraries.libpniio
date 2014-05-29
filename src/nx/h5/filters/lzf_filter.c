@@ -103,6 +103,8 @@ int register_lzf(void){
 
     2. Compute the chunk size in bytes and store it in slot 2.
 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
 herr_t lzf_set_local(hid_t dcpl, hid_t type, hid_t space){
 
     int ndims;
@@ -152,6 +154,7 @@ herr_t lzf_set_local(hid_t dcpl, hid_t type, hid_t space){
 
     return 1;
 }
+#pragma GCC diagnostic pop
 
 
 /* The filter function */

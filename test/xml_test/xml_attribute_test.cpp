@@ -1,25 +1,25 @@
-/*
- * (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- *
- *  Created on: Jul 11, 2013
- *      Author: Eugen Wintersberger
- */
+//
+// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+//  Created on: Jul 11, 2013
+//      Author: Eugen Wintersberger
+//
 
 #include <vector>
 #include "xml_attribute_test.hpp"
@@ -85,7 +85,7 @@ void xml_attribute_test::test_read_data_int()
     child = root.get_child("group1");
 
     //----------------------this should work-----------------------------------
-    int32 value;
+    int32 value = 0;
     CPPUNIT_ASSERT_NO_THROW(value = xml::attribute_data<int32>::read(child,"value"));
     CPPUNIT_ASSERT(value == 12);
 
@@ -122,7 +122,7 @@ void xml_attribute_test::test_read_data_uint()
     child = root.get_child("group1");
 
     //----------------------this should work-----------------------------------
-    uint32 value;
+    uint32 value = 0;
     CPPUNIT_ASSERT_NO_THROW(value = xml::attribute_data<uint32>::read(child,"value"));
     CPPUNIT_ASSERT(value == 12);
 
@@ -160,7 +160,7 @@ void xml_attribute_test::test_read_data_float()
     child = root.get_child("group1");
 
     //----------------------this should work-----------------------------------
-    float64 value;
+    float64 value = 0.0;
     CPPUNIT_ASSERT_NO_THROW(value = xml::attribute_data<float64>::read(child,"value"));
     CPPUNIT_ASSERT_DOUBLES_EQUAL(value,12.234,1.e-8);
 

@@ -1,14 +1,33 @@
 
 #gather all source files for the library
-file(GLOB_RECURSE SOURCES *.c*)
+set(SOURCES column_info.cpp
+             data_reader.cpp
+             image_info.cpp
+             image_reader.cpp
+             spreadsheet_reader.cpp
+             strutils.cpp)
 
 
 link_directories(${PNICORE_PKG_LIBRARY_DIRS} ${HDF5_LIBRARY_DIRS})
 include_directories(${PNICORE_PKG_INCLUDE_DIRS} ${HDF5_INCLUDE_DIRS})
 
 #first we need to build the C-filter code
+add_definitions(-fPIC)
+add_subdirectory(cbf)
+add_subdirectory(fio)
+add_subdirectory(nx)
+add_subdirectory(parsers)
+add_subdirectory(tiff)
 
-add_library(pniio SHARED ${SOURCES})
+add_library(pniio SHARED ${SOURCES} $<TARGET_OBJECTS:cbf_objects>
+    $<TARGET_OBJECTS:fio_objects>
+    $<TARGET_OBJECTS:nx_objects>
+    $<TARGET_OBJECTS:h5_objects>
+    $<TARGET_OBJECTS:xml_objects>
+    $<TARGET_OBJECTS:filter_objects>
+    $<TARGET_OBJECTS:parser_objects>
+    $<TARGET_OBJECTS:tiff_objects>
+    )
 add_dependencies(pniio config.hpp)
 set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"
                                        SOVERSION "${SO_VERSION}")

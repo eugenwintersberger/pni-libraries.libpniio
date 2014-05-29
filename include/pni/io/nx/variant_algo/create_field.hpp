@@ -117,6 +117,8 @@ namespace nx{
         //! \param filter instance of FTYPE with the filter class
         //! \return instance of FT - the newly created field
         //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
         template<
                  typename T,
                  typename FT,
@@ -133,6 +135,7 @@ namespace nx{
 
             return g.template create_field<T>(name,s,cs);
         }
+#pragma GCC diagnostic pop
 
     };
 
@@ -227,12 +230,15 @@ namespace nx{
             //! \param f field instance
             //! \return empty result type
             //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
                 throw nxfield_error(EXCEPTION_RECORD,
                         "Cannot create a group below a field!");
                 return result_type();
             }
+#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
             //!
@@ -245,12 +251,15 @@ namespace nx{
             //! \param a attribute instance
             //! \return an empty result type
             //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
                 throw nxattribute_error(EXCEPTION_RECORD,
                         "Cannot create a group below an attribute!");
                 return result_type();
             }
+#pragma GCC diagnostic pop
     };
 
 
