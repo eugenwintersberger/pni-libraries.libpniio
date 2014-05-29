@@ -40,18 +40,11 @@ set(TEST_SOURCES
     ./parser_tests/array_parser_test.cpp
     ./parser_tests/record_parser_test.cpp
     ./pniiotest.cpp
-    ./hdf5_implementation_tests/H5DatasetTest.cpp
-    ./hdf5_implementation_tests/H5AttributeTest.cpp
-    ./hdf5_implementation_tests/H5NamedObjectTest.cpp
-    ./hdf5_implementation_tests/H5LinkTest.cpp
-    ./hdf5_implementation_tests/H5ObjectTest.cpp
-    ./hdf5_implementation_tests/H5DatatypeTest.cpp
-    ./hdf5_implementation_tests/H5GroupTest.cpp
-    ./hdf5_implementation_tests/H5DataspaceTest.cpp
-    ./hdf5_implementation_tests/H5FileTest.cpp
-    ./hdf5_implementation_tests/H5AttributeObjectTest.cpp
     ./EqualityCheck.cpp
 )
+
+set(COMMON_SRC EqualityCheck.cpp data.cpp TestHelpers.cpp)
+add_library(test_common OBJECT ${COMMON_SRC})
 
 link_directories(${PNICORE_PKG_LIBRARY_DIRS} ${HDF5_LIBRARY_DIRS})
 include_directories(${PNICORE_PKG_INCLUDE_DIRS} ${HDF5_INCLUDE_DIRS})
@@ -72,6 +65,7 @@ target_link_libraries(pniiotest pniio dl)
 
 add_subdirectory(xml_test)
 add_subdirectory(utils_test)
+add_subdirectory(hdf5_imp_test)
 
 
 add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
