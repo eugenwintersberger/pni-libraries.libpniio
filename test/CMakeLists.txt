@@ -29,12 +29,6 @@ set(TEST_SOURCES
     ./nxvariant_tests/get_parent_test.cpp
     ./data.cpp
     ./TestHelpers.cpp
-    ./nexus_lowlevel_test/NXFieldTest.cpp
-    ./nexus_lowlevel_test/NXAttributeTest.cpp
-    ./nexus_lowlevel_test/nxlink_test.cpp
-    ./nexus_lowlevel_test/NXSelectionTest.cpp
-    ./nexus_lowlevel_test/NXGroupTest.cpp
-    ./nexus_lowlevel_test/NXFileTest.cpp
     ./parser_tests/value_parser_test.cpp
     ./parser_tests/slice_parser_test.cpp
     ./parser_tests/array_parser_test.cpp
@@ -66,6 +60,7 @@ target_link_libraries(pniiotest pniio dl)
 add_subdirectory(xml_test)
 add_subdirectory(utils_test)
 add_subdirectory(hdf5_imp_test)
+add_subdirectory(nexus_lowlevel_test)
 
 
 add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
