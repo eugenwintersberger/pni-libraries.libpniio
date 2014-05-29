@@ -23,7 +23,7 @@
 
 #pragma once
 
-#include "variant_algo/close.hpp"
+#include "algorithms/close.hpp"
 
 
 namespace pni{

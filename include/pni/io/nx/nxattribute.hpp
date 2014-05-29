@@ -34,7 +34,7 @@
 #include "nxobject_traits.hpp"
 #include "nxobject_type.hpp"
 #include "utils/io_utils.hpp"
-#include "nxvariant.hpp"
+#include "algorithms.hpp"
 
 
 namespace pni{

@@ -106,7 +106,7 @@ namespace nx{
     //! and false otherwise.
     /*! 
     \code{.cpp}
-    typedef nxvariant_trait<h5::nxfile>::object_types object_types;
+    typedef nxobject_trait<nximp_id::HDF5>::object_types object_types;
 
     object_types o = ....;
     if(!is_valid(o))

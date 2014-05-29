@@ -16,16 +16,13 @@ set(HEADER_FILES nexus_utils.hpp
                  nximp_map.hpp 
                  nxlink.hpp 
                  nxlink_type.hpp 
-                 nxobject.hpp
                  nxobject_iterator.hpp
                  nxobject_traits.hpp
                  nxobject_type.hpp
                  nxpath.hpp
                  nxpath_utils.hpp
                  nxselection.hpp
-                 nxtypes.hpp
-                 nxvariant.hpp
-                 nxvariant_traits.hpp
+                 algorithms.hpp
                  xml.hpp)
 
 install(FILES ${HEADER_FILES} 
@@ -35,4 +32,4 @@ install(FILES ${HEADER_FILES}
 add_subdirectory("h5")
 add_subdirectory("xml")
 add_subdirectory("utils")
-add_subdirectory("variant_algo")
+add_subdirectory("algorithms")

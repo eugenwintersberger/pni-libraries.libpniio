@@ -23,7 +23,7 @@
 
 #include <pni/core/types.hpp>
 #include "../nxobject_traits.hpp"
-#include "../nxvariant.hpp"
+#include "../algorithms.hpp"
 #include "xml_node.hpp"
 #include "attribute_data.hpp"
 

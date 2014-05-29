@@ -31,7 +31,7 @@
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/nxexceptions.hpp>
 #include <pni/io/nx/nexus_utils.hpp>
-#include <pni/io/nx/nxvariant.hpp>
+#include <pni/io/nx/algorithms.hpp>
 
 #include <pni/core/arrays.hpp>
 

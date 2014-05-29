@@ -23,7 +23,7 @@
 
 #include <pni/core/types.hpp>
 #include "../nexus_utils.hpp"
-#include "../nxvariant.hpp"
+#include "../algorithms.hpp"
 #include "xml_node.hpp"
 #include "node_data.hpp"
 #include "attribute_data.hpp"

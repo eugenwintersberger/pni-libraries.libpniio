@@ -38,7 +38,7 @@
 #include "utils/io_utils.hpp"
 #include "nxattribute.hpp"
 #include "nxattribute_iterator.hpp"
-#include "nxvariant.hpp"
+#include "algorithms.hpp"
 
 
 namespace pni{

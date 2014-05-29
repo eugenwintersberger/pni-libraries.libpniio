@@ -34,4 +34,4 @@ set(HEADER_FILES as_attribute.hpp
                  write.hpp)
 
 install(FILES ${HEADER_FILES} 
-    DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/pni/io/nx/variant_algo)
+    DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/pni/io/nx/algorithms)

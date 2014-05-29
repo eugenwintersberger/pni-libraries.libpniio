@@ -25,7 +25,7 @@
 #include <boost/current_function.hpp>
 #include "nxlink_test.hpp"
 #include <pni/io/nx/nxlink.hpp>
-#include <pni/io/nx/nxvariant.hpp>
+#include <pni/io/nx/algorithms.hpp>
 
 
 
