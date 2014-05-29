@@ -29,10 +29,6 @@ set(TEST_SOURCES
     ./nxvariant_tests/get_parent_test.cpp
     ./data.cpp
     ./TestHelpers.cpp
-    ./parser_tests/value_parser_test.cpp
-    ./parser_tests/slice_parser_test.cpp
-    ./parser_tests/array_parser_test.cpp
-    ./parser_tests/record_parser_test.cpp
     ./pniiotest.cpp
     ./EqualityCheck.cpp
 )
@@ -61,6 +57,7 @@ add_subdirectory(xml_test)
 add_subdirectory(utils_test)
 add_subdirectory(hdf5_imp_test)
 add_subdirectory(nexus_lowlevel_test)
+add_subdirectory(parser_test)
 
 
 add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
