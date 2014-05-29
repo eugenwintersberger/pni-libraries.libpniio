@@ -1,32 +1,6 @@
 
 #need to define the version of the library
 set(TEST_SOURCES 
-    ./nxvariant_tests/is_valid_test.cpp
-    ./nxvariant_tests/get_attribute_test.cpp
-    ./nxvariant_tests/get_class_test.cpp
-    ./nxvariant_tests/get_size_test.cpp
-    ./nxvariant_tests/get_type_test.cpp
-    ./nxvariant_tests/read_test.cpp
-    ./nxvariant_tests/get_unit_test.cpp
-    ./nxvariant_tests/grow_test.cpp
-    ./nxvariant_tests/get_object_test.cpp
-    ./nxvariant_tests/is_class_test.cpp
-    ./nxvariant_tests/is_group_test.cpp
-    ./nxvariant_tests/get_shape_test.cpp
-    ./nxvariant_tests/as_field_test.cpp
-    ./nxvariant_tests/write_test.cpp
-    ./nxvariant_tests/create_group_test.cpp
-    ./nxvariant_tests/as_group_test.cpp
-    ./nxvariant_tests/set_class_test.cpp
-    ./nxvariant_tests/get_rank_test.cpp
-    ./nxvariant_tests/is_field_test.cpp
-    ./nxvariant_tests/set_unit_test.cpp
-    ./nxvariant_tests/as_attribute_test.cpp
-    ./nxvariant_tests/create_field_test.cpp
-    ./nxvariant_tests/create_attribute_test.cpp
-    ./nxvariant_tests/get_child_test.cpp
-    ./nxvariant_tests/is_attribute_test.cpp
-    ./nxvariant_tests/get_parent_test.cpp
     ./data.cpp
     ./TestHelpers.cpp
     ./pniiotest.cpp
@@ -58,6 +32,7 @@ add_subdirectory(utils_test)
 add_subdirectory(hdf5_imp_test)
 add_subdirectory(nexus_lowlevel_test)
 add_subdirectory(parser_test)
+add_subdirectory(algorithm_test)
 
 
 add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
