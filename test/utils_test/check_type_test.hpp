@@ -131,7 +131,7 @@ class check_type_test : public CppUnit::TestFixture
 template<typename TA>
 void check_type_test<TA>::setUp()
 {
-    file = h5::nxfile::create_file("check_test.nx",true);
+    file = h5::nxfile::create_file("check_type_test.nx",true);
     field = file.root().create_field<TA>("test");
 }
 

@@ -35,9 +35,6 @@ set(TEST_SOURCES
     ./nexus_lowlevel_test/NXSelectionTest.cpp
     ./nexus_lowlevel_test/NXGroupTest.cpp
     ./nexus_lowlevel_test/NXFileTest.cpp
-    ./utils_tests/nxpath_utils_test.cpp
-    ./utils_tests/check_type_test.cpp
-    ./utils_tests/nxpath_test.cpp
     ./parser_tests/value_parser_test.cpp
     ./parser_tests/slice_parser_test.cpp
     ./parser_tests/array_parser_test.cpp
@@ -74,6 +71,7 @@ endif()
 target_link_libraries(pniiotest pniio dl)
 
 add_subdirectory(xml_test)
+add_subdirectory(utils_test)
 
 
 add_custom_command(TARGET pniiotest PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
