@@ -91,68 +91,6 @@ namespace nx{
         typedef typename nxobject_element<VTYPE,2>::type type;
     };
 
-    /*
-template<typename OTYPE>
-using trait_type = nxobject_traits<nximp_code_map<OTYPE>::icode>;
-
-template<typename OTYPE>
-using object_type = typename trait_type<OTYPE>::object_type;
-
-template<typename OTYPE>
-using group_type  = typename trait_type<OTYPE>::group_type;
-
-template<typename OTYPE>
-using file_type  = typename trait_type<OTYPE>::file_type;
-
-template<typename OTYPE>
-using field_type = typename trait_type<OTYPE>::field_type;
-
-template<typename OTYPE>
-using attribute_type = typename trait_type<OTYPE>::attribute_type;
-
-template<typename OTYPE>
-using selection_type = typename trait_type<OTYPE>::selection_type;
-
-template<typename OTYPE>
-using deflate_type = typename trait_type<OTYPE>::deflate_type;
-*/
-
-    //!
-    //! \ingroup nexus_lowlevel 
-    //! \brief define a Nexus object type
-    //!
-    /*
-#define DEFINE_NXOBJECT(otype) \
-        typedef typename pni::io::nx::nxobject_traits<nximp_code_map<otype>::idcode>::object_type
-
-#define DEFINE_NXGROUP(otype) \
-        typedef typename nxobject_traits<nximp_code_map<otype>::idcode>::group_type
-
-#define DEFINE_NXFILE(otype) \
-        typedef typename nxobject_traits<nximp_code_map<otype>::idcode>::file_type
-
-#define DEFINE_NXFIELD(otype) \
-        typedef typename nxobject_traits<nximp_code_map<otype>::idcode>::field_type
-
-#define DEFINE_NXATTRIBUTE(otype) \
-        typedef typename nxobject_traits<nximp_code_map<otype>::idcode>::attribute_type
-
-#define DEFINE_NXSELECTION(otype) \
-        typedef typename nxobject_traits<nximp_code_map<otype>::idcode>::selection_type
-
-#define DEFINE_NXDEFLATE(otype)\
-        typedef typename nxobject_traits<nximp_code_map<otype>::idcode>::deflate_type
-
-
-#define DEFINE_NEXUS_TYPES(otype)\
-        DEFINE_NXOBJECT(otype) object_type;\
-        DEFINE_NXGROUP(otype)  group_type;\
-        DEFINE_NXFILE(otype)   file_type;\
-        DEFINE_NXFIELD(otype)  field_type;\
-        DEFINE_NXATTRIBUTE(otype) attribute_type;\
-        DEFINE_NXSELECTION(otype) selection_type
-*/
-//end of namespace
 }
 }
 }
