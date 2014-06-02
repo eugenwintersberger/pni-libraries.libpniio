@@ -28,11 +28,11 @@
 #include <fstream>
 #include <pni/core/types.hpp>
 
-using namespace pni::core;
 
 namespace pni{
 namespace io{
 
+    using namespace pni::core;
     //! 
     //! \ingroup general_io
     //! \brief base class for data readers
@@ -71,7 +71,7 @@ namespace io{
             //! \return unique pointer to the input stream
             //!
             std::unique_ptr<std::ifstream> 
-                :_open_stream(const string &fname) const;
+                _open_stream(const string &fname) const;
         protected:
             //!
             //! \brief get stream
