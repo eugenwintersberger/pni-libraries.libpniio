@@ -1,32 +1,26 @@
-/*
- * Declaration of class CBFReader
- *
- * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- *
- * CBFReader is the base class for readers for the CBF format and a descendant
- * of Reader (see Reader.hpp).
- *
- * Created on: Apr 19, 2011
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- */
-
+//
+// (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+// Created on: Apr 19, 2011
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+//
 #pragma once
 
 #include<iostream>
@@ -50,24 +44,28 @@ namespace pni{
 namespace io{
 
 
-    /*! 
-    \ingroup image_io_cbf
-    \brief base clase for CBF readers
-
-    CBFReader is the base class for all readers of data stored in binary CIF format.
-    Although CBF is standardized by the ICUR the guys from Dectris (the vendor of the Pilatus
-    detector) use a kind of dialect which must be treated in a slightly different way.
-    The field _header_convention in the class indicates whether or not the header is
-    in standard CBF format or in the Dectris dialect.
-    
-    Reading a CBF file is a two step process:
-    - the header is read and the information stored there kept in in a CIFBinaryHeader object
-    - the binary data is read from the stream using a CBFBinStreamReader object
-    The header information contains enough information to decide which binary reader to use
-    and to construct the data objects which will hold the data read from the file.
-    From such a point of view the header object can be consideres as a factory for the binary
-    readers and the array objects holding the data.
-    */
+    //! 
+    //! \ingroup image_io_cbf
+    //! \brief base clase for CBF readers
+    //! 
+    //! CBFReader is the base class for all readers of data stored in binary 
+    //! CIF format.  Although CBF is standardized by the ICUR the guys from 
+    //! Dectris (the vendor of the Pilatus detector) use a kind of dialect 
+    //! which must be treated in a slightly different way.  The field 
+    //! _header_convention in the class indicates whether or not the header is
+    //! in standard CBF format or in the Dectris dialect.
+    //! 
+    //! Reading a CBF file is a two step process:
+    //! - the header is read and the information stored there kept in in a 
+    //! CIFBinaryHeader object
+    //! - the binary data is read from the stream using a CBFBinStreamReader 
+    //! object
+    //! The header information contains enough information to decide which 
+    //! binary reader to use and to construct the data objects which will 
+    //! hold the data read from the file.  From such a point of view the 
+    //! header object can be consideres as a factory for the binary
+    //! readers and the array objects holding the data.
+    //!
     class cbf_reader: public image_reader 
     {
         private:
@@ -81,11 +79,11 @@ namespace io{
             cbf::compression_id _compression_type; 
 
             //-----------------------------------------------------------------
-            /*! 
-            \brief parse the file
-
-            Parse the file and setup member variables of the class.
-            */
+            //! 
+            //! \brief parse the file
+            //!
+            //! Parse the file and setup member variables of the class.
+            //!
             void _parse_file();
             
         public:
@@ -94,15 +92,16 @@ namespace io{
             cbf_reader();
 
             //-----------------------------------------------------------------
-            /*! 
-            \brief construct reader object
-
-            The name of the CBFFile is passed as a String object. During
-            instantiation of class the file is parsed. Throws an exception if
-            the flavor of the CBF file cannot be deduced from the header.
-            \throw file_error if the CBF flavor cannot be deduced
-            \param fname name of the file
-            */
+            //! 
+            //! \brief construct reader object
+            //!
+            //! The name of the CBFFile is passed as a String object. During
+            //! instantiation of class the file is parsed. Throws an 
+            //! exception if the flavor of the CBF file cannot be deduced 
+            //! from the header.
+            //! \throw file_error if the CBF flavor cannot be deduced
+            //! \param fname name of the file
+            //!
             cbf_reader(const string &fname);
 
             //-----------------------------------------------------------------
@@ -152,33 +151,34 @@ namespace io{
             }
 
             //-----------------------------------------------------------------
-            /*!
-            \brief read image
-
-            \tparam CTYPE container type for storing data
-            \throw memory_allocation_error if container allocation failes
-            \throw file_error in case of IO errors
-            \param i image number to read
-            \param c channel to read (default = 0)
-            \return instance of CTYPE with image data
-            */
+            //!
+            //! \brief read image
+            //!
+            //! \tparam CTYPE container type for storing data
+            //! \throw memory_allocation_error if container allocation failes
+            //! \throw file_error in case of IO errors
+            //!  \param i image number to read
+            //! \param c channel to read (default = 0)
+            //! \return instance of CTYPE with image data
+            //!
             template<typename CTYPE> CTYPE image(size_t i,size_t c=0);
            
             //-----------------------------------------------------------------
-            /*!
-            \brief read data from detector file
-
-            Reads a single image from a detector file and stores it in an
-            container of type CTYPE. Ths me
-            \throws file_error if case of IO errors
-            \tparam CTYPE container type holding the image data
-            \tparam SizeMissmatchError if container and image size do not match
-            \param array instance of CTYPE where data will be stored
-            \param i image number
-            \param c channel number
-            */
+            //!
+            //! \brief read data from detector file
+            //! 
+            //! Reads a single image from a detector file and stores it in an
+            //! container of type CTYPE. Ths me
+            //! \throws file_error if case of IO errors
+            //! \tparam CTYPE container type holding the image data
+            //! \tparam SizeMissmatchError if container and image size do 
+            //! not match
+            //! \param array instance of CTYPE where data will be stored
+            //! \param i image number
+            //! \param c channel number
+            //!
             template<typename CTYPE> 
-                void image(CTYPE &array,size_t i,size_t c=0);
+            void image(CTYPE &array,size_t i,size_t c=0);
 
     };
 

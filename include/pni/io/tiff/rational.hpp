@@ -1,31 +1,26 @@
-/*
- * Implementation of class TIFFRational
- *
- * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- *
- * Declaration of class TIFFRational.
- *
- * Created on: Jun 17, 2011
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- */
-
+//
+// (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+// Created on: Jun 17, 2011
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+//
 #pragma once
 
 #include <iostream>
@@ -39,12 +34,13 @@ namespace io{
 namespace tiff{
 
 
-    /*! \ingroup image_io_tiff
-    \brief rational type for TIFF IFD entries
-
-    IFD entries in TIFF files can consist of a rational number. This class
-    implements such a type as a template.
-    */
+    //!
+    //! \ingroup image_io_tiff
+    //! \brief rational type for TIFF IFD entries
+    //!
+    //! IFD entries in TIFF files can consist of a rational number. This 
+    //! class implements such a type as a template.
+    //!
     template<typename T> class rational
     {
         protected:
@@ -62,12 +58,13 @@ namespace tiff{
             ~rational(){}
 
             //====================conversion operator=======================
-            /*! \brief conversion operator
-
-            This operator converts the rational number to a single scalar value.
-            It will be typically used to convert from a rational number to a
-            floating point type. 
-            */
+            //!
+            //! \brief conversion operator
+            //!
+            //! This operator converts the rational number to a single 
+            //! scalar value.  It will be typically used to convert from a 
+            //! rational number to a floating point type. 
+            //!
             template<typename U> operator U()
             {
                 return (U)((U)(_numerator))/((U)(_denominator));

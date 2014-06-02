@@ -1,28 +1,26 @@
-/*
- * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- *
- * DectrisCBFReader class definition
- *
- * Created on: Apr 23, 2012
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- */
+//
+// (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+// Created on: Apr 23, 2012
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+//
 
 #pragma once
 
@@ -39,54 +37,63 @@ namespace pni{
 namespace io{
 namespace cbf{
     
-    /*! 
-    \ingroup image_io_cbf
-    \brief reader for DECTRIS detector data
-
-    This type provides static method to read data from CBF files written by
-    detectors from DECTRIS. 
-    */
+    //!
+    //! \ingroup image_io_cbf
+    //! \brief reader for DECTRIS detector data
+    //! 
+    //! This type provides static method to read data from CBF files written 
+    //! by detectors from DECTRIS. 
+    //1
     class dectris_reader
     {
         public:
-            /*! \brief read header information
-
-            This static method reads the header data from a CBF file. The header
-            information is collected and stored in an ImageInfo type. In
-            addition the ct argument holds the ID of the compression use for
-            this image.
-            \param is input stream from which to read
-            \param info ImageInfo vector where to store image data
-            \param ct compression id 
-            \return position of data section
-            */
+            //! 
+            //! \brief read header information
+            //!
+            //! This static method reads the header data from a CBF file. The 
+            //! header information is collected and stored in an ImageInfo 
+            //! type. In addition the ct argument holds the ID of the 
+            //! compression use for this image.
+            //!
+            //! \param is input stream from which to read
+            //! \param info ImageInfo vector where to store image data
+            //! \param ct compression id 
+            //! \return position of data section
+            //!
             static std::streampos read_header(std::ifstream &is,
                     std::vector<pni::io::image_info> &info,compression_id &ct);
 
             //-----------------------------------------------------------------
-            /*! \brief read data 
-
-            Static method to read byte offset compressed data from DECTRIS CBF
-            files. 
-            \tparam CBFT type used for data in the file
-            \tparam CTYPE container type where to store the data
-            \param is input stream
-            \param info instance of ImageInfo for the image to read
-            \param data container instance where to store the data
-            */
-            template<typename CBFT,typename CTYPE>
-                static void read_data_byte_offset(
-                        std::ifstream &is,
-                        const pni::io::image_info &info,
-                        CTYPE &data);
+            //!
+            //! \brief read data 
+            //!
+            //! Static method to read byte offset compressed data from 
+            //! DECTRIS CBF files. 
+            //!
+            //! \tparam CBFT type used for data in the file
+            //! \tparam CTYPE container type where to store the data
+            //! \param is input stream
+            //! \param info instance of ImageInfo for the image to read
+            //! \param data container instance where to store the data
+            //!
+            template<
+                     typename CBFT,
+                     typename CTYPE
+                    >
+            static void read_data_byte_offset(std::ifstream &is,
+                                              const pni::io::image_info &info,
+                                              CTYPE &data);
 
 
     };
 
     //-------------------------------------------------------------------------
-    template<typename CBFT,typename CTYPE>
-        void dectris_reader::read_data_byte_offset( std::ifstream &is,
-                const pni::io::image_info &info, CTYPE &data)
+    template<
+             typename CBFT,
+             typename CTYPE
+            >
+    void dectris_reader::read_data_byte_offset(std::ifstream &is,
+                                 const pni::io::image_info &info, CTYPE &data)
     {
 
         //unsigned long i;
@@ -98,14 +105,8 @@ namespace cbf{
         typename CTYPE::iterator iter = data.begin();
         typename CTYPE::value_type v_old = 0;
 
-#ifdef NOFOREACH
-        for(auto iter = data.begin();iter!=data.end();++iter)
-        {
-            typename CTYPE::value_type &v = *iter;
-#else
         for(typename CTYPE::value_type &v: data)
         {
-#endif
             v = v_old; //set the new value to the previous
 
             buffer = 0; //reset the read buffer

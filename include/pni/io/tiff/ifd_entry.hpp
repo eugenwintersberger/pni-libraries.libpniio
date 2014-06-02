@@ -1,30 +1,26 @@
-/*
- * Declaration of class CBFReader
- *
- * (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- *
- * Definition of class TIFFIFDEntry
- *
- * Created on: Apr 24, 2012
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- */
+//
+// (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+// Created on: Apr 24, 2012
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+//
 #pragma once
 
 #include <iostream>
@@ -67,12 +63,12 @@ namespace tiff{
     bool operator>=(ifd_entry_type_id a,ifd_entry_type_id b);
 #endif
 
-    /*!
-    \ingroup image_io_tiff
-    \brief class for IFD entries
-
-    This class can manage the content of a single IFDEntry. 
-    */
+    //!
+    //! \ingroup image_io_tiff
+    //! \brief class for IFD entries
+    //!
+    //! This class can manage the content of a single IFDEntry. 
+    //!
     class ifd_entry
     {
         private:
@@ -82,26 +78,32 @@ namespace tiff{
             std::streampos _data;  //!< marks data position
 
             //===============private methods===================================
-            /*! \brief read entry data from stream
+            //!
+            //! \brief read entry data from stream
+            //!
+            //! Reads the entrys data from an input stream. This method 
+            //! assumes that the input stream points to the first element of 
+            //! the entry. The position of the stream is altered. It is the 
+            //! responsibility of the calling method to take care about the 
+            //! position of the stream.
+            //!
+            //! \param r vector where to store the data
+            //! \param stream input stream from which to read
+            //! 
+            template<typename T> 
+            void _read_entry_data(std::vector<T> &r,std::ifstream &stream);
 
-            Reads the entrys data from an input stream. This method assumes that
-            the input stream points to the first element of the entry. The
-            position of the stream is altered. It is the responsibility of the
-            calling method to take care about the position of the stream.
-            \param r vector where to store the data
-            \param stream input stream from which to read
-            */
-            template<typename T> void _read_entry_data(std::vector<T>
-                    &r,std::ifstream &stream);
-
-            /*! \brief read string entry from stream
-
-            Reads a string entry from the stream. The stream position will be
-            altered by this method. Thus the calling method must take care about
-            this.
-            \param r vector where to store data
-            \param stream input stream from which to read
-            */
+            //----------------------------------------------------------------
+            //!
+            //! \brief read string entry from stream
+            //!
+            //! Reads a string entry from the stream. The stream position 
+            //! will be altered by this method. Thus the calling method must 
+            //! take care about this.
+            //!
+            //! \param r vector where to store data
+            //! \param stream input stream from which to read
+            //!
             void _read_entry_data(std::vector<string> &r,std::ifstream &stream);
             
         public:
@@ -118,16 +120,18 @@ namespace tiff{
             ifd_entry(ifd_entry &&e);
 
             //-----------------------------------------------------------------
-            /*! \brief standard constructor
-
-            Standard constructor to create a IFDEntry.
-            \param tag TIFF tag of the entry
-            \param tid type ID of the entry
-            \param size number of elements stored in this entry
-            \param data starting position of data in the stream
-            */
-            ifd_entry(uint16 tag,ifd_entry_type_id tid,size_t size,std::streampos
-                    data);
+            //!
+            //! \brief standard constructor
+            //! 
+            //! Standard constructor to create a IFDEntry.
+            //!
+            //! \param tag TIFF tag of the entry
+            //! \param tid type ID of the entry
+            //! \param size number of elements stored in this entry
+            //! \param data starting position of data in the stream
+            //!
+            ifd_entry(uint16 tag,ifd_entry_type_id tid,size_t size,
+                      std::streampos data);
 
             //-----------------------------------------------------------------
             //! destructor
@@ -141,51 +145,58 @@ namespace tiff{
             ifd_entry &operator=(ifd_entry &&e);
 
             //===============static methods====================================
-            /*! \brief create entry from stream
-
-            A static factory method to create an instance of IFDEntry from a
-            stream.
-            \param stream input stream from which to read data
-            \return instance of IFDEntry
-            */
+            //!
+            //! \brief create entry from stream
+            //!
+            //! A static factory method to create an instance of IFDEntry 
+            //! from a stream.
+            //!
+            //! \param stream input stream from which to read data
+            //! \return instance of IFDEntry
+            //!
             static ifd_entry create_from_stream(std::ifstream &stream);
 
             //==================class methods==================================
-            /*! \brief number of elements
-
-            Returns the number of elements that make up the entry.
-            \return number of elements
-            */
+            //!
+            //! \brief number of elements
+            //!
+            //! Returns the number of elements that make up the entry.
+            //! \return number of elements
+            //!
             size_t size() const;
 
             //-----------------------------------------------------------------
-            /*! \brief get name
-
-            Returns the name of the entry as a string.
-            \return name as string
-            */
+            //!
+            //! \brief get name
+            //!
+            //! Returns the name of the entry as a string.
+            //! \return name as string
+            //!
             string name() const;
 
             //-----------------------------------------------------------------
-            /*! \brief get type ID
-
-            Returns the TypeID of the entries type. 
-            \return type ID of entry
-            */
+            //!
+            //! \brief get type ID
+            //!
+            //! Returns the TypeID of the entries type. 
+            //! \return type ID of entry
+            //!
             type_id_t type_id() const;
 
             //-----------------------------------------------------------------
-            /*! \brief get entry value
-
-            Template returns the value of the entry and returs it as a vector of
-            type T. Entries are in general considered as arrays (vectors) in
-            TIFF. Thus the std::vector type is used to represent each entry.
-
-            The method makes no assumption about the position of the stream
-            pointer neither does it alter its state. 
-            \param stream input stream from which data will be read
-            \return entry as vector
-            */
+            //!
+            //! \brief get entry value
+            //!
+            //! Template returns the value of the entry and returs it as a 
+            //! vector of type T. Entries are in general considered as arrays
+            //! (vectors) in TIFF. Thus the std::vector type is used to 
+            //! represent each entry.
+            //!
+            //! The method makes no assumption about the position of the stream
+            //! pointer neither does it alter its state. 
+            //! \param stream input stream from which data will be read
+            //! \return entry as vector
+            //!
             template<typename T> std::vector<T> value(std::ifstream &stream);
 
             //-----------------------------------------------------------------
