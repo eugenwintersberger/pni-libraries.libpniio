@@ -26,8 +26,6 @@ set(HEADER_FILES as_attribute.hpp
                  is_field.hpp 
                  is_group.hpp 
                  is_valid.hpp 
-                 nxvariant_algo_helper.hpp 
-                 nxvariant_visitor_template.hpp 
                  read.hpp 
                  set_class.hpp 
                  set_unit.hpp 
