@@ -21,7 +21,7 @@
 //
 #pragma once
 
-#include "../nxobject_traits.hpp"
+#include "../nxobject.hpp"
 
 namespace pni{
 namespace io{
@@ -29,29 +29,33 @@ namespace nx{
 
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief as field visitor
     //!
-    //! This visitor return the object stored in a variant as a field object.
+    //! This visitor return the object stored as nxobject as a field object.
     //! Obviously this will only work if the object is really a field object. 
     //! If the stored object is a group or an attribute object an exception 
     //! will be thrown.
     //!
-    //! \tparam VTYPE variant type
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
     //! \sa as_field
     //!
-    template<typename VTYPE> 
-    class as_field_visitor : public boost::static_visitor<
-                             typename nxobject_field<VTYPE>::type
-                             >
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    class as_field_visitor : public boost::static_visitor<FTYPE>
     {
         public:
             //! field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
             //! result type of the visitor
             typedef field_type result_type;
 
@@ -108,7 +112,7 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief as field wrapper
     //!
     //! Wrapper function for the as_field_visitor template. This function takes a
@@ -116,20 +120,26 @@ namespace nx{
     //! instance of a field type. In other cases an exception will be thrown.
     /*!
     \code{.cpp}
-    object_types field_obj = get_object(root,path_to_field);
+    auto field_obj = get_object(root,path_to_field);
     auto f = as_field(field_obj);
     \endcode
     */
     //!
     //! \throws nxfield_error if stored object is not a field type
-    //! \tparam VTYPE variant type
-    //! \param o instance of VTYPE
-    //! \return instance of a field type
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \param o instance of nxobject<GTYPE,FTYPE,ATYPE>
+    //! \return instance of FTYPE
     //!
-    template<typename VTYPE> 
-    typename nxobject_field<VTYPE>::type as_field(const VTYPE &o)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    FTYPE as_field(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(as_field_visitor<VTYPE>(),o);
+        return boost::apply_visitor(as_field_visitor<GTYPE,FTYPE,ATYPE>(),o);
     }
 
 //end of namespace

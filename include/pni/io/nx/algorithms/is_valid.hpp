@@ -22,12 +22,28 @@
 //
 #pragma once
 
-#include "../nxobject_traits.hpp"
+#include "../nxobject.hpp"
 
 
 namespace pni{
 namespace io{
 namespace nx{
+
+    //!
+    //! \ingroup algorithm_code
+    //! \brief check object validity
+    //! 
+    //! Check if the passed object is valid and return true if this is the 
+    //! case.
+    //! 
+    //! \tparam OTYPE object type
+    //! \param o instance of OTYPE
+    //! \return true if the object is valid
+    //! 
+    template<typename OTYPE> bool is_valid(const OTYPE &o)
+    {
+        return o.is_valid();
+    }
 
     //!
     //! \ingroup variant_code
@@ -37,21 +53,27 @@ namespace nx{
     //! validity. You will hardly ever use this visitory directly but rather 
     //! the is_valid wrapper function.
     //!
-    //! \tparam VTYPE variant type
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
     //! \sa is_valid
     //!
-    template<typename VTYPE> 
+    template<
+             typename GTYPE,
+             typename FTYPE, 
+             typename ATYPE
+            > 
     class is_valid_visitor : public boost::static_visitor<bool>
     {
         public:
             //! result type (bool)
             typedef bool result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
           
             //-----------------------------------------------------------------
             //!
@@ -64,7 +86,7 @@ namespace nx{
             //!
             result_type operator()(const group_type &g) const
             {
-                return g.is_valid();
+                return is_valid(g);
             }
 
             //-----------------------------------------------------------------
@@ -79,7 +101,7 @@ namespace nx{
             //!
             result_type operator()(const field_type &f) const
             {
-                return f.is_valid();
+                return is_valid(f);
             }
 
             //-----------------------------------------------------------------
@@ -93,12 +115,12 @@ namespace nx{
             //!
             result_type operator()(const attribute_type &a) const
             {
-                return a.is_valid();
+                return is_valid(a);
             }
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief is_valid wrapper 
     //!
     //! This function acts as a wrapper around the is_valid_visitor. It 
@@ -106,9 +128,7 @@ namespace nx{
     //! and false otherwise.
     /*! 
     \code{.cpp}
-    typedef nxobject_trait<nximp_id::HDF5>::object_types object_types;
-
-    object_types o = ....;
+    auto o = ....;
     if(!is_valid(o))
     {
         std::cerr<<"Nexus object is not valid - abort program!"<<std::endl;
@@ -116,14 +136,20 @@ namespace nx{
     }
     \endcode
     */
-    //! \tparam VTYPE
-    //! \param o reference to instance of VTYPE
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \param o reference to nxobject<GTYPE,FTYPE,ATYPE>
     //! \return true if valid, false otherwise
     //!
-    template<typename VTYPE> 
-    typename is_valid_visitor<VTYPE>::result_type is_valid(const VTYPE &o)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    bool is_valid(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(is_valid_visitor<VTYPE>(),o);
+        return boost::apply_visitor(is_valid_visitor<GTYPE,FTYPE,ATYPE>(),o);
     }
 
 //end of namespace

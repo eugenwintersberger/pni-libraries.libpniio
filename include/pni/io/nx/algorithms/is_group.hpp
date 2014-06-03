@@ -21,34 +21,40 @@
 //
 #pragma once
 
-#include "../nxobject_traits.hpp"
+#include "../nxobject.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief check if group
     //!
     //! Check if the object stored in a variant is a group. The return value 
     //! of the () operator of this visitor is bool.
     //! 
-    //! \tparam VTYPE variant type
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
     //! \return true if the object is a group, false otherwise
     //!
-    template<typename VTYPE> 
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
     class is_group_visitor : public boost::static_visitor<bool>
     {
         public:
             //! result type 
             typedef bool result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
           
             //----------------------------------------------------------------
             //!
@@ -97,7 +103,7 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief check for group
     //!
     //! This template function is a wrapper around the is_group_visitor 
@@ -105,14 +111,20 @@ namespace nx{
     //! a group and returns true if this is the case. In all other cases 
     //! false is returned.
     //! 
-    //! \tparam VTYPE variant type
-    //! \param o reference to VTYPE instance
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \param o reference to nxobject<GTYPE,FTYPE,ATYPE>
     //! \return true if object is a group, false otherwise
     //!
-    template<typename VTYPE> 
-    typename is_group_visitor<VTYPE>::result_type is_group(const VTYPE &o)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    bool is_group(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(is_group_visitor<VTYPE>(),o);
+        return boost::apply_visitor(is_group_visitor<GTYPE,FTYPE,ATYPE>(),o);
     }
 
 //end of namespace

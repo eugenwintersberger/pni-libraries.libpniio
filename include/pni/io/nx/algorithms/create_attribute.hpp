@@ -24,6 +24,7 @@
 #include <boost/variant.hpp>
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 #include "get_object.hpp"
 
@@ -38,21 +39,23 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief create an attribute
     //!
-    //! Function template creates an attribute for a given parent. 
+    //! Function template creating an attribute for a parent 
     /*!
     \code
     auto parent = ....;
     auto attr = create_attribute<int32>(parent,"test",shape_t{4,4});
     \endcode
     */
+    //! If no shape is passed a scalar attribute is created.
     //!
     //! \throws nxattribute_error in case of errors
     //! \tparam T data type for the attribute
-    //! \tparam PTYPE parent type
+    //! \tparam PTYPE parent template
+    //! \tparam IMPID implementation ID
     //! \tparam STYPE container type for the shape (default is shape_t)
     //! \param o parent 
     //! \param n attribute name
-    //! \param s attribute shape
+    //! \param s attribute shape (optional)
     //! \return istance of nxattribute 
     //!
     template<
@@ -71,27 +74,35 @@ namespace nx{
     //-------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_code
-    //! \brief create_attribute wrapper
+    //! \brief create an attribute 
     //!
-    //! Wrapper function for the create_attribute_visitor template. The 
-    //! function creates a new attribute described  by a path relative to the 
-    //! object passed as the first argument of the function. This object must 
-    //! be either a gruop or a field.
+    //! Create an attribute whose name and parent object is described by a
+    //! Nexus path. The parent object referenced by the path must exist in
+    //! order for the function to succeed. 
+    //! The first argument is the root for the path if it is relative. 
+    //! If the path is an absolute one it just acts as a reference from which 
+    //! to obtain the root group of the Nexus file.
     /*!
     \code
     nxpath path = path_from_string("/:NXentry/:NXinstrument/:NXdetector/data@test");
-    object_types root = get_object(...);
+    auto root = get_object(...);
     create_attribute<int32>(root,path,shape_t{4,4});
     \endcode
     */
+    //! The last argument is the shape of the attribute which is optional. 
+    //! If no shape is passed a scalar attribute is created. 
+    //! 
+    //! An exception is raised if the path does not refere to an attribute.
+    //! 
     //! \throws nxattribute_error in the case of errors
     //! \tparam T data type of the field
-    //! \tparam VTYPE variant type
+    //! \tparam PTYPE parent type template
+    //! \tparam IMPID implementation ID
     //! \tparam STYPE container type for the shape (default is shape_t)
-    //! \param o instance of VTYPE with the parent group
+    //! \param o parent instance
     //! \param path Nexus path to the attribute
     //! \param s shape of the attribute
-    //! \return object_types with the newly created attribute
+    //! \return instance of nxattribute
     //!
     template<
              typename T,
@@ -112,14 +123,24 @@ namespace nx{
 
         split_last(path,group_path,target_path);
 
-        PTYPE<IMPID> parent = get_object(o,group_path);
-        parent = get_child(parent,target_path.begin()->first,
+        //obtain the parent for the target object - this will always be a 
+        //grou ptype
+        auto parent = get_object(o,group_path);
+        //get the target to which to attache the attribute - can be a group
+        //or a field
+        auto target = get_child(parent,target_path.begin()->first,
                            target_path.begin()->second);
 
-        return create_attribute(parent,target_path.attribute(),s);
+        //finally create the attribute
+        return create_attribute(target,target_path.attribute(),s);
     }
 
     //------------------------------------------------------------------------
+    //!
+    //! \ingroup algorithm_code
+    //! \brief create attribute 
+    //! 
+    //! 
     template<
              typename T,
              template<nximp_code> class PTYPE,
@@ -182,24 +203,26 @@ namespace nx{
     //! \sa create_attribute
     //!
     template<
-             typename VTYPE,
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE,
              typename T,
              typename STYPE
             > 
-    class create_attribute_visitor : public boost::static_visitor<VTYPE>
+    class create_attribute_visitor : public boost::static_visitor<ATYPE>
     {
         private:
             string _name;  //!< the name of the field
             STYPE _shape;  //!< shape of field
         public:
             //! result type
-            typedef VTYPE result_type;
+            typedef ATYPE result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
 
             //-----------------------------------------------------------------
             //!
@@ -224,7 +247,7 @@ namespace nx{
             //!
             result_type operator()(const group_type &g) const
             {
-                return result_type(create_attribute<T>(g,_name,_shape));
+                return create_attribute<T>(g,_name,_shape);
             }
 
             //-----------------------------------------------------------------
@@ -238,7 +261,7 @@ namespace nx{
             //!
             result_type operator()(const field_type &f) const
             {
-                return result_type(create_attribute<T>(f,_name,_shape));
+                return create_attribute<T>(f,_name,_shape);
             }
 
             //-----------------------------------------------------------------
@@ -288,15 +311,17 @@ namespace nx{
     //!
     template<
              typename T,
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE,
              typename ...TYPES,
              typename STYPE = shape_t
             > 
 
-    typename create_attribute_visitor<boost::variant<TYPES...>,T,STYPE>::result_type 
-    create_attribute(const boost::variant<TYPES...> &o,const string &n,const STYPE &s=STYPE())
+    ATYPE create_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &o,
+                           const string &n,const STYPE &s=STYPE())
     {
-        typedef typename boost::variant<TYPES...> variant_type;
-        typedef create_attribute_visitor<variant_type,T,STYPE> visitor_t;
+        typedef create_attribute_visitor<GTYPE,FTYPE,ATYPE,T,STYPE> visitor_t;
         return boost::apply_visitor(visitor_t(n,s),o);
     }
     
@@ -328,14 +353,16 @@ namespace nx{
     //!
     template<
              typename T,
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE,
              typename ...TYPES,
              typename STYPE = shape_t
             > 
-    typename create_attribute_visitor<boost::variant<TYPES...>,T,STYPE>::result_type 
-    create_attribute(const boost::variant<TYPES...> &o,const nxpath &path,const STYPE &s=STYPE())
+    ATYPE create_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &o,
+                           const nxpath &path,const STYPE &s=STYPE())
     {
-        typedef typename boost::variant<TYPES...> variant_type;
-        typedef create_attribute_visitor<variant_type,T,STYPE> visitor_t;
+        typedef create_attribute_visitor<GTYPE,FTYPE,ATYPE,T,STYPE> visitor_t;
         nxpath group_path,target_path;
 
         //check if the path describes an attribute
@@ -345,11 +372,11 @@ namespace nx{
 
         split_last(path,group_path,target_path);
 
-        variant_type parent = get_object(o,group_path);
-        parent = get_child(parent,target_path.begin()->first,
+        auto parent = get_object(o,group_path);
+        auto target = get_child(parent,target_path.begin()->first,
                            target_path.begin()->second);
 
-        return boost::apply_visitor(visitor_t(target_path.attribute(),s),parent);
+        return boost::apply_visitor(visitor_t(target_path.attribute(),s),target);
     }
     
 

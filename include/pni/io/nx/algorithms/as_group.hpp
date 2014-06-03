@@ -21,7 +21,7 @@
 //
 #pragma once
 
-#include "../nxobject_traits.hpp"
+#include "../nxobject.hpp"
 
 namespace pni{
 namespace io{
@@ -29,7 +29,7 @@ namespace nx{
 
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief as group visitor
     //!
     //! This visitor return the object stored in a variant as a group object.
@@ -37,21 +37,25 @@ namespace nx{
     //! If the stored object is a field or an attribute object an exception 
     //! will be thrown.
     //!
-    //! \tparam VTYPE variant type
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
     //! \sa as_group
     //!
-    template<typename VTYPE> 
-    class as_group_visitor : public boost::static_visitor<
-                             typename nxobject_group<VTYPE>::type
-                             >
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    class as_group_visitor : public boost::static_visitor<GTYPE>
     {
         public:
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type     group_type;
+            typedef GTYPE     group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type     field_type;
+            typedef FTYPE     field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
             //! result type
             typedef group_type result_type;
 
@@ -108,7 +112,7 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief as group wrapper
     //!
     //! Wrapper function for the as_group_visitor template. This function 
@@ -117,20 +121,26 @@ namespace nx{
     //! will be thrown.
     /*!
     \code{.cpp}
-    object_types group_obj = get_object(root,path_to_group);
+    auto group_obj = get_object(root,path_to_group);
     auto g = as_group(group_obj);
     \endcode
     */
     //!
     //! \throws nxgroup_error if stored object is not a group type
-    //! \tparam VTYPE variant type
-    //! \param o instance of VTYPE
-    //! \return instance of a group type
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \param o instance of nxobject<GTYPE,FTYPE,ATYPE>
+    //! \return instance of GTYPE
     //!
-    template<typename VTYPE> 
-    typename nxobject_group<VTYPE>::type as_group(const VTYPE &o)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    GTYPE as_group(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(as_group_visitor<VTYPE>(),o);
+        return boost::apply_visitor(as_group_visitor<GTYPE,FTYPE,ATYPE>(),o);
     }
 
 //end of namespace

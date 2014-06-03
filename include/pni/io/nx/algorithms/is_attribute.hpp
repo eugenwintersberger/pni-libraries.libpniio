@@ -22,34 +22,40 @@
 //
 #pragma once
 
-#include "../nxobject_traits.hpp"
+#include "../nxobject.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief check attribute visitor
     //!
     //! This visitor checks if the object stored in a variant type is an 
     //! attribute instance. In this case true will be returne. False 
     //! otherwise. 
     //! 
-    //! \tparam VTYPE variant type
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
     //!
-    template<typename VTYPE> 
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
     class is_attribute_visitor : public boost::static_visitor<bool>
     {
         public:
             //! result type (bool)
             typedef bool result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
           
             //-----------------------------------------------------------------
             //!
@@ -97,21 +103,28 @@ namespace nx{
 #pragma GCC diagnostic pop
     };
 
-    /*!
-    \ingroup variant code
-    \brief check if attribute
-
-    A wrapper around the is_attribute_visitor template. The function returns
-    true if the object stored in VTYPE is an attribute. In all other cases false
-    is returned.
-    \tparam VTYPE variant type
-    \param o reference to instance of VTYPE
-    \return true if o is an attribute, false otherwise
-    */
-    template<typename VTYPE> 
-    typename is_attribute_visitor<VTYPE>::result_type is_attribute(const VTYPE &o)
+    //!
+    //! \ingroup algorithm_code
+    //! \brief check if attribute
+    //! 
+    //! A wrapper around the is_attribute_visitor template. The function 
+    //! returns true if the object stored in nxobject<GTYPE,FTYPE,ATYPE> is 
+    //! an attribute. In all other cases false is returned.
+    //!
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \param o reference to an instance of nxobject<GTYPE,FTYPE,ATYPE>
+    //! \return true if o is an attribute, false otherwise
+    //!
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    bool is_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(is_attribute_visitor<VTYPE>(),o);
+        return boost::apply_visitor(is_attribute_visitor<GTYPE,FTYPE,ATYPE>(),o);
     }
 
 //end of namespace

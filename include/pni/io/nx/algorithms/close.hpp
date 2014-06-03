@@ -21,8 +21,7 @@
 //
 #pragma once
 
-#include <boost/variant.hpp>
-#include "../nxobject_traits.hpp"
+#include "../nxobject.hpp"
 
 namespace pni{
 namespace io{
@@ -43,25 +42,31 @@ namespace nx{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief close an object
     //!
     //! This visitor closes an open object.
     //! 
-    //! \tparam VTYPE variant type
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
     //!
-    template<typename VTYPE> 
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
     class close_visitor : public boost::static_visitor<void>
     {
         public:
             //! result type (bool)
             typedef void result_type;   
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
            
             //-----------------------------------------------------------------
             //!
@@ -104,21 +109,25 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief close object
     //!
     //! Wrapper function around the close_visitor. The function closes the 
     //! object stored in the variant type passed to it.
     //!
-    //! \tparam VTYPE Nexus object variant type
-    //! \param o instance of VTYPE
-    //! \return true if the object is a field
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \param o instance of nxobject<GTYPE,FTYPE,ATYPE>
     //!
-    template<typename ...TYPES> 
-    void close(boost::variant<TYPES...> &o)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    void close(nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        typedef typename boost::variant<TYPES...> variant_type;
-        return boost::apply_visitor(close_visitor<variant_type>(),o);
+        return boost::apply_visitor(close_visitor<GTYPE,FTYPE,ATYPE>(),o);
     }
 
 

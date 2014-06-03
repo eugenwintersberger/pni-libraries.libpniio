@@ -4,6 +4,7 @@ set(SOURCES as_attribute_test.cpp
             create_attribute_test.cpp
             create_field_test.cpp
             create_group_test.cpp
+            close_test.cpp
             get_attribute_test.cpp
             get_child_test.cpp
             get_class_test.cpp
