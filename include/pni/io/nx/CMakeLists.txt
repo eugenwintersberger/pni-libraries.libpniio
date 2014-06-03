@@ -14,6 +14,7 @@ set(HEADER_FILES nexus_utils.hpp
                  nximp_code_map.hpp 
                  nximp_map.hpp 
                  nxlink.hpp 
+                 nxobject.hpp
                  nxlink_type.hpp 
                  nxobject_iterator.hpp
                  nxobject_traits.hpp

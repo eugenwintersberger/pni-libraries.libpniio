@@ -34,6 +34,7 @@
 #include "nximp_code.hpp"
 #include "nximp_code_map.hpp"
 #include "nxobject_traits.hpp"
+#include "nxobject.hpp"
 
 #include "h5/h5link.hpp"
 #include "h5/H5AttributeObject.hpp"
@@ -58,7 +59,7 @@ namespace h5{
     typedef pni::io::nx::nxdeflate_filter<nximp_map<nximp_code::HDF5>::deflate_imp> nxdeflate_filter;
     typedef pni::io::nx::nxattribute<nximp_code::HDF5>  nxattribute;
     typedef pni::io::nx::nxselection<nxfield> nxselection;
-    typedef boost::variant<nxgroup,nxfield,nxattribute> nxobject;
+    typedef pni::io::nx::nxobject<nxgroup,nxfield,nxattribute> nxobject;
 //end of namespace
 }
 }

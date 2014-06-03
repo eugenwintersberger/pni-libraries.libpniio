@@ -1,6 +1,4 @@
 //
-// Declaration of types
-//
 // (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
@@ -19,22 +17,32 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Created on: Jul 1, 2011
+// Created on: Jun 28, 2013
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 #pragma once
 
-#include "nxfile.hpp"
-#include "nxgroup.hpp"
-#include "nxfield.hpp"
-#include "nxdeflate_filter.hpp"
-#include "nxattribute.hpp"
-#include "nximp_code.hpp"
-#include "nximp_code_map.hpp"
-#include "nxobject_traits.hpp"
-#include "nxobject.hpp"
+#include <boost/variant.hpp>
 
+namespace pni{
+namespace io{
+namespace nx{
+    
+    //!
+    //! \ingroup nexus_lowlevel
+    //!
+    //! nxobject is an alias to a boost::variant template which can hold an 
+    //! instance of a group, a field, or an attribute. It can be thus 
+    //! used as a general container for all kind of Nexus objects.
+    //!
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            >
+    using nxobject = boost::variant<GTYPE,FTYPE,ATYPE>;
 
-#include "nx_hdf5_implementation.hpp"
-
-
+//end of namespace
+}
+}
+}
