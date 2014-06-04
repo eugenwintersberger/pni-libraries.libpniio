@@ -22,6 +22,7 @@
 #pragma once
 
 #include <type_traits>
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 #include "is_group.hpp"
 #include "is_field.hpp"
@@ -33,51 +34,70 @@ namespace pni{
 namespace io{
 namespace nx{
 
+    //!
+    //! \ingroup algorithm_code
+    //! \brief get attribute container
+    //! 
+    //! Append all attributes of a particular object to a container. 
+    //! The container type has to provide a push_back function as any STL 
+    //! container does. By appending the attribtues we avoid allocation problems
+    //! of the container. The Nexus object can be either a group or a field
+    //! object.
+    //! 
+    //! \tparam CTYPE container type
+    //! \tparam OTYPE object template
+    //! \tparam IMPID implementation ID of the object
+    //! \param o Nexus object
+    //! \param c container to which to append
+    //! 
+    template<
+             typename CTYPE,
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID
+            >
+    void get_attributes(const OTYPE<IMPID> &o,CTYPE &c)
+    {
+        static_assert(std::is_same<typename CTYPE::value_type,
+                      typename nxobject_trait<IMPID>::attribute_type>::value,
+                      "The target container value type must be the same as the"
+                      " variant type!");
+
+        auto iter = o.attr_begin();
+        auto end = o.attr_end();
+
+        while(iter!=end) c.push_back(*iter++);
+    }
+
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief get attributes visitor
     //! 
     //! Adds all attributes of an object to a container.
-    //! \tparam VTYPE variant type
     //! \tparam CTYPE container template
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
     //!
     template<
-             typename VTYPE,
-             typename CTYPE
+             typename CTYPE,
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
             > 
     class get_attributes_visitor : public boost::static_visitor<void>
     {
         private:
             CTYPE &_container; //!< container holding the children
-
-            //!
-            //! \brief append attributes
-            //!
-            //! Groups as well as fields have the same interface to retrieve
-            //! attributes. Thus, a single template function can be used to 
-            //! append the attributes to the container.
-            //!
-            //! \tparam NXTYPE nexus object type
-            //! \param o reference to the nexus object
-            //!
-            template<typename NXTYPE> 
-            void append_attributes(const NXTYPE &o) const
-            {
-                for(auto iter = o.attr_begin(); iter!=o.attr_end();++iter)
-                    _container.push_back(VTYPE(*iter));
-
-            }
-
         public:
             //! result type
             typedef void result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
 
             //-----------------------------------------------------------------
             //! constructor
@@ -93,7 +113,7 @@ namespace nx{
             //!
             result_type operator()(const group_type &g) const
             {
-                append_attributes(g);
+                get_attributes(g,_container);
             }
 
             //-----------------------------------------------------------------
@@ -106,7 +126,7 @@ namespace nx{
             //!
             result_type operator()(const field_type &f) const
             {
-                append_attributes(f);
+                get_attributes(f,_container);
             }
 
             //-----------------------------------------------------------------
@@ -132,35 +152,34 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
-    //! \brief get attributes wrapper
+    //! \ingroup algorithm_code
+    //! \brief get attributes 
     //!
-    //! Wrapper function for the get_attributes_visitor template. The parent 
-    //! object from which to retrieve its attributes is passed as the first 
-    //! argument.  The second argument is the container within which the 
-    //! attributes will be stored. The value_type of the container must 
-    //! match the variant type of the parent. If this is not the case an 
-    //! error will be raised during compilation.
+    //! Return a list of attributes attached to an instance of nxobject. 
+    //! 
     //!
     //! \throws nxattribute_error if the stored object is an attribute
-    //! \tparam VTYPE variant type
     //! \tparam CTYPE container type for the children
-    //! \param o parent object as instance of VTYPE
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \param o parent object of type nxobject<GTYPE,FTYPE,ATYPE>
     //! \param c container as instance of CTYPE
-    //! \return container with attributes
     //!
     template<
-             typename VTYPE,
-             typename CTYPE
+             typename CTYPE,
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
             > 
-    void get_attributes(const VTYPE &o,CTYPE &c)
+    void get_attributes(const nxobject<GTYPE,FTYPE,ATYPE> &o,CTYPE &c)
     {
         //check if the container type is of same type is the variant type
-        static_assert(std::is_same<typename CTYPE::value_type,VTYPE>::value,
+        static_assert(std::is_same<typename CTYPE::value_type,ATYPE>::value,
                       "The target container value type must be the same as the"
                       " variant type!");
 
-        return boost::apply_visitor(get_attributes_visitor<VTYPE,CTYPE>(c),o);
+        return boost::apply_visitor(get_attributes_visitor<CTYPE,GTYPE,FTYPE,ATYPE>(c),o);
     }
 
 //end of namespace

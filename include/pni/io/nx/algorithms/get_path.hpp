@@ -21,35 +21,61 @@
 //
 #pragma once
 
-#include "../nxobject_traits.hpp"
+#include "../nxobject.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
 
+    //!
+    //! \ingroup algorithm_code
+    //! \brief get object path
+    //! 
+    //! Return the path of an object as a string. The object can be either an
+    //! instance of nxfield, nxgroup, or nxattribute. 
+    //! 
+    //! \tparam OTYPE object type template
+    //! \tparam IMPID implementation ID
+    //! \param o object instance
+    //! \return path as string
+    //! 
+    template<
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID
+            >
+    string get_path(const OTYPE<IMPID> &o)
+    {
+        return o.path();
+    }
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief get path visitor
     //!
-    //! Retrieves the path of a Nexus object. This works currently only for 
-    //! groups and fields as we cannot retrieve the parent object from an 
-    //! attribute.
-    //! \tparam VTYPE variant type
+    //! Visitor template used to obtain the path from an object stored in an 
+    //! nxobject instance.
+    //!
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
     //! \sa get_path
     //!
-    template<typename VTYPE> 
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
     class get_path_visitor : public boost::static_visitor<string>
     {
         public:
             //! result type
             typedef string result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
 
             //-----------------------------------------------------------------
             //!
@@ -61,7 +87,7 @@ namespace nx{
             //!
             result_type operator()(const group_type &g) const
             {
-                return g.path();
+                return get_path(g);
             }
 
             //-----------------------------------------------------------------
@@ -74,7 +100,7 @@ namespace nx{
             //!
             result_type operator()(const field_type &f) const
             {
-                return f.path();
+                return get_path(f);
             }
 
             //-----------------------------------------------------------------
@@ -87,23 +113,30 @@ namespace nx{
             //!
             result_type operator()(const attribute_type &a) const
             {
-                return a.path();
+                return get_path(a);
             }
     };
 
     //!
-    //! \ingroup variant_code
-    //! \brief get path wrapper
+    //! \ingroup algorithm_code
+    //! \brief get path 
     //!
-    //! Wrapper function for the get_path_visitor class. 
-    //! \tparam VTYPE
-    //! \param o instance of VTYPE
-    //! \return a string with the path of the object
+    //! Return the path of an object stored in an nxobject instance. 
     //!
-    template<typename VTYPE> 
-    typename get_path_visitor<VTYPE>::result_type get_path(const VTYPE &o)
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \param o instance of nxobject
+    //! \return path as string
+    //!
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    string get_path(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(get_path_visitor<VTYPE>(),o);
+        return boost::apply_visitor(get_path_visitor<GTYPE,FTYPE,ATYPE>(),o);
     }
 
 //end of namespace

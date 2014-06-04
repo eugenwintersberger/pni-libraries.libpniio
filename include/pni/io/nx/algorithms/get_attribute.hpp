@@ -21,12 +21,23 @@
 //
 #pragma once
 
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 
 
 namespace pni{
 namespace io{
 namespace nx{
+
+    template<
+             template<nximp_code> class PTYPE,
+             nximp_code IMPID
+           >
+    typename nxobject_trait<IMPID>::attribute_type
+    get_attribute(const PTYPE<IMPID> &p,const string &name)
+    {
+        return p.attr(name);
+    }
 
 
     //!
@@ -38,20 +49,20 @@ namespace nx{
     //!
     //! \tparam VTYPE variant type to act on
     //!
-    template<typename VTYPE> 
-    class get_attribute_visitor : public boost::static_visitor<VTYPE>
+    template<typename GTYPE,typename FTYPE,typename ATYPE> 
+    class get_attribute_visitor : public boost::static_visitor<ATYPE>
     {
         private:
             string _attribute; //!< name of the attribute to retrieve
         public:
             //! result type
-            typedef VTYPE result_type;
+            typedef ATYPE result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
       
             //-----------------------------------------------------------------
             //!
@@ -72,7 +83,7 @@ namespace nx{
             //!
             result_type operator()(const group_type &g) const
             {
-                return result_type(g.attr(_attribute));
+                return get_attribute(g,_attribute);
             }
 
             //---------------------------------------------------------------------
@@ -85,7 +96,7 @@ namespace nx{
             //!
             result_type operator()(const field_type &f) const
             {
-                return result_type(f.attr(_attribute));
+                return get_attribute(f,_attribute);
             }
 
             //---------------------------------------------------------------------
@@ -127,11 +138,10 @@ namespace nx{
     //! \param a name of the attribute
     //! \return attribute as an object_types variant
     //!
-    template<typename VTYPE> 
-    typename get_attribute_visitor<VTYPE>::result_type 
-    get_attribute(const VTYPE &o,const string &a)
+    template<typename GTYPE,typename FTYPE,typename ATYPE> 
+    ATYPE get_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &o,const string &a)
     {
-        return boost::apply_visitor(get_attribute_visitor<VTYPE>(a),o);
+        return boost::apply_visitor(get_attribute_visitor<GTYPE,FTYPE,ATYPE>(a),o);
     }
 
 //end of namespace 

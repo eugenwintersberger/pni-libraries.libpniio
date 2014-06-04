@@ -21,36 +21,64 @@
 //
 #pragma once
 
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
 
+    //!
+    //! \ingroup algorithm_code
+    //! \brief get object name
+    //! 
+    //! Return the name of an object. This template function is called in case
+    //! that the object is an instance of an nxfield or nxgroup template.
+    //! 
+    //! \tparam OTYPE object type template
+    //! \tparam IMPID implementation ID
+    //! \param o reference to the object
+    //! \return name of the object
+    //!
+    template<
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID
+            >
+    string get_name(const OTYPE<IMPID> &o)
+    {
+        return o.name();
+    }
+
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief get name visitor
     //!
     //! This visitor retrieves the name of an object stored in a variant type. 
     //! The class is not intended to be directly used. Rather use the get_name
     //! wrapper template function.
     //! 
-    //! \tparam VTYPE variant type
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
     //! \sa get_name
     //!
-    template<typename VTYPE> 
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
     class get_name_visitor : public boost::static_visitor<string>
     {
         public:
             //! result type
             typedef string result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type; 
+            typedef ATYPE attribute_type; 
 
             //-----------------------------------------------------------------
             //!
@@ -62,7 +90,7 @@ namespace nx{
             //!
             result_type operator()(const group_type &g) const
             {
-                return g.name();
+                return get_name(g);
             }
 
             //-----------------------------------------------------------------
@@ -75,7 +103,7 @@ namespace nx{
             //!
             result_type operator()(const field_type &f) const
             {
-                return f.name();
+                return get_name(f);
             }
 
             //-----------------------------------------------------------------
@@ -88,24 +116,32 @@ namespace nx{
             //!
             result_type operator()(const attribute_type &a) const
             {
-                return a.name();
+                return get_name(a);
             }
     };
 
     //!
-    //! \ingroup variant_code
-    //! \brief get name wrapper
+    //! \ingroup algorithm_code
+    //! \brief get name 
     //!
-    //! Wrapper function for the get_name_visitor template. Use this function
-    //! instead of get_name_visitor directly. 
-    //! \tparam VTYPE
-    //! \param o instance of VTYPE
-    //! \return a string with the name of the object
+    //! Retriev the name of an object stored in an instance of the nxobject
+    //! template. It instantiates the get_name_visitor template and returns the 
+    //! name of the object.
+    //! 
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \param o instance of nxobject
+    //! \return name of the object
     //!
-    template<typename VTYPE> 
-    typename get_name_visitor<VTYPE>::result_type get_name(const VTYPE &o)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    string get_name(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(get_name_visitor<VTYPE>(),o);
+        return boost::apply_visitor(get_name_visitor<GTYPE,FTYPE,ATYPE>(),o);
     }
 
 //end of namespace

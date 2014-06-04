@@ -57,7 +57,6 @@ void get_attribute_test::test_group()
         
     object_type object = group;
     CPPUNIT_ASSERT(is_valid(get_attribute(object,"NX_class")));
-    CPPUNIT_ASSERT(is_attribute(get_attribute(object,"NX_class")));
     CPPUNIT_ASSERT(get_name(get_attribute(object,"NX_class")) == "NX_class");
 
 }
@@ -68,7 +67,6 @@ void get_attribute_test::test_field()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     object_type object = field;
 
-    CPPUNIT_ASSERT(is_attribute(get_attribute(object,"units")));
     CPPUNIT_ASSERT(get_name(get_attribute(object,"units")) == "units");
 
 }

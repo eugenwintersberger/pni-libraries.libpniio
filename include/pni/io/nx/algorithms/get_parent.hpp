@@ -21,36 +21,66 @@
 //
 #pragma once
 
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
 
+    //!
+    //! \ingroup algorithm_code
+    //! \brief return parent
+    //! 
+    //! Returns the parent object of an instance of nxfield, nxattribute, or 
+    //! nxgroup object. The parent is returned as an instance of nxobject.
+    //! 
+    //! \tparam OTYPE object template
+    //! \tparam IMPID implementation ID
+    //! \param o object instance
+    //! \return parent as nxobject instance
+    //! 
+    template<
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID
+            >
+    nxobject<typename nxobject_trait<IMPID>::group_type,
+             typename nxobject_trait<IMPID>::field_type,
+             typename nxobject_trait<IMPID>::attribute_type>
+    get_parent(const OTYPE<IMPID> &o)
+    {
+        return o.parent();
+    }
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief get parent visitor
     //!
-    //! This visitor retrieve the parent of an object stored in a variant 
-    //! type.  This works for fields and groups. Parent retrieval is 
-    //! currently not supported for attribute. The parent object will be 
-    //! returned as an object_types type.
+    //! Visitor template used to retrieve the parent object from an instance of 
+    //! nxobject.
     //!
-    //! \tparam VTYPE variant type
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
     //!
-    template<typename VTYPE> 
-    class get_parent_visitor : public boost::static_visitor<VTYPE>
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    class get_parent_visitor : public boost::static_visitor<
+                               nxobject<GTYPE,FTYPE,ATYPE>
+                               >
     {
         public:
             //! result type
-            typedef VTYPE result_type;
+            typedef nxobject<GTYPE,FTYPE,ATYPE> result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
 
             //-----------------------------------------------------------------
             //!
@@ -62,8 +92,7 @@ namespace nx{
             //!
             result_type operator()(const group_type &g) const
             {
-                return g.parent();
-                //return result_type(group_type(g.parent()));
+                return get_parent(g);
             }
 
             //-----------------------------------------------------------------
@@ -76,7 +105,7 @@ namespace nx{
             //!
             result_type operator()(const field_type &f) const
             {
-                return f.parent();
+                return get_parent(f);
             }
 
             //-----------------------------------------------------------------
@@ -90,45 +119,31 @@ namespace nx{
             //!
             result_type operator()(const attribute_type &a) const
             {
-                return a.parent();
-
-                //auto object = a.parent();
-               
-                //the situation is a bit more difficult here as an attribute can
-                //have either a field or a group as its parent.
-                /*
-                if(object.object_type() == nxobject_type::NXFIELD)
-                    return result_type(field_type(object));
-                else if(object.object_type() == nxobject_type::NXGROUP)
-                    return result_type(group_type(object));
-                else
-                    throw nxattribute_error(EXCEPTION_RECORD,
-                            "Parent is of unknown type!");
-
-                //just to make the compiler happy
-                return result_type();
-                */
+                return get_parent(a);
             }
     };
 
     //!
-    //! \ingroup variant_code
-    //! \brief get parent wrapper
+    //! \ingroup algorithm_code
+    //! \brief get parent 
     //!
-    //! Wrapper for the get_parent_visitor template. Returns the parent object 
-    //! of an object stored in the variant type. As parent retrieval works only 
-    //! for fields and groups an exception will be thrown if the stored object 
-    //! is an attribute.
+    //! Return the parent object of an instance of nxobject as a new instance of 
+    //! nxobject.
     //!
-    //! \throws nxattribute_error if the stored object is an attribute
-    //! \tparam VTYPE variant type
-    //! \param o instance of VTYPE
-    //! \return parent object
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \param o instance of nxobject
+    //! \return parent object as instance of nxobject
     //!
-    template<typename VTYPE> 
-    typename get_parent_visitor<VTYPE>::result_type get_parent(const VTYPE &o)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    nxobject<GTYPE,FTYPE,ATYPE> get_parent(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(get_parent_visitor<VTYPE>(),o);
+        return boost::apply_visitor(get_parent_visitor<GTYPE,FTYPE,ATYPE>(),o);
     }
 
 //end of namespace
