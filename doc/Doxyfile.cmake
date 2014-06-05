@@ -66,7 +66,7 @@ INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/../include \
                          mainpage \
                          @CMAKE_CURRENT_SOURCE_DIR@/h5_implementation_classes \
                          @CMAKE_CURRENT_SOURCE_DIR@/nxpath_code \
-                         @CMAKE_CURRENT_SOURCE_DIR@/variant_code \
+                         @CMAKE_CURRENT_SOURCE_DIR@/algorithm_code \
                          @CMAKE_CURRENT_SOURCE_DIR@/xml_code \
                          @CMAKE_CURRENT_SOURCE_DIR@/nexus_utilities \
                          @CMAKE_CURRENT_SOURCE_DIR@/nexus_io \
