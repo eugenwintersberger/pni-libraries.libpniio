@@ -22,7 +22,6 @@
 #pragma once
 
 #include "../nxobject.hpp"
-#include "../nxobject_traits.hpp"
 
 namespace pni{
 namespace io{
@@ -33,7 +32,12 @@ namespace nx{
     //! \brief get object name
     //! 
     //! Return the name of an object. This template function is called in case
-    //! that the object is an instance of an nxfield or nxgroup template.
+    //! that the object is an instance of 
+    //! 
+    //! \li nxgroup
+    //! \li nxfile
+    //! \li nxattribute
+    //! \li nxfield
     //! 
     //! \tparam OTYPE object type template
     //! \tparam IMPID implementation ID
@@ -54,9 +58,8 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief get name visitor
     //!
-    //! This visitor retrieves the name of an object stored in a variant type. 
-    //! The class is not intended to be directly used. Rather use the get_name
-    //! wrapper template function.
+    //! Visitor retrieving the name of an object stored in an nxobject 
+    //! instance.
     //! 
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
@@ -125,8 +128,7 @@ namespace nx{
     //! \brief get name 
     //!
     //! Retriev the name of an object stored in an instance of the nxobject
-    //! template. It instantiates the get_name_visitor template and returns the 
-    //! name of the object.
+    //! template. 
     //! 
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
