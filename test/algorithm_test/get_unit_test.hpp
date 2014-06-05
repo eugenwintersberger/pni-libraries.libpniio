@@ -28,7 +28,7 @@
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 #include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/algorithms.hpp>
+#include <pni/io/nx/algorithms/get_unit.hpp>
 #include <pni/io/nx/nxobject_traits.hpp>
 
 using namespace pni::core;

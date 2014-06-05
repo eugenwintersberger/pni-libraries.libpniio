@@ -28,7 +28,7 @@
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 #include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/algorithms.hpp>
+#include <pni/io/nx/algorithms/is_class.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx;
