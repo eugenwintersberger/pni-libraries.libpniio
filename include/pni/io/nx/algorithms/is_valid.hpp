@@ -34,13 +34,14 @@ namespace nx{
     //! \brief check object validity
     //! 
     //! Check if the passed object is valid and return true if this is the 
-    //! case.
+    //! case. This template code takes instances of nxattribute, nxfield,
+    //! and nxgroup as input arguments.
     //! 
     //! \tparam OTYPE object type
     //! \param o instance of OTYPE
     //! \return true if the object is valid
     //! 
-    template<typename OTYPE> bool is_valid(const OTYPE &o)
+    template<typename OTYPE> bool is_valid(const OTYPE &o) noexcept
     {
         return o.is_valid();
     }
@@ -49,9 +50,8 @@ namespace nx{
     //! \ingroup variant_code
     //! \brief check object validity
     //!
-    //! This visitor checks a Nexus object stored in a variant type for its
-    //! validity. You will hardly ever use this visitory directly but rather 
-    //! the is_valid wrapper function.
+    //! Visitor to call the is_valid method on objects stored in an nxobject
+    //! instance.
     //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
@@ -84,7 +84,7 @@ namespace nx{
             //! \param g group instance
             //! \return true if valid, false otherwise
             //!
-            result_type operator()(const group_type &g) const
+            result_type operator()(const group_type &g) const noexcept
             {
                 return is_valid(g);
             }
@@ -99,7 +99,7 @@ namespace nx{
             //! \param f field instance
             //! \return true if valid, false otherwise
             //!
-            result_type operator()(const field_type &f) const
+            result_type operator()(const field_type &f) const noexcept
             {
                 return is_valid(f);
             }
@@ -113,7 +113,7 @@ namespace nx{
             //!  \param a attribute instance
             //! \return true if valid, false otherwise
             //!
-            result_type operator()(const attribute_type &a) const
+            result_type operator()(const attribute_type &a) const noexcept
             {
                 return is_valid(a);
             }
@@ -123,9 +123,8 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief is_valid wrapper 
     //!
-    //! This function acts as a wrapper around the is_valid_visitor. It 
-    //! returns true if the object stored in the variant type VTYPE is valid  
-    //! and false otherwise.
+    //! Test the validity of an object stored in an nxobject instance by calling 
+    //! the is_valid method on the particular instance.
     /*! 
     \code{.cpp}
     auto o = ....;
@@ -147,7 +146,7 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    bool is_valid(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    bool is_valid(const nxobject<GTYPE,FTYPE,ATYPE> &o) noexcept
     {
         return boost::apply_visitor(is_valid_visitor<GTYPE,FTYPE,ATYPE>(),o);
     }

@@ -33,12 +33,31 @@
 using namespace pni::core;
 using namespace pni::io::nx;
 
+//!
+//! \ingroup algorithm_test
+//! \brief test validity function
+//! 
+//! Test the is_valid function template. There are two implementations of this 
+//! template. The first one works on the following types
+//!
+//! \li nxfile
+//! \li nxgroup
+//! \li nxfield
+//! \li nxattribute
+//! 
+//! and one using a visitor class to obtain the same information for objects 
+//! stored in an nxobject template. 
+//! 
 class is_valid_test : public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(is_valid_test);
+        CPPUNIT_TEST(test_nxobject_field);
+        CPPUNIT_TEST(test_nxobject_group);
+        CPPUNIT_TEST(test_nxobject_attribute);
+        CPPUNIT_TEST(test_file);
         CPPUNIT_TEST(test_field);
-        CPPUNIT_TEST(test_group);
         CPPUNIT_TEST(test_attribute);
+        CPPUNIT_TEST(test_group);
         CPPUNIT_TEST_SUITE_END();
 
         h5::nxfile file;
@@ -51,10 +70,15 @@ class is_valid_test : public CppUnit::TestFixture
     public:
         void setUp();
         void tearDown();
-        
+
         void test_field();
-        void test_group();
+        void test_file();
         void test_attribute();
+        void test_group();
+        
+        void test_nxobject_field();
+        void test_nxobject_group();
+        void test_nxobject_attribute();
 
 };
 

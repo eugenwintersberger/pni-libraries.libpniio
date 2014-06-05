@@ -50,8 +50,47 @@ void is_valid_test::tearDown()
 }
 
 
-//-----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 void is_valid_test::test_group()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    CPPUNIT_ASSERT(is_valid(group));
+    group.close();
+    CPPUNIT_ASSERT(!is_valid(group));
+}
+
+//----------------------------------------------------------------------------
+void is_valid_test::test_field()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    CPPUNIT_ASSERT(is_valid(field));
+    field.close();
+    CPPUNIT_ASSERT(!is_valid(field));
+}
+
+//----------------------------------------------------------------------------
+void is_valid_test::test_attribute()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    CPPUNIT_ASSERT(is_valid(attribute));
+    attribute.close();
+    CPPUNIT_ASSERT(!is_valid(attribute));
+}
+
+//----------------------------------------------------------------------------
+void is_valid_test::test_file()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    CPPUNIT_ASSERT(is_valid(file));
+    file.close();
+    CPPUNIT_ASSERT(!is_valid(file));
+}
+//-----------------------------------------------------------------------------
+void is_valid_test::test_nxobject_group()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
    
@@ -62,7 +101,7 @@ void is_valid_test::test_group()
 }
 
 //-----------------------------------------------------------------------------
-void is_valid_test::test_field()
+void is_valid_test::test_nxobject_field()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
@@ -73,7 +112,7 @@ void is_valid_test::test_field()
 }
 
 //-----------------------------------------------------------------------------
-void is_valid_test::test_attribute()
+void is_valid_test::test_nxobject_attribute()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
