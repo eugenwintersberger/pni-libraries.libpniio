@@ -32,10 +32,7 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief as field visitor
     //!
-    //! This visitor return the object stored as nxobject as a field object.
-    //! Obviously this will only work if the object is really a field object. 
-    //! If the stored object is a group or an attribute object an exception 
-    //! will be thrown.
+    //! Visitor extracting a field stored in an nxobject instance.
     //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
@@ -115,13 +112,13 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief as field wrapper
     //!
-    //! Wrapper function for the as_field_visitor template. This function takes a
-    //! variant object and returns a field object if the stored object is an
-    //! instance of a field type. In other cases an exception will be thrown.
+    //! function template extracting a field stored in an nxobject instance. 
+    //! If the stored object is not an instance of nxfield an exception of 
+    //! type nxfield_error will be thrown. 
     /*!
     \code{.cpp}
-    auto field_obj = get_object(root,path_to_field);
-    auto f = as_field(field_obj);
+    auto object = get_object(root,path_to_field);
+    auto field = as_field(field_obj);
     \endcode
     */
     //!

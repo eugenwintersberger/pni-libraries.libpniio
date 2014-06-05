@@ -33,6 +33,14 @@
 using namespace pni::core;
 using namespace pni::io::nx;
 
+//! 
+//! \ingroup algorithm_test 
+//! \brief test group retrieval from nxobject
+//! 
+//! Test the retrieval of an nxgroup instance stored in an nxobject instance.
+//! We only need to test for nxobject instances as input arguments as the 
+//! function does not make sense on any other type.
+//!
 class as_group_test : public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(as_group_test);

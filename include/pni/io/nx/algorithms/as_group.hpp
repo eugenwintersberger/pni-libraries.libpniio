@@ -32,10 +32,7 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief as group visitor
     //!
-    //! This visitor return the object stored in a variant as a group object.
-    //! Obviously this will only work if the object is really a group object. 
-    //! If the stored object is a field or an attribute object an exception 
-    //! will be thrown.
+    //! Visitor extracting a group stored in an nxobject instance.
     //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
@@ -115,14 +112,14 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief as group wrapper
     //!
-    //! Wrapper function for the as_group_visitor template. This function 
-    //! takes a variant object and returns a group object if the stored 
-    //! object is an instance of a group type. In other cases an exception 
-    //! will be thrown.
+    //! Function template returning a group object stored in an nxobject 
+    //! instance. If the stored object is not an instance of nxgroup an
+    //! exception  will be thrown.
+    //!
     /*!
     \code{.cpp}
-    auto group_obj = get_object(root,path_to_group);
-    auto g = as_group(group_obj);
+    auto object = get_object(root,path_to_group);
+    auto group  = as_group(group_obj);
     \endcode
     */
     //!

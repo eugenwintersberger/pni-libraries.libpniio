@@ -60,6 +60,7 @@ void as_group_test::test_group()
         
     h5::nxobject object = root;
     h5::nxgroup g;
+    //must work - the stored object is an instance of nxgroup
     CPPUNIT_ASSERT_NO_THROW(g = as_group(object));
     CPPUNIT_ASSERT(g.is_valid());
     CPPUNIT_ASSERT(g.name() == "/");
@@ -70,7 +71,8 @@ void as_group_test::test_field()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject object = field;
-
+    
+    //must throw as the stored object is an instance of nxfield
     CPPUNIT_ASSERT_THROW(as_group(object),nxgroup_error);
 }
 
@@ -80,6 +82,7 @@ void as_group_test::test_attribute()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = field.attr("temp");
+    //must throw as the stored object is an instance of nxattribute
     CPPUNIT_ASSERT_THROW(as_group(object),nxgroup_error);
     
 }

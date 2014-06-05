@@ -32,10 +32,7 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief as attribute visitor
     //!
-    //! This visitor return the object stored in a variant as a attribute 
-    //! object.  Obviously this will only work if the object is really an 
-    //! attribute object.  If the stored object is a field or a group object 
-    //! an exception will be thrown.
+    //! Visitor to extract an attribute stored in an nxobject instance.
     //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
@@ -117,13 +114,13 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief as attribute wrapper
     //!
-    //! Wrapper function for the as_attribute_visitor template. This function 
-    //! takes a variant object and returns an attribute object if the stored 
-    //! object is an instance of an attribute type. In other cases an 
+    //! Function template extracting an attribute stored in an nxobject
+    //! instance. If the object is not an attribute an nxattribute_error 
     //! exception will be thrown.
+    //! The object is returned as an nxattribute instance. 
     /*!
     \code{.cpp}
-    object_types attr_obj = get_object(root,path_to_atribute);
+    auto attr_obj = get_object(root,path_to_atribute);
     auto a = as_attribute(attr_obj);
     \endcode
     */

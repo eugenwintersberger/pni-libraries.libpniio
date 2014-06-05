@@ -59,6 +59,7 @@ void as_field_test::test_group()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     h5::nxobject object = root;
+    //must throw as the object stored is an nxgroup instance
     CPPUNIT_ASSERT_THROW(as_field(object),nxfield_error);
 }
 
@@ -69,6 +70,7 @@ void as_field_test::test_field()
     h5::nxobject object = field;
 
     h5::nxfield f;
+    //should work as the stored object is an nxfield instance
     CPPUNIT_ASSERT_NO_THROW(f=as_field(object));
     CPPUNIT_ASSERT(f.is_valid());
     CPPUNIT_ASSERT(f.name() == "data");
@@ -80,6 +82,7 @@ void as_field_test::test_attribute()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = field.attr("temp");
+    //must throw as the stored object is an nxattribute instance
     CPPUNIT_ASSERT_THROW(as_field(object),nxfield_error);
     
 }

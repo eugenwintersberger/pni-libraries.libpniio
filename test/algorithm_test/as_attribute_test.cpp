@@ -59,6 +59,7 @@ void as_attribute_test::test_group()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     h5::nxobject object = root;
+    //must throw as the stored object is an nxgroup instance
     CPPUNIT_ASSERT_THROW(as_attribute(object),nxattribute_error);
 }
 
@@ -68,6 +69,7 @@ void as_attribute_test::test_field()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject object = field;
 
+    //must throw as the stored object is an nxfield instance
     CPPUNIT_ASSERT_THROW(as_attribute(object),nxattribute_error);
 }
 
@@ -78,6 +80,7 @@ void as_attribute_test::test_attribute()
 
     h5::nxobject object = field.attr("temp");
     h5::nxattribute a;
+    //this shoud work as we are trying to retrieve a real attribute
     CPPUNIT_ASSERT_NO_THROW(a = as_attribute(object));
     CPPUNIT_ASSERT(a.is_valid());
     CPPUNIT_ASSERT(a.name() == "temp");

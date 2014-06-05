@@ -33,6 +33,14 @@
 using namespace pni::core;
 using namespace pni::io::nx;
 
+//! 
+//! \ingroup algorithm_test
+//! \brief test attribute retrieval
+//! 
+//! Testing the retrieval of an nxattribute instance stored in an nxobject
+//! instance. As input argument we only have to test nxobject since this 
+//! function does not make sense on any other type. 
+//!
 class as_attribute_test : public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(as_attribute_test);

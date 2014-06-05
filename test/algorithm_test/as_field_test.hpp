@@ -33,6 +33,14 @@
 using namespace pni::core;
 using namespace pni::io::nx;
 
+//! 
+//! \ingroup algorithm_test
+//! \brief test field retrieval
+//! 
+//! Testing the retrieval of a field type stored in an instance of nxobject
+//! We only need to test for instances of nxobject as input argument as the 
+//! function would not make any sense on any other type.
+//!
 class as_field_test : public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(as_field_test);
