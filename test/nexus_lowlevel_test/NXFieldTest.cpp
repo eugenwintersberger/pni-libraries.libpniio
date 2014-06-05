@@ -130,12 +130,10 @@ void NXFieldTest::test_parent()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    nxfield f = root.create_field<float64>("/detector/data");
+    nxfield f = root.create_field<float64>("data");
     nxgroup p = f.parent();
     CPPUNIT_ASSERT(p.is_valid());
-    CPPUNIT_ASSERT(p.name() == "detector");
-    f = root.create_field<uint16>("temperature");
-    CPPUNIT_ASSERT(get_name(f.parent()) == "/");
+    CPPUNIT_ASSERT(p.name() == "/");
 }
 
 //------------------------------------------------------------------------------

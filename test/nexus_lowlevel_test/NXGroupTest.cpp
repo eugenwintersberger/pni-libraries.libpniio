@@ -74,11 +74,11 @@ void NXGroupTest::test_creation()
 	nxgroup g;
     CPPUNIT_ASSERT(!g.is_valid());
 
-	g = _f.root().create_group("/hello/world");
+	g = _f.root().create_group("hello").create_group("world");
     CPPUNIT_ASSERT(g.is_valid());
 	g.close();
     CPPUNIT_ASSERT(!g.is_valid());
-	g = _f.root().create_group("/directory_1");
+	g = _f.root().create_group("directory_1");
     CPPUNIT_ASSERT(g.is_valid());
     CPPUNIT_ASSERT(g.path() == "/directory_1");
     CPPUNIT_ASSERT(g.name() == "directory_1");
@@ -102,7 +102,7 @@ void NXGroupTest::test_parent()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    nxgroup g = _f.root().create_group("detector/modules");
+    nxgroup g = _f.root().create_group("detector").create_group("modules");
     nxgroup p = g.parent();
     CPPUNIT_ASSERT(p.name() == "detector");
     CPPUNIT_ASSERT(p.parent().name() == "/");
@@ -114,21 +114,16 @@ void NXGroupTest::test_open()
 	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 	nxgroup g1,g2;
 
-	CPPUNIT_ASSERT_NO_THROW(g1 = _f.root().create_group("/directory1/data"));
+	CPPUNIT_ASSERT_NO_THROW(g1 = _f.root().create_group("directory1")
+                                          .create_group("data"));
 
-	CPPUNIT_ASSERT_NO_THROW(g2 = _f.root().open("/directory1"));
+	CPPUNIT_ASSERT_NO_THROW(g2 = _f.root().open("directory1"));
 	nxgroup g = g2.open("data");
 	nxgroup g3;
 	g3 = g2.open("data");
 
-	nxgroup g4 = _f.root().open("/directory1/data");
 
 	CPPUNIT_ASSERT_THROW(_f.root().open("directory2"),pni::io::nx::nxgroup_error);
-	CPPUNIT_ASSERT_NO_THROW(_f.root().open("directory1/data"));
-
-	g1.close();
-	g2.close();
-
 }
 
 //------------------------------------------------------------------------------
@@ -146,8 +141,9 @@ void NXGroupTest::test_existance()
 	nxgroup g1,g2;
 	nxfield f;
 
-	g1 = _f.root().create_group("/scan_1/instrument");
-	g1 = _f.root().create_group("/scan_2/instrument/detector");
+	g1 = _f.root().create_group("scan_1").create_group("instrument");
+	g1 = _f.root().create_group("scan_2").create_group("instrument").
+                  create_group("detector");
 
 	g1 = _f.root().open("scan_1");
 	CPPUNIT_ASSERT(g1.exists("instrument"));
@@ -191,7 +187,7 @@ void NXGroupTest::test_comparison()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    nxgroup g1 = _f.root().create_group("hello/world");
+    nxgroup g1 = _f.root().create_group("hello").create_group("world");
     nxgroup g2 = _f.root()["/hello/world"];
 
     CPPUNIT_ASSERT(g1 == g2);
