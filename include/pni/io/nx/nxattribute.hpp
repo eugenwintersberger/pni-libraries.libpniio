@@ -428,7 +428,7 @@ namespace nx{
 
             //---------------------------------------------------------------
             //! check validity of the attribute
-            bool is_valid() const { return _imp.is_valid(); }
+            bool is_valid() const noexcept { return _imp.is_valid(); } 
 
             //---------------------------------------------------------------
             //! 

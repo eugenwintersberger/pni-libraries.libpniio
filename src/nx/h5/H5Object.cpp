@@ -99,7 +99,7 @@ namespace h5{
     }
    
     //=============basic manipulation methods==================================
-    bool H5Object::is_valid() const 
+    bool H5Object::is_valid() const noexcept
     {
         //std::cout<<_id;
         if(H5Iis_valid(_id)>0) return true;

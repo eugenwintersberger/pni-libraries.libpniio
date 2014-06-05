@@ -233,7 +233,7 @@ namespace nx{
             }
 
             //----------------------------------------------------------------
-            bool is_valid() const
+            bool is_valid() const noexcept
             {
                 return _imp.is_valid(); 
             }

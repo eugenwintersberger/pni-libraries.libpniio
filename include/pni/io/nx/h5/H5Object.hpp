@@ -170,7 +170,7 @@ namespace h5{
             //! open.
             //! \returns true if valid HDF5 object
             //!
-            bool is_valid() const;
+            bool is_valid() const noexcept;
 
             //------------------------------------------------------------------
             //! 

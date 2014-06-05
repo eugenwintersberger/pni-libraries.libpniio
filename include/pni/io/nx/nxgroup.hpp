@@ -720,7 +720,7 @@ namespace nx{
             void close() { _imp.close(); }
 
             //---------------------------------------------------------------
-            bool is_valid() const { return _imp.is_valid(); }
+            bool is_valid() const noexcept { return _imp.is_valid(); }
 
             //---------------------------------------------------------------
             const imp_type &imp() const { return _imp; }
