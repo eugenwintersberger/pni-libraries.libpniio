@@ -33,6 +33,14 @@
 using namespace pni::core;
 using namespace pni::io::nx;
 
+//!
+//! \ingroup algorithm_test
+//! \brief test is_group template
+//! 
+//! Test the is_group function template. Need to test only for input 
+//! arguments of type nxobject. The function would not make sense for 
+//! any other type.
+//!
 class is_group_test : public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(is_group_test);

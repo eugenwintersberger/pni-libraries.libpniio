@@ -33,6 +33,14 @@
 using namespace pni::core;
 using namespace pni::io::nx;
 
+//! 
+//! \ingroup algorithm_test
+//! \brief test for field type
+//! 
+//! Test is_field function template. We only need to test with instances 
+//! of nxobject as input arguments as the function does not make sense
+//! for any other type.
+//!
 class is_field_test : public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(is_field_test);

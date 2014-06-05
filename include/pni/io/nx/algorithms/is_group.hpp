@@ -31,8 +31,8 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief check if group
     //!
-    //! Check if the object stored in a variant is a group. The return value 
-    //! of the () operator of this visitor is bool.
+    //! Visitor testing if the object stored in an nxobject instance is an 
+    //! instance of nxgroup.
     //! 
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
@@ -65,7 +65,7 @@ namespace nx{
             //!
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const group_type &g) const
+            result_type operator()(const group_type &g) const noexcept
             {
                 return true;
             }
@@ -80,7 +80,7 @@ namespace nx{
             //!
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const field_type &f) const
+            result_type operator()(const field_type &f) const noexcept
             {
                 return false;
             }
@@ -95,7 +95,7 @@ namespace nx{
             //!
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const attribute_type &a) const
+            result_type operator()(const attribute_type &a) const noexcept
             {
                 return false;
             }
@@ -104,12 +104,13 @@ namespace nx{
 
     //!
     //! \ingroup algorithm_code
-    //! \brief check for group
+    //! \brief test for group
     //!
-    //! This template function is a wrapper around the is_group_visitor 
-    //! visitor template. It checks if the object stored in a variant type is 
-    //! a group and returns true if this is the case. In all other cases 
-    //! false is returned.
+    //! Template function testing if the object stored in an instance of 
+    //! nxobject is an instance of nxgroup. If this is the case true is 
+    //! returned, false otherwise. The function does not test for the 
+    //! validity of the stored object. It just provides type information 
+    //! about the stored object at runtime.
     //! 
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
@@ -122,7 +123,7 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    bool is_group(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    bool is_group(const nxobject<GTYPE,FTYPE,ATYPE> &o) noexcept
     {
         return boost::apply_visitor(is_group_visitor<GTYPE,FTYPE,ATYPE>(),o);
     }

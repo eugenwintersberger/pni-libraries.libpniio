@@ -33,6 +33,14 @@
 using namespace pni::core;
 using namespace pni::io::nx;
 
+//! 
+//! \ingroup algorithm_test
+//! \brief test attribute check
+//! 
+//! Testing the is_attribute function template. We only need to test with 
+//! instances of nxobject as input argument as the function does not make any
+//! sense for any other class instances.
+//!
 class is_attribute_test : public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(is_attribute_test);

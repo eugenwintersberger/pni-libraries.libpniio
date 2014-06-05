@@ -32,8 +32,8 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief check field visitor
     //!
-    //! This visitor checks a variant type if the object stored is a field. 
-    //! In this case true is returned.
+    //! Visitor testing if the object stored in an instance of nxobject
+    //! is an instance of nxfield. 
     //! 
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
@@ -65,7 +65,7 @@ namespace nx{
             //!
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const group_type &g) const
+            result_type operator()(const group_type &g) const noexcept
             {
                 return false;
             }
@@ -80,7 +80,7 @@ namespace nx{
             //!
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const field_type &f) const
+            result_type operator()(const field_type &f) const noexcept
             {
                 return true;
             }
@@ -95,7 +95,7 @@ namespace nx{
             //!
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const attribute_type &a) const
+            result_type operator()(const attribute_type &a) const noexcept
             {
                 return false;
             }
@@ -106,8 +106,10 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief check if field
     //!
-    //! Wrapper function around the is_field_visitor. The function returns 
-    //! true if the object stored in the variant type is a field type.
+    //! Function template testing if the object stored in an instance of
+    //! nxobject is an instance of nxfield. If this is the case true is 
+    //! returned, false otherwise. The function does not test for validity of an
+    //! object. It just helps to retrieve type information at runtime.
     //! 
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
@@ -120,7 +122,7 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    bool is_field(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    bool is_field(const nxobject<GTYPE,FTYPE,ATYPE> &o) noexcept
     {
         return boost::apply_visitor(is_field_visitor<GTYPE,FTYPE,ATYPE>(),o);
     }

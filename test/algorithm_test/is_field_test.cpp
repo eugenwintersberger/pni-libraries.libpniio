@@ -56,6 +56,7 @@ void is_field_test::test_group()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     h5::nxobject object = group;
+    //returns false as the stored object is an instance of nxgroup
     CPPUNIT_ASSERT(!is_field(object));
 }
 
@@ -65,6 +66,7 @@ void is_field_test::test_field()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = field;
+    //returns true as the stored object is an instance of nxfield
     CPPUNIT_ASSERT(is_field(object)); 
 }
 
@@ -74,6 +76,7 @@ void is_field_test::test_attribute()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = attribute;
+    //returns false as the stored object is an instance of nxattribute
     CPPUNIT_ASSERT(!is_field(object));
    
 }

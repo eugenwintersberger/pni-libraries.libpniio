@@ -32,9 +32,8 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief check attribute visitor
     //!
-    //! This visitor checks if the object stored in a variant type is an 
-    //! attribute instance. In this case true will be returne. False 
-    //! otherwise. 
+    //! Visitor checking if the object stored in an instance of nxobject is 
+    //! an instance of nxattribute.
     //! 
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
@@ -66,7 +65,7 @@ namespace nx{
             //!
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const group_type &g) const 
+            result_type operator()(const group_type &g) const  noexcept
             { 
                 return false; 
             }
@@ -81,7 +80,7 @@ namespace nx{
             //!
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const field_type &f) const 
+            result_type operator()(const field_type &f) const noexcept
             { 
                 return false; 
             }
@@ -96,7 +95,7 @@ namespace nx{
             //!
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const attribute_type &a) const 
+            result_type operator()(const attribute_type &a) const noexcept
             { 
                 return true; 
             }
@@ -107,9 +106,11 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief check if attribute
     //! 
-    //! A wrapper around the is_attribute_visitor template. The function 
-    //! returns true if the object stored in nxobject<GTYPE,FTYPE,ATYPE> is 
-    //! an attribute. In all other cases false is returned.
+    //! Function template checking if the object stored in an nxobject instance 
+    //! is an instance of nxattribute. If this is the case true is returned,
+    //! otherwise. The function does not test for the validity of an object. 
+    //! It just provides runtime information about the type of the object stored 
+    //! in the nxobject instance.
     //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
@@ -122,7 +123,7 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    bool is_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    bool is_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &o) noexcept
     {
         return boost::apply_visitor(is_attribute_visitor<GTYPE,FTYPE,ATYPE>(),o);
     }
