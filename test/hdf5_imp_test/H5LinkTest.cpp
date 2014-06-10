@@ -22,7 +22,6 @@
 //
 
 #include <pni/io/nx/nxpath.hpp>
-#include <pni/io/nx/nxpath_utils.hpp>
 #include <pni/io/nx/nxlink_type.hpp>
 #include <boost/current_function.hpp>
 #include "H5LinkTest.hpp"

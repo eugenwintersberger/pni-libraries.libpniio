@@ -27,6 +27,7 @@ add_library(pniio SHARED ${SOURCES} $<TARGET_OBJECTS:cbf_objects>
     $<TARGET_OBJECTS:filter_objects>
     $<TARGET_OBJECTS:parser_objects>
     $<TARGET_OBJECTS:tiff_objects>
+    $<TARGET_OBJECTS:nx_path>
     )
 add_dependencies(pniio config.hpp)
 set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"

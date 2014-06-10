@@ -29,7 +29,6 @@
 #include <pni/core/arrays.hpp>
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/nxpath.hpp>
-#include <pni/io/nx/nxpath_utils.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx;

@@ -39,33 +39,18 @@ namespace nx{
     nxpath::nxpath():
         _file_name(),
         _attribute_name(),
-        _objects(),
+        _elements(),
         _is_absolute()
     {}
 
     //-------------------------------------------------------------------------
-    nxpath::nxpath(const string &file,const nxpath::object_path_t &objects,
+    nxpath::nxpath(const string &file,const nxpath::elements_type &objects,
                    const string &attr,bool absolute):
         _file_name(file),
         _attribute_name(attr),
-        _objects(objects),
+        _elements(objects),
         _is_absolute(absolute)
     {}
-
-    //--------------------------------------------------------------------------
-    void nxpath::append(const string &gname,const string &gclass)
-    {
-        object_element_t element(gname,gclass);
-        _objects.push_back(element);
-    }
-
-    //-------------------------------------------------------------------------
-    void nxpath::prepend(const string &gname,const string &gclass)
-    {
-        object_element_t element(gname,gclass);
-        _objects.push_front(element);
-    }
-
 
     //-------------------------------------------------------------------------
     bool is_file_path(const string &s)
@@ -148,7 +133,7 @@ namespace nx{
     nxpath path_from_string(const string &p)
     {
         typedef string::const_iterator iterator_t;
-        typedef nxpath_parser<iterator_t> nxpath_parser_t;
+        typedef elements_parser<iterator_t> nxpath_parser_t;
 
         //split the path entered by the user
         string filename,attribute_name,groups;
@@ -158,7 +143,7 @@ namespace nx{
         nxpath_parser_t parser;
         iterator_t start = groups.begin();
         iterator_t stop  = groups.end();
-        nxpath::object_path_t gpath; 
+        nxpath::elements_type gpath; 
         parse(start,stop,parser,gpath);
 
         bool absolute_path = groups[0] == '/';

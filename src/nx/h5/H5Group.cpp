@@ -33,7 +33,6 @@ extern "C"{
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 #include <pni/io/nx/nxexceptions.hpp>
 #include <pni/io/nx/nxpath.hpp>
-#include <pni/io/nx/nxpath_utils.hpp>
 
 namespace pni{
 namespace io{

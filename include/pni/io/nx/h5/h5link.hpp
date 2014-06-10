@@ -34,7 +34,6 @@ extern "C"{
 
 #include "../nxlink_type.hpp"
 #include "../nxpath.hpp"
-#include "../nxpath_utils.hpp"
 
 namespace pni{
 namespace io {

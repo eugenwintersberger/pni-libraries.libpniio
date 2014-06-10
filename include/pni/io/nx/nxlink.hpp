@@ -25,7 +25,6 @@
 
 #include "nxobject_traits.hpp"
 #include "nxpath.hpp"
-#include "nxpath_utils.hpp"
 #include "nxlink_type.hpp"
 
 namespace pni{

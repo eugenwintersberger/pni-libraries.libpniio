@@ -21,13 +21,24 @@
 //
 
 #include <sstream>
-#include <pni/io/nx/nxpath_utils.hpp>
+#include <pni/io/nx/nxpath/utils.hpp>
 #include <pni/core/error.hpp>
 
 
 namespace pni{
 namespace io{
 namespace nx{
+
+    void append(nxpath &p,const string &gname,const string &gclass)
+    {
+        p.push_back(nxpath::element_type{gname,gclass});
+    }
+
+    //--------------------------------------------------------------------------
+    void prepend(nxpath &p,const string &gname,const string &gclass)
+    {
+        p.push_front(nxpath::element_type{gname,gclass});
+    }
 
     //--------------------------------------------------------------------------
     void split_path(const nxpath &p,size_t s,nxpath &p1,nxpath &p2)
@@ -43,7 +54,7 @@ namespace nx{
         auto split_iter = p.begin();
         std::advance(split_iter,s);
 
-        nxpath::object_path_t gp1(s),gp2(p.size()-s);
+        nxpath::elements_type gp1(s),gp2(p.size()-s);
         std::copy(p.begin(),split_iter,gp1.begin());
         std::copy(split_iter,p.end(),gp2.begin());
 
@@ -85,19 +96,19 @@ namespace nx{
     }
 
     //--------------------------------------------------------------------------
-    bool has_name(const nxpath::object_element_t &e)
+    bool has_name(const nxpath::element_type &e)
     {
         return !e.first.empty();
     }
 
     //--------------------------------------------------------------------------
-    bool has_class(const nxpath::object_element_t &e)
+    bool has_class(const nxpath::element_type &e)
     {
         return !e.second.empty();
     }
 
     //--------------------------------------------------------------------------
-    bool is_complete(const nxpath::object_element_t &e)
+    bool is_complete(const nxpath::element_type &e)
     {
         return has_name(e)&&has_class(e);
     }

@@ -25,12 +25,23 @@
 #include <iostream>
 #include <pni/core/types.hpp>
 #include "nxpath.hpp"
+#include "parser.hpp"
 
 
 namespace pni{
 namespace io{
 namespace nx{
     using namespace pni::core;
+
+    //! \ingroup nxpath_code 
+    //! \brief append element 
+    //! 
+    //! Append an element to a path. 
+    //! 
+    void append(nxpath &p,const string &gname,const string &gclass);
+
+    void prepend(nxpath &p,const string &gname,const string &gclass);
+
 
     //!
     //! \ingroup nxpath_code
@@ -102,7 +113,7 @@ namespace nx{
     //! \param e reference to the element
     //! \return true if e has a name, false otherwise
     //!
-    bool has_name(const nxpath::object_element_t &e);
+    bool has_name(const nxpath::element_type &e);
 
     //--------------------------------------------------------------------------
     //!
@@ -114,7 +125,7 @@ namespace nx{
     //! \param e reference to the element
     //! \return true if e has a class, false otherwise
     //!
-    bool has_class(const nxpath::object_element_t &e);
+    bool has_class(const nxpath::element_type &e);
 
     //--------------------------------------------------------------------------
     //!
@@ -130,7 +141,7 @@ namespace nx{
     //! \param e reference to the path element
     //! \return true if element is complete, false otherwise
     //!
-    bool is_complete(const nxpath::object_element_t &e);
+    bool is_complete(const nxpath::element_type &e);
 
     //--------------------------------------------------------------------------
     //!
