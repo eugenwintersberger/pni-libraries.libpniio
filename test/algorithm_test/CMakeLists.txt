@@ -26,6 +26,8 @@ set(SOURCES as_attribute_test.cpp
             set_unit_test.cpp
             write_test.cpp
             algorithm_test.cpp
+            get_name_test.cpp
+            #get_path_test.cpp
            )
 
 add_executable(algorithm_test ${SOURCES} $<TARGET_OBJECTS:test_common>)

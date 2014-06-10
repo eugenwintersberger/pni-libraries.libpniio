@@ -47,25 +47,30 @@ void NXGroupTest::tearDown()
 }
 
 //------------------------------------------------------------------------------
-/*
 void NXGroupTest::test_linking()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    nxgroup g = _f.create_group("/scan_1/detector/data");
-    CPPUNIT_ASSERT_NO_THROW(g.link("/collection/detector/data"));
-    CPPUNIT_ASSERT(_f.exists("/collection/detector/data"));
+    nxgroup g = _f.root().create_group("scan_1").create_group("detector")
+                         .create_group("data");
+    _f.root().create_group("collection").create_group("detector");
+    CPPUNIT_ASSERT_NO_THROW(pni::io::nx::link(g,_f.root(),"/collection/detector/data"));
+    CPPUNIT_ASSERT(_f.root().exists("/collection/detector/data"));
 
-    nxgroup ref = g.open("/scan_1");
-    CPPUNIT_ASSERT_NO_THROW(g.link(ref,"a_link"));
-    CPPUNIT_ASSERT(_f.exists("/scan_1/a_link"));
+    nxgroup ref = _f.root().open("scan_1");
+    CPPUNIT_ASSERT_NO_THROW(pni::io::nx::link(g,ref,"a_link"));
+    CPPUNIT_ASSERT(_f.root().exists("/scan_1/a_link"));
 
+    //create some group in an external file
     nxfile file = nxfile::create_file("NXGroupTest2.h5",true,0);
-    file.create_group("/test/data");
-    CPPUNIT_ASSERT_NO_THROW(g.link("NXGroupTest2.h5:/test/data","/external/data"));
-    CPPUNIT_ASSERT(_f.exists("/external/data"));
+    file.root().create_group("test").create_group("data");
+
+    //linke the external group
+    g = _f.root().create_group("external");
+    pni::io::nx::link("NXGroupTest2.h5://test/data",g,"data");
+    CPPUNIT_ASSERT_NO_THROW(pni::io::nx::link("NXGroupTest2.h5:///test/data",g,"data"));
+    CPPUNIT_ASSERT(_f.root().exists("/external/data"));
 }
-*/
 
 //------------------------------------------------------------------------------
 void NXGroupTest::test_creation()
@@ -126,13 +131,6 @@ void NXGroupTest::test_open()
 	CPPUNIT_ASSERT_THROW(_f.root().open("directory2"),pni::io::nx::nxgroup_error);
 }
 
-//------------------------------------------------------------------------------
-/*
-void NXGroupTest::test_internal_links()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-}
-*/
 
 //------------------------------------------------------------------------------
 void NXGroupTest::test_existance()

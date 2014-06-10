@@ -33,41 +33,41 @@ namespace io{
 namespace nx{
 
     
+    //!
+    //! \ingroup nexus_lowlevel
+    //! \brief create a link
+    //!
+    //! Creates a link to an object referenced by target. The new link is 
+    //! created below g with name. If the location and the target reside 
+    //! within the same file or the target path has no filename set an 
+    //! internal link will be created.  
+    //! Consider the following example. Here we want to create a link from 
+    //! the data stored in a detector field (all within the same file).
     /*!
-    \ingroup nexus_lowlevel
-    \brief create a link
-
-    Creates a link to an object referenced by target. The new link is created
-    below g with name. If the location and the target reside within the same
-    file or the target path has no filename set an internal link will be
-    created.  
-    Consider the following example. Here we want to create a link from the data
-    stored in a detector field (all within the same file).
-
     \code
     nxpath path = path_from_string("/entry/instrument/detector/data");
     nxgroup data_group = ....;
     link(path,data_group,"data"); 
     \endcode
-    
-    In the next example the same link should be created but this time the
-    detector data is stored in an external file.
-
+    */ 
+    //! In the next example the same link should be created but this time 
+    //! the detector data is stored in an external file.
+    /*!
     \code
     nxpath path =
     path_from_string("detector_file.nxs://entry/instrument/detector/data");
     nxgroup data_group = ...;
     link(path,data_group,"data");
     \endcode
-
-    The sequence of calls is the same as in the latter examples except that
-    the path includes a file name.
-
-    \tparam GTYPE group type
-    \param target path to the original object
-    \param g group where to create the link
-    \param name the new name of the link
     */
+    //! The sequence of calls is the same as in the latter examples except 
+    //! that the path includes a file name.
+    //!
+    //! \tparam GTYPE group type
+    //! \param target path to the original object
+    //! \param g group where to create the link
+    //! \param name the new name of the link
+    //!
     template<
              template<nximp_code> class GTYPE,
              nximp_code IMPID
@@ -88,17 +88,18 @@ namespace nx{
     }
 
     //-------------------------------------------------------------------------
-    /*!
-    \ingroup nexus_lowlevel
-    \brief create a link
-
-    Creates a link to an object referenced by target. The new link is created
-    below g with name. Here the target path is given by a string.
-    \tparam GTYPE group type
-    \param target path to the object as a string
-    \param g group where to create the link
-    \param name the new name of the link
-    */
+    //!
+    //! \ingroup nexus_lowlevel
+    //! \brief create a link
+    //!
+    //! Creates a link to an object referenced by target. The new link is 
+    //! created below g with name. Here the target path is given by a string.
+    //!
+    //! \tparam GTYPE group type
+    //! \param target path to the object as a string
+    //! \param g group where to create the link
+    //!\param name the new name of the link
+    //!
     template<typename GTYPE>
     void link(const string &target,const GTYPE &g,const string &name)
     {
@@ -113,19 +114,21 @@ namespace nx{
     }
 
     //-------------------------------------------------------------------------
-    /*!
-    \ingroup nexus_lowlevel
-    \brief create a link
-
-    Create a new link to the target object. The new link will be created below g
-    with name name. This function can currently only create internal links as it
-    assumes that the target and g reside within the same file.
-    \tparam STYPE type of the target object
-    \tparam GTYPE group type
-    \param target object to which the new link should point
-    \param g group where to create the link
-    \param name the new name of the link
-    */
+    //!
+    //! \ingroup nexus_lowlevel
+    //! \brief create a link
+    //! 
+    //! Create a new link to the target object. The new link will be created 
+    //! below g with name name. This function can currently only create 
+    //! internal links as it assumes that the target and g reside within the 
+    //! same file.
+    //! 
+    //! \tparam STYPE type of the target object
+    //! \tparam GTYPE group type
+    //! \param target object to which the new link should point
+    //! \param g group where to create the link
+    //! \param name the new name of the link
+    //!
     template< 
              typename STYPE,
              typename GTYPE
@@ -136,18 +139,20 @@ namespace nx{
     }
 
     //-------------------------------------------------------------------------
-    /*!
-    \brief return link type
-
-    Returns the type of link used for child name below parent. 
-    \throws pni::core::key_error if parent has no child with name
-    \throws pni::io::nx::nxlink_error if link type could not be obtained
-    \throws pni::core::type_error if the link type is unkown
-    \tparam GTYPE parent object type
-    \param parent instance of GTYPE
-    \param name of the child
-    \return link type
-    */
+    //!
+    //! \ingroup nexus_lowlevel
+    //! \brief return link type
+    //!
+    //! Returns the type of link used for child name below parent. 
+    //!
+    //! \throws pni::core::key_error if parent has no child with name
+    //! \throws pni::io::nx::nxlink_error if link type could not be obtained
+    //! \throws pni::core::type_error if the link type is unkown
+    //! \tparam GTYPE parent object type
+    //! \param parent instance of GTYPE
+    //! \param name of the child
+    //! \return link type
+    //!
     template<
              template<nximp_code> class GTYPE,
              nximp_code IMPID
@@ -160,16 +165,18 @@ namespace nx{
     }
 
     //-------------------------------------------------------------------------
-    /*!
-    \brief return true if link is external
-
-    Returns true if the link used for child name below parent is an external
-    one. 
-    \tparam GTYPE parent type
-    \param parent instance of GTYPE
-    \param name child name
-    \return true if link is external, false otherwise
-    */
+    //!
+    //! \ingroup nexus_lowlevel
+    //! \brief return true if link is external
+    //!
+    //! Returns true if the link used for child name below parent is an 
+    //! external one. 
+    //!
+    //! \tparam GTYPE parent type
+    //! \param parent instance of GTYPE
+    //! \param name child name
+    //! \return true if link is external, false otherwise
+    //!
     template<typename GTYPE>
     bool is_external_link(const GTYPE &parent,const string &name)
     {
@@ -177,16 +184,18 @@ namespace nx{
     }
 
     //-------------------------------------------------------------------------
-    /*!
-    \brief return true if link is soft
-
-    Returns true if the link used for child name below parent is an soft
-    one. 
-    \tparam GTYPE parent type
-    \param parent instance of GTYPE
-    \param name child name
-    \return true if link is soft, false otherwise
-    */
+    //!
+    //! \ingroup nexus_lowlevel
+    //! \brief return true if link is soft
+    //! 
+    //! Returns true if the link used for child name below parent is an soft
+    //! one. 
+    //!
+    //! \tparam GTYPE parent type
+    //! \param parent instance of GTYPE
+    //! \param name child name
+    //! \return true if link is soft, false otherwise
+    //!
     template<typename GTYPE>
     bool is_soft_link(const GTYPE &parent,const string &name)
     {
@@ -194,16 +203,17 @@ namespace nx{
     }
 
     //-------------------------------------------------------------------------
-    /*!
-    \brief return true if link is hard
-
-    Returns true if the link used for child name below parent is an hard
-    one. 
-    \tparam GTYPE parent type
-    \param parent instance of GTYPE
-    \param name child name
-    \return true if link is hard, false otherwise
-    */
+    //!
+    //! \ingroup nexus_lowlevel
+    //! \brief return true if link is hard
+    //! 
+    //! Returns true if the link used for child name below parent is an hard
+    //! one. 
+    //! \tparam GTYPE parent type
+    //! \param parent instance of GTYPE
+    //! \param name child name
+    //! \return true if link is hard, false otherwise
+    //!
     template<typename GTYPE>
     bool is_hard_link(const GTYPE &parent,const string &name)
     {

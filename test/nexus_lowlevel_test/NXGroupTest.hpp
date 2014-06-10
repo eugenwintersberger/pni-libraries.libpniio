@@ -40,12 +40,11 @@ class NXGroupTest: public CppUnit::TestFixture
 	CPPUNIT_TEST(test_creation);
 	CPPUNIT_TEST(test_open);
     CPPUNIT_TEST(test_parent);
-//	CPPUNIT_TEST(test_internal_links);
     CPPUNIT_TEST(test_iterator);
 	CPPUNIT_TEST(test_existance);
 	CPPUNIT_TEST(test_remove);
 	CPPUNIT_TEST(test_assignment);
- //   CPPUNIT_TEST(test_linking);
+    CPPUNIT_TEST(test_linking);
     CPPUNIT_TEST(test_comparison);
 	CPPUNIT_TEST_SUITE_END();
 private:
@@ -56,11 +55,10 @@ public:
 	void tearDown();
 	void test_creation();
 	void test_open();
-//	void test_internal_links();
 	void test_existance();
 	void test_remove();
 	void test_assignment();
-//    void test_linking();
+    void test_linking();
     void test_comparison();
     void test_iterator();
     void test_parent();
