@@ -129,7 +129,7 @@ namespace nx{
     {   
         string buffer;
         i>>buffer;
-        p = path_from_string(buffer);
+        p = nxpath::from_string(buffer);
         return i;
     }
 

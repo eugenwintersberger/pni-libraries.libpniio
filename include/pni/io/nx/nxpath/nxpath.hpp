@@ -27,8 +27,6 @@
 #include <pni/core/types.hpp>
 #include <list>
 
-
-
 namespace pni{
 namespace io{
 namespace nx{
@@ -81,6 +79,7 @@ namespace nx{
             elements_type _elements;
             //! declar path as absolute
             bool _is_absolute;
+
         public:
             //===============constructors and destructor=======================
             //! default constructor
@@ -89,6 +88,10 @@ namespace nx{
             //! constructor
             nxpath(const string &file,const elements_type &groups,
                    const string &attr,bool absolute=false);
+            
+            static nxpath from_string(const string &input);
+
+            static string to_string(const nxpath &p);
            
             //===============public member methods=============================
             //!
@@ -118,40 +121,55 @@ namespace nx{
 
 
             //-----------------------------------------------------------------
-            void push_back(const element_type &o)
-            {
-                _elements.push_back(o);
-            }
+            //!
+            //! \brief append element
+            //! 
+            //! Append a new element to the end of the Nexus path. 
+            //!
+            //! \param o element to append
+            //! 
+            void push_back(const element_type &o) { _elements.push_back(o); }
 
             //----------------------------------------------------------------
-            void push_front(const element_type &o)
-            {
-                _elements.push_front(o);
-            }
+            //! 
+            //! \brief prepend element
+            //! 
+            //! Append an element to the beginning of the Nexus path.
+            //! 
+            //! \param o element to append
+            //! 
+            void push_front(const element_type &o) { _elements.push_front(o); }
 
             //----------------------------------------------------------------
-            void pop_front()
-            {
-                _elements.pop_front();
-            }
+            //! 
+            //! \brief last element from path
+            //! 
+            void pop_front() { _elements.pop_front(); }
 
             //----------------------------------------------------------------
-            void pop_back()
-            {
-                _elements.pop_back();
-            }
+            //! 
+            //! \brief remove first element from path
+            //!
+            void pop_back() { _elements.pop_back(); }
 
             //-----------------------------------------------------------------
-            element_type front() const
-            {
-                return _elements.front();
-            }
+            //!
+            //! \brief get last element
+            //! 
+            //! Return the last element of the Nexus path. 
+            //! 
+            //! \return last element
+            element_type front() const { return _elements.front(); }
 
             //----------------------------------------------------------------
-            element_type back() const 
-            {
-                return _elements.back();
-            }
+            //!
+            //! \brief get first element
+            //!
+            //! Return the first element of the Nexus path
+            //! 
+            //! \return first element
+            //!
+            element_type back() const { return _elements.back(); }
 
 
             //------------------------------------------------------------------
@@ -178,70 +196,6 @@ namespace nx{
             //! get const iterator to last+1 element
             const_iterator end() const   { return _elements.end();   }
     };
-
-
-
-    //-------------------------------------------------------------------------
-    //!
-    //! \ingroup nxpath_code
-    //! \brief check if path is fs path
-    //!
-    //! This function checks if a string represents a path to a file on the
-    //! filesystem. For this check it assumes that the last element of the 
-    //! path is the name of the file which has the form
-    /*!
-    \code
-    [basename].[extension]
-    \endcode
-    */
-    //! This function is necessary for splitting the string representation of a
-    //! nexus path. In cases where only the filename or the object path is 
-    //! given we need a way to distinguish between these two types of paths. 
-    //!
-    //! \param s the path as string
-    //! \return true of s represents a file path
-    //!
-    bool is_file_path(const string &s);
-
-
-    //-------------------------------------------------------------------------
-    //!
-    //! \ingroup nxpath_code
-    //! \brief split nexus path
-    //!
-    //! This is a service function used by path_from_string. It takes the 
-    //! complete Nexus path as a string and splits it into three pieces at the 
-    //! and the @ token
-    //!
-    //! \li the filename
-    //! \li the object path
-    //! \li the attribute name
-    //!
-    //! This function was implemented in order to keep the parsers for the 
-    //! different components of the path as easy as possible. In other words 
-    //! this is something like a very simple lexxer. 
-    //!
-    //! \param input the full Nexus path
-    //! \param file the filename 
-    //! \param groups the group portion of the path
-    //! \param attribute the attribute name
-    //!
-    void split_path(const string &input, string &file,string &groups,
-                    string &attribute);
-
-    //-------------------------------------------------------------------------
-    //!
-    //! \ingroup nxpath_code
-    //! \brief creates a path from a string
-    //!
-    //! This function takes a full Nexus path as its input argument, parses 
-    //! it and constructs a nxpath instance out of it.
-    //!
-    //! \param p full Nexus path as string
-    //! \return instance of nxpath
-    //!
-    nxpath path_from_string(const string &p);
-
 
 //end of namespace
 }

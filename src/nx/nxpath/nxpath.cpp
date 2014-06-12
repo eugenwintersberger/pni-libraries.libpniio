@@ -53,102 +53,43 @@ namespace nx{
     {}
 
     //-------------------------------------------------------------------------
-    bool is_file_path(const string &s)
-    {
-        fs::path p(s);
-
-        //if the path has no extension we assume it to be an object path
-        if(extension(p).empty()) return false;
-
-        return true;
-        
-    }
-
-    //-------------------------------------------------------------------------
-    void split_object_path(const string &input,string &groups,
-                           string &attributes)
-    {
-        //define a string container 
-        typedef std::vector<string> str_cont_t;
-
-        str_cont_t result;
-        algo::split(result,input,algo::is_any_of("@"));
-
-        groups = string();
-        attributes = string();
-        
-        for(size_t i=0;i<result.size();++i)
-        {
-            if(i==0) groups = result[i];
-            else if(i==1) attributes = result[i];
-            else
-            {
-                //throw an exception here.
-            }
-        }
-
-
-    }
-
-    //-------------------------------------------------------------------------
-    void split_path(const string &input,
-                    string &file,string &groups,string &attribute)
-    {
-        //define a string container 
-        typedef std::vector<string> str_cont_t;
-
-        //start with file portion
-        file = string();
-        groups = string();
-        attribute = string();
-
-         
-        if(algo::contains(input,"://"))
-        {
-            //here it is easy we know that which part of the path is the file
-            //section and which the object path within the file 
-            auto result = algo::find_first(input,"://");
-            file = string(input.begin(),result.begin());
-            split_object_path(string(result.end(),input.end()),groups,
-                              attribute);
-             
-        }
-        else
-        {
-            //here we need some additional check - in this case the string can
-            //be either a file path or an object path
-            if(is_file_path(input)) file = input;
-            else
-            {
-                //in this case the string is an object path and we have to check
-                //for a possible attribute
-                split_object_path(input,groups,attribute);
-
-            }
-
-        }
-    }
-
-    //-------------------------------------------------------------------------
-    nxpath path_from_string(const string &p)
+    nxpath nxpath::from_string(const string &input)
     {
         typedef string::const_iterator iterator_t;
+
+        //a file path must contain at least one '.' - the extension of the 
+        //file
+        bool file_path = algo::contains(input,".");
+        //a full path consists of a file path separated from the object path
+        //by :// 
+        bool full_path = algo::contains(input,"://");
+        //an attribute is speparated by an '@' symbol from the rest of the 
+        //rest of the path
+        bool has_attribute = algo::contains(input,"@");
+
+        string parser_input;
+        if(full_path)
+            //need to parse a full nexus path
+            parser_input = input;
+        else if(file_path)
+            //if the input is not a full path but satisifies the requirements 
+            //for a file path => it can only be a file path.
+            parser_input = input + "://";
+        else
+            //if the input is neither a full path nor a file path it must be 
+            //an object path
+            parser_input = "://"+input;
         typedef elements_parser<iterator_t> nxpath_parser_t;
 
         //split the path entered by the user
         string filename,attribute_name,groups;
-        split_path(p,filename,groups,attribute_name);
 
-        //parse the group section
-        nxpath_parser_t parser;
-        iterator_t start = groups.begin();
-        iterator_t stop  = groups.end();
-        nxpath::elements_type gpath; 
-        parse(start,stop,parser,gpath);
+    }
 
-        bool absolute_path = groups[0] == '/';
+    //-------------------------------------------------------------------------
+    string nxpath::to_string(const nxpath &p)
+    {
 
-        return nxpath(filename,gpath,attribute_name,absolute_path);
     }
 
 

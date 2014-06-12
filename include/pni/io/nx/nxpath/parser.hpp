@@ -75,7 +75,7 @@ namespace nx{
             using namespace boost::phoenix;
             using boost::spirit::qi::_1;
 
-            component_rule = +char_("-_a-zA-z0-9");
+            component_rule = +char_("-_a-zA-Z0-9");
             element_rule =  eps[_a="",_b=""]>>(
                                   (component_rule[_a=_1]>>-(':'>component_rule[_b=_1]))                              |
                                   (':'>component_rule)[_b = _1]
@@ -120,43 +120,42 @@ namespace nx{
     //--------------------------------------------------------------------------
     //!
     //! \ingroup nxpath_code
-    //! \brief filename parser
+    //! \brief file path parser
     //! 
     //! This parser parses a file name. Of all components in a Nexus path, 
     //! a filename is allowed to contain one or many periods '.'. 
     //! In fact, a filename must have an extension to make it distinguishable 
-    //! from other path elements.
+    //! from other path elements. Every file path must be terminated with a 
+    //! :// even when only the file is given.
     /*!
     \code
-    path/filename.ext
+    path/filename.ext://
     \endcode
     */
     //!
     //! \tparam ITERT iterator type for the parser
     //!
-    template<typename ITERT> struct filename_parser :
+    template<typename ITERT> struct filepath_parser :
     boost::spirit::qi::grammar<ITERT,string()>
     {
         //! rule for the file name including path up to the first extension
         boost::spirit::qi::rule<ITERT,string()> base_rule;
-       
-        //! rule for extensions
-        boost::spirit::qi::rule<ITERT,string()> extension_rule;
 
         //! rule for a group element
-        boost::spirit::qi::rule<ITERT,string()> filename_rule;
+        boost::spirit::qi::rule<ITERT,string()> filepath_rule;
+
 
         //! default constructor
-        filename_parser() : filename_parser::base_type(filename_rule)
+        filepath_parser() : filepath_parser::base_type(filepath_rule)
         {
             using namespace boost::spirit::qi;
             using namespace boost::fusion;
             using namespace boost::phoenix;
             using boost::spirit::qi::_1;
 
-            base_rule = +char_("-_a-zA-z0-9/.");
-            extension_rule = +char_("-_a-zA-z0-9");
-            filename_rule =  base_rule>>+('.'>extension_rule);
+            //the basename of a file must not contain any / or . 
+            base_rule = *char_("-_a-zA-Z0-9./");
+            filepath_rule = base_rule[_val = _1] > lit("://");
         }
     };
 
