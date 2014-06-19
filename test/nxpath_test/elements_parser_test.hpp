@@ -17,7 +17,7 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Jun 11, 2014
+//  Created on: Jun 19, 2014
 //      Author: Eugen Wintersberger
 //
 
@@ -39,25 +39,32 @@ using namespace pni::io::nx::parsers;
 
 //!
 //! \ingroup test_code
-//! \brief test nxpath_parser
+//! \brief test elements_parser
 //! 
-//! Test the nxpath_parser used for parsing a nexus path. 
+//! Test the elements parser component for the Nexus path parser.
 //!
-class nxpath_parser_test:public CppUnit::TestFixture 
+class elements_parser_test:public CppUnit::TestFixture 
 {
-	CPPUNIT_TEST_SUITE(nxpath_parser_test);
-    CPPUNIT_TEST(test_filename_only);
-    CPPUNIT_TEST(test_element_path_only);
-    CPPUNIT_TEST(test_attribute);
+	CPPUNIT_TEST_SUITE(elements_parser_test);
+    CPPUNIT_TEST(test_root);
+    CPPUNIT_TEST(test_with_root);
+    CPPUNIT_TEST(test_relative);
+    CPPUNIT_TEST(test_relative_current);
+    CPPUNIT_TEST(test_relative_parent);
+    CPPUNIT_TEST(test_errors);
 	CPPUNIT_TEST_SUITE_END();
 
+
     typedef string::const_iterator iterator_type;
-    typedef nxpath_parser<iterator_type> nxpath_parser_type;
-    nxpath_parser_type parser;
+    typedef elements_parser<iterator_type> elements_parser_type;
+    typedef boost::spirit::qi::expectation_failure<iterator_type> 
+            expectation_error_type;
+    elements_parser_type parser;
 
     iterator_type start_iter,stop_iter;
     string input;
-    nxpath output;
+    nxpath::elements_type output;
+    nxpath::element_type element;
 
     void set_input(const string &value)
     {
@@ -72,22 +79,18 @@ public:
 
     //------------------------------------------------------------------------
     //!
-    //! \brief test file portian
+    //! \brief test root group parsing
     //!
-    //! This tests path strings where only the filename portion is given
+    //! Test parsing only the root group.
     //!
-    void test_filename_only();
+    void test_root();
+    void test_with_root();
+    void test_relative();
+    void test_relative_current();
+    void test_relative_parent();
 
-    //------------------------------------------------------------------------
-    //!
-    //! \brief test with object path only
-    //!
-    void test_element_path_only();
+    void test_errors();
 
-    //------------------------------------------------------------------------
-    //!
-    //! \brief test with 
-    void test_attribute();
 
 };
 

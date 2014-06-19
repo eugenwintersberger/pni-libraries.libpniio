@@ -39,17 +39,15 @@ namespace nx{
     nxpath::nxpath():
         _file_name(),
         _attribute_name(),
-        _elements(),
-        _is_absolute()
+        _elements()
     {}
 
     //-------------------------------------------------------------------------
     nxpath::nxpath(const string &file,const nxpath::elements_type &objects,
-                   const string &attr,bool absolute):
+                   const string &attr):
         _file_name(file),
         _attribute_name(attr),
-        _elements(objects),
-        _is_absolute(absolute)
+        _elements(objects)
     {}
 
     //-------------------------------------------------------------------------
@@ -79,7 +77,7 @@ namespace nx{
             //if the input is neither a full path nor a file path it must be 
             //an object path
             parser_input = "://"+input;
-        typedef elements_parser<iterator_t> nxpath_parser_t;
+        typedef parsers::elements_parser<iterator_t> nxpath_parser_t;
 
         //split the path entered by the user
         string filename,attribute_name,groups;
@@ -89,6 +87,61 @@ namespace nx{
     //-------------------------------------------------------------------------
     string nxpath::to_string(const nxpath &p)
     {
+
+    }
+
+    //-------------------------------------------------------------------------
+    bool nxpath::is_absolute() const
+    {
+        //if the first element in the object path is NXroot the path 
+        //is absolute.
+        if(size())
+            return _elements.front().second=="NXroot";
+        else
+            return false;
+    }
+
+    //-------------------------------------------------------------------------
+    std::ostream &operator<<(std::ostream &stream,const nxpath::element_type &e)
+    {
+        stream<<e.first;
+        //the colon will only be printed if the second component is not empty
+        if(!e.second.empty()) stream<<":"<<e.second;
+        return stream;
+    }
+
+    // -----------------------------------------------------------------------
+    std::ostream &operator<<(std::ostream &stream,
+                             const nxpath::elements_type &elements)
+    {
+        size_t index = 0;
+
+        for(auto e: elements)
+        {
+            stream<<e;
+            if(index++ < elements.size()-1) stream<<"/";
+        }
+
+        return stream;
+    }
+    
+    //--------------------------------------------------------------------------
+    std::ostream &operator<<(std::ostream &stream,const nxpath &p)
+    {
+        if(!p.filename().empty()) stream<<p.filename()<<"://";
+
+        if(p.is_absolute()) stream<<"/";
+
+        size_t index = 0;
+        for(auto e: p)
+        {
+            stream<<e;
+            if(index++ < p.size()-1) stream<<"/";
+        }
+
+        if(!p.attribute().empty()) stream<<"@"<<p.attribute();
+
+        return stream;
 
     }
 

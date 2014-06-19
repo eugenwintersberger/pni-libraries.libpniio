@@ -31,7 +31,10 @@ CPPUNIT_TEST_SUITE_REGISTRATION(nxpath_parser_test);
 using namespace boost::spirit;
 
 //-----------------------------------------------------------------------------
-void nxpath_parser_test::setUp() { }
+void nxpath_parser_test::setUp() 
+{ 
+    output = nxpath();
+}
 
 //-----------------------------------------------------------------------------
 void nxpath_parser_test::tearDown() {}
@@ -72,8 +75,40 @@ void nxpath_parser_test::test_element_path_only()
     CPPUNIT_ASSERT(output.filename().empty());
     CPPUNIT_ASSERT(output.attribute().empty());
     CPPUNIT_ASSERT(output.is_absolute());
+    CPPUNIT_ASSERT(output.size()==4);
+
+    set_input("://entry/:NXinstrument/detector:NXdetector");
+    
+    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
+    CPPUNIT_ASSERT(output.filename().empty());
+    CPPUNIT_ASSERT(output.attribute().empty());
+    CPPUNIT_ASSERT(!output.is_absolute());
     CPPUNIT_ASSERT(output.size()==3);
 
-    
+    set_input(":///");
+    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
+    CPPUNIT_ASSERT(output.filename().empty());
+    CPPUNIT_ASSERT(output.attribute().empty());
+    CPPUNIT_ASSERT(output.is_absolute());
+    CPPUNIT_ASSERT(output.size()==1);
+
 }
 
+//----------------------------------------------------------------------------
+void nxpath_parser_test::test_attribute()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    set_input(":///:NXentry@datx");
+    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
+    CPPUNIT_ASSERT(output.attribute() == "datx");
+
+
+    output = nxpath();
+    set_input(":///@name");
+    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
+    CPPUNIT_ASSERT(output.filename().empty());
+    CPPUNIT_ASSERT(output.size()==1);
+    CPPUNIT_ASSERT(output.attribute() == "name");
+
+}

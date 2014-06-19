@@ -30,14 +30,24 @@
 #include <boost/spirit/include/phoenix_object.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/fusion/include/io.hpp>
+#include <boost/phoenix/operator/io.hpp>
 #include <boost/variant.hpp>
 #include <boost/fusion/include/std_pair.hpp>
 #include <boost/optional/optional.hpp>
+#include <utility>
 
 
 namespace pni{
 namespace io{
 namespace nx{
+
+//add here an additional namespace to avoid namespace polution from the boost
+//spirit framework.
+namespace parsers{
+
+    using namespace boost::spirit;
+    using namespace boost::fusion;
+    using namespace boost::phoenix;
 
     //--------------------------------------------------------------------------
     //!
@@ -54,33 +64,43 @@ namespace nx{
     //!
     //! \tparam ITERT iterator type for the parser
     //!
-    template<typename ITERT> struct element_parser :
-    boost::spirit::qi::grammar<ITERT,
-                               boost::spirit::locals<string,string>, 
-                               nxpath::element_type()>
+    template<typename ITERT> 
+    struct element_parser : qi::grammar<
+                                        ITERT,
+                                        locals<string,string>,
+                                        nxpath::element_type()
+                                       >
     {
-        //! rule for a single component
-        boost::spirit::qi::rule<ITERT,string()> component_rule;
+        typedef nxpath::element_type element_type;
 
+        //! rule for a single component
+        qi::rule<ITERT,string()> component_rule;
+
+
+        qi::rule<ITERT,string()> dot_rule;
+        
         //! rule for a group element
-        boost::spirit::qi::rule<ITERT,
-                                boost::spirit::locals<string,string>, 
-                                nxpath::element_type()> element_rule;
+        qi::rule< ITERT,locals<string,string>,nxpath::element_type()> element_rule;
 
         //! default constructor
         element_parser() : element_parser::base_type(element_rule)
         {
-            using namespace boost::spirit::qi;
-            using namespace boost::fusion;
-            using namespace boost::phoenix;
-            using boost::spirit::qi::_1;
+            using qi::_1;
 
-            component_rule = +char_("-_a-zA-Z0-9");
-            element_rule =  eps[_a="",_b=""]>>(
-                                  (component_rule[_a=_1]>>-(':'>component_rule[_b=_1]))                              |
-                                  (':'>component_rule)[_b = _1]
-                    )[_val = construct<nxpath::element_type>(_a,_b)];
+            component_rule = +qi::char_("-_a-zA-Z0-9")>!lit(".");
+            dot_rule = (lit(".")>!component_rule)[_val="."] 
+                       || 
+                       (lit(".")>!(component_rule | lit(".")))[_val+="."];
+
+            element_rule =  (
+                            dot_rule[_a = _1,_b = ""]
+                            |
+                             //can be either a full element or a single first
+                             //part
+                            (component_rule[_a = _1]||(':'>component_rule[_b = _1]))
+                            )[_val = construct<element_type>(_a,_b)]; 
         }
+
     };
     
     //-------------------------------------------------------------------------
@@ -98,22 +118,29 @@ namespace nx{
     //! \tparam ITERT iterator type for the parser
     //!
     template<typename ITERT>
-    struct elements_parser :
-        boost::spirit::qi::grammar<ITERT,nxpath::elements_type()>
+    struct elements_parser : qi::grammar<ITERT,nxpath::elements_type()>
     {
         //! rule for the entire group portion
-        boost::spirit::qi::rule<ITERT,nxpath::elements_type()> elements_rule;
+        qi::rule<ITERT,nxpath::elements_type()> elements_rule;
         //! group element parser
         element_parser<ITERT> element_; 
 
         //! default constructor
         elements_parser() : elements_parser::base_type(elements_rule)
         {
-            using namespace boost::spirit::qi;
-            using namespace boost::fusion;
-            using namespace boost::phoenix;
+            using boost::phoenix::push_back;
+            using boost::phoenix::push_front;
+            using boost::spirit::qi::_1;
+            using boost::spirit::qi::_2;
 
-            elements_rule = ('/'>>element_ % '/') | ( element_ % '/');
+            //[push_back(_val,construct<nxpath::element_type>("/","NXroot"))] 
+            elements_rule = eps[_val = construct<nxpath::elements_type>()]>>
+                (
+                (lit('/')[push_back(_val,construct<nxpath::element_type>("/","NXroot"))]
+                 ||
+                 *(element_[push_back(_val,_1)] % (lit('/')>!lit('/')))
+                )
+                );
         }
     };
 
@@ -135,26 +162,23 @@ namespace nx{
     //!
     //! \tparam ITERT iterator type for the parser
     //!
-    template<typename ITERT> struct filepath_parser :
-    boost::spirit::qi::grammar<ITERT,string()>
+    template<typename ITERT> 
+    struct filepath_parser : qi::grammar<ITERT,string()>
     {
         //! rule for the file name including path up to the first extension
-        boost::spirit::qi::rule<ITERT,string()> base_rule;
+        qi::rule<ITERT,string()> base_rule;
 
         //! rule for a group element
-        boost::spirit::qi::rule<ITERT,string()> filepath_rule;
+        qi::rule<ITERT,string()> filepath_rule;
 
 
         //! default constructor
         filepath_parser() : filepath_parser::base_type(filepath_rule)
         {
-            using namespace boost::spirit::qi;
-            using namespace boost::fusion;
-            using namespace boost::phoenix;
             using boost::spirit::qi::_1;
 
             //the basename of a file must not contain any / or . 
-            base_rule = *char_("-_a-zA-Z0-9./");
+            base_rule = *qi::char_("-_a-zA-Z0-9./"); 
             filepath_rule = base_rule[_val = _1] > lit("://");
         }
     };
@@ -167,49 +191,52 @@ namespace nx{
     //! \tparam ITERT iterator type
     //!
     template<typename ITERT>
-    struct nxpath_parser : 
-        boost::spirit::qi::grammar<ITERT,
-                                   boost::spirit::locals
-                                   <
-                                       string,
-                                       nxpath::elements_type,
-                                       string,
-                                       bool
-                                   >,
-                                   nxpath()>
-
+    struct nxpath_parser : qi::grammar<ITERT,
+                                       locals
+                                       <
+                                           string,
+                                           nxpath::elements_type,
+                                           string
+                                       >,
+                                       nxpath()>
     {
-        boost::spirit::qi::rule<ITERT,
-                               boost::spirit::locals
-                               <
-                                   string,
-                                   nxpath::elements_type,
-                                   string,
-                                   bool
-                               >,
-                               nxpath()> nxpath_rule;
+        qi::rule<ITERT,
+                 locals
+                 <
+                     string,
+                     nxpath::elements_type,
+                     string
+                 >,
+                 nxpath()> nxpath_rule;
 
         //add parser for the filepath
         filepath_parser<ITERT> filepath_rule;
+
+        qi::rule<ITERT,string()> attribute_rule;
 
         //add parser for the elements
         elements_parser<ITERT> element_rule;
 
         nxpath_parser() : nxpath_parser::base_type(nxpath_rule)
         {
-            using namespace boost::spirit::qi;
-            using namespace boost::fusion;
-            using namespace boost::phoenix;
             using boost::spirit::qi::_1;
-            
-            nxpath_rule = eps[_a="",_c="",_d=false]>>
-                          (-filepath_rule[_a=_1] || lit("://")
-                           || -lit("/")[_d=true]
+           
+            attribute_rule = +qi::char_("-_a-zA-Z0-9");
+            nxpath_rule = eps[_a="",
+                              _b = construct<nxpath::elements_type>(),
+                              _c=""]
+                          >>
+                          (-filepath_rule[_a=_1] 
+                           || lit("://")
                            || element_rule[_b=_1]
-                           || (lit("@")>+char_("-_a-zA-Z0-9")[_c = _1])) 
-                          [_val = construct<nxpath>(_a,_b,_c,_d)];
+                           || (lit("@")>attribute_rule[_c=_1])
+                           ) 
+                          [_val = construct<nxpath>(_a,_b,_c)];
         }
     };
+
+//end of parser namespace
+}
                                     
 //end of namespace
 }

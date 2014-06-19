@@ -35,6 +35,7 @@
 
 using namespace pni::core;
 using namespace pni::io::nx;
+using namespace pni::io::nx::parsers;
 
 //!
 //! \ingroup test_code

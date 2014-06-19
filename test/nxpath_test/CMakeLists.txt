@@ -1,6 +1,8 @@
 set(SOURCES nxpath_test.cpp
             filepath_parser_test.cpp
             nxpath_parser_test.cpp
+            element_parser_test.cpp
+            elements_parser_test.cpp
            )
 
 add_executable(nxpath_test ${SOURCES} $<TARGET_OBJECTS:test_common>)

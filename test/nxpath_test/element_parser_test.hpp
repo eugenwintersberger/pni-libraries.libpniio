@@ -17,7 +17,7 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Jun 11, 2014
+//  Created on: Jun 19, 2014
 //      Author: Eugen Wintersberger
 //
 
@@ -39,25 +39,30 @@ using namespace pni::io::nx::parsers;
 
 //!
 //! \ingroup test_code
-//! \brief test nxpath_parser
+//! \brief test element_parser
 //! 
-//! Test the nxpath_parser used for parsing a nexus path. 
+//! Test the element parser component for the Nexus path parser.
 //!
-class nxpath_parser_test:public CppUnit::TestFixture 
+class element_parser_test:public CppUnit::TestFixture 
 {
-	CPPUNIT_TEST_SUITE(nxpath_parser_test);
-    CPPUNIT_TEST(test_filename_only);
-    CPPUNIT_TEST(test_element_path_only);
-    CPPUNIT_TEST(test_attribute);
+	CPPUNIT_TEST_SUITE(element_parser_test);
+    CPPUNIT_TEST(test_current);
+    CPPUNIT_TEST(test_parent);
+    CPPUNIT_TEST(test_full);
+    CPPUNIT_TEST(test_name);
+    CPPUNIT_TEST(test_class);
+    CPPUNIT_TEST(test_errors);
 	CPPUNIT_TEST_SUITE_END();
 
     typedef string::const_iterator iterator_type;
-    typedef nxpath_parser<iterator_type> nxpath_parser_type;
-    nxpath_parser_type parser;
+    typedef element_parser<iterator_type> element_parser_type;
+    typedef boost::spirit::qi::expectation_failure<iterator_type> 
+            expectation_error_type;
+    element_parser_type parser;
 
     iterator_type start_iter,stop_iter;
     string input;
-    nxpath output;
+    nxpath::element_type output;
 
     void set_input(const string &value)
     {
@@ -69,25 +74,42 @@ public:
 	void setUp();
 	void tearDown();
 
+    //------------------------------------------------------------------------
+    //!
+    //! \brief test parsing current group
+    //!
+    void test_current();
 
     //------------------------------------------------------------------------
     //!
-    //! \brief test file portian
+    //! \brief test parsing parent group
     //!
-    //! This tests path strings where only the filename portion is given
-    //!
-    void test_filename_only();
+    void test_parent();
 
     //------------------------------------------------------------------------
     //!
-    //! \brief test with object path only
+    //! \brief test parsing a full element
     //!
-    void test_element_path_only();
+    void test_full();
 
     //------------------------------------------------------------------------
     //!
-    //! \brief test with 
-    void test_attribute();
+    //! \brief test parsing name portion
+    //!
+    void test_name();
+
+    //------------------------------------------------------------------------
+    //!
+    //! \brief test parsing class portion
+    //!
+    void test_class();
+
+    //------------------------------------------------------------------------
+    //!
+    //! \brief test error cases
+    //!
+    void test_errors();
+
 
 };
 

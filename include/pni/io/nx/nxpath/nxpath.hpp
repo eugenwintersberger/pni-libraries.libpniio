@@ -77,8 +77,6 @@ namespace nx{
             string _attribute_name;
             //! list of groups
             elements_type _elements;
-            //! declar path as absolute
-            bool _is_absolute;
 
         public:
             //===============constructors and destructor=======================
@@ -87,7 +85,7 @@ namespace nx{
             //-----------------------------------------------------------------
             //! constructor
             nxpath(const string &file,const elements_type &groups,
-                   const string &attr,bool absolute=false);
+                   const string &attr);
             
             static nxpath from_string(const string &input);
 
@@ -178,7 +176,7 @@ namespace nx{
 
             //------------------------------------------------------------------
             //! return true if path is absolute
-            bool is_absolute() const {return _is_absolute; }
+            bool is_absolute() const;
 
             //===================iterators======================================
             //! get iterator to first element
