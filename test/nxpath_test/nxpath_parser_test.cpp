@@ -23,47 +23,57 @@
 
 #include <boost/exception/diagnostic_information.hpp>
 #include <boost/spirit/home/qi/parse.hpp>
-#include "filepath_parser_test.hpp"
+#include "nxpath_parser_test.hpp"
 #include "../EqualityCheck.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(filepath_parser_test);
+CPPUNIT_TEST_SUITE_REGISTRATION(nxpath_parser_test);
 
 using namespace boost::spirit;
 
 //-----------------------------------------------------------------------------
-void filepath_parser_test::setUp() { }
+void nxpath_parser_test::setUp() { }
 
 //-----------------------------------------------------------------------------
-void filepath_parser_test::tearDown() {}
+void nxpath_parser_test::tearDown() {}
 
 //-----------------------------------------------------------------------------
-void filepath_parser_test::test_valid_path()
+void nxpath_parser_test::test_filename_only()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    set_input("hello.world:// ");
+    set_input("hello.world://");
 
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,filename));
+    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
 
-    CPPUNIT_ASSERT(filename=="hello.world");
+    CPPUNIT_ASSERT(!output.is_absolute());
+    CPPUNIT_ASSERT(output.filename()=="hello.world");
+    CPPUNIT_ASSERT(output.size() == 0);
+    CPPUNIT_ASSERT(output.attribute().empty());
 
+    
     set_input("/usr/share/data/hello.nxs://");
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,filename));
-    CPPUNIT_ASSERT(filename=="/usr/share/data/hello.nxs");
+    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
+    CPPUNIT_ASSERT(output.filename()=="/usr/share/data/hello.nxs");
 
     set_input("://");
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,filename));
-    CPPUNIT_ASSERT(filename=="");
+    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
+    CPPUNIT_ASSERT(output.filename()=="");
 }
 
 //-----------------------------------------------------------------------------
-void filepath_parser_test::test_invalid_path()
+void nxpath_parser_test::test_element_path_only()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    set_input("/hello.world ");
 
-    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,filename),
-                         qi::expectation_failure<iterator_type>);
+
+    set_input(":///entry/:NXinstrument/detector:NXdetector");
+
+    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
+    CPPUNIT_ASSERT(output.filename().empty());
+    CPPUNIT_ASSERT(output.attribute().empty());
+    CPPUNIT_ASSERT(output.is_absolute());
+    CPPUNIT_ASSERT(output.size()==3);
+
+    
 }
 

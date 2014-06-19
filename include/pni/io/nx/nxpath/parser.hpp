@@ -21,6 +21,7 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 #pragma once
+#include "nxpath.hpp"
 
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
@@ -33,7 +34,6 @@
 #include <boost/fusion/include/std_pair.hpp>
 #include <boost/optional/optional.hpp>
 
-#include "nxpath.hpp"
 
 namespace pni{
 namespace io{
@@ -159,9 +159,13 @@ namespace nx{
         }
     };
 
-
-
-
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup nxpath_code
+    //! \brief parser for a nexus path
+    //! 
+    //! \tparam ITERT iterator type
+    //!
     template<typename ITERT>
     struct nxpath_parser : 
         boost::spirit::qi::grammar<ITERT,
@@ -184,19 +188,29 @@ namespace nx{
                                    bool
                                >,
                                nxpath()> nxpath_rule;
+
+        //add parser for the filepath
+        filepath_parser<ITERT> filepath_rule;
+
+        //add parser for the elements
+        elements_parser<ITERT> element_rule;
+
         nxpath_parser() : nxpath_parser::base_type(nxpath_rule)
         {
-
+            using namespace boost::spirit::qi;
+            using namespace boost::fusion;
+            using namespace boost::phoenix;
+            using boost::spirit::qi::_1;
+            
+            nxpath_rule = eps[_a="",_c="",_d=false]>>
+                          (-filepath_rule[_a=_1] || lit("://")
+                           || -lit("/")[_d=true]
+                           || element_rule[_b=_1]
+                           || (lit("@")>+char_("-_a-zA-Z0-9")[_c = _1])) 
+                          [_val = construct<nxpath>(_a,_b,_c,_d)];
         }
-
-        
     };
                                     
-        
-                                                        
-
-
-
 //end of namespace
 }
 }

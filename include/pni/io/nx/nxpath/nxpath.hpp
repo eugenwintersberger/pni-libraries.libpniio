@@ -197,6 +197,38 @@ namespace nx{
             const_iterator end() const   { return _elements.end();   }
     };
 
+    std::ostream &operator<<(std::ostream &stream,
+                             const nxpath::element_type &e);
+
+    std::ostream &operator<<(std::ostream &stream,
+                             const nxpath::elements_type &elements);
+
+    //--------------------------------------------------------------------------
+    //!
+    //! \ingroup nxpath_code
+    //! \brief output operator for a nexus path
+    //! 
+    //! Prints a nexus path to an output stream. One can either use this to 
+    //! write a Nexus path to standard out 
+    /*!
+    \code{.cpp}
+    nxpath p = ....;
+    std::cout<<p<<std::endl;
+    \endcode
+    */
+    //! or to a string using the stringstream operator
+    /*!
+    \code{.cpp}
+    std::stringstream ss;
+    ss<<p;
+    \endcode
+    */
+    //!
+    //! \param o reference to the output stream
+    //! \param p reference to the path
+    //! \return reference to the output operator
+    //!
+    std::ostream &operator<<(std::ostream &stream,const nxpath &p);
 //end of namespace
 }
 }

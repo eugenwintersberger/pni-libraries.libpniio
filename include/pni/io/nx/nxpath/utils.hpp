@@ -143,32 +143,6 @@ namespace nx{
     //!
     bool is_complete(const nxpath::element_type &e);
 
-    //--------------------------------------------------------------------------
-    //!
-    //! \ingroup nxpath_code
-    //! \brief output operator for a nexus path
-    //! 
-    //! Prints a nexus path to an output stream. One can either use this to 
-    //! write a Nexus path to standard out 
-    /*!
-    \code{.cpp}
-    nxpath p = ....;
-    std::cout<<p<<std::endl;
-    \endcode
-    */
-    //! or to a string using the stringstream operator
-    /*!
-    \code{.cpp}
-    std::stringstream ss;
-    ss<<p;
-    \endcode
-    */
-    //!
-    //! \param o reference to the output stream
-    //! \param p reference to the path
-    //! \return reference to the output operator
-    //!
-    std::ostream &operator<<(std::ostream &o,const nxpath &p);
 
     //--------------------------------------------------------------------------
     //!
