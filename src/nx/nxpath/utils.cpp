@@ -60,7 +60,7 @@ namespace nx{
 
         //if the original path was absolute also the first part of the two 
         //must be absolute
-        p1 = nxpath(p.filename(),gp1,"",p.is_absolute());
+        p1 = nxpath(p.filename(),gp1,"");
         p2 = nxpath("",gp2,p.attribute());
     }
 
@@ -113,16 +113,6 @@ namespace nx{
         return has_name(e)&&has_class(e);
     }
 
-    //--------------------------------------------------------------------------
-    std::ostream &operator<<(std::ostream &o,const nxpath &p)
-    {
-        /*
-           if the path object has a filename we can assume that the group path
-           is absolute. Thus the leading / for the group section can be added
-           without further concern.
-        */
-        return o<<string_from_path(p);
-    }
 
     //--------------------------------------------------------------------------
     std::istream &operator>>(std::istream &i,nxpath &p)

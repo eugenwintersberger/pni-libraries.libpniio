@@ -40,9 +40,20 @@ namespace nx{
     //! 
     void append(nxpath &p,const string &gname,const string &gclass);
 
+    //!
+    //! \ingroup nxpath_code
+    //! \brief prepend element
+    //! 
+    //! Prepend an element to the beginning of a path.
+    //! 
+    //! \param p path 
+    //! \param gname group name of the element
+    //! \param gclass group class of the element
+    //!
     void prepend(nxpath &p,const string &gname,const string &gclass);
 
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup nxpath_code
     //! \brief split a nexus path
@@ -54,7 +65,7 @@ namespace nx{
     //! The best is to have a look at the following example
     /*!
     \code{.cpp}
-    nxpath path = path_from_string("file.nx:///entry:NXentry/instrument:NXinstrument/data");
+    nxpath path = nxpath::from_string("file.nx:///entry:NXentry/instrument:NXinstrument/data");
     nxpath p1,p2;
     split_path(path,1,p1,p2);
 

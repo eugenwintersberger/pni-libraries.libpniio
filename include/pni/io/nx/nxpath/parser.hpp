@@ -25,15 +25,6 @@
 
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_object.hpp>
-#include <boost/fusion/include/adapt_struct.hpp>
-#include <boost/fusion/include/io.hpp>
-#include <boost/phoenix/operator/io.hpp>
-#include <boost/variant.hpp>
-#include <boost/fusion/include/std_pair.hpp>
-#include <boost/optional/optional.hpp>
 #include <utility>
 
 
@@ -46,7 +37,6 @@ namespace nx{
 namespace parsers{
 
     using namespace boost::spirit;
-    using namespace boost::fusion;
     using namespace boost::phoenix;
 
     //--------------------------------------------------------------------------
@@ -234,6 +224,9 @@ namespace parsers{
                           [_val = construct<nxpath>(_a,_b,_c)];
         }
     };
+
+    //------------------------------------------------------------------------
+    nxpath parse_path(const string &input);
 
 //end of parser namespace
 }

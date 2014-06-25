@@ -198,9 +198,6 @@ namespace nx{
     std::ostream &operator<<(std::ostream &stream,
                              const nxpath::element_type &e);
 
-    std::ostream &operator<<(std::ostream &stream,
-                             const nxpath::elements_type &elements);
-
     //--------------------------------------------------------------------------
     //!
     //! \ingroup nxpath_code
