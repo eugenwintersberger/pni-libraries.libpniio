@@ -44,7 +44,7 @@ int main(int argc,char **argv)
     runner.addTest(registry.makeTest());
     runner.eventManager().addListener(&progress);
     
-    std::ofstream os("nxpath_test.xml");
+    std::ofstream os("nxpath_tests.xml");
     runner.setOutputter(new CppUnit::XmlOutputter(&runner.result(),os));
     
     bool result = runner.run();
