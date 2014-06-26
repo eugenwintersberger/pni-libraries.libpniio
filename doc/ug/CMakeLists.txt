@@ -1,13 +1,25 @@
-#build users guide with sphinx
+#build documentation
 
-set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/source")
-set(HTML_DIR "${CMAKE_CURRENT_BINARY_DIR}/build/html")
-set(EPUB_DIR "${CMAKE_CURRENT_BINARY_DIR}/build/epub")
-set(PDF_DIR  "${CMAKE_CURRENT_BINARY_DIR}/build/latex")
+#get all the sources for the documentation
+set(PDFLATEX_COMPILER pdflatex)
+set(BIBTEX_COMMAND bibtex)
+set(SOURCES libpniio_ug.tex
+            tex/introduction.tex
+            tex/installation.tex
+    )
 
 
-#we can do this since sphinx looks by itself for new files.
-add_custom_target(ug_html COMMAND sphinx-build -b html ${SRC_DIR} ${HTML_DIR})
-add_custom_target(ug_epub COMMAND sphinx-build -b epub ${SRC_DIR} ${EPUB_DIR})
-add_custom_target(ug_pdf  COMMAND sphinx-build -b latex ${SRC_DIR} ${EPUB_DIR})
+add_custom_command(OUTPUT libpniio_ug.pdf 
+                   COMMAND ${PDFLATEX_COMPILER} -shell-escape libpniio_ug.tex
+                   #COMMAND ${BIBTEX_COMMAND} libpniio_ug
+                   COMMAND ${PDFLATEX_COMPILER} -shell-escape libpniio_ug.tex
+                   COMMAND ${PDFLATEX_COMPILER} -shell-escape libpniio_ug.tex
+                   DEPENDS ${SOURCES}
+                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                   )
+
+add_custom_target(doc  DEPENDS "libpniio_ug.pdf" )
+
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/libpniio_ug.pdf" 
+        DESTINATION "${CMAKE_INSTALL_FULL_DOCDIR}")
 

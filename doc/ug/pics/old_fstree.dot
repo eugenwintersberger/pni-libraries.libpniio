@@ -1,0 +1,35 @@
+digraph tree {
+    rankdir=LR;
+    nodesep=0.5;
+    fixedsize=true;
+    
+    DATA     [label="data",shape="folder"];
+    IMAGE_POINT [ shape = "point"];
+    IMAGEDIR [label="images",shape="folder"];
+
+    IFILE1_POINT [shape=point,width=0,height=0,concentrate=true];
+    IMFILE1 [ label="image_1.tiff",shape="box"];
+    IFILE2_POINT [shape=point];
+    IMFILE2 [ label="image_2.tiff",shape="box"];
+    IFILE3_POINT [shape=point];
+    IMFILE3 [ label="image_3.tiff",shape="box"];
+
+    AFILE [label = "scalar_data.dat",shape="box"];
+    AFILE_POINT [shape="point"];
+
+    IMAGE_POINT->IMAGEDIR;
+    AFILE_POINT->AFILE;
+
+    {
+        rank = same;
+        DATA->IMAGE_POINT->AFILE_POINT[arrowhead=none];
+    }
+
+    IFILE1_POINT->IMFILE1; IFILE2_POINT->IMFILE2;
+    IFILE3_POINT->IMFILE3;
+
+    {
+        rank = same;
+        IMAGEDIR->IFILE1_POINT->IFILE2_POINT->IFILE3_POINT[arrowhead=none];
+    }
+}

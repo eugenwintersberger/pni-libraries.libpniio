@@ -1,0 +1,20 @@
+%%% a basic introduction to Nexus
+
+Today, data recorded during experiments is typically stored either as individual
+image files or as a flat ASCII file. In some situations both are used where
+image data from detectors is stored in a binary image format while scalar data
+is stored in a flat ASCII file. 
+This approach has several problems 
+\begin{enumerate}
+\item when the number of image files grows large the performance of most file
+systems degenerate 
+\item to access data in an individual image file a new file handler has to be
+created 
+\item image and scalar data is stored in different files which increases the
+managements efforts to keep related information aligned.
+\end{enumerate}
+
+Nexus is a binary file format which attempts to solves all these problems. Nexus
+can keep scalar and multidimensional data within a single file and allows to
+organize data in trees. Additional attributes can be attached to each object in
+a file to store metadata which might be required for later analysis of the data.

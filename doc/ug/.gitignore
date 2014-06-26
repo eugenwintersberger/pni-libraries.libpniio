@@ -1,1 +1,5 @@
 build
+*.log
+*.lox
+libpniio_ug.pdf
+*.pyg

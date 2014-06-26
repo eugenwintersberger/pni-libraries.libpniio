@@ -1,0 +1,100 @@
+\documentclass[a4paper,draft]{scrbook}
+\usepackage{a4wide,amsmath}
+\usepackage[final]{graphicx}
+\usepackage[square,numbers]{natbib}
+\usepackage[draft=false]{hyperref}  %% need this for links and references in the document
+\usepackage{array}     %% need this for more table formating (m{} and p{})
+\usepackage{url}       %% support for URLs
+\usepackage{float}     %% required for extra float placement
+\usepackage{placeins}
+\usepackage{subfig}
+\usepackage{lscape}    %% landscape figures
+\usepackage[disable]{todonotes}
+\usepackage{color}
+\usepackage[figuresright]{rotating}
+\usepackage{minted}    %% excellent source code formating
+
+\hypersetup{pdftitle={libpniio API review 2013 },
+        	pdfborder=0 0 0,
+	    	colorlinks=false}
+
+\setcapindent{0em}
+
+\title{{\Huge{\tt libpniio} Users Guide}}
+\author{Eugen Wintersberger}
+
+\newcommand{\libpnicore}{{\tt libpnicore}}
+\newcommand{\libpniio}{{\tt libpniio}}
+\newcommand{\sdarray}{{\tt static\_array}}
+\newcommand{\darray}{{\tt dynamic\_array}}
+\newcommand{\farray}{{\tt fixed\_dim\_array}}
+\newcommand{\mdarray}{{\tt mdarray}}
+\newcommand{\arrayview}{{\tt array\_view}}
+\newcommand{\arrayerasure}{{\tt array}}
+\newcommand{\numarray}{{\tt numeric\_array}}
+\newcommand{\cmake}{{\tt cmake}}
+\newcommand{\pkgconfig}{{\tt pkg-config}}
+\newcommand{\gcc}{{\tt gcc}}
+\newcommand{\nxfield}{\tt nxfield}
+\newcommand{\nxobject}{\tt nxobject}
+\newcommand{\nxgroup}{\tt nxgroup}
+\newcommand{\nxattribute}{\tt nxattribute}
+\newcommand{\nxpath}{\tt nxpath}
+
+%\bibliographystyle{plainnat}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter{Introduction}\label{chapter:introduction}
+\input{tex/introduction.tex}
+\FloatBarrier
+
+\chapter{Installation}\label{chapter:installation}
+\input{tex/installation.tex}
+\FloatBarrier
+
+\chapter{Legacy format support}\label{chapter:legacy_formats}
+\FloatBarrier
+
+\chapter{Getting started with Nexus}\label{chapter:nexus_quickstart}
+\input{tex/nexus_introduction.tex}
+\FloatBarrier
+
+\chapter{Addressing Nexus object - the Nexus path}
+\input{tex/nexus_path.tex}
+\FloatBarrier
+
+
+%\chapter{Using the library}\label{chapter:using_library}
+%\input{tex/using.tex}
+%\FloatBarrier 
+%
+%\chapter{Data types}\label{chapter:data_types}
+%\input{tex/types.tex}
+%\FloatBarrier
+%
+%\chapter{Arrays}\label{chapter:arrays}
+%\input{tex/arrays.tex}
+%\FloatBarrier
+%
+%\chapter{Type erasures}\label{chapter:type_erasures}
+%\input{tex/type_erasures.tex}
+%\FloatBarrier
+%
+%\chapter{Program configuration utilities}\label{chapter:configuration}
+%\input{tex/configuration.tex}
+%\FloatBarrier
+%
+%\chapter{Benchmark utilities}\label{chapter:benchmark}
+%\FloatBarrier
+%
+%\appendix
+%\chapter{Some internals on multidimensional arrays}
+%\input{tex/appendix_multidim_arrays.tex}
+%\FloatBarrier
+
+%\bibliography{libpniio_ug}
+
+\end{document}
