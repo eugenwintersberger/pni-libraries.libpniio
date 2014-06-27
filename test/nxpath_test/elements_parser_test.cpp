@@ -39,51 +39,7 @@ void elements_parser_test::setUp()
 //-----------------------------------------------------------------------------
 void elements_parser_test::tearDown() {}
 
-//-----------------------------------------------------------------------------
-void elements_parser_test::test_root()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    set_input("/");
 
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
-    //std::cerr<<output.size()<<std::endl; 
-    CPPUNIT_ASSERT(output.size() == 1);
-    CPPUNIT_ASSERT(output.front().first == "/");
-    CPPUNIT_ASSERT(output.front().second == "NXroot");
-}
-
-//----------------------------------------------------------------------------
-void elements_parser_test::test_with_root()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    set_input("/:NXentry/:NXinstrument/lambda:NXdetector/data");
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
-  
-    CPPUNIT_ASSERT(output.size() == 5);
-     
-    nxpath::element_type element = output.front(); output.pop_front();
-    CPPUNIT_ASSERT((element.first=="/") && (element.second=="NXroot"));
-
-    element = output.front(); output.pop_front();
-    CPPUNIT_ASSERT((element.first.empty()) && (element.second=="NXentry"));
-    
-    element = output.front(); output.pop_front();
-    CPPUNIT_ASSERT(element.first.empty());
-    CPPUNIT_ASSERT(element.second=="NXinstrument");
-    
-    element = output.front(); output.pop_front();
-    CPPUNIT_ASSERT((element.first == "lambda") && 
-                   (element.second=="NXdetector"));
-
-    element = output.front(); output.pop_front();
-    CPPUNIT_ASSERT((element.first == "data") && 
-                   (element.second.empty()));
-
-    //here we should have consumed all the components from the path
-    CPPUNIT_ASSERT(output.size() == 0);
-}
 
 //----------------------------------------------------------------------------
 void elements_parser_test::test_relative()
@@ -164,13 +120,20 @@ void elements_parser_test::test_errors()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    set_input("/:NXentry/..../data");
+    set_input(":NXentry/..../data");
     CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
                          expectation_error_type);
 
+    /*
     set_input(":NXentry//data");
     CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
                          expectation_error_type);
+                         */
 
+    /*
+    set_input(":NXentry../data");
+    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
+                         expectation_error_type);
+                         */
 
 }

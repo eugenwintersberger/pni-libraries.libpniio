@@ -24,6 +24,26 @@
 #include <pni/io/nx/nxpath/nxpath.hpp>
 #include <pni/io/nx/nxpath/parser.hpp>
 
+namespace std
+{
+    std::ostream &operator<<(std::ostream &stream,const pni::io::nx::nxpath::element_type &e)
+    {
+        stream<<e.first<<":"<<e.second;
+        return stream;
+    }
+
+    std::ostream &operator<<(std::ostream &stream,const pni::io::nx::nxpath::elements_type &e)
+    {
+        for(auto v: e)
+        {
+            stream<<v.first<<":"<<v.second;
+            if(v != e.back()) stream<<"/";
+        }
+
+        return stream;
+
+    }
+}
 
 namespace pni{
 namespace io{
@@ -68,13 +88,36 @@ namespace nx{
     }
 
     //-------------------------------------------------------------------------
+    /*
     std::ostream &operator<<(std::ostream &stream,const nxpath::element_type &e)
     {
-        stream<<e.first;
-        //the colon will only be printed if the second component is not empty
-        if(!e.second.empty()) stream<<":"<<e.second;
+        if((!e.first.empty() && e.first=="/") || 
+           (!e.second.empty() && e.second=="NXroot"))
+        {
+            stream<<"/";
+        }
+        else
+        {
+            stream<<e.first;
+            //the colon will only be printed if the second component is not empty
+            if(!e.second.empty()) stream<<":"<<e.second;
+        }
         return stream;
     }
+    */
+
+    /*
+    std::ostream &operator<<(std::ostream &stream,
+                             const nxpath::elements_type &e)
+    {
+        if(!e.size()) return stream;
+
+        for(auto v: e)
+            stream<<e<<"/";
+
+        return stream;
+
+    }*/
 
     //--------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &stream,const nxpath &p)

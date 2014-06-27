@@ -17,7 +17,7 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Jun 11, 2014
+//  Created on: Jun 25, 2014
 //      Author: Eugen Wintersberger
 //
 
@@ -26,7 +26,7 @@
 #include <boost/current_function.hpp>
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
-#include <pni/io/nx/nxpath/parser.hpp>
+#include <pni/io/nx/nxpath.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
@@ -35,50 +35,32 @@
 
 using namespace pni::core;
 using namespace pni::io::nx;
-using namespace pni::io::nx::parsers;
 
 //!
 //! \ingroup test_code
-//! \brief test nxpath_parser
+//! \brief test nxpath
 //! 
-//! Test the nxpath_parser used for parsing a nexus path. 
+//! Test the nxpath class
 //!
-class nxpath_parser_test:public CppUnit::TestFixture 
+class nxpath_test:public CppUnit::TestFixture 
 {
-	CPPUNIT_TEST_SUITE(nxpath_parser_test);
-    CPPUNIT_TEST(test_element_path_only);
-    CPPUNIT_TEST(test_attribute);
+	CPPUNIT_TEST_SUITE(nxpath_test);
+    CPPUNIT_TEST(test_from_string_no_file);
+    CPPUNIT_TEST(test_from_string_with_file);
+    CPPUNIT_TEST(test_from_string_no_file_attr);
+    CPPUNIT_TEST(test_from_string_with_file_attr);
 	CPPUNIT_TEST_SUITE_END();
 
-    typedef string::const_iterator iterator_type;
-    typedef nxpath_parser<iterator_type> nxpath_parser_type;
-    nxpath_parser_type parser;
-
-    iterator_type start_iter,stop_iter;
-    string input;
-    nxpath output;
-
-    void set_input(const string &value)
-    {
-        input = value;
-        start_iter = input.begin();
-        stop_iter  = input.end();
-    }
 public:
 	void setUp();
 	void tearDown();
 
+    void test_from_string_no_file();
+    void test_from_string_with_file();
+    void test_from_string_with_file_attr();
+    void test_from_string_no_file_attr();
 
-    //------------------------------------------------------------------------
-    //!
-    //! \brief test with object path only
-    //!
-    void test_element_path_only();
 
-    //------------------------------------------------------------------------
-    //!
-    //! \brief test with 
-    void test_attribute();
 
 };
 

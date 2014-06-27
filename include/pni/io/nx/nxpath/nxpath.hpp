@@ -195,8 +195,36 @@ namespace nx{
             const_iterator end() const   { return _elements.end();   }
     };
 
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup nxpath_code
+    //! \brief output operator for single elements
+    //!
+    //! Write a single object element to an output stream. 
+    //!
+    //! \param stream output stream reference
+    //! \param e object element
+    //! \return reference to the modified stream
+    /*
     std::ostream &operator<<(std::ostream &stream,
                              const nxpath::element_type &e);
+                             */
+
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup nxpath_code
+    //! \brief output operator for object path
+    //!
+    //! Write an entire object path to an output stream
+    //!
+    //! \param stream output stream reference
+    //! \param e object path 
+    //! \return reference to the modified stream
+    /*
+    std::ostream &operator<<(std::ostream &stream,
+                             const nxpath::elements_type &e);
+                             */
+
 
     //--------------------------------------------------------------------------
     //!

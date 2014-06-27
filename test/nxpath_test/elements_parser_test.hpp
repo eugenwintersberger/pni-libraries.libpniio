@@ -46,8 +46,6 @@ using namespace pni::io::nx::parsers;
 class elements_parser_test:public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(elements_parser_test);
-    CPPUNIT_TEST(test_root);
-    CPPUNIT_TEST(test_with_root);
     CPPUNIT_TEST(test_relative);
     CPPUNIT_TEST(test_relative_current);
     CPPUNIT_TEST(test_relative_parent);
@@ -83,8 +81,6 @@ public:
     //!
     //! Test parsing only the root group.
     //!
-    void test_root();
-    void test_with_root();
     void test_relative();
     void test_relative_current();
     void test_relative_parent();

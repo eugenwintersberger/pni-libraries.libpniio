@@ -39,29 +39,6 @@ void nxpath_parser_test::setUp()
 //-----------------------------------------------------------------------------
 void nxpath_parser_test::tearDown() {}
 
-//-----------------------------------------------------------------------------
-void nxpath_parser_test::test_filename_only()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    set_input("hello.world://");
-
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
-
-    CPPUNIT_ASSERT(!output.is_absolute());
-    CPPUNIT_ASSERT(output.filename()=="hello.world");
-    CPPUNIT_ASSERT(output.size() == 0);
-    CPPUNIT_ASSERT(output.attribute().empty());
-
-    
-    set_input("/usr/share/data/hello.nxs://");
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
-    CPPUNIT_ASSERT(output.filename()=="/usr/share/data/hello.nxs");
-
-    set_input("://");
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
-    CPPUNIT_ASSERT(output.filename()=="");
-}
 
 //-----------------------------------------------------------------------------
 void nxpath_parser_test::test_element_path_only()
@@ -69,7 +46,7 @@ void nxpath_parser_test::test_element_path_only()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
 
-    set_input(":///entry/:NXinstrument/detector:NXdetector");
+    set_input("/entry/:NXinstrument/detector:NXdetector");
 
     CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
     CPPUNIT_ASSERT(output.filename().empty());
@@ -77,21 +54,13 @@ void nxpath_parser_test::test_element_path_only()
     CPPUNIT_ASSERT(output.is_absolute());
     CPPUNIT_ASSERT(output.size()==4);
 
-    set_input("://entry/:NXinstrument/detector:NXdetector");
+    set_input("entry/:NXinstrument/detector:NXdetector");
     
     CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
     CPPUNIT_ASSERT(output.filename().empty());
     CPPUNIT_ASSERT(output.attribute().empty());
     CPPUNIT_ASSERT(!output.is_absolute());
     CPPUNIT_ASSERT(output.size()==3);
-
-    set_input(":///");
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
-    CPPUNIT_ASSERT(output.filename().empty());
-    CPPUNIT_ASSERT(output.attribute().empty());
-    CPPUNIT_ASSERT(output.is_absolute());
-    CPPUNIT_ASSERT(output.size()==1);
-
 }
 
 //----------------------------------------------------------------------------
@@ -99,13 +68,16 @@ void nxpath_parser_test::test_attribute()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    set_input(":///:NXentry@datx");
+    set_input("/:NXentry@datx");
     CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
+    CPPUNIT_ASSERT(output.front().first == "/");
+    CPPUNIT_ASSERT(output.front().second == "NXroot");
     CPPUNIT_ASSERT(output.attribute() == "datx");
+    CPPUNIT_ASSERT(output.size() == 2);
 
 
     output = nxpath();
-    set_input(":///@name");
+    set_input("/@name");
     CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
     CPPUNIT_ASSERT(output.filename().empty());
     CPPUNIT_ASSERT(output.size()==1);

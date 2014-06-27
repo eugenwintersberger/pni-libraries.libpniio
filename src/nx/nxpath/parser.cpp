@@ -37,29 +37,33 @@ namespace parsers{
         typedef string::iterator iterator_type;
         typedef nxpath_parser<iterator_type> parser_type;
 
-        //a file path must contain at least one '.' - the extension of the 
-        //file
-        bool file_path = algo::contains(input,".");
-        //a full path consists of a file path separated from the object path
-        //by :// 
-        bool full_path = algo::contains(input,"://");
-        
-        string parser_input;
-        if(full_path)
-            //need to parse a full nexus path
-            parser_input = input;
-        else if(file_path)
-            //if the input is not a full path but satisifies the requirements
-            //for a file path => it can only be a file path.
-            parser_input = input + "://";
-        else
-            //if the input is neither a full path nor a file path it must be 
-            //an object path and needs a prefix to be successfully parsed
-            parser_input = "://"+input;
+        string file_part,parser_input;
 
+        string::size_type n = input.find("://");
+        if(n == string::npos)
+        {
+            //if we do not have :// in the path we can assume that the path is
+            //an object path
+            parser_input = input;
+            file_part = "";
+        }
+        else 
+        {
+            file_part = input.substr(0,n);
+            parser_input = input.substr(n+3);
+
+            //if we have a file section we eventually add a leading / to the
+            //object path in order to make it absolute - a path with a file
+            //section must be absolute.
+            if(parser_input[0]!='/') 
+                parser_input = "/"+parser_input;
+        }
+        std::cout<<input<<std::endl;
+        std::cout<<file_part<<std::endl;
+        std::cout<<parser_input<<std::endl;
         
         //generate parser
-        parser_type parser; 
+        parser_type parser(file_part); 
         nxpath path;
         qi::parse(parser_input.begin(),parser_input.end(),parser,path);
 
