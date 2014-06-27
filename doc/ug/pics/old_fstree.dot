@@ -1,21 +1,21 @@
 digraph tree {
     rankdir=LR;
-    nodesep=0.5;
+    nodesep=0.3
     fixedsize=true;
     
     DATA     [label="data",shape="folder"];
-    IMAGE_POINT [ shape = "point"];
+    IMAGE_POINT [ shape = "point",width=0,height=0,concentrate=true];
     IMAGEDIR [label="images",shape="folder"];
 
     IFILE1_POINT [shape=point,width=0,height=0,concentrate=true];
     IMFILE1 [ label="image_1.tiff",shape="box"];
-    IFILE2_POINT [shape=point];
+    IFILE2_POINT [shape=point,width=0,height=0,concentrate=true];
     IMFILE2 [ label="image_2.tiff",shape="box"];
-    IFILE3_POINT [shape=point];
+    IFILE3_POINT [shape=point,width=0,height=0,concentrate=true];
     IMFILE3 [ label="image_3.tiff",shape="box"];
 
     AFILE [label = "scalar_data.dat",shape="box"];
-    AFILE_POINT [shape="point"];
+    AFILE_POINT [shape="point",width=0,height=0,concentrate=true];
 
     IMAGE_POINT->IMAGEDIR;
     AFILE_POINT->AFILE;

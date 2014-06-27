@@ -1,0 +1,13 @@
+digraph {
+    node [shape="box",fillcolor=dodgerblue,fontcolor=white,style="rounded,filled"];
+    edge [arrowhead = none];
+    L1 [label="Layer 1: Basic nexus objects"];
+    NXFIELD  [label="NXfield",shape=ellipse,width=2];
+    NXGROUP  [label="NXgroup",shape=ellipse,width=2];
+    NXATTRIBUTE [ label="NXattribute",shape=ellipse,width=2];
+
+    
+    L1->NXFIELD;
+    L1->NXGROUP;
+    L1->NXATTRIBUTE;
+}
