@@ -28,68 +28,6 @@
 #include <boost/fusion/include/std_pair.hpp>
 #include <utility>
 
-namespace boost{
-namespace spirit{
-namespace traits{
-
-    //------------------------------------------------------------------------
-    template<typename OUT> 
-    struct print_attribute_debug<OUT,pni::io::nx::nxpath::element_type>
-    {
-        static void call(OUT &out,const pni::io::nx::nxpath::element_type &e)
-        {
-            out<<e.first<<":"<<e.second;
-        }
-    };
-
-    //------------------------------------------------------------------------
-    template<typename OUT> 
-    struct print_attribute_debug<OUT,pni::io::nx::nxpath::elements_type>
-    {
-        static void call(OUT &out,const pni::io::nx::nxpath::elements_type &e)
-        {
-            for(auto v: e)
-            {
-                out<<v.first<<":"<<v.second;
-                if(v != e.back()) out<<"/";
-            }
-
-        }
-    };
-
-    //------------------------------------------------------------------------
-    template<typename OUT> 
-    struct print_attribute_debug<OUT,pni::io::nx::nxpath>
-    {
-        static void call(OUT &out,const pni::io::nx::nxpath &p)
-        {
-            if(!p.filename().empty())
-                out<<p.filename()<<"://";
-
-            for(auto v: p)
-            {
-                out<<v.first<<":"<<v.second;
-                if(v!=p.back()) out<<"/";
-            }
-
-            if(!p.attribute().empty())
-                out<<"@"<<p.attribute();
-
-        }
-    };
-
-//end of namespace
-}}}
-
-namespace std
-{
-    std::ostream &operator<<(std::ostream &stream,const
-            pni::io::nx::nxpath::elements_type &e);
-
-    std::ostream &operator<<(std::ostream &stream,const
-            pni::io::nx::nxpath::element_type &e);
-}
-
 
 namespace pni{
 namespace io{
@@ -102,6 +40,14 @@ namespace parsers{
     using namespace boost::spirit;
     using namespace boost::phoenix;
 
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup nxpath_code
+    //! \brief nexus identifier parser
+    //!
+    //! This code parsers a single Nexus identifier which would be a fieldname
+    //! a group name or an attribute name. 
+    //!
     template<typename ITERT>
     struct id_parser : qi::grammar<ITERT,string()>
     {
@@ -113,70 +59,6 @@ namespace parsers{
         }
     };
     
-    //--------------------------------------------------------------------------
-    //!
-    //! \ingroup nxpath_code
-    //! \brief file path parser
-    //! 
-    //! This parser parses a file name. Of all components in a Nexus path, 
-    //! a filename is allowed to contain one or many periods '.'. 
-    //! In fact, a filename must have an extension to make it distinguishable 
-    //! from other path elements. Every file path must be terminated with a 
-    //! :// even when only the file is given.
-    /*!
-    \code
-    path/filename.ext://
-    \endcode
-    */
-    //!
-    //! \tparam ITERT iterator type for the parser
-    //!
-    template<typename ITERT> 
-    struct filepath_parser : qi::grammar<ITERT,string()>
-    {
-        //! rule for the file name including path up to the first extension
-        qi::rule<ITERT,string()> base_rule;
-
-        //! rule for a group element
-        qi::rule<ITERT,string()> filepath_rule;
-
-
-        //! default constructor
-        filepath_parser() : filepath_parser::base_type(filepath_rule)
-        {
-            using boost::spirit::qi::_1;
-
-            //the basename of a file must not contain any / or . 
-            base_rule = *qi::char_("-_a-zA-Z0-9./"); 
-            filepath_rule = base_rule[_val = _1] > lit("://");
-        }
-    };
-    
-    //------------------------------------------------------------------------
-    template<typename ITERT>
-    struct file_split_parser : qi::grammar<ITERT,std::pair<string,string>()>
-    {
-        qi::rule<ITERT,std::pair<string,string>()> split_rule;
-
-        qi::rule<ITERT,string()> string_rule;
-
-        file_split_parser() : file_split_parser::base_type(split_rule)
-        {
-            using qi::_1;
-            using boost::spirit::ascii::alnum;
-
-            string_rule = (+qi::char_("a-zA-Z0-9./$:")-lit("://"));
-
-            split_rule =(   string_rule[at_c<1>(_val)=_1] 
-                         || lit("://")[at_c<0>(_val) = at_c<1>(_val),
-                                       at_c<1>(_val)=""]
-                         || string_rule[at_c<1>(_val)=_1]) > eoi;
-            split_rule.name("split_rule");
-            debug(split_rule); 
-        }
-    };
-
-
     //--------------------------------------------------------------------------
     //!
     //! \ingroup nxpath_code
@@ -233,8 +115,6 @@ namespace parsers{
                             | 
                               (name_rule[_a = _1] || class_rule[_b = _1])
                             )[_val = construct<element_type>(_a,_b)];
-            element_rule.name("element_rule");
-            debug(element_rule);
         }
 
     };
@@ -264,18 +144,8 @@ namespace parsers{
         //! default constructor
         elements_parser() : elements_parser::base_type(elements_rule)
         {
-            using boost::phoenix::push_back;
-            using boost::phoenix::push_front;
-            using boost::spirit::qi::_1;
-            using boost::spirit::qi::_2;
-
             //[push_back(_val,construct<nxpath::element_type>("/","NXroot"))] 
             elements_rule = (element_ % '/') >-lit("/");
-
-            //need to allow for a final / for groups
-
-            elements_rule.name("elements_rule");
-            debug(elements_rule);
         }
     };
 
@@ -308,7 +178,6 @@ namespace parsers{
         qi::rule<ITERT,nxpath::element_type()> root_rule;
                 
         //add parser for the filepath
-        filepath_parser<ITERT> filepath_rule;
         id_parser<ITERT> id_;
 
         //add parser for the elements
@@ -324,7 +193,6 @@ namespace parsers{
 
             root_rule = lit("/")[_val = construct<nxpath::element_type>("/","NXroot")];
             root_rule.name("root_rule");
-            debug(root_rule);
            
             nxpath_rule = eps[_a = construct<nxpath::elements_type>(),_b="",
                               _val = construct<nxpath>(boost::phoenix::ref(_filename),_a,_b),
@@ -338,12 +206,10 @@ namespace parsers{
                               (lit("@")>id_[_b=_1])
                            ) [_val = construct<nxpath>(boost::phoenix::ref(_filename),_a,_b)] 
                           >eoi; //finally EOI is the terminal for the string
-            nxpath_rule.name("nxpath_rule");
-            debug(nxpath_rule);
         }
 
         private:
-        string _filename;
+            string _filename;
     };
 
     //------------------------------------------------------------------------

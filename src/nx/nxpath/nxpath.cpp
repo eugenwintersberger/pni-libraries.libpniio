@@ -24,26 +24,6 @@
 #include <pni/io/nx/nxpath/nxpath.hpp>
 #include <pni/io/nx/nxpath/parser.hpp>
 
-namespace std
-{
-    std::ostream &operator<<(std::ostream &stream,const pni::io::nx::nxpath::element_type &e)
-    {
-        stream<<e.first<<":"<<e.second;
-        return stream;
-    }
-
-    std::ostream &operator<<(std::ostream &stream,const pni::io::nx::nxpath::elements_type &e)
-    {
-        for(auto v: e)
-        {
-            stream<<v.first<<":"<<v.second;
-            if(v != e.back()) stream<<"/";
-        }
-
-        return stream;
-
-    }
-}
 
 namespace pni{
 namespace io{
@@ -88,7 +68,6 @@ namespace nx{
     }
 
     //-------------------------------------------------------------------------
-    /*
     std::ostream &operator<<(std::ostream &stream,const nxpath::element_type &e)
     {
         if((!e.first.empty() && e.first=="/") || 
@@ -104,9 +83,8 @@ namespace nx{
         }
         return stream;
     }
-    */
 
-    /*
+    //------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &stream,
                              const nxpath::elements_type &e)
     {
@@ -117,7 +95,7 @@ namespace nx{
 
         return stream;
 
-    }*/
+    }
 
     //--------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &stream,const nxpath &p)

@@ -205,10 +205,8 @@ namespace nx{
     //! \param stream output stream reference
     //! \param e object element
     //! \return reference to the modified stream
-    /*
     std::ostream &operator<<(std::ostream &stream,
                              const nxpath::element_type &e);
-                             */
 
     //------------------------------------------------------------------------
     //!
@@ -220,10 +218,8 @@ namespace nx{
     //! \param stream output stream reference
     //! \param e object path 
     //! \return reference to the modified stream
-    /*
     std::ostream &operator<<(std::ostream &stream,
                              const nxpath::elements_type &e);
-                             */
 
 
     //--------------------------------------------------------------------------

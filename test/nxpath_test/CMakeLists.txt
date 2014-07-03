@@ -1,5 +1,4 @@
 set(SOURCES nxpath_tests.cpp
-            filepath_parser_test.cpp
             nxpath_parser_test.cpp
             element_parser_test.cpp
             elements_parser_test.cpp

@@ -58,10 +58,7 @@ namespace parsers{
             if(parser_input[0]!='/') 
                 parser_input = "/"+parser_input;
         }
-        std::cout<<input<<std::endl;
-        std::cout<<file_part<<std::endl;
-        std::cout<<parser_input<<std::endl;
-        
+
         //generate parser
         parser_type parser(file_part); 
         nxpath path;
