@@ -22,7 +22,8 @@
 #pragma once
 
 #include <sstream>
-#include "../nximp_code_map.hpp"
+#include <type_traits>
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 #include "is_group.hpp"
 #include "is_field.hpp"
@@ -35,7 +36,51 @@ namespace pni{
 namespace io{
 namespace nx{
 
+    //!
+    //! \ingroup algorithm_code
+    //! \brief return child by index
+    //!
+    //! Returns the child of a group by its index. 
+    //! 
+    //! \tpatram OTYPE object type (a group)
+    //! \tparam IMPID implementation ID
+    //! \param o group object 
+    //! \param index the index of the child
+    //! \return child object as nxobject instance
+    template<
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID
+            >
+    nxobject<
+             typename nxobject_trait<IMPID>::group_type,
+             typename nxobject_trait<IMPID>::field_type,
+             typename nxobject_trait<IMPID>::attribute_type
+            >
+    get_child_by_index(const OTYPE<IMPID> &o,size_t index)
+    {
+        typedef OTYPE<IMPID> object_type;
+        typedef typename nxobject_trait<IMPID>::field_type field_type;
+        typedef typename nxobject_trait<IMPID>::attribute_type attribute_type;
+        static_assert(!std::is_same<object_type,field_type>::value,
+                      "GROUP TYPE REQUIRED - GOT FIELD TYPE!");
+        static_assert(!std::is_same<object_type,attribute_type>::value,
+                      "GROUP TYPE REQUIRED - GOT ATTRIBUTE TYPE!");
 
+        if(index>=o.nchildren())
+        {
+            std::stringstream ss;
+            ss<<"Index "<<index<<" exceeds total number of ";
+            ss<<" children "<<o.nchildren()<<"!";
+
+            throw index_error(EXCEPTION_RECORD,ss.str());
+        }
+
+        //here comes the interesting part
+        return o[index]; 
+    }
+        
+
+    //------------------------------------------------------------------------
     //!
     //! \ingroup variant_code
     //! \brief get child by index visitor
@@ -43,24 +88,33 @@ namespace nx{
     //! Retrieves the child of a group according to its index. Clearly this 
     //! works only for groups. In case of attributes and fields an exception 
     //! is thrown.
-    //! \tparam VTYPE variant type
     //!
-    template<typename VTYPE> 
-    class get_child_by_index_visitor : public boost::static_visitor<VTYPE>
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //!
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    class get_child_by_index_visitor : public boost::static_visitor<
+                                       nxobject<GTYPE,FTYPE,ATYPE> 
+                                       >
     {
         private: 
             //! index of the child
             size_t _index;
         public:
             //! result type
-            typedef VTYPE result_type;
+            typedef nxobject<GTYPE,FTYPE,ATYPE> result_type;
              
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
 
             //-----------------------------------------------------------------
             //!
@@ -85,21 +139,7 @@ namespace nx{
             //!
             result_type operator()(const group_type &g) const
             {
-                if(_index>=g.nchildren())
-                {
-                    std::stringstream ss;
-                    ss<<"Index "<<_index<<" exceeds total number of group ";
-                    ss<<" children "<<g.nchildren()<<"!";
-
-                    throw index_error(EXCEPTION_RECORD,ss.str());
-                }
-
-
-                //here comes the interesting part
-                result_type result=g[_index]; 
-
-                //in the worst case we return an invalid object
-                return result_type();
+                return get_child_by_index(g,_index);
             }
 
             //-----------------------------------------------------------------
@@ -141,25 +181,34 @@ namespace nx{
 #pragma GCC diagnostic pop
     };
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup variant_code
     //! \brief get child by index wrapper
     //!
-    //! Wrapper function for the get_child_visitor template. 
+    //! Wrapper function for the get_child_by_index_visitor template. 
     //! \throws nxfield_error if the stored object is a field
     //! \throws nxattribute_error if the stored object is an attribute
     //! \throws index_error if the index exceeds the number of children
     //! \throws type_error if the Nexus object is of unknown type
-    //! \tparam VTYPE variant type
-    //! \param o instance of VTYPE
-    //! \param i index of the child
-    //! \return child object
     //!
-    template<typename VTYPE> 
-    typename get_child_by_index_visitor<VTYPE>::result_type
-    get_child(const VTYPE &o,size_t i)
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \param o parent as nxobject
+    //! \param i index of the child
+    //! \return requested child as nxobject instance
+    //!
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    nxobject<GTYPE,FTYPE,ATYPE> 
+    get_child_by_index(const nxobject<GTYPE,FTYPE,ATYPE> &o,size_t i)
     {
-        return boost::apply_visitor(get_child_by_index_visitor<VTYPE>(i),o);
+        typedef get_child_by_index_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(i),o);
     }
 
 //end of namespace

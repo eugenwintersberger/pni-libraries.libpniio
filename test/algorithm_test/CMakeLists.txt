@@ -7,6 +7,7 @@ set(SOURCES as_attribute_test.cpp
             close_test.cpp
             get_attribute_test.cpp
             get_child_test.cpp
+            get_child_by_index_test.cpp
             get_class_test.cpp
             get_object_test.cpp
             get_parent_test.cpp
