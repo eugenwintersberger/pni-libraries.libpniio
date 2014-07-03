@@ -27,6 +27,8 @@
 #include "get_name.hpp"
 #include "is_class.hpp"
 #include "is_valid.hpp"
+#include <type_traits>
+#include <functional>
 
 #ifdef NOFOREACH
 #include <boost/foreach.hpp>
@@ -35,6 +37,110 @@
 namespace pni{
 namespace io{
 namespace nx{
+
+    
+    template<typename OTYPE> struct object_predicates
+    {
+        static
+        bool has_name(const OTYPE &o,const string &name)
+        {
+            return get_name(o) == name;
+        }
+
+        static
+        bool has_class(const OTYPE &o,const string &c)
+        { 
+            if(is_field(o)) return false;
+            return is_class(o,c);
+        }
+
+        static
+        bool has_name_and_class(const OTYPE &o,const string &n,const string &c)
+        {
+            if(is_field(o)) return false;
+            return has_name(o,n) && has_class(o,c);
+        }
+
+    };
+
+
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup algorithm_code
+    //! \brief get child from parent
+    //! 
+    //! Retrieve a child from a parent. Currently the parent can only be a 
+    //! group type. 
+    //!
+    //! \throws key_error if the requested object does not exist
+    //! 
+    //! \tparam OTYPE parent type
+    //! \tparam IMPID implementation id of the parent
+    //! \param parent reference to the parent object
+    //! \param n name of the object
+    //! \param c class of the object (only for groups)
+    //! \return requested object as instance of nxobject
+    template<
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID
+            >
+    nxobject<
+             typename nxobject_trait<IMPID>::group_type,
+             typename nxobject_trait<IMPID>::field_type,
+             typename nxobject_trait<IMPID>::attribute_type
+            >
+    get_child(const OTYPE<IMPID> &parent,const string &n,const string &c)
+    {
+        typedef OTYPE<IMPID> parent_type;
+        typedef typename nxobject_trait<IMPID>::field_type field_type;
+        typedef typename nxobject_trait<IMPID>::attribute_type attribute_type;
+        typedef typename nxobject_trait<IMPID>::group_type group_type;
+        typedef nxobject<group_type,field_type,attribute_type> object_type;
+        typedef object_predicates<object_type> predicate_type;
+        typedef std::function<bool(const object_type &o)> function_type;
+        using std::placeholders::_1;
+
+        static_assert(!std::is_same<object_type,field_type>::value,
+                      "GROUP TYPE REQUIRED - GOT FIELD TYPE!");
+        static_assert(!std::is_same<object_type,attribute_type>::value,
+                      "GROUP TYPE REQUIRED - GOT ATTRIBUTE TYPE!");
+
+        //searching does not make too much sense if we have neither a
+        //name or a class - better throw an exception here
+        function_type predicate;
+        if(n.empty() && c.empty())
+            throw key_error(EXCEPTION_RECORD,"'name' and 'class' field are"
+                    "emtpy - do not know what to search for!");
+        else if((!n.empty()) && (!c.empty()))
+            //search for name and class
+            predicate = std::bind(&predicate_type::has_name_and_class,_1,n,c);
+        else if((!n.empty()) && (c.empty()))
+            predicate = std::bind(&predicate_type::has_name,_1,n);
+        else if((n.empty()) && (!c.empty()))
+            predicate = std::bind(&predicate_type::has_class,_1,c);
+
+
+        //if the group has no children at all searching is futile
+        //better throw an exception here
+        if(!parent.nchildren()) return object_type(field_type());
+
+        //if we request the root group and g is already root - just
+        //return root - need to do something about this
+        if((n == "/") && (n == parent.name()))
+            return object_type(parent);
+
+        //need to do some treatment for the special cases . and .. as
+        //child names 
+        if(n == ".") return object_type(parent);
+        if(n == "..") return object_type(parent.parent());
+        
+        auto result_iter = std::find_if(parent.begin(),parent.end(),predicate);
+        if(result_iter == parent.end())
+            throw key_error(EXCEPTION_RECORD,"Requested child with name ["+
+                    n+"] not found!");
+
+        return *result_iter;
+    }
 
 
     //!
@@ -46,23 +152,32 @@ namespace nx{
     //! Children can be selected by two criteria: their name and their 
     //! class. Though, the class name is only evaluated if we are 
     //! looking for a group.
-    //! \tparam VTYPE variant type
     //!
-    template<typename VTYPE> 
-    class get_child_visitor : public boost::static_visitor<VTYPE>
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //!
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    class get_child_visitor : public boost::static_visitor<
+                              nxobject<GTYPE,FTYPE,ATYPE> 
+                              >
     {
         private: 
             string _name;  //!< name of the object
             string _class; //!< object class (in case of a group)
         public:
             //! result type
-            typedef VTYPE result_type;
+            typedef nxobject<GTYPE,FTYPE,ATYPE> result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
 
             //-----------------------------------------------------------------
             //!
@@ -99,62 +214,7 @@ namespace nx{
             //!
             result_type operator()(const group_type &g) const
             {
-                //here comes the interesting part
-                result_type result; 
-
-                //searching does not make too much sense if we have neither a
-                //name or a class - better throw an exception here
-                if(_name.empty() && _class.empty())
-                    return result_type(field_type());
-
-                //if the group has no children at all searching is futile
-                //better throw an exception here
-                if(!g.nchildren()) return result_type(field_type());
-
-                //if we request the root group and g is already root - just
-                //return root
-                if((_name == "/") && (_name == g.name()))
-                    return result_type(g);
-
-                //need to do some treatment for the special cases . and .. as
-                //child names 
-                if(_name == ".") return result_type(g);
-                if(_name == "..") return result_type(g.parent());
-
-                for(auto child: g)
-                {
-                    if(is_group(child))
-                    {
-                        //check here for name and type
-                        if(_name.empty())
-                        {
-                            //we only need to check for the class
-                            if(pni::io::nx::is_class(child,_class)) 
-                                return child;
-                        }
-                        else 
-                        {
-                            //we definitly need to check the name
-                            if(get_name(child) == _name)
-                            {
-                                if(_class.empty()) return child;
-                                else if(pni::io::nx::is_class(child,_class))
-                                    return child;
-                            }
-                        }
-                        continue;
-                    }
-                    else if(is_field(child))
-                    {
-                        //check here only for the name
-                        if(get_name(child)!=_name) continue;
-
-                        return child;
-                    }
-                }
-
-                //in the worst case we return an invalid object
-                return result_type();
+                return get_child(g,_name,_class);
             }
 
             //-----------------------------------------------------------------
@@ -198,24 +258,34 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief get child wrapper
     //!
     //! Wrapper function for the get_child_visitor template. 
     //!
     //! \throws nxfield_error if the stored object is a field
     //! \throws nxattribute_error if the stored object is an attribute
-    //! \tparam VTYPE variant type
-    //! \param o instance of VTYPE
-    //! \param n name of the child
-    //! \param c class of the child (only for groups)
-    //! \return child object
+    //! \throws key_error if the requested child does not exist
     //!
-    template<typename VTYPE> 
-    typename get_child_visitor<VTYPE>::result_type
-    get_child(const VTYPE &o,const string &n,const string &c)
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \param o parent object as nxobject
+    //! \param n the childs name
+    //! \param c the childs class (only for groups)
+    //! \return the requested child as nxobject
+    //!
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    nxobject<GTYPE,FTYPE,ATYPE>
+    get_child(const nxobject<GTYPE,FTYPE,ATYPE> &o,const string &n,
+              const string &c)
     {
-        return boost::apply_visitor(get_child_visitor<VTYPE>(n,c),o);
+        typedef get_child_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(n,c),o);
     }
 
 //end of namespace

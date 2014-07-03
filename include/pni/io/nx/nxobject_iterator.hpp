@@ -14,7 +14,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// a long with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Created on: Feb 12, 2012
@@ -23,6 +23,7 @@
 
 #pragma once
 
+#include <iterator>
 #include "algorithms/close.hpp"
 
 
@@ -33,6 +34,7 @@ namespace nx{
     using pni::core::array;
     using pni::core::string;
     using pni::core::exception;
+
 
     /*! 
     \ingroup nexus_lowlevel
@@ -50,8 +52,13 @@ namespace nx{
             ItemT      _item;   //!< the actual object to which the 
                                 //!< interator referes
         public:
-            typedef IterableT iterable_type; //!< type of iterable
-            typedef ItemT     item_type;     //!< item type
+            typedef IterableT   iterable_type; //!< type of iterable
+            typedef ItemT       item_type;     //!< item type
+            typedef ItemT       value_type;
+            typedef size_t      difference_type;
+            typedef value_type* pointer;
+            typedef value_type& reference;
+            typedef std::forward_iterator_tag iterator_category;
             //================constructors and destructor======================
             //! default constructor
             nxobject_iterator():

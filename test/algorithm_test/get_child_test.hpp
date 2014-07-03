@@ -36,9 +36,10 @@ using namespace pni::io::nx;
 class get_child_test : public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(get_child_test);
-        CPPUNIT_TEST(test_field);
-        CPPUNIT_TEST(test_group);
-        CPPUNIT_TEST(test_attribute);
+        CPPUNIT_TEST(test_field_object);
+        CPPUNIT_TEST(test_group_object);
+        CPPUNIT_TEST(test_attribute_object);
+        CPPUNIT_TEST(test_group_by_name);
         CPPUNIT_TEST_SUITE_END();
 
         h5::nxfile file;
@@ -50,9 +51,10 @@ class get_child_test : public CppUnit::TestFixture
         void setUp();
         void tearDown();
         
-        void test_field();
-        void test_group();
-        void test_attribute();
+        void test_group_by_name();
+        void test_field_object();
+        void test_group_object();
+        void test_attribute_object();
 
 };
 

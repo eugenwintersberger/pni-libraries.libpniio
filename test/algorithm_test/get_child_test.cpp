@@ -34,7 +34,12 @@ void get_child_test::setUp()
 {
     file = h5::nxfile::create_file("groups.nx",true,0);
     root = file.root();
-    group = root.create_group("group","NXentry");
+    group = root.create_group("scan_1","NXentry");
+    group.create_group("beamline","NXinstrument");
+    group.create_field<string>("date");
+    group.create_field<string>("experiment_id");
+    group.create_group("data","NXdata");
+    group.create_group("control","NXmonitor");
     field = root.create_field<uint32>("data");
     attribute = group.attr("NX_class");
 }
@@ -49,34 +54,44 @@ void get_child_test::tearDown()
     file.close();
 }
 
-
 //-----------------------------------------------------------------------------
-void get_child_test::test_group()
+void get_child_test::test_group_by_name()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    h5::nxobject object = root;
-    CPPUNIT_ASSERT(is_valid(get_child(object,"group","")));
-    CPPUNIT_ASSERT(is_valid(get_child(object,"","NXentry")));
-    CPPUNIT_ASSERT(is_valid(get_child(object,"group","NXentry")));
-    CPPUNIT_ASSERT(!is_valid(get_child(object,"log","")));
-    CPPUNIT_ASSERT(!is_valid(get_child(object,"","NXlog")));
-    CPPUNIT_ASSERT(!is_valid(get_child(object,"log","NXlog")));
+    h5::nxobject o = get_child(group,"control","");
+    CPPUNIT_ASSERT(get_name(o)=="control");
+    CPPUNIT_ASSERT(is_class(o,"NXmonitor"));
+
 }
 
 //-----------------------------------------------------------------------------
-void get_child_test::test_field()
+void get_child_test::test_group_object()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    h5::nxobject object = root;
+    CPPUNIT_ASSERT(is_valid(get_child(object,"scan_1","")));
+    CPPUNIT_ASSERT(is_valid(get_child(object,"","NXentry")));
+    CPPUNIT_ASSERT(is_valid(get_child(object,"scan_1","NXentry")));
+    CPPUNIT_ASSERT_THROW(get_child(object,"log",""),key_error);
+    CPPUNIT_ASSERT_THROW(get_child(object,"","NXlog"),key_error);
+    CPPUNIT_ASSERT_THROW(get_child(object,"log","NXlog"),key_error);
+}
+
+//-----------------------------------------------------------------------------
+void get_child_test::test_field_object()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = field;
     CPPUNIT_ASSERT_THROW(get_child(object,"",""),nxfield_error); 
 }
 
 //-----------------------------------------------------------------------------
-void get_child_test::test_attribute()
+void get_child_test::test_attribute_object()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = attribute;
     CPPUNIT_ASSERT_THROW(get_child(object,"",""),nxattribute_error);

@@ -89,7 +89,7 @@ void create_field_test::test_group_from_path()
     CPPUNIT_ASSERT(s[0] == 1);
     
     CPPUNIT_ASSERT_THROW(create_field<uint16>(gi,
-                nxpath::from_string("./:NXdetector/data")),nxgroup_error);
+                nxpath::from_string("./:NXdetector/data")),key_error);
 
 }
 

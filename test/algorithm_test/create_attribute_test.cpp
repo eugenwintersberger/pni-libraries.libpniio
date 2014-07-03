@@ -99,7 +99,7 @@ void create_attribute_test::test_group_from_path()
     CPPUNIT_ASSERT(s.size() == 0);
     
     CPPUNIT_ASSERT_THROW(create_attribute<uint16>(root_group,
-                nxpath::from_string("./:NXdetector@data")),nxattribute_error);
+                nxpath::from_string("./:NXdetector@data")),key_error);
 
 }
 
