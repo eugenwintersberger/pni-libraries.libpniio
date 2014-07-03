@@ -113,9 +113,15 @@ namespace nx{
             //! return the filename
             string filename() const { return _file_name; }
 
+            //! set the filename
+            void filename(const string &f) { _file_name = f; }
+
             //-----------------------------------------------------------------
             //! return the attribute name
             string attribute() const { return _attribute_name; }
+
+            //! set the attribute name
+            void attribute(const string &a) { _attribute_name = a; }
 
 
             //-----------------------------------------------------------------

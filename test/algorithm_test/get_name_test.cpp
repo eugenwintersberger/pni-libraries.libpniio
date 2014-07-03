@@ -54,7 +54,8 @@ void get_name_test::tearDown()
 void get_name_test::test_group()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
+
+    CPPUNIT_ASSERT(get_name(root)  == "/");
     CPPUNIT_ASSERT(get_name(group) == "group");
 }
 

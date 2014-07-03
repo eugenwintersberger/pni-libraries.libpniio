@@ -85,11 +85,11 @@ void create_attribute_test::test_group_from_path()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject root_group = root;
-    nxpath p = path_from_string("/:NXentry/:NXinstrument@time");
+    nxpath p = nxpath::from_string("/:NXentry/:NXinstrument@time");
 
     
     h5::nxobject f;
-    CPPUNIT_ASSERT_NO_THROW(f=create_attribute<float32>(root_group,p));
+    f=create_attribute<float32>(root_group,p);
     CPPUNIT_ASSERT(is_valid(f));
     CPPUNIT_ASSERT(is_attribute(f));
     CPPUNIT_ASSERT(get_name(f)=="time");
@@ -99,7 +99,7 @@ void create_attribute_test::test_group_from_path()
     CPPUNIT_ASSERT(s.size() == 0);
     
     CPPUNIT_ASSERT_THROW(create_attribute<uint16>(root_group,
-                path_from_string("./:NXdetector@data")),nxattribute_error);
+                nxpath::from_string("./:NXdetector@data")),nxattribute_error);
 
 }
 

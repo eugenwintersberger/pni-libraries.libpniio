@@ -1,6 +1,4 @@
 set(SOURCES check_type_test.cpp
-            nxpath_test.cpp
-            nxpath_utils_test.cpp
             utils_test.cpp
            )
 

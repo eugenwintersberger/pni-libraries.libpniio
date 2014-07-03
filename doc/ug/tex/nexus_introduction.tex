@@ -1,10 +1,11 @@
 %%% a basic introduction to Nexus
 
-Today, data recorded during experiments is typically stored either as individual
-image files or as a flat ASCII file. In some situations both are used where
-image data from detectors is stored in a binary image format while scalar data
-is stored in a flat ASCII file. 
-This approach has several problems 
+Today, data recorded during synchrotron experiments is typically stored in
+individual binary image files and/or as flat ASCII files. 
+Figure~\ref{fig:nxintro:old_fstree} shows the typicall directory structure of
+such a setup. The ASCII file stores scalar data while the detector data is
+stored in a separate directory as image files (here TIFF).
+Such an approach leads to technical and organizational problems
 \begin{enumerate}
 \item when the number of image files grows large the performance of most file
 systems degenerate 
@@ -13,8 +14,83 @@ created
 \item image and scalar data is stored in different files which increases the
 managements efforts to keep related information aligned.
 \end{enumerate}
+\begin{figure}[tb]
+    \centering
+    \begin{minipage}[c]{0.4\linewidth}
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{pics/old_fstree.pdf}}
+    \end{minipage}
+    \hspace{0.05\linewidth}
+    \begin{minipage}[c]{0.5\linewidth}
+    \caption{{\small A typical directory structure used at todays synchrotron
+    experiments. Scalar data is stored in a single ASCII file while detector
+    data is stored as individual image files in a separate directory.}}
+    \label{fig:nxintro:old_fstree}
+    \end{minipage}
+\end{figure}
 
-Nexus is a binary file format which attempts to solves all these problems. Nexus
-can keep scalar and multidimensional data within a single file and allows to
-organize data in trees. Additional attributes can be attached to each object in
-a file to store metadata which might be required for later analysis of the data.
+Nexus is a binary file format which attempts to solve all of these problems.
+Nexus can keep scalar and multidimensional data within a single file and allows
+to organize data in trees. Additional attributes can be attached to each object
+in a file storing metadata which might be required for later analysis of the
+data. It must be noted that Nexus is not a physical file format itself. It is
+rather a set of rules how data must be organized within a particular format in
+order to become a valid Nexus file. Currently the following physical file
+formats are supported by the original Nexus API
+\begin{itemize}
+\item XML -- currently only used for file structure validation
+\item HDF4 -- for historical reasons, should not be used for new data
+\item HDF5 -- the current standard storage backend for Nexus files. 
+\end{itemize}
+One of the aims of \libpniio\ is to provide an abstraction layer between the
+user and the storage backend. As \libpniio\ currently supports only HDF5 this is
+rather artificial. However, \libpniio\ provides the architecture to include
+other file formats to be used with Nexus too. 
+There has been a lot of confusion what physical file format Nexus files are.
+Many users think that Nexus has its own phyisical file format. This is in fact
+not true. Just to avoid any further confusion fo the reader let me make this
+clear once and for all
+\begin{quote}
+{\huge
+{\color{red}Every Nexus file written by \libpniio\ is also a valid HDF5 file!}
+\todo[caption={fix quote},inline]{This quote needs better formating. Maybe the
+text should go into a box and the margins to the surrounding text must be
+bigger}
+}
+\end{quote}
+
+%%%===========================================================================
+\section{The Nexus layer model}
+
+\begin{figure}[tb]
+    \centering
+    \begin{minipage}[c]{0.4\linewidth}
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{pics/nxlayers.pdf}}
+    \end{minipage}
+    \hspace{0.05\linewidth}
+    \begin{minipage}[c]{0.5\linewidth}
+    \caption{{\small Nexus can be considered to consist of three layers}}
+    \label{fig:nxintro:layers}
+    \end{minipage}
+\end{figure}
+
+\subsection{Layer 1 objects}
+
+\begin{figure}[tb]
+    \centering
+    \begin{minipage}[c]{0.4\linewidth}
+    \centering
+    \resizebox{\linewidth}{!}{\includegraphics{pics/layer1.pdf}}
+    \end{minipage}
+    \hspace{0.05\linewidth}
+    \begin{minipage}[c]{0.5\linewidth}
+    \caption{{\small The basic objects of the first layer in the Nexus object
+    model.}}
+    \label{fig:nxintro:layer1}
+    \end{minipage}
+\end{figure}
+
+\subsection{Layer 2 objects}
+
+\subsection{Layer 3 objects}

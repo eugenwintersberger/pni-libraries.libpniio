@@ -31,7 +31,9 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief close object
     //!
-    //! Invokes the close() method of the passed object. 
+    //! Invokes the close() method of the passed object.  The objects accepted
+    //! by this function template are either of type nxfield, nxattribute,  
+    //! nxgroup, or nxfile. 
     //!
     //! \tparam OTYPE object type
     //!
@@ -45,7 +47,7 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief close an object
     //!
-    //! This visitor closes an open object.
+    //! This visitor closes an open stored in an instance of nxobject.
     //! 
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type

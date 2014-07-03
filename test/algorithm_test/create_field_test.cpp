@@ -75,7 +75,7 @@ void create_field_test::test_group_from_path()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject gi = root["/group/instrument"];
-    nxpath p = path_from_string("/:NXentry/:NXinstrument/data");
+    nxpath p = nxpath::from_string("/:NXentry/:NXinstrument/data");
 
     
     h5::nxobject f;
@@ -89,7 +89,7 @@ void create_field_test::test_group_from_path()
     CPPUNIT_ASSERT(s[0] == 1);
     
     CPPUNIT_ASSERT_THROW(create_field<uint16>(gi,
-                path_from_string("./:NXdetector/data")),nxgroup_error);
+                nxpath::from_string("./:NXdetector/data")),nxgroup_error);
 
 }
 

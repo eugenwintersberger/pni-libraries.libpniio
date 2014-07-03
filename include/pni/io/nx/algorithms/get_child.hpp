@@ -103,12 +103,18 @@ namespace nx{
                 result_type result; 
 
                 //searching does not make too much sense if we have neither a
-                //name or a class
+                //name or a class - better throw an exception here
                 if(_name.empty() && _class.empty())
                     return result_type(field_type());
 
                 //if the group has no children at all searching is futile
+                //better throw an exception here
                 if(!g.nchildren()) return result_type(field_type());
+
+                //if we request the root group and g is already root - just
+                //return root
+                if((_name == "/") && (_name == g.name()))
+                    return result_type(g);
 
                 //need to do some treatment for the special cases . and .. as
                 //child names 

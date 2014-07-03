@@ -67,8 +67,8 @@ void NXGroupTest::test_linking()
 
     //linke the external group
     g = _f.root().create_group("external");
-    pni::io::nx::link("NXGroupTest2.h5://test/data",g,"data");
-    CPPUNIT_ASSERT_NO_THROW(pni::io::nx::link("NXGroupTest2.h5:///test/data",g,"data"));
+    //pni::io::nx::link("NXGroupTest2.h5://test/data",g,"data");
+    CPPUNIT_ASSERT_NO_THROW(pni::io::nx::link("NXGroupTest2.h5://test/data",g,"data"));
     CPPUNIT_ASSERT(_f.root().exists("/external/data"));
 }
 

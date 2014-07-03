@@ -77,7 +77,7 @@ void nxlink_test::test_field_internal_link()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     h5::nxgroup root_group = target_file.root();
-    nxpath p = path_from_string("/entry/detector/data");
+    nxpath p = nxpath::from_string("/entry/detector/data");
     link(p,location,"detector_data_1");
 
     link("/entry/detector/data",location,"detector_data_2");
@@ -113,7 +113,7 @@ void nxlink_test::test_field_external_link()
     
     h5::nxgroup root_group = link_file.root();
 
-    nxpath p = path_from_string("nxlink_target_test.h5:///entry/detector/data");
+    nxpath p = nxpath::from_string("nxlink_target_test.h5:///entry/detector/data");
     link(p,root_group,"data_1");
     CPPUNIT_ASSERT(link_type(root_group,"data_1")==nxlink_type::EXTERNAL);
     CPPUNIT_ASSERT(!is_soft_link(root_group,"data_1"));
@@ -139,7 +139,7 @@ void nxlink_test::test_group_internal_link()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxgroup root_group = target_file.root();
-    nxpath p = path_from_string("/entry/detector");
+    nxpath p = nxpath::from_string("/entry/detector");
     link(p,location,"detector_1");
 
     link("/entry/detector",location,"detector_2");
@@ -176,7 +176,7 @@ void nxlink_test::test_group_external_link()
     
     h5::nxgroup root_group = link_file.root();
 
-    nxpath p = path_from_string("nxlink_target_test.h5:///entry/detector");
+    nxpath p = nxpath::from_string("nxlink_target_test.h5:///entry/detector");
     link(p,root_group,"detector_1");
     CPPUNIT_ASSERT(link_type(root_group,"detector_1")==nxlink_type::EXTERNAL);
     CPPUNIT_ASSERT(is_external_link(root_group,"detector_1"));

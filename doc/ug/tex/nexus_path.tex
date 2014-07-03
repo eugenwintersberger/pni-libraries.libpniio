@@ -1,1 +1,55 @@
 %%% describing how to address Nexus objects
+
+Nexus objects are addressed by a path. In \libpniio\ the path of a Nexus object
+consists of three parts
+\begin{itemize}
+\item the file section
+\item the object section describing the location of an object within the file
+\item and an optional attribute section.
+\end{itemize}
+The different sections are organized as follows
+\begin{verbatim}
+file://object_path@attribute
+\end{verbatim}
+
+\section{The grammar of a Nexus path}
+Lets first have a look on the grammar of a Nexus path in
+EBNF\footnote{EBNF=Extended Backus Naur Form}
+\begin{verbatim}
+file_path   = {all characters allowed by the plattform to describe a path}
+
+(* definition of character sets*)
+valid_char  = "_" | "a-z" | "A-Z" | "0-9";
+whitespace  = " " | "\n" | "\r";
+
+(*definition of required terminal symbols*)
+class_seperator  = ":";
+object_seperator = "/";
+current_group    = ".";
+parent_group     = "..";
+
+(*a nexus ID must not be empty*)
+nexus_id    = valid_char,{valid_char}; 
+nexus_name  = nexus_id,(class_seperator|group_separtor|whitespace);
+nexus_group = group_seperator,nexus_id,[group_seperator|whitespace];
+
+(*
+ the first part is the object name, the second the group class if the 
+ object is a group
+*)
+object_id   =   nexus_name    
+              | nexus_name,nexus_group 
+              | nexus_group   
+              | current_group 
+              | parent_Gruop  
+                                             
+object_path ::= ["/"],object_id,{"/",object_id};
+nexus_path  ::= [file_path,"://"],object_path,["@",nexus_attr];
+\end{verbatim}
+
+The {\tt file\_path} is platform dependent which makes it difficult to determine
+which characters would be allowed in a path. Thus we leave this open to and
+separate the file path from everything else by a {\tt ://} string germinal.
+{\tt nexus\_id} describes a repetition of a set of characters allowed in Nexus
+names (for groups, fields, attributes, and classes). It is much more restrictive
+as for the filename.

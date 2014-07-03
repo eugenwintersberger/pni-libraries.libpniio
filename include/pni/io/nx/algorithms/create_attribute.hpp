@@ -114,25 +114,19 @@ namespace nx{
     create_attribute(const PTYPE<IMPID> &o,const nxpath &path,
                      const STYPE &s=STYPE())
     {
-        nxpath group_path,target_path;
+        nxpath parent_path(path); parent_path.attribute("");
 
         //check if the path describes an attribute
         if(path.attribute().empty())
             throw nxattribute_error(EXCEPTION_RECORD,
                     "Path does not describe an attribute!");
 
-        split_last(path,group_path,target_path);
-
         //obtain the parent for the target object - this will always be a 
         //grou ptype
-        auto parent = get_object(o,group_path);
-        //get the target to which to attache the attribute - can be a group
-        //or a field
-        auto target = get_child(parent,target_path.begin()->first,
-                           target_path.begin()->second);
+        auto parent = get_object(o,parent_path);
 
         //finally create the attribute
-        return create_attribute(target,target_path.attribute(),s);
+        return create_attribute(parent,path.attribute(),s);
     }
 
     //------------------------------------------------------------------------

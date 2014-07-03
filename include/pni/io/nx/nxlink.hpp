@@ -102,7 +102,7 @@ namespace nx{
     template<typename GTYPE>
     void link(const string &target,const GTYPE &g,const string &name)
     {
-        nxpath path = path_from_string(target);
+        nxpath path = nxpath::from_string(target);
         link(path,g,name);
     }
 

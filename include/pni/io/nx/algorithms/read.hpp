@@ -27,6 +27,17 @@
 namespace pni{
 namespace io{
 namespace nx{
+
+    template<
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID,
+             typename ATYPE
+            >
+    void read(const OTYPE<IMPID> &o,ATYPE &a)
+    {
+        o.read(a);
+    }
+
     
     using namespace pni::core;
 
@@ -45,7 +56,9 @@ namespace nx{
     //!
     template<
              typename ATYPE,
-             typename VTYPE
+             typename GTYPE,
+             typename FTYPE,
+             typename ATTYPE
             > 
     class read_visitor : public boost::static_visitor<void>
     {
@@ -61,11 +74,11 @@ namespace nx{
             //! result type
             typedef void result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATTYPE attribute_type;
 
             //-----------------------------------------------------------------
             //!
@@ -201,23 +214,23 @@ namespace nx{
     //! \return nothing
     //!
     template<typename ATYPE,
-             typename VTYPE,
+             typename GTYPE,
+             typename FTYPE,
+             typename ATTYPE,
              typename ...ITYPES 
             > 
-    typename read_visitor<ATYPE,VTYPE>::result_type 
-    read(VTYPE &o,ATYPE &a,ITYPES ...indices)
+    void read(nxobject<GTYPE,FTYPE,ATTYPE> &o,ATYPE &a,ITYPES ...indices)
     {
-        typedef read_visitor<ATYPE,VTYPE> visitor_t;
+        typedef read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE> visitor_t;
         std::vector<slice> sel{slice(indices)...};
         visitor_t visitor(a,sel);
         return boost::apply_visitor(visitor,o);
     }
 
-    template<typename ATYPE,typename VTYPE>
-    typename read_visitor<ATYPE,VTYPE>::result_type
-    read(VTYPE &o,ATYPE &a,const std::vector<slice> &sel)
+    template<typename ATYPE,typename GTYPE,typename FTYPE,typename ATTYPE>
+    void read(nxobject<GTYPE,FTYPE,ATTYPE> &o,ATYPE &a,const std::vector<slice> &sel)
     {
-        typedef read_visitor<ATYPE,VTYPE> visitor_t;
+        typedef read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE> visitor_t;
         visitor_t visitor(a,sel);
         return boost::apply_visitor(visitor,o);
     }
