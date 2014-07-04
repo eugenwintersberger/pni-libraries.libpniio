@@ -54,7 +54,7 @@ namespace nx{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup algorithm_code
+    //! \ingroup algorithm_internal_code
     //! \brief get parent visitor
     //!
     //! Visitor template used to retrieve the parent object from an instance of 

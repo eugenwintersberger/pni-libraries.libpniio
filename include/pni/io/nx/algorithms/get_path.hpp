@@ -49,7 +49,7 @@ namespace nx{
     }
 
     //!
-    //! \ingroup algorithm_code
+    //! \ingroup algorithm_internal_code
     //! \brief get path visitor
     //!
     //! Visitor template used to obtain the path from an object stored in an 

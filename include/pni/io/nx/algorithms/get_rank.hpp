@@ -29,7 +29,7 @@ namespace nx{
 
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief get rank visitor
     //!
     //! This visitor retrieves the rank (the number of dimensions) of a 
@@ -101,7 +101,7 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief get rank wrapper
     //!
     //! Wrapper function for the get_rank_visitor template. This function 

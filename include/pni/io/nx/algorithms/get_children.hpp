@@ -67,7 +67,7 @@ namespace nx{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup algorithm_code
+    //! \ingroup algorithm_internal_code
     //! \brief get children visitor
     //! 
     //! Visitor wrapper for the get_children function. This visitor is used

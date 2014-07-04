@@ -28,7 +28,7 @@ namespace io{
 namespace nx{
 
     //!
-    //! \ingroup algorithm_code
+    //! \ingroup algorithm_internal_code
     //! \brief check if group
     //!
     //! Visitor testing if the object stored in an nxobject instance is an 

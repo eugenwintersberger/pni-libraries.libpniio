@@ -31,7 +31,7 @@ namespace nx{
     using namespace pni::core;
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief get size visitor
     //!
     //! Return the size (the total number of elements stored) of a field or
@@ -96,7 +96,7 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief get size wrapper
     //!
     //! This function is a wrapper to the get_size_visitor template. It 

@@ -34,7 +34,7 @@ namespace nx{
     using namespace pni::core;
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief field creator 
     //! 
     //! This template selects which member function of a group type to use 
@@ -86,7 +86,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief field creator 
     //!
     //! This is a specialization of the field_creator template. If FTYPE is 
@@ -141,7 +141,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief create field visitor
     //!
     //! This visitor creates a field below the group stored in the variant 
@@ -265,7 +265,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief create_field wrapper
     //! 
     //! This wrapper function for the create_field_visitor creates a new 
@@ -313,7 +313,7 @@ namespace nx{
     
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief create_field wrapper
     //!
     //! This wrapper function for the create_field_visitor creates a new 
@@ -365,7 +365,7 @@ namespace nx{
     
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief create_field wrapper
     //!
     //! This wrapper function for the create_field_visitor creates a new 
@@ -425,7 +425,7 @@ namespace nx{
     
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief create_field wrapper
     //!
     //! This wrapper function for the create_field_visitor creates a new 

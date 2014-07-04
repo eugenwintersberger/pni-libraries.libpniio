@@ -16,11 +16,11 @@ option(BOOST_PREFIX "installation prefix of the local BOOST installation" "/usr"
 include(configure/CMakeLists.txt)
 
 #need to define the version of the library
-set(MAJOR_VERSION "0")
-set(MINOR_VERSION "9")
-set(PATCH_VERSION "5")
+set(MAJOR_VERSION "1")
+set(MINOR_VERSION "0")
+set(PATCH_VERSION "0")
 set(LIBRARY_VERSION "${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}")
-set(SO_VERSION "1")
+set(SO_VERSION "2")
 
 include_directories("./include")
 

@@ -31,7 +31,7 @@ namespace nx{
     using namespace pni::core;
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief write visitor
     //!
     //! This visitor writes data to  a field or attribute. Partial IO is 
@@ -137,7 +137,7 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief write wrapper
     //!
     //! This function template is a wrapper for the write_visitor. It will 

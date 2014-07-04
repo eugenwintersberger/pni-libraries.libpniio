@@ -29,7 +29,7 @@ namespace nx{
 
     
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief set class visitor
     //!
     //! This visitor sets the class on a Nexus group stored in a variant type.
@@ -128,7 +128,7 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief set class wrapper
     //!
     //! This function is a wrapper for the set_class_visitor template. 

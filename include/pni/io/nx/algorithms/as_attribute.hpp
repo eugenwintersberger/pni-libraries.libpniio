@@ -29,7 +29,7 @@ namespace nx{
 
 
     //!
-    //! \ingroup algorithm_code
+    //! \ingroup algorithm_internal_code
     //! \brief as attribute visitor
     //!
     //! Visitor to extract an attribute stored in an nxobject instance.

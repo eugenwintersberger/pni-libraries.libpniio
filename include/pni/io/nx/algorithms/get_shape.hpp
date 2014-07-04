@@ -29,7 +29,7 @@ namespace nx{
 
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief get shape visitor
     //! 
     //! This visitor retrieves the shape of an attribute or a field. If the 
@@ -103,7 +103,7 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief get shape wrapper
     //!
     //! Wrapper function for the get_shape_visitor template. This function 

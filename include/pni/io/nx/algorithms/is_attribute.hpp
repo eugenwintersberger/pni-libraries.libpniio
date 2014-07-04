@@ -29,7 +29,7 @@ namespace io{
 namespace nx{
 
     //!
-    //! \ingroup algorithm_code
+    //! \ingroup algorithm_internal_code
     //! \brief check attribute visitor
     //!
     //! Visitor checking if the object stored in an instance of nxobject is 

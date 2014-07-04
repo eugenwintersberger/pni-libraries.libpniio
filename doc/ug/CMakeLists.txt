@@ -18,7 +18,7 @@ add_custom_command(OUTPUT libpniio_ug.pdf
                    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                    )
 
-add_custom_target(doc  DEPENDS "libpniio_ug.pdf" )
+add_custom_target(ug_doc  DEPENDS "libpniio_ug.pdf" )
 
 install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/libpniio_ug.pdf" 
         DESTINATION "${CMAKE_INSTALL_FULL_DOCDIR}")

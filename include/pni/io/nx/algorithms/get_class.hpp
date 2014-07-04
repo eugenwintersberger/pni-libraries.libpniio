@@ -29,25 +29,29 @@ namespace io{
 namespace nx{
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief get class visitor
     //!
     //! Retrieves the Nexus class of a group stored in variant type. 
     //! \tparam VTYPE variant type
     //! \sa get_class
     //!
-    template<typename VTYPE> 
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
     class get_class_visitor : public boost::static_visitor<string>
     {
         public:
             //! result type
             typedef string result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
 
             //!
             //! \brief process gruops 
@@ -117,7 +121,7 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief get class wrapper
     //!
     //! Wrapper function for the get_class_visitor template. If the object 
@@ -133,10 +137,15 @@ namespace nx{
     //! \param o instance of VTYPE
     //! \return Nexus class as a tring
     //!
-    template<typename VTYPE> 
-    typename get_class_visitor<VTYPE>::result_type get_class(const VTYPE &o)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    string get_class(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(get_class_visitor<VTYPE>(),o);
+        typedef get_class_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(),o);
     }
 
 //end of namespace

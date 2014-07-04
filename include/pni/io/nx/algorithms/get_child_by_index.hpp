@@ -82,7 +82,7 @@ namespace nx{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief get child by index visitor
     //! 
     //! Retrieves the child of a group according to its index. Clearly this 
@@ -183,7 +183,7 @@ namespace nx{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief get child by index wrapper
     //!
     //! Wrapper function for the get_child_by_index_visitor template. 

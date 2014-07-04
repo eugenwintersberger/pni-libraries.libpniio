@@ -39,7 +39,7 @@ namespace io{
 namespace nx{
 
     //!
-    //! \ingroup algorithm_code
+    //! \ingroup algorithm_internal_code
     //! \brief object predicates 
     //! 
     //! This template class provides predicate methods for object selection. 
@@ -130,7 +130,9 @@ namespace nx{
 
         //if the group has no children at all searching is futile
         //better throw an exception here
-        if(!parent.nchildren()) return object_type(field_type());
+        if(!parent.nchildren()) 
+            throw key_error(EXCEPTION_RECORD, "Group ["+get_name(parent)
+                    +"] does not have any children!");
 
         //if we request the root group and g is already root - just
         //return root - need to do something about this
@@ -145,6 +147,9 @@ namespace nx{
         //....................................................................
         //here is the important part
         auto result_iter = std::find_if(parent.begin(),parent.end(),predicate);
+
+        //if the iterator is at the end position the object has not been 
+        //found - throw an exception here
         if(result_iter == parent.end())
             throw key_error(EXCEPTION_RECORD,"Requested child with name ["+
                     n+"] not found!");
@@ -154,7 +159,7 @@ namespace nx{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief get child visitor
     //! 
     //! Visitor wrapper for the get_child function.

@@ -31,7 +31,7 @@ namespace nx{
     using namespace pni::core;
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief get type visitor
     //!
     //! This visitor retrieves the type code of the data stored in a field or
@@ -99,7 +99,7 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief get type wrapper
     //!
     //! Wrapper function for the get_type_visitor template. This function 

@@ -44,7 +44,7 @@ namespace nx{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup algorithm_code
+    //! \ingroup algorithm_internal_code
     //! \brief close an object
     //!
     //! This visitor closes an open stored in an instance of nxobject.

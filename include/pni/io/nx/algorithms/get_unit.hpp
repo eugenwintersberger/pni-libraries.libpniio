@@ -28,6 +28,7 @@ namespace io{
 namespace nx{
 
     //!
+    //! \ingroup algorithm_code
     //! \brief get the unit of a field
     //!
     //! Return the unit string for a field 
@@ -43,7 +44,7 @@ namespace nx{
     }
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief get unit visitor
     //!
     //! Retrieves the unit string of a field stored in the variant type.
@@ -119,7 +120,7 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief get unit wrapper
     //!
     //! Wrapper function for the get_unit_visitor. It returns the the unit 

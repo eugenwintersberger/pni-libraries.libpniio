@@ -55,7 +55,7 @@ namespace nx{
 
 
     //!
-    //! \ingroup algorithm_code
+    //! \ingroup algorithm_internal_code
     //! \brief get name visitor
     //!
     //! Visitor retrieving the name of an object stored in an nxobject 

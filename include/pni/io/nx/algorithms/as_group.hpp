@@ -29,7 +29,7 @@ namespace nx{
 
 
     //!
-    //! \ingroup algorithm_code
+    //! \ingroup algorithm_internal_code
     //! \brief as group visitor
     //!
     //! Visitor extracting a group stored in an nxobject instance.

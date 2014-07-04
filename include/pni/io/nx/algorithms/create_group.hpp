@@ -32,7 +32,7 @@ namespace nx{
     using namespace pni::core;
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief create group visitor
     //!
     //! This visitor creates a group below the group stored in the variant 
@@ -143,7 +143,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //!\brief create_group wrapper
     //!
     //! Wrapper function for the create_group_visitor. This wrapper creates a 
@@ -168,7 +168,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief create_group wrapper
     //!
     //! Wrapper for the create_group_visitor. This wrapper creates a new group 

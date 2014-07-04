@@ -42,7 +42,7 @@ namespace nx{
     using namespace pni::core;
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief read visitor
     //!
     //! This visitor reads data from a field or an attribute. Partial IO is
@@ -151,7 +151,7 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief read wrapper
     //!
     //! This function template is a wrapper for the read_visitor. It will 

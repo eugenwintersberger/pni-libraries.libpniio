@@ -47,7 +47,6 @@ GENERATE_BUGLIST       = YES
 GENERATE_DEPRECATEDLIST= YES
 MAX_INITIALIZER_LINES  = 30
 SHOW_USED_FILES        = YES
-SHOW_DIRECTORIES       = NO
 
 #---------------------------------------------------------------------------
 # configuration options related to warning and progress messages
@@ -62,17 +61,11 @@ WARN_NO_PARAMDOC       = YES
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/../include \
-                         mainpage \
-                         @CMAKE_CURRENT_SOURCE_DIR@/h5_implementation_classes \
-                         @CMAKE_CURRENT_SOURCE_DIR@/nxpath_code \
-                         @CMAKE_CURRENT_SOURCE_DIR@/algorithm_code \
-                         @CMAKE_CURRENT_SOURCE_DIR@/xml_code \
-                         @CMAKE_CURRENT_SOURCE_DIR@/nexus_utilities \
-                         @CMAKE_CURRENT_SOURCE_DIR@/nexus_io \
-                         @CMAKE_CURRENT_SOURCE_DIR@/image_io \
-                         @CMAKE_CURRENT_SOURCE_DIR@/ascii_io \
-                         @CMAKE_CURRENT_SOURCE_DIR@/general_io
+INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/../include mainpage \
+                         algorithm_code ascii_io general_io \
+                         h5_implementation_classes \ 
+                         image_io implementation_interface nexus_io \
+                         nexus_utilities nxpath_code xml_code
 RECURSIVE              = YES
 EXCLUDE_SYMLINKS       = NO
 EXAMPLE_PATH           = examples
@@ -111,7 +104,6 @@ HTML_FILE_EXTENSION    = .html
 HTML_HEADER            =
 HTML_FOOTER            =
 HTML_STYLESHEET        =
-HTML_ALIGN_MEMBERS     = YES
 GENERATE_HTMLHELP      = YES
 HHC_LOCATION           =
 GENERATE_CHI           = NO
@@ -119,10 +111,9 @@ BINARY_TOC             = NO
 TOC_EXPAND             = NO
 DISABLE_INDEX          = NO
 ENUM_VALUES_PER_LINE   = 4
-GENERATE_TREEVIEW      = YES
-USE_INLINE_TREES       = YES
+GENERATE_TREEVIEW      = NO
 TREEVIEW_WIDTH         = 250
-SEARCHENGINE           = YES
+SEARCHENGINE           = NO
 
 #---------------------------------------------------------------------------
 # Configuration options related to the preprocessor
@@ -176,7 +167,6 @@ GENERATE_LATEX = NO
 
 DOXYFILE_ENCODING      = UTF-8
 TYPEDEF_HIDES_STRUCT   = NO
-SYMBOL_CACHE_SIZE      = 0
 EXTRACT_ANON_NSPACES   = NO
 FORCE_LOCAL_INCLUDES   = NO
 SORT_MEMBERS_CTORS_1ST = NO
@@ -196,7 +186,6 @@ DOCSET_BUNDLE_ID       = org.doxygen.@CMAKE_PROJECT_NAME@-@LIBARAY_VERSION@
 DOCSET_PUBLISHER_ID    = org.doxygen.DESY
 DOCSET_PUBLISHER_NAME  = DESY                      
 GENERATE_QHP           = NO
-USE_INLINE_TREES       = YES
 EXT_LINKS_IN_WINDOW    = NO
 FORMULA_FONTSIZE       = 10
 FORMULA_TRANSPARENT    = YES

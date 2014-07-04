@@ -28,7 +28,7 @@ namespace io{
 namespace nx{
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief set unit visitor
     //!
     //! This visitors sets the unit on a field stored in the variant type.
@@ -111,7 +111,7 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief set unit wrapper
     //!
     //! Wrapper function for the set_unit_visitor template.

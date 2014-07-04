@@ -20,7 +20,6 @@ set(HEADER_FILES nexus_utils.hpp
                  nxobject_traits.hpp
                  nxobject_type.hpp
                  nxpath.hpp
-                 nxpath_utils.hpp
                  nxselection.hpp
                  algorithms.hpp
                  xml.hpp)
@@ -33,3 +32,4 @@ add_subdirectory("h5")
 add_subdirectory("xml")
 add_subdirectory("utils")
 add_subdirectory("algorithms")
+add_subdirectory("nxpath")

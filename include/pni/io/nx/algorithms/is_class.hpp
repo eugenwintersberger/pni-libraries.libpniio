@@ -29,7 +29,7 @@ namespace nx{
 
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief is class visitor
     //!
     //! Checks if the group stored in a variant type is of a particular class.
@@ -127,7 +127,7 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief is class wrapper 
     //!
     //! Wrapper function for the is_class_visitor template. 

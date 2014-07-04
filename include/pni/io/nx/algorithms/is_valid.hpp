@@ -47,7 +47,7 @@ namespace nx{
     }
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief check object validity
     //!
     //! Visitor to call the is_valid method on objects stored in an nxobject
@@ -119,6 +119,7 @@ namespace nx{
             }
     };
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_code
     //! \brief is_valid wrapper 

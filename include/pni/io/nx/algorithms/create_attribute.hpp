@@ -185,7 +185,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief create attribute visitor
     //!
     //! This visitor creates an attribute below the group stored in the 
@@ -281,7 +281,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief create_attribute wrapper
     //!
     //! This wrapper function for the create_attribute_visitor creates a new
@@ -322,7 +322,7 @@ namespace nx{
     
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief create_attribute wrapper
     //!
     //! Wrapper function for the create_attribute_visitor template. The 

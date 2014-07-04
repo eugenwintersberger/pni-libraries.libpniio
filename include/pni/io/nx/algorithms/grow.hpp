@@ -31,7 +31,7 @@ namespace nx{
     using namespace pni::core;
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief grow visitor
     //!
     //!  This visitor grows a field along a particular dimensions. 
@@ -120,7 +120,7 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief grow wrapper
     //!
     //! This function is a wrapper to the grow_visitor. It grows a field 

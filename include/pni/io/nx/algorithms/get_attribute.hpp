@@ -29,6 +29,19 @@ namespace pni{
 namespace io{
 namespace nx{
 
+    //! 
+    //! \ingroup algorithm_code
+    //! \brief get attribute by name
+    //! 
+    //! Return an attribute from a parent object. 
+    //! 
+    //! \throws key_error if the object does not have an attribute with name
+    //! \tparam PTYPE parent type template
+    //! \tparam IMPID parent type implementation id
+    //! \param p refernece to parent instance
+    //! \param name attributes name
+    //! \return attribute type
+    //! 
     template<
              template<nximp_code> class PTYPE,
              nximp_code IMPID
@@ -36,12 +49,17 @@ namespace nx{
     typename nxobject_trait<IMPID>::attribute_type
     get_attribute(const PTYPE<IMPID> &p,const string &name)
     {
+        if(!p.has_attr(name))
+            throw key_error(EXCEPTION_RECORD,"Object ["+get_name(p)+"] "
+                    "does not have an attribute ["+name+"]!");
+
         return p.attr(name);
     }
 
 
+    //------------------------------------------------------------------------
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_internal_code
     //! \brief get attribute visitor
     //!
     //! Visitor obtaining an attribute from an object stored in a variant type 
@@ -49,7 +67,11 @@ namespace nx{
     //!
     //! \tparam VTYPE variant type to act on
     //!
-    template<typename GTYPE,typename FTYPE,typename ATYPE> 
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
     class get_attribute_visitor : public boost::static_visitor<ATYPE>
     {
         private:
@@ -125,7 +147,7 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief get attribute 
     //!
     //! Return the attribute of an object stored in a variant type. If you 
@@ -138,10 +160,15 @@ namespace nx{
     //! \param a name of the attribute
     //! \return attribute as an object_types variant
     //!
-    template<typename GTYPE,typename FTYPE,typename ATYPE> 
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
     ATYPE get_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &o,const string &a)
     {
-        return boost::apply_visitor(get_attribute_visitor<GTYPE,FTYPE,ATYPE>(a),o);
+        typedef get_attribute_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(a),o);
     }
 
 //end of namespace 

@@ -69,8 +69,9 @@ namespace nx{
     }
 
 
+    //------------------------------------------------------------------------
     //!
-    //! \ingroup algorithm_code
+    //! \ingroup algorithm_internal_code
     //! \brief get attributes visitor
     //! 
     //! Adds all attributes of an object to a container.
