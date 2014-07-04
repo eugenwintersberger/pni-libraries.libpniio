@@ -33,18 +33,55 @@ namespace pni{
 namespace io{
 namespace nx{
 
-
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
+    //! \brief get container with children
+    //! 
+    //! This function template appends all children of a group object to a 
+    //! container passed by the user. 
+    //! 
+    //! \tparam OTYPE parent object template
+    //! \tparam IMPID implementation id of the parent 
+    //! \tparam CTYPE container type
+    //! 
+    template<
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID,
+             typename CTYPE
+            >
+    void get_children(const OTYPE<IMPID> &o,CTYPE &c)
+    {
+        typedef typename nxobject_trait<IMPID>::field_type field_type;
+        typedef typename nxobject_trait<IMPID>::attribute_type attribute_type;
+        typedef OTYPE<IMPID> object_type;
+
+        static_assert(!std::is_same<object_type,field_type>::value,
+                "GROUP TYPE REQUIRED - GOT A FIELD TYPE!");
+        static_assert(!std::is_same<object_type,attribute_type>::value,
+                "GROUP TYPE REQUIRED - GOT AN ATTRIBUTE TYPE!");
+
+        for(auto &child: o)
+            c.push_back(child);
+    }
+
+
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup algorithm_code
     //! \brief get children visitor
     //! 
-    //! Returns a container with children of a group stored in a variant 
-    //! type.
-    //! \tparam VTYPE variant type
-    //! \tparam CTEMP container template
+    //! Visitor wrapper for the get_children function. This visitor is used
+    //! when the input argument is an nxobject instance.
+    //! 
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \tparam CTYPE container type
     //!
     template<
-             typename VTYPE,
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE,
              typename CTYPE
             > 
     class get_children_visitor : public boost::static_visitor<void>
@@ -55,11 +92,11 @@ namespace nx{
             //! result type
             typedef void result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
 
             //-----------------------------------------------------------------
             //! constructor
@@ -77,7 +114,7 @@ namespace nx{
             //!
             result_type operator()(const group_type &g) const 
             {
-                for(auto &c: g) _container.push_back(c);
+                get_children(g,_container);
             }
 
             //-----------------------------------------------------------------
@@ -121,34 +158,39 @@ namespace nx{
     };
 
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief get children wrapper
     //!
-    //! Wrapper function for the get_children_visitor template. The parent 
-    //! object from which to retrieve its children is passed as the first 
-    //! argument.  The second argument is the container within which the 
-    //! children will be stored. The value_type of the container must match 
-    //! the variant type of the parent. If this is not the case an error 
-    //! will be raised during compilation.
+    //! Wrapper function for the get_children_visitor. 
     //!
     //! \throws nxfield_error if the stored object is a field
     //! \throws nxattribute_error if the stored object is an attribute
     //! \throws type_error if one of the stored objects is not a nexus object
-    //! \tparam VTYPE variant type
-    //! \tparam CTYPE container type for the children
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \tparam CTYPE container type
     //! \param o parent object as instance of VTYPE
     //! \param c container as instance of CTYPE
     //! \return container with children
     //!
-    template<typename VTYPE,typename CTYPE> 
-    void get_children(const VTYPE &o,CTYPE &c)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE,
+             typename CTYPE
+            > 
+    void get_children(const nxobject<GTYPE,FTYPE,ATYPE> &o,CTYPE &c)
     {
+        typedef get_children_visitor<GTYPE,FTYPE,ATYPE,CTYPE> visitor_type;
+        typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
+        typedef typename CTYPE::value_type value_type;
         //check if the container type is of same type is the variant type
-        static_assert(std::is_same<typename CTYPE::value_type,VTYPE>::value,
+        static_assert(std::is_same<value_type,object_type>::value,
                       "The target container value type must be the same as the"
                       " variant type!");
 
-        return boost::apply_visitor(get_children_visitor<VTYPE,CTYPE>(c),o);
+        return boost::apply_visitor(visitor_type(c),o);
     }
 
 //end of namespace
