@@ -38,7 +38,14 @@ namespace pni{
 namespace io{
 namespace nx{
 
-    
+    //!
+    //! \ingroup algorithm_code
+    //! \brief object predicates 
+    //! 
+    //! This template class provides predicate methods for object selection. 
+    //! 
+    //! \tparam OTYPE object type
+    //!
     template<typename OTYPE> struct object_predicates
     {
         static
@@ -80,6 +87,7 @@ namespace nx{
     //! \param n name of the object
     //! \param c class of the object (only for groups)
     //! \return requested object as instance of nxobject
+    //!
     template<
              template<nximp_code> class OTYPE,
              nximp_code IMPID
@@ -133,7 +141,9 @@ namespace nx{
         //child names 
         if(n == ".") return object_type(parent);
         if(n == "..") return object_type(parent.parent());
-        
+    
+        //....................................................................
+        //here is the important part
         auto result_iter = std::find_if(parent.begin(),parent.end(),predicate);
         if(result_iter == parent.end())
             throw key_error(EXCEPTION_RECORD,"Requested child with name ["+
@@ -142,16 +152,12 @@ namespace nx{
         return *result_iter;
     }
 
-
+    //------------------------------------------------------------------------
     //!
     //! \ingroup variant_code
     //! \brief get child visitor
     //! 
-    //! Retrieves a child object form an object stored in a variant type. 
-    //! Virtually the only object where this will work are groups. 
-    //! Children can be selected by two criteria: their name and their 
-    //! class. Though, the class name is only evaluated if we are 
-    //! looking for a group.
+    //! Visitor wrapper for the get_child function.
     //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type

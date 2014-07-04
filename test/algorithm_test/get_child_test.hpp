@@ -38,7 +38,10 @@ class get_child_test : public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE(get_child_test);
         CPPUNIT_TEST(test_field_object);
         CPPUNIT_TEST(test_group_object);
+        CPPUNIT_TEST(test_group_by_class);
+        CPPUNIT_TEST(test_field_by_name);
         CPPUNIT_TEST(test_attribute_object);
+        CPPUNIT_TEST(test_group_by_name_class);
         CPPUNIT_TEST(test_group_by_name);
         CPPUNIT_TEST_SUITE_END();
 
@@ -52,6 +55,9 @@ class get_child_test : public CppUnit::TestFixture
         void tearDown();
         
         void test_group_by_name();
+        void test_group_by_class();
+        void test_group_by_name_class();
+        void test_field_by_name();
         void test_field_object();
         void test_group_object();
         void test_attribute_object();

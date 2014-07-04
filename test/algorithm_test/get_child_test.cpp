@@ -63,6 +63,44 @@ void get_child_test::test_group_by_name()
     CPPUNIT_ASSERT(get_name(o)=="control");
     CPPUNIT_ASSERT(is_class(o,"NXmonitor"));
 
+    CPPUNIT_ASSERT_THROW(get_child(group,"bla",""), key_error);
+
+}
+
+//----------------------------------------------------------------------------
+void get_child_test::test_group_by_class()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    h5::nxobject o = get_child(group,"","NXinstrument");
+    CPPUNIT_ASSERT(get_name(o)=="beamline");
+    CPPUNIT_ASSERT(is_class(o,"NXinstrument"));
+
+    CPPUNIT_ASSERT_THROW(get_child(group,"","NXfoo"),key_error);
+}
+
+//----------------------------------------------------------------------------
+void get_child_test::test_group_by_name_class()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    h5::nxobject o = get_child(root,"scan_1","NXentry");
+    CPPUNIT_ASSERT(get_name(o)=="scan_1");
+    CPPUNIT_ASSERT(is_class(o,"NXentry"));
+
+    CPPUNIT_ASSERT_THROW(get_child(root,"scan_1","NXfoo"),key_error);
+    CPPUNIT_ASSERT_THROW(get_child(root,"foo","NXentry"),key_error);
+    CPPUNIT_ASSERT_THROW(get_child(root,"foo","NXfoo"),key_error);
+}
+
+//-----------------------------------------------------------------------------
+void get_child_test::test_field_by_name()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    h5::nxobject o = get_child(group,"date","");
+    CPPUNIT_ASSERT(is_field(o));
+    CPPUNIT_ASSERT(get_name(o)=="date");
 }
 
 //-----------------------------------------------------------------------------
