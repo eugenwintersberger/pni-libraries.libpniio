@@ -62,7 +62,7 @@ namespace nx{
             //!
             //! Throws an exception as the stored object is not an attribute 
             //! type.
-            //! \throws nxattribute_error object not an attribute
+            //! \throws type_error object not an attribute
             //! \param g group instance
             //! \return invalid attribute instance
             //!
@@ -70,8 +70,9 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
-                throw nxattribute_error(EXCEPTION_RECORD,
-                        "Object is not an attribute but a group!");
+                throw type_error(EXCEPTION_RECORD,
+                      "Object is not an instance of nxattribute "
+                      "but of s nxgroup!");
                 return result_type();
             }
 #pragma GCC diagnostic pop
@@ -82,7 +83,7 @@ namespace nx{
             //!
             //! Throw an exception as the object is not an attribute type 
             //! instance
-            //! \throws nxattribute_error instance not a group type
+            //! \throws type_error instance not a group type
             //! \param f field instance
             //! \return invalid attribute instance
             //!
@@ -90,8 +91,9 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
-                throw nxattribute_error(EXCEPTION_RECORD,
-                        "Object is a field but not an attribute instance!");
+                throw type_error(EXCEPTION_RECORD,
+                        "Object is not an instance of nxattribute "
+                        "but of nxfield!");
                 return result_type();
             }
 #pragma GCC diagnostic pop
@@ -125,11 +127,11 @@ namespace nx{
     \endcode
     */
     //!
-    //! \throws nxattribute_error if stored object is not a attribute type
+    //! \throws type_error if stored object is not a attribute type
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
-    //! \param o instance of nxobject<GTYPE,FTYPE,ATYPE>
+    //! \param o instance of nxobject
     //! \return instance of ATYPE
     //!
     template<
@@ -139,7 +141,8 @@ namespace nx{
             > 
     ATYPE as_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(as_attribute_visitor<GTYPE,FTYPE,ATYPE>(),o);
+        typedef as_attribute_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(),o);
     }
 
 //end of namespace

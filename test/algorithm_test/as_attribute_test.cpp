@@ -35,7 +35,7 @@ void as_attribute_test::setUp()
     field_shape = shape_t{0,10,10};
     attr_shape  = shape_t{4,4};
 
-    file = h5::nxfile::create_file("is_valid.nx",true,0);
+    file = h5::nxfile::create_file("as_attribute_test.nx",true,0);
     root = file.root();
     group = root.create_group("group","NXentry");
     group.create_group("instrument","NXinstrument");
@@ -56,27 +56,27 @@ void as_attribute_test::tearDown()
 //-----------------------------------------------------------------------------
 void as_attribute_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     h5::nxobject object = root;
     //must throw as the stored object is an nxgroup instance
-    CPPUNIT_ASSERT_THROW(as_attribute(object),nxattribute_error);
+    CPPUNIT_ASSERT_THROW(as_attribute(object),type_error);
 }
 
 //-----------------------------------------------------------------------------
 void as_attribute_test::test_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject object = field;
 
     //must throw as the stored object is an nxfield instance
-    CPPUNIT_ASSERT_THROW(as_attribute(object),nxattribute_error);
+    CPPUNIT_ASSERT_THROW(as_attribute(object),type_error);
 }
 
 //-----------------------------------------------------------------------------
 void as_attribute_test::test_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = field.attr("temp");
     h5::nxattribute a;
