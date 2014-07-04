@@ -12,6 +12,7 @@ set(SOURCES as_attribute_test.cpp
             get_class_test.cpp
             get_object_test.cpp
             get_parent_test.cpp
+            get_root_test.cpp
             get_rank_test.cpp
             get_shape_test.cpp
             get_size_test.cpp

@@ -26,6 +26,7 @@
 #include "../nxpath.hpp"
 #include "../nxobject_traits.hpp"
 #include "get_parent.hpp"
+#include "get_root.hpp"
 #include "get_attribute.hpp"
 #include "get_child.hpp"
 
@@ -37,36 +38,9 @@ namespace pni{
 namespace io{
 namespace nx{
 
-    //!
-    //! \ingroup variant_code
-    //! \brief get root 
-    //!
-    //! Return the root group of an object. This is quite usefull in cases 
-    //! where an absolute path is used. 
-    //!
-    //! This function throws no exceptions.
-    //!
-    //! \tparam VTYPE variant type
-    //! \param p reference to an instance of VTYPE
-    //! \return an instance of object_types holding the root group
-    //!
-    template<typename VTYPE> VTYPE get_root(const VTYPE &p)
-    {
-        //if the object is already the root group we can return immediately
-        if(get_name(p)=="/") return p;
-
-        VTYPE root = p;
-        do
-            root = get_parent(root);
-        while(get_name(root)!="/");
-
-        return root;
-
-    }
-
     //----------------------------------------------------------------------------
     //!
-    //! \ingroup variant_code
+    //! \ingroup algorithm_code
     //! \brief get object by name
     //!
     //! Return an object specified by a Nexus path. From the nature of a nexus 

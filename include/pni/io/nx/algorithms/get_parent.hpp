@@ -52,6 +52,7 @@ namespace nx{
         return o.parent();
     }
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_code
     //! \brief get parent visitor
@@ -123,6 +124,7 @@ namespace nx{
             }
     };
 
+    //-------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_code
     //! \brief get parent 
