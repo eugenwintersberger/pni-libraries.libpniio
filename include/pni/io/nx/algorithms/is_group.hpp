@@ -29,7 +29,7 @@ namespace nx{
 
     //!
     //! \ingroup algorithm_internal_code
-    //! \brief check if group
+    //! \brief is_group visitor
     //!
     //! Visitor testing if the object stored in an nxobject instance is an 
     //! instance of nxgroup.
@@ -125,7 +125,8 @@ namespace nx{
             > 
     bool is_group(const nxobject<GTYPE,FTYPE,ATYPE> &o) noexcept
     {
-        return boost::apply_visitor(is_group_visitor<GTYPE,FTYPE,ATYPE>(),o);
+        typedef is_group_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(),o);
     }
 
 //end of namespace

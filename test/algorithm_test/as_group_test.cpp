@@ -56,7 +56,7 @@ void as_group_test::tearDown()
 //-----------------------------------------------------------------------------
 void as_group_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     h5::nxobject object = root;
     h5::nxgroup g;
@@ -69,21 +69,21 @@ void as_group_test::test_group()
 //-----------------------------------------------------------------------------
 void as_group_test::test_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject object = field;
     
     //must throw as the stored object is an instance of nxfield
-    CPPUNIT_ASSERT_THROW(as_group(object),nxgroup_error);
+    CPPUNIT_ASSERT_THROW(as_group(object),type_error);
 }
 
 //-----------------------------------------------------------------------------
 void as_group_test::test_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = field.attr("temp");
     //must throw as the stored object is an instance of nxattribute
-    CPPUNIT_ASSERT_THROW(as_group(object),nxgroup_error);
+    CPPUNIT_ASSERT_THROW(as_group(object),type_error);
     
 }
 

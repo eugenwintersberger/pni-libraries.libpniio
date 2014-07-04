@@ -30,7 +30,7 @@ namespace nx{
 
     //!
     //! \ingroup algorithm_internal_code
-    //! \brief check field visitor
+    //! \brief is_field visitor
     //!
     //! Visitor testing if the object stored in an instance of nxobject
     //! is an instance of nxfield. 
@@ -102,14 +102,15 @@ namespace nx{
 #pragma GCC diagnostic pop
     };
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_code
     //! \brief check if field
     //!
     //! Function template testing if the object stored in an instance of
     //! nxobject is an instance of nxfield. If this is the case true is 
-    //! returned, false otherwise. The function does not test for validity of an
-    //! object. It just helps to retrieve type information at runtime.
+    //! returned, false otherwise. The function does not test for validity 
+    //! of an object. It just helps to retrieve type information at runtime.
     //! 
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
@@ -124,7 +125,8 @@ namespace nx{
             > 
     bool is_field(const nxobject<GTYPE,FTYPE,ATYPE> &o) noexcept
     {
-        return boost::apply_visitor(is_field_visitor<GTYPE,FTYPE,ATYPE>(),o);
+        typedef is_field_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(),o);
     }
 
 //end of namespace

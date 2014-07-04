@@ -61,7 +61,7 @@ namespace nx{
             //! \brief process group instances
             //!
             //! Throws an exception as the stored object is not a field.
-            //! \throws nxfield_error groups do not have a rank
+            //! \throws type_error groups do not have a rank
             //! \param g group instance
             //! \return invalid field instance
             //!
@@ -69,8 +69,9 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
-                throw nxfield_error(EXCEPTION_RECORD,
-                        "Object is a group and not a field!");
+                throw type_error(EXCEPTION_RECORD,
+                        "Object is not an instance of nxfield, "
+                        "but of nxgroup!");
                 return field_type();
             }
 #pragma GCC diagnostic pop
@@ -93,7 +94,7 @@ namespace nx{
             //! \brief process attribute instances
             //!
             //! Throw an exception as the object is not a field object.
-            //! \throws nxfield_error no field instance
+            //! \throws tpye_error no field instance
             //! \param a attribute instance
             //! \return invalid field instance
             //!
@@ -101,8 +102,9 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
-                throw nxfield_error(EXCEPTION_RECORD,
-                        "Object is an attribute not a field!");
+                throw type_error(EXCEPTION_RECORD,
+                        "Object is not an instance of nxfield, "
+                        "but of nxattribute!");
                 return field_type();
             }
 #pragma GCC diagnostic pop
@@ -122,11 +124,11 @@ namespace nx{
     \endcode
     */
     //!
-    //! \throws nxfield_error if stored object is not a field type
+    //! \throws type_error if stored object is not a field type
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
-    //! \param o instance of nxobject<GTYPE,FTYPE,ATYPE>
+    //! \param o instance of nxobject
     //! \return instance of FTYPE
     //!
     template<
@@ -136,7 +138,8 @@ namespace nx{
             > 
     FTYPE as_field(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(as_field_visitor<GTYPE,FTYPE,ATYPE>(),o);
+        typedef as_field_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(),o);
     }
 
 //end of namespace

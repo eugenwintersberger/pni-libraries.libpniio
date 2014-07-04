@@ -31,7 +31,7 @@ namespace nx{
 
     //!
     //! \ingroup algorithm_code
-    //! \brief check object validity
+    //! \brief visitor checking object validity
     //! 
     //! Check if the passed object is valid and return true if this is the 
     //! case. This template code takes instances of nxattribute, nxfield,
@@ -149,7 +149,8 @@ namespace nx{
             > 
     bool is_valid(const nxobject<GTYPE,FTYPE,ATYPE> &o) noexcept
     {
-        return boost::apply_visitor(is_valid_visitor<GTYPE,FTYPE,ATYPE>(),o);
+        typedef is_valid_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(),o);
     }
 
 //end of namespace

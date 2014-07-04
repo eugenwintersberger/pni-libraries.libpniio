@@ -74,7 +74,7 @@ namespace nx{
             //! \brief process field instances
             //!
             //! Throw an exception as the object is not a field type instance
-            //! \throws nxgroup_error instance not a group type
+            //! \throws type_error instance not a group type
             //! \param f field instance
             //! \return empty instance of group_type
             //!
@@ -82,8 +82,9 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
-                throw nxgroup_error(EXCEPTION_RECORD,
-                        "Object is a field but not a group instance!");
+                throw type_error(EXCEPTION_RECORD,
+                        "Object is not an instance of nxgruop "
+                        "but of nxfield!");
                 return result_type();
             }
 #pragma GCC diagnostic pop
@@ -93,7 +94,7 @@ namespace nx{
             //! \brief process attribute instances
             //!
             //! Throw an exception as the object is not a group object.
-            //! \throws nxfield_error no group instance
+            //! \throws type_error no group instance
             //! \param a attribute instance
             //! \return invalid group instance
             //!
@@ -101,8 +102,9 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
-                throw nxgroup_error(EXCEPTION_RECORD,
-                        "Object is an attribute not a field!");
+                throw type_error(EXCEPTION_RECORD,
+                        "Object is not an instance of nxgroup "
+                        "but of nxattribute!");
                 return result_type();
             }
 #pragma GCC diagnostic pop
@@ -123,7 +125,7 @@ namespace nx{
     \endcode
     */
     //!
-    //! \throws nxgroup_error if stored object is not a group type
+    //! \throws type_error if stored object is not a group type
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
@@ -137,7 +139,8 @@ namespace nx{
             > 
     GTYPE as_group(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(as_group_visitor<GTYPE,FTYPE,ATYPE>(),o);
+        typedef as_group_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(),o);
     }
 
 //end of namespace

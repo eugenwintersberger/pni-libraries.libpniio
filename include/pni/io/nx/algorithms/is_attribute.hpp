@@ -30,7 +30,7 @@ namespace nx{
 
     //!
     //! \ingroup algorithm_internal_code
-    //! \brief check attribute visitor
+    //! \brief is_attribute visitor
     //!
     //! Visitor checking if the object stored in an instance of nxobject is 
     //! an instance of nxattribute.
@@ -102,15 +102,16 @@ namespace nx{
 #pragma GCC diagnostic pop
     };
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_code
     //! \brief check if attribute
     //! 
-    //! Function template checking if the object stored in an nxobject instance 
-    //! is an instance of nxattribute. If this is the case true is returned,
-    //! otherwise. The function does not test for the validity of an object. 
-    //! It just provides runtime information about the type of the object stored 
-    //! in the nxobject instance.
+    //! Function template checking if the object stored in an nxobject 
+    //! instance is an instance of nxattribute. If this is the case true is 
+    //! returned, otherwise. The function does not test for the validity of 
+    //! an object.  It just provides runtime information about the type of 
+    //! the object stored in the nxobject instance.
     //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
@@ -125,7 +126,8 @@ namespace nx{
             > 
     bool is_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &o) noexcept
     {
-        return boost::apply_visitor(is_attribute_visitor<GTYPE,FTYPE,ATYPE>(),o);
+        typedef is_attribute_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(),o);
     }
 
 //end of namespace
