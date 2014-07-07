@@ -22,6 +22,7 @@
 //
 
 #include <pni/io/nx/h5/H5NamedObject.hpp>
+#include <pni/io/exceptions.hpp>
 
 #include "hdf5_utilities.hpp"
 
@@ -29,6 +30,9 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
+
+    using pni::io::io_error;
+    using pni::io::invalid_object_error;
 
     //=============implementation of constructors and destructors==============
     H5NamedObject::H5NamedObject():H5Object(){ }
@@ -98,6 +102,10 @@ namespace h5{
     //================implementation of name operations========================
     string H5NamedObject::name() const
     {
+        if(!is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Try to obtain the name of an invalid object!");
+
         string p(H5NamedObject::path());
 
         //if the path is empty return an empty string
@@ -150,10 +158,7 @@ namespace h5{
     //-------------------------------------------------------------------------
     string H5NamedObject::path() const
     {
-        if(is_valid())
-            return get_object_path(id()); 
-
-        return string("");
+        return get_object_path(id());
     }
 
     //-------------------------------------------------------------------------

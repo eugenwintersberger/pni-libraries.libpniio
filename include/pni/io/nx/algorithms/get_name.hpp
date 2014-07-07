@@ -39,6 +39,8 @@ namespace nx{
     //! \li nxattribute
     //! \li nxfield
     //! 
+    //! \throws io_error in case of problems
+    //! \throws invalid_object_erro in case of an invalid object
     //! \tparam OTYPE object type template
     //! \tparam IMPID implementation ID
     //! \param o reference to the object
@@ -54,6 +56,7 @@ namespace nx{
     }
 
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_internal_code
     //! \brief get name visitor
@@ -88,6 +91,8 @@ namespace nx{
             //! \brief process group instances
             //!
             //! Retrieve the name from a group instance.
+            //! \throws io_error in case of IO issues
+            //! \throws invalid_object_error if group not valid
             //! \param g group instance
             //! \return string with the group name
             //!
@@ -101,6 +106,9 @@ namespace nx{
             //! \brief process field instances
             //!
             //! Retrieve the name of a field instance.
+            //!
+            //! \throws io_error in case of IO issues
+            //! \throws invalid_object_error if the field is not valid
             //! \param f field instance
             //! \return name of the field
             //!
@@ -114,6 +122,9 @@ namespace nx{
             //! \brief process attribute instances
             //!
             //! Retrieve the name of an attribute instance.
+            //!
+            //! \throws io_error in case of IO issues
+            //! \throws invalid_object_error in case the attribute is not valid
             //! \param a attribute instance
             //! \return name of the attribute
             //!
@@ -130,6 +141,8 @@ namespace nx{
     //! Retriev the name of an object stored in an instance of the nxobject
     //! template. 
     //! 
+    //! \throws io_error in case of IO errors
+    //! \throws invalid_oject_error if the object is not valid
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
@@ -143,7 +156,8 @@ namespace nx{
             > 
     string get_name(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(get_name_visitor<GTYPE,FTYPE,ATYPE>(),o);
+        typedef get_name_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(),o);
     }
 
 //end of namespace

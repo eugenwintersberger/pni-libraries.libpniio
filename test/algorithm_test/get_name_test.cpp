@@ -23,9 +23,12 @@
 
 #include <boost/current_function.hpp>
 #include<cppunit/extensions/HelperMacros.h>
+#include <pni/io/exceptions.hpp>
 
 #include "get_name_test.hpp"
 
+using pni::io::invalid_object_error;
+using pni::io::io_error;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(get_name_test);
 
@@ -53,7 +56,7 @@ void get_name_test::tearDown()
 //----------------------------------------------------------------------------
 void get_name_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     CPPUNIT_ASSERT(get_name(root)  == "/");
     CPPUNIT_ASSERT(get_name(group) == "group");
@@ -62,7 +65,7 @@ void get_name_test::test_group()
 //----------------------------------------------------------------------------
 void get_name_test::test_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     CPPUNIT_ASSERT(get_name(field)== "data");
 }
@@ -70,7 +73,7 @@ void get_name_test::test_field()
 //----------------------------------------------------------------------------
 void get_name_test::test_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     CPPUNIT_ASSERT(get_name(attribute) == "NX_class");
 }
@@ -78,14 +81,14 @@ void get_name_test::test_attribute()
 //----------------------------------------------------------------------------
 void get_name_test::test_file()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     CPPUNIT_ASSERT(get_name(file)=="get_name_test.nx");
 }
 //-----------------------------------------------------------------------------
 void get_name_test::test_nxobject_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     h5::nxobject object = group;
     CPPUNIT_ASSERT(get_name(object) == "group");
@@ -94,7 +97,7 @@ void get_name_test::test_nxobject_group()
 //-----------------------------------------------------------------------------
 void get_name_test::test_nxobject_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     h5::nxobject object = field;
     CPPUNIT_ASSERT(get_name(object)=="data");
@@ -103,10 +106,19 @@ void get_name_test::test_nxobject_field()
 //-----------------------------------------------------------------------------
 void get_name_test::test_nxobject_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     h5::nxobject object = attribute;
     CPPUNIT_ASSERT(get_name(object) == "NX_class");
    
+}
+
+//-----------------------------------------------------------------------------
+void get_name_test::test_errors()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    h5::nxobject object = h5::nxgroup();
+    CPPUNIT_ASSERT_THROW(get_name(object),invalid_object_error);
 }
 

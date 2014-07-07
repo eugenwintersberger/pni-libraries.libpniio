@@ -55,7 +55,11 @@ namespace h5{
     string get_object_path(hid_t id)
     {
         //if the object has already been created return this value
-        hsize_t bsize = H5Iget_name(id,NULL,1);
+        ssize_t bsize = H5Iget_name(id,NULL,1);
+        if(bsize<0)
+            throw io_error(EXCEPTION_RECORD,
+                    "Error retrieving length of object name!");
+
         string buffer(bsize,' ');
 
         if(H5Iget_name(id,const_cast<char*>(buffer.data()),bsize+1)<0)
