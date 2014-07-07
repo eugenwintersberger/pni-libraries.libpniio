@@ -37,6 +37,7 @@ namespace io{
     //! \brief general IO error
     //!
     //! This exception is thrown in all situations where IO operations fail.
+    //! This includes reading and writing of payload- or meta-data.
     //!
     class io_error:public exception
     {
@@ -91,7 +92,7 @@ namespace io{
 
     //-------------------------------------------------------------------------
     //! 
-    //! \ingroup invalid_object_error
+    //! \ingroup io_error_classes
     //! \brief unexpected invalid object
     //!
     //! Raised in cases where an object is unexpectedly in an invalid state. 
@@ -117,6 +118,38 @@ namespace io{
             friend std::ostream &operator<<(std::ostream &o,
                                             const invalid_object_error &e);
     };
+
+    //-------------------------------------------------------------------------
+    //! 
+    //! \ingroup io_error_classes
+    //! \brief general error on IO objects
+    //!
+    //! Used for general errors on IO objects. This includes the failure 
+    //! to create or close an object. 
+    //!
+    class object_error:public exception
+    {
+        public:
+            //-----------------------------------------------------------------
+            //! default constructor
+            explicit object_error();
+
+            //-----------------------------------------------------------------
+            //! constructor
+            explicit object_error(const exception_record &i,
+                                          const string &d);
+
+            //-----------------------------------------------------------------
+            //! destructor
+            ~object_error() throw();
+           
+            //-----------------------------------------------------------------
+            //! output operator
+            friend std::ostream &operator<<(std::ostream &o,
+                                            const object_error &e);
+    };
+
+
 
 
 //end of namespace

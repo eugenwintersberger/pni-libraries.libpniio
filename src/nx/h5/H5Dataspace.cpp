@@ -25,12 +25,16 @@
 #include <pni/io/nx/h5/H5Dataspace.hpp>
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 #include <pni/io/nx/nxexceptions.hpp>
+#include <pni/io/exceptions.hpp>
 
 
 namespace pni{
 namespace io{
 namespace nx {
 namespace h5 {
+
+    using pni::io::object_error;
+    using pni::io::invalid_object_error;
 
     //====================private methods======================================
 
@@ -56,9 +60,9 @@ namespace h5 {
                         
         if(err<0)
         {
-            pni::io::nx::nxbackend_error error(EXCEPTION_RECORD,
-                    "Cannot create HDF5 dataspace!\n\n"+
-                    get_h5_error_string());
+            object_error error(EXCEPTION_RECORD,
+                              "Cannot create HDF5 dataspace!\n\n"+
+                               get_h5_error_string());
 #ifdef DEBUG
             std::cerr<<error<<std::endl;
 #endif
@@ -146,7 +150,12 @@ namespace h5 {
     //-------------------------------------------------------------------------
     H5Dataspace::~H5Dataspace()
     {
-        if(is_valid()) H5Sclose(id());
+        if(is_valid()) 
+            if(H5Sclose(id())<0)
+                throw object_error(EXCEPTION_RECORD,
+                        "Error closing HDF5 data space - HDF5 error was:\n\n"+
+                        get_h5_error_string());
+
         //reset the object ID
         H5Object::reset_id();
     }
@@ -253,7 +262,7 @@ namespace h5 {
         ssize_t size = H5Sget_select_npoints(id());
         if(size<0) 
         {
-            pni::io::nx::nxbackend_error error( EXCEPTION_RECORD,
+            object_error error( EXCEPTION_RECORD,
                     "Could not determine dataspace size\n\n"+
                     get_h5_error_string());
             std::cerr<<error<<std::endl;
@@ -272,7 +281,12 @@ namespace h5 {
     //-------------------------------------------------------------------------
     void H5Dataspace::close()
     {
-        if(is_valid()) H5Sclose(id());
+        if(is_valid()) 
+            if(H5Sclose(id())<0)
+                throw object_error(EXCEPTION_RECORD,
+                        "Error closing HDF5 data space - HDF5 error was:\n\n"+
+                        get_h5_error_string());
+
         H5Object::reset_id();
     }
 

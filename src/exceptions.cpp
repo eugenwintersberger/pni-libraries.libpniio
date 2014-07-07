@@ -78,6 +78,23 @@ namespace io{
     {
         return e.print(o);
     }
+    
+    //--------------------------------------------------------------------------
+    object_error::object_error():exception("object_error"){ }
+
+    //--------------------------------------------------------------------------
+    object_error::object_error(const exception_record &i,const string &d)
+                 :exception("object_error",i,d)
+    { }
+
+    //--------------------------------------------------------------------------
+    object_error::~object_error() throw() { }
+
+    //--------------------------------------------------------------------------
+    std::ostream &operator<<(std::ostream &o,const object_error &e)
+    {
+        return e.print(o);
+    }
 
 //end of namespace
 }

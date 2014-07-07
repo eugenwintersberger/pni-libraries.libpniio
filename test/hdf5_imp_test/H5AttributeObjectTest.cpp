@@ -22,10 +22,14 @@
 //
 #include "H5AttributeObjectTest.hpp"
 
+#include <pni/io/exceptions.hpp>
 #include <pni/io/nx/nxexceptions.hpp>
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(H5AttributeObjectTest);
+
+using pni::io::invalid_object_error;
+using pni::io::object_error;
 
 //-----------------------------------------------------------------------------
 void H5AttributeObjectTest::setUp()
@@ -64,9 +68,9 @@ void H5AttributeObjectTest::test_creation()
     //default constructor
     H5AttributeObject o;
     CPPUNIT_ASSERT(!o.is_valid());
-    CPPUNIT_ASSERT_THROW(o.object_type(),pni::io::nx::nxobject_error);
+    CPPUNIT_ASSERT_THROW(o.object_type(),invalid_object_error);
     //try to construct an instance from an invalid HDF5 ID.
-    CPPUNIT_ASSERT_THROW(H5TestObject(-1),pni::io::nx::nxobject_error);
+    CPPUNIT_ASSERT_THROW(H5TestObject(-1),object_error);
   
     //test constructor from new object
     H5AttributeObject test(H5TestObject(create_group(file,"group")));

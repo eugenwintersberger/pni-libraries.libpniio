@@ -34,6 +34,7 @@ namespace h5{
 
     using pni::io::io_error;
     using pni::io::invalid_object_error;
+    using pni::io::object_error;
 
     //===============private methods===========================================
     void H5Attribute::__set_space_type()
@@ -95,7 +96,12 @@ namespace h5{
         _dspace.close();
         _dtype.close();
 
-        if(is_valid()) H5Aclose(id());
+        if(is_valid()) 
+            if(H5Aclose(id())<0)
+                throw object_error(EXCEPTION_RECORD,
+                        "Error closing attribute ["+name()+"]"
+                        " - HDF5 error was:\n\n"+ get_h5_error_string());
+
         H5Object::reset_id();
     }
 
@@ -136,7 +142,12 @@ namespace h5{
         _dspace.close();
         _dtype.close();
 
-        if(is_valid()) H5Aclose(id());
+        if(is_valid()) 
+            if(H5Aclose(id())<0)
+                throw object_error(EXCEPTION_RECORD,
+                        "Error closing attribute ["+name()+"] "
+                        "- HDF5 error was:\n\n"+get_h5_error_string());
+
         H5Object::reset_id();
     }
 

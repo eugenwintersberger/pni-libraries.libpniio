@@ -24,18 +24,21 @@
 #include <iostream>
 #include <pni/io/nx/h5/H5Object.hpp>
 #include <pni/io/nx/h5/h5_error_stack.hpp>
-#include <pni/io/nx/nxexceptions.hpp>
+#include <pni/io/exceptions.hpp>
 #include "../../deprecation_warning.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
+    using pni::io::object_error;
+    using pni::io::invalid_object_error;
+
     //=================constrcutors and destructors============================
     H5Object::H5Object(const hid_t &sid) :_id(sid)
     {
         if(id()<0)
-            throw pni::io::nx::nxobject_error(EXCEPTION_RECORD,
+            throw object_error(EXCEPTION_RECORD,
                     "HDF5 object ID < 0, object creation failed!");
     }
     
@@ -61,7 +64,12 @@ namespace h5{
     //-------------------------------------------------------------------------
     H5Object::~H5Object()
     {
-        if(is_valid()) H5Oclose(id());
+        if(is_valid()) 
+            if(H5Oclose(id())<0)
+                throw object_error(EXCEPTION_RECORD,
+                    "Error closing object - HDF5 error was:\n\n"+
+                    get_h5_error_string());
+
         reset_id(); //reset the ID value to 0
     }   
 
@@ -112,7 +120,11 @@ namespace h5{
     {
         //if the ID is valid this will decrement the reference counter or close
         //the object if the counter becomes 0.
-        if(is_valid()) H5Oclose(_id);
+        if(is_valid()) 
+            if(H5Oclose(_id)<0)
+                throw object_error(EXCEPTION_RECORD,
+                        "Error closing object - HDF5 error was:\n\n"+
+                        get_h5_error_string());
         _id = 0;
     }
     
@@ -124,8 +136,7 @@ namespace h5{
     {
 
         if(!is_valid())
-            throw pni::io::nx::nxobject_error(EXCEPTION_RECORD,
-                    "Invalid HDF5 object!");
+            throw invalid_object_error(EXCEPTION_RECORD,"Invalid HDF5 object!");
 
         H5I_type_t tid = H5Iget_type(_id);
         switch(tid)
@@ -149,7 +160,7 @@ namespace h5{
 
         herr_t err = H5Oget_info(id(),&info);
         if(err < 0)
-            throw pni::io::nx::nxobject_error(EXCEPTION_RECORD,
+            throw object_error(EXCEPTION_RECORD,
                     "Cannot obtain object info!\n\n"+get_h5_error_string());
 
         return info.atime;
@@ -164,7 +175,7 @@ namespace h5{
 
         herr_t err = H5Oget_info(id(),&info);
         if(err < 0)
-            throw pni::io::nx::nxobject_error(EXCEPTION_RECORD,
+            throw object_error(EXCEPTION_RECORD,
                     "Cannot obtain object info!\n\n"+get_h5_error_string());
 
         return info.mtime;
@@ -179,7 +190,7 @@ namespace h5{
 
         herr_t err = H5Oget_info(id(),&info);
         if(err < 0)
-            throw pni::io::nx::nxobject_error(EXCEPTION_RECORD,
+            throw object_error(EXCEPTION_RECORD,
                     "Cannot obtain object info!\n\n"+get_h5_error_string());
 
         return info.ctime;
@@ -194,7 +205,7 @@ namespace h5{
 
         herr_t err = H5Oget_info(id(),&info);
         if(err < 0)
-            throw pni::io::nx::nxobject_error(EXCEPTION_RECORD,
+            throw object_error(EXCEPTION_RECORD,
                     "Cannot obtain object info!\n\n"+get_h5_error_string());
 
         return info.btime;
@@ -223,14 +234,14 @@ namespace h5{
         //obtain HDF5 info structure of first object
         herr_t err = H5Oget_info(a.id(),&ia);
         if(err < 0)
-            throw pni::io::nx::nxobject_error(EXCEPTION_RECORD,
+            throw object_error(EXCEPTION_RECORD,
                     "Cannot obtain object info of first object!\n\n" + 
                     get_h5_error_string());
 
         //obtain HDF5 info structure of second object
         err = H5Oget_info(b.id(),&ib);
         if(err < 0)
-            throw pni::io::nx::nxobject_error(EXCEPTION_RECORD,
+            throw object_error(EXCEPTION_RECORD,
                     "Cannot obtain object info of second object!\n\n" + 
                     get_h5_error_string());
 
