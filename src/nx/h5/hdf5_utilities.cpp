@@ -21,7 +21,9 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
+#include <pni/io/exceptions.hpp>
 #include "hdf5_utilities.hpp"
+
 
 
 namespace pni{
@@ -29,18 +31,22 @@ namespace io{
 namespace nx{
 namespace h5{
 
+    using pni::io::io_error;
+
     string get_filename(hid_t id)
     {
         //first we need to determine the size of the file name
         ssize_t nsize = H5Fget_name(id,nullptr,0);
         if(nsize<0)
-            return string(); //return an empty string
+            throw io_error(EXCEPTION_RECORD,
+                    "Error retrieving length of file name!");
 
         //nsize is now the number of characters in the file name.
         string buffer(nsize,' ');
         //we have to read one more character to get the binary 0
         if(H5Fget_name(id,const_cast<char*>(buffer.data()),nsize+1)<0)
-            return string();
+            throw io_error(EXCEPTION_RECORD,
+                    "Error retrieving filename!");
 
         return buffer;
     }
@@ -52,7 +58,10 @@ namespace h5{
         hsize_t bsize = H5Iget_name(id,NULL,1);
         string buffer(bsize,' ');
 
-        H5Iget_name(id,const_cast<char*>(buffer.data()),bsize+1);
+        if(H5Iget_name(id,const_cast<char*>(buffer.data()),bsize+1)<0)
+            throw io_error(EXCEPTION_RECORD,
+                    "Error retrieving object name!");
+
         return buffer;
     }
 
