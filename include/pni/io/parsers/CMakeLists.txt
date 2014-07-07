@@ -1,4 +1,4 @@
-set(HEADER_FILES array_parser.hpp delimiter_parser.hpp exceptions.hpp
+set(HEADER_FILES array_parser.hpp delimiter_parser.hpp 
                  record_parser.hpp slice_parser.hpp value_parser.hpp)
 
 install(FILES ${HEADER_FILES} 

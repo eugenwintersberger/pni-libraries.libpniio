@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,14 +17,31 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Created on: Jul 11,2013
+// Created on: Aug 5, 2011
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include <pni/io/parsers/exceptions.hpp>
+#include <pni/io/exceptions.hpp>
 
 namespace pni{
 namespace io{
+
+    //--------------------------------------------------------------------------
+    io_error::io_error():exception("io_error"){ }
+
+    //--------------------------------------------------------------------------
+    io_error::io_error(const exception_record &i,const string &d)
+                 :exception("io_error",i,d)
+    { }
+
+    //--------------------------------------------------------------------------
+    io_error::~io_error() throw() { }
+
+    //--------------------------------------------------------------------------
+    std::ostream &operator<<(std::ostream &o,const io_error &e)
+    {
+        return e.print(o);
+    }
 
     //--------------------------------------------------------------------------
     parser_error::parser_error():exception("parser_error"){ }
@@ -42,7 +59,6 @@ namespace io{
     {
         return e.print(o);
     }
-
 
 //end of namespace
 }

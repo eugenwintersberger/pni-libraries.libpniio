@@ -33,7 +33,7 @@
 #include<pni/core/arrays.hpp>
 #include<vector>
 
-#include "exceptions.hpp"
+#include "../exceptions.hpp"
 #include "value_parser.hpp"
 #include "delimiter_parser.hpp"
 

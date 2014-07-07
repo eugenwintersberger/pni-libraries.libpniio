@@ -6,6 +6,7 @@ set(HEADER_FILES column_info.hpp
                  image_reader.hpp
                  spreadsheet_reader.hpp
                  strutils.hpp
+                 exceptions.hpp
                  )
 
 install(FILES ${HEADER_FILES} 

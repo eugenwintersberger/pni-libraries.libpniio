@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "../../parsers/exceptions.hpp"
+#include "../../exceptions.hpp"
 #include "../nexus_utils.hpp"
 #include <pni/core/arrays.hpp>
 #include "xml_node.hpp"

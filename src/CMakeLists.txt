@@ -5,6 +5,7 @@ set(SOURCES column_info.cpp
              image_info.cpp
              image_reader.cpp
              spreadsheet_reader.cpp
+             exceptions.cpp
              strutils.cpp)
 
 
@@ -16,7 +17,6 @@ add_definitions(-fPIC)
 add_subdirectory(cbf)
 add_subdirectory(fio)
 add_subdirectory(nx)
-add_subdirectory(parsers)
 add_subdirectory(tiff)
 
 add_library(pniio SHARED ${SOURCES} $<TARGET_OBJECTS:cbf_objects>
@@ -25,7 +25,6 @@ add_library(pniio SHARED ${SOURCES} $<TARGET_OBJECTS:cbf_objects>
     $<TARGET_OBJECTS:h5_objects>
     $<TARGET_OBJECTS:xml_objects>
     $<TARGET_OBJECTS:filter_objects>
-    $<TARGET_OBJECTS:parser_objects>
     $<TARGET_OBJECTS:tiff_objects>
     $<TARGET_OBJECTS:nx_path>
     )

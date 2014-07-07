@@ -27,7 +27,7 @@
 #include "../nx.hpp"
 #include "../nexus_utils.hpp"
 #include "../nxobject_traits.hpp"
-#include "../../parsers/exceptions.hpp"
+#include "../../exceptions.hpp"
 #include "../../parsers/array_parser.hpp"
 
 #include "xml_node.hpp"
