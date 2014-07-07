@@ -59,6 +59,25 @@ namespace io{
     {
         return e.print(o);
     }
+    
+    //--------------------------------------------------------------------------
+    invalid_object_error::invalid_object_error():
+        exception("invalid_object_error"){ }
+
+    //--------------------------------------------------------------------------
+    invalid_object_error::invalid_object_error(const exception_record &i,
+                                               const string &d)
+                 :exception("invalid_object_error",i,d)
+    { }
+
+    //--------------------------------------------------------------------------
+    invalid_object_error::~invalid_object_error() throw() { }
+
+    //--------------------------------------------------------------------------
+    std::ostream &operator<<(std::ostream &o,const invalid_object_error &e)
+    {
+        return e.print(o);
+    }
 
 //end of namespace
 }

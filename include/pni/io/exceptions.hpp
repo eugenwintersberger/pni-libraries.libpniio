@@ -89,6 +89,35 @@ namespace io{
                                             const parser_error &e);
     };
 
+    //-------------------------------------------------------------------------
+    //! 
+    //! \ingroup invalid_object_error
+    //! \brief unexpected invalid object
+    //!
+    //! Raised in cases where an object is unexpectedly in an invalid state. 
+    //!
+    class invalid_object_error:public exception
+    {
+        public:
+            //-----------------------------------------------------------------
+            //! default constructor
+            explicit invalid_object_error();
+
+            //-----------------------------------------------------------------
+            //! constructor
+            explicit invalid_object_error(const exception_record &i,
+                                          const string &d);
+
+            //-----------------------------------------------------------------
+            //! destructor
+            ~invalid_object_error() throw();
+           
+            //-----------------------------------------------------------------
+            //! output operator
+            friend std::ostream &operator<<(std::ostream &o,
+                                            const invalid_object_error &e);
+    };
+
 
 //end of namespace
 }

@@ -316,6 +316,8 @@ namespace h5{
             //! \brief get name
             //!
             //! Return the name of the attribute as string.
+            //! 
+            //! \throws io_error in case of errors
             //! \return attribute name
             //!
             virtual string name() const;

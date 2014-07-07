@@ -24,12 +24,17 @@
 #include <pni/io/nx/h5/H5Group.hpp>
 #include <pni/io/nx/h5/H5Dataset.hpp>
 #include <pni/io/nx/h5/H5Attribute.hpp>
+#include <pni/io/exceptions.hpp>
 
 
 namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
+
+    using pni::io::io_error;
+    using pni::io::invalid_object_error;
+
     //===============private methods===========================================
     void H5Attribute::__set_space_type()
     {
@@ -138,9 +143,22 @@ namespace h5{
     //-------------------------------------------------------------------------
     string H5Attribute::name() const
     {
-        char name[1024];
-        H5Aget_name(id(),1024,name);
-        return string(name);
+        if(!is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Trying to retrieve the name of an invalid attribute!");
+
+        ssize_t n = H5Aget_name(id(),0,NULL);
+        if(n<0)
+            throw io_error(EXCEPTION_RECORD,
+                    "Error retrieving attribute name length!");
+
+        string name_buffer(n,' ');
+
+        if(H5Aget_name(id(),n+1,const_cast<char*>(name_buffer.data()))<0)
+            throw io_error(EXCEPTION_RECORD,
+                    "Error retrieving attribute name!");
+
+        return name_buffer;
     }
 
     //-------------------------------------------------------------------------
@@ -152,7 +170,7 @@ namespace h5{
         {
             //first we need to retrieve the path to the parent object
             hsize_t bsize;
-            bsize = H5Iget_name(id(),NULL,1);
+            bsize = H5Iget_name(id(),0,NULL);
             buffer = string(bsize,' ');
 
             H5Iget_name(id(),const_cast<char*>(buffer.data()),bsize+1);
