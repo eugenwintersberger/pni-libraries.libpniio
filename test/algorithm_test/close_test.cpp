@@ -51,7 +51,7 @@ void close_test::tearDown()
 
 void close_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     CPPUNIT_ASSERT(is_valid(group));
     close(group);
@@ -61,7 +61,7 @@ void close_test::test_group()
 //-----------------------------------------------------------------------------
 void close_test::test_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     CPPUNIT_ASSERT(is_valid(field));
     close(field);
@@ -71,7 +71,7 @@ void close_test::test_field()
 //----------------------------------------------------------------------------
 void close_test::test_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     CPPUNIT_ASSERT(is_valid(attribute));
     close(attribute);
@@ -81,7 +81,7 @@ void close_test::test_attribute()
 //-----------------------------------------------------------------------------
 void close_test::test_visitor_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     h5::nxobject object = group;
     CPPUNIT_ASSERT(is_valid(object));
@@ -92,7 +92,7 @@ void close_test::test_visitor_group()
 //-----------------------------------------------------------------------------
 void close_test::test_visitor_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = field;
     CPPUNIT_ASSERT(is_valid(object));
@@ -103,7 +103,7 @@ void close_test::test_visitor_field()
 //-----------------------------------------------------------------------------
 void close_test::test_visitor_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = attribute;
     CPPUNIT_ASSERT(is_valid(object));

@@ -35,6 +35,7 @@ namespace nx{
     //! by this function template are either of type nxfield, nxattribute,  
     //! nxgroup, or nxfile. 
     //!
+    //! \throws object_error in case of errors
     //! \tparam OTYPE object type
     //!
     template<typename OTYPE> void close(OTYPE &o)
@@ -75,6 +76,7 @@ namespace nx{
             //! \brief process group instances
             //!
             //! Close the group.
+            //! \throws object_error in case closing the group fails
             //! \param g reference to group instance
             //! \return false
             //!
@@ -88,6 +90,7 @@ namespace nx{
             //! \brief process field instances
             //!
             //! Close the field.
+            //! \throws object_error in case closing the field fails
             //! \param f reference to field instance
             //! \return true
             //!
@@ -101,6 +104,7 @@ namespace nx{
             //! \brief process attribute instances
             //!
             //! Close the attribute.
+            //! \throws object_error in case closing the attribute fails
             //! \param a reference to attribute instance
             //! \return false
             //!
@@ -110,6 +114,7 @@ namespace nx{
             }
     };
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_code
     //! \brief close object
@@ -129,7 +134,8 @@ namespace nx{
             > 
     void close(nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(close_visitor<GTYPE,FTYPE,ATYPE>(),o);
+        typedef close_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(),o);
     }
 
 
