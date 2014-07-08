@@ -31,6 +31,7 @@
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 
+#include "nxattribute_manager.hpp"
 #include "nximp_map.hpp"
 #include "nxobject_traits.hpp"
 #include "nxexceptions.hpp"
@@ -324,29 +325,47 @@ namespace nx{
             }
 
         public:
+            //===================public attributes=============================
+            nxattribute_manager<field_type> attributes;
             //============constructors and destructors=========================
             //! default constructor
-            explicit nxfield(){ }
+            explicit nxfield():
+                _imp(),
+                attributes(_imp)
+            { }
 
             //-----------------------------------------------------------------
             //! copy constructor
-            nxfield(const field_type &o):_imp(o._imp) { }
+            nxfield(const field_type &o):
+                _imp(o._imp),
+                attributes(_imp)
+            { }
 
             //-----------------------------------------------------------------
             //! move constructor
-            nxfield(field_type &&o):_imp(std::move(o._imp)) { }
+            nxfield(field_type &&o):
+                _imp(std::move(o._imp)),
+                attributes(_imp)
+            { }
 
             //-----------------------------------------------------------------
             //! copy constructor from implementation object
-            explicit nxfield(const imp_type &o):_imp(o) { }
+            explicit nxfield(const imp_type &o):
+                _imp(o),
+                attributes(_imp)
+            { }
 
             //-----------------------------------------------------------------
             //! move constructor from implementation object
-            explicit nxfield(imp_type &&o):_imp(std::move(o)){}
+            explicit nxfield(imp_type &&o):
+                _imp(std::move(o)),
+                attributes(_imp)
+            {}
 
             //-----------------------------------------------------------------
             nxfield(const typename nxobject_trait<IMPID>::object_type &o):
-                _imp()
+                _imp(),
+                attributes(_imp)
             {
                 *this = o;
             }

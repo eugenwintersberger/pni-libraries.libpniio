@@ -68,7 +68,7 @@ namespace nx{
     create_attribute(const PTYPE<IMPID> &o,const string &n,
                      const STYPE &s=STYPE())
     {
-        typedef typename nxobject_traits<IMPID>::object_type object_type;
+        typedef typename nxobject_trait<IMPID>::object_type object_type;
         return object_type(o.template attr<T>(n,s));
     }
     
