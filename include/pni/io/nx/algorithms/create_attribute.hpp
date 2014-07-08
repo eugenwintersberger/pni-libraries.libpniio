@@ -39,7 +39,7 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief create an attribute
     //!
-    //! Function template creating an attribute for a parent 
+    //! Function template creating an attribute attached to an object
     /*!
     \code
     auto parent = ....;
@@ -56,7 +56,7 @@ namespace nx{
     //! \param o parent 
     //! \param n attribute name
     //! \param s attribute shape (optional)
-    //! \return istance of nxattribute 
+    //! \return attribute stored in an instance of nxobject
     //!
     template<
              typename T,
@@ -64,11 +64,12 @@ namespace nx{
              nximp_code IMPID,
              typename STYPE = shape_t
             > 
-    typename nxobject_trait<IMPID>::attribute_type
+    typename nxobject_trait<IMPID>::object_type
     create_attribute(const PTYPE<IMPID> &o,const string &n,
                      const STYPE &s=STYPE())
     {
-        return o.template attr<T>(n,s);
+        typedef typename nxobject_traits<IMPID>::object_type object_type;
+        return object_type(o.template attr<T>(n,s));
     }
     
     //-------------------------------------------------------------------------
@@ -94,7 +95,7 @@ namespace nx{
     //! 
     //! An exception is raised if the path does not refere to an attribute.
     //! 
-    //! \throws nxattribute_error in the case of errors
+    //! \throws value_error if path does not contain an attribute name
     //! \tparam T data type of the field
     //! \tparam PTYPE parent type template
     //! \tparam IMPID implementation ID
@@ -110,23 +111,27 @@ namespace nx{
              nximp_code IMPID,
              typename STYPE = shape_t
             > 
-    typename nxobject_trait<IMPID>::attribute_type
+    typename nxobject_trait<IMPID>::object_type
     create_attribute(const PTYPE<IMPID> &o,const nxpath &path,
                      const STYPE &s=STYPE())
     {
-        nxpath parent_path(path); parent_path.attribute("");
+        typedef typename nxobject_trait<IMPID>::object_type object_type;
 
         //check if the path describes an attribute
         if(path.attribute().empty())
-            throw nxattribute_error(EXCEPTION_RECORD,
+            throw value_error(EXCEPTION_RECORD,
                     "Path does not describe an attribute!");
+
+        //create a path to the parent object of the attribute
+        nxpath parent_path(path); 
+        parent_path.attribute("");
 
         //obtain the parent for the target object - this will always be a 
         //grou ptype
         auto parent = get_object(o,parent_path);
 
         //finally create the attribute
-        return create_attribute(parent,path.attribute(),s);
+        return create_attribute<T>(parent,path.attribute(),s);
     }
 
     //------------------------------------------------------------------------
