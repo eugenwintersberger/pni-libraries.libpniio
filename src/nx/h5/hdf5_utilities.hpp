@@ -26,6 +26,7 @@ extern "C" {
 }
 
 #include <pni/core/types.hpp>
+#include <pni/io/nx/h5/h5_error_stack.hpp>
 
 namespace pni{
 namespace io{
@@ -63,6 +64,18 @@ namespace h5{
     //! \return path as string
     //!
     string get_object_path(hid_t id);
+
+    //------------------------------------------------------------------------
+    //! 
+    //! \brief get parent path
+    //! 
+    //! Return the path to the parent of a particular object. 
+    //! 
+    //! \throws io_error  in case of errors
+    //! \param id the HDF5 ID of the object
+    //! \return path to the parent
+    //! 
+    string get_parent_path(hid_t id);
 
 //end of namespace
 }

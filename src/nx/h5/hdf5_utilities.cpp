@@ -69,6 +69,32 @@ namespace h5{
         return buffer;
     }
 
+    //------------------------------------------------------------------------
+    string get_parent_path(hid_t id)
+    {
+        string opath = get_object_path(id);
+
+        if(opath.empty()) return opath;
+
+        //if the string is of size 1 and has
+        //only one / return this
+        if((opath.size() == 1) && (opath[0] == '/')) 
+            return string("/");
+
+        size_t lpos = opath.find_last_of("/");
+        string base;
+        if(lpos != opath.npos)
+        {
+            base = string(opath,0,lpos+1);
+            //remove a trailing /, except the base is just the root group
+            if((base.size()>1) && (base[base.size()-1] == '/'))
+                base = string(base,0,base.size()-1);
+        }
+
+        return base;
+
+    }
+
 //end of namespace
 }
 }

@@ -323,17 +323,6 @@ namespace h5{
     }
 
 
-    //------------------------------------------------------------------
-    H5Object H5Dataset::parent() const
-    {
-        hid_t fid = H5Iget_file_id(id());
-        hid_t gid = H5Oopen(fid,base().c_str(),H5P_DEFAULT);
-        H5Group g(gid);
-        H5Fclose(fid);
-
-        return H5Object(g);
-    }
-
     //-------------------------------------------------------------------------
     void H5Dataset::close() 
     {

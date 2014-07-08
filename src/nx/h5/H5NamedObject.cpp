@@ -170,8 +170,26 @@ namespace h5{
     //-------------------------------------------------------------------------
     H5Object H5NamedObject::parent() const
     {
+        hid_t fid = H5Iget_file_id(id());
+        if(fid<0)
+            throw object_error(EXCEPTION_RECORD,
+                    "Error obtaining file ID in order to retrieve the parent"
+                    " object - HDF5 error:\n\n"+get_h5_error_string());
 
-        return H5Object();
+        hid_t pid = H5Oopen(fid,get_parent_path(id()).c_str(),H5P_DEFAULT);
+        if(pid<0)
+        {
+            H5Fclose(fid); //close file ID in case of an error
+            throw object_error(EXCEPTION_RECORD,
+                    "Error obtaining parent ID of object ["+name()+"] "
+                    "- HDF5 error:\n\n"+get_h5_error_string());
+        }
+
+        H5Fclose(fid); //close file ID in case of success
+        //H5Group g(gid);
+
+        return H5Object(H5NamedObject(pid));
+
     }
 
 

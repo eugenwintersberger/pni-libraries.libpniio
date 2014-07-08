@@ -328,6 +328,7 @@ namespace h5{
             //!
             //! Return an instance of H5Object with the parent object of the
             //! attribute.
+            //! \throws object_error if parent object could not be retrieved
             //! \return H5Object instance
             //!
             virtual H5Object parent() const;

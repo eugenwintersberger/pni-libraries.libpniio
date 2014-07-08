@@ -207,16 +207,6 @@ namespace h5{
             virtual void close();
 
             //-----------------------------------------------------------------
-            //! 
-            //! \brief return the parent group 
-            //!
-            //! Returns the parent group und which this group object is 
-            //! linked.
-            //! \return parent group 
-            //!
-            virtual H5Object parent() const { return open(base()); }
-
-            //-----------------------------------------------------------------
             //!
             //! \brief number of child nodes
             //! 

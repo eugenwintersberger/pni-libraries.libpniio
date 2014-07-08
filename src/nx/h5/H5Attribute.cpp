@@ -203,6 +203,10 @@ namespace h5{
 
         //attempt to retrieve the parent object
         pid = H5Oopen(id(),".",H5P_DEFAULT);
+        if(pid<0)
+            throw object_error(EXCEPTION_RECORD,
+                    "Error opening parent object for attribute"
+                    " HDF5 error was:\n\n"+get_h5_error_string());
 
 
         return H5Object(pid); 

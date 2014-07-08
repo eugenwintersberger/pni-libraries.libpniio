@@ -39,6 +39,9 @@ class get_parent_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_field);
         CPPUNIT_TEST(test_group);
         CPPUNIT_TEST(test_attribute);
+        CPPUNIT_TEST(test_nxobject_field);
+        CPPUNIT_TEST(test_nxobject_group);
+        CPPUNIT_TEST(test_nxobject_attribute);
         CPPUNIT_TEST_SUITE_END();
 
         h5::nxfile file;
@@ -49,9 +52,12 @@ class get_parent_test : public CppUnit::TestFixture
         void setUp();
         void tearDown();
         
+        void test_nxobject_field();
+        void test_nxobject_group();
+        void test_nxobject_attribute();
         void test_field();
-        void test_group();
         void test_attribute();
+        void test_group();
 
 };
 

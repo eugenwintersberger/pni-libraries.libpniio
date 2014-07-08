@@ -688,16 +688,6 @@ namespace h5{
                 return _fspace;
             }
 
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief return parent group
-            //!
-            //! Method returns the parent group of the dataset. 
-            //!
-            //! \return parent group.
-            //!
-            virtual H5Object parent() const;
-
 
             //===================reading data methods==========================
             //! 

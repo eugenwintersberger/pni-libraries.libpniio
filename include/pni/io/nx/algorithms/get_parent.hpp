@@ -35,6 +35,8 @@ namespace nx{
     //! Returns the parent object of an instance of nxfield, nxattribute, or 
     //! nxgroup object. The parent is returned as an instance of nxobject.
     //! 
+    //! \throws object_error in case of errors generating parent object
+    //! \throws io_error in case of errors during metadata retrieval
     //! \tparam OTYPE object template
     //! \tparam IMPID implementation ID
     //! \param o object instance
@@ -44,9 +46,7 @@ namespace nx{
              template<nximp_code> class OTYPE,
              nximp_code IMPID
             >
-    nxobject<typename nxobject_trait<IMPID>::group_type,
-             typename nxobject_trait<IMPID>::field_type,
-             typename nxobject_trait<IMPID>::attribute_type>
+    typename nxobject_trait<IMPID>::object_type
     get_parent(const OTYPE<IMPID> &o)
     {
         return o.parent();
@@ -88,6 +88,8 @@ namespace nx{
             //! \brief process groups
             //!
             //! Return the parent group of a group. 
+            //! \throws object_error in case of errors generating parent object
+            //! \throws io_error in case of errors during metadata retrieval
             //! \param g group instance
             //! \return parent group
             //!
@@ -101,6 +103,8 @@ namespace nx{
             //! \brief process fields
             //!
             //! Return the fields parent group.
+            //! \throws object_error in case of errors generating parent object
+            //! \throws io_error in case of errors during metadata retrieval
             //! \param f field instance
             //! \return parent group of the field
             //!
@@ -114,7 +118,8 @@ namespace nx{
             //! \brief process attribute
             //!
             //! Retrieve the type of an object.
-            //! \throws nxattribute_error parent retrieval not supported
+            //! \throws object_error in case of errors generating parent object
+            //! \throws io_error in case of errors during metadata retrieval
             //! \param a attribute instance
             //! \return to be ignored
             //!
@@ -132,6 +137,8 @@ namespace nx{
     //! Return the parent object of an instance of nxobject as a new instance of 
     //! nxobject.
     //!
+    //! \throws object_error in case of errors generating parent object
+    //! \throws io_error in case of errors during metadata retrieval
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
@@ -145,7 +152,8 @@ namespace nx{
             > 
     nxobject<GTYPE,FTYPE,ATYPE> get_parent(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(get_parent_visitor<GTYPE,FTYPE,ATYPE>(),o);
+        typedef get_parent_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(),o);
     }
 
 //end of namespace
