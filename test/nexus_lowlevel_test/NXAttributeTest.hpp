@@ -31,13 +31,13 @@
 
 template<typename T> using sarray = static_array<T,10,20>;
 
-/*!
-\ingroup test_classes
-\brief Attribute facilities test
-
-Testing attribute facilities of different Nexus objects
-\tparam APTYPE attribute parent type (group, field, or file)
-*/
+//!
+//! \ingroup test_classes
+//! \brief Attribute facilities test
+//! 
+//! Testing attribute facilities of different Nexus objects
+//! \tparam APTYPE attribute parent type (group, field, or file)
+//!
 template<typename APTYPE> class NXAttributeTest: public CppUnit::TestFixture  
 {
         CPPUNIT_TEST_SUITE(NXAttributeTest<APTYPE>);
@@ -152,7 +152,7 @@ void NXAttributeTest<APTYPE>::create_parent(const nxfile &f,nxfield &p)
 template<typename APTYPE> void NXAttributeTest<APTYPE>::setUp()
 {
     //create the file where to store data
-    _f = nxfile::create_file("NXAttributeTest.h5",true,0);
+    _f = nxfile::create_file("NXAttributeTest.nxs",true,0);
 
     //create the attribute parrent
     create_parent(_f,_parent);
@@ -179,7 +179,7 @@ template<typename APTYPE> void NXAttributeTest<APTYPE>::test_creation()
     CPPUNIT_ASSERT(a.rank() == 0);
 
     //creating a scalar attribute
-    nxattribute a1(_parent.template attr<string>("attribute"));
+    nxattribute a1(_parent.attributes.template create<string>("attribute"));
     CPPUNIT_ASSERT(a1.is_valid());
     CPPUNIT_ASSERT(a1.type_id() == type_id_t::STRING);
     CPPUNIT_ASSERT(a1.rank() == 1);
@@ -198,7 +198,7 @@ template<typename APTYPE> void NXAttributeTest<APTYPE>::test_creation()
     CPPUNIT_ASSERT(p.path() == a1.base());
 
     //create an array attribute
-    nxattribute a2(_parent.template attr<bool_t>("array",_shape));
+    nxattribute a2(_parent.attributes.template create<bool_t>("array",_shape));
     CPPUNIT_ASSERT(a2.is_valid());
     CPPUNIT_ASSERT(a2.type_id() == type_id_t::BOOL);
     CPPUNIT_ASSERT(a2.rank() == 2);
@@ -219,27 +219,27 @@ template<typename T> void NXAttributeTest<APTYPE>::test_scalar_attribute()
     //write data
     T write_value = create_scalar_data<T>();
     //write from object
-    _parent.template attr<T>("a1").write(write_value);
-    _parent.attr("a1").write((const T *)&write_value);
+    _parent.attributes.template create<T>("a1").write(write_value);
+    _parent.attributes["a1"].write((const T *)&write_value);
     //write from pointer
     _f.flush();
        
     //read data
     T read_value;
     //read to object
-    _parent.attr("a1").read(read_value);
+    _parent.attributes["a1"].read(read_value);
     //read to memory
-    _parent.attr("a1").read(&read_value);
+    _parent.attributes["a1"].read(&read_value);
 
     check_equality(write_value,read_value);
 
     //--------------------test some exceptions---------------------------------
     //try to recreate an attribute
     CPPUNIT_ASSERT_THROW(
-            _parent.template attr<T>("a1"),pni::io::nx::nxattribute_error);
+            _parent.attributes.template create<T>("a1"),pni::io::object_error);
 
     //try to open a non-existing attribute
-    CPPUNIT_ASSERT_THROW(_parent.attr("b1"),pni::io::nx::nxattribute_error);
+    CPPUNIT_ASSERT_THROW(_parent.attributes["b1"],pni::io::object_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -256,8 +256,8 @@ template<typename ATYPE> void NXAttributeTest<APTYPE>::test_array_attribute()
     std::vector<value_t> data(create_array_data<value_t>(write.size()));
     std::copy(data.begin(),data.end(),write.begin());
 
-    _parent.template attr<value_t>("a2",_shape).write(write);
-    _parent.attr("a2").read(read);
+    _parent.attributes.template create<value_t>("a2",_shape).write(write);
+    _parent.attributes["a2"].read(read);
 
     CPPUNIT_ASSERT(std::equal(read.begin(),read.end(),write.begin()));
 }
@@ -274,9 +274,9 @@ template<typename APTYPE> void NXAttributeTest<APTYPE>::test_array()
 
     array o1(data);
     
-    _parent.template attr<string>("test",s).write(o1);
+    _parent.attributes.template create<string>("test",s).write(o1);
     array o2 = dynamic_array<string>::create(s);
-    _parent.attr("test").read(o2);
+    _parent.attributes["test"].read(o2);
 
 }
 

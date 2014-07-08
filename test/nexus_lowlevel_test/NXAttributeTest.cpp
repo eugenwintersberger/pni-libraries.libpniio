@@ -30,6 +30,6 @@
 
 #include "NXAttributeTest.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(NXAttributeTest<nxgroup>);
+//CPPUNIT_TEST_SUITE_REGISTRATION(NXAttributeTest<nxgroup>);
 CPPUNIT_TEST_SUITE_REGISTRATION(NXAttributeTest<nxfield>);
 

@@ -129,8 +129,7 @@ namespace nx{
                 catch(...)
                 {
                     throw object_error(EXCEPTION_RECORD,
-                            "Cannot open attribute ["+n+"] from object ["
-                            +this->path()+"]!");
+                            "Cannot open attribute ["+n+"]!");
                 }
                 return attr;
             }
@@ -158,8 +157,7 @@ namespace nx{
                 catch(...)
                 {
                     std::stringstream istr;
-                    istr<<"Cannot open attribute ["<<i<<"] from object [";
-                    istr<<this->path()+"]!";
+                    istr<<"Cannot open attribute ["<<i<<"]!";
                     throw object_error(EXCEPTION_RECORD,istr.str());
                 }
 
