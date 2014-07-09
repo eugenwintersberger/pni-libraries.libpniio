@@ -181,7 +181,7 @@ namespace h5{
         {
             //first we need to retrieve the path to the parent object
             hsize_t bsize;
-            bsize = H5Iget_name(id(),0,NULL);
+            bsize = H5Iget_name(id(),NULL,0);
             buffer = string(bsize,' ');
 
             H5Iget_name(id(),const_cast<char*>(buffer.data()),bsize+1);

@@ -166,14 +166,14 @@ void H5AttributeObjectTest::test_inquery()
     CPPUNIT_ASSERT(o1.has_attr("test1"));
     CPPUNIT_ASSERT(!o1.has_attr("bla"));
     
-    CPPUNIT_ASSERT_THROW(o1.attr("bla"),pni::io::nx::nxattribute_error);
+    CPPUNIT_ASSERT_THROW(o1.attr("bla"),pni::core::key_error);
     CPPUNIT_ASSERT_NO_THROW(o1.attr(0));
     CPPUNIT_ASSERT_NO_THROW(o1.attr(1));
     CPPUNIT_ASSERT_THROW(o1.attr(2),index_error);
     CPPUNIT_ASSERT_THROW(o1.attr(100),index_error);
 
     //try to create a new one without overwrite
-    CPPUNIT_ASSERT_THROW(o1.attr<string>("test1"),pni::io::nx::nxattribute_error);
+    CPPUNIT_ASSERT_THROW(o1.attr<string>("test1"),pni::io::object_error);
     CPPUNIT_ASSERT_NO_THROW(o1.attr<string>("test1",true));
 
     CPPUNIT_ASSERT_NO_THROW(o1.del_attr("test1"));
@@ -195,6 +195,6 @@ void H5AttributeObjectTest::test_attribute_open()
     CPPUNIT_ASSERT(o.attr("temp").is_valid());
     CPPUNIT_ASSERT(a.is_valid());
 
-    CPPUNIT_ASSERT_THROW(o.attr("bla"),pni::io::nx::nxattribute_error);
+    CPPUNIT_ASSERT_THROW(o.attr("bla"),pni::core::key_error);
 }
 

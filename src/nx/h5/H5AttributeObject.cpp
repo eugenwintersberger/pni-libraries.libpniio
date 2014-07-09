@@ -21,15 +21,14 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-
 #include <pni/io/nx/h5/H5AttributeObject.hpp>
-
 
 
 namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
+
     //=======implementation of constructors and destructors====================
     //implementation of the default constructor
     H5AttributeObject::H5AttributeObject():H5NamedObject(){ }
@@ -122,8 +121,7 @@ namespace h5{
         {
             std::stringstream ss;
             ss<<"Object ["<<name()<<"] has no attribute ["<<n<<"]!";
-            throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD,ss.str()+
-                    get_h5_error_string());
+            throw key_error(EXCEPTION_RECORD,ss.str()+get_h5_error_string());
         }
 
         hid_t aid = H5Aopen(id(),n.c_str(),H5P_DEFAULT);
@@ -132,7 +130,7 @@ namespace h5{
             std::stringstream ss;
             ss<<"Error opening attribute ["<<n<<"] from object [";
             ss<<name()<<"]!";
-            throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD,ss.str()+
+            throw object_error(EXCEPTION_RECORD,ss.str()+
                     get_h5_error_string());
         }
 
@@ -159,7 +157,7 @@ namespace h5{
             std::stringstream ss;
             ss<<"Error opening attribute with index ("<<i<<") on object ";
             ss<<"["<<name()<<"]!";
-            throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD,ss.str()+
+            throw object_error(EXCEPTION_RECORD,ss.str()+
                     get_h5_error_string());
         }
 
@@ -188,8 +186,7 @@ namespace h5{
             std::stringstream ss;
             ss<<"Error checking for existence of attribute ";
             ss<<"["<<n<<"] on object ["<<name()<<"]!";
-            throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD,ss.str()+
-                    get_h5_error_string());
+            throw object_error(EXCEPTION_RECORD,ss.str()+get_h5_error_string());
         }
     }
 
@@ -202,8 +199,7 @@ namespace h5{
             std::stringstream ss;
             ss<<"Error deleteing attribute ["<<n<<"] from ";
             ss<<"object ["<<name()<<"]!";
-            throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD,ss.str()+
-                    get_h5_error_string());
+            throw object_error(EXCEPTION_RECORD,ss.str()+get_h5_error_string());
         }
     }
 

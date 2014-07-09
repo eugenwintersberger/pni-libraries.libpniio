@@ -72,18 +72,7 @@ namespace nx{
                     > 
             attribute_type create(const string &n, const CTYPE &s,bool ov=true) const
             {
-                attribute_type attr;
-
-                try
-                {
-                    attr = attribute_type(_imp.template attr<T>(n,s,ov));
-                }
-                catch(...)
-                {
-                    throw object_error(EXCEPTION_RECORD,
-                            "Cannot create attribute ["+n+"]!");
-                }
-                return attr;
+                return attribute_type(_imp.template attr<T>(n,s,ov));
             }
             
             //-----------------------------------------------------------------
@@ -115,23 +104,13 @@ namespace nx{
             //! if the attribute does not exist.
             //!
             //! \throws object_error in case of problems
+            //! \throws key_error in case the requested attribute does not exist
             //! \param n name of the attribute
             //! \return instance of nxattribute
             //!
             attribute_type operator[](const string &n) const
             {
-                attribute_type attr;
-
-                try
-                {
-                    attr = attribute_type(_imp.attr(n));
-                }
-                catch(...)
-                {
-                    throw object_error(EXCEPTION_RECORD,
-                            "Cannot open attribute ["+n+"]!");
-                }
-                return attr;
+                return attribute_type(_imp.attr(n));
             }
 
             //-----------------------------------------------------------------
@@ -142,26 +121,14 @@ namespace nx{
             //! the total number of attributes attached to this object an 
             //! exception will be thrown.
             //!
+            //! \throws index_error if i exceeds the total number of attributes
             //! \throws object_error in case of errors
             //! \param i index of the attribute
             //! \return instance of nxattribute
             //!
             attribute_type operator[](size_t i) const
             {
-                attribute_type attr;
-
-                try
-                {
-                    attr = attribute_type(_imp.attr(i));
-                }
-                catch(...)
-                {
-                    std::stringstream istr;
-                    istr<<"Cannot open attribute ["<<i<<"]!";
-                    throw object_error(EXCEPTION_RECORD,istr.str());
-                }
-
-                return attr;
+                return attribute_type(_imp.attr(i));
             }
 
             //-----------------------------------------------------------------
@@ -174,15 +141,7 @@ namespace nx{
             //!
             void remove(const string &n) const
             {
-                try
-                {
-                    _imp.del_attr(n);
-                }
-                catch(...)
-                {
-                    throw object_error(EXCEPTION_RECORD,
-                            "Error deleting attribute ["+n+"]!");
-                }
+                _imp.del_attr(n);
             }
 
             //-----------------------------------------------------------------
@@ -198,16 +157,7 @@ namespace nx{
             //!
             bool exists(const string &n) const
             {
-                try
-                {
-                    return _imp.has_attr(n);
-                }
-                catch(...)
-                {
-                    throw object_error(EXCEPTION_RECORD,
-                            "Error checking for attribute ["+n+"]!");
-                }
-                return false;
+                return _imp.has_attr(n);
             }
 
             //-----------------------------------------------------------------

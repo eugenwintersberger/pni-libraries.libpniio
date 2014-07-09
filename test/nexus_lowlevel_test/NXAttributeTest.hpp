@@ -239,7 +239,7 @@ template<typename T> void NXAttributeTest<APTYPE>::test_scalar_attribute()
             _parent.attributes.template create<T>("a1"),pni::io::object_error);
 
     //try to open a non-existing attribute
-    CPPUNIT_ASSERT_THROW(_parent.attributes["b1"],pni::io::object_error);
+    CPPUNIT_ASSERT_THROW(_parent.attributes["b1"],pni::io::key_error);
 }
 
 //-----------------------------------------------------------------------------

@@ -24,12 +24,14 @@
 #pragma once
 #include <vector>
 
+#include <pni/core/error.hpp>
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 
 #include "H5NamedObject.hpp"
 #include "H5Attribute.hpp"
 #include "H5DatatypeFactory.hpp"
+#include "../../exceptions.hpp"
 
 
 namespace pni{
@@ -40,6 +42,8 @@ namespace h5{
     //avoid namespace collisions with std
     using pni::core::exception;
     using pni::core::string;
+    using pni::io::object_error;
+    using pni::core::key_error;
                      
 
     //forward declarations
@@ -62,7 +66,7 @@ namespace h5{
             //! Creates an attribute of type T. If the ov flag is true
             //! the method overwrites an existing attribute of same name.
             //! Otherwise an exception will be thrown.
-            //! \throw pni::io::nxattribute_error in case of errors
+            //! \throw pni::io::object_error in case of errors
             //! \param n name of the attribute
             //! \param ov overwrite flag 
             //! \param space dataspace to use for the attribute
@@ -139,7 +143,7 @@ namespace h5{
             //! the method is set to true. In this case the existing 
             //! attribute will be overwritten.
             //! 
-            //! \throws pni::io::nx::nxattribute_error if attribute exists or 
+            //! \throws pni::io::object_error if attribute exists or 
             //! in case of errors
             //! \param n name of the attribute
             //! \param ov overwrite attribute if true
@@ -149,6 +153,7 @@ namespace h5{
                 attr(const string &n,bool ov=false) const;
 
             //-----------------------------------------------------------------
+            //!
             //! \brief create an array attribute
             //!
             //! Create an array attribute of type T and shape s. The type
@@ -157,7 +162,7 @@ namespace h5{
             //! an exception will be thrown unless ov is set to true.
             //! In the later case the existing attribute will be
             //! overwritten.
-            //! \throws pni::io::nx::nxattribute_error if the attribute exists or 
+            //! \throws pni::io::object_error if the attribute exists or 
             //! in case of errors
             //! \param n name of the attribute
             //! \param s shape of the array
@@ -176,10 +181,12 @@ namespace h5{
             //!
             //! \brief open attribute by name
             //! 
-            //! Open an existing attribute and returns it to the callee.  If 
-            //! the attribute does not exist or an other error occurs during 
-            //! attribute creation pni::io::nx::nxattribute_error is thrown.
-            //! \throws pni::io::nx::nxattribute_error if attribute does not 
+            //! Open an existing attribute and returns it to the callee.
+            //! If the object does not exist key_error is thrown. In case of any
+            //! other error oject_error;
+            //!
+            //! \throws pni::core::key_error if attribute does not exist 
+            //! \throws pni::io::object_error in case of other errors
             //! exist or creation error
             //! \param n name of the attribute
             //! \return attribute object
@@ -193,7 +200,9 @@ namespace h5{
             //! Opens an attribute reference by index i. If i exceeds the 
             //! number of attributes attached to this object an exception 
             //! will be thrown.
-            //! \throws index_error if i exceeds 
+            //!
+            //! \throws pni::core::index_error if i exceeds 
+            //! \throws pni::io::object_error in case of any other error
             //! \param i index of the attribute
             //! \returns instance of H5Attribute
             //!
@@ -205,7 +214,8 @@ namespace h5{
             //!
             //! Checks if an attribute exists and returns true if it does.
             //! Otherwise false will be returned.
-            //! \throws pni::io::nx::nxattribute_error in case of errors
+            //!
+            //! \throws pni::io::object_error in case of errors
             //! \param n name of the attribute to check for
             //! \return true if exists, false otherwise
             //!
@@ -216,7 +226,8 @@ namespace h5{
             //! \brief Deletes an attribute
             //!
             //! Deletes an attribute from the object. 
-            //! \throws pni::io::nx::nxattribute_error in case of errors 
+            //! 
+            //! \throws pni::io::object_error in case of errors 
             //! \param n name of the attribute
             //!
             void del_attr(const string &n) const;
@@ -254,7 +265,7 @@ namespace h5{
             {
                 string ss = "Attribute ["+n+"] already exists on "
                         "object ["+path()+"]!\n\n"+get_h5_error_string();
-                throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD,ss);
+                throw object_error(EXCEPTION_RECORD,ss);
             }
         }
 
@@ -262,7 +273,7 @@ namespace h5{
                 H5P_DEFAULT,H5P_DEFAULT);
         if(aid < 0)
         {
-            pni::io::nx::nxattribute_error error(EXCEPTION_RECORD,
+            object_error error(EXCEPTION_RECORD,
                     "Cannot create attribute ["+n+"] on object ["
                     +path()+"]!\n\n" +get_h5_error_string());
             throw error;
