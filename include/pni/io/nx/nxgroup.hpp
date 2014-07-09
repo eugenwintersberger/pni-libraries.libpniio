@@ -26,6 +26,7 @@
 #include <pni/core/types.hpp>
 #include <pni/core/utilities.hpp>
 
+#include "nxattribute_manager.hpp"
 #include "nximp_map.hpp"
 #include "nxfield.hpp"
 #include "nxfilter.hpp"
@@ -185,9 +186,11 @@ namespace nx{
                 return field;
             }
         public:
+            //==================public attributes==============================
+            nxattribute_manager<group_type> attributes;
             //==============constructors and destructor========================
             //! default constructor
-            explicit nxgroup():_imp() { }
+            explicit nxgroup():_imp(),attributes(_imp) { }
 
             //-----------------------------------------------------------------
             //!
@@ -199,23 +202,37 @@ namespace nx{
             //!
             //! \param o original group object 
             //!
-            nxgroup(const group_type &o):_imp(o._imp) { }
+            nxgroup(const group_type &o):
+                _imp(o._imp),
+                attributes(_imp)
+            { }
             
             //-----------------------------------------------------------------
             //! move constructor
-            nxgroup(group_type &&o):_imp(std::move(o._imp)) { }
+            nxgroup(group_type &&o):
+                _imp(std::move(o._imp)),
+                attributes(_imp)
+            { }
            
             //-----------------------------------------------------------------
             //!copy construct from implementation object
-            explicit nxgroup(const imp_type &imp):_imp(imp) { }
+            explicit nxgroup(const imp_type &imp):
+                _imp(imp),
+                attributes(_imp)
+            { }
 
             //-----------------------------------------------------------------
             //! move construct from implementation object
-            explicit nxgroup(imp_type &&imp):_imp(std::move(imp)) { }
+            explicit nxgroup(imp_type &&imp):
+                _imp(std::move(imp)),
+                attributes(_imp)
+            { }
 
             //-----------------------------------------------------------------
             //! conversion constructor
-            nxgroup(const typename nxobject_trait<IMPID>::object_type &o):_imp()
+            nxgroup(const typename nxobject_trait<IMPID>::object_type &o):
+                _imp(),
+                attributes(_imp)
             {
                 *this = o;
             }
