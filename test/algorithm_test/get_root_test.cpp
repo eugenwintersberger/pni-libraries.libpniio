@@ -80,7 +80,7 @@ void get_root_test::test_attribute()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
    
-    h5::nxattribute a = group.attr("NX_class");
+    h5::nxattribute a = group.attributes["NX_class"];
     
     CPPUNIT_ASSERT(get_name(get_root(a))=="/");
     CPPUNIT_ASSERT(get_name(get_root(h5::nxobject(a)))=="/");

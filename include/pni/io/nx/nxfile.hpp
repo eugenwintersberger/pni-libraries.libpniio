@@ -82,7 +82,7 @@ namespace nx{
                 if((_imp.is_valid())&&(!_imp.is_readonly()))
                 {
                     auto r = root();
-                    r.template attr<string>("file_update_time",true)
+                    r.attributes.template create<string>("file_update_time",true)
                         .write(nxdate_time::get_date_time_str());
                     r.close();
                 }
@@ -158,17 +158,17 @@ namespace nx{
                 auto root_group = file.root();
                 
                 //set file specific attributes
-                root_group.template
-                    attr<string>("NX_class",true).write(string("NXroot"));
-                root_group.template 
-                    attr<string>("file_time",true).write(nxdate_time::get_date_time_str());
-                root_group.template 
-                    attr<string>("file_update_time",true).write(nxdate_time::get_date_time_str());
-                root_group.template attr<string>("file_name",true).write(n);
+                root_group.attributes.template
+                    create<string>("NX_class",true).write(string("NXroot"));
+                root_group.attributes.template 
+                    create<string>("file_time",true).write(nxdate_time::get_date_time_str());
+                root_group.attributes.template 
+                    create<string>("file_update_time",true).write(nxdate_time::get_date_time_str());
+                root_group.attributes.template create<string>("file_name",true).write(n);
 
                 //this should be taken from a configuration
-                root_group.template
-                    attr<string>("NeXus_version",true).write(string("4.3.0"));
+                root_group.attributes.template
+                    create<string>("NeXus_version",true).write(string("4.3.0"));
 
                 //flush the files content
                 file.flush();
@@ -193,7 +193,7 @@ namespace nx{
                 if((this->is_valid())&&(!this->is_readonly()))
                 {
                     auto r = root();
-                    r.template attr<string>("file_update_time",true)
+                    r.attributes.template create<string>("file_update_time",true)
                         .write(nxdate_time::get_date_time_str());
                     r.close();
                 }

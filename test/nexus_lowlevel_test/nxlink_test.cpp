@@ -153,17 +153,17 @@ void nxlink_test::test_group_internal_link()
     string buffer;
     h5::nxgroup group_1 = root_group["links/detector_1"];
     CPPUNIT_ASSERT(group_1.is_valid());
-    group_1.attr("NX_class").read(buffer);
+    group_1.attributes["NX_class"].read(buffer);
     CPPUNIT_ASSERT(buffer == "NXdetector");
     
     h5::nxgroup group_2 = root_group["links/detector_2"];
     CPPUNIT_ASSERT(group_2.is_valid());
-    group_2.attr("NX_class").read(buffer);
+    group_2.attributes["NX_class"].read(buffer);
     CPPUNIT_ASSERT(buffer == "NXdetector");
     
     h5::nxgroup group_3 = root_group["links/detector_3"];
     CPPUNIT_ASSERT(group_3.is_valid());
-    group_3.attr("NX_class").read(buffer);
+    group_3.attributes["NX_class"].read(buffer);
     CPPUNIT_ASSERT(buffer == "NXdetector");
 }
 
@@ -188,12 +188,12 @@ void nxlink_test::test_group_external_link()
     string buffer;
     h5::nxgroup group_1 = root_group["detector_1"];
     CPPUNIT_ASSERT(group_1.is_valid());
-    group_1.attr("NX_class").read(buffer);
+    group_1.attributes["NX_class"].read(buffer);
     CPPUNIT_ASSERT(buffer == "NXdetector");
     
     h5::nxgroup group_2 = root_group["detector_1"];
     CPPUNIT_ASSERT(group_2.is_valid());
-    group_2.attr("NX_class").read(buffer);
+    group_2.attributes["NX_class"].read(buffer);
     CPPUNIT_ASSERT(buffer == "NXdetector");
 }
 

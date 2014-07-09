@@ -57,7 +57,7 @@ void set_class_test::test_group()
     CPPUNIT_ASSERT(is_valid(object));
     CPPUNIT_ASSERT_NO_THROW(set_class(object,"NXlog"));
     string buffer;
-    group.attr("NX_class").read(buffer);
+    group.attributes["NX_class"].read(buffer);
     CPPUNIT_ASSERT(buffer == "NXlog");
 }
 
@@ -75,7 +75,7 @@ void set_class_test::test_attribute()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    h5::nxobject object = group.attr("NX_class");
+    h5::nxobject object = group.attributes["NX_class"];
     CPPUNIT_ASSERT_THROW(set_class(object,"NXentry"),nxattribute_error);
    
 }

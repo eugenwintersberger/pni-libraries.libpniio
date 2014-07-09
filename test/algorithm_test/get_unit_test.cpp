@@ -72,7 +72,7 @@ void get_unit_test::test_attribute()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    object_type object = group.attr("NX_class");
+    object_type object = group.attributes["NX_class"];
     CPPUNIT_ASSERT_THROW(set_unit(object,"m"),nxattribute_error);
    
 }

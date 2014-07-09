@@ -40,7 +40,7 @@ void as_group_test::setUp()
     group = root.create_group("group","NXentry");
     group.create_group("instrument","NXinstrument");
     field = root.create_field<uint32>("data",field_shape);
-    field.attr<float32>("temp",attr_shape);
+    field.attributes.create<float32>("temp",attr_shape);
 }
 
 //-----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ void as_group_test::test_attribute()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    h5::nxobject object = field.attr("temp");
+    h5::nxobject object = field.attributes["temp"];
     //must throw as the stored object is an instance of nxattribute
     CPPUNIT_ASSERT_THROW(as_group(object),type_error);
     

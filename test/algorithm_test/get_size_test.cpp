@@ -40,7 +40,7 @@ void get_size_test::setUp()
     group = root.create_group("group","NXentry");
     group.create_group("instrument","NXinstrument");
     field = root.create_field<uint32>("data",field_shape);
-    attribute = field.attr<float32>("temp",attr_shape);
+    attribute = field.attributes.create<float32>("temp",attr_shape);
 }
 
 //-----------------------------------------------------------------------------

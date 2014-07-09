@@ -65,10 +65,10 @@ void set_unit_test::test_field()
     h5::nxobject object = field;
     CPPUNIT_ASSERT_NO_THROW(set_unit(object,"m"));
     string buffer;
-    field.attr("units").read(buffer);
+    field.attributes["units"].read(buffer);
     CPPUNIT_ASSERT(buffer == "m");
     CPPUNIT_ASSERT_NO_THROW(set_unit(object,"mm"));
-    field.attr("units").read(buffer);
+    field.attributes["units"].read(buffer);
     CPPUNIT_ASSERT(buffer == "mm");
 
 }
@@ -78,7 +78,7 @@ void set_unit_test::test_attribute()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    h5::nxobject object = group.attr("NX_class");
+    h5::nxobject object = group.attributes["NX_class"];
     CPPUNIT_ASSERT_THROW(set_unit(object,"m"),nxattribute_error);
    
 }

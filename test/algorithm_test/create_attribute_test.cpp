@@ -40,7 +40,7 @@ void create_attribute_test::setUp()
     group = root.create_group("group","NXentry");
     group.create_group("instrument","NXinstrument");
     field = group.create_field<int32>("test");
-    attr  = field.attr<float32>("temperature");
+    attr  = field.attributes.create<float32>("temperature");
 }
 
 //-----------------------------------------------------------------------------
@@ -125,7 +125,7 @@ void create_attribute_test::test_attribute()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    h5::nxobject object = group.attr("NX_class");
+    h5::nxobject object = group.attributes["NX_class"];
     CPPUNIT_ASSERT_THROW(create_attribute<float32>(object,"g1"),nxattribute_error);
 }
 

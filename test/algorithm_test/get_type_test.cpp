@@ -40,7 +40,7 @@ void get_type_test::setUp()
     group = root.create_group("group","NXentry");
     group.create_group("instrument","NXinstrument");
     field = root.create_field<uint32>("data",field_shape);
-    field.attr<float32>("temp",attr_shape);
+    field.attributes.create<float32>("temp",attr_shape);
 }
 
 //-----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ void get_type_test::test_attribute()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     shape_t shape;
-    object_type object = field.attr("temp");
+    object_type object = field.attributes["temp"];
     CPPUNIT_ASSERT(get_type(object) == type_id_t::FLOAT32);
     
 }

@@ -37,8 +37,8 @@ namespace nx{
     {
         string buffer;
 
-        if(field.has_attr("units"))
-            field.attr("units").read(buffer);
+        if(field.attributes.exists("units"))
+            field.attributes["units"].read(buffer);
 
         return buffer;
     }

@@ -98,7 +98,7 @@ void get_parent_test::test_nxobject_attribute()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    h5::nxobject a(group.attr("NX_class"));
+    h5::nxobject a(group.attributes["NX_class"]);
 
     auto p = get_parent(a);
     CPPUNIT_ASSERT(is_group(p));
@@ -111,7 +111,7 @@ void get_parent_test::test_attribute()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    h5::nxattribute a = group.attr("NX_class");
+    h5::nxattribute a = group.attributes["NX_class"];
 
     h5::nxgroup p = get_parent(a);
 

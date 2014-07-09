@@ -197,14 +197,14 @@ namespace xml{
                 if(has_attribute(_xml_node,"units"))
                 {
                     auto units = attribute_data<string>::read(_xml_node,"units");
-                    f.template attr<string>("units").write(units);
+                    f.attributes.template create<string>("units").write(units);
                 }
 
                 //-------------------try to write long_name attribute--------------
                 if(has_attribute(_xml_node,"long_name"))
                 {
                     auto lname = attribute_data<string>::read(_xml_node,"long_name");
-                    f.template attr<string>("long_name").write(lname);
+                    f.attributes.template create<string>("long_name").write(lname);
                 }
 
                 //now we read the data from the field  and write it

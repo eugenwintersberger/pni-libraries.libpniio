@@ -49,11 +49,11 @@ namespace nx{
     typename nxobject_trait<IMPID>::attribute_type
     get_attribute(const PTYPE<IMPID> &p,const string &name)
     {
-        if(!p.has_attr(name))
+        if(!p.attributes.exists(name))
             throw key_error(EXCEPTION_RECORD,"Object ["+get_name(p)+"] "
                     "does not have an attribute ["+name+"]!");
 
-        return p.attr(name);
+        return p.attributes[name];
     }
 
 

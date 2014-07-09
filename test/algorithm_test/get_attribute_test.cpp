@@ -37,7 +37,7 @@ void get_attribute_test::setUp()
     group = root.create_group("group","NXentry");
     group.create_group("instrument","NXinstrument");
     field = root.create_field<uint32>("data");
-    field.attr<string>("units").write("mm");
+    field.attributes.create<string>("units").write("mm");
 }
 
 //-----------------------------------------------------------------------------
@@ -76,7 +76,7 @@ void get_attribute_test::test_attribute()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    CPPUNIT_ASSERT_THROW(get_attribute(object_type(group.attr("NX_class")),"bla"),
+    CPPUNIT_ASSERT_THROW(get_attribute(object_type(group.attributes["NX_class"]),"bla"),
                          nxattribute_error);
 }
 

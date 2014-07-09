@@ -36,7 +36,7 @@ void is_group_test::setUp()
     root = file.root();
     group = root.create_group("group","NXentry");
     field = root.create_field<uint32>("data");
-    attribute = group.attr("NX_class");
+    attribute = group.attributes["NX_class"];
 }
 
 //-----------------------------------------------------------------------------

@@ -74,8 +74,8 @@ namespace nx{
             result_type operator()(const group_type &g) const
             {
                 string buffer;
-                if(g.has_attr("NX_class"))
-                    g.attr("NX_class").read(buffer);
+                if(g.attributes.exists("NX_class"))
+                    g.attributes["NX_class"].read(buffer);
                 else
                     return false;
 

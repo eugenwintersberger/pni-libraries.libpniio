@@ -69,7 +69,7 @@ namespace nx{
                      const STYPE &s=STYPE())
     {
         typedef typename nxobject_trait<IMPID>::object_type object_type;
-        return object_type(o.template attr<T>(n,s));
+        return object_type(o.attributes.template create<T>(n,s));
     }
     
     //-------------------------------------------------------------------------

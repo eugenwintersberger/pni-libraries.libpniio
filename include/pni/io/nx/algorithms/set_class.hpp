@@ -73,7 +73,7 @@ namespace nx{
             {
                 try
                 {
-                    g.template attr<string>("NX_class",true).write(_class);
+                    g.attributes.template create<string>("NX_class",true).write(_class);
                 }
                 catch(...)
                 {

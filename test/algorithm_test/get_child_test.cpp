@@ -41,7 +41,7 @@ void get_child_test::setUp()
     group.create_group("data","NXdata");
     group.create_group("control","NXmonitor");
     field = root.create_field<uint32>("data");
-    attribute = group.attr("NX_class");
+    attribute = group.attributes["NX_class"];
 }
 
 //-----------------------------------------------------------------------------

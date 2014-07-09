@@ -86,7 +86,7 @@ namespace nx{
             //!
             result_type operator()(const field_type &f) const
             {
-                f.template attr<string>("units",true).write(_unit);
+                f.attributes.template create<string>("units",true).write(_unit);
             }
 
             //-----------------------------------------------------------------

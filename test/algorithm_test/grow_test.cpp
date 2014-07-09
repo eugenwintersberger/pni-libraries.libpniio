@@ -35,12 +35,12 @@ void grow_test::setUp()
     field_shape = shape_t{1,10,10};
     attr_shape  = shape_t{4,4};
 
-    file = h5::nxfile::create_file("is_valid.nx",true,0);
+    file = h5::nxfile::create_file("grow_test.nx",true,0);
     root = file.root();
     group = root.create_group("group","NXentry");
     group.create_group("instrument","NXinstrument");
     field = root.create_field<uint32>("data",field_shape);
-    attribute = field.attr<float32>("temp",attr_shape);
+    attribute = field.attributes.create<float32>("temp",attr_shape);
 }
 
 //-----------------------------------------------------------------------------

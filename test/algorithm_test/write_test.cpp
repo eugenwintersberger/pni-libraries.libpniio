@@ -44,7 +44,7 @@ void write_test::setUp()
     group = root.create_group("group","NXentry");
     group.create_group("instrument","NXinstrument");
     field = root.create_field<uint32>("data",field_shape);
-    attribute = field.attr<int16>("temp",attr_shape);
+    attribute = field.attributes.create<int16>("temp",attr_shape);
 
 }
 
