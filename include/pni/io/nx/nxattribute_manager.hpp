@@ -45,7 +45,7 @@ namespace nx{
             typedef nxattribute_manager<OTYPE> manager_type;
             typedef typename OTYPE::attribute_type attribute_type;
             typedef attribute_type value_type;
-            typedef pni::core::container_iterator<const manager_type> iterator_type;
+            typedef pni::core::container_iterator<const manager_type> iterator;
             typedef typename OTYPE::imp_type imp_type;
         private:
             imp_type &_imp;
@@ -226,7 +226,7 @@ namespace nx{
             Return an iterator to the first attribute attached to the object.
             \return iterator to first attribute
             */
-            iterator_type begin() const { return iterator_type(*this); }
+            iterator begin() const { return iterator(this); }
 
             //-----------------------------------------------------------------
             /*! 
@@ -235,9 +235,9 @@ namespace nx{
             Return an iterator to the last attribute attached to the object.
             \return iterator to last attribute
             */
-            iterator_type end() const
+            iterator end() const
             {
-                return iterator_type(*this,size());
+                return iterator(this,size());
             }
     };
 

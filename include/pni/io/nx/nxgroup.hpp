@@ -31,10 +31,8 @@
 #include "nxfield.hpp"
 #include "nxfilter.hpp"
 #include "nxexceptions.hpp"
-#include "nxobject_iterator.hpp"
 #include "nxlink.hpp"
 #include "nxattribute.hpp"
-#include "nxattribute_iterator.hpp"
 #include "algorithms.hpp"
 
 
@@ -59,15 +57,15 @@ namespace nx{
             typedef typename nximp_map<IMPID>::group_imp imp_type;
             typedef nxgroup<IMPID> group_type;
 
-            typedef nxobject_iterator<group_type,
-                    typename nxobject_trait<IMPID>::object_type 
-                    > iterator; //!< iterator type
+            //typedef nxobject_iterator<group_type,
+            //       typename nxobject_trait<IMPID>::object_type 
+             //       > iterator; //!< iterator type
+            typedef typename nxobject_trait<IMPID>::object_type value_type;
+            typedef pni::core::container_iterator<const group_type> iterator;
             //! field type
             typedef typename nxobject_trait<IMPID>::field_type field_type; 
             typedef typename nxobject_trait<IMPID>::attribute_type
                 attribute_type;
-            typedef nxattribute_iterator<field_type,attribute_type>
-                attr_iterator;
         private:
             typedef typename nximp_map<IMPID>::field_imp field_imp_type;
             typedef typename nximp_map<IMPID>::object_imp object_imp_type;
@@ -557,6 +555,7 @@ namespace nx{
             \return number of childs
             */
             size_t nchildren() const { return _imp.nchildren(); }
+            size_t size() const { return _imp.nchildren(); }
 
             //-----------------------------------------------------------------
             /*!
@@ -710,7 +709,7 @@ namespace nx{
             */
             iterator begin() const
             {
-                return iterator(*this);
+                return iterator(this);
             }
           
             //-----------------------------------------------------------------
@@ -721,7 +720,7 @@ namespace nx{
             */
             iterator end() const
             {
-                return iterator(*this, this->nchildren());
+                return iterator(this, this->size());
             }
 
             //----------------------------------------------------------------

@@ -38,7 +38,6 @@
 #include "nxselection.hpp"
 #include "utils/io_utils.hpp"
 #include "nxattribute.hpp"
-#include "nxattribute_iterator.hpp"
 #include "algorithms.hpp"
 
 
@@ -165,8 +164,6 @@ namespace nx{
             typedef nxfield<IMPID>              field_type;
             typedef typename nxobject_trait<IMPID>::attribute_type
                 attribute_type;
-            typedef nxattribute_iterator<field_type,attribute_type>
-                attr_iterator;
         private:
             //! field implementation
             imp_type _imp;

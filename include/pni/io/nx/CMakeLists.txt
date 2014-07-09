@@ -1,6 +1,5 @@
 set(HEADER_FILES nexus_utils.hpp
                  nxattribute.hpp 
-                 nxattribute_iterator.hpp 
                  nxdate_time.hpp 
                  nxdeflate_filter.hpp 
                  nxexceptions.hpp 
@@ -16,7 +15,6 @@ set(HEADER_FILES nexus_utils.hpp
                  nxlink.hpp 
                  nxobject.hpp
                  nxlink_type.hpp 
-                 nxobject_iterator.hpp
                  nxobject_traits.hpp
                  nxobject_type.hpp
                  nxpath.hpp

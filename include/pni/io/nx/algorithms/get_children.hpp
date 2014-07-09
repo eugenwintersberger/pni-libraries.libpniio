@@ -60,7 +60,7 @@ namespace nx{
         static_assert(!std::is_same<object_type,attribute_type>::value,
                 "GROUP TYPE REQUIRED - GOT AN ATTRIBUTE TYPE!");
 
-        for(auto &child: o)
+        for(const auto &child: o)
             c.push_back(child);
     }
 
