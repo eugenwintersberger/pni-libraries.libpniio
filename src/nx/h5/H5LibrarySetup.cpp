@@ -23,7 +23,6 @@
 
 #include <pni/io/nx/h5/H5LibrarySetup.hpp>
 
-#include <pni/io/nx/h5/filters/lzf_filter.h>
 
 namespace pni {
 namespace io {
@@ -38,8 +37,6 @@ namespace h5 {
         H5get_libversion(&_major_version_number,&_minor_version_number,
                          &_release_number);
 
-        //register custom filters to the library
-        register_lzf();
     }
 
     //--------------------------------------------------------------------------

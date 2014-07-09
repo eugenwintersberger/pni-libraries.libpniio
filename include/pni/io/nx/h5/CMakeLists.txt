@@ -12,12 +12,10 @@ set(HEADER_FILES H5Attribute.hpp
                  H5Group.hpp 
                  H5LibrarySetup.hpp 
                  h5link.hpp 
-                 H5LZFFilter.hpp 
                  H5NamedObject.hpp 
                  H5Object.hpp 
                  H5ObjectType.hpp )
 
-add_subdirectory("filters")
 
 install(FILES ${HEADER_FILES} DESTINATION
         ${CMAKE_INSTALL_FULL_INCLUDEDIR}/pni/io/nx/h5)

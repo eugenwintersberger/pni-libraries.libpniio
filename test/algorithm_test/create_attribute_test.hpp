@@ -28,10 +28,12 @@
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 #include <pni/io/nx/nx.hpp>
+#include <pni/io/exceptions.hpp>
 #include <pni/io/nx/algorithms/create_attribute.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx;
+using pni::io::invalid_object_error;
 
 class create_attribute_test : public CppUnit::TestFixture
 {

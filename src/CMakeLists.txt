@@ -24,7 +24,6 @@ add_library(pniio SHARED ${SOURCES} $<TARGET_OBJECTS:cbf_objects>
     $<TARGET_OBJECTS:nx_objects>
     $<TARGET_OBJECTS:h5_objects>
     $<TARGET_OBJECTS:xml_objects>
-    $<TARGET_OBJECTS:filter_objects>
     $<TARGET_OBJECTS:tiff_objects>
     $<TARGET_OBJECTS:nx_path>
     )
