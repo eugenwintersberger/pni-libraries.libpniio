@@ -277,8 +277,8 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
-                throw nxattribute_error(EXCEPTION_RECORD,
-                        "Cannot create a group below an attribute!");
+                throw type_error(EXCEPTION_RECORD,
+                        "Cannot create an attribute at an attribute!");
                 return result_type();
             }
 #pragma GCC diagnostic pop
@@ -362,20 +362,21 @@ namespace nx{
                            const nxpath &path,const STYPE &s=STYPE())
     {
         typedef create_attribute_visitor<GTYPE,FTYPE,ATYPE,T,STYPE> visitor_t;
-        nxpath group_path,target_path;
 
         //check if the path describes an attribute
         if(path.attribute().empty())
-            throw nxattribute_error(EXCEPTION_RECORD,
+            throw value_error(EXCEPTION_RECORD,
                     "Path does not describe an attribute!");
 
-        split_last(path,group_path,target_path);
+        //create a path to the parent object of the attribute
+        nxpath parent_path(path); 
+        parent_path.attribute("");
 
-        auto parent = get_object(o,group_path);
-        auto target = get_child(parent,target_path.begin()->first,
-                           target_path.begin()->second);
+        //obtain the parent for the target object - this will always be a 
+        //grou ptype
+        auto parent = get_object(o,parent_path);
 
-        return boost::apply_visitor(visitor_t(target_path.attribute(),s),target);
+        return boost::apply_visitor(visitor_t(path.attribute(),s),parent);
     }
     
 

@@ -52,16 +52,24 @@ void create_attribute_test::tearDown()
     root.close();
     file.close();
 }
+//-----------------------------------------------------------------------------
+
+void create_attribute_test::default_test(const h5::nxobject &a)
+{
+    CPPUNIT_ASSERT(is_valid(a));
+    CPPUNIT_ASSERT(is_attribute(a));
+}
 
 
 //-----------------------------------------------------------------------------
-void create_attribute_test::test_group()
+void create_attribute_test::test_group_object()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject root_group = root;
     
     h5::nxobject f;
-    CPPUNIT_ASSERT(is_valid(f=create_attribute<float32>(root_group,"test1")));
+    CPPUNIT_ASSERT_NO_THROW(f=create_attribute<float32>(root_group,"test1"));
+    CPPUNIT_ASSERT(is_valid(f));
     CPPUNIT_ASSERT(is_attribute(f));
     CPPUNIT_ASSERT(get_name(f)=="test1");
     CPPUNIT_ASSERT(get_rank(f)==0);
@@ -80,10 +88,36 @@ void create_attribute_test::test_group()
 
 }
 
+
+
+//-----------------------------------------------------------------------------
+void create_attribute_test::test_group()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    h5::nxobject f;
+    CPPUNIT_ASSERT_NO_THROW(f=create_attribute<float32>(root,"test1"));
+    CPPUNIT_ASSERT(is_valid(f));
+    CPPUNIT_ASSERT(is_attribute(f));
+    CPPUNIT_ASSERT(get_name(f)=="test1");
+    CPPUNIT_ASSERT(get_rank(f)==0);
+    CPPUNIT_ASSERT(get_type(f) == type_id_t::FLOAT32);
+    auto s = get_shape<shape_t>(f);
+    CPPUNIT_ASSERT(s.size()== 0);
+
+    CPPUNIT_ASSERT(is_valid(f=create_attribute<float32>(root,"test2",shape_t{4,3})));
+    CPPUNIT_ASSERT(is_attribute(f));
+    CPPUNIT_ASSERT(get_name(f)=="test2");
+    CPPUNIT_ASSERT(get_rank(f)==2);
+    CPPUNIT_ASSERT(get_type(f) == type_id_t::FLOAT32);
+    s = get_shape<shape_t>(f);
+    CPPUNIT_ASSERT(s[0] == 4);
+    CPPUNIT_ASSERT(s[1] == 3);
+}
 //-----------------------------------------------------------------------------
 void create_attribute_test::test_group_from_path()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject root_group = root;
     nxpath p = nxpath::from_string("/:NXentry/:NXinstrument@time");
 
@@ -97,17 +131,21 @@ void create_attribute_test::test_group_from_path()
     CPPUNIT_ASSERT(get_type(f) == type_id_t::FLOAT32);
     auto s = get_shape<shape_t>(f);
     CPPUNIT_ASSERT(s.size() == 0);
-    
+   
+    //fails because the group does not exist
     CPPUNIT_ASSERT_THROW(create_attribute<uint16>(root_group,
                 nxpath::from_string("./:NXdetector@data")),key_error);
-
+    //fails because the pass does not describe an attribute
+    CPPUNIT_ASSERT_THROW(create_attribute<uint16>(root_group,
+                        nxpath::from_string("/:NXentry/:NXinstrument")),
+                        value_error);
 }
 
 
 //-----------------------------------------------------------------------------
 void create_attribute_test::test_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject parent = field;
     
     h5::nxobject f;
@@ -123,9 +161,18 @@ void create_attribute_test::test_field()
 //-----------------------------------------------------------------------------
 void create_attribute_test::test_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = group.attributes["NX_class"];
-    CPPUNIT_ASSERT_THROW(create_attribute<float32>(object,"g1"),nxattribute_error);
+    CPPUNIT_ASSERT_THROW(create_attribute<float32>(object,"g1"),type_error);
+}
+
+//----------------------------------------------------------------------------
+void create_attribute_test::test_errors()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    h5::nxobject object;
+
+    CPPUNIT_ASSERT_THROW(create_attribute<string>(object,"test"),invalid_object_error);
 }
 

@@ -142,6 +142,7 @@ namespace h5{
             //! Returns the parent object. This might be either a group (in 
             //! the case of a field or group) or a field.
             //!
+            //! \throws object_error in case 
             //! \return object instance of the parent
             //!
             virtual H5Object parent() const;

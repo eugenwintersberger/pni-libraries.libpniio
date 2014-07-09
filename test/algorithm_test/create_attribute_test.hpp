@@ -38,8 +38,10 @@ class create_attribute_test : public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE(create_attribute_test);
         CPPUNIT_TEST(test_field);
         CPPUNIT_TEST(test_group);
+        CPPUNIT_TEST(test_group_object);
         CPPUNIT_TEST(test_group_from_path);
         CPPUNIT_TEST(test_attribute);
+        CPPUNIT_TEST(test_errors);
         CPPUNIT_TEST_SUITE_END();
 
         h5::nxfile file;
@@ -48,7 +50,8 @@ class create_attribute_test : public CppUnit::TestFixture
         h5::nxattribute attr;
 
         shape_t field_shape,cs_shape;
-
+    
+        void default_test(const h5::nxobject &a);
         
     public:
         void setUp();
@@ -56,8 +59,9 @@ class create_attribute_test : public CppUnit::TestFixture
         
         void test_field();
         void test_group();
+        void test_group_object();
         void test_group_from_path();
         void test_attribute();
-
+        void test_errors();
 };
 
