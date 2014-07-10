@@ -107,8 +107,6 @@ void H5AttributeTest::test_inquery()
     CPPUNIT_ASSERT(a1.rank() == 0);
     CPPUNIT_ASSERT(a1.type_id() == type_id_t::FLOAT32);
     CPPUNIT_ASSERT(a1.shape<shape_t>().size() == 0);
-    CPPUNIT_ASSERT(a1.path() == "/group@a1");
-    CPPUNIT_ASSERT(a1.base() == "/group");
 
 
     CPPUNIT_ASSERT(a2.is_valid());

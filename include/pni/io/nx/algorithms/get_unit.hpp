@@ -22,6 +22,7 @@
 #pragma once
 
 #include "../nxobject_traits.hpp"
+#include "get_path.hpp"
 
 namespace pni{
 namespace io{
@@ -77,7 +78,7 @@ namespace nx{
             result_type operator()(const group_type &g) const
             {
                 throw nxgroup_error(EXCEPTION_RECORD,
-                        "Group ["+g.path()+"] does not have a unit!");
+                        "Group ["+get_path(g)+"] does not have a unit!");
                 return result_type();
             }
 #pragma GCC diagnostic pop

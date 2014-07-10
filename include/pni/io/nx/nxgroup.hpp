@@ -28,12 +28,11 @@
 
 #include "nxattribute_manager.hpp"
 #include "nximp_map.hpp"
-#include "nxfield.hpp"
+#include "nxobject_traits.hpp"
 #include "nxfilter.hpp"
 #include "nxexceptions.hpp"
 #include "nxlink.hpp"
-#include "nxattribute.hpp"
-#include "algorithms.hpp"
+#include "algorithms/get_path.hpp"
 
 
 namespace pni{
@@ -308,7 +307,7 @@ namespace nx{
                     //in case of an unknown error throw a new one
                     std::stringstream ss;
                     ss<<"Error creating group ["<<n<<"] below ["<<
-                                  this->path()<<"]!";
+                                  get_path(*this)<<"]!";
                     throw nxgroup_error(EXCEPTION_RECORD,ss.str());
                 }
 
@@ -328,7 +327,7 @@ namespace nx{
                 {
                     std::stringstream ss;
                     ss<<"Error creating attribute [NX_class] on";
-                    ss<<" group"<<this->path()<<"!";
+                    ss<<" group"<<get_path(*this)<<"!";
                     throw nxattribute_error(EXCEPTION_RECORD,ss.str());
                          
                 }
@@ -519,8 +518,8 @@ namespace nx{
                 catch(...)
                 {
                     throw nxgroup_error(EXCEPTION_RECORD,
-                          "Error opening ["+n+"] below group ["+this->path()+
-                          "]!");
+                          "Error opening ["+n+"] below group ["
+                          +get_path(*this)+ "]!");
                 }
 
                 if(object.nxobject_type() == nxobject_type::NXFIELD)
@@ -722,12 +721,6 @@ namespace nx{
             {
                 return iterator(this, this->size());
             }
-
-            //----------------------------------------------------------------
-            string path() const { return _imp.path(); }
-
-            //----------------------------------------------------------------
-            string base() const { return _imp.base(); }
 
             //---------------------------------------------------------------
             string name() const { return _imp.name(); }

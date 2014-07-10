@@ -26,6 +26,7 @@
 #include "nxobject_traits.hpp"
 #include "nxpath.hpp"
 #include "nxlink_type.hpp"
+#include "algorithms/get_path.hpp"
 
 namespace pni{
 namespace io{
@@ -134,7 +135,7 @@ namespace nx{
             >
     void link(const STYPE &target,const GTYPE &g,const string &name)
     {
-        link(target.path(),g,name);
+        link(get_path(target),g,name);
     }
 
     //-------------------------------------------------------------------------

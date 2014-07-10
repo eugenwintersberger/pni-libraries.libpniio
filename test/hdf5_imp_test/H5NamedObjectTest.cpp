@@ -60,9 +60,7 @@ void H5NamedObjectTest::test_creation()
     //check the object type
     CPPUNIT_ASSERT(test.object_type() == H5ObjectType::GROUP);
     CPPUNIT_ASSERT(test.is_valid());
-    CPPUNIT_ASSERT(test.path() == "/group");
     CPPUNIT_ASSERT(test.name() == "group");
-    CPPUNIT_ASSERT(test.base() == "/");
     CPPUNIT_ASSERT_NO_THROW(test.close());
     CPPUNIT_ASSERT(!test.is_valid());
 

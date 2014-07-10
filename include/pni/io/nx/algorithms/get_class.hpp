@@ -23,6 +23,7 @@
 #pragma once
 
 #include "../nxobject_traits.hpp"
+#include "get_path.hpp"
 
 namespace pni{
 namespace io{
@@ -61,7 +62,6 @@ namespace nx{
             //! (the NX_class attribute does not exist) an exception will 
             //! be thrown.
             //!
-            //! \throws nxgroup_error if NX_class attribute does not exist
             //! \param g group instance
             //! \return Nexus class as string
             //!
@@ -70,9 +70,6 @@ namespace nx{
                 result_type buffer;
                 if(g.attributes.exists("NX_class"))
                     g.attributes["NX_class"].read(buffer);
-                else
-                    throw nxgroup_error(EXCEPTION_RECORD,
-                            "Group "+g.path()+" has no class attribute!");
 
                 return buffer;
             }

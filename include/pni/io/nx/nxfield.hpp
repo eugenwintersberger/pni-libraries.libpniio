@@ -37,8 +37,7 @@
 #include "nxexceptions.hpp"
 #include "nxselection.hpp"
 #include "utils/io_utils.hpp"
-#include "nxattribute.hpp"
-#include "algorithms.hpp"
+#include "algorithms/get_path.hpp"
 
 
 namespace pni{
@@ -496,7 +495,7 @@ namespace nx{
                 catch(...)
                 {
                     std::stringstream ss;
-                    ss<<"Growing field ["<<this->path();
+                    ss<<"Growing field ["<<get_path(*this);
                     ss<<"] along dimension"<<e<<" by "<<n<<" elements ";
                     ss<<"failed!";
                     throw nxfield_error(EXCEPTION_RECORD,ss.str());
@@ -541,7 +540,7 @@ namespace nx{
                 {
                     throw nxfield_error(EXCEPTION_RECORD,
                                        "Error reading data from field ["
-                                       +this->path()+"]!");
+                                       +get_path(*this)+"]!");
                 }
             }
            
@@ -557,7 +556,7 @@ namespace nx{
                 {
                     throw nxfield_error(EXCEPTION_RECORD,
                                        "Error reading data from field ["
-                                       +this->path()+"]!");
+                                       +get_path(*this)+"]!");
                 }
             }
 
@@ -651,7 +650,7 @@ namespace nx{
                 {
                     throw nxfield_error(EXCEPTION_RECORD,
                             "Error writing data to field ["
-                            +this->path()+"]!");
+                            +get_path(*this)+"]!");
                 }
 
             }
@@ -668,7 +667,7 @@ namespace nx{
                 {
                     throw nxfield_error(EXCEPTION_RECORD,
                             "Error writing data to field ["
-                            +this->path()+"]!");
+                            +get_path(*this)+"]!");
                 }
 
             }
@@ -808,12 +807,6 @@ namespace nx{
             }
         
             friend class nxselection<field_type>;
-
-            //----------------------------------------------------------------
-            string path() const { return _imp.path(); }
-
-            //----------------------------------------------------------------
-            string base() const { return _imp.base(); }
 
             //---------------------------------------------------------------
             string name() const { return _imp.name(); }

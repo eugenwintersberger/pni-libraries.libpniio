@@ -22,7 +22,7 @@
 //
 
 #include <pni/io/exceptions.hpp>
-#include "hdf5_utilities.hpp"
+#include <pni/io/nx/h5/hdf5_utilities.hpp>
 
 
 
@@ -92,7 +92,6 @@ namespace h5{
         }
 
         return base;
-
     }
 
 //end of namespace

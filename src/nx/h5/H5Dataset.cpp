@@ -106,8 +106,9 @@ namespace h5{
                 lpl,H5P_DEFAULT,H5P_DEFAULT);
         if(did<0)
             throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
-            "Cannot create dataset ["+n+"] below ["+path()+"]!\n\n"+
-            get_h5_error_string());
+            "Cannot create dataset ["+n+"] below ["
+            +get_object_path(g.id())+"]!\n\n"
+            +get_h5_error_string());
 
         //set id
         *this = H5Dataset(did);

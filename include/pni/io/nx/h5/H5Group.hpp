@@ -28,6 +28,7 @@
 
 
 #include "H5AttributeObject.hpp"
+#include "hdf5_utilities.hpp"
 
 
 namespace pni{

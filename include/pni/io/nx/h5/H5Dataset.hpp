@@ -37,6 +37,7 @@
 #include "H5Filter.hpp"
 #include "h5_error_stack.hpp"
 #include "../nxexceptions.hpp"
+#include "hdf5_utilities.hpp"
 
 
 namespace pni{
@@ -215,7 +216,7 @@ namespace h5{
                 if(lpl == -1)
                     throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
                             "Error creating link property list for dataset ["+
-                            n+"] below ["+g.path()+"]!\n\n"+
+                            n+"] below ["+get_object_path(g.id())+"]!\n\n"+
                             get_h5_error_string());
 
                 
@@ -224,7 +225,7 @@ namespace h5{
                 if(cpl == -1)
                     throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
                             "Error creating dataset create property list for ["+
-                            n+"] below ["+g.path()+"]!\n\n"+
+                            n+"] below ["+get_object_path(g.id())+"]!\n\n"+
                             get_h5_error_string());
 
                 if(cs.size() != 0)
@@ -232,7 +233,7 @@ namespace h5{
                     if(H5Pset_layout(cpl,H5D_CHUNKED)<0)
                         throw pni::io::nx::nxfile_error(EXCEPTION_RECORD,
                         "Error setting dataset layout for ["+n+"] below "
-                        "["+g.path()+"] to chunked!\n\n"+
+                        "["+get_object_path(g.id())+"] to chunked!\n\n"+
                         get_h5_error_string());
 
                     std::vector<hsize_t> cdims(cs.size());
@@ -240,7 +241,7 @@ namespace h5{
                     if(H5Pset_chunk(cpl,cs.size(),cdims.data())<0)
                         throw pni::io::nx::nxfile_error(EXCEPTION_RECORD,
                         "Error setting chunk size for ["+n+"] below "
-                        "["+g.path()+"]!\n\n"+ get_h5_error_string());
+                        "["+get_object_path(g.id())+"]!\n\n"+ get_h5_error_string());
                 }
 
                 //create the datase
@@ -252,8 +253,9 @@ namespace h5{
                     H5Pclose(lpl);
                     H5Pclose(cpl);
                     throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
-                          "Cannot create dataset ["+n+"] below ["+g.path()+
-                          "]!\n\n"+ get_h5_error_string());
+                          "Cannot create dataset ["+n+"] below ["
+                          +get_object_path(g.id())+ "]!\n\n"
+                          +get_h5_error_string());
                 };
 
                 
@@ -299,7 +301,7 @@ namespace h5{
                 if(lpl == -1)
                     throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
                             "Error creating link property list for dataset ["+
-                            n+"] below ["+g.path()+"]!\n\n"+
+                            n+"] below ["+get_object_path(g.id())+"]!\n\n"+
                             get_h5_error_string());
 
                 
@@ -308,7 +310,7 @@ namespace h5{
                 if(cpl == -1)
                     throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
                             "Error creating dataset create property list for ["+
-                            n+"] below ["+g.path()+"]!\n\n"+
+                            n+"] below ["+get_object_path(g.id())+"]!\n\n"+
                             get_h5_error_string());
 
                 if(cs.size() != 0)
@@ -316,7 +318,7 @@ namespace h5{
                     if(H5Pset_layout(cpl,H5D_CHUNKED)<0)
                         throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
                         "Error setting dataset layout for ["+n+"] below "
-                        "["+g.path()+"] to chunked!\n\n"+
+                        "["+get_object_path(g.id())+"] to chunked!\n\n"+
                         get_h5_error_string());
 
                     std::vector<hsize_t> cdims(cs.size());
@@ -324,7 +326,7 @@ namespace h5{
                     if(H5Pset_chunk(cpl,cs.size(),cdims.data())<0)
                         throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
                         "Error setting chunk size for ["+n+"] below "
-                        "["+g.path()+"]!\n\n"+ get_h5_error_string());
+                        "["+get_object_path(g.id())+"]!\n\n"+ get_h5_error_string());
 
                 }
 
@@ -340,8 +342,8 @@ namespace h5{
                     H5Pclose(lpl);
                     H5Pclose(cpl);
                     throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
-                         "Cannot create dataset ["+n+"] below ["+g.path()+"]!"+
-                         get_h5_error_string());
+                         "Cannot create dataset ["+n+"] below ["
+                         +get_object_path(g.id())+"]!"+ get_h5_error_string());
                 }
 
                 *this = H5Dataset(did);

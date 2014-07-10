@@ -52,8 +52,6 @@ void H5GroupTest::test_creation()
     CPPUNIT_ASSERT(g1.is_valid());
     CPPUNIT_ASSERT(g1.filename() == "H5GroupTest.h5");
     CPPUNIT_ASSERT(g1.name()=="group1");
-    CPPUNIT_ASSERT(g1.path()=="/group1");
-    CPPUNIT_ASSERT(g1.base()=="/");
 
     //create a group from another group
     H5Group g2("group12",g1);

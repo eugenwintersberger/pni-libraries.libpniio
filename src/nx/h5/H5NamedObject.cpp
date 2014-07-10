@@ -22,9 +22,8 @@
 //
 
 #include <pni/io/nx/h5/H5NamedObject.hpp>
+#include <pni/io/nx/h5/hdf5_utilities.hpp>
 #include <pni/io/exceptions.hpp>
-
-#include "hdf5_utilities.hpp"
 
 namespace pni{
 namespace io{
@@ -106,7 +105,7 @@ namespace h5{
             throw invalid_object_error(EXCEPTION_RECORD,
                     "Try to obtain the name of an invalid object!");
 
-        string p(H5NamedObject::path());
+        string p = get_object_path(id());
 
         //if the path is empty return an empty string
         if(p.empty()) return p;
@@ -119,46 +118,6 @@ namespace h5{
         if(lpos != p.npos) name = string(p,lpos+1,p.size()-lpos+1);
 
         return name;
-    }
-    
-    //-------------------------------------------------------------------------
-    string H5NamedObject::base() const
-    {
-        string p(H5NamedObject::path());
-
-        if(p.empty()) return p;
-
-        //if the string is of size 1 and has
-        //only one / return this
-        string base;
-        if((p.size() == 1) && (p[0] == '/')) return string("/");
-
-        size_t lpos = p.find_last_of("/");
-        if(lpos != p.npos)
-        {
-            //if the / has been found in the 
-            //first position we can simply return this
-            if(lpos == 0) base = string("/");
-            else
-            {
-                //in all other cases a bit more work 
-                //is necessary
-                base = string(p,0,lpos+1);
-
-                //remove a trailing /
-                if(base[base.size()-1] == '/'){
-                    base = string(base,0,base.size()-1);
-                }
-            }
-        }
-
-        return base;
-    }
-
-    //-------------------------------------------------------------------------
-    string H5NamedObject::path() const
-    {
-        return get_object_path(id());
     }
 
     //-------------------------------------------------------------------------

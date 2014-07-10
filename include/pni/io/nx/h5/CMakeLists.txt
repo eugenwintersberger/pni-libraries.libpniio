@@ -14,7 +14,9 @@ set(HEADER_FILES H5Attribute.hpp
                  h5link.hpp 
                  H5NamedObject.hpp 
                  H5Object.hpp 
-                 H5ObjectType.hpp )
+                 H5ObjectType.hpp 
+                 hdf5_utilities.hpp
+                 )
 
 
 install(FILES ${HEADER_FILES} DESTINATION

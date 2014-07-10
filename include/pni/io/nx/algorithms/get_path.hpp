@@ -22,10 +22,13 @@
 #pragma once
 
 #include "../nxobject.hpp"
+#include "../nxobject_traits.hpp"
+#include "get_class.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
+    using namespace pni::core;
 
     //!
     //! \ingroup algorithm_code
@@ -39,15 +42,18 @@ namespace nx{
     //! \param o object instance
     //! \return path as string
     //! 
-    template<
-             template<nximp_code> class OTYPE,
-             nximp_code IMPID
+    template< 
+              template<nximp_code> class OTYPE,
+              nximp_code IMPID 
             >
     string get_path(const OTYPE<IMPID> &o)
     {
-        return o.path();
-    }
+        typedef typename nxobject_trait<IMPID>::object_type object_type;
 
+        return get_path(object_type(o));
+    }
+   
+    //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_internal_code
     //! \brief get path visitor
@@ -87,7 +93,20 @@ namespace nx{
             //!
             result_type operator()(const group_type &g) const
             {
-                return get_path(g);
+                typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
+                string name = g.name();
+                string c    = get_class(object_type(g));
+
+                if(name == "/")
+                    //in the case of the root class
+                    return "";
+                else
+                {
+                    string path = name;
+                    if(!c.empty()) path = path+":"+c;
+
+                    return get_path(g.parent())+"/"+path;
+                }
             }
 
             //-----------------------------------------------------------------
@@ -100,7 +119,7 @@ namespace nx{
             //!
             result_type operator()(const field_type &f) const
             {
-                return get_path(f);
+                return get_path(f.parent())+"/"+f.name();
             }
 
             //-----------------------------------------------------------------
@@ -113,7 +132,7 @@ namespace nx{
             //!
             result_type operator()(const attribute_type &a) const
             {
-                return get_path(a);
+                return get_path(a.parent())+"@"+a.name();
             }
     };
 

@@ -22,6 +22,7 @@
 #pragma once
 
 #include "../nxobject_traits.hpp"
+#include "get_path.hpp"
 
 namespace pni{
 namespace io{
@@ -79,7 +80,7 @@ namespace nx{
                 {
                     throw nxgroup_error(EXCEPTION_RECORD,
                             "Error writing NX_class attribute to group "
-                            +g.path()+"!");
+                            +get_path(g)+"!");
                 }
 
             }

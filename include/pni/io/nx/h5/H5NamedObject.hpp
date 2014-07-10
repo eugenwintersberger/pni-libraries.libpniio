@@ -104,28 +104,6 @@ namespace h5{
             virtual string name() const;
 
             //-----------------------------------------------------------------
-            //! 
-            //! \brief return object base
-            //!
-            //! Return the the base part of the objects path.  If the object 
-            //! would have the path /scan_1/detector/data this method would 
-            //! return /scan_1/detector.
-            //!
-            //! \return base part of the objects path
-            //!
-            virtual string base() const;
-
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief return object path
-            //! 
-            //! This method returns the full path of an object.
-            //!
-            //! \return full object path
-            //!
-            virtual string path() const;
-
-            //-----------------------------------------------------------------
             //!
             //! \brief return filename
             //!

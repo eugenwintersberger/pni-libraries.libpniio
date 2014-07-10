@@ -38,7 +38,7 @@
 #include <pni/io/nx/h5/H5Dataset.hpp>
 
 using namespace pni::core;
-using namespace pni::io::nx::h5;
+using namespace pni::io::nx;
 
 class H5LinkTest:public CppUnit::TestFixture{
         CPPUNIT_TEST_SUITE(H5LinkTest);
@@ -47,8 +47,8 @@ class H5LinkTest:public CppUnit::TestFixture{
         CPPUNIT_TEST(test_link_type);
         CPPUNIT_TEST_SUITE_END();
     private:
-        H5File _file1;
-        H5File _file2;
+        h5::H5File _file1;
+        h5::H5File _file2;
     public:
         void setUp();
         void tearDown();

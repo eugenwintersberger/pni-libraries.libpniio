@@ -85,7 +85,8 @@ namespace h5{
         if(link_pl < 0) 
         {
             string estr = "Creation of link property list failed"
-                "for new group ["+name+"] under ["+parent.path()+
+                "for new group ["+name+"] under ["
+                +get_object_path(parent.id())+
                 "]!\n\n"+get_h5_error_string();
             throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD,estr);
         }
@@ -95,8 +96,8 @@ namespace h5{
         if(gid<0)
         {
             string estr = "Error creating group ["+name+
-                          "] under ["+parent.path()+"!\n\n"+
-                          get_h5_error_string();
+                          "] under ["+get_object_path(parent.id())
+                          +"!\n\n"+get_h5_error_string();
             throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD,estr);
         }
 

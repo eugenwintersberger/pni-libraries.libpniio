@@ -32,6 +32,7 @@
 #include "H5Attribute.hpp"
 #include "H5DatatypeFactory.hpp"
 #include "../../exceptions.hpp"
+#include "hdf5_utilities.hpp"
 
 
 namespace pni{
@@ -264,7 +265,8 @@ namespace h5{
             else
             {
                 string ss = "Attribute ["+n+"] already exists on "
-                        "object ["+path()+"]!\n\n"+get_h5_error_string();
+                        "object ["+get_object_path(id())+"]!\n\n"
+                        +get_h5_error_string();
                 throw object_error(EXCEPTION_RECORD,ss);
             }
         }
@@ -275,7 +277,8 @@ namespace h5{
         {
             object_error error(EXCEPTION_RECORD,
                     "Cannot create attribute ["+n+"] on object ["
-                    +path()+"]!\n\n" +get_h5_error_string());
+                    +get_object_path(id())+"]!\n\n" 
+                    +get_h5_error_string());
             throw error;
         }
 

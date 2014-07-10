@@ -27,6 +27,7 @@
 
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 #include <pni/io/nx/nxexceptions.hpp>
+#include <pni/io/nx/h5/hdf5_utilities.hpp>
 
 namespace pni{
 namespace io{
@@ -114,14 +115,14 @@ namespace h5{
 
         if(!loc.exists(name))
             throw key_error(EXCEPTION_RECORD,
-                    "Group ["+loc.path()+"] does not have a child ["+name+
-                    "]!");
+                    "Group ["+get_object_path(loc.id())
+                    +"] does not have a child ["+name+ "]!");
 
         if(H5Lget_info(loc.id(),name.c_str(),&info,H5P_DEFAULT)<0)
         {
             throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
                     "Error obtaining link type for child ["+name+"] of group"+
-                    "["+loc.path()+"]!");
+                    "["+get_object_path(loc.id())+"]!");
         }
 
         if(info.type == H5L_TYPE_EXTERNAL)
