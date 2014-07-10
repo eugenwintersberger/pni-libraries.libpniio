@@ -25,6 +25,7 @@ extern "C"{
 #include <hdf5.h>
 }
 
+#include <pni/io/exceptions.hpp>
 #include <pni/io/nx/h5/h5_error.hpp>
 
 
@@ -32,13 +33,11 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
+    using pni::io::io_error;
 
     //--------------------------------------------------------------------------
-    h5_error::h5_error():
-        _class_id(0),
+    h5_error::h5_error() noexcept:
         _class_name(),
-        _major_number(0),
-        _minor_number(0),
         _file_name(),
         _func_name(),
         _description(),
@@ -48,10 +47,7 @@ namespace h5{
 
     //--------------------------------------------------------------------------
     h5_error::h5_error(const h5_error &e):
-        _class_id(e._class_id),
         _class_name(e._class_name),
-        _major_number(e._major_number),
-        _minor_number(e._minor_number),
         _file_name(e._file_name),
         _func_name(e._func_name),
         _description(e._description),
@@ -67,10 +63,7 @@ namespace h5{
     {
         if(this != &e)
         {
-            _class_id = e._class_id;
             _class_name = e._class_name;
-            _major_number = e._major_number;
-            _minor_number = e._minor_number;
             _file_name = e._file_name;
             _func_name = e._func_name;
             _description = e._description;
@@ -81,104 +74,75 @@ namespace h5{
         return *this;
     }
 
-    //--------------------------------------------------------------------------
-    hid_t h5_error::class_id() const
+    //------------------------------------------------------------------------
+    string h5_error::get_message(hid_t mid,H5E_type_t *mtype)
     {
-        return _class_id;
+        ssize_t buffer_size = 0;
+
+        //get the major message from the error stack
+        buffer_size = H5Eget_msg(mid,mtype,NULL,1);
+        if(buffer_size<0)
+            throw io_error(EXCEPTION_RECORD,
+                    "Error retrieving error message content length!");
+
+        string buffer(buffer_size,' ');
+
+        char*ptr = const_cast<char*>(buffer.data());
+        if(H5Eget_msg(mid,mtype,ptr,buffer_size+1)<0)
+            throw io_error(EXCEPTION_RECORD,
+                    "Error retrieving error message content!");
+    
+        return buffer;
     }
 
-    //--------------------------------------------------------------------------
-    void h5_error::class_id(hid_t id)
-    {
-        char *ptr = nullptr;
-        size_t buffer_size = 0;
 
-        //set the class id
-        _class_id = id;
-        //determine the class name from the class id
+    //--------------------------------------------------------------------------
+    void h5_error::class_name(hid_t id)
+    {
+        ssize_t buffer_size = 0;
 
         //allocate memory
-        buffer_size = H5Eget_class_name(id,NULL,1)+1;
-        ptr = new char[buffer_size];
-        if(!ptr)
-            throw memory_allocation_error(EXCEPTION_RECORD, 
-                                        "Memory allocation failed!");
+        buffer_size = H5Eget_class_name(id,NULL,1);
+        if(buffer_size<0)
+            throw io_error(EXCEPTION_RECORD,"Cannot obtain class name length!");
+
+        _class_name = string(buffer_size,' ');
 
         //obtain error class
-        H5Eget_class_name(id,ptr,buffer_size);
-        _class_name = string(ptr);
-        //free memory
-        if(ptr) delete [] ptr;
+        if(H5Eget_class_name(id,const_cast<char*>(_class_name.data()),buffer_size+1)<0)
+            throw io_error(EXCEPTION_RECORD,"Error retrieving class name!");
     }
 
     //--------------------------------------------------------------------------
-    hid_t h5_error::major_number() const
+    string h5_error::class_name() const
     {
-        return _major_number;
+        return _class_name;
     }
 
     //--------------------------------------------------------------------------
-    void h5_error::major_number(hid_t v)
+    void h5_error::major_message(hid_t mid)
     {
-        char *ptr = nullptr;
-        size_t buffer_size = 0;
         H5E_type_t msg_type;
 
         //set the major number
-        _major_number = v;
+        _major_message = get_message(mid,&msg_type);
+        if(msg_type != H5E_MAJOR)
+            throw type_error(EXCEPTION_RECORD,
+                    "Message does not contain major number of the error!");
 
-        //get the major message from the error stack
-        buffer_size = H5Eget_msg(v,&msg_type,NULL,1);
-        if(buffer_size > 0){
-            //memory allocation
-            ptr = new char[buffer_size+1];
-            if(!ptr)
-                throw memory_allocation_error(EXCEPTION_RECORD, 
-                                            "Memory allocation failed!");
-
-            //read error message
-            H5Eget_msg(v,&msg_type,ptr,buffer_size+1);
-            _major_message = string(ptr);
-
-            //free memory
-            if(ptr) delete [] ptr;
-            ptr = nullptr;
-        }
-    }
-
-    //-------------------------------------------------------------------------
-    hid_t h5_error::minor_number() const
-    {
-        return _minor_number;
     }
 
     //--------------------------------------------------------------------------
-    void h5_error::minor_number(hid_t v)
+    void h5_error::minor_message(hid_t mid)
     {
-        char *ptr = nullptr;
-        size_t buffer_size = 0;
         H5E_type_t msg_type;
 
         //set the minor number
-        _minor_number = v;
-
-        //get the minor message
-        buffer_size = H5Eget_msg(v,&msg_type,NULL,1);
-        if(buffer_size > 0){
-            //memory allocation
-            ptr = new char[buffer_size+1];
-            if(!ptr)
-                throw memory_allocation_error(EXCEPTION_RECORD, 
-                                            "Memory allocation failed!");
-
-            //read minor number
-            H5Eget_msg(v,&msg_type,ptr,buffer_size+1);
-            _minor_message = string(ptr);
-
-            //free memory	
-            if(ptr) delete [] ptr;	
-            ptr = nullptr;
-        }
+        _minor_message = get_message(mid,&msg_type);
+        
+        if(msg_type != H5E_MINOR)
+            throw type_error(EXCEPTION_RECORD,
+                    "Message does not contain minor number of the error!");
     }
 
     //--------------------------------------------------------------------------
@@ -234,10 +198,10 @@ namespace h5{
     //--------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const h5_error &e)
     {
-        o<<e._class_name<<" - Error in: "<<e._func_name<<" ("<<e._file_name
+        o<<e.class_name()<<" - Error in: "<<e.func_name()<<" ("<<e.file_name()
          <<")"<<std::endl;
-        o<<e._description<<": "<<e._major_message<<" -- "<<e._minor_message
-         <<std::endl;
+        o<<e.description()<<": "<<e.major_message()<<" -- "
+         <<e.minor_message()<<std::endl;
 
         return o;
     }
