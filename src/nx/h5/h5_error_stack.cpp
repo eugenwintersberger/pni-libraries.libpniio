@@ -18,9 +18,10 @@
 // ===========================================================================
 //
 //  Created on: Jul 28, 2011
-//      Author: Eugen Wintersberger
+//      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
+#include <pni/io/exceptions.hpp>
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 #include <cstdio>
 #include <cstdlib>
@@ -30,6 +31,9 @@ namespace pni {
 namespace io {
 namespace nx {
 namespace h5 {
+
+    using pni::io::object_error;
+    using pni::io::io_error;
 
 
     //--------------------------------------------------------------------------
@@ -43,9 +47,9 @@ namespace h5 {
         if(eptr->file_name!=NULL) h5e.file_name(string(eptr->file_name));
         if(eptr->func_name!=NULL) h5e.func_name(string(eptr->func_name));
         if(eptr->desc != NULL) h5e.description(string(eptr->desc));
-        h5e.minor_number(eptr->min_num);
-        h5e.major_number(eptr->maj_num);
-        h5e.class_id(eptr->cls_id);
+        h5e.minor_message(eptr->min_num);
+        h5e.major_message(eptr->maj_num);
+        h5e.class_name(eptr->cls_id);
         stack->append(h5e);
 
         return 0;
@@ -53,27 +57,32 @@ namespace h5 {
 #pragma GCC diagnostic pop
 
     //--------------------------------------------------------------------------
-    h5_error_stack::h5_error_stack() { } 
+    h5_error_stack::h5_error_stack() noexcept { } 
+    
+    //--------------------------------------------------------------------------
+    h5_error_stack::h5_error_stack(const h5_error_stack &s):
+        _stack_id(s._stack_id),
+        _errors(s._errors)
+    { }
 
     //--------------------------------------------------------------------------
     void h5_error_stack::fill()
     {
         //fill the stack with error messages
         _stack_id = H5Eget_current_stack();
+        if(_stack_id<0)
+            throw object_error(EXCEPTION_RECORD,
+                    "Failure retrieving HDF5 error stack!");
+
         H5Ewalk2(_stack_id,H5E_WALK_DOWNWARD,_error_walker,(void *)this);
     }
 
-    //--------------------------------------------------------------------------
-    h5_error_stack::h5_error_stack(const h5_error_stack &s)
-    {
-        _stack_id = s._stack_id;
-        _errors = std::vector<h5_error>(s._errors);
-    }
 
     //--------------------------------------------------------------------------
     h5_error_stack &h5_error_stack::operator=(const h5_error_stack &s)
     {
-        if(this != &s){
+        if(this != &s)
+        {
             _stack_id = s._stack_id;
             _errors = std::vector<h5_error>(s._errors);
         }
@@ -85,23 +94,38 @@ namespace h5 {
     h5_error_stack::~h5_error_stack() 
     {
         _errors.clear();
-        H5Eclear2(_stack_id);
-        H5Eclose_stack(_stack_id);
+        if(H5Eclear2(_stack_id)<0)
+            throw object_error(EXCEPTION_RECORD,
+                    "Failure clearing HDF5 error stack!");
+
+        if(H5Eclose_stack(_stack_id)<0)
+            throw object_error(EXCEPTION_RECORD,
+                    "Failure closing HDF5 error stack!");
     }
 
     //--------------------------------------------------------------------------
     void h5_error_stack::append(const h5_error &e){ _errors.push_back(e); }
 
     //--------------------------------------------------------------------------
+    h5_error_stack::const_iterator h5_error_stack::begin() const
+    {
+        return _errors.begin();
+    }
+
+    //--------------------------------------------------------------------------
+    h5_error_stack::const_iterator h5_error_stack::end() const
+    {
+        return _errors.end();
+    }
+
+    //--------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const h5_error_stack &s)
     {
-        std::vector<h5_error>::const_iterator iter;
-
         o<<"HDF5 Errors ("<<s.number_of_errors()<<" error records):"
          <<std::endl;
 
-        for(iter=s._errors.begin();iter!=s._errors.end();iter++)
-            o<<*iter<<std::endl;
+        for(auto error: s)
+            o<<error<<std::endl;
 
         return o;
     }
