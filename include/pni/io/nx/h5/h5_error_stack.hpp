@@ -142,6 +142,7 @@ using pni::core::string;
             
     //------------------------------------------------------------------------
     //!
+    //! \ingroup nxh5_classes
     //! \brief ostream operator
     //!
     std::ostream &operator<<(std::ostream &o, const h5_error_stack &s);
@@ -163,7 +164,7 @@ extern "C" herr_t _error_walker(unsigned n,const H5E_error2_t *eptr,
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup nxh5_error_classes
+    //! \ingroup nxh5_classes
     //! \brief return HDF5 error messages
     //!
     //! Returns all the error messages in the actual HDF5 error stack as a 

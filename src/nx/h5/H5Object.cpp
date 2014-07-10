@@ -43,18 +43,23 @@ namespace h5{
     }
     
     //-------------------------------------------------------------------------
-    H5Object::H5Object() :_id(0) { }
+    H5Object::H5Object() noexcept :_id(0) { }
 
     //-------------------------------------------------------------------------
-    H5Object::H5Object(const H5Object &o) :_id(o._id)
+    H5Object::H5Object(const H5Object &o) 
+        :_id(o._id)
     {
         //need to increment the reference 
         //counter for this object as we do copy construction
-        if(H5Iis_valid(_id)) H5Iinc_ref(_id);
+        if(is_valid()) 
+            if(H5Iinc_ref(_id)<0)
+                throw object_error(EXCEPTION_RECORD,
+                        "Increment of reference counter failed!");
     }
 
     //-------------------------------------------------------------------------
-    H5Object::H5Object(H5Object &&o) :_id(o._id) 
+    H5Object::H5Object(H5Object &&o) noexcept
+        :_id(o._id) 
     {
         o._id = 0;
         //since the id is removed from the original object we do not
@@ -85,7 +90,10 @@ namespace h5{
 
         //if the original object is valid we have to increment 
         //the reference counter for this id
-        if(is_valid()) H5Iinc_ref(_id);
+        if(is_valid()) 
+            if(H5Iinc_ref(_id)<0)
+                throw object_error(EXCEPTION_RECORD,
+                        "Inrement of reference counter failed!");
 
         return *this;
     }
@@ -107,12 +115,19 @@ namespace h5{
     }
    
     //=============basic manipulation methods==================================
-    bool H5Object::is_valid() const noexcept
+    bool H5Object::is_valid() const 
     {
-        //std::cout<<_id;
-        if(H5Iis_valid(_id)>0) return true;
+        htri_t value = H5Iis_valid(_id);
+        
+        if(value < 0)
+            throw object_error(EXCEPTION_RECORD,
+                    "Cannot determine object validity!");
 
-        return false;
+        if(value)
+            return true;
+        else 
+            return false;
+
     }
 
     //-------------------------------------------------------------------------
@@ -129,7 +144,7 @@ namespace h5{
     }
     
     //-------------------------------------------------------------------------
-    const hid_t &H5Object::id() const { return _id; }
+    const hid_t &H5Object::id() const noexcept { return _id; }
 
     //-------------------------------------------------------------------------
     H5ObjectType H5Object::object_type() const 
@@ -147,7 +162,9 @@ namespace h5{
             case H5I_DATATYPE: return H5ObjectType::DATATYPE;
             case H5I_DATASPACE: return H5ObjectType::DATASPACE;
             case H5I_ATTR: return H5ObjectType::ATTRIBUTE;
-            default: return H5ObjectType::BADID;
+            default: 
+                throw type_error(EXCEPTION_RECORD,
+                        "HDF5 object is of invalid type!");
         };
     }
 
@@ -230,6 +247,9 @@ namespace h5{
     bool operator==(const H5Object &a,const H5Object &b)
     {
         H5O_info_t ia,ib;
+
+        if((!a.is_valid()) || (!b.is_valid()))
+            return false;
        
         //obtain HDF5 info structure of first object
         herr_t err = H5Oget_info(a.id(),&ia);

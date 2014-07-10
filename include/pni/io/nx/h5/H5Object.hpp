@@ -30,6 +30,7 @@ extern "C"{
 #include <pni/core/types.hpp>
 #include "H5ObjectType.hpp"
 #include "../nxobject_type.hpp"
+#include "../../exceptions.hpp"
 
 namespace pni{
 namespace io{
@@ -68,7 +69,7 @@ namespace h5{
             //! Reset the ID of the object to zero and thus renders it as 
             //! invalid.
             //!
-            void reset_id() { _id = 0; }
+            void reset_id() noexcept { _id = 0; }
         public:
             //================constructors and destructors=====================
             //! 
@@ -92,14 +93,21 @@ namespace h5{
             explicit H5Object(const hid_t &id);
 
             //-----------------------------------------------------------------
-            //! default constructor
-            explicit H5Object();
+            //! 
+            //! \brief default constructor
+            //! 
+            //! The default constructor does not throw
+            //!
+            explicit H5Object() noexcept;
 
             //-----------------------------------------------------------------
             //! 
             //! \brief copy constructor
             //!
             //! Copies the ID of the o and increments its reference counter.
+            //!
+            //! \throws object_error in cases where object validity could not 
+            //!                      be determined
             //! \param o object which to cpy
             //!
             H5Object(const H5Object &o);
@@ -114,10 +122,15 @@ namespace h5{
             //!
             //! \param o object to move
             //!
-            H5Object(H5Object &&o);
+            H5Object(H5Object &&o) noexcept;
 
             //-----------------------------------------------------------------
-            //! destructor
+            //!
+            //! \brief destructor
+            //! 
+            //! \throws object_error if closing object failed or its validity
+            //!                      could not be determined
+            //!
             virtual ~H5Object();
 
 
@@ -128,6 +141,8 @@ namespace h5{
             //! Just like for the copy constructor the reference counter for 
             //! the original ID is incremented.
             //!
+            //! \throws object_error if reference counter increment fails or 
+            //!                      object validity could not be determined
             //! \param o object to assign
             //! \return refence to object
             //!
@@ -140,6 +155,7 @@ namespace h5{
             //! Like the move constructor this operator has no influence on the
             //! value of the IDs reference counter.
             //!
+            //! \throws object_error if closing the original object fails
             //! \param o object form which to move data
             //! \return reference to object
             //!
@@ -157,6 +173,9 @@ namespace h5{
             //! only for groups, datasets, and types all other objects must 
             //! implement their own close method using the appropriate HDF5 
             //! function call.
+            //! 
+            //! \throws object_error if object validity could not be determined
+            //! or closing the object failed
             //!
             virtual void close();
 
@@ -168,9 +187,11 @@ namespace h5{
             //! object. In other words this means that the object is valid and
             //! available. For a file object this would mean that the file is 
             //! open.
+            //! 
+            //! \throws object_error if querying the object validity fails
             //! \returns true if valid HDF5 object
             //!
-            bool is_valid() const noexcept;
+            bool is_valid() const;
 
             //------------------------------------------------------------------
             //! 
@@ -180,7 +201,7 @@ namespace h5{
             //! const reference and thus cannot be altered.
             //! \return HDF5 ID
             //!
-            const hid_t &id() const;
+            const hid_t &id() const noexcept;
 
             //-----------------------------------------------------------------
             //! 
@@ -190,7 +211,8 @@ namespace h5{
             //! identify the kind of object one is dealing with. If the object 
             //! is not valid an exception will be thrown.
             //!
-            //! \throws pni::io::nx::nxbackend_error if object is not valid
+            //! \throws invalid_object_error if object is not valid
+            //! \throws type_error if object is of unkown type
             //! \return HDF type
             //!
             H5ObjectType object_type() const;
@@ -201,6 +223,9 @@ namespace h5{
             //!
             //! Returns the Nexus object type of an object.  This can be 
             //! either nxobject_type::NXFIELD or nxobject_type::NXGROUP. 
+            //! 
+            //! \throws invalid_object_error if the object is not valid
+            //! \throws type_error if object type is unknown
             //! \return Nexus object type
             //!
             pni::io::nx::nxobject_type nxobject_type() const;
@@ -262,9 +287,10 @@ namespace h5{
     //! 
     //! Operator checks if two HDF5 object are equal. This check is done by
     //! comparing the address of the objects in the file.  If they share the 
-    //! same address the objects should be equal.
+    //! same address the objects should be equal. Invalid objects are considered 
+    //! as not equal.
     //!
-    //! \throws pni::io::nx::nxbackend_error in case of an error 
+    //! \throws object_error if object addresses could not be obtained
     //! \param a lhs value of the operator
     //! \param b rhs value of the operator
     //! \return true if equal, false otherwise
@@ -278,7 +304,7 @@ namespace h5{
     //!
     //! Simply the inverse of the equality operator.
     //!
-    //! \throws pni::io::nx::nxbackend_error in case of an error 
+    //! \throws object_error if object addresses could not be obtained
     //! \param a lhs value of the operator
     //! \param b rhs value of the operator
     //! \return true if not equal, false otherwise

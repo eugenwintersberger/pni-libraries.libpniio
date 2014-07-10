@@ -37,6 +37,7 @@ namespace h5{
 
 
     //!
+    //! \ingroup nxh5_classes
     //! \brief get object filename
     //! 
     //! Returns the name of a file a dataset, attribute, or group object 
@@ -52,6 +53,7 @@ namespace h5{
 
     //-------------------------------------------------------------------------
     //!
+    //! \ingroup nxh5_classes
     //! \brief get object path
     //!
     //! Return the path of an HDF5 object as a string. The object can be 
@@ -67,6 +69,7 @@ namespace h5{
 
     //------------------------------------------------------------------------
     //! 
+    //! \ingroup nxh5_classes
     //! \brief get parent path
     //! 
     //! Return the path to the parent of a particular object. 
