@@ -30,6 +30,7 @@
 
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/nxobject_type.hpp>
+#include <pni/io/nx/algorithms.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION(NXGroupTest);
 
@@ -85,9 +86,7 @@ void NXGroupTest::test_creation()
     CPPUNIT_ASSERT(!g.is_valid());
 	g = _f.root().create_group("directory_1");
     CPPUNIT_ASSERT(g.is_valid());
-    CPPUNIT_ASSERT(g.path() == "/directory_1");
     CPPUNIT_ASSERT(g.name() == "directory_1");
-    CPPUNIT_ASSERT(g.base() == "/");
 
 
 	//test copy constructor
@@ -212,6 +211,6 @@ void NXGroupTest::test_iterator()
     g.create_group("dir3");
 
     for(nxgroup sg: g)
-        std::cout<<sg.path()<<std::endl;
+        std::cout<<get_path(sg)<<std::endl;
 }
 
