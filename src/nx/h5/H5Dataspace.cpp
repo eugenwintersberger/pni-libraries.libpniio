@@ -45,9 +45,13 @@ namespace h5 {
         {
             _maxdims = dim_vector_type(rank());
             _dims    = dim_vector_type(rank());
-            H5Sget_simple_extent_dims(id(),
-                    const_cast<hsize_t*>(_dims.data()),
-                    const_cast<hsize_t*>(_maxdims.data()));
+            hsize_t *dimptr = const_cast<hsize_t*>(_dims.data());
+            hsize_t *mdimptr = const_cast<hsize_t*>(_maxdims.data());
+            herr_t err = H5Sget_simple_extent_dims(id(),dimptr,mdimptr);
+            if(err<0)
+                throw object_error(EXCEPTION_RECORD,
+                        "Failure obtaining dataspace extent!\n\n"
+                        +get_h5_error_string());
         }
     }
 
@@ -94,20 +98,26 @@ namespace h5 {
 
     //-------------------------------------------------------------------------
     //implementation of the move constructor
-    H5Dataspace::H5Dataspace(H5Dataspace &&o):
-        H5Object(std::move(o)),
+    H5Dataspace::H5Dataspace(H5Dataspace &&o) noexcept 
+        :H5Object(std::move(o)),
         _maxdims(std::move(o._maxdims)),
         _dims(std::move(o._dims))
     { }
 
     //-------------------------------------------------------------------------
     //implementation of the move conversion constructor
-    H5Dataspace::H5Dataspace(H5Object &&o):H5Object(std::move(o))
+    H5Dataspace::H5Dataspace(H5Object &&o) 
+        :H5Object(std::move(o))
     {
         //this is a perfekt application for the __set_buffers() method
         __setup_buffers();
     }
 
+    //-------------------------------------------------------------------------
+    H5Dataspace::H5Dataspace(hid_t tid):H5Object(tid)
+    {
+        __setup_buffers();
+    }
 
     //-------------------------------------------------------------------------
     //construct dataspace form initializer list
@@ -141,11 +151,6 @@ namespace h5 {
         __setup_dataspace();
     }
 
-    //-------------------------------------------------------------------------
-    H5Dataspace::H5Dataspace(hid_t tid):H5Object(tid)
-    {
-        __setup_buffers();
-    }
 
     //-------------------------------------------------------------------------
     H5Dataspace::~H5Dataspace()
@@ -346,7 +351,7 @@ namespace h5 {
         o<<"HDF5 Dataspace: "<<s.rank()<<" dimensions"<<std::endl;
         o<<"act. # of elements: ( ";
         for(size_t i=0;i<s.rank();i++){
-            o<<s._dims[i]<<" ";
+            o<<s.dim(i)<<" ";
         }
         o<<")";
 

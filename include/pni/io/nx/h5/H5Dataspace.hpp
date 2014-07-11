@@ -45,7 +45,18 @@ namespace h5 {
     //!
     //! This class encapsulates an HDF5 dataspace. A dataspace describes the
     //! organization of dataelements within a dataset in the file or of data 
-    //! stored in memory. It basically describes a multidimensional array 
+    //! stored in memory. A dataspace in HDF5 can either be
+    //! \li scalar 
+    //! \li or \c simple - which is in fact a simple multidimensional array.
+    //! 
+    //! A dataspace object provides information items which are necessary 
+    //! to describe the data organization
+    //! \li the \b rank - which is the number of dimensions
+    //! \li the \b shape - which is the number of elements along each dimension
+    //! \li and the \b maximum shape - which is the maximum number of elements
+    //! along each dimension.
+    //!
+    //! It basically describes a multidimensional array 
     //! with a particular rank (number of dimensions) and a particular 
     //! number of elements along each dimension. For each dimension there 
     //! exists an actual number of elements which is the number of elements 
@@ -82,7 +93,8 @@ namespace h5 {
             //!
             //! This method will setup a dataspace according to the values of 
             //! its member variables.
-            //! \throws pni::io::nx::nxbackend_error in case of errors
+            //! \throws object_error if dataspace extent could not have been
+            //!                      set
             //!
             void __setup_dataspace();
 
@@ -94,39 +106,62 @@ namespace h5 {
             //! method will fill the buffers according to the dataspace 
             //! described by the ID. 
             //!
+            //! \brief object_error if dataspace extent could not have been 
+            //!                     retrieved
+            //!
             void __setup_buffers();
         public:
-            //! static data member describing an unlimited dimension. 
-            //static const hsize_t UNLIMITED = H5S_UNLIMITED;
-
             //==============constructors and destructor========================
             //! 
             //! \brief default constructor
             //!
             //! By default a scalar dataspace is constructed. This 
             //! constructor can always be used in order to store a scalar 
-            //! value.
+            //! value. Consequently even a default constructed H5Dataspace is 
+            //! always a valid HDF5 object.
             //!
             explicit H5Dataspace();
 
             //-----------------------------------------------------------------
-            //! copy constructor
+            //!
+            //! \brief copy constructor
+            //! 
+            //! \throws object_error in case of failure
+            //!
             H5Dataspace(const H5Dataspace &o);
 
             //-----------------------------------------------------------------
-            //! copy conversion constructor
+            //!
+            //! \brief copy conversion constructor
+            //! 
+            //! Constructs a dataspace instance from an instance of H5Object.
+            //!
+            //! \throws object_error in case of failure
+            //!
             explicit H5Dataspace(const H5Object &o);
 
             //-----------------------------------------------------------------
-            //! move constructor
-            H5Dataspace(H5Dataspace &&o);
+            //!
+            //! \brief move constructor
+            //! 
+            H5Dataspace(H5Dataspace &&o) noexcept;
 
             //-----------------------------------------------------------------
-            //! move conversion constructor
+            //!
+            //! \brief move conversion constructor
+            //! 
+            //! \throws object_error if internal buffer setup fails
+            //!
             explicit H5Dataspace(H5Object &&o);
 
             //-----------------------------------------------------------------
-            //! construct from ID
+            //!
+            //! \brief construct from ID
+            //!
+            //! \brief object_error in case of failure
+            //! 
+            //! \param id HDF5 id of the original object
+            //!
             explicit H5Dataspace(hid_t id);
             
             //-----------------------------------------------------------------
@@ -142,9 +177,7 @@ namespace h5 {
             H5Dataspace space(shape);
             \endcode
             */
-            //! \throws memory_allocation_error if buffer allocation fails
-            //! \throws pni::io::nx::nxbackend_error if setup of the 
-            //! dataspace fails
+            //! \throws object_error in case of failure
             //! \tparam CTYPE container type for the shape
             //! \param s instance of CTYPE with the shape
             //! \sa H5Dataspace(const CTYPE1 &s,const CTYPE2 &ms)
@@ -175,13 +208,10 @@ namespace h5 {
             \endcode
             */
             //!
-            //! \throws memory_allocation_error if buffer allocation fails
-            //! \throws shape_mismatch_error if the two containers have a 
-            //! different size and thus represent different ranks
-            //! \throws pni::io::nx::nxbackend_error if setup of the 
-            //! dataspace fails
-            //!
-            //!\tparam CTYPE1 container type for the actual shape
+            //! \throws shape_mismatch_error if actual and max dim containers 
+            //!                              are of different size
+            //! \throws object_error in case of any other failure
+            //! \tparam CTYPE1 container type for the actual shape
             //! \tparam CTYPE2 container type for the maximum shape
             //! \param s initial shape
             //! \param ms maximum shape
@@ -227,10 +257,7 @@ namespace h5 {
             \endcode
             */
             //!
-            //! \throws memory_allocation_error if buffer allocation fails
-            //! \throws pni::io::nx::nxbackend_error if data-space creation 
-            //! fails
-            //!
+            //! \throws object_error in case of any error
             //! \param list initializer list
             //! \sa H5Dataspace(const Shape &s)
             //!
@@ -243,11 +270,9 @@ namespace h5 {
             //! Create a fixed size dataspace from two initializer lists. The
             //! created dataspace is a simple dataspace in HDF5 terminilogy.
             //!
-            //! \throws memory_allocation_error if buffer allocation fails
-            //! \throws shape_mismatch_error if the two lists are of 
-            //! different size
-            //! \throws pni::io::nx::nxbackend_error if dataspace setup fails
-            //!
+            //! \throws shape_mismatch_error if the size of the two initializer
+            //!                              lists do not match
+            //! \throws object_error in case of any other error
             //! \param dlist initializer list with actual shape values
             //! \param mlist initializer list with maximum shape values
             //!
@@ -264,19 +289,34 @@ namespace h5 {
             ~H5Dataspace();
             
             //=====================Assignment operators========================
-            //! copy assignment operator
+            //!
+            //! \brief copy assignment operator
+            //! 
+            //! \throws object_error in case of errors 
+            //! 
             H5Dataspace &operator=(const H5Dataspace &o);
 
             //-----------------------------------------------------------------
-            //! copy conversion operator
+            //!
+            //! \brief copy conversion operator
+            //! 
+            //! \throws object_error in case of errors
             H5Dataspace &operator=(const H5Object &o);
 
             //-----------------------------------------------------------------
-            //! move assignment operator
+            //!
+            //! \brief move assignment operator
+            //! 
+            //! \throws object_error in case of errors
+            //! 
             H5Dataspace &operator=(H5Dataspace &&o);
 
             //-----------------------------------------------------------------
-            //! move conversion assignment operator
+            //!
+            //! \brief move conversion assignment operator
+            //! 
+            //! \throws object_error in case of errors
+            //!
             H5Dataspace &operator=(H5Object &&o);
 
             //=====================convenience  methods========================
@@ -384,6 +424,7 @@ namespace h5 {
             //! the construction of a dataset will lead to an dataset of 
             //! constant size.
             //!
+            //! \throws object_error in case of errors
             //! \param s new dataspace shape 
             //!
             template<typename CTYPE> void resize(const CTYPE &s)
@@ -489,13 +530,15 @@ namespace h5 {
             //! close the dataspace
             virtual void close();
 
-            //-----------------------------------------------------------------
-            //! output operator
-            friend std::ostream &operator<<(std::ostream &o,
-                    const H5Dataspace &s);
 
         };
 
+        //--------------------------------------------------------------------
+        //!
+        //! \ingroup nxh5_classes
+        //! \brief output operator
+        //!
+        std::ostream &operator<<(std::ostream &o,const H5Dataspace &s);
 
 //end of namespace
 }
