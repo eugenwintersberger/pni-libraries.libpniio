@@ -33,6 +33,17 @@ namespace nx{
 namespace h5{
     using pni::io::object_error;
     using pni::io::invalid_object_error;
+    //=====================private member functions============================
+    void H5Object::inc_ref()
+    {
+        if(H5Iinc_ref(_id)<0)
+            throw object_error(EXCEPTION_RECORD,
+                    "Increment of reference counter failed!\n\n"
+                    +get_h5_error_string());
+
+        //Failing to succesfully inrement the reference counter for an internal
+        //object ID is a serious issue and justifies to throw an exception here.
+    }
 
     //=================constrcutors and destructors============================
     H5Object::H5Object(const hid_t &sid) :_id(sid)
@@ -51,10 +62,7 @@ namespace h5{
     {
         //need to increment the reference 
         //counter for this object as we do copy construction
-        if(is_valid()) 
-            if(H5Iinc_ref(_id)<0)
-                throw object_error(EXCEPTION_RECORD,
-                        "Increment of reference counter failed!");
+        if(is_valid()) inc_ref();
     }
 
     //-------------------------------------------------------------------------
@@ -75,6 +83,9 @@ namespace h5{
                     "Error closing object - HDF5 error was:\n\n"+
                     get_h5_error_string());
 
+        //not being able to successfully destroy a valid object indicates a
+        //serious problem - the exception should thus be thrown
+
         reset_id(); //reset the ID value to 0
     }   
 
@@ -90,10 +101,7 @@ namespace h5{
 
         //if the original object is valid we have to increment 
         //the reference counter for this id
-        if(is_valid()) 
-            if(H5Iinc_ref(_id)<0)
-                throw object_error(EXCEPTION_RECORD,
-                        "Inrement of reference counter failed!");
+        if(is_valid()) inc_ref();
 
         return *this;
     }
@@ -121,7 +129,8 @@ namespace h5{
         
         if(value < 0)
             throw object_error(EXCEPTION_RECORD,
-                    "Cannot determine object validity!");
+                    "Cannot determine object validity!\n\n"+
+                    get_h5_error_string());
 
         if(value)
             return true;
@@ -140,11 +149,15 @@ namespace h5{
                 throw object_error(EXCEPTION_RECORD,
                         "Error closing object - HDF5 error was:\n\n"+
                         get_h5_error_string());
-        _id = 0;
+
+        reset_id(); //in any case we have to reset the ID of the obejct
     }
     
     //-------------------------------------------------------------------------
-    const hid_t &H5Object::id() const noexcept { return _id; }
+    const hid_t &H5Object::id() const noexcept 
+    { 
+        return _id; 
+    }
 
     //-------------------------------------------------------------------------
     H5ObjectType H5Object::object_type() const 

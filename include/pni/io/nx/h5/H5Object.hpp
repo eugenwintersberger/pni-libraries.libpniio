@@ -70,6 +70,18 @@ namespace h5{
             //! invalid.
             //!
             void reset_id() noexcept { _id = 0; }
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief increments reference counter
+            //!
+            //! This memeber method increments the reference counter of the 
+            //! internal HDF5 object ID. This is in particular important for
+            //! all kinds of copy operations.
+            //! 
+            //! \throws object_error if increment fails
+            //! 
+            void inc_ref();
         public:
             //================constructors and destructors=====================
             //! 
@@ -87,7 +99,7 @@ namespace h5{
             \endcode
             */
             //! An exception is thrown if the ID passed is negative.
-            //! \throws pni::io::nx::nxbackend_error if id<0
+            //! \throws object_error if id<0
             //! \param id HDF5 object ID.
             //!
             explicit H5Object(const hid_t &id);
@@ -213,6 +225,7 @@ namespace h5{
             //!
             //! \throws invalid_object_error if object is not valid
             //! \throws type_error if object is of unkown type
+            //! \throws object_error in case of any other error
             //! \return HDF type
             //!
             H5ObjectType object_type() const;
@@ -226,6 +239,7 @@ namespace h5{
             //! 
             //! \throws invalid_object_error if the object is not valid
             //! \throws type_error if object type is unknown
+            //! \throws object_error in case of any other failure
             //! \return Nexus object type
             //!
             pni::io::nx::nxobject_type nxobject_type() const;
@@ -290,7 +304,7 @@ namespace h5{
     //! same address the objects should be equal. Invalid objects are considered 
     //! as not equal.
     //!
-    //! \throws object_error if object addresses could not be obtained
+    //! \throws object_error in case of errors
     //! \param a lhs value of the operator
     //! \param b rhs value of the operator
     //! \return true if equal, false otherwise
@@ -304,7 +318,7 @@ namespace h5{
     //!
     //! Simply the inverse of the equality operator.
     //!
-    //! \throws object_error if object addresses could not be obtained
+    //! \throws object_error in case of errors
     //! \param a lhs value of the operator
     //! \param b rhs value of the operator
     //! \return true if not equal, false otherwise
