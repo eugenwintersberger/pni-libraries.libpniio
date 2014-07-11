@@ -42,7 +42,7 @@ namespace h5 {
     using pni::core::string;
 
     //! 
-    //! \ingroup nxh5_classes
+    //! \ingroup nxh5_error_classes
     //! \brief HDF5 error record
     //!
     //! This class describes an HDF5 error record. Such a record consists 
@@ -66,9 +66,9 @@ namespace h5 {
             //!
             //! \brief get error message
             //! 
-            //! Retrieve the content of an error message as a string.
+            //! Retrieve the content of an error message as a string. If the 
+            //! Content could not be retrieved an error message is returned.
             //! 
-            //! \throws io_error in case of retrieval problems
             //! \param mid message id 
             //! \param mtype pointer to the message type
             //! \return content of the message as a string
@@ -103,9 +103,9 @@ namespace h5 {
             //! 
             //! \brief set class ID
             //! 
-            //! Sets the class id from an object. 
+            //! Sets the class id from an object. If the class name could not 
+            //! be retrieved it is set to unkown.
             //! 
-            //! \throws io_error if buffer allocation fails
             //! \param id object ID
             //!
             void class_name(hid_t id);
@@ -122,9 +122,6 @@ namespace h5 {
             //! 
             //! Obtains the major number of the Error. 
             //!
-            //! \throws io_error if message could not be retrieved
-            //! \throws type_error if the message does not contain the major
-            //!                    number
             //! \param mid message id 
             //! 
             void major_message(hid_t mid);
@@ -142,9 +139,6 @@ namespace h5 {
             //! 
             //! Obtains the minor number message from the Error.
             //! 
-            //! \throws io_error if message could not be retrieved
-            //! \throws type_error if the message does not contain the minor 
-            //!                    number
             //! \param mid message id
             //! 
             void minor_message(hid_t mid);
@@ -197,6 +191,7 @@ namespace h5 {
 
     //-----------------------------------------------------------------
     //! 
+    //! \ingroup nxh5_error_classes
     //! \brief ouput stream operator
     //! 
     std::ostream &operator<<(std::ostream &o,const h5_error &e);

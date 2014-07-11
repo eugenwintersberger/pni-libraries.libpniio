@@ -82,15 +82,13 @@ namespace h5{
         //get the major message from the error stack
         buffer_size = H5Eget_msg(mid,mtype,NULL,1);
         if(buffer_size<0)
-            throw io_error(EXCEPTION_RECORD,
-                    "Error retrieving error message content length!");
+            return "Error: could not retrieve HDF5 error message";
 
         string buffer(buffer_size,' ');
 
         char*ptr = const_cast<char*>(buffer.data());
         if(H5Eget_msg(mid,mtype,ptr,buffer_size+1)<0)
-            throw io_error(EXCEPTION_RECORD,
-                    "Error retrieving error message content!");
+            return "Error: could not retrieve HDF5 error message";
     
         return buffer;
     }
@@ -104,13 +102,19 @@ namespace h5{
         //allocate memory
         buffer_size = H5Eget_class_name(id,NULL,1);
         if(buffer_size<0)
-            throw io_error(EXCEPTION_RECORD,"Cannot obtain class name length!");
+        {
+            _class_name = "UNKNOWN";  
+            return;
+        }
 
         _class_name = string(buffer_size,' ');
 
         //obtain error class
         if(H5Eget_class_name(id,const_cast<char*>(_class_name.data()),buffer_size+1)<0)
-            throw io_error(EXCEPTION_RECORD,"Error retrieving class name!");
+        {
+            _class_name = "UNKOWN";
+            return;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -127,8 +131,7 @@ namespace h5{
         //set the major number
         _major_message = get_message(mid,&msg_type);
         if(msg_type != H5E_MAJOR)
-            throw type_error(EXCEPTION_RECORD,
-                    "Message does not contain major number of the error!");
+            _major_message = "Error - Not Major message!: "+_major_message;
 
     }
 
@@ -141,8 +144,7 @@ namespace h5{
         _minor_message = get_message(mid,&msg_type);
         
         if(msg_type != H5E_MINOR)
-            throw type_error(EXCEPTION_RECORD,
-                    "Message does not contain minor number of the error!");
+            _minor_message = "Error - Not Minor message!:"+_minor_message;
     }
 
     //--------------------------------------------------------------------------

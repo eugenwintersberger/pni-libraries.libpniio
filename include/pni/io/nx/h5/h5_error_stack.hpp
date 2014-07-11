@@ -47,7 +47,7 @@ using pni::core::string;
 
 
     //! 
-    //! \ingroup nxh5_classes
+    //! \ingroup nxh5_error_classes
     //! \brief HDF5 error stack
     //!
     //! Class HDF5ErrorStack provides a simple object oriented interface to 
@@ -83,9 +83,6 @@ using pni::core::string;
             //!
             //! \brief default destructor
             //! 
-            //! \throws object_error when clearing or closing the HDF5 error
-            //!                      fails
-            //! 
             virtual ~h5_error_stack();
 
             //-----------------------------------------------------------------
@@ -109,10 +106,6 @@ using pni::core::string;
             //!
             //! Reads error messages from the current HDF5 error stack and 
             //! add them to the stack.	
-            //! 
-            //! \throws io_error in case of errors during data retrieval
-            //! \throws type_error in case of message type errors
-            //! \throws object_error in case of faild stack retrieval
             //!
             void fill();
 
@@ -142,18 +135,16 @@ using pni::core::string;
             
     //------------------------------------------------------------------------
     //!
-    //! \ingroup nxh5_classes
+    //! \ingroup nxh5_error_classes
     //! \brief ostream operator
     //!
     std::ostream &operator<<(std::ostream &o, const h5_error_stack &s);
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup nxh5_classes
+    //! \ingroup nxh5_error_classes
     //! \brief Walker functins to read over error messages
     //! 
-    //! \throws io_error in case of io errors
-    //! \throws type_error in case of message type problems
     //! \param n undocumented
     //! \param eptr pointer to error stack
     //! \param client_data data passed by the client to the walker code
@@ -164,15 +155,12 @@ extern "C" herr_t _error_walker(unsigned n,const H5E_error2_t *eptr,
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup nxh5_classes
+    //! \ingroup nxh5_error_classes
     //! \brief return HDF5 error messages
     //!
     //! Returns all the error messages in the actual HDF5 error stack as a 
     //! string. 
     //! 
-    //! \throws type_error in case of message type errors
-    //! \throws object_error in case of object destruction or creation errors
-    //! \throws io_error in case of data retrieval errors
     //! \return error messages
     //!
     string get_h5_error_string();

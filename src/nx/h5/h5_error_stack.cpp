@@ -70,11 +70,10 @@ namespace h5 {
     {
         //fill the stack with error messages
         _stack_id = H5Eget_current_stack();
-        if(_stack_id<0)
-            throw object_error(EXCEPTION_RECORD,
-                    "Failure retrieving HDF5 error stack!");
-
-        H5Ewalk2(_stack_id,H5E_WALK_DOWNWARD,_error_walker,(void *)this);
+        if(_stack_id>0)
+            H5Ewalk2(_stack_id,H5E_WALK_DOWNWARD,_error_walker,(void *)this);
+        else
+            std::cerr<<"Failure to retrieve the HDF5 error stack!"<<std::endl;
     }
 
 
@@ -95,12 +94,10 @@ namespace h5 {
     {
         _errors.clear();
         if(H5Eclear2(_stack_id)<0)
-            throw object_error(EXCEPTION_RECORD,
-                    "Failure clearing HDF5 error stack!");
+            std::cerr<<"Failure clearing HDF5 error stack!"<<std::endl;
 
         if(H5Eclose_stack(_stack_id)<0)
-            throw object_error(EXCEPTION_RECORD,
-                    "Failure closing HDF5 error stack!");
+            std::cerr<<"Failure closing HDF5 error stack!"<<std::endl;
     }
 
     //--------------------------------------------------------------------------
