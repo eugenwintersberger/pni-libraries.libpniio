@@ -53,7 +53,7 @@ namespace h5 {
     //! to describe the data organization
     //! \li the \b rank - which is the number of dimensions
     //! \li the \b shape - which is the number of elements along each dimension
-    //! \li and the \b maximum shape - which is the maximum number of elements
+    //! \li and the \b maximum \b shape - which is the maximum number of elements
     //! along each dimension.
     //!
     //! It basically describes a multidimensional array 
@@ -132,27 +132,9 @@ namespace h5 {
 
             //-----------------------------------------------------------------
             //!
-            //! \brief copy conversion constructor
-            //! 
-            //! Constructs a dataspace instance from an instance of H5Object.
-            //!
-            //! \throws object_error in case of failure
-            //!
-            explicit H5Dataspace(const H5Object &o);
-
-            //-----------------------------------------------------------------
-            //!
             //! \brief move constructor
             //! 
             H5Dataspace(H5Dataspace &&o) noexcept;
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief move conversion constructor
-            //! 
-            //! \throws object_error if internal buffer setup fails
-            //!
-            explicit H5Dataspace(H5Object &&o);
 
             //-----------------------------------------------------------------
             //!
@@ -298,26 +280,11 @@ namespace h5 {
 
             //-----------------------------------------------------------------
             //!
-            //! \brief copy conversion operator
-            //! 
-            //! \throws object_error in case of errors
-            H5Dataspace &operator=(const H5Object &o);
-
-            //-----------------------------------------------------------------
-            //!
             //! \brief move assignment operator
             //! 
             //! \throws object_error in case of errors
             //! 
             H5Dataspace &operator=(H5Dataspace &&o);
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief move conversion assignment operator
-            //! 
-            //! \throws object_error in case of errors
-            //!
-            H5Dataspace &operator=(H5Object &&o);
 
             //=====================convenience  methods========================
             //! 

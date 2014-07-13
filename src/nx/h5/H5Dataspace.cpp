@@ -89,29 +89,12 @@ namespace h5 {
     { }
 
     //-------------------------------------------------------------------------
-    //implementation of the copy conversion constructor
-    H5Dataspace::H5Dataspace(const H5Object &o):H5Object(o)
-    {
-        //now we have to set the shape object
-        __setup_buffers();
-    }
-
-    //-------------------------------------------------------------------------
     //implementation of the move constructor
     H5Dataspace::H5Dataspace(H5Dataspace &&o) noexcept 
         :H5Object(std::move(o)),
         _maxdims(std::move(o._maxdims)),
         _dims(std::move(o._dims))
     { }
-
-    //-------------------------------------------------------------------------
-    //implementation of the move conversion constructor
-    H5Dataspace::H5Dataspace(H5Object &&o) 
-        :H5Object(std::move(o))
-    {
-        //this is a perfekt application for the __set_buffers() method
-        __setup_buffers();
-    }
 
     //-------------------------------------------------------------------------
     H5Dataspace::H5Dataspace(hid_t tid):H5Object(tid)
@@ -179,18 +162,6 @@ namespace h5 {
     }
 
     //-------------------------------------------------------------------------
-    //implementation of the copy conversion assignment operator
-    H5Dataspace &H5Dataspace::operator=(const H5Object &o)
-    {
-        if(this == &o) return *this;
-            
-        H5Object::operator=(o);
-        __setup_buffers();
-
-        return *this;
-    }
-
-    //-------------------------------------------------------------------------
     //implementation of the move assignment operator
     H5Dataspace &H5Dataspace::operator=(H5Dataspace &&o)
     {
@@ -199,18 +170,6 @@ namespace h5 {
         H5Object::operator=(std::move(o));
         _dims  = std::move(o._dims);
         _maxdims = std::move(o._maxdims);
-
-        return *this;
-    }
-
-    //-------------------------------------------------------------------------
-    //implementation of the move conversion operator
-    H5Dataspace &H5Dataspace::operator=(H5Object &&o)
-    {
-        if(this == &o) return *this;
-
-        H5Object::operator=(std::move(o));
-        __setup_buffers();
 
         return *this;
     }
