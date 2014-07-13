@@ -56,12 +56,8 @@ namespace h5 {
     //! \li and the \b maximum \b shape - which is the maximum number of elements
     //! along each dimension.
     //!
-    //! It basically describes a multidimensional array 
-    //! with a particular rank (number of dimensions) and a particular 
-    //! number of elements along each dimension. For each dimension there 
-    //! exists an actual number of elements which is the number of elements 
-    //! now allocated and a maximum number of elements. The later one gives 
-    //! the maximum number of elements along a dimension to which a dataset 
+    //! The object encapsulates two buffers (instances of std::vector) which
+    //! provide this information.  
     //! (not a dataspace) can grow. This number can be a finite one or can 
     //! be set to H5Dataspace::UNLIMITED which allows the dataset to grow 
     //! infinitely along this dimension. 
@@ -77,15 +73,14 @@ namespace h5 {
     //!
     class H5Dataspace:public H5Object
     {
-        private:
-            //! vector type used to store dimensions
-            typedef std::vector<hsize_t> dim_vector_type;
+        public:
+            typedef std::vector<hsize_t> vector_type;
         private:
             
             //! maximum number of elements dimensions
-            dim_vector_type _maxdims; 
+            vector_type _maxdims; 
             //! number of elements 
-            dim_vector_type _dims;    
+            vector_type _dims;    
 
             //-----------------------------------------------------------------
             //!
@@ -300,7 +295,7 @@ namespace h5 {
             //! \sa CTYPE shape() const
             //! \sa void shape(CTYPE &c) const
             //!
-            const dim_vector_type &current_shape() const { return _dims; }
+            const vector_type &current_shape() const { return _dims; }
 
 
             //-----------------------------------------------------------------
@@ -310,7 +305,7 @@ namespace h5 {
             //! Returns the maximum shape of the dataspace. 
             //! \return shape object 
             //!
-            const dim_vector_type &maximum_shape() const { return _maxdims; }
+            const vector_type &maximum_shape() const { return _maxdims; }
 
             //-----------------------------------------------------------------
             //!
@@ -396,8 +391,8 @@ namespace h5 {
             //!
             template<typename CTYPE> void resize(const CTYPE &s)
             {
-                _dims = dim_vector_type(s.size());
-                _maxdims = dim_vector_type(s.size());
+                _dims = vector_type(s.size());
+                _maxdims = vector_type(s.size());
                 
                 std::copy(s.begin(),s.end(),_dims.begin());
                 std::copy(s.begin(),s.end(),_maxdims.begin());
@@ -449,8 +444,8 @@ namespace h5 {
                     throw shape_mismatch_error(EXCEPTION_RECORD,ss.str());
                 }
 
-                _dims = dim_vector_type(s.size());
-                _maxdims = dim_vector_type(ms.size());
+                _dims = vector_type(s.size());
+                _maxdims = vector_type(ms.size());
 
                 std::copy(s.begin(),s.end(),_dims.begin());
                 std::copy(ms.begin(),ms.end(),_maxdims.begin());

@@ -43,8 +43,8 @@ namespace h5 {
     {
         if(!is_scalar())
         {
-            _maxdims = dim_vector_type(rank());
-            _dims    = dim_vector_type(rank());
+            _maxdims = vector_type(rank());
+            _dims    = vector_type(rank());
             hsize_t *dimptr = const_cast<hsize_t*>(_dims.data());
             hsize_t *mdimptr = const_cast<hsize_t*>(_maxdims.data());
             herr_t err = H5Sget_simple_extent_dims(id(),dimptr,mdimptr);
@@ -257,8 +257,8 @@ namespace h5 {
     //-------------------------------------------------------------------------
     void H5Dataspace::resize(const std::initializer_list<hsize_t> &list)
     {
-        _dims    = dim_vector_type(list.size());
-        _maxdims = dim_vector_type(list.size());
+        _dims    = vector_type(list.size());
+        _maxdims = vector_type(list.size());
 
         std::copy(list.begin(),list.end(),_dims.begin());
         std::copy(list.begin(),list.end(),_maxdims.begin());
