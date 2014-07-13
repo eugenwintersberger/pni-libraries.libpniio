@@ -39,7 +39,7 @@ namespace h5 {
     //====================private methods======================================
 
     //implementation of the buffer allocation routine
-    void H5Dataspace::__setup_buffers()
+    void H5Dataspace::__update_buffers()
     {
         if(!is_scalar())
         {
@@ -56,7 +56,7 @@ namespace h5 {
     }
 
     //-------------------------------------------------------------------------
-    void H5Dataspace::__setup_dataspace()
+    void H5Dataspace::__update_dataspace()
     {
 
         herr_t err = H5Sset_extent_simple(id(),_dims.size(),_dims.data(),
@@ -99,7 +99,7 @@ namespace h5 {
     //-------------------------------------------------------------------------
     H5Dataspace::H5Dataspace(hid_t tid):H5Object(tid)
     {
-        __setup_buffers();
+        __update_buffers();
     }
 
     //-------------------------------------------------------------------------
@@ -109,7 +109,7 @@ namespace h5 {
         _maxdims(list),
         _dims(list)
     {
-        __setup_dataspace();
+        __update_dataspace();
     }
 
     //-------------------------------------------------------------------------
@@ -131,7 +131,7 @@ namespace h5 {
         }
 
         //finally resize the dataspace
-        __setup_dataspace();
+        __update_dataspace();
     }
 
 
@@ -263,7 +263,7 @@ namespace h5 {
         std::copy(list.begin(),list.end(),_dims.begin());
         std::copy(list.begin(),list.end(),_maxdims.begin());
 
-        __setup_dataspace();
+        __update_dataspace();
     }
 
 
@@ -282,7 +282,7 @@ namespace h5 {
         std::copy(dlist.begin(),dlist.end(),_dims.begin());
         std::copy(mlist.begin(),mlist.end(),_maxdims.begin());
 
-        __setup_dataspace();
+        __update_dataspace();
     }
 
     //-------------------------------------------------------------------------
@@ -299,7 +299,7 @@ namespace h5 {
 
         //set extension
         _dims[dim] += ext;
-        __setup_dataspace();
+        __update_dataspace();
     }
 
 

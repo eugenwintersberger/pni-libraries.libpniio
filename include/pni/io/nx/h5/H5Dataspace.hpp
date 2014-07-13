@@ -96,7 +96,7 @@ namespace h5 {
             //! \throws object_error if dataspace extent could not have been
             //!                      set
             //!
-            void __setup_dataspace();
+            void __update_dataspace();
 
             //-----------------------------------------------------------------
             //! 
@@ -109,7 +109,7 @@ namespace h5 {
             //! \brief object_error if dataspace extent could not have been 
             //!                     retrieved
             //!
-            void __setup_buffers();
+            void __update_buffers();
         public:
             //==============constructors and destructor========================
             //! 
@@ -172,7 +172,7 @@ namespace h5 {
                 std::copy(s.begin(),s.end(),_maxdims.begin());
                 std::copy(s.begin(),s.end(),_dims.begin());
 
-                __setup_dataspace();
+                __update_dataspace();
             }
 
             //----------------------------------------------------------------- 
@@ -223,7 +223,7 @@ namespace h5 {
                 std::copy(s.begin(),s.end(),_dims.begin());
 
                 //resize the dataspace to a simple one
-                __setup_dataspace();
+                __update_dataspace();
             }
 
             //-----------------------------------------------------------------
@@ -402,7 +402,7 @@ namespace h5 {
                 std::copy(s.begin(),s.end(),_dims.begin());
                 std::copy(s.begin(),s.end(),_maxdims.begin());
 
-                __setup_dataspace();
+                __update_dataspace();
             }
 
             //-----------------------------------------------------------------
@@ -455,7 +455,7 @@ namespace h5 {
                 std::copy(s.begin(),s.end(),_dims.begin());
                 std::copy(ms.begin(),ms.end(),_maxdims.begin());
 
-                __setup_dataspace();
+                __update_dataspace();
             }
 
             //-----------------------------------------------------------------
