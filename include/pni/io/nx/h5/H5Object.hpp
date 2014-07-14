@@ -244,54 +244,6 @@ namespace h5{
             //!
             pni::io::nx::nxobject_type nxobject_type() const;
 
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief return the access time of the object
-            //!
-            //! Returns the last time the object was accessed. The time is 
-            //! returned as a time_t structure.
-            //! \warning  THIS METHOD WILL BE REMOVED IN ONE OF THE FUTURE RELEASES
-            //! \throws pni::io::nx::nxbackend_error if cannot obtain time
-            //! \return access time
-            //!
-            time_t acc_time() const;
-
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief return modification time
-            //!
-            //! Returns the time when the object was last mofified. The time is
-            //! returned as a time_t structure.
-            //! \warning  THIS METHOD WILL BE REMOVED IN ONE OF THE FUTURE RELEASES
-            //! \throws pni::io::nx::nxbackend_error if cannot obtain time
-            //! \return modification time
-            //!
-            time_t mod_time() const;
-
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief return change time
-            //!
-            //! Returns the time when the object was changed last.  The time value
-            //! is returned as a time_t struct.
-            //! \warning THIS METHOD WILL BE REMOVED IN ONE OF THE FUTURE RELEASES
-            //! \throws pni::io::nx::nxbackend_error if cannot obtain time
-            //! \return change time
-            //!
-            time_t chng_time() const;
-
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief return birth time
-            //!
-            //! Returns the time when the object was created. The time value is
-            //! returned as time_t structure.
-            //! \warning THIS METHOD WILL BE REMOVED IN ONE OF THE FUTURE RELEASES
-            //! \throws pni::io::nx::nxbackend_error if cannot obtain time
-            //! \return birth time
-            //!
-            time_t birth_time() const;
-
     };
 
     //===================equality operators for H5Object instances=============
