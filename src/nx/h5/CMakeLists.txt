@@ -14,6 +14,8 @@ set(SOURCES H5Attribute.cpp
             H5NamedObject.cpp
             H5Object.cpp
             hdf5_utilities.cpp
+            h5object.cpp
+            h5object_types.cpp
             )
 
 
