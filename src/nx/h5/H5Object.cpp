@@ -182,66 +182,6 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    time_t H5Object::acc_time() const
-    {
-        REMOVE_FUNCTION(BOOST_CURRENT_FUNCTION);
-        //TO BE REMOVED
-        H5O_info_t info;
-
-        herr_t err = H5Oget_info(id(),&info);
-        if(err < 0)
-            throw object_error(EXCEPTION_RECORD,
-                    "Cannot obtain object info!\n\n"+get_h5_error_string());
-
-        return info.atime;
-    }
-    
-    //-------------------------------------------------------------------------
-    time_t H5Object::mod_time() const
-    {
-        REMOVE_FUNCTION(BOOST_CURRENT_FUNCTION);
-        //TO BE REMOVED
-        H5O_info_t info;
-
-        herr_t err = H5Oget_info(id(),&info);
-        if(err < 0)
-            throw object_error(EXCEPTION_RECORD,
-                    "Cannot obtain object info!\n\n"+get_h5_error_string());
-
-        return info.mtime;
-    }
-    
-    //-------------------------------------------------------------------------
-    time_t H5Object::chng_time() const
-    {
-        REMOVE_FUNCTION(BOOST_CURRENT_FUNCTION);
-        //TO BE REMOVED
-        H5O_info_t info;
-
-        herr_t err = H5Oget_info(id(),&info);
-        if(err < 0)
-            throw object_error(EXCEPTION_RECORD,
-                    "Cannot obtain object info!\n\n"+get_h5_error_string());
-
-        return info.ctime;
-    }
-
-    //--------------------------------------------------------------------------
-    time_t H5Object::birth_time() const
-    {
-        REMOVE_FUNCTION(BOOST_CURRENT_FUNCTION);
-        //TO BE REMOVED
-        H5O_info_t info;
-
-        herr_t err = H5Oget_info(id(),&info);
-        if(err < 0)
-            throw object_error(EXCEPTION_RECORD,
-                    "Cannot obtain object info!\n\n"+get_h5_error_string());
-
-        return info.btime;
-    }
-
-    //-------------------------------------------------------------------------
     pni::io::nx::nxobject_type H5Object::nxobject_type() const
     {
         if(object_type() == H5ObjectType::GROUP) 
