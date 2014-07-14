@@ -74,6 +74,7 @@ namespace h5 {
     class H5Dataspace:public H5Object
     {
         public:
+            //! buffer type for array parameters
             typedef std::vector<hsize_t> vector_type;
         private:
             
