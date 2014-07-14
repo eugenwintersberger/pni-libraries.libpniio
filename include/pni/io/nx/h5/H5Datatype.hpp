@@ -54,12 +54,10 @@ namespace h5{
             explicit H5Datatype();
             //! copy constructor
             H5Datatype(const H5Datatype &o);
-            //! copy conversion operator
-            H5Datatype(const H5Object &o);
             //! move constructor
             H5Datatype(H5Datatype &&o);
             //! move conversion operator
-            H5Datatype(H5Object &&o);
+            //H5Datatype(H5Object &&o);
             //! constructor form HDF5 id
             explicit H5Datatype(const hid_t &tid);
             //! destructor
@@ -69,12 +67,8 @@ namespace h5{
             //==========Assignment operators==================================
             //! copy assignment operator
             H5Datatype &operator=(const H5Datatype &o);
-            //! copy conversion assignment operator
-            H5Datatype &operator=(const H5Object &o);
             //! move assignment operator
             H5Datatype &operator=(H5Datatype &&o);
-            //! move conversion assignment operator
-            H5Datatype &operator=(H5Object &&o);
 
             //==========some inquery methods==================================
             //! type ID
@@ -86,13 +80,6 @@ namespace h5{
             //----------------------------------------------------------------
             //! close the datatype
             virtual void close();
-
-
-            //----------------------------------------------------------------
-            friend bool operator==(const H5Datatype &a,const H5Datatype &b);
-
-            //----------------------------------------------------------------
-            friend bool operator!=(const H5Datatype &a,const H5Datatype &b);
     };
             
     //==========comparison operators==========================================

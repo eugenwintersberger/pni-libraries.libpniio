@@ -40,13 +40,7 @@ namespace h5{
     H5Datatype::H5Datatype(const H5Datatype &o):H5Object(o){ }
 
     //-------------------------------------------------------------------------
-    H5Datatype::H5Datatype(const H5Object &o):H5Object(o){ }
-
-    //-------------------------------------------------------------------------
     H5Datatype::H5Datatype(H5Datatype &&o):H5Object(std::move(o)){ }
-
-    //-------------------------------------------------------------------------
-    H5Datatype::H5Datatype(H5Object &&o):H5Object(std::move(o)){ }
 
     //-------------------------------------------------------------------------
     H5Datatype::H5Datatype(const hid_t &tid):H5Object(tid){ }
@@ -58,7 +52,6 @@ namespace h5{
         H5Object::reset_id();
     }
 
-
     //=============Assignment operator=========================================
     //implementation of copy assignment operator
     H5Datatype &H5Datatype::operator=(const H5Datatype &o)
@@ -69,26 +62,8 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    //implementation of copy conversion assignment operator
-    H5Datatype &H5Datatype::operator=(const H5Object &o)
-    {
-        if(this != &o) H5Object::operator=(o);
-
-        return *this;
-    }
-
-    //-------------------------------------------------------------------------
     //implementation of move assignment operator
     H5Datatype &H5Datatype::operator=(H5Datatype &&o)
-    {
-        if(this != &o) H5Object::operator=(std::move(o));
-
-        return *this;
-    }
-
-    //-------------------------------------------------------------------------
-    //implementation of move conversion assignment operator
-    H5Datatype &H5Datatype::operator=(H5Object &&o)
     {
         if(this != &o) H5Object::operator=(std::move(o));
 
