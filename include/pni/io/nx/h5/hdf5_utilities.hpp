@@ -26,16 +26,36 @@ extern "C" {
 }
 
 #include <pni/core/types.hpp>
-#include <pni/io/nx/h5/h5_error_stack.hpp>
 
 namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
 
+    class h5object;
+
     using namespace pni::core;
 
+    //============name methods=========================================
+    //! 
+    //! \ingroup nxh5_classes
+    //! \brief return object name
+    //!
+    //! Returns the name of an object. Within an HDF5 file objects can 
+    //! be addressed by a UNIX like path.  This method returns the 
+    //! last part of the path.  So if an object would have the 
+    //! following path /scan_1/detector/data this method would return 
+    //! data.  The behavior of this method is slightly different for 
+    //! a file object.
+    //!
+    //! \throws invalid_object_error if obj is not valid
+    //! \throws io_error in case of data retrieval issues
+    //!
+    //! \return name of the object
+    //!
+    string get_name(const h5object &obj);
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup nxh5_classes
     //! \brief get object filename
@@ -79,6 +99,20 @@ namespace h5{
     //! \return path to the parent
     //! 
     string get_parent_path(hid_t id);
+        
+    //----------------------------------------------------------------
+    //!
+    //! \ingroup nxh5_classes
+    //! \brief return the parent object
+    //!
+    //! Returns the parent object. This might be either a group (in 
+    //! the case of a field or group) or a field.
+    //!
+    //! \throws object_error in case of any error
+    //! \return object instance of the parent
+    //!
+    h5object parent(const h5object &obj);
+
 
 //end of namespace
 }

@@ -23,6 +23,7 @@
 
 #include <pni/io/exceptions.hpp>
 #include <pni/io/nx/h5/hdf5_utilities.hpp>
+#include <pni/io/nx/h5/h5object.hpp>
 
 
 
@@ -50,6 +51,16 @@ namespace h5{
 
         return buffer;
     }
+
+    //-------------------------------------------------------------------------
+    string get_filename(const h5object &obj)
+    {
+        if(obj.is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Object is not valid - cannot obtain filename!");
+
+        return get_filename(obj.id());
+    }
    
     //-------------------------------------------------------------------------
     string get_object_path(hid_t id)
@@ -67,6 +78,28 @@ namespace h5{
                     "Error retrieving object name!");
 
         return buffer;
+    }
+   
+    //------------------------------------------------------------------------
+    string get_name(const h5object &obj) 
+    {
+        if(!obj.is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Try to obtain the name of an invalid object!");
+
+        string p = get_object_path(obj.id());
+
+        //if the path is empty return an empty string
+        if(p.empty()) return p;
+
+        if((p.size() == 1) && (p[0] == '/')) return p;
+
+        //need to extract the the name information from the path
+        size_t lpos = p.find_last_of("/");
+        string name = p;
+        if(lpos != p.npos) name = string(p,lpos+1,p.size()-lpos+1);
+
+        return name;
     }
 
     //------------------------------------------------------------------------
@@ -92,6 +125,32 @@ namespace h5{
         }
 
         return base;
+    }
+    
+    //-------------------------------------------------------------------------
+    h5object get_object_parent(const h5object &obj)
+    {
+        h5object file(H5Iget_file_id(obj.id()));
+
+        return h5object(H5Oopen(file.id(),
+                                get_parent_path(obj.id()).c_str(),
+                                H5P_DEFAULT));
+    }
+
+    //------------------------------------------------------------------------
+    h5object get_attribute_parent(const h5object &obj)
+    {
+        //attempt to retrieve the parent object
+        return h5object(H5Oopen(obj.id(),".",H5P_DEFAULT));
+    }
+
+    //------------------------------------------------------------------------
+    h5object get_parent(const h5object &obj) 
+    {
+        if(get_hdf5_type(obj)==h5object_type::ATTRIBUTE)
+            return get_attribute_parent(obj);
+        else
+            return get_object_parent(obj);
     }
 
 //end of namespace
