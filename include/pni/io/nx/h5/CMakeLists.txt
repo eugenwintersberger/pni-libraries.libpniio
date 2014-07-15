@@ -16,6 +16,9 @@ set(HEADER_FILES H5Attribute.hpp
                  H5Object.hpp 
                  H5ObjectType.hpp 
                  hdf5_utilities.hpp
+                 h5object.hpp
+                 h5datatype.hpp
+                 h5dataspace.hpp
                  )
 
 
