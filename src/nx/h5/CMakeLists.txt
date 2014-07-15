@@ -18,6 +18,7 @@ set(SOURCES H5Attribute.cpp
             h5object_types.cpp
             h5datatype.cpp
             h5dataspace.cpp
+            attribute_utils.cpp
             )
 
 
