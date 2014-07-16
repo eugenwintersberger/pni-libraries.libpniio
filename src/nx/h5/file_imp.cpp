@@ -24,6 +24,9 @@
 #include <pni/io/nx/h5/file_imp.hpp>
 #include <pni/io/nx/h5/group_imp.hpp>
 #include <pni/io/nx/h5/attribute_imp.hpp>
+#include <pni/io/nx/h5/h5dataspace.hpp>
+#include <pni/io/nx/h5/h5datatype.hpp>
+#include <pni/io/nx/h5/attribute_utils.hpp>
 
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 #include <pni/io/nx/nxexceptions.hpp>
@@ -142,36 +145,34 @@ namespace h5{
             //enable splitting
             H5Pset_fapl_family(acc_plist.id(),ssize*1024*1024,H5P_DEFAULT);
 
-        file_imp file;
+        object_imp file;
         if(overwrite)
-            file = file_imp(object_imp(H5Fcreate(n.c_str(),
-                                                 H5F_ACC_TRUNC,
-                                                 create_plist.id(),
-                                                 acc_plist.id())));
+            file = object_imp(H5Fcreate(n.c_str(),
+                                        H5F_ACC_TRUNC,
+                                        create_plist.id(),
+                                        acc_plist.id()));
         else
-            file = file_imp(object_imp(H5Fcreate(n.c_str(),
-                                                 H5F_ACC_EXCL,
-                                                 create_plist.id(),
-                                                 acc_plist.id())));
+            file = object_imp(H5Fcreate(n.c_str(),
+                                        H5F_ACC_EXCL,
+                                        create_plist.id(),
+                                        acc_plist.id()));
 
         //in the end we need to set the HDF5 version to the correct
         //value
-        /*
         unsigned major,minor,rel;
         H5get_libversion(&major,&minor,&rel);
         std::ostringstream vstring;
         vstring<<major<<"."<<minor<<"."<<rel;
-
-        H5Attribute a = f.attr<string>("HDF5_version");
+   
+        attribute_imp a(create_attribute(file,
+                                         "HDF5_verison",
+                                         get_type(type_id_t::STRING),
+                                         h5dataspace(),
+                                         true));
         string version(vstring.str());
         a.write(&version);
-        a.close();
 
-        //close file create and access property lists
-        H5Pclose(create_plist);
-        H5Pclose(acc_plist);
-        */
-        return file;
+        return file_imp(std::move(file));
     }
 
     //-------------------------------------------------------------------------
