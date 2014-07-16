@@ -159,7 +159,7 @@ namespace h5{
                 const h5datatype &mem_type = get_type(type_id_map<T>::type_id);
                 herr_t err = H5Awrite(_object.id(),
                                       mem_type.object().id(),
-                                      const_cast<void *>(ptr));
+                                      (void *)(ptr));
                 if(err<0)
                     throw io_error(EXCEPTION_RECORD, 
                         "Error writing attribute ["+this->name()+"]!\n\n"+
@@ -221,7 +221,7 @@ namespace h5{
             //! occurs
             //!
             //! \tparam T type of data in memory
-            //! \throws pni::io::nx::nxattribute_error in case of IO errors
+            //! \throws io_error in case of IO errors
             //! \param ptr pointer to memory
             //!
             template<typename T> void read(T *ptr) const
@@ -229,9 +229,9 @@ namespace h5{
                 const h5datatype &mem_type = get_type(type_id_map<T>::type_id);
                 herr_t err = H5Aread(_object.id(),
                                      mem_type.object().id(),
-                                     const_cast<void *>(ptr));
+                                     (void*)(ptr));
                 if(err < 0)
-                    throw pni::io::nx::nxattribute_error(EXCEPTION_RECORD,
+                    throw io_error(EXCEPTION_RECORD,
                             "Error reading attribute ["+this->name()+"]!\n\n"+
                             get_h5_error_string());
             }
@@ -303,6 +303,17 @@ namespace h5{
             //!
             size_t rank() const { return this->_dspace.rank(); }
 
+            //-----------------------------------------------------------------
+            //!
+            //! \brief check validity
+            //! 
+            //! Returns true if the attribute is a valid object, false
+            //! otherwise.
+            //!
+            //! \throws object_error if validity check fails
+            //! \return true if valid, false otherwise
+            //! 
+            bool is_valid() const;
 
             //-----------------------------------------------------------------
             //! 
@@ -313,7 +324,19 @@ namespace h5{
             //! \throws io_error in case of errors
             //! \return attribute name
             //!
-            virtual string name() const;
+            string name() const;
+
+            //----------------------------------------------------------------
+            //! 
+            //! \brief get filename
+            //! 
+            //! Return the name of the file where this attribute is stored.
+            //!
+            //! \throws io_error if the filename cannot be retrieved
+            //! 
+            //! \return file name
+            //! 
+            string filename() const;
 
             //-----------------------------------------------------------------
             //!

@@ -1,25 +1,25 @@
-/*
- * (c) Copyright 2012 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- *
- * Created on: Sep 13, 2012
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- */
+//
+// (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+// Created on: Jul 16, 2014
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+///
 #pragma once
 
 extern "C" {
@@ -29,11 +29,14 @@ extern "C" {
 #include "../common.hpp"
 #include "../data.hpp"
 
-#include<pni/core/arrays.hpp>
+#include <pni/io/nx/h5/file_imp.hpp>
+#include <pni/io/nx/h5/group_imp.hpp>
+#include <pni/io/nx/h5/h5datatype.hpp>
+#include <pni/io/nx/h5/h5dataspace.hpp>
+#include <pni/io/nx/h5/attribute_imp.hpp>
+#include <pni/io/nx/h5/attribute_utils.hpp>
 
-#include <pni/io/nx/h5/H5File.hpp>
-#include <pni/io/nx/h5/H5Group.hpp>
-
+using namespace pni::io::nx::h5;
 
 /*!
 \ingroup test_suites
@@ -41,9 +44,9 @@ extern "C" {
 
 Testing instances of H5Attribute.
 */
-class H5AttributeTest:public CppUnit::TestFixture
+class attribute_imp_test:public CppUnit::TestFixture
 {
-        CPPUNIT_TEST_SUITE(H5AttributeTest);
+        CPPUNIT_TEST_SUITE(attribute_imp_test);
         CPPUNIT_TEST(test_creation); 
         CPPUNIT_TEST(test_assignment);
         CPPUNIT_TEST(test_inquery);
@@ -82,8 +85,8 @@ class H5AttributeTest:public CppUnit::TestFixture
         CPPUNIT_TEST(test_array_attribute<string>);
         CPPUNIT_TEST_SUITE_END();
     private:
-        H5File file;   //!< file object
-        H5Group group; //!< group object
+        file_imp file;   //!< file object
+        group_imp root_group;
 
     public:
         //---------------------------------------------------------------------
@@ -123,11 +126,14 @@ class H5AttributeTest:public CppUnit::TestFixture
 };
 
 //-----------------------------------------------------------------------------
-template<typename T> void H5AttributeTest::test_scalar_attribute()
+template<typename T> void attribute_imp_test::test_scalar_attribute()
 {
-    PRINT_TEST_FUNCTION_SIG;
-
-    H5Attribute a = group.attr<T>("a1");
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    attribute_imp a(create_attribute(root_group.object(),
+                                     "a1",
+                                     get_type(type_id_map<T>::type_id),
+                                     h5dataspace(),
+                                     false));
 
     //write data
     auto write = create_scalar_data<T>();
@@ -139,7 +145,7 @@ template<typename T> void H5AttributeTest::test_scalar_attribute()
 }
 
 //-----------------------------------------------------------------------------
-template<typename T> void H5AttributeTest::test_array_attribute()
+template<typename T> void attribute_imp_test::test_array_attribute()
 {
     PRINT_TEST_FUNCTION_SIG;
 
@@ -150,7 +156,11 @@ template<typename T> void H5AttributeTest::test_array_attribute()
     std::vector<T> b = create_array_data<T>(write.size());
     std::copy(b.begin(),b.end(),write.begin());
     
-    H5Attribute a = group.attr<T>("a1",s);
+    attribute_imp a(create_attribute(root_group.object(),
+                                     "a1",
+                                     get_type(type_id_map<T>::type_id), 
+                                     h5dataspace(s),
+                                     false));
     //write data
     a.write(write.data());
     //read data back
@@ -159,4 +169,3 @@ template<typename T> void H5AttributeTest::test_array_attribute()
     //compare data
     for(size_t i=0;i<a.size();i++) check_equality(read[i],write[i]);
 }
-

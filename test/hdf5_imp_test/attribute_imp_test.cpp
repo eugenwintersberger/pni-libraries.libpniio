@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2012 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,71 +17,80 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Created on: Sep 13, 2012
+// Created on: Jul 16, 2014
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-#include "H5AttributeTest.hpp"
+#include "attribute_imp_test.hpp"
 #include <pni/io/nx/nxdate_time.hpp>
 
 
-CPPUNIT_TEST_SUITE_REGISTRATION(H5AttributeTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(attribute_imp_test);
 
 //-----------------------------------------------------------------------------
-void H5AttributeTest::setUp()
+void attribute_imp_test::setUp()
 {
-    file = H5File::create_file("H5AttributeTest.h5",true,0);
-    group = H5Group("group",file);
+    file = file_imp::create("attribute_imp_test.h5",true,0);
+    root_group = file.root();
 }
 
 //-----------------------------------------------------------------------------
-void H5AttributeTest::tearDown()
+void attribute_imp_test::tearDown()
 {
-    group.close();
+    root_group.close();
     file.close();
 }
 
 //-----------------------------------------------------------------------------
-void H5AttributeTest::test_creation()
+void attribute_imp_test::test_creation()
 {
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
     using pni::io::nx::nxdate_time;
-    PRINT_TEST_FUNCTION_SIG;
 
     //default constructor
-    H5Attribute a;
+    attribute_imp a;
     CPPUNIT_ASSERT(!a.is_valid());
   
     //test constructor from new object
-    H5Attribute a1 = group.attr<string>("a1");
+    attribute_imp a1(create_attribute(root_group.object(),
+                                     "a1",
+                                     get_type(type_id_t::STRING),
+                                     h5dataspace(),
+                                     false));
     CPPUNIT_ASSERT(a1.is_valid());
     CPPUNIT_ASSERT(a1.name() == "a1");
 
     
     //test construction from copy constructor
-    H5Attribute a2(a1);
+    attribute_imp a2(a1);
     CPPUNIT_ASSERT(a2.is_valid());
     CPPUNIT_ASSERT(a2.name() == a1.name());
     
     //test move construction
-    H5Attribute a3(std::move(a2));
+    attribute_imp a3(std::move(a2));
     CPPUNIT_ASSERT(a3.is_valid());
     CPPUNIT_ASSERT(!a2.is_valid());
 
 }
 
 //-----------------------------------------------------------------------------
-void H5AttributeTest::test_assignment()
+void attribute_imp_test::test_assignment()
 {
-    PRINT_TEST_FUNCTION_SIG;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    H5Attribute a1 = group.attr<string>("a1");
+    attribute_imp a1(create_attribute(root_group.object(),
+                                      "a1",
+                                      get_type(type_id_t::STRING),
+                                      h5dataspace(),
+                                      false));
     CPPUNIT_ASSERT(a1.is_valid());
 
-    H5Attribute a2;
+    attribute_imp a2;
     a2 = a1;
     CPPUNIT_ASSERT(a1.is_valid());
     CPPUNIT_ASSERT(a2.is_valid());
 
-    H5Attribute a3;
+    attribute_imp a3;
     a3= std::move(a2);
     CPPUNIT_ASSERT(!a2.is_valid());
     CPPUNIT_ASSERT(a1.is_valid());
@@ -91,18 +100,25 @@ void H5AttributeTest::test_assignment()
 
 
 //-----------------------------------------------------------------------------
-void H5AttributeTest::test_inquery()
+void attribute_imp_test::test_inquery()
 {
-    PRINT_TEST_FUNCTION_SIG;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    H5Attribute a1 = group.attr<float32>("a1");
+    attribute_imp a1(create_attribute(root_group.object(),
+                                      "a1",
+                                      get_type(type_id_t::FLOAT32),
+                                      h5dataspace(),
+                                      false));
     shape_t shape{10,2};
-    H5Attribute a2 = group.attr<float32>("a2",shape);
+    attribute_imp a2(create_attribute(root_group.object(),
+                                      "a2",
+                                      get_type(type_id_t::FLOAT32),
+                                      h5dataspace{10,2},
+                                      false));
 
     CPPUNIT_ASSERT(a1.is_valid());
     CPPUNIT_ASSERT(a1.name() == "a1");
-    std::cout<<a1.filename()<<std::endl;
-    CPPUNIT_ASSERT(a1.filename() == string("H5AttributeTest.h5"));
+    CPPUNIT_ASSERT(a1.filename() == string("attribute_imp_test.h5"));
     CPPUNIT_ASSERT(a1.size() == 1);
     CPPUNIT_ASSERT(a1.rank() == 0);
     CPPUNIT_ASSERT(a1.type_id() == type_id_t::FLOAT32);
@@ -111,16 +127,16 @@ void H5AttributeTest::test_inquery()
 
     CPPUNIT_ASSERT(a2.is_valid());
     CPPUNIT_ASSERT(a2.name() == "a2");
-    CPPUNIT_ASSERT(a2.filename() == "H5AttributeTest.h5");
+    CPPUNIT_ASSERT(a2.filename() == "attribute_imp_test.h5");
     CPPUNIT_ASSERT(a2.size() == 20);
     CPPUNIT_ASSERT(a2.rank() == 2);
     CPPUNIT_ASSERT(a2.type_id() == type_id_t::FLOAT32);
     auto ashape = a2.shape<shape_t>();
     CPPUNIT_ASSERT(std::equal(shape.begin(),shape.end(),ashape.begin()));
 
-    H5Group parent = a1.parent();
+    group_imp parent(a1.parent());
     CPPUNIT_ASSERT(parent.is_valid());
-    CPPUNIT_ASSERT(parent.name() == "group");
+    CPPUNIT_ASSERT(parent.name() == "/");
 }
 
 

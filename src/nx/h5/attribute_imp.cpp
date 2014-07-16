@@ -131,6 +131,18 @@ namespace h5{
     {
         return get_parent(_object);
     }
+
+    //-------------------------------------------------------------------------
+    bool attribute_imp::is_valid() const
+    {
+        return _object.is_valid();
+    }
+
+    //-------------------------------------------------------------------------
+    string attribute_imp::filename() const
+    {
+        return get_filename(_object.id());
+    }
     
     //-------------------------------------------------------------------------
     //implementation of write from String
