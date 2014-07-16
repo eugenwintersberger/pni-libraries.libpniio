@@ -7,7 +7,6 @@ set(SOURCES H5Attribute.cpp
             H5DeflateFilter.cpp
             h5_error.cpp
             h5_error_stack.cpp
-            H5File.cpp
             H5Group.cpp
             H5LibrarySetup.cpp
             h5link.cpp
@@ -20,7 +19,8 @@ set(SOURCES H5Attribute.cpp
             h5dataspace.cpp
             attribute_utils.cpp
             attribute_imp.cpp
-            #group_imp.cpp
+            group_imp.cpp
+            file_imp.cpp
             )
 
 

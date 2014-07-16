@@ -1,17 +1,18 @@
-set(SOURCES H5AttributeObjectTest.cpp
-            H5AttributeTest.cpp
-            H5DatasetTest.cpp
-            H5DataspaceTest.cpp
-            H5DatatypeTest.cpp
-            H5FileTest.cpp
-            H5GroupTest.cpp
-            H5LinkTest.cpp
-            H5NamedObjectTest.cpp
-            H5ObjectTest.cpp
+set(SOURCES 
+            #H5AttributeObjectTest.cpp
+            #H5AttributeTest.cpp
+            #H5DatasetTest.cpp
+            #H5DataspaceTest.cpp
+            #H5DatatypeTest.cpp
+            #H5GroupTest.cpp
+            #H5LinkTest.cpp
+            #H5NamedObjectTest.cpp
+            #H5ObjectTest.cpp
             hdf5_imp_test.cpp
             object_imp_test.cpp
             h5datatype_test.cpp
             h5dataspace_test.cpp
+            file_imp_test.cpp
            )
 
 add_executable(hdf5_imp_test ${SOURCES} $<TARGET_OBJECTS:test_common>)

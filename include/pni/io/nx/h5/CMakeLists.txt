@@ -7,7 +7,6 @@ set(HEADER_FILES H5Attribute.hpp
                  H5DeflateFilter.hpp 
                  h5_error.hpp 
                  h5_error_stack.hpp 
-                 H5File.hpp 
                  H5Filter.hpp 
                  H5Group.hpp 
                  H5LibrarySetup.hpp 
