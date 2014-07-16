@@ -26,7 +26,7 @@
 #include <pni/io/exceptions.hpp>
 
 #include <pni/io/nx/h5/h5object_types.hpp>
-#include <pni/io/nx/h5/h5object.hpp>
+#include <pni/io/nx/h5/object_imp.hpp>
 
 
 namespace pni{
@@ -37,7 +37,7 @@ namespace h5{
     using pni::core::type_error;
 
     //------------------------------------------------------------------------
-    h5object_type get_hdf5_type(const h5object &o)
+    h5object_type get_hdf5_type(const object_imp &o)
     {
         if(!o.is_valid())
             throw invalid_object_error(EXCEPTION_RECORD,
@@ -68,7 +68,7 @@ namespace h5{
     }
     
     //------------------------------------------------------------------------
-    pni::io::nx::nxobject_type get_nexus_type(const h5object &o)
+    pni::io::nx::nxobject_type get_nexus_type(const object_imp &o)
     {
         if(get_hdf5_type(o) == h5object_type::GROUP) 
             return pni::io::nx::nxobject_type::NXGROUP;

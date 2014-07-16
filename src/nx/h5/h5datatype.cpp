@@ -22,7 +22,6 @@
 //
 
 #include <pni/io/nx/h5/h5datatype.hpp>
-#include <pni/io/nx/h5/H5DatatypeFactory.hpp>
 #include <pni/io/nx/nxexceptions.hpp>
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 
@@ -38,17 +37,17 @@ namespace h5{
     //map for basic numeric types
     const static std::map<type_id_t,h5datatype> __base_type_map = 
     {
-     {type_id_t::UINT8,h5datatype(h5object(H5Tcopy(H5T_NATIVE_UINT8)))},
-     {type_id_t::INT8,h5datatype(h5object(H5Tcopy(H5T_NATIVE_INT8)))},
-     {type_id_t::UINT16,h5datatype(h5object(H5Tcopy(H5T_NATIVE_UINT16)))},
-     {type_id_t::INT16,h5datatype(h5object(H5Tcopy(H5T_NATIVE_INT16)))},
-     {type_id_t::UINT32,h5datatype(h5object(H5Tcopy(H5T_NATIVE_UINT32)))},
-     {type_id_t::INT32,h5datatype(h5object(H5Tcopy(H5T_NATIVE_INT32)))},
-     {type_id_t::UINT64,h5datatype(h5object(H5Tcopy(H5T_NATIVE_UINT64)))},
-     {type_id_t::INT64,h5datatype(h5object(H5Tcopy(H5T_NATIVE_INT64)))},
-     {type_id_t::FLOAT32,h5datatype(h5object(H5Tcopy(H5T_NATIVE_FLOAT)))},
-     {type_id_t::FLOAT64,h5datatype(h5object(H5Tcopy(H5T_NATIVE_DOUBLE)))},
-     {type_id_t::FLOAT128,h5datatype(h5object(H5Tcopy(H5T_NATIVE_LDOUBLE)))}
+     {type_id_t::UINT8,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_UINT8)))},
+     {type_id_t::INT8,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_INT8)))},
+     {type_id_t::UINT16,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_UINT16)))},
+     {type_id_t::INT16,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_INT16)))},
+     {type_id_t::UINT32,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_UINT32)))},
+     {type_id_t::INT32,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_INT32)))},
+     {type_id_t::UINT64,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_UINT64)))},
+     {type_id_t::INT64,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_INT64)))},
+     {type_id_t::FLOAT32,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_FLOAT)))},
+     {type_id_t::FLOAT64,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_DOUBLE)))},
+     {type_id_t::FLOAT128,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_LDOUBLE)))}
     };
 
     template<typename T> struct complex_struct
@@ -66,7 +65,7 @@ namespace h5{
         h5datatype h5_base_type = __base_type_map.at(tid);
 
         //throw object_error if this fails
-        h5datatype type(h5object(H5Tcreate(H5T_COMPOUND,sizeof(comp_type))));
+        h5datatype type(object_imp(H5Tcreate(H5T_COMPOUND,sizeof(comp_type))));
 
         if(H5Tinsert(type.object().id(),"r",HOFFSET(comp_type,r),
                     h5_base_type.object().id())<0)
@@ -83,7 +82,7 @@ namespace h5{
 
     h5datatype create_bool()
     {
-        h5datatype type(h5object(H5Tcopy(H5T_NATIVE_UINT8)));
+        h5datatype type(object_imp(H5Tcopy(H5T_NATIVE_UINT8)));
         H5Tset_precision(type.object().id(),1);
         return type;
     }
@@ -94,7 +93,7 @@ namespace h5{
     {
         string estr = "Error creating STRING type!";
 
-        h5datatype type(h5object(H5Tcopy(H5T_C_S1)));
+        h5datatype type(object_imp(H5Tcopy(H5T_C_S1)));
 
         if(H5Tset_strpad(type.object().id(),H5T_STR_NULLTERM)<0)
             throw object_error(EXCEPTION_RECORD,
@@ -115,23 +114,23 @@ namespace h5{
     //-------------------------------------------------------------------------
     h5datatype create_binary()
     {
-        return h5datatype(h5object(H5Tcreate(H5T_OPAQUE,1)));
+        return h5datatype(object_imp(H5Tcreate(H5T_OPAQUE,1)));
     }
 
     //------------------------------------------------------------------------
     const static std::map<type_id_t,h5datatype> __id_2_type_map = 
     {
-     {type_id_t::UINT8,h5datatype(h5object(H5Tcopy(H5T_NATIVE_UINT8)))},
-     {type_id_t::INT8,h5datatype(h5object(H5Tcopy(H5T_NATIVE_INT8)))},
-     {type_id_t::UINT16,h5datatype(h5object(H5Tcopy(H5T_NATIVE_UINT16)))},
-     {type_id_t::INT16,h5datatype(h5object(H5Tcopy(H5T_NATIVE_INT16)))},
-     {type_id_t::UINT32,h5datatype(h5object(H5Tcopy(H5T_NATIVE_UINT32)))},
-     {type_id_t::INT32,h5datatype(h5object(H5Tcopy(H5T_NATIVE_INT32)))},
-     {type_id_t::UINT64,h5datatype(h5object(H5Tcopy(H5T_NATIVE_UINT64)))},
-     {type_id_t::INT64,h5datatype(h5object(H5Tcopy(H5T_NATIVE_INT64)))},
-     {type_id_t::FLOAT32,h5datatype(h5object(H5Tcopy(H5T_NATIVE_FLOAT)))},
-     {type_id_t::FLOAT64,h5datatype(h5object(H5Tcopy(H5T_NATIVE_DOUBLE)))},
-     {type_id_t::FLOAT128,h5datatype(h5object(H5Tcopy(H5T_NATIVE_LDOUBLE)))},
+     {type_id_t::UINT8,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_UINT8)))},
+     {type_id_t::INT8,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_INT8)))},
+     {type_id_t::UINT16,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_UINT16)))},
+     {type_id_t::INT16,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_INT16)))},
+     {type_id_t::UINT32,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_UINT32)))},
+     {type_id_t::INT32,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_INT32)))},
+     {type_id_t::UINT64,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_UINT64)))},
+     {type_id_t::INT64,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_INT64)))},
+     {type_id_t::FLOAT32,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_FLOAT)))},
+     {type_id_t::FLOAT64,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_DOUBLE)))},
+     {type_id_t::FLOAT128,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_LDOUBLE)))},
      {type_id_t::COMPLEX32,create_complex<complex32>()},
      {type_id_t::COMPLEX64,create_complex<complex64>()},
      {type_id_t::COMPLEX128,create_complex<complex128>()},
@@ -162,7 +161,7 @@ namespace h5{
     { }
 
     //-------------------------------------------------------------------------
-    h5datatype::h5datatype(h5object &&o) 
+    h5datatype::h5datatype(object_imp &&o) 
         :_object(std::move(o))
     {
         if(get_hdf5_type(_object)!=h5object_type::DATATYPE)
@@ -187,7 +186,7 @@ namespace h5{
 
     //-------------------------------------------------------------------------
     //implementation of move assignment operator
-    h5datatype &h5datatype::operator=(h5datatype &&o)
+    h5datatype &h5datatype::operator=(h5datatype &&o) noexcept
     {
         if(this != &o) _object = std::move(o._object);
 
@@ -195,7 +194,7 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    const h5object &h5datatype::object() const noexcept
+    const object_imp &h5datatype::object() const noexcept
     {
         return _object;
     }

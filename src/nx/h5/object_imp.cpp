@@ -22,7 +22,7 @@
 //
 
 #include <iostream>
-#include <pni/io/nx/h5/h5object.hpp>
+#include <pni/io/nx/h5/object_imp.hpp>
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 #include <pni/io/exceptions.hpp>
 
@@ -35,7 +35,7 @@ namespace h5{
     using pni::io::invalid_object_error;
 
     //=====================private member functions============================
-    void h5object::inc_ref()
+    void object_imp::inc_ref()
     {
         if(H5Iinc_ref(_id)<0)
             throw object_error(EXCEPTION_RECORD,
@@ -47,7 +47,7 @@ namespace h5{
     }
 
     //=================constrcutors and destructors============================
-    h5object::h5object(hid_t &&sid) :_id(sid)
+    object_imp::object_imp(hid_t &&sid) :_id(sid)
     {
         if(id()<0)
             throw object_error(EXCEPTION_RECORD,
@@ -55,10 +55,10 @@ namespace h5{
     }
     
     //-------------------------------------------------------------------------
-    h5object::h5object() noexcept :_id(0) { }
+    object_imp::object_imp() noexcept :_id(0) { }
 
     //-------------------------------------------------------------------------
-    h5object::h5object(const h5object &o) 
+    object_imp::object_imp(const object_imp &o) 
         :_id(o._id)
     {
         //need to increment the reference 
@@ -67,7 +67,7 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    h5object::h5object(h5object &&o) noexcept
+    object_imp::object_imp(object_imp &&o) noexcept
         :_id(o._id) 
     {
         o._id = 0;
@@ -76,7 +76,7 @@ namespace h5{
     }
     
     //-------------------------------------------------------------------------
-    h5object::~h5object()
+    object_imp::~object_imp()
     {
         close();
     }   
@@ -84,7 +84,7 @@ namespace h5{
 
     //================assignment operators=====================================
     //implementation of the copy assignment operator
-    h5object &h5object::operator=(const h5object &o)
+    object_imp &object_imp::operator=(const object_imp &o)
     {
         if(this == &o) return *this;
 
@@ -100,7 +100,7 @@ namespace h5{
 
     //-------------------------------------------------------------------------
     //implementation of the move assignment operator
-    h5object &h5object::operator=(h5object &&o) noexcept
+    object_imp &object_imp::operator=(object_imp &&o) noexcept
     {
         if(this == &o) return *this;
 
@@ -116,7 +116,7 @@ namespace h5{
     }
    
     //=============basic manipulation methods==================================
-    bool h5object::is_valid() const 
+    bool object_imp::is_valid() const 
     {
         htri_t value = H5Iis_valid(_id);
         
@@ -133,7 +133,7 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    void h5object::close() 
+    void object_imp::close() 
     {
         //if the ID is valid this will decrement the reference counter or close
         //the object if the counter becomes 0.
@@ -162,13 +162,13 @@ namespace h5{
     }
     
     //-------------------------------------------------------------------------
-    const hid_t &h5object::id() const noexcept 
+    const hid_t &object_imp::id() const noexcept 
     { 
         return _id; 
     }
 
     //==================some private functions=================================
-    bool check_type_equality(const h5object &a,const h5object &b)
+    bool check_type_equality(const object_imp &a,const object_imp &b)
     {
         htri_t result = H5Tequal(a.id(),b.id());
         if(result>0) return true;
@@ -179,7 +179,7 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    bool check_plist_equality(const h5object &a,const h5object &b)
+    bool check_plist_equality(const object_imp &a,const object_imp &b)
     {
         htri_t result = H5Pequal(a.id(),b.id());
         if(result >0) return true;
@@ -190,7 +190,7 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    bool check_object_equality(const h5object &a,const h5object &b)
+    bool check_object_equality(const object_imp &a,const object_imp &b)
     {
         H5O_info_t ia,ib;
 
@@ -217,7 +217,7 @@ namespace h5{
 
     //=============comparison operators========================================
     //implementation of equality check
-    bool operator==(const h5object &a,const h5object &b)
+    bool operator==(const object_imp &a,const object_imp &b)
     {
         //if one of the object is not valid they are considered as in not-equal
         if((!a.is_valid()) || (!b.is_valid()))
@@ -238,7 +238,7 @@ namespace h5{
 
     //-------------------------------------------------------------------------
     //implementation of inequality check
-    bool operator!=(const h5object &a,const h5object &b)
+    bool operator!=(const object_imp &a,const object_imp &b)
     {
         if(a == b) return false;
         return true;

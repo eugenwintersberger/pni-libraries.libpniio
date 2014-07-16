@@ -98,7 +98,7 @@ namespace h5 {
     { }
 
     //-------------------------------------------------------------------------
-    h5dataspace::h5dataspace(h5object &&o)
+    h5dataspace::h5dataspace(object_imp &&o)
         :_object(std::move(o))
     {
         if(get_hdf5_type(_object) != h5object_type::DATASPACE)
@@ -155,7 +155,7 @@ namespace h5 {
 
     //-------------------------------------------------------------------------
     //implementation of the move assignment operator
-    h5dataspace &h5dataspace::operator=(h5dataspace &&o)
+    h5dataspace &h5dataspace::operator=(h5dataspace &&o) noexcept
     {
         if(this == &o) return *this;
 

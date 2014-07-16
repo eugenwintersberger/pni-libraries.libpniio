@@ -24,7 +24,7 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include "h5object.hpp"
+#include "object_imp.hpp"
 
 namespace pni{
 namespace io{
@@ -47,7 +47,7 @@ namespace h5{
     class h5datatype
     {
         private:
-            h5object _object;
+            object_imp _object;
         public:
             //======================Constructors and destructors===============
             //!
@@ -62,7 +62,7 @@ namespace h5{
             //! \throws type_error if the passed object is not an HDF5 
             //! data type 
             //!
-            explicit h5datatype(h5object &&o);
+            explicit h5datatype(object_imp &&o);
 
             //----------------------------------------------------------------
             //!
@@ -82,13 +82,21 @@ namespace h5{
             //!
             //! \brief obtain reference to object
             //!
-            const h5object &object() const noexcept;
+            const object_imp &object() const noexcept;
 
             //==========Assignment operators==================================
-            //! copy assignment operator
+            //! 
+            //! \brief copy assignment operator
+            //!
+            //! \throws object_error in case of errors
+            //!
             h5datatype &operator=(const h5datatype &o);
-            //! move assignment operator
-            h5datatype &operator=(h5datatype &&o);
+
+            //----------------------------------------------------------------
+            //! 
+            //! \brief move assignment operator
+            //!  
+            h5datatype &operator=(h5datatype &&o) noexcept;
 
     };
             

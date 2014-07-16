@@ -14,11 +14,13 @@ set(SOURCES H5Attribute.cpp
             H5NamedObject.cpp
             H5Object.cpp
             hdf5_utilities.cpp
-            h5object.cpp
+            object_imp.cpp
             h5object_types.cpp
             h5datatype.cpp
             h5dataspace.cpp
             attribute_utils.cpp
+            attribute_imp.cpp
+            #group_imp.cpp
             )
 
 

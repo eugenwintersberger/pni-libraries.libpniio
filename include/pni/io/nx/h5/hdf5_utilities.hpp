@@ -32,7 +32,7 @@ namespace io{
 namespace nx{
 namespace h5{
 
-    class h5object;
+    class object_imp;
 
     using namespace pni::core;
 
@@ -53,7 +53,7 @@ namespace h5{
     //!
     //! \return name of the object
     //!
-    string get_name(const h5object &obj);
+    string get_name(const object_imp &obj);
 
     //------------------------------------------------------------------------
     //!
@@ -100,18 +100,19 @@ namespace h5{
     //! 
     string get_parent_path(hid_t id);
         
-    //----------------------------------------------------------------
+    //------------------------------------------------------------------------
     //!
     //! \ingroup nxh5_classes
     //! \brief return the parent object
     //!
-    //! Returns the parent object. This might be either a group (in 
-    //! the case of a field or group) or a field.
+    //! Returns the parent object. If the current object is  group or a field
+    //! the returned object is always a group. In the case of an attribute the
+    //! parent can be either a group or a field.
     //!
     //! \throws object_error in case of any error
     //! \return object instance of the parent
     //!
-    h5object parent(const h5object &obj);
+    object_imp get_parent(const object_imp &obj);
 
 
 //end of namespace

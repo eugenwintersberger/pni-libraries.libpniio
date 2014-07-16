@@ -31,7 +31,7 @@ namespace nx{
 namespace h5{
    
     //forward declaration
-    class h5object;
+    class object_imp;
 
     //!
     //! \ingroup nxh5_classes 
@@ -71,7 +71,7 @@ namespace h5{
     //! \param o reference to h5object
     //! \return HDF5 object type
     //! 
-    h5object_type get_hdf5_type(const h5object &o);
+    h5object_type get_hdf5_type(const object_imp &o);
 
     //------------------------------------------------------------------------
     //! 
@@ -90,7 +90,7 @@ namespace h5{
     //! \param o reference to h5object instance
     //! \return Nexus type
     //!
-    pni::io::nx::nxobject_type get_nexus_type(const h5object &o);
+    pni::io::nx::nxobject_type get_nexus_type(const object_imp &o);
 
 
 //end of namespace

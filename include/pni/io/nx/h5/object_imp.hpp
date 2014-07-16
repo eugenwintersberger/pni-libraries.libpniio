@@ -53,7 +53,7 @@ namespace h5{
     //! composition instead of inheritance which should make maintenance of the 
     //! class much easier. 
     //!
-    class h5object
+    class object_imp
     {
         private:
             hid_t _id; //!< ID of the object
@@ -110,7 +110,7 @@ namespace h5{
             //! \throws object_error if id<0
             //! \param id HDF5 object ID.
             //!
-            explicit h5object(hid_t &&id);
+            explicit object_imp(hid_t &&id);
 
             //-----------------------------------------------------------------
             //! 
@@ -118,7 +118,7 @@ namespace h5{
             //! 
             //! The default constructor does not throw
             //!
-            explicit h5object() noexcept;
+            explicit object_imp() noexcept;
 
             //-----------------------------------------------------------------
             //! 
@@ -130,7 +130,7 @@ namespace h5{
             //!                      be determined
             //! \param o object which to cpy
             //!
-            h5object(const h5object &o);
+            object_imp(const object_imp &o);
 
             //-----------------------------------------------------------------
             //! 
@@ -142,7 +142,7 @@ namespace h5{
             //!
             //! \param o object to move
             //!
-            h5object(h5object &&o) noexcept;
+            object_imp(object_imp &&o) noexcept;
 
             //-----------------------------------------------------------------
             //!
@@ -151,7 +151,7 @@ namespace h5{
             //! \throws object_error if closing object failed or its validity
             //!                      could not be determined
             //!
-            ~h5object();
+            ~object_imp();
 
 
             //================assignment operators=============================
@@ -166,7 +166,7 @@ namespace h5{
             //! \param o object to assign
             //! \return refence to object
             //!
-            h5object &operator=(const h5object &o);
+            object_imp &operator=(const object_imp &o);
 
             //-----------------------------------------------------------------
             //!
@@ -179,7 +179,7 @@ namespace h5{
             //! \param o object form which to move data
             //! \return reference to object
             //!
-            h5object &operator=(h5object &&o) noexcept;
+            object_imp &operator=(object_imp &&o) noexcept;
 
 
             //=====================basic object maniuplation====================
@@ -241,7 +241,7 @@ namespace h5{
     //! \param b rhs value of the operator
     //! \return true if equal, false otherwise
     //!
-    bool operator==(const h5object &a,const h5object &b);
+    bool operator==(const object_imp &a,const object_imp &b);
 
     //-------------------------------------------------------------------------
     //! 
@@ -255,7 +255,7 @@ namespace h5{
     //! \param b rhs value of the operator
     //! \return true if not equal, false otherwise
     //!
-    bool operator!=(const h5object &a,const h5object &b);
+    bool operator!=(const object_imp &a,const object_imp &b);
 
 
 //end of namespace

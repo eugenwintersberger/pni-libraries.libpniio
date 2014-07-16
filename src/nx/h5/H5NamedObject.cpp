@@ -23,6 +23,7 @@
 
 #include <pni/io/nx/h5/H5NamedObject.hpp>
 #include <pni/io/nx/h5/hdf5_utilities.hpp>
+#include <pni/io/nx/h5/h5_error_stack.hpp>
 #include <pni/io/exceptions.hpp>
 
 namespace pni{

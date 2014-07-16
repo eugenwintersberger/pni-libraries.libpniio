@@ -30,7 +30,7 @@ namespace io{
 namespace nx{
 namespace h5{
     //-------------------------------------------------------------------------
-    bool has_attribute(const h5object &parent,const string &name) 
+    bool has_attribute(const object_imp &parent,const string &name) 
     {
         htri_t ret = H5Aexists(parent.id(),name.c_str());
         if(ret >0 ) return true;
@@ -43,7 +43,7 @@ namespace h5{
     }
     
     //-------------------------------------------------------------------------
-    void delete_attribute(const h5object &parent,const string &name) 
+    void delete_attribute(const object_imp &parent,const string &name) 
     {
         herr_t err = H5Adelete(parent.id(),name.c_str());
         if(err < 0)
@@ -53,7 +53,7 @@ namespace h5{
                     +get_h5_error_string());
     }
     //------------------------------------------------------------------------
-    h5object create_attribute(const h5object &parent,const string &name,
+    object_imp create_attribute(const object_imp &parent,const string &name,
                               const h5datatype &type,const h5dataspace &space,
                               bool overwrite)
     {
@@ -71,7 +71,7 @@ namespace h5{
                         +get_h5_error_string());
         }
 
-        return h5object(H5Acreate2(parent.id(),
+        return object_imp(H5Acreate2(parent.id(),
                                    name.c_str(),
                                    type.object().id(),
                                    space.object().id(),
@@ -80,19 +80,19 @@ namespace h5{
     }
 
     //------------------------------------------------------------------------
-    h5object get_attribute_by_name(const h5object &parent,const string &name) 
+    object_imp get_attribute_by_name(const object_imp &parent,const string &name) 
     {
         if(!has_attribute(parent,name))
             throw key_error(EXCEPTION_RECORD,
                      "Object ["+get_object_path(parent.id())
                      +"] has no attribute ["+name+"]!");
 
-        return h5object(H5Aopen(parent.id(),name.c_str(),H5P_DEFAULT));
+        return object_imp(H5Aopen(parent.id(),name.c_str(),H5P_DEFAULT));
     }
 
     //-------------------------------------------------------------------------
     //get number of attributes
-    size_t get_number_of_attributes(const h5object &parent)
+    size_t get_number_of_attributes(const object_imp &parent)
     {
         H5O_info_t info;
         H5Oget_info(parent.id(),&info);
@@ -102,7 +102,7 @@ namespace h5{
 
     //-------------------------------------------------------------------------
     //implementation of opening an attribute by index
-    h5object get_attribute_by_index(const h5object &parent,size_t i) 
+    object_imp get_attribute_by_index(const object_imp &parent,size_t i) 
     {
         if(i>=get_number_of_attributes(parent))
         {
@@ -113,7 +113,7 @@ namespace h5{
             throw index_error(EXCEPTION_RECORD,ss.str());
         }
 
-        return h5object(H5Aopen_by_idx(parent.id(),".",H5_INDEX_NAME,
+        return object_imp(H5Aopen_by_idx(parent.id(),".",H5_INDEX_NAME,
                                        H5_ITER_INC,i,H5P_DEFAULT,H5P_DEFAULT));
 
     }

@@ -23,7 +23,7 @@
 
 #include <pni/io/exceptions.hpp>
 #include <pni/io/nx/h5/hdf5_utilities.hpp>
-#include <pni/io/nx/h5/h5object.hpp>
+#include <pni/io/nx/h5/object_imp.hpp>
 
 
 
@@ -53,7 +53,7 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    string get_filename(const h5object &obj)
+    string get_filename(const object_imp &obj)
     {
         if(obj.is_valid())
             throw invalid_object_error(EXCEPTION_RECORD,
@@ -81,7 +81,7 @@ namespace h5{
     }
    
     //------------------------------------------------------------------------
-    string get_name(const h5object &obj) 
+    string get_name(const object_imp &obj) 
     {
         if(!obj.is_valid())
             throw invalid_object_error(EXCEPTION_RECORD,
@@ -128,24 +128,24 @@ namespace h5{
     }
     
     //-------------------------------------------------------------------------
-    h5object get_object_parent(const h5object &obj)
+    object_imp get_object_parent(const object_imp &obj)
     {
-        h5object file(H5Iget_file_id(obj.id()));
+        object_imp file(H5Iget_file_id(obj.id()));
 
-        return h5object(H5Oopen(file.id(),
+        return object_imp(H5Oopen(file.id(),
                                 get_parent_path(obj.id()).c_str(),
                                 H5P_DEFAULT));
     }
 
     //------------------------------------------------------------------------
-    h5object get_attribute_parent(const h5object &obj)
+    object_imp get_attribute_parent(const object_imp &obj)
     {
         //attempt to retrieve the parent object
-        return h5object(H5Oopen(obj.id(),".",H5P_DEFAULT));
+        return object_imp(H5Oopen(obj.id(),".",H5P_DEFAULT));
     }
 
     //------------------------------------------------------------------------
-    h5object get_parent(const h5object &obj) 
+    object_imp get_parent(const object_imp &obj) 
     {
         if(get_hdf5_type(obj)==h5object_type::ATTRIBUTE)
             return get_attribute_parent(obj);

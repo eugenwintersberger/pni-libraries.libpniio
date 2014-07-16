@@ -9,7 +9,7 @@ set(SOURCES H5AttributeObjectTest.cpp
             H5NamedObjectTest.cpp
             H5ObjectTest.cpp
             hdf5_imp_test.cpp
-            h5object_test.cpp
+            object_imp_test.cpp
             h5datatype_test.cpp
             h5dataspace_test.cpp
            )

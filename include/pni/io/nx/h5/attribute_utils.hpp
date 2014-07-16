@@ -27,7 +27,7 @@
 #include <pni/core/error.hpp>
 #include <pni/core/types.hpp>
 
-#include "h5object.hpp"
+#include "object_imp.hpp"
 #include "h5dataspace.hpp"
 #include "h5datatype.hpp"
 #include "../../exceptions.hpp"
@@ -57,7 +57,7 @@ namespace h5{
     //! \param n name of the attribute to check for
     //! \return true if exists, false otherwise
     //!
-    bool has_attribute(const h5object &parent,const string &n);
+    bool has_attribute(const object_imp &parent,const string &n);
             
     //------------------------------------------------------------------------
     //! 
@@ -69,7 +69,7 @@ namespace h5{
     //! \throws pni::io::object_error in case of errors 
     //! \param n name of the attribute
     //!
-    void delete_attribute(const h5object &parent,const string &name);
+    void delete_attribute(const object_imp &parent,const string &name);
 
     //-------------------------------------------------------------------------
     //!
@@ -86,7 +86,7 @@ namespace h5{
     //! \param overwrite if true overwrite an existing attribute
     //! \return the attribute as h5object
     //!
-    h5object create_attribute(const h5object &parent,
+    object_imp create_attribute(const object_imp &parent,
                               const string &name,
                               const h5datatype &type,
                               const h5dataspace &space,
@@ -107,7 +107,7 @@ namespace h5{
     //! \param n name of the attribute
     //! \return attribute object
     //!
-    h5object get_attribute_by_name(const h5object &parent,const string &n);
+    object_imp get_attribute_by_name(const object_imp &parent,const string &n);
 
 
     //-----------------------------------------------------------------
@@ -118,7 +118,7 @@ namespace h5{
     //! Method returns the number of attributes attached to this object.
     //! \return number of attributes
     //!
-    size_t get_number_of_attributes(const h5object &parent);
+    size_t get_number_of_attributes(const object_imp &parent);
 
     //------------------------------------------------------------------------
     //!
@@ -133,7 +133,7 @@ namespace h5{
     //! \param i index of the attribute
     //! \returns instance of H5Attribute
     //!
-    h5object get_attribute_by_index(const h5object &parent,size_t i);
+    object_imp get_attribute_by_index(const object_imp &parent,size_t i);
 
 
 //end of namespace

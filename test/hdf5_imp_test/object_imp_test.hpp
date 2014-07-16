@@ -30,13 +30,13 @@ extern "C" {
 #include<cppunit/extensions/HelperMacros.h>
 #include<boost/current_function.hpp>
 
-#include <pni/io/nx/h5/h5object.hpp>
+#include <pni/io/nx/h5/object_imp.hpp>
 
 using namespace pni::io::nx::h5;
 
-class h5object_test:public CppUnit::TestFixture
+class object_imp_test:public CppUnit::TestFixture
 {
-        CPPUNIT_TEST_SUITE(h5object_test);
+        CPPUNIT_TEST_SUITE(object_imp_test);
         CPPUNIT_TEST(test_default);
         CPPUNIT_TEST(test_create_from_attribute); 
         CPPUNIT_TEST(test_create_from_dataset);

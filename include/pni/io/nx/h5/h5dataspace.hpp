@@ -27,7 +27,7 @@
 #include <algorithm>
 #include <pni/core/error.hpp>
 
-#include "h5object.hpp"
+#include "object_imp.hpp"
 
 namespace pni{
 namespace io{
@@ -82,7 +82,7 @@ namespace h5 {
             typedef buffer_type::const_iterator iterator;
         private:
             //! The HDF5 object representing the dataspace
-            h5object _object;
+            object_imp _object;
             //! maximum number of elements dimensions
             buffer_type _maxdims; 
             //! number of elements 
@@ -145,7 +145,7 @@ namespace h5 {
             //! 
             //! \param id HDF5 id of the original object
             //!
-            explicit h5dataspace(h5object &&o);
+            explicit h5dataspace(object_imp &&o);
             
             //-----------------------------------------------------------------
             //! 
@@ -275,9 +275,7 @@ namespace h5 {
             //!
             //! \brief move assignment operator
             //! 
-            //! \throws object_error in case of errors
-            //! 
-            h5dataspace &operator=(h5dataspace &&o);
+            h5dataspace &operator=(h5dataspace &&o) noexcept;
 
             //=====================convenience  methods========================
             //-----------------------------------------------------------------
@@ -294,7 +292,7 @@ namespace h5 {
             //!
             //! \brief get object reference
             //!
-            const h5object &object() const 
+            const object_imp &object() const 
             {
                 return _object;
             }

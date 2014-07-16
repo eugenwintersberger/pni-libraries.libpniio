@@ -50,7 +50,7 @@ void h5dataspace_test::test_object_construction()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    h5dataspace space1(h5object(H5Screate_simple(3,dims,dims)));
+    h5dataspace space1(object_imp(H5Screate_simple(3,dims,dims)));
     CPPUNIT_ASSERT(!space1.is_scalar());
     CPPUNIT_ASSERT(space1.rank() == 3);
     CPPUNIT_ASSERT(space1.size() == 600);
