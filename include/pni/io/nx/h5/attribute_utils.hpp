@@ -118,7 +118,7 @@ namespace h5{
     //! Method returns the number of attributes attached to this object.
     //! \return number of attributes
     //!
-    size_t get_number_of_attributes(const object_imp &parent);
+    size_t get_number_of_attributes(const object_imp &parent) noexcept;
 
     //------------------------------------------------------------------------
     //!

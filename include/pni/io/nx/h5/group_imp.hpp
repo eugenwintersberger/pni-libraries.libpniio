@@ -20,15 +20,14 @@
 // Created on: Jan 10, 2012
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-
-
 #pragma once
 
 #include <pni/core/types.hpp>
 
-
-#include "h5object.hpp"
+#include "object_imp.hpp"
 #include "hdf5_utilities.hpp"
+#include "attribute_utils.hpp"
+#include "attribute_imp.hpp"
 
 
 namespace pni{
@@ -41,7 +40,6 @@ namespace h5{
     using pni::core::exception;
     using pni::core::string;
     //class forward declarations            
-    class H5Dataset;
     
     //! 
     //! \ingroup nxh5_classes
@@ -54,7 +52,7 @@ namespace h5{
     class group_imp
     {
         private:
-            h5object _object;
+            object_imp _object;
         public:
             //==========constructors and destructors===========================
             //! 
@@ -64,12 +62,12 @@ namespace h5{
 
             //-----------------------------------------------------------------
             //! 
-            //! \brief constructor from h5object
+            //! \brief constructor from object_imp
             //! 
             //! \throws type_error if the object is not a group object
             //! \throws object_error in case of errors
             //!
-            explicit group_imp(h5object &&o);
+            explicit group_imp(object_imp &&o);
 
             //-----------------------------------------------------------------
             //!
@@ -99,17 +97,23 @@ namespace h5{
 
 
             //===================assignment operators===========================
-            //! copy assignment
-            H5Group &operator=(const H5Group &o);
+            //!
+            //! \brief copy assignment
+            //! 
+            //! \throws object_error in case of errors
+            //! 
+            group_imp &operator=(const group_imp &o);
 
             //------------------------------------------------------------------
-            //! move assignment
-            H5Group &operator=(H5Group &&o);
+            //! 
+            //! \brief move assignment
+            //! 
+            group_imp &operator=(group_imp &&o) noexcept;
 
 
             //=================methods to open objects==========================
             //! 
-            //! \brief open an arbitrary object
+            //! \brief get child by name
             //!
             //! Opens an arbitrary object. The method takes a path to the 
             //! object and returns an H5Object. As all classes derived from 
@@ -120,23 +124,13 @@ namespace h5{
             //! group instance calling this method. Both methods work as 
             //! expected.
             //!
-            //! \throws pni::io::nx::nxobject_error in case of errors
-            //! \param n object path
-            //! \return HDF5 object 
+            //! \throws key_error if group has no child with this name
+            //! \throws object_error in case of errors during object
+            //! construction
+            //! \param name name of the child object
+            //! \return object instance 
             //!
-            H5Object open(const string &n) const;
-
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief open an arbitrary object
-            //!
-            //! Basically this does the same as the open() method.
-            //!
-            //! \param n object path
-            //! \return H5Object addressed by n
-            //! \sa H5Object open(const String &n) const
-            //!
-            H5Object operator[](const string &n) const;
+            object_imp at(const string &name) const;
 
             //-----------------------------------------------------------------
             //! 
@@ -151,25 +145,13 @@ namespace h5{
             //! \param i object index
             //! \return child object
             //!
-            H5Object open(size_t i) const;
-
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief open by index
-            //!
-            //! [] operator to obtain a child node by index;
-            //! \throws index_error if index exceeds number of childs
-            //! \param i object index
-            //! \return child node
-            //! \sa open(size_t i)
-            //!
-            H5Object operator[](size_t i) const;
+            object_imp at(size_t i) const;
 
             //----------------------------------------------------------------
             //!
             //! \brief return object reference
             //! 
-            const h5object &object() const 
+            const object_imp &object() const 
             { 
                 return _object; 
             }
@@ -193,11 +175,12 @@ namespace h5{
             //! can be either a path relative to this object or an absolute 
             //! path. 
             //!
-            //! \throws pni::io::nx::nxgroup_error in case of errors
-            //! \param n path to the object 
+            //! \throws object_error if info about child nodes could not have
+            //! been obtained 
+            //! \param name of the child node
             //! \return true if an object of name n exists
             //!
-            bool exists(const string &n) const;
+            bool has_child(const string &name) const;
 
             //-----------------------------------------------------------------
             //!
@@ -206,14 +189,176 @@ namespace h5{
             //! Returns the number of child nodes (groups and datasets) 
             //! linked below this group.
             //!
-            //! \throws pni::io::nx::nxgroup_error in case of errors
+            //! \throws object_error in case of errors
             //! \return number of child nodes
             //!
-            size_t nchildren() const;
+            size_t size() const;
 
-            
-            friend class H5Dataset;                   
-            
+            //----------------------------------------------------------------
+            //!
+            //! \brief get name
+            //! 
+            //! Return the name of the group.
+            //!
+            //! \throws invalid_object_error if object is not valid
+            //! \throws io_error if name of the group cannot be retrieved
+            //! \return name of the group
+            //! 
+            string name() const;
+
+            //---------------------------------------------------------------
+            //! 
+            //! \brief get parent object
+            //! 
+            //! Return the parent of the current group. 
+            //!
+            //! \throws object_error in case of errors
+            //! 
+            object_imp parent() const;
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief get filename
+            //! 
+            //! Return the name of the file holding this group.
+            //! 
+            //! \throws io_error if filename cannot be retrieved
+            //! 
+            //! \return filename
+            string filename() const;
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief close the group
+            //! 
+            //! Close the current group. This member function is a delegate to
+            //! the close method of the internal object implementation. 
+            //! If the object is for some reason of unkown type and thus 
+            //! cannot be closed a type_error exception is thrown.
+            //! 
+            //! \throws object_error if the object validity check failed
+            //! \throws type_error if the type if the object could not be 
+            //! determined.
+            //! 
+            void close();
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief check group validity
+            //! 
+            //! Returns true if the group is a valid object, false otherwise. 
+            //! 
+            //! \throws object_error if the validity of the object chould not be
+            //! checked. 
+            //! \return true if valid, false otherwise
+            //!
+            bool is_valid() const;
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief create scalar attribute
+            //!
+            //! Create a simple scalar attribute 
+            //! \throws object_error if attribute creation fails
+            //! \tparam T data type for the attribute
+            //! \param name the name of the new attribute
+            //! \param overwrite if true overwrite an existing attribute
+            //! \return instance of attribute_imp
+            //!
+            template<typename T>
+            attribute_imp attr(const string &name,bool overwrite=false) const
+            {
+                type_id_t tid = type_id_map<T>::type_id;
+
+                return attribute_imp(create_attribute(_object,
+                                                      name,
+                                                      get_type(tid),
+                                                      h5dataspace(),
+                                                      overwrite));
+            }
+
+            //----------------------------------------------------------------
+            //! 
+            //! \brief create multidimensional attribute
+            //! 
+            //! Create a multidimensional attribute.
+            //! \throws object_error if attribute reation fails
+            //! \tparam T data type for the attribute
+            //! \tparam CTYPE container type for the shape
+            //! \param name the name for the attribute
+            //! \param shape container with number of elements
+            //! \param overwrite when true overwrite existing attribute
+            //! \return instance of attribute_imp
+            //! 
+            template<
+                     typename T,
+                     typename CTYPE
+                    >
+            attribute_imp attr(const string &name,const CTYPE &shape,
+                               bool overwrite=false) const
+            {
+                type_id_t tid = type_id_map<T>::type_id;
+                return attribute_imp(create_attribute(_object,
+                                                      name,
+                                                      get_type(tid),
+                                                      h5dataspace(shape),
+                                                      overwrite));
+            }
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief get attribute by name
+            //! 
+            //! \throws key_error if attribute does not exist
+            //! \throws object_error if attribute retrievel fails
+            //! \param name name of the requested attribute
+            //! \return instance of attribute_imp
+            //! 
+            attribute_imp attr(const string &name) const;
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief get attribute by index
+            //! 
+            //! \throws index_error if i exceeds the total number of attributes
+            //! \throws object_error if attribute retrieval fails
+            //! \param i attribute index
+            //! \return instance of attribute_imp
+            //! 
+            attribute_imp attr(size_t i) const;
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief get number of attributes
+            //! 
+            //! Returns the total number of attribtues attached to this group.
+            //! \returns number of attributes
+            //!
+            size_t nattr() const noexcept;
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief check if attribute exists
+            //! 
+            //! Returns true if the group has an attribute of the requested
+            //! name, false otherwise.
+            //! \throws object_error if attribute check fails
+            //! \param name the name of the looked up attribute
+            //! \return true if attribute exists, flase otherwise
+            //!
+            bool has_attr(const string &name) const;
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief delete an attribute
+            //!
+            //! Remove an attribute from this group. 
+            //! \throws object_error if attribute removal fails
+            //! \param name the name of the attribute to delete
+            //! 
+            void del_attr(const string &name) const;
+
+
     };
 
 

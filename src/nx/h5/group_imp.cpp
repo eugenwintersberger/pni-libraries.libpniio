@@ -27,6 +27,7 @@ extern "C"{
 #include<hdf5.h>
 }
 
+#include <pni/io/nx/h5/group_imp.hpp>
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 #include <pni/io/nx/nxexceptions.hpp>
 #include <pni/io/nx/nxpath.hpp>
@@ -43,7 +44,7 @@ namespace h5{
     {}
 
     //-------------------------------------------------------------------------
-    group_imp::group_imp(h5object &&o)
+    group_imp::group_imp(object_imp &&o) 
         :_object(o)
     {
         if(get_hdf5_type(_object)!=h5object_type::GROUP)
@@ -59,230 +60,160 @@ namespace h5{
 
     //-------------------------------------------------------------------------
     //implementation of the move constructor
-    group_imp::gruop_imp(group_imp &&o) noexcept
+    group_imp::group_imp(group_imp &&o) noexcept
         :_object(std::move(o._object))
     {}
 
     //-------------------------------------------------------------------------
     //implementation of the standard constructor
-    H5Group::H5Group(const string &name,const H5Group &parent)
+    group_imp::group_imp(const group_imp &parent,const string &name)
     {
-        hid_t link_pl = 0; //link creation property list
-        hid_t cr_pl   = 0; //creation property list
-
-        //create link property list
-        link_pl = H5Pcreate(H5P_LINK_CREATE);
-        if(link_pl < 0) 
-        {
-            string estr = "Creation of link property list failed"
-                "for new group ["+name+"] under ["
-                +get_object_path(parent.id())+
-                "]!\n\n"+get_h5_error_string();
-            throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD,estr);
-        }
-
-        hid_t gid = H5Gcreate2(parent.id(),name.c_str(),
-                link_pl,cr_pl,H5P_DEFAULT);
-        if(gid<0)
-        {
-            string estr = "Error creating group ["+name+
-                          "] under ["+get_object_path(parent.id())
-                          +"!\n\n"+get_h5_error_string();
-            throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD,estr);
-        }
-
-        *this = H5Group(gid); 
-        H5Pclose(link_pl);
+        _object = object_imp(H5Gcreate2(parent.object().id(),
+                                        name.c_str(),
+                                        H5P_DEFAULT,
+                                        H5P_DEFAULT,
+                                        H5P_DEFAULT));
     }
 
 
     //==============implementation of assignment operators=====================
     //implementation of copy assignment
-    H5Group &H5Group::operator=(const H5Group &o)
+    group_imp &group_imp::operator=(const group_imp &o)
     {
         if(this == &o) return *this;
 
-        H5AttributeObject::operator=(o);
+        _object = o._object;
 
         return *this;
     }
     
-    //-------------------------------------------------------------------------
-    //implementation of copy conversion assignment
-    H5Group &H5Group::operator=(const H5Object &o)
-    {
-
-        if(o.object_type() != H5ObjectType::GROUP)
-            throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD,
-                    "Object is not a group object!\n\n"+
-                    get_h5_error_string());
-
-        if(this == &o) return *this;
-
-        H5AttributeObject::operator=(o);
-
-        return *this;
-    }
-
     //-------------------------------------------------------------------------
     //implementation of move assignment
-    H5Group &H5Group::operator=(H5Group &&o)
+    group_imp &group_imp::operator=(group_imp &&o) noexcept
     {
         if(this == &o) return *this;
 
-        H5AttributeObject::operator=(std::move(o));
+        _object = std::move(o._object);
 
         return *this;
     }
     
     //-------------------------------------------------------------------------
-    //implementation of move conversion assignment
-    H5Group &H5Group::operator=(H5Object &&o)
+    object_imp group_imp::at(const string &name) const
     {
+        if(!has_child(name))
+            throw key_error(EXCEPTION_RECORD,
+                    "Group ["+get_object_path(_object.id())+"] has no child ["
+                    +name+"]!\n\n"+get_h5_error_string());
 
-        if(o.object_type() != H5ObjectType::GROUP)
-            throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD,
-                    "Object is not a group object!\n\n"+
-                    get_h5_error_string());
-
-        if(this == &o) return *this;
-        H5AttributeObject::operator=(std::move(o));
-
-        return *this;
-    }
-
-
-    //-------------------------------------------------------------------------
-    H5Object H5Group::open(const string &n) const
-    {
-        hid_t oid = H5Oopen(id(),n.c_str(),H5P_DEFAULT);
-        if(oid<0)
-            throw pni::io::nx::nxobject_error(EXCEPTION_RECORD, 
-                    "Error opening object ["+n+"]!\n\n"+
-                    get_h5_error_string());
-
-        //determine the object type
-        H5I_type_t tid = H5Iget_type(oid);
-        if(tid==H5I_BADID)
-            throw pni::io::nx::nxbackend_error(EXCEPTION_RECORD,
-                    "Error obtaining object type for ["+n+"]!\n\n"+
-                    get_h5_error_string());
-
-        H5Object o;
-        if(tid == H5I_GROUP) o = std::move(H5Group(oid)); 
-        else if(tid == H5I_DATASET) o = std::move(H5Dataset(oid));
         
-        //H5Oclose(oid);
-        return o;
+        return object_imp(H5Oopen(_object.id(),name.c_str(),H5P_DEFAULT));
     }
 
     //-------------------------------------------------------------------------
-    H5Object H5Group::operator[](const string &n) const
+    object_imp group_imp::at(size_t i) const
     {
-        return this->open(n);
-    }
-
-    //-------------------------------------------------------------------------
-    H5Object H5Group::open(size_t i) const
-    {
-        if(i >= nchildren())
+        if(i >= size())
         {
             std::stringstream sstream;
             sstream<<"Index ("<<i<<") exceeds number of child nodes ("
-                <<nchildren()<<")!";
+                <<size()<<")!";
             throw index_error(EXCEPTION_RECORD,sstream.str());
         }
 
-        char name[1024];
-        ssize_t size = H5Lget_name_by_idx(id(),".",H5_INDEX_NAME,H5_ITER_INC,
-                i,name,1024,H5P_DEFAULT);
-
-        if(size < 0)
-            throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD, 
-                    "Error obtaining object name!\n\n"+
-                    get_h5_error_string());
-
-        return open(string(name));
+        return object_imp(H5Oopen_by_idx(_object.id(),".",
+                                         H5_INDEX_NAME,
+                                         H5_ITER_INC,
+                                         hsize_t(i),
+                                         H5P_DEFAULT));
     }
 
     //-------------------------------------------------------------------------
-    H5Object H5Group::operator[](size_t i) const
+    bool group_imp::has_child(const string &name) const
     {
-        return open(i);
+        htri_t result = H5Lexists(_object.id(),name.c_str(),H5P_DEFAULT);
+        if(result>0)
+            return true;
+        else if(result == 0)
+            return false;
+        else
+            throw object_error(EXCEPTION_RECORD,
+                    "Could not obtain link information from gruop!\n\n"
+                    +get_h5_error_string());
     }
 
-
-    //-------------------------------------------------------------------------
-    bool H5Group::exists(const string &n) const
+    //------------------------------------------------------------------------
+    string group_imp::filename() const
     {
-        htri_t retval;
-        std::vector<string> plist;
-        std::vector<string>::iterator iter;
-        size_t spos1,spos2;
-        string path;
-        bool is_abs = false;
-
-        //remove a trailing slash
-        if(n[n.size()-1]=='/') path = n.substr(0,n.size()-1);
-        else path = n;
-
-        if(n[0] == '/') is_abs = true;
-
-        //have to split the string
-        spos1 = path.find_first_of("/");
-        if(spos1 != n.npos)
-        {
-            if(spos1 != 0) plist.push_back(path.substr(0,spos1));
-
-            do
-            {
-                spos2 = path.find_first_of("/",spos1+1);
-                plist.push_back(path.substr(spos1+1,(spos2-spos1)-1));
-                spos1 = spos2;
-            }while(spos2 != path.npos);
-        }
-        else plist.push_back(path);
-
-        //clear the path
-        path.clear();
-        if(is_abs) path += "/";
-
-        for(iter = plist.begin(); iter != plist.end(); ++iter)
-        {
-            path += *iter;
-
-            //do check
-            //std::cout<<path<<std::endl;
-            retval = H5Lexists(id(),path.c_str(),H5P_DEFAULT);
-            if(retval<0) 
-                throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD, 
-                        "Cannot check existance of objec ["+n+"]!\n\n"+
-                        get_h5_error_string());
-
-            if(!retval) return false;
-
-            //append a trailing /
-            path += "/";
-        }
-
-        return true;
-
+        return get_filename(_object.id());
     }
 
-
-
     //-------------------------------------------------------------------------
-    size_t H5Group::nchildren() const
+    size_t group_imp::size() const
     {
         H5G_info_t ginfo;
-        herr_t err = H5Gget_info(id(),&ginfo);
+        herr_t err = H5Gget_info(_object.id(),&ginfo);
         if(err < 0)
-            throw pni::io::nx::nxgroup_error(EXCEPTION_RECORD,
+            throw object_error(EXCEPTION_RECORD,
                     "Cannot obtain group information!\n\n"+
                     get_h5_error_string());
 
         return ginfo.nlinks;
     }            
+
+    //------------------------------------------------------------------------
+    string group_imp::name() const
+    {
+        return get_name(_object);
+    }
+
+    //------------------------------------------------------------------------
+    object_imp group_imp::parent() const
+    {
+        return get_parent(_object);
+    }
+
+    //------------------------------------------------------------------------
+    void group_imp::close()
+    {
+        _object.close();
+    }
+
+    //------------------------------------------------------------------------
+    bool group_imp::is_valid() const
+    {
+        return _object.is_valid();
+    }
+
+    //------------------------------------------------------------------------
+    attribute_imp group_imp::attr(const string &name) const 
+    {
+        return attribute_imp(get_attribute_by_name(_object,name));
+    }
+
+    //------------------------------------------------------------------------
+    attribute_imp group_imp::attr(size_t i) const
+    {
+        return attribute_imp(get_attribute_by_index(_object,i));
+    }
+
+    //-----------------------------------------------------------------------
+    size_t group_imp::nattr() const noexcept
+    {
+        return get_number_of_attributes(_object);
+    }
+
+    //-----------------------------------------------------------------------
+    bool group_imp::has_attr(const string &name) const
+    {
+        return has_attribute(_object,name);
+    }
+     
+    //------------------------------------------------------------------------
+    void group_imp::del_attr(const string &name) const
+    {
+        delete_attribute(_object,name);
+    }
 
 //end of namespace
 }

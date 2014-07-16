@@ -92,7 +92,7 @@ namespace h5{
 
     //-------------------------------------------------------------------------
     //get number of attributes
-    size_t get_number_of_attributes(const object_imp &parent)
+    size_t get_number_of_attributes(const object_imp &parent) noexcept
     {
         H5O_info_t info;
         H5Oget_info(parent.id(),&info);
