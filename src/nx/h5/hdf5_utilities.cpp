@@ -24,6 +24,7 @@
 #include <pni/io/exceptions.hpp>
 #include <pni/io/nx/h5/hdf5_utilities.hpp>
 #include <pni/io/nx/h5/object_imp.hpp>
+#include <pni/io/nx/h5/h5_error_stack.hpp>
 
 
 
@@ -79,15 +80,31 @@ namespace h5{
 
         return buffer;
     }
-   
-    //------------------------------------------------------------------------
-    string get_name(const object_imp &obj) 
-    {
-        if(!obj.is_valid())
-            throw invalid_object_error(EXCEPTION_RECORD,
-                    "Try to obtain the name of an invalid object!");
 
-        string p = get_object_path(obj.id());
+    //------------------------------------------------------------------------
+    string get_attribute_name(const object_imp &object)
+    {
+        ssize_t buffer_size = H5Aget_name(object.id(),0,NULL);
+        if(buffer_size<0)
+            throw io_error(EXCEPTION_RECORD,
+                    "Error retrieving length of attribute name!\n\n"+
+                    get_h5_error_string());
+
+        string name(buffer_size,' ');
+
+        if(H5Aget_name(object.id(),buffer_size+1,
+                       const_cast<char*>(name.data()))<0)
+            throw io_error(EXCEPTION_RECORD,
+                    "Error retrieving name of attribute!\n\n"+
+                    get_h5_error_string());
+
+        return name;
+    }
+
+    //------------------------------------------------------------------------
+    string get_others_name(const object_imp &object)
+    {
+        string p = get_object_path(object.id());
 
         //if the path is empty return an empty string
         if(p.empty()) return p;
@@ -100,6 +117,19 @@ namespace h5{
         if(lpos != p.npos) name = string(p,lpos+1,p.size()-lpos+1);
 
         return name;
+    }
+    //------------------------------------------------------------------------
+    string get_name(const object_imp &obj) 
+    {
+        if(!obj.is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Try to obtain the name of an invalid object!");
+
+        if(get_hdf5_type(obj) == h5object_type::ATTRIBUTE)
+            return get_attribute_name(obj);
+        else
+            return get_others_name(obj);
+
     }
 
     //------------------------------------------------------------------------
