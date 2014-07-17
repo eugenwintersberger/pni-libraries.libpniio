@@ -82,7 +82,9 @@ namespace h5{
     {
         size_vector_type current_dims(shape);
 
-        if(current_dims.empty()) current_dims=size_vector_type{1};
+        if(current_dims.empty()) 
+            throw size_mismatch_error(EXCEPTION_RECORD,
+                    "Field shape must not be empty!");
 
         size_vector_type maximum_dims(current_dims.size());
         std::fill(maximum_dims.begin(),maximum_dims.end(),H5S_UNLIMITED);
@@ -100,7 +102,7 @@ namespace h5{
                                     const h5filter &filter)
     {
         //if chunk and shape do not match we can stop immediately
-        check_equal_size(shape,chunk); 
+        check_equal_size(shape,chunk,EXCEPTION_RECORD); 
                                     
         //create datatype and dataspace
         h5datatype type   = get_type(tid);

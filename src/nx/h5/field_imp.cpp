@@ -80,6 +80,18 @@ namespace h5{
          _type(std::move(o._type))
     { }
 
+    //-----------------------------------------------------------------
+    field_imp::field_imp(const group_imp &parent,const string &name,
+                         type_id_t tid,const size_vector_type &shape,
+                         const size_vector_type &chunk,
+                         const h5filter &filter)
+    {
+        *this = field_factory::create(parent,name,tid,shape,chunk,
+                                      filter);
+    }
+
+
+
     //=========implementation of the assignment operators==============
     //implementation of the  copy assignment operator
     field_imp &field_imp::operator=(const field_imp &o)
@@ -280,6 +292,61 @@ namespace h5{
         _object.close();
     }
 
+    //------------------------------------------------------------------------
+    string field_imp::name() const
+    {
+        return get_name(_object);
+    }
+
+    //------------------------------------------------------------------------
+    object_imp field_imp::parent() const
+    {
+        return get_parent(_object);
+    }
+
+    //------------------------------------------------------------------------
+    string field_imp::filename() const 
+    {
+        return get_filename(_object.id());
+    }
+
+    //------------------------------------------------------------------------
+    bool field_imp::is_valid() const
+    {
+        return _object.is_valid();
+    }
+
+    //------------------------------------------------------------------------
+    attribute_imp field_imp::attr(const string &name) const 
+    {
+        return attribute_imp(get_attribute_by_name(_object,name));
+    }
+
+    //------------------------------------------------------------------------
+    attribute_imp field_imp::attr(size_t i) const
+    {
+        return attribute_imp(get_attribute_by_index(_object,i));
+    }
+
+    //-----------------------------------------------------------------------
+    size_t field_imp::nattr() const noexcept
+    {
+        return get_number_of_attributes(_object);
+    }
+
+    //-----------------------------------------------------------------------
+    bool field_imp::has_attr(const string &name) const
+    {
+        return has_attribute(_object,name);
+    }
+     
+    //------------------------------------------------------------------------
+    void field_imp::del_attr(const string &name) const
+    {
+        delete_attribute(_object,name);
+    }
+
+    
 
 
 //end of namespace

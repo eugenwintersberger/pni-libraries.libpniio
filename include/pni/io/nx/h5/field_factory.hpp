@@ -113,7 +113,8 @@ namespace h5{
             //! \brief create dataspace
             //! 
             //! Create a dataspace form a user supplied shape vector.
-            //! 
+            //!
+            //! \throws size_mismatch_error if shape empty
             //! \throws object_error in case of failures
             //! \param shape user provided shape vector
             //! \return instance of h5dataspace
@@ -143,13 +144,19 @@ namespace h5{
 
             //----------------------------------------------------------------
             //!
-            
+            //! \brief create a field
+            //! 
+            //! 
+            //! \throws size_mismatch_error if either chunk or shape are empty
+            //! or their size does not match
+            //! \throws object_error in case of any other error
+            //! 
             static field_imp create(const group_imp &parent,
                                     const string &name,
                                     type_id_t tid,
                                     const size_vector_type &shape,
                                     const size_vector_type &chunk,
-                                    const h5filter &filter = h5filter());
+                                    const h5filter &filter);
 
     };
 

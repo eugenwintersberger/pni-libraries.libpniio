@@ -35,6 +35,9 @@
 #include "h5_error_stack.hpp"
 #include "../nxexceptions.hpp"
 #include "hdf5_utilities.hpp"
+#include "attribute_utils.hpp"
+#include "field_factory.hpp"
+#include "h5filter.hpp"
 
 
 namespace pni{
@@ -56,6 +59,8 @@ namespace h5{
     //!
     class field_imp
     {
+        public: 
+            typedef field_factory::size_vector_type size_vector_type;
         private:
             //! object guard
             object_imp _object;
@@ -122,6 +127,25 @@ namespace h5{
             //! \param o move reference to an H5Object
             //!
             explicit field_imp(object_imp &&o);
+
+            //-----------------------------------------------------------------
+            //!
+            //! \brief create field
+            //!
+            //! 
+            //! \throws size_mismatch_error in case that either shape or chunk
+            //! empty or their sizes do not match
+            //! \throws object_error in case of any other failure 
+            //! \param parent the parent group for the field
+            //! \param name the name of the field
+            //! \param shape the number of elements along each dimension
+            //! \param chunk the chunk shape
+            //! \param filter reference to an optional filter 
+            //! 
+            explicit field_imp(const group_imp &parent,const string &name,
+                               type_id_t tid,const size_vector_type &shape,
+                               const size_vector_type &chunk,
+                               const h5filter &filter = h5filter());
 
             //-----------------------------------------------------------------
             //!
@@ -416,6 +440,42 @@ namespace h5{
             //!
             void write(const string *sptr) const;
 
+            //=================================================================
+            // DEFAULT OBJECT METHODS
+            //=================================================================
+            //----------------------------------------------------------------
+            //!
+            //! \brief get name
+            //! 
+            //! Return the name of the group.
+            //!
+            //! \throws invalid_object_error if object is not valid
+            //! \throws io_error if name of the group cannot be retrieved
+            //! \return name of the group
+            //! 
+            string name() const;
+
+            //---------------------------------------------------------------
+            //! 
+            //! \brief get parent object
+            //! 
+            //! Return the parent of the current group. 
+            //!
+            //! \throws object_error in case of errors
+            //! 
+            object_imp parent() const;
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief get filename
+            //! 
+            //! Return the name of the file holding this group.
+            //! 
+            //! \throws io_error if filename cannot be retrieved
+            //! 
+            //! \return filename
+            //!
+            string filename() const;
 
             //-----------------------------------------------------------------
             //!
@@ -423,8 +483,127 @@ namespace h5{
             //!
             //! Method closing the dataset.
             //!
-            virtual void close();
+            void close();
+            
+            //----------------------------------------------------------------
+            //!
+            //! \brief check group validity
+            //! 
+            //! Returns true if the group is a valid object, false otherwise. 
+            //! 
+            //! \throws object_error if the validity of the object chould not be
+            //! checked. 
+            //! \return true if valid, false otherwise
+            //!
+            bool is_valid() const;
 
+            //=================================================================
+            //ATTRIBUTE INTERFACE
+            //=================================================================
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief create scalar attribute
+            //!
+            //! Create a simple scalar attribute 
+            //! \throws object_error if attribute creation fails
+            //! \tparam T data type for the attribute
+            //! \param name the name of the new attribute
+            //! \param overwrite if true overwrite an existing attribute
+            //! \return instance of attribute_imp
+            //!
+            template<typename T>
+            attribute_imp attr(const string &name,bool overwrite=false) const
+            {
+                type_id_t tid = type_id_map<T>::type_id;
+
+                return attribute_imp(create_attribute(_object,
+                                                      name,
+                                                      get_type(tid),
+                                                      h5dataspace(),
+                                                      overwrite));
+            }
+
+            //----------------------------------------------------------------
+            //! 
+            //! \brief create multidimensional attribute
+            //! 
+            //! Create a multidimensional attribute.
+            //! \throws object_error if attribute reation fails
+            //! \tparam T data type for the attribute
+            //! \tparam CTYPE container type for the shape
+            //! \param name the name for the attribute
+            //! \param shape container with number of elements
+            //! \param overwrite when true overwrite existing attribute
+            //! \return instance of attribute_imp
+            //! 
+            template<
+                     typename T,
+                     typename CTYPE
+                    >
+            attribute_imp attr(const string &name,const CTYPE &shape,
+                               bool overwrite=false) const
+            {
+                type_id_t tid = type_id_map<T>::type_id;
+                return attribute_imp(create_attribute(_object,
+                                                      name,
+                                                      get_type(tid),
+                                                      h5dataspace(shape),
+                                                      overwrite));
+            }
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief get attribute by name
+            //! 
+            //! \throws key_error if attribute does not exist
+            //! \throws object_error if attribute retrievel fails
+            //! \param name name of the requested attribute
+            //! \return instance of attribute_imp
+            //! 
+            attribute_imp attr(const string &name) const;
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief get attribute by index
+            //! 
+            //! \throws index_error if i exceeds the total number of attributes
+            //! \throws object_error if attribute retrieval fails
+            //! \param i attribute index
+            //! \return instance of attribute_imp
+            //! 
+            attribute_imp attr(size_t i) const;
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief get number of attributes
+            //! 
+            //! Returns the total number of attribtues attached to this group.
+            //! \returns number of attributes
+            //!
+            size_t nattr() const noexcept;
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief check if attribute exists
+            //! 
+            //! Returns true if the group has an attribute of the requested
+            //! name, false otherwise.
+            //! \throws object_error if attribute check fails
+            //! \param name the name of the looked up attribute
+            //! \return true if attribute exists, flase otherwise
+            //!
+            bool has_attr(const string &name) const;
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief delete an attribute
+            //!
+            //! Remove an attribute from this group. 
+            //! \throws object_error if attribute removal fails
+            //! \param name the name of the attribute to delete
+            //! 
+            void del_attr(const string &name) const;
     };
 
 
