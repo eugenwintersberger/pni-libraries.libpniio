@@ -5,13 +5,14 @@ set(SOURCES H5Attribute.cpp
             H5Datatype.cpp
             H5DatatypeFactory.cpp
             H5DeflateFilter.cpp
-            h5_error.cpp
-            h5_error_stack.cpp
             H5Group.cpp
             H5LibrarySetup.cpp
             h5link.cpp
             H5NamedObject.cpp
             H5Object.cpp
+
+            h5_error.cpp
+            h5_error_stack.cpp
             hdf5_utilities.cpp
             object_imp.cpp
             h5object_types.cpp
@@ -21,6 +22,10 @@ set(SOURCES H5Attribute.cpp
             attribute_imp.cpp
             group_imp.cpp
             file_imp.cpp
+            field_imp.cpp
+            field_factory.cpp
+            h5filter.cpp
+            h5deflate_filter.cpp
             )
 
 
