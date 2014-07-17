@@ -29,6 +29,7 @@ extern "C"{
 #include <pni/io/nx/h5/h5filter.hpp>
 #include <pni/core/types.hpp>
 #include <vector>
+#include "type_imp.hpp"
 
 namespace pni{
 namespace io{
@@ -66,11 +67,7 @@ namespace h5{
     //! 
     class field_factory
     {
-        public:
-            //! vector type used for sizes
-            typedef std::vector<hsize_t> size_vector_type;
         private:
-
 
             //----------------------------------------------------------------
             //!
@@ -106,7 +103,8 @@ namespace h5{
             //! \param chunk container with chunk shape data
             //! \return instance of property list
             //! 
-            static object_imp create_cplist(const size_vector_type &chunk);
+            static object_imp 
+            create_cplist(const type_imp::index_vector_type &chunk);
 
             //----------------------------------------------------------------
             //!
@@ -119,28 +117,10 @@ namespace h5{
             //! \param shape user provided shape vector
             //! \return instance of h5dataspace
             //!
-            static h5dataspace create_dataspace(const size_vector_type &shape);
+            static h5dataspace 
+            create_dataspace(const type_imp::index_vector_type &shape);
 
         public:
-            //----------------------------------------------------------------
-            //! 
-            //! \brief conversion function to size_vector_type
-            //!
-            //! Take an arbitrary, STL compliant container type as an input 
-            //! and convert it to size_vector_type.
-            //! 
-            //! \tparam CTYPE container type
-            //! \param c instance of CTYPE
-            //! \return instance of size_vector_type
-            //! 
-            template<typename CTYPE> 
-            static size_vector_type to_size_vector(const CTYPE &c) noexcept
-            {
-                size_vector_type v(c.size());
-                std::copy(c.begin(),c.end(),v.begin());
-                return v;
-            }
-
 
             //----------------------------------------------------------------
             //!
@@ -154,8 +134,8 @@ namespace h5{
             static field_imp create(const group_imp &parent,
                                     const string &name,
                                     type_id_t tid,
-                                    const size_vector_type &shape,
-                                    const size_vector_type &chunk,
+                                    const type_imp::index_vector_type &shape,
+                                    const type_imp::index_vector_type &chunk,
                                     const h5filter &filter);
 
     };

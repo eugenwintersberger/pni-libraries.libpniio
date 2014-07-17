@@ -30,13 +30,13 @@
 
 
 #include "object_imp.hpp"
+#include "type_imp.hpp"
 #include "attribute_imp.hpp"
 #include "h5dataspace.hpp"
 #include "h5_error_stack.hpp"
 #include "../nxexceptions.hpp"
 #include "hdf5_utilities.hpp"
 #include "attribute_utils.hpp"
-#include "field_factory.hpp"
 #include "h5filter.hpp"
 
 
@@ -51,6 +51,9 @@ namespace h5{
     using pni::core::shape_mismatch_error;
     using pni::core::string;
 
+    //forward declarations
+    class group_imp;
+
     //! 
     //! \ingroup nxh5_classes
     //! \brief dataset object
@@ -59,8 +62,6 @@ namespace h5{
     //!
     class field_imp
     {
-        public: 
-            typedef field_factory::size_vector_type size_vector_type;
         private:
             //! object guard
             object_imp _object;
@@ -70,8 +71,6 @@ namespace h5{
             mutable h5dataspace _memory_space;
             //! datatype on file
             h5datatype  _type;
-
-            typedef std::vector<hsize_t> size_vector_t;
 
             //!
             //! \brief update internal parameters
@@ -143,8 +142,9 @@ namespace h5{
             //! \param filter reference to an optional filter 
             //! 
             explicit field_imp(const group_imp &parent,const string &name,
-                               type_id_t tid,const size_vector_type &shape,
-                               const size_vector_type &chunk,
+                               type_id_t tid,
+                               const type_imp::index_vector_type &shape,
+                               const type_imp::index_vector_type &chunk,
                                const h5filter &filter = h5filter());
 
             //-----------------------------------------------------------------
@@ -191,27 +191,10 @@ namespace h5{
             //!
             //! \throws shape_mismatch_error if rank of s is not equal to 
             //! the rank of the dataset
-            //! \throws pni::io::nx::nxfield_error in case of other errors 
-            //! during resizeing
+            //! \throws object_error in case of other errors during resizeing
             //! \param s shape object describing the new shape of the dataset
             //!
-            template<typename CTYPE> void resize(const CTYPE &s)
-            {
-                if(s.size() != _file_space.rank())
-                    throw shape_mismatch_error(EXCEPTION_RECORD,
-                          "New shape does not have the same rank!");
-
-                std::vector<hsize_t> b(s.size());
-                std::copy(s.begin(),s.end(),b.begin());
-
-                herr_t err = H5Dset_extent(_object.id(),b.data());
-                if(err < 0)
-                    throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
-                         "Resizing of dataset ["+get_object_path(_object.id())
-                         +"] failed!\n\n"+ get_h5_error_string());
-
-                _update();
-            }
+            void resize(const type_imp::index_vector_type &s);
 
             //-----------------------------------------------------------------
             //! 
@@ -262,18 +245,6 @@ namespace h5{
             //! \return number of dimensions
             //!
             size_t rank() const;
-
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief number of elements
-            //!
-            //! Returns the number of elements along dimension i. 
-            //!
-            //! \throws index_error if i exceeds dataset rank
-            //! \param i index of the dimension
-            //! \return number of elements along i
-            //!
-            size_t dim(const size_t &i) const;
 
             //-----------------------------------------------------------------
             //! 

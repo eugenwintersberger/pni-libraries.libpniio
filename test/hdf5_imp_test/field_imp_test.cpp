@@ -23,13 +23,14 @@
 #include "field_imp_test.hpp"
 #include <boost/current_function.hpp>
 #include <pni/io/nx/h5/h5deflate_filter.hpp>
+#include <pni/io/nx/h5/type_imp.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION(field_imp_test);
 
 
 void field_imp_test::setUp()
 {
-    _file = file_imp::create("file_imp_test.h5",true,0);
+    _file = file_imp::create("field_imp_test.h5",true,0);
     _group = group_imp(_file.root(),"data");
 }
 
@@ -93,6 +94,12 @@ void field_imp_test::test_create_errors()
 void field_imp_test::test_create_with_filter()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    h5deflate_filter filter; 
+    field_imp field(_group,"data",type_id_t::FLOAT32,{0,100,200},{1,100,200},filter);
+    CPPUNIT_ASSERT(field.is_valid());
+    CPPUNIT_ASSERT(field.rank() == 3);
+    CPPUNIT_ASSERT(field.size() == 0);
 }
 
 //-----------------------------------------------------------------------------
@@ -100,12 +107,34 @@ void field_imp_test::test_create_copy()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
+    field_imp field1{_group,"data",type_id_t::FLOAT32,{10,200},{1,200}};
+    CPPUNIT_ASSERT(field1.is_valid());
+    CPPUNIT_ASSERT(field1.rank() == 2);
+    CPPUNIT_ASSERT(field1.size() == 2000);
+
+    field_imp field2 = field1;
+    CPPUNIT_ASSERT(field2.is_valid());
+    CPPUNIT_ASSERT(field2.rank() == field1.rank());
+    CPPUNIT_ASSERT(field2.size() == field2.size());
+
+
 }
 
 //-----------------------------------------------------------------------------
 void field_imp_test::test_create_move()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    field_imp field1{_group,"data",type_id_t::FLOAT32,{10,200},{1,200}};
+    CPPUNIT_ASSERT(field1.is_valid());
+    CPPUNIT_ASSERT(field1.rank() == 2);
+    CPPUNIT_ASSERT(field1.size() == 2000);
+
+    field_imp field2(std::move(field1));
+    CPPUNIT_ASSERT(field2.is_valid());
+    CPPUNIT_ASSERT(field2.rank() == 2);
+    CPPUNIT_ASSERT(field2.size() == 2000);
+    CPPUNIT_ASSERT(!field1.is_valid());
 
 }
 
@@ -114,6 +143,25 @@ void field_imp_test::test_assignment()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
+    field_imp field1{_group,"data",type_id_t::FLOAT32,{10,200},{1,200}};
+    field_imp field2,field3;
+    CPPUNIT_ASSERT(field1.is_valid());
+    CPPUNIT_ASSERT(field1.rank() == 2);
+    CPPUNIT_ASSERT(field1.size() == 2000);
+
+    //copy assignment
+    field2 = field1;
+    CPPUNIT_ASSERT(field2.is_valid());
+    CPPUNIT_ASSERT(field2.rank() == field1.rank());
+    CPPUNIT_ASSERT(field2.size() == field1.size());
+    CPPUNIT_ASSERT(field1.is_valid());
+
+    field3 = std::move(field1);
+    CPPUNIT_ASSERT(field3.is_valid());
+    CPPUNIT_ASSERT(field3.rank() == field2.rank());
+    CPPUNIT_ASSERT(field3.size() == field2.size());
+    CPPUNIT_ASSERT(!field1.is_valid());
+
 }
 
 //----------------------------------------------------------------------------
@@ -121,7 +169,13 @@ void field_imp_test::test_inquery()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
+    field_imp field1{_group,"data",type_id_t::FLOAT32,{10,200},{1,200}};
 
+    CPPUNIT_ASSERT(field1.is_valid());
+    CPPUNIT_ASSERT(field1.name() == "data");
+    CPPUNIT_ASSERT(field1.size() == 2000);
+    CPPUNIT_ASSERT(field1.type_id() == type_id_t::FLOAT32);
+    CPPUNIT_ASSERT(field1.filename() == "field_imp_test.h5");
 }
 
 
@@ -130,72 +184,36 @@ void field_imp_test::test_parent()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    /*
-    H5Datatype type = H5DatatypeFactory::create_type<uint16>();
-    H5Dataspace space;
-    H5Dataset d("/detector/data",_file,type,space);
 
-    H5Group p(d.parent());
-    CPPUNIT_ASSERT(p.name() == "detector");
-    H5Dataset t("temperature",_file,type,space);
-    CPPUNIT_ASSERT(H5Group(t.parent()).name() == "/");
-    */
+    field_imp field1{_group,"data",type_id_t::FLOAT32,{10,200},{1,200}};
+    group_imp p(object_imp(field1.parent()));
+
+    CPPUNIT_ASSERT(p.is_valid());
+    CPPUNIT_ASSERT(p.name() == "data");
 }
 
 //-----------------------------------------------------------------------------
 void field_imp_test::test_resize()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    field_imp field1{_group,"data",type_id_t::FLOAT32,{10,200},{1,200}};
+    CPPUNIT_ASSERT(field1.size() == 2000);
 
-    //create base shape
-    /*
-    shape_t s{0,1024};
-    shape_t cs{1,1024};
-    H5Datatype type = H5DatatypeFactory::create_type<uint32>();
-    H5Dataspace space({0,1024},{H5S_UNLIMITED,H5S_UNLIMITED});
-
-    H5Dataset ds("ds",_group,type,space,cs);
-
-    CPPUNIT_ASSERT_NO_THROW(ds.grow(0));
-    s = shape_t({1,1024});
-    CPPUNIT_ASSERT(ds.rank()  == s.size());
-    CPPUNIT_ASSERT(std::equal(s.begin(),s.end(),ds.shape<shape_t>().begin()));
-    s = shape_t({4,1024});
-    CPPUNIT_ASSERT_NO_THROW(ds.grow(0,3));
-    CPPUNIT_ASSERT(ds.rank()  == s.size());
-    CPPUNIT_ASSERT(std::equal(s.begin(),s.end(),ds.shape<shape_t>().begin()));
-
-    s = shape_t{0};
-    cs = shape_t{1};
-    type = H5DatatypeFactory::create_type<string>();
-    CPPUNIT_ASSERT_NO_THROW(space = H5Dataspace({0},{H5S_UNLIMITED}));
-    H5Dataset ss("ss",_group,type,space,cs);
-    CPPUNIT_ASSERT(ss.rank() == 1);
-    CPPUNIT_ASSERT(ss.size() == 0);
-    CPPUNIT_ASSERT_NO_THROW(ss.grow(0));
-    CPPUNIT_ASSERT(ss.rank() == 1);
-    CPPUNIT_ASSERT(ss.size() == 1);
-    CPPUNIT_ASSERT_NO_THROW(ss.grow(0,10));
-    CPPUNIT_ASSERT(ss.rank() == 1);
-    CPPUNIT_ASSERT(ss.size() == 11);
-
-    //reshape the dataset
-    shape_t ns{100,512};
-    CPPUNIT_ASSERT_NO_THROW(ds.resize(ns));
-    CPPUNIT_ASSERT(std::equal(ns.begin(),ns.end(),ds.shape<shape_t>().begin()));
-    */
+    CPPUNIT_ASSERT_NO_THROW(field1.resize({50,200}));
+    CPPUNIT_ASSERT(field1.size() == 10000);
+    
+    CPPUNIT_ASSERT_THROW(field1.resize({10,20,2000}),shape_mismatch_error);
 }
 
 //------------------------------------------------------------------------------
 void field_imp_test::test_string_array_data()
 {
-    /*
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     shape_t s{2,3};
-    H5Datatype type = H5DatatypeFactory::create_type<string>();
-    H5Dataspace space(s);
 
-    H5Dataset dset("sarray",_group,type,space,s);
+    field_imp dset{_group,"sarray",type_id_t::STRING,{2,3},{1,3}};
 
     auto swrite = dynamic_array<string>::create(s);
     swrite(0,0) = "hello"; swrite(0,1) = "world"; swrite(0,2) = "this";
@@ -208,60 +226,47 @@ void field_imp_test::test_string_array_data()
     CPPUNIT_ASSERT_NO_THROW(dset.read(sread.data()));
 
     std::equal(swrite.begin(),swrite.end(),sread.begin());
-    */
+    
 }
 
 //-----------------------------------------------------------------------------
 void field_imp_test::test_string_scalar_data()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    /*
-    H5Datatype type = H5DatatypeFactory::create_type<string>();
-    H5Dataspace space;
-
-    H5Dataset dset("sscalar",_group,type,space);
-
+    field_imp field{_group,"sscalar",type_id_t::STRING,{1},{1}};
     string write = "hello world";
-    dset.write(&write);
+    field.write(&write);
     string read;
-    dset.read(&read);
+    field.read(&read);
     CPPUNIT_ASSERT(read == write);
-    */
+    
 }
 
 //-----------------------------------------------------------------------------
 void field_imp_test::test_bool_scalar_data()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    /*
+    
     bool_t read_flag,write_flag;
 
-    H5Datatype type = H5DatatypeFactory::create_type<bool_t>();
-    H5Dataspace space;
-
-    H5Dataset dset("flag",_group,type,space);
+    field_imp field{_group,"flag",type_id_t::BOOL,{1},{1}};
 
     read_flag = false; write_flag = true;
-    dset.write(&write_flag);
-    dset.read(&read_flag);
+    field.write(&write_flag);
+    field.read(&read_flag);
     CPPUNIT_ASSERT(read_flag == write_flag);
-    */
+    
 }
 
 //-----------------------------------------------------------------------------
 void field_imp_test::test_string_selection() 
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    /*
-    H5Datatype type = H5DatatypeFactory::create_type<string>();
     shape_t shape({10,20});
-    H5Dataspace space(shape);
-    H5Dataset dset("text",_group,type,space);
+    field_imp field{_group,"text",type_id_t::STRING,
+                    type_imp::to_index_vector(shape),{1,20}};
 
-    shape_t s;
-    s = dset.shape<shape_t>();
-    CPPUNIT_ASSERT(dset.size()==10*20);
 
     std::vector<string> writebuf(10);
     std::vector<string> readbuf(10);
@@ -278,21 +283,20 @@ void field_imp_test::test_string_selection()
         std::fill(writebuf.begin(),writebuf.end(),string(ss.str()));
         
         //apply selection
-        dset.apply_selection(selection);
-        CPPUNIT_ASSERT(dset.size()==10);
+        field.apply_selection(selection);
+        CPPUNIT_ASSERT(field.size()==10);
 
         //write data
-        dset.write(writebuf.data());
+        field.write(writebuf.data());
 
         //read data back
-        dset.read(readbuf.data());
+        field.read(readbuf.data());
 
         //compare data
         CPPUNIT_ASSERT(std::equal(writebuf.begin(),writebuf.end(),readbuf.begin()));
-        dset.clear_selections();
-        CPPUNIT_ASSERT(dset.size() == 10*20);
+        field.clear_selections();
+        CPPUNIT_ASSERT(field.size() == 10*20);
     }
-    */
 
 }
 

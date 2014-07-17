@@ -55,7 +55,8 @@ namespace h5{
     }
 
     //------------------------------------------------------------------------
-    object_imp field_factory::create_cplist(const field_factory::size_vector_type &chunk)
+    object_imp 
+    field_factory::create_cplist(const type_imp::index_vector_type &chunk)
     {
         if(!chunk.size())
             throw size_mismatch_error(EXCEPTION_RECORD,
@@ -78,15 +79,16 @@ namespace h5{
     }
 
     //-----------------------------------------------------------------------
-    h5dataspace field_factory::create_dataspace(const size_vector_type &shape)
+    h5dataspace 
+    field_factory::create_dataspace(const type_imp::index_vector_type &shape)
     {
-        size_vector_type current_dims(shape);
+        type_imp::index_vector_type current_dims(shape);
 
         if(current_dims.empty()) 
             throw size_mismatch_error(EXCEPTION_RECORD,
                     "Field shape must not be empty!");
 
-        size_vector_type maximum_dims(current_dims.size());
+        type_imp::index_vector_type maximum_dims(current_dims.size());
         std::fill(maximum_dims.begin(),maximum_dims.end(),H5S_UNLIMITED);
 
         return h5dataspace{current_dims,maximum_dims};
@@ -97,8 +99,8 @@ namespace h5{
     field_imp field_factory::create(const group_imp &parent,
                                     const string &name,
                                     type_id_t tid,
-                                    const size_vector_type &shape,
-                                    const size_vector_type &chunk,
+                                    const type_imp::index_vector_type &shape,
+                                    const type_imp::index_vector_type &chunk,
                                     const h5filter &filter)
     {
         //if chunk and shape do not match we can stop immediately

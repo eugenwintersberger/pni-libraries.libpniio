@@ -24,6 +24,7 @@
 #include <boost/current_function.hpp>
 
 #include <pni/io/nx/h5/field_imp.hpp>
+#include <pni/io/nx/h5/field_factory.hpp>
 
 namespace pni{
 namespace io{
@@ -74,16 +75,18 @@ namespace h5{
     //-----------------------------------------------------------------
     //implementation of the move constrcutor
     field_imp::field_imp(field_imp &&o) noexcept
-        :_object(o._object),
+        :_object(std::move(o._object)),
          _file_space(std::move(o._file_space)),
          _memory_space(std::move(o._memory_space)),
          _type(std::move(o._type))
     { }
 
     //-----------------------------------------------------------------
-    field_imp::field_imp(const group_imp &parent,const string &name,
-                         type_id_t tid,const size_vector_type &shape,
-                         const size_vector_type &chunk,
+    field_imp::field_imp(const group_imp &parent,
+                         const string &name,
+                         type_id_t tid,
+                         const type_imp::index_vector_type &shape,
+                         const type_imp::index_vector_type &chunk,
                          const h5filter &filter)
     {
         *this = field_factory::create(parent,name,tid,shape,chunk,
@@ -133,7 +136,7 @@ namespace h5{
             throw index_error(EXCEPTION_RECORD,ss.str());
         }
 
-        size_vector_t b(_file_space.rank());
+        type_imp::index_vector_type b(_file_space.rank());
         std::copy(_file_space.current_begin(),
                   _file_space.current_end(),
                   b.begin());
@@ -177,11 +180,22 @@ namespace h5{
     }
 
     //------------------------------------------------------------------------
-    size_t field_imp::dim(const size_t &i) const 
-    { 
-        return _memory_space.current_dim(i); 
+    void field_imp::resize(const type_imp::index_vector_type &s)
+    {
+        if(s.size() != _file_space.rank())
+            throw shape_mismatch_error(EXCEPTION_RECORD,
+                  "New shape does not have the same rank!");
+
+        herr_t err = H5Dset_extent(_object.id(),s.data());
+        if(err < 0)
+            throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
+                 "Resizing of dataset ["+get_object_path(_object.id())
+                 +"] failed!\n\n"+ get_h5_error_string());
+
+        _update();
     }
-    
+
+
     //------------------------------------------------------------------------
     type_id_t field_imp::type_id() const 
     { 
