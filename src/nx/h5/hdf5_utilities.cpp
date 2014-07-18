@@ -59,7 +59,7 @@ namespace h5{
     }
     
     //-------------------------------------------------------------------------
-    string get_object_path(const object_imp &object)
+    string get_path(const object_imp &object)
     {
         if(!object.is_valid())
             throw invalid_object_error(EXCEPTION_RECORD,
@@ -104,7 +104,7 @@ namespace h5{
     //------------------------------------------------------------------------
     string get_others_name(const object_imp &object)
     {
-        string p = get_object_path(object);
+        string p = get_path(object);
 
         //if the path is empty return an empty string
         if(p.empty()) return p;
@@ -132,13 +132,10 @@ namespace h5{
 
     }
 
-   
-
-
     //------------------------------------------------------------------------
     string get_parent_path(const object_imp &object)
     {
-        string opath = get_object_path(object);
+        string opath = get_path(object);
 
         if(opath.empty()) return opath;
 

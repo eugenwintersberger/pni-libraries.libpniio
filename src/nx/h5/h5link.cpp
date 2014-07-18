@@ -115,14 +115,14 @@ namespace h5{
 
         if(!loc.has_child(name))
             throw key_error(EXCEPTION_RECORD,
-                    "Group ["+get_object_path(loc.object())
+                    "Group ["+get_path(loc.object())
                     +"] does not have a child ["+name+ "]!");
 
         if(H5Lget_info(loc.object().id(),name.c_str(),&info,H5P_DEFAULT)<0)
         {
             throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
                     "Error obtaining link type for child ["+name+"] of group"+
-                    "["+get_object_path(loc.object())+"]!");
+                    "["+get_path(loc.object())+"]!");
         }
 
         if(info.type == H5L_TYPE_EXTERNAL)

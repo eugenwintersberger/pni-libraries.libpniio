@@ -103,7 +103,7 @@ namespace h5{
     {
         if(!has_child(name))
             throw key_error(EXCEPTION_RECORD,
-                    "Group ["+get_object_path(_object)+"] has no child ["
+                    "Group ["+get_path(_object)+"] has no child ["
                     +name+"]!\n\n"+get_h5_error_string());
 
         

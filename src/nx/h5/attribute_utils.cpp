@@ -38,7 +38,7 @@ namespace h5{
         else
             throw object_error(EXCEPTION_RECORD,
                     "Error checking for existence of attribute ["+name
-                    +"] on object ["+get_object_path(parent)+"]!\n\n"
+                    +"] on object ["+get_path(parent)+"]!\n\n"
                     +get_h5_error_string());
     }
     
@@ -49,7 +49,7 @@ namespace h5{
         if(err < 0)
             throw object_error(EXCEPTION_RECORD,
                     "Error deleteing attribute ["+name+"] from object [" 
-                    +get_object_path(parent)+"]!\n\n"
+                    +get_path(parent)+"]!\n\n"
                     +get_h5_error_string());
     }
     //------------------------------------------------------------------------
@@ -67,7 +67,7 @@ namespace h5{
             else
                 throw object_error(EXCEPTION_RECORD,
                         "Attribute ["+name+"] already exists on object ["
-                        +get_object_path(parent)+"]!\n\n"
+                        +get_path(parent)+"]!\n\n"
                         +get_h5_error_string());
         }
 
@@ -84,7 +84,7 @@ namespace h5{
     {
         if(!has_attribute(parent,name))
             throw key_error(EXCEPTION_RECORD,
-                     "Object ["+get_object_path(parent)
+                     "Object ["+get_path(parent)
                      +"] has no attribute ["+name+"]!");
 
         return object_imp(H5Aopen(parent.id(),name.c_str(),H5P_DEFAULT));
@@ -109,7 +109,7 @@ namespace h5{
             std::stringstream ss;
             ss<<"Index ("<<i<<") exceeds number of attributes ("
               <<get_number_of_attributes(parent)<<" on object ["
-              <<get_object_path(parent)<<"]!";
+              <<get_path(parent)<<"]!";
             throw index_error(EXCEPTION_RECORD,ss.str());
         }
 

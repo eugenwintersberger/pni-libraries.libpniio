@@ -71,7 +71,7 @@ namespace h5{
     //! \param id of the object
     //! \return path as string
     //!
-    string get_object_path(const object_imp &object);
+    string get_path(const object_imp &object);
 
     //------------------------------------------------------------------------
     //! 
@@ -85,14 +85,13 @@ namespace h5{
     //! data.  The behavior of this method is slightly different for 
     //! a file object.
     //!
+    //! \throws object_error if validity check fails
     //! \throws invalid_object_error if obj is not valid
     //! \throws io_error in case of data retrieval issues
     //!
     //! \return name of the object
     //!
     string get_name(const object_imp &obj);
-
-
 
     //------------------------------------------------------------------------
     //! 
@@ -101,7 +100,9 @@ namespace h5{
     //! 
     //! Return the path to the parent of a particular object. 
     //! 
+    //! \throws invalid_object_error if object is not valid
     //! \throws io_error  in case of errors
+    //! \throws object_error if validity check fails
     //! \param id the HDF5 ID of the object
     //! \return path to the parent
     //! 
@@ -116,7 +117,10 @@ namespace h5{
     //! the returned object is always a group. In the case of an attribute the
     //! parent can be either a group or a field.
     //!
-    //! \throws object_error in case of any error
+    //! \throws invalid_object_error if object not valid
+    //! \throws object_error in case of any other error
+    //! \throws type_error if the type of the object is unkown or could not be 
+    //! determined
     //! \return object instance of the parent
     //!
     object_imp get_parent(const object_imp &obj);
