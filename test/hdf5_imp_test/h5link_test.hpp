@@ -30,25 +30,25 @@
 
 
 #include <pni/io/nx/h5/h5link.hpp>
-#include <pni/io/nx/h5/H5File.hpp>
-#include <pni/io/nx/h5/H5Group.hpp>
-#include <pni/io/nx/h5/H5Dataspace.hpp>
-#include <pni/io/nx/h5/H5Datatype.hpp>
-#include <pni/io/nx/h5/H5DatatypeFactory.hpp>
-#include <pni/io/nx/h5/H5Dataset.hpp>
+#include <pni/io/nx/h5/file_imp.hpp>
+#include <pni/io/nx/h5/group_imp.hpp>
+#include <pni/io/nx/h5/field_imp.hpp>
+#include <pni/io/nx/h5/h5dataspace.hpp>
+#include <pni/io/nx/h5/h5datatype.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx;
 
-class H5LinkTest:public CppUnit::TestFixture{
-        CPPUNIT_TEST_SUITE(H5LinkTest);
+class h5link_test:public CppUnit::TestFixture
+{
+        CPPUNIT_TEST_SUITE(h5link_test);
         CPPUNIT_TEST(test_internal);
         CPPUNIT_TEST(test_external);
         CPPUNIT_TEST(test_link_type);
         CPPUNIT_TEST_SUITE_END();
     private:
-        h5::H5File _file1;
-        h5::H5File _file2;
+        h5::file_imp _file1;
+        h5::file_imp _file2;
     public:
         void setUp();
         void tearDown();

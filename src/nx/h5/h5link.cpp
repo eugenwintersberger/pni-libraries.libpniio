@@ -23,7 +23,7 @@
 
 
 #include <pni/io/nx/h5/h5link.hpp>
-#include <pni/io/nx/h5/H5Group.hpp>
+#include <pni/io/nx/h5/group_imp.hpp>
 
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 #include <pni/io/nx/nxexceptions.hpp>
@@ -63,7 +63,7 @@ namespace h5{
 
 
     //-------------------------------------------------------------------------
-    void h5link::create_external_link(const nxpath &path,const H5Group &loc,
+    void h5link::create_external_link(const nxpath &path,const group_imp &loc,
                                       const string &name)
     {
         if(path.filename().empty())
@@ -78,7 +78,7 @@ namespace h5{
         string h5path = _nx2hdf5path(path);
 
         herr_t err = H5Lcreate_external(path.filename().c_str(),h5path.c_str(),
-                                        loc.id(),name.c_str(),
+                                        loc.object().id(),name.c_str(),
                                         H5P_DEFAULT,H5P_DEFAULT);
         if(err < 0)
             throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
@@ -87,7 +87,7 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    void h5link::create_internal_link(const nxpath &target,const H5Group &loc,
+    void h5link::create_internal_link(const nxpath &target,const group_imp &loc,
                                       const string &name)
     {
         if(!target.filename().empty())
@@ -98,7 +98,7 @@ namespace h5{
         string target_path = _nx2hdf5path(target);
 
 
-        herr_t err = H5Lcreate_soft(target_path.c_str(),loc.id(),
+        herr_t err = H5Lcreate_soft(target_path.c_str(),loc.object().id(),
                                     name.c_str(),H5P_DEFAULT,H5P_DEFAULT);
         if(err < 0)
             throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
@@ -108,21 +108,21 @@ namespace h5{
 
     
     //-------------------------------------------------------------------------
-    pni::io::nx::nxlink_type h5link::link_type(const H5Group &loc,
+    pni::io::nx::nxlink_type h5link::link_type(const group_imp &loc,
                                                const string &name)
     {
         H5L_info_t info;
 
-        if(!loc.exists(name))
+        if(!loc.has_child(name))
             throw key_error(EXCEPTION_RECORD,
-                    "Group ["+get_object_path(loc.id())
+                    "Group ["+get_object_path(loc.object().id())
                     +"] does not have a child ["+name+ "]!");
 
-        if(H5Lget_info(loc.id(),name.c_str(),&info,H5P_DEFAULT)<0)
+        if(H5Lget_info(loc.object().id(),name.c_str(),&info,H5P_DEFAULT)<0)
         {
             throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
                     "Error obtaining link type for child ["+name+"] of group"+
-                    "["+get_object_path(loc.id())+"]!");
+                    "["+get_object_path(loc.object().id())+"]!");
         }
 
         if(info.type == H5L_TYPE_EXTERNAL)

@@ -1,5 +1,5 @@
 set(SOURCES 
-            #H5LinkTest.cpp
+            h5link_test.cpp
             hdf5_imp_test.cpp
             h5datatype_test.cpp
             h5dataspace_test.cpp

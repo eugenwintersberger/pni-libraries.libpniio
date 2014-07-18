@@ -7,10 +7,10 @@ set(SOURCES H5Attribute.cpp
             H5DeflateFilter.cpp
             H5Group.cpp
             H5LibrarySetup.cpp
-            h5link.cpp
             H5NamedObject.cpp
             H5Object.cpp
 
+            h5link.cpp
             h5_error.cpp
             h5_error_stack.cpp
             hdf5_utilities.cpp
