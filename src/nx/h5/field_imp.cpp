@@ -197,6 +197,15 @@ namespace h5{
 
 
     //------------------------------------------------------------------------
+    type_imp::index_vector_type field_imp::shape() const
+    {
+        type_imp::index_vector_type s(_memory_space.rank());
+        std::copy(_memory_space.current_begin(),
+                  _memory_space.current_end(),
+                  s.begin());
+        return s;
+    }
+    //------------------------------------------------------------------------
     type_id_t field_imp::type_id() const 
     { 
         return pni::io::nx::h5::type_id(_type); 
@@ -361,7 +370,49 @@ namespace h5{
     }
 
     
+    void field_imp::apply_selection(const type_imp::selection_vector_type &s)
+        const
+    {
+        //create an array selection
+        array_selection asel = array_selection::create(s);
+        
+        //create buffers
+        auto offset = asel.offset<type_imp::index_vector_type>();
+        auto stride = asel.stride<type_imp::index_vector_type>();
+        auto count = asel.full_shape<type_imp::index_vector_type>();
 
+        //need to throw an exception if the rank of the selection and
+        //that of the 
+        if(offset.size() != _file_space.rank())
+            throw shape_mismatch_error(EXCEPTION_RECORD,
+                    "Selection and field rank do not match!");
+
+        //apply the selection
+        herr_t err = H5Sselect_hyperslab(_file_space.object().id(),
+                H5S_SELECT_SET,offset.data(),stride.data(),count.data(),
+                nullptr);
+        if(err<0)
+            throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
+                    "Error applying selection to dataset!\n\n"+
+                    get_h5_error_string());
+
+        //need to set the memory dataspace to the effective shape of the
+        //selection
+        _memory_space = h5dataspace(asel.shape<std::vector<size_t>>());
+
+    }
+
+    //------------------------------------------------------------------------
+    void field_imp::clear_selections() const
+    {
+        //this should be quite easy - there is nothing special we have
+        ///to do.
+        if(_file_space.object().is_valid())
+        {
+            H5Sselect_all(_file_space.object().id());
+            _memory_space = _file_space;
+        }
+    }
 
 //end of namespace
 }

@@ -55,7 +55,7 @@ class field_imp_test:public CppUnit::TestFixture
         CPPUNIT_TEST(test_inquery);
         CPPUNIT_TEST(test_resize);
         CPPUNIT_TEST(test_parent);
-        /*
+        
         CPPUNIT_TEST(test_scalar_data<uint8>);
         CPPUNIT_TEST(test_scalar_data<int8>);
         CPPUNIT_TEST(test_scalar_data<uint16>);
@@ -107,7 +107,6 @@ class field_imp_test:public CppUnit::TestFixture
         CPPUNIT_TEST(test_selection<complex128>);
         CPPUNIT_TEST(test_selection<binary>);
         CPPUNIT_TEST(test_string_selection);
-        */
         CPPUNIT_TEST_SUITE_END();
     private:
         file_imp _file;
@@ -134,6 +133,7 @@ class field_imp_test:public CppUnit::TestFixture
         void test_string_selection();
         void test_bool_selection();
         void test_parent();
+
 };
 
 //-----------------------------------------------------------------------------
@@ -142,12 +142,8 @@ template<typename T> void field_imp_test::test_scalar_data()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     //start with a scalar dataset
-    field_imp scalar_ds = field_factory::create(_group,
-                                                "scalar_dataset",
-                                                type_id_map<T>::type_id,
-                                                {1},
-                                                {1});
-
+    type_id_t tid = type_id_map<T>::type_id;
+    field_imp scalar_ds{_group,"scalar_dataset",tid, {1},{1}};
     T write = T(1);
     CPPUNIT_ASSERT_NO_THROW(scalar_ds.write(&write));
     T read;
@@ -161,8 +157,8 @@ template<typename T> void field_imp_test::test_array_data()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     shape_t s{3,3};
     shape_t cs{1,3}; 
-    field_imp ds = field_factory::create(_group,"array_dataset",
-                                         type_id_map<T>::type_id,{3,3},{1,3});
+    type_id_t tid = type_id_map<T>::type_id;
+    field_imp ds{_group,"array_dataset",tid,{3,3},{1,3}};
     auto write = dynamic_array<T>::create(s);
     auto read  = dynamic_array<T>::create(s);
     std::fill(write.begin(),write.end(),T(1));
@@ -179,11 +175,10 @@ template<typename T> void field_imp_test::test_selection()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     shape_t shape({10,20});
-    field_imp dset = field_factory::create(_group,"flags",
-                                           type_id_map<T>::type_id,{10,20},{1,20});
+    type_id_t tid = type_id_map<T>::type_id;
+    field_imp dset(_group,"flags",tid,{10,20},{1,20});
 
-    shape_t s;
-    s = dset.shape<shape_t>();
+    type_imp::index_vector_type s = dset.shape();
     CPPUNIT_ASSERT(dset.size()==10*20);
 
     std::vector<T> writebuf(10);
@@ -207,7 +202,7 @@ template<typename T> void field_imp_test::test_selection()
         //check new properties of the dataset with selection
         CPPUNIT_ASSERT(dset.size()==10);
         CPPUNIT_ASSERT(dset.rank()==1);
-        auto sel_s = dset.shape<shape_t>();
+        type_imp::index_vector_type sel_s = dset.shape();
         CPPUNIT_ASSERT(sel_s.size() == 1);
         CPPUNIT_ASSERT(sel_s[0] == 10);
 

@@ -24,6 +24,8 @@
 
 #include <vector>
 #include <algorithm>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
 
 extern "C"{
 #include <hdf5.h>
@@ -42,6 +44,10 @@ namespace h5{
         //! container type for counters
         typedef std::vector<index_type> index_vector_type;
 
+        //! container for selections
+        typedef std::vector<pni::core::slice> selection_vector_type;
+
+         
 
         template<typename CTYPE>
         static index_vector_type to_index_vector(const CTYPE &container)
@@ -53,6 +59,22 @@ namespace h5{
 
         template<typename CTYPE>
         static CTYPE from_index_vector(const index_vector_type &v)
+        {
+            CTYPE container(v.size());
+            std::copy(v.begin(),v.end(),container.begin());
+            return container;
+        }
+
+        template<typename CTYPE>
+        static selection_vector_type to_selection_vector(const CTYPE &container)
+        {
+            selection_vector_type v(container.size());
+            std::copy(container.begin(),container.end(),v.begin());
+            return v;
+        }
+
+        template<typename CTYPE>
+        static CTYPE from_selection_vector(const selection_vector_type &v)
         {
             CTYPE container(v.size());
             std::copy(v.begin(),v.end(),container.begin());

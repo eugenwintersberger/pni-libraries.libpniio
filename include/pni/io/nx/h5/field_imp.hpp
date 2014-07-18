@@ -227,14 +227,7 @@ namespace h5{
             //! Returns a copy of the datasets shape. 
             //! \return dataset shape
             //!
-            template<typename CTYPE> CTYPE shape() const
-            {
-                CTYPE s(_memory_space.rank());
-                std::copy(_memory_space.current_begin(),
-                          _memory_space.current_end(),
-                          s.begin());
-                return s;
-            }
+            type_imp::index_vector_type shape() const;
 
             //-----------------------------------------------------------------
             //!
@@ -258,67 +251,14 @@ namespace h5{
 
 
             //-----------------------------------------------------------------
-            //! apply a selection
-            template<typename CTYPE> void apply_selection(const CTYPE &s) 
-            {
-                std::vector<slice> sel(s.size());
-                std::copy(s.begin(),s.end(),sel.begin());
-
-                //create an array selection
-                array_selection asel = array_selection::create(sel);
-                
-                //create buffers
-                auto offset = asel.offset<std::vector<hsize_t> >();
-                auto stride = asel.stride<std::vector<hsize_t> >();
-                auto count = asel.full_shape<std::vector<hsize_t> >();
-
-                //need to throw an exception if the rank of the selection and
-                //that of the 
-                if(offset.size() != _file_space.rank())
-                    throw shape_mismatch_error(EXCEPTION_RECORD,
-                            "Selection and field rank do not match!");
-
-                //apply the selection
-                herr_t err = H5Sselect_hyperslab(_file_space.object().id(),
-                        H5S_SELECT_SET,offset.data(),stride.data(),count.data(),
-                        nullptr);
-                if(err<0)
-                    throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
-                            "Error applying selection to dataset!\n\n"+
-                            get_h5_error_string());
-
-                //need to set the memory dataspace to the effective shape of the
-                //selection
-                _memory_space = h5dataspace(asel.shape<std::vector<size_t>>());
-
-            }
+            //!
+            //! \brief apply a selection
+            //! 
+            void apply_selection(const type_imp::selection_vector_type &s) const;
 
             //----------------------------------------------------------------
             //! remove a selection
-            void clear_selections() const
-            {
-                //this should be quite easy - there is nothing special we have
-                ///to do.
-                if(_file_space.object().is_valid())
-                {
-                    H5Sselect_all(_file_space.object().id());
-                    _memory_space = _file_space;
-                }
-            }
-
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief return dataspace
-            //!
-            //! Returns a const. reference to the dataspace of the dataset.
-            //!
-            //! \return const reference to the dataspace
-            //!
-            const h5dataspace &space() const
-            {
-                return _file_space;
-            }
-
+            void clear_selections() const;
 
             //===================reading data methods==========================
             //! 
