@@ -136,26 +136,27 @@ void group_imp_test::test_create_scalar_attribute()
     
     group_imp g(root_group,"test");
 
-    attribute_imp a = g.attr<float32>("hello");
+    attribute_imp a = g.attr("hello",type_id_t::FLOAT32);
     CPPUNIT_ASSERT(g.has_attr("hello"));
     CPPUNIT_ASSERT(g.nattr() == 1);
 
-    CPPUNIT_ASSERT_THROW(g.attr<float32>("hello"),object_error);
+    CPPUNIT_ASSERT_THROW(g.attr("hello",type_id_t::FLOAT32),object_error);
 }
 
 //----------------------------------------------------------------------------
 void group_imp_test::test_create_mdim_attribute()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef std::vector<size_t> shape_type;
 
     group_imp g(root_group,"test");
 
-    attribute_imp a = g.attr<string>("hello",shape_type{2,40});
+    attribute_imp a = g.attr("hello",type_id_t::STRING,
+                             type_imp::index_vector_type{2,40});
     CPPUNIT_ASSERT(g.has_attr("hello"));
     CPPUNIT_ASSERT(g.nattr() == 1);
 
-    CPPUNIT_ASSERT_THROW(g.attr<float32>("hello",shape_type{3,40}),
+    CPPUNIT_ASSERT_THROW(g.attr("hello",type_id_t::FLOAT32,
+                                type_imp::index_vector_type{3,40}),
                          object_error);
 }
 
@@ -166,7 +167,7 @@ void group_imp_test::test_get_attribute_by_name()
     
     group_imp g(root_group,"test");
 
-    g.attr<string>("hello world");
+    g.attr("hello world",type_id_t::STRING);
     attribute_imp a = g.attr("hello world");
     CPPUNIT_ASSERT(a.name() == "hello world");
     CPPUNIT_ASSERT(a.type_id() == type_id_t::STRING);
@@ -183,7 +184,7 @@ void group_imp_test::test_get_attribute_by_index()
     
     group_imp g(root_group,"test");
 
-    g.attr<string>("hello world");
+    g.attr("hello world",type_id_t::STRING);
     attribute_imp a = g.attr(0);
     CPPUNIT_ASSERT(a.name() == "hello world");
     CPPUNIT_ASSERT(a.type_id() == type_id_t::STRING);
@@ -200,7 +201,7 @@ void group_imp_test::test_delete_attribute()
     
     group_imp g(root_group,"test");
 
-    g.attr<string>("bla");
+    g.attr("bla",type_id_t::STRING);
     CPPUNIT_ASSERT(g.has_attr("bla"));
 
     g.del_attr("bla");

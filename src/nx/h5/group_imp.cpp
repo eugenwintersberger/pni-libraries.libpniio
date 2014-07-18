@@ -215,6 +215,34 @@ namespace h5{
         delete_attribute(_object,name);
     }
 
+    //------------------------------------------------------------------------
+    attribute_imp group_imp::attr(const string &name,type_id_t tid,
+                       bool overwrite) const
+    {
+        return attribute_imp(create_attribute(_object,
+                                              name,
+                                              get_type(tid),
+                                              h5dataspace(),
+                                              overwrite));
+    }
+   
+    //-------------------------------------------------------------------------
+    attribute_imp group_imp::attr(const string &name,type_id_t tid,
+                                  const type_imp::index_vector_type &shape,
+                                  bool overwrite) const
+    {
+        return attribute_imp(create_attribute(_object,
+                                              name,
+                                              get_type(tid),
+                                              h5dataspace(shape),
+                                              overwrite));
+    }
+
+    //------------------------------------------------------------------------
+    const object_imp &group_imp::object() const 
+    { 
+        return _object; 
+    }
 //end of namespace
 }
 }

@@ -418,22 +418,13 @@ namespace h5{
             //!
             //! Create a simple scalar attribute 
             //! \throws object_error if attribute creation fails
-            //! \tparam T data type for the attribute
             //! \param name the name of the new attribute
+            //! \param tid type id for the attribute
             //! \param overwrite if true overwrite an existing attribute
             //! \return instance of attribute_imp
             //!
-            template<typename T>
-            attribute_imp attr(const string &name,bool overwrite=false) const
-            {
-                type_id_t tid = type_id_map<T>::type_id;
-
-                return attribute_imp(create_attribute(_object,
-                                                      name,
-                                                      get_type(tid),
-                                                      h5dataspace(),
-                                                      overwrite));
-            }
+            attribute_imp attr(const string &name,type_id_t tid,
+                               bool overwrite=false) const;
 
             //----------------------------------------------------------------
             //! 
@@ -441,27 +432,15 @@ namespace h5{
             //! 
             //! Create a multidimensional attribute.
             //! \throws object_error if attribute reation fails
-            //! \tparam T data type for the attribute
-            //! \tparam CTYPE container type for the shape
             //! \param name the name for the attribute
+            //! \param tid type id for the attribute
             //! \param shape container with number of elements
             //! \param overwrite when true overwrite existing attribute
             //! \return instance of attribute_imp
             //! 
-            template<
-                     typename T,
-                     typename CTYPE
-                    >
-            attribute_imp attr(const string &name,const CTYPE &shape,
-                               bool overwrite=false) const
-            {
-                type_id_t tid = type_id_map<T>::type_id;
-                return attribute_imp(create_attribute(_object,
-                                                      name,
-                                                      get_type(tid),
-                                                      h5dataspace(shape),
-                                                      overwrite));
-            }
+            attribute_imp attr(const string &name,type_id_t tid,
+                               const type_imp::index_vector_type &shape,
+                               bool overwrite=false) const;
 
             //----------------------------------------------------------------
             //!

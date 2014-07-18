@@ -414,6 +414,29 @@ namespace h5{
         }
     }
 
+    //------------------------------------------------------------------------
+    attribute_imp field_imp::attr(const string &name,type_id_t tid,
+                                  bool overwrite) const
+    {
+        return attribute_imp(create_attribute(_object,
+                                              name,
+                                              get_type(tid),
+                                              h5dataspace(),
+                                              overwrite));
+    }
+
+    //------------------------------------------------------------------------
+    attribute_imp field_imp::attr(const string &name,type_id_t tid,
+                                  const type_imp::index_vector_type &shape,
+                                  bool overwrite) const
+    {
+        return attribute_imp(create_attribute(_object,
+                                              name,
+                                              get_type(tid),
+                                              h5dataspace(shape),
+                                              overwrite));
+    }
+
 //end of namespace
 }
 }
