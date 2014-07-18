@@ -129,42 +129,44 @@ class attribute_imp_test:public CppUnit::TestFixture
 template<typename T> void attribute_imp_test::test_scalar_attribute()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    type_id_t tid = type_id_map<T>::type_id;
     attribute_imp a(create_attribute(root_group.object(),
                                      "a1",
-                                     get_type(type_id_map<T>::type_id),
+                                     get_type(tid),
                                      h5dataspace(),
                                      false));
 
     //write data
     auto write = create_scalar_data<T>();
-    a.write(&write);
+    a.write(tid,&write);
     //read data back and check equality
     T read;
-    a.read(&read);
+    a.read(tid,&read);
     check_equality(write,read);
 }
 
 //-----------------------------------------------------------------------------
 template<typename T> void attribute_imp_test::test_array_attribute()
 {
-    PRINT_TEST_FUNCTION_SIG;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    shape_t s{10,20};
+    type_imp::index_vector_type s{10,20};
     auto write = dynamic_array<T>::create(s);
     static_array<T,10,20> read;
+    type_id_t tid = type_id_map<T>::type_id;
 
     std::vector<T> b = create_array_data<T>(write.size());
     std::copy(b.begin(),b.end(),write.begin());
     
     attribute_imp a(create_attribute(root_group.object(),
                                      "a1",
-                                     get_type(type_id_map<T>::type_id), 
+                                     get_type(tid), 
                                      h5dataspace(s),
                                      false));
     //write data
-    a.write(write.data());
+    a.write(tid,write.data());
     //read data back
-    a.read(read.data());
+    a.read(tid,read.data());
 
     //compare data
     for(size_t i=0;i<a.size();i++) check_equality(read[i],write[i]);

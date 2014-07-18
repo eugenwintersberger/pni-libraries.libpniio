@@ -28,6 +28,7 @@
 #include <pni/core/arrays.hpp>
 
 #include "object_imp.hpp"
+#include "type_imp.hpp"
 #include "h5dataspace.hpp"
 #include "h5datatype.hpp"
 
@@ -145,27 +146,6 @@ namespace h5{
             attribute_imp &operator=(attribute_imp &&o) noexcept;
 
             //===================reading and writting data=====================
-            //!
-            //! \brief pointer write
-            //!
-            //! Private method writing data from memory addressed by 
-            //! ptr to the attribute.
-            //! \tparam T data type in memory
-            //! \throws io_error in case of IO errors
-            //! \param ptr pointer to memory
-            //!
-            template<typename T> void write(const T *ptr) const
-            {
-                const h5datatype &mem_type = get_type(type_id_map<T>::type_id);
-                herr_t err = H5Awrite(_object.id(),
-                                      mem_type.object().id(),
-                                      (void *)(ptr));
-                if(err<0)
-                    throw io_error(EXCEPTION_RECORD, 
-                        "Error writing attribute ["+this->name()+"]!\n\n"+
-                        get_h5_error_string());
-            }
-
             //----------------------------------------------------------------
             //!
             //! \brief write data from void
@@ -189,7 +169,7 @@ namespace h5{
             //! \throws io_error in case of input output issues
             //! \param s string to write
             //!
-            void write(const string *s) const;
+            void write(type_id_t tid,const string *s) const;
 
             //-----------------------------------------------------------------
             //!
@@ -206,36 +186,8 @@ namespace h5{
             */
             //! \param s pointer to the character string
             //!
-            void write(const char *s) const 
-            {
-                string str(s);
-                write(&str);
-            }
+            void write(type_id_t tid,const char *s) const ;
           
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief pointer read
-            //!
-            //! Private method reading data form the attribute to a memory 
-            //! region addressed by ptr. An exception is thrown if an error 
-            //! occurs
-            //!
-            //! \tparam T type of data in memory
-            //! \throws io_error in case of IO errors
-            //! \param ptr pointer to memory
-            //!
-            template<typename T> void read(T *ptr) const
-            {
-                const h5datatype &mem_type = get_type(type_id_map<T>::type_id);
-                herr_t err = H5Aread(_object.id(),
-                                     mem_type.object().id(),
-                                     (void*)(ptr));
-                if(err < 0)
-                    throw io_error(EXCEPTION_RECORD,
-                            "Error reading attribute ["+this->name()+"]!\n\n"+
-                            get_h5_error_string());
-            }
-
             //----------------------------------------------------------------
             //!
             //! \brief read data to void 
@@ -258,7 +210,7 @@ namespace h5{
             //! \throws H5AttributeError in case of general IO errors
             //! \param s string variable to which data will be written
             //!
-            void read(string *s) const;
+            void read(type_id_t tid,string *s) const;
            
             //=================attribute inquery methods=======================
             //! 
@@ -267,14 +219,7 @@ namespace h5{
             //! Returns the shape of the attribute.
             //! \return shape object
             //!
-            template<typename CTYPE> CTYPE shape() const
-            {
-                CTYPE s(_dspace.rank());
-                std::copy(_dspace.current_begin(),
-                          _dspace.current_end(),
-                          s.begin());
-                return s;
-            }
+            type_imp::index_vector_type shape() const;
 
             //-----------------------------------------------------------------
             //! 
@@ -292,7 +237,7 @@ namespace h5{
             //! Return  the total number of elements stored in the attribute.
             //! \return number of elements
             //!
-            size_t size() const { return this->_dspace.size(); }
+            size_t size() const;
 
             //-----------------------------------------------------------------
             //!
@@ -301,7 +246,7 @@ namespace h5{
             //! Get the number of dimensions.
             //! \return number of dimensions
             //!
-            size_t rank() const { return this->_dspace.rank(); }
+            size_t rank() const;
 
             //-----------------------------------------------------------------
             //!

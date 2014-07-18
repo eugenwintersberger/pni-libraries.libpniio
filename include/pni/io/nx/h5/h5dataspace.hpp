@@ -28,6 +28,7 @@
 #include <pni/core/error.hpp>
 
 #include "object_imp.hpp"
+#include "type_imp.hpp"
 
 namespace pni{
 namespace io{
@@ -75,9 +76,9 @@ namespace h5 {
     {
         public:
             //! value type for buffers
-            typedef hsize_t value_type;
+            typedef type_imp::index_type value_type;
             //! buffer type for array parameters
-            typedef std::vector<value_type> buffer_type;
+            typedef type_imp::index_vector_type buffer_type;
             //! buffer iterator
             typedef buffer_type::const_iterator iterator;
         private:
@@ -156,26 +157,14 @@ namespace h5 {
             //! of dimensions will be set to these values.
             /*!
             \code
-            std::list<size_t> shape{4,5,19};
-            H5Dataspace space(shape);
+            type_imp::index_vector_type shape{4,5,19};
+            h5dataspace space(shape);
             \endcode
             */
             //! \throws object_error in case of failure
-            //! \tparam CTYPE container type for the shape
-            //! \param s instance of CTYPE with the shape
-            //! \sa H5Dataspace(const CTYPE1 &s,const CTYPE2 &ms)
+            //! \param s vector with shape data
             //!
-            template<typename CTYPE> 
-            explicit h5dataspace(const CTYPE &s):
-                _object(H5Screate(H5S_SCALAR)),
-                _maxdims(s.size()),
-                _dims(s.size())
-            {
-                std::copy(s.begin(),s.end(),_maxdims.begin());
-                std::copy(s.begin(),s.end(),_dims.begin());
-
-                __update_dataspace();
-            }
+            explicit h5dataspace(const type_imp::index_vector_type &s);
 
             //----------------------------------------------------------------- 
             //! 
@@ -186,47 +175,22 @@ namespace h5 {
             //!
             /*! 
             \code
-            std::list<size_t> shape{4,5,19};
-            std::vector<size_t> mshape{100,100,100};
-            H5Dataspace space(shape,mshape);
+            type_imp::index_vector_type shape{4,5,19};
+            type_imp::index_vector_type mshape{100,100,100};
+            h5dataspace space(shape,mshape);
             \endcode
             */
             //!
             //! \throws shape_mismatch_error if actual and max dim containers 
             //!                              are of different size
             //! \throws object_error in case of any other failure
-            //! \tparam CTYPE1 container type for the actual shape
-            //! \tparam CTYPE2 container type for the maximum shape
             //! \param s initial shape
             //! \param ms maximum shape
             //!
             //! \sa H5Dataspace(const CTYPE &s)
             //!
-            template<
-                     typename CTYPE1,
-                     typename CTYPE2
-                    >
-            explicit h5dataspace(const CTYPE1 &s,const CTYPE2 &ms):
-                _object(H5Screate(H5S_SCALAR)),
-                _maxdims(ms.size()),
-                _dims(s.size())
-
-            {
-                //check if the ranks of the shapes is equal
-                if(s.size() != ms.size())
-                {
-                    std::stringstream ss;
-                    ss<<"Rank of actual shape ("<<s.size()<<") and of ";
-                    ss<<"maximum shape ("<<ms.size()<<") do not match!";
-                    throw shape_mismatch_error(EXCEPTION_RECORD,ss.str());
-                }
-
-                std::copy(ms.begin(),ms.end(),_maxdims.begin());
-                std::copy(s.begin(),s.end(),_dims.begin());
-
-                //resize the dataspace to a simple one
-                __update_dataspace();
-            }
+            explicit h5dataspace(const type_imp::index_vector_type &s,
+                                 const type_imp::index_vector_type &ms);
 
             //-----------------------------------------------------------------
             //!
@@ -237,7 +201,7 @@ namespace h5 {
             //! constructor and has constant size. 
             /*!
             \code
-            H5Dataspace space({1,2,3});
+            h5dataspace space({1,2,3});
             \endcode
             */
             //!

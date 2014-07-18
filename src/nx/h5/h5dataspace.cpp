@@ -140,6 +140,35 @@ namespace h5 {
         __update_dataspace();
     }
 
+    //-------------------------------------------------------------------------
+    h5dataspace::h5dataspace(const type_imp::index_vector_type &s):
+        _object(H5Screate(H5S_SCALAR)),
+        _maxdims(s),
+        _dims(s)
+    {
+        __update_dataspace();
+    }
+
+    //------------------------------------------------------------------------
+    h5dataspace::h5dataspace(const type_imp::index_vector_type &s,
+                             const type_imp::index_vector_type &ms):
+        _object(H5Screate(H5S_SCALAR)),
+        _maxdims(ms),
+        _dims(s)
+
+    {
+        //check if the ranks of the shapes is equal
+        if(s.size() != ms.size())
+        {
+            std::stringstream ss;
+            ss<<"Rank of actual shape ("<<s.size()<<") and of ";
+            ss<<"maximum shape ("<<ms.size()<<") do not match!";
+            throw shape_mismatch_error(EXCEPTION_RECORD,ss.str());
+        }
+
+        //resize the dataspace to a simple one
+        __update_dataspace();
+    }
     //===================Assignment operators==================================
     //implementation of the copy assignment operator
     h5dataspace &h5dataspace::operator=(const h5dataspace &o)

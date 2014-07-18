@@ -83,7 +83,7 @@ void h5dataspace_test::test_init_list_construction()
 void h5dataspace_test::test_container_construction()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef std::list<hsize_t> list_type;
+    typedef type_imp::index_vector_type list_type;
     
     list_type cdims={10,4,3};
 
@@ -110,7 +110,7 @@ void h5dataspace_test::test_container_construction()
 void h5dataspace_test::test_current_iterator()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef std::list<hsize_t> list_type;
+    typedef type_imp::index_vector_type list_type;
     list_type shape{20,40,10};
 
     h5dataspace space(shape);
@@ -125,7 +125,7 @@ void h5dataspace_test::test_current_iterator()
 void h5dataspace_test::test_maximum_iterator()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef std::list<hsize_t> list_type;
+    typedef type_imp::index_vector_type list_type;
     list_type shape{20,40,10};
     list_type mshape{200,400,100};
 

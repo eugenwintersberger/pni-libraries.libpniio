@@ -398,7 +398,7 @@ namespace h5{
 
         //need to set the memory dataspace to the effective shape of the
         //selection
-        _memory_space = h5dataspace(asel.shape<std::vector<size_t>>());
+        _memory_space = h5dataspace(asel.shape<type_imp::index_vector_type>());
 
     }
 

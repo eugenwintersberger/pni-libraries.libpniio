@@ -122,7 +122,7 @@ void attribute_imp_test::test_inquery()
     CPPUNIT_ASSERT(a1.size() == 1);
     CPPUNIT_ASSERT(a1.rank() == 0);
     CPPUNIT_ASSERT(a1.type_id() == type_id_t::FLOAT32);
-    CPPUNIT_ASSERT(a1.shape<shape_t>().size() == 0);
+    CPPUNIT_ASSERT(a1.shape().size() == 0);
 
 
     CPPUNIT_ASSERT(a2.is_valid());
@@ -131,7 +131,7 @@ void attribute_imp_test::test_inquery()
     CPPUNIT_ASSERT(a2.size() == 20);
     CPPUNIT_ASSERT(a2.rank() == 2);
     CPPUNIT_ASSERT(a2.type_id() == type_id_t::FLOAT32);
-    auto ashape = a2.shape<shape_t>();
+    auto ashape = a2.shape();
     CPPUNIT_ASSERT(std::equal(shape.begin(),shape.end(),ashape.begin()));
 
     group_imp parent(a1.parent());

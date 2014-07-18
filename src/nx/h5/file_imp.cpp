@@ -170,7 +170,7 @@ namespace h5{
                                          h5dataspace(),
                                          true));
         string version(vstring.str());
-        a.write(&version);
+        a.write(type_id_t::STRING,&version);
 
         return file_imp(std::move(file));
     }

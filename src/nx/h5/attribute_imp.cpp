@@ -146,7 +146,7 @@ namespace h5{
     
     //-------------------------------------------------------------------------
     //implementation of write from String
-    void attribute_imp::write(const string *s) const
+    void attribute_imp::write(type_id_t tid,const string *s) const
     {
         std::vector<const char*> ptrs(size());
 
@@ -173,10 +173,51 @@ namespace h5{
                            "Error writing attribute ["+this->name()+"]!\n\n"
                            +get_h5_error_string());
     }
+    
+    //-------------------------------------------------------------------------
+    void attribute_imp::read(type_id_t tid,void *ptr) const
+    {
+        const h5datatype &mem_type = get_type(tid);
+        herr_t err = H5Aread(_object.id(),
+                              mem_type.object().id(),
+                              ptr);
+        if(err<0)
+            throw io_error(EXCEPTION_RECORD, 
+                           "Error reading attribute ["+this->name()+"]!\n\n"
+                           +get_h5_error_string());
+    }
 
     //-------------------------------------------------------------------------
+    type_imp::index_vector_type attribute_imp::shape() const
+    {
+        type_imp::index_vector_type s(_dspace.rank());
+        std::copy(_dspace.current_begin(),
+                  _dspace.current_end(),
+                  s.begin());
+        return s;
+    }
+    
+    //-------------------------------------------------------------------------
+    size_t attribute_imp::size() const 
+    { 
+        return this->_dspace.size(); 
+    }
+
+    //-------------------------------------------------------------------------
+    size_t attribute_imp::rank() const 
+    { 
+        return this->_dspace.rank(); 
+    }
+
+    //-------------------------------------------------------------------------
+    void attribute_imp::write(type_id_t tid,const char *s) const 
+    {
+        string str(s);
+        write(tid,&str);
+    }
+    //-------------------------------------------------------------------------
     //implementation to read to string
-    void attribute_imp::read(string *s) const
+    void attribute_imp::read(type_id_t tid,string *s) const
     {
         //if the type is not a variable length string memory must be allocated
         //for each string in the attribute
