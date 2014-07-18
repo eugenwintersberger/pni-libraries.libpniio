@@ -1,12 +1,5 @@
 set(SOURCES 
-            #H5AttributeObjectTest.cpp
-            #H5DatasetTest.cpp
-            #H5DataspaceTest.cpp
-            #H5DatatypeTest.cpp
-            #H5GroupTest.cpp
             #H5LinkTest.cpp
-            #H5NamedObjectTest.cpp
-            #H5ObjectTest.cpp
             hdf5_imp_test.cpp
             h5datatype_test.cpp
             h5dataspace_test.cpp
