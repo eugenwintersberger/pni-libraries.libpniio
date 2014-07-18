@@ -1,23 +1,22 @@
-set(HEADER_FILES H5Attribute.hpp 
-                 H5AttributeObject.hpp 
-                 H5Dataset.hpp 
-                 H5Dataspace.hpp 
-                 H5DatatypeFactory.hpp 
-                 H5Datatype.hpp 
-                 H5DeflateFilter.hpp 
-                 h5_error.hpp 
-                 h5_error_stack.hpp 
-                 H5Filter.hpp 
-                 H5Group.hpp 
-                 H5LibrarySetup.hpp 
-                 h5link.hpp 
-                 H5NamedObject.hpp 
-                 H5Object.hpp 
-                 H5ObjectType.hpp 
-                 hdf5_utilities.hpp
-                 h5object.hpp
-                 h5datatype.hpp
-                 h5dataspace.hpp
+set(HEADER_FILES 
+                attribute_imp.hpp
+                attribute_utils.hpp
+                field_factory.hpp
+                field_imp.hpp
+                file_imp.hpp
+                group_imp.hpp
+                h5dataspace.hpp
+                h5datatype.hpp
+                h5deflate_filter.hpp
+                h5deflatefilter.hpp
+                h5_error.hpp
+                h5_error_stack.hpp
+                h5filter.hpp
+                h5link.hpp
+                h5object_types.hpp
+                hdf5_utilities.hpp
+                object_imp.hpp
+                type_imp.hpp
                  )
 
 
