@@ -87,7 +87,8 @@ namespace h5{
             //!
             //! Read a dataset with variable length strings.
             //!
-            //! \throws nxfield_error in case of IO errors
+            //! \throws io_error in case of IO errors
+            //! \throws object_error in case of creation/destruction problems
             //! \param s pointer to targe strings
             //! \param stype file data type
             //!
@@ -101,7 +102,7 @@ namespace h5{
             //! mainly to support legacy files which do not use variable 
             //! length strings.
             //!
-            //! \throws nxfield_error in case of IO errors
+            //! \throws io_error in case of IO errors
             //! \param s pointer to target strings
             //! \param stype file data type
             //!
@@ -204,7 +205,7 @@ namespace h5{
             //! command can be quite useful for writing data sequentially. 
             //!
             //! \throws index_error if e exceeds the rank of the dataset
-            //! \throws pni::io::nx::nxfield_error in case of other errors
+            //! \throws object_error in case of other errors
             //! \param e index of the extend dimension
             //! \param n number of elements by which the dimension shall be
             //! extended
@@ -282,11 +283,12 @@ namespace h5{
             //! of the template method read(T &value). It is necessary since 
             //! strings are handled slightly different from other objects.
             //! 
-            //! \throws shape_mismatch_error if the dataset is not scalar
-            //! \throws pni::io::nx::nxfield_error in case of other IO errors
+            //! \throws io_error if reading data fails
+            //! \throws object_error in case of other IO errors
+            //! \param tid type id for the string
             //! \param sptr pointer to String objects
             //!
-            void read(string *sptr) const;
+            void read(type_id_t tid,string *sptr) const;
 
             //===============writing data methods==============================
             //! 
@@ -297,7 +299,9 @@ namespace h5{
             //! dataspace of the dataset is scalar or the total dataspace size 
             //! is 1.
             //! 
-            //! \throws io_error in case of other errors
+            //! \throws io_error in case of IO errors
+            //! \throws object_error  in case of all other errors
+            //! \param tid type id for the strings
             //! \param ptr pointer to the memory region from which to read
             //!
             void write(type_id_t tid,const void *ptr) const;
@@ -308,12 +312,12 @@ namespace h5{
             //! 
             //! Write data from a String variable to the dataset.
             //!
-            //! \throws shape_mismatch_error if the dataset is not scalar
-            //! \throws pni::io::nx::nxfield_error in the case of all other 
-            //! errors
+            //! \throws io_error in the case of IO failures
+            //! \throws object_error in case of other errors
+            //! \param tid type id for the string
             //! \param sptr pointer to String objects.
             //!
-            void write(const string *sptr) const;
+            void write(type_id_t tid,const string *sptr) const;
 
             //=================================================================
             // DEFAULT OBJECT METHODS

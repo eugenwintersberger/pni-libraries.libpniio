@@ -144,7 +144,7 @@ namespace h5{
 
         herr_t err = H5Dset_extent(_object.id(),b.data());
         if(err < 0)
-            throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
+            throw object_error(EXCEPTION_RECORD, 
                   "Grow of dataset ["+get_object_path(_object.id())
                   +"] failed!\n\n"+get_h5_error_string());
 
@@ -154,7 +154,7 @@ namespace h5{
     }
 
     //------------------------------------------------------------------
-    void field_imp::write(const string *sptr) const
+    void field_imp::write(type_id_t tid,const string *sptr) const
     {
         typedef const char * char_ptr_t;
         //select the proper memory data type
@@ -174,7 +174,7 @@ namespace h5{
 
         delete [] ptr; //free memory
         if(err<0)
-            throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
+            throw io_error(EXCEPTION_RECORD, 
                     "Error writing data to dataset!\n\n"+
                     get_h5_error_string());
     }
@@ -188,7 +188,7 @@ namespace h5{
 
         herr_t err = H5Dset_extent(_object.id(),s.data());
         if(err < 0)
-            throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
+            throw object_error(EXCEPTION_RECORD, 
                  "Resizing of dataset ["+get_object_path(_object.id())
                  +"] failed!\n\n"+ get_h5_error_string());
 
@@ -223,7 +223,7 @@ namespace h5{
         return _memory_space.rank(); 
     }
     //-----------------------------------------------------------------
-    void field_imp::read(string *sptr) const
+    void field_imp::read(type_id_t tid,string *sptr) const
     {
         //select the proper memory data type
         h5datatype mem_type(object_imp(H5Dget_type(_object.id())));
@@ -240,19 +240,18 @@ namespace h5{
         std::vector<char *> ptrs(size());
 
         //need here a more general guard for HDF5 objects
-        hid_t xfer_plist = H5Pcreate(H5P_DATASET_XFER);
+        object_imp xfer_plist(H5Pcreate(H5P_DATASET_XFER));
 
         //read data from disk
         herr_t err = H5Dread(_object.id(),
                              stype.object().id(),
                              _memory_space.object().id(),
                              _file_space.object().id(),
-                             xfer_plist,
+                             xfer_plist.id(),
                              (void *)ptrs.data());
         if(err<0)
         {
-            H5Pclose(xfer_plist); //close the transfer property list
-            pni::io::nx::nxfield_error error(EXCEPTION_RECORD, 
+            io_error error(EXCEPTION_RECORD, 
                     "Error reading data to dataset ["
                     +get_object_path(_object.id())+"]!\n\n"+
                     get_h5_error_string());
@@ -273,9 +272,8 @@ namespace h5{
 
         H5Dvlen_reclaim(stype.object().id(),
                         _memory_space.object().id(),
-                        xfer_plist,
+                        xfer_plist.id(),
                         ptrs.data());
-        H5Pclose(xfer_plist); //close the transfer property list
     }
 
     //-------------------------------------------------------------------------
@@ -294,7 +292,7 @@ namespace h5{
                               (void *)ptrs.data());
         if(err<0)
         {
-            pni::io::nx::nxfield_error error(EXCEPTION_RECORD, 
+            io_error error(EXCEPTION_RECORD, 
                     "Error reading data to dataset ["
                     +get_object_path(_object.id())+"]!\n\n"+
                     get_h5_error_string());
@@ -369,7 +367,7 @@ namespace h5{
         delete_attribute(_object,name);
     }
 
-    
+    //------------------------------------------------------------------------
     void field_imp::apply_selection(const type_imp::selection_vector_type &s)
         const
     {

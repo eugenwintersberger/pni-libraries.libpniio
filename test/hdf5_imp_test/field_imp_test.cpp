@@ -219,11 +219,11 @@ void field_imp_test::test_string_array_data()
     swrite(0,0) = "hello"; swrite(0,1) = "world"; swrite(0,2) = "this";
     swrite(1,0) = "is"; swrite(1,1) = "a string"; swrite(1,2) = "array";
     
-    CPPUNIT_ASSERT_NO_THROW(dset.write(swrite.data()));
+    CPPUNIT_ASSERT_NO_THROW(dset.write(type_id_t::STRING,swrite.data()));
 
     auto sread = dynamic_array<string>::create(s);
 
-    CPPUNIT_ASSERT_NO_THROW(dset.read(sread.data()));
+    CPPUNIT_ASSERT_NO_THROW(dset.read(type_id_t::STRING,sread.data()));
 
     std::equal(swrite.begin(),swrite.end(),sread.begin());
     
@@ -236,9 +236,9 @@ void field_imp_test::test_string_scalar_data()
 
     field_imp field{_group,"sscalar",type_id_t::STRING,{1},{1}};
     string write = "hello world";
-    field.write(&write);
+    field.write(type_id_t::STRING,&write);
     string read;
-    field.read(&read);
+    field.read(type_id_t::STRING,&read);
     CPPUNIT_ASSERT(read == write);
     
 }
@@ -287,10 +287,10 @@ void field_imp_test::test_string_selection()
         CPPUNIT_ASSERT(field.size()==10);
 
         //write data
-        field.write(writebuf.data());
+        field.write(type_id_t::STRING,writebuf.data());
 
         //read data back
-        field.read(readbuf.data());
+        field.read(type_id_t::STRING,readbuf.data());
 
         //compare data
         CPPUNIT_ASSERT(std::equal(writebuf.begin(),writebuf.end(),readbuf.begin()));
