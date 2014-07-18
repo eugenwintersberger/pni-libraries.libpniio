@@ -436,7 +436,46 @@ namespace h5{
                                               h5dataspace(shape),
                                               overwrite));
     }
+    
+    //------------------------------------------------------------------------
+    void field_imp::read(type_id_t tid,void *ptr) const
+    {
+        //select the proper memory data type
+        const h5datatype &mem_type = get_type(tid);
 
+        //write data to disk
+        herr_t err = H5Dread(_object.id(),
+                             mem_type.object().id(),
+                             _memory_space.object().id(),
+                             _file_space.object().id(),
+                              H5P_DEFAULT,
+                              ptr);
+        if(err<0)
+            throw io_error(EXCEPTION_RECORD, 
+                  "Error writing data to dataset ["
+                  +get_object_path(_object.id())+"]!\n\n"
+                  +get_h5_error_string());
+    }
+
+    //------------------------------------------------------------------------
+    void field_imp::write(type_id_t tid,const void *ptr) const
+    {
+        //select the proper memory data type
+        const h5datatype &mem_type = get_type(tid);
+
+        //write data to disk
+        herr_t err = H5Dwrite(_object.id(),
+                              mem_type.object().id(),
+                              _memory_space.object().id(),
+                              _file_space.object().id(),
+                              H5P_DEFAULT,
+                              ptr);
+        if(err<0)
+            throw io_error(EXCEPTION_RECORD, 
+                "Error writing data to dataset ["
+                +get_object_path(_object.id())+"]!\n\n"+
+                get_h5_error_string());
+    }
 //end of namespace
 }
 }

@@ -268,29 +268,11 @@ namespace h5{
             //! succeed the dataset must be a scalar dataset or the total size 
             //! of the dataset must be 1.
             //!
-            //! \throws shape_mismatch_error if dataset is not scalar or the 
-            //! size of the dataset is not 1
-            //! \throws pni::io::nx::nxfield_error in all other error cases
+            //! \throws io_error in case of errors
+            //! \param tid type id of the original data type in memory
             //! \param ptr pointer to memory where the data should be stored.
             //!
-            template<typename T> void read(T *ptr) const
-            {
-                //select the proper memory data type
-                const h5datatype &mem_type = get_type(type_id_map<T>::type_id);
-
-                //write data to disk
-                herr_t err = H5Dread(_object.id(),
-                                     mem_type.object().id(),
-                                     _memory_space.object().id(),
-                                     _file_space.object().id(),
-                                      H5P_DEFAULT,
-                                      (void *)ptr);
-                if(err<0)
-                    throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
-                          "Error writing data to dataset ["
-                          +get_object_path(_object.id())+"]!\n\n"
-                          +get_h5_error_string());
-            }
+            void read(type_id_t tid,void *ptr) const;
 
             //-----------------------------------------------------------------
             //! 
@@ -314,29 +296,11 @@ namespace h5{
             //! the data from variable value. This method works only if the 
             //! dataspace of the dataset is scalar or the total dataspace size 
             //! is 1.
-            //!
-            //! \throws shape_mismatch_error if the dataspace is not scalar
-            //! \throws pni::io::nx::nxfield_error in case of other errors
+            //! 
+            //! \throws io_error in case of other errors
             //! \param ptr pointer to the memory region from which to read
             //!
-            template<typename T> void write(const T *ptr) const
-            {
-                //select the proper memory data type
-                const h5datatype &mem_type = get_type(type_id_map<T>::type_id);
-
-                //write data to disk
-                herr_t err = H5Dwrite(_object.id(),
-                                      mem_type.object().id(),
-                                      _memory_space.object().id(),
-                                      _file_space.object().id(),
-                                      H5P_DEFAULT,
-                                      (const void *)ptr);
-                if(err<0)
-                    throw pni::io::nx::nxfield_error(EXCEPTION_RECORD, 
-                        "Error writing data to dataset ["
-                        +get_object_path(_object.id())+"]!\n\n"+
-                        get_h5_error_string());
-            }
+            void write(type_id_t tid,const void *ptr) const;
 
             //-----------------------------------------------------------------
             //! 

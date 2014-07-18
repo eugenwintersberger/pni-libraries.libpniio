@@ -253,8 +253,8 @@ void field_imp_test::test_bool_scalar_data()
     field_imp field{_group,"flag",type_id_t::BOOL,{1},{1}};
 
     read_flag = false; write_flag = true;
-    field.write(&write_flag);
-    field.read(&read_flag);
+    field.write(type_id_t::BOOL,&write_flag);
+    field.read(type_id_t::BOOL,&read_flag);
     CPPUNIT_ASSERT(read_flag == write_flag);
     
 }

@@ -145,9 +145,9 @@ template<typename T> void field_imp_test::test_scalar_data()
     type_id_t tid = type_id_map<T>::type_id;
     field_imp scalar_ds{_group,"scalar_dataset",tid, {1},{1}};
     T write = T(1);
-    CPPUNIT_ASSERT_NO_THROW(scalar_ds.write(&write));
+    CPPUNIT_ASSERT_NO_THROW(scalar_ds.write(tid,&write));
     T read;
-    CPPUNIT_ASSERT_NO_THROW(scalar_ds.read(&read));
+    CPPUNIT_ASSERT_NO_THROW(scalar_ds.read(tid,&read));
     check_equality(read,write);
 }
 
@@ -163,8 +163,8 @@ template<typename T> void field_imp_test::test_array_data()
     auto read  = dynamic_array<T>::create(s);
     std::fill(write.begin(),write.end(),T(1));
 
-    CPPUNIT_ASSERT_NO_THROW(ds.write(write.data()));
-    CPPUNIT_ASSERT_NO_THROW(ds.read(read.data()));
+    CPPUNIT_ASSERT_NO_THROW(ds.write(tid,write.data()));
+    CPPUNIT_ASSERT_NO_THROW(ds.read(tid,read.data()));
     
     //check equality
     for(size_t i=0;i<write.size();i++) check_equality(write[i],read[i]);
@@ -207,10 +207,10 @@ template<typename T> void field_imp_test::test_selection()
         CPPUNIT_ASSERT(sel_s[0] == 10);
 
         //write data
-        dset.write(writebuf.data());
+        dset.write(tid,writebuf.data());
 
         //read data back
-        dset.read(readbuf.data());
+        dset.read(tid,readbuf.data());
 
         //compare data
         CPPUNIT_ASSERT(std::equal(writebuf.begin(),writebuf.end(),readbuf.begin()));
