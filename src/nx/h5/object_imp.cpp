@@ -157,7 +157,7 @@ namespace h5{
             if(error_code<0)
                 throw object_error(EXCEPTION_RECORD,"Error closing object!");
         }
-
+        //if the object is not valid we just need to reset the ID
         reset_id(); //in any case we have to reset the ID of the obejct
     }
 

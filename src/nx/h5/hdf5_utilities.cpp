@@ -35,52 +35,52 @@ namespace h5{
 
     using pni::io::io_error;
 
-    string get_filename(hid_t id)
+    string get_filename(const object_imp &object)
     {
+        if(!object.is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Failed to retrieve the filename from an invalid object!");
+
         //first we need to determine the size of the file name
-        ssize_t nsize = H5Fget_name(id,nullptr,0);
+        ssize_t nsize = H5Fget_name(object.id(),nullptr,0);
         if(nsize<0)
             throw io_error(EXCEPTION_RECORD,
-                    "Error retrieving length of file name!");
+                  "Error retrieving length of file name!\n\n"
+                  +get_h5_error_string());
 
         //nsize is now the number of characters in the file name.
         string buffer(nsize,' ');
         //we have to read one more character to get the binary 0
-        if(H5Fget_name(id,const_cast<char*>(buffer.data()),nsize+1)<0)
+        if(H5Fget_name(object.id(),const_cast<char*>(buffer.data()),nsize+1)<0)
             throw io_error(EXCEPTION_RECORD,
-                    "Error retrieving filename!");
+                    "Error retrieving filename!\n\n"+get_h5_error_string());
 
         return buffer;
     }
-
+    
     //-------------------------------------------------------------------------
-    string get_filename(const object_imp &obj)
+    string get_object_path(const object_imp &object)
     {
-        if(obj.is_valid())
+        if(!object.is_valid())
             throw invalid_object_error(EXCEPTION_RECORD,
-                    "Object is not valid - cannot obtain filename!");
+                    "Failed to retrieve path from an invalid object!");
 
-        return get_filename(obj.id());
-    }
-   
-    //-------------------------------------------------------------------------
-    string get_object_path(hid_t id)
-    {
         //if the object has already been created return this value
-        ssize_t bsize = H5Iget_name(id,NULL,1);
+        ssize_t bsize = H5Iget_name(object.id(),NULL,1);
         if(bsize<0)
             throw io_error(EXCEPTION_RECORD,
-                    "Error retrieving length of object name!");
+                    "Error retrieving length of object name!\n\n"
+                    +get_h5_error_string());
 
+        //read the data
         string buffer(bsize,' ');
-
-        if(H5Iget_name(id,const_cast<char*>(buffer.data()),bsize+1)<0)
+        if(H5Iget_name(object.id(),const_cast<char*>(buffer.data()),bsize+1)<0)
             throw io_error(EXCEPTION_RECORD,
-                    "Error retrieving object name!");
+                    "Error retrieving object name!\n\n"
+                    +get_h5_error_string());
 
         return buffer;
     }
-
     //------------------------------------------------------------------------
     string get_attribute_name(const object_imp &object)
     {
@@ -104,7 +104,7 @@ namespace h5{
     //------------------------------------------------------------------------
     string get_others_name(const object_imp &object)
     {
-        string p = get_object_path(object.id());
+        string p = get_object_path(object);
 
         //if the path is empty return an empty string
         if(p.empty()) return p;
@@ -132,10 +132,13 @@ namespace h5{
 
     }
 
+   
+
+
     //------------------------------------------------------------------------
-    string get_parent_path(hid_t id)
+    string get_parent_path(const object_imp &object)
     {
-        string opath = get_object_path(id);
+        string opath = get_object_path(object);
 
         if(opath.empty()) return opath;
 
@@ -163,7 +166,7 @@ namespace h5{
         object_imp file(H5Iget_file_id(obj.id()));
 
         return object_imp(H5Oopen(file.id(),
-                                get_parent_path(obj.id()).c_str(),
+                                get_parent_path(obj).c_str(),
                                 H5P_DEFAULT));
     }
 

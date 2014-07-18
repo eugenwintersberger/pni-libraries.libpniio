@@ -35,8 +35,45 @@ namespace h5{
     class object_imp;
 
     using namespace pni::core;
+    
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup nxh5_classes
+    //! \brief get object filename
+    //! 
+    //! Returns the name of a file a dataset, attribute, or group object 
+    //! belongs to.  If the filename cannot be obtained an empty string 
+    //! is returned. This function assumes that id referes to a valid HDF5 
+    //! object. In case of errors an io_error exception is thrown. 
+    //!
+    //! \throw invalid_object_error if the object is not valid
+    //! \throw io_error if object data cannot be retrieveda
+    //! \throw object_error if validity check fails for some other reason
+    //!
+    //! \param object HDF5 object
+    //! \return string with the file name
+    //!
+    string get_filename(const object_imp &object);
+    
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup nxh5_classes
+    //! \brief get object path
+    //!
+    //! Return the path of an HDF5 object as a string. The object can be 
+    //! either an attribute, a field, or a group.  This function assumes that 
+    //! id referens to a valid HDF5 object. In case of errors an io_error 
+    //! exception is thrown.
+    //!
+    //! \throws object_error if object validity cannot be verified
+    //! \throws invalid_object_error if the object is not valid
+    //! \throws io_error in case of any IO related error.
+    //! \param id of the object
+    //! \return path as string
+    //!
+    string get_object_path(const object_imp &object);
 
-    //============name methods=========================================
+    //------------------------------------------------------------------------
     //! 
     //! \ingroup nxh5_classes
     //! \brief return object name
@@ -55,37 +92,7 @@ namespace h5{
     //!
     string get_name(const object_imp &obj);
 
-    //------------------------------------------------------------------------
-    //!
-    //! \ingroup nxh5_classes
-    //! \brief get object filename
-    //! 
-    //! Returns the name of a file a dataset, attribute, or group object 
-    //! belongs to.  If the filename cannot be obtained an empty string 
-    //! is returned. This function assumes that id referes to a valid HDF5 
-    //! object. In case of errors an io_error exception is thrown. 
-    //!
-    //! \throw io_error in case of errors
-    //! \param id HDF5 id of the object
-    //! \return string with the file name
-    //!
-    string get_filename(hid_t id);
 
-    //-------------------------------------------------------------------------
-    //!
-    //! \ingroup nxh5_classes
-    //! \brief get object path
-    //!
-    //! Return the path of an HDF5 object as a string. The object can be 
-    //! either an attribute, a field, or a group.  This function assumes that 
-    //! id referens to a valid HDF5 object. In case of errors an io_error 
-    //! exception is thrown.
-    //!
-    //! \throws io_error in case of errors.
-    //! \param id of the object
-    //! \return path as string
-    //!
-    string get_object_path(hid_t id);
 
     //------------------------------------------------------------------------
     //! 
@@ -98,7 +105,7 @@ namespace h5{
     //! \param id the HDF5 ID of the object
     //! \return path to the parent
     //! 
-    string get_parent_path(hid_t id);
+    string get_parent_path(const object_imp &object);
         
     //------------------------------------------------------------------------
     //!

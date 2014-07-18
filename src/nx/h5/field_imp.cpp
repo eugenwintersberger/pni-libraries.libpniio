@@ -131,7 +131,7 @@ namespace h5{
         {
             std::stringstream ss;
             ss<<"Dimension index ("<<e<<") exceeds rank of ";
-            ss<<"dataspace ["<<get_object_path(_object.id())
+            ss<<"dataspace ["<<get_object_path(_object)
               <<"] which is ("<<rank()<<")!";
             throw index_error(EXCEPTION_RECORD,ss.str());
         }
@@ -145,7 +145,7 @@ namespace h5{
         herr_t err = H5Dset_extent(_object.id(),b.data());
         if(err < 0)
             throw object_error(EXCEPTION_RECORD, 
-                  "Grow of dataset ["+get_object_path(_object.id())
+                  "Grow of dataset ["+get_object_path(_object)
                   +"] failed!\n\n"+get_h5_error_string());
 
         //re-fetch the new dataspace
@@ -192,7 +192,7 @@ namespace h5{
         herr_t err = H5Dset_extent(_object.id(),s.data());
         if(err < 0)
             throw object_error(EXCEPTION_RECORD, 
-                 "Resizing of dataset ["+get_object_path(_object.id())
+                 "Resizing of dataset ["+get_object_path(_object)
                  +"] failed!\n\n"+ get_h5_error_string());
 
         _update();
@@ -259,7 +259,7 @@ namespace h5{
         {
             io_error error(EXCEPTION_RECORD, 
                     "Error reading data to dataset ["
-                    +get_object_path(_object.id())+"]!\n\n"+
+                    +get_object_path(_object)+"]!\n\n"+
                     get_h5_error_string());
             throw error;
         }
@@ -300,7 +300,7 @@ namespace h5{
         {
             io_error error(EXCEPTION_RECORD, 
                     "Error reading data to dataset ["
-                    +get_object_path(_object.id())+"]!\n\n"+
+                    +get_object_path(_object)+"]!\n\n"+
                     get_h5_error_string());
             throw error;
         }
@@ -334,7 +334,7 @@ namespace h5{
     //------------------------------------------------------------------------
     string field_imp::filename() const 
     {
-        return get_filename(_object.id());
+        return get_filename(_object);
     }
 
     //------------------------------------------------------------------------
@@ -457,7 +457,7 @@ namespace h5{
         if(err<0)
             throw io_error(EXCEPTION_RECORD, 
                   "Error writing data to dataset ["
-                  +get_object_path(_object.id())+"]!\n\n"
+                  +get_object_path(_object)+"]!\n\n"
                   +get_h5_error_string());
     }
 
@@ -477,7 +477,7 @@ namespace h5{
         if(err<0)
             throw io_error(EXCEPTION_RECORD, 
                 "Error writing data to dataset ["
-                +get_object_path(_object.id())+"]!\n\n"+
+                +get_object_path(_object)+"]!\n\n"+
                 get_h5_error_string());
     }
 //end of namespace

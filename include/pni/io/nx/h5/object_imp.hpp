@@ -54,6 +54,10 @@ namespace h5{
     //! composition instead of inheritance which should make maintenance of the 
     //! class much easier. 
     //!
+    //! Alternatively one can consider this class as a guard for hid_t. 
+    //! The descructor calls the close() method and thus ensures that an an 
+    //! object represented by hid_t is closed when it looses scope.
+    //!
     class object_imp
     {
         private:
@@ -117,7 +121,8 @@ namespace h5{
             //! 
             //! \brief default constructor
             //! 
-            //! The default constructor does not throw
+            //! The default constructor does not throw. However, after default 
+            //! construction the object will be in an invalid state. 
             //!
             explicit object_imp() noexcept;
 
@@ -125,7 +130,8 @@ namespace h5{
             //! 
             //! \brief copy constructor
             //!
-            //! Copies the ID of the o and increments its reference counter.
+            //! Copies the ID of the o and increments its reference counter if 
+            //! the object is valid.
             //!
             //! \throws object_error in cases where object validity could not 
             //!                      be determined
@@ -188,12 +194,9 @@ namespace h5{
             //! \brief close the object
             //! 
             //! This will decrement the reference counter of the ID held by this
-            //! object or close it if the reference counter approaches 0. It is
-            //! important to note that this method uses internally the 
-            //! \c H5Oclose function from the HDf5 API. As this function works 
-            //! only for groups, datasets, and types all other objects must 
-            //! implement their own close method using the appropriate HDF5 
-            //! function call.
+            //! object or close it if the reference counter approaches 0. 
+            //! The close method runs an object introspection by means of the 
+            //! HDF5 library and calls the appropriate close function. 
             //! 
             //! \throws object_error if object validity could not be determined
             //! \throws type_error if the type of the object could not be

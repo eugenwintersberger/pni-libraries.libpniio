@@ -141,7 +141,7 @@ namespace h5{
     //-------------------------------------------------------------------------
     string attribute_imp::filename() const
     {
-        return get_filename(_object.id());
+        return get_filename(_object);
     }
     
     //-------------------------------------------------------------------------

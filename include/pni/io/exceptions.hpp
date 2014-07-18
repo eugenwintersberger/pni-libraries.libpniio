@@ -96,6 +96,8 @@ namespace io{
     //! \brief unexpected invalid object
     //!
     //! Raised in cases where an object is unexpectedly in an invalid state. 
+    //! An object uses this exception in cases where the user makes a request 
+    //! on a feature not availabel as the object is in an invalid state.
     //!
     class invalid_object_error:public exception
     {
