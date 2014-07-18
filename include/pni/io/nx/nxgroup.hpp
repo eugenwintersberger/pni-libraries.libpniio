@@ -54,6 +54,7 @@ namespace nx{
         public:
             //===================public types==================================
             typedef typename nximp_map<IMPID>::group_imp imp_type;
+            typedef typename nximp_map<IMPID>::type_imp  type_type;
             typedef nxgroup<IMPID> group_type;
 
             //typedef nxobject_iterator<group_type,
@@ -65,6 +66,7 @@ namespace nx{
             typedef typename nxobject_trait<IMPID>::field_type field_type; 
             typedef typename nxobject_trait<IMPID>::attribute_type
                 attribute_type;
+
         private:
             typedef typename nximp_map<IMPID>::field_imp field_imp_type;
             typedef typename nximp_map<IMPID>::object_imp object_imp_type;
@@ -112,8 +114,10 @@ namespace nx{
                 field_type field;
                 try
                 {
-                    field = field_type(field_imp_type::template 
-                                       create<T>(n,_imp,shape,chunk));
+                    field = field_type(field_imp_type(_imp,n,
+                                       type_id_map<T>::type_id,
+                                       type_type::to_index_vector(shape),
+                                       type_type::to_index_vector(chunk)));
                 }
                 catch(shape_mismatch_error &error)
                 {
@@ -156,8 +160,11 @@ namespace nx{
 
                 try
                 {
-                    field =  field_type(field_imp_type::template
-                              create<T>(n,_imp,shape,chunk,filter.imp()));
+                    field =  field_type(field_imp_type(_imp,n,
+                                        type_id_map<T>::type_id,
+                                        type_type::to_index_vector(shape),
+                                        type_type::to_index_vector(chunk),
+                                        filter.imp()));
                 }
                 catch(shape_mismatch_error &error)
                 {
@@ -293,7 +300,7 @@ namespace nx{
                 group_type g;
                 try
                 {
-                    g = group_type(imp_type(n,_imp));
+                    g = group_type(imp_type(_imp,n));
                 }
                 catch(nxgroup_error &e)
                 {
@@ -513,7 +520,7 @@ namespace nx{
                 object_imp_type object; 
                 try
                 {
-                   object = _imp.open(n);
+                   object = _imp.at(n);
                 }
                 catch(...)
                 {
@@ -523,9 +530,9 @@ namespace nx{
                 }
 
                 if(object.nxobject_type() == nxobject_type::NXFIELD)
-                    return field_type(field_imp_type(object));
+                    return field_type(field_imp_type(std::move(object)));
                 else if(object.nxobject_type() == nxobject_type::NXGROUP)
-                    return group_type(imp_type(object));
+                    return group_type(imp_type(std::move(object)));
                 else
                     throw type_error(EXCEPTION_RECORD,
                                      "Unknown Nexus object type!");
@@ -553,8 +560,8 @@ namespace nx{
             Returns the total number of childs linke below this group.
             \return number of childs
             */
-            size_t nchildren() const { return _imp.nchildren(); }
-            size_t size() const { return _imp.nchildren(); }
+            size_t nchildren() const { return _imp.size(); }
+            size_t size() const { return _imp.size(); }
 
             //-----------------------------------------------------------------
             /*!
@@ -583,12 +590,12 @@ namespace nx{
             typename nxobject_trait<IMPID>::object_type open(size_t i) const
             {
                 object_imp_type obj_imp; 
-                obj_imp = _imp.open(i);
+                obj_imp = _imp.at(i);
 
                 if(obj_imp.nxobject_type() == nxobject_type::NXFIELD)
-                    return field_type(field_imp_type(obj_imp));
+                    return field_type(field_imp_type(std::move(obj_imp)));
                 else if(obj_imp.nxobject_type() == nxobject_type::NXGROUP)
-                    return group_type(imp_type(obj_imp));
+                    return group_type(imp_type(std::move(obj_imp)));
                 else 
                     throw type_error(EXCEPTION_RECORD,
                                      "Unkown NEXUS object type!");
@@ -616,7 +623,13 @@ namespace nx{
             \param n name of the link (object) to look for
             \return true if the object exist, false otherwise
             */
-            bool exists(const string &n) const{ return _imp.exists(n); }
+            bool has_child(const string &n) const
+            { 
+                if(n.find('/')==string::npos)
+                    return _imp.has_child(n); 
+                else
+                    return false;
+            }
 
             //-----------------------------------------------------------------
             /*! \brief remove an object from the file
@@ -743,7 +756,7 @@ namespace nx{
     template<nximp_code IMPID>
     bool operator==(const nxgroup<IMPID> &a,const nxgroup<IMPID> &b)
     {
-        if(a.imp() == b.imp()) return true;
+        if(a.imp().object() == b.imp().object()) return true;
         return false;
     }
 

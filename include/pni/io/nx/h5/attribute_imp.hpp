@@ -294,6 +294,12 @@ namespace h5{
             //! \return H5Object instance
             //!
             object_imp parent() const;
+
+            //-----------------------------------------------------------------
+            //!
+            //! \brief close object
+            //! 
+            void close();
     };
 
 

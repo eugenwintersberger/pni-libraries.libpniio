@@ -56,11 +56,14 @@ void NXGroupTest::test_linking()
                          .create_group("data");
     _f.root().create_group("collection").create_group("detector");
     CPPUNIT_ASSERT_NO_THROW(pni::io::nx::link(g,_f.root(),"/collection/detector/data"));
-    CPPUNIT_ASSERT(_f.root().exists("/collection/detector/data"));
+    nxgroup o;
+    CPPUNIT_ASSERT_NO_THROW(o=get_object(_f.root(),nxpath::from_string("/collection/detector/data")));
+    CPPUNIT_ASSERT(o.is_valid());
+    CPPUNIT_ASSERT(o.name() == "data");
 
     nxgroup ref = _f.root().open("scan_1");
     CPPUNIT_ASSERT_NO_THROW(pni::io::nx::link(g,ref,"a_link"));
-    CPPUNIT_ASSERT(_f.root().exists("/scan_1/a_link"));
+    CPPUNIT_ASSERT_NO_THROW(get_object(_f.root(),nxpath::from_string("/scan_1/a_link")));
 
     //create some group in an external file
     nxfile file = nxfile::create_file("NXGroupTest2.h5",true,0);
@@ -70,7 +73,7 @@ void NXGroupTest::test_linking()
     g = _f.root().create_group("external");
     //pni::io::nx::link("NXGroupTest2.h5://test/data",g,"data");
     CPPUNIT_ASSERT_NO_THROW(pni::io::nx::link("NXGroupTest2.h5://test/data",g,"data"));
-    CPPUNIT_ASSERT(_f.root().exists("/external/data"));
+    CPPUNIT_ASSERT_NO_THROW(get_object(_f.root(),nxpath::from_string("/external/data")));
 }
 
 //------------------------------------------------------------------------------
@@ -143,16 +146,16 @@ void NXGroupTest::test_existance()
                   create_group("detector");
 
 	g1 = _f.root().open("scan_1");
-	CPPUNIT_ASSERT(g1.exists("instrument"));
-	CPPUNIT_ASSERT(g1.exists("/scan_2"));
-	CPPUNIT_ASSERT(!g1.exists("/instrument"));
+	CPPUNIT_ASSERT(g1.has_child("instrument"));
+	CPPUNIT_ASSERT(!g1.has_child("/scan_2"));
+	CPPUNIT_ASSERT(!g1.has_child("/instrument"));
 	g2 = _f.root().open("scan_2");
-	CPPUNIT_ASSERT(g2.exists("instrument/detector/"));
-	CPPUNIT_ASSERT(!g2.exists("/instrument/detector/data"));
+	CPPUNIT_ASSERT(nxgroup(g2["instrument"]).has_child("detector"));
+	CPPUNIT_ASSERT(!g2.has_child("/instrument/detector/data"));
 
-	CPPUNIT_ASSERT(_f.root().exists("scan_1"));
-	CPPUNIT_ASSERT(_f.root().exists("/scan_1/instrument"));
-	CPPUNIT_ASSERT(_f.root().exists("scan_2/instrument/detector"));
+	CPPUNIT_ASSERT(_f.root().has_child("scan_1"));
+	CPPUNIT_ASSERT(_f.root().has_child("scan_2"));
+	CPPUNIT_ASSERT(!_f.root().has_child("scan_2/instrument/detector"));
 }
 
 //------------------------------------------------------------------------------

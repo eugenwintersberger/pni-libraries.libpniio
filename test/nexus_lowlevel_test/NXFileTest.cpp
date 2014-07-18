@@ -38,7 +38,7 @@ void NXFileTest::tearDown() { }
 //------------------------------------------------------------------------------
 void NXFileTest::test_creation()
 {
-	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+	std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 	nxfile f;
 
 	//initially create the file
@@ -91,7 +91,7 @@ void NXFileTest::test_creation()
 //------------------------------------------------------------------------------
 void NXFileTest::test_open()
 {
-	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+	std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 	nxfile f;
 
     CPPUNIT_ASSERT_NO_THROW(f = nxfile::create_file("NXFileTest.h5",true,0));
@@ -112,18 +112,4 @@ void NXFileTest::test_open()
 	CPPUNIT_ASSERT_THROW(nxfile::open_file("blabla.h5",true),pni::io::nx::nxfile_error);
 
 }
-
-//-----------------------------------------------------------------------------
-void NXFileTest::test_inquery()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    nxfile f;
-
-    CPPUNIT_ASSERT_NO_THROW(f = nxfile::create_file("NXFileTest.h5",true,0));
-    CPPUNIT_ASSERT(f.path()=="NXFileTest.h5");
-    CPPUNIT_ASSERT(f.name()=="NXFileTest.h5");
-    CPPUNIT_ASSERT(f.base()=="");
-
-}
-
 

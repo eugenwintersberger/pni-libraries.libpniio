@@ -48,6 +48,7 @@ namespace nx{
             typedef pni::core::container_iterator<const manager_type> iterator;
             typedef typename OTYPE::imp_type imp_type;
         private:
+            typedef typename OTYPE::type_type type_imp;
             imp_type &_imp;
         public:
             nxattribute_manager(imp_type &imp):_imp(imp) {}
@@ -72,7 +73,12 @@ namespace nx{
                     > 
             attribute_type create(const string &n, const CTYPE &s,bool ov=true) const
             {
-                return attribute_type(_imp.template attr<T>(n,s,ov));
+                type_id_t tid = type_id_map<T>::type_id;
+
+                return attribute_type(_imp.attr(n,
+                                                tid,
+                                                type_imp::to_index_vector(s),
+                                                ov));
             }
             
             //-----------------------------------------------------------------

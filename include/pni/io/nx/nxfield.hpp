@@ -160,6 +160,7 @@ namespace nx{
     {
         public:
             typedef typename nximp_map<IMPID>::field_imp imp_type;
+            typedef typename nximp_map<IMPID>::type_imp  type_type;
             typedef nxfield<IMPID>              field_type;
             typedef typename nxobject_trait<IMPID>::attribute_type
                 attribute_type;
@@ -246,7 +247,7 @@ namespace nx{
                 //finally we read the data
                 try
                 {
-                    _imp.read( a.data());
+                    _imp.read(pni::core::type_id(a),a.data());
                 }
                 catch(nxfield_error &error)
                 {
@@ -289,7 +290,7 @@ namespace nx{
                 }
 
 
-                try { _imp.write(a.data()); }
+                try { _imp.write(pni::io::type_id(a),a.data()); }
                 catch(...)
                 {
                     throw nxfield_error(EXCEPTION_RECORD,
@@ -405,7 +406,7 @@ namespace nx{
             */
             template<typename CTYPE> CTYPE shape() const 
             { 
-                return _imp.template shape<CTYPE>(); 
+                return type_type::template from_index_vector<CTYPE>(_imp.shape()); 
             }
 
             //-----------------------------------------------------------------
@@ -456,7 +457,7 @@ namespace nx{
             {
                 try
                 {
-                    _imp.resize(s);
+                    _imp.resize(type_type::to_index_vector(s));
                 }
                 catch(shape_mismatch_error &e)
                 {
@@ -534,7 +535,7 @@ namespace nx{
 
                 try
                 {
-                    _imp.read(&value);
+                    _imp.read(type_id_map<T>::type_id,&value);
                 }
                 catch(...)
                 {
@@ -550,7 +551,7 @@ namespace nx{
             {
                 try
                 {
-                    _imp.read(values);
+                    _imp.read(type_id_map<T>::type_id,values);
                 }
                 catch(...)
                 {
@@ -644,7 +645,7 @@ namespace nx{
 
                 try
                 {
-                    _imp.write(&value);
+                    _imp.write(type_id_map<T>::type_id,&value);
                 }
                 catch(...)
                 {
@@ -661,7 +662,7 @@ namespace nx{
 
                 try
                 {
-                    _imp.write(value);
+                    _imp.write(type_id_map<T>::type_id,value);
                 }
                 catch(...)
                 {

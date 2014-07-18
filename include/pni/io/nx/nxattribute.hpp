@@ -60,6 +60,7 @@ namespace nx{
     {
         public:
             typedef typename nximp_map<IMPID>::attribute_imp   implementation_type;
+            typedef typename nximp_map<IMPID>::type_imp type_type;
             //! define the actual type of this object
             typedef nxattribute<IMPID>                attribute_type;
         private:
@@ -106,7 +107,7 @@ namespace nx{
                 check_equal_shape(a,*this,EXCEPTION_RECORD);
 
 
-                this->_imp.read(a.data());
+                this->_imp.read(pni::core::type_id(a),a.data());
             }
 
         public:
@@ -217,7 +218,7 @@ namespace nx{
                 static_assert(!std::is_pointer<T>::value,"no const pointer");
                 try
                 {
-                    this->_imp.write(data);
+                    this->_imp.write(type_id_map<T>::type_id,data);
                 }
                 catch(...)
                 {
@@ -248,7 +249,7 @@ namespace nx{
 
                 try
                 {
-                    this->_imp.write(&value);
+                    this->_imp.write(type_id_map<T>::type_id,&value);
                 }
                 catch(...)
                 {
@@ -274,7 +275,7 @@ namespace nx{
                 try
                 {
                     string s(value);
-                    this->write(s);
+                    this->write(type_id_t::STRING,s);
                 }
                 catch(shape_mismatch_error &error)
                 {
@@ -386,14 +387,14 @@ namespace nx{
             template<typename T> 
             void read(T &value) const
             {
-                _imp.read(&value);
+                _imp.read(type_id_map<T>::type_id,&value);
             }
 
             //---------------------------------------------------------------
             template<typename T>
             void read(T *value) const
             {
-                _imp.read(value);
+                _imp.read(type_id_map<T>::type_id,value);
             }
 
 
@@ -402,7 +403,7 @@ namespace nx{
             template<typename CTYPE> 
             CTYPE shape() const
             {
-                return _imp.template shape<CTYPE>();
+                return type_type::template from_index_vector<CTYPE>(_imp.shape());
             }
 
             //--------------------------------------------------------------
@@ -479,9 +480,9 @@ namespace nx{
                 typename nximp_map<IMPID>::object_imp p = _imp.parent();
 
                 if(p.nxobject_type() == nxobject_type::NXFIELD)
-                    return field_type(field_imp_type(p));
+                    return field_type(field_imp_type(std::move(p)));
                 else if(p.nxobject_type() == nxobject_type::NXGROUP)
-                    return group_type(group_imp_type(p));
+                    return group_type(group_imp_type(std::move(p)));
                 else
                     throw type_error(EXCEPTION_RECORD,
                              "Cannot convert parent type");

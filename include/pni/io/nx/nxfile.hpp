@@ -121,7 +121,7 @@ namespace nx{
             {
                 try
                 {
-                    return file_type(imp_type::open_file(n,ro));
+                    return file_type(imp_type::open(n,ro));
                 }
                 catch(...)
                 {
@@ -148,7 +148,7 @@ namespace nx{
 
                 try
                 {
-                    file = file_type(imp_type::create_file(n,ow,ssize));
+                    file = file_type(imp_type::create(n,ow,ssize));
                 }
                 catch(...)
                 {
@@ -202,19 +202,6 @@ namespace nx{
                 //nxobject<Imp>::close();
             }
 
-            //-----------------------------------------------------------------
-            /*!
-            \brief get number of open groups
-            \return number ofopen groups
-            */
-            size_t open_groups() const { return this->imp().open_groups(); }
-
-            //------------------------------------------------------------------
-            /*!
-            \brief get number of open fields
-            \return number of open fields
-            */
-            size_t open_fields() const { return this->imp().open_fields(); }
 
             //------------------------------------------------------------------
             /*!
@@ -229,7 +216,7 @@ namespace nx{
                 typedef typename nximp_map<IMPID>::group_imp group_imp_type;
                 typedef typename nxobject_trait<IMPID>::group_type group_type;
 
-                return group_type(group_imp_type(_imp.open("/")));
+                return group_type(group_imp_type(_imp.root()));
             }
 
             //----------------------------------------------------------------
@@ -237,15 +224,6 @@ namespace nx{
             {
                 return _imp.is_valid(); 
             }
-
-            //----------------------------------------------------------------
-            string path() const { return _imp.path(); }
-
-            //----------------------------------------------------------------
-            string base() const { return _imp.base(); }
-
-            //---------------------------------------------------------------
-            string name() const { return _imp.name(); }
 
     };
 

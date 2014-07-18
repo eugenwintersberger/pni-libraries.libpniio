@@ -27,13 +27,14 @@
 
 #include "nximp_code.hpp"
 
-#include "h5/H5AttributeObject.hpp"
-#include "h5/H5File.hpp"
-#include "h5/H5Group.hpp"
-#include "h5/H5Dataset.hpp"
-#include "h5/H5Filter.hpp"
-#include "h5/H5Attribute.hpp"
-#include "h5/H5DeflateFilter.hpp"
+#include "h5/object_imp.hpp"
+#include "h5/type_imp.hpp"
+#include "h5/file_imp.hpp"
+#include "h5/group_imp.hpp"
+#include "h5/field_imp.hpp"
+#include "h5/h5filter.hpp"
+#include "h5/attribute_imp.hpp"
+#include "h5/h5deflate_filter.hpp"
 
 namespace pni{
 namespace io{
@@ -54,13 +55,14 @@ namespace nx{
     //set implementation types for the HDF5 implementation
     template<> struct nximp_map<nximp_code::HDF5>
     {
-        typedef pni::io::nx::h5::H5AttributeObject  object_imp;
-        typedef pni::io::nx::h5::H5File             file_imp;
-        typedef pni::io::nx::h5::H5Group            group_imp;
-        typedef pni::io::nx::h5::H5Dataset          field_imp;
-        typedef pni::io::nx::h5::H5Filter           filter_imp;
-        typedef pni::io::nx::h5::H5Attribute        attribute_imp;
-        typedef pni::io::nx::h5::H5DeflateFilter    deflate_imp;
+        typedef pni::io::nx::h5::type_imp         type_imp;
+        typedef pni::io::nx::h5::object_imp       object_imp;
+        typedef pni::io::nx::h5::file_imp         file_imp;
+        typedef pni::io::nx::h5::group_imp        group_imp;
+        typedef pni::io::nx::h5::field_imp        field_imp;
+        typedef pni::io::nx::h5::h5filter         filter_imp;
+        typedef pni::io::nx::h5::attribute_imp    attribute_imp;
+        typedef pni::io::nx::h5::h5deflate_filter deflate_imp;
     };
     //! \endcond
 

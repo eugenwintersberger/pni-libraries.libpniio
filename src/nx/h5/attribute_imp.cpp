@@ -274,6 +274,12 @@ namespace h5{
             s[i] = string(str_data.data()+i*ssize,ssize);
 
     }
+
+    //-------------------------------------------------------------------------
+    void attribute_imp::close()
+    {
+        _object.close();
+    }
            
 
 //end of namespace

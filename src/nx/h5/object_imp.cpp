@@ -160,6 +160,11 @@ namespace h5{
 
         reset_id(); //in any case we have to reset the ID of the obejct
     }
+
+    pni::io::nx::nxobject_type object_imp::nxobject_type() const
+    {
+        return get_nexus_type(*this);
+    }
     
     //-------------------------------------------------------------------------
     const hid_t &object_imp::id() const noexcept 

@@ -53,42 +53,24 @@ namespace nx{
     //!
     template<typename IOT> void write_array(const IOT &obj,const array& a)
     {
-        if(a.type_id() == type_id_t::UINT8) 
-            obj.write((uint8*)a.data());
-        else if(a.type_id() == type_id_t::INT8)
-            obj.write((int8*)a.data());
+        type_id_t tid = a.type_id();
 
-        if(a.type_id() == type_id_t::UINT16) 
-            obj.write((uint16*)a.data());
-        else if(a.type_id() == type_id_t::INT16)
-            obj.write((int16*)a.data());
+        if(tid == type_id_t::UINT8)         obj.write(tid,a.data());
+        else if(tid == type_id_t::INT8)     obj.write(tid,a.data());
+        else if(tid == type_id_t::UINT16)   obj.write(tid,a.data());
+        else if(tid == type_id_t::INT16)    obj.write(tid,a.data());
+        else if(tid == type_id_t::UINT32)   obj.write(tid,a.data());
+        else if(tid == type_id_t::INT32)    obj.write(tid,a.data());
+        else if(tid == type_id_t::UINT64)   obj.write(tid,a.data());
+        else if(tid == type_id_t::INT64)    obj.write(tid,a.data());
+        else if(tid == type_id_t::FLOAT32)  obj.write(tid,a.data());
+        else if(tid == type_id_t::FLOAT64)  obj.write(tid,a.data());
+        else if(tid == type_id_t::FLOAT128) obj.write(tid,a.data());
+        else if(tid == type_id_t::STRING)   obj.write(tid,a.data());
 
-        if(a.type_id() == type_id_t::UINT32) 
-            obj.write((uint32*)a.data());
-        else if(a.type_id() == type_id_t::INT32)
-            obj.write((int32*)a.data());
-
-        if(a.type_id() == type_id_t::UINT64) 
-            obj.write((uint64*)a.data());
-        else if(a.type_id() == type_id_t::INT64)
-            obj.write((int64*)a.data());
-
-        else if(a.type_id() == type_id_t::FLOAT32)
-            obj.write((float32*)a.data());
-        else if(a.type_id() == type_id_t::FLOAT64)
-            obj.write((float64*)a.data());
-        else if(a.type_id() == type_id_t::FLOAT128)
-            obj.write((float128*)a.data());
-
-        else if(a.type_id() == type_id_t::STRING)
-            obj.write((string*)a.data());
-
-        else if(a.type_id() == type_id_t::COMPLEX32)
-            obj.write((complex32*)a.data());
-        else if(a.type_id() == type_id_t::COMPLEX64)
-            obj.write((complex64*)a.data());
-        else if(a.type_id() == type_id_t::COMPLEX128)
-            obj.write((complex128*)a.data());
+        else if(tid == type_id_t::COMPLEX32)  obj.write(tid,a.data());
+        else if(tid == type_id_t::COMPLEX64)  obj.write(tid,a.data());
+        else if(tid == type_id_t::COMPLEX128) obj.write(tid,a.data());
         else
             throw type_error(EXCEPTION_RECORD,
                     "Unsupported data type!");
@@ -110,42 +92,25 @@ namespace nx{
     //!
     template<typename IOT> void read_array(const IOT &obj,array &a)
     {
-        if(a.type_id() == type_id_t::UINT8) 
-            obj.read((uint8*)(a.data()));
-        else if(a.type_id() == type_id_t::INT8)
-            obj.read((int8*)a.data());
+        type_id_t tid = a.type_id();
 
-        if(a.type_id() == type_id_t::UINT16) 
-            obj.read((uint16*)a.data());
-        else if(a.type_id() == type_id_t::INT16)
-            obj.read((int16*)a.data());
+        if(tid == type_id_t::UINT8)       obj.read(tid,a.data());
+        else if(tid == type_id_t::INT8)   obj.read(tid,a.data());
+        else if(tid == type_id_t::UINT16) obj.read(tid,a.data());
+        else if(tid == type_id_t::INT16)  obj.read(tid,a.data());
+        else if(tid == type_id_t::UINT32) obj.read(tid,a.data());
+        else if(tid == type_id_t::INT32)  obj.read(tid,a.data());
+        else if(tid == type_id_t::UINT64) obj.read(tid,a.data());
+        else if(tid == type_id_t::INT64)  obj.read(tid,a.data());
 
-        if(a.type_id() == type_id_t::UINT32) 
-            obj.read((uint32*)a.data());
-        else if(a.type_id() == type_id_t::INT32)
-            obj.read((int32*)a.data());
+        else if(tid == type_id_t::FLOAT32)  obj.read(tid,a.data());
+        else if(tid == type_id_t::FLOAT64)  obj.read(tid,a.data());
+        else if(tid == type_id_t::FLOAT128) obj.read(tid,a.data());
+        else if(tid == type_id_t::STRING)   obj.read(tid,a.data());
 
-        if(a.type_id() == type_id_t::UINT64) 
-            obj.read((uint64*)a.data());
-        else if(a.type_id() == type_id_t::INT64)
-            obj.read((int64*)a.data());
-
-        else if(a.type_id() == type_id_t::FLOAT32)
-            obj.read((float32*)a.data());
-        else if(a.type_id() == type_id_t::FLOAT64)
-            obj.read((float64*)a.data());
-        else if(a.type_id() == type_id_t::FLOAT128)
-            obj.read((float128*)a.data());
-
-        else if(a.type_id() == type_id_t::STRING)
-            obj.read((string*)a.data());
-
-        else if(a.type_id() == type_id_t::COMPLEX32)
-            obj.read((complex32*)a.data());
-        else if(a.type_id() == type_id_t::COMPLEX64)
-            obj.read((complex64*)a.data());
-        else if(a.type_id() == type_id_t::COMPLEX128)
-            obj.read((complex128*)a.data());
+        else if(tid == type_id_t::COMPLEX32)  obj.read(tid,a.data());
+        else if(tid == type_id_t::COMPLEX64)  obj.read(tid,a.data());
+        else if(tid == type_id_t::COMPLEX128) obj.read(tid,a.data());
         else
             throw type_error(EXCEPTION_RECORD,
                     "Unsupported data type!");

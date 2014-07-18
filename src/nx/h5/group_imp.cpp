@@ -131,7 +131,9 @@ namespace h5{
     //-------------------------------------------------------------------------
     bool group_imp::has_child(const string &name) const
     {
-        htri_t result = H5Lexists(_object.id(),name.c_str(),H5P_DEFAULT);
+        object_imp plist(H5Pcreate(H5P_LINK_ACCESS));
+        H5Pset_nlinks(plist.id(),1);
+        htri_t result = H5Lexists(_object.id(),name.c_str(),plist.id());
         if(result>0)
             return true;
         else if(result == 0)

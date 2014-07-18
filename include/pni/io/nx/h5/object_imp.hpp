@@ -30,6 +30,7 @@ extern "C"{
 #include <pni/core/types.hpp>
 #include "../../exceptions.hpp"
 #include "h5object_types.hpp"
+#include "../nxobject_type.hpp"
 
 namespace pni{
 namespace io{
@@ -224,6 +225,12 @@ namespace h5{
             //! \return HDF5 ID
             //!
             const hid_t &id() const noexcept;
+
+            //-----------------------------------------------------------------
+            //!
+            //! \brief get nexus object type
+            //!
+            pni::io::nx::nxobject_type nxobject_type() const; 
     };
 
     //===================equality operators for H5Object instances=============
