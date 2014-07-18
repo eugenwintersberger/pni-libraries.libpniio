@@ -27,11 +27,14 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
-    
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
     void h5filter::setup(const object_imp &plist) const
     {
         //we do nothing here - a zero filter
     }
+#pragma GCC diagnostic pop
 
 //end of namespace
 }

@@ -173,6 +173,6 @@ void create_attribute_test::test_errors()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject object;
 
-    CPPUNIT_ASSERT_THROW(create_attribute<string>(object,"test"),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(create_attribute<string>(object,"test"),pni::io::io_error);
 }
 

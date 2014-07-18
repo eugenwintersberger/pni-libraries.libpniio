@@ -146,6 +146,8 @@ namespace h5{
     
     //-------------------------------------------------------------------------
     //implementation of write from String
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
     void attribute_imp::write(type_id_t tid,const string *s) const
     {
         std::vector<const char*> ptrs(size());
@@ -160,6 +162,7 @@ namespace h5{
                   "Error writing attribute ["+name()+"]!\n\n"
                   +get_h5_error_string());
     }
+#pragma GCC diagnostic pop
 
     //-------------------------------------------------------------------------
     void attribute_imp::write(type_id_t tid,const void *ptr) const
@@ -217,6 +220,8 @@ namespace h5{
     }
     //-------------------------------------------------------------------------
     //implementation to read to string
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
     void attribute_imp::read(type_id_t tid,string *s) const
     {
         //if the type is not a variable length string memory must be allocated
@@ -227,6 +232,7 @@ namespace h5{
             _read_vl_strings(s);
 
     }
+#pragma GCC diagnostic pop
 
     //-------------------------------------------------------------------------
     void attribute_imp::_read_vl_strings(string *s) const

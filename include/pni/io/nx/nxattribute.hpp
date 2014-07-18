@@ -275,7 +275,7 @@ namespace nx{
                 try
                 {
                     string s(value);
-                    this->write(type_id_t::STRING,s);
+                    this->write(s);
                 }
                 catch(shape_mismatch_error &error)
                 {

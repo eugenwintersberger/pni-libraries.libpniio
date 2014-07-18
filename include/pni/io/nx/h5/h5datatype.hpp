@@ -130,6 +130,9 @@ namespace h5{
     //! \brief get type code
     //!
     //! Obtain the type code of a datatype object
+    //! \throws type_error if the passed datatype is not known
+    //! \param o instance of an HDF5 datat type
+    //! \return type_id_t value for the data type
     //!
     type_id_t type_id(const h5datatype &o);
 

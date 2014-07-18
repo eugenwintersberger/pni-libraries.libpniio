@@ -78,13 +78,6 @@ void get_name_test::test_attribute()
     CPPUNIT_ASSERT(get_name(attribute) == "NX_class");
 }
 
-//----------------------------------------------------------------------------
-void get_name_test::test_file()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT(get_name(file)=="get_name_test.nx");
-}
 //-----------------------------------------------------------------------------
 void get_name_test::test_nxobject_group()
 {

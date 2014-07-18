@@ -204,7 +204,8 @@ namespace h5{
     {
         for(const auto &p: __id_2_type_map)
             if(p.second == o) return p.first;
-    
+        
+        throw type_error(EXCEPTION_RECORD,"HDF5 type is unkown!");
     }
 
     

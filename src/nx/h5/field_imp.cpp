@@ -154,6 +154,8 @@ namespace h5{
     }
 
     //------------------------------------------------------------------
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
     void field_imp::write(type_id_t tid,const string *sptr) const
     {
         typedef const char * char_ptr_t;
@@ -178,6 +180,7 @@ namespace h5{
                     "Error writing data to dataset!\n\n"+
                     get_h5_error_string());
     }
+#pragma GCC diagnostic pop
 
     //------------------------------------------------------------------------
     void field_imp::resize(const type_imp::index_vector_type &s)
@@ -223,6 +226,8 @@ namespace h5{
         return _memory_space.rank(); 
     }
     //-----------------------------------------------------------------
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
     void field_imp::read(type_id_t tid,string *sptr) const
     {
         //select the proper memory data type
@@ -233,6 +238,7 @@ namespace h5{
         else
             _read_static_strings(sptr,mem_type);
     }
+#pragma GCC diagnostic pop
 
     //-------------------------------------------------------------------------
     void field_imp::_read_vl_strings(string *s,h5datatype &stype) const
