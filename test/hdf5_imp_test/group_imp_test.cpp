@@ -22,11 +22,13 @@
 //
 #include <vector>
 #include <pni/core/arrays.hpp>
+#include <pni/io/exceptions.hpp>
 #include "group_imp_test.hpp"
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(group_imp_test);
 
+using pni::io::object_error;
 
 //-----------------------------------------------------------------------------
 void group_imp_test::setUp()

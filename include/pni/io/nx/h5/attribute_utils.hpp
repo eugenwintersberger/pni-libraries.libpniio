@@ -24,15 +24,7 @@
 #pragma once
 #include <vector>
 
-#include <pni/core/error.hpp>
 #include <pni/core/types.hpp>
-
-#include "object_imp.hpp"
-#include "h5dataspace.hpp"
-#include "h5datatype.hpp"
-#include "../../exceptions.hpp"
-#include "hdf5_utilities.hpp"
-
 
 namespace pni{
 namespace io{
@@ -40,10 +32,12 @@ namespace nx{
 namespace h5{
     using namespace pni::core;
     //avoid namespace collisions with std
-    using pni::core::exception;
     using pni::core::string;
-    using pni::io::object_error;
-    using pni::core::key_error;
+
+    //forward declaration of object_imp
+    class object_imp;
+    class h5dataspace;
+    class h5datatype;
 
     //------------------------------------------------------------------------
     //! 
@@ -53,11 +47,14 @@ namespace h5{
     //! Checks if an attribute exists and returns true if it does.
     //! Otherwise false will be returned.
     //!
-    //! \throws pni::io::object_error in case of errors
-    //! \param n name of the attribute to check for
+    //! \throws invalid_object_error if object not valid
+    //! \throws object_error in case of any other errors
+    //!
+    //! \param parent the parent object where we look for the attribute
+    //! \param name the name of the attribute to look for
     //! \return true if exists, false otherwise
     //!
-    bool has_attribute(const object_imp &parent,const string &n);
+    bool has_attribute(const object_imp &parent,const string &name);
             
     //------------------------------------------------------------------------
     //! 
@@ -66,8 +63,11 @@ namespace h5{
     //!
     //! Deletes an attribute from the object. 
     //! 
-    //! \throws pni::io::object_error in case of errors 
-    //! \param n name of the attribute
+    //! \throws invalid_object_error if the object is not a valid HDF5 object
+    //! \throws object_error in case of all other errors 
+    //!
+    //! \param parent reference to the parent object
+    //! \param name the name of the attribute to delete
     //!
     void delete_attribute(const object_imp &parent,const string &name);
 
@@ -78,7 +78,9 @@ namespace h5{
     //! 
     //! Create a new attribute attached to a parent. 
     //!
-    //! \throws pni::io::object_error in case of any errors
+    //! \throws invalid_objet_error if the parent object is not valid
+    //! \throws object_error in case of any errors
+    //! 
     //! \param parent the parent object for the attribute
     //! \param name the name for the attribute
     //! \param type an HDF5 data type
@@ -87,10 +89,10 @@ namespace h5{
     //! \return the attribute as h5object
     //!
     object_imp create_attribute(const object_imp &parent,
-                              const string &name,
-                              const h5datatype &type,
-                              const h5dataspace &space,
-                              bool overwrite);
+                                const string &name,
+                                const h5datatype &type,
+                                const h5dataspace &space,
+                                bool overwrite);
                      
     //------------------------------------------------------------------------
     //!
@@ -101,9 +103,10 @@ namespace h5{
     //! object does not exist key_error is thrown. In case of any other error 
     //! oject_error;
     //!
-    //! \throws pni::core::key_error if attribute does not exist 
-    //! \throws pni::io::object_error in case of other errors
-    //! exist or creation error
+    //! \throws invalid_object_error if the parent object is not valid
+    //! \throws key_error if attribute does not exist 
+    //! \throws object_error in case of other errors
+    //!
     //! \param n name of the attribute
     //! \return attribute object
     //!
@@ -116,9 +119,14 @@ namespace h5{
     //! \brief get number of attributes
     //!
     //! Method returns the number of attributes attached to this object.
+    //!
+    //! \throws invalid_object_error if the parent is not valid
+    //! \throws object_error in case of any other error
+    //! 
+    //! \param parent the parent object with attributes
     //! \return number of attributes
     //!
-    size_t get_number_of_attributes(const object_imp &parent) noexcept;
+    size_t get_number_of_attributes(const object_imp &parent) ;
 
     //------------------------------------------------------------------------
     //!
@@ -128,8 +136,12 @@ namespace h5{
     //! Opens an attribute reference by index i. If i exceeds the number of 
     //! attributes attached to this object an exception will be thrown.
     //!
-    //! \throws pni::core::index_error if i exceeds 
-    //! \throws pni::io::object_error in case of any other error
+    //! \throws invalid_object_error if parent object is not valid
+    //! \throws index_error if i exceeds the total number of attributes attached
+    //! to the parent object
+    //! \throws object_error in case of any other error
+    //! 
+    //! \param parent the parent object from which to retrieve the attribute
     //! \param i index of the attribute
     //! \returns instance of H5Attribute
     //!
