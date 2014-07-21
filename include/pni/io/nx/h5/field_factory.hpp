@@ -131,6 +131,14 @@ namespace h5{
             //! or their size does not match
             //! \throws object_error in case of any other error
             //! 
+            //! \param parent the parent object for the field
+            //! \param name the name of the field
+            //! \param tid the type id for the field data
+            //! \param shape the number of elements along each dimension
+            //! \param chunk the chunk shape for the field
+            //! \param filter a filter that might be used 
+            //! \return field implemenation instance
+            //!
             static field_imp create(const group_imp &parent,
                                     const string &name,
                                     type_id_t tid,
