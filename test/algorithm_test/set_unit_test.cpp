@@ -54,7 +54,7 @@ void set_unit_test::test_group()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     h5::nxobject object = group;
-    CPPUNIT_ASSERT_THROW(set_unit(object,"m"),nxgroup_error);
+    CPPUNIT_ASSERT_THROW(set_unit(object,"m"),type_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -79,7 +79,7 @@ void set_unit_test::test_attribute()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = group.attributes["NX_class"];
-    CPPUNIT_ASSERT_THROW(set_unit(object,"m"),nxattribute_error);
+    CPPUNIT_ASSERT_THROW(set_unit(object,"m"),type_error);
    
 }
 

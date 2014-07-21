@@ -65,7 +65,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
-                throw nxgroup_error(EXCEPTION_RECORD,
+                throw type_error(EXCEPTION_RECORD,
                         "A group does not have a type!");
                 return type_id_t::NONE;
             }

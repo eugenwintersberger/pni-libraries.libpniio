@@ -234,7 +234,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
-                throw nxfield_error(EXCEPTION_RECORD,
+                throw type_error(EXCEPTION_RECORD,
                         "Cannot create a group below a field!");
                 return result_type();
             }
@@ -255,7 +255,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
-                throw nxattribute_error(EXCEPTION_RECORD,
+                throw type_error(EXCEPTION_RECORD,
                         "Cannot create a group below an attribute!");
                 return result_type();
             }

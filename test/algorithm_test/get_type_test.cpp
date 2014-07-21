@@ -59,7 +59,7 @@ void get_type_test::test_group()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     object_type object = root;
-    CPPUNIT_ASSERT_THROW(get_type(object),nxgroup_error);
+    CPPUNIT_ASSERT_THROW(get_type(object),type_error);
 
 }
 

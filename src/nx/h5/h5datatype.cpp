@@ -146,9 +146,18 @@ namespace h5{
     //------------------------------------------------------------------------
     const h5datatype &get_type(type_id_t id)
     {
-        return __id_2_type_map.at(id);
+        try
+        {
+            return __id_2_type_map.at(id);
+        }
+        catch(std::out_of_range &error)
+        {
+            throw type_error(EXCEPTION_RECORD,
+                    "PNI type does not have a corresponding HDF5 data type!");
+        }
     }
 
+    //-------------------------------------------------------------------------
     h5datatype make_type(type_id_t id)
     {
         return get_type(id);

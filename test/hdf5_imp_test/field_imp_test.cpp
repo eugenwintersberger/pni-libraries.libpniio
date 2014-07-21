@@ -22,10 +22,13 @@
 //
 #include "field_imp_test.hpp"
 #include <boost/current_function.hpp>
+#include <pni/io/exceptions.hpp>
 #include <pni/io/nx/h5/h5deflate_filter.hpp>
 #include <pni/io/nx/h5/type_imp.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION(field_imp_test);
+
+using pni::io::object_error;
 
 
 void field_imp_test::setUp()
@@ -219,11 +222,13 @@ void field_imp_test::test_string_array_data()
     swrite(0,0) = "hello"; swrite(0,1) = "world"; swrite(0,2) = "this";
     swrite(1,0) = "is"; swrite(1,1) = "a string"; swrite(1,2) = "array";
     
-    CPPUNIT_ASSERT_NO_THROW(dset.write(type_id_t::STRING,swrite.data()));
+    CPPUNIT_ASSERT_NO_THROW(dset.write(type_id_t::STRING,
+                            static_cast<void*>(swrite.data())));
 
     auto sread = dynamic_array<string>::create(s);
 
-    CPPUNIT_ASSERT_NO_THROW(dset.read(type_id_t::STRING,sread.data()));
+    CPPUNIT_ASSERT_NO_THROW(dset.read(type_id_t::STRING,
+                                      static_cast<void*>(sread.data())));
 
     std::equal(swrite.begin(),swrite.end(),sread.begin());
     

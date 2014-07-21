@@ -92,8 +92,8 @@ void get_children_test::test_from_object()
                        (get_name(child) == "control"));
 
     g = h5::nxobject(field);
-    CPPUNIT_ASSERT_THROW(get_children(g,c),nxfield_error);
+    CPPUNIT_ASSERT_THROW(get_children(g,c),type_error);
     g = h5::nxobject(attribute);
-    CPPUNIT_ASSERT_THROW(get_children(g,c),nxattribute_error);
+    CPPUNIT_ASSERT_THROW(get_children(g,c),type_error);
 }
 

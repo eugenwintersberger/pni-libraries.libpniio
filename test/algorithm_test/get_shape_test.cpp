@@ -59,7 +59,7 @@ void get_shape_test::test_group()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     h5::nxobject object = root;
-    CPPUNIT_ASSERT_THROW(get_shape<shape_t>(object),nxgroup_error);
+    CPPUNIT_ASSERT_THROW(get_shape<shape_t>(object),type_error);
 }
 
 //-----------------------------------------------------------------------------

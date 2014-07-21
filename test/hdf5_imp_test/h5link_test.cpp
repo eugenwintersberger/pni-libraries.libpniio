@@ -26,6 +26,7 @@
 #include <boost/current_function.hpp>
 #include "h5link_test.hpp"
 #include <pni/io/nx/algorithms.hpp>
+#include <pni/io/nx/nxexceptions.hpp>
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(h5link_test);

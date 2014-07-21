@@ -21,15 +21,26 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include <boost/current_function.hpp>
+#include <vector>
+#include <sstream>
+
+#include <pni/core/arrays.hpp>
+#include <pni/core/error.hpp>
 
 #include <pni/io/nx/h5/field_imp.hpp>
 #include <pni/io/nx/h5/field_factory.hpp>
+#include <pni/io/nx/h5/hdf5_utilities.hpp>
+#include <pni/io/nx/h5/attribute_utils.hpp>
+#include <pni/io/nx/h5/string_utils.hpp>
+#include <pni/io/nx/h5/h5_error_stack.hpp>
 
 namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
+    using pni::core::exception;
+    using pni::core::shape_mismatch_error;
+    using pni::core::string;
 
     //============implementation of private methods====================
     void field_imp::_update()
@@ -142,8 +153,7 @@ namespace h5{
                   b.begin());
         b[e] += n;
 
-        herr_t err = H5Dset_extent(_object.id(),b.data());
-        if(err < 0)
+        if(H5Dset_extent(_object.id(),b.data())<0)
             throw object_error(EXCEPTION_RECORD, 
                   "Grow of dataset ["+get_path(_object)
                   +"] failed!\n\n"+get_h5_error_string());
@@ -153,35 +163,6 @@ namespace h5{
         _memory_space = _file_space;
     }
 
-    //------------------------------------------------------------------
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-    void field_imp::write(type_id_t tid,const string *sptr) const
-    {
-        typedef const char * char_ptr_t;
-        //select the proper memory data type
-        
-        h5datatype mem_type(object_imp(H5Dget_type(_object.id())));
-        char_ptr_t *ptr = new char_ptr_t[size()];
-        for(size_t i=0;i<size();i++)
-            ptr[i] = sptr[i].c_str();
-
-        //write data to disk
-        herr_t err = H5Dwrite(_object.id(),
-                              mem_type.object().id(),
-                              _memory_space.object().id(),
-                              _file_space.object().id(),
-                              H5P_DEFAULT,
-                              (const void *)ptr);
-
-        delete [] ptr; //free memory
-        if(err<0)
-            throw io_error(EXCEPTION_RECORD, 
-                    "Error writing data to dataset!\n\n"+
-                    get_h5_error_string());
-    }
-#pragma GCC diagnostic pop
-
     //------------------------------------------------------------------------
     void field_imp::resize(const type_imp::index_vector_type &s)
     {
@@ -189,8 +170,7 @@ namespace h5{
             throw shape_mismatch_error(EXCEPTION_RECORD,
                   "New shape does not have the same rank!");
 
-        herr_t err = H5Dset_extent(_object.id(),s.data());
-        if(err < 0)
+        if(H5Dset_extent(_object.id(),s.data())<0)
             throw object_error(EXCEPTION_RECORD, 
                  "Resizing of dataset ["+get_path(_object)
                  +"] failed!\n\n"+ get_h5_error_string());
@@ -225,91 +205,113 @@ namespace h5{
     { 
         return _memory_space.rank(); 
     }
-    //-----------------------------------------------------------------
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-    void field_imp::read(type_id_t tid,string *sptr) const
+
+    //------------------------------------------------------------------------
+    void field_imp::_read_data(const h5datatype &memtype,
+                               const h5dataspace &memspace,
+                               const h5dataspace &filespace,
+                               const object_imp &xfer_list,
+                               void *ptr) const
     {
-        //select the proper memory data type
-        h5datatype mem_type(object_imp(H5Dget_type(_object.id())));
-        
-        if(H5Tis_variable_str(mem_type.object().id()))
-            _read_vl_strings(sptr,mem_type);
+        if(H5Dread(_object.id(),memtype.object().id(),
+                             memspace.object().id(),filespace.object().id(),
+                             xfer_list.id(),ptr)<0)
+        {
+            io_error error(EXCEPTION_RECORD, 
+                    "Error reading data to dataset ["
+                    +get_path(_object)+"]!\n\n"+
+                    get_h5_error_string());
+            throw error;
+        }
+    }
+    
+    //------------------------------------------------------------------------
+    void field_imp::read(type_id_t tid,void *ptr) const
+    {
+        if(!is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Cannot read data from invalid object!");
+
+        if((tid==type_id_t::STRING) && is_vl_string(_type))
+        {
+            char_ptr_vector_type ptrs(size());
+
+            //need here a more general guard for HDF5 objects
+            object_imp xfer_plist(H5Pcreate(H5P_DATASET_XFER));
+            _read_data(_type,_memory_space,_file_space,xfer_plist,
+                       static_cast<void*>(ptrs.data()));
+       
+            copy_from_vector(ptrs,static_cast<string*>(ptr));
+            H5Dvlen_reclaim(_type.object().id(),
+                            _memory_space.object().id(),
+                            xfer_plist.id(),
+                            ptrs.data());
+        }
+        else if((tid==type_id_t::STRING) && is_static_string(_type))
+        {
+            char_vector_type ptrs(static_string_size(_type)*size());
+
+            _read_data(_type,_memory_space,_file_space,
+                       object_imp(H5Pcreate(H5P_DATASET_XFER)),
+                       static_cast<void*>(ptrs.data()));
+
+            copy_from_vector(ptrs,size(),static_string_size(_type),
+                             static_cast<string *>(ptr));
+        }
         else
-            _read_static_strings(sptr,mem_type);
-    }
-#pragma GCC diagnostic pop
+        {
+            //select the proper memory data type
+            const h5datatype &mem_type = get_type(tid);
 
-    //-------------------------------------------------------------------------
-    void field_imp::_read_vl_strings(string *s,h5datatype &stype) const
+            _read_data(mem_type,_memory_space,_file_space,
+                       object_imp(H5Pcreate(H5P_DATASET_XFER)),
+                       ptr);
+        }
+    }
+
+    //------------------------------------------------------------------------
+    void field_imp::write(type_id_t tid,const void *ptr) const
     {
-        std::vector<char *> ptrs(size());
+        if(!is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Cannot write data to invalid object!");
 
-        //need here a more general guard for HDF5 objects
-        object_imp xfer_plist(H5Pcreate(H5P_DATASET_XFER));
-
-        //read data from disk
-        herr_t err = H5Dread(_object.id(),
-                             stype.object().id(),
-                             _memory_space.object().id(),
-                             _file_space.object().id(),
-                             xfer_plist.id(),
-                             (void *)ptrs.data());
-        if(err<0)
+        if(tid == type_id_t::STRING)
         {
-            io_error error(EXCEPTION_RECORD, 
-                    "Error reading data to dataset ["
-                    +get_path(_object)+"]!\n\n"+
-                    get_h5_error_string());
-            throw error;
-        }
+            auto *sptr = static_cast<const string*>(ptr);
+            char_const_ptr_vector_type data(size());
+            
+            h5datatype mem_type(object_imp(H5Dget_type(_object.id())));
 
-        for(size_t i=0;i<size();i++)
+            size_t index=0;
+            for(auto &v: data) v = sptr[index++].c_str();
+
+            _write_data(mem_type,_memory_space,_file_space,
+                        static_cast<const void*>(data.data()));
+        }
+        else
         {
-            try
-            {
-                s[i] = string(ptrs[i]);
-            }
-            catch(...)
-            {
-                s[i] = "";
-            }
-        }
+            //select the proper memory data type
+            const h5datatype &mem_type = get_type(tid);
 
-        H5Dvlen_reclaim(stype.object().id(),
-                        _memory_space.object().id(),
-                        xfer_plist.id(),
-                        ptrs.data());
+            _write_data(mem_type,_memory_space,_file_space,ptr);
+        }
     }
 
-    //-------------------------------------------------------------------------
-    void field_imp::_read_static_strings(string *s,h5datatype &stype) const
+    //------------------------------------------------------------------------
+    void field_imp::_write_data(const h5datatype &memtype,
+                                const h5dataspace &memspace,
+                                const h5dataspace &filespace,
+                                const void *ptr) const
     {
-        size_t strsize = H5Tget_size(stype.object().id());
-
-        std::vector<char> ptrs(strsize*size());
-
-        //read data from disk
-        herr_t err = H5Dread(_object.id(),
-                             stype.object().id(),
-                             _memory_space.object().id(),
-                             _file_space.object().id(),
-                              H5P_DEFAULT,
-                              (void *)ptrs.data());
-        if(err<0)
-        {
-            io_error error(EXCEPTION_RECORD, 
-                    "Error reading data to dataset ["
-                    +get_path(_object)+"]!\n\n"+
-                    get_h5_error_string());
-            throw error;
-        }
-
-        for(size_t i=0;i<size();i++)
-            s[i] = string(ptrs.data()+i*strsize,strsize);
+        //write data to disk
+        if(H5Dwrite(_object.id(),memtype.object().id(),memspace.object().id(),
+                    filespace.object().id(),H5P_DEFAULT,ptr)<0)
+            throw io_error(EXCEPTION_RECORD, 
+                "Error writing data to dataset ["
+                +get_path(_object)+"]!\n\n"+
+                get_h5_error_string());
     }
-
-
     //-------------------------------------------------------------------------
     void field_imp::close() 
     {
@@ -340,7 +342,10 @@ namespace h5{
     //------------------------------------------------------------------------
     bool field_imp::is_valid() const
     {
-        return _object.is_valid();
+        return _object.is_valid() && 
+               _file_space.object().is_valid() && 
+               _memory_space.object().is_valid() && 
+               _type.object().is_valid();
     }
 
     //------------------------------------------------------------------------
@@ -396,7 +401,7 @@ namespace h5{
                 H5S_SELECT_SET,offset.data(),stride.data(),count.data(),
                 nullptr);
         if(err<0)
-            throw pni::io::nx::nxfield_error(EXCEPTION_RECORD,
+            throw object_error(EXCEPTION_RECORD,
                     "Error applying selection to dataset!\n\n"+
                     get_h5_error_string());
 
@@ -441,45 +446,6 @@ namespace h5{
                                               overwrite));
     }
     
-    //------------------------------------------------------------------------
-    void field_imp::read(type_id_t tid,void *ptr) const
-    {
-        //select the proper memory data type
-        const h5datatype &mem_type = get_type(tid);
-
-        //write data to disk
-        herr_t err = H5Dread(_object.id(),
-                             mem_type.object().id(),
-                             _memory_space.object().id(),
-                             _file_space.object().id(),
-                              H5P_DEFAULT,
-                              ptr);
-        if(err<0)
-            throw io_error(EXCEPTION_RECORD, 
-                  "Error writing data to dataset ["
-                  +get_path(_object)+"]!\n\n"
-                  +get_h5_error_string());
-    }
-
-    //------------------------------------------------------------------------
-    void field_imp::write(type_id_t tid,const void *ptr) const
-    {
-        //select the proper memory data type
-        const h5datatype &mem_type = get_type(tid);
-
-        //write data to disk
-        herr_t err = H5Dwrite(_object.id(),
-                              mem_type.object().id(),
-                              _memory_space.object().id(),
-                              _file_space.object().id(),
-                              H5P_DEFAULT,
-                              ptr);
-        if(err<0)
-            throw io_error(EXCEPTION_RECORD, 
-                "Error writing data to dataset ["
-                +get_path(_object)+"]!\n\n"+
-                get_h5_error_string());
-    }
 //end of namespace
 }
 }

@@ -94,8 +94,8 @@ void create_group_test::test_field()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject object = field;
 
-    CPPUNIT_ASSERT_THROW(create_group(object,"g1","NXlog"),nxgroup_error);
-    CPPUNIT_ASSERT_THROW(create_group(object,"g2","NXlog"),nxgroup_error);
+    CPPUNIT_ASSERT_THROW(create_group(object,"g1","NXlog"),type_error);
+    CPPUNIT_ASSERT_THROW(create_group(object,"g2","NXlog"),type_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -104,7 +104,7 @@ void create_group_test::test_attribute()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = field.attributes["temp"];
-    CPPUNIT_ASSERT_THROW(create_group(object,"g1","NXlog"),nxgroup_error);
-    CPPUNIT_ASSERT_THROW(create_group(object,"g2","NXlog"),nxgroup_error);
+    CPPUNIT_ASSERT_THROW(create_group(object,"g1","NXlog"),type_error);
+    CPPUNIT_ASSERT_THROW(create_group(object,"g2","NXlog"),type_error);
 }
 

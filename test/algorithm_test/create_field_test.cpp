@@ -137,7 +137,7 @@ void create_field_test::test_field()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject object = field;
 
-    CPPUNIT_ASSERT_THROW(create_field<float32>(object,"g1"),nxfield_error);
+    CPPUNIT_ASSERT_THROW(create_field<float32>(object,"g1"),type_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -146,6 +146,6 @@ void create_field_test::test_attribute()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = group.attributes["NX_class"];
-    CPPUNIT_ASSERT_THROW(create_field<float32>(object,"g1"),nxattribute_error);
+    CPPUNIT_ASSERT_THROW(create_field<float32>(object,"g1"),type_error);
 }
 

@@ -63,7 +63,7 @@ void get_class_test::test_field()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     object_type object = field;
-    CPPUNIT_ASSERT_THROW(get_class(object),nxfield_error);
+    CPPUNIT_ASSERT_THROW(get_class(object),type_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ void get_class_test::test_attribute()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     object_type object = group.attributes["NX_class"];
-    CPPUNIT_ASSERT_THROW(get_class(object),nxattribute_error);
+    CPPUNIT_ASSERT_THROW(get_class(object),type_error);
    
 }
 

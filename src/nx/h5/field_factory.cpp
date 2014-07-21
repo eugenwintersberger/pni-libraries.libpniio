@@ -27,6 +27,7 @@
 #include <pni/io/nx/h5/field_imp.hpp>
 #include <pni/io/nx/h5/h5datatype.hpp>
 #include <pni/io/nx/h5/h5dataspace.hpp>
+#include <pni/io/nx/h5/h5_error_stack.hpp>
 
 namespace pni{
 namespace io{

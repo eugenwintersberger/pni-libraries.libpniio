@@ -50,6 +50,8 @@ namespace h5{
     //! 
     typedef std::vector<char*> char_ptr_vector_type;
 
+    typedef std::vector<const char*> char_const_ptr_vector_type;
+
     void copy_from_vector(const char_vector_type &vector,size_t nstrs,size_t strsize,
                           string *strings);
 

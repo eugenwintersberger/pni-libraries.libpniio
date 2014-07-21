@@ -72,17 +72,7 @@ namespace nx{
             //!
             result_type operator()(const group_type &g) const
             {
-                try
-                {
-                    g.attributes.template create<string>("NX_class",true).write(_class);
-                }
-                catch(...)
-                {
-                    throw nxgroup_error(EXCEPTION_RECORD,
-                            "Error writing NX_class attribute to group "
-                            +get_path(g)+"!");
-                }
-
+                g.attributes.template create<string>("NX_class",true).write(_class);
             }
 
             //-----------------------------------------------------------------
@@ -101,8 +91,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
-                throw nxfield_error(EXCEPTION_RECORD,
-                        "Fields do not have a class!");
+                throw type_error(EXCEPTION_RECORD,"Fields do not have a class!");
             }
 #pragma GCC diagnostic pop
 
@@ -122,7 +111,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
-                throw nxattribute_error(EXCEPTION_RECORD,
+                throw type_error(EXCEPTION_RECORD,
                         "Attributes do not have a class!");
             }
 #pragma GCC diagnostic pop

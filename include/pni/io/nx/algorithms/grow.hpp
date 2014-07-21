@@ -82,7 +82,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
-                throw nxgroup_error(EXCEPTION_RECORD,
+                throw type_error(EXCEPTION_RECORD,
                         "One cannot grow a group object!");
             }
 #pragma GCC diagnostic pop
@@ -113,7 +113,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
-                throw nxattribute_error(EXCEPTION_RECORD,
+                throw type_error(EXCEPTION_RECORD,
                     "An attribute cannot be grown!");
             }
 #pragma GCC diagnostic pop

@@ -22,22 +22,15 @@
 //
 #pragma once
 
-#include <vector>
-#include <sstream>
 #include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
-#include <pni/core/error.hpp>
 
 
 #include "object_imp.hpp"
 #include "type_imp.hpp"
-#include "attribute_imp.hpp"
 #include "h5dataspace.hpp"
-#include "h5_error_stack.hpp"
-#include "../nxexceptions.hpp"
-#include "hdf5_utilities.hpp"
-#include "attribute_utils.hpp"
+#include "h5datatype.hpp"
 #include "h5filter.hpp"
+#include "attribute_imp.hpp"
 
 
 namespace pni{
@@ -47,9 +40,6 @@ namespace h5{
 
     using namespace pni::core;
     //avoid namespace collisions with std
-    using pni::core::exception;
-    using pni::core::shape_mismatch_error;
-    using pni::core::string;
 
     //forward declarations
     class group_imp;
@@ -81,32 +71,44 @@ namespace h5{
             //! 
             void _update();
 
-            //-----------------------------------------------------------------
+            //----------------------------------------------------------------
             //!
-            //! \brief read variable length strings
-            //!
-            //! Read a dataset with variable length strings.
-            //!
-            //! \throws io_error in case of IO errors
-            //! \throws object_error in case of creation/destruction problems
-            //! \param s pointer to targe strings
-            //! \param stype file data type
-            //!
-            void _read_vl_strings(string *s,h5datatype &stype) const;
+            //! \brief read data from file
+            //! 
+            //! Reads a data from the file and stores it in a memory location 
+            //! refered to by ptr. 
+            //! 
+            //! \throws io_error in case of errors
+            //! \throws object_error in case of any other error
+            //! 
+            //! \param memtye memory data type
+            //! \param memspace memory data space
+            //! \param filespace file data space
+            //! \param xfer_list data transfer property list
+            //! \param ptr pointer to memory region
+            //! 
+            void _read_data(const h5datatype &memtype,
+                           const h5dataspace &memspace,
+                           const h5dataspace &filespace,
+                           const object_imp &xfer_list,
+                           void *ptr) const;
 
-            //-----------------------------------------------------------------
+            //----------------------------------------------------------------
             //!
-            //! \brief read static length strings
+            //! \brief write data to file
+            //! 
+            //! Write data from memory (referenced by ptr) to the dataset.
+            //! 
+            //! \throws io_error in case of Input-output-errors
+            //! \param memtype memory data type
+            //! \param memspace memory data space
+            //! \param filespace file data space
+            //! \param ptr pointer to the source region in memory
             //!
-            //! Read array with static length strings. This function is 
-            //! mainly to support legacy files which do not use variable 
-            //! length strings.
-            //!
-            //! \throws io_error in case of IO errors
-            //! \param s pointer to target strings
-            //! \param stype file data type
-            //!
-            void _read_static_strings(string *s,h5datatype &stype) const;
+            void _write_data(const h5datatype &memtype,
+                             const h5dataspace &memspace,
+                             const h5dataspace &filespace,
+                             const void *ptr) const;
 
         public:
             //===================Constructors and destructors==================
@@ -269,26 +271,13 @@ namespace h5{
             //! succeed the dataset must be a scalar dataset or the total size 
             //! of the dataset must be 1.
             //!
-            //! \throws io_error in case of errors
+            //! \throws invalid_object error if field is not valid
+            //! \throws object_error in case of a general error
+            //! \throws io_error in case of IO failure
             //! \param tid type id of the original data type in memory
             //! \param ptr pointer to memory where the data should be stored.
             //!
             void read(type_id_t tid,void *ptr) const;
-
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief read a string scalar
-            //!
-            //! Read data to a String variable. This is a specialized version 
-            //! of the template method read(T &value). It is necessary since 
-            //! strings are handled slightly different from other objects.
-            //! 
-            //! \throws io_error if reading data fails
-            //! \throws object_error in case of other IO errors
-            //! \param tid type id for the string
-            //! \param sptr pointer to String objects
-            //!
-            void read(type_id_t tid,string *sptr) const;
 
             //===============writing data methods==============================
             //! 
@@ -299,25 +288,15 @@ namespace h5{
             //! dataspace of the dataset is scalar or the total dataspace size 
             //! is 1.
             //! 
+            //! \throws invalid_object_error in case of IO errors
             //! \throws io_error in case of IO errors
             //! \throws object_error  in case of all other errors
+            //! \throws type_error if tid does not have a corresponding HDF5
+            //! data type
             //! \param tid type id for the strings
             //! \param ptr pointer to the memory region from which to read
             //!
             void write(type_id_t tid,const void *ptr) const;
-
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief write a String value
-            //! 
-            //! Write data from a String variable to the dataset.
-            //!
-            //! \throws io_error in the case of IO failures
-            //! \throws object_error in case of other errors
-            //! \param tid type id for the string
-            //! \param sptr pointer to String objects.
-            //!
-            void write(type_id_t tid,const string *sptr) const;
 
             //=================================================================
             // DEFAULT OBJECT METHODS
@@ -386,6 +365,7 @@ namespace h5{
             //!
             //! Create a simple scalar attribute 
             //! \throws object_error if attribute creation fails
+            //!
             //! \param name the name of the new attribute
             //! \param tid type id for the attribute
             //! \param overwrite if true overwrite an existing attribute
@@ -400,6 +380,7 @@ namespace h5{
             //! 
             //! Create a multidimensional attribute.
             //! \throws object_error if attribute reation fails
+            //!
             //! \param name the name for the attribute
             //! \param tid type id for the attribute
             //! \param shape container with number of elements

@@ -59,7 +59,7 @@ void get_rank_test::test_group()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     h5::nxobject object = root;
-    CPPUNIT_ASSERT_THROW(get_rank(object),nxgroup_error);
+    CPPUNIT_ASSERT_THROW(get_rank(object),type_error);
 
 }
 

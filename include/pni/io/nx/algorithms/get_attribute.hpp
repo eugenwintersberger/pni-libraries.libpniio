@@ -139,7 +139,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
-                throw nxattribute_error(EXCEPTION_RECORD,
+                throw type_error(EXCEPTION_RECORD,
                         "Attributes cannot have attributes by themself!");
                 return result_type();
             }

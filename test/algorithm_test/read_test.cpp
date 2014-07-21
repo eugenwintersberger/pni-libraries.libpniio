@@ -65,7 +65,7 @@ void read_test::test_group()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     object_type object = root;
-    CPPUNIT_ASSERT_THROW(write(object,farray_t()),nxgroup_error);
+    CPPUNIT_ASSERT_THROW(write(object,farray_t()),type_error);
 
 }
 
@@ -154,7 +154,7 @@ void read_test::test_attribute_full()
     for(size_t i=0;i<attr_wdata.size();++i)
         CPPUNIT_ASSERT(attr_wdata[i] == attr_rdata[i]);
 
-    CPPUNIT_ASSERT_THROW(write(object,attr_wdata,0,1),nxattribute_error);
+    CPPUNIT_ASSERT_THROW(write(object,attr_wdata,0,1),type_error);
     
 }
 

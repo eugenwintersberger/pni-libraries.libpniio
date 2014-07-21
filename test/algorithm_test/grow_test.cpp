@@ -60,7 +60,7 @@ void grow_test::test_group()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     h5::nxobject object = root;
-    CPPUNIT_ASSERT_THROW(grow(object),nxgroup_error);
+    CPPUNIT_ASSERT_THROW(grow(object),type_error);
 
 }
 
@@ -87,7 +87,7 @@ void grow_test::test_attribute()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = attribute;
-    CPPUNIT_ASSERT_THROW(grow(object),nxattribute_error);
+    CPPUNIT_ASSERT_THROW(grow(object),type_error);
     
 }
 

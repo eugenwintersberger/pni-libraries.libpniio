@@ -65,7 +65,7 @@ void get_child_by_index_test::test_field_object()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = field;
-    CPPUNIT_ASSERT_THROW(get_child_by_index(object,size_t(1)),nxfield_error); 
+    CPPUNIT_ASSERT_THROW(get_child_by_index(object,size_t(1)),type_error); 
 }
 
 //-----------------------------------------------------------------------------
@@ -74,7 +74,7 @@ void get_child_by_index_test::test_attribute_object()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = attribute;
-    CPPUNIT_ASSERT_THROW(get_child_by_index(object,1),nxattribute_error);
+    CPPUNIT_ASSERT_THROW(get_child_by_index(object,1),type_error);
    
 }
 //-----------------------------------------------------------------------------

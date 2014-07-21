@@ -142,7 +142,7 @@ namespace h5{
     //! \ingroup nxh5_classes
     //! \brief get reference to type
     //!
-    //! \throws std::out_of_range  if no type for the ID value exists
+    //! \throws type_error if id has no corresponding HDF5 data type
     //!
     //! \param id type id for which to requeste an HDF5 datatype
     //! \return reference to a predefined data type
@@ -154,7 +154,7 @@ namespace h5{
     //! \ingroup nxh5_classes
     //! \brief create new type
     //! 
-    //! \throws std::out_of_range if the ID has no HDF5 counterpart
+    //! \throws type_error if the ID has no HDF5 counterpart
     //! \param id type id
     //! \return h5datatype instance
     h5datatype make_type(type_id_t id);

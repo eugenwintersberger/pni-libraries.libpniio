@@ -77,6 +77,6 @@ void get_attribute_test::test_attribute()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     CPPUNIT_ASSERT_THROW(get_attribute(object_type(group.attributes["NX_class"]),"bla"),
-                         nxattribute_error);
+                         type_error);
 }
 

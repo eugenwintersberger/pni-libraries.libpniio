@@ -93,7 +93,7 @@ namespace nx{
                 }
                 else
                     //you have to at least provide a name
-                    throw nxgroup_error(EXCEPTION_RECORD,
+                    throw value_error(EXCEPTION_RECORD,
                             "No name provided for the new group!");
 
                 return result_type(group);
@@ -114,7 +114,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
-                throw nxgroup_error(EXCEPTION_RECORD,
+                throw type_error(EXCEPTION_RECORD,
                         "Cannot create a group below a field!");
                 return result_type();
             }
@@ -134,7 +134,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
-                throw nxgroup_error(EXCEPTION_RECORD,
+                throw type_error(EXCEPTION_RECORD,
                         "Cannot create a group below an attribute!");
                 return result_type();
             }
