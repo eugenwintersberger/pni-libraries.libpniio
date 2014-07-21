@@ -34,6 +34,7 @@ namespace io{
 namespace nx{
 namespace h5{
 
+    //------------------------------------------------------------------------
     //map for basic numeric types
     const static std::map<type_id_t,h5datatype> __base_type_map = 
     {
@@ -50,12 +51,15 @@ namespace h5{
      {type_id_t::FLOAT128,h5datatype(object_imp(H5Tcopy(H5T_NATIVE_LDOUBLE)))}
     };
 
+    //------------------------------------------------------------------------
+    //template struct for complex data type creation
     template<typename T> struct complex_struct
     {
         T r;
         T i;
     };
 
+    //------------------------------------------------------------------------
     //possible exceptions: object_error
     template<typename CT> h5datatype create_complex()
     {
@@ -139,6 +143,7 @@ namespace h5{
      {type_id_t::BINARY,create_binary()}
     };
 
+    //------------------------------------------------------------------------
     const h5datatype &get_type(type_id_t id)
     {
         return __id_2_type_map.at(id);
@@ -202,6 +207,10 @@ namespace h5{
     //=================implementation of inquery methods=======================
     type_id_t type_id(const h5datatype &o) 
     {
+        if(!o.object().is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Datatype object not valid - cannot fetch type id!");
+
         for(const auto &p: __id_2_type_map)
             if(p.second == o) return p.first;
         
@@ -214,7 +223,14 @@ namespace h5{
     //! equality comparison
     bool operator==(const h5datatype &a,const h5datatype &b)
     {
-        return a.object() == b.object();
+        htri_t result = H5Tequal(a.object().id(),b.object().id());
+        if(result > 0 )
+            return true;
+        else if(result == 0)
+            return false;
+        else
+            throw object_error(EXCEPTION_RECORD,
+                    "Failuer comparing two data type!");
     }
 
     //-------------------------------------------------------------------------
@@ -225,6 +241,7 @@ namespace h5{
 
         return true;
     }
+
 
 
 //end of namespace

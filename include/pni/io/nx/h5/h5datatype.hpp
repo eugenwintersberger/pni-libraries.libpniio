@@ -131,6 +131,7 @@ namespace h5{
     //!
     //! Obtain the type code of a datatype object
     //! \throws type_error if the passed datatype is not known
+    //! \throws invalid_object_error if the data type instance is not valid
     //! \param o instance of an HDF5 datat type
     //! \return type_id_t value for the data type
     //!
@@ -143,10 +144,19 @@ namespace h5{
     //!
     //! \throws std::out_of_range  if no type for the ID value exists
     //!
+    //! \param id type id for which to requeste an HDF5 datatype
     //! \return reference to a predefined data type
     //!
     const h5datatype &get_type(type_id_t id);
 
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup nxh5_classes
+    //! \brief create new type
+    //! 
+    //! \throws std::out_of_range if the ID has no HDF5 counterpart
+    //! \param id type id
+    //! \return h5datatype instance
     h5datatype make_type(type_id_t id);
 
 
