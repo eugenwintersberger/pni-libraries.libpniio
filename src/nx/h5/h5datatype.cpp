@@ -217,7 +217,57 @@ namespace h5{
         throw type_error(EXCEPTION_RECORD,"HDF5 type is unkown!");
     }
 
-    
+    //-------------------------------------------------------------------------
+    bool is_vl_string(const h5datatype &type)
+    {
+        if(!type.object().is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Cannot retrieve string status from invalid type!");
+       
+        //if the type is not even a string type we can immediately 
+        //return false
+        if(type_id(type)!=type_id_t::STRING) return false;
+
+        //check the string type
+        htri_t result = H5Tis_variable_str(type.object().id());
+
+        if(result >0)
+            return true;
+        else if(result == 0)
+            return false;
+        else
+            throw object_error(EXCEPTION_RECORD,
+                    "Cannot retrieve VL status of string type!");
+    }
+
+    //-------------------------------------------------------------------------
+    bool is_static_string(const h5datatype &type)
+    {
+        if(!type.object().is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Cannot retrieve string status from invalid type!");
+
+        if(type_id(type)!=type_id_t::STRING) return false;
+
+        return !is_vl_string(type);
+    }
+
+    //-------------------------------------------------------------------------:wa
+    size_t static_string_size(const h5datatype &type)
+    {
+        if(!is_static_string(type))
+            throw type_error(EXCEPTION_RECORD,
+                    "Data type is not a static string type!");
+
+        size_t size = H5Tget_size(type.object().id());
+        
+        if(!size)
+            throw object_error(EXCEPTION_RECORD,
+                    "Error retrieving the size of the string type!");
+
+        return size;
+    }
+
     //==========implementation of comparison operators=========================
 
     //! equality comparison

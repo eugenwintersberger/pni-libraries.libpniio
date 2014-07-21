@@ -159,6 +159,54 @@ namespace h5{
     //! \return h5datatype instance
     h5datatype make_type(type_id_t id);
 
+    //------------------------------------------------------------------------
+    //! 
+    //! \ingroup nxh5_classes
+    //! \brief check variable length string 
+    //! 
+    //! Returns true if the data type represents a variable length string 
+    //! type.
+    //! 
+    //! \throws object_error if type inquery fails
+    //! \throws invalid_object_error if type is not valid
+    //! 
+    //! \param type a type instance
+    //! \return true if VL string type, false otherwise
+    //!
+    bool is_vl_string(const h5datatype &type);
+
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup nxh5_classes
+    //! \brief check if static length string
+    //! 
+    //! Returns true if the data type represents a static length string. 
+    //! If type is not a string type at all false will be returned. 
+    //!
+    //! \throw object_error if information retrieval fails
+    //! \throw invalid_object_error if object not valid
+    //!
+    //! \param type instance of h5datatype
+    //! \return true if static string type, false otherwise
+    //!
+    bool is_static_string(const h5datatype &type);
+
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup nxh5_classes
+    //! \brief get static string size
+    //! 
+    //! Return the size of the strings for a static string size type. 
+    //! 
+    //! \throws type_error if type is not a static string type
+    //! \throws invalid_type_error if the type is not valid
+    //! \throws object_error in any other case
+    //!
+    //! \param type the datatype from which to retrieve the string size
+    //! \return number of characters in each string
+    //! 
+    size_t static_string_size(const h5datatype &type);
+
 
 //end of namespace
 }

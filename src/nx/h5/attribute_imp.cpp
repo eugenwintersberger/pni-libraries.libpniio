@@ -24,6 +24,8 @@
 #include <pni/io/nx/h5/attribute_imp.hpp>
 #include <pni/io/exceptions.hpp>
 #include <pni/io/nx/h5/hdf5_utilities.hpp>
+#include <pni/io/nx/h5/h5_error_stack.hpp>
+#include <pni/io/nx/h5/string_utils.hpp>
 
 
 namespace pni{
@@ -41,6 +43,8 @@ namespace h5{
         _dspace = h5dataspace();
         _dtype  = h5datatype();
 
+        //we do not throw invalid_object_error as this member function is used
+        //during construction where the object would definitely be invalid
         if(_object.is_valid())
         {
             //we can use this Ids to create new H5Objects from which 
@@ -135,7 +139,11 @@ namespace h5{
     //-------------------------------------------------------------------------
     bool attribute_imp::is_valid() const
     {
-        return _object.is_valid();
+        //as attribute_imp is a composite object we have to check all its
+        //components to determine the validity status
+        return _object.is_valid() && 
+               _dspace.object().is_valid() && 
+               _dtype.object().is_valid();
     }
 
     //-------------------------------------------------------------------------
@@ -144,52 +152,6 @@ namespace h5{
         return get_filename(_object);
     }
     
-    //-------------------------------------------------------------------------
-    //implementation of write from String
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-    void attribute_imp::write(type_id_t tid,const string *s) const
-    {
-        std::vector<const char*> ptrs(size());
-
-        for(size_t i=0;i<size();i++) ptrs[i] = s[i].data();
-
-        herr_t err = H5Awrite(_object.id(),
-                              _dtype.object().id(),
-                              (void *)ptrs.data());
-        if(err < 0)
-            throw io_error(EXCEPTION_RECORD, 
-                  "Error writing attribute ["+name()+"]!\n\n"
-                  +get_h5_error_string());
-    }
-#pragma GCC diagnostic pop
-
-    //-------------------------------------------------------------------------
-    void attribute_imp::write(type_id_t tid,const void *ptr) const
-    {
-        const h5datatype &mem_type = get_type(tid);
-        herr_t err = H5Awrite(_object.id(),
-                              mem_type.object().id(),
-                              ptr);
-        if(err<0)
-            throw io_error(EXCEPTION_RECORD, 
-                           "Error writing attribute ["+this->name()+"]!\n\n"
-                           +get_h5_error_string());
-    }
-    
-    //-------------------------------------------------------------------------
-    void attribute_imp::read(type_id_t tid,void *ptr) const
-    {
-        const h5datatype &mem_type = get_type(tid);
-        herr_t err = H5Aread(_object.id(),
-                              mem_type.object().id(),
-                              ptr);
-        if(err<0)
-            throw io_error(EXCEPTION_RECORD, 
-                           "Error reading attribute ["+this->name()+"]!\n\n"
-                           +get_h5_error_string());
-    }
-
     //-------------------------------------------------------------------------
     type_imp::index_vector_type attribute_imp::shape() const
     {
@@ -211,74 +173,79 @@ namespace h5{
     { 
         return this->_dspace.rank(); 
     }
+    
+    //-------------------------------------------------------------------------
+    void attribute_imp::write(type_id_t tid,const void *ptr) const
+    {
+        if(!is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Cannot write data to invalid attribut!");
+
+        if(tid==type_id_t::STRING)
+        {
+            auto s = static_cast<const string*>(ptr);
+            std::vector<const char*> ptrs(size());
+            for(size_t i=0;i<size();i++) ptrs[i] = s[i].data();
+            _write_data(_dtype,static_cast<const void*>(ptrs.data()));
+        }
+        else
+        {
+            const h5datatype &mem_type = get_type(tid);
+            _write_data(mem_type,ptr);
+        }
+    }
 
     //-------------------------------------------------------------------------
-    void attribute_imp::write(type_id_t tid,const char *s) const 
+    void attribute_imp::_write_data(const h5datatype &memtype,const void *ptr)
+        const
     {
-        string str(s);
-        write(tid,&str);
+        if(H5Awrite(_object.id(),memtype.object().id(),ptr)<0)
+            throw io_error(EXCEPTION_RECORD,
+                    "Error writing attribute ["+name()+"]!\n\n"
+                    +get_h5_error_string());
+
     }
+
+
     //-------------------------------------------------------------------------
     //implementation to read to string
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-    void attribute_imp::read(type_id_t tid,string *s) const
+    void attribute_imp::read(type_id_t tid,void *ptr) const
     {
+        if(!is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Cannot read data from invalid attribute!");
+
         //if the type is not a variable length string memory must be allocated
         //for each string in the attribute
-        if(!H5Tis_variable_str(_dtype.object().id()))
-            _read_static_strings(s);
+        if(is_static_string(_dtype))
+        {
+            char_vector_type str_data(size()*static_string_size(_dtype));
+            _read_data(_dtype,static_cast<void *>(str_data.data()));
+            copy_from_vector(str_data,
+                             size(),
+                             static_string_size(_dtype),
+                             static_cast<string*>(ptr));
+        }
+        else if(is_vl_string(_dtype))
+        {
+            char_ptr_vector_type str_pointers(size());
+            _read_data(_dtype,static_cast<void *>(str_pointers.data()));
+            copy_from_vector(str_pointers,static_cast<string*>(ptr));
+        }
         else
-            _read_vl_strings(s);
-
-    }
-#pragma GCC diagnostic pop
-
-    //-------------------------------------------------------------------------
-    void attribute_imp::_read_vl_strings(string *s) const
-    {
-        size_t nstrings = size();
-
-        //allocate a vector of pointers each holding an individual string
-        std::vector<char*> str_pointers(nstrings);
-            
-        herr_t err = H5Aread(_object.id(),
-                             _dtype.object().id(),
-                             (void *)str_pointers.data());
-        if(err<0)
-            throw io_error(EXCEPTION_RECORD, 
-                    "Error reading attribute ["+name()+"]!\n\n"+
-                    get_h5_error_string());
-
-        //copy the strings
-        for(size_t i = 0;i<nstrings;i++)
-            s[i] = string(str_pointers[i]);
+        {
+            const h5datatype &mem_type = get_type(tid);
+            _read_data(mem_type,ptr);
+        }
 
     }
 
     //-------------------------------------------------------------------------
-    void attribute_imp::_read_static_strings(string *s) const
+    void attribute_imp::_read_data(const h5datatype &memtype,void *ptr) const
     {
-        //total number of strings stored
-        size_t nstrings = size(); 
-        //determine the length of the strings
-        size_t ssize    = H5Tget_size(_dtype.object().id());
-
-        //allocate memory
-        std::vector<char> str_data(nstrings*ssize);
-
-        herr_t err = H5Aread(_object.id(),
-                             _dtype.object().id(),
-                             (void *)str_data.data());
-        if(err<0)
-            throw io_error(EXCEPTION_RECORD, 
-                    "Error reading attribute ["+name()+"]!\n\n"+
-                    get_h5_error_string());
-
-        //copy the strings
-        for(size_t i = 0;i<nstrings;++i)
-            s[i] = string(str_data.data()+i*ssize,ssize);
-
+        if(H5Aread(_object.id(),memtype.object().id(),ptr)<0)
+            throw io_error(EXCEPTION_RECORD,"Error reading attribute ["
+                    +name()+"]!\n\n"+get_h5_error_string());
     }
 
     //-------------------------------------------------------------------------

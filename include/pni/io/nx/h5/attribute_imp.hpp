@@ -25,15 +25,11 @@
 #include<sstream>
 
 #include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
 
 #include "object_imp.hpp"
 #include "type_imp.hpp"
 #include "h5dataspace.hpp"
 #include "h5datatype.hpp"
-
-#include "h5_error_stack.hpp"
-#include "../nxexceptions.hpp"
 
 namespace pni{
 namespace io{
@@ -71,31 +67,34 @@ namespace h5{
             //! and datatype
             //!
             void __update();
-
-            //------------------------------------------------------------------
-            //!
-            //! \brief read variable length string attributes       
+            
+            //----------------------------------------------------------------
             //! 
-            //! Read an attribute with variable length strings. 
-            //! \throws io_error in case of errors
-            //! \param s pointer to target strings
-            //! \param stype string type
+            //! \brief read data to void
+            //! 
+            //! Read attribute data from disk using memtype memory
+            //! representation.
             //!
-            void _read_vl_strings(string *s) const; 
+            //! \throws io_error in case of read problems
+            //!
+            //! \param memtype type of data in memory
+            //! \param ptr pointer to the target location in memory
+            //!
+            void _read_data(const h5datatype &memtype,void *ptr) const;
 
-            //------------------------------------------------------------------
+            //-----------------------------------------------------------------
+            //! 
+            //! \brief write data from memory
+            //! 
+            //! Write data from a memory location denoted by ptr. 
+            //! 
+            //! \throws io_error in case of write problems
             //!
-            //! \brief read static length string attribute
+            //! \param memtype memory datatype 
+            //! \param ptr pointer to the source region in memory
             //!
-            //! Read an attribute with static string attributes (strings of 
-            //! constant size).
-            //!
-            //! \param s pointer to target strings
-            //! \param stype string type
-            //!
-            void _read_static_strings(string *s) const;
-
-
+            void _write_data(const h5datatype &memtype,const void *ptr) const;
+        
         public:
             //==============-====constructors and destructors===================
             //!
@@ -129,8 +128,6 @@ namespace h5{
             //! 
             attribute_imp(attribute_imp &&o) noexcept;
 
-           
-
             //=====================assignment operators========================
             //!
             //! \brief copy assignment operator
@@ -159,35 +156,6 @@ namespace h5{
             //!
             void write(type_id_t tid,const void *ptr) const;
 
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief write string attribute
-            //!
-            //! Write data to a string attribute.
-            //! 
-            //! \throws io_error in case of input output issues
-            //! \param s string to write
-            //!
-            void write(type_id_t tid,const string *s) const;
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief handle C-style strings
-            //!
-            //! This method is used as a string constant is not converted to 
-            //! String but rather to const char *. This method is called in 
-            //! the following example
-            /*!
-            \code
-            H5Attribute a=...;
-            a.write("hello word");
-            \endcode
-            */
-            //! \param s pointer to the character string
-            //!
-            void write(type_id_t tid,const char *s) const ;
-          
             //----------------------------------------------------------------
             //!
             //! \brief read data to void 
@@ -196,22 +164,15 @@ namespace h5{
             //! The memory type information relies entirely on the tid 
             //! argument
             //! 
+            //! \throws io_error in case of read errors
+            //! \throws invalid_object_error if the attribute is not valid
+            //! \throws object_error in any other case of failure
+            //! 
             //! \param tid type id of memory
             //! \param ptr pointer to memory
             //!
             void read(type_id_t tid,void *ptr) const;
 
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief read to string
-            //!
-            //! Reads a string value from an attribute.
-            //! \throws shape_mismatch_error if attribute is not scalar
-            //! \throws H5AttributeError in case of general IO errors
-            //! \param s string variable to which data will be written
-            //!
-            void read(type_id_t tid,string *s) const;
-           
             //=================attribute inquery methods=======================
             //! 
             //! \brief obtain attribute shape
