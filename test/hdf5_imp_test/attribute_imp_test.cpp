@@ -113,7 +113,7 @@ void attribute_imp_test::test_inquery()
     attribute_imp a2(create_attribute(root_group.object(),
                                       "a2",
                                       get_type(type_id_t::FLOAT32),
-                                      h5dataspace{10,2},
+                                      h5dataspace{type_imp::index_vector_type{10,2}},
                                       false));
 
     CPPUNIT_ASSERT(a1.is_valid());

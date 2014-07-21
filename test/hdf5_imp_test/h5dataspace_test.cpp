@@ -57,29 +57,6 @@ void h5dataspace_test::test_object_construction()
 }
 
 //----------------------------------------------------------------------------
-void h5dataspace_test::test_init_list_construction()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5dataspace space({3,2,3,4});
-    CPPUNIT_ASSERT(!space.is_scalar());
-    CPPUNIT_ASSERT(space.rank()==4);
-    CPPUNIT_ASSERT(space.size() == 72);
-
-    h5dataspace space2({10,50},{100,500});
-    CPPUNIT_ASSERT(!space2.is_scalar());
-    CPPUNIT_ASSERT(space2.rank() == 2);
-    CPPUNIT_ASSERT(space2.size() == 500);
-
-    //fails because of different rank of current and maximum list
-    CPPUNIT_ASSERT_THROW(h5dataspace({10,50},{100}),shape_mismatch_error);
-    CPPUNIT_ASSERT_THROW(h5dataspace({10},{100,500}),shape_mismatch_error);
-    //must fail because current number of elements exceeds the maximum 
-    //number of elements
-    CPPUNIT_ASSERT_THROW(h5dataspace({200},{100}),pni::io::object_error);
-}
-
-//----------------------------------------------------------------------------
 void h5dataspace_test::test_container_construction()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
@@ -143,50 +120,15 @@ void h5dataspace_test::test_maximum_iterator()
 }
 
 //----------------------------------------------------------------------------
-void h5dataspace_test::test_init_list_resize()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5dataspace space{10,20};
-    
-    CPPUNIT_ASSERT(space.current_dim(0) == 10);
-    CPPUNIT_ASSERT(space.maximum_dim(0) == 10);
-    CPPUNIT_ASSERT(space.current_dim(1) == 20);
-    CPPUNIT_ASSERT(space.maximum_dim(1) == 20);
-
-    space.resize({100,200});
-    CPPUNIT_ASSERT(space.current_dim(0) == 100);
-    CPPUNIT_ASSERT(space.maximum_dim(0) == 100);
-    CPPUNIT_ASSERT(space.current_dim(1) == 200);
-    CPPUNIT_ASSERT(space.maximum_dim(1) == 200);
-
-    space.resize({10,20,30},{100,200,300});
-    std::cerr<<space.rank()<<std::endl;
-    CPPUNIT_ASSERT(space.rank()==3);
-    CPPUNIT_ASSERT(space.current_dim(0) == 10);
-    CPPUNIT_ASSERT(space.current_dim(1) == 20);
-    CPPUNIT_ASSERT(space.current_dim(2) == 30);
-                                
-    CPPUNIT_ASSERT(space.maximum_dim(0) == 100);
-    CPPUNIT_ASSERT(space.maximum_dim(1) == 200);
-    CPPUNIT_ASSERT(space.maximum_dim(2) == 300);
-
-    CPPUNIT_ASSERT_THROW(space.resize({10,20},{100}),shape_mismatch_error);
-    CPPUNIT_ASSERT_THROW(space.resize({10},{100,200}),shape_mismatch_error);
-    CPPUNIT_ASSERT_THROW(space.resize({101,20},{100,200}),
-                         pni::io::object_error);
-}
-
-//----------------------------------------------------------------------------
 void h5dataspace_test::test_container_resize()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     typedef std::list<hsize_t> list_type;
 
-    h5dataspace space{10,20};
+    h5dataspace space{type_imp::index_vector_type{10,20}};
 
-    CPPUNIT_ASSERT_NO_THROW(space.resize(list_type{20,40,100}));
+    CPPUNIT_ASSERT_NO_THROW(space.resize(type_imp::to_index_vector(list_type{20,40,100})));
     CPPUNIT_ASSERT(space.rank()==3);
     CPPUNIT_ASSERT(space.current_dim(0) == 20);
     CPPUNIT_ASSERT(space.current_dim(1) == 40);
@@ -195,19 +137,22 @@ void h5dataspace_test::test_container_resize()
     CPPUNIT_ASSERT(space.maximum_dim(1) == 40);
     CPPUNIT_ASSERT(space.maximum_dim(2) == 100);
 
-    CPPUNIT_ASSERT_NO_THROW(space.resize(list_type{10,30},
-                                         list_type{100,300}));
+    CPPUNIT_ASSERT_NO_THROW(space.resize(type_imp::to_index_vector(list_type{10,30}),
+                                         type_imp::to_index_vector(list_type{100,300})));
     CPPUNIT_ASSERT(space.rank()==2);
     CPPUNIT_ASSERT(space.current_dim(0) == 10);
     CPPUNIT_ASSERT(space.current_dim(1) == 30);
     CPPUNIT_ASSERT(space.maximum_dim(0) == 100);
     CPPUNIT_ASSERT(space.maximum_dim(1) == 300);
     
-    CPPUNIT_ASSERT_THROW(space.resize(list_type{10,30},list_type{10}),
+    CPPUNIT_ASSERT_THROW(space.resize(type_imp::to_index_vector(list_type{10,30}),
+                                      type_imp::to_index_vector(list_type{10})),
                          shape_mismatch_error);
-    CPPUNIT_ASSERT_THROW(space.resize(list_type{10},list_type{100,200}),
+    CPPUNIT_ASSERT_THROW(space.resize(type_imp::to_index_vector(list_type{10}),
+                                      type_imp::to_index_vector(list_type{100,200})),
                           shape_mismatch_error);
-    CPPUNIT_ASSERT_THROW(space.resize(list_type{100,10},list_type{10,200}),
+    CPPUNIT_ASSERT_THROW(space.resize(type_imp::to_index_vector(list_type{100,10}),
+                                      type_imp::to_index_vector(list_type{10,200})),
                          pni::io::object_error);
 
 }

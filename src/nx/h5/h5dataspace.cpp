@@ -21,7 +21,7 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-
+#include <algorithm>
 #include <pni/io/nx/h5/h5dataspace.hpp>
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 #include <pni/io/nx/nxexceptions.hpp>
@@ -109,38 +109,6 @@ namespace h5 {
     }
 
     //-------------------------------------------------------------------------
-    //construct dataspace form initializer list
-    h5dataspace::h5dataspace(const std::initializer_list<hsize_t> &list):
-        _object(H5Screate(H5S_SCALAR)),
-        _maxdims(list),
-        _dims(list)
-    {
-        __update_dataspace();
-    }
-
-    //-------------------------------------------------------------------------
-    //construction from two initializer lists
-    h5dataspace::h5dataspace(const std::initializer_list<hsize_t> &dlist,
-                             const std::initializer_list<hsize_t> &mlist)
-        :_object(H5Screate(H5S_SCALAR)),
-         _maxdims(mlist),
-         _dims(dlist)
-    {
-
-        //check if the sizes of the two initializer lists match
-        if(mlist.size() != dlist.size())
-        {
-            std::stringstream ss;
-            ss<<"Rank of actual shape ("<<dlist.size()<<") and of ";
-            ss<<"maximum shape ("<<mlist.size()<<") do not match!";
-            throw shape_mismatch_error(EXCEPTION_RECORD,ss.str());
-        }
-
-        //finally resize the dataspace
-        __update_dataspace();
-    }
-
-    //-------------------------------------------------------------------------
     h5dataspace::h5dataspace(const type_imp::index_vector_type &s):
         _object(H5Screate(H5S_SCALAR)),
         _maxdims(s),
@@ -158,13 +126,10 @@ namespace h5 {
 
     {
         //check if the ranks of the shapes is equal
-        if(s.size() != ms.size())
-        {
-            std::stringstream ss;
-            ss<<"Rank of actual shape ("<<s.size()<<") and of ";
-            ss<<"maximum shape ("<<ms.size()<<") do not match!";
-            throw shape_mismatch_error(EXCEPTION_RECORD,ss.str());
-        }
+        if(!check_equal_size(s,ms))
+            throw shape_mismatch_error(EXCEPTION_RECORD,
+                    "Current and maximum shape containers have different "
+                    "length!");
 
         //resize the dataspace to a simple one
         __update_dataspace();
@@ -196,9 +161,21 @@ namespace h5 {
     }
 
     //===================Other methods=========================================
+    const object_imp &h5dataspace::object() const noexcept
+    {
+        return _object;
+    }
+
+    //------------------------------------------------------------------------
     //implementation of is_scalar
     bool h5dataspace::is_scalar() const 
     {
+        
+        if(!_object.is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Dataspace instance is not valid - cannot check if "
+                    "scalar!");
+
         H5S_class_t type = H5Sget_simple_extent_type(_object.id());
         if(type == H5S_SCALAR) return true;
         return false;
@@ -220,6 +197,10 @@ namespace h5 {
         //return 0 if the dataspace is scalar
         if(is_scalar()) return 0;
 
+        if(i>=rank())
+            throw index_error(EXCEPTION_RECORD,
+                    "User index exceeds rank of dataspace!");
+
         //return the number of elements along dimension i if the 
         //dataspace is simple
         return _dims[i];
@@ -230,6 +211,10 @@ namespace h5 {
     {
         //return 0 if the dataspace is scalar
         if(is_scalar()) return 0;
+
+        if(i>=rank())
+            throw index_error(EXCEPTION_RECORD,
+                    "User index exceeds rank of dataspace!");
 
         //return the maximum number of elements along i if the 
         //dataspace is simple
@@ -258,29 +243,26 @@ namespace h5 {
     }
 
     //-------------------------------------------------------------------------
-    void h5dataspace::resize(const std::initializer_list<hsize_t> &list)
+    void h5dataspace::resize(const type_imp::index_vector_type &shape)
     {
-        _dims    = buffer_type(list);
-        _maxdims = buffer_type(list);
+        _dims    = shape;
+        _maxdims = shape;
 
         __update_dataspace();
     }
 
 
     //-------------------------------------------------------------------------
-    void h5dataspace::resize(const std::initializer_list<hsize_t> &dlist,
-                             const std::initializer_list<hsize_t> &mlist)
+    void h5dataspace::resize(const type_imp::index_vector_type &cshape,
+                             const type_imp::index_vector_type &mshape)
     {
+        if(!check_equal_size(cshape,mshape))
+            throw shape_mismatch_error(EXCEPTION_RECORD,
+                    "Current and maximum shape vector do not have equal"
+                    " lenght!");
 
-        if(dlist.size() != mlist.size())
-        {
-            std::stringstream ss;
-            ss<<"Rank of actual shape ("<<dlist.size()<<") and of ";
-            ss<<"maximum shape ("<<mlist.size()<<") do not match!";
-            throw shape_mismatch_error(EXCEPTION_RECORD,ss.str());
-        }
-        _dims    = buffer_type(dlist);
-        _maxdims = buffer_type(mlist);
+        _dims    = cshape;
+        _maxdims = mshape;
 
         __update_dataspace();
     }
@@ -302,8 +284,30 @@ namespace h5 {
         __update_dataspace();
     }
 
+    
+    //------------------------------------------------------------------------
+    h5dataspace::iterator h5dataspace::current_begin() const noexcept 
+    {
+        return _dims.begin();
+    }
 
+    //------------------------------------------------------------------------
+    h5dataspace::iterator h5dataspace::current_end() const noexcept
+    {
+        return _dims.end();
+    }
 
+    //------------------------------------------------------------------------
+    h5dataspace::iterator h5dataspace::maximum_begin() const noexcept
+    {
+        return _maxdims.begin();
+    }
+    
+    //------------------------------------------------------------------------
+    h5dataspace::iterator h5dataspace::maximum_end() const noexcept
+    {
+        return _maxdims.end();
+    }
     //======================operators==========================================
     std::ostream &operator<<(std::ostream &o,const h5dataspace &s)
     {

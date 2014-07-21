@@ -22,11 +22,6 @@
 //
 #pragma once
 
-#include <vector>
-#include <sstream>
-#include <algorithm>
-#include <pni/core/error.hpp>
-
 #include "object_imp.hpp"
 #include "type_imp.hpp"
 
@@ -187,45 +182,8 @@ namespace h5 {
             //! \param s initial shape
             //! \param ms maximum shape
             //!
-            //! \sa H5Dataspace(const CTYPE &s)
-            //!
             explicit h5dataspace(const type_imp::index_vector_type &s,
                                  const type_imp::index_vector_type &ms);
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief construction with an initializer list
-            //!
-            //! Use an initializer list to construct a dataspace. The 
-            //! dataspace created by this constructor is always a simple 
-            //! constructor and has constant size. 
-            /*!
-            \code
-            h5dataspace space({1,2,3});
-            \endcode
-            */
-            //!
-            //! \throws object_error in case of any error
-            //! \param list initializer list
-            //! \sa H5Dataspace(const Shape &s)
-            //!
-            explicit h5dataspace(const std::initializer_list<hsize_t> &list);
-          
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief fixed size dataspace
-            //!
-            //! Create a fixed size dataspace from two initializer lists. The
-            //! created dataspace is a simple dataspace in HDF5 terminilogy.
-            //!
-            //! \throws shape_mismatch_error if the size of the two initializer
-            //!                              lists do not match
-            //! \throws object_error in case of any other error
-            //! \param dlist initializer list with actual shape values
-            //! \param mlist initializer list with maximum shape values
-            //!
-            explicit h5dataspace(const std::initializer_list<hsize_t> &dlist,
-                                 const std::initializer_list<hsize_t> &mlist);
 
             //=====================Assignment operators========================
             //!
@@ -248,6 +206,8 @@ namespace h5 {
             //!
             //! Returns the rank (the number of dimensions) of the dataset. 
             //! For a scalar dataspace this method returns 0.
+            //! 
+            //! \throws invalid_object_error if dataspace is not valid
             //! \return number of dimension 
             //!
             size_t rank() const;
@@ -256,10 +216,7 @@ namespace h5 {
             //!
             //! \brief get object reference
             //!
-            const object_imp &object() const 
-            {
-                return _object;
-            }
+            const object_imp &object() const noexcept;
 
             //-----------------------------------------------------------------
             //!
@@ -268,9 +225,12 @@ namespace h5 {
             //! Returns the number of elements along dimension i. If the 
             //! dataspace is scalar 0 is returned independent of the value 
             //! of i.
+            //!
+            //! \throws invalid_object_error if dataspace not valid
             //! \throws index_error if i exceeds the dataspace rank
+            //!
             //! \param i dimension index
-            //! \return number of elements along i */
+            //! \return number of elements along i 
             //!
             size_t current_dim(size_t i) const;
 
@@ -282,7 +242,9 @@ namespace h5 {
             //! If the dataspace is scalar 0 is returned independent of the 
             //! value of i.
             //!
+            //! \throws invalid_object_error if dataspace is not valid
             //! \throws index_error if i exceeds dataspace rank
+            //!
             //! \param i index of dimension
             //! \return maximum number of elements along dimension i 
             //!
@@ -295,7 +257,10 @@ namespace h5 {
             //! Returns the total number of elemenets that can be stored in the 
             //! dataspace.  For a scalar dataspace this method returns 1.
             //!
-            //! \return total number of elements */
+            //! \throws invalid_object_error if dataspace not valid
+            //! \throws object_error if size could not be determined
+            //!
+            //! \return total number of elements 
             //!
             size_t size() const;
 
@@ -304,6 +269,7 @@ namespace h5 {
             //! \brief true if scalar dataspace
             //!
             //! Returns true if the dataspace is scalar. 
+            //! \throws invalid_object_error if dataspace is not valid
             //! \return true if dataspace is scalar 
             //!
             bool is_scalar() const;
@@ -317,10 +283,7 @@ namespace h5 {
             //! 
             //! \return iterator 
             //! 
-            iterator current_begin() const noexcept 
-            {
-                return _dims.begin();
-            }
+            iterator current_begin() const noexcept;
 
             //----------------------------------------------------------------
             //!
@@ -330,10 +293,7 @@ namespace h5 {
             //!
             //! \return iterator
             //!
-            iterator current_end() const noexcept
-            {
-                return _dims.end();
-            }
+            iterator current_end() const noexcept;
 
             //----------------------------------------------------------------
             //!
@@ -343,10 +303,7 @@ namespace h5 {
             //!
             //! \return iterator
             //!
-            iterator maximum_begin() const noexcept
-            {
-                return _maxdims.begin();
-            }
+            iterator maximum_begin() const noexcept;
 
             //----------------------------------------------------------------
             //!
@@ -356,35 +313,7 @@ namespace h5 {
             //!
             //! \return iterator
             //!
-            iterator maximum_end() const noexcept
-            {
-                return _maxdims.end();
-            }
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief resize dataspace
-            //!
-            //! Resizes the dataspace to a new shape determined by s. If the 
-            //! dataspace was originally scalar the new dataspace becomes simple. 
-            //! In this case the maximum number of elements along each 
-            //! dimension will be determined by s too.  Using this datspace for 
-            //! the construction of a dataset will lead to an dataset of 
-            //! constant size.
-            //!
-            //! \throws object_error in case of errors
-            //! \param s new dataspace shape 
-            //!
-            template<typename CTYPE> void resize(const CTYPE &s)
-            {
-                _dims = buffer_type(s.size());
-                _maxdims = buffer_type(s.size());
-                
-                std::copy(s.begin(),s.end(),_dims.begin());
-                std::copy(s.begin(),s.end(),_maxdims.begin());
-
-                __update_dataspace();
-            }
+            iterator maximum_end() const noexcept;
 
             //-----------------------------------------------------------------
             //!
@@ -396,48 +325,9 @@ namespace h5 {
             //! typing code easier.
             //!
             //! \throws object_error if dataspace update fails
-            //! \param list initializer list 
+            //! \param shape number of elements along each dimension
             //!
-            void resize(const std::initializer_list<hsize_t> &list);
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief resize dataspace
-            //!
-            //! With this version of the resize method the actual and maximum 
-            //! number of elements along each dimension can be configured 
-            //! individually.  Using such a dataspace for dataset 
-            //! construction will lead to an resizeable dataset.
-            //!
-            //! \throws shape_mismatch_error if the ranks of the two shapes 
-            //! do not match
-            //! \throws object_error if dataspace update fails
-            //!
-            //! \param s initial shape of the dataspace
-            //! \param ms maximum shape of the dataspace 
-            //!
-            template<
-                     typename CTYPE1,
-                     typename CTYPE2
-                    >
-            void resize(const CTYPE1 &s,const CTYPE2 &ms)
-            {
-                if(s.size() != ms.size())
-                {
-                    std::stringstream ss;
-                    ss<<"Rank of actual shape ("<<s.size()<<") and of ";
-                    ss<<"maximum shape ("<<ms.size()<<") do not match!";
-                    throw shape_mismatch_error(EXCEPTION_RECORD,ss.str());
-                }
-
-                _dims = buffer_type(s.size());
-                _maxdims = buffer_type(ms.size());
-
-                std::copy(s.begin(),s.end(),_dims.begin());
-                std::copy(ms.begin(),ms.end(),_maxdims.begin());
-
-                __update_dataspace();
-            }
+            void resize(const type_imp::index_vector_type &shape);
 
             //-----------------------------------------------------------------
             //!
@@ -452,11 +342,11 @@ namespace h5 {
             //! \throws shape_mismatch_error if list sizes are not equal
             //! \throws object_error if dataspace update fails
             //!
-            //! \param dlist list with actual number of elements
-            //! \param mlist list with maximum number of elements 
+            //! \param cshape current number of elements along each dimension
+            //! \param mshape maximum number of elements along each dimension
             //!
-            void resize(const std::initializer_list<hsize_t> &dlist,
-                        const std::initializer_list<hsize_t> &mlist);
+            void resize(const type_imp::index_vector_type &cshape,
+                        const type_imp::index_vector_type &mshape);
 
             //-----------------------------------------------------------------
             //!
@@ -469,6 +359,7 @@ namespace h5 {
             //!
             //! \throws index_error if dim exceeds rank of dataspace
             //! \throws object_error if dataspace update fails
+            //!
             //! \param dim dimension along which to grow
             //! \param ext extend by which to grow 
             //!
@@ -480,6 +371,8 @@ namespace h5 {
         //!
         //! \ingroup nxh5_classes
         //! \brief output operator
+        //! 
+        //! \throws invalid_object_error if dataspace is not valid
         //!
         std::ostream &operator<<(std::ostream &o,const h5dataspace &s);
 
