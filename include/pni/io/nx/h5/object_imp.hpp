@@ -233,6 +233,10 @@ namespace h5{
             //!
             //! \brief get nexus object type
             //!
+            //! \throws type_error in case of an unkown type
+            //! \throws invalid object_error if object is not valid
+            //! \return Nexus type of the object
+            //!
             pni::io::nx::nxobject_type nxobject_type() const; 
     };
 
