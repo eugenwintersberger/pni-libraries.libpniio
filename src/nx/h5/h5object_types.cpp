@@ -39,13 +39,12 @@ namespace h5{
     //------------------------------------------------------------------------
     h5object_type get_hdf5_type(const object_imp &o)
     {
+        //we obviously cannot retrieve the HDF5 type from an invalid object
         if(!o.is_valid())
             throw invalid_object_error(EXCEPTION_RECORD,
-                    "Invalid HDF5 object!");
+                                       "Invalid HDF5 object!");
 
         H5I_type_t tid = H5Iget_type(o.id());
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wswitch"
         switch(tid)
         {
             case H5I_FILE:      return h5object_type::FILE;
@@ -54,22 +53,18 @@ namespace h5{
             case H5I_DATATYPE:  return h5object_type::DATATYPE;
             case H5I_DATASPACE: return h5object_type::DATASPACE;
             case H5I_ATTR:      return h5object_type::ATTRIBUTE;
+            case H5I_GENPROP_LST: return h5object_type::PLIST;
+            default:
+                throw type_error(EXCEPTION_RECORD,
+                        "HDF5 object is of invalid type!");
         };
-#pragma GCC diagnostic pop
-
-        //if all of the above fails we may need to check if the id belongs to a
-        //property list
-        hid_t pclass = H5Pget_class(o.id());
-        if(pclass<0)
-            throw type_error(EXCEPTION_RECORD,
-                    "HDF5 object is of invalid type!");
-
-        return h5object_type::PLIST;
     }
     
     //------------------------------------------------------------------------
     pni::io::nx::nxobject_type get_nexus_type(const object_imp &o)
     {
+        //if the object is not valid get_hdf5_object_type will 
+        //throw invalid_object_error - do not have to do this here
         if(get_hdf5_type(o) == h5object_type::GROUP) 
             return pni::io::nx::nxobject_type::NXGROUP;
         else if(get_hdf5_type(o) == h5object_type::FILE)

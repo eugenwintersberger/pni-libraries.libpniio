@@ -64,10 +64,13 @@ namespace h5{
     //! \li an HDF5 dataspace
     //! \li an HDF5 dataset
     //! \li an HDF5 attribute
+    //! \li an HDF5 property list
     //!
     //! An exception is thrown in case of an unknown type.
+    //!
     //! \throws type_error in case of an unkown object type
     //! \throws invalid_object_error if the object is not valid
+    //!
     //! \param o reference to h5object
     //! \return HDF5 object type
     //! 
