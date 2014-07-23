@@ -65,6 +65,7 @@ namespace h5{
     //! 
     //! \throws invalid_object_error if the object is not a valid HDF5 object
     //! \throws object_error in case of all other errors 
+    //! \throws key_error if attribute does not exist
     //!
     //! \param parent reference to the parent object
     //! \param name the name of the attribute to delete

@@ -11,6 +11,7 @@ set(SOURCES
             field_imp_test.cpp
             h5object_types_test.cpp
             hdf5_utilities_test.cpp
+            attribute_utils_test.cpp
            )
 
 add_executable(hdf5_imp_test ${SOURCES} $<TARGET_OBJECTS:test_common>)

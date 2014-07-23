@@ -62,6 +62,11 @@ namespace h5{
             throw invalid_object_error(EXCEPTION_RECORD,
                     "Cannot delete attribute from invalid object!");
 
+        if(!has_attribute(parent,name))
+            throw key_error(EXCEPTION_RECORD,
+                    "Cannot delete attribute ["+name+"] from ["+
+                    get_path(parent)+"] - attribute does not exist!");
+
         herr_t err = H5Adelete(parent.id(),name.c_str());
         if(err < 0)
             throw object_error(EXCEPTION_RECORD,
