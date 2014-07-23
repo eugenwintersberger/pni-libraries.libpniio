@@ -35,6 +35,7 @@ namespace h5{
 
     using pni::io::io_error;
 
+    //-------------------------------------------------------------------------
     string get_filename(const object_imp &object)
     {
         if(!object.is_valid())
