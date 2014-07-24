@@ -20,6 +20,7 @@ set(HEADER_FILES as_attribute.hpp
                  get_size.hpp 
                  get_type.hpp 
                  get_unit.hpp 
+                 get_root.hpp
                  grow.hpp 
                  is_attribute.hpp 
                  is_class.hpp 

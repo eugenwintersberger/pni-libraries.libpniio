@@ -20,7 +20,9 @@ set(HEADER_FILES nexus_utils.hpp
                  nxpath.hpp
                  nxselection.hpp
                  algorithms.hpp
-                 xml.hpp)
+                 xml.hpp
+                 nxattribute_manager.hpp
+                 )
 
 install(FILES ${HEADER_FILES} 
         DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/pni/io/nx)

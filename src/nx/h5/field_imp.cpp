@@ -104,8 +104,6 @@ namespace h5{
                                       filter);
     }
 
-
-
     //=========implementation of the assignment operators==============
     //implementation of the  copy assignment operator
     field_imp &field_imp::operator=(const field_imp &o)
@@ -134,10 +132,30 @@ namespace h5{
         return *this;
     }
 
+    //------------------------------------------------------------------------
+    void field_imp::resize(const type_imp::index_vector_type &s)
+    {
+        _throw_if_not_valid(EXCEPTION_RECORD,
+                            "Cannot resize invalid dataset object!");
 
-    //=========implementation of inquery methods========================
+        if(s.size() != _file_space.rank())
+            throw shape_mismatch_error(EXCEPTION_RECORD,
+                  "New shape does not have the same rank!");
+
+        if(H5Dset_extent(_object.id(),s.data())<0)
+            throw object_error(EXCEPTION_RECORD, 
+                 "Resizing of dataset ["+get_path(_object)
+                 +"] failed!\n\n"+ get_h5_error_string());
+
+        _update();
+    }
+
+    //------------------------------------------------------------------------
     void field_imp::grow(const size_t &e,const size_t &n)
     {
+        _throw_if_not_valid(EXCEPTION_RECORD,
+                            "Cannot grow invalid dataset!");
+
         if(e>=rank())
         {
             std::stringstream ss;
@@ -163,25 +181,15 @@ namespace h5{
         _memory_space = _file_space;
     }
 
-    //------------------------------------------------------------------------
-    void field_imp::resize(const type_imp::index_vector_type &s)
-    {
-        if(s.size() != _file_space.rank())
-            throw shape_mismatch_error(EXCEPTION_RECORD,
-                  "New shape does not have the same rank!");
 
-        if(H5Dset_extent(_object.id(),s.data())<0)
-            throw object_error(EXCEPTION_RECORD, 
-                 "Resizing of dataset ["+get_path(_object)
-                 +"] failed!\n\n"+ get_h5_error_string());
-
-        _update();
-    }
-
+    //=========implementation of inquery methods========================
 
     //------------------------------------------------------------------------
     type_imp::index_vector_type field_imp::shape() const
     {
+        _throw_if_not_valid(EXCEPTION_RECORD,
+                            "Cannot obtain the shape of an invalid field!");
+
         type_imp::index_vector_type s(_memory_space.rank());
         std::copy(_memory_space.current_begin(),
                   _memory_space.current_end(),
@@ -191,18 +199,27 @@ namespace h5{
     //------------------------------------------------------------------------
     type_id_t field_imp::type_id() const 
     { 
+        _throw_if_not_valid(EXCEPTION_RECORD,
+                            "Cannot obtain type from an invalid field!");
+
         return pni::io::nx::h5::type_id(_type); 
     }
 
     //------------------------------------------------------------------------
     size_t field_imp::size() const 
     { 
+        _throw_if_not_valid(EXCEPTION_RECORD,
+                            "Cannot obtain the size from an invalid field!");
+
         return _memory_space.size(); 
     }
     
     //------------------------------------------------------------------------
     size_t field_imp::rank() const 
     { 
+        _throw_if_not_valid(EXCEPTION_RECORD,
+                            "Cannot determine the rank of an invalid field!");
+
         return _memory_space.rank(); 
     }
 
@@ -228,9 +245,8 @@ namespace h5{
     //------------------------------------------------------------------------
     void field_imp::read(type_id_t tid,void *ptr) const
     {
-        if(!is_valid())
-            throw invalid_object_error(EXCEPTION_RECORD,
-                    "Cannot read data from invalid object!");
+        _throw_if_not_valid(EXCEPTION_RECORD,
+                            "Cannot read data from invaliid field!");
 
         if((tid==type_id_t::STRING) && is_vl_string(_type))
         {
@@ -272,9 +288,9 @@ namespace h5{
     //------------------------------------------------------------------------
     void field_imp::write(type_id_t tid,const void *ptr) const
     {
-        if(!is_valid())
-            throw invalid_object_error(EXCEPTION_RECORD,
-                    "Cannot write data to invalid object!");
+        _throw_if_not_valid(EXCEPTION_RECORD,
+                            "Cannot write data to invalid object!");
+                            
 
         if(tid == type_id_t::STRING)
         {
@@ -324,18 +340,27 @@ namespace h5{
     //------------------------------------------------------------------------
     string field_imp::name() const
     {
+        _throw_if_not_valid(EXCEPTION_RECORD,
+                            "Cannot retrieve name of invalid field!");
+
         return get_name(_object);
     }
 
     //------------------------------------------------------------------------
     object_imp field_imp::parent() const
     {
+        _throw_if_not_valid(EXCEPTION_RECORD,
+                            "Cannot obtain parent of an invalid field!");
+
         return get_parent(_object);
     }
 
     //------------------------------------------------------------------------
     string field_imp::filename() const 
     {
+        _throw_if_not_valid(EXCEPTION_RECORD,
+                            "Cannot obtain filename from an invalid field!");
+
         return get_filename(_object);
     }
 
@@ -351,24 +376,36 @@ namespace h5{
     //------------------------------------------------------------------------
     attribute_imp field_imp::attr(const string &name) const 
     {
+        _throw_if_not_valid(EXCEPTION_RECORD,
+                "Cannot obtain attribute from invalid field!");
+
         return attribute_imp(get_attribute_by_name(_object,name));
     }
 
     //------------------------------------------------------------------------
     attribute_imp field_imp::attr(size_t i) const
     {
+        _throw_if_not_valid(EXCEPTION_RECORD,
+                            "Cannot obtain attribute from invalid field!");
         return attribute_imp(get_attribute_by_index(_object,i));
     }
 
     //-----------------------------------------------------------------------
-    size_t field_imp::nattr() const noexcept
+    size_t field_imp::nattr() const 
     {
+        _throw_if_not_valid(EXCEPTION_RECORD,
+                            "Cannot get number of attributes from an invalid"
+                            " field!");
+
         return get_number_of_attributes(_object);
     }
 
     //-----------------------------------------------------------------------
     bool field_imp::has_attr(const string &name) const
     {
+        _throw_if_not_valid(EXCEPTION_RECORD,
+                            "Cannot check for attribute on an invalid field!");
+
         return has_attribute(_object,name);
     }
      
@@ -377,8 +414,33 @@ namespace h5{
     {
         delete_attribute(_object,name);
     }
+    
+    //------------------------------------------------------------------------
+    attribute_imp field_imp::attr(const string &name,type_id_t tid,
+                                  bool overwrite) const
+    {
+        return attribute_imp(create_attribute(_object,
+                                              name,
+                                              get_type(tid),
+                                              h5dataspace(),
+                                              overwrite));
+    }
 
     //------------------------------------------------------------------------
+    attribute_imp field_imp::attr(const string &name,type_id_t tid,
+                                  const type_imp::index_vector_type &shape,
+                                  bool overwrite) const
+    {
+        return attribute_imp(create_attribute(_object,
+                                              name,
+                                              get_type(tid),
+                                              h5dataspace(shape),
+                                              overwrite));
+    }
+
+    //========================================================================
+    // SELECTION RELATED METHODS
+    //========================================================================
     void field_imp::apply_selection(const type_imp::selection_vector_type &s)
         const
     {
@@ -423,28 +485,6 @@ namespace h5{
         }
     }
 
-    //------------------------------------------------------------------------
-    attribute_imp field_imp::attr(const string &name,type_id_t tid,
-                                  bool overwrite) const
-    {
-        return attribute_imp(create_attribute(_object,
-                                              name,
-                                              get_type(tid),
-                                              h5dataspace(),
-                                              overwrite));
-    }
-
-    //------------------------------------------------------------------------
-    attribute_imp field_imp::attr(const string &name,type_id_t tid,
-                                  const type_imp::index_vector_type &shape,
-                                  bool overwrite) const
-    {
-        return attribute_imp(create_attribute(_object,
-                                              name,
-                                              get_type(tid),
-                                              h5dataspace(shape),
-                                              overwrite));
-    }
     
 //end of namespace
 }

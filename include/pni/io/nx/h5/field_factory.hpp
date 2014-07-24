@@ -130,6 +130,7 @@ namespace h5{
             //! \throws size_mismatch_error if either chunk or shape are empty
             //! or their size does not match
             //! \throws object_error in case of any other error
+            //! \throws type_error if tid has no corresponding HDF5 type
             //! 
             //! \param parent the parent object for the field
             //! \param name the name of the field

@@ -100,6 +100,7 @@ namespace h5{
             //! Write data from memory (referenced by ptr) to the dataset.
             //! 
             //! \throws io_error in case of Input-output-errors
+            //!
             //! \param memtype memory data type
             //! \param memspace memory data space
             //! \param filespace file data space
@@ -109,6 +110,27 @@ namespace h5{
                              const h5dataspace &memspace,
                              const h5dataspace &filespace,
                              const void *ptr) const;
+
+            //-----------------------------------------------------------------
+            //!
+            //! \brief throw if not valid
+            //! 
+            //! Throws an exception if the field object is not valid. 
+            //! 
+            //! \throws invalid_object_error if field object is not valid
+            //! \throws object_error if the validity of any of the objects
+            //! cannot be determined
+            //!
+            //! \param record the exception record
+            //! \param message the message which should be attached to the 
+            //! exception
+            //! 
+            void _throw_if_not_valid(const exception_record &record,
+                                     const string &message) const
+            {
+                if(!is_valid())
+                    throw invalid_object_error(record,message);
+            }
 
         public:
             //===================Constructors and destructors==================
@@ -126,6 +148,9 @@ namespace h5{
             //! be thrown.
             //!
             //! \throws type_error if o does not refer to a dataset
+            //! \throws object_error in case of any other error during object 
+            //! construction
+            //! 
             //! \param o move reference to an H5Object
             //!
             explicit field_imp(object_imp &&o);
@@ -138,6 +163,8 @@ namespace h5{
             //! \throws size_mismatch_error in case that either shape or chunk
             //! empty or their sizes do not match
             //! \throws object_error in case of any other failure 
+            //! \throws type_error if tid has no corresponding HDF5 type
+            //!
             //! \param parent the parent group for the field
             //! \param name the name of the field
             //! \param shape the number of elements along each dimension
@@ -167,6 +194,8 @@ namespace h5{
             //======================assignment operators=======================
             //!
             //! \brief copy assignment operator
+            //! 
+            //! \throws object_error in case of any assignment errors
             //!
             field_imp &operator=(const field_imp &o);
 
@@ -195,6 +224,8 @@ namespace h5{
             //! \throws shape_mismatch_error if rank of s is not equal to 
             //! the rank of the dataset
             //! \throws object_error in case of other errors during resizeing
+            //! \throws invalid_object_error if field object not valid
+            //!
             //! \param s shape object describing the new shape of the dataset
             //!
             void resize(const type_imp::index_vector_type &s);
@@ -208,6 +239,8 @@ namespace h5{
             //!
             //! \throws index_error if e exceeds the rank of the dataset
             //! \throws object_error in case of other errors
+            //! \throws invalid_object_error if field is not valid
+            //! 
             //! \param e index of the extend dimension
             //! \param n number of elements by which the dimension shall be
             //! extended
@@ -219,6 +252,10 @@ namespace h5{
             //! \brief total number of elements
             //!
             //! Returns the total number of elements stored in the dataset.
+            //!
+            //! \throws invalid_object_error field object not valid
+            //! \throws object_error in case of size retrieval failed
+            //! 
             //! \return total number of elements
             //!
             size_t size() const;
@@ -228,6 +265,10 @@ namespace h5{
             //! \brief shape of dataset
             //!
             //! Returns a copy of the datasets shape. 
+            //! 
+            //! \throws invalid_object_error if field not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \return dataset shape
             //!
             type_imp::index_vector_type shape() const;
@@ -238,6 +279,9 @@ namespace h5{
             //!
             //! Returns the number of dimensions of the dataset.
             //!
+            //! \throws invalid_object_error if field object not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \return number of dimensions
             //!
             size_t rank() const;
@@ -247,11 +291,13 @@ namespace h5{
             //! \brief datatype ID
             //!
             //! Datatype ID of the dataset. 
+            //! 
+            //! \throws invalid_object_error if field object not valid
+            //! \throws object_error in case of any other error
             //!
             //! \return type id of the datatype of the dataset
             //!
             type_id_t type_id() const ;
-
 
             //-----------------------------------------------------------------
             //!
@@ -273,7 +319,9 @@ namespace h5{
             //!
             //! \throws invalid_object error if field is not valid
             //! \throws object_error in case of a general error
+            //! \throws type_error if tid has no corresponding HDF5 type
             //! \throws io_error in case of IO failure
+            //!
             //! \param tid type id of the original data type in memory
             //! \param ptr pointer to memory where the data should be stored.
             //!
@@ -293,6 +341,7 @@ namespace h5{
             //! \throws object_error  in case of all other errors
             //! \throws type_error if tid does not have a corresponding HDF5
             //! data type
+            //!
             //! \param tid type id for the strings
             //! \param ptr pointer to the memory region from which to read
             //!
@@ -309,6 +358,8 @@ namespace h5{
             //!
             //! \throws invalid_object_error if object is not valid
             //! \throws io_error if name of the group cannot be retrieved
+            //! \throws object_error in case of any other error
+            //!
             //! \return name of the group
             //! 
             string name() const;
@@ -319,7 +370,12 @@ namespace h5{
             //! 
             //! Return the parent of the current group. 
             //!
+            //! \throws invalid_object_error if field is not valid
             //! \throws object_error in case of errors
+            //! \throws type_error if the type of the object could not be 
+            //! determined
+            //! 
+            //! \return parent object as object_imp
             //! 
             object_imp parent() const;
 
@@ -329,9 +385,11 @@ namespace h5{
             //! 
             //! Return the name of the file holding this group.
             //! 
+            //! \throws invalid_object_error if field object not valid
             //! \throws io_error if filename cannot be retrieved
+            //! \throws object_error in case of any other error
             //! 
-            //! \return filename
+            //! \return name of the file the field belongs to
             //!
             string filename() const;
 
@@ -351,6 +409,7 @@ namespace h5{
             //! 
             //! \throws object_error if the validity of the object chould not be
             //! checked. 
+            //! 
             //! \return true if valid, false otherwise
             //!
             bool is_valid() const;
@@ -364,7 +423,10 @@ namespace h5{
             //! \brief create scalar attribute
             //!
             //! Create a simple scalar attribute 
+            //!
             //! \throws object_error if attribute creation fails
+            //! \throws invalid_object_error if parent field not valid
+            //! \throws type_error if tid has no corresponding HDF5 type
             //!
             //! \param name the name of the new attribute
             //! \param tid type id for the attribute
@@ -379,7 +441,10 @@ namespace h5{
             //! \brief create multidimensional attribute
             //! 
             //! Create a multidimensional attribute.
+            //!
             //! \throws object_error if attribute reation fails
+            //! \throws invalid_object_error if parent field not valid
+            //! \throws type_error if tid has no corresponding HDF5 type
             //!
             //! \param name the name for the attribute
             //! \param tid type id for the attribute
@@ -397,6 +462,8 @@ namespace h5{
             //! 
             //! \throws key_error if attribute does not exist
             //! \throws object_error if attribute retrievel fails
+            //! \throws invalid_object_error if parent field not valid
+            //!
             //! \param name name of the requested attribute
             //! \return instance of attribute_imp
             //! 
@@ -408,6 +475,8 @@ namespace h5{
             //! 
             //! \throws index_error if i exceeds the total number of attributes
             //! \throws object_error if attribute retrieval fails
+            //! \throws invalid_object_error if parent field not valid
+            //!
             //! \param i attribute index
             //! \return instance of attribute_imp
             //! 
@@ -416,11 +485,14 @@ namespace h5{
             //----------------------------------------------------------------
             //!
             //! \brief get number of attributes
+            //!
+            //! \throws invalid_object_error if parent field not valid
+            //! \throws object_error in case of of any other error
             //! 
             //! Returns the total number of attribtues attached to this group.
             //! \returns number of attributes
             //!
-            size_t nattr() const noexcept;
+            size_t nattr() const ;
 
             //----------------------------------------------------------------
             //!
@@ -428,7 +500,10 @@ namespace h5{
             //! 
             //! Returns true if the group has an attribute of the requested
             //! name, false otherwise.
+            //!
             //! \throws object_error if attribute check fails
+            //! \throws invalid_object_error if parent field not valid
+            //! 
             //! \param name the name of the looked up attribute
             //! \return true if attribute exists, flase otherwise
             //!
@@ -439,7 +514,11 @@ namespace h5{
             //! \brief delete an attribute
             //!
             //! Remove an attribute from this group. 
+            //!
             //! \throws object_error if attribute removal fails
+            //! \throws key_error if attribute name does not exist
+            //! \throws invalid_object_error if parent field does not exist
+            //! 
             //! \param name the name of the attribute to delete
             //! 
             void del_attr(const string &name) const;
