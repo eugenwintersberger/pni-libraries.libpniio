@@ -85,11 +85,16 @@ namespace nx{
             typedef std::vector<slice> selection_type;
             //=============constructors and destructor=========================
             //! default constructor
-            nxselection(selection_type sel,FTYPE &field):
-                _selection(sel),
+            nxselection(selection_type &&sel,FTYPE &field):
+                _selection(std::move(sel)),
                 _field(field)
             {}
 
+            //! default constructor
+            nxselection(const selection_type &sel,FTYPE &field):
+                _selection(sel),
+                _field(field)
+            {}
             //-----------------------------------------------------------------
             //! copy constructor
             nxselection(const nxselection<FTYPE> &sel):

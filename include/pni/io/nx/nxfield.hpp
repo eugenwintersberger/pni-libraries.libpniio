@@ -289,7 +289,6 @@ namespace nx{
                                _shape_mismatch_error_message(ashape,fshape));
                 }
 
-
                 try { _imp.write(pni::io::type_id(a),a.data()); }
                 catch(...)
                 {

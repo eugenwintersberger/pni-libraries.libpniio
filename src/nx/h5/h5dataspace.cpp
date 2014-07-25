@@ -284,6 +284,18 @@ namespace h5 {
         __update_dataspace();
     }
 
+    //------------------------------------------------------------------------
+    const type_imp::index_vector_type &h5dataspace::current_dims() const noexcept
+    {
+        return _dims;
+    }
+
+    //------------------------------------------------------------------------
+    const type_imp::index_vector_type &h5dataspace::maximum_dims() const noexcept
+    {
+        return _maxdims;
+    }
+
     
     //------------------------------------------------------------------------
     h5dataspace::iterator h5dataspace::current_begin() const noexcept 

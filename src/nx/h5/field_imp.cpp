@@ -165,20 +165,14 @@ namespace h5{
             throw index_error(EXCEPTION_RECORD,ss.str());
         }
 
-        type_imp::index_vector_type b(_file_space.rank());
-        std::copy(_file_space.current_begin(),
-                  _file_space.current_end(),
-                  b.begin());
-        b[e] += n;
+        _file_space.grow(e,n);
+        _memory_space.grow(e,n);
 
-        if(H5Dset_extent(_object.id(),b.data())<0)
+        //if(H5Dset_extent(_object.id(),b.data())<0)
+        if(H5Dset_extent(_object.id(),_file_space.current_dims().data())<0)
             throw object_error(EXCEPTION_RECORD, 
                   "Grow of dataset ["+get_path(_object)
                   +"] failed!\n\n"+get_h5_error_string());
-
-        //re-fetch the new dataspace
-        _file_space.grow(e,n);
-        _memory_space = _file_space;
     }
 
 
@@ -445,18 +439,36 @@ namespace h5{
         const
     {
         //create an array selection
-        array_selection asel = array_selection::create(s);
+        //array_selection asel = array_selection::create(s);
         
         //create buffers
+        /*
         auto offset = asel.offset<type_imp::index_vector_type>();
         auto stride = asel.stride<type_imp::index_vector_type>();
         auto count = asel.full_shape<type_imp::index_vector_type>();
+        */
 
         //need to throw an exception if the rank of the selection and
         //that of the 
-        if(offset.size() != _file_space.rank())
+        if(s.size() != _file_space.rank())
             throw shape_mismatch_error(EXCEPTION_RECORD,
                     "Selection and field rank do not match!");
+
+        type_imp::index_vector_type offset(s.size());
+        type_imp::index_vector_type stride(s.size());
+        type_imp::index_vector_type count(s.size());
+        type_imp::index_vector_type mshape;
+
+        size_t index=0;
+        for(auto sl: s)
+        {
+            offset[index] = sl.first();
+            stride[index] = sl.stride();
+            count[index] = pni::core::size(sl);
+            if(count[index]!=1) mshape.push_back(count[index]);
+            index++;     
+        }
+
 
         //apply the selection
         herr_t err = H5Sselect_hyperslab(_file_space.object().id(),
@@ -469,7 +481,7 @@ namespace h5{
 
         //need to set the memory dataspace to the effective shape of the
         //selection
-        _memory_space = h5dataspace(asel.shape<type_imp::index_vector_type>());
+        _memory_space = h5dataspace(mshape);
 
     }
 

@@ -273,6 +273,11 @@ namespace h5 {
             //! \return true if dataspace is scalar 
             //!
             bool is_scalar() const;
+
+            //----------------------------------------------------------------
+            const type_imp::index_vector_type &current_dims() const noexcept;
+
+            const type_imp::index_vector_type &maximum_dims() const noexcept;
    
             //----------------------------------------------------------------
             //! 
