@@ -218,7 +218,7 @@ void NXFieldTest::test_io_string_scalar()
     CPPUNIT_ASSERT(write == read);
 
     CPPUNIT_ASSERT_NO_THROW(field1.grow(0));
-    CPPUNIT_ASSERT_THROW(field1.write(write),shape_mismatch_error);
+    CPPUNIT_ASSERT_THROW(field1.write(write),size_mismatch_error);
 
     //try to write a literal
     nxfield field2 = root.create_field<string>("scalar_2");
@@ -242,7 +242,7 @@ void NXFieldTest::test_io_bool_scalar()
     CPPUNIT_ASSERT(write == read);
 
     CPPUNIT_ASSERT_NO_THROW(field1.grow(0));
-    CPPUNIT_ASSERT_THROW(field1.write(write),shape_mismatch_error);
+    CPPUNIT_ASSERT_THROW(field1.write(write),size_mismatch_error);
 }
 //------------------------------------------------------------------------------
 void NXFieldTest::test_io_string_array()
@@ -261,7 +261,7 @@ void NXFieldTest::test_io_string_array()
     CPPUNIT_ASSERT(std::equal(write.begin(),write.end(),read.begin()));
 
     field1 = root.create_field<string>("array2",{2,2});
-    CPPUNIT_ASSERT_THROW(field1.write(write),shape_mismatch_error);
+    CPPUNIT_ASSERT_THROW(field1.write(write),size_mismatch_error);
 
     nxdeflate_filter deflate;
     deflate.compression_rate(9);

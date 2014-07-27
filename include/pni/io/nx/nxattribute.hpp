@@ -28,12 +28,12 @@
 #include <pni/core/arrays.hpp>
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
+#include <pni/core/type_erasures.hpp>
 
 #include "nximp_map.hpp"
 #include "nxexceptions.hpp"
 #include "nxobject_traits.hpp"
 #include "nxobject_type.hpp"
-#include "utils/io_utils.hpp"
 #include "algorithms.hpp"
 
 
@@ -299,15 +299,7 @@ namespace nx{
             //!
             void write(const array &a) const
             {
-                try
-                {
-                    write_array(_imp,a);
-                }
-                catch(...)
-                {
-                    throw nxattribute_error(EXCEPTION_RECORD,
-                            "Error reading attribute!");
-                }
+                _imp.write(a.type_id(),a.data());
             }
 
             //-----------------------------------------------------------------
@@ -356,22 +348,14 @@ namespace nx{
             //! \throws type_error if data type is not supported
             //! \throws shape_mismatch_error if array shape does not match
             //! \throws nxattribute_error in case of any other IO error
+            //!
             //! \param a instance of array 
             //!
             void read(array &a) const
             {
                 check_allocation_state(a,EXCEPTION_RECORD);
                 check_equal_shape(a,*this,EXCEPTION_RECORD);
-
-                try
-                {
-                    read_array(_imp,a);
-                }
-                catch(...)
-                {
-                    throw nxattribute_error(EXCEPTION_RECORD,
-                            "Error reading to array!");
-                }
+                _imp.read(a.type_id(),a.data());
             }
 
             //-----------------------------------------------------------------

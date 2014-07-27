@@ -36,7 +36,6 @@
 #include "nxobject_traits.hpp"
 #include "nxexceptions.hpp"
 #include "nxselection.hpp"
-#include "utils/io_utils.hpp"
 #include "algorithms/get_path.hpp"
 
 
@@ -50,57 +49,39 @@ namespace nx{
     using pni::core::string;
     using pni::core::exception;
 
-    /*! 
-    \ingroup nexus_lowlevel
-    \brief nxfield base class
-
-    nxfield is a type used to store multidimensional data in a file. The IO
-    methods it provides support all the array templates provided by \c
-    libpnicore. Partial IO is provided by the () operator (see below). 
-    The interface of nxfield is quite similar to those of the array templates
-    provided by \c libpnicore. Like them it provides a shape() and  a size()
-    method returning the number of elements along each dimension and the total
-    number of elements in the field. rank() returns the number of dimensions of
-    the field. 
-    Unlike the array templates which provide the ID of their element type via a
-    static member variable the method type_id() is provided by NXField for the
-    same purpose.
-
-    \section nxfield_resize_and_grow resize and grow
-    <div align="right"
-    style="width:500;float:right;border-width:20px;margin-left:20px">
-    <table>
-    <tr>
-    <td> 
-    \image html array_grow.svg 
-    </td>
-    <td> 
-    \image html array_resize.svg 
-    </td>
-    </tr>
-    <tr>
-    <td> <center> Grow operation </center> </td>
-    <td> <center> Resize operation </center> </td>
-    </tr>
-    </table>
-    </div>
-    The number of dimensions a field provides is fixed at the time it is
-    created. However, the number of elements along each of these dimensions can
-    be altered at runtime. Two methods of the class are responsible for resizing
-    a field: resize() and grow(). 
-    The difference between resize and grow is shown in the figure below. 
-    While the grow() operation resizes the field by a fixed amount of elements
-    along a particular dimension a resize operation can enlarge multiple
-    dimensions at the same time. 
-    The latter one is useful in situations where the number of elements along
-    each dimension is unknown at the time the field is created. 
-    The grow() operation is however very useful in situations where the number
-    of elements to store in an element is not known at the time the field is
-    created. One can use this to append data along one dimensions. 
-    Consider for instance this example that shows a very common situation during
-    experiments. Data should be stored in a field but the total number of points
-    is not known when the field is created
-    \code
+    //! 
+    //! \ingroup nexus_lowlevel
+    //! \brief nxfield base class
+    //!
+    //! nxfield is a type used to store multidimensional data in a file. The IO
+    //! methods it provides support all the array templates provided by \c
+    //! libpnicore. Partial IO is provided by the () operator (see below). 
+    //! The interface of nxfield is quite similar to those of the array 
+    //! templates provided by \c libpnicore. Like them it provides a shape() 
+    //! and  a size() method returning the number of elements along each 
+    //! dimension and the total number of elements in the field. rank() 
+    //! returns the number of dimensions of the field. 
+    //! 
+    //! Unlike the array templates which provide the ID of their element type 
+    //! via a static member variable the method type_id() is provided by 
+    //! NXField for the same purpose.
+    //! The number of dimensions a field provides is fixed at the time it is
+    //! created. However, the number of elements along each of these 
+    //! dimensions can be altered at runtime. Two methods of the class are 
+    //! responsible for resizing a field: resize() and grow(). 
+    //! The difference between resize and grow is shown in the figure below. 
+    //! While the grow() operation resizes the field by a fixed amount of 
+    //! elements along a particular dimension a resize operation can enlarge 
+    //! multiple dimensions at the same time. 
+    //! The latter one is useful in situations where the number of elements 
+    //! along each dimension is unknown at the time the field is created. 
+    //! The grow() operation is however very useful in situations where the 
+    //! number of elements to store in an element is not known at the time the 
+    //! field is created. One can use this to append data along one dimensions.
+    //! Consider for instance this example that shows a very common situation 
+    //! during experiments. Data should be stored in a field but the total 
+    //! number of points is not known when the field is created
+    /*!\code
     //we start with a field of size 0 - no element
     nxfield field = group.create_field<float32>("motor",shape_t{0}); 
 
@@ -112,31 +93,17 @@ namespace nx{
         if(get_break_condition()) break;
     }
     \endcode
-    The above loop runs until get_break_condition() return true. In no case we
-    can no in advance when the loop will exit and thus how many elements should
-    be stored. The grow() method offers an easy way to handle such situations.
-
-    \section nxfield_partial_io Partial IO
-    <div align="right"
-    style="width:500;float:right;border-width:20px;margin-left:20px">
-    <table>
-    <tr>
-    <td> \image html selection_1.png </td>
-    <td> \image html selection_2.png </td>
-    <td> \image html selection_3.png </td>
-    </tr>
-    <tr>
-    <td><center> Selection 1 </center></td>
-    <td><center> Selection 2 </center></td>
-    <td><center> Selection 3 </center></td>
-    </table>
-    </div>
-
-    As HDF5 datasets, nxfield objects provide the possibility to read or write
-    only a part of the data.  The mechanism works pretty much as the array view
-    selection in \c libpnicore. 
-    Compare the following code with the figures on the right side
-    \code
+    */
+    //! The above loop runs until get_break_condition() return true. In no 
+    //! case we can no in advance when the loop will exit and thus how many 
+    //! elements should be stored. The grow() method offers an easy way to 
+    //! handle such situations.
+    //!
+    //! As HDF5 datasets, nxfield objects provide the possibility to read or 
+    //! write only a part of the data.  The mechanism works pretty much as 
+    //! the array view selection in \c libpnicore. 
+    //! Compare the following code with the figures on the right side
+    /*!\code
     darray<uint32> strip(shape_t{1024});
 
     //selection 1
@@ -151,11 +118,12 @@ namespace nx{
     field3(slice(2,6),slice(2,10,2)).read(block2);
 
     \endcode
-    Under the hood the () operator of NXField applies a selection to the
-    underlying HDF5 dataset according to the arguments passed to it. 
-    Every call to read or write immediately after reading or writing the data
-    removes this selections.
     */
+    //! Under the hood the () operator of NXField applies a selection to the
+    //! underlying HDF5 dataset according to the arguments passed to it. 
+    //! Every call to read or write immediately after reading or writing the 
+    //! data removes this selections.
+    //!
     template<nximp_code IMPID> class nxfield
     {
         public:
@@ -167,41 +135,25 @@ namespace nx{
         private:
             //! field implementation
             imp_type _imp;
-            /*!
-            \brief gernerate error message
 
-            Generate the error message for a shape mismatch error between a
-            field and an array type. 
-            \param ashape array shape
-            \param fshape field shape
-            \return error message
-            */
+            //!
+            //! \brief gernerate error message
+            //!
+            //! Generate the error message for a shape mismatch error 
+            //! between a field and an array type. 
+            //!
+            //! \param ashape array shape
+            //! \param fshape field shape
+            //! \return error message
+            //!
             static string _shape_mismatch_error_message(const shape_t
                     &ashape,const shape_t &fshape) 
             {
                 std::stringstream ss;
                 ss<<"Array shape ( ";
-#ifdef NOFOREACH
-                for(auto iter = ashape.begin();iter!=ashape.end();++iter)
-                {
-                    auto v = *iter;
-#else
-                for(auto v: ashape) 
-                {
-#endif
-                    ss<<v<<" ";
-                }
+                for(auto v: ashape) ss<<v<<" ";
                 ss<<") and field shape ( ";
-#ifdef NOFOREACH
-                for(auto iter = fshape.begin();iter!=fshape.end();++iter)
-                {
-                    auto v = *iter;
-#else
-                for(auto v: fshape) 
-                {
-#endif 
-                    ss<<v<<" ";
-                }
+                for(auto v: fshape) ss<<v<<" ";
                 ss<<") do not match!";
 
                 return ss.str();
@@ -209,112 +161,84 @@ namespace nx{
 
 
             //-----------------------------------------------------------------
-            /*!
-            \brief read data to array
-
-            \throws memory_not_allocated_error if array buffer not allocated
-            \throws shape_mismatch_error if shapes do not match
-            \throws nxfield_error in case of other errors
-            \tparam ATYPE array type
-            \param a reference to an instance fo ATYPE
-            */
-            template<typename ATYPE> void _read_array(ATYPE &a) const
+            //!
+            //! \brief read data to array
+            //!
+            //! \throws memory_not_allocated_error if array buffer not 
+            //! allocated
+            //! \throws size_mismatch_error if array and field size do not 
+            //! match
+            //! \throws invalid_object_error if field is not valid
+            //! \throws object_error in case of any other error
+            //! \throws type_error if array data type cannot be handled
+            //! \throws io_error in case of IO errors
+            //!
+            //! \tparam ATYPE array typew
+            //! \param a reference to an instance fo ATYPE
+            //!
+            template<typename ATYPE> 
+            void _read_array(ATYPE &a) const
             {
                 if(a.size() == 0)
                     throw memory_not_allocated_error(EXCEPTION_RECORD,
                                      "Target array buffer not allocated!");
 
-                auto ashape = a.shape<shape_t>();
-                auto fshape = this->shape<shape_t>();
-                
-                if(ashape.size() == fshape.size())
-                {
-                    //if array and field have the same rank we need to check the
-                    //shape of each of the objects
-                    if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
-                        throw shape_mismatch_error(EXCEPTION_RECORD,
-                                _shape_mismatch_error_message(ashape,fshape));
-                }
-                else
-                {
-                    //if the two components are of different size we have to
-                    //throw an exception in any case
-                    if(this->size() != a.size())
-                        throw shape_mismatch_error(EXCEPTION_RECORD,
-                                _shape_mismatch_error_message(ashape,fshape));
-                }
+                if(a.size()!=size())
+                    throw size_mismatch_error(EXCEPTION_RECORD,
+                            "Array and field size do not match!");
 
-                //finally we read the data
-                try
-                {
-                    _imp.read(pni::core::type_id(a),a.data());
-                }
-                catch(nxfield_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
+                _imp.read(pni::core::type_id(a),a.data());
 
             }
 
-
             //-----------------------------------------------------------------
-            /*!
-            \brief write data from array
-
-            \throws memory_not_allocated_error if array buffer not allocated
-            \throws shape_mismatch_error if shapes do not match
-            \throws nxfield_error in case of other errors
-            \tparam ATYPE array type
-            \param a reference to an instance fo ATYPE
-            */
-            template<typename ATYPE> void _write_array(ATYPE &a) const
+            //!
+            //! \brief write data from array
+            //!
+            //! \throws memory_not_allocated_error if array buffer not 
+            //! allocated
+            //! \throws size_mismatch_error if array and field size do not 
+            //! match
+            //! \throws invalid_object_error if field is not valid
+            //! \throws object_error in case of any other error
+            //! \throws type_error if array type cannot be handled
+            //! \throws io_error in case of IO errors
+            //!
+            //! \tparam ATYPE array type
+            //! \param a reference to an instance fo ATYPE
+            //!
+            template<typename ATYPE> 
+            void _write_array(ATYPE &a) const
             {
                 if(a.size() == 0)
                     throw memory_not_allocated_error(EXCEPTION_RECORD,
                                      "Source array buffer not allocated!");
 
-                auto ashape = a.shape<shape_t>();
-                auto fshape = this->shape<shape_t>();
+                if(a.size()!=size())
+                    throw size_mismatch_error(EXCEPTION_RECORD,
+                            "Array and field size do not match!");
 
-                if(ashape.size() == fshape.size())
-                {
-                    if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
-                        throw shape_mismatch_error(EXCEPTION_RECORD,
-                                _shape_mismatch_error_message(ashape,fshape));
-                }
-                else
-                {
-                    if(this->size() != a.size())
-                        throw shape_mismatch_error(EXCEPTION_RECORD,
-                               _shape_mismatch_error_message(ashape,fshape));
-                }
-
-                try { _imp.write(pni::io::type_id(a),a.data()); }
-                catch(...)
-                {
-                    throw nxfield_error(EXCEPTION_RECORD,
-                                     "Cannt write data from array!");
-                }
+                _imp.write(pni::io::type_id(a),a.data()); 
             }
 
             //-----------------------------------------------------------------
-            /*!
-            \brief apply selection
-
-            Apply a selection to the field.
-            \param s selection container
-            */
+            //!
+            //! \brief apply selection
+            //!
+            //! Apply a selection to the field.
+            //! \param s selection container
+            //!
             void apply_selection(const std::vector<slice> &s) 
             {
                 _imp.apply_selection(s);
             }
 
             //-----------------------------------------------------------------
-            /*! 
-            \brief remove a selection
-
-            Removes a selection previously applied with apply_selection.
-            */
+            //! 
+            //! \brief remove a selection
+            //!
+            //! Removes a selection previously applied with apply_selection.
+            //!
             void reset_selection() 
             {
                 _imp.clear_selections();
@@ -324,35 +248,45 @@ namespace nx{
             //===================public attributes=============================
             nxattribute_manager<field_type> attributes;
             //============constructors and destructors=========================
-            //! default constructor
+            //!
+            //! \brief default constructor
+            //!
             explicit nxfield():
                 _imp(),
                 attributes(_imp)
             { }
 
             //-----------------------------------------------------------------
-            //! copy constructor
+            //!
+            //! \brief copy constructor
+            //!
             nxfield(const field_type &o):
                 _imp(o._imp),
                 attributes(_imp)
             { }
 
             //-----------------------------------------------------------------
-            //! move constructor
+            //!
+            //! \brief move constructor
+            //!
             nxfield(field_type &&o):
                 _imp(std::move(o._imp)),
                 attributes(_imp)
             { }
 
             //-----------------------------------------------------------------
-            //! copy constructor from implementation object
+            //!
+            //! \brief copy constructor from implementation object
+            //!
             explicit nxfield(const imp_type &o):
                 _imp(o),
                 attributes(_imp)
             { }
 
             //-----------------------------------------------------------------
-            //! move constructor from implementation object
+            //!
+            //! \brief move constructor from implementation object
+            //!
             explicit nxfield(imp_type &&o):
                 _imp(std::move(o)),
                 attributes(_imp)
@@ -368,10 +302,18 @@ namespace nx{
 
 
             //-----------------------------------------------------------------
-            //!destructor
-            ~nxfield() { _imp.clear_selections(); }
+            //!
+            //! \brief destructor
+            //!
+            ~nxfield() 
+            { 
+                _imp.clear_selections(); 
+            }
             
             //===============assignment operator===============================
+            //!
+            //! \brief copy assignment operator
+            //!
             field_type &operator=(const field_type &f)
             {
                 if(this == &f) return *this;
@@ -380,6 +322,10 @@ namespace nx{
                 return *this;
             }
 
+            //----------------------------------------------------------------
+            //!
+            //! \brief move assignment operator
+            //!
             field_type &operator=(field_type &&f)
             {
                 if(this == &f) return *this;
@@ -389,6 +335,11 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
+            //!
+            //! \brief conversion assignment
+            //!
+            //! \throws type_error if object is not a field
+            //!
             field_type &operator=(const typename nxobject_trait<IMPID>::object_type &o)
             {
                 *this = as_field(o);
@@ -397,42 +348,66 @@ namespace nx{
 
 
             //=================dataset inquiry methods=========================
-            /*! 
-            \brief field shape
-
-            Returns the shape of the field
-            \return Shape object
-            */
+            //!
+            //! \brief field shape
+            //!
+            //! Returns the shape of the field
+            //!
+            //! \throws invalid_object_error if field is not valid
+            //! \throws object_error in case of any other error
+            //!
+            //! \return container with elements per dimension
+            //!
             template<typename CTYPE> CTYPE shape() const 
             { 
                 return type_type::template from_index_vector<CTYPE>(_imp.shape()); 
             }
 
             //-----------------------------------------------------------------
-            /*! 
-            \brief return size
-
-            Return the size (number of elements) in the field.
-            \return total number of elements in the field
-            */
-            size_t size() const { return _imp.size(); }
-
-            //-----------------------------------------------------------------
-            /*! 
-            \brief get the type ID
-
-            Return the ID of the data type stored in the field.
-            \return data type ID
-            */
-            type_id_t type_id() const { return _imp.type_id(); }
+            //! 
+            //! \brief return size
+            //!
+            //! Return the size (number of elements) in the field.
+            //!
+            //! \throws invalid_object_error if field is not valid
+            //! \throws objecct_error in case of any other error
+            //!
+            //! \return total number of elements in the field
+            //!
+            size_t size() const 
+            { 
+                return _imp.size(); 
+            }
 
             //-----------------------------------------------------------------
-            /*!
-            \brief get parent object
+            //! 
+            //! \brief get the type ID
+            //!
+            //! Return the ID of the data type stored in the field.
+            //!
+            //! \throws invalid_object_error if field is not valid
+            //! \throws object_error in case of any other error
+            //! 
+            //! \return data type ID
+            //!
+            type_id_t type_id() const 
+            { 
+                return _imp.type_id(); 
+            }
 
-            Returns the parent object of the field.
-            \return parent object
-            */
+            //-----------------------------------------------------------------
+            //!
+            //! \brief get parent object
+            //!
+            //! Returns the parent object of the field.
+            //!
+            //! \throws invalid_object_error if field is not valid
+            //! \throws type_error if the interal type of the field object could 
+            //! not be determined
+            //! \throws objet_error in case of any other error
+            //!
+            //! \return parent object
+            //!
             typename nxobject_trait<IMPID>::object_type parent() const
             {
                 typedef typename nxobject_trait<IMPID>::group_type group_type;
@@ -442,145 +417,142 @@ namespace nx{
             }
             
             //-----------------------------------------------------------------
-            /*! 
-            \brief resize field
-
-            Resize the field to a new shape determined by s.  The rank of the
-            old and the new shape must coincide otherwise an exception will be
-            thrown.
-            \throws shape_mismatch_error if ranks do not match
-            \throws nxfield_error in case of other errors
-            \param s describing the new shape of the field
-            */
+            //! 
+            //! \brief resize field
+            //!
+            //! Resize the field to a new shape determined by s.  The rank of 
+            //! the old and the new shape must coincide otherwise an exception 
+            //! will be thrown.
+            //!
+            //! \throws shape_mismatch_error if ranks do not match
+            //! \throws invalid_object_error if field is not valid
+            //! \throws object_error in case of any other error
+            //!
+            //! \param s describing the new shape of the field
+            //!
             template<typename CTYPE> void resize(const CTYPE &s)
             {
-                try
-                {
                     _imp.resize(type_type::to_index_vector(s));
-                }
-                catch(shape_mismatch_error &e)
-                {
-                    e.append(EXCEPTION_RECORD); throw e;
-                }
-                catch(...)
-                {
-                    throw nxfield_error(EXCEPTION_RECORD,
-                            "Error resizing field!");
-                }
             }
 
             //-----------------------------------------------------------------
-            /*! 
-            \brief grow field along a particular dimension
-
-            Grows the field by n elements along dimension e. This method is
-            pretty useful in cases where an arbitrary number of points shall be
-            stored in a field and their number is not known when the field was
-            created.
-            \throws index_error if e exceeds the rank of the field
-            \throws nxfield_error in case of other errors
-            \param e index of dimension along which to grow
-            \param n number of elements by which to grow
-            */
+            //! 
+            //! \brief grow field along a particular dimension
+            //!
+            //! Grows the field by n elements along dimension e. This method 
+            //! is pretty useful in cases where an arbitrary number of points 
+            //! shall be stored in a field and their number is not known when 
+            //! the field was created.
+            //!
+            //! \throws index_error if e exceeds the rank of the field
+            //! \throws object_error in case of any other error
+            //! \throws invalid_object_error if field not valid
+            //!
+            //! \param e index of dimension along which to grow
+            //! \param n number of elements by which to grow
+            //!
             void grow(const size_t &e,const size_t &n=1)
             {
-                try
-                {
                     _imp.grow(e,n);
-                }
-                catch(index_error &e)
-                {
-                    e.append(EXCEPTION_RECORD); throw e;
-                }
-                catch(...)
-                {
-                    std::stringstream ss;
-                    ss<<"Growing field ["<<get_path(*this);
-                    ss<<"] along dimension"<<e<<" by "<<n<<" elements ";
-                    ss<<"failed!";
-                    throw nxfield_error(EXCEPTION_RECORD,ss.str());
-                }
             }
 
             //-----------------------------------------------------------------
-            /*! 
-            \brief number of dimensions
-
-            Returns the number of dimensions of the field.
-            \return number of dimensions
-            */
-            size_t rank() const { return _imp.rank(); }
+            //! 
+            //! \brief number of dimensions
+            //!
+            //! Returns the number of dimensions of the field.
+            //!
+            //! \throws invalid_object_error if field is not valid
+            //! \throws object_error in case of any other error
+            //!
+            //! \return number of dimensions
+            //!
+            size_t rank() const 
+            { 
+                return _imp.rank(); 
+            }
 
             //=============methods for reading data============================
-            /*! 
-            \brief reading simple data from the dataset
-
-            Read a single data value from the dataset. In order to succeed the
-            dataset must be a scalar dataset or the total size of the dataset
-            must be 1.
+            //! 
+            //! \brief reading simple data from the dataset
+            //!
+            //! Read a single data value from the dataset. In order to succeed 
+            //! the dataset must be a scalar dataset or the total size of the 
+            //! dataset must be 1.
+            /*!
             \code
             uint32 scalar;
             field.read(scalar);
             \endcode
-            \throws shape_mismatch_error if dataset is not scalar
-            \throws nxfield_error in all other error cases
-            \param value variable where to store the data
             */
+            //!
+            //! \throws shape_mismatch_error if dataset is not scalar
+            //! \throws invalid_object_error if field is not valid
+            //! \throws type_error if argument type cannot be handled
+            //! \throws io_error in case of IO failure
+            //!
+            //! \tparam T data type of the argument
+            //! \param value variable where to store the data
+            //!
             template<typename T> void read(T &value) const
             {
-                if(_imp.size() != 1)
+                if(size() != 1)
                     throw shape_mismatch_error(EXCEPTION_RECORD,
                                               "Field is not scalar!");
 
-                try
-                {
-                    _imp.read(type_id_map<T>::type_id,&value);
-                }
-                catch(...)
-                {
-                    throw nxfield_error(EXCEPTION_RECORD,
-                                       "Error reading data from field ["
-                                       +get_path(*this)+"]!");
-                }
+                _imp.read(type_id_map<T>::type_id,&value);
             }
            
             //----------------------------------------------------------------
+            //!
+            //! \brief reading data to memory
+            //! 
+            //! Read data from a field to a region in memory referedn to by 
+            //! poitner values. This method does not check any shape or 
+            //! size bounds. 
+            //! 
+            //! \throws invalid_object_error if field is not valid
+            //! \throws type_error if argument type cannot be handled
+            //! \throws io_error in case of IO failure
+            //! 
+            //! \tparam T data type to read (in memory)
+            //! \param values pointer to memory reagion
+            //!
             template<typename T> 
             void read(T *values) const
             {
-                try
-                {
-                    _imp.read(type_id_map<T>::type_id,values);
-                }
-                catch(...)
-                {
-                    throw nxfield_error(EXCEPTION_RECORD,
-                                       "Error reading data from field ["
-                                       +get_path(*this)+"]!");
-                }
+                _imp.read(type_id_map<T>::type_id,values);
             }
 
 
             //-----------------------------------------------------------------
+            //! 
+            //! \brief read data to array
+            //!
+            //! Copy the data stored in the field to an array object.
+            //! An exception is thrown if the buffer holding the arrays data is
+            //! not allocated or the shape of the array does not match the shape
+            //! of the field.
             /*! 
-            \brief read data to array
-
-            Copy the data stored in the field to an array object.
-            An exception is thrown if the buffer holding the arrays data is
-            not allocated or the shape of the array does not match the shape
-            of the field.
-            
             \code
             darray<float32> a(field.shape<shape_t>());
             field.read(a);
             \endcode
-
-            \throws shape_mismatch_error if field and array-shape do not
-            match
-            \throws memory_not_allocated_error if array buffer not allocated
-            \throws nxfield_error in case of all other errors.
-            \param array Array instance where to store the data
             */
+            //! \throws memory_not_allocated_error if array buffer not 
+            //! allocated
+            //! \throws size_mismatch_error if array and field size do not 
+            //! match
+            //! \throws invalid_object_error if field is not valid
+            //! \throws object_error in case of any other error
+            //! \throws type_error if array data type cannot be handled
+            //! \throws io_error in case of IO errors
+            //!
+            //! \tparam STORAGE storage type of the mdarray template
+            //! \tparam IMAP index map type of the array type
+            //! \tparam IPA inplace arithmetic policy 
+            //! \param array Array instance where to store the data
+            //!
             template<
                      typename STORAGE,
                      typename IMAP,
@@ -588,88 +560,80 @@ namespace nx{
                     >
             void read(mdarray<STORAGE,IMAP,IPA> &array) const
             {
-                try
-                {
-                    this->_read_array(array);
-                }
-                catch(memory_not_allocated_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(shape_mismatch_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(nxfield_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
+                _read_array(array);
             }
 
             //-----------------------------------------------------------------
-            /*!
-            \brief read data to a array instance
-
-            This method reads data to an array type erasure. 
-            \throws shape_mismatch_error if field and array-shape do not match
-            \throws memory_not_allocated_error if array-buffer is not allocated
-            \throws nxfield_error in case of any other IO error
-            \param a instance of the array
-            */
-            void read(array &a) const;
+            //!
+            //! \brief read data to a array instance
+            //! 
+            //! This method reads data to an array type erasure. 
+            //! 
+            //! \throws shape_mismatch_error if field and array-shape do not match
+            //! \throws memory_not_allocated_error if array-buffer is not allocated
+            //! \throws nxfield_error in case of any other IO error
+            //! 
+            //! \param a instance of the array
+            //! 
+            void read(array &a) const
+            {
+                _imp.read(a.type_id(),a.data());
+            }
 
            
             //=================methods for writing data========================
+            //! 
+            //! \brief write a single value
+            //!
+            //! Writs a single value of type T to the field. This method will 
+            //! succeed only if the field can hold only a single value.
             /*! 
-            \brief write a single value
-
-            Writs a single value of type T to the field. This method will 
-            succeed only if the field can hold only a single value.
-            
             \code
             float64 data = 1.2340;
             field.write(data);
             \endcode
-
-            \throws shape_mismatch_error if the dataspace is not scalar
-            \throws nxfield_error in case of other errors
-            \param value value to write
             */
+            //! \throws size_mismatch_error if the dataspace is not scalar
+            //! \throws invalid_object_error in case of IO errors
+            //! \throws io_error in case of IO errors
+            //! \throws object_error  in case of all other errors
+            //! \throws type_error if tid does not have a corresponding HDF5
+            //! data type
+            //!
+            //! \tparam T memory data type of the source
+            //! \param value value to write
+            //! 
             template<typename T> void write(const T &value) const
             {
                 static_assert(!std::is_pointer<T>::value,"no pointer");
                 if(_imp.size()!=1) 
-                    throw shape_mismatch_error(EXCEPTION_RECORD,
+                    throw size_mismatch_error(EXCEPTION_RECORD,
                                               "Field is not scalar!");
 
-                try
-                {
-                    _imp.write(type_id_map<T>::type_id,&value);
-                }
-                catch(...)
-                {
-                    throw nxfield_error(EXCEPTION_RECORD,
-                            "Error writing data to field ["
-                            +get_path(*this)+"]!");
-                }
-
+                _imp.write(type_id_map<T>::type_id,&value);
             }
 
             //----------------------------------------------------------------
+            //! 
+            //! \brief write data from memory
+            //! 
+            //! Write data from a memory region referend to by value to the
+            //! field. The method does not perform any size or shape 
+            //! checking. It assumes that the region of memory is large 
+            //! enough. 
+            //! 
+            //! \throws invalid_object_error in case of IO errors
+            //! \throws io_error in case of IO errors
+            //! \throws object_error  in case of all other errors
+            //! \throws type_error if tid does not have a corresponding HDF5
+            //! data type
+            //! 
+            //! \tparam T memory data type of the source
+            //! \param value pointer to memory region
+            //! 
             template<typename T> void write(const T *value) const
             {
-
-                try
-                {
-                    _imp.write(type_id_map<T>::type_id,value);
-                }
-                catch(...)
-                {
-                    throw nxfield_error(EXCEPTION_RECORD,
-                            "Error writing data to field ["
-                            +get_path(*this)+"]!");
-                }
-
+                _imp.write(type_id_map<T>::type_id,value);
             }
 
             //----------------------------------------------------------------
@@ -684,45 +648,49 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            /*! 
-            \brief write old style string
-
-            Writes a C-style string to disk. This method is a specialization of
-            the write(const T &value) template mathod.
-
-            \throws shape_mismatch_error if the field is not scalar
-            \throws nxfield_error in case of other errors
-            \param value pointer to string data
-            */
+            //! 
+            //! \brief write old style string
+            //! 
+            //! Writes a C-style string to disk. This method is a 
+            //! specialization of the write(const T &value) template mathod.
+            //!
+            //! \throws size_mismatch_error if the dataspace is not scalar
+            //! \throws invalid_object_error in case of IO errors
+            //! \throws io_error in case of IO errors
+            //! \throws object_error  in case of all other errors
+            //! \throws type_error if tid does not have a corresponding HDF5
+            //! data type
+            //! 
+            //! \param value pointer to string data
+            //!
             void write(const char *value) const
             {
-                try
-                {
-                    string s(value);
-                    this->write(s);
-                }
-                catch(shape_mismatch_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(nxfield_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
+                string s(value);
+                write(s);
 
             }
 
             //-----------------------------------------------------------------
-            /*! 
-            \brief write data form a DArray
-
-            Write data from an instance of darray. 
-            \throws memory_not_allocated_error if array-buffer is not allocated
-            \throws shape_mismatch_error if field and array shape do not match
-            \throws nxfield_error in case of any other IO error
-            \tparam OTS template arguments to DArray
-            \param a instance of DArray
-            */
+            //! 
+            //! \brief write data form a DArray
+            //!
+            //! Write data from an instance of darray. 
+            //!
+            //! \throws memory_not_allocated_error if array buffer not 
+            //! allocated
+            //! \throws size_mismatch_error if array and field size do not 
+            //! match
+            //! \throws invalid_object_error if field is not valid
+            //! \throws object_error in case of any other error
+            //! \throws type_error if array type cannot be handled
+            //! \throws io_error in case of IO errors
+            //!
+            //! \tparam STORAGE storage type for mdarray
+            //! \tparam IMAP index map type for mdarray
+            //! \tparam IPA inplace arithmetic type
+            //!
+            //! \param a instance of DArray
+            //!
             template<
                      typename STORAGE,
                      typename IMAP,
@@ -730,34 +698,22 @@ namespace nx{
                     > 
             void write(const mdarray<STORAGE,IMAP,IPA> &a) const
             {
-                try
-                {
-                    this->_write_array(a);
-                }
-                catch(memory_not_allocated_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(shape_mismatch_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(nxfield_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
+                _write_array(a);
             }
 
             //-----------------------------------------------------------------
-            /*!
-            \brief write array erasure
-
-            Write the data stored by an array erasure. 
-            \throws memory_not_allocated_error array instance nof allocated
-            \throws shape_mismatch_error shapes do not match
-            \param a reference to array erasure
-            */
-            void write(const array &a) const;
+            //!
+            //! \brief write array erasure
+            //!
+            //! Write the data stored by an array erasure. 
+            //!
+            //!
+            //! \param a reference to array erasure
+            //!
+            void write(const array &a) const
+            {
+                _imp.write(a.type_id(),a.data());
+            }
 
             //---------------------------------------------------------------
             /*! 
@@ -826,85 +782,6 @@ namespace nx{
 
     };
 
-    //-------------------------------------------------------------------------
-    template<nximp_code IMPID> void nxfield<IMPID>::read(array &a) const
-    {
-        if(a.size() == 0)
-            throw memory_not_allocated_error(EXCEPTION_RECORD,
-                             "Target array buffer not allocated!");
-
-        shape_t ashape = a.shape();
-        auto fshape = this->shape<shape_t>();
-        
-        if(ashape.size() == fshape.size())
-        {
-            //if array and field have the same rank we need to check the
-            //shape of each of the objects
-            if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
-                throw shape_mismatch_error(EXCEPTION_RECORD,
-                        _shape_mismatch_error_message(ashape,fshape));
-        }
-        else
-        {
-            //if the two components are of different size we have to
-            //throw an exception in any case
-            if(this->size() != a.size())
-                throw shape_mismatch_error(EXCEPTION_RECORD,
-                        _shape_mismatch_error_message(ashape,fshape));
-        }
-
-        //finally we read the data
-        try
-        {
-            read_array(_imp,a);
-        }
-        catch(nxfield_error &error)
-        {
-            error.append(EXCEPTION_RECORD); throw error;
-        }
-    }
-
-    //-------------------------------------------------------------------------
-    template<nximp_code IMPID> void nxfield<IMPID>::write(const array &a) const
-    {
-
-        if(a.size() == 0)
-            throw memory_not_allocated_error(EXCEPTION_RECORD,
-                             "Source array buffer not allocated!");
-
-        shape_t ashape = a.shape();
-        auto fshape = this->shape<shape_t>();
-
-        if(ashape.size() == fshape.size())
-        {
-            if(!std::equal(ashape.begin(),ashape.end(),fshape.begin()))
-                throw shape_mismatch_error(EXCEPTION_RECORD,
-                        _shape_mismatch_error_message(ashape,fshape));
-        }
-        else
-        {
-            if(this->size() != a.size())
-                throw shape_mismatch_error(EXCEPTION_RECORD,
-                       _shape_mismatch_error_message(ashape,fshape));
-        }
-
-
-        try 
-        { 
-            write_array(_imp,a);            
-        }
-        catch(type_error &error)
-        {
-            //in case of a type error we propagate the error to the next level
-            error.append(EXCEPTION_RECORD);
-            throw error;
-        }
-        catch(...)
-        {
-            throw nxfield_error(EXCEPTION_RECORD,
-                             "Cannt write data from array!");
-        }
-    }
 
 //end of namespace
 }
