@@ -32,9 +32,7 @@
 #include <pni/core/arrays.hpp>
 
 #include "nxattribute_manager.hpp"
-#include "nximp_map.hpp"
 #include "nxobject_traits.hpp"
-#include "nxexceptions.hpp"
 #include "nxselection.hpp"
 #include "algorithms/get_path.hpp"
 
@@ -569,15 +567,20 @@ namespace nx{
             //! 
             //! This method reads data to an array type erasure. 
             //! 
-            //! \throws shape_mismatch_error if field and array-shape do not match
-            //! \throws memory_not_allocated_error if array-buffer is not allocated
-            //! \throws nxfield_error in case of any other IO error
+            //! \throws memory_not_allocated_error if array buffer not 
+            //! allocated
+            //! \throws size_mismatch_error if array and field size do not 
+            //! match
+            //! \throws invalid_object_error if field is not valid
+            //! \throws object_error in case of any other error
+            //! \throws type_error if array data type cannot be handled
+            //! \throws io_error in case of IO errors
             //! 
             //! \param a instance of the array
             //! 
             void read(array &a) const
             {
-                _imp.read(a.type_id(),a.data());
+                _read_array(a);
             }
 
            
@@ -637,6 +640,26 @@ namespace nx{
             }
 
             //----------------------------------------------------------------
+            //! 
+            //! \brief write data from mdarray
+            //! 
+            //! Write data stored in an instance of mdarray. 
+            //! 
+            //! \throws memory_not_allocated_error if array buffer not 
+            //! allocated
+            //! \throws size_mismatch_error if array and field size do not 
+            //! match
+            //! \throws invalid_object_error if field is not valid
+            //! \throws object_error in case of any other error
+            //! \throws type_error if array type cannot be handled
+            //! \throws io_error in case of IO errors
+            //! 
+            //! \tparam STORAGE storage type for mdarray
+            //! \tparam IMAP index map type for mdarray
+            //! \tparam IPA inplance arithmetic type
+            //! 
+            //! \param a instance of mdarray
+            //!
             template<
                      typename STORAGE,
                      typename IMAP,
@@ -671,10 +694,10 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            //! 
-            //! \brief write data form a DArray
             //!
-            //! Write data from an instance of darray. 
+            //! \brief write array erasure
+            //!
+            //! Write the data stored by an array erasure. 
             //!
             //! \throws memory_not_allocated_error if array buffer not 
             //! allocated
@@ -685,43 +708,21 @@ namespace nx{
             //! \throws type_error if array type cannot be handled
             //! \throws io_error in case of IO errors
             //!
-            //! \tparam STORAGE storage type for mdarray
-            //! \tparam IMAP index map type for mdarray
-            //! \tparam IPA inplace arithmetic type
-            //!
-            //! \param a instance of DArray
-            //!
-            template<
-                     typename STORAGE,
-                     typename IMAP,
-                     typename IPA
-                    > 
-            void write(const mdarray<STORAGE,IMAP,IPA> &a) const
-            {
-                _write_array(a);
-            }
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief write array erasure
-            //!
-            //! Write the data stored by an array erasure. 
-            //!
-            //!
             //! \param a reference to array erasure
             //!
             void write(const array &a) const
             {
-                _imp.write(a.type_id(),a.data());
+                _write_array(a);
             }
 
             //---------------------------------------------------------------
-            /*! 
-            \brief set a selection on the field
-
-            This method applies a selection to the field and return a reference
-            to this field. This can now be used to write data only to the
-            selection of the array.
+            //! 
+            //! \brief set a selection on the field
+            //!
+            //! This method applies a selection to the field and return a 
+            //! reference to this field. This can now be used to write data 
+            //! only to the selection of the array.
+            /*!
             \code
             nxfield f = g.create_field<uint16>("frame",shape_t{1024,1024});
             darray<uint16> spec(shape_t{1024})k
@@ -729,12 +730,14 @@ namespace nx{
             f(100,slice(0,1024)).read(spec)
 
             \endcode
-            The selection will be reset with every call to the read() or write
-            methods. 
-            \tparam ITYPES index types
-            \param indices instances of ITYPES
-            \return field object with selection set
             */
+            //! The selection will be reset with every call to the read() or 
+            //! write methods. 
+            //!
+            //! \tparam ITYPES index types
+            //! \param indices instances of ITYPES
+            //! \return field object with selection set
+            //!
             template<typename ...ITYPES>
             nxselection<field_type> operator()(ITYPES ...indices)
             {
@@ -745,16 +748,17 @@ namespace nx{
             }
 
             //---------------------------------------------------------------
-            /*!
-            \brief set a selection on the field
-
-            Operator to set a selection to the field. The selection is given by
-            a vector container of slice objects.
-            The selection will be reset with each call to the read() or write()
-            methods.
-            \param selection container with instances of slice
-            \return instance of NXField with selection set
-            */
+            //!
+            //! \brief set a selection on the field
+            //!
+            //! Operator to set a selection to the field. The selection is 
+            //! given by a vector container of slice objects.
+            //! The selection will be reset with each call to the read() or 
+            //! write() methods.
+            //!
+            //! \param selection container with instances of slice
+            //! \return instance of NXField with selection set
+            //!
             nxselection<field_type> operator()(const std::vector<slice> &selection) 
             {
                 typedef nxselection<field_type> sel_type;
@@ -765,16 +769,36 @@ namespace nx{
             friend class nxselection<field_type>;
 
             //---------------------------------------------------------------
-            string name() const { return _imp.name(); }
+            //! 
+            //! \brief return field name
+            //!
+            string name() const 
+            { 
+                return _imp.name(); 
+            }
 
             //---------------------------------------------------------------
-            void close() { _imp.close(); }
+            //!
+            //! \brief close field
+            //!
+            void close() 
+            { 
+                _imp.close(); 
+            }
 
             //---------------------------------------------------------------
-            bool is_valid() const noexcept { return _imp.is_valid(); }
+            //!
+            //! \brief check validity
+            //! 
+            bool is_valid() const noexcept 
+            { 
+                return _imp.is_valid(); 
+            }
 
             //---------------------------------------------------------------
-            const imp_type &imp() const { return _imp; }
+            //!
+            //! \brief 
+            //const imp_type &imp() const { return _imp; }
 
             //---------------------------------------------------------------
             nxobject_type object_type() const { return _imp.nxobject_type(); }
