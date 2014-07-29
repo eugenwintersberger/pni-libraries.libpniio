@@ -62,6 +62,10 @@ namespace h5{
             //! datatype on file
             h5datatype  _type;
 
+            mutable type_imp::index_vector_type _offset;
+            mutable type_imp::index_vector_type _stride;
+            mutable type_imp::index_vector_type _count;
+
             //!
             //! \brief update internal parameters
             //! 

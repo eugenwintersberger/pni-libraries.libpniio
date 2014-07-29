@@ -48,6 +48,19 @@ namespace h5{
         _file_space = h5dataspace(object_imp(H5Dget_space(_object.id())));
         _type       = h5datatype(object_imp(H5Dget_type(_object.id())));
         _memory_space = _file_space;
+
+        if(_file_space.rank()!=0)
+        {
+            _offset = type_imp::index_vector_type(_file_space.rank());
+            _stride = type_imp::index_vector_type(_file_space.rank());
+            _count  = type_imp::index_vector_type(_file_space.rank());
+        }
+        else
+        {
+            _offset = type_imp::index_vector_type();
+            _stride = type_imp::index_vector_type();
+            _count  = type_imp::index_vector_type();
+        }
     }
 
     //===implementation of constructors and destructors================
@@ -56,7 +69,10 @@ namespace h5{
         :_object(),
          _file_space(),
          _memory_space(),
-         _type()
+         _type(),
+         _offset(),
+         _stride(),
+         _count()
     { } 
     
     //-----------------------------------------------------------------
@@ -65,7 +81,10 @@ namespace h5{
         _object(std::move(o)),
         _file_space(),
         _memory_space(),
-        _type()
+        _type(),
+        _offset(),
+        _stride(),
+        _count()
     {
         if(get_hdf5_type(_object) != h5object_type::DATASET)
             throw type_error(EXCEPTION_RECORD,
@@ -79,7 +98,10 @@ namespace h5{
         :_object(o._object),
          _file_space(o._file_space), 
          _memory_space(o._memory_space),
-         _type(o._type)
+         _type(o._type),
+         _offset(o._offset),
+         _stride(o._stride),
+         _count(o._count)
     { }
 
 
@@ -89,7 +111,10 @@ namespace h5{
         :_object(std::move(o._object)),
          _file_space(std::move(o._file_space)),
          _memory_space(std::move(o._memory_space)),
-         _type(std::move(o._type))
+         _type(std::move(o._type)),
+         _offset(std::move(o._offset)),
+         _stride(std::move(o._stride)),
+         _count(std::move(o._count))
     { }
 
     //-----------------------------------------------------------------
@@ -114,6 +139,9 @@ namespace h5{
         _file_space   = o._file_space;
         _memory_space = o._memory_space;
         _type         = o._type;
+        _offset       = o._offset;
+        _stride       = o._stride;
+        _count        = o._count;
 
         return *this;
     }
@@ -128,6 +156,9 @@ namespace h5{
         _file_space   = std::move(o._file_space);
         _memory_space = std::move(o._memory_space);
         _type         = std::move(o._type);
+        _offset       = std::move(o._offset);
+        _stride       = std::move(o._stride);
+        _count        = std::move(o._count);
 
         return *this;
     }
@@ -454,25 +485,27 @@ namespace h5{
             throw shape_mismatch_error(EXCEPTION_RECORD,
                     "Selection and field rank do not match!");
 
+        /*
         type_imp::index_vector_type offset(s.size());
         type_imp::index_vector_type stride(s.size());
         type_imp::index_vector_type count(s.size());
+        */
         type_imp::index_vector_type mshape;
 
         size_t index=0;
-        for(auto sl: s)
+        for(const auto &sl: s)
         {
-            offset[index] = sl.first();
-            stride[index] = sl.stride();
-            count[index] = pni::core::size(sl);
-            if(count[index]!=1) mshape.push_back(count[index]);
+            _offset[index] = sl.first();
+            _stride[index] = sl.stride();
+            _count[index] = pni::core::size(sl);
+            if(_count[index]!=1) mshape.push_back(_count[index]);
             index++;     
         }
 
 
         //apply the selection
         herr_t err = H5Sselect_hyperslab(_file_space.object().id(),
-                H5S_SELECT_SET,offset.data(),stride.data(),count.data(),
+                H5S_SELECT_SET,_offset.data(),_stride.data(),_count.data(),
                 nullptr);
         if(err<0)
             throw object_error(EXCEPTION_RECORD,
