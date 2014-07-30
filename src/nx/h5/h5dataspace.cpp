@@ -237,10 +237,24 @@ namespace h5 {
         return (size_t)(size);
     }
 
+    //------------------------------------------------------------------------
+    bool h5dataspace::has_selection() const
+    {
+        H5S_sel_type type = H5Sget_select_type(_object.id());
+
+        if(type == H5S_SEL_NONE)
+            return false;
+        else if(type < 0)
+            throw object_error(EXCEPTION_RECORD,
+                    "Could not determine selection type!");
+        else
+            return true;
+
+    }
+
     //-------------------------------------------------------------------------
     void h5dataspace::grow(size_t dim,size_t ext)
     {
-
         if(dim >= rank())
         {
             std::stringstream ss;
@@ -253,6 +267,36 @@ namespace h5 {
         _dims[dim] += ext;
         __update_dataspace();
     }
+
+    //------------------------------------------------------------------------
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+    void h5dataspace::apply_selection(const type_imp::selection_vector_type
+            &selection) const
+    {
+
+    }
+#pragma GCC diagnostic pop
+            
+    void h5dataspace::reset_selection() const
+    {
+    }
+
+    //------------------------------------------------------------------------
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wreturn-type"
+    size_t h5dataspace::selection_size() const
+    {
+    }
+#pragma GCC diagnostic pop
+
+    //------------------------------------------------------------------------
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wreturn-type"
+    type_imp::index_vector_type h5dataspace::selection_shape() const
+    {
+    }
+#pragma GCC diagnostic pop
 
     //------------------------------------------------------------------------
     const type_imp::index_vector_type &h5dataspace::current_dims() const noexcept

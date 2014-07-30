@@ -83,6 +83,12 @@ namespace h5 {
             buffer_type _maxdims; 
             //! number of elements 
             buffer_type _dims;    
+           
+            //---------------internal variables for selection state------------
+            mutable type_imp::index_vector_type _offset;
+            mutable type_imp::index_vector_type _stride;
+            mutable type_imp::index_vector_type _count;
+
 
             //-----------------------------------------------------------------
             //!
@@ -262,6 +268,18 @@ namespace h5 {
             bool is_scalar() const;
 
             //----------------------------------------------------------------
+            //!
+            //! \brief true if selection is set on this dataspace
+            //!
+            //! Return true if a selection is applied to this dataspace.
+            //!
+            //! \throws object_error if selection space cannot be determined
+            //!
+            //! \return true if dataspace has selection
+            //!
+            bool has_selection() const;
+
+            //----------------------------------------------------------------
             //! 
             //! \brief return reference to the current dimensions buffer
             //!
@@ -330,6 +348,21 @@ namespace h5 {
             //! \param ext extend by which to grow 
             //!
             void grow(size_t dim=0,size_t ext=1) ;
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief apply selection
+            //!
+            //! Apply a selection on this dataspace
+            //!
+            void apply_selection(const type_imp::selection_vector_type
+                    &selection) const;
+
+            void reset_selection() const;
+
+            size_t selection_size() const;
+
+            type_imp::index_vector_type selection_shape() const;
 
         };
 

@@ -184,18 +184,13 @@ namespace h5{
     //------------------------------------------------------------------------
     void field_imp::grow(const size_t &e,const size_t &n)
     {
+        /*
         _throw_if_not_valid(EXCEPTION_RECORD,
                             "Cannot grow invalid dataset!");
+                            */
 
-        if(e>=rank())
-        {
-            std::stringstream ss;
-            ss<<"Dimension index ("<<e<<") exceeds rank of ";
-            ss<<"dataspace ["<<get_path(_object)
-              <<"] which is ("<<rank()<<")!";
-            throw index_error(EXCEPTION_RECORD,ss.str());
-        }
-
+        //these methods will throw an exception if e exceeds the rank 
+        //of the dataspaces
         _file_space.grow(e,n);
         _memory_space.grow(e,n);
 
@@ -313,8 +308,10 @@ namespace h5{
     //------------------------------------------------------------------------
     void field_imp::write(type_id_t tid,const void *ptr) const
     {
+        /*
         _throw_if_not_valid(EXCEPTION_RECORD,
                             "Cannot write data to invalid object!");
+                            */
                             
 
         if(tid == type_id_t::STRING)
@@ -514,7 +511,7 @@ namespace h5{
 
         //need to set the memory dataspace to the effective shape of the
         //selection
-        _memory_space = h5dataspace(mshape);
+        _memory_space = std::move(h5dataspace(mshape));
 
     }
 
