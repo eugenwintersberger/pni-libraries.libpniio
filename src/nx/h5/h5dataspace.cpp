@@ -109,29 +109,54 @@ namespace h5 {
     }
 
     //-------------------------------------------------------------------------
-    h5dataspace::h5dataspace(const type_imp::index_vector_type &s):
+    h5dataspace::h5dataspace(const type_imp::index_vector_type &shape):
         _object(H5Screate(H5S_SCALAR)),
-        _maxdims(s),
-        _dims(s)
+        _maxdims(shape),
+        _dims(shape)
     {
         __update_dataspace();
     }
 
     //------------------------------------------------------------------------
-    h5dataspace::h5dataspace(const type_imp::index_vector_type &s,
-                             const type_imp::index_vector_type &ms):
+    h5dataspace::h5dataspace(type_imp::index_vector_type &&shape):
         _object(H5Screate(H5S_SCALAR)),
-        _maxdims(ms),
-        _dims(s)
+        _maxdims(std::move(shape)),
+        _dims(_maxdims)
+    {
+        __update_dataspace(); 
+    }
+
+    //------------------------------------------------------------------------
+    h5dataspace::h5dataspace(const type_imp::index_vector_type &shape,
+                             const type_imp::index_vector_type &max_shape):
+        _object(H5Screate(H5S_SCALAR)),
+        _maxdims(max_shape),
+        _dims(shape)
 
     {
         //check if the ranks of the shapes is equal
-        if(!check_equal_size(s,ms))
+        if(!check_equal_size(_dims,_maxdims))
             throw shape_mismatch_error(EXCEPTION_RECORD,
                     "Current and maximum shape containers have different "
                     "length!");
 
         //resize the dataspace to a simple one
+        __update_dataspace();
+    }
+
+    //------------------------------------------------------------------------
+    h5dataspace::h5dataspace(type_imp::index_vector_type &&shape,
+                             type_imp::index_vector_type &&max_shape):
+        _object(H5Screate(H5S_SCALAR)),
+        _maxdims(std::move(max_shape)),
+        _dims(std::move(shape))
+    {
+        //check if the ranks of the shapes is equal
+        if(!check_equal_size(_dims,_maxdims))
+            throw shape_mismatch_error(EXCEPTION_RECORD,
+                    "Current and maximum shape containers have different "
+                    "length!");
+
         __update_dataspace();
     }
     //===================Assignment operators==================================
@@ -192,36 +217,6 @@ namespace h5 {
     }
 
     //-------------------------------------------------------------------------
-    size_t h5dataspace::current_dim(size_t i) const 
-    {
-        //return 0 if the dataspace is scalar
-        if(is_scalar()) return 0;
-
-        if(i>=rank())
-            throw index_error(EXCEPTION_RECORD,
-                    "User index exceeds rank of dataspace!");
-
-        //return the number of elements along dimension i if the 
-        //dataspace is simple
-        return _dims[i];
-    }
-
-    //-------------------------------------------------------------------------
-    size_t h5dataspace::maximum_dim(size_t i) const 
-    {
-        //return 0 if the dataspace is scalar
-        if(is_scalar()) return 0;
-
-        if(i>=rank())
-            throw index_error(EXCEPTION_RECORD,
-                    "User index exceeds rank of dataspace!");
-
-        //return the maximum number of elements along i if the 
-        //dataspace is simple
-        return _maxdims[i];
-    }
-
-    //-------------------------------------------------------------------------
     size_t h5dataspace::size() const 
     {
         //return 1 if the dataspace is scalar
@@ -240,31 +235,6 @@ namespace h5 {
         }
 
         return (size_t)(size);
-    }
-
-    //-------------------------------------------------------------------------
-    void h5dataspace::resize(const type_imp::index_vector_type &shape)
-    {
-        _dims    = shape;
-        _maxdims = shape;
-
-        __update_dataspace();
-    }
-
-
-    //-------------------------------------------------------------------------
-    void h5dataspace::resize(const type_imp::index_vector_type &cshape,
-                             const type_imp::index_vector_type &mshape)
-    {
-        if(!check_equal_size(cshape,mshape))
-            throw shape_mismatch_error(EXCEPTION_RECORD,
-                    "Current and maximum shape vector do not have equal"
-                    " lenght!");
-
-        _dims    = cshape;
-        _maxdims = mshape;
-
-        __update_dataspace();
     }
 
     //-------------------------------------------------------------------------

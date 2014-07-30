@@ -134,7 +134,7 @@ namespace h5 {
 
             //-----------------------------------------------------------------
             //!
-            //! \brief construct from ID
+            //! \brief constructor
             //!
             //! \brief object_error in case of failure
             //! \brief type_error if the passed object is not a dataspace
@@ -145,45 +145,64 @@ namespace h5 {
             
             //-----------------------------------------------------------------
             //! 
-            //! \brief construct form shape
+            //! \brief constructor
             //!
-            //! Constructor takes a container which holds the shape of the 
-            //! dataspace to create. The actual as well as the maximum number 
-            //! of dimensions will be set to these values.
-            /*!
-            \code
-            type_imp::index_vector_type shape{4,5,19};
-            h5dataspace space(shape);
-            \endcode
-            */
+            //! This constructor takes a const reference to a container with 
+            //! the current shape of the dataspace. The maximum shape will be 
+            //! equal to the current shape.
+            //!
             //! \throws object_error in case of failure
-            //! \param s vector with shape data
+            //! \param shape vector with shape data
             //!
-            explicit h5dataspace(const type_imp::index_vector_type &s);
+            explicit h5dataspace(const type_imp::index_vector_type &shape);
+
+            //----------------------------------------------------------------
+            //! 
+            //! \brief constructor
+            //! 
+            //! The constructors takes an rvalue reference to the current 
+            //! shape of the dataspace. The maximum shape will have the same 
+            //! value as the current shape.
+            //! 
+            //! \throws object_error in case of any failure
+            //! \param shape rvalue reference to the current shape
+            //!
+            explicit h5dataspace(type_imp::index_vector_type  &&shape);
 
             //----------------------------------------------------------------- 
             //! 
-            //! \brief constructor with actual and maximum shape
+            //! \brief constructor
             //!
-            //! Constructor takes two containers of arbitrary type which 
-            //! hold the actual and the maximum shape of the dataspace.
-            //!
-            /*! 
-            \code
-            type_imp::index_vector_type shape{4,5,19};
-            type_imp::index_vector_type mshape{100,100,100};
-            h5dataspace space(shape,mshape);
-            \endcode
-            */
+            //! Constructor takes two const lvalue references to containers  
+            //! holding the current and maximum shape of the dataspace.
             //!
             //! \throws shape_mismatch_error if actual and max dim containers 
             //!                              are of different size
             //! \throws object_error in case of any other failure
-            //! \param s initial shape
-            //! \param ms maximum shape
+            //! \param shape current shape
+            //! \param max_shape maximum shape
             //!
-            explicit h5dataspace(const type_imp::index_vector_type &s,
-                                 const type_imp::index_vector_type &ms);
+            explicit h5dataspace(const type_imp::index_vector_type &shape,
+                                 const type_imp::index_vector_type &max_shape);
+
+            //----------------------------------------------------------------- 
+            //! 
+            //! \brief constructor
+            //!
+            //! Constructor takes two rvalue references to containers  
+            //! holding the current and maximum shape of the dataspace.
+            //! This will improve performance in dataspace construction as no 
+            //! new memory for the maximum and current shape must be 
+            //! allocated.
+            //!
+            //! \throws shape_mismatch_error if actual and max dim containers 
+            //!                              are of different size
+            //! \throws object_error in case of any other failure
+            //! \param shape current shape
+            //! \param max_shape maximum shape
+            //!
+            explicit h5dataspace(type_imp::index_vector_type &&shape,
+                                 type_imp::index_vector_type &&max_shape);
 
             //=====================Assignment operators========================
             //!
@@ -220,38 +239,6 @@ namespace h5 {
 
             //-----------------------------------------------------------------
             //!
-            //! \brief number of elements
-            //!
-            //! Returns the number of elements along dimension i. If the 
-            //! dataspace is scalar 0 is returned independent of the value 
-            //! of i.
-            //!
-            //! \throws invalid_object_error if dataspace not valid
-            //! \throws index_error if i exceeds the dataspace rank
-            //!
-            //! \param i dimension index
-            //! \return number of elements along i 
-            //!
-            size_t current_dim(size_t i) const;
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief max.elements along dimension
-            //!
-            //! Returns the maximum number of dimension along dimension i. 
-            //! If the dataspace is scalar 0 is returned independent of the 
-            //! value of i.
-            //!
-            //! \throws invalid_object_error if dataspace is not valid
-            //! \throws index_error if i exceeds dataspace rank
-            //!
-            //! \param i index of dimension
-            //! \return maximum number of elements along dimension i 
-            //!
-            size_t maximum_dim(size_t i) const;
-
-            //-----------------------------------------------------------------
-            //!
             //! \brief total number of elements
             //!
             //! Returns the total number of elemenets that can be stored in the 
@@ -275,8 +262,15 @@ namespace h5 {
             bool is_scalar() const;
 
             //----------------------------------------------------------------
+            //! 
+            //! \brief return reference to the current dimensions buffer
+            //!
             const type_imp::index_vector_type &current_dims() const noexcept;
 
+            //----------------------------------------------------------------
+            //!
+            //! \brief return reference to the maximum dimensions buffer
+            //!
             const type_imp::index_vector_type &maximum_dims() const noexcept;
    
             //----------------------------------------------------------------
@@ -319,39 +313,6 @@ namespace h5 {
             //! \return iterator
             //!
             iterator maximum_end() const noexcept;
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief resize dataspace
-            //!
-            //! This method does basically what resize(const Shape &s) is
-            //! doing. However, an initializer list is used instead of a 
-            //! shape object. This method exists for convenience as it makes 
-            //! typing code easier.
-            //!
-            //! \throws object_error if dataspace update fails
-            //! \param shape number of elements along each dimension
-            //!
-            void resize(const type_imp::index_vector_type &shape);
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief resize dataspace
-            //!
-            //! Like resize(const Shape&, const Shape &) but using 
-            //! initializer lists instead of shape objects. This is again a 
-            //! convenience method to reduce typing work.  The rank of the 
-            //! resized dataspace is determined by the size of the tow lists. 
-            //! Both lists must be of equal size.
-            //!
-            //! \throws shape_mismatch_error if list sizes are not equal
-            //! \throws object_error if dataspace update fails
-            //!
-            //! \param cshape current number of elements along each dimension
-            //! \param mshape maximum number of elements along each dimension
-            //!
-            void resize(const type_imp::index_vector_type &cshape,
-                        const type_imp::index_vector_type &mshape);
 
             //-----------------------------------------------------------------
             //!

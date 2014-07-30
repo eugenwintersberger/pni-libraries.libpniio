@@ -44,7 +44,6 @@ class h5dataspace_test:public CppUnit::TestFixture
         CPPUNIT_TEST(test_container_construction);
         CPPUNIT_TEST(test_current_iterator);
         CPPUNIT_TEST(test_maximum_iterator);
-        CPPUNIT_TEST(test_container_resize);
         CPPUNIT_TEST(test_grow);
         CPPUNIT_TEST_SUITE_END();
 
@@ -59,8 +58,6 @@ class h5dataspace_test:public CppUnit::TestFixture
         void test_container_construction();
         void test_current_iterator();
         void test_maximum_iterator();
-        void test_init_list_resize();
-        void test_container_resize();
         void test_grow();
 };
 
