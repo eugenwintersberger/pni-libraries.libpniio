@@ -53,7 +53,6 @@ class field_imp_test:public CppUnit::TestFixture
         CPPUNIT_TEST(test_create_errors);
         CPPUNIT_TEST(test_assignment);
         CPPUNIT_TEST(test_inquery);
-        CPPUNIT_TEST(test_resize);
         CPPUNIT_TEST(test_parent);
         
         CPPUNIT_TEST(test_scalar_data<uint8>);
@@ -122,7 +121,6 @@ class field_imp_test:public CppUnit::TestFixture
         void test_create_move();
         void test_assignment();
         void test_inquery();
-        void test_resize();
         template<typename T> void test_scalar_data();
         template<typename T> void test_array_data();
         void test_string_array_data();
@@ -145,9 +143,9 @@ template<typename T> void field_imp_test::test_scalar_data()
     type_id_t tid = type_id_map<T>::type_id;
     field_imp scalar_ds{_group,"scalar_dataset",tid, {1},{1}};
     T write = T(1);
-    CPPUNIT_ASSERT_NO_THROW(scalar_ds.write(tid,&write));
+    CPPUNIT_ASSERT_NO_THROW(scalar_ds.write(tid,{1},&write));
     T read;
-    CPPUNIT_ASSERT_NO_THROW(scalar_ds.read(tid,&read));
+    CPPUNIT_ASSERT_NO_THROW(scalar_ds.read(tid,{1},&read));
     check_equality(read,write);
 }
 
@@ -163,8 +161,8 @@ template<typename T> void field_imp_test::test_array_data()
     auto read  = dynamic_array<T>::create(s);
     std::fill(write.begin(),write.end(),T(1));
 
-    CPPUNIT_ASSERT_NO_THROW(ds.write(tid,write.data()));
-    CPPUNIT_ASSERT_NO_THROW(ds.read(tid,read.data()));
+    CPPUNIT_ASSERT_NO_THROW(ds.write(tid,{write.size()},write.data()));
+    CPPUNIT_ASSERT_NO_THROW(ds.read(tid,{write.size()},read.data()));
     
     //check equality
     for(size_t i=0;i<write.size();i++) check_equality(write[i],read[i]);
@@ -207,10 +205,10 @@ template<typename T> void field_imp_test::test_selection()
         CPPUNIT_ASSERT(sel_s[0] == 10);
 
         //write data
-        dset.write(tid,writebuf.data());
+        dset.write(tid,{writebuf.size()},writebuf.data());
 
         //read data back
-        dset.read(tid,readbuf.data());
+        dset.read(tid,{readbuf.size()},readbuf.data());
 
         //compare data
         CPPUNIT_ASSERT(std::equal(writebuf.begin(),writebuf.end(),readbuf.begin()));

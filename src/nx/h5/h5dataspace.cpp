@@ -26,6 +26,7 @@
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 #include <pni/io/nx/nxexceptions.hpp>
 #include <pni/io/exceptions.hpp>
+#include <functional>
 
 
 namespace pni{
@@ -36,25 +37,6 @@ namespace h5 {
     using pni::io::object_error;
 
     //====================private methods======================================
-
-    //implementation of the buffer allocation routine
-    void h5dataspace::__update_buffers()
-    {
-        if(!is_scalar())
-        {
-            _maxdims = buffer_type(rank());
-            _dims    = buffer_type(rank());
-            auto *dimptr = const_cast<value_type*>(_dims.data());
-            auto *mdimptr = const_cast<value_type*>(_maxdims.data());
-            herr_t err = H5Sget_simple_extent_dims(_object.id(),dimptr,mdimptr);
-            if(err<0)
-                throw object_error(EXCEPTION_RECORD,
-                        "Failure obtaining dataspace extent!\n\n"
-                        +get_h5_error_string());
-        }
-    }
-
-    //-------------------------------------------------------------------------
     void h5dataspace::__update_dataspace()
     {
         herr_t err = H5Sset_extent_simple(_object.id(),_dims.size(),_dims.data(),
@@ -72,102 +54,121 @@ namespace h5 {
         }
     }
 
-    //=============Constructors and destructors================================
-    h5dataspace::h5dataspace() noexcept:
-        _object(H5Screate(H5S_SCALAR)),
-        _maxdims(),
-        _dims()
+    //-------------------------------------------------------------------------
+    void h5dataspace::__update_buffers()
     {
-        //the dataspace is initialized as a scalar dataspace
+        _dims = type_imp::index_vector_type(rank());
+        _maxdims = type_imp::index_vector_type(rank());
+
+        if(H5Sget_simple_extent_dims(_object.id(),_dims.data(),_maxdims.data())<0)
+            throw object_error(EXCEPTION_RECORD,
+                    "Error retrieving dataspace dimensions!");
+
+        _offset = type_imp::index_vector_type(rank());
+        _stride = type_imp::index_vector_type(rank());
+        _count  = type_imp::index_vector_type(rank());
+
+        std::fill(_offset.begin(),_offset.end(),0);
+        std::fill(_stride.begin(),_stride.end(),1);
+        std::fill(_count.begin(),_count.end(),1);
+    }
+
+    //-------------------------------------------------------------------------
+    void h5dataspace::__init_buffers() noexcept
+    {
+        std::fill(_maxdims.begin(),_maxdims.end(),H5S_UNLIMITED);
+        std::fill(_offset.begin(),_offset.end(),0);
+        std::fill(_stride.begin(),_stride.end(),1);
+        std::fill(_count.begin(),_count.end(),1);
+    }
+
+    //=============Constructors and destructors================================
+    h5dataspace::h5dataspace():
+        _object(),
+        _dims{{1}},
+        _maxdims{{H5S_UNLIMITED}},
+        _offset{{0}},
+        _stride{{1}},
+        _count{{1}}
+    {
+        _object = object_imp(H5Screate_simple(1,_dims.data(),_maxdims.data()));
     }
 
     //-------------------------------------------------------------------------
     //implementation of the copy constructor
-    h5dataspace::h5dataspace(const h5dataspace &o)
-        :_object(o._object),
+    h5dataspace::h5dataspace(const h5dataspace &o):
+        _object(o._object),
+        _dims(o._dims),
         _maxdims(o._maxdims),
-        _dims(o._dims)
+        _offset(o._offset),
+        _stride(o._stride),
+        _count(o._count)
     { }
 
     //-------------------------------------------------------------------------
     //implementation of the move constructor
-    h5dataspace::h5dataspace(h5dataspace &&o) noexcept 
-        :_object(std::move(o._object)),
+    h5dataspace::h5dataspace(h5dataspace &&o) noexcept :
+        _object(std::move(o._object)),
+        _dims(std::move(o._dims)),
         _maxdims(std::move(o._maxdims)),
-        _dims(std::move(o._dims))
+        _offset(std::move(o._offset)),
+        _stride(std::move(o._stride)),
+        _count(std::move(o._count))
     { }
 
-    //-------------------------------------------------------------------------
-    h5dataspace::h5dataspace(object_imp &&o)
-        :_object(std::move(o))
-    {
-        if(get_hdf5_type(_object) != h5object_type::DATASPACE)
-            throw type_error(EXCEPTION_RECORD,
-                    "Object is not a dataspace!");
-
-        __update_buffers();
-    }
 
     //-------------------------------------------------------------------------
     h5dataspace::h5dataspace(const type_imp::index_vector_type &shape):
-        _object(H5Screate(H5S_SCALAR)),
-        _maxdims(shape),
-        _dims(shape)
+        _object(),
+        _dims(shape),
+        _maxdims(shape.size()),
+        _offset(shape.size()),
+        _stride(shape.size()),
+        _count(shape.size())
     {
-        __update_dataspace();
+        __init_buffers();
+        _object = object_imp(H5Screate_simple(_dims.size(),
+                                              _dims.data(),
+                                              _maxdims.data()));
     }
 
     //------------------------------------------------------------------------
     h5dataspace::h5dataspace(type_imp::index_vector_type &&shape):
-        _object(H5Screate(H5S_SCALAR)),
-        _maxdims(std::move(shape)),
-        _dims(_maxdims)
+        _object(),
+        _dims(std::move(shape)),
+        _maxdims(_dims.size()),
+        _offset(_dims.size()),
+        _stride(_dims.size()),
+        _count(_dims.size())
     {
-        __update_dataspace(); 
+        __init_buffers();
+        _object = object_imp(H5Screate_simple(_dims.size(),
+                                              _dims.data(),
+                                              _maxdims.data()));
     }
 
-    //------------------------------------------------------------------------
-    h5dataspace::h5dataspace(const type_imp::index_vector_type &shape,
-                             const type_imp::index_vector_type &max_shape):
-        _object(H5Screate(H5S_SCALAR)),
-        _maxdims(max_shape),
-        _dims(shape)
-
+    //-------------------------------------------------------------------------
+    h5dataspace::h5dataspace(object_imp &&o):
+        _object(o)
     {
-        //check if the ranks of the shapes is equal
-        if(!check_equal_size(_dims,_maxdims))
-            throw shape_mismatch_error(EXCEPTION_RECORD,
-                    "Current and maximum shape containers have different "
-                    "length!");
+        if(get_hdf5_type(_object) != h5object_type::DATASPACE)
+            throw type_error(EXCEPTION_RECORD, "Object is not a dataspace!");
 
-        //resize the dataspace to a simple one
-        __update_dataspace();
+        __update_buffers();
     }
 
-    //------------------------------------------------------------------------
-    h5dataspace::h5dataspace(type_imp::index_vector_type &&shape,
-                             type_imp::index_vector_type &&max_shape):
-        _object(H5Screate(H5S_SCALAR)),
-        _maxdims(std::move(max_shape)),
-        _dims(std::move(shape))
-    {
-        //check if the ranks of the shapes is equal
-        if(!check_equal_size(_dims,_maxdims))
-            throw shape_mismatch_error(EXCEPTION_RECORD,
-                    "Current and maximum shape containers have different "
-                    "length!");
-
-        __update_dataspace();
-    }
     //===================Assignment operators==================================
     //implementation of the copy assignment operator
     h5dataspace &h5dataspace::operator=(const h5dataspace &o)
     {
         if (this == &o) return *this;
     
-        _object = o._object;
-        _dims  = o._dims;
+        _object  = o._object;
+        _dims    = o._dims;
         _maxdims = o._maxdims;
+        _offset  = o._offset;
+        _stride  = o._stride;
+        _count   = o._count;
 
         return *this;
     }
@@ -178,63 +179,45 @@ namespace h5 {
     {
         if(this == &o) return *this;
 
-        _object = std::move(o._object);
-        _dims  = std::move(o._dims);
+        _object  = std::move(o._object);
+        _dims    = std::move(o._dims);
         _maxdims = std::move(o._maxdims);
+        _offset  = std::move(o._offset);
+        _stride  = std::move(o._stride);
+        _count   = std::move(o._count);
 
         return *this;
     }
 
     //===================Other methods=========================================
-    const object_imp &h5dataspace::object() const noexcept
+    hid_t h5dataspace::id() const noexcept
     {
-        return _object;
+        return _object.id();
     }
 
-    //------------------------------------------------------------------------
-    //implementation of is_scalar
-    bool h5dataspace::is_scalar() const 
+    bool h5dataspace::is_valid() const
     {
-        
-        if(!_object.is_valid())
-            throw invalid_object_error(EXCEPTION_RECORD,
-                    "Dataspace instance is not valid - cannot check if "
-                    "scalar!");
-
-        H5S_class_t type = H5Sget_simple_extent_type(_object.id());
-        if(type == H5S_SCALAR) return true;
-        return false;
+        return _object.is_valid();
     }
 
     //-------------------------------------------------------------------------
     size_t h5dataspace::rank() const 
     {
-        //return 0 if the dataspace is scalar
-        if(is_scalar()) return 0;
-
-        //return the number of dimension if the dataspace is simple
         return H5Sget_simple_extent_ndims(_object.id());
     }
 
     //-------------------------------------------------------------------------
     size_t h5dataspace::size() const 
     {
-        //return 1 if the dataspace is scalar
-        if(is_scalar()) return 1;
-
-        //return the number of elements in the dataspace if the 
-        //dataspcae is simple
-        ssize_t size = H5Sget_select_npoints(_object.id());
-        if(size<0) 
-        {
-            object_error error( EXCEPTION_RECORD,
-                    "Could not determine dataspace size\n\n"+
-                    get_h5_error_string());
-            std::cerr<<error<<std::endl;
-            throw error;
-        }
-
-        return (size_t)(size);
+        return
+            std::accumulate(_dims.begin(),_dims.end(),1,std::multiplies<size_t>());
+                               
+    }
+    
+    //------------------------------------------------------------------------
+    const type_imp::index_vector_type &h5dataspace::shape() const noexcept
+    {
+        return _dims;
     }
 
     //------------------------------------------------------------------------
@@ -242,7 +225,7 @@ namespace h5 {
     {
         H5S_sel_type type = H5Sget_select_type(_object.id());
 
-        if(type == H5S_SEL_NONE)
+        if(type == H5S_SEL_ALL)
             return false;
         else if(type < 0)
             throw object_error(EXCEPTION_RECORD,
@@ -269,96 +252,90 @@ namespace h5 {
     }
 
     //------------------------------------------------------------------------
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
     void h5dataspace::apply_selection(const type_imp::selection_vector_type
-            &selection) const
+            &selection) const  
     {
+        if(selection.size() != rank())
+            throw shape_mismatch_error(EXCEPTION_RECORD,
+                    "Selection and dataspace rank do not match!");
+
+        size_t index=0;
+        for(const auto &sl: selection)
+        {
+            _offset[index] = sl.first();
+            _stride[index] = sl.stride();
+            _count[index] = pni::core::size(sl);
+            index++;     
+        }
+
+
+        //apply the selection
+        herr_t err = H5Sselect_hyperslab(_object.id(),
+                H5S_SELECT_SET,_offset.data(),_stride.data(),_count.data(),
+                nullptr);
+        if(err<0)
+            throw object_error(EXCEPTION_RECORD,
+                    "Error applying selection to dataset!\n\n"+
+                    get_h5_error_string());
+
 
     }
-#pragma GCC diagnostic pop
-            
+           
+    //------------------------------------------------------------------------
     void h5dataspace::reset_selection() const
     {
+        H5Sselect_all(_object.id());
     }
 
     //------------------------------------------------------------------------
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wreturn-type"
     size_t h5dataspace::selection_size() const
     {
+        //return the number of elements in the dataspace if the 
+        //dataspcae is simple
+        ssize_t size = H5Sget_select_npoints(_object.id());
+        if(size<0) 
+        {
+            object_error error( EXCEPTION_RECORD,
+                    "Could not determine dataspace size\n\n"+
+                    get_h5_error_string());
+            std::cerr<<error<<std::endl;
+            throw error;
+        }
+
+        return (size_t)(size);
     }
-#pragma GCC diagnostic pop
 
     //------------------------------------------------------------------------
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wreturn-type"
+    size_t h5dataspace::selection_rank() const
+    {
+        return std::count_if(_count.begin(),_count.end(),
+                             [](hsize_t v){ return v>1; });
+    }
+
+    //------------------------------------------------------------------------
     type_imp::index_vector_type h5dataspace::selection_shape() const
     {
-    }
-#pragma GCC diagnostic pop
+        type_imp::index_vector_type shape;
 
-    //------------------------------------------------------------------------
-    const type_imp::index_vector_type &h5dataspace::current_dims() const noexcept
-    {
-        return _dims;
+        for(auto c: _count)
+            if(c>1) shape.push_back(c);
+
+        return shape;
     }
 
-    //------------------------------------------------------------------------
-    const type_imp::index_vector_type &h5dataspace::maximum_dims() const noexcept
-    {
-        return _maxdims;
-    }
 
     
-    //------------------------------------------------------------------------
-    h5dataspace::iterator h5dataspace::current_begin() const noexcept 
-    {
-        return _dims.begin();
-    }
-
-    //------------------------------------------------------------------------
-    h5dataspace::iterator h5dataspace::current_end() const noexcept
-    {
-        return _dims.end();
-    }
-
-    //------------------------------------------------------------------------
-    h5dataspace::iterator h5dataspace::maximum_begin() const noexcept
-    {
-        return _maxdims.begin();
-    }
-    
-    //------------------------------------------------------------------------
-    h5dataspace::iterator h5dataspace::maximum_end() const noexcept
-    {
-        return _maxdims.end();
-    }
     //======================operators==========================================
     std::ostream &operator<<(std::ostream &o,const h5dataspace &s)
     {
-        if(s.is_scalar())
-            o<<"HDF5 scalar dataspace";
-        else
+        o<<"HDF5 Dataspace: "<<s.rank()<<" dimensions"<<std::endl;
+        o<<"Current # of elements: (";
+        for(auto iter=s.shape().begin();iter!=s.shape().end();++iter)
         {
-            o<<"HDF5 Dataspace: "<<s.rank()<<" dimensions"<<std::endl;
-            o<<"Current # of elements: (";
-            for(auto iter=s.current_begin();iter!=s.current_end();++iter)
-            {
-                o<<*iter;
-                if(iter!=s.current_end()-1) o<<",";
-            }
-            o<<")"<<std::endl;
-
-            o<<"Maximum # of elements: (";
-            for(auto iter=s.maximum_begin();iter!=s.maximum_end();++iter)
-            {
-                o<<*iter;
-                if(iter!=s.maximum_end()-1) o<<",";
-            }
-            o<<")"<<std::endl;
+            o<<*iter;
+            if(iter!=s.shape().end()-1) o<<",";
         }
-
+        o<<")";
         return o;
     }
 

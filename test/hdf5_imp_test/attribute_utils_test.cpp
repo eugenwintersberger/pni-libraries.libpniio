@@ -44,7 +44,7 @@ object_imp attribute_utils_test::create_attribute(const object_imp &parent,
 
     return object_imp{H5Acreate(parent.id(),name.c_str(),
                                 type.object().id(),
-                                space.object().id(),
+                                space.id(),
                                 H5P_DEFAULT,H5P_DEFAULT)};
 }
 

@@ -176,7 +176,7 @@ template<typename APTYPE> void NXAttributeTest<APTYPE>::test_creation()
     nxattribute a;
     CPPUNIT_ASSERT(a.size()==1);
     CPPUNIT_ASSERT(!a.is_valid());
-    CPPUNIT_ASSERT(a.rank() == 0);
+    CPPUNIT_ASSERT(a.rank() == 1);
 
     //creating a scalar attribute
     nxattribute a1(_parent.attributes.template create<string>("attribute"));

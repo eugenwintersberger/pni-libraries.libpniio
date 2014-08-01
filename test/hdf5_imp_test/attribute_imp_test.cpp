@@ -120,9 +120,9 @@ void attribute_imp_test::test_inquery()
     CPPUNIT_ASSERT(a1.name() == "a1");
     CPPUNIT_ASSERT(a1.filename() == string("attribute_imp_test.h5"));
     CPPUNIT_ASSERT(a1.size() == 1);
-    CPPUNIT_ASSERT(a1.rank() == 0);
+    CPPUNIT_ASSERT(a1.rank() == 1);
     CPPUNIT_ASSERT(a1.type_id() == type_id_t::FLOAT32);
-    CPPUNIT_ASSERT(a1.shape().size() == 0);
+    CPPUNIT_ASSERT(a1.shape().size() == 1);
 
 
     CPPUNIT_ASSERT(a2.is_valid());

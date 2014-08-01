@@ -173,7 +173,7 @@ void group_imp_test::test_get_attribute_by_name()
     attribute_imp a = g.attr("hello world");
     CPPUNIT_ASSERT(a.name() == "hello world");
     CPPUNIT_ASSERT(a.type_id() == type_id_t::STRING);
-    CPPUNIT_ASSERT(a.rank() == 0);
+    CPPUNIT_ASSERT(a.rank() == 1);
     CPPUNIT_ASSERT(a.size() == 1);
 
     CPPUNIT_ASSERT_THROW(g.attr("bla"),key_error);
@@ -190,7 +190,7 @@ void group_imp_test::test_get_attribute_by_index()
     attribute_imp a = g.attr(0);
     CPPUNIT_ASSERT(a.name() == "hello world");
     CPPUNIT_ASSERT(a.type_id() == type_id_t::STRING);
-    CPPUNIT_ASSERT(a.rank() == 0);
+    CPPUNIT_ASSERT(a.rank() == 1);
     CPPUNIT_ASSERT(a.size() == 1);
 
     CPPUNIT_ASSERT_THROW(g.attr(10),index_error);

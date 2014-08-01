@@ -163,47 +163,6 @@ void NXFieldTest::test_assignment()
 }
 
 //------------------------------------------------------------------------------
-void NXFieldTest::test_resize()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    //create base shape
-    shape_t s({0,1024});
-    shape_t cs({1,1024});
-
-    nxfield field = root.create_field<float32>("ds",s);
-    CPPUNIT_ASSERT(field.is_valid());
-    auto shape = field.shape<shape_t>();
-    CPPUNIT_ASSERT(std::equal(shape.begin(),shape.end(),s.begin()));
-
-    CPPUNIT_ASSERT_NO_THROW(field.grow(0));
-    s = shape_t({1,1024});
-    CPPUNIT_ASSERT(field.rank()  == s.size());
-    shape = field.shape<shape_t>();
-    CPPUNIT_ASSERT(std::equal(shape.begin(),shape.end(),s.begin()));
-    s = shape_t({4,1024});
-    CPPUNIT_ASSERT_NO_THROW(field.grow(0,3));
-    CPPUNIT_ASSERT(field.rank()  == s.size());
-    shape = field.shape<shape_t>();
-    CPPUNIT_ASSERT(std::equal(shape.begin(),shape.end(),s.begin()));
-
-    nxfield field2 = root.create_field<string>("ss");
-    CPPUNIT_ASSERT(field2.rank() == 1);
-    CPPUNIT_ASSERT(field2.size() == 1);
-    CPPUNIT_ASSERT_NO_THROW(field2.grow(0));
-    CPPUNIT_ASSERT(field2.rank() == 1);
-    CPPUNIT_ASSERT(field2.size() == 2);
-    CPPUNIT_ASSERT_NO_THROW(field2.grow(0,10));
-    CPPUNIT_ASSERT(field2.rank() == 1);
-    CPPUNIT_ASSERT(field2.size() == 12);
-
-    //reshape the dataset
-    s = shape_t{100,512};
-    CPPUNIT_ASSERT_NO_THROW(field.resize(s));
-    shape = field.shape<shape_t>();
-    CPPUNIT_ASSERT(std::equal(shape.begin(),shape.end(),s.begin()));
-}
-//------------------------------------------------------------------------------
 void NXFieldTest::test_io_string_scalar()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;

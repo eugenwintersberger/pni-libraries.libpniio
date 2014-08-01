@@ -54,16 +54,20 @@ object_imp hdf5_utilities_test::create_group(const object_imp &parent,
 object_imp hdf5_utilities_test::create_dataset(const object_imp &parent,
                                                const string &name) const
 {
-    object_imp cplist = create_link_create_list();
+    //object_imp cplist = create_link_create_list();
     h5dataspace space;
     const h5datatype &type = get_type(type_id_t::FLOAT32);
+    object_imp cplist{H5Pcreate(H5P_DATASET_CREATE)};
+    H5Pset_layout(cplist.id(),H5D_CHUNKED);
+    type_imp::index_vector_type cs{1};
+    H5Pset_chunk(cplist.id(),1,cs.data());
 
     return object_imp{H5Dcreate2(parent.id(),
                                  name.c_str(),
                                  type.object().id(),
-                                 space.object().id(),
+                                 space.id(),
                                  H5P_DEFAULT,
-                                 H5P_DEFAULT,
+                                 cplist.id(),
                                  H5P_DEFAULT)};
 }
 
@@ -76,7 +80,7 @@ object_imp hdf5_utilities_test::create_attribute(const object_imp &parent,
 
     return object_imp{H5Acreate(parent.id(),name.c_str(),
                                 type.object().id(),
-                                space.object().id(),
+                                space.id(),
                                 H5P_DEFAULT,H5P_DEFAULT)};
 }
 

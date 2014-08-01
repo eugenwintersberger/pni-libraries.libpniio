@@ -72,23 +72,23 @@ namespace h5 {
         public:
             //! value type for buffers
             typedef type_imp::index_type value_type;
-            //! buffer type for array parameters
-            typedef type_imp::index_vector_type buffer_type;
             //! buffer iterator
-            typedef buffer_type::const_iterator iterator;
+            typedef type_imp::index_vector_type::const_iterator iterator;
         private:
             //! The HDF5 object representing the dataspace
             object_imp _object;
-            //! maximum number of elements dimensions
-            buffer_type _maxdims; 
             //! number of elements 
-            buffer_type _dims;    
+            type_imp::index_vector_type _dims;    
+            //! maximum number of elements dimensions
+            type_imp::index_vector_type _maxdims; 
            
             //---------------internal variables for selection state------------
             mutable type_imp::index_vector_type _offset;
             mutable type_imp::index_vector_type _stride;
             mutable type_imp::index_vector_type _count;
 
+            //-----------------------------------------------------------------
+            void __init_buffers() noexcept;
 
             //-----------------------------------------------------------------
             //!
@@ -102,16 +102,8 @@ namespace h5 {
             //!
             void __update_dataspace();
 
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief set buffers from object
-            //!
-            //! Update buffers according to the underlying dataspace.
-            //!
-            //! \brief object_error if dataspace extent could not have been 
-            //!                     retrieved
-            //!
             void __update_buffers();
+
         public:
             //==============constructors and destructor========================
             //! 
@@ -121,8 +113,10 @@ namespace h5 {
             //! constructor can always be used in order to store a scalar 
             //! value. Consequently even a default constructed H5Dataspace is 
             //! always a valid HDF5 object.
+            //! 
+            //! \throws object_error in case of default construction problems
             //!
-            explicit h5dataspace() noexcept;
+            explicit h5dataspace();
 
             //-----------------------------------------------------------------
             //!
@@ -139,16 +133,8 @@ namespace h5 {
             h5dataspace(h5dataspace &&o) noexcept;
 
             //-----------------------------------------------------------------
-            //!
-            //! \brief constructor
-            //!
-            //! \brief object_error in case of failure
-            //! \brief type_error if the passed object is not a dataspace
-            //! 
-            //! \param id HDF5 id of the original object
-            //!
-            explicit h5dataspace(object_imp &&o);
-            
+            h5dataspace(object_imp &&o);
+
             //-----------------------------------------------------------------
             //! 
             //! \brief constructor
@@ -175,41 +161,6 @@ namespace h5 {
             //!
             explicit h5dataspace(type_imp::index_vector_type  &&shape);
 
-            //----------------------------------------------------------------- 
-            //! 
-            //! \brief constructor
-            //!
-            //! Constructor takes two const lvalue references to containers  
-            //! holding the current and maximum shape of the dataspace.
-            //!
-            //! \throws shape_mismatch_error if actual and max dim containers 
-            //!                              are of different size
-            //! \throws object_error in case of any other failure
-            //! \param shape current shape
-            //! \param max_shape maximum shape
-            //!
-            explicit h5dataspace(const type_imp::index_vector_type &shape,
-                                 const type_imp::index_vector_type &max_shape);
-
-            //----------------------------------------------------------------- 
-            //! 
-            //! \brief constructor
-            //!
-            //! Constructor takes two rvalue references to containers  
-            //! holding the current and maximum shape of the dataspace.
-            //! This will improve performance in dataspace construction as no 
-            //! new memory for the maximum and current shape must be 
-            //! allocated.
-            //!
-            //! \throws shape_mismatch_error if actual and max dim containers 
-            //!                              are of different size
-            //! \throws object_error in case of any other failure
-            //! \param shape current shape
-            //! \param max_shape maximum shape
-            //!
-            explicit h5dataspace(type_imp::index_vector_type &&shape,
-                                 type_imp::index_vector_type &&max_shape);
-
             //=====================Assignment operators========================
             //!
             //! \brief copy assignment operator
@@ -230,10 +181,13 @@ namespace h5 {
             //! \brief rank of dataset
             //!
             //! Returns the rank (the number of dimensions) of the dataset. 
-            //! For a scalar dataspace this method returns 0.
+            //! This method always returns the total number of dimensions even
+            //! if a selection is set.
             //! 
             //! \throws invalid_object_error if dataspace is not valid
             //! \return number of dimension 
+            //!
+            //! \sa selection_rank()
             //!
             size_t rank() const;
 
@@ -241,7 +195,10 @@ namespace h5 {
             //!
             //! \brief get object reference
             //!
-            const object_imp &object() const noexcept;
+            hid_t id() const noexcept;
+
+            //-----------------------------------------------------------------
+            bool is_valid() const;
 
             //-----------------------------------------------------------------
             //!
@@ -256,16 +213,6 @@ namespace h5 {
             //! \return total number of elements 
             //!
             size_t size() const;
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief true if scalar dataspace
-            //!
-            //! Returns true if the dataspace is scalar. 
-            //! \throws invalid_object_error if dataspace is not valid
-            //! \return true if dataspace is scalar 
-            //!
-            bool is_scalar() const;
 
             //----------------------------------------------------------------
             //!
@@ -283,54 +230,7 @@ namespace h5 {
             //! 
             //! \brief return reference to the current dimensions buffer
             //!
-            const type_imp::index_vector_type &current_dims() const noexcept;
-
-            //----------------------------------------------------------------
-            //!
-            //! \brief return reference to the maximum dimensions buffer
-            //!
-            const type_imp::index_vector_type &maximum_dims() const noexcept;
-   
-            //----------------------------------------------------------------
-            //! 
-            //! \brief iterator to first current dimension
-            //!
-            //! Return an interator to the first current dimension of the
-            //! dataspace.
-            //! 
-            //! \return iterator 
-            //! 
-            iterator current_begin() const noexcept;
-
-            //----------------------------------------------------------------
-            //!
-            //! \brief iterator to last current dimension
-            //!
-            //! Return an interator to the last current dimensions.
-            //!
-            //! \return iterator
-            //!
-            iterator current_end() const noexcept;
-
-            //----------------------------------------------------------------
-            //!
-            //! \brief iterator to first maximum dimension
-            //!
-            //! Return an iterator to the first maximum dimension.
-            //!
-            //! \return iterator
-            //!
-            iterator maximum_begin() const noexcept;
-
-            //----------------------------------------------------------------
-            //!
-            //! \brief iterator to last maximum dimension
-            //!
-            //! Return an iterator to the last maximum dimension
-            //!
-            //! \return iterator
-            //!
-            iterator maximum_end() const noexcept;
+            const type_imp::index_vector_type &shape() const noexcept;
 
             //-----------------------------------------------------------------
             //!
@@ -356,13 +256,15 @@ namespace h5 {
             //! Apply a selection on this dataspace
             //!
             void apply_selection(const type_imp::selection_vector_type
-                    &selection) const;
+                    &selection) const ;
 
             void reset_selection() const;
 
             size_t selection_size() const;
 
             type_imp::index_vector_type selection_shape() const;
+
+            size_t selection_rank() const;
 
         };
 

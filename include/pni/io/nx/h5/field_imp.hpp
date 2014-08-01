@@ -57,14 +57,6 @@ namespace h5{
             object_imp _object;
             //! dataspace on file
             h5dataspace _file_space;
-            //! dataspace in memory - used for selections
-            mutable h5dataspace _memory_space;
-            //! datatype on file
-            h5datatype  _type;
-
-            mutable type_imp::index_vector_type _offset;
-            mutable type_imp::index_vector_type _stride;
-            mutable type_imp::index_vector_type _count;
 
             //!
             //! \brief update internal parameters
@@ -211,31 +203,6 @@ namespace h5{
 
             //=================methods to modify the dataset===================
             //! 
-            //! \brief resize the dataset
-            //!
-            //! Set the shape of the dataset to s. The new shape must satisfy 
-            //! some restrictions: 
-            //!
-            //! \li the rank of s must not exceed the rank of the orignal 
-            //! dataset
-            //! \li the new number of elements of each dimension must not 
-            //! exceed the maximum number of elements along each dimension as 
-            //! set in the dataspace used to create the dataset.
-            //!
-            //! If this requirements are not met by s an exception will be
-            //! thrown.
-            //!
-            //! \throws shape_mismatch_error if rank of s is not equal to 
-            //! the rank of the dataset
-            //! \throws object_error in case of other errors during resizeing
-            //! \throws invalid_object_error if field object not valid
-            //!
-            //! \param s shape object describing the new shape of the dataset
-            //!
-            void resize(const type_imp::index_vector_type &s);
-
-            //-----------------------------------------------------------------
-            //! 
             //! \brief extend the shape along a dimension
             //!
             //! Extends the size of the dataset along a single dimension.  This
@@ -329,7 +296,8 @@ namespace h5{
             //! \param tid type id of the original data type in memory
             //! \param ptr pointer to memory where the data should be stored.
             //!
-            void read(type_id_t tid,void *ptr) const;
+            void read(type_id_t tid,const type_imp::index_vector_type &shape,
+                      void *ptr) const;
 
             //===============writing data methods==============================
             //! 
@@ -349,7 +317,8 @@ namespace h5{
             //! \param tid type id for the strings
             //! \param ptr pointer to the memory region from which to read
             //!
-            void write(type_id_t tid,const void *ptr) const;
+            void write(type_id_t tid,const type_imp::index_vector_type &shape,
+                       const void *ptr) const;
 
             //=================================================================
             // DEFAULT OBJECT METHODS

@@ -142,7 +142,7 @@ namespace h5{
         //as attribute_imp is a composite object we have to check all its
         //components to determine the validity status
         return _object.is_valid() && 
-               _dspace.object().is_valid() && 
+               _dspace.is_valid() && 
                _dtype.object().is_valid();
     }
 
@@ -156,8 +156,8 @@ namespace h5{
     type_imp::index_vector_type attribute_imp::shape() const
     {
         type_imp::index_vector_type s(_dspace.rank());
-        std::copy(_dspace.current_begin(),
-                  _dspace.current_end(),
+        std::copy(_dspace.shape().begin(),
+                  _dspace.shape().end(),
                   s.begin());
         return s;
     }

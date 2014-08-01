@@ -177,6 +177,7 @@ namespace nx{
             template<typename ATYPE> 
             void _read_array(ATYPE &a) const
             {
+                typedef typename type_type::index_vector_type index_vector_type;
                 if(a.size() == 0)
                     throw memory_not_allocated_error(EXCEPTION_RECORD,
                                      "Target array buffer not allocated!");
@@ -185,7 +186,8 @@ namespace nx{
                     throw size_mismatch_error(EXCEPTION_RECORD,
                             "Array and field size do not match!");
 
-                _imp.read(pni::core::type_id(a),a.data());
+                _imp.read(pni::core::type_id(a),
+                          a.template shape<index_vector_type>(),a.data());
 
             }
 
@@ -208,6 +210,7 @@ namespace nx{
             template<typename ATYPE> 
             void _write_array(ATYPE &a) const
             {
+                typedef typename type_type::index_vector_type index_vector_type;
                 if(a.size() == 0)
                     throw memory_not_allocated_error(EXCEPTION_RECORD,
                                      "Source array buffer not allocated!");
@@ -216,7 +219,8 @@ namespace nx{
                     throw size_mismatch_error(EXCEPTION_RECORD,
                             "Array and field size do not match!");
 
-                _imp.write(pni::io::type_id(a),a.data()); 
+                _imp.write(pni::io::type_id(a),
+                           a.template shape<index_vector_type>(),a.data()); 
             }
 
             //-----------------------------------------------------------------
@@ -416,25 +420,6 @@ namespace nx{
             
             //-----------------------------------------------------------------
             //! 
-            //! \brief resize field
-            //!
-            //! Resize the field to a new shape determined by s.  The rank of 
-            //! the old and the new shape must coincide otherwise an exception 
-            //! will be thrown.
-            //!
-            //! \throws shape_mismatch_error if ranks do not match
-            //! \throws invalid_object_error if field is not valid
-            //! \throws object_error in case of any other error
-            //!
-            //! \param s describing the new shape of the field
-            //!
-            template<typename CTYPE> void resize(const CTYPE &s)
-            {
-                    _imp.resize(type_type::to_index_vector(s));
-            }
-
-            //-----------------------------------------------------------------
-            //! 
             //! \brief grow field along a particular dimension
             //!
             //! Grows the field by n elements along dimension e. This method 
@@ -494,11 +479,12 @@ namespace nx{
             //!
             template<typename T> void read(T &value) const
             {
+                typedef typename type_type::index_vector_type index_vector_type;
                 if(size() != 1)
                     throw shape_mismatch_error(EXCEPTION_RECORD,
                                               "Field is not scalar!");
 
-                _imp.read(type_id_map<T>::type_id,&value);
+                _imp.read(type_id_map<T>::type_id,index_vector_type{1},&value);
             }
            
             //----------------------------------------------------------------
@@ -517,9 +503,11 @@ namespace nx{
             //! \param values pointer to memory reagion
             //!
             template<typename T> 
-            void read(T *values) const
+            void read(size_t n,T *values) const
             {
-                _imp.read(type_id_map<T>::type_id,values);
+                typedef typename type_type::index_vector_type index_vector_type;
+
+                _imp.read(type_id_map<T>::type_id,index_vector_type{n},values);
             }
 
 
@@ -608,12 +596,13 @@ namespace nx{
             //! 
             template<typename T> void write(const T &value) const
             {
+                typedef typename type_type::index_vector_type index_vector_type;
                 static_assert(!std::is_pointer<T>::value,"no pointer");
                 if(_imp.size()!=1) 
                     throw size_mismatch_error(EXCEPTION_RECORD,
                                               "Field is not scalar!");
 
-                _imp.write(type_id_map<T>::type_id,&value);
+                _imp.write(type_id_map<T>::type_id,index_vector_type{1},&value);
             }
 
             //----------------------------------------------------------------
@@ -634,9 +623,11 @@ namespace nx{
             //! \tparam T memory data type of the source
             //! \param value pointer to memory region
             //! 
-            template<typename T> void write(const T *value) const
+            template<typename T> void write(size_t n,const T *value) const
             {
-                _imp.write(type_id_map<T>::type_id,value);
+                typedef typename type_type::index_vector_type index_vector_type;
+
+                _imp.write(type_id_map<T>::type_id,index_vector_type{n},value);
             }
 
             //----------------------------------------------------------------

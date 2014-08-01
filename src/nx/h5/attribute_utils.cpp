@@ -101,7 +101,7 @@ namespace h5{
         return object_imp(H5Acreate2(parent.id(),
                                    name.c_str(),
                                    type.object().id(),
-                                   space.object().id(),
+                                   space.id(),
                                    H5P_DEFAULT,
                                    H5P_DEFAULT));
     }

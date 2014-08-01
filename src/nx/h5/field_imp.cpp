@@ -45,46 +45,22 @@ namespace h5{
     //============implementation of private methods====================
     void field_imp::_update()
     {
+        //obtain the dataspace on the file
         _file_space = h5dataspace(object_imp(H5Dget_space(_object.id())));
-        _type       = h5datatype(object_imp(H5Dget_type(_object.id())));
-        _memory_space = _file_space;
-
-        if(_file_space.rank()!=0)
-        {
-            _offset = type_imp::index_vector_type(_file_space.rank());
-            _stride = type_imp::index_vector_type(_file_space.rank());
-            _count  = type_imp::index_vector_type(_file_space.rank());
-        }
-        else
-        {
-            _offset = type_imp::index_vector_type();
-            _stride = type_imp::index_vector_type();
-            _count  = type_imp::index_vector_type();
-        }
     }
 
     //===implementation of constructors and destructors================
     //implementation of the default constructor
     field_imp::field_imp() noexcept
         :_object(),
-         _file_space(),
-         _memory_space(),
-         _type(),
-         _offset(),
-         _stride(),
-         _count()
+         _file_space()
     { } 
     
     //-----------------------------------------------------------------
     //implementation of the copy conversion constructor
     field_imp::field_imp(object_imp &&o):
         _object(std::move(o)),
-        _file_space(),
-        _memory_space(),
-        _type(),
-        _offset(),
-        _stride(),
-        _count()
+        _file_space()
     {
         if(get_hdf5_type(_object) != h5object_type::DATASET)
             throw type_error(EXCEPTION_RECORD,
@@ -96,12 +72,7 @@ namespace h5{
     //implementation of the copy constructor
     field_imp::field_imp(const field_imp &o)
         :_object(o._object),
-         _file_space(o._file_space), 
-         _memory_space(o._memory_space),
-         _type(o._type),
-         _offset(o._offset),
-         _stride(o._stride),
-         _count(o._count)
+         _file_space(o._file_space)
     { }
 
 
@@ -109,12 +80,7 @@ namespace h5{
     //implementation of the move constrcutor
     field_imp::field_imp(field_imp &&o) noexcept
         :_object(std::move(o._object)),
-         _file_space(std::move(o._file_space)),
-         _memory_space(std::move(o._memory_space)),
-         _type(std::move(o._type)),
-         _offset(std::move(o._offset)),
-         _stride(std::move(o._stride)),
-         _count(std::move(o._count))
+         _file_space(std::move(o._file_space))
     { }
 
     //-----------------------------------------------------------------
@@ -137,11 +103,6 @@ namespace h5{
 
         _object       = o._object;
         _file_space   = o._file_space;
-        _memory_space = o._memory_space;
-        _type         = o._type;
-        _offset       = o._offset;
-        _stride       = o._stride;
-        _count        = o._count;
 
         return *this;
     }
@@ -154,31 +115,8 @@ namespace h5{
 
         _object       = std::move(o._object);
         _file_space   = std::move(o._file_space);
-        _memory_space = std::move(o._memory_space);
-        _type         = std::move(o._type);
-        _offset       = std::move(o._offset);
-        _stride       = std::move(o._stride);
-        _count        = std::move(o._count);
 
         return *this;
-    }
-
-    //------------------------------------------------------------------------
-    void field_imp::resize(const type_imp::index_vector_type &s)
-    {
-        _throw_if_not_valid(EXCEPTION_RECORD,
-                            "Cannot resize invalid dataset object!");
-
-        if(s.size() != _file_space.rank())
-            throw shape_mismatch_error(EXCEPTION_RECORD,
-                  "New shape does not have the same rank!");
-
-        if(H5Dset_extent(_object.id(),s.data())<0)
-            throw object_error(EXCEPTION_RECORD, 
-                 "Resizing of dataset ["+get_path(_object)
-                 +"] failed!\n\n"+ get_h5_error_string());
-
-        _update();
     }
 
     //------------------------------------------------------------------------
@@ -192,10 +130,9 @@ namespace h5{
         //these methods will throw an exception if e exceeds the rank 
         //of the dataspaces
         _file_space.grow(e,n);
-        _memory_space.grow(e,n);
 
         //if(H5Dset_extent(_object.id(),b.data())<0)
-        if(H5Dset_extent(_object.id(),_file_space.current_dims().data())<0)
+        if(H5Dset_extent(_object.id(),_file_space.shape().data())<0)
             throw object_error(EXCEPTION_RECORD, 
                   "Grow of dataset ["+get_path(_object)
                   +"] failed!\n\n"+get_h5_error_string());
@@ -210,19 +147,19 @@ namespace h5{
         _throw_if_not_valid(EXCEPTION_RECORD,
                             "Cannot obtain the shape of an invalid field!");
 
-        type_imp::index_vector_type s(_memory_space.rank());
-        std::copy(_memory_space.current_begin(),
-                  _memory_space.current_end(),
-                  s.begin());
-        return s;
+        if(_file_space.has_selection())
+            return _file_space.selection_shape();
+        else
+            return _file_space.shape();
     }
     //------------------------------------------------------------------------
     type_id_t field_imp::type_id() const 
     { 
+        using pni::io::nx::h5::type_id;
         _throw_if_not_valid(EXCEPTION_RECORD,
                             "Cannot obtain type from an invalid field!");
 
-        return pni::io::nx::h5::type_id(_type); 
+        return type_id(h5datatype(object_imp(H5Dget_type(_object.id())))); 
     }
 
     //------------------------------------------------------------------------
@@ -231,7 +168,10 @@ namespace h5{
         _throw_if_not_valid(EXCEPTION_RECORD,
                             "Cannot obtain the size from an invalid field!");
 
-        return _memory_space.size(); 
+        if(_file_space.has_selection())
+            return _file_space.selection_size(); 
+        else
+            return _file_space.size();
     }
     
     //------------------------------------------------------------------------
@@ -239,8 +179,11 @@ namespace h5{
     { 
         _throw_if_not_valid(EXCEPTION_RECORD,
                             "Cannot determine the rank of an invalid field!");
-
-        return _memory_space.rank(); 
+       
+        if(_file_space.has_selection())
+            return _file_space.selection_rank(); 
+        else
+            return _file_space.rank();
     }
 
     //------------------------------------------------------------------------
@@ -251,7 +194,7 @@ namespace h5{
                                void *ptr) const
     {
         if(H5Dread(_object.id(),memtype.object().id(),
-                             memspace.object().id(),filespace.object().id(),
+                             memspace.id(),filespace.id(),
                              xfer_list.id(),ptr)<0)
         {
             io_error error(EXCEPTION_RECORD, 
@@ -263,77 +206,73 @@ namespace h5{
     }
     
     //------------------------------------------------------------------------
-    void field_imp::read(type_id_t tid,void *ptr) const
+    void field_imp::read(type_id_t tid,
+                         const type_imp::index_vector_type &shape,
+                         void *ptr) const
     {
         _throw_if_not_valid(EXCEPTION_RECORD,
                             "Cannot read data from invaliid field!");
+        h5datatype file_type{object_imp(H5Dget_type(_object.id()))};
+        const h5datatype &memory_type = get_type(tid);
+        h5dataspace memory_space{shape};
 
-        if((tid==type_id_t::STRING) && is_vl_string(_type))
+        if((tid==type_id_t::STRING) && is_vl_string(file_type))
         {
             char_ptr_vector_type ptrs(size());
 
             //need here a more general guard for HDF5 objects
             object_imp xfer_plist(H5Pcreate(H5P_DATASET_XFER));
-            _read_data(_type,_memory_space,_file_space,xfer_plist,
+            _read_data(memory_type,memory_space,_file_space,xfer_plist,
                        static_cast<void*>(ptrs.data()));
        
             copy_from_vector(ptrs,static_cast<string*>(ptr));
-            H5Dvlen_reclaim(_type.object().id(),
-                            _memory_space.object().id(),
+            H5Dvlen_reclaim(memory_type.object().id(),
+                            memory_space.id(),
                             xfer_plist.id(),
                             ptrs.data());
         }
-        else if((tid==type_id_t::STRING) && is_static_string(_type))
+        else if((tid==type_id_t::STRING) && is_static_string(file_type))
         {
-            char_vector_type ptrs(static_string_size(_type)*size());
+            char_vector_type ptrs(static_string_size(file_type)*size());
 
-            _read_data(_type,_memory_space,_file_space,
+            _read_data(memory_type,memory_space,_file_space,
                        object_imp(H5Pcreate(H5P_DATASET_XFER)),
                        static_cast<void*>(ptrs.data()));
 
-            copy_from_vector(ptrs,size(),static_string_size(_type),
+            copy_from_vector(ptrs,size(),static_string_size(file_type),
                              static_cast<string *>(ptr));
         }
         else
-        {
-            //select the proper memory data type
-            const h5datatype &mem_type = get_type(tid);
-
-            _read_data(mem_type,_memory_space,_file_space,
+            _read_data(memory_type,memory_space,_file_space,
                        object_imp(H5Pcreate(H5P_DATASET_XFER)),
                        ptr);
-        }
     }
 
     //------------------------------------------------------------------------
-    void field_imp::write(type_id_t tid,const void *ptr) const
+    void field_imp::write(type_id_t tid,
+                          const type_imp::index_vector_type &shape,
+                          const void *ptr) const
     {
         /*
         _throw_if_not_valid(EXCEPTION_RECORD,
                             "Cannot write data to invalid object!");
                             */
-                            
+        const h5datatype &memory_type = get_type(tid);
+        h5dataspace memory_space{shape};
 
         if(tid == type_id_t::STRING)
         {
             auto *sptr = static_cast<const string*>(ptr);
             char_const_ptr_vector_type data(size());
             
-            h5datatype mem_type(object_imp(H5Dget_type(_object.id())));
-
             size_t index=0;
             for(auto &v: data) v = sptr[index++].c_str();
 
-            _write_data(mem_type,_memory_space,_file_space,
+            _write_data(memory_type,memory_space,_file_space,
                         static_cast<const void*>(data.data()));
         }
         else
-        {
-            //select the proper memory data type
-            const h5datatype &mem_type = get_type(tid);
-
-            _write_data(mem_type,_memory_space,_file_space,ptr);
-        }
+            _write_data(memory_type,memory_space,_file_space,ptr);
     }
 
     //------------------------------------------------------------------------
@@ -343,8 +282,8 @@ namespace h5{
                                 const void *ptr) const
     {
         //write data to disk
-        if(H5Dwrite(_object.id(),memtype.object().id(),memspace.object().id(),
-                    filespace.object().id(),H5P_DEFAULT,ptr)<0)
+        if(H5Dwrite(_object.id(),memtype.object().id(),memspace.id(),
+                    filespace.id(),H5P_DEFAULT,ptr)<0)
             throw io_error(EXCEPTION_RECORD, 
                 "Error writing data to dataset ["
                 +get_path(_object)+"]!\n\n"+
@@ -354,8 +293,6 @@ namespace h5{
     void field_imp::close() 
     {
         _file_space = h5dataspace();
-        _memory_space = h5dataspace();
-        _type = h5datatype();
         _object.close();
     }
 
@@ -389,10 +326,7 @@ namespace h5{
     //------------------------------------------------------------------------
     bool field_imp::is_valid() const
     {
-        return _object.is_valid() && 
-               _file_space.object().is_valid() && 
-               _memory_space.object().is_valid() && 
-               _type.object().is_valid();
+        return _object.is_valid() && _file_space.is_valid() ;
     }
 
     //------------------------------------------------------------------------
@@ -465,66 +399,14 @@ namespace h5{
     //========================================================================
     void field_imp::apply_selection(const type_imp::selection_vector_type &s)
         const
-    {
-        //create an array selection
-        //array_selection asel = array_selection::create(s);
-        
-        //create buffers
-        /*
-        auto offset = asel.offset<type_imp::index_vector_type>();
-        auto stride = asel.stride<type_imp::index_vector_type>();
-        auto count = asel.full_shape<type_imp::index_vector_type>();
-        */
-
-        //need to throw an exception if the rank of the selection and
-        //that of the 
-        if(s.size() != _file_space.rank())
-            throw shape_mismatch_error(EXCEPTION_RECORD,
-                    "Selection and field rank do not match!");
-
-        /*
-        type_imp::index_vector_type offset(s.size());
-        type_imp::index_vector_type stride(s.size());
-        type_imp::index_vector_type count(s.size());
-        */
-        type_imp::index_vector_type mshape;
-
-        size_t index=0;
-        for(const auto &sl: s)
-        {
-            _offset[index] = sl.first();
-            _stride[index] = sl.stride();
-            _count[index] = pni::core::size(sl);
-            if(_count[index]!=1) mshape.push_back(_count[index]);
-            index++;     
-        }
-
-
-        //apply the selection
-        herr_t err = H5Sselect_hyperslab(_file_space.object().id(),
-                H5S_SELECT_SET,_offset.data(),_stride.data(),_count.data(),
-                nullptr);
-        if(err<0)
-            throw object_error(EXCEPTION_RECORD,
-                    "Error applying selection to dataset!\n\n"+
-                    get_h5_error_string());
-
-        //need to set the memory dataspace to the effective shape of the
-        //selection
-        _memory_space = std::move(h5dataspace(mshape));
-
+    {   
+        _file_space.apply_selection(s);
     }
 
     //------------------------------------------------------------------------
     void field_imp::clear_selections() const
     {
-        //this should be quite easy - there is nothing special we have
-        ///to do.
-        if(_file_space.object().is_valid())
-        {
-            H5Sselect_all(_file_space.object().id());
-            _memory_space = _file_space;
-        }
+        _file_space.reset_selection();
     }
 
     

@@ -43,7 +43,7 @@ namespace h5{
         return field_imp(object_imp(H5Dcreate2(parent.id(),
                                                name.c_str(),
                                                type.object().id(),
-                                               space.object().id(),
+                                               space.id(),
                                                H5P_DEFAULT,
                                                create_plist.id(),
                                                H5P_DEFAULT)));
@@ -90,9 +90,8 @@ namespace h5{
                     "Field shape must not be empty!");
 
         type_imp::index_vector_type maximum_dims(current_dims.size());
-        std::fill(maximum_dims.begin(),maximum_dims.end(),H5S_UNLIMITED);
 
-        return h5dataspace{current_dims,maximum_dims};
+        return h5dataspace{current_dims};
     }
 
    
