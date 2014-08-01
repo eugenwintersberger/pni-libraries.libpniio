@@ -47,20 +47,23 @@ namespace h5{
     {
         //obtain the dataspace on the file
         _file_space = h5dataspace(object_imp(H5Dget_space(_object.id())));
+        _selection  = selection{_file_space.rank()};
     }
 
     //===implementation of constructors and destructors================
     //implementation of the default constructor
     field_imp::field_imp() noexcept
         :_object(),
-         _file_space()
+         _file_space(),
+         _selection()
     { } 
     
     //-----------------------------------------------------------------
     //implementation of the copy conversion constructor
     field_imp::field_imp(object_imp &&o):
         _object(std::move(o)),
-        _file_space()
+        _file_space(),
+        _selection()
     {
         if(get_hdf5_type(_object) != h5object_type::DATASET)
             throw type_error(EXCEPTION_RECORD,
@@ -72,7 +75,8 @@ namespace h5{
     //implementation of the copy constructor
     field_imp::field_imp(const field_imp &o)
         :_object(o._object),
-         _file_space(o._file_space)
+         _file_space(o._file_space),
+         _selection(o._selection)
     { }
 
 
@@ -80,7 +84,9 @@ namespace h5{
     //implementation of the move constrcutor
     field_imp::field_imp(field_imp &&o) noexcept
         :_object(std::move(o._object)),
-         _file_space(std::move(o._file_space))
+         _file_space(std::move(o._file_space)),
+         _selection(std::move(o._selection))
+            
     { }
 
     //-----------------------------------------------------------------
@@ -103,6 +109,7 @@ namespace h5{
 
         _object       = o._object;
         _file_space   = o._file_space;
+        _selection    = o._selection;
 
         return *this;
     }
@@ -115,6 +122,7 @@ namespace h5{
 
         _object       = std::move(o._object);
         _file_space   = std::move(o._file_space);
+        _selection    = std::move(o._selection);
 
         return *this;
     }
@@ -136,6 +144,7 @@ namespace h5{
             throw object_error(EXCEPTION_RECORD, 
                   "Grow of dataset ["+get_path(_object)
                   +"] failed!\n\n"+get_h5_error_string());
+
     }
 
 
@@ -148,7 +157,7 @@ namespace h5{
                             "Cannot obtain the shape of an invalid field!");
 
         if(_file_space.has_selection())
-            return _file_space.selection_shape();
+            return effective_shape(_selection);
         else
             return _file_space.shape();
     }
@@ -169,7 +178,7 @@ namespace h5{
                             "Cannot obtain the size from an invalid field!");
 
         if(_file_space.has_selection())
-            return _file_space.selection_size(); 
+            return pni::io::nx::h5::size(_selection); 
         else
             return _file_space.size();
     }
@@ -181,7 +190,7 @@ namespace h5{
                             "Cannot determine the rank of an invalid field!");
        
         if(_file_space.has_selection())
-            return _file_space.selection_rank(); 
+            return effective_rank(_selection); 
         else
             return _file_space.rank();
     }
@@ -289,6 +298,7 @@ namespace h5{
                 +get_path(_object)+"]!\n\n"+
                 get_h5_error_string());
     }
+
     //-------------------------------------------------------------------------
     void field_imp::close() 
     {
@@ -399,8 +409,13 @@ namespace h5{
     //========================================================================
     void field_imp::apply_selection(const type_imp::selection_vector_type &s)
         const
-    {   
-        _file_space.apply_selection(s);
+    {  
+        if(s.size() != _file_space.rank())
+            throw shape_mismatch_error(EXCEPTION_RECORD,
+                    "Field and selection rank do not match!");
+
+        _selection.update(s);
+        _file_space.apply_selection(_selection);
     }
 
     //------------------------------------------------------------------------

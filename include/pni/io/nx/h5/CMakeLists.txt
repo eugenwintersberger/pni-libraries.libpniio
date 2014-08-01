@@ -17,6 +17,7 @@ set(HEADER_FILES
                 hdf5_utilities.hpp
                 object_imp.hpp
                 type_imp.hpp
+                selection.hpp
                  )
 
 

@@ -24,6 +24,7 @@
 
 #include "object_imp.hpp"
 #include "type_imp.hpp"
+#include "selection.hpp"
 
 namespace pni{
 namespace io{
@@ -34,6 +35,9 @@ namespace h5 {
     //avoid namespace collisions with std
     using pni::core::exception;
     using pni::core::string;
+
+    //forward declaration of selection class
+    class selection;
 
     //!
     //! \ingroup nxh5_classes
@@ -81,11 +85,6 @@ namespace h5 {
             type_imp::index_vector_type _dims;    
             //! maximum number of elements dimensions
             type_imp::index_vector_type _maxdims; 
-           
-            //---------------internal variables for selection state------------
-            mutable type_imp::index_vector_type _offset;
-            mutable type_imp::index_vector_type _stride;
-            mutable type_imp::index_vector_type _count;
 
             //-----------------------------------------------------------------
             void __init_buffers() noexcept;
@@ -255,16 +254,13 @@ namespace h5 {
             //!
             //! Apply a selection on this dataspace
             //!
-            void apply_selection(const type_imp::selection_vector_type
-                    &selection) const ;
+            void apply_selection(const selection &s) const ;
 
+            //----------------------------------------------------------------
+            //!
+            //! \brief reset selection 
+            //!
             void reset_selection() const;
-
-            size_t selection_size() const;
-
-            type_imp::index_vector_type selection_shape() const;
-
-            size_t selection_rank() const;
 
         };
 

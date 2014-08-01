@@ -112,7 +112,7 @@ namespace h5{
         static selection_vector_type to_selection_vector(const CTYPE &container)
         {
             static_assert(std::is_same<typename CTYPE::value_type,
-                                        slice>::value,
+                                        pni::core::slice>::value,
                          "Container must store values of slice!");
 
             selection_vector_type v(container.size());
@@ -137,7 +137,7 @@ namespace h5{
         static CTYPE from_selection_vector(const selection_vector_type &v)
         {
             static_assert(std::is_same<typename CTYPE::value_type,
-                                       slice>::value,
+                                       pni::core::slice>::value,
                           "Container value type must be slice!");
 
             CTYPE container(v.size());

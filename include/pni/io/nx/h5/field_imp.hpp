@@ -31,6 +31,7 @@
 #include "h5datatype.hpp"
 #include "h5filter.hpp"
 #include "attribute_imp.hpp"
+#include "selection.hpp"
 
 
 namespace pni{
@@ -57,6 +58,9 @@ namespace h5{
             object_imp _object;
             //! dataspace on file
             h5dataspace _file_space;
+
+            //! selection object
+            mutable selection _selection;
 
 
             //!

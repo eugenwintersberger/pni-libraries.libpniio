@@ -16,6 +16,7 @@ set(SOURCES
             hdf5_utilities.cpp
             object_imp.cpp
             string_utils.cpp
+            selection.cpp
             )
 
 
