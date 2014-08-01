@@ -37,15 +37,6 @@
 #include "nxobject.hpp"
 
 #include "h5/h5link.hpp"
-/*
-#include "h5/object_imp.hpp"
-#include "h5/file_imp.hpp"
-#include "h5/group_imp.hpp"
-#include "h5/field_imp.hpp"
-#include "h5/attribute_imp.hpp"
-#include "h5/h5filter.hpp"
-#include "h5/deflate_filter.hpp"
-*/
 
 namespace pni{
 namespace io{
@@ -59,7 +50,6 @@ namespace h5{
     typedef pni::io::nx::nxfilter<nximp_map<nximp_code::HDF5>::filter_imp>             nxfilter;
     typedef pni::io::nx::nxdeflate_filter<nximp_map<nximp_code::HDF5>::deflate_imp> nxdeflate_filter;
     typedef pni::io::nx::nxattribute<nximp_code::HDF5>  nxattribute;
-    typedef pni::io::nx::nxselection<nxfield> nxselection;
     typedef pni::io::nx::nxobject<nxgroup,nxfield,nxattribute> nxobject;
 //end of namespace
 }
@@ -77,7 +67,6 @@ namespace nx{
         typedef h5::nxgroup group_type;
         typedef h5::nxfield field_type;
         typedef h5::nxattribute attribute_type;
-        typedef h5::nxselection selection_type;
         typedef h5::h5link link_type;
         typedef h5::nxdeflate_filter deflate_type;
         typedef h5::nxobject object_type;

@@ -33,7 +33,6 @@
 
 #include "nxattribute_manager.hpp"
 #include "nxobject_traits.hpp"
-#include "nxselection.hpp"
 #include "algorithms/get_path.hpp"
 
 
@@ -730,12 +729,15 @@ namespace nx{
             //! \return field object with selection set
             //!
             template<typename ...ITYPES>
-            nxselection<field_type> operator()(ITYPES ...indices)
+            field_type operator()(ITYPES ...indices)
             {
-                typedef nxselection<field_type> sel_type;
-                typedef typename sel_type::selection_type container_type;
+                typedef std::vector<slice> container_type;
+                //create copy of this field - a rather cheap operation
+                field_type new_field{*this};
 
-                return sel_type(container_type({slice(indices)...}),*this);
+                new_field.apply_selection(container_type({slice(indices)...}));
+
+                return new_field;
             }
 
             //---------------------------------------------------------------
@@ -750,15 +752,13 @@ namespace nx{
             //! \param selection container with instances of slice
             //! \return instance of NXField with selection set
             //!
-            nxselection<field_type> operator()(const std::vector<slice> &selection) 
+            field_type operator()(const std::vector<slice> &selection) 
             {
-                typedef nxselection<field_type> sel_type;
-
-                return sel_type(selection,*this);
+                field_type new_field{*this};
+                new_field.apply_selection(selection);
+                return new_field;
             }
         
-            friend class nxselection<field_type>;
-
             //---------------------------------------------------------------
             //! 
             //! \brief return field name

@@ -18,7 +18,6 @@ set(HEADER_FILES nexus_utils.hpp
                  nxobject_traits.hpp
                  nxobject_type.hpp
                  nxpath.hpp
-                 nxselection.hpp
                  algorithms.hpp
                  xml.hpp
                  nxattribute_manager.hpp
