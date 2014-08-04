@@ -47,7 +47,9 @@ namespace h5{
     {
         //obtain the dataspace on the file
         _file_space = h5dataspace(object_imp(H5Dget_space(_object.id())));
-        _selection  = selection{_file_space.rank()};
+        //we cannot do more here as the parameters of a selection 
+        //cannot be retrieved from the dataspace
+        _selection = selection(_file_space.rank());
     }
 
     //===implementation of constructors and destructors================
@@ -86,7 +88,6 @@ namespace h5{
         :_object(std::move(o._object)),
          _file_space(std::move(o._file_space)),
          _selection(std::move(o._selection))
-            
     { }
 
     //-----------------------------------------------------------------
@@ -283,6 +284,7 @@ namespace h5{
         else
             _write_data(memory_type,memory_space,_file_space,ptr);
     }
+
 
     //------------------------------------------------------------------------
     void field_imp::_write_data(const h5datatype &memtype,

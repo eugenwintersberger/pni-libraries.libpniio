@@ -207,7 +207,7 @@ namespace nx{
             //! \param a reference to an instance fo ATYPE
             //!
             template<typename ATYPE> 
-            void _write_array(ATYPE &a) const
+            void _write_array(const ATYPE &a) const
             {
                 typedef typename type_type::index_vector_type index_vector_type;
                 if(a.size() == 0)
@@ -222,28 +222,6 @@ namespace nx{
                            a.template shape<index_vector_type>(),a.data()); 
             }
 
-            //-----------------------------------------------------------------
-            //!
-            //! \brief apply selection
-            //!
-            //! Apply a selection to the field.
-            //! \param s selection container
-            //!
-            void apply_selection(const std::vector<slice> &s) 
-            {
-                _imp.apply_selection(s);
-            }
-
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief remove a selection
-            //!
-            //! Removes a selection previously applied with apply_selection.
-            //!
-            void reset_selection() 
-            {
-                _imp.clear_selections();
-            }
 
         public:
             //===================public attributes=============================
@@ -655,9 +633,20 @@ namespace nx{
                      typename IMAP,
                      typename IPA
                     >
-            void write(const mdarray<STORAGE,IMAP,IPA> &a)
+            void write(const mdarray<STORAGE,IMAP,IPA> &a) const
             {
-                _write_array(a);
+                typedef typename type_type::index_vector_type index_vector_type;
+                if(a.size() == 0)
+                    throw memory_not_allocated_error(EXCEPTION_RECORD,
+                                     "Source array buffer not allocated!");
+
+                if(a.size()!=size())
+                    throw size_mismatch_error(EXCEPTION_RECORD,
+                            "Array and field size do not match!");
+
+                _imp.write(pni::io::type_id(a),
+                           a.template shape<index_vector_type>(),a.data()); 
+                //_write_array(a);
             }
 
             //-----------------------------------------------------------------
@@ -729,16 +718,22 @@ namespace nx{
             //! \return field object with selection set
             //!
             template<typename ...ITYPES>
-            field_type operator()(ITYPES ...indices)
+            field_type &operator()(ITYPES ...indices)
             {
                 typedef std::vector<slice> container_type;
-                //create copy of this field - a rather cheap operation
-                field_type new_field{*this};
 
-                new_field.apply_selection(container_type({slice(indices)...}));
+                _imp.apply_selection(container_type({slice(indices)...}));
 
-                return new_field;
+                return *this;
             }
+
+            //---------------------------------------------------------------
+            field_type &operator()()
+            {
+                _imp.clear_selections();
+                return *this;
+            }
+
 
             //---------------------------------------------------------------
             //!
@@ -752,13 +747,12 @@ namespace nx{
             //! \param selection container with instances of slice
             //! \return instance of NXField with selection set
             //!
-            field_type operator()(const std::vector<slice> &selection) 
+            field_type &operator()(const std::vector<slice> &selection) 
             {
-                field_type new_field{*this};
-                new_field.apply_selection(selection);
-                return new_field;
+                _imp.apply_selection(selection);
+                return *this;
             }
-        
+
             //---------------------------------------------------------------
             //! 
             //! \brief return field name
@@ -785,11 +779,6 @@ namespace nx{
             { 
                 return _imp.is_valid(); 
             }
-
-            //---------------------------------------------------------------
-            //!
-            //! \brief 
-            //const imp_type &imp() const { return _imp; }
 
             //---------------------------------------------------------------
             nxobject_type object_type() const { return _imp.nxobject_type(); }

@@ -233,8 +233,6 @@ namespace h5 {
             throw object_error(EXCEPTION_RECORD,
                     "Error applying selection to dataset!\n\n"+
                     get_h5_error_string());
-
-
     }
            
     //------------------------------------------------------------------------

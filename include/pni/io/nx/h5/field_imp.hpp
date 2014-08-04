@@ -58,8 +58,6 @@ namespace h5{
             object_imp _object;
             //! dataspace on file
             h5dataspace _file_space;
-
-            //! selection object
             mutable selection _selection;
 
 
@@ -324,6 +322,7 @@ namespace h5{
             //!
             void write(type_id_t tid,const type_imp::index_vector_type &shape,
                        const void *ptr) const;
+
 
             //=================================================================
             // DEFAULT OBJECT METHODS

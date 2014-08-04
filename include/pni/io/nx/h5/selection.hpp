@@ -96,10 +96,23 @@ namespace h5{
             const type_imp::index_vector_type &offset() const;
 
             //----------------------------------------------------------------
+            void offset(const type_imp::index_vector_type &offset);
+
+            //----------------------------------------------------------------
+            void offset(type_imp::index_type value);
+            
+            //----------------------------------------------------------------
+            void offset(size_t index,size_t value);
+
+            //----------------------------------------------------------------
             //!
             //! \brief get refeference to stride vector
             //!
             const type_imp::index_vector_type &stride() const;
+
+            void stride(const type_imp::index_vector_type &value);
+
+            void stride(type_imp::index_type value);
             
             //----------------------------------------------------------------
             //! 
@@ -107,11 +120,18 @@ namespace h5{
             //!
             const type_imp::index_vector_type &count() const;
 
+            void count(const type_imp::index_vector_type &value);
+
+            void count(type_imp::index_type value);
+
+            void count(size_t index,type_imp::index_type value);
+
             //----------------------------------------------------------------
             //!
             //! \brief update selection
             //! 
             void update(const type_imp::selection_vector_type &s);
+
     };
 
     //!

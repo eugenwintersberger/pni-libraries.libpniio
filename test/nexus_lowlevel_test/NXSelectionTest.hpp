@@ -95,7 +95,7 @@ template<typename T> void NXSelectionTest::test_scalar_selection()
     nxfield field = root.create_field<T>("array",shape);
 
     T write=T(0),read=T(0);
-    
+   
     CPPUNIT_ASSERT(field.size()==12);
     CPPUNIT_ASSERT(field.rank()==2);
     CPPUNIT_ASSERT(field.shape<shape_t>()[0] == 3);
@@ -106,6 +106,7 @@ template<typename T> void NXSelectionTest::test_scalar_selection()
     CPPUNIT_ASSERT(field(1,1).shape<shape_t>().size()==0);
     CPPUNIT_ASSERT(field(1,1).rank()==0);
 
+    field();
     CPPUNIT_ASSERT(field.size()==12);
     CPPUNIT_ASSERT(field.rank()==2);
     CPPUNIT_ASSERT(field.shape<shape_t>()[0] == 3);

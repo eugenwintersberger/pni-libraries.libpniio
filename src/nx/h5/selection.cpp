@@ -93,15 +93,63 @@ namespace h5{
     }
 
     //------------------------------------------------------------------------
+    void selection::offset(const type_imp::index_vector_type &value) 
+    {
+        std::copy(value.begin(),value.end(),_offset.begin());
+    }
+
+    //------------------------------------------------------------------------
+    void selection::offset(type_imp::index_type value)
+    {
+        std::fill(_offset.begin(),_offset.end(),value);
+    }
+
+    //------------------------------------------------------------------------
     const type_imp::index_vector_type &selection::stride() const
     {
         return _stride;
     }
 
     //------------------------------------------------------------------------
+    void selection::stride(const type_imp::index_vector_type &value)
+    {
+        std::copy(value.begin(),value.end(),_stride.begin());
+    }
+
+    //------------------------------------------------------------------------
+    void selection::stride(type_imp::index_type value)
+    {
+        std::fill(_stride.begin(),_stride.end(),value);
+    }
+
+    //------------------------------------------------------------------------
     const type_imp::index_vector_type &selection::count() const
     {
         return _count;
+    }
+
+    //------------------------------------------------------------------------
+    void selection::offset(size_t index,size_t value)
+    {
+        _offset[index] = value;
+    }
+
+    //------------------------------------------------------------------------
+    void selection::count(const type_imp::index_vector_type &value)
+    {
+        std::copy(value.begin(),value.end(),_count.begin());
+    }
+
+    //------------------------------------------------------------------------
+    void selection::count(type_imp::index_type value)
+    {
+        std::fill(_count.begin(),_count.end(),value);
+    }
+
+    //------------------------------------------------------------------------
+    void selection::count(size_t index,type_imp::index_type value)
+    {
+        _count[index] = value;
     }
 
     //------------------------------------------------------------------------
