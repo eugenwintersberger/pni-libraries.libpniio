@@ -129,7 +129,7 @@ namespace h5{
     }
 
     //------------------------------------------------------------------------
-    void field_imp::grow(const size_t &e,const size_t &n)
+    void field_imp::grow(const size_t &e,const size_t &n) 
     {
         /*
         _throw_if_not_valid(EXCEPTION_RECORD,
@@ -270,6 +270,9 @@ namespace h5{
         const h5datatype &memory_type = get_type(tid);
         h5dataspace memory_space{shape};
 
+        if(_file_space.has_selection())
+            memory_space = h5dataspace(_selection.count());
+
         if(tid == type_id_t::STRING)
         {
             auto *sptr = static_cast<const string*>(ptr);
@@ -282,7 +285,9 @@ namespace h5{
                         static_cast<const void*>(data.data()));
         }
         else
+        {
             _write_data(memory_type,memory_space,_file_space,ptr);
+        }
     }
 
 

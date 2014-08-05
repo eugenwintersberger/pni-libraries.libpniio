@@ -411,7 +411,7 @@ namespace nx{
             //! \param e index of dimension along which to grow
             //! \param n number of elements by which to grow
             //!
-            void grow(const size_t &e,const size_t &n=1)
+            void grow(const size_t &e,const size_t &n=1) 
             {
                     _imp.grow(e,n);
             }
@@ -579,7 +579,7 @@ namespace nx{
                     throw size_mismatch_error(EXCEPTION_RECORD,
                                               "Field is not scalar!");
 
-                _imp.write(type_id_map<T>::type_id,index_vector_type{1},&value);
+                _imp.write(type_id_map<T>::type_id,index_vector_type{{1}},&value);
             }
 
             //----------------------------------------------------------------
@@ -604,7 +604,8 @@ namespace nx{
             {
                 typedef typename type_type::index_vector_type index_vector_type;
 
-                _imp.write(type_id_map<T>::type_id,index_vector_type{n},value);
+                _imp.write(type_id_map<T>::type_id,index_vector_type{{n}},
+                           static_cast<const void*>(value));
             }
 
             //----------------------------------------------------------------
@@ -644,11 +645,13 @@ namespace nx{
                     throw size_mismatch_error(EXCEPTION_RECORD,
                             "Array and field size do not match!");
 
-                _imp.write(pni::io::type_id(a),
-                           a.template shape<index_vector_type>(),a.data()); 
+                _imp.write(type_id_map<typename STORAGE::value_type>::type_id,
+                           a.template shape<index_vector_type>(),
+                           static_cast<const void*>(a.data())); 
                 //_write_array(a);
             }
 
+           
             //-----------------------------------------------------------------
             //! 
             //! \brief write old style string
@@ -718,17 +721,18 @@ namespace nx{
             //! \return field object with selection set
             //!
             template<typename ...ITYPES>
-            field_type &operator()(ITYPES ...indices)
+            field_type operator()(ITYPES ...indices)
             {
                 typedef std::vector<slice> container_type;
+                field_type new_field(*this);
 
-                _imp.apply_selection(container_type({slice(indices)...}));
+                new_field._imp.apply_selection(container_type({slice(indices)...}));
 
-                return *this;
+                return new_field;
             }
 
             //---------------------------------------------------------------
-            field_type &operator()()
+            field_type operator()()
             {
                 _imp.clear_selections();
                 return *this;
@@ -747,10 +751,11 @@ namespace nx{
             //! \param selection container with instances of slice
             //! \return instance of NXField with selection set
             //!
-            field_type &operator()(const std::vector<slice> &selection) 
+            field_type operator()(const std::vector<slice> &selection) 
             {
-                _imp.apply_selection(selection);
-                return *this;
+                field_type new_field(*this);
+                new_field._imp.apply_selection(selection);
+                return new_field;
             }
 
             //---------------------------------------------------------------

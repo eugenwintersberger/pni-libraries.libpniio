@@ -219,7 +219,7 @@ namespace h5{
             //! \param n number of elements by which the dimension shall be
             //! extended
             //!
-            void grow(const size_t &e=0,const size_t &n=1);
+            void grow(const size_t &e=0,const size_t &n=1) ;
 
             //-----------------------------------------------------------------
             //! 
