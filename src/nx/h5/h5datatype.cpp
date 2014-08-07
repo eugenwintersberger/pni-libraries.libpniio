@@ -84,6 +84,7 @@ namespace h5{
         return type;
     }
 
+    //------------------------------------------------------------------------
     h5datatype create_bool()
     {
         h5datatype type(object_imp(H5Tcopy(H5T_NATIVE_UINT8)));
@@ -170,41 +171,12 @@ namespace h5{
     { }
 
     //-------------------------------------------------------------------------
-    h5datatype::h5datatype(const h5datatype &o)
-        :_object(o._object)
-    { }
-
-    //-------------------------------------------------------------------------
     h5datatype::h5datatype(object_imp &&o) 
         :_object(std::move(o))
     {
         if(get_hdf5_type(_object)!=h5object_type::DATATYPE)
             throw type_error(EXCEPTION_RECORD,
                     "Object passed is not an HDF5 datatype!");
-    }
-
-    //-------------------------------------------------------------------------
-    h5datatype::h5datatype(h5datatype &&o) noexcept
-        :_object(std::move(o._object))
-    { 
-    }
-
-    //=============Assignment operator=========================================
-    //implementation of copy assignment operator
-    h5datatype &h5datatype::operator=(const h5datatype &o)
-    {
-        if(this != &o) _object = o._object;
-        
-        return *this;
-    }
-
-    //-------------------------------------------------------------------------
-    //implementation of move assignment operator
-    h5datatype &h5datatype::operator=(h5datatype &&o) noexcept
-    {
-        if(this != &o) _object = std::move(o._object);
-
-        return *this;
     }
 
     //-------------------------------------------------------------------------

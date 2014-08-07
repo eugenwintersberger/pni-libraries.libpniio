@@ -55,37 +55,11 @@ namespace h5{
             //!
             selection() noexcept;
 
-            //-----------------------------------------------------------------
-            //!
-            //! \brief copy constructor
-            //!
-            selection(const selection &s);
-
-            //----------------------------------------------------------------
-            //!
-            //! \brief move constructor
-            //!
-            selection(selection &&s) noexcept;
-
             //----------------------------------------------------------------
             //!
             //! \brief constructor
             //!
             selection(size_t n);
-
-            //----------------------------------------------------------------
-            //              Assignment operators
-            //----------------------------------------------------------------
-            //!
-            //! \brief copy assignment
-            //!
-            selection &operator=(const selection &s);
-
-            //----------------------------------------------------------------
-            //!
-            //! \brief move assignment
-            //!
-            selection &operator=(selection &&s) noexcept;
 
             //----------------------------------------------------------------
             //               Data access methods

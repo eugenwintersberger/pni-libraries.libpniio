@@ -66,38 +66,9 @@ namespace h5{
 
             //----------------------------------------------------------------
             //!
-            //! \brief copy constructor
-            //!
-            //! \throws object_error in case of errors
-            //!
-            h5datatype(const h5datatype &o);
-
-            //----------------------------------------------------------------
-            //!
-            //! \brief move constructor
-            //!
-            h5datatype(h5datatype &&o) noexcept;
-
-            //----------------------------------------------------------------
-            //!
             //! \brief obtain reference to object
             //!
             const object_imp &object() const noexcept;
-
-            //==========Assignment operators==================================
-            //! 
-            //! \brief copy assignment operator
-            //!
-            //! \throws object_error in case of errors
-            //!
-            h5datatype &operator=(const h5datatype &o);
-
-            //----------------------------------------------------------------
-            //! 
-            //! \brief move assignment operator
-            //!  
-            h5datatype &operator=(h5datatype &&o) noexcept;
-
     };
             
     //==========comparison operators==========================================

@@ -37,19 +37,6 @@ namespace h5{
         _count()
     {}
 
-    //------------------------------------------------------------------------
-    selection::selection(const selection &s):
-        _offset(s._offset),
-        _stride(s._stride),
-        _count(s._count)
-    {}
-
-    //-----------------------------------------------------------------------
-    selection::selection(selection &&s) noexcept:
-        _offset(std::move(s._offset)),
-        _stride(std::move(s._stride)),
-        _count(std::move(s._count))
-    {}
 
     //------------------------------------------------------------------------
     selection::selection(size_t n):
@@ -60,30 +47,6 @@ namespace h5{
         std::fill(_offset.begin(),_offset.end(),0);
         std::fill(_stride.begin(),_stride.end(),1);
         std::fill(_count.begin(),_count.end(),0);
-    }
-
-    //------------------------------------------------------------------------
-    selection &selection::operator=(const selection &s)
-    {
-        if(this == &s) return *this;
-
-        _offset = s._offset;
-        _stride = s._stride;
-        _count  = s._count;
-
-        return *this;
-    }
-
-    //------------------------------------------------------------------------
-    selection &selection::operator=(selection &&s) noexcept
-    {
-        if(this == &s) return *this;
-
-        _offset = std::move(s._offset);
-        _stride = std::move(s._stride);
-        _count  = std::move(s._count);
-
-        return *this;
     }
 
     //------------------------------------------------------------------------
