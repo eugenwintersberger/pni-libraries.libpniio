@@ -62,20 +62,6 @@ namespace h5{
 
             //-----------------------------------------------------------------
             //!
-            //! \brief copy construction
-            //! 
-            //! \throws object_error in case of problems
-            //!
-            file_imp(const file_imp &f);
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief move constructor
-            //!
-            file_imp(file_imp &&o) noexcept;
-
-            //-----------------------------------------------------------------
-            //!
             //! \brief object constructor
             //! 
             //! \throws type_error in cases where the object is not a file
@@ -83,20 +69,6 @@ namespace h5{
             //! 
             explicit file_imp(object_imp &&o);
 
-            //=====================assignment operators========================
-            //!
-            //! \brief move assignment
-            //!
-            file_imp &operator=(file_imp &&o) noexcept;
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief copy assignment
-            //!
-            //! \throws object_error in case of errors
-            //!
-            file_imp &operator=(const file_imp &o);
-       
             //=====================factory methods=============================
             //! 
             //! \brief open an existing file

@@ -71,20 +71,6 @@ namespace h5{
             explicit group_imp(object_imp &&o);
 
             //-----------------------------------------------------------------
-            //!
-            //! \brief copy constructor
-            //! 
-            //! \throws object_error in case of errors
-            //! 
-            group_imp(const group_imp &o);
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief move constructor
-            //! 
-            group_imp(group_imp &&o) noexcept;
-
-            //-----------------------------------------------------------------
             //! 
             //! \brief constructor 
             //! 
@@ -95,22 +81,6 @@ namespace h5{
             //! \param name the name of the new group
             //! 
             explicit group_imp(const group_imp &parent,const string &name);
-
-
-            //===================assignment operators===========================
-            //!
-            //! \brief copy assignment
-            //! 
-            //! \throws object_error in case of errors
-            //! 
-            group_imp &operator=(const group_imp &o);
-
-            //------------------------------------------------------------------
-            //! 
-            //! \brief move assignment
-            //! 
-            group_imp &operator=(group_imp &&o) noexcept;
-
 
             //=================methods to open objects==========================
             //! 

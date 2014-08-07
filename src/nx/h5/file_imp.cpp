@@ -51,49 +51,15 @@ namespace h5{
     file_imp::file_imp() noexcept
         :_object()
     {}
-   
-    //-------------------------------------------------------------------------
-    //implementation of copy constructor
-    file_imp::file_imp(const file_imp &o)
-        :_object(o._object)
-    {}
-
-    //--------------------------------------------------------------------------
-    //implementation of the move constructor
-    file_imp::file_imp(file_imp &&o) noexcept
-        :_object(std::move(o._object))
-    {}
 
     //-------------------------------------------------------------------------
-    file_imp::file_imp(object_imp &&o)
+    file_imp::file_imp(object_imp &&o) 
         :_object(std::move(o))
     {
         if(get_hdf5_type(_object)!=h5object_type::FILE)
             throw type_error(EXCEPTION_RECORD,
                     "Object is not a file object!");
     }
-
-    //=================Implementation of assignment operators==================
-    file_imp &file_imp::operator=(file_imp &&o) noexcept
-    {
-        if(this == &o) return *this;
-
-        _object = std::move(o._object);
-
-        return *this;
-    }
-
-    //-------------------------------------------------------------------------
-    //implementation of copy assignment
-    file_imp &file_imp::operator=(const file_imp &o)
-    {
-        if(this == &o) return *this;
-
-        _object = o._object;
-
-        return *this;
-    }
-
 
     //=================Implementation of file specific methods=================
     void file_imp::close()

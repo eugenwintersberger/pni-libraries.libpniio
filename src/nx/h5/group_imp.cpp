@@ -53,18 +53,6 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    //implementation of the copy constructor
-    group_imp::group_imp(const group_imp &o)
-        :_object(o._object)
-    {}
-
-    //-------------------------------------------------------------------------
-    //implementation of the move constructor
-    group_imp::group_imp(group_imp &&o) noexcept
-        :_object(std::move(o._object))
-    {}
-
-    //-------------------------------------------------------------------------
     //implementation of the standard constructor
     group_imp::group_imp(const group_imp &parent,const string &name)
     {
@@ -75,29 +63,6 @@ namespace h5{
                                         H5P_DEFAULT));
     }
 
-
-    //==============implementation of assignment operators=====================
-    //implementation of copy assignment
-    group_imp &group_imp::operator=(const group_imp &o)
-    {
-        if(this == &o) return *this;
-
-        _object = o._object;
-
-        return *this;
-    }
-    
-    //-------------------------------------------------------------------------
-    //implementation of move assignment
-    group_imp &group_imp::operator=(group_imp &&o) noexcept
-    {
-        if(this == &o) return *this;
-
-        _object = std::move(o._object);
-
-        return *this;
-    }
-    
     //-------------------------------------------------------------------------
     object_imp group_imp::at(const string &name) const
     {
