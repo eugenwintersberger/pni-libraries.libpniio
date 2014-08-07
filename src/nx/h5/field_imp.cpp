@@ -74,23 +74,6 @@ namespace h5{
     }
     
     //-----------------------------------------------------------------
-    //implementation of the copy constructor
-    field_imp::field_imp(const field_imp &o)
-        :_object(o._object),
-         _file_space(o._file_space),
-         _selection(o._selection)
-    { }
-
-
-    //-----------------------------------------------------------------
-    //implementation of the move constrcutor
-    field_imp::field_imp(field_imp &&o) noexcept
-        :_object(std::move(o._object)),
-         _file_space(std::move(o._file_space)),
-         _selection(std::move(o._selection))
-    { }
-
-    //-----------------------------------------------------------------
     field_imp::field_imp(const group_imp &parent,
                          const string &name,
                          type_id_t tid,
@@ -100,32 +83,6 @@ namespace h5{
     {
         *this = field_factory::create(parent,name,tid,shape,chunk,
                                       filter);
-    }
-
-    //=========implementation of the assignment operators==============
-    //implementation of the  copy assignment operator
-    field_imp &field_imp::operator=(const field_imp &o)
-    {
-        if(this == &o) return *this;
-
-        _object       = o._object;
-        _file_space   = o._file_space;
-        _selection    = o._selection;
-
-        return *this;
-    }
-
-    //-----------------------------------------------------------------
-    //implementation of the  move assignment operator
-    field_imp &field_imp::operator=(field_imp &&o) noexcept
-    {
-        if(this == &o) return *this;
-
-        _object       = std::move(o._object);
-        _file_space   = std::move(o._file_space);
-        _selection    = std::move(o._selection);
-
-        return *this;
     }
 
     //------------------------------------------------------------------------
@@ -412,7 +369,6 @@ namespace h5{
     // SELECTION RELATED METHODS
     //========================================================================
     void field_imp::apply_selection(const type_imp::selection_vector_type &s)
-        const
     {  
         if(s.size() != _file_space.rank())
             throw shape_mismatch_error(EXCEPTION_RECORD,

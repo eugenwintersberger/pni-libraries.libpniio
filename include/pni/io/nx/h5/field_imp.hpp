@@ -58,7 +58,7 @@ namespace h5{
             object_imp _object;
             //! dataspace on file
             h5dataspace _file_space;
-            mutable selection _selection;
+            selection _selection;
 
 
             //!
@@ -176,33 +176,6 @@ namespace h5{
                                const type_imp::index_vector_type &chunk,
                                const h5filter &filter = h5filter());
 
-            //-----------------------------------------------------------------
-            //!
-            //! \brief copy constructor
-            //! 
-            //! \throws object_error if copy operation fails
-            //!
-            field_imp(const field_imp &o);
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief move constructor
-            //!
-            field_imp(field_imp &&o) noexcept;
-
-            //======================assignment operators=======================
-            //!
-            //! \brief copy assignment operator
-            //! 
-            //! \throws object_error in case of any assignment errors
-            //!
-            field_imp &operator=(const field_imp &o);
-
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief move assignment operator
-            //! 
-            field_imp &operator=(field_imp &&o) noexcept;
 
             //=================methods to modify the dataset===================
             //! 
@@ -277,7 +250,7 @@ namespace h5{
             //!
             //! \brief apply a selection
             //! 
-            void apply_selection(const type_imp::selection_vector_type &s) const;
+            void apply_selection(const type_imp::selection_vector_type &s);
 
             //----------------------------------------------------------------
             //! remove a selection
