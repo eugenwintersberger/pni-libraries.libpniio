@@ -131,10 +131,8 @@ namespace h5{
     //------------------------------------------------------------------------
     void field_imp::grow(const size_t &e,const size_t &n) 
     {
-        /*
         _throw_if_not_valid(EXCEPTION_RECORD,
                             "Cannot grow invalid dataset!");
-                            */
 
         //these methods will throw an exception if e exceeds the rank 
         //of the dataspaces
@@ -263,10 +261,9 @@ namespace h5{
                           const type_imp::index_vector_type &shape,
                           const void *ptr) const
     {
-        /*
         _throw_if_not_valid(EXCEPTION_RECORD,
                             "Cannot write data to invalid object!");
-                            */
+
         const h5datatype &memory_type = get_type(tid);
         h5dataspace memory_space{shape};
 

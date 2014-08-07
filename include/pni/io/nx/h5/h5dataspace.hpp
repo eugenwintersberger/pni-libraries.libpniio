@@ -117,14 +117,6 @@ namespace h5 {
             explicit h5dataspace();
 
             //-----------------------------------------------------------------
-            //!
-            //! \brief copy constructor
-            //! 
-            //! \throws object_error in case of failure
-            //!
-            //h5dataspace(const h5dataspace &o);
-
-            //-----------------------------------------------------------------
             h5dataspace(object_imp &&o);
 
             //-----------------------------------------------------------------
@@ -163,6 +155,7 @@ namespace h5 {
             //! if a selection is set.
             //! 
             //! \throws invalid_object_error if dataspace is not valid
+            //! \throws object_error in case of any other error
             //! \return number of dimension 
             //!
             //! \sa selection_rank()
@@ -176,6 +169,15 @@ namespace h5 {
             hid_t id() const noexcept;
 
             //-----------------------------------------------------------------
+            //!
+            //! \brief check validity status
+            //! 
+            //! Returns true if the dataspace instance is valid, false
+            //! otherwise.
+            //!
+            //! \throw object_error if validity status cannot be obtained
+            //! 
+            //! \return true if valid, false otherwise
             bool is_valid() const;
 
             //-----------------------------------------------------------------
