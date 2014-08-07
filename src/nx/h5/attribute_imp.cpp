@@ -76,48 +76,6 @@ namespace h5{
         __update();
     }
 
-    //-------------------------------------------------------------------------
-    //implementation of the copy constructor
-    attribute_imp::attribute_imp(const attribute_imp &o)
-        :_object(o._object),
-         _dspace(o._dspace),
-         _dtype(o._dtype)
-    { }
-
-    //--------------------------------------------------------------------------
-    //implementation of the move constructor
-    attribute_imp::attribute_imp(attribute_imp &&o) noexcept
-        :_object(std::move(o._object)),
-         _dspace(std::move(o._dspace)),
-         _dtype(std::move(o._dtype))
-    { }
-
-    //===============implementation of assignment operators====================
-    // implementation of copy assignment operator
-    attribute_imp &attribute_imp::operator=(const attribute_imp &a)
-    {
-       if(this == &a) return *this;
-    
-       _object = a._object;
-       _dspace = a._dspace;
-       _dtype  = a._dtype;
-
-       return *this;
-    }
-    
-    //-------------------------------------------------------------------------
-    //implementation of move assignment operator
-    attribute_imp &attribute_imp::operator=(attribute_imp &&o) noexcept
-    {
-        if(this == &o) return *this;
-
-        _object = std::move(o._object);
-        _dspace = std::move(o._dspace);
-        _dtype  = std::move(o._dtype);
-
-        return *this;
-    }
-
     //=========implementation of inquery methods===============================
     type_id_t attribute_imp::type_id() const
     {

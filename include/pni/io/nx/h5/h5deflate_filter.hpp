@@ -58,12 +58,6 @@ namespace h5 {
 
             //-----------------------------------------------------------------
             //! 
-            //! \brief copy constructor
-            //! 
-            h5deflate_filter(const h5deflate_filter &) noexcept;
-
-            //-----------------------------------------------------------------
-            //! 
             //! \brief constructor
             //! 
             h5deflate_filter(uint32 rate,bool shuffle) noexcept;

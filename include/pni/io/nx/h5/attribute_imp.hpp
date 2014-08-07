@@ -114,34 +114,6 @@ namespace h5{
             //!
             explicit attribute_imp(object_imp &&object);
 
-            //-----------------------------------------------------------------
-            //!
-            //! \brief copy constructor
-            //! 
-            //! \throws object_error in case of errors
-            //!
-            attribute_imp(const attribute_imp &o);
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief move constructor
-            //! 
-            attribute_imp(attribute_imp &&o) noexcept;
-
-            //=====================assignment operators========================
-            //!
-            //! \brief copy assignment operator
-            //! 
-            //! \ingroup object_error in case of assignment issues
-            //!
-            attribute_imp &operator=(const attribute_imp &a);
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief move assignment operator
-            //! 
-            attribute_imp &operator=(attribute_imp &&o) noexcept;
-
             //===================reading and writting data=====================
             //----------------------------------------------------------------
             //!

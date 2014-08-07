@@ -37,13 +37,6 @@ namespace h5 {
     { }
     
     //-------------------------------------------------------------------------
-    h5deflate_filter::h5deflate_filter(const h5deflate_filter &o) noexcept:
-        h5filter(),
-        _comp_rate(o._comp_rate),
-        _shuffle(o._shuffle)
-    { }
-
-    //-------------------------------------------------------------------------
     h5deflate_filter::h5deflate_filter(uint32 rate,bool shuffle) noexcept:
         h5filter(),
         _comp_rate(rate),
