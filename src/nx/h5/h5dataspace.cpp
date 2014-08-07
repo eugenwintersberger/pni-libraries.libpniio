@@ -82,23 +82,6 @@ namespace h5 {
     }
 
     //-------------------------------------------------------------------------
-    //implementation of the copy constructor
-    h5dataspace::h5dataspace(const h5dataspace &o):
-        _object(o._object),
-        _dims(o._dims),
-        _maxdims(o._maxdims)
-    { }
-
-    //-------------------------------------------------------------------------
-    //implementation of the move constructor
-    h5dataspace::h5dataspace(h5dataspace &&o) noexcept :
-        _object(std::move(o._object)),
-        _dims(std::move(o._dims)),
-        _maxdims(std::move(o._maxdims))
-    { }
-
-
-    //-------------------------------------------------------------------------
     h5dataspace::h5dataspace(const type_imp::index_vector_type &shape):
         _object(),
         _dims(shape),
@@ -130,32 +113,6 @@ namespace h5 {
             throw type_error(EXCEPTION_RECORD, "Object is not a dataspace!");
 
         __update_buffers();
-    }
-
-    //===================Assignment operators==================================
-    //implementation of the copy assignment operator
-    h5dataspace &h5dataspace::operator=(const h5dataspace &o)
-    {
-        if (this == &o) return *this;
-    
-        _object  = o._object;
-        _dims    = o._dims;
-        _maxdims = o._maxdims;
-
-        return *this;
-    }
-
-    //-------------------------------------------------------------------------
-    //implementation of the move assignment operator
-    h5dataspace &h5dataspace::operator=(h5dataspace &&o) noexcept
-    {
-        if(this == &o) return *this;
-
-        _object  = std::move(o._object);
-        _dims    = std::move(o._dims);
-        _maxdims = std::move(o._maxdims);
-
-        return *this;
     }
 
     //===================Other methods=========================================

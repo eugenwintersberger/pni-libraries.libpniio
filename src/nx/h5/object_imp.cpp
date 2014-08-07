@@ -104,10 +104,9 @@ namespace h5{
     {
         if(this == &o) return *this;
 
-        //we use here swap to exchange the two IDs. As we assume that the object 
-        //passed to this method will be destroyed anyhow (temporary) we do not 
-        //have to explicitely destroy the object
-        std::swap(_id,o._id);
+        close(); //need to close the original object here 
+        _id = o._id;
+        o.reset_id();
 
         //As this is a move operation we do not need to care
         //about the IDs reference. 
@@ -118,6 +117,8 @@ namespace h5{
     //=============basic manipulation methods==================================
     bool object_imp::is_valid() const 
     {
+        if(_id==0) return false;
+
         htri_t value = H5Iis_valid(_id);
         
         if(value < 0)
@@ -161,6 +162,7 @@ namespace h5{
         reset_id(); //in any case we have to reset the ID of the obejct
     }
 
+    //--------------------------------------------------------------------------
     pni::io::nx::nxobject_type object_imp::nxobject_type() const
     {
         return get_nexus_type(*this);

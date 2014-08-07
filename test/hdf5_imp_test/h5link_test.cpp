@@ -34,8 +34,16 @@ CPPUNIT_TEST_SUITE_REGISTRATION(h5link_test);
 //-----------------------------------------------------------------------------
 void h5link_test::setUp()
 {
-    _file1 = h5::file_imp::create("h5link_test1.h5",true,0);
-    _file2 = h5::file_imp::create("h5link_test2.h5",true,0);
+    try
+    {
+        _file1 = h5::file_imp::create("h5link_test1.h5",true,0);
+        _file2 = h5::file_imp::create("h5link_test2.h5",true,0);
+    }
+    catch(pni::io::object_error &error)
+    {
+        std::cerr<<error<<std::endl;
+    }
+
 }
 
 //------------------------------------------------------------------------------

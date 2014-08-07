@@ -158,7 +158,7 @@ void object_imp_test::test_move()
         object_imp tmp(H5Tcopy(H5T_NATIVE_FLOAT));
         o = std::move(tmp);
         CPPUNIT_ASSERT(o.is_valid());
-        CPPUNIT_ASSERT(tmp.is_valid());
+        CPPUNIT_ASSERT(!tmp.is_valid());
     }
 
     CPPUNIT_ASSERT(o.is_valid());

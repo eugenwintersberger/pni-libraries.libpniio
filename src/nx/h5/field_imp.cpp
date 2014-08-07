@@ -428,7 +428,8 @@ namespace h5{
     //------------------------------------------------------------------------
     void field_imp::clear_selections() const
     {
-        _file_space.reset_selection();
+        if(_file_space.is_valid())
+            _file_space.reset_selection();
     }
 
     

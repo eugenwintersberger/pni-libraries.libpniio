@@ -43,6 +43,10 @@ class h5dataspace_test:public CppUnit::TestFixture
         CPPUNIT_TEST(test_object_construction);
         CPPUNIT_TEST(test_container_construction);
         CPPUNIT_TEST(test_current_iterator);
+        CPPUNIT_TEST(test_move_construction);
+        CPPUNIT_TEST(test_copy_construction);
+        CPPUNIT_TEST(test_move_assignment);
+        CPPUNIT_TEST(test_copy_assignment);
         CPPUNIT_TEST(test_grow);
         CPPUNIT_TEST_SUITE_END();
 
@@ -52,10 +56,14 @@ class h5dataspace_test:public CppUnit::TestFixture
         void tearDown();
 
         void test_default_construction();
+        void test_move_construction();
+        void test_copy_construction();
         void test_object_construction();
         void test_init_list_construction();
         void test_container_construction();
         void test_current_iterator();
+        void test_move_assignment();
+        void test_copy_assignment();
         void test_grow();
 };
 

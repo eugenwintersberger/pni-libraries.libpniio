@@ -55,6 +55,76 @@ void h5dataspace_test::test_object_construction()
 }
 
 //----------------------------------------------------------------------------
+void h5dataspace_test::test_move_construction()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    h5dataspace s1{{10,3}};
+    CPPUNIT_ASSERT(s1.is_valid());
+    CPPUNIT_ASSERT(s1.size() == 30);
+    CPPUNIT_ASSERT(s1.rank() == 2);
+
+    h5dataspace s2(std::move(s1));
+    CPPUNIT_ASSERT(s2.is_valid());
+    CPPUNIT_ASSERT(!s1.is_valid());
+    CPPUNIT_ASSERT(s2.rank() == 2);
+    CPPUNIT_ASSERT(s2.size() == 30);
+}
+
+//----------------------------------------------------------------------------
+void h5dataspace_test::test_copy_construction()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    h5dataspace s1{{10,3}};
+    CPPUNIT_ASSERT(s1.is_valid());
+    CPPUNIT_ASSERT(s1.size() == 30);
+    CPPUNIT_ASSERT(s1.rank() == 2);
+
+    h5dataspace s2(s1);
+    CPPUNIT_ASSERT(s2.is_valid());
+    CPPUNIT_ASSERT(s1.is_valid());
+    CPPUNIT_ASSERT(s2.rank() == 2);
+    CPPUNIT_ASSERT(s2.size() == 30);
+}
+
+//----------------------------------------------------------------------------
+void h5dataspace_test::test_move_assignment()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    h5dataspace s1{{10,3}};
+    CPPUNIT_ASSERT(s1.is_valid());
+    CPPUNIT_ASSERT(s1.size() == 30);
+    CPPUNIT_ASSERT(s1.rank() == 2);
+
+    h5dataspace s2;
+    s2 = std::move(s1);
+    CPPUNIT_ASSERT(s2.is_valid());
+    CPPUNIT_ASSERT(!s1.is_valid());
+    CPPUNIT_ASSERT(s2.rank() == 2);
+    CPPUNIT_ASSERT(s2.size() == 30);
+}
+
+//----------------------------------------------------------------------------
+void h5dataspace_test::test_copy_assignment()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    h5dataspace s1{{10,3}};
+    CPPUNIT_ASSERT(s1.is_valid());
+    CPPUNIT_ASSERT(s1.size() == 30);
+    CPPUNIT_ASSERT(s1.rank() == 2);
+
+    h5dataspace s2;
+    s2 = s1;
+    CPPUNIT_ASSERT(s2.is_valid());
+    CPPUNIT_ASSERT(s1.is_valid());
+    CPPUNIT_ASSERT(s2.rank() == 2);
+    CPPUNIT_ASSERT(s2.size() == 30);
+}
+
+//----------------------------------------------------------------------------
 void h5dataspace_test::test_container_construction()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;

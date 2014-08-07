@@ -24,7 +24,6 @@
 
 #include "object_imp.hpp"
 #include "type_imp.hpp"
-#include "selection.hpp"
 
 namespace pni{
 namespace io{
@@ -36,7 +35,7 @@ namespace h5 {
     using pni::core::exception;
     using pni::core::string;
 
-    //forward declaration of selection class
+    //forward declaration of selection
     class selection;
 
     //!
@@ -123,13 +122,7 @@ namespace h5 {
             //! 
             //! \throws object_error in case of failure
             //!
-            h5dataspace(const h5dataspace &o);
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief move constructor
-            //! 
-            h5dataspace(h5dataspace &&o) noexcept;
+            //h5dataspace(const h5dataspace &o);
 
             //-----------------------------------------------------------------
             h5dataspace(object_imp &&o);
@@ -159,20 +152,6 @@ namespace h5 {
             //! \param shape rvalue reference to the current shape
             //!
             explicit h5dataspace(type_imp::index_vector_type  &&shape);
-
-            //=====================Assignment operators========================
-            //!
-            //! \brief copy assignment operator
-            //! 
-            //! \throws object_error in case of errors 
-            //! 
-            h5dataspace &operator=(const h5dataspace &o);
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief move assignment operator
-            //! 
-            h5dataspace &operator=(h5dataspace &&o) noexcept;
 
             //=====================convenience  methods========================
             //-----------------------------------------------------------------

@@ -721,7 +721,7 @@ namespace nx{
             //! \return field object with selection set
             //!
             template<typename ...ITYPES>
-            field_type operator()(ITYPES ...indices)
+            field_type operator()(ITYPES ...indices) const
             {
                 typedef std::vector<slice> container_type;
                 field_type new_field(*this);
@@ -732,7 +732,7 @@ namespace nx{
             }
 
             //---------------------------------------------------------------
-            field_type operator()()
+            field_type operator()() const
             {
                 _imp.clear_selections();
                 return *this;
@@ -751,7 +751,7 @@ namespace nx{
             //! \param selection container with instances of slice
             //! \return instance of NXField with selection set
             //!
-            field_type operator()(const std::vector<slice> &selection) 
+            field_type operator()(const std::vector<slice> &selection)  const
             {
                 field_type new_field(*this);
                 new_field._imp.apply_selection(selection);
