@@ -31,10 +31,10 @@
 #include <pni/core/type_erasures.hpp>
 
 #include "nximp_map.hpp"
-#include "nxexceptions.hpp"
 #include "nxobject_traits.hpp"
 #include "nxobject_type.hpp"
 #include "algorithms.hpp"
+#include "../exceptions.hpp"
 
 
 namespace pni{
@@ -72,9 +72,13 @@ namespace nx{
             //! \brief write data from array
             //!
             //! Read data from an array type and store it in the attribute.
-            //! \throws memory_not_allocated_error if the array buffer is not allocated
+            //! 
+            //! \throws memory_not_allocated_error if the array buffer is not 
+            //! allocated
             //! \throws shape_mismatch_error if the shapes of the array and the
             //! attribute do not match
+            //! \throws io_error in case of IO errors
+            //!
             //! \tparam ATYPE array type
             //! \param a instance of ATYPE
             //!
@@ -84,7 +88,7 @@ namespace nx{
                 check_allocation_state(a,EXCEPTION_RECORD);
                 check_equal_shape(a,*this,EXCEPTION_RECORD);
 
-                this->_imp.write(pni::core::type_id(a),a.data());
+                _imp.write(pni::core::type_id(a),a.data());
             }
             
             //-----------------------------------------------------------------
@@ -96,6 +100,7 @@ namespace nx{
             //! allocated
             //! \throws shape_mismatch_error if the shapes of the array and the
             //! attribute do not match
+            //! \thorws io_error in case of a general IO error
             //! 
             //! \tparam ATYPE array type
             //! \param a instance of ATYPE
@@ -107,12 +112,14 @@ namespace nx{
                 check_equal_shape(a,*this,EXCEPTION_RECORD);
 
 
-                this->_imp.read(pni::core::type_id(a),a.data());
+                _imp.read(pni::core::type_id(a),a.data());
             }
 
         public:
             //==========constructors and destructors============================
-            //! default constructor
+            //!
+            //! \brief default constructor
+            //!
             explicit nxattribute():_imp(){}
             
             //------------------------------------------------------------------
@@ -170,7 +177,11 @@ namespace nx{
             //! allocated
             //! \throws shape_mismatch_errror if array and attribute shape 
             //! do not match
-            //! \throws nxattribute_error in case of any other IO error
+            //! \throws io_error in case of IO errors
+            //! \throws invalid_object_error if the object is not valid
+            //! \throws type_error if the datatype stored in the array is not 
+            //! supported
+            //! \throws object_error in case of any other error
             //!
             //! \tparam STORAGE storage type of the mdarray
             //! \tparam IMAP index map type of the mdarray
@@ -184,38 +195,30 @@ namespace nx{
                     >
             void write(const mdarray<STORAGE,IMAP,IPA> &o) const
             {
-                try
-                {
-                    this->_write_array(o);
-                }
-                catch(memory_not_allocated_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(shape_mismatch_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(nxattribute_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
+                _write_array(o);
             }
 
             //----------------------------------------------------------------
+            //!
+            //! \brief write data from a plain C pointer
+            //!
+            //! This method is for interoperability with old C-code. 
+            //! It writes data referenced by a plain pointer. It is assumed 
+            //! that the user has allocated enough memory.
+            //! 
+            //! \throws io_error in case of a general IO error
+            //! \throws type_error if data type not supported by the library
+            //! \throws invalid_object_error if object not valid
+            //! \throws object_error in case of any other error
+            //! 
+            //! \tparam T data type of the pointer
+            //! \param data pointer to the data
+            //! 
             template<typename T>
             void write(const T *data) const
             {
                 static_assert(!std::is_pointer<T>::value,"no const pointer");
-                try
-                {
-                    this->_imp.write(type_id_map<T>::type_id,data);
-                }
-                catch(...)
-                {
-                    throw nxattribute_error(EXCEPTION_RECORD,
-                            "Error writing attribute!");
-                }
+                _imp.write(type_id_map<T>::type_id,data);
             }
 
             //-----------------------------------------------------------------
@@ -226,7 +229,11 @@ namespace nx{
             //! field is not scalar (size=1).
             //!
             //! \throws shape_mismatch_error if field is not scalar
-            //! \throws nxattribute_error in case of any other IO error
+            //! \throws io_error in case of a general IO error
+            //! \throws invalid_object_error in case of an invalid field object
+            //! \throws type_error in case the datatype is not supported
+            //! \throws object_error in case of any other error
+            //! 
             //! \tparam T data type of the scalar to write
             //! \param value reference to the value to write
             //!
@@ -234,19 +241,12 @@ namespace nx{
             void write(const T &value) const
             {
                 static_assert(!std::is_pointer<T>::value,"no const pointer");
-                if(this->size()!=1)
+
+                if(size()!=1)
                     throw shape_mismatch_error(EXCEPTION_RECORD,
                             "Field is not scalar!");
 
-                try
-                {
-                    this->_imp.write(type_id_map<T>::type_id,&value);
-                }
-                catch(...)
-                {
-                    throw nxattribute_error(EXCEPTION_RECORD,
-                            "Error writing attribute!");
-                }
+                _imp.write(type_id_map<T>::type_id,&value);
             }
 
 
@@ -258,24 +258,16 @@ namespace nx{
             //! C-strings.
             //! 
             //! \throws shape_mismatch_error if field is not scalar
-            //! \throws nxattribute_error in case of any other IO error
+            //! \throws invalid_object_error if field is not valid
+            //! \throws io_error in case of a general IO error
+            //! \throws object_error in case of any other error
+            //!
             //! \param value pointer to a C-string
             //!
             void write(const char *value) const
             {
-                try
-                {
-                    string s(value);
-                    this->write(s);
-                }
-                catch(shape_mismatch_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(nxattribute_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
+                string s(value);
+                write(s);
             }
 
             //-----------------------------------------------------------------
@@ -285,7 +277,10 @@ namespace nx{
             //! \throws memory_not_allocated_error if array not allocated
             //! \throws type_error if data type not supported
             //! \throws shape_mismatch_error if array shape does not match
-            //! \throws nxattribute_error in case of any other error
+            //! \throws invalid_object_error if field is not valid
+            //! \throws io_error in case of a general IO error
+            //! \throws object_error in case of any other error
+            //!
             //! \param a instance of array
             //!
             void write(const array &a) const
@@ -298,12 +293,20 @@ namespace nx{
             //! \brief read data to an array
             //!
             //! Read data to an DArray instance.
+            //!
             //! \throws memory_not_allocated_error if array buffer is not 
             //! allocated
             //! \throws shape_mismatch_error if array and attribute shape do 
             //! not match
-            //! \throws nxattribute_error in the case of any other IO error
-            //! \tparam OTS template arguments to DArray
+            //! \throws invalid_object_error if field is not valid
+            //! \throws type_error if data type is not supported
+            //! \throws io_error in case of a general IO error
+            //! \throws object_error in case of any other error
+            //! 
+            //! \tparam STORAGE storage type for mdarray
+            //! \tparam IMAP index map type for mdarray
+            //! \tparam IPA in-place arithmetics type for mdarray
+            //!
             //! \param o instance of DArray
             //!
             template<
@@ -313,22 +316,7 @@ namespace nx{
                     > 
             void read(mdarray<STORAGE,IMAP,IPA> &o) const
             {
-                try
-                {
-                    this->_read_array(o);
-                }
-                catch(memory_not_allocated_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(shape_mismatch_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(nxattribute_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
+                _read_array(o);
             }
             
             //-----------------------------------------------------------------
@@ -338,7 +326,9 @@ namespace nx{
             //! \throws memory_not_allocated_error if array not allocated
             //! \throws type_error if data type is not supported
             //! \throws shape_mismatch_error if array shape does not match
-            //! \throws nxattribute_error in case of any other IO error
+            //! \throws invalid_object_error if field is not valid
+            //! \throws io_error in case of a general IO error
+            //! \throws object_error in case of any other error
             //!
             //! \param a instance of array 
             //!
@@ -354,18 +344,42 @@ namespace nx{
             //! \brief read a single scalar value
             //!
             //! Read a single scalar value.
+            //!
             //! \throws shape_mismatch_error if the attribute is not scalar
-            //! \throws nxattribute_error in case of any other IO error
+            //! \throws invalid_object_error if the attribute is not valid
+            //! \throws io_error in case of a general IO error
+            //! \throws type_error if data type is not supported
+            //! \throws object_error in case of any other error
+            //!
             //! \tparam T type to read to
             //! \param value reference to an instance of T
             //!
             template<typename T> 
             void read(T &value) const
             {
+                if(size()!=1)
+                    throw shape_mismatch_error(EXCEPTION_RECORD,
+                            "Try to read a scalar from an array field!");
+
                 _imp.read(type_id_map<T>::type_id,&value);
             }
 
             //---------------------------------------------------------------
+            //!
+            //! \brief read data to pointer
+            //!
+            //! Read data to a memory location referenced by the pointer value.
+            //! This method is for compatability with old C-code.
+            //! It is assumed that enough memory is allocated.
+            //!
+            //! \throws type_error if T is not supported
+            //! \throws invalid_object_error if attribute is not valid
+            //! \throws io_error in case of a general IO error
+            //! \throws object_error in case of any other error
+            //! 
+            //! \tparam T data type to read to
+            //! \param value pointer to memory
+            //!
             template<typename T>
             void read(T *value) const
             {
@@ -374,7 +388,15 @@ namespace nx{
 
 
             //============simple maintenance methods========================
-            //! obtain attribute shape
+            //!
+            //! \brief obtain attribute shape
+            //!
+            //! \throws invalid_object_error if attribute not valid
+            //! \throws object_error in case of any other error
+            //! 
+            //! \tparam CTYPE user requested container type
+            //! \return instance of CTYPE with shape information
+            //!
             template<typename CTYPE> 
             CTYPE shape() const
             {
@@ -382,11 +404,29 @@ namespace nx{
             }
 
             //--------------------------------------------------------------
-            //! return attribute rank
+            //!
+            //! \brief return attribute rank
+            //!
+            //! This method returns the rank of the attribute - the number of 
+            //! dimensions. 
+            //! 
+            //! \throws invalid_object_error if the attribute is not valid
+            //! \throws object_error in case of any other error
+            //! \return number of dimensions
+            //!
             size_t rank() const { return this->_imp.rank(); }
 
             //--------------------------------------------------------------
-            //! obtain attribute size
+            //!
+            //! \brief obtain attribute size
+            //! 
+            //! Return the number of elements stored in the attribute.
+            //! 
+            //! \throws invalid_object_error if the attribute is not valid
+            //! \throws object_error in case of any other error
+            //! 
+            //! \return number of elements
+            //!
             size_t size() const { return _imp.size(); }
 
             //--------------------------------------------------------------
@@ -394,17 +434,28 @@ namespace nx{
             //! \brief obtain type id
             //!
             //! Returns the type ID of the data stored in the attribute.
+            //!
+            //! \throws invalid_object_error if attribute is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \return type id of the elements stored in the field
             //!
             type_id_t type_id() const { return _imp.type_id(); }
 
             //--------------------------------------------------------------
-            //! close attribute
+            //! 
+            //! \brief close attribute
+            //!
             void close() { _imp.close(); }
 
             //---------------------------------------------------------------
-            //! check validity of the attribute
-            bool is_valid() const noexcept { return _imp.is_valid(); } 
+            //!
+            //! \brief check validity of the attribute
+            //! 
+            //! \throws object_error if the validity check fails
+            //! \return true if object is valid, false otherwise
+            //!
+            bool is_valid() const { return _imp.is_valid(); } 
 
             //---------------------------------------------------------------
             //! 
@@ -412,37 +463,24 @@ namespace nx{
             //!
             //! Obtain the name of the attribute. With this name it can be
             //! identified at a particular object.
+            //!
+            //! \throws invalid_object_error if object is not valid
+            //! \throws io_error in case of an IO error
+            //! \throws object_error in case of any other error
+            //!
             //! \return string with the attributes name
             //!
             string name() const { return _imp.name(); }
-
-            //---------------------------------------------------------------
-            //! 
-            //! \brief get attribute base
-            //!
-            //! This is basically the path to the parent object of an 
-            //! attribute
-            //!
-            //! \return path to parent object
-            //!
-            string base() const { return _imp.base(); }
-
-            //---------------------------------------------------------------
-            //!
-            //! \brief get attribute path
-            //!
-            //! Return the full path of an attribute. This is virtually the 
-            //! base name and the attribute name concatenated by an "@" 
-            //! sign.
-            //! \return full path to the attribute
-            //!
-            string path() const { return _imp.path(); }
 
             //-----------------------------------------------------------------
             //!
             //! \brief return parent object
             //! 
             //! This method returns the parent object of a 
+            //! \throws invalid_object_error if attribute is not valid
+            //! \throws type_error if parent type is unkown
+            //! \throws object_error in case of any other error
+            //!
             //! \return parent object
             //!
             typename nxobject_trait<IMPID>::object_type parent() const

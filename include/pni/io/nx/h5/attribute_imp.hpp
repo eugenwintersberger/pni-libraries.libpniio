@@ -223,6 +223,8 @@ namespace h5{
             //! Return an instance of H5Object with the parent object of the
             //! attribute.
             //!
+            //! \throws invalid_object_error if attribute is not valid
+            //! \throws type_error if parent type could not be determined
             //! \throws object_error if parent object could not be retrieved
             //! \return H5Object instance
             //!

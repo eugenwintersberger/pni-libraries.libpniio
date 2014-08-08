@@ -58,6 +58,7 @@ namespace h5{
             object_imp _object;
             //! dataspace on file
             h5dataspace _file_space;
+            //! local selection object
             selection _selection;
 
 
@@ -78,7 +79,6 @@ namespace h5{
             //! refered to by ptr. 
             //! 
             //! \throws io_error in case of errors
-            //! \throws object_error in case of any other error
             //! 
             //! \param memtye memory data type
             //! \param memspace memory data space
@@ -156,7 +156,7 @@ namespace h5{
 
             //-----------------------------------------------------------------
             //!
-            //! \brief create field
+            //! \brief constructor
             //!
             //! 
             //! \throws size_mismatch_error in case that either shape or chunk
@@ -249,11 +249,21 @@ namespace h5{
             //-----------------------------------------------------------------
             //!
             //! \brief apply a selection
+            //!
+            //! \throw invalid_object_error if object not valid
+            //! \throw shape_mismatch_error if selection size and rank of the
+            //! field do not match
+            //! \throw object_error in case of any other error
+            //! \param s vector with slices describing the selection
             //! 
             void apply_selection(const type_imp::selection_vector_type &s);
 
             //----------------------------------------------------------------
-            //! remove a selection
+            //!
+            //! \brief remove a selection
+            //!
+            //! \throw object_error in case of any error
+            //!
             void clear_selections() const;
 
             //===================reading data methods==========================
