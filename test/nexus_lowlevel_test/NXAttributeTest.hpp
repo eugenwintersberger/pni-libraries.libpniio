@@ -201,6 +201,15 @@ template<typename APTYPE> void NXAttributeTest<APTYPE>::test_creation()
     s = a2.shape<shape_t>();
     CPPUNIT_ASSERT(s.size() == 2);
     CPPUNIT_ASSERT(std::equal(s.begin(),s.end(),_shape.begin()));
+
+    //trying copy and move construction
+    nxattribute a3 = a2;
+    CPPUNIT_ASSERT(a3.is_valid());
+    CPPUNIT_ASSERT(a2.is_valid());
+
+    nxattribute a4 = std::move(a2);
+    CPPUNIT_ASSERT(a4.is_valid());
+    CPPUNIT_ASSERT(!a2.is_valid());
 }
 
 //-----------------------------------------------------------------------------

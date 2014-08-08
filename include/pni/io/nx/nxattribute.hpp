@@ -114,54 +114,45 @@ namespace nx{
             //==========constructors and destructors============================
             //! default constructor
             explicit nxattribute():_imp(){}
-
+            
             //------------------------------------------------------------------
-            //! copy constructor
-            nxattribute(const attribute_type &a): _imp(a._imp) { }
-
-            //------------------------------------------------------------------
-            //! move constructor
-            nxattribute(attribute_type &&a):_imp(std::move(a._imp)) { }
-
-            //------------------------------------------------------------------
-            //! copy constructor from implementation
+            //!
+            //! \brief copy constructor from implementation
+            //!
             explicit nxattribute(const implementation_type &i):_imp(i) { }
 
             //------------------------------------------------------------------
-            //! move constructor from implementation
-            explicit nxattribute(implementation_type &&i):_imp(std::move(i)) { }
+            //!
+            //! \brief move constructor from implementation
+            //!
+            explicit nxattribute(implementation_type &&i):_imp(std::move(i)) 
+            { }
 
-            //! conversion constructor
+            //----------------------------------------------------------------
+            //!
+            //! \brief conversion constructor
+            //!
+            //! Constructs an attribute object form an instance of 
+            //! object_type. 
+            //!
+            //! \throws type_error if the object is not an attribute
+            //! \param o instance of object_type
             nxattribute(const typename nxobject_trait<IMPID>::object_type &o):
                 _imp()
             {
                 *this = o;
             }
-
-            //------------------------------------------------------------------
-            //!destructor
-            ~nxattribute(){ _imp.close(); }
-
+            
             //===================assignment operators===========================
-            //! copy assignment operator
-            attribute_type &operator=(const attribute_type &a)
-            {
-                if(this == &a) return *this;
-
-                _imp = a._imp;
-                return *this;
-            }
-
-            //------------------------------------------------------------------
-            //! move assignment operator
-            attribute_type &operator=(attribute_type &&a)
-            {
-                if(this == &a) return *this;
-                _imp = std::move(a._imp);
-                return *this;
-            }
-
-            //------------------------------------------------------------------
+            //!
+            //! \brief conversion assignment
+            //!
+            //! This assignment operator converts an object_type to an
+            //! attribute.
+            //! \throws type_error if the object is not an attribute
+            //! \param o instance of object_type
+            //! \return reference to attribute
+            //!
             attribute_type &operator=(const typename
                     nxobject_trait<IMPID>::object_type &o)
             {

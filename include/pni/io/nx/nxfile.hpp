@@ -42,14 +42,17 @@ namespace nx{
     using pni::core::string;
     using pni::core::exception;
 
-    /*! 
-    \ingroup nexus_lowlevel
-    \brief File object
-
-    NXFile represents a file for reading and writing data too. It is the basic
-    data holding entity. You can use NXField to read from or write data to a
-    file.
-    */
+    //! 
+    //! \ingroup nexus_lowlevel
+    //! \brief File object
+    //! 
+    //! nxfile represents a file for reading and writing data too. It is the 
+    //! basic data holding entity. You can use NXField to read from or write 
+    //! data to a file.
+    //! 
+    //! The copy and move constructors as well as the assignment operators
+    //! must be implemented as the class has a non-trivial destructor.
+    //!
     template<nximp_code IMPID> class nxfile
     {
         public:
@@ -60,23 +63,35 @@ namespace nx{
             imp_type _imp; 
         public:
             //===============constructors and destructor========================
-            //! default constructor
+            //!
+            //! \brief default constructor
+            //!
             explicit nxfile():_imp() { }
 
             //-----------------------------------------------------------------
-            //! copy constrcutor
+            //!
+            //! \brief copy constrcutor
+            //!
             nxfile(const file_type &file):_imp(file._imp) { }
 
+
             //-----------------------------------------------------------------
-            //! implemenetation move constructor
+            //!
+            //! \brief move constructor
+            //!
+            nxfile(file_type &&f):_imp(std::move(f._imp)) { }
+            
+            
+            //-----------------------------------------------------------------
+            //!
+            //! \brief implemenetation move constructor
+            //!
             explicit nxfile(imp_type &&imp):_imp(std::move(imp)){ }
 
             //-----------------------------------------------------------------
-            //! move constructor
-            nxfile(file_type &&f):_imp(std::move(f._imp)) { }
-
-            //-----------------------------------------------------------------
-            //! destructor
+            //!
+            //! \brief destructor
+            //!
             ~nxfile()
             {
                 if((_imp.is_valid())&&(!_imp.is_readonly()))
@@ -88,7 +103,11 @@ namespace nx{
                 }
             }
 
+                
             //================assigment operator===============================
+            //!
+            //! \brief copy assignment operator
+            //!
             file_type &operator=(const file_type &f)
             {
                 if(this == &f) return *this;
@@ -96,8 +115,12 @@ namespace nx{
                 _imp = f._imp;
 
                 return *this;
-            }
+            } 
 
+            //----------------------------------------------------------------
+            //!
+            //! \brief move assignment operator
+            //!
             file_type &operator=(file_type &&f)
             {
                 if(this == &f) return *this;
@@ -105,18 +128,17 @@ namespace nx{
                 _imp = std::move(f._imp);
                 return *this;
             }
-                
 
             //================factory methods==================================
-            /*! 
-            \brief open file
-
-            Static method opening an existing file.
-            \throws nxfile_error in case of errors
-            \param n name of the file
-            \param ro open read only if true
-            \return an instance of NXFile
-            */
+            //! 
+            //! \brief open file
+            //!
+            //! Static method opening an existing file.
+            //! \throws nxfile_error in case of errors
+            //! \param n name of the file
+            //! \param ro open read only if true
+            //! \return an instance of NXFile
+            //!
             static file_type open_file(const string &n,bool ro=true)
             {
                 try
@@ -131,16 +153,16 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            /*! 
-            \brief create file
-            
-            Static method to create a file. 
-            \throws nxfile_error in case of errors
-            \param n name of the file to create
-            \param ow overwrite existing file if true
-            \param ssize split size (not implemented yet)
-            \return instance of NXFile
-            */
+            //! 
+            //! \brief create file
+            //! 
+            //! Static method to create a file. 
+            //! \throws nxfile_error in case of errors
+            //! \param n name of the file to create
+            //! \param ow overwrite existing file if true
+            //! \param ssize split size (not implemented yet)
+            //! \return instance of NXFile
+            //!
             static file_type
             create_file(const string &n,bool ow=false, ssize_t ssize = 0)
             {
@@ -178,17 +200,23 @@ namespace nx{
 
 
             //-----------------------------------------------------------------
-            //! flush the file
+            //!
+            //! \brief flush the file
+            //!
             void flush() const{ _imp.flush(); }
             
             //-----------------------------------------------------------------
-            //! check read only
+            //!
+            //! \brief check read only
+            //!
             bool is_readonly() const { return _imp.is_readonly(); }
 
 
             //-----------------------------------------------------------------
-            //! close the file
-            virtual void close()
+            //!
+            //! \brief close the file
+            //!
+            void close()
             {
                 if((this->is_valid())&&(!this->is_readonly()))
                 {
@@ -199,19 +227,17 @@ namespace nx{
                 }
                 
                 _imp.close();
-                //nxobject<Imp>::close();
             }
 
 
             //------------------------------------------------------------------
-            /*!
-            \brief get root group
-
-            Return the root group of the file.
-            \return root group of the file
-            */
-            typename nxobject_trait<IMPID>::group_type
-            root() const
+            //!
+            //! \brief get root group
+            //!
+            //! Return the root group of the file.
+            //! \return root group of the file
+            //!
+            typename nxobject_trait<IMPID>::group_type root() const
             {
                 typedef typename nximp_map<IMPID>::group_imp group_imp_type;
                 typedef typename nxobject_trait<IMPID>::group_type group_type;
@@ -220,6 +246,9 @@ namespace nx{
             }
 
             //----------------------------------------------------------------
+            //!
+            //! \brief check validity
+            //!
             bool is_valid() const noexcept
             {
                 return _imp.is_valid(); 
