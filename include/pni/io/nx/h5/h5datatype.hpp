@@ -77,6 +77,7 @@ namespace h5{
     //! \brief equality comparison
     //!
     //! \throws object_error if comparison fails
+    //!
     //! \param a lhs value of the operator
     //! \param b rhs value of the operator
     //! \return true if types are equal
@@ -89,6 +90,7 @@ namespace h5{
     //! \brief inequality 
     //!
     //! \throws object_error if comparison fails
+    //!
     //! \param a lhs value of the operator
     //! \param b rhs value of the operator
     //! \return true if not equal
@@ -103,6 +105,8 @@ namespace h5{
     //! Obtain the type code of a datatype object
     //! \throws type_error if the passed datatype is not known
     //! \throws invalid_object_error if the data type instance is not valid
+    //! \throws object_error in case of any other error
+    //!
     //! \param o instance of an HDF5 datat type
     //! \return type_id_t value for the data type
     //!
@@ -126,6 +130,7 @@ namespace h5{
     //! \brief create new type
     //! 
     //! \throws type_error if the ID has no HDF5 counterpart
+    //!
     //! \param id type id
     //! \return h5datatype instance
     h5datatype make_type(type_id_t id);

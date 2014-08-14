@@ -123,6 +123,10 @@ namespace h5{
             //! to this function. 
             //! 
             //! \throws io_error in case of errors
+            //! \throws invalid_object_error if attribute is not valid
+            //! \throws object_error in case of any other error
+            //! \throws type_error if the data type has no HDF5 counterpart
+            //!
             //! \param tid type id of allocated memory
             //! \param ptr pointer to the region of memory
             //!
@@ -139,6 +143,7 @@ namespace h5{
             //! \throws io_error in case of read errors
             //! \throws invalid_object_error if the attribute is not valid
             //! \throws object_error in any other case of failure
+            //! \throws type_error if the data type has no HDF5 counterpart
             //! 
             //! \param tid type id of memory
             //! \param ptr pointer to memory
@@ -159,6 +164,11 @@ namespace h5{
             //! \brief return type_id
             //!
             //! Return the ID of the datatype used for the attribute.
+            //!
+            //! \throws type_error if the type cannot be identified
+            //! \throws invalid_object_error if the object is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \return type ID
             //!
             type_id_t type_id() const;
@@ -168,6 +178,10 @@ namespace h5{
             //! \brief get size
             //!
             //! Return  the total number of elements stored in the attribute.
+            //!
+            //! \throws invalid_object_error if object is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \return number of elements
             //!
             size_t size() const;
@@ -177,6 +191,10 @@ namespace h5{
             //! \brief get rank
             //!
             //! Get the number of dimensions.
+            //!
+            //! \throws invalid_object_error if the attribute is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \return number of dimensions
             //!
             size_t rank() const;
@@ -189,6 +207,7 @@ namespace h5{
             //! otherwise.
             //!
             //! \throws object_error if validity check fails
+            //!
             //! \return true if valid, false otherwise
             //! 
             bool is_valid() const;
@@ -200,6 +219,9 @@ namespace h5{
             //! Return the name of the attribute as string.
             //! 
             //! \throws io_error in case of errors
+            //! \throws invalid_object_error if attribute is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \return attribute name
             //!
             string name() const;
@@ -211,6 +233,8 @@ namespace h5{
             //! Return the name of the file where this attribute is stored.
             //!
             //! \throws io_error if the filename cannot be retrieved
+            //! \throws invalid_object_error if the attribute is not valid
+            //! \throws object_error in case of any other error
             //! 
             //! \return file name
             //! 
@@ -226,6 +250,7 @@ namespace h5{
             //! \throws invalid_object_error if attribute is not valid
             //! \throws type_error if parent type could not be determined
             //! \throws object_error if parent object could not be retrieved
+            //!
             //! \return H5Object instance
             //!
             object_imp parent() const;

@@ -78,6 +78,9 @@ namespace nx{
             //! \throws shape_mismatch_error if the shapes of the array and the
             //! attribute do not match
             //! \throws io_error in case of IO errors
+            //! \throws invalid_object_error if attribute is not valid
+            //! \throws type_error if the data type is unknown
+            //! \throws object_error in case of any other error
             //!
             //! \tparam ATYPE array type
             //! \param a instance of ATYPE
@@ -96,11 +99,15 @@ namespace nx{
             //! \brief read data to array
             //!
             //! Read attribute data from the file and store it to the array.
+            //!
             //! \throws memory_not_allocated_error if the arrays buffer is not
             //! allocated
             //! \throws shape_mismatch_error if the shapes of the array and the
             //! attribute do not match
-            //! \thorws io_error in case of a general IO error
+            //! \throws io_error in case of a general IO error
+            //! \throws type_error if the datatype is unkonwn
+            //! \throws invalid_object_error in case the attribute is not valid
+            //! \throws object_error in case of any other error
             //! 
             //! \tparam ATYPE array type
             //! \param a instance of ATYPE
@@ -143,7 +150,9 @@ namespace nx{
             //! object_type. 
             //!
             //! \throws type_error if the object is not an attribute
+            //!
             //! \param o instance of object_type
+            //!
             nxattribute(const typename nxobject_trait<IMPID>::object_type &o):
                 _imp()
             {
@@ -261,6 +270,7 @@ namespace nx{
             //! \throws invalid_object_error if field is not valid
             //! \throws io_error in case of a general IO error
             //! \throws object_error in case of any other error
+            //! \throws type_error if the datatype is not supported
             //!
             //! \param value pointer to a C-string
             //!
@@ -412,6 +422,7 @@ namespace nx{
             //! 
             //! \throws invalid_object_error if the attribute is not valid
             //! \throws object_error in case of any other error
+            //!
             //! \return number of dimensions
             //!
             size_t rank() const { return this->_imp.rank(); }
@@ -453,6 +464,7 @@ namespace nx{
             //! \brief check validity of the attribute
             //! 
             //! \throws object_error if the validity check fails
+            //!
             //! \return true if object is valid, false otherwise
             //!
             bool is_valid() const { return _imp.is_valid(); } 
@@ -477,6 +489,7 @@ namespace nx{
             //! \brief return parent object
             //! 
             //! This method returns the parent object of a 
+            //!
             //! \throws invalid_object_error if attribute is not valid
             //! \throws type_error if parent type is unkown
             //! \throws object_error in case of any other error
