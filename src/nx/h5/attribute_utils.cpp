@@ -58,10 +58,6 @@ namespace h5{
     //-------------------------------------------------------------------------
     void delete_attribute(const object_imp &parent,const string &name) 
     {
-        if(!parent.is_valid())
-            throw invalid_object_error(EXCEPTION_RECORD,
-                    "Cannot delete attribute from invalid object!");
-
         if(!has_attribute(parent,name))
             throw key_error(EXCEPTION_RECORD,
                     "Cannot delete attribute ["+name+"] from ["+
@@ -80,10 +76,6 @@ namespace h5{
                               const h5datatype &type,const h5dataspace &space,
                               bool overwrite)
     {
-        if(!parent.is_valid())
-            throw invalid_object_error(EXCEPTION_RECORD,
-                    "Cannot create an attribute on an invalid HDF5 object!");
-
         //what to do if the attribute already exists?
         if(has_attribute(parent,name))
         {
@@ -109,10 +101,6 @@ namespace h5{
     //------------------------------------------------------------------------
     object_imp get_attribute_by_name(const object_imp &parent,const string &name) 
     {
-        if(!parent.is_valid())
-            throw invalid_object_error(EXCEPTION_RECORD,
-                    "Cannot retrieve attribute from an invalid parent object!");
-
         if(!has_attribute(parent,name))
             throw key_error(EXCEPTION_RECORD,
                      "Object ["+get_path(parent)

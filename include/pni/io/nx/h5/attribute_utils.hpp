@@ -47,7 +47,7 @@ namespace h5{
     //! Checks if an attribute exists and returns true if it does.
     //! Otherwise false will be returned.
     //!
-    //! \throws invalid_object_error if object not valid
+    //! \throws invalid_object_error if parent object not valid
     //! \throws object_error in case of any other errors
     //!
     //! \param parent the parent object where we look for the attribute

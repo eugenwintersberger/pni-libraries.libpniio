@@ -96,6 +96,10 @@ namespace h5{
     //-------------------------------------------------------------------------
     bool group_imp::has_child(const string &name) const
     {
+        if(!is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Group instance not valid!");
+
         object_imp plist(H5Pcreate(H5P_LINK_ACCESS));
         H5Pset_nlinks(plist.id(),1);
         htri_t result = H5Lexists(_object.id(),name.c_str(),plist.id());

@@ -188,7 +188,7 @@ namespace h5{
         {
             char_ptr_vector_type str_pointers(size());
             _read_data(_dtype,static_cast<void *>(str_pointers.data()));
-            copy_from_vector(str_pointers,static_cast<string*>(ptr));
+            copy_from_vector(str_pointers,size(),static_cast<string*>(ptr));
         }
         else
         {

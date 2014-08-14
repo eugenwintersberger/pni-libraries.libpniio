@@ -112,7 +112,9 @@ namespace h5{
             \endcode
             */
             //! An exception is thrown if the ID passed is negative.
+            //!
             //! \throws object_error if id<0
+            //!
             //! \param id HDF5 object ID.
             //!
             explicit object_imp(hid_t &&id);
@@ -134,7 +136,9 @@ namespace h5{
             //! the object is valid.
             //!
             //! \throws object_error in cases where object validity could not 
-            //!                      be determined
+            //!                      be determined or reference counter
+            //!                      increment failed
+            //! 
             //! \param o object which to cpy
             //!
             object_imp(const object_imp &o);
@@ -157,6 +161,7 @@ namespace h5{
             //! 
             //! \throws object_error if closing object failed or its validity
             //!                      could not be determined
+            //! \throws type_error if object type could not be determined
             //!
             ~object_imp();
 
@@ -170,6 +175,8 @@ namespace h5{
             //!
             //! \throws object_error if reference counter increment fails or 
             //!                      object validity could not be determined
+            //! \throws type_error if object type could not be determined
+            //!
             //! \param o object to assign
             //! \return refence to object
             //!
@@ -183,6 +190,8 @@ namespace h5{
             //! value of the IDs reference counter.
             //!
             //! \throws object_error if closing the original object fails
+            //! \throws type_error if object type could not be determined
+            //!
             //! \param o object form which to move data
             //! \return reference to object
             //!
@@ -200,8 +209,7 @@ namespace h5{
             //! 
             //! \throws object_error if object validity could not be determined
             //! \throws type_error if the type of the object could not be
-            //!         determined
-            //! or closing the object failed
+            //!         determined 
             //!
             void close();
 
@@ -235,6 +243,8 @@ namespace h5{
             //!
             //! \throws type_error in case of an unkown type
             //! \throws invalid object_error if object is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \return Nexus type of the object
             //!
             pni::io::nx::nxobject_type nxobject_type() const; 
@@ -251,6 +261,8 @@ namespace h5{
     //! as not equal.
     //!
     //! \throws object_error in case of errors
+    //! \throws type_error if object type cannot be determined
+    //!
     //! \param a lhs value of the operator
     //! \param b rhs value of the operator
     //! \return true if equal, false otherwise
@@ -265,6 +277,8 @@ namespace h5{
     //! Simply the inverse of the equality operator.
     //!
     //! \throws object_error in case of errors
+    //! \throws type_error if object type cannot be determined
+    //!
     //! \param a lhs value of the operator
     //! \param b rhs value of the operator
     //! \return true if not equal, false otherwise

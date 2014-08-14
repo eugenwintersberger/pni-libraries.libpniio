@@ -130,6 +130,7 @@ void hdf5_utilities_test::test_get_path()
     CPPUNIT_ASSERT(get_path(dataset) == "/scan_1/detector/data/data");
 
     CPPUNIT_ASSERT_THROW(get_path(object_imp()),invalid_object_error); 
+    CPPUNIT_ASSERT_THROW(get_path(attribute),type_error);
 }
 
 //----------------------------------------------------------------------------
@@ -169,5 +170,6 @@ void hdf5_utilities_test::test_get_parent_path()
     CPPUNIT_ASSERT(get_parent_path(group) == "/scan_1/detector");
 
     CPPUNIT_ASSERT_THROW(get_parent_path(object_imp()),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(get_parent_path(attribute),type_error);
 }
 

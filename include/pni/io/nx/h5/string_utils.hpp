@@ -33,14 +33,15 @@ namespace h5{
     using namespace pni::core;
    
     //!
-    //! \nxh5_classes
+    //! \ingroup nxh5_classes
     //! \brief vector type for individual characters
     //!
-    //! This type is mainly used for reading strings of static size from a field 
-    //! or attribute. 
+    //! This type is mainly used for reading strings of static size from a 
+    //! field or attribute. 
     //! 
     typedef std::vector<char> char_vector_type;
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup nxh5_classes
     //! \brief vector tyep for char pointers
@@ -50,12 +51,51 @@ namespace h5{
     //! 
     typedef std::vector<char*> char_ptr_vector_type;
 
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup nxh5_classes
+    //! \brief vector type for const char pointers
+    //!
+    //! This type is mainly used for writing strings of variable length to 
+    //! a field or attribute
+    //!
     typedef std::vector<const char*> char_const_ptr_vector_type;
 
-    void copy_from_vector(const char_vector_type &vector,size_t nstrs,size_t strsize,
-                          string *strings);
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup nxh5_classes
+    //! \brief copy char vector to strings
+    //!
+    //! Copies the content of char vector to a set of strings. An exception is 
+    //! throws if the total number of required characters does not match the 
+    //! size of the vector.
+    //!
+    //! \throws size_mismatch_error if nstrs*strsize!=vector.size()
+    //!
+    //! \param vector the vector with characters
+    //! \param nstrs number of strings
+    //! \param strsize size of the strings
+    //! \param strings pointer to the first string instance
+    //!
+    void copy_from_vector(const char_vector_type &vector,size_t nstrs,
+                          size_t strsize,string *strings);
 
-    void copy_from_vector(const char_ptr_vector_type &vector,string *strings);
+    //-----------------------------------------------------------------------
+    //!
+    //! \ingroup nxh5_classes
+    //! \brief copy strings from vector to a pointer of strings
+    //!
+    //! Copies the content of a pointer of stringsa
+    //!
+    //! \throws size_mismatch_error if number of strings and vector size do
+    //! not match
+    //!
+    //! \param vector the vector with char poitners
+    //! \param nstrs number of strings
+    //! \param strings pointer to the first string
+    //!
+    void copy_from_vector(const char_ptr_vector_type &vector,size_t nstrs,
+                          string *strings);
 
 }
 }

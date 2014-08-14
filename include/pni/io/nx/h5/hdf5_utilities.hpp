@@ -41,14 +41,16 @@ namespace h5{
     //! \ingroup nxh5_classes
     //! \brief get object filename
     //! 
-    //! Returns the name of a file a dataset, attribute, or group object 
-    //! belongs to.  If the filename cannot be obtained an empty string 
-    //! is returned. This function assumes that id referes to a valid HDF5 
-    //! object. In case of errors an io_error exception is thrown. 
+    //! Returns the name of the file an HDF5 object belongs too. 
+    //! This function works with the following objects
+    //! \li an HDF5 dataset
+    //! \li an HDF5 group
+    //! \li or an HDF5 attribute
     //!
     //! \throw invalid_object_error if the object is not valid
     //! \throw io_error if object data cannot be retrieveda
     //! \throw object_error if validity check fails for some other reason
+    //! \throw type_error if the passed object is of inappropriate type
     //!
     //! \param object HDF5 object
     //! \return string with the file name
@@ -60,14 +62,16 @@ namespace h5{
     //! \ingroup nxh5_classes
     //! \brief get object path
     //!
-    //! Return the path of an HDF5 object as a string. The object can be 
-    //! either an attribute, a field, or a group.  This function assumes that 
-    //! id referens to a valid HDF5 object. In case of errors an io_error 
-    //! exception is thrown.
+    //! Return the path of an HDF5 object as a string. This function works
+    //! for the following HDF5 object types
+    //! \li group
+    //! \li dataset
     //!
     //! \throws object_error if object validity cannot be verified
     //! \throws invalid_object_error if the object is not valid
     //! \throws io_error in case of any IO related error.
+    //! \throws type_error object is not a group or dataset
+    //!
     //! \param id of the object
     //! \return path as string
     //!
@@ -78,16 +82,16 @@ namespace h5{
     //! \ingroup nxh5_classes
     //! \brief return object name
     //!
-    //! Returns the name of an object. Within an HDF5 file objects can 
-    //! be addressed by a UNIX like path.  This method returns the 
-    //! last part of the path.  So if an object would have the 
-    //! following path /scan_1/detector/data this method would return 
-    //! data.  The behavior of this method is slightly different for 
-    //! a file object.
+    //! Returns the name of an object. This function works for the following
+    //! HDF5 types
+    //! \li groups
+    //! \li datasets
+    //! \li attributes
     //!
     //! \throws object_error if validity check fails
     //! \throws invalid_object_error if obj is not valid
     //! \throws io_error in case of data retrieval issues
+    //! \throws type_error if object type cannot be determined
     //!
     //! \return name of the object
     //!
@@ -98,11 +102,16 @@ namespace h5{
     //! \ingroup nxh5_classes
     //! \brief get parent path
     //! 
-    //! Return the path to the parent of a particular object. 
+    //! Return the path to the parent of a particular object. Supported HDf5 
+    //! types are
+    //! \li groups
+    //! \li datasets
     //! 
     //! \throws invalid_object_error if object is not valid
     //! \throws io_error  in case of errors
     //! \throws object_error if validity check fails
+    //! \throws type_error if the object is of an inappropriate type
+    //!
     //! \param id the HDF5 ID of the object
     //! \return path to the parent
     //! 
@@ -121,6 +130,8 @@ namespace h5{
     //! \throws object_error in case of any other error
     //! \throws type_error if the type of the object is unkown or could not be 
     //! determined
+    //! \thorws io_error in case of any IO related errors
+    //!
     //! \return object instance of the parent
     //!
     object_imp get_parent(const object_imp &obj);

@@ -8,7 +8,6 @@ set(HEADER_FILES
                 h5dataspace.hpp
                 h5datatype.hpp
                 h5deflate_filter.hpp
-                h5deflatefilter.hpp
                 h5_error.hpp
                 h5_error_stack.hpp
                 h5filter.hpp

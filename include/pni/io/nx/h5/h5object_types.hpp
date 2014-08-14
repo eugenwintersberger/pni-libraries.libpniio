@@ -70,6 +70,7 @@ namespace h5{
     //!
     //! \throws type_error in case of an unkown object type
     //! \throws invalid_object_error if the object is not valid
+    //! \throws object_error in case of any other error
     //!
     //! \param o reference to h5object
     //! \return HDF5 object type
@@ -78,7 +79,7 @@ namespace h5{
 
     //------------------------------------------------------------------------
     //! 
-    //! \ingroup hdf5_classes
+    //! \ingroup nxh5_classes
     //! \brief return Nexus type
     //! 
     //! Return the Nexus type of an instance of h5object. This can be either a
@@ -88,8 +89,11 @@ namespace h5{
     //! \li Nexus file
     //!
     //! An exception is thrown if the type is unkown. 
+    //! 
     //! \throws type_error in the case of an unkown object type
     //! \throws invalid_object_error if the object is not valid
+    //! \throws object_error in case of any other error
+    //!
     //! \param o reference to h5object instance
     //! \return Nexus type
     //!

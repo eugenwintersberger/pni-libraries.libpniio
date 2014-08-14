@@ -38,9 +38,12 @@ namespace h5{
     //-------------------------------------------------------------------------
     string get_filename(const object_imp &object)
     {
-        if(!object.is_valid())
-            throw invalid_object_error(EXCEPTION_RECORD,
-                    "Failed to retrieve the filename from an invalid object!");
+        h5object_type type = get_hdf5_type(object);
+        if(!((type == h5object_type::GROUP)||
+             (type == h5object_type::DATASET) ||
+             (type == h5object_type::ATTRIBUTE)))
+            throw type_error(EXCEPTION_RECORD,
+                    "Object must be a group, dataset, or attribute!");
 
         //first we need to determine the size of the file name
         ssize_t nsize = H5Fget_name(object.id(),nullptr,0);
@@ -62,9 +65,11 @@ namespace h5{
     //-------------------------------------------------------------------------
     string get_path(const object_imp &object)
     {
-        if(!object.is_valid())
-            throw invalid_object_error(EXCEPTION_RECORD,
-                    "Failed to retrieve path from an invalid object!");
+        h5object_type type = get_hdf5_type(object);
+        if(!((type == h5object_type::GROUP) || 
+             (type == h5object_type::DATASET)))
+            throw type_error(EXCEPTION_RECORD,
+                    "Object must be a group or dataset!");
 
         //if the object has already been created return this value
         ssize_t bsize = H5Iget_name(object.id(),NULL,1);
@@ -122,10 +127,6 @@ namespace h5{
     //------------------------------------------------------------------------
     string get_name(const object_imp &obj) 
     {
-        if(!obj.is_valid())
-            throw invalid_object_error(EXCEPTION_RECORD,
-                    "Try to obtain the name of an invalid object!");
-
         if(get_hdf5_type(obj) == h5object_type::ATTRIBUTE)
             return get_attribute_name(obj);
         else
