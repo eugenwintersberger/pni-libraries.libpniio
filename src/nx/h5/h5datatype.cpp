@@ -201,10 +201,6 @@ namespace h5{
     //-------------------------------------------------------------------------
     bool is_vl_string(const h5datatype &type)
     {
-        if(!type.object().is_valid())
-            throw invalid_object_error(EXCEPTION_RECORD,
-                    "Cannot retrieve string status from invalid type!");
-       
         //if the type is not even a string type we can immediately 
         //return false
         if(type_id(type)!=type_id_t::STRING) return false;
@@ -224,16 +220,12 @@ namespace h5{
     //-------------------------------------------------------------------------
     bool is_static_string(const h5datatype &type)
     {
-        if(!type.object().is_valid())
-            throw invalid_object_error(EXCEPTION_RECORD,
-                    "Cannot retrieve string status from invalid type!");
-
         if(type_id(type)!=type_id_t::STRING) return false;
 
         return !is_vl_string(type);
     }
 
-    //-------------------------------------------------------------------------:wa
+    //-------------------------------------------------------------------------
     size_t static_string_size(const h5datatype &type)
     {
         if(!is_static_string(type))

@@ -26,7 +26,7 @@
 #include <pni/io/nx/h5/group_imp.hpp>
 
 #include <pni/io/nx/h5/h5_error_stack.hpp>
-#include <pni/io/nx/nxexceptions.hpp>
+#include <pni/io/exceptions.hpp>
 #include <pni/io/nx/h5/hdf5_utilities.hpp>
 
 namespace pni{
@@ -67,11 +67,11 @@ namespace h5{
                                       const string &name)
     {
         if(path.filename().empty())
-            throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
+            throw pni::io::link_error(EXCEPTION_RECORD,
                     "For an external link a target filename must be provided!");
 
         if(!path.is_absolute())
-            throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
+            throw pni::io::link_error(EXCEPTION_RECORD,
                     "For an external link the target path must be absolute!");
 
         //convert the user provided path to an HDF5 path
@@ -81,7 +81,7 @@ namespace h5{
                                         loc.object().id(),name.c_str(),
                                         H5P_DEFAULT,H5P_DEFAULT);
         if(err < 0)
-            throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
+            throw pni::io::link_error(EXCEPTION_RECORD,
                     "Error creating external link!\n\n"+get_h5_error_string());
 
     }
@@ -91,7 +91,7 @@ namespace h5{
                                       const string &name)
     {
         if(!target.filename().empty())
-            throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
+            throw pni::io::link_error(EXCEPTION_RECORD,
                     "Target paths for internal links must not contain a "
                     "filename!");
 
@@ -101,7 +101,7 @@ namespace h5{
         herr_t err = H5Lcreate_soft(target_path.c_str(),loc.object().id(),
                                     name.c_str(),H5P_DEFAULT,H5P_DEFAULT);
         if(err < 0)
-            throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
+            throw pni::io::link_error(EXCEPTION_RECORD,
                     "Error creating internal link!\n\n"+
                     get_h5_error_string());
     }
@@ -120,7 +120,7 @@ namespace h5{
 
         if(H5Lget_info(loc.object().id(),name.c_str(),&info,H5P_DEFAULT)<0)
         {
-            throw pni::io::nx::nxlink_error(EXCEPTION_RECORD,
+            throw pni::io::link_error(EXCEPTION_RECORD,
                     "Error obtaining link type for child ["+name+"] of group"+
                     "["+get_path(loc.object())+"]!");
         }

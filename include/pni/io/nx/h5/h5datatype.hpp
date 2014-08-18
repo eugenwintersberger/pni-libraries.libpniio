@@ -61,6 +61,10 @@ namespace h5{
             //!
             //! \throws type_error if the passed object is not an HDF5 
             //! data type 
+            //! \throws invalid_object_error if the object is not valid
+            //! \throws object_error in case of any other error
+            //!
+            //! \param o rvalue reference to an existing object instance
             //!
             explicit h5datatype(object_imp &&o);
 
@@ -103,6 +107,7 @@ namespace h5{
     //! \brief get type code
     //!
     //! Obtain the type code of a datatype object
+    //!
     //! \throws type_error if the passed datatype is not known
     //! \throws invalid_object_error if the data type instance is not valid
     //! \throws object_error in case of any other error
@@ -133,6 +138,7 @@ namespace h5{
     //!
     //! \param id type id
     //! \return h5datatype instance
+    //!
     h5datatype make_type(type_id_t id);
 
     //------------------------------------------------------------------------
@@ -145,6 +151,7 @@ namespace h5{
     //! 
     //! \throws object_error if type inquery fails
     //! \throws invalid_object_error if type is not valid
+    //! \throws type_error if the datatype is not supported
     //! 
     //! \param type a type instance
     //! \return true if VL string type, false otherwise
@@ -161,6 +168,7 @@ namespace h5{
     //!
     //! \throw object_error if information retrieval fails
     //! \throw invalid_object_error if object not valid
+    //! \throw type_error if data type is not supported
     //!
     //! \param type instance of h5datatype
     //! \return true if static string type, false otherwise

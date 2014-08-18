@@ -145,7 +145,8 @@ namespace h5{
     void file_imp::flush() const
     {
         if(_object.is_valid()) 
-            H5Fflush(_object.id(),H5F_SCOPE_LOCAL);
+            if(H5Fflush(_object.id(),H5F_SCOPE_LOCAL)<0)
+                throw io_error(EXCEPTION_RECORD,"Flush to file failed!");
     }
    
     //------------------------------------------------------------------------
@@ -157,8 +158,13 @@ namespace h5{
     //-------------------------------------------------------------------------
     bool file_imp::is_readonly() const
     {
+        if(!is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Cannot retrieve file intent from invalid file object!");
+
         unsigned int stat;
-        H5Fget_intent(_object.id(),&stat);
+        if(H5Fget_intent(_object.id(),&stat)<0)
+            throw object_error(EXCEPTION_RECORD,"Cannot retrieve file intent!");
 
         if(stat==H5F_ACC_RDWR) return false;
         return true;
@@ -167,6 +173,10 @@ namespace h5{
     //------------------------------------------------------------------------
     group_imp file_imp::root() const
     {
+        if(!is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Cannot obtain root group from invalid file object!");
+
         return group_imp(object_imp(H5Oopen(_object.id(),"/",H5P_DEFAULT)));
     }
 

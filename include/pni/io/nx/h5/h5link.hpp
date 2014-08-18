@@ -65,6 +65,7 @@ namespace h5{
             //! pni::core::value_error is thrown.
             //!
             //! \throws pni::core::value_error if element name is missing
+            //!
             //! \param p Nexus path object
             //! \return HDF5 path as a string
             //!
@@ -83,8 +84,9 @@ namespace h5{
             //! element without a name (HDF5 cannot handle such situations) 
             //! otherwise a value_error exception will be thrown.
             //! 
-            //! \throws pni::io::nx::nxlink_error in case of all errors
+            //! \throws pni::io::link_error in case of all errors
             //! \throws pni::core::value_error for path elements wihtout name
+            //!
             //! \param target path of the links target
             //! \param loc location where the link should be created
             //! \param name linkname below loc
@@ -106,7 +108,8 @@ namespace h5{
             //!
             //! \throws pni::core::value_error if the target path contains 
             //! elements without an object name
-            //! \throws pni::io::nx::nxlink_error if linking fails
+            //! \throws pni::io::link_error if linking fails
+            //!
             //! \param target path to the links target
             //! \param loc location for the new link
             //! \param name name of the object below loc
@@ -122,9 +125,10 @@ namespace h5{
             //! Returns the link type of a child of loc identified by its name. 
             //!
             //! \throws pni::core::key_error if the child could not be found
-            //! \throws pni::io::nx::nxlink_error if the link type could not 
+            //! \throws pni::io::link_error if the link type could not 
             //! be retrieved 
             //! \throws pni::core::type_error if the link type is unkown
+            //!
             //! \param loc parent group
             //! \param name the name of the child 
             //! \return link type

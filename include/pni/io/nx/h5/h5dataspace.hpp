@@ -117,6 +117,17 @@ namespace h5 {
             explicit h5dataspace();
 
             //-----------------------------------------------------------------
+            //!
+            //! \brief constructor
+            //! 
+            //! Construct a dataspace from an instance of object_imp. 
+            //!
+            //! \throws type_error in case that the object is not a dataspace
+            //! \throws invalid_object_error if the object is not valid
+            //! \throws object_error in case of any other error
+            //!
+            //! \param o rvalue reference to an instance of object_imp
+            //!
             h5dataspace(object_imp &&o);
 
             //-----------------------------------------------------------------
@@ -128,6 +139,7 @@ namespace h5 {
             //! equal to the current shape.
             //!
             //! \throws object_error in case of failure
+            //!
             //! \param shape vector with shape data
             //!
             explicit h5dataspace(const type_imp::index_vector_type &shape);
@@ -141,12 +153,12 @@ namespace h5 {
             //! value as the current shape.
             //! 
             //! \throws object_error in case of any failure
+            //!
             //! \param shape rvalue reference to the current shape
             //!
             explicit h5dataspace(type_imp::index_vector_type  &&shape);
 
             //=====================convenience  methods========================
-            //-----------------------------------------------------------------
             //!
             //! \brief rank of dataset
             //!
@@ -156,9 +168,8 @@ namespace h5 {
             //! 
             //! \throws invalid_object_error if dataspace is not valid
             //! \throws object_error in case of any other error
-            //! \return number of dimension 
             //!
-            //! \sa selection_rank()
+            //! \return number of dimension 
             //!
             size_t rank() const;
 
@@ -222,6 +233,7 @@ namespace h5 {
             //! dataspace an exception will be thrown.
             //!
             //! \throws index_error if dim exceeds rank of dataspace
+            //! \throws invalid_object_error if the dataspace is not valid
             //! \throws object_error if dataspace update fails
             //!
             //! \param dim dimension along which to grow
@@ -235,13 +247,18 @@ namespace h5 {
             //!
             //! Apply a selection on this dataspace
             //!
+            //! \throws invalid_object_error if dataspace is not valid
+            //! \throws object_error if applying the selection fails
+            //! 
+            //! \param s reference to a selection object
+            //!
             void apply_selection(const selection &s) const ;
 
             //----------------------------------------------------------------
             //!
             //! \brief reset selection 
             //!
-            void reset_selection() const;
+            void reset_selection() const noexcept;
 
         };
 

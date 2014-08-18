@@ -90,6 +90,7 @@ namespace h5{
             //! \brief create a default creation property list
             //! 
             //! \throws object_error in case of object creation failure
+            //!
             //! \return instance of dataset creation property list
             //! 
             static object_imp create_cplist();
@@ -100,6 +101,7 @@ namespace h5{
             //!
             //! \throws size_mismatch_error if chunk is empty
             //! \throws object_error in case of any other error
+            //!
             //! \param chunk container with chunk shape data
             //! \return instance of property list
             //! 
@@ -114,6 +116,7 @@ namespace h5{
             //!
             //! \throws size_mismatch_error if shape empty
             //! \throws object_error in case of failures
+            //!
             //! \param shape user provided shape vector
             //! \return instance of h5dataspace
             //!
@@ -129,8 +132,9 @@ namespace h5{
             //! 
             //! \throws size_mismatch_error if either chunk or shape are empty
             //! or their size does not match
-            //! \throws object_error in case of any other error
             //! \throws type_error if tid has no corresponding HDF5 type
+            //! \throws invalid_object_error if parent group is not valid
+            //! \throws object_error in case of any other error
             //! 
             //! \param parent the parent object for the field
             //! \param name the name of the field

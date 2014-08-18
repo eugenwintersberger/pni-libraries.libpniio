@@ -110,12 +110,14 @@ namespace h5{
             //! h5object. 
             //! 
             //! \throws type_error if object is not an attribute type
+            //! \throws invalid_object_error if object is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \param id HDF5 id of the attribute object.
             //!
             explicit attribute_imp(object_imp &&object);
 
             //===================reading and writting data=====================
-            //----------------------------------------------------------------
             //!
             //! \brief write data from void
             //!
@@ -157,7 +159,7 @@ namespace h5{
             //! Returns the shape of the attribute.
             //! \return shape object
             //!
-            type_imp::index_vector_type shape() const;
+            type_imp::index_vector_type shape() const; 
 
             //-----------------------------------------------------------------
             //! 
@@ -221,6 +223,7 @@ namespace h5{
             //! \throws io_error in case of errors
             //! \throws invalid_object_error if attribute is not valid
             //! \throws object_error in case of any other error
+            //! \throws type_error if the attribute type cannot be determined
             //!
             //! \return attribute name
             //!
@@ -235,6 +238,7 @@ namespace h5{
             //! \throws io_error if the filename cannot be retrieved
             //! \throws invalid_object_error if the attribute is not valid
             //! \throws object_error in case of any other error
+            //! \throws type_error if the attribute type cannot be determined
             //! 
             //! \return file name
             //! 
@@ -250,6 +254,7 @@ namespace h5{
             //! \throws invalid_object_error if attribute is not valid
             //! \throws type_error if parent type could not be determined
             //! \throws object_error if parent object could not be retrieved
+            //! \throws type_error if attribute type cannot be determined
             //!
             //! \return H5Object instance
             //!
@@ -258,6 +263,9 @@ namespace h5{
             //-----------------------------------------------------------------
             //!
             //! \brief close object
+            //!
+            //! \throws type_error if attribute type is not correct
+            //! \throws object_error in case of any other error
             //! 
             void close();
     };

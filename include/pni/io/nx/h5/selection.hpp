@@ -59,6 +59,8 @@ namespace h5{
             //!
             //! \brief constructor
             //!
+            //! \param n number of dimensions of the original field
+            //!
             selection(size_t n);
 
             //----------------------------------------------------------------
@@ -67,43 +69,142 @@ namespace h5{
             //!
             //! \brief get reference to offset vector
             //!
-            const type_imp::index_vector_type &offset() const;
+            const type_imp::index_vector_type &offset() const noexcept;
 
             //----------------------------------------------------------------
+            //!
+            //! \brief set offset vector
+            //!
+            //! Use offset data from an user provided vector.
+            //!
+            //! \throws shape_mismatch_error if rank of selection an size of 
+            //! offset vector do not match
+            //!
+            //! \param offset vector with new offset data
+            //!
             void offset(const type_imp::index_vector_type &offset);
 
             //----------------------------------------------------------------
-            void offset(type_imp::index_type value);
+            //!
+            //! \brief set offset vector
+            //!
+            //! Set all elements of the offset vector to value.
+            //!
+            //! \param value new offset value
+            //!
+            void offset(type_imp::index_type value) noexcept;
             
             //----------------------------------------------------------------
+            //!
+            //! \brief set offset 
+            //!
+            //! Set offset value for dimension index to value.
+            //!
+            //! \throws index_error if index exceeds the total rank of the
+            //! selection
+            //!
+            //! \param index dimension index for which to set the offset
+            //! \param value new offset value 
+            //!
             void offset(size_t index,size_t value);
 
             //----------------------------------------------------------------
             //!
             //! \brief get refeference to stride vector
             //!
-            const type_imp::index_vector_type &stride() const;
+            const type_imp::index_vector_type &stride() const noexcept;
 
+            //----------------------------------------------------------------
+            //!
+            //! \brief set stride vector
+            //!
+            //! Set the stride vector from a user provided vector.
+            //!
+            //! \throws shape_mismatch_error if vector size does not match 
+            //! the total rank of the selection
+            //!
+            //! \param value vector with new stride values
+            //!
             void stride(const type_imp::index_vector_type &value);
 
-            void stride(type_imp::index_type value);
+            //----------------------------------------------------------------
+            //!
+            //! \brief set stride 
+            //!
+            //! Set all stride components to value.
+            //!
+            //! \param value new value for all stride components
+            //!
+            void stride(type_imp::index_type value) noexcept;
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief set stride
+            //!
+            //! Set the stride value for a particular dimension.
+            //! 
+            //! \throws index_error if the dimension index exceeds the 
+            //! rank of the selection
+            //!
+            //! \param index dimension index
+            //! \param value stride value for the selected dimension
+            //!
+            void stride(size_t index,type_imp::index_type value);
             
             //----------------------------------------------------------------
             //! 
             //! \brief get reference to count vector
             //!
-            const type_imp::index_vector_type &count() const;
+            const type_imp::index_vector_type &count() const noexcept;
 
+            //----------------------------------------------------------------
+            //!
+            //! \brief set count values
+            //!
+            //! Set count values from a user provided vector.
+            //!
+            //! \throws shape_mismatch_error if vector size does not match 
+            //! selection rank
+            //!
+            //! \param value vector with new count values
+            //!
             void count(const type_imp::index_vector_type &value);
 
-            void count(type_imp::index_type value);
+            //----------------------------------------------------------------
+            //!
+            //! \brief set count values
+            //!
+            //! Set all count entries to value.
+            //!
+            //! \param value new value for all count entries
+            //!
+            void count(type_imp::index_type value) noexcept;
 
+            //----------------------------------------------------------------
+            //!
+            //! \brief set count value
+            //!
+            //! Set the count value for a particular dimension.
+            //! 
+            //! \throws index_error if dimension index exceeds the rank of the 
+            //! dimension
+            //!
+            //! \param index dimension index
+            //! \param value new count value for the selected dimension
+            //!
             void count(size_t index,type_imp::index_type value);
 
             //----------------------------------------------------------------
             //!
             //! \brief update selection
             //! 
+            //! Set selection propertires from a vector of slices. 
+            //!
+            //! \throws shape_mismatch_error if vector size and selection 
+            //! length do not match
+            //! 
+            //! \param s slice vector
+            //!
             void update(const type_imp::selection_vector_type &s);
 
     };
@@ -117,7 +218,7 @@ namespace h5{
     //!
     //! \param s selection instance
     //! \return effective rank
-    size_t effective_rank(const selection &s);
+    size_t effective_rank(const selection &s) noexcept;
 
     //------------------------------------------------------------------------
     //! 
@@ -142,7 +243,7 @@ namespace h5{
     //! \param s selection instance
     //! \return number of selected elements
     //! 
-    size_t size(const selection &s);
+    size_t size(const selection &s) noexcept;
 
     //------------------------------------------------------------------------
     //!

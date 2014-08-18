@@ -303,36 +303,24 @@ namespace h5{
     //------------------------------------------------------------------------
     attribute_imp field_imp::attr(const string &name) const 
     {
-        _throw_if_not_valid(EXCEPTION_RECORD,
-                "Cannot obtain attribute from invalid field!");
-
         return attribute_imp(get_attribute_by_name(_object,name));
     }
 
     //------------------------------------------------------------------------
     attribute_imp field_imp::attr(size_t i) const
     {
-        _throw_if_not_valid(EXCEPTION_RECORD,
-                            "Cannot obtain attribute from invalid field!");
         return attribute_imp(get_attribute_by_index(_object,i));
     }
 
     //-----------------------------------------------------------------------
     size_t field_imp::nattr() const 
     {
-        _throw_if_not_valid(EXCEPTION_RECORD,
-                            "Cannot get number of attributes from an invalid"
-                            " field!");
-
         return get_number_of_attributes(_object);
     }
 
     //-----------------------------------------------------------------------
     bool field_imp::has_attr(const string &name) const
     {
-        _throw_if_not_valid(EXCEPTION_RECORD,
-                            "Cannot check for attribute on an invalid field!");
-
         return has_attribute(_object,name);
     }
      

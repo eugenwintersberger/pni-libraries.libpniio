@@ -89,9 +89,7 @@ namespace h5{
             throw size_mismatch_error(EXCEPTION_RECORD,
                     "Field shape must not be empty!");
 
-        type_imp::index_vector_type maximum_dims(current_dims.size());
-
-        return h5dataspace{current_dims};
+        return h5dataspace{std::move(current_dims)};
     }
 
    
@@ -103,6 +101,10 @@ namespace h5{
                                     const type_imp::index_vector_type &chunk,
                                     const h5filter &filter)
     {
+        if(!parent.is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Parent group is invalid!");
+
         //if chunk and shape do not match we can stop immediately
         check_equal_size(shape,chunk,EXCEPTION_RECORD); 
                                     

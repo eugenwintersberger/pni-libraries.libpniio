@@ -60,6 +60,34 @@ namespace io{
                                             const io_error &e);
     };
 
+
+    //! 
+    //! \ingroup io_error_classes
+    //! \brief link error
+    //!
+    //! Exception is thrown when link operations fails.
+    //!
+    class link_error:public exception
+    {
+        public:
+            //-----------------------------------------------------------------
+            //! default constructor
+            explicit link_error();
+
+            //-----------------------------------------------------------------
+            //! constructor
+            explicit link_error(const exception_record &i,const string &d);
+
+            //-----------------------------------------------------------------
+            //! destructor
+            ~link_error() throw();
+           
+            //-----------------------------------------------------------------
+            //! output operator
+            friend std::ostream &operator<<(std::ostream &o,
+                                            const link_error &e);
+    };
+
     //-------------------------------------------------------------------------
     //! 
     //! \ingroup io_error_classes

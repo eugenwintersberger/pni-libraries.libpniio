@@ -113,23 +113,19 @@ namespace h5{
     //-------------------------------------------------------------------------
     type_imp::index_vector_type attribute_imp::shape() const
     {
-        type_imp::index_vector_type s(_dspace.rank());
-        std::copy(_dspace.shape().begin(),
-                  _dspace.shape().end(),
-                  s.begin());
-        return s;
+        return _dspace.shape();
     }
     
     //-------------------------------------------------------------------------
     size_t attribute_imp::size() const 
     { 
-        return this->_dspace.size(); 
+        return _dspace.size(); 
     }
 
     //-------------------------------------------------------------------------
     size_t attribute_imp::rank() const 
     { 
-        return this->_dspace.rank(); 
+        return _dspace.rank(); 
     }
     
     //-------------------------------------------------------------------------

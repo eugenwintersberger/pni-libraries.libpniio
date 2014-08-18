@@ -67,6 +67,9 @@ namespace h5{
             //! 
             //! This memberfunctions updates the datatype and the 
             //! dataspace of the field.
+            //!
+            //! \throws invalid_object_error if data space is invalid
+            //! \throws type_error if the object is not a dataspace
             //! \throws object_error if update fails
             //! 
             void _update();
@@ -147,6 +150,7 @@ namespace h5{
             //! be thrown.
             //!
             //! \throws type_error if o does not refer to a dataset
+            //! \throws invalid_object_error if the object is not valid
             //! \throws object_error in case of any other error during object 
             //! construction
             //! 
@@ -163,6 +167,7 @@ namespace h5{
             //! empty or their sizes do not match
             //! \throws object_error in case of any other failure 
             //! \throws type_error if tid has no corresponding HDF5 type
+            //! \throws invalid_object_error if parent object is not valid
             //!
             //! \param parent the parent group for the field
             //! \param name the name of the field
@@ -241,6 +246,7 @@ namespace h5{
             //! 
             //! \throws invalid_object_error if field object not valid
             //! \throws object_error in case of any other error
+            //! \throws type_error if the type cannot be determined 
             //!
             //! \return type id of the datatype of the dataset
             //!
@@ -254,6 +260,7 @@ namespace h5{
             //! \throw shape_mismatch_error if selection size and rank of the
             //! field do not match
             //! \throw object_error in case of any other error
+            //!
             //! \param s vector with slices describing the selection
             //! 
             void apply_selection(const type_imp::selection_vector_type &s);
@@ -310,7 +317,6 @@ namespace h5{
             //=================================================================
             // DEFAULT OBJECT METHODS
             //=================================================================
-            //----------------------------------------------------------------
             //!
             //! \brief get name
             //! 
@@ -319,6 +325,7 @@ namespace h5{
             //! \throws invalid_object_error if object is not valid
             //! \throws io_error if name of the group cannot be retrieved
             //! \throws object_error in case of any other error
+            //! \throws type_error if object type is not known
             //!
             //! \return name of the group
             //! 
@@ -348,6 +355,7 @@ namespace h5{
             //! \throws invalid_object_error if field object not valid
             //! \throws io_error if filename cannot be retrieved
             //! \throws object_error in case of any other error
+            //! \throws type_error if object is of wrong type
             //! 
             //! \return name of the file the field belongs to
             //!
@@ -358,6 +366,9 @@ namespace h5{
             //! \brief close the dataset
             //!
             //! Method closing the dataset.
+            //!
+            //! \throw type_error if type is not supported
+            //! \throw object_error in case of any other error
             //!
             void close();
             

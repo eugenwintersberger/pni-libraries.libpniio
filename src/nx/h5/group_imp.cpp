@@ -56,6 +56,10 @@ namespace h5{
     //implementation of the standard constructor
     group_imp::group_imp(const group_imp &parent,const string &name)
     {
+        if(!parent.is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Fail to create group - parent object is not valid!");
+
         _object = object_imp(H5Gcreate2(parent.object().id(),
                                         name.c_str(),
                                         H5P_DEFAULT,
@@ -114,6 +118,24 @@ namespace h5{
     }
 
     //------------------------------------------------------------------------
+    void group_imp::remove(const string &n) const
+    {
+        if(!is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Cannot remove object from invalid group!");
+
+        if(!has_child(n))
+            throw key_error(EXCEPTION_RECORD,
+                    "Group has ["+name()+"] has no child ["+n+"]!");
+
+        if(H5Ldelete(_object.id(),n.c_str(),H5P_DEFAULT)<0)
+            throw object_error(EXCEPTION_RECORD,
+                    "Deleting child ["+n+"] from group ["+name()+"]"
+                    " failed!");
+
+    }
+
+    //------------------------------------------------------------------------
     string group_imp::filename() const
     {
         return get_filename(_object);
@@ -122,6 +144,10 @@ namespace h5{
     //-------------------------------------------------------------------------
     size_t group_imp::size() const
     {
+        if(!is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Cannot obtain number of elements from an invalid group!");
+
         H5G_info_t ginfo;
         herr_t err = H5Gget_info(_object.id(),&ginfo);
         if(err < 0)
@@ -169,7 +195,7 @@ namespace h5{
     }
 
     //-----------------------------------------------------------------------
-    size_t group_imp::nattr() const noexcept
+    size_t group_imp::nattr() const
     {
         return get_number_of_attributes(_object);
     }
@@ -210,7 +236,7 @@ namespace h5{
     }
 
     //------------------------------------------------------------------------
-    const object_imp &group_imp::object() const 
+    const object_imp &group_imp::object() const noexcept
     { 
         return _object; 
     }

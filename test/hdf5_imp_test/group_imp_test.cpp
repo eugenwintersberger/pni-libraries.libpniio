@@ -29,6 +29,7 @@
 CPPUNIT_TEST_SUITE_REGISTRATION(group_imp_test);
 
 using pni::io::object_error;
+using pni::io::invalid_object_error;
 
 //-----------------------------------------------------------------------------
 void group_imp_test::setUp()
@@ -208,4 +209,18 @@ void group_imp_test::test_delete_attribute()
 
     g.del_attr("bla");
     CPPUNIT_ASSERT(!g.has_attr("bla"));
+}
+
+//----------------------------------------------------------------------------
+void group_imp_test::test_remove()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    group_imp g(root_group,"test");
+    CPPUNIT_ASSERT(root_group.has_child("test"));
+    root_group.remove("test");
+    CPPUNIT_ASSERT(!root_group.has_child("test"));
+
+    CPPUNIT_ASSERT_THROW(root_group.remove("bla"),key_error);
+    CPPUNIT_ASSERT_THROW(group_imp().remove("bla"),invalid_object_error);
 }

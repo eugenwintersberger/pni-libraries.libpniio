@@ -50,7 +50,7 @@ namespace h5{
     }
 
     //------------------------------------------------------------------------
-    const type_imp::index_vector_type &selection::offset() const
+    const type_imp::index_vector_type &selection::offset() const noexcept
     {
         return _offset;
     }
@@ -58,17 +58,31 @@ namespace h5{
     //------------------------------------------------------------------------
     void selection::offset(const type_imp::index_vector_type &value) 
     {
+        if(value.size()!=_offset.size())
+            throw shape_mismatch_error(EXCEPTION_RECORD,
+                    "Selection rank and offset size do not match!");
+
         std::copy(value.begin(),value.end(),_offset.begin());
     }
 
     //------------------------------------------------------------------------
-    void selection::offset(type_imp::index_type value)
+    void selection::offset(type_imp::index_type value) noexcept
     {
         std::fill(_offset.begin(),_offset.end(),value);
     }
+    
+    //------------------------------------------------------------------------
+    void selection::offset(size_t index,size_t value)
+    {
+        if(index>=_offset.size())
+            throw index_error(EXCEPTION_RECORD,
+                    "Dimension index exceeds total rank of selection!");
+
+        _offset[index] = value;
+    }
 
     //------------------------------------------------------------------------
-    const type_imp::index_vector_type &selection::stride() const
+    const type_imp::index_vector_type &selection::stride() const noexcept
     {
         return _stride;
     }
@@ -76,26 +90,35 @@ namespace h5{
     //------------------------------------------------------------------------
     void selection::stride(const type_imp::index_vector_type &value)
     {
+        if(value.size() != _stride.size())
+            throw shape_mismatch_error(EXCEPTION_RECORD,
+                    "Stride vector size does not match selection rank!");
+
         std::copy(value.begin(),value.end(),_stride.begin());
     }
 
     //------------------------------------------------------------------------
-    void selection::stride(type_imp::index_type value)
+    void selection::stride(type_imp::index_type value) noexcept
     {
         std::fill(_stride.begin(),_stride.end(),value);
     }
 
     //------------------------------------------------------------------------
-    const type_imp::index_vector_type &selection::count() const
+    void selection::stride(size_t index,type_imp::index_type value)
+    {
+        if(index>=_stride.size())
+            throw index_error(EXCEPTION_RECORD,
+                    "Dimension index exceeds selection rank!");
+
+        _stride[index] = value;
+    }
+
+    //------------------------------------------------------------------------
+    const type_imp::index_vector_type &selection::count() const noexcept
     {
         return _count;
     }
 
-    //------------------------------------------------------------------------
-    void selection::offset(size_t index,size_t value)
-    {
-        _offset[index] = value;
-    }
 
     //------------------------------------------------------------------------
     void selection::count(const type_imp::index_vector_type &value)
@@ -104,7 +127,7 @@ namespace h5{
     }
 
     //------------------------------------------------------------------------
-    void selection::count(type_imp::index_type value)
+    void selection::count(type_imp::index_type value) noexcept
     {
         std::fill(_count.begin(),_count.end(),value);
     }
@@ -118,6 +141,10 @@ namespace h5{
     //------------------------------------------------------------------------
     void selection::update(const type_imp::selection_vector_type &s)
     {
+        if(s.size()!=_offset.size())
+            throw shape_mismatch_error(EXCEPTION_RECORD,
+                    "Size of slice vector does not match selection rank!");
+
         size_t index=0;
         for(const auto &sl: s)
         {
@@ -131,7 +158,7 @@ namespace h5{
     //========================================================================
     // Implementation of utility functions
     //========================================================================
-    size_t effective_rank(const selection &s)
+    size_t effective_rank(const selection &s) noexcept
     {
         return std::count_if(s.count().begin(),
                              s.count().end(),
@@ -149,7 +176,7 @@ namespace h5{
     }
 
     //------------------------------------------------------------------------
-    size_t size(const selection &s)
+    size_t size(const selection &s) noexcept
     {
         typedef std::multiplies<type_imp::index_type> mult_type;
 

@@ -66,6 +66,10 @@ namespace h5{
             //! 
             //! \throws type_error in cases where the object is not a file
             //! object
+            //! \throws invalid_object_error if the passed object is not valid
+            //! \throws object_error in any other case of failure
+            //!
+            //! \param o rvalue reference to an object instance
             //! 
             explicit file_imp(object_imp &&o);
 
@@ -78,6 +82,9 @@ namespace h5{
             //! 
             //! \throws type_error if the file is not an HDF5 file
             //! \throws object_error in case of any object creation error
+            //! \throws invalid_object_error if the file object opened is not
+            //! valid
+            //!
             //! \param n name of the file
             //! \param ro if true file will be in read only mode
             //! \return instance of file_imp
@@ -96,23 +103,43 @@ namespace h5{
             //! be set with ssize.
             //!
             //! \throws object_error in case of object creation fails
+            //! \throws invalid_object_error if the created file is not valid
+            //!
             //! \param n file name
             //! \param ow overwrite existing file if true
             //! \param ssize split size
             //! \return instance of H5File
             //!
-            static file_imp create(const string &path,bool ow=false,ssize_t ssize=0);
+            static file_imp create(const string &path,bool ow=false,
+                                   ssize_t ssize=0);
 
             //====================misc methods=================================
-            //! close the file
+            //!
+            //! \brief close the file
+            //! 
+            //! \throws object_error if something goes wrong
+            //! \throws type_error if the object type could not be determined
+            //!
             void close();
 
             //-----------------------------------------------------------------
-            //! flush the file
+            //!
+            //! \brief flush the file
+            //!
+            //! \throws io_error if flush fails
+            //! \throws object_error if validity status could not be determined
+            //!
             void flush() const;
 
             //-----------------------------------------------------------------
-            //! return true if file is read-only
+            //!
+            //! \brief return true if file is read-only
+            //!
+            //! \throws invalid_object_error if file is not valid
+            //! \throws object_error if file intent cannot be retrieved
+            //!
+            //! \return true if readonly, false otherwise
+            //!
             bool is_readonly() const;
 
             //-----------------------------------------------------------------
@@ -132,6 +159,12 @@ namespace h5{
             //! 
             //! Return the root group of the file. 
             //! 
+            //! \throws invalid_object_error if file is not valid
+            //! \throws type_error if group type cannot be determined
+            //! \throws object_error in case of any other error
+            //! 
+            //! \return root group instance
+            //!
             group_imp root() const;
 
 

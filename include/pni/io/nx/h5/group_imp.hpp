@@ -67,6 +67,9 @@ namespace h5{
             //! 
             //! \throws type_error if the object is not a group object
             //! \throws object_error in case of errors
+            //! \throws invalid_object_error if the passed object is not valid
+            //!
+            //! \param o rvalue refernence to an HDF5 object 
             //!
             explicit group_imp(object_imp &&o);
 
@@ -76,7 +79,9 @@ namespace h5{
             //! 
             //! Create a new group below a parent group.
             //!
+            //! \throws invalid_object_error if parent group is not valid
             //! \throws object_error in case of errors
+            //!
             //! \param parent the parent group for the gnew group
             //! \param name the name of the new group
             //! 
@@ -96,8 +101,9 @@ namespace h5{
             //! expected.
             //!
             //! \throws key_error if group has no child with this name
-            //! \throws object_error in case of errors during object
-            //! construction
+            //! \throws invalid_object_error if group is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \param name name of the child object
             //! \return object instance 
             //!
@@ -112,7 +118,9 @@ namespace h5{
             //! opened with this method.
             //!
             //! \throws index_error if index exceeds number of childs
-            //! \throws pni::io::nx::nxgroup_error in case of errors
+            //! \throws invalid_object_error if group is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \param i object index
             //! \return child object
             //!
@@ -122,7 +130,7 @@ namespace h5{
             //!
             //! \brief return object reference
             //! 
-            const object_imp &object() const;
+            const object_imp &object() const noexcept;
 
             //======================misc methods===============================
             //! 
@@ -130,10 +138,14 @@ namespace h5{
             //!
             //! This method removes an object of name n attached to this  
             //! group.
+            //! 
+            //! \throws invalid_object_error if group is not valid
+            //! \throws key_error if group does not have a child n
+            //! \throws object_error in case of any other error
             //!
             //! \param n name of the object to remove
             //!
-            void remove(const string &n);
+            void remove(const string &n) const;
 
             //-----------------------------------------------------------------
             //! 
@@ -143,8 +155,10 @@ namespace h5{
             //! can be either a path relative to this object or an absolute 
             //! path. 
             //!
+            //! \throws invalid_object_error if the group instance is not valid
             //! \throws object_error if info about child nodes could not have
             //! been obtained 
+            //!
             //! \param name of the child node
             //! \return true if an object of name n exists
             //!
@@ -157,7 +171,9 @@ namespace h5{
             //! Returns the number of child nodes (groups and datasets) 
             //! linked below this group.
             //!
+            //! \throws invalid_object_error if group is not valid
             //! \throws object_error in case of errors
+            //!
             //! \return number of child nodes
             //!
             size_t size() const;
@@ -170,6 +186,9 @@ namespace h5{
             //!
             //! \throws invalid_object_error if object is not valid
             //! \throws io_error if name of the group cannot be retrieved
+            //! \throws object_error in case of any other err
+            //! \throws type_error if the internal object is of wrong type
+            //!
             //! \return name of the group
             //! 
             string name() const;
@@ -180,6 +199,8 @@ namespace h5{
             //! 
             //! Return the parent of the current group. 
             //!
+            //! \throws invalid_object_error if the group is not valid
+            //! \throws type_error if object type is unkown
             //! \throws object_error in case of errors
             //! 
             object_imp parent() const;
@@ -191,6 +212,10 @@ namespace h5{
             //! Return the name of the file holding this group.
             //! 
             //! \throws io_error if filename cannot be retrieved
+            //! \throws invalid_object_error if group is not valid
+            //! \throws object_error in case of any other error
+            //! \throws type_error in case of problems with the internal object
+            //! type
             //! 
             //! \return filename
             string filename() const;
@@ -227,7 +252,11 @@ namespace h5{
             //! \brief create scalar attribute
             //!
             //! Create a simple scalar attribute 
+            //!
             //! \throws object_error if attribute creation fails
+            //! \throws invalid_object_error if parent object is not valid
+            //! \throws type_error if the requested type has no HDF5 equivalent
+            //!
             //! \param name the name of the new attribute
             //! \param tid type id for the attribute
             //! \param overwrite if true overwrite an existing attribute
@@ -241,7 +270,11 @@ namespace h5{
             //! \brief create multidimensional attribute
             //! 
             //! Create a multidimensional attribute.
-            //! \throws object_error if attribute reation fails
+            //!
+            //! \throws object_error if attribute creation fails
+            //! \throws invalid_object_error if parent object is not valid
+            //! \throws type_error if the requested type has no HDF5 equivalent
+            //!
             //! \param name the name for the attribute
             //! \param tid type id for the attribute
             //! \param shape container with number of elements
@@ -255,9 +288,11 @@ namespace h5{
             //----------------------------------------------------------------
             //!
             //! \brief get attribute by name
-            //! 
+            //!
+            //! \throws invalid_object_error if group is not valid
             //! \throws key_error if attribute does not exist
             //! \throws object_error if attribute retrievel fails
+            //!
             //! \param name name of the requested attribute
             //! \return instance of attribute_imp
             //! 
@@ -267,8 +302,10 @@ namespace h5{
             //!
             //! \brief get attribute by index
             //! 
+            //! \throws invalid_object_error if group is not valid
             //! \throws index_error if i exceeds the total number of attributes
             //! \throws object_error if attribute retrieval fails
+            //!
             //! \param i attribute index
             //! \return instance of attribute_imp
             //! 
@@ -279,9 +316,13 @@ namespace h5{
             //! \brief get number of attributes
             //! 
             //! Returns the total number of attribtues attached to this group.
+            //!
+            //! \throws invalid_object_error if group is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \returns number of attributes
             //!
-            size_t nattr() const noexcept;
+            size_t nattr() const;
 
             //----------------------------------------------------------------
             //!
@@ -289,7 +330,10 @@ namespace h5{
             //! 
             //! Returns true if the group has an attribute of the requested
             //! name, false otherwise.
+            //!
+            //! \throws invalid_object_error if group is not valid
             //! \throws object_error if attribute check fails
+            //!
             //! \param name the name of the looked up attribute
             //! \return true if attribute exists, flase otherwise
             //!
@@ -300,7 +344,12 @@ namespace h5{
             //! \brief delete an attribute
             //!
             //! Remove an attribute from this group. 
+            //!
+            //! \throws invalid_object_error if group is not valid
+            //! \throws key_error if an attribute with the requested name does 
+            //! not exist
             //! \throws object_error if attribute removal fails
+            //!
             //! \param name the name of the attribute to delete
             //! 
             void del_attr(const string &name) const;

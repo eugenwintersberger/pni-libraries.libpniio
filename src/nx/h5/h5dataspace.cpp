@@ -80,6 +80,17 @@ namespace h5 {
     {
         _object = object_imp(H5Screate_simple(1,_dims.data(),_maxdims.data()));
     }
+    
+    //-------------------------------------------------------------------------
+    h5dataspace::h5dataspace(object_imp &&o):
+        _object(std::move(o))
+    {
+        if(get_hdf5_type(_object) != h5object_type::DATASPACE)
+            throw type_error(EXCEPTION_RECORD, "Object is not a dataspace!");
+
+        __update_buffers();
+    }
+
 
     //-------------------------------------------------------------------------
     h5dataspace::h5dataspace(const type_imp::index_vector_type &shape):
@@ -105,22 +116,13 @@ namespace h5 {
                                               _maxdims.data()));
     }
 
-    //-------------------------------------------------------------------------
-    h5dataspace::h5dataspace(object_imp &&o):
-        _object(o)
-    {
-        if(get_hdf5_type(_object) != h5object_type::DATASPACE)
-            throw type_error(EXCEPTION_RECORD, "Object is not a dataspace!");
-
-        __update_buffers();
-    }
-
     //===================Other methods=========================================
     hid_t h5dataspace::id() const noexcept
     {
         return _object.id();
     }
 
+    //-------------------------------------------------------------------------
     bool h5dataspace::is_valid() const
     {
         return _object.is_valid();
@@ -129,12 +131,20 @@ namespace h5 {
     //-------------------------------------------------------------------------
     size_t h5dataspace::rank() const 
     {
+        if(!is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Cannot obtain the rank of an invalid dataspace!");
+
         return H5Sget_simple_extent_ndims(_object.id());
     }
 
     //-------------------------------------------------------------------------
     size_t h5dataspace::size() const 
     {
+        if(!is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Cannot obtain size of an invalid dataspace!");
+
         typedef std::multiplies<size_t> mult_type;
         return std::accumulate(_dims.begin(),_dims.end(),1,mult_type());
                                
@@ -180,6 +190,10 @@ namespace h5 {
     //------------------------------------------------------------------------
     void h5dataspace::apply_selection(const selection &s) const  
     {
+        if(!is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Cannot apply a selection to an invalid dataspace!");
+
         //apply the selection
         herr_t err = H5Sselect_hyperslab(_object.id(),H5S_SELECT_SET,
                                          s.offset().data(),
@@ -193,7 +207,7 @@ namespace h5 {
     }
            
     //------------------------------------------------------------------------
-    void h5dataspace::reset_selection() const
+    void h5dataspace::reset_selection() const noexcept
     {
         H5Sselect_all(_object.id());
     }

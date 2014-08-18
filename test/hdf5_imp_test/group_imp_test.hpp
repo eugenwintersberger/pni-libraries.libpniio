@@ -52,6 +52,7 @@ class group_imp_test:public CppUnit::TestFixture
         CPPUNIT_TEST(test_get_attribute_by_name);
         CPPUNIT_TEST(test_get_attribute_by_index);
         CPPUNIT_TEST(test_delete_attribute);
+        CPPUNIT_TEST(test_remove);
         CPPUNIT_TEST_SUITE_END();
     private:
         file_imp file;
@@ -69,5 +70,6 @@ class group_imp_test:public CppUnit::TestFixture
         void test_get_attribute_by_name();
         void test_get_attribute_by_index();
         void test_delete_attribute();
+        void test_remove();
     
 };
