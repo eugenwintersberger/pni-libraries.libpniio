@@ -110,7 +110,7 @@ namespace h5 {
             //!
             //! \return shuffle flag status
             //!
-            bool shuffle() const;
+            bool shuffle() const noexcept;
     };
 
 

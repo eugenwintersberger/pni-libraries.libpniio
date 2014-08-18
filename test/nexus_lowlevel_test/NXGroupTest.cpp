@@ -61,7 +61,7 @@ void NXGroupTest::test_linking()
     CPPUNIT_ASSERT(o.is_valid());
     CPPUNIT_ASSERT(o.name() == "data");
 
-    nxgroup ref = _f.root().open("scan_1");
+    nxgroup ref = _f.root().at("scan_1");
     CPPUNIT_ASSERT_NO_THROW(pni::io::nx::link(g,ref,"a_link"));
     CPPUNIT_ASSERT_NO_THROW(get_object(_f.root(),nxpath::from_string("/scan_1/a_link")));
 
@@ -124,13 +124,13 @@ void NXGroupTest::test_open()
 	CPPUNIT_ASSERT_NO_THROW(g1 = _f.root().create_group("directory1")
                                           .create_group("data"));
 
-	CPPUNIT_ASSERT_NO_THROW(g2 = _f.root().open("directory1"));
-	nxgroup g = g2.open("data");
+	CPPUNIT_ASSERT_NO_THROW(g2 = _f.root().at("directory1"));
+	nxgroup g = g2.at("data");
 	nxgroup g3;
-	g3 = g2.open("data");
+	g3 = g2.at("data");
 
 
-	CPPUNIT_ASSERT_THROW(_f.root().open("directory2"),pni::io::nx::nxgroup_error);
+	CPPUNIT_ASSERT_THROW(_f.root().at("directory2"),key_error);
 }
 
 
@@ -145,11 +145,11 @@ void NXGroupTest::test_existance()
 	g1 = _f.root().create_group("scan_2").create_group("instrument").
                   create_group("detector");
 
-	g1 = _f.root().open("scan_1");
+	g1 = _f.root().at("scan_1");
 	CPPUNIT_ASSERT(g1.has_child("instrument"));
 	CPPUNIT_ASSERT(!g1.has_child("/scan_2"));
 	CPPUNIT_ASSERT(!g1.has_child("/instrument"));
-	g2 = _f.root().open("scan_2");
+	g2 = _f.root().at("scan_2");
 	CPPUNIT_ASSERT(nxgroup(g2["instrument"]).has_child("detector"));
 	CPPUNIT_ASSERT(!g2.has_child("/instrument/detector/data"));
 

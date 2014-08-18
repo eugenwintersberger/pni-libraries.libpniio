@@ -252,7 +252,6 @@ namespace h5{
             //! attribute.
             //!
             //! \throws invalid_object_error if attribute is not valid
-            //! \throws type_error if parent type could not be determined
             //! \throws object_error if parent object could not be retrieved
             //! \throws type_error if attribute type cannot be determined
             //!

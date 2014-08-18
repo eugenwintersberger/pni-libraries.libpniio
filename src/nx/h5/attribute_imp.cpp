@@ -111,7 +111,7 @@ namespace h5{
     }
     
     //-------------------------------------------------------------------------
-    type_imp::index_vector_type attribute_imp::shape() const
+    type_imp::index_vector_type attribute_imp::shape() const 
     {
         return _dspace.shape();
     }

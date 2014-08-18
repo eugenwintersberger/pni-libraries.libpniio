@@ -141,15 +141,7 @@ namespace nx{
             //!
             static file_type open_file(const string &n,bool ro=true)
             {
-                try
-                {
-                    return file_type(imp_type::open(n,ro));
-                }
-                catch(...)
-                {
-                    throw nxfile_error(EXCEPTION_RECORD,"Error opening file!");
-                }
-
+                return file_type(imp_type::open(n,ro));
             }
 
             //-----------------------------------------------------------------
@@ -166,16 +158,7 @@ namespace nx{
             static file_type
             create_file(const string &n,bool ow=false, ssize_t ssize = 0)
             {
-                file_type file;
-
-                try
-                {
-                    file = file_type(imp_type::create(n,ow,ssize));
-                }
-                catch(...)
-                {
-                    throw nxfile_error(EXCEPTION_RECORD,"Error creating file!");
-                }
+                file_type file = file_type(imp_type::create(n,ow,ssize));
 
                 auto root_group = file.root();
                 

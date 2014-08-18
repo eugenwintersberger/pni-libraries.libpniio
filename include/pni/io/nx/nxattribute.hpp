@@ -127,17 +127,18 @@ namespace nx{
             //!
             //! \brief default constructor
             //!
-            explicit nxattribute():_imp(){}
+            explicit nxattribute() noexcept:_imp(){}
             
             //------------------------------------------------------------------
             //!
-            //! \brief copy constructor from implementation
-            //!
-            explicit nxattribute(const implementation_type &i):_imp(i) { }
-
-            //------------------------------------------------------------------
-            //!
             //! \brief move constructor from implementation
+            //!
+            //! \throws invalid_object_error if the implementation is not valid
+            //! \throws type_error if the implementation type is not an
+            //! attribute
+            //! \throws object_error in case of any other error
+            //!
+            //! \param i rvalue to an implementation instance
             //!
             explicit nxattribute(implementation_type &&i):_imp(std::move(i)) 
             { }
@@ -150,6 +151,7 @@ namespace nx{
             //! object_type. 
             //!
             //! \throws type_error if the object is not an attribute
+            //! \throws object_error in case of any other error
             //!
             //! \param o instance of object_type
             //!
@@ -165,7 +167,10 @@ namespace nx{
             //!
             //! This assignment operator converts an object_type to an
             //! attribute.
+            //!
             //! \throws type_error if the object is not an attribute
+            //! \throws object_error in case of any other error
+            //!
             //! \param o instance of object_type
             //! \return reference to attribute
             //!
@@ -217,7 +222,7 @@ namespace nx{
             //! 
             //! \throws io_error in case of a general IO error
             //! \throws type_error if data type not supported by the library
-            //! \throws invalid_object_error if object not valid
+            //! \throws invalid_object_error if attribute not valid
             //! \throws object_error in case of any other error
             //! 
             //! \tparam T data type of the pointer
@@ -284,9 +289,11 @@ namespace nx{
             //!
             //! \brief write array type erasure data
             //!
-            //! \throws memory_not_allocated_error if array not allocated
+            //! \throws memory_not_allocated_error if array buffer is not 
+            //! allocated
+            //! \throws shape_mismatch_errror if array and attribute shape 
+            //! do not match
             //! \throws type_error if data type not supported
-            //! \throws shape_mismatch_error if array shape does not match
             //! \throws invalid_object_error if field is not valid
             //! \throws io_error in case of a general IO error
             //! \throws object_error in case of any other error
@@ -295,7 +302,7 @@ namespace nx{
             //!
             void write(const array &a) const
             {
-                _imp.write(a.type_id(),a.data());
+                _write_array(a);
             }
 
             //-----------------------------------------------------------------
@@ -344,9 +351,7 @@ namespace nx{
             //!
             void read(array &a) const
             {
-                check_allocation_state(a,EXCEPTION_RECORD);
-                check_equal_shape(a,*this,EXCEPTION_RECORD);
-                _imp.read(a.type_id(),a.data());
+                _read_array(a);
             }
 
             //-----------------------------------------------------------------
@@ -410,6 +415,9 @@ namespace nx{
             template<typename CTYPE> 
             CTYPE shape() const
             {
+                if(!is_valid())
+                    throw invalid_object_error(EXCEPTION_RECORD,
+                            "Cannot get shape from invalid attribute!");
                 return type_type::template from_index_vector<CTYPE>(_imp.shape());
             }
 
@@ -448,6 +456,7 @@ namespace nx{
             //!
             //! \throws invalid_object_error if attribute is not valid
             //! \throws object_error in case of any other error
+            //! \throws type_error if data type is not supported
             //!
             //! \return type id of the elements stored in the field
             //!
@@ -456,6 +465,9 @@ namespace nx{
             //--------------------------------------------------------------
             //! 
             //! \brief close attribute
+            //!
+            //! \throws type_error if object type cannot be determined
+            //! \throws object_error in case of any other error
             //!
             void close() { _imp.close(); }
 
@@ -479,6 +491,7 @@ namespace nx{
             //! \throws invalid_object_error if object is not valid
             //! \throws io_error in case of an IO error
             //! \throws object_error in case of any other error
+            //! \throws type_error if object type cannot be determined
             //!
             //! \return string with the attributes name
             //!

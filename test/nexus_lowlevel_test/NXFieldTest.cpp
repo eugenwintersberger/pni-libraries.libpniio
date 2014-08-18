@@ -112,10 +112,10 @@ void NXFieldTest::test_open()
 
 	root.create_field<uint32>("data1");
 
-	nxfield f1 = as_field(root.open("data1"));
+	nxfield f1 = as_field(root.at("data1"));
 
 	nxfield f2;
-	f2 = as_field(root.open("data1"));
+	f2 = as_field(root.at("data1"));
 }
 
 //------------------------------------------------------------------------------

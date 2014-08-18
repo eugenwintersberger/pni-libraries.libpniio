@@ -30,7 +30,7 @@
 #include "nximp_map.hpp"
 #include "nxobject_traits.hpp"
 #include "nxfilter.hpp"
-#include "nxexceptions.hpp"
+#include "../exceptions.hpp"
 #include "nxlink.hpp"
 #include "algorithms/get_path.hpp"
 
@@ -48,18 +48,22 @@ namespace nx{
     //! \ingroup nexus_lowlevel
     //! \brief NXgroup object
     //! 
+    //! 
+    //! \tparam IMPID implementation ID for the group
+    //!
     template<nximp_code IMPID> class nxgroup
     {
             
         public:
             //===================public types==================================
+            //! group implementation type
             typedef typename nximp_map<IMPID>::group_imp imp_type;
+            //! type implementation
             typedef typename nximp_map<IMPID>::type_imp  type_type;
+            //! the group type
             typedef nxgroup<IMPID> group_type;
 
-            //typedef nxobject_iterator<group_type,
-            //       typename nxobject_trait<IMPID>::object_type 
-             //       > iterator; //!< iterator type
+
             typedef typename nxobject_trait<IMPID>::object_type value_type;
             typedef pni::core::container_iterator<const group_type> iterator;
             //! field type
@@ -68,7 +72,9 @@ namespace nx{
                 attribute_type;
 
         private:
+            //! field implementation type
             typedef typename nximp_map<IMPID>::field_imp field_imp_type;
+            //! object implementation type
             typedef typename nximp_map<IMPID>::object_imp object_imp_type;
             imp_type _imp;
 
@@ -92,11 +98,15 @@ namespace nx{
             //! This member function template is doing the real work on 
             //! creating a field. The frontend functions provided by the 
             //! public interface take only care about the shape and 
-            //! chunk shape configuration. 
+            //! chunk shape configuration. This function creates a field 
+            //! without a filter.
             //!
-            //! \throws shape_mismatch_error if shape and chunk shape do 
-            //! not match
-            //! \throws nxgroup_error in case of other errors
+            //! \throws size_mismatch_error if chunk and shape have different 
+            //! size
+            //! \throws type_error if data type is not supported
+            //! \throws invalid_object_error if the group is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \tparam T data type of the field to create
             //! \tparam CTYPE container type for shape and chunk shape
             //! \param n name of the field
@@ -111,83 +121,53 @@ namespace nx{
             field_type _create_field(const string &n,const CTYPE &shape,
                                      const CTYPE &chunk) const
             {
-                field_type field;
-                try
-                {
-                    field = field_type(field_imp_type(_imp,n,
-                                       type_id_map<T>::type_id,
-                                       type_type::to_index_vector(shape),
-                                       type_type::to_index_vector(chunk)));
-                }
-                catch(shape_mismatch_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(size_mismatch_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(nxfield_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(type_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(...)
-                {
-                    throw nxgroup_error(EXCEPTION_RECORD,
-                                       "Something went wrong!");
-                }
-                return field;
+                return field_type(field_imp_type(_imp,n,
+                                  type_id_map<T>::type_id,
+                                  type_type::to_index_vector(shape),
+                                  type_type::to_index_vector(chunk)));
 
             }
            
             //----------------------------------------------------------------
+            //! 
+            //! \brief field creation function
+            //! 
+            //! This member function template is doing the real work on 
+            //! creating a field. The frontend functions provided by the 
+            //! public interface take only care about the shape and 
+            //! chunk shape configuration. This function creates a field 
+            //! with filter.
+            //!
+            //! \throws size_mismatch_error if chunk and shape have different 
+            //! size
+            //! \throws type_error if data type is not supported
+            //! \throws invalid_object_error if the group is not valid
+            //! \throws object_error in case of any other error
+            //!
+            //! \tparam T data type of the field to create
+            //! \tparam CTYPE container type for shape and chunk shape
+            //! \tparam FIMP filter implementation type
+            //! 
+            //! \param n name of the field
+            //! \param shape container with shape information
+            //! \param chunk container with chunk shape data
+            //! \return field instance
+            //!
             template<
                       typename T,
-                      typename CHUNKT,
-                      typename SHAPET,
+                      typename CTYPE,
                       typename FIMP
                     > 
             field_type
-            _create_field(const string &n,const SHAPET &shape,
-                         const CHUNKT &chunk,
+            _create_field(const string &n,const CTYPE &shape,
+                         const CTYPE &chunk,
                          const nxfilter<FIMP> &filter) const
             {
-                field_type field;
-
-                try
-                {
-                    field =  field_type(field_imp_type(_imp,n,
-                                        type_id_map<T>::type_id,
-                                        type_type::to_index_vector(shape),
-                                        type_type::to_index_vector(chunk),
-                                        filter.imp()));
-                }
-                catch(shape_mismatch_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(size_mismatch_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(nxfield_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(type_error &error)
-                {
-                    error.append(EXCEPTION_RECORD); throw error;
-                }
-                catch(...)
-                {
-                    throw nxgroup_error(EXCEPTION_RECORD,
-                                       "Something went wrong!");
-                }
-                return field;
+                return field_type(field_imp_type(_imp,n,
+                                    type_id_map<T>::type_id,
+                                    type_type::to_index_vector(shape),
+                                    type_type::to_index_vector(chunk),
+                                    filter.imp()));
             }
         public:
             //==================public attributes==============================
@@ -220,10 +200,13 @@ namespace nx{
            
             //-----------------------------------------------------------------
             //!copy construct from implementation object
+            /*
             explicit nxgroup(const imp_type &imp):
                 _imp(imp),
                 attributes(_imp)
             { }
+            */
+
 
             //-----------------------------------------------------------------
             //! move construct from implementation object
@@ -240,13 +223,11 @@ namespace nx{
             {
                 *this = o;
             }
-        
-
-            //-----------------------------------------------------------------
-            //! destructor
-            ~nxgroup(){ } 
 
             //========================assignment operators=====================
+            //!
+            //! \brief copy assignment
+            //!
             group_type &operator=(const group_type &g)
             {
                 if(this == &g) return *this;
@@ -255,6 +236,10 @@ namespace nx{
                 return *this;
             }
 
+            //-----------------------------------------------------------------
+            //! 
+            //! \brief move assignment
+            //!
             group_type &operator=(group_type &&g)
             {
                 if(this == &g) return *this;
@@ -265,13 +250,15 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
+            //!
+            //! \brief conversion assignment
+            //!
             group_type &operator=(const typename
                     nxobject_trait<IMPID>::object_type &o)
             {
                 *this = as_group(o);
                 return  *this;
             }
-
 
             //====================group creation methods=======================
             //! 
@@ -297,47 +284,12 @@ namespace nx{
                 //we have to check if the particular group type
                 //exists and add a check object to the class
 
-                group_type g;
-                try
-                {
-                    g = group_type(imp_type(_imp,n));
-                }
-                catch(nxgroup_error &e)
-                {
-                    //a known error from the underlying implementation is 
-                    //forwarded 
-                    e.append(EXCEPTION_RECORD);
-                    throw e;
-                }
-                catch(...)
-                {
-                    //in case of an unknown error throw a new one
-                    std::stringstream ss;
-                    ss<<"Error creating group ["<<n<<"] below ["<<
-                                  get_path(*this)<<"]!";
-                    throw nxgroup_error(EXCEPTION_RECORD,ss.str());
-                }
+                group_type g = group_type(imp_type(_imp,n));
 
                 //if the type string is not empty we write the 
                 //appropriate attribute.
-                try
-                {
-                    if(!type.empty())
-                        g.attributes.template create<string>("NX_class").write(type);
-                }
-                catch(nxattribute_error &e)
-                {
-                    e.append(EXCEPTION_RECORD);
-                    throw e;
-                }
-                catch(...)
-                {
-                    std::stringstream ss;
-                    ss<<"Error creating attribute [NX_class] on";
-                    ss<<" group"<<get_path(*this)<<"!";
-                    throw nxattribute_error(EXCEPTION_RECORD,ss.str());
-                         
-                }
+                if(!type.empty())
+                    g.attributes.template create<string>("NX_class").write(type);
 
                 return g;
             }
@@ -358,9 +310,12 @@ namespace nx{
             //! container must not be empty. Otherwise an exception 
             //! will be thrown.
             //! 
-            //! \throw size_mismatch_error if shape is an empty container
-            //! \throw shape_mismatch_error if chunk and shape do not match
-            //! \throw nxgroup_error in case of a general error
+            //! \throws size_mismatch_error if chunk and shape have different 
+            //! size
+            //! \throws type_error if data type is not supported
+            //! \throws invalid_object_error if the group is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \tparam T data type of the field
             //! \tparam CTYPE container type for the shape
             //! \param n name of the field
@@ -403,9 +358,11 @@ namespace nx{
             //! value will be generated from the original shape where the 
             //! first dimension is set to one. 
             //!
-            //! \throws size_mismatch_error if chunk and field shape do not 
-            //! have the same rank
-            //! \throws nxgroup_error in all other cases
+            //! \throws size_mismatch_error if chunk and shape have different 
+            //! size
+            //! \throws type_error if data type is not supported
+            //! \throws invalid_object_error if the group is not valid
+            //! \throws object_error in case of any other error
             //! 
             //! \tparam T data type of the field
             //! \tparam CTYPE container type for the shape and chunk
@@ -426,12 +383,13 @@ namespace nx{
             }
 
             //------------------------------------------------------------------
-            /*! 
-            \brief Creates a multidimensional field with a filter.
-
-            Create a multidimensional field with a filter for data compression.
-            With this method the chunk shape for the field is determined
-            automatically.
+            //! 
+            //! \brief Creates a multidimensional field with a filter.
+            //!
+            //! Create a multidimensional field with a filter for data 
+            //! compression.  With this method the chunk shape for the field 
+            //! is determined automatically.
+            /*!
             \code
             nxgruop g = file["/scan_1/instrument/detector"];
 
@@ -440,13 +398,22 @@ namespace nx{
 
             nxfield field = g.create_field<uint16>("data",shape,filter);
             \endcode
-            \tparam T data type for the filed
-            \tparam CTYPES container type for the field shape
-            \param n name of the field
-            \param s shape of the field
-            \param filter implementation
-            \return instance of NXField
             */
+            //!
+            //! \throws size_mismatch_error if chunk and shape have different 
+            //! size
+            //! \throws type_error if data type is not supported
+            //! \throws invalid_object_error if the group is not valid
+            //! \throws object_error in case of any other error
+            //!
+            //! \tparam T data type for the filed
+            //! \tparam CTYPES container type for the field shape
+            //!
+            //! \param n name of the field
+            //! \param s shape of the field
+            //! \param filter implementation
+            //! \return instance of NXField
+            //!
             template<
                      typename T,
                      typename CTYPES,
@@ -467,10 +434,11 @@ namespace nx{
 
            
             //-----------------------------------------------------------------
-            /*! 
-            \brief create a multidimensional field (explicit chunk) with filter
-
-            Create a field with filter and adjustable chunk shape.
+            //! 
+            //! \brief create a multidimensional field (explicit chunk) with filter
+            //!
+            //! Create a field with filter and adjustable chunk shape.
+            /*!
             \code
             nxgroup g = file.create_group("scan_1/instrument/detector");
 
@@ -481,17 +449,23 @@ namespace nx{
             nxfield field = g.create_field<uint16>("data",shape,chunk,filter);
 
             \endcode
-            \throws shape_mismatch_error if the rank of chunk and field shape do
-            not share the same rank
-            \tparam T data type of the field
-            \tparam CTYPES container type for the shape
-            \tparam CTYPEC container type for the chunk shape
-            \param n name or path of the field
-            \param s shape of the field
-            \param cs chunk shape of the field
-            \param filter filter instance to use
-            \return instance of NXField
             */
+            //!
+            //! \throws size_mismatch_error if chunk and shape have different 
+            //! size
+            //! \throws type_error if data type is not supported
+            //! \throws invalid_object_error if the group is not valid
+            //! \throws object_error in case of any other error
+            //! 
+            //! \tparam T data type of the field
+            //! \tparam CTYPES container type for the shape
+            //! \tparam CTYPEC container type for the chunk shape
+            //! \param n name or path of the field
+            //! \param s shape of the field
+            //! \param cs chunk shape of the field
+            //! \param filter filter instance to use
+            //! \return instance of NXField
+            //!
             template<typename T,
                      typename CTYPES,
                      typename CTYPEC,
@@ -506,28 +480,24 @@ namespace nx{
 
 
             //===============methods to open objects===========================
-            /*! 
-            \brief open an arbitrary object
-
-            Returns an object by name. The name can be either an absolute or
-            relative path.
-            \param n path or name of the object to open
-            \return object
-            */
-            virtual 
-            typename nxobject_trait<IMPID>::object_type open(const string &n) const
+            //! 
+            //! \brief open an arbitrary object
+            //!
+            //! Returns an object by name. The name can be either an absolute 
+            //! or relative path.
+            //! 
+            //! \throws invalid_object_error if group is not valid
+            //! \throws key_error if child does not exist
+            //! \throws type_error if child type is not supported
+            //! \throws object_error in case of any other error
+            //!
+            //! \param n path or name of the object to open
+            //! \return object
+            //!
+            typename nxobject_trait<IMPID>::object_type 
+            at(const string &n) const
             {
-                object_imp_type object; 
-                try
-                {
-                   object = _imp.at(n);
-                }
-                catch(...)
-                {
-                    throw nxgroup_error(EXCEPTION_RECORD,
-                          "Error opening ["+n+"] below group ["
-                          +get_path(*this)+ "]!");
-                }
+                object_imp_type object =  _imp.at(n);
 
                 if(object.nxobject_type() == nxobject_type::NXFIELD)
                     return field_type(field_imp_type(std::move(object)));
@@ -540,36 +510,50 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            /*! 
-            \brief open an object
-
-            Opens an object using the [] operator. 
-            \param n name or path of the object
-            \return object
-            */
+            //! 
+            //! \brief open an object
+            //! 
+            //! Opens an object using the [] operator. w
+            //! 
+            //! \throws invalid_object_error if group is not valid
+            //! \throws key_error if child does not exist
+            //! \throws type_error if child type is not supported
+            //! \throws object_error in case of any other error
+            //!
+            //! \param n name or path of the object
+            //! \return object
+            //!
             typename nxobject_trait<IMPID>::object_type 
             operator[](const string &n) const
             {
-                return this->open(n);
+                return at(n);
             }
 
-            //-----------------------------------------------------------------
-            /*! 
-            \brief number of childs
-
-            Returns the total number of childs linke below this group.
-            \return number of childs
-            */
-            size_t nchildren() const { return _imp.size(); }
+            //----------------------------------------------------------------
+            //!
+            //! \brief return number of children
+            //!
+            //! Returns the number of children attached to this group.
+            //! 
+            //! \throws invalid_object_error if group is not valid
+            //! \throws object_error in case of any other error
+            //!
+            //! \return number of children
+            //!
             size_t size() const { return _imp.size(); }
 
             //-----------------------------------------------------------------
-            /*!
-            \brief return parent object
-
-            Return the parent object of the gruop.
-            \return parent object
-            */
+            //!
+            //! \brief return parent object
+            //!
+            //! Return the parent object of the gruop.
+            //!
+            //! \throws invalid_object_error if group is not valid
+            //! \throws type_error if the parents object type is unkown
+            //! \throws object_error in case of any other error
+            //!
+            //! \return parent object
+            //!
             group_type parent() const
             {
                 group_type g(imp_type(_imp.parent()));
@@ -577,20 +561,25 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            /*! 
-            \brief open object by index
-
-            Unlike open(const string &n) here the object is addressed by its
-            index. Thus only objects directly linked below this group can be
-            accessed.
-            \throws index_error if the index exceeds number of childs
-            \param i index of the object
-            \return object
-            */
-            typename nxobject_trait<IMPID>::object_type open(size_t i) const
+            //! 
+            //! \brief open object by index
+            //! 
+            //! Unlike open(const string &n) here the object is addressed by 
+            //! its index. Thus only objects directly linked below this group 
+            //! can be accessed.
+            //!
+            //! \throws index_error if the index exceeds number of childs
+            //! \throws invalid_object_error if the group is not valid
+            //! \throws type_error if the child type is not supported
+            //! \throws object_error in case of any other error
+            //!
+            //! \param i index of the object
+            //! \return object
+            //!
+            typename nxobject_trait<IMPID>::object_type 
+            at(size_t i) const
             {
-                object_imp_type obj_imp; 
-                obj_imp = _imp.at(i);
+                object_imp_type obj_imp(_imp.at(i));
 
                 if(obj_imp.nxobject_type() == nxobject_type::NXFIELD)
                     return field_type(field_imp_type(std::move(obj_imp)));
@@ -602,27 +591,38 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            /*! 
-            \brief open object by index
-
-            Opens an object by index using the [] operator. 
-            \throws index_error if the index exceeds number of childs
-            \param i index of the object
-            \return object
-            */
-            typename nxobject_trait<IMPID>::object_type operator[](size_t i) const
+            //! 
+            //! \brief open object by index
+            //!
+            //! Opens an object by index using the [] operator. 
+            //!
+            //! \throws index_error if the index exceeds number of childs
+            //! \throws invalid_object_error if the group is not valid
+            //! \throws type_error if the child type is not supported
+            //! \throws object_error in case of any other error
+            //!
+            //! \param i index of the object
+            //! \return object
+            //!
+            typename nxobject_trait<IMPID>::object_type 
+            operator[](size_t i) const
             {
-                return this->open(i);
+                return this->at(i);
             }
 
             //-----------------------------------------------------------------
-            /*! \brief check if a particular object exists
-
-            Check if a link with name n to an object can be found below this
-            group. 
-            \param n name of the link (object) to look for
-            \return true if the object exist, false otherwise
-            */
+            //! 
+            //! \brief check if a particular object exists
+            //!
+            //! Check if a link with name n to an object can be found below 
+            //! this group. 
+            //!
+            //! \throws invalid_object_error if group is not valid
+            //! \throws object_error in case of any other error
+            //!
+            //! \param n name of the link (object) to look for
+            //! \return true if the object exist, false otherwise
+            //!
             bool has_child(const string &n) const
             { 
                 if(n.find('/')==string::npos)
@@ -632,127 +632,110 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            /*! \brief remove an object from the file
-
-            Remove the link with name n to an object. As objects are not really
-            delted this will only remove a particular link to an object. If this
-            was the only link the object is no longer accessible. However, the
-            object still exists. You have to use h5repack in order to physically
-            delete the object from the file.
-            \param n name of the link to delete
-            */
+            //! 
+            //! \brief remove an object from the file
+            //! 
+            //! Remove the link with name n to an object. As objects are not 
+            //! really delted this will only remove a particular link to an 
+            //! object. If this was the only link the object is no longer 
+            //! accessible. However, the object still exists. You have to 
+            //! use h5repack in order to physically delete the object from 
+            //! the file.
+            //!
+            //! \throws key_error if the child does not exist
+            //! \throws invalid_object_error if group is not valid
+            //! \throws object_error in case of any other error
+            //!
+            //! \param n name of the link to delete
+            //!
             void remove(const string &n) const{ _imp.remove(n); }
 
             //-----------------------------------------------------------------
-            /*! \brief create link
-
-            Create a new link to this very group. The link will be available
-            under the new name n. 
-            \code
-            //create the original group
-            nxgroup g1 = file.create_group("/scan_1/detector/module_01")
-            
-            //create a new link to this group
-            g1.link("/scan_1/modules/m01");
-
-            nxgroup g2 = file["/scan_1/modules/m01"];
-            \endcode
-            This method can only be used to create file local links. 
-            \param n name of the new link to this object
-            */
-            void link(const string &n) const { _imp.link(n); }
-
-            //-----------------------------------------------------------------
-            /*! \brief create link
-
-            Another method to create a link. The method creates a new link to
-            this object which will be available by the name n below group ref. 
-            \code
-            string ipath = "/scan_1/instrument/";
-            string spath = "/scan_1/sample/";
-            nxgroup cont = file.create_group(ipath+"motors","NXcontainer");
-            nxgroup piezo = file.create_group(spath+"piezo","NXpositioner");
-
-            piezo.link(cont,"piezo_stage");
-            //get piezo under its new name
-            nxgroup stage = cont["piezo_stage"];
-            \endcode
-            This method can only be used to create file local links.
-            \param ref reference group below which the link shall be created
-            \param n new name of the link
-            */
-            void link(const nxgroup &ref,const string &n) const
-            {
-                _imp.link(ref.imp(),n);
-            }
-
-            //-----------------------------------------------------------------
-            /*! 
-            \brief create link
-
-            Create a new link to an object determined by the path p under the
-            new path n. With this method it is possible to even create external
-            links. 
-            Creating an internal link
-            \code
-            nxgroup g1 = file.create_group("/test1/data");
-            nxgroup g2 = file.create_group("/test2/data");
-            //create a link from g2 to /test1/data_2
-            g1.link("/test2/data","/test1/data_2");
-            \endcode
-            Create an external link
-            \code
-            nxgroup g1 = file.create_group("/scan_1/instrument/detector");
-            g1.link("detectordata.nx:/detector/data",g1.path()+"/data");
-            \endcode
-            \param p path to the object to which the link refers to
-            \param n name of the link
-            */
-            void link(const string &p,const string &n) const
-            {
-                _imp.link(p,n);
-            }
-
-            //-----------------------------------------------------------------
-            /*! \brief iterator on first child
-
-            Return an iterator on the first child stored in below the group.
-            \return iterator
-            */
-            iterator begin() const
-            {
-                return iterator(this);
-            }
+            //! 
+            //! \brief iterator on first child
+            //!
+            //! Return an iterator on the first child stored in below the 
+            //! group.
+            //!
+            //! \return iterator
+            //!
+            iterator begin() const noexcept { return iterator(this); }
           
             //-----------------------------------------------------------------
-            /*! \brief iterator on last child
-
-            Returns an iterator on the last+1 obejct stored in the group.
-            \return iterator
-            */
+            //!
+            //! \brief iterator on last child
+            //!
+            //! Returns an iterator on the last+1 obejct stored in the group.
+            //! 
+            //! \throws invalid_object_error if group is not valid
+            //! \throws object_error in case of any other error
+            //!
+            //! \return iterator
+            //!
             iterator end() const
             {
                 return iterator(this, this->size());
             }
 
             //---------------------------------------------------------------
+            //!
+            //! \brief name of the group
+            //! 
+            //! Returns the name of the group
+            //!
+            //! \throws invalid_object_error if group is not valid
+            //! \throws type_error if the internals object type cannot be 
+            //! determined
+            //! \throws io_error in case of errors during reading data
+            //! \throws object_error in case of any other error
+            //! 
+            //! \return group name
+            //!
             string name() const { return _imp.name(); }
 
             //---------------------------------------------------------------
+            //!
+            //! \brief close the group
+            //! 
+            //! \throws type_error if the internal type could not be 
+            //! determined
+            //! \throws object_error in case of other errors
+            //!
             void close() { _imp.close(); }
 
             //---------------------------------------------------------------
-            bool is_valid() const noexcept { return _imp.is_valid(); }
+            //! 
+            //! \brief check group validity
+            //! 
+            //! Returns true if the group is valid, false otherwise.
+            //!
+            //! \throws object_error if validity check fails
+            //!
+            //! \return group validity
+            //!
+            bool is_valid() const { return _imp.is_valid(); }
 
             //---------------------------------------------------------------
-            const imp_type &imp() const { return _imp; }
+            //!
+            //! \brief get constant reference to the implementation
+            //!
+            const imp_type &imp() const noexcept{ return _imp; }
 
-            //---------------------------------------------------------------
-            nxobject_type object_type() const { return _imp.nxobject_type(); }
 
     };
 
     //=============comparison operators====================================
+    //!
+    //! \ingroup nexus_lowlevel
+    //! \brief group equality check
+    //!
+    //! Checks the equality of two groups. 
+    //!
+    //! \throws type_error if internal types could not be determined
+    //! \throws object_error in case of any other error
+    //!
+    //! \return true if group are equal, false otherwise
+    //!
     template<nximp_code IMPID>
     bool operator==(const nxgroup<IMPID> &a,const nxgroup<IMPID> &b)
     {
@@ -760,6 +743,18 @@ namespace nx{
         return false;
     }
 
+    //-----------------------------------------------------------------------
+    //!
+    //! \ingroup nexus_lowlevel
+    //! \brief group inequality check
+    //!
+    //! Checks the inequality of two groups.
+    //!
+    //! \throws type_error if the internal types could not be determined
+    //! \throws object_error in case of any other error
+    //!
+    //! \return true if not equal, false otherwise
+    //!
     template<nximp_code IMPID>
     bool operator!=(const nxgroup<IMPID> &a,const nxgroup<IMPID> &b)
     {

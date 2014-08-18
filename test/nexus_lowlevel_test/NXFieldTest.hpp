@@ -79,7 +79,6 @@ class NXFieldTest:public CppUnit::TestFixture
     CPPUNIT_TEST(test_io_array<complex64>);
     CPPUNIT_TEST(test_io_array<complex128>);
     CPPUNIT_TEST(test_io_array<binary>);
-    //CPPUNIT_TEST(test_io_bool_array);
     CPPUNIT_TEST(test_grow);
     CPPUNIT_TEST(test_io_string_array);
 

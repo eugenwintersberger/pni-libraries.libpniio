@@ -130,7 +130,7 @@ namespace nx{
 
         //if the group has no children at all searching is futile
         //better throw an exception here
-        if(!parent.nchildren()) 
+        if(!parent.size()) 
             throw key_error(EXCEPTION_RECORD, "Group ["+get_name(parent)
                     +"] does not have any children!");
 

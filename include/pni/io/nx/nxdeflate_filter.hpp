@@ -32,81 +32,80 @@ namespace nx{
     using pni::core::string;
     using pni::core::exception;
 
-    /*! 
-    \ingroup nexus_utilities
-    \brief Nexus deflate filter
-
-    This class provides an implementation of the simple deflate filter as it is
-    implemented in zlib. 
-    */
-    template<typename FIMP> class nxdeflate_filter:public nxfilter<FIMP>
+    //!
+    //! \ingroup nexus_lowlevel
+    //! \brief Nexus deflate filter
+    //!
+    //! This class provides an implementation of the simple deflate filter as 
+    //! it is implemented in zlib. 
+    //!
+    template<typename FIMP> 
+    class nxdeflate_filter:public nxfilter<FIMP>
     {
         public:
             typedef FIMP imp_type;
             typedef nxdeflate_filter<FIMP> filter_type;
             //====================constructors and destructor==================
-            //! default constructor
-            explicit nxdeflate_filter():nxfilter<FIMP>() { }
+            //!
+            //! \brief default constructor
+            //!
+            explicit nxdeflate_filter() noexcept:nxfilter<FIMP>() { }
 
             //-----------------------------------------------------------------
-            //! copy constructor
-            nxdeflate_filter(const filter_type &f):nxfilter<FIMP>(f)
+            //!
+            //! \brief standard constructor
+            //!
+            explicit nxdeflate_filter(uint32 r,bool s) noexcept:
+                nxfilter<FIMP>(imp_type(r,s))
             { }
 
             //-----------------------------------------------------------------
-            //! move constructor
-            nxdeflate_filter(filter_type &&f):nxfilter<FIMP>(std::move(f))
-            { }
-
-            //-----------------------------------------------------------------
-            //! standard constructor
-            nxdeflate_filter(uint32 r,bool s):nxfilter<FIMP>(imp_type(r,s))
-            { }
-
-            //-----------------------------------------------------------------
-            //! destructor
+            //!
+            //! \brief destructor
+            //!
             ~nxdeflate_filter() { }
 
-            //====================assignment operators=========================
-            //! copy assignment operator
-            filter_type &operator=(const filter_type &f)
-            {
-                if(this != &f) nxfilter<FIMP>::operator=(f);
-                return *this;
-            }
-
-            //-----------------------------------------------------------------
-            //! move assignment operator
-            filter_type &operator=(filter_type &&f)
-            {
-                if(this != &f) nxfilter<FIMP>::operator=(std::move(f));
-                return *this;
-            }
-
             //==============filter attribute access methods====================
-            //! set compression rate
+            //!
+            //! \brief set compression rate
+            //!
+            //! Sets the compression rate for the deflate filter. This 
+            //! parameter can take values from 0 to 9. 
+            //!
+            //! \throws range_error if r is not between 0 and 9
+            //!
+            //! \param r compression ratio
+            //! 
             void compression_rate(uint32 r)
             {
                 this->imp().compression_rate(r);
             }
 
             //-----------------------------------------------------------------
-            //! get compression rate
-            uint32 compression_rate() const
+            //!
+            //! \brief get compression rate
+            //!
+            uint32 compression_rate() const noexcept
             {
                 return this->imp().compression_rate();
             }
 
             //-----------------------------------------------------------------
-            //! set shuffle 
-            void shuffle(bool s)
+            //!
+            //! \brief set shuffle 
+            //!
+            //! \param s boolean parameter switching shuffle on or of
+            //!
+            void shuffle(bool s) noexcept
             {
                 this->imp().shuffle(s);
             }
 
             //-----------------------------------------------------------------
-            //! get shuffle flag
-            bool shuffle() const
+            //!
+            //! \brief get shuffle flag
+            //!
+            bool shuffle() const noexcept
             {
                 return this->imp().shuffle();
             }

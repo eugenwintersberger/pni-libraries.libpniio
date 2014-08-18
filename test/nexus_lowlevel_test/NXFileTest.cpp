@@ -51,12 +51,12 @@ void NXFileTest::test_creation()
 
 	//recreating the file should cause an error
 	CPPUNIT_ASSERT_THROW(nxfile::create_file("NXFileTest.h5",false)
-            ,pni::io::nx::nxfile_error); //here we except an error
+            ,pni::io::object_error); //here we except an error
 
 	//everything should work fine
 	CPPUNIT_ASSERT_NO_THROW(f = nxfile::create_file("NXFileTest.h5",true,0));
     CPPUNIT_ASSERT_THROW(f =
-            nxfile::create_file("NXFileTest.h5",true,0),pni::io::nx::nxfile_error);
+            nxfile::create_file("NXFileTest.h5",true,0),pni::io::object_error);
     f.flush();
     //should produce no exception as HDF5 allows multiple files to be open
 	CPPUNIT_ASSERT_NO_THROW(f = nxfile::open_file("NXFileTest.h5",true));
@@ -67,9 +67,9 @@ void NXFileTest::test_creation()
     //try now multiple calls to create
     //if overwrite is not set an exception should be thrown
 	CPPUNIT_ASSERT_THROW(f = nxfile::create_file("NXFileTest.h5",false,0),
-            pni::io::nx::nxfile_error);
+            pni::io::object_error);
     CPPUNIT_ASSERT_THROW(f = nxfile::create_file("NXFileTest.h5",true,0),
-            pni::io::nx::nxfile_error);
+            pni::io::object_error);
 
 	f.close();
 
@@ -104,12 +104,12 @@ void NXFileTest::test_open()
 
     //here we should  get an exception - the file is already open
 	CPPUNIT_ASSERT_THROW(nxfile::create_file("NXFileTest.h5",true,0),
-            pni::io::nx::nxfile_error);
+            pni::io::object_error);
 
 	CPPUNIT_ASSERT_NO_THROW(f.close());
 
 	//try to open a file which does not exist
-	CPPUNIT_ASSERT_THROW(nxfile::open_file("blabla.h5",true),pni::io::nx::nxfile_error);
+	CPPUNIT_ASSERT_THROW(nxfile::open_file("blabla.h5",true),pni::io::object_error);
 
 }
 

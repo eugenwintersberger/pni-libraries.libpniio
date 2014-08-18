@@ -65,7 +65,7 @@ namespace nx{
             //!
             result_type operator()(const group_type &g) const
             {
-                return g.nchildren();
+                return g.size();
             }
 
             //-----------------------------------------------------------------

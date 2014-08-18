@@ -66,11 +66,11 @@ namespace nx{
         static_assert(!std::is_same<object_type,attribute_type>::value,
                       "GROUP TYPE REQUIRED - GOT ATTRIBUTE TYPE!");
 
-        if(index>=o.nchildren())
+        if(index>=o.size())
         {
             std::stringstream ss;
             ss<<"Index "<<index<<" exceeds total number of ";
-            ss<<" children "<<o.nchildren()<<"!";
+            ss<<" children "<<o.size()<<"!";
 
             throw index_error(EXCEPTION_RECORD,ss.str());
         }

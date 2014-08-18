@@ -86,7 +86,7 @@ namespace h5 {
     }
 
     //------------------------------------------------------------------
-    bool h5deflate_filter::shuffle() const
+    bool h5deflate_filter::shuffle() const noexcept
     {
         return _shuffle;
     }

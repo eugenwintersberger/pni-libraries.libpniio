@@ -73,7 +73,7 @@ void xml_lowlevel_test::test_create_group()
     root = xml::create_from_string("<group name=\"entry2\"> </group>");
     child = root.get_child("group");
     CPPUNIT_ASSERT_THROW(xml::create_group(root_group,child),
-            nxgroup_error);
+            pni::io::object_error);
 
 }
 

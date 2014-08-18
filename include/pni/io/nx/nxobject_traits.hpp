@@ -50,13 +50,13 @@ namespace nx{
     using nxobject_element = boost::mpl::at<typename VTYPE::types,boost::mpl::int_<i>>;
     
     //-------------------------------------------------------------------------
-    /*!
-    \ingroup variant_code
-    \brief get group type
-
-    Obtains the group type of a variant type.
-    \tparam VTYPE variant type
-    */
+    //!
+    //! \ingroup nexus_lowlevel
+    //! \brief get group type
+    //!
+    //! Obtains the group type of a variant type.
+    //! \tparam VTYPE variant type
+    //!
     template<typename VTYPE> struct nxobject_group
     {
         //! group type
@@ -64,13 +64,13 @@ namespace nx{
     };
 
     //-------------------------------------------------------------------------
-    /*!
-    \ingroup variant_code
-    \brief get field type
-
-    Obtains the field type of a variant type
-    \tparam VTYPE variant type
-    */
+    //!
+    //! \ingroup nexus_lowlevel
+    //! \brief get field type
+    //!
+    //! Obtains the field type of a variant type
+    //! \tparam VTYPE variant type
+    //!
     template<typename VTYPE> struct nxobject_field
     {
         //! field type
@@ -78,13 +78,13 @@ namespace nx{
     };
 
     //-------------------------------------------------------------------------
-    /*!
-    \ingroup variant_code
-    \brief get attribute type
-
-    Retrieves the attribute type from a varian type.
-    \tparam VTYPE
-    */
+    //!
+    //! \ingroup nexus_lowlevel
+    //! \brief get attribute type
+    //!
+    //! Retrieves the attribute type from a varian type.
+    //! \tparam VTYPE
+    //!
     template<typename VTYPE> struct nxobject_attribute
     {
         //! attribute type

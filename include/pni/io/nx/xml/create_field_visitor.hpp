@@ -28,6 +28,7 @@
 #include "node_data.hpp"
 #include "attribute_data.hpp"
 #include "dim2shape.hpp"
+#include "../nxexceptions.hpp"
 
 namespace pni{
 namespace io{

@@ -26,6 +26,7 @@
 #include "../algorithms.hpp"
 #include "xml_node.hpp"
 #include "attribute_data.hpp"
+#include "../nxexceptions.hpp"
 
 namespace pni{
 namespace io{

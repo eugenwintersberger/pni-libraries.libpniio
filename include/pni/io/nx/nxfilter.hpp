@@ -40,7 +40,7 @@ namespace nx{
     using pni::core::exception;
 
     //! 
-    //! \ingroup nexus_utilities
+    //! \ingroup nexus_lowlevel
     //! \brief Filter object
     //!
     //! Base class for all filter objects in the Nexus world.
@@ -54,67 +54,46 @@ namespace nx{
             imp_type _imp; //!< filter implementation object
         protected:
 
-            /*! 
-            \brief get non-const ref
-
-            This returns a non constant refernce to the implementation.  This is
-            necessary for derived classes that want to export some functionality
-            of the implementation object to derived clases.  This makes
-            perfectly sense since the class hierachrchy is not directly for
-            encapsulation but only for avoiding writing work.
-            \return reference to implementation object
-            */
-            imp_type &imp(){ return _imp; }
+            //! 
+            //! \brief get non-const ref
+            //!
+            //! This returns a non constant refernce to the implementation.  
+            //! This is necessary for derived classes that want to export some 
+            //! functionality of the implementation object to derived clases.  
+            //! This makes perfectly sense since the class hierachrchy is not 
+            //! directly for encapsulation but only for avoiding writing work.
+            //!
+            //! \return reference to implementation object
+            //!
+            imp_type &imp()
+            { 
+                return _imp; 
+            }
         public:
             //================constructors  and destructor======================
-            //! default constructor
-            explicit nxfilter():_imp() { }
+            //!
+            //! \brief default constructor
+            //!
+            explicit nxfilter() noexcept:_imp() { }
 
-            //------------------------------------------------------------------
-            //! copy constructor
-            nxfilter(const filter_type &f):_imp(f._imp) { }
-            
             //------------------------------------------------------------------
             //! copy implementation constructor 
-            nxfilter(const imp_type &i):_imp(i) { }
-
-            //-----------------------------------------------------------------
-            //! move constructor
-            nxfilter(filter_type &&f):_imp(std::move(f._imp)) { }
-            
-            //-----------------------------------------------------------------
-            //! move constructor from implementation
-            nxfilter(imp_type &&i):_imp(std::move(i)) { }
+            nxfilter(const imp_type &i) noexcept:_imp(i) { }
 
             //-----------------------------------------------------------------
             //! destructor
             virtual ~nxfilter() { }
 
-            //==================assignment operators===========================
-            //! copy assignment operator
-            filter_type &operator=(const filter_type &f)
-            {
-                if(this != &f) _imp = f._imp;
-                return *this;
-            }
-
             //-----------------------------------------------------------------
-            //! move assignment operator
-            filter_type &operator=(filter_type &&f)
-            {
-                if(this != &f) _imp = std::move(f._imp);
-                return *this;
-            }
-
-            //-----------------------------------------------------------------
-            /*! 
-            \brief return const ref to implementation
-
-            This method returns a const reference to the implementation 
-            of the filter object. 
-            \return const ref. to implementation
-            */
-            const imp_type& imp() const { return _imp; }
+            //! 
+            //! \brief return const ref to implementation
+            //!
+            //! This method returns a const reference to the implementation 
+            //! of the filter object. 
+            //!
+            //! \return const ref. to implementation
+            //!
+            const imp_type& imp() const noexcept { return _imp; }
 
     };
 
