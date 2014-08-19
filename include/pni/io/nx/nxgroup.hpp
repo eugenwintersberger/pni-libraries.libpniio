@@ -48,8 +48,48 @@ namespace nx{
     //! \ingroup nexus_lowlevel
     //! \brief NXgroup object
     //! 
+    //! nxgroup is the basic container in Nexus. It can hold other grous, fields
+    //! and of course attributes. The attributes can be accessed via the public
+    //! nxattribute_manager attribute.  The field and group children of a group 
+    //! can be accessed via the container interface.
+    //! nxgroup exposes an STL compliant interface and thus can be used like 
+    //! many other STL containers. The value_type of nxgroup is nxobject which 
+    //! is a generic object that can be converted into an attribute, field, or 
+    //! group (provided it represents such an object). 
+    //! As an example we use here nxgroup in a for each loop separating the 
+    //! group and field children into vectors
+    /*!
+    nxgroup g = ....;
+    std::vector<nxfield> field_vector;
+    std::vector<nxgroup> group_vector;
+
+    for(auto child: g)
+    {
+        if(is_field(child)) 
+            field_vector.push_back(as_field(child));
+        else if(is_group(child)) 
+            group_vector.push_back(as_group(child));
+        else 
+            throw type_error(...);
+    }
+    */
+    //! In addition we can use lambda functions along with STL lambda 
+    //! functions. Consider the case where we would like to determine the 
+    //! number of fields and groups in a group. This could be easily done with
+    /*!
+    nxgroup g = ....;
+    size_t number_of_fields = std::count_if(g.begin(),g.end(),
+                                            [](const nxobject &child)
+                                            {return is_field(child);});
+    size_t number_of_groups = std::count_if(g.begin(),g.end(),
+                                            [](const nxobject &child)
+                                            {return is_group(child);});
+    */
+    //! For a more detailed explanation about groups and field see the 
+    //! user reference manual. 
     //! 
     //! \tparam IMPID implementation ID for the group
+    //! \sa nxattribute_manager
     //!
     template<nximp_code IMPID> class nxgroup
     {
@@ -63,11 +103,13 @@ namespace nx{
             //! the group type
             typedef nxgroup<IMPID> group_type;
 
-
+            //! nxobject as container value_type
             typedef typename nxobject_trait<IMPID>::object_type value_type;
+            //! iterator type
             typedef pni::core::container_iterator<const group_type> iterator;
             //! field type
             typedef typename nxobject_trait<IMPID>::field_type field_type; 
+            //! attribute type
             typedef typename nxobject_trait<IMPID>::attribute_type
                 attribute_type;
 
@@ -76,6 +118,9 @@ namespace nx{
             typedef typename nximp_map<IMPID>::field_imp field_imp_type;
             //! object implementation type
             typedef typename nximp_map<IMPID>::object_imp object_imp_type;
+            //! 
+            //! \brief the implementation instance of nxgroup
+            //!
             imp_type _imp;
 
             //===================private functions============================
@@ -171,6 +216,13 @@ namespace nx{
             }
         public:
             //==================public attributes==============================
+            //!
+            //! \brief attribute manager
+            //! 
+            //! This public attribute provides access to the groups 
+            //! attribute manager.
+            //! \sa nxattribute_manager
+            //!
             nxattribute_manager<group_type> attributes;
             //==============constructors and destructor========================
             //! default constructor
@@ -192,31 +244,34 @@ namespace nx{
             { }
             
             //-----------------------------------------------------------------
-            //! move constructor
+            //!
+            //! \brief move constructor
+            //! 
             nxgroup(group_type &&o):
                 _imp(std::move(o._imp)),
                 attributes(_imp)
             { }
            
             //-----------------------------------------------------------------
-            //!copy construct from implementation object
-            /*
-            explicit nxgroup(const imp_type &imp):
-                _imp(imp),
-                attributes(_imp)
-            { }
-            */
-
-
-            //-----------------------------------------------------------------
-            //! move construct from implementation object
+            //! 
+            //! \brief move construct from implementation object
+            //!
+            //! Construction from an implementation instance has to be done via
+            //! an rvalue reference. This ensures that ownership of the 
+            //! implementation object is passed over to the new nxgroup 
+            //! instance.
+            //! 
+            //! \param imp rvalue reference to the implementation instance
+            //!
             explicit nxgroup(imp_type &&imp):
                 _imp(std::move(imp)),
                 attributes(_imp)
             { }
 
             //-----------------------------------------------------------------
-            //! conversion constructor
+            //!
+            //! \brief conversion constructor
+            //!
             nxgroup(const typename nxobject_trait<IMPID>::object_type &o):
                 _imp(),
                 attributes(_imp)

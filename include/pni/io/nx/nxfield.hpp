@@ -121,12 +121,18 @@ namespace nx{
     //! Every call to read or write immediately after reading or writing the 
     //! data removes this selections.
     //!
+    //! \tparam IMPID implementation id
+    //!
     template<nximp_code IMPID> class nxfield
     {
         public:
+            //! implementation type
             typedef typename nximp_map<IMPID>::field_imp imp_type;
+            //! type implementation type
             typedef typename nximp_map<IMPID>::type_imp  type_type;
+            //! typedef for this type
             typedef nxfield<IMPID>              field_type;
+            //! attribute type
             typedef typename nxobject_trait<IMPID>::attribute_type
                 attribute_type;
         private:
@@ -160,6 +166,8 @@ namespace nx{
             //-----------------------------------------------------------------
             //!
             //! \brief read data to array
+            //! 
+            //! Read data from the field and store its content into an array.
             //!
             //! \throws memory_not_allocated_error if array buffer not 
             //! allocated
@@ -170,7 +178,7 @@ namespace nx{
             //! \throws type_error if array data type cannot be handled
             //! \throws io_error in case of IO errors
             //!
-            //! \tparam ATYPE array typew
+            //! \tparam ATYPE array type
             //! \param a reference to an instance fo ATYPE
             //!
             template<typename ATYPE> 
@@ -193,6 +201,8 @@ namespace nx{
             //-----------------------------------------------------------------
             //!
             //! \brief write data from array
+            //!
+            //! Write the content of an array to a field.
             //!
             //! \throws memory_not_allocated_error if array buffer not 
             //! allocated
@@ -225,6 +235,13 @@ namespace nx{
 
         public:
             //===================public attributes=============================
+            //!
+            //! \brief attribute manager
+            //!
+            //! This public attribute provides access to the attribute manager
+            //! instance of this field. 
+            //! \sa nxattribute_manager
+            //!
             nxattribute_manager<field_type> attributes;
             //============constructors and destructors=========================
             //!
@@ -250,15 +267,6 @@ namespace nx{
             //!
             nxfield(field_type &&o):
                 _imp(std::move(o._imp)),
-                attributes(_imp)
-            { }
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief copy constructor from implementation object
-            //!
-            explicit nxfield(const imp_type &o):
-                _imp(o),
                 attributes(_imp)
             { }
 
@@ -338,7 +346,7 @@ namespace nx{
             //! \return container with elements per dimension
             //!
             template<typename CTYPE> CTYPE shape() const 
-            { 
+            {
                 return type_type::template from_index_vector<CTYPE>(_imp.shape()); 
             }
 
@@ -366,6 +374,7 @@ namespace nx{
             //!
             //! \throws invalid_object_error if field is not valid
             //! \throws object_error in case of any other error
+            //! \throws type_error if data type is not supported
             //! 
             //! \return data type ID
             //!
@@ -450,6 +459,7 @@ namespace nx{
             //! \throws invalid_object_error if field is not valid
             //! \throws type_error if argument type cannot be handled
             //! \throws io_error in case of IO failure
+            //! \throws object_error in case of any other error
             //!
             //! \tparam T data type of the argument
             //! \param value variable where to store the data
@@ -475,6 +485,7 @@ namespace nx{
             //! \throws invalid_object_error if field is not valid
             //! \throws type_error if argument type cannot be handled
             //! \throws io_error in case of IO failure
+            //! \throws object_error in case of any other error
             //! 
             //! \tparam T data type to read (in memory)
             //! \param values pointer to memory reagion
@@ -553,7 +564,7 @@ namespace nx{
             //! 
             //! \brief write a single value
             //!
-            //! Writs a single value of type T to the field. This method will 
+            //! Writes a single value of type T to the field. This method will 
             //! succeed only if the field can hold only a single value.
             /*! 
             \code
@@ -636,19 +647,7 @@ namespace nx{
                     >
             void write(const mdarray<STORAGE,IMAP,IPA> &a) const
             {
-                typedef typename type_type::index_vector_type index_vector_type;
-                if(a.size() == 0)
-                    throw memory_not_allocated_error(EXCEPTION_RECORD,
-                                     "Source array buffer not allocated!");
-
-                if(a.size()!=size())
-                    throw size_mismatch_error(EXCEPTION_RECORD,
-                            "Array and field size do not match!");
-
-                _imp.write(type_id_map<typename STORAGE::value_type>::type_id,
-                           a.template shape<index_vector_type>(),
-                           static_cast<const void*>(a.data())); 
-                //_write_array(a);
+                _write_array(a);
             }
 
            
@@ -716,6 +715,11 @@ namespace nx{
             //! The selection will be reset with every call to the read() or 
             //! write methods. 
             //!
+            //! \throws invalid_object_error if field is not valid
+            //! \throws shape_missmatch_error if selection and field rank do 
+            //! not match
+            //! \throws object_error in case of any other error
+            //!
             //! \tparam ITYPES index types
             //! \param indices instances of ITYPES
             //! \return field object with selection set
@@ -732,6 +736,15 @@ namespace nx{
             }
 
             //---------------------------------------------------------------
+            //! 
+            //! \brief clear a selection
+            //!
+            //! Clears a selection applied to the field.
+            //! 
+            //! \throws object_error in case of failure
+            //!
+            //! \return new field instance with clearn selection
+            //!
             field_type operator()() const
             {
                 _imp.clear_selections();
@@ -747,6 +760,11 @@ namespace nx{
             //! given by a vector container of slice objects.
             //! The selection will be reset with each call to the read() or 
             //! write() methods.
+            //! 
+            //! \throws invalid_object_error if field is not valid
+            //! \throws shape_missmatch_error if selection and field rank do 
+            //! not match
+            //! \throws object_error in case of any other error
             //!
             //! \param selection container with instances of slice
             //! \return instance of NXField with selection set
@@ -762,6 +780,13 @@ namespace nx{
             //! 
             //! \brief return field name
             //!
+            //! \throws invalid_object_error if field is not valid
+            //! \throws io_error if name could not be read
+            //! \throws type_error in case of an internal type issue
+            //! \throws object_error in case of any other error
+            //!
+            //! \return name of the field
+            //!
             string name() const 
             { 
                 return _imp.name(); 
@@ -771,6 +796,10 @@ namespace nx{
             //!
             //! \brief close field
             //!
+            //! \throws type_error if object type could not be determined 
+            //! during closing
+            //! \throws object_error in case of any other error
+            //!
             void close() 
             { 
                 _imp.close(); 
@@ -779,15 +808,13 @@ namespace nx{
             //---------------------------------------------------------------
             //!
             //! \brief check validity
-            //! 
+            //!
+            //! \throws object_error validity check fails
+            //!
             bool is_valid() const noexcept 
             { 
                 return _imp.is_valid(); 
             }
-
-            //---------------------------------------------------------------
-            nxobject_type object_type() const { return _imp.nxobject_type(); }
-
 
     };
 
