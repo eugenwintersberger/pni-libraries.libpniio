@@ -22,7 +22,6 @@
 //
 #include "hdf5_utilities_test.hpp"
 #include <pni/io/exceptions.hpp>
-#include <pni/io/nx/nxexceptions.hpp>
 #include <pni/io/nx/h5/h5datatype.hpp>
 #include <pni/io/nx/h5/h5dataspace.hpp>
 #include <pni/io/nx/h5/attribute_utils.hpp>

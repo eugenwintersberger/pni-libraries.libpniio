@@ -24,7 +24,6 @@
 #include <algorithm>
 #include <pni/io/nx/h5/h5dataspace.hpp>
 #include <pni/io/nx/h5/h5_error_stack.hpp>
-#include <pni/io/nx/nxexceptions.hpp>
 #include <pni/io/exceptions.hpp>
 #include <functional>
 #include <pni/io/nx/h5/selection.hpp>

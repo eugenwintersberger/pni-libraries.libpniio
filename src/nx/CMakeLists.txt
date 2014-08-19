@@ -1,5 +1,4 @@
 set(SOURCES nxdate_time.cpp
-            nxexceptions.cpp
             )
 
 add_subdirectory(h5)

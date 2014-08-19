@@ -73,7 +73,7 @@ void h5link_test::test_internal()
     //check for exceptions
     target = nxpath::from_string("test.nx://test/data");
     CPPUNIT_ASSERT_THROW(h5::h5link::create_internal_link(target,root_group,"link_2"),
-                         pni::io::link_error);
+                         pni::core::value_error);
 
     target = nxpath::from_string("/:NXentry/data");
     CPPUNIT_ASSERT_THROW(h5::h5link::create_internal_link(target,root_group,"link_3"),
@@ -100,7 +100,7 @@ void h5link_test::test_external()
     //echeck exceptions
     target = nxpath::from_string("/test/data");
     CPPUNIT_ASSERT_THROW(h5::h5link::create_external_link(target,root_group,"ext2"),
-            pni::io::link_error);
+            pni::core::value_error);
 
 
     target = nxpath::from_string("h5link_test1.h5://:NXentry/data");

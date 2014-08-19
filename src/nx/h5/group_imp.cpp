@@ -29,7 +29,6 @@ extern "C"{
 
 #include <pni/io/nx/h5/group_imp.hpp>
 #include <pni/io/nx/h5/h5_error_stack.hpp>
-#include <pni/io/nx/nxexceptions.hpp>
 #include <pni/io/nx/nxpath.hpp>
 
 namespace pni{

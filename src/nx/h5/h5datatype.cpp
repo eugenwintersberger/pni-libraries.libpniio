@@ -22,7 +22,6 @@
 //
 
 #include <pni/io/nx/h5/h5datatype.hpp>
-#include <pni/io/nx/nxexceptions.hpp>
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 
 #include <map>

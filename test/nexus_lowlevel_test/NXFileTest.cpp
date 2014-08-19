@@ -24,7 +24,6 @@
 #include<cppunit/extensions/HelperMacros.h>
 
 #include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/nxexceptions.hpp>
 #include "NXFileTest.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(NXFileTest);

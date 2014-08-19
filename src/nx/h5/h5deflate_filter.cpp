@@ -22,7 +22,6 @@
 
 #include <pni/io/nx/h5/h5deflate_filter.hpp>
 #include <pni/io/nx/h5/h5_error_stack.hpp>
-#include <pni/io/nx/nxexceptions.hpp>
 
 namespace pni {
 namespace io {

@@ -22,7 +22,6 @@
 //
 #include "object_imp_test.hpp"
 #include <pni/io/exceptions.hpp>
-#include <pni/io/nx/nxexceptions.hpp>
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(object_imp_test);

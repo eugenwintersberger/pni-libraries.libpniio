@@ -83,7 +83,14 @@ namespace xml{
     //! \brief convert group to XML
     //! 
     //! Converts a stored Nexus group to its XML representation.
-    //! \throws nxgroup_error if the group has no class attribute
+    //! 
+    //! \throws invalid_object_error if the group is not valid
+    //! \throws io_error if the groups name or class cannot be 
+    //! retrieved
+    //! \throws type_error if the class attribute is of an 
+    //! invalid type
+    //! \throws object_error in case of any other error
+    //!
     //! \param group variant type with the group to convert
     //! \return XML node
     //!
@@ -152,17 +159,7 @@ namespace xml{
             key = "group";
 
             //add the actual group to the parent node
-            try
-            {
-                child =  group2xml(p);
-            }
-            catch(nxgroup_error &error)
-            {
-                //break this branch and return to the calling instance. This
-                //situation will typically occur if the group does not have a
-                //NX_class attribute and thus is not a Nexus class.
-                return; 
-            }
+            child =  group2xml(p);
 
             //obtain al child nodes
             vector_t objects;

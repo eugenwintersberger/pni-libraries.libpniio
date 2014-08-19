@@ -2,7 +2,6 @@ set(HEADER_FILES nexus_utils.hpp
                  nxattribute.hpp 
                  nxdate_time.hpp 
                  nxdeflate_filter.hpp 
-                 nxexceptions.hpp 
                  nxfield.hpp 
                  nxfile.hpp 
                  nxfilter.hpp 

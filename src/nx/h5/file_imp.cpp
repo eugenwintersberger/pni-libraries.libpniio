@@ -29,7 +29,6 @@
 #include <pni/io/nx/h5/attribute_utils.hpp>
 
 #include <pni/io/nx/h5/h5_error_stack.hpp>
-#include <pni/io/nx/nxexceptions.hpp>
 
 #include <sstream>
 

@@ -26,7 +26,6 @@
 #include "../algorithms.hpp"
 #include "xml_node.hpp"
 #include "attribute_data.hpp"
-#include "../nxexceptions.hpp"
 
 namespace pni{
 namespace io{
@@ -104,7 +103,7 @@ namespace xml{
             //! \brief process field instances
             //!
             //! Throw an instance as a field cannot create a new group. 
-            //! \throws nxfield_error field cannot create a new group
+            //! \throws type_error field cannot create a new group
             //! \param f field instance
             //! \return nothin
             //!
@@ -112,7 +111,7 @@ namespace xml{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
-                throw nxfield_error(EXCEPTION_RECORD,
+                throw type_error(EXCEPTION_RECORD,
                         "Cannot create a group below a field!");
                 return result_type();
             }
@@ -125,7 +124,7 @@ namespace xml{
             //! Throw an exception as we cannot create a group from an 
             //! attribute.
             //!
-            //! \throws nxattribute_error
+            //! \throws type_error cannot create group below an attribute
             //! \param a attribute instance
             //! \return size of the attribute
             //!
@@ -133,7 +132,7 @@ namespace xml{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
-                throw nxattribute_error(EXCEPTION_RECORD,
+                throw type_error(EXCEPTION_RECORD,
                         "Cannot create a group below an attribute!");
                 return result_type();
             }

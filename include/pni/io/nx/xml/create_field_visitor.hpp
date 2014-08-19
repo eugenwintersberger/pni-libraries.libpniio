@@ -28,7 +28,6 @@
 #include "node_data.hpp"
 #include "attribute_data.hpp"
 #include "dim2shape.hpp"
-#include "../nxexceptions.hpp"
 
 namespace pni{
 namespace io{
@@ -222,7 +221,7 @@ namespace xml{
             //! \brief process field instances
             //!
             //! Throw an exception as a field cannot create a new field. 
-            //! \throws nxfield_error field cannot create a new field
+            //! \throws type_error field cannot create a new field
             //! \param f field instance
             //! \return nothin
             //!
@@ -230,7 +229,7 @@ namespace xml{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
-                throw nxfield_error(EXCEPTION_RECORD,
+                throw type_error(EXCEPTION_RECORD,
                         "Cannot create a field below a field!");
                 return result_type();
             }
@@ -243,7 +242,7 @@ namespace xml{
             //! Throw an exception as we cannot create a field from an 
             //! attribute.
             //! 
-            //! \throws nxattribute_error
+            //! \throws type_error
             //! \param a attribute instance
             //! \return size of the attribute
             //!
@@ -251,7 +250,7 @@ namespace xml{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
-                throw nxattribute_error(EXCEPTION_RECORD,
+                throw type_error(EXCEPTION_RECORD,
                         "Cannot create a field below an attribute!");
                 return result_type();
             }
