@@ -23,7 +23,6 @@
 #pragma once
 
 #include "../nxobject_traits.hpp"
-#include "get_path.hpp"
 
 namespace pni{
 namespace io{
@@ -34,8 +33,10 @@ namespace nx{
     //! \brief get class visitor
     //!
     //! Retrieves the Nexus class of a group stored in variant type. 
-    //! \tparam VTYPE variant type
-    //! \sa get_class
+    //! 
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
     //!
     template<
              typename GTYPE,
@@ -55,12 +56,19 @@ namespace nx{
             typedef ATYPE attribute_type;
 
             //!
-            //! \brief process gruops 
+            //! \brief process groups 
             //!
             //! Retrieve the content of the NX_class attribute of a Nexus 
             //! group and return it as a string. If the group has no type 
             //! (the NX_class attribute does not exist) an exception will 
             //! be thrown.
+            //! 
+            //! \throws invalid_object_error if parent group is not valid
+            //! \throws shape_mismatch_error the attribute is not a scalar
+            //! \throws type_error the attribute type is not supported
+            //! \throws io_error attribute data retrieval failed
+            //! \throws object_error in case of any other error
+            //! 
             //!
             //! \param g group instance
             //! \return Nexus class as string
@@ -81,7 +89,8 @@ namespace nx{
             //! Fields have no Nexus class. Thus an exception will be thrown 
             //! when this visitor is applied to a field.
             //!
-            //! \throw nxfield_error 
+            //! \throw type_error a field type has no class attribute
+            //!
             //! \param f instance of a field
             //! \return empty string
             //!
@@ -102,7 +111,9 @@ namespace nx{
             //! Attributes have no Nexus class. Thus an exception will be 
             //! thrown. 
             //!
-            //! \throw nxattribute_error 
+            //! \throw type_error an attribute type cannot have an attribute
+            //! at all
+            //!
             //! \param a attribute instance
             //! \return empty string
             //!
@@ -127,9 +138,12 @@ namespace nx{
     //! exception will be thrown.  Exceptions are thrown also in cases 
     //! where the object stored in the variant are fields or attributes.
     //!
-    //! \throws nxgroup_error if the group has no NX_class attribute
-    //! \throws nxfield_error if applied to a field
-    //! \throws nxattribute_error if applied to an attribute
+    //! \throws type_error if the passed object is not a group
+    //! \throws invalid_object_error if the passed object is not valid
+    //! \throws shape_mismatch_error if NX_class attribute is not a scalar
+    //! \throws io_error if attribute data could not be retrieved
+    //! \throws object_error in case of any other error
+    //! 
     //! \tparam VTYPE variant type
     //! \param o instance of VTYPE
     //! \return Nexus class as a tring

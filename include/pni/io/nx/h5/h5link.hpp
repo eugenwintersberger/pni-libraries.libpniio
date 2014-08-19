@@ -84,8 +84,10 @@ namespace h5{
             //! element without a name (HDF5 cannot handle such situations) 
             //! otherwise a value_error exception will be thrown.
             //! 
-            //! \throws pni::io::link_error in case of all errors
-            //! \throws pni::core::value_error for path elements wihtout name
+            //! \throws invalid_object_error if loc is not valid
+            //! \throws link_error if link creation fails
+            //! \throws value_error for malformed paths 
+            //! \throws object_error in case of any other error
             //!
             //! \param target path of the links target
             //! \param loc location where the link should be created
@@ -106,9 +108,10 @@ namespace h5{
             //! In addition the target_path Nexus path must not contain a 
             //! file name.
             //!
-            //! \throws pni::core::value_error if the target path contains 
-            //! elements without an object name
-            //! \throws pni::io::link_error if linking fails
+            //! \throws invalid_object_error if loc is not valid
+            //! \throws value_error in case of a malformed path
+            //! \throws link_error if link creation fails
+            //! \throws object_error in case of any other error
             //!
             //! \param target path to the links target
             //! \param loc location for the new link
@@ -124,10 +127,11 @@ namespace h5{
             //!
             //! Returns the link type of a child of loc identified by its name. 
             //!
-            //! \throws pni::core::key_error if the child could not be found
-            //! \throws pni::io::link_error if the link type could not 
-            //! be retrieved 
-            //! \throws pni::core::type_error if the link type is unkown
+            //! \throws invalid_object_error if loc is not valid
+            //! \throws key_error if the child could not be found
+            //! \throws link_error if the link type could not be retrieved 
+            //! \throws type_error if the link type is unkown
+            //! \throws object_error in case of any other error
             //!
             //! \param loc parent group
             //! \param name the name of the child 

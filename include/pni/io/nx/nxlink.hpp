@@ -63,6 +63,10 @@ namespace nx{
     //! The sequence of calls is the same as in the latter examples except 
     //! that the path includes a file name.
     //!
+    //! \throws invalid_object_error if parent group is not valid
+    //! \throws link_error if error during link-creation
+    //! \throws value_error if the path contains any class-only elements
+    //!
     //! \tparam GTYPE group type
     //! \param target path to the original object
     //! \param g group where to create the link
@@ -95,10 +99,14 @@ namespace nx{
     //! Creates a link to an object referenced by target. The new link is 
     //! created below g with name. Here the target path is given by a string.
     //!
+    //! \throws invalid_object_Error if g is not a valid group
+    //! \throws link_error in case of errors during link creation
+    //! \throws value_error if path contains class-only elements
+    //!
     //! \tparam GTYPE group type
     //! \param target path to the object as a string
     //! \param g group where to create the link
-    //!\param name the new name of the link
+    //! \param name the new name of the link
     //!
     template<typename GTYPE>
     void link(const string &target,const GTYPE &g,const string &name)
@@ -107,6 +115,23 @@ namespace nx{
         link(path,g,name);
     }
 
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup nexus_lowlevel
+    //! \brief create a link
+    //!
+    //! Creates a link to an object referenced by target. The new link is 
+    //! created below g with name. Here the target path is given by a string.
+    //!
+    //! \throws invalid_object_error when g is not a valid group
+    //! \throws link_error in case of errors during link creation
+    //! \throws value_error if path contains class-only elements
+    //!
+    //! \tparam GTYPE group type
+    //! \param target path to the object as a string
+    //! \param g group where to create the link
+    //! \param name the new name of the link
+    //!
     template<typename GTYPE>
     void link(const char *target,const GTYPE &g,const string &name)
     {
@@ -123,6 +148,18 @@ namespace nx{
     //! internal links as it assumes that the target and g reside within the 
     //! same file.
     //! 
+    //! \throws link_error in case of errors during link creation
+    //! \throws invalid_object_error if either g or target are not valid 
+    //! objects
+    //! \throws invalid_object_error if one of the fields parents 
+    //! could not be retrieved or the attribute itself is not valid
+    //! \throws shape_mismatch_error if a possible class attribute is
+    //! not scalar
+    //! \throws io_error if class data retrieval failed
+    //! \throws type_error if the class attribute exists but is of 
+    //! the wrong type
+    //! \throws object_error in case of any other error
+    //!
     //! \tparam STYPE type of the target object
     //! \tparam GTYPE group type
     //! \param target object to which the new link should point
@@ -145,9 +182,11 @@ namespace nx{
     //!
     //! Returns the type of link used for child name below parent. 
     //!
-    //! \throws pni::core::key_error if parent has no child with name
-    //! \throws pni::io::nx::nxlink_error if link type could not be obtained
-    //! \throws pni::core::type_error if the link type is unkown
+    //! \throws invalid_object_error if parent is not a valid group
+    //! \throws key_error if parent has no child with name
+    //! \throws link_error if link type could not be obtained
+    //! \throws type_error if the link type is unkown
+    //!
     //! \tparam GTYPE parent object type
     //! \param parent instance of GTYPE
     //! \param name of the child
@@ -171,6 +210,12 @@ namespace nx{
     //!
     //! Returns true if the link used for child name below parent is an 
     //! external one. 
+    //! 
+    //! \throws invalid_object_error if parent is not a valid group
+    //! \throws key_error if parent has no child with name
+    //! \throws link_error if link type could not be obtained
+    //! \throws type_error if the link type is unkown
+    //! \throws object_error in case of any other error
     //!
     //! \tparam GTYPE parent type
     //! \param parent instance of GTYPE
@@ -190,6 +235,12 @@ namespace nx{
     //! 
     //! Returns true if the link used for child name below parent is an soft
     //! one. 
+    //! 
+    //! \throws invalid_object_error if parent is not a valid group
+    //! \throws key_error if parent has no child with name
+    //! \throws link_error if link type could not be obtained
+    //! \throws type_error if the link type is unkown
+    //! \throws object_error in case of any other error
     //!
     //! \tparam GTYPE parent type
     //! \param parent instance of GTYPE
@@ -209,6 +260,13 @@ namespace nx{
     //! 
     //! Returns true if the link used for child name below parent is an hard
     //! one. 
+    //!  
+    //! \throws invalid_object_error if parent is not a valid group
+    //! \throws key_error if parent has no child with name
+    //! \throws link_error if link type could not be obtained
+    //! \throws type_error if the link type is unkown
+    //! \throws object_error in case of any other error
+    //!
     //! \tparam GTYPE parent type
     //! \param parent instance of GTYPE
     //! \param name child name

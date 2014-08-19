@@ -32,6 +32,7 @@ namespace nx{
     using pni::io::object_error;
 
     //!
+    //! \ingroup nexus_lowlevel
     //! \brief attribute manager template
     //! 
     //! Provides attribute functionality to other objects that are capable of

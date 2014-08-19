@@ -134,7 +134,13 @@ namespace nx{
             //! \brief open file
             //!
             //! Static method opening an existing file.
+            //!
+            //! \throws type_error if the file is not an HDF5 file
+            //! \throws invalid_object_error if the new file object is not 
+            //! valid
+            //! \throws object_error in case of any other error
             //! \throws nxfile_error in case of errors
+            //!
             //! \param n name of the file
             //! \param ro open read only if true
             //! \return an instance of NXFile
@@ -149,7 +155,12 @@ namespace nx{
             //! \brief create file
             //! 
             //! Static method to create a file. 
-            //! \throws nxfile_error in case of errors
+            //!
+            //! \throws invalid_object_error if the newly created file object
+            //! is not valid
+            //! \throws io_error if attribute writing or flush fails
+            //! \throws object_error in case of any other error
+            //!
             //! \param n name of the file to create
             //! \param ow overwrite existing file if true
             //! \param ssize split size (not implemented yet)
@@ -186,11 +197,19 @@ namespace nx{
             //!
             //! \brief flush the file
             //!
+            //! \throws io_error if flush fails
+            //! \throws object_error in case of any other error
+            //!
             void flush() const{ _imp.flush(); }
             
             //-----------------------------------------------------------------
             //!
             //! \brief check read only
+            //!
+            //! \throws invalid_object_error if file is not valid
+            //! \throws object_error in case of any other error
+            //! 
+            //! \return true if file is read-onlye, false otherwise
             //!
             bool is_readonly() const { return _imp.is_readonly(); }
 
@@ -198,6 +217,10 @@ namespace nx{
             //-----------------------------------------------------------------
             //!
             //! \brief close the file
+            //! 
+            //! \throws type_error if there is an issue with the internal file
+            //! object
+            //! \throws object_error in case of any other error
             //!
             void close()
             {
@@ -218,6 +241,11 @@ namespace nx{
             //! \brief get root group
             //!
             //! Return the root group of the file.
+            //!
+            //! \throws invalid_object_error if the file is not valid
+            //! \throws type_error if the group type cannot be determined
+            //! \throws object_error in case of any other error
+            //!
             //! \return root group of the file
             //!
             typename nxobject_trait<IMPID>::group_type root() const
@@ -231,6 +259,10 @@ namespace nx{
             //----------------------------------------------------------------
             //!
             //! \brief check validity
+            //!
+            //! \throws object_error if validity status check fails
+            //! 
+            //! \return true when file is valid, false otherwise
             //!
             bool is_valid() const noexcept
             {

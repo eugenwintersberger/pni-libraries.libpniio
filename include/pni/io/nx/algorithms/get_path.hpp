@@ -37,6 +37,15 @@ namespace nx{
     //! Return the path of an object as a string. The object can be either an
     //! instance of nxfield, nxgroup, or nxattribute. 
     //! 
+    //! \throws invalid_object_error if one of the fields parents 
+    //! could not be retrieved or the attribute itself is not valid
+    //! \throws shape_mismatch_error if a possible class attribute is
+    //! not scalar
+    //! \throws io_error if class data retrieval failed
+    //! \throws type_error if the class attribute exists but is of 
+    //! the wrong type
+    //! \throws object_error in case of any other error
+    //! 
     //! \tparam OTYPE object type template
     //! \tparam IMPID implementation ID
     //! \param o object instance
@@ -88,6 +97,15 @@ namespace nx{
             //! \brief process group instances
             //!
             //! Return the path of a group instance
+            //! 
+            //! \throws invalid_object_error if the group is not valid
+            //! \throws shape_mismatch_error if a possible class attribute is
+            //! not scalar
+            //! \throws io_error if class data retrieval failed
+            //! \throws type_error if the class attribute exists but is of 
+            //! the wrong type
+            //! \throws object_error in case of any other error
+            //!
             //! \param g group instance
             //! \return string with the path
             //!
@@ -114,6 +132,16 @@ namespace nx{
             //! \brief process field instances
             //!
             //! Retrieve the path of a field instance.
+            //!
+            //! \throws invalid_object_error if one of the fields parents 
+            //! could not be retrieved or the field itself is not valid
+            //! \throws shape_mismatch_error if a possible class attribute is
+            //! not scalar
+            //! \throws io_error if class data retrieval failed
+            //! \throws type_error if the class attribute exists but is of 
+            //! the wrong type
+            //! \throws object_error in case of any other error
+            //! 
             //! \param f field instance
             //! \return path to the field
             //!
@@ -127,6 +155,16 @@ namespace nx{
             //! \brief process attribute instances
             //!
             //! Return the path of an attribute.
+            //!
+            //! \throws invalid_object_error if one of the fields parents 
+            //! could not be retrieved or the attribute itself is not valid
+            //! \throws shape_mismatch_error if a possible class attribute is
+            //! not scalar
+            //! \throws io_error if class data retrieval failed
+            //! \throws type_error if the class attribute exists but is of 
+            //! the wrong type
+            //! \throws object_error in case of any other error
+            //!
             //! \param a attribute instance
             //! \return path to the attribute
             //!
@@ -141,6 +179,16 @@ namespace nx{
     //! \brief get path 
     //!
     //! Return the path of an object stored in an nxobject instance. 
+    //!
+    //! \throws invalid_object_error if one of the fields parents 
+    //! could not be retrieved or the attribute itself is not valid
+    //! \throws shape_mismatch_error if a possible class attribute is
+    //! not scalar
+    //! \throws io_error if class data retrieval failed
+    //! \throws type_error if the class attribute exists but is of 
+    //! the wrong type
+    //! \throws object_error in case of any other error
+    //!
     //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
