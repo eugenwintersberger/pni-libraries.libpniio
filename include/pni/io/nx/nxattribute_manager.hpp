@@ -61,7 +61,10 @@ namespace nx{
             //! attribute of same name already exists. If ov=true an existing 
             //! attribute will be overwritten
             //! 
+            //! \throws invalid_object_error in case of an invalid parent
+            //! \throws type_error if data type is not supported
             //! \throws object_error in case of errors
+            //!
             //! \param n name of the attribute
             //! \param s shape of the array
             //! \param ov overwrite flag
@@ -90,7 +93,10 @@ namespace nx{
             //! already exists. If ov=true the existing attribute will be 
             //! overwritten and no exeption will be thrown.
             //!
+            //! \throws invalid_object_error in case of an invalid parent
+            //! \throws type_error if data type is not supported
             //! \throws object_error in case of attribute related errors
+            //!
             //! \param n name of the attribute
             //! \param ov overwrite flag
             //! \return an instance of nxattribute
@@ -109,8 +115,11 @@ namespace nx{
             //! of nxattribute<> to the callee. An exception will be thrown 
             //! if the attribute does not exist.
             //!
+            //! \throws invalid_object_error if the parent is not valid
+            //! \throws key_error in case the requested attribute does not 
+            //! exist
             //! \throws object_error in case of problems
-            //! \throws key_error in case the requested attribute does not exist
+            //!
             //! \param n name of the attribute
             //! \return instance of nxattribute
             //!
@@ -127,8 +136,11 @@ namespace nx{
             //! the total number of attributes attached to this object an 
             //! exception will be thrown.
             //!
-            //! \throws index_error if i exceeds the total number of attributes
+            //! \throws invalid_object_error if the parent is not valid
+            //! \throws index_error if i exceeds the total number of 
+            //! attributes
             //! \throws object_error in case of errors
+            //!
             //! \param i index of the attribute
             //! \return instance of nxattribute
             //!
@@ -142,7 +154,11 @@ namespace nx{
             //! \brief delete an attribute
             //!
             //! Deletes an attribute attached to this object.
-            //! \throws object_error in case of errors
+            //!
+            //! \throws invalid_object_error if parent is not valid
+            //! \throws key_error if attribute does not exist
+            //! \throws object_error in case of any errors
+            //!
             //! \param n name of the attribute
             //!
             void remove(const string &n) const
@@ -157,7 +173,9 @@ namespace nx{
             //! Checks whether or not an attribute with a particular name 
             //! exits. If it does true is returned otherwise false.
             //!
-            //! \throws object_error in case of errors
+            //! \throws invalid_object_error if parent is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \param n name of the attribute
             //! \return true if n exists otherwise false
             //!
@@ -171,30 +189,35 @@ namespace nx{
             //! \brief get number of attributes
             //!
             //! Returns the number of attributes attached to this object.
+            //! 
+            //! \throws invalid_object_error if parent is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \return number of attributes
             //!
             size_t size() const { return _imp.nattr(); }
 
             //-----------------------------------------------------------------
-            /*! 
-            \brief iterator to frist attribute
-
-            Return an iterator to the first attribute attached to the object.
-            \return iterator to first attribute
-            */
+            //! 
+            //! \brief iterator to frist attribute
+            //!
+            //! Return an iterator to the first attribute attached to the 
+            //! object.
+            //!
+            //! \return iterator to first attribute
+            //!
             iterator begin() const { return iterator(this); }
 
             //-----------------------------------------------------------------
-            /*! 
-            \brief iterator to last attribute
-
-            Return an iterator to the last attribute attached to the object.
-            \return iterator to last attribute
-            */
-            iterator end() const
-            {
-                return iterator(this,size());
-            }
+            //! 
+            //! \brief iterator to last attribute
+            //!
+            //! Return an iterator to the last attribute attached to the 
+            //! object.
+            //!
+            //! \return iterator to last attribute
+            //!
+            iterator end() const { return iterator(this,size()); }
     };
 
 
