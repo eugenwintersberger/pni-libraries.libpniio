@@ -41,13 +41,13 @@ namespace nx{
     //! a form like this
     /*!
     \code
-    filename:///entry:NXentry/instrument:NXinstrument/detector/data@attrname
+    filename://entry:NXentry/instrument:NXinstrument/detector/data@attrname
     \endcode
     */
     //! More specific this can be written as
     /*!
     \code
-    [filename://][/]path
+    [filename://]path
     \endcode
     */
     //! Usage
@@ -57,6 +57,9 @@ namespace nx{
     nxpath path = nxpath::from_string(path_str);
     \endcode
     */
+    //! A path can either be absolute or relative to a particular 
+    //! object. However, a path with a filename part is always absolute (for
+    //! obvious reasons).
     //!
     class nxpath
     {
@@ -80,15 +83,44 @@ namespace nx{
 
         public:
             //===============constructors and destructor=======================
-            //! default constructor
+            //!
+            //! \brief default constructor
+            //! 
             nxpath();
             //-----------------------------------------------------------------
-            //! constructor
-            nxpath(const string &file,const elements_type &groups,
-                   const string &attr);
-            
+            //!
+            //! \brief constructor
+            //!
+            //! \param file name of the file
+            //! \param groups a list of elements for the object path
+            //! \param attr the optional name of an attribute
+            //!
+            explicit nxpath(const string &file,const elements_type &groups,
+                            const string &attr);
+           
+            //-----------------------------------------------------------------
+            //!
+            //! \brief create path from string
+            //!
+            //! This method creates a path from a string passed to it. 
+            //! 
+            //! \throws parser_error in case of parsing problems
+            //!
+            //! \param input string with path representation
+            //!
+            //! \return path instance
+            //!
             static nxpath from_string(const string &input);
 
+            //-----------------------------------------------------------------
+            //!
+            //! \brief create string from path
+            //!
+            //! Returns the string representation of a path.
+            //!
+            //! \param p reference to path instance
+            //! \return string representation of the path
+            //!
             static string to_string(const nxpath &p);
            
             //===============public member methods=============================
@@ -98,7 +130,7 @@ namespace nx{
             //! Returns true if the path contains a file name. 
             //! \return true if filename exists
             //!
-            bool has_filename() const  { return !_file_name.empty(); }
+            bool has_filename() const noexcept;
 
             //-----------------------------------------------------------------
             //!
@@ -107,22 +139,31 @@ namespace nx{
             //! Returns true if the path contains an attribute name.
             //! \return true if path has attribute
             //!
-            bool has_attribute() const { return !_attribute_name.empty(); }
+            bool has_attribute() const noexcept;
 
             //-----------------------------------------------------------------
-            //! return the filename
-            string filename() const { return _file_name; }
+            //!
+            //! \brief return the filename
+            //!
+            string filename() const noexcept;
 
-            //! set the filename
-            void filename(const string &f) { _file_name = f; }
+            //----------------------------------------------------------------
+            //!
+            //! \brief set the filename
+            //!
+            void filename(const string &f);
 
             //-----------------------------------------------------------------
-            //! return the attribute name
-            string attribute() const { return _attribute_name; }
+            //!
+            //! \brief return the attribute name
+            //!
+            string attribute() const noexcept;
 
-            //! set the attribute name
-            void attribute(const string &a) { _attribute_name = a; }
-
+            //----------------------------------------------------------------
+            //!
+            //! \brief set the attribute name
+            //!
+            void attribute(const string &a);
 
             //-----------------------------------------------------------------
             //!
@@ -132,7 +173,7 @@ namespace nx{
             //!
             //! \param o element to append
             //! 
-            void push_back(const element_type &o) { _elements.push_back(o); }
+            void push_back(const element_type &o);
 
             //----------------------------------------------------------------
             //! 
@@ -142,19 +183,19 @@ namespace nx{
             //! 
             //! \param o element to append
             //! 
-            void push_front(const element_type &o) { _elements.push_front(o); }
+            void push_front(const element_type &o);
 
             //----------------------------------------------------------------
             //! 
             //! \brief last element from path
             //! 
-            void pop_front() { _elements.pop_front(); }
+            void pop_front();
 
             //----------------------------------------------------------------
             //! 
             //! \brief remove first element from path
             //!
-            void pop_back() { _elements.pop_back(); }
+            void pop_back();
 
             //-----------------------------------------------------------------
             //!
@@ -163,7 +204,10 @@ namespace nx{
             //! Return the last element of the Nexus path. 
             //! 
             //! \return last element
-            element_type front() const { return _elements.front(); }
+            element_type front() const 
+            { 
+                return _elements.front(); 
+            }
 
             //----------------------------------------------------------------
             //!
@@ -173,87 +217,39 @@ namespace nx{
             //! 
             //! \return first element
             //!
-            element_type back() const { return _elements.back(); }
-
-
-            //------------------------------------------------------------------
-            //! return number of group entries
-            size_t size() const { return _elements.size(); }
+            element_type back() const;
 
             //------------------------------------------------------------------
-            //! return true if path is absolute
-            bool is_absolute() const;
+            //!
+            //! \brief return number of group entries
+            //!
+            size_t size() const;
 
             //===================iterators======================================
-            //! get iterator to first element
-            iterator begin() { return _elements.begin(); }
+            //!
+            //! \brief get iterator to first element
+            //!
+            iterator begin();
 
             //----------------------------------------------------------------
-            //! get iterator to last+1 element
-            iterator end()   { return _elements.end();   }
+            //!
+            //! \brief get iterator to last+1 element
+            iterator end();
 
             //----------------------------------------------------------------
-            //! get const iterator to first element
-            const_iterator begin() const { return _elements.begin(); }
+            //!
+            //! \brief get const iterator to first element
+            //!
+            const_iterator begin() const;
 
             //----------------------------------------------------------------
-            //! get const iterator to last+1 element
-            const_iterator end() const   { return _elements.end();   }
+            //! 
+            //! \brief get const iterator to last+1 element
+            //!
+            const_iterator end() const;
     };
 
-    //------------------------------------------------------------------------
-    //!
-    //! \ingroup nxpath_code
-    //! \brief output operator for single elements
-    //!
-    //! Write a single object element to an output stream. 
-    //!
-    //! \param stream output stream reference
-    //! \param e object element
-    //! \return reference to the modified stream
-    std::ostream &operator<<(std::ostream &stream,
-                             const nxpath::element_type &e);
 
-    //------------------------------------------------------------------------
-    //!
-    //! \ingroup nxpath_code
-    //! \brief output operator for object path
-    //!
-    //! Write an entire object path to an output stream
-    //!
-    //! \param stream output stream reference
-    //! \param e object path 
-    //! \return reference to the modified stream
-    std::ostream &operator<<(std::ostream &stream,
-                             const nxpath::elements_type &e);
-
-
-    //--------------------------------------------------------------------------
-    //!
-    //! \ingroup nxpath_code
-    //! \brief output operator for a nexus path
-    //! 
-    //! Prints a nexus path to an output stream. One can either use this to 
-    //! write a Nexus path to standard out 
-    /*!
-    \code{.cpp}
-    nxpath p = ....;
-    std::cout<<p<<std::endl;
-    \endcode
-    */
-    //! or to a string using the stringstream operator
-    /*!
-    \code{.cpp}
-    std::stringstream ss;
-    ss<<p;
-    \endcode
-    */
-    //!
-    //! \param o reference to the output stream
-    //! \param p reference to the path
-    //! \return reference to the output operator
-    //!
-    std::ostream &operator<<(std::ostream &stream,const nxpath &p);
 //end of namespace
 }
 }

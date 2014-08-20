@@ -213,6 +213,17 @@ namespace parsers{
     };
 
     //------------------------------------------------------------------------
+    //!
+    //! \ingroup nxpath_code
+    //! \brief parser string to path
+    //!
+    //! Parse a string input and generate a path instance from it. 
+    //!
+    //! \throws parser_error in case of a parser problem
+    //!
+    //! \param input string from which to construct the path
+    //! \return nxpath instance
+    //!
     nxpath parse_path(const string &input);
 
 //end of parser namespace

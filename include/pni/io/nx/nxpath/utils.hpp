@@ -25,13 +25,15 @@
 #include <iostream>
 #include <pni/core/types.hpp>
 #include "nxpath.hpp"
-#include "parser.hpp"
 
 
 namespace pni{
 namespace io{
 namespace nx{
     using namespace pni::core;
+
+    //forward declaration of path 
+    class nxpath;
 
     //! \ingroup nxpath_code 
     //! \brief append element 
@@ -112,6 +114,28 @@ namespace nx{
     //! \return string representation of p
     //!
     string string_from_path(const nxpath &p);
+    
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup nxpath_code
+    //! \brief check if element is root
+    //!
+    //! The root element has the form ("/","NXroot"). This function returns
+    //! true if the passed element is the root element.
+    //! 
+    //! \param e element instance
+    //! \return true if root element, false otherwise
+    //!
+    bool is_root_element(const nxpath::element_type &e);
+
+    //--------------------------------------------------------------------------
+    //!
+    //! \ingroup nxpath_code
+    //!
+    //! \param p path instance
+    //! \return true if path is absolute, false otherwise
+    //!
+    bool is_absolute(const nxpath &p);
 
     //--------------------------------------------------------------------------
     //!
@@ -199,6 +223,62 @@ namespace nx{
     //! \return true if not equal, false otherwise
     //!
     bool operator!=(const nxpath &lhs,const nxpath &rhs);
+    
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup nxpath_code
+    //! \brief output operator for single elements
+    //!
+    //! Write a single object element to an output stream. 
+    //!
+    //! \param stream output stream reference
+    //! \param e object element
+    //! \return reference to the modified stream
+    //!
+    std::ostream &operator<<(std::ostream &stream,
+                             const nxpath::element_type &e);
+
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup nxpath_code
+    //! \brief output operator for object path
+    //!
+    //! Write an entire object path to an output stream
+    //!
+    //! \param stream output stream reference
+    //! \param e object path 
+    //! \return reference to the modified stream
+    //!
+    std::ostream &operator<<(std::ostream &stream,
+                             const nxpath::elements_type &e);
+
+
+    //--------------------------------------------------------------------------
+    //!
+    //! \ingroup nxpath_code
+    //! \brief output operator for a nexus path
+    //! 
+    //! Prints a nexus path to an output stream. One can either use this to 
+    //! write a Nexus path to standard out 
+    /*!
+    \code{.cpp}
+    nxpath p = ....;
+    std::cout<<p<<std::endl;
+    \endcode
+    */
+    //! or to a string using the stringstream operator
+    /*!
+    \code{.cpp}
+    std::stringstream ss;
+    ss<<p;
+    \endcode
+    */
+    //!
+    //! \param o reference to the output stream
+    //! \param p reference to the path
+    //! \return reference to the output operator
+    //!
+    std::ostream &operator<<(std::ostream &stream,const nxpath &p);
 
 //end of namespace
 }

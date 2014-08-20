@@ -39,7 +39,7 @@ namespace h5{
     {
         string h5p;
 
-        if(p.is_absolute())
+        if(is_absolute(p))
             h5p = "/";
 
         size_t index = 0;
@@ -74,7 +74,7 @@ namespace h5{
             throw pni::io::value_error(EXCEPTION_RECORD,
                     "For an external link a target filename must be provided!");
 
-        if(!path.is_absolute())
+        if(!is_absolute(path))
             throw pni::io::value_error(EXCEPTION_RECORD,
                     "For an external link the target path must be absolute!");
 

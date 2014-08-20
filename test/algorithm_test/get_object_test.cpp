@@ -88,7 +88,7 @@ void get_object_test::test_relative()
 
     h5::nxobject root_group = root;
     nxpath p = nxpath::from_string("../instrument/detector");
-    CPPUNIT_ASSERT(!p.is_absolute());
+    CPPUNIT_ASSERT(!is_absolute(p));
 
     h5::nxobject ig = get_object(root_group,nxpath::from_string("group/instrument"));
     CPPUNIT_ASSERT(get_name(ig) == "instrument");

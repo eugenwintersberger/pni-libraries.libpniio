@@ -21,8 +21,10 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
+#include <sstream>
 #include <pni/io/nx/nxpath/nxpath.hpp>
 #include <pni/io/nx/nxpath/parser.hpp>
+#include <pni/io/nx/nxpath/utils.hpp>
 
 
 namespace pni{
@@ -53,68 +55,106 @@ namespace nx{
     //-------------------------------------------------------------------------
     string nxpath::to_string(const nxpath &p)
     {
+        std::stringstream str_stream;
+        str_stream<<p;
 
+        return str_stream.str();
+    }
+           
+    //-------------------------------------------------------------------------
+    bool nxpath::has_filename() const noexcept 
+    { 
+        return !_file_name.empty(); 
     }
 
     //-------------------------------------------------------------------------
-    bool nxpath::is_absolute() const
+    bool nxpath::has_attribute() const noexcept 
+    { 
+        return !_attribute_name.empty(); 
+    }
+    
+    //-------------------------------------------------------------------------
+    string nxpath::filename() const noexcept 
+    { 
+        return _file_name; 
+    }
+    
+    //-------------------------------------------------------------------------
+    void nxpath::filename(const string &f) 
     {
-        //if the first element in the object path is NXroot the path 
-        //is absolute.
-        if(size())
-            return _elements.front().second=="NXroot";
-        else
-            return false;
+        _file_name = f; 
+    }
+    
+    //-------------------------------------------------------------------------
+    string nxpath::attribute() const noexcept 
+    { 
+        return _attribute_name; 
     }
 
     //-------------------------------------------------------------------------
-    std::ostream &operator<<(std::ostream &stream,const nxpath::element_type &e)
-    {
-        if((!e.first.empty() && e.first=="/") || 
-           (!e.second.empty() && e.second=="NXroot"))
-        {
-            stream<<"/";
-        }
-        else
-        {
-            stream<<e.first;
-            //the colon will only be printed if the second component is not empty
-            if(!e.second.empty()) stream<<":"<<e.second;
-        }
-        return stream;
+    void nxpath::attribute(const string &a) 
+    { 
+        _attribute_name = a; 
     }
 
-    //------------------------------------------------------------------------
-    std::ostream &operator<<(std::ostream &stream,
-                             const nxpath::elements_type &e)
-    {
-        if(!e.size()) return stream;
-
-        for(auto v: e)
-            stream<<e<<"/";
-
-        return stream;
-
+    //-------------------------------------------------------------------------
+    void nxpath::push_back(const element_type &o) 
+    { 
+        _elements.push_back(o); 
     }
 
-    //--------------------------------------------------------------------------
-    std::ostream &operator<<(std::ostream &stream,const nxpath &p)
-    {
-        if(!p.filename().empty()) stream<<p.filename()<<"://";
+    //-------------------------------------------------------------------------
+    void nxpath::push_front(const element_type &o) 
+    { 
+        _elements.push_front(o); 
+    }
+    
+    //-------------------------------------------------------------------------
+    void nxpath::pop_front() 
+    { 
+        _elements.pop_front(); 
+    }
 
-        if(p.is_absolute()) stream<<"/";
+    //-------------------------------------------------------------------------
+    void nxpath::pop_back() 
+    { 
+        _elements.pop_back(); 
+    }
+    
+    //-------------------------------------------------------------------------
+    nxpath::element_type nxpath::back() const 
+    { 
+        return _elements.back(); 
+    }
+    
+    //-------------------------------------------------------------------------
+    size_t nxpath::size() const 
+    { 
+        return _elements.size(); 
+    }
 
-        size_t index = 0;
-        for(auto e: p)
-        {
-            stream<<e;
-            if(index++ < p.size()-1) stream<<"/";
-        }
+    //-------------------------------------------------------------------------
+    nxpath::iterator nxpath::begin() 
+    { 
+        return _elements.begin(); 
+    }
+    
+    //-------------------------------------------------------------------------
+    nxpath::iterator nxpath::end()   
+    { 
+        return _elements.end();   
+    }
 
-        if(!p.attribute().empty()) stream<<"@"<<p.attribute();
-
-        return stream;
-
+    //-------------------------------------------------------------------------
+    nxpath::const_iterator nxpath::begin() const 
+    { 
+        return _elements.begin(); 
+    }
+    
+    //-------------------------------------------------------------------------
+    nxpath::const_iterator nxpath::end() const   
+    { 
+        return _elements.end();   
     }
 
 

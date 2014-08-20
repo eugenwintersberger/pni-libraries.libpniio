@@ -25,6 +25,7 @@
 #include <boost/spirit/home/qi/parse.hpp>
 #include "nxpath_parser_test.hpp"
 #include "../EqualityCheck.hpp"
+#include <pni/io/nx/nxpath/utils.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION(nxpath_parser_test);
 
@@ -51,7 +52,7 @@ void nxpath_parser_test::test_element_path_only()
     CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
     CPPUNIT_ASSERT(output.filename().empty());
     CPPUNIT_ASSERT(output.attribute().empty());
-    CPPUNIT_ASSERT(output.is_absolute());
+    CPPUNIT_ASSERT(is_absolute(output));
     CPPUNIT_ASSERT(output.size()==4);
 
     set_input("entry/:NXinstrument/detector:NXdetector");
@@ -59,7 +60,7 @@ void nxpath_parser_test::test_element_path_only()
     CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
     CPPUNIT_ASSERT(output.filename().empty());
     CPPUNIT_ASSERT(output.attribute().empty());
-    CPPUNIT_ASSERT(!output.is_absolute());
+    CPPUNIT_ASSERT(!is_absolute(output));
     CPPUNIT_ASSERT(output.size()==3);
 }
 

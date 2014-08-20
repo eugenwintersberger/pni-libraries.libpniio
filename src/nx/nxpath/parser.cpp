@@ -22,6 +22,7 @@
 //
 
 #include <pni/io/nx/nxpath/parser.hpp>
+#include <pni/io/exceptions.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 
 namespace pni{
@@ -60,9 +61,17 @@ namespace parsers{
         }
 
         //generate parser
-        parser_type parser(file_part); 
         nxpath path;
-        qi::parse(parser_input.begin(),parser_input.end(),parser,path);
+        try
+        {
+            parser_type parser(file_part); 
+            qi::parse(parser_input.begin(),parser_input.end(),parser,path);
+        }
+        catch(...)
+        {
+            throw pni::io::parser_error(EXCEPTION_RECORD,
+                    "Error parsing string to nxpath!");
+        }
 
         return path;
     }

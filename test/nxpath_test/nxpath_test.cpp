@@ -39,32 +39,37 @@ void nxpath_test::test_from_string_no_file()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
    
     //test for a relative path without attribute
-    nxpath p = nxpath::from_string("../:NXdata/data");
+    string str = "../:NXdata/data";
+    nxpath p = nxpath::from_string(str);
     CPPUNIT_ASSERT(p.filename().empty());
     CPPUNIT_ASSERT(p.attribute().empty());
     CPPUNIT_ASSERT(p.size()==3);
-    CPPUNIT_ASSERT(!p.is_absolute());
+    CPPUNIT_ASSERT(!is_absolute(p));
+    CPPUNIT_ASSERT(nxpath::to_string(p) == str);
 
     //test for an absolute path without attribute
-    p = nxpath::from_string("/scan_1/:NXinstrument/:NXdetector/");
+    str = "/scan_1/:NXinstrument/:NXdetector/";
+    p = nxpath::from_string(str);
     CPPUNIT_ASSERT(p.filename().empty() && p.attribute().empty());
-    CPPUNIT_ASSERT(p.is_absolute());
+    CPPUNIT_ASSERT(is_absolute(p));
     CPPUNIT_ASSERT(p.size()==4);
+    CPPUNIT_ASSERT(nxpath::to_string(p) == string(str,0,str.size()-1));
 
     //test for an absolute path without attribute
-    p = nxpath::from_string("/scan_1/:NXinstrument/:NXdetector");
+    str = "/scan_1/:NXinstrument/:NXdetector";
+    p = nxpath::from_string(str);
     CPPUNIT_ASSERT(p.filename().empty() && p.attribute().empty());
-    CPPUNIT_ASSERT(p.is_absolute());
+    CPPUNIT_ASSERT(is_absolute(p));
     CPPUNIT_ASSERT(p.size()==4);
+    CPPUNIT_ASSERT(nxpath::to_string(p)==str);
 
 
-    p = nxpath::from_string("/");
+    str = "/";
+    p = nxpath::from_string(str);
     CPPUNIT_ASSERT(p.filename().empty() && p.attribute().empty());
-    CPPUNIT_ASSERT(p.is_absolute());
+    CPPUNIT_ASSERT(is_absolute(p));
     CPPUNIT_ASSERT(p.size()==1);
-
-
-
+    CPPUNIT_ASSERT(nxpath::to_string(p) == str);
 }
 
 //----------------------------------------------------------------------------
@@ -73,32 +78,40 @@ void nxpath_test::test_from_string_no_file_attr()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     //get an attribute
-    nxpath p = nxpath::from_string("/scan_1/:NXinstrument/value@test");
+    string str = "/scan_1/:NXinstrument/value@test";
+    nxpath p = nxpath::from_string(str);
     CPPUNIT_ASSERT(p.filename().empty());
-    CPPUNIT_ASSERT(p.is_absolute());
+    CPPUNIT_ASSERT(is_absolute(p));
     CPPUNIT_ASSERT(p.size()==4);
     CPPUNIT_ASSERT(p.attribute() == "test");
+    CPPUNIT_ASSERT(nxpath::to_string(p) == str);
    
     //get an attribute from the root group
-    p = nxpath::from_string("/@date");
+    str = "/@date";
+    p = nxpath::from_string(str);
     CPPUNIT_ASSERT(p.filename().empty());
-    CPPUNIT_ASSERT(p.is_absolute());
+    CPPUNIT_ASSERT(is_absolute(p));
     CPPUNIT_ASSERT(p.size()==1);
     CPPUNIT_ASSERT(p.attribute() == "date");
+    CPPUNIT_ASSERT(nxpath::to_string(p) == str);
 
     //get an attribute from the current group
-    p = nxpath::from_string(".@date");
+    str = ".@date";
+    p = nxpath::from_string(str);
     CPPUNIT_ASSERT(p.filename().empty());
-    CPPUNIT_ASSERT(!p.is_absolute());
+    CPPUNIT_ASSERT(!is_absolute(p));
     CPPUNIT_ASSERT(p.size()==1);
     CPPUNIT_ASSERT(p.attribute() == "date");
+    CPPUNIT_ASSERT(nxpath::to_string(p)==str);
 
     //get an attribute from the parent group
-    p = nxpath::from_string("..@date");
+    str = "..@date";
+    p = nxpath::from_string(str);
     CPPUNIT_ASSERT(p.filename().empty());
-    CPPUNIT_ASSERT(!p.is_absolute());
+    CPPUNIT_ASSERT(!is_absolute(p));
     CPPUNIT_ASSERT(p.size()==1);
     CPPUNIT_ASSERT(p.attribute() == "date");
+    CPPUNIT_ASSERT(nxpath::to_string(p)==str);
 }
 
 //----------------------------------------------------------------------------
@@ -107,32 +120,40 @@ void nxpath_test::test_from_string_with_file_attr()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     //get an attribute
-    nxpath p = nxpath::from_string("data/test/test.nx://scan_1/:NXinstrument/value@test");
+    string str = "data/test/test.nx://scan_1/:NXinstrument/value@test";
+    nxpath p = nxpath::from_string(str);
     CPPUNIT_ASSERT(p.filename() == "data/test/test.nx");
-    CPPUNIT_ASSERT(p.is_absolute());
+    CPPUNIT_ASSERT(is_absolute(p));
     CPPUNIT_ASSERT(p.size()==4);
     CPPUNIT_ASSERT(p.attribute() == "test");
+    CPPUNIT_ASSERT(nxpath::to_string(p)==str);
    
     //get an attribute from the root group
-    p = nxpath::from_string("test.nx://@date");
+    str = "test.nx://@date";
+    p = nxpath::from_string(str);
     CPPUNIT_ASSERT(p.filename() == "test.nx");
-    CPPUNIT_ASSERT(p.is_absolute());
+    CPPUNIT_ASSERT(is_absolute(p));
     CPPUNIT_ASSERT(p.size()==1);
     CPPUNIT_ASSERT(p.attribute() == "date");
+    CPPUNIT_ASSERT(nxpath::to_string(p)==str);
 
     //get an attribute from the current group
-    p = nxpath::from_string("test.nx://:NXentry/:NXinstrument/.@date");
+    str = "test.nx://:NXentry/:NXinstrument/.@date";
+    p = nxpath::from_string(str);
     CPPUNIT_ASSERT(p.filename() == "test.nx");
-    CPPUNIT_ASSERT(p.is_absolute());
+    CPPUNIT_ASSERT(is_absolute(p));
     CPPUNIT_ASSERT(p.size()==4);
     CPPUNIT_ASSERT(p.attribute() == "date");
+    CPPUNIT_ASSERT(nxpath::to_string(p)==str);
 
     //get an attribute from the parent group
-    p = nxpath::from_string("test.nx://scan_1:NXentry/..@date");
+    str = "test.nx://scan_1:NXentry/..@date";
+    p = nxpath::from_string(str);
     CPPUNIT_ASSERT(p.filename() == "test.nx");
-    CPPUNIT_ASSERT(p.is_absolute());
+    CPPUNIT_ASSERT(is_absolute(p));
     CPPUNIT_ASSERT(p.size()==3);
     CPPUNIT_ASSERT(p.attribute() == "date");
+    CPPUNIT_ASSERT(nxpath::to_string(p)==str);
 }
 //----------------------------------------------------------------------------
 void nxpath_test::test_from_string_with_file()
@@ -140,19 +161,23 @@ void nxpath_test::test_from_string_with_file()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     //test for an absolute path without attribute
-    nxpath p = nxpath::from_string("test.nx://");
+    string str = "test.nx://";
+    nxpath p = nxpath::from_string(str);
     CPPUNIT_ASSERT(p.filename() == "test.nx");
     CPPUNIT_ASSERT(p.attribute().empty());
     CPPUNIT_ASSERT(p.size() == 1);
-    CPPUNIT_ASSERT(p.is_absolute());
+    CPPUNIT_ASSERT(is_absolute(p));
     CPPUNIT_ASSERT(p.front().first == "/");
     CPPUNIT_ASSERT(p.front().second == "NXroot");
+    CPPUNIT_ASSERT(nxpath::to_string(p) == str);
 
     //test for an absolute path without attribute
-    p = nxpath::from_string("test.nx://../:NXdata/data");
+    str = "test.nx://../:NXdata/data";
+    p = nxpath::from_string(str);
     CPPUNIT_ASSERT(p.filename() == "test.nx");
     CPPUNIT_ASSERT(p.size() == 4);
-    CPPUNIT_ASSERT(p.is_absolute());
+    CPPUNIT_ASSERT(is_absolute(p));
+    CPPUNIT_ASSERT(nxpath::to_string(p) == str);
 
 }
 

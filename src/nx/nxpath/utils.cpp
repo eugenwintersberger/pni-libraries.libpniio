@@ -22,6 +22,7 @@
 
 #include <sstream>
 #include <pni/io/nx/nxpath/utils.hpp>
+#include <pni/io/nx/nxpath/parser.hpp>
 #include <pni/core/error.hpp>
 
 
@@ -77,7 +78,7 @@ namespace nx{
         if(!p.filename().empty())
             ostr += p.filename()+"://";
 
-        if(p.is_absolute()) ostr += "/";
+        if(is_absolute(p)) ostr += "/";
 
         //dump groups
         auto slash_iter = p.begin();
@@ -93,6 +94,19 @@ namespace nx{
             ostr += "@"+p.attribute();
 
         return ostr;
+    }
+    
+    //-------------------------------------------------------------------------
+    bool is_root_element(const nxpath::element_type &e)
+    {
+        return (has_name(e) && (e.first=="/") && 
+                has_class(e) && (e.second=="NXroot"));
+    }
+
+    //--------------------------------------------------------------------------
+    bool is_absolute(const nxpath &p)
+    {
+        return is_root_element(p.front());
     }
 
     //--------------------------------------------------------------------------
@@ -147,6 +161,49 @@ namespace nx{
     bool operator!=(const nxpath &lhs,const nxpath &rhs)
     {
         return !(lhs == rhs);
+    }
+    
+    //-------------------------------------------------------------------------
+    std::ostream &operator<<(std::ostream &stream,const nxpath::element_type &e)
+    {
+        stream<<e.first;
+        //the colon will only be printed if the second component is not empty
+        if(!e.second.empty() && !is_root_element(e) ) stream<<":"<<e.second;
+        return stream;
+    }
+
+    //------------------------------------------------------------------------
+    std::ostream &operator<<(std::ostream &stream,
+                             const nxpath::elements_type &e)
+    {
+        if(!e.size()) return stream;
+
+        for(auto v: e) 
+        {
+            stream<<e;
+            }
+
+        return stream;
+
+    }
+
+    //--------------------------------------------------------------------------
+    std::ostream &operator<<(std::ostream &stream,const nxpath &p)
+    {
+        if(!p.filename().empty()) stream<<p.filename()<<":/";
+
+        size_t index = 0;
+        for(auto e: p)
+        {
+            stream<<e;
+            if((index++ < p.size()-1) && !is_root_element(e)) 
+                stream<<"/";
+        }
+
+        if(!p.attribute().empty()) stream<<"@"<<p.attribute();
+
+        return stream;
+
     }
 
 //end of namespace
