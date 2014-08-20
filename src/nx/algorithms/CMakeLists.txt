@@ -1,5 +1,4 @@
-set(SOURCES create_field.cpp
-            )
+set(SOURCES utils.cpp)
 
 add_library(algorithms OBJECT ${SOURCES})
 

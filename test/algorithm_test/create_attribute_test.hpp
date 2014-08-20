@@ -38,10 +38,8 @@ using pni::io::invalid_object_error;
 class create_attribute_test : public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(create_attribute_test);
-        CPPUNIT_TEST(test_field);
-        CPPUNIT_TEST(test_group);
+        CPPUNIT_TEST(test_field_object);
         CPPUNIT_TEST(test_group_object);
-        CPPUNIT_TEST(test_group_from_path);
         CPPUNIT_TEST(test_attribute);
         CPPUNIT_TEST(test_errors);
         CPPUNIT_TEST_SUITE_END();
@@ -58,11 +56,9 @@ class create_attribute_test : public CppUnit::TestFixture
     public:
         void setUp();
         void tearDown();
-        
-        void test_field();
-        void test_group();
+       
+        void test_field_object();
         void test_group_object();
-        void test_group_from_path();
         void test_attribute();
         void test_errors();
 };

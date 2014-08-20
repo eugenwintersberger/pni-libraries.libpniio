@@ -36,118 +36,263 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup algorithm_code
-    //! \brief create an attribute
+    //! \ingroup algorithm_internal_code
+    //! \brief create attribute visitor
     //!
-    //! Function template creating an attribute attached to an object
+    //! This visitor creates an attribute below the group stored in an nxobject 
+    //! type. If the nxobject instance holds an instance of nxattribute a 
+    //! type_error exception is thrown.
+    //!
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE fieldtype
+    //! \tparam ATYPE attribute type
+    //! \tparam T data type of the attribute
+    //! \tparam STYPE container type for the shape
+    //!
+    //! \sa create_attribute
+    //!
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE,
+             typename T,
+             typename STYPE
+            > 
+    class create_attribute_visitor : public boost::static_visitor<
+                                     nxobject<GTYPE,FTYPE,ATYPE>  
+                                     >
+    {
+        private:
+            string _name;  //!< the name of the field
+            STYPE _shape;  //!< shape of field
+            bool  _overwrite; //!< overwrite flag for the attribute
+        public:
+            //! result type
+            typedef nxobject<GTYPE,FTYPE,ATYPE> result_type;
+            //! Nexus group type
+            typedef GTYPE group_type;
+            //! Nexus field type
+            typedef FTYPE field_type;
+            //! Nexus attribute type
+            typedef ATYPE attribute_type;
+
+            //-----------------------------------------------------------------
+            //!
+            //! \brief constructor
+            //!
+            //! \param n name of the attribute
+            //! \param s shape of the attribute
+            //!
+            create_attribute_visitor(const string &n,const STYPE &s,bool o):
+                _name(n),
+                _shape(s),
+                _overwrite(o)
+            {}
+
+            //-----------------------------------------------------------------
+            //!
+            //! \brief process group instances
+            //!
+            //! Create a new attribute of name _name attached to group g.ant.
+            //! 
+            //! \throws invalid_object_error if the group is not valid
+            //! \throws type_error if the data type is not supported
+            //! \throws object_error in case of any other error
+            //!
+            //! \param g parent group instance for the attribute
+            //! \return new group stored as object_types
+            //!
+            result_type operator()(const group_type &g) const
+            {
+                auto attr =  g.attributes.template create<T>(_name,_shape,_overwrite);
+                return result_type(attr);
+            }
+
+            //-----------------------------------------------------------------
+            //!
+            //! \brief process field instances
+            //!
+            //! Create a new attribute of name _name attached to field f.
+            //!
+            //! \throws invalid_object_error if the field is not valid
+            //! \throws type_error if the datat type is not supported
+            //! \throws object_error in case of any other errors
+            //!
+            //! \param f field instance
+            //! \return empty result type
+            //!
+            result_type operator()(const field_type &f) const
+            {
+                auto attr = f.attributes.template create<T>(_name,_shape,_overwrite);
+                return result_type(attr);
+            }
+
+            //-----------------------------------------------------------------
+            //!
+            //! \brief process attribute instances
+            //!
+            //! An attribute cannot create an  attribute - an exception will be
+            //! thrown.
+            //!
+            //! \throws type_error as one cannot attach an attribute to an 
+            //! attribute
+            //!
+            //! \param a attribute instance
+            //! \return an empty result type
+            //!
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+            result_type operator()(const attribute_type &a) const
+            {
+                throw type_error(EXCEPTION_RECORD,
+                        "Cannot create an attribute at an attribute!");
+                return result_type();
+            }
+#pragma GCC diagnostic pop
+    };
+
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup algorithm_code
+    //! \brief create multidimensional attribute 
+    //!
+    //! Create an attribute of a particular name, type, and shape at a parent 
+    //! object. The parent is provided as an instance of nxobject. 
     /*!
     \code
-    auto parent = ....;
-    auto attr = create_attribute<int32>(parent,"test",shape_t{4,4});
+    auto g = get_object(...);
+    auto attr = create_attribute<int32>(g,"test",shape_t{4,4});
     \endcode
     */
-    //! If no shape is passed a scalar attribute is created.
     //!
-    //! \throws nxattribute_error in case of errors
-    //! \tparam T data type for the attribute
-    //! \tparam PTYPE parent template
-    //! \tparam IMPID implementation ID
-    //! \tparam STYPE container type for the shape (default is shape_t)
-    //! \param o parent 
-    //! \param n attribute name
-    //! \param s attribute shape (optional)
-    //! \return attribute stored in an instance of nxobject
+    //! The last argument is the shape of the attribute. If now shape is passed
+    //! a scalar attribute will be created. 
+    //!
+    //! \throws invalid_object_error if the parent object is not valid
+    //! \throws type_error if the data type is not supported or the parent
+    //! holds an nxattribute instance
+    //! \throws object_error in case of any other error
+    //! 
+    //! \tparam T data type of the attribute
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \tparam STYPE shape container type
+    //! 
+    //! \param o instance of VTYPE with the parent group
+    //! \param n name of the new attribute
+    //! \param s shape of the attribute
+    //! \return attribute as an instance of nxobject
     //!
     template<
              typename T,
-             template<nximp_code> class PTYPE,
-             nximp_code IMPID,
-             typename STYPE = shape_t
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE,
+             typename STYPE
             > 
-    typename nxobject_trait<IMPID>::object_type
-    create_attribute(const PTYPE<IMPID> &o,const string &n,
-                     const STYPE &s=STYPE())
+    nxobject<GTYPE,FTYPE,ATYPE> 
+    create_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
+                     const string &name,
+                     const STYPE &shape,
+                     bool overwrite=false)
     {
-        typedef typename nxobject_trait<IMPID>::object_type object_type;
-        return object_type(o.attributes.template create<T>(n,s));
+        typedef create_attribute_visitor<GTYPE,FTYPE,ATYPE,T,STYPE> visitor_t;
+        return boost::apply_visitor(visitor_t(name,shape,overwrite),parent);
     }
     
     //-------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_code
-    //! \brief create an attribute 
+    //! \brief create scalar attribute 
     //!
-    //! Create an attribute whose name and parent object is described by a
-    //! Nexus path. The parent object referenced by the path must exist in
-    //! order for the function to succeed. 
-    //! The first argument is the root for the path if it is relative. 
-    //! If the path is an absolute one it just acts as a reference from which 
-    //! to obtain the root group of the Nexus file.
+    //! Create an attribute of a particular name, type, and shape at a parent 
+    //! object. The parent is provided as an instance of nxobject. 
     /*!
     \code
-    nxpath path = path_from_string("/:NXentry/:NXinstrument/:NXdetector/data@test");
-    auto root = get_object(...);
-    create_attribute<int32>(root,path,shape_t{4,4});
+    auto g = get_object(...);
+    auto attr = create_attribute<int32>(g,"test",shape_t{4,4});
     \endcode
     */
-    //! The last argument is the shape of the attribute which is optional. 
-    //! If no shape is passed a scalar attribute is created. 
+    //!
+    //! The last argument is the shape of the attribute. If now shape is passed
+    //! a scalar attribute will be created. 
+    //!
+    //! \throws invalid_object_error if the parent object is not valid
+    //! \throws type_error if the data type is not supported or the parent
+    //! holds an nxattribute instance
+    //! \throws object_error in case of any other error
     //! 
-    //! An exception is raised if the path does not refere to an attribute.
+    //! \tparam T data type of the attribute
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
     //! 
-    //! \throws value_error if path does not contain an attribute name
-    //! \tparam T data type of the field
-    //! \tparam PTYPE parent type template
-    //! \tparam IMPID implementation ID
-    //! \tparam STYPE container type for the shape (default is shape_t)
-    //! \param o parent instance
-    //! \param path Nexus path to the attribute
+    //! \param o instance of VTYPE with the parent group
+    //! \param n name of the new attribute
     //! \param s shape of the attribute
-    //! \return instance of nxattribute
+    //! \return attribute as an instance of nxobject
     //!
     template<
              typename T,
-             template<nximp_code> class PTYPE,
-             nximp_code IMPID,
-             typename STYPE = shape_t
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
             > 
-    typename nxobject_trait<IMPID>::object_type
-    create_attribute(const PTYPE<IMPID> &o,const nxpath &path,
-                     const STYPE &s=STYPE())
+    nxobject<GTYPE,FTYPE,ATYPE> 
+    create_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
+                     const string &name,
+                     bool overwrite=false)
     {
-        typedef typename nxobject_trait<IMPID>::object_type object_type;
-
-        //check if the path describes an attribute
-        if(path.attribute().empty())
-            throw value_error(EXCEPTION_RECORD,
-                    "Path does not describe an attribute!");
-
-        //create a path to the parent object of the attribute
-        nxpath parent_path(path); 
-        parent_path.attribute("");
-
-        //obtain the parent for the target object - this will always be a 
-        //grou ptype
-        auto parent = get_object(o,parent_path);
-
-        //finally create the attribute
-        return create_attribute<T>(parent,path.attribute(),s);
+        return create_attribute<T>(parent,name,shape_t{},overwrite);
     }
-
+    
     //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_code
     //! \brief create attribute 
     //! 
+    //! Create an attribute of a given name, shape, and type at a parent 
+    //! object. This special version of create_attribute is particularly 
+    //! useful in situations where the data type is provided at runtime. 
+    /*!
+    \code
+    auto parent = get_object(...);
+    string name = get_name_from_user(...);
+    type_id_t tid = get_type_from_user(...);
+
+    auto attr = create_attribute(parent,tid,name);
+    \endcode
+    */
+    //! The first two arguments are the parent object and the type id.
+    //! All other arguments are the same as for the other create_attribute
+    //! templates.
+    //!
+    //! \throws invalid_object_error if the parent object is not valid
+    //! \throws type_error if the data type is not supported or the parent
+    //! holds an nxattribute instance
+    //! \throws object_error in case of any other error
+    //! 
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \tparam STYPE shape container type
+    //! 
+    //! \param o instance of VTYPE with the parent group
+    //! \param tid type id of the attributes data type
+    //! \param args residual arguments
+    //!
+    //! \return newly created attribute as an instance of nxobject
     //! 
     template<
-             typename T,
-             template<nximp_code> class PTYPE,
-             nximp_code IMPID,
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE,
              typename ...ARGTS
             >
-    typename nxobject_trait<IMPID>::attribute_type
-    create_attribute(const PTYPE<IMPID> &o,type_id_t tid,ARGTS ...args)
+    nxobject<GTYPE,FTYPE,ATYPE>
+    create_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &o,type_id_t tid,
+                     ARGTS ...args)
     {
         if(tid == type_id_t::UINT8)
             return create_attribute<uint8>(o,args...);
@@ -186,199 +331,6 @@ namespace nx{
                     "Unknown type code!");
         
     }
-    
-
-    //-------------------------------------------------------------------------
-    //!
-    //! \ingroup algorithm_internal_code
-    //! \brief create attribute visitor
-    //!
-    //! This visitor creates an attribute below the group stored in the 
-    //! variant type.  If the stored object is not a group an exception will 
-    //! be thrown. 
-    //! \tparam VTYPE variant type
-    //! \tparam T data type of the attribute
-    //! \tparam STYPE container type for the shape
-    //! \sa create_attribute
-    //!
-    template<
-             typename GTYPE,
-             typename FTYPE,
-             typename ATYPE,
-             typename T,
-             typename STYPE
-            > 
-    class create_attribute_visitor : public boost::static_visitor<ATYPE>
-    {
-        private:
-            string _name;  //!< the name of the field
-            STYPE _shape;  //!< shape of field
-        public:
-            //! result type
-            typedef ATYPE result_type;
-            //! Nexus group type
-            typedef GTYPE group_type;
-            //! Nexus field type
-            typedef FTYPE field_type;
-            //! Nexus attribute type
-            typedef ATYPE attribute_type;
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief constructor
-            //!
-            //! \param n name of the attribute
-            //! \param s shape of the attribute
-            //!
-            create_attribute_visitor(const string &n,const STYPE &s):
-                _name(n),
-                _shape(s)
-            {}
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief process group instances
-            //!
-            //! Create a new attribute of name _name attached to group g.ant.
-            //! \throws nxattribute_error in case of errors
-            //! \param g parent group instance for the attribute
-            //! \return new group stored as object_types
-            //!
-            result_type operator()(const group_type &g) const
-            {
-                return create_attribute<T>(g,_name,_shape);
-            }
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief process field instances
-            //!
-            //! Create a new attribute of name _name attached to field f.
-            //! \throws nxattribute_error in case of errors
-            //! \param f field instance
-            //! \return empty result type
-            //!
-            result_type operator()(const field_type &f) const
-            {
-                return create_attribute<T>(f,_name,_shape);
-            }
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief process attribute instances
-            //!
-            //! An attribute cannot create an  attribute - an exception will be
-            //! thrown.
-            //! \throws nxattribute_error 
-            //! \param a attribute instance
-            //! \return an empty result type
-            //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const attribute_type &a) const
-            {
-                throw type_error(EXCEPTION_RECORD,
-                        "Cannot create an attribute at an attribute!");
-                return result_type();
-            }
-#pragma GCC diagnostic pop
-    };
-
-    //-------------------------------------------------------------------------
-    //!
-    //! \ingroup algorithm_code
-    //! \brief create_attribute wrapper
-    //!
-    //! This wrapper function for the create_attribute_visitor creates a new
-    //! attribute below attached to an object stored in the varian type.  The 
-    //! object must be a field or a group type.
-    /*!
-    \code
-    object_types g = get_object(...);
-    create_attribute<int32>(g,"test",shape_t{4,4});
-    \endcode
-    */
-    //!
-    //! \throws nxattribute_error in case of errors
-    //! \tparam T data type of the field
-    //! \tparam VTYPE variant type
-    //! \tparam STYPE container type for the shape (default is shape_t)
-    //! \param o instance of VTYPE with the parent group
-    //! \param n name of the new attribute
-    //! \param s shape of the attribute
-    //! \return object_types with the newly created attribute
-    //!
-    template<
-             typename T,
-             typename GTYPE,
-             typename FTYPE,
-             typename ATYPE,
-             typename ...TYPES,
-             typename STYPE = shape_t
-            > 
-
-    ATYPE create_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &o,
-                           const string &n,const STYPE &s=STYPE())
-    {
-        typedef create_attribute_visitor<GTYPE,FTYPE,ATYPE,T,STYPE> visitor_t;
-        return boost::apply_visitor(visitor_t(n,s),o);
-    }
-    
-    
-    //-------------------------------------------------------------------------
-    //!
-    //! \ingroup algorithm_code
-    //! \brief create_attribute wrapper
-    //!
-    //! Wrapper function for the create_attribute_visitor template. The 
-    //! function creates a new attribute described  by a path relative to the 
-    //! object passed as the first argument of the function. This object must 
-    //! be either a gruop or a field.
-    /*!
-    \code
-    nxpath path = path_from_string("/:NXentry/:NXinstrument/:NXdetector/data@test");
-    object_types root = get_object(...);
-    create_attribute<int32>(root,path,shape_t{4,4});
-    \endcode
-    */
-    //! \throws nxattribute_error in the case of errors
-    //! \tparam T data type of the field
-    //! \tparam VTYPE variant type
-    //! \tparam STYPE container type for the shape (default is shape_t)
-    //! \param o instance of VTYPE with the parent group
-    //! \param path Nexus path to the attribute
-    //! \param s shape of the attribute
-    //! \return object_types with the newly created attribute
-    //!
-    template<
-             typename T,
-             typename GTYPE,
-             typename FTYPE,
-             typename ATYPE,
-             typename ...TYPES,
-             typename STYPE = shape_t
-            > 
-    ATYPE create_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &o,
-                           const nxpath &path,const STYPE &s=STYPE())
-    {
-        typedef create_attribute_visitor<GTYPE,FTYPE,ATYPE,T,STYPE> visitor_t;
-
-        //check if the path describes an attribute
-        if(path.attribute().empty())
-            throw value_error(EXCEPTION_RECORD,
-                    "Path does not describe an attribute!");
-
-        //create a path to the parent object of the attribute
-        nxpath parent_path(path); 
-        parent_path.attribute("");
-
-        //obtain the parent for the target object - this will always be a 
-        //grou ptype
-        auto parent = get_object(o,parent_path);
-
-        return boost::apply_visitor(visitor_t(path.attribute(),s),parent);
-    }
-    
 
 //end of namespace
 }

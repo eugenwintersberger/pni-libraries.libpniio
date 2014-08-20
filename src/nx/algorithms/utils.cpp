@@ -21,22 +21,37 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include <pni/io/nx/algorithms/create_field.hpp>
+#include <pni/io/nx/algorithms/utils.hpp>
+#include <pni/io/nx/nxpath/nxpath.hpp>
 
 namespace pni{
 namespace io{
 namespace nx{
 
-    nxpath get_path(const nxpath &p)
+    nxpath get_path(const nxpath &p) noexcept
     {
         return p;
     }
+   
+    //------------------------------------------------------------------------
+    nxpath get_attribute_path(const nxpath &p) noexcept
+    {
+        return get_path(p);
+    }
 
+
+    //------------------------------------------------------------------------
     nxpath get_path(const string &p)
     {
         return nxpath::from_string(p);
     }
 
+    //------------------------------------------------------------------------
+    nxpath get_attribute_path(const string &p)
+    {
+        return get_path(".@"+p);
+    }
+    
 //end of namespace
 }
 }
