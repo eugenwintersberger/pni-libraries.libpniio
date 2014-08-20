@@ -25,7 +25,6 @@
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 #include "../nx.hpp"
-#include "../nexus_utils.hpp"
 #include "../nxobject_traits.hpp"
 #include "../../exceptions.hpp"
 #include "../../parsers/array_parser.hpp"

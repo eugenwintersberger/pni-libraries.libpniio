@@ -1,5 +1,4 @@
-set(HEADER_FILES nexus_utils.hpp
-                 nxattribute.hpp 
+set(HEADER_FILES nxattribute.hpp 
                  nxdate_time.hpp 
                  nxdeflate_filter.hpp 
                  nxfield.hpp 
@@ -28,6 +27,5 @@ install(FILES ${HEADER_FILES}
 
 add_subdirectory("h5")
 add_subdirectory("xml")
-add_subdirectory("utils")
 add_subdirectory("algorithms")
 add_subdirectory("nxpath")

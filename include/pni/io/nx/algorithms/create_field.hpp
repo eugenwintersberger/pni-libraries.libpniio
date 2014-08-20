@@ -23,8 +23,10 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
+//#include <pni/core/arrays.hpp>
 #include "../nxobject_traits.hpp"
+#include "../nximp_code_map.hpp"
+#include "../nxfilter.hpp"
 #include "get_object.hpp"
 
 namespace pni{
@@ -32,112 +34,6 @@ namespace io{
 namespace nx{
     
     using namespace pni::core;
-
-    //!
-    //! \ingroup algorithm_internal_code
-    //! \brief field creator 
-    //! 
-    //! This template selects which member function of a group type to use 
-    //! for field creation depending on the filter type. This is the 
-    //! default template which will be used in cases where the FTYPE is a 
-    //! real filter type. 
-    //!
-    //! \tparam FTYPE filter type
-    //!
-    template<typename FTYPE> struct field_creator
-    {
-        //!
-        //! \brief create field
-        //!
-        //! This static member function calls the field creation member of 
-        //! a group type. In this case the member including the filter as 
-        //! an argument will be used. 
-        //!
-        //! \throws nxgroup_error in case that field creation fails
-        //! \throws shape_mismatch_error in case the field shape and chunk 
-        //! shape do not match
-        //! \tparam T data type of the field
-        //! \tparam FT field type
-        //! \tparam GTYPE group type
-        //! \tparam STYPE container type for the shape
-        //! \tparam CSTYPE container type for the chunk shape
-        //! \param g instance of GTYPE - the parent group
-        //! \param name the name of the new field
-        //! \param s instance of STYPE with the field shape
-        //! \param cs instance of CSTYPE with the fields chunk shape
-        //! \param filter instance of FTYPE with the filter class
-        //! \return instance of FT - the newly created field
-        //!
-        template<
-                 typename T,
-                 typename FT,
-                 typename GTYPE,
-                 typename STYPE
-                 >
-        static FT create_field(const GTYPE &g,
-                               const string &name, 
-                               const STYPE &s,
-                               const STYPE &cs,
-                               const FTYPE &filter)
-        {
-            return g.template create_field<T>(name,s,cs,filter);
-        }
-    };
-
-    //-------------------------------------------------------------------------
-    //!
-    //! \ingroup algorithm_internal_code
-    //! \brief field creator 
-    //!
-    //! This is a specialization of the field_creator template. If FTYPE is 
-    //! int it is assumed that no filter shall be used. Thus the groups 
-    //! member function for field creation without a filter is used.
-    //!
-    template<> struct field_creator<int>
-    {
-        //!
-        //! \brief create field
-        //!
-        //! This static member function calls the field creation member of 
-        //! a group type. In this case the member including the filter as 
-        //! an argument will be used. 
-        //!
-        //! \throws nxgroup_error in case that field creation fails
-        //! \throws shape_mismatch_error in case the field shape and chunk 
-        //! shape do not match
-        //! \tparam T data type of the field
-        //! \tparam FT field type
-        //! \tparam GTYPE group type
-        //! \tparam STYPE container type for the shape
-        //! \tparam CSTYPE container type for the chunk shape
-        //! \param g instance of GTYPE - the parent group
-        //! \param name the name of the new field
-        //! \param s instance of STYPE with the field shape
-        //! \param cs instance of CSTYPE with the fields chunk shape
-        //! \param filter instance of FTYPE with the filter class
-        //! \return instance of FT - the newly created field
-        //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-        template<
-                 typename T,
-                 typename FT,
-                 typename GTYPE,
-                 typename STYPE,
-                 typename CSTYPE
-                >
-        static FT create_field(const GTYPE &g,
-                               const string &name,
-                               const STYPE &s,
-                               const CSTYPE &cs,
-                               const int &filter)
-        {
-
-            return g.template create_field<T>(name,s,cs);
-        }
-#pragma GCC diagnostic pop
-
-    };
 
     //-------------------------------------------------------------------------
     //!
@@ -156,28 +52,34 @@ namespace nx{
     //! \sa create_group
     //!
     template<
-             typename VTYPE,
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE,
              typename T,
              typename STYPE,
-             typename CSTYPE,
-             typename FTYPE
+             typename FILTERT
             > 
-    class create_field_visitor : public boost::static_visitor<VTYPE>
+    class create_field_visitor : public boost::static_visitor<
+                                 nxobject<GTYPE,FTYPE,ATYPE> 
+                                 >
     {
+        public:
+            //! result type
+            typedef nxobject<GTYPE,FTYPE,ATYPE> result_type;
+            //! Nexus group type
+            typedef GTYPE group_type;
+            //! Nexus field type
+            typedef FTYPE field_type;
+            //! Nexus attribute type
+            typedef ATYPE attribute_type;
+            //! define the filter type
+            typedef FILTERT filter_type;
         private:
             string _name;   //!< the name of the field
             STYPE  _shape;  //!< shape of field
-            CSTYPE _cshape; //!< chunk shape of the field
-            FTYPE  _filter; //!< filter type
+            STYPE  _cshape; //!< chunk shape of the field
+            filter_type  _filter; //!< reference to the filter
         public:
-            //! result type
-            typedef VTYPE result_type;
-            //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
-            //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
-            //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
 
             //----------------------------------------------------------------
             //!
@@ -190,7 +92,7 @@ namespace nx{
             //! \param filter filter instance to use
             //!
             create_field_visitor(const string &n,const STYPE &s,
-                                 const CSTYPE &cs,const FTYPE &filter):
+                                 const STYPE &cs,const filter_type &filter):
                 _name(n),
                 _shape(s),
                 _cshape(cs),
@@ -213,12 +115,9 @@ namespace nx{
             //!
             result_type operator()(const group_type &g) const
             {
-                typedef field_creator<FTYPE> creator_t;
-                auto f = creator_t::template create_field<T,field_type>(g,
-                         _name,_shape,_cshape,_filter);
+                auto f = g.template create_field<T>(_name,_shape,_cshape,_filter);
 
                 return result_type(f);
-
             }
 
             //-----------------------------------------------------------------
@@ -262,225 +161,132 @@ namespace nx{
 #pragma GCC diagnostic pop
     };
 
+    nxpath get_path(const nxpath &p);
 
-    //-------------------------------------------------------------------------
-    //!
-    //! \ingroup algorithm_code
-    //! \brief create_field wrapper
+    nxpath get_path(const string &p);
+
+    //------------------------------------------------------------------------
     //! 
-    //! This wrapper function for the create_field_visitor creates a new 
-    //! field below a parent group. No compression is used for this field. 
-    //! The shape arguments are optional. If not given a field of shape (1) 
-    //! is created. 
-    /*!
-    \code
-    object_types g = get_object(...);
-    auto field = create_field<int32>(g,"test",shape_t{4,4});
-    \endcode
-    */
+    //! \brief field construction
     //!
-    //! \throws nxgroup_error if stored object is a group or if field creation 
-    //! fails
-    //! \throws shape_mismatch_error if the chunk shape and the field shape 
-    //! do not match
-    //! \throws nxfield_error if the object stored in the variant is a field
-    //! \throws nxattribute_error if the object stored in the variant is an
-    //! attribute
-    //! \tparam T data type of the field
-    //! \tparam VTYPE variant type
-    //! \tparam STYPE container type for the shape (default is shape_t)
-    //! \tparam CSTYPE container type for the chunk shape (default is shape_t)
-    //! \param o instance of VTYPE with the parent group
-    //! \param n name of the new field
-    //! \param s the shape of the field
-    //! \param cs the chunk shape of the field
-    //! \return object_types with the newly created field
+    //! The full function to construct a field relative to a particular 
+    //! group.
     //!
     template<
              typename T,
-             typename VTYPE,
-             typename STYPE = shape_t,
-             typename CSTYPE = shape_t
-            > 
-    typename create_field_visitor<VTYPE,T,STYPE,CSTYPE,int>::result_type 
-    create_field(const VTYPE &o,const string &n,
-                 const STYPE &s={1},
-                 const CSTYPE &cs={1})
-    {
-        typedef create_field_visitor<VTYPE,T,STYPE,CSTYPE,int> visitor_t;
-        return boost::apply_visitor(visitor_t(n,s,cs,int(0)),o);
-    }
-    
-    //-------------------------------------------------------------------------
-    //!
-    //! \ingroup algorithm_code
-    //! \brief create_field wrapper
-    //!
-    //! This wrapper function for the create_field_visitor creates a new 
-    //! field below a parent group. In this case compression is used for the 
-    //! field. Compression always requires you to pass the shape arguments. 
-    /*!
-    \code
-    object_types g = get_object(...);
-    h5::nxdeflate_filter filter(5,true);
-
-    auto field = create_field<int32>(g,"test",shape_t{4,4},shape_t{1,4},filter);
-    \endcode
-    */
-    //!
-    //! \throws nxgroup_error if stored object is a group or if field 
-    //! creation fails
-    //! \throws shape_mismatch_error if the chunk shape and the field shape 
-    //! do not match
-    //! \throws nxfield_error if the object stored in the variant is a 
-    //! field
-    //! \throws nxattribute_error if the object stored in the variant is 
-    //! an attribute
-    //! \tparam T data type of the field
-    //! \tparam VTYPE variant type
-    //! \tparam STYPE container type for the shape (default is shape_t)
-    //! \tparam CSTYPE container type for the chunk shape (default is shape_t)
-    //! \tparam FTYPE filter type
-    //! \param o instance of VTYPE with the parent group
-    //! \param n name of the new field
-    //! \param s shape of the field
-    //! \param cs chunk shape of the field
-    //! \param filter instance of FTYPE
-    //! \return object_types with the newly created field
-    //!
-    template<
-             typename T,
-             typename VTYPE,
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE,
              typename STYPE,
-             typename CSTYPE,
-             typename FTYPE
-            > 
-    typename create_field_visitor<VTYPE,T,STYPE,CSTYPE,FTYPE>::result_type 
-    create_field(const VTYPE &o,const string &n,const STYPE &s,
-                 const CSTYPE &cs,const FTYPE &filter)
+             typename FILTERT,
+             typename PATHT
+            >
+    nxobject<GTYPE,FTYPE,ATYPE>
+    create_field(const nxobject<GTYPE,FTYPE,ATYPE> &location,const PATHT &path,
+                 const STYPE &shape,const STYPE &chunk,
+                 const FILTERT &filter)
     {
-        typedef create_field_visitor<VTYPE,T,STYPE,CSTYPE,FTYPE> visitor_t;
-        return boost::apply_visitor( visitor_t(n,s,cs,filter),o);
+        typedef create_field_visitor<GTYPE,FTYPE,ATYPE,T,STYPE,FILTERT> visitor_type;
+
+        nxpath fpath = get_path(path);
+
+        string field_name = fpath.back().first;
+        nxpath parent_path(fpath);
+        parent_path.pop_back();
+
+        nxobject<GTYPE,FTYPE,ATYPE> parent = get_object(location,parent_path);
+        return boost::apply_visitor(visitor_type(field_name,shape,chunk,filter),parent);
+
     }
-    
-    //-------------------------------------------------------------------------
+   
+    //------------------------------------------------------------------------
     //!
-    //! \ingroup algorithm_code
-    //! \brief create_field wrapper
+    //! \brief field construction template
     //!
-    //! This wrapper function for the create_field_visitor creates a new 
-    //! field whose location and name within the file is determined by a 
-    //! Nexus path object. The filename part of the path is ignored by this 
-    //! function. Intermediate groups are not created and are assumed to 
-    //! exist. Otherwise an exception will be thrown. No compression is 
-    //! used for this field. The shape arguments are optional. If not given 
-    //! a field of shape (1) is created. 
-    /*!
-    \code
-    nxpath path = path_from_string("/:NXentry/:NXinstrument/:NXdetector/data");
-    object_types root = get_object(...);
-    auto field = create_field<int32>(root,path,shape_t{4,4});
-    \endcode
-    */
-    //!
-    //! \throws nxgroup_error if stored object is a group or if field 
-    //! creation fails
-    //! \throws shape_mismatch_error if the chunk shape and the field 
-    //! shape do not match
-    //! \throws nxfield_error if the object stored in the variant is a 
-    //! field
-    //! \throws nxattribute_error if the object stored in the variant 
-    //! is an attribute
-    //! \tparam T data type of the field
-    //! \tparam VTYPE variant type
-    //! \tparam STYPE container type for the shape (default is shape_t)
-    //! \tparam CSTYPE container type for the chunk shape (default is 
-    //! shape_t)
-    //! \param o instance of VTYPE with the parent group
-    //! \param path Nexus path to the field
-    //! \param s shape of the new field
-    //! \param cs chunk shape of the field
-    //! \return object_types with the newly created group
+    //! This template does field construction without filters
     //!
     template<
              typename T,
-             typename VTYPE,
-             typename STYPE = shape_t,
-             typename CSTYPE = shape_t
-            > 
-    typename create_field_visitor<VTYPE,T,STYPE,CSTYPE,int>::result_type 
-    create_field(const VTYPE &o,const nxpath &path,const STYPE &s={1},
-                 const CSTYPE &cs={1})
-    {
-        typedef create_field_visitor<VTYPE,T,STYPE,CSTYPE,int> visitor_t;
-        nxpath group_path,target_path;
-
-        split_last(path,group_path,target_path);
-
-        VTYPE parent = get_object(o,group_path);
-
-        return boost::apply_visitor(visitor_t(target_path.begin()->first,
-                                              s,cs,int(0)),parent);
-    }
-    
-    //-------------------------------------------------------------------------
-    //!
-    //! \ingroup algorithm_code
-    //! \brief create_field wrapper
-    //!
-    //! This wrapper function for the create_field_visitor creates a new 
-    //! field. The location and name of the field is determined by a Nexus 
-    //! path with respect to the parent object passed as the first argument. 
-    //! Intermediate groups in the path are assumed to exist. Otherwise an 
-    //! exception will be thrown.  In this case compression is used for the 
-    //! field. Compression always requires you to pass the shape arguments. 
-    /*!
-    \code
-    nxpath path = path_from_string("/:NXentry/:NXinstrument/:NXdetector/data");
-    h5::nxdeflate_filter filter(5,true);
-    object_types root = get_object(...);
-    auto field = create_field<int32>(root,path,shape_t{4,4},shape_t{1,4},filter);
-    \endcode
-    */
-    //! \throws nxgroup_error if stored object is a group or if field 
-    //! creation fails
-    //! \throws shape_mismatch_error if the chunk shape and the field shape 
-    //! do not match
-    //! \throws nxfield_error if the object stored in the variant is a field
-    //! \throws nxattribute_error if the object stored in the variant is an
-    //! attribute
-    //! \tparam T data type of the field
-    //! \tparam VTYPE variant type
-    //! \tparam STYPE container type for the shape (default is shape_t)
-    //! \tparam CSTYPE container type for the chunk shape (default is shape_t)
-    //! \tparam FTYPE filter type
-    //! \param o instance of VTYPE with the parent group
-    //! \param path the path to the new location of the field
-    //! \param s shape of the field
-    //! \param cs chunk shape of the field
-    //! \param filter instance of FTYPE
-    //! \return object_types with the newly created group
-    //!
-    template<
-             typename T,
-             typename VTYPE,
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE,
              typename STYPE,
-             typename CSTYPE,
-             typename FTYPE
+             typename PATHT
             > 
-    typename create_field_visitor<VTYPE,T,STYPE,CSTYPE,FTYPE>::result_type 
-    create_field(const VTYPE &o,const nxpath &path,const STYPE &s,
-                 const CSTYPE &cs,const FTYPE &filter)
+    nxobject<GTYPE,FTYPE,ATYPE> 
+    create_field(const nxobject<GTYPE,FTYPE,ATYPE> &parent,const PATHT &path,
+                 const STYPE &shape,const STYPE &chunk)
     {
-        typedef create_field_visitor<VTYPE,T,STYPE,CSTYPE,FTYPE> visitor_t;
-        nxpath group_path,target_path;
+        typename nxobject_trait<nximp_code_map<ATYPE>::icode>::filter_type filter;
+        
+        return create_field<T>(parent,path,shape,chunk,filter);
+    }
 
-        split_last(path,group_path,target_path);
+    //------------------------------------------------------------------------
+    template<
+             typename T,
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE,
+             typename PATHT,
+             typename STYPE = shape_t
+            > 
+    nxobject<GTYPE,FTYPE,ATYPE> 
+    create_field(const nxobject<GTYPE,FTYPE,ATYPE> &parent,const PATHT &path,
+                 const STYPE &shape={1})
+    {
+        STYPE chunk(shape);
+        chunk.front() = 1;
+        
+        return create_field<T>(parent,path,shape,chunk);
+    }
 
-        VTYPE parent = get_object(o,group_path);
-
-        return boost::apply_visitor( visitor_t(target_path.begin()->first,
-                                    s,cs,filter),parent);
+    //--------------------------------------------------------------------------
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE,
+             typename ...ARGTS
+            >
+    FTYPE create_field(const nxobject<GTYPE,FTYPE,ATYPE> &o,type_id_t tid,ARGTS...args)
+    {
+        if(tid == type_id_t::UINT8)
+            return create_field<uint8>(o,args...);
+        else if(tid == type_id_t::INT8)
+            return create_field<int8>(o,args...);
+        else if(tid == type_id_t::UINT16)
+            return create_field<uint16>(o,args...);
+        else if(tid == type_id_t::INT16)
+            return create_field<int16>(o,args...);
+        else if(tid == type_id_t::UINT32)
+            return create_field<uint32>(o,args...);
+        else if(tid == type_id_t::INT32)
+            return create_field<int32>(o,args...);
+        else if(tid == type_id_t::UINT64)
+            return create_field<uint64>(o,args...);
+        else if(tid == type_id_t::INT64)
+            return create_field<int64>(o,args...);
+        else if(tid == type_id_t::FLOAT32)
+            return create_field<float32>(o,args...);
+        else if(tid == type_id_t::FLOAT64)
+            return create_field<float64>(o,args...);
+        else if(tid == type_id_t::FLOAT128)
+            return create_field<float128>(o,args...);
+        else if(tid == type_id_t::COMPLEX32)
+            return create_field<complex32>(o,args...);
+        else if(tid == type_id_t::COMPLEX64)
+            return create_field<complex64>(o,args...);
+        else if(tid == type_id_t::COMPLEX128)
+            return create_field<complex128>(o,args...);
+        else if(tid == type_id_t::BINARY)
+            return create_field<binary>(o,args...);
+        else if(tid == type_id_t::STRING)
+            return create_field<string>(o,args...);
+        else if(tid == type_id_t::BOOL)
+            return create_field<bool_t>(o,args...);
+        else
+            throw type_error(EXCEPTION_RECORD,
+                    "Unknown type id!");
     }
 
 //end of namespace

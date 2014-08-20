@@ -68,9 +68,16 @@ namespace nx{
         typedef h5::nxfield field_type;
         typedef h5::nxattribute attribute_type;
         typedef h5::h5link link_type;
+        typedef h5::nxfilter filter_type;
         typedef h5::nxdeflate_filter deflate_type;
         typedef h5::nxobject object_type;
     };
+
+    NXIMPCODEMAPDECL(h5::nxfile,nximp_code::HDF5);
+    NXIMPCODEMAPDECL(h5::nxgroup,nximp_code::HDF5);
+    NXIMPCODEMAPDECL(h5::nxfield,nximp_code::HDF5);
+    NXIMPCODEMAPDECL(h5::nxattribute,nximp_code::HDF5);
+
 
 
 //need to setup the implementation code maps

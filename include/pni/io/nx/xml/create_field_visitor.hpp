@@ -22,12 +22,13 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include "../nexus_utils.hpp"
 #include "../algorithms.hpp"
 #include "xml_node.hpp"
 #include "node_data.hpp"
 #include "attribute_data.hpp"
 #include "dim2shape.hpp"
+#include "../nxobject.hpp"
+#include "../nxobject_traits.hpp"
 
 namespace pni{
 namespace io{
@@ -43,8 +44,12 @@ namespace xml{
     //! 
     //! This visitor creates a group from an XML object.
     //!
-    template<typename VTYPE> 
-    class create_field_visitor : public boost::static_visitor<VTYPE>
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    class create_field_visitor : public boost::static_visitor<nxobject<GTYPE,FTYPE,ATYPE>>
     {
         private: 
             node _xml_node; //!< XML node data
@@ -65,10 +70,7 @@ namespace xml{
             //! \param n the XML node with the data
             //! \param f instance of a Nexus field
             //!
-            template<
-                     typename T,
-                     typename FTYPE
-                    >
+            template<typename T>
             void copy_node_to_field(const node &n,const FTYPE &f) const
             {
                 if(f.size() == 1)
@@ -99,7 +101,6 @@ namespace xml{
             //! \param n XML node from which to read the data
             //! \param f instance of FTYPE to where the data shall be writen 
             //!
-            template<typename FTYPE>
             void copy_node_to_field(const node &n,const FTYPE &f) const
             {
                 if(f.type_id() == type_id_t::UINT8)
@@ -135,13 +136,13 @@ namespace xml{
 
         public:
             //! result type
-            typedef VTYPE result_type;
+            typedef nxobject<GTYPE,FTYPE,ATYPE> result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
 
             //-----------------------------------------------------------------
             //!
@@ -188,7 +189,7 @@ namespace xml{
                 //at this point we should have gathered enough information in order to
                 //create the field.
                 type_id_t type_id = type_id_from_str(type);
-                auto f = pni::io::nx::create_field(g,name,type_id,shape);
+                auto f = pni::io::nx::create_field(result_type(g),type_id,name,shape);
 
 
                 //OK - in the next step we try to gather some optional information that
@@ -293,11 +294,15 @@ namespace xml{
     //! \param n the XML node
     //! \return a field instancen as a variant
     //!
-    template<typename VTYPE> 
-    typename create_field_visitor<VTYPE>::result_type 
-    create_field(const VTYPE &o,const node &n)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    FTYPE create_field(const nxobject<GTYPE,FTYPE,ATYPE> &o,const node &n)
     {
-        return boost::apply_visitor(create_field_visitor<VTYPE>(n),o);
+        typedef create_field_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(n),o);
     }
 
 //end of namespace

@@ -29,7 +29,6 @@
 #include<cppunit/extensions/HelperMacros.h>
 
 #include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/nexus_utils.hpp>
 #include <pni/io/nx/algorithms.hpp>
 
 #include <pni/core/arrays.hpp>
@@ -96,10 +95,10 @@ void NXFieldTest::test_creation()
     shape_t cshape({100});
 
     //create a field with a utilty function
-    field = create_field(root,"test_util", type_id_t::UINT32);
-    field = create_field(root,"test_util2",type_id_t::FLOAT128,
+    field = create_field(nxobject(root), type_id_t::UINT32,"test_util");
+    field = create_field(nxobject(root),type_id_t::FLOAT128,"test_util2",
                          shape_t{0,1024,1024},shape_t{1,1024,1024});
-    field = create_field(root,"test_util3",type_id_t::FLOAT128,
+    field = create_field(nxobject(root),type_id_t::FLOAT128,"test_util3",
                          shape_t{0,1024,1024},shape_t{1,1024,1024},deflate);
 
 }
