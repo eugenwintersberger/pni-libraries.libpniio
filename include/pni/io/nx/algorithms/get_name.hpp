@@ -38,12 +38,15 @@ namespace nx{
     //! \li nxgroup
     //! \li nxfile
     //! \li nxattribute
-    //! \li nxfield
     //! 
     //! \throws io_error in case of problems
     //! \throws invalid_object_erro in case of an invalid object
+    //! \throws type_error if a type cannot be retrieved for this type
+    //! \throws object_error in case of any other error
+    //!
     //! \tparam OTYPE object type template
     //! \tparam IMPID implementation ID
+    //!
     //! \param o reference to the object
     //! \return name of the object
     //!
@@ -92,8 +95,12 @@ namespace nx{
             //! \brief process group instances
             //!
             //! Retrieve the name from a group instance.
+            //!
             //! \throws io_error in case of IO issues
             //! \throws invalid_object_error if group not valid
+            //! \throws type_error if a type cannot be retrieved for this type
+            //! \throws object_error in case of any other error
+            //!
             //! \param g group instance
             //! \return string with the group name
             //!
@@ -110,6 +117,9 @@ namespace nx{
             //!
             //! \throws io_error in case of IO issues
             //! \throws invalid_object_error if the field is not valid
+            //! \throws type_error if a type cannot be retrieved for this type
+            //! \throws object_error in case of any other error
+            //!
             //! \param f field instance
             //! \return name of the field
             //!
@@ -126,6 +136,9 @@ namespace nx{
             //!
             //! \throws io_error in case of IO issues
             //! \throws invalid_object_error in case the attribute is not valid
+            //! \throws type_error if a type cannot be retrieved for this type
+            //! \throws object_error in case of any other error
+            //!
             //! \param a attribute instance
             //! \return name of the attribute
             //!
@@ -144,9 +157,13 @@ namespace nx{
     //! 
     //! \throws io_error in case of IO errors
     //! \throws invalid_oject_error if the object is not valid
+    //! \throws type_error if a type cannot be retrieved for this type
+    //! \throws object_error in case of any other error
+    //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //!
     //! \param o instance of nxobject
     //! \return name of the object
     //!

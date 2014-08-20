@@ -60,6 +60,7 @@ void get_name_test::test_group()
 
     CPPUNIT_ASSERT(get_name(root)  == "/");
     CPPUNIT_ASSERT(get_name(group) == "group");
+    CPPUNIT_ASSERT_THROW(get_name(h5::nxgroup()),invalid_object_error);
 }
 
 //----------------------------------------------------------------------------
@@ -68,6 +69,7 @@ void get_name_test::test_field()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     CPPUNIT_ASSERT(get_name(field)== "data");
+    CPPUNIT_ASSERT_THROW(get_name(h5::nxfield()),invalid_object_error);
 }
 
 //----------------------------------------------------------------------------
@@ -76,6 +78,7 @@ void get_name_test::test_attribute()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     CPPUNIT_ASSERT(get_name(attribute) == "NX_class");
+    CPPUNIT_ASSERT_THROW(get_name(h5::nxattribute()),invalid_object_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -85,6 +88,8 @@ void get_name_test::test_nxobject_group()
     
     h5::nxobject object = group;
     CPPUNIT_ASSERT(get_name(object) == "group");
+    CPPUNIT_ASSERT_THROW(get_name(h5::nxobject(h5::nxgroup())),
+                         invalid_object_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -94,6 +99,8 @@ void get_name_test::test_nxobject_field()
     
     h5::nxobject object = field;
     CPPUNIT_ASSERT(get_name(object)=="data");
+    CPPUNIT_ASSERT_THROW(get_name(h5::nxobject(h5::nxfield())),
+                         invalid_object_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -103,6 +110,8 @@ void get_name_test::test_nxobject_attribute()
     
     h5::nxobject object = attribute;
     CPPUNIT_ASSERT(get_name(object) == "NX_class");
+    CPPUNIT_ASSERT_THROW(get_name(h5::nxobject(h5::nxattribute())),
+                         invalid_object_error);
    
 }
 

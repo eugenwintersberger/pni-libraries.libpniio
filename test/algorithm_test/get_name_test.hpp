@@ -40,7 +40,6 @@ using namespace pni::io::nx;
 //! Test the get_name function template. There are two implementations of this 
 //! template. The first one works on the following types
 //!
-//! \li nxfile
 //! \li nxgroup
 //! \li nxfield
 //! \li nxattribute
