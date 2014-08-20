@@ -36,6 +36,8 @@ namespace nx{
     //! nxgroup, or nxfile. 
     //!
     //! \throws object_error in case of errors
+    //! \throws type_error if internal object type is not supported
+    //!
     //! \tparam OTYPE object type
     //!
     template<typename OTYPE> void close(OTYPE &o)
@@ -76,7 +78,11 @@ namespace nx{
             //! \brief process group instances
             //!
             //! Close the group.
+            //!
             //! \throws object_error in case closing the group fails
+            //! \throws type_error if internal object type could not be 
+            //!                    determined
+            //!
             //! \param g reference to group instance
             //! \return false
             //!
@@ -90,7 +96,11 @@ namespace nx{
             //! \brief process field instances
             //!
             //! Close the field.
+            //!
             //! \throws object_error in case closing the field fails
+            //! \throws type_error if internal object type could not be 
+            //!                    determined
+            //!
             //! \param f reference to field instance
             //! \return true
             //!
@@ -104,7 +114,11 @@ namespace nx{
             //! \brief process attribute instances
             //!
             //! Close the attribute.
+            //!
             //! \throws object_error in case closing the attribute fails
+            //! \throws type_error if internal object type could not be 
+            //!                    determined
+            //!
             //! \param a reference to attribute instance
             //! \return false
             //!
@@ -121,6 +135,10 @@ namespace nx{
     //!
     //! Wrapper function around the close_visitor. The function closes the 
     //! object stored in the variant type passed to it.
+    //!
+    //! \throws object_error in case of an error during closing the object
+    //! \throws type_error if the internal object type could not be 
+    //!                    determined
     //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
