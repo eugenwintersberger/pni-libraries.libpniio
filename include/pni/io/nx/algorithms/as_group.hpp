@@ -61,6 +61,7 @@ namespace nx{
             //! \brief process group instances
             //!
             //! Returns the instance of the group object.
+            //!
             //! \param g group instance
             //! \return instance of group type
             //!
@@ -74,7 +75,9 @@ namespace nx{
             //! \brief process field instances
             //!
             //! Throw an exception as the object is not a field type instance
+            //!
             //! \throws type_error instance not a group type
+            //!
             //! \param f field instance
             //! \return empty instance of group_type
             //!
@@ -94,7 +97,9 @@ namespace nx{
             //! \brief process attribute instances
             //!
             //! Throw an exception as the object is not a group object.
+            //!
             //! \throws type_error no group instance
+            //!
             //! \param a attribute instance
             //! \return invalid group instance
             //!
@@ -126,6 +131,7 @@ namespace nx{
     */
     //!
     //! \throws type_error if stored object is not a group type
+    //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type

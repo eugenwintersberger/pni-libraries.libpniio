@@ -116,7 +116,7 @@ namespace nx{
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
     //! \param o instance of nxobject<GTYPE,FTYPE,ATYPE>
-    //! \return true if the object is a field
+    //! \return true if the object is a field, false otherwise
     //!
     template<
              typename GTYPE,

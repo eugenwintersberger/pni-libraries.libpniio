@@ -34,9 +34,16 @@ namespace nx{
     //! \brief visitor checking object validity
     //! 
     //! Check if the passed object is valid and return true if this is the 
-    //! case. This template code takes instances of nxattribute, nxfield,
-    //! and nxgroup as input arguments.
+    //! case. This template code takes instances 
+    //! \li nxattribute
+    //! \li nxfield
+    //! \li nxgroup
+    //! \li nxfile
+    //!
+    //! as input arguments.
     //! 
+    //! \throws object_error if the validity check fails
+    //!
     //! \tparam OTYPE object type
     //! \param o instance of OTYPE
     //! \return true if the object is valid
@@ -81,10 +88,13 @@ namespace nx{
             //!
             //! Checks a group instance for its validity. If the group is 
             //! valid true is returned, otherwise false. 
+            //! 
+            //! \throws object_error if validity check fails
+            //!
             //! \param g group instance
             //! \return true if valid, false otherwise
             //!
-            result_type operator()(const group_type &g) const noexcept
+            result_type operator()(const group_type &g) const 
             {
                 return is_valid(g);
             }
@@ -95,11 +105,13 @@ namespace nx{
             //!
             //! Checks a field instance for its validity. If the field is 
             //! valid true is returned, otherwise false. 
+            //! 
+            //! \throws object_error if validity check fails
             //!
             //! \param f field instance
             //! \return true if valid, false otherwise
             //!
-            result_type operator()(const field_type &f) const noexcept
+            result_type operator()(const field_type &f) const 
             {
                 return is_valid(f);
             }
@@ -110,10 +122,13 @@ namespace nx{
             //!
             //! Checks a attribute instance for its validity. If the attribute 
             //! is valid true is returned, otherwise false. 
-            //!  \param a attribute instance
+            //!
+            //! \throws object_error if validity check fails
+            //!
+            //! \param a attribute instance
             //! \return true if valid, false otherwise
             //!
-            result_type operator()(const attribute_type &a) const noexcept
+            result_type operator()(const attribute_type &a) const 
             {
                 return is_valid(a);
             }
@@ -136,6 +151,9 @@ namespace nx{
     }
     \endcode
     */
+    //!
+    //! \throws object_error if validity check fails
+    //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type

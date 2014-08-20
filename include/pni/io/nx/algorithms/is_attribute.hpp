@@ -109,9 +109,9 @@ namespace nx{
     //! 
     //! Function template checking if the object stored in an nxobject 
     //! instance is an instance of nxattribute. If this is the case true is 
-    //! returned, otherwise. The function does not test for the validity of 
-    //! an object.  It just provides runtime information about the type of 
-    //! the object stored in the nxobject instance.
+    //! returned, otherwise false. The function does not test for the validity 
+    //! of an object.  It just provides runtime information about the type 
+    //! of the object stored in the nxobject instance.
     //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type

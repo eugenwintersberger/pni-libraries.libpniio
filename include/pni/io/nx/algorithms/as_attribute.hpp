@@ -62,7 +62,9 @@ namespace nx{
             //!
             //! Throws an exception as the stored object is not an attribute 
             //! type.
+            //!
             //! \throws type_error object not an attribute
+            //!
             //! \param g group instance
             //! \return invalid attribute instance
             //!
@@ -83,7 +85,9 @@ namespace nx{
             //!
             //! Throw an exception as the object is not an attribute type 
             //! instance
+            //!
             //! \throws type_error instance not a group type
+            //!
             //! \param f field instance
             //! \return invalid attribute instance
             //!
@@ -128,6 +132,7 @@ namespace nx{
     */
     //!
     //! \throws type_error if stored object is not a attribute type
+    //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type

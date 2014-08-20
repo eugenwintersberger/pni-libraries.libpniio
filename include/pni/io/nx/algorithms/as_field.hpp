@@ -61,7 +61,9 @@ namespace nx{
             //! \brief process group instances
             //!
             //! Throws an exception as the stored object is not a field.
+            //!
             //! \throws type_error groups do not have a rank
+            //!
             //! \param g group instance
             //! \return invalid field instance
             //!
@@ -81,6 +83,7 @@ namespace nx{
             //! \brief process field instances
             //!
             //! Returns the field stored in the variant.
+            //!
             //! \param f field instance
             //! \return field instance
             //!
@@ -94,7 +97,9 @@ namespace nx{
             //! \brief process attribute instances
             //!
             //! Throw an exception as the object is not a field object.
+            //!
             //! \throws tpye_error no field instance
+            //!
             //! \param a attribute instance
             //! \return invalid field instance
             //!
@@ -125,6 +130,7 @@ namespace nx{
     */
     //!
     //! \throws type_error if stored object is not a field type
+    //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
