@@ -75,6 +75,7 @@ void create_field_test::test_group_from_path()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject gi = root["/group/instrument"];
+    CPPUNIT_ASSERT(get_path(gi)=="/group:NXentry/instrument:NXinstrument");
     nxpath p = nxpath::from_string("/:NXentry/:NXinstrument/data");
 
     
@@ -83,6 +84,7 @@ void create_field_test::test_group_from_path()
     CPPUNIT_ASSERT(is_valid(f));
     CPPUNIT_ASSERT(is_field(f));
     CPPUNIT_ASSERT(get_name(f)=="data");
+    CPPUNIT_ASSERT(get_path(f)=="/group:NXentry/instrument:NXinstrument/data");
     CPPUNIT_ASSERT(get_rank(f)==1);
     CPPUNIT_ASSERT(get_type(f) == type_id_t::FLOAT32);
     auto s = get_shape<shape_t>(f);
