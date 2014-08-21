@@ -23,9 +23,11 @@
 
 #include <boost/current_function.hpp>
 #include<cppunit/extensions/HelperMacros.h>
+#include <pni/io/exceptions.hpp>
 
 #include "get_class_test.hpp"
 
+using pni::io::invalid_object_error;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(get_class_test);
 
@@ -55,6 +57,10 @@ void get_class_test::test_group()
     
     object_type object = group;
     CPPUNIT_ASSERT(get_class(object)=="NXentry");
+    CPPUNIT_ASSERT(get_class(group) =="NXentry");
+    CPPUNIT_ASSERT_THROW(get_class(object_type(h5::nxgroup())),
+                         invalid_object_error);
+    CPPUNIT_ASSERT_THROW(get_class(h5::nxgroup()),invalid_object_error);
 }
 
 //-----------------------------------------------------------------------------

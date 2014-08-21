@@ -29,6 +29,37 @@ namespace io{
 namespace nx{
 
     //!
+    //! \ingroup algorithm_code
+    //! \brief get the class of a group
+    //! 
+    //! This function template returns the class of a group which is stored in 
+    //! its NX_class attribute.
+    //!
+    //! \throws invalid_object_error if parent group is not valid
+    //! \throws shape_mismatch_error the attribute is not a scalar
+    //! \throws type_error the attribute type is not supported
+    //! \throws io_error attribute data retrieval failed
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam IMPID implementation ID for the group
+    //! \param group the group for which the class should be obtained
+    //! \return string with class type
+    //! 
+    template<
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID
+            >
+    string get_class(const OTYPE<IMPID> &group)
+    {
+        string group_class;
+        if(group.attributes.exists("NX_class"))
+            group.attributes["NX_class"].read(group_class);
+
+        return group_class;
+    }
+
+    //------------------------------------------------------------------------
+    //!
     //! \ingroup algorithm_internal_code
     //! \brief get class visitor
     //!
@@ -75,11 +106,7 @@ namespace nx{
             //!
             result_type operator()(const group_type &g) const
             {
-                result_type buffer;
-                if(g.attributes.exists("NX_class"))
-                    g.attributes["NX_class"].read(buffer);
-
-                return buffer;
+                return get_class(g);
             }
 
             //-----------------------------------------------------------------
@@ -130,13 +157,9 @@ namespace nx{
 
     //!
     //! \ingroup algorithm_code
-    //! \brief get class wrapper
+    //! \brief get group class
     //!
-    //! Wrapper function for the get_class_visitor template. If the object 
-    //! stored in the variant type is a group its Nexus class will be 
-    //! retrieved. If the group does not have the NX_classs attribute an 
-    //! exception will be thrown.  Exceptions are thrown also in cases 
-    //! where the object stored in the variant are fields or attributes.
+    //! Return the class of a group.
     //!
     //! \throws type_error if the passed object is not a group
     //! \throws invalid_object_error if the passed object is not valid
@@ -144,8 +167,11 @@ namespace nx{
     //! \throws io_error if attribute data could not be retrieved
     //! \throws object_error in case of any other error
     //! 
-    //! \tparam VTYPE variant type
-    //! \param o instance of VTYPE
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //!
+    //! \param o group as instance of nxobject
     //! \return Nexus class as a tring
     //!
     template<
