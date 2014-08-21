@@ -113,18 +113,30 @@ namespace h5{
     //-------------------------------------------------------------------------
     type_imp::index_vector_type attribute_imp::shape() const 
     {
+        if(!is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Cannot obtain shape from an invalid object!");
+
         return _dspace.shape();
     }
     
     //-------------------------------------------------------------------------
     size_t attribute_imp::size() const 
     { 
+        if(!is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Cannot obtain size from an invalid attribute!");
+
         return _dspace.size(); 
     }
 
     //-------------------------------------------------------------------------
     size_t attribute_imp::rank() const 
     { 
+        if(!is_valid())
+            throw invalid_object_error(EXCEPTION_RECORD,
+                    "Cannot obtain rank from an invalid attribute!");
+
         return _dspace.rank(); 
     }
     

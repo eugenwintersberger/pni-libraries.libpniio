@@ -176,10 +176,14 @@ template<typename APTYPE> void NXAttributeTest<APTYPE>::test_creation()
 {
     //checking the default constructor
     nxattribute a;
-    CPPUNIT_ASSERT(a.size()==1);
     CPPUNIT_ASSERT(!a.is_valid());
-    CPPUNIT_ASSERT(a.rank() == 1);
+    CPPUNIT_ASSERT_THROW(a.shape<shape_t>(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(a.type_id(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(a.size(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(a.rank(),invalid_object_error);
     CPPUNIT_ASSERT_THROW(a.filename(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(a.name(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(a.parent(),invalid_object_error);
 
     //creating a scalar attribute
     nxattribute a1(_parent.attributes.template create<string>("attribute"));

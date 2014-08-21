@@ -22,7 +22,9 @@
 //
 #include "attribute_imp_test.hpp"
 #include <pni/io/nx/nxdate_time.hpp>
+#include <pni/io/exceptions.hpp>
 
+using pni::io::invalid_object_error;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(attribute_imp_test);
 
@@ -50,6 +52,13 @@ void attribute_imp_test::test_creation()
     //default constructor
     attribute_imp a;
     CPPUNIT_ASSERT(!a.is_valid());
+    CPPUNIT_ASSERT_THROW(a.filename(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(a.size(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(a.type_id(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(a.shape(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(a.rank(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(a.name(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(a.parent(),invalid_object_error);
   
     //test constructor from new object
     attribute_imp a1(create_attribute(root_group.object(),
