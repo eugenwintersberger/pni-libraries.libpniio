@@ -28,6 +28,8 @@
 #include "../common.hpp"
 #include "../data.hpp"
 #include <pni/core/arrays.hpp>
+#include <pni/io/exceptions.hpp>
+using pni::io::invalid_object_error;
 
 template<typename T> using sarray = static_array<T,10,20>;
 
@@ -177,9 +179,11 @@ template<typename APTYPE> void NXAttributeTest<APTYPE>::test_creation()
     CPPUNIT_ASSERT(a.size()==1);
     CPPUNIT_ASSERT(!a.is_valid());
     CPPUNIT_ASSERT(a.rank() == 1);
+    CPPUNIT_ASSERT_THROW(a.filename(),invalid_object_error);
 
     //creating a scalar attribute
     nxattribute a1(_parent.attributes.template create<string>("attribute"));
+    CPPUNIT_ASSERT(a1.filename() == "NXAttributeTest.nxs");
     CPPUNIT_ASSERT(a1.is_valid());
     CPPUNIT_ASSERT(a1.type_id() == type_id_t::STRING);
     CPPUNIT_ASSERT(a1.rank() == 1);

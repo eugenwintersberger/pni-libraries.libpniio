@@ -32,6 +32,9 @@
 #include <pni/io/nx/algorithms.hpp>
 
 #include <pni/core/arrays.hpp>
+#include <pni/io/exceptions.hpp>
+
+using pni::io::invalid_object_error;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(NXFieldTest);
 
@@ -61,9 +64,12 @@ void NXFieldTest::test_creation()
 	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
 	nxfield field;
+    CPPUNIT_ASSERT(!field.is_valid());
+    CPPUNIT_ASSERT_THROW(field.filename(),invalid_object_error);
 
 	CPPUNIT_ASSERT_NO_THROW(field = root.create_field<uint16>("test1"));
     CPPUNIT_ASSERT(field.is_valid());
+    CPPUNIT_ASSERT(field.filename() == "NXFieldTest.h5");
     CPPUNIT_ASSERT(field.rank()==1);
     CPPUNIT_ASSERT(field.size() == 1);
 

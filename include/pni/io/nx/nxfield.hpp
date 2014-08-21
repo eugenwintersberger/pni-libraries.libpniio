@@ -794,6 +794,25 @@ namespace nx{
 
             //---------------------------------------------------------------
             //!
+            //! \brief return filename
+            //! 
+            //! Returns the name of the file the field belongs too.
+            //!
+            //! \throws invalid_object_error if the field is not valid
+            //! \throws io_error if the filename information retrieval fails
+            //! \throws type_error if the internal object type does not 
+            //! support filename retrieval
+            //! \throws object_error in case of any other error
+            //!
+            //! \return name of the file
+            //!
+            string filename() const 
+            {
+                return _imp.filename();
+            }
+
+            //---------------------------------------------------------------
+            //!
             //! \brief close field
             //!
             //! \throws type_error if object type could not be determined 

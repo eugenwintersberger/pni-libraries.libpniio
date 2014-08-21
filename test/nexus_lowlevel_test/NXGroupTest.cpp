@@ -31,6 +31,9 @@
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/nxobject_type.hpp>
 #include <pni/io/nx/algorithms.hpp>
+#include <pni/io/exceptions.hpp>
+
+using pni::io::invalid_object_error;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(NXGroupTest);
 
@@ -82,9 +85,11 @@ void NXGroupTest::test_creation()
 	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 	nxgroup g;
     CPPUNIT_ASSERT(!g.is_valid());
+    CPPUNIT_ASSERT_THROW(g.filename(),invalid_object_error);
 
 	g = _f.root().create_group("hello").create_group("world");
     CPPUNIT_ASSERT(g.is_valid());
+    CPPUNIT_ASSERT(g.filename() == "NXGroupTest.h5");
 	g.close();
     CPPUNIT_ASSERT(!g.is_valid());
 	g = _f.root().create_group("directory_1");
