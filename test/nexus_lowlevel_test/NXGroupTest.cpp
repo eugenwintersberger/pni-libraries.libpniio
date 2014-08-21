@@ -85,7 +85,16 @@ void NXGroupTest::test_creation()
 	std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 	nxgroup g;
     CPPUNIT_ASSERT(!g.is_valid());
+    CPPUNIT_ASSERT_THROW(g.at("hello"),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(g["hello"],invalid_object_error);
+    CPPUNIT_ASSERT_THROW(g.size(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(g.parent(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(g.at(0),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(g[0],invalid_object_error);
     CPPUNIT_ASSERT_THROW(g.filename(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(g.has_child("hello"),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(g.remove("hello"),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(g.name(),invalid_object_error);
 
 	g = _f.root().create_group("hello").create_group("world");
     CPPUNIT_ASSERT(g.is_valid());

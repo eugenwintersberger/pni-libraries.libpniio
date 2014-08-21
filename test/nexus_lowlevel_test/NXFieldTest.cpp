@@ -66,6 +66,13 @@ void NXFieldTest::test_creation()
 	nxfield field;
     CPPUNIT_ASSERT(!field.is_valid());
     CPPUNIT_ASSERT_THROW(field.filename(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(field.name(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(field.parent(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(field.rank(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(field.size(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(field.shape<shape_t>(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(field.type_id(),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(field.grow(0),invalid_object_error);
 
 	CPPUNIT_ASSERT_NO_THROW(field = root.create_field<uint16>("test1"));
     CPPUNIT_ASSERT(field.is_valid());
