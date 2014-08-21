@@ -40,32 +40,36 @@ namespace nx{
     //! 
     //! Append all attributes of a particular object to a container. 
     //! The container type has to provide a push_back function as any STL 
-    //! container does. By appending the attribtues we avoid allocation problems
-    //! of the container. The Nexus object can be either a group or a field
-    //! object.
-    //! 
+    //! container does. The value_type of the container must be an appropriate
+    //! instance of nxobject. Appending the attributes has several advantages:
+    //! \li we do not need to allocate memory in advance
+    //! \li we can collect attributes from different parent objects
+    //!
+    //! \throws invalid_object_error if the parent is not valid
+    //! \throws object_error in case of any other error
+    //!
     //! \tparam CTYPE container type
     //! \tparam OTYPE object template
     //! \tparam IMPID implementation ID of the object
-    //! \param o Nexus object
-    //! \param c container to which to append
+    //!
+    //! \param parent reference to the object holding the attributes
+    //! \param container the container instance where to append the attributes
     //! 
     template<
              typename CTYPE,
              template<nximp_code> class OTYPE,
              nximp_code IMPID
             >
-    void get_attributes(const OTYPE<IMPID> &o,CTYPE &c)
+    void get_attributes(const OTYPE<IMPID> &parent,CTYPE &container)
     {
-        static_assert(std::is_same<typename CTYPE::value_type,
-                      typename nxobject_trait<IMPID>::attribute_type>::value,
+        typedef typename nxobject_trait<IMPID>::object_type object_type;
+        typedef typename CTYPE::value_type value_type;
+        static_assert(std::is_same<value_type,object_type>::value,
                       "The target container value type must be the same as the"
                       " variant type!");
 
-        auto iter = o.attr_begin();
-        auto end = o.attr_end();
-
-        while(iter!=end) c.push_back(*iter++);
+        for(auto attribute: parent.attributes) 
+            container.push_back(attribute);
     }
 
 
@@ -75,6 +79,7 @@ namespace nx{
     //! \brief get attributes visitor
     //! 
     //! Adds all attributes of an object to a container.
+    //!
     //! \tparam CTYPE container template
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
@@ -108,7 +113,9 @@ namespace nx{
             //!
             //! \brief process groups
             //! 
-            //! Append group attributes to the attribute container.
+            //! \throws invalid_object_error if the group is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \param g group instance
             //! \return child object
             //!
@@ -122,6 +129,10 @@ namespace nx{
             //! \brief process fields
             //!
             //! Append field attributes to the container.
+            //!
+            //! \throws invalid_object_error if the field is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \param f field instance
             //! \return to be ignored
             //!
@@ -137,7 +148,7 @@ namespace nx{
             //! Attributes cannot have other attributes - thus an exception 
             //! will be thrown here.
             //!
-            //! \throws nxattribute_error no children for attributes
+            //! \throws type_error as attributes do not have other attributes
             //! \param a attribute instance
             //! \return to be ignored
             //!
@@ -157,15 +168,20 @@ namespace nx{
     //! \brief get attributes 
     //!
     //! Return a list of attributes attached to an instance of nxobject. 
-    //! 
+    //! The object must hold an nxfield or nxattribute instance otherwise
+    //! type_error is thrown.
     //!
-    //! \throws nxattribute_error if the stored object is an attribute
+    //! \throws invalid_object_error if the parent is not valid
+    //! \throws type_error if the parent object is an instance of nxattribute
+    //! \throws object_error in case of any other error
+    //!
     //! \tparam CTYPE container type for the children
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
-    //! \param o parent object of type nxobject<GTYPE,FTYPE,ATYPE>
-    //! \param c container as instance of CTYPE
+    //! \param parent the attributes parent as nxobject instance
+    //! \param container the container instance to which the attribute should 
+    //! be appended
     //!
     template<
              typename CTYPE,
@@ -173,14 +189,19 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    void get_attributes(const nxobject<GTYPE,FTYPE,ATYPE> &o,CTYPE &c)
+    void get_attributes(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
+                        CTYPE &container)
     {
+        typedef get_attributes_visitor<CTYPE,GTYPE,FTYPE,ATYPE> visitor_type;
+        typedef typename CTYPE::value_type value_type;
+        typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
+
         //check if the container type is of same type is the variant type
-        static_assert(std::is_same<typename CTYPE::value_type,ATYPE>::value,
+        static_assert(std::is_same<value_type,object_type>::value,
                       "The target container value type must be the same as the"
                       " variant type!");
 
-        return boost::apply_visitor(get_attributes_visitor<CTYPE,GTYPE,FTYPE,ATYPE>(c),o);
+        return boost::apply_visitor(visitor_type(container),parent);
     }
 
 //end of namespace
