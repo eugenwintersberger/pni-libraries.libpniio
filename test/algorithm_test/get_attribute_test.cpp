@@ -23,8 +23,12 @@
 
 #include <boost/current_function.hpp>
 #include<cppunit/extensions/HelperMacros.h>
+#include <pni/io/exceptions.hpp>
 
 #include "get_attribute_test.hpp"
+
+using pni::io::object_error;
+using pni::io::invalid_object_error;
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(get_attribute_test);
@@ -53,7 +57,7 @@ void get_attribute_test::tearDown()
 //-----------------------------------------------------------------------------
 void get_attribute_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     object_type object = group;
     CPPUNIT_ASSERT(is_valid(get_attribute(object,"NX_class")));
@@ -64,7 +68,7 @@ void get_attribute_test::test_group()
 //-----------------------------------------------------------------------------
 void get_attribute_test::test_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     object_type object = field;
 
     CPPUNIT_ASSERT(get_name(get_attribute(object,"units")) == "units");
@@ -74,9 +78,26 @@ void get_attribute_test::test_field()
 //-----------------------------------------------------------------------------
 void get_attribute_test::test_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     CPPUNIT_ASSERT_THROW(get_attribute(object_type(group.attributes["NX_class"]),"bla"),
                          type_error);
+}
+
+void get_attribute_test::test_errors()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    h5::nxfield f;
+    h5::nxgroup g;
+    h5::nxobject o = f;
+    CPPUNIT_ASSERT_THROW(get_attribute(f,"test"),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(get_attribute(g,"test"),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(get_attribute(o,"test"),invalid_object_error);
+
+    CPPUNIT_ASSERT_THROW(get_attribute(group,"hello"),key_error);
+    o = group;
+    CPPUNIT_ASSERT_THROW(get_attribute(o,"hello"),key_error);
+
 }
 

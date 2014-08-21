@@ -33,11 +33,18 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief get attribute by name
     //! 
-    //! Return an attribute from a parent object. 
+    //! Return an attribute from a parent object. This template will work for 
+    //! the following types
+    //! \li nxfield
+    //! \li nxgroup
     //! 
+    //! \throws invalid_object_error if parent is not valid 
     //! \throws key_error if the object does not have an attribute with name
+    //! \throws object_error in case of any other erro
+    //!
     //! \tparam PTYPE parent type template
     //! \tparam IMPID parent type implementation id
+    //!
     //! \param p refernece to parent instance
     //! \param name attributes name
     //! \return attribute type
@@ -46,14 +53,10 @@ namespace nx{
              template<nximp_code> class PTYPE,
              nximp_code IMPID
            >
-    typename nxobject_trait<IMPID>::attribute_type
-    get_attribute(const PTYPE<IMPID> &p,const string &name)
+    typename nxobject_trait<IMPID>::object_type
+    get_attribute(const PTYPE<IMPID> &parent,const string &name)
     {
-        if(!p.attributes.exists(name))
-            throw key_error(EXCEPTION_RECORD,"Object ["+get_name(p)+"] "
-                    "does not have an attribute ["+name+"]!");
-
-        return p.attributes[name];
+        return parent.attributes[name];
     }
 
 
@@ -62,17 +65,21 @@ namespace nx{
     //! \ingroup algorithm_internal_code
     //! \brief get attribute visitor
     //!
-    //! Visitor obtaining an attribute from an object stored in a variant type 
-    //! and returns it as an objects_type.
+    //! Visitor obtaining an attribute from an object stored in a instance
+    //! of nxobject.
     //!
-    //! \tparam VTYPE variant type to act on
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
     //!
     template<
              typename GTYPE,
              typename FTYPE,
              typename ATYPE
             > 
-    class get_attribute_visitor : public boost::static_visitor<ATYPE>
+    class get_attribute_visitor : public boost::static_visitor<
+                                  nxobject<GTYPE,FTYPE,ATYPE>
+                                  >
     {
         private:
             string _attribute; //!< name of the attribute to retrieve
@@ -100,6 +107,11 @@ namespace nx{
             //! \brief process groups
             //!
             //! Return the attribute of a group type instance. 
+            //! 
+            //! \throws invalid_object_error if the group is not valid
+            //! \throws key_error if the attribute does not exist
+            //! \throws object_error in case of any other attribute
+            //!
             //! \param g group instance
             //! \return instance of object_types with attribute
             //!
@@ -113,6 +125,11 @@ namespace nx{
             //! \brief process fields
             //!
             //! Return an attribute attached to a field. 
+            //!
+            //! \throws invalid_object_error if the field is not valid
+            //! \throws key_error if the attribute does not exist
+            //! \throws object_error in case of any other error
+            //!
             //! \param f field instance
             //! \return instance of object_types with attribute
             //!
@@ -150,14 +167,20 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief get attribute 
     //!
-    //! Return the attribute of an object stored in a variant type. If you 
-    //! try to retrieve an attribute from an other attribute or the attribute 
-    //! does not exist an exception is thrown.
+    //! Returns an attribute from an object stored in an instance of nxobject.
+    //! The object must be either an nxfield or an nxgroup instance.
+    //! 
+    //! \throws invalid_object_error if the parent is not valid
+    //! \throws key_error if the attribute does not exist
+    //! \throws type_error if the parent is not a field or group
+    //! \throws object_error in case of any other error
     //!
-    //! \throws nxattribute_error in case of errors
-    //! \tparam VTYPE variant type
-    //! \param o instance of VTYPE
-    //! \param a name of the attribute
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! 
+    //! \param parent reference to the parent object
+    //! \param name the attributes name
     //! \return attribute as an object_types variant
     //!
     template<
@@ -165,10 +188,12 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    ATYPE get_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &o,const string &a)
+    nxobject<GTYPE,FTYPE,ATYPE>
+    get_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
+                  const string &name)
     {
         typedef get_attribute_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
-        return boost::apply_visitor(visitor_type(a),o);
+        return boost::apply_visitor(visitor_type(name),parent);
     }
 
 //end of namespace 
