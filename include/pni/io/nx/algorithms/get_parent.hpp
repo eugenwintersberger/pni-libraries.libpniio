@@ -35,10 +35,13 @@ namespace nx{
     //! Returns the parent object of an instance of nxfield, nxattribute, or 
     //! nxgroup object. The parent is returned as an instance of nxobject.
     //! 
+    //! \throws invalid_object_error if the child is not valid
+    //! \throws type_error if there are some issues with the internal type
     //! \throws object_error in case of errors generating parent object
-    //! \throws io_error in case of errors during metadata retrieval
+    //!
     //! \tparam OTYPE object template
     //! \tparam IMPID implementation ID
+    //!
     //! \param o object instance
     //! \return parent as nxobject instance
     //! 
@@ -88,8 +91,11 @@ namespace nx{
             //! \brief process groups
             //!
             //! Return the parent group of a group. 
+            //!
+            //! \throws invalid_object_error if the group is not valid
+            //! \throws type_error in case of issues with the internal type
             //! \throws object_error in case of errors generating parent object
-            //! \throws io_error in case of errors during metadata retrieval
+            //! 
             //! \param g group instance
             //! \return parent group
             //!
@@ -103,8 +109,11 @@ namespace nx{
             //! \brief process fields
             //!
             //! Return the fields parent group.
+            //! 
+            //! \throws invalid_object_error if the field is not valid
+            //! \throws type_error in case of internal type issues
             //! \throws object_error in case of errors generating parent object
-            //! \throws io_error in case of errors during metadata retrieval
+            //!
             //! \param f field instance
             //! \return parent group of the field
             //!
@@ -118,8 +127,11 @@ namespace nx{
             //! \brief process attribute
             //!
             //! Retrieve the type of an object.
+            //!
+            //! \throws invalid_object_error if the attribute is not valid
+            //! \throws type_error in case of internal type issues
             //! \throws object_error in case of errors generating parent object
-            //! \throws io_error in case of errors during metadata retrieval
+            //!
             //! \param a attribute instance
             //! \return to be ignored
             //!
@@ -137,11 +149,14 @@ namespace nx{
     //! Return the parent object of an instance of nxobject as a new instance of 
     //! nxobject.
     //!
+    //! \throws invalid_object_error if the object is not valid
+    //! \throws type_error in case of internal type issues
     //! \throws object_error in case of errors generating parent object
-    //! \throws io_error in case of errors during metadata retrieval
+    //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //!
     //! \param o instance of nxobject
     //! \return parent object as instance of nxobject
     //!
@@ -150,7 +165,8 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    nxobject<GTYPE,FTYPE,ATYPE> get_parent(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    nxobject<GTYPE,FTYPE,ATYPE> 
+    get_parent(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
         typedef get_parent_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
         return boost::apply_visitor(visitor_type(),o);

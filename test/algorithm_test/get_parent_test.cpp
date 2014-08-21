@@ -26,6 +26,9 @@
 
 #include "get_parent_test.hpp"
 
+#include <pni/io/exceptions.hpp>
+using pni::io::invalid_object_error;
+
 
 CPPUNIT_TEST_SUITE_REGISTRATION(get_parent_test);
 
@@ -54,7 +57,11 @@ void get_parent_test::test_nxobject_group()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    h5::nxobject object = group["instrument"];
+    h5::nxobject object ;
+    CPPUNIT_ASSERT_THROW(get_parent(object),invalid_object_error);
+
+        
+    object= group["instrument"];
     CPPUNIT_ASSERT(is_valid(get_parent(object)));
     CPPUNIT_ASSERT(get_name(get_parent(object)) == "group");
     CPPUNIT_ASSERT(get_name(get_parent(h5::nxobject(group))) == "/");
