@@ -82,6 +82,16 @@ namespace nx{
             > 
     class get_path_visitor : public boost::static_visitor<string>
     {
+        private:
+            string element_name(const string &name,const string &type) const
+            {
+                string ename(name);
+
+                if((!type.empty()) && (type!="NXroot")) 
+                    ename += ":" + type;
+
+                return ename;
+            }
         public:
             //! result type
             typedef string result_type;
@@ -101,7 +111,7 @@ namespace nx{
             //! \throws invalid_object_error if the group is not valid
             //! \throws shape_mismatch_error if a possible class attribute is
             //! not scalar
-            //! \throws io_error if class data retrieval failed
+            //! \throws io_error if name or group type retrievel fails
             //! \throws type_error if the class attribute exists but is of 
             //! the wrong type
             //! \throws object_error in case of any other error
@@ -112,19 +122,20 @@ namespace nx{
             result_type operator()(const group_type &g) const
             {
                 typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
-                string name = g.name();
-                string c    = get_class(object_type(g));
 
-                if(name == "/")
-                    //in the case of the root class
-                    return "";
+                //determine the name and the type of the group
+                string group_name = g.name();
+                string group_type = get_class(object_type(g));
+               
+                //assemble the element name
+                string ename = element_name(group_name,group_type);
+
+                //the recursion is done when we arrived at the root group
+                if(group_type == "NXroot")
+                    return ename;
                 else
-                {
-                    string path = name;
-                    if(!c.empty()) path = path+":"+c;
+                    return get_path(g.parent()) + "/" + ename;
 
-                    return get_path(g.parent())+"/"+path;
-                }
             }
 
             //-----------------------------------------------------------------
@@ -137,7 +148,7 @@ namespace nx{
             //! could not be retrieved or the field itself is not valid
             //! \throws shape_mismatch_error if a possible class attribute is
             //! not scalar
-            //! \throws io_error if class data retrieval failed
+            //! \throws io_error if class type or name retrieval fails
             //! \throws type_error if the class attribute exists but is of 
             //! the wrong type
             //! \throws object_error in case of any other error
@@ -203,7 +214,17 @@ namespace nx{
             > 
     string get_path(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(get_path_visitor<GTYPE,FTYPE,ATYPE>(),o);
+        string path =  boost::apply_visitor(get_path_visitor<GTYPE,FTYPE,ATYPE>(),o);
+
+        //repair two leading // which can happen in some cases
+        if((path.size()>=2) && 
+           (path[0]=='/')   && 
+           (path[1]=='/'))
+        {
+            return string(path,1,path.size()-1);
+        }
+        else
+            return path;
     }
 
 //end of namespace
