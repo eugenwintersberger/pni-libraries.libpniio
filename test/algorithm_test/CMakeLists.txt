@@ -31,6 +31,7 @@ set(SOURCES as_attribute_test.cpp
             write_test.cpp
             algorithm_test.cpp
             get_name_test.cpp
+            get_filename_test.cpp
             get_path_test.cpp
            )
 

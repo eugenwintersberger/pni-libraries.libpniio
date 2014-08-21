@@ -12,6 +12,7 @@ set(HEADER_FILES as_attribute.hpp
                  get_children.hpp 
                  get_class.hpp 
                  get_name.hpp 
+                 get_filename.hpp
                  get_object.hpp 
                  get_parent.hpp 
                  get_path.hpp 
