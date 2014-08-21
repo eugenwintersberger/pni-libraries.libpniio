@@ -22,21 +22,57 @@
 #pragma once
 
 #include "../nxobject_traits.hpp"
+#include "get_class.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
 
+    //!
+    //! \ingroup algorithm_code
+    //! \brief checks group type
+    //!
+    //! This function template checks whether or not a group is of a particular
+    //! type. 
+    //!
+    //! \throws invalid_object_error if parent group is not valid
+    //! \throws shape_mismatch_error the attribute is not a scalar
+    //! \throws type_error the attribute type is not supported
+    //! \throws io_error attribute data retrieval failed
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam OTYPE nexus object template
+    //! \tparam IMPID implementation ID of the object
+    //!
+    //! \param object the group to check
+    //! \param type the type we want ot check for
+    //! \return true if the group is of that type, false otherwise
+    //!
+    template<
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID
+            >
+    bool is_class(const OTYPE<IMPID> &object,const string &type)
+    {
+        return get_class(object)==type;
+    }
 
     //!
     //! \ingroup algorithm_internal_code
     //! \brief is class visitor
     //!
-    //! Checks if the group stored in a variant type is of a particular class.
-    //! \tparam VTYPE variant type
+    //! This visitor is used to check the class a group belongs too.
+    //! 
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
     //!
-    template<typename VTYPE> 
-    class is_class_visitor : public boost::static_visitor<string>
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    class is_class_visitor : public boost::static_visitor<bool>
     {
         private:
             string _class; //!< class type
@@ -44,11 +80,11 @@ namespace nx{
             //! result type
             typedef bool result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
 
             //-----------------------------------------------------------------
             //!
@@ -62,35 +98,25 @@ namespace nx{
             //!
             //! \brief process groups
             //!
-            //! Check the class of the group stored in the variant type. 
-            //! If the groups class and the _class match the method returns 
-            //! true, false otherwise. If the group does not have an NX_class 
-            //! attribute false will be returnd.
+            //! \throws invalid_object_error if parent group is not valid
+            //! \throws shape_mismatch_error the attribute is not a scalar
+            //! \throws type_error the attribute type is not supported
+            //! \throws io_error attribute data retrieval failed
+            //! \throws object_error in case of any other error
             //!
-            //! \throws nxgroup_error if NX_class attribute does not exist
             //! \param g group instance
             //! \return true if class types match, false otherwise
             //!
             result_type operator()(const group_type &g) const
             {
-                string buffer;
-                if(g.attributes.exists("NX_class"))
-                    g.attributes["NX_class"].read(buffer);
-                else
-                    return false;
-
-                return buffer==_class;
-
+                return is_class(g,_class);
             }
 
             //-----------------------------------------------------------------
             //!
             //! \brief process fields
             //! 
-            //! As fields do not have a class type this method throws an 
-            //! exception. 
-            //!
-            //! \throws nxfield_error fields do not have a class
+            //! \throws type_error fields do not have a class
             //! \param f field instance
             //! \return can be ignored 
             //!
@@ -100,7 +126,7 @@ namespace nx{
             {
                 throw type_error(EXCEPTION_RECORD,
                         "Fields do not have a class!");
-                return result_type();
+                return false;
             }
 #pragma GCC diagnostic pop
 
@@ -108,10 +134,7 @@ namespace nx{
             //!
             //! \brief process attributes
             //!
-            //! Attributes do not have a class type. Thus this method 
-            //! throws an exception. 
-            //!
-            //! \throws nxattribute_error attributes have no class
+            //! \throws type_error attributes have no class
             //! \param a attribute instance
             //! \return can be ignored
             //!
@@ -121,30 +144,41 @@ namespace nx{
             {
                 throw type_error(EXCEPTION_RECORD,
                         "Attributes do not have a class!");
-                return result_type();
+                return false;
             }
 #pragma GCC diagnostic pop
     };
 
     //!
     //! \ingroup algorithm_code
-    //! \brief is class wrapper 
+    //! \brief is class function
     //!
-    //! Wrapper function for the is_class_visitor template. 
+    //! Returns true if a group stored in an instance of nxobject is member
+    //! of a particular class.
     //!
-    //! \throws nxgroup_error if group does not have an NX_class attribute
-    //! \throws nxfield_error if the stored object is a field
-    //! \throws nxattribute_error if the stored object is an attribute
-    //! \tparam VTYPE variant type
-    //! \param o instance of VTYPE
+    //! \throws invalid_object_error if parent group is not valid
+    //! \throws shape_mismatch_error the attribute is not a scalar
+    //! \throws type_error the attribute type is not supported
+    //! \throws io_error attribute data retrieval failed
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //!
+    //! \param o instance of nxobject
     //! \param c Nexus class to check for
     //! \return true if group class and c match, false otherwise
     //!
-    template<typename VTYPE> 
-    typename is_class_visitor<VTYPE>::result_type 
-    is_class(const VTYPE &o,const string &c)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    bool is_class(const nxobject<GTYPE,FTYPE,ATYPE> &o,const string &c)
     {
-        return boost::apply_visitor(is_class_visitor<VTYPE>(c),o);
+        typedef is_class_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(c),o);
     }
 
 //end of namespace

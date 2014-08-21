@@ -24,11 +24,6 @@
 #include <type_traits>
 #include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
-#include "is_group.hpp"
-#include "is_field.hpp"
-#include "get_name.hpp"
-#include "is_class.hpp"
-#include "is_valid.hpp"
 
 namespace pni{
 namespace io{
