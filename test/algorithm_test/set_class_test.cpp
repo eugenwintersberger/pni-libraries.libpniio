@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,12 +17,15 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Jun 28, 2013
+//  Created on: May 29, 2014
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
 #include <boost/current_function.hpp>
 #include<cppunit/extensions/HelperMacros.h>
+#include <pni/io/exceptions.hpp>
+
+using pni::io::invalid_object_error;
 
 #include "set_class_test.hpp"
 
@@ -52,13 +55,24 @@ void set_class_test::tearDown()
 void set_class_test::test_group()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5::nxobject object = group;
-    CPPUNIT_ASSERT(is_valid(object));
-    CPPUNIT_ASSERT_NO_THROW(set_class(object,"NXlog"));
     string buffer;
+
+    //test on the plain nxgroup object
+    CPPUNIT_ASSERT_NO_THROW(set_class(group,"NXentry"));
+    group.attributes["NX_class"].read(buffer);
+    CPPUNIT_ASSERT(buffer == "NXentry");
+   
+    //test on the object
+    h5::nxobject object = group;
+    CPPUNIT_ASSERT_NO_THROW(set_class(object,"NXlog"));
     group.attributes["NX_class"].read(buffer);
     CPPUNIT_ASSERT(buffer == "NXlog");
+
+    //test some exceptions
+    CPPUNIT_ASSERT_THROW(set_class(h5::nxgroup(),"NXdetector"),
+                         invalid_object_error);
+    CPPUNIT_ASSERT_THROW(set_class(h5::nxobject(h5::nxgroup()),"NXinstrument"),
+                         invalid_object_error);
 }
 
 //-----------------------------------------------------------------------------
