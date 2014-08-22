@@ -97,7 +97,6 @@ namespace nx{
             >
     get_child(const OTYPE<IMPID> &parent,const string &n,const string &c)
     {
-        typedef OTYPE<IMPID> parent_type;
         typedef typename nxobject_trait<IMPID>::field_type field_type;
         typedef typename nxobject_trait<IMPID>::attribute_type attribute_type;
         typedef typename nxobject_trait<IMPID>::group_type group_type;

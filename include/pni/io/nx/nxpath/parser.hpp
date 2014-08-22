@@ -22,6 +22,7 @@
 //
 #pragma once
 #include "nxpath.hpp"
+#include "insert.hpp"
 
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
@@ -155,6 +156,10 @@ namespace parsers{
     //!
     //! \ingroup nxpath_code
     //! \brief parser for a nexus path
+    //!
+    //! The parser has to local elements:
+    //! \li the elements list
+    //! \li a string for an optional attribute
     //! 
     //! \tparam ITERT iterator type
     //!
@@ -194,15 +199,24 @@ namespace parsers{
             root_rule = lit("/")[_val = construct<nxpath::element_type>("/","NXroot")];
             root_rule.name("root_rule");
            
-            nxpath_rule = eps[_a = construct<nxpath::elements_type>(),_b="",
+            nxpath_rule = eps[
+                              //we start with an empty elements list
+                              _a = construct<nxpath::elements_type>(), 
+                              //and we start with an empty attribute
+                              _b="",
+                              //finally we start with an empty path which holds
+                              //only a single root element
                               _val = construct<nxpath>(boost::phoenix::ref(_filename),_a,_b),
+                              //this is where we add the root element
                               push_back(_val,construct<nxpath::element_type>("/","NXroot")) 
                               ]
                           >>
-                          (   root_rule[push_back(_a,_1)]
+                          (   //parse the root element
+                              root_rule[push_back(_a,_1)] 
                            || 
-                              element_rule[insert(_a,end(_a),begin(_1),end(_1))]
+                              element_rule[pni::io::nx::insert(_a,end(_a),begin(_1),end(_1))]
                            || 
+                              //here we do the attribute part
                               (lit("@")>id_[_b=_1])
                            ) [_val = construct<nxpath>(boost::phoenix::ref(_filename),_a,_b)] 
                           >eoi; //finally EOI is the terminal for the string
