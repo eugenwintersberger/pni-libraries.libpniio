@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
-// Created on: Jul 1, 2013
+// Created on: May 29, 2014
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 #pragma once

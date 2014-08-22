@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,7 +17,7 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Jun 28, 2013
+//  Created on: May 29, 2014
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
@@ -52,7 +52,8 @@ void is_class_test::tearDown()
 void is_class_test::test_group()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
+
+    CPPUNIT_ASSERT(pni::io::nx::is_class(group,"NXentry"));
     h5::nxobject object = group;
     CPPUNIT_ASSERT(pni::io::nx::is_class(object,"NXentry"));
     CPPUNIT_ASSERT(!pni::io::nx::is_class(object,"NXlog"));
@@ -73,6 +74,6 @@ void is_class_test::test_attribute()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = group.attributes["NX_class"];
-    CPPUNIT_ASSERT_THROW(pni::io::nx::is_class(object,"NXentry"),type_error);
+    CPPUNIT_ASSERT_THROW(is_class(object,"NXentry"),type_error);
 }
 
