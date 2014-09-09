@@ -28,10 +28,6 @@
 #include <type_traits>
 #include <functional>
 
-#ifdef NOFOREACH
-#include <boost/foreach.hpp>
-#endif
-
 namespace pni{
 namespace io{
 namespace nx{
@@ -46,12 +42,51 @@ namespace nx{
     //!
     template<typename OTYPE> struct object_predicates
     {
+        typedef OTYPE object_type;
+        typedef std::function<bool(const object_type &o)> function_type;
+        typedef object_predicates<OTYPE> predicate_type;
+
+        //--------------------------------------------------------------------
+        //!
+        //! \brief name predicate
+        //!
+        //! This predicate function returns true for a name match. This
+        //! predicate can be applied to fields as well as groups.
+        //!
+        //! \throws invalid_object_error if the object is not valid
+        //! \throws type_error if the type does not support name retrieval
+        //! \throws io_error if name retrieval fails
+        //! \throws object_error in case of any other error
+        //!
+        //! \param o object to check
+        //! \param name the name to match
+        //! \return true of o's name matches name
+        //!
         static
         bool has_name(const OTYPE &o,const string &name)
         {
             return get_name(o) == name;
         }
 
+        //--------------------------------------------------------------------
+        //!
+        //! \brief class match
+        //!
+        //! This predicate function returns true for a class match. If the 
+        //! object is a field type the predicate returns false in any case.
+        //! Naturally this predicate makes only sense for groups.
+        //!
+        //! \throws invalid_object_error if the object is not valid
+        //! \throws shape_mismatch_error if the NX_class attribute is not 
+        //! scalar
+        //! \throws type_error if NX_class is of inappropriate type
+        //! \throws io_error if attribute retrieval failed
+        //! \throws object_error in case of any other error
+        //! 
+        //! \param o object to check
+        //! \param c Nexus class name
+        //! \return true if o's NX_class attribute matches c
+        //!
         static
         bool has_class(const OTYPE &o,const string &c)
         { 
@@ -59,11 +94,64 @@ namespace nx{
             return is_class(o,c);
         }
 
+        //--------------------------------------------------------------------
+        //!
+        //! \brief name and class match
+        //!
+        //! This function returns true in the case of a name and class match.
+        //! like the has_class predicate it makes only sense for groups.
+        //!
+        //! \throws invalid_object_error if the group is not valid
+        //! \throws shape_mismatch_error if the NX_class attribute is not a 
+        //! scalar
+        //! \throws type_error if the NX_class attribute is not of string type
+        //! \throws io_error if name or class retrieval fails
+        //! \throws object_error in case of any other error
+        //!
+        //! \param o object to check
+        //! \param n object name to match
+        //! \param c object class to match
+        //! \return true if o's class and name match n and c, false otherwise
+        //!
         static
         bool has_name_and_class(const OTYPE &o,const string &n,const string &c)
         {
             if(is_field(o)) return false;
             return has_name(o,n) && has_class(o,c);
+        }
+
+        //--------------------------------------------------------------------
+        //!
+        //! \brief create predicate function
+        //!
+        //! Static function creating a predicate function which can be used 
+        //! in an STL algorithm. 
+        //!
+        //! \throws key_error value_error if n and c are empty
+        //! \throws object_error if the predicate creation fails for some 
+        //! other reason.
+        //! 
+        //! \param n name to look for 
+        //! \param c Nexus type to look for
+        //! \return predicate function
+        //!
+        static function_type create(const string &n,const string &c)
+        {
+            using std::placeholders::_1;
+
+            if(n.empty() && c.empty())
+                throw key_error(EXCEPTION_RECORD,"'name' and 'class' field are"
+                        "emtpy - do not know what to search for!");
+            else if((!n.empty()) && (!c.empty()))
+                //search for name and class
+                return std::bind(&predicate_type::has_name_and_class,_1,n,c);
+            else if((!n.empty()) && (c.empty()))
+                return std::bind(&predicate_type::has_name,_1,n);
+            else if((n.empty()) && (!c.empty()))
+                return std::bind(&predicate_type::has_class,_1,c);
+            else
+                throw value_error(EXCEPTION_RECORD,
+                        "Could not create predicate function!");
         }
 
     };
@@ -77,7 +165,10 @@ namespace nx{
     //! Retrieve a child from a parent. Currently the parent can only be a 
     //! group type. 
     //!
+    //! \throws invalid_object_error if 
     //! \throws key_error if the requested object does not exist
+    //! \throws value_error if no predicate function can be constructed 
+    //! from n and c
     //! 
     //! \tparam OTYPE parent type
     //! \tparam IMPID implementation id of the parent
@@ -90,40 +181,19 @@ namespace nx{
              template<nximp_code> class OTYPE,
              nximp_code IMPID
             >
-    nxobject<
-             typename nxobject_trait<IMPID>::group_type,
-             typename nxobject_trait<IMPID>::field_type,
-             typename nxobject_trait<IMPID>::attribute_type
-            >
+    typename nxobject_trait<IMPID>::object_type
     get_child(const OTYPE<IMPID> &parent,const string &n,const string &c)
     {
         typedef typename nxobject_trait<IMPID>::field_type field_type;
         typedef typename nxobject_trait<IMPID>::attribute_type attribute_type;
-        typedef typename nxobject_trait<IMPID>::group_type group_type;
-        typedef nxobject<group_type,field_type,attribute_type> object_type;
+        typedef typename nxobject_trait<IMPID>::object_type object_type;
         typedef object_predicates<object_type> predicate_type;
-        typedef std::function<bool(const object_type &o)> function_type;
-        using std::placeholders::_1;
+        typedef typename predicate_type::function_type function_type;
 
         static_assert(!std::is_same<object_type,field_type>::value,
                       "GROUP TYPE REQUIRED - GOT FIELD TYPE!");
         static_assert(!std::is_same<object_type,attribute_type>::value,
                       "GROUP TYPE REQUIRED - GOT ATTRIBUTE TYPE!");
-
-        //searching does not make too much sense if we have neither a
-        //name or a class - better throw an exception here
-        function_type predicate;
-        if(n.empty() && c.empty())
-            throw key_error(EXCEPTION_RECORD,"'name' and 'class' field are"
-                    "emtpy - do not know what to search for!");
-        else if((!n.empty()) && (!c.empty()))
-            //search for name and class
-            predicate = std::bind(&predicate_type::has_name_and_class,_1,n,c);
-        else if((!n.empty()) && (c.empty()))
-            predicate = std::bind(&predicate_type::has_name,_1,n);
-        else if((n.empty()) && (!c.empty()))
-            predicate = std::bind(&predicate_type::has_class,_1,c);
-
 
         //if the group has no children at all searching is futile
         //better throw an exception here
@@ -133,15 +203,16 @@ namespace nx{
 
         //if we request the root group and g is already root - just
         //return root - need to do something about this
-        if((n == "/") && (n == parent.name()))
+        if(((n == "/") && (n == parent.name())) || (n == "."))
             return object_type(parent);
-
-        //need to do some treatment for the special cases . and .. as
-        //child names 
-        if(n == ".") return object_type(parent);
-        if(n == "..") return object_type(parent.parent());
-    
+        else if(n == "..")
+            return object_type(parent.parent());
+        
         //....................................................................
+        //searching does not make too much sense if we have neither a
+        //name or a class - better throw an exception here
+        function_type predicate = predicate_type::create(n,c);
+
         //here is the important part
         auto result_iter = std::find_if(parent.begin(),parent.end(),predicate);
 

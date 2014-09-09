@@ -11,6 +11,7 @@ set(SOURCES column_info.cpp
 
 link_directories(${PNICORE_PKG_LIBRARY_DIRS} ${HDF5_LIBRARY_DIRS})
 include_directories(${PNICORE_PKG_INCLUDE_DIRS} ${HDF5_INCLUDE_DIRS})
+message("${HDF5_INCLUDE_DIRS}")
 
 #first we need to build the C-filter code
 add_definitions(-fPIC)

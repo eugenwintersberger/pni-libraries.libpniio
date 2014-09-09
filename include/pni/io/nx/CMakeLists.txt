@@ -19,7 +19,9 @@ set(HEADER_FILES nxattribute.hpp
                  algorithms.hpp
                  xml.hpp
                  nxattribute_manager.hpp
+                 recursive_iterator.hpp
                  )
+
 
 install(FILES ${HEADER_FILES} 
         DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/pni/io/nx)
