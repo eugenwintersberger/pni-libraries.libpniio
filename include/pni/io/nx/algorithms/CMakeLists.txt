@@ -6,10 +6,8 @@ set(HEADER_FILES as_attribute.hpp
                  create_field.hpp 
                  create_group.hpp 
                  get_attribute.hpp 
-                 get_attributes.hpp 
                  get_child_by_index.hpp 
                  get_child.hpp 
-                 get_children.hpp 
                  get_class.hpp 
                  get_name.hpp 
                  get_filename.hpp
