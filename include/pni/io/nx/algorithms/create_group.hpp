@@ -38,24 +38,34 @@ namespace nx{
     //! This visitor creates a group below the group stored in the variant 
     //! type.  If the stored object is not a group an exception will be 
     //! thrown. 
-    //! \tparam VTYPE variant type
+    //!
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //!
     //! \sa create_group
     //!
-    template<typename VTYPE> 
-    class create_group_visitor : public boost::static_visitor<VTYPE>
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    class create_group_visitor : public boost::static_visitor<
+                                    nxobject<GTYPE,FTYPE,ATYPE>  
+                                 >
     {
         private:
             string _name;  //!< the name of the group
             string _class; //!< the Nexus class of the group
         public:
             //! result type
-            typedef VTYPE result_type;
+            typedef nxobject<GTYPE,FTYPE,ATYPE> result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
 
             //!
             //! \brief constructor
@@ -106,7 +116,9 @@ namespace nx{
             //!
             //! A field cannot have a child group. Thus an exception will be 
             //! thrown. 
-            //! \throws group_error 
+            //!
+            //! \throws type_error  
+            //!
             //! \param f field instance
             //! \return empty result type
             //!
@@ -126,7 +138,9 @@ namespace nx{
             //!
             //! An attribute cannot create a group - thus an exception will be
             //! thrown.
-            //! \throws nxgroup_error 
+            //!
+            //! \throws type_error 
+            //!
             //! \param a attribute instance
             //! \return an empty result type
             //!
@@ -153,17 +167,27 @@ namespace nx{
     //! class then the NX_class attribute will not be set.
     //!
     //! \throws nxgroup_error if stored object is a group
-    //! \tparam VTYPE variant type
+    //!
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //!
     //! \param o instance of VTYPE with the parent group
     //! \param n name of the new group
     //! \param c Nexus class of the group
     //! \return object_types with the newly created group
     //!
-    template<typename VTYPE> 
-    typename create_group_visitor<VTYPE>::result_type 
-    create_group(const VTYPE &o,const string &n,const string &c)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    nxobject<GTYPE,FTYPE,ATYPE>
+    create_group(const nxobject<GTYPE,FTYPE,ATYPE> &o,const string &n,const string &c)
     {
-        return boost::apply_visitor(create_group_visitor<VTYPE>(n,c),o);
+        typedef create_group_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+
+        return boost::apply_visitor(visitor_type(n,c),o);
     }
 
     //-------------------------------------------------------------------------
@@ -177,16 +201,25 @@ namespace nx{
     //! will be thrown if this is not the case.
     //!
     //! \throws nxgroup_error in case of errors
-    //! \tparam VTYPE variant type
+    //!
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //!
     //! \param o instance of VTYPE with the parent group
     //! \param p path to the new group
     //! \return instance of object_types with the new group
     //!
-    template<typename VTYPE>
-    typename create_group_visitor<VTYPE>::result_type
-    create_group(const VTYPE &o,const nxpath &p)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            >
+    nxobject<GTYPE,FTYPE,ATYPE>
+    create_group(const nxobject<GTYPE,FTYPE,ATYPE> &o,const nxpath &p)
     {
-        typedef typename create_group_visitor<VTYPE>::result_type object_types;
+        typedef create_group_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        typedef nxobject<GTYPE,FTYPE,ATYPE> object_types;
         nxpath parent_path,group_path;
         split_last(p,parent_path,group_path);
    
