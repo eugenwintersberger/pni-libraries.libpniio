@@ -5,7 +5,7 @@ set(SOURCES nexus_lowlevel_test.cpp
             NXGroupTest.cpp
             nxlink_test.cpp
             NXSelectionTest.cpp
-            recursive_iterator_test.cpp
+            flat_group_test.cpp
            )
 
 add_executable(nexus_lowlevel_test ${SOURCES} $<TARGET_OBJECTS:test_common>)
