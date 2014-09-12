@@ -23,7 +23,6 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-//#include <pni/core/arrays.hpp>
 #include "../nxobject_traits.hpp"
 #include "../nximp_code_map.hpp"
 #include "../nxfilter.hpp"
@@ -107,9 +106,12 @@ namespace nx{
             //! parent group g. The new group will be stored as object_types 
             //! variant.
             //! 
-            //! \throws nxgroup_error in case of errors
-            //! \throws shape_mismatch_error if the chunk shape and the field 
-            //! shape do not match
+            //! \throws invalid_object_error if the parent is not valid
+            //! \throws type_error if the data type is not supported
+            //! \throws size_mismatch_error if chunk-shape and shape do not
+            //! match
+            //! \throws object_error in case of any other error
+            //!
             //! \param g parent group instance
             //! \return new group stored as object_types
             //!
@@ -125,7 +127,9 @@ namespace nx{
             //! \brief process field instances
             //!
             //! A field cannot create another field. Throw an exception here.
-            //! \throws nxfield_error  
+            //!
+            //! \throws type_error cannot create field with a field parent
+            //!
             //! \param f field instance
             //! \return empty result type
             //!
@@ -146,7 +150,9 @@ namespace nx{
             //! An attribute cannot create a field - an exception will be 
             //! thrown.
             //! 
-            //! \throws nxattribute_error 
+            //! \throws type_error cannot create field with an attribute
+            //! parent
+            //!
             //! \param a attribute instance
             //! \return an empty result type
             //!
@@ -167,10 +173,33 @@ namespace nx{
 
     //------------------------------------------------------------------------
     //! 
+    //! \ingroup algorithm_code
     //! \brief field construction
     //!
     //! The full function to construct a field relative to a particular 
     //! group.
+    //!
+    //! \throws invalid_object_error if the parent is not valid
+    //! \throws type_error if the data type is not supported
+    //! \throws size_mismatch_error if chunk-shape and shape do not
+    //! match
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam T data type of the new array
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \tparam STYPE shape type
+    //! \tparam FILTERT filter type
+    //! \tparam PATHT path type
+    //! 
+    //! \param location the root location where the field should be created
+    //! \param path a string or nxpath object with the path to the field
+    //! \param shape the initial shape of the field
+    //! \param chunkd the chunkd shape of the field
+    //! \param filter reference to the filter object
+    //!
+    //! \return field type wrapped into an nxobject instance
     //!
     template<
              typename T,
@@ -201,9 +230,30 @@ namespace nx{
    
     //------------------------------------------------------------------------
     //!
+    //! \ingroup algorithm_code
     //! \brief field construction template
     //!
     //! This template does field construction without filters
+    //! 
+    //! \throws invalid_object_error if the parent is not valid
+    //! \throws type_error if the data type is not supported
+    //! \throws size_mismatch_error if chunk-shape and shape do not
+    //! match
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam T data type of the new field
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \tparam STYPE shape type
+    //! \tparam PATHT path type
+    //!
+    //! \param parent the parent object for the field
+    //! \param path string or nxpath with the location of the field
+    //! \param shape the shape of the field
+    //! \param chunk the chunk shape for the field
+    //!
+    //! \return field type wrapped into an nxobject instance
     //!
     template<
              typename T,
@@ -217,12 +267,36 @@ namespace nx{
     create_field(const nxobject<GTYPE,FTYPE,ATYPE> &parent,const PATHT &path,
                  const STYPE &shape,const STYPE &chunk)
     {
+        //create the default filter
         typename nxobject_trait<nximp_code_map<ATYPE>::icode>::filter_type filter;
         
         return create_field<T>(parent,path,shape,chunk,filter);
     }
 
     //------------------------------------------------------------------------
+    //!
+    //! \ingroup algorithm_code
+    //! \brief field construction template
+    //! 
+    //! \throws invalid_object_error if the parent is not valid
+    //! \throws type_error if the data type is not supported
+    //! \throws size_mismatch_error if chunk-shape and shape do not
+    //! match
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam T data type of the new field
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \tparam PATHT path type
+    //! \tparam STYPE shape type
+    //!
+    //! \param parent the parent location for the new field
+    //! \param path string or nxpath with the relative position for the field
+    //! \param shape the shape of the new field
+    //!
+    //! \return field type wrapped into an nxobject instance
+    //!
     template<
              typename T,
              typename GTYPE,
@@ -242,13 +316,38 @@ namespace nx{
     }
 
     //--------------------------------------------------------------------------
+    //!
+    //! \ingroup algorithm_code
+    //! \brief field construction template
+    //! 
+    //! This template function is particulary useful if the data type for the 
+    //! new field is available only at runtime. 
+    //!
+    //! \throws invalid_object_error if the parent is not valid
+    //! \throws type_error if the data type is not supported
+    //! \throws size_mismatch_error if chunk-shape and shape do not
+    //! match
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \tparam ARGTS residual argument types
+    //!
+    //! \param o parent location for the new field
+    //! \param tid the type ID for the new field
+    //! \param args residual args as for the other function templates
+    //!
+    //! \return field type wrapped into an nxobject instance
+    //!
     template<
              typename GTYPE,
              typename FTYPE,
              typename ATYPE,
              typename ...ARGTS
             >
-    FTYPE create_field(const nxobject<GTYPE,FTYPE,ATYPE> &o,type_id_t tid,ARGTS...args)
+    nxobject<GTYPE,FTYPE,ATYPE>
+    create_field(const nxobject<GTYPE,FTYPE,ATYPE> &o,type_id_t tid,ARGTS...args)
     {
         if(tid == type_id_t::UINT8)
             return create_field<uint8>(o,args...);

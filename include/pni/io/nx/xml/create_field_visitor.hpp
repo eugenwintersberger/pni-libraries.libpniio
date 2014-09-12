@@ -189,7 +189,7 @@ namespace xml{
                 //at this point we should have gathered enough information in order to
                 //create the field.
                 type_id_t type_id = type_id_from_str(type);
-                auto f = pni::io::nx::create_field(result_type(g),type_id,name,shape);
+                field_type f = pni::io::nx::create_field(result_type(g),type_id,name,shape);
 
 
                 //OK - in the next step we try to gather some optional information that
