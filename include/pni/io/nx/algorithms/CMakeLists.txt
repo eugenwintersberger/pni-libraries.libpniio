@@ -6,7 +6,6 @@ set(HEADER_FILES as_attribute.hpp
                  create_field.hpp 
                  create_group.hpp 
                  get_attribute.hpp 
-                 get_child_by_index.hpp 
                  get_child.hpp 
                  get_class.hpp 
                  get_name.hpp 
@@ -22,6 +21,8 @@ set(HEADER_FILES as_attribute.hpp
                  get_root.hpp
                  grow.hpp 
                  is_attribute.hpp 
+                 object_predicates.hpp
+                 iterators.hpp
                  is_class.hpp 
                  is_field.hpp 
                  is_group.hpp 

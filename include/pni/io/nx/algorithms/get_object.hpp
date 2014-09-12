@@ -48,7 +48,11 @@ namespace nx{
     //! object is only used to retrieve the root group and then continue from 
     //! there.
     //! 
+    //! \throws invalid_object_error if the parent is not valid
+    //! \throws type_error if the object is not a group
     //! \throws key_error if one of the path element does not lead to a child
+    //! \throws object_error in the case of any other error
+    //! 
     //! \tparam OTYPE parent object type
     //! \tparam IMPID implementation ID of the parent tyep
     //! \param o reference to the parent
@@ -59,7 +63,8 @@ namespace nx{
     auto get_object(const OTYPE &o,const nxpath &path)
     ->decltype(get_parent(o))
     {
-        decltype(get_parent(o)) target = o;
+        typedef decltype(get_parent(o)) object_type;
+        object_type target = o;
 
         //traverse over the path
         for(auto element: path)

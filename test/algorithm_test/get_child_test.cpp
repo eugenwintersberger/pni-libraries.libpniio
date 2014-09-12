@@ -26,6 +26,7 @@
 
 #include "get_child_test.hpp"
 
+using pni::io::invalid_object_error;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(get_child_test);
 
@@ -42,6 +43,43 @@ void get_child_test::setUp()
     group.create_group("control","NXmonitor");
     field = root.create_field<uint32>("data");
     attribute = group.attributes["NX_class"];
+}
+
+//-----------------------------------------------------------------------------
+void get_child_test::test_group_by_index()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+   
+    h5::nxobject object;
+    CPPUNIT_ASSERT_NO_THROW(object=get_child(group,0));
+    CPPUNIT_ASSERT(get_name(object)=="beamline");
+
+    CPPUNIT_ASSERT_NO_THROW(object=get_child(group,1));
+    std::cout<<get_name(object)<<std::endl;
+    CPPUNIT_ASSERT(get_name(object)=="control");
+    
+    CPPUNIT_ASSERT_THROW(get_child(group,100),index_error);
+    CPPUNIT_ASSERT_THROW(get_child(h5::nxgroup(),1),invalid_object_error);
+}
+
+//-----------------------------------------------------------------------------
+void get_child_test::test_group_object_by_index()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    h5::nxobject g = group;
+    h5::nxobject object;
+    
+    CPPUNIT_ASSERT_NO_THROW(object=get_child(g,0));
+    CPPUNIT_ASSERT(get_name(object)=="beamline");
+
+    CPPUNIT_ASSERT_NO_THROW(object=get_child(g,1));
+    std::cout<<get_name(object)<<std::endl;
+    CPPUNIT_ASSERT(get_name(object)=="control");
+    
+    CPPUNIT_ASSERT_THROW(get_child(g,100),index_error);
+    CPPUNIT_ASSERT_THROW(get_child(h5::nxobject(h5::nxgroup()),1),
+                         invalid_object_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -64,7 +102,6 @@ void get_child_test::test_group_by_name()
     CPPUNIT_ASSERT(is_class(o,"NXmonitor"));
 
     CPPUNIT_ASSERT_THROW(get_child(group,"bla",""), key_error);
-
 }
 
 //----------------------------------------------------------------------------
@@ -124,6 +161,7 @@ void get_child_test::test_field_object()
 
     h5::nxobject object = field;
     CPPUNIT_ASSERT_THROW(get_child(object,"",""),type_error); 
+    CPPUNIT_ASSERT_THROW(get_child(object,1),type_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -133,6 +171,6 @@ void get_child_test::test_attribute_object()
 
     h5::nxobject object = attribute;
     CPPUNIT_ASSERT_THROW(get_child(object,"",""),type_error);
-   
+    CPPUNIT_ASSERT_THROW(get_child(object,1),type_error);
 }
 

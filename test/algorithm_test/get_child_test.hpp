@@ -43,6 +43,8 @@ class get_child_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_attribute_object);
         CPPUNIT_TEST(test_group_by_name_class);
         CPPUNIT_TEST(test_group_by_name);
+        CPPUNIT_TEST(test_group_by_index);
+        CPPUNIT_TEST(test_group_object_by_index);
         CPPUNIT_TEST_SUITE_END();
 
         h5::nxfile file;
@@ -61,6 +63,8 @@ class get_child_test : public CppUnit::TestFixture
         void test_field_object();
         void test_group_object();
         void test_attribute_object();
+        void test_group_by_index();
+        void test_group_object_by_index();
 
 };
 

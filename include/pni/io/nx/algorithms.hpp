@@ -35,7 +35,6 @@
 #include "algorithms/get_unit.hpp"
 #include "algorithms/get_parent.hpp"
 #include "algorithms/get_child.hpp"
-#include "algorithms/get_child_by_index.hpp"
 #include "algorithms/get_object.hpp"
 #include "algorithms/get_shape.hpp"
 #include "algorithms/get_type.hpp"
