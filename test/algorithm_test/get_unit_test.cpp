@@ -51,7 +51,7 @@ void get_unit_test::tearDown()
 //-----------------------------------------------------------------------------
 void get_unit_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     object_type object = group;
     CPPUNIT_ASSERT_THROW(set_unit(object,"m"),type_error);
@@ -60,7 +60,7 @@ void get_unit_test::test_group()
 //-----------------------------------------------------------------------------
 void get_unit_test::test_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     object_type object = field;
     CPPUNIT_ASSERT_NO_THROW(set_unit(object,"m"));
@@ -70,7 +70,7 @@ void get_unit_test::test_field()
 //-----------------------------------------------------------------------------
 void get_unit_test::test_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     object_type object = group.attributes["NX_class"];
     CPPUNIT_ASSERT_THROW(set_unit(object,"m"),type_error);

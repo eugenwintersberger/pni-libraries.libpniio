@@ -27,6 +27,7 @@
 #include "../nximp_code_map.hpp"
 #include "../nxfilter.hpp"
 #include "get_object.hpp"
+#include "utils.hpp"
 
 namespace pni{
 namespace io{
@@ -166,10 +167,6 @@ namespace nx{
             }
 #pragma GCC diagnostic pop
     };
-
-    nxpath get_path(const nxpath &p);
-
-    nxpath get_path(const string &p);
 
     //------------------------------------------------------------------------
     //! 

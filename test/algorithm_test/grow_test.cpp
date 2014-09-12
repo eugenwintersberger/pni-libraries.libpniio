@@ -57,7 +57,7 @@ void grow_test::tearDown()
 //-----------------------------------------------------------------------------
 void grow_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     h5::nxobject object = root;
     CPPUNIT_ASSERT_THROW(grow(object),type_error);
@@ -67,7 +67,7 @@ void grow_test::test_group()
 //-----------------------------------------------------------------------------
 void grow_test::test_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject object = field;
 
     auto s = get_shape<shape_t>(object);
@@ -84,7 +84,7 @@ void grow_test::test_field()
 //-----------------------------------------------------------------------------
 void grow_test::test_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = attribute;
     CPPUNIT_ASSERT_THROW(grow(object),type_error);

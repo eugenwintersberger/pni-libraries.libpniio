@@ -62,7 +62,7 @@ void read_test::tearDown()
 //-----------------------------------------------------------------------------
 void read_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     object_type object = root;
     CPPUNIT_ASSERT_THROW(write(object,farray_t()),type_error);
@@ -72,7 +72,7 @@ void read_test::test_group()
 //-----------------------------------------------------------------------------
 void read_test::test_field_full()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     field_wdata = farray_t::create(field_shape);
     field_rdata = farray_t::create(field_shape);
@@ -92,7 +92,7 @@ void read_test::test_field_full()
 //-----------------------------------------------------------------------------
 void read_test::test_field_partial()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     field_wdata = farray_t::create(shape_t{1,3,5});
     field_rdata = farray_t::create(shape_t{1,3,5});
@@ -137,7 +137,7 @@ void read_test::test_field_partial()
 //-----------------------------------------------------------------------------
 void read_test::test_attribute_full()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     object_type object = attribute;
 
@@ -161,7 +161,7 @@ void read_test::test_attribute_full()
 //-----------------------------------------------------------------------------
 void read_test::test_attribute_string()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     object_type object = field.attributes.create<string>("test_string");;
 

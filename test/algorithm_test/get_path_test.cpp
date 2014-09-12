@@ -53,7 +53,7 @@ void get_path_test::tearDown()
 //----------------------------------------------------------------------------
 void get_path_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
   
     CPPUNIT_ASSERT(get_path(group) == "/group:NXentry");
     CPPUNIT_ASSERT(get_path(root) == "/");
@@ -62,7 +62,7 @@ void get_path_test::test_group()
 //----------------------------------------------------------------------------
 void get_path_test::test_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     CPPUNIT_ASSERT(get_path(field)== "/group:NXentry/data");
 }
@@ -70,7 +70,7 @@ void get_path_test::test_field()
 //----------------------------------------------------------------------------
 void get_path_test::test_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     CPPUNIT_ASSERT(get_path(attribute) == "/group:NXentry@NX_class");
 }
@@ -78,7 +78,7 @@ void get_path_test::test_attribute()
 //-----------------------------------------------------------------------------
 void get_path_test::test_nxobject_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     h5::nxobject object = group;
     CPPUNIT_ASSERT(get_path(object) == "/group:NXentry");
@@ -87,7 +87,7 @@ void get_path_test::test_nxobject_group()
 //-----------------------------------------------------------------------------
 void get_path_test::test_nxobject_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     h5::nxobject object = field;
     CPPUNIT_ASSERT(get_path(object)=="/group:NXentry/data");
@@ -96,7 +96,7 @@ void get_path_test::test_nxobject_field()
 //-----------------------------------------------------------------------------
 void get_path_test::test_nxobject_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     h5::nxobject object = attribute;
     CPPUNIT_ASSERT(get_path(object) == "/group:NXentry@NX_class");

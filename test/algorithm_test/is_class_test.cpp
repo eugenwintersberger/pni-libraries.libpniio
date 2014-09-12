@@ -51,7 +51,7 @@ void is_class_test::tearDown()
 //-----------------------------------------------------------------------------
 void is_class_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     CPPUNIT_ASSERT(pni::io::nx::is_class(group,"NXentry"));
     h5::nxobject object = group;
@@ -62,7 +62,7 @@ void is_class_test::test_group()
 //-----------------------------------------------------------------------------
 void is_class_test::test_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = field;
     CPPUNIT_ASSERT_THROW(pni::io::nx::is_class(object,"NXentry"),type_error);
@@ -71,7 +71,7 @@ void is_class_test::test_field()
 //-----------------------------------------------------------------------------
 void is_class_test::test_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = group.attributes["NX_class"];
     CPPUNIT_ASSERT_THROW(is_class(object,"NXentry"),type_error);

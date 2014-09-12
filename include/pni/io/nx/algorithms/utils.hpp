@@ -59,8 +59,33 @@ namespace nx{
     //!
     nxpath get_path(const string &p);
 
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup algorithm_internal_code
+    //! \brief get attribute path
+    //!
+    //! Convert a string with an attribute name to an attribute path. This is 
+    //! done by adding the prefix ".@" to the input string.
+    //!
+    //! \throws parser_error in case of any syntax errors
+    //!
+    //! \param p name of the attribute
+    //!
+    //! \return path referening to the attribute
+    //!
     nxpath get_attribute_path(const string &p);
 
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup algorithm_internal_code
+    //! \brief get attribute path
+    //! 
+    //! This function does nothing it just passes through the input path. 
+    //!
+    //! \param p input path
+    //! 
+    //! \return unchanged input path
+    //!
     nxpath get_attribute_path(const nxpath &p) noexcept;
 
 

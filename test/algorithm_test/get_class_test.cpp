@@ -53,7 +53,7 @@ void get_class_test::tearDown()
 //-----------------------------------------------------------------------------
 void get_class_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     object_type object = group;
     CPPUNIT_ASSERT(get_class(object)=="NXentry");
@@ -66,7 +66,7 @@ void get_class_test::test_group()
 //-----------------------------------------------------------------------------
 void get_class_test::test_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     object_type object = field;
     CPPUNIT_ASSERT_THROW(get_class(object),type_error);
@@ -75,7 +75,7 @@ void get_class_test::test_field()
 //-----------------------------------------------------------------------------
 void get_class_test::test_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     object_type object = group.attributes["NX_class"];
     CPPUNIT_ASSERT_THROW(get_class(object),type_error);

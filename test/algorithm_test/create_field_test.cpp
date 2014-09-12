@@ -55,7 +55,7 @@ void create_field_test::tearDown()
 //-----------------------------------------------------------------------------
 void create_field_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject root_group = root;
     
     h5::nxobject f;
@@ -73,7 +73,7 @@ void create_field_test::test_group()
 //-----------------------------------------------------------------------------
 void create_field_test::test_group_from_path()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject gi = root["/group/instrument"];
     CPPUNIT_ASSERT(get_path(gi)=="/group:NXentry/instrument:NXinstrument");
     nxpath p = nxpath::from_string("/:NXentry/:NXinstrument/data");
@@ -98,7 +98,7 @@ void create_field_test::test_group_from_path()
 //-----------------------------------------------------------------------------
 void create_field_test::test_group_filter()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxdeflate_filter filter(2,true);
     h5::nxobject root_group = root;
@@ -117,7 +117,7 @@ void create_field_test::test_group_filter()
 //-----------------------------------------------------------------------------
 void create_field_test::test_group_filter_from_path()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxdeflate_filter filter(2,true);
     h5::nxobject root_group = root;
@@ -136,7 +136,7 @@ void create_field_test::test_group_filter_from_path()
 //-----------------------------------------------------------------------------
 void create_field_test::test_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject object = field;
 
     CPPUNIT_ASSERT_THROW(create_field<float32>(object,"g1"),type_error);
@@ -145,7 +145,7 @@ void create_field_test::test_field()
 //-----------------------------------------------------------------------------
 void create_field_test::test_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = group.attributes["NX_class"];
     CPPUNIT_ASSERT_THROW(create_field<float32>(object,"g1"),type_error);

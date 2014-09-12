@@ -57,7 +57,7 @@ void get_size_test::tearDown()
 //-----------------------------------------------------------------------------
 void get_size_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     object_type object = root;
     CPPUNIT_ASSERT(get_size(object)==2);
@@ -67,7 +67,7 @@ void get_size_test::test_group()
 //-----------------------------------------------------------------------------
 void get_size_test::test_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     object_type object = field;
 
     CPPUNIT_ASSERT(get_size(object) == 100);
@@ -77,7 +77,7 @@ void get_size_test::test_field()
 //-----------------------------------------------------------------------------
 void get_size_test::test_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     shape_t shape;
     object_type object = attribute;

@@ -62,7 +62,7 @@ void write_test::tearDown()
 //-----------------------------------------------------------------------------
 void write_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     h5::nxobject object =  root;
     CPPUNIT_ASSERT_THROW(write(object,farray_t()),type_error);
@@ -72,7 +72,7 @@ void write_test::test_group()
 //-----------------------------------------------------------------------------
 void write_test::test_field_full()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     field_wdata = farray_t::create(field_shape);
     field_rdata = farray_t::create(field_shape);
@@ -92,7 +92,7 @@ void write_test::test_field_full()
 //-----------------------------------------------------------------------------
 void write_test::test_field_partial()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     field_wdata = farray_t::create(shape_t{1,3,5});
     field_rdata = farray_t::create(shape_t{1,3,5});
@@ -135,7 +135,7 @@ void write_test::test_field_partial()
 //-----------------------------------------------------------------------------
 void write_test::test_attribute_full()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     h5::nxobject object = attribute;
 

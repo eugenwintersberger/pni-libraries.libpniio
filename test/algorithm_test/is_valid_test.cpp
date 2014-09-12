@@ -53,7 +53,7 @@ void is_valid_test::tearDown()
 //----------------------------------------------------------------------------
 void is_valid_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     CPPUNIT_ASSERT(is_valid(group));
     group.close();
@@ -63,7 +63,7 @@ void is_valid_test::test_group()
 //----------------------------------------------------------------------------
 void is_valid_test::test_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     CPPUNIT_ASSERT(is_valid(field));
     field.close();
@@ -73,7 +73,7 @@ void is_valid_test::test_field()
 //----------------------------------------------------------------------------
 void is_valid_test::test_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     CPPUNIT_ASSERT(is_valid(attribute));
     attribute.close();
@@ -83,7 +83,7 @@ void is_valid_test::test_attribute()
 //----------------------------------------------------------------------------
 void is_valid_test::test_file()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     CPPUNIT_ASSERT(is_valid(file));
     file.close();
@@ -93,7 +93,7 @@ void is_valid_test::test_file()
 //-----------------------------------------------------------------------------
 void is_valid_test::test_nxobject_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
    
     object_type object;
     CPPUNIT_ASSERT(!is_valid(object));
@@ -104,7 +104,7 @@ void is_valid_test::test_nxobject_group()
 //-----------------------------------------------------------------------------
 void is_valid_test::test_nxobject_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     object_type object;
     CPPUNIT_ASSERT(!is_valid(object));
@@ -115,7 +115,7 @@ void is_valid_test::test_nxobject_field()
 //-----------------------------------------------------------------------------
 void is_valid_test::test_nxobject_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     object_type object;
     CPPUNIT_ASSERT(!is_valid(object));

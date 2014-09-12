@@ -56,7 +56,7 @@ void get_type_test::tearDown()
 //-----------------------------------------------------------------------------
 void get_type_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     object_type object = root;
     CPPUNIT_ASSERT_THROW(get_type(object),type_error);
@@ -66,12 +66,11 @@ void get_type_test::test_group()
 //-----------------------------------------------------------------------------
 void get_type_test::test_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject object = field;
     CPPUNIT_ASSERT(is_valid(object));
 
     type_id_t value = get_type(object);
-    std::cout<<value<<std::endl;
     CPPUNIT_ASSERT(get_type(object) == type_id_t::UINT32);
 
 }
@@ -79,7 +78,7 @@ void get_type_test::test_field()
 //-----------------------------------------------------------------------------
 void get_type_test::test_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     shape_t shape;
     object_type object = field.attributes["temp"];

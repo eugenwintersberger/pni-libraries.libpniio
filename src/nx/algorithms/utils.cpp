@@ -39,7 +39,6 @@ namespace nx{
         return get_path(p);
     }
 
-
     //------------------------------------------------------------------------
     nxpath get_path(const string &p)
     {

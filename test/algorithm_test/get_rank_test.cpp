@@ -56,7 +56,7 @@ void get_rank_test::tearDown()
 //-----------------------------------------------------------------------------
 void get_rank_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     h5::nxobject object = root;
     CPPUNIT_ASSERT_THROW(get_rank(object),type_error);
@@ -66,7 +66,7 @@ void get_rank_test::test_group()
 //-----------------------------------------------------------------------------
 void get_rank_test::test_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject object = field;
     CPPUNIT_ASSERT(get_rank(object)==3);
 }
@@ -74,7 +74,7 @@ void get_rank_test::test_field()
 //-----------------------------------------------------------------------------
 void get_rank_test::test_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = field.attributes["temp"];
     CPPUNIT_ASSERT(get_rank(object)==2);

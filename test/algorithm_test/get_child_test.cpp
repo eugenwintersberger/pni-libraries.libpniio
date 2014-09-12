@@ -55,7 +55,6 @@ void get_child_test::test_group_by_index()
     CPPUNIT_ASSERT(get_name(object)=="beamline");
 
     CPPUNIT_ASSERT_NO_THROW(object=get_child(group,1));
-    std::cout<<get_name(object)<<std::endl;
     CPPUNIT_ASSERT(get_name(object)=="control");
     
     CPPUNIT_ASSERT_THROW(get_child(group,100),index_error);
@@ -74,7 +73,6 @@ void get_child_test::test_group_object_by_index()
     CPPUNIT_ASSERT(get_name(object)=="beamline");
 
     CPPUNIT_ASSERT_NO_THROW(object=get_child(g,1));
-    std::cout<<get_name(object)<<std::endl;
     CPPUNIT_ASSERT(get_name(object)=="control");
     
     CPPUNIT_ASSERT_THROW(get_child(g,100),index_error);

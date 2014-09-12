@@ -56,7 +56,7 @@ void get_shape_test::tearDown()
 //-----------------------------------------------------------------------------
 void get_shape_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     h5::nxobject object = root;
     CPPUNIT_ASSERT_THROW(get_shape<shape_t>(object),type_error);
@@ -65,7 +65,7 @@ void get_shape_test::test_group()
 //-----------------------------------------------------------------------------
 void get_shape_test::test_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject object = field;
 
     shape_t shape;
@@ -80,7 +80,7 @@ void get_shape_test::test_field()
 //-----------------------------------------------------------------------------
 void get_shape_test::test_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     shape_t shape;
     h5::nxobject object = field.attributes["temp"];

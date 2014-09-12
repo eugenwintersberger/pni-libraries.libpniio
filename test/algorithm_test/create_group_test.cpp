@@ -56,7 +56,7 @@ void create_group_test::tearDown()
 //-----------------------------------------------------------------------------
 void create_group_test::test_group()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     auto gi = get_child(h5::nxobject(group),"instrument","");
     h5::nxobject ng;
@@ -69,7 +69,7 @@ void create_group_test::test_group()
 //-----------------------------------------------------------------------------
 void create_group_test::test_group_from_path()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     auto gi = get_child(h5::nxobject(group),"instrument","");
     h5::nxobject ng;
@@ -91,7 +91,7 @@ void create_group_test::test_group_from_path()
 //-----------------------------------------------------------------------------
 void create_group_test::test_field()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject object = field;
 
     CPPUNIT_ASSERT_THROW(create_group(object,"g1","NXlog"),type_error);
@@ -101,7 +101,7 @@ void create_group_test::test_field()
 //-----------------------------------------------------------------------------
 void create_group_test::test_attribute()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = field.attributes["temp"];
     CPPUNIT_ASSERT_THROW(create_group(object,"g1","NXlog"),type_error);
