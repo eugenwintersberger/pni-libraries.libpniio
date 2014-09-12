@@ -323,10 +323,9 @@ namespace nx{
             //! is an empty string in which case the NX_class attribute will 
             //! not be written.
             //!
-            //! \throws pni::io::nx::nxgroup_error in case of group creation 
-            //! errors
-            //! \throws pni::io::nx::nxattribute_error in case of attribute 
-            //! problems
+            //! \throws invalid_object_error if parent is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \param n group name
             //! \param type nexus class type
             //! \return a new instance of nxgroup

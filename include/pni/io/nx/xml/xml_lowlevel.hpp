@@ -73,7 +73,7 @@ namespace xml{
         {
             if(child.first == "group")
             {
-                auto g = create_group(parent,child.second);
+                auto g = pni::io::nx::xml::create_group(parent,child.second);
                 //recursive call of create_objects
                 create_objects(g,child.second);
             }

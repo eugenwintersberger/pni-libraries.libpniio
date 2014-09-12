@@ -24,6 +24,7 @@
 #include <pni/core/types.hpp>
 #include "../nxobject_traits.hpp"
 #include "get_object.hpp"
+#include "utils.hpp"
 
 namespace pni{
 namespace io{
@@ -55,8 +56,10 @@ namespace nx{
                                  >
     {
         private:
-            string _name;  //!< the name of the group
-            string _class; //!< the Nexus class of the group
+            //! the name of the group
+            string _name; 
+            //! the Nexus class of the group
+            string _class; 
         public:
             //! result type
             typedef nxobject<GTYPE,FTYPE,ATYPE> result_type;
@@ -71,6 +74,7 @@ namespace nx{
             //! \brief constructor
             //!
             //! Constructor of the visitor.
+            //!
             //! \param n name of the group
             //! \param c class of the group
             //!
@@ -87,7 +91,9 @@ namespace nx{
             //! parent group g. The new group will be stored as object_types 
             //! variant.
             //!
-            //! \throws nxgroup_error in case of errors
+            //! \throws invalid_object_error if the parent is not valid
+            //! \throws object_error in case of any other error 
+            //!
             //! \param g parent group instance
             //! \return new group stored as object_types
             //!
@@ -166,11 +172,13 @@ namespace nx{
     //! argument must be non-empty. If an empty string is passed as the groups 
     //! class then the NX_class attribute will not be set.
     //!
-    //! \throws nxgroup_error if stored object is a group
+    //! \throws invalid_object_error if stored object is a group
+    //! \throws object_error in case of any other error
     //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam PATHT path type
     //!
     //! \param o instance of VTYPE with the parent group
     //! \param n name of the new group
@@ -180,59 +188,29 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename PATHT
             > 
     nxobject<GTYPE,FTYPE,ATYPE>
-    create_group(const nxobject<GTYPE,FTYPE,ATYPE> &o,const string &n,const string &c)
+    create_group(const nxobject<GTYPE,FTYPE,ATYPE> &o,const PATHT &path)
     {
         typedef create_group_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
 
-        return boost::apply_visitor(visitor_type(n,c),o);
-    }
+        nxpath parent_path(get_path(path));
+        nxpath::element_type e = parent_path.back();
+        parent_path.pop_back();
 
-    //-------------------------------------------------------------------------
-    //!
-    //! \ingroup algorithm_code
-    //! \brief create_group wrapper
-    //!
-    //! Wrapper for the create_group_visitor. This wrapper creates a new group 
-    //! whose location, name, and class is described by a Nexus path. The 
-    //! template assumes that all intermediate groups exist. An exception 
-    //! will be thrown if this is not the case.
-    //!
-    //! \throws nxgroup_error in case of errors
-    //!
-    //! \tparam GTYPE group type
-    //! \tparam FTYPE field type
-    //! \tparam ATYPE attribute type
-    //!
-    //! \param o instance of VTYPE with the parent group
-    //! \param p path to the new group
-    //! \return instance of object_types with the new group
-    //!
-    template<
-             typename GTYPE,
-             typename FTYPE,
-             typename ATYPE
-            >
-    nxobject<GTYPE,FTYPE,ATYPE>
-    create_group(const nxobject<GTYPE,FTYPE,ATYPE> &o,const nxpath &p)
-    {
-        typedef create_group_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
-        typedef nxobject<GTYPE,FTYPE,ATYPE> object_types;
-        nxpath parent_path,group_path;
-        split_last(p,parent_path,group_path);
-   
-       
-        object_types parent;
+        object_type parent;
+
         if(parent_path.size())
             parent = get_object(o,parent_path);
         else
             parent = o;
 
-        return create_group(parent,group_path.begin()->first,
-                            group_path.begin()->second);
+        return boost::apply_visitor(visitor_type(e.first,e.second),parent);
     }
+
 //end of namespace
 }
 }

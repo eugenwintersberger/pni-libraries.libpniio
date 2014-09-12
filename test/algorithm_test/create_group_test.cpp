@@ -60,7 +60,7 @@ void create_group_test::test_group()
 
     auto gi = get_child(h5::nxobject(group),"instrument","");
     h5::nxobject ng;
-    CPPUNIT_ASSERT_NO_THROW(ng = create_group(gi,"detector","NXdetector"));
+    CPPUNIT_ASSERT_NO_THROW(ng = create_group(gi,"detector:NXdetector"));
     CPPUNIT_ASSERT(is_valid(ng));
     CPPUNIT_ASSERT(get_name(ng)=="detector");
     CPPUNIT_ASSERT(is_group(ng));
@@ -79,9 +79,8 @@ void create_group_test::test_group_from_path()
     CPPUNIT_ASSERT(is_group(ng));
     CPPUNIT_ASSERT(get_name(ng) == "log");
     CPPUNIT_ASSERT(pni::io::nx::is_class(ng,"NXlog"));
-
-    CPPUNIT_ASSERT_NO_THROW(ng = create_group(gi,
-                nxpath::from_string("../../entry2:NXentry")));
+ng = create_group(gi, nxpath::from_string("../../entry2:NXentry"));
+    //CPPUNIT_ASSERT_NO_THROW();
     CPPUNIT_ASSERT(is_valid(ng));
     CPPUNIT_ASSERT(is_group(ng));
     CPPUNIT_ASSERT(get_name(ng) == "entry2");
@@ -94,8 +93,8 @@ void create_group_test::test_field()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject object = field;
 
-    CPPUNIT_ASSERT_THROW(create_group(object,"g1","NXlog"),type_error);
-    CPPUNIT_ASSERT_THROW(create_group(object,"g2","NXlog"),type_error);
+    CPPUNIT_ASSERT_THROW(create_group(object,"g1:NXlog"),type_error);
+    CPPUNIT_ASSERT_THROW(create_group(object,"g2:NXlog"),type_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -104,7 +103,7 @@ void create_group_test::test_attribute()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     h5::nxobject object = field.attributes["temp"];
-    CPPUNIT_ASSERT_THROW(create_group(object,"g1","NXlog"),type_error);
-    CPPUNIT_ASSERT_THROW(create_group(object,"g2","NXlog"),type_error);
+    CPPUNIT_ASSERT_THROW(create_group(object,"g1:NXlog"),type_error);
+    CPPUNIT_ASSERT_THROW(create_group(object,"g2:NXlog"),type_error);
 }
 

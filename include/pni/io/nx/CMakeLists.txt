@@ -19,7 +19,6 @@ set(HEADER_FILES nxattribute.hpp
                  algorithms.hpp
                  xml.hpp
                  nxattribute_manager.hpp
-                 recursive_iterator.hpp
                  flat_group.hpp
                  )
 
