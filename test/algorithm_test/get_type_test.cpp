@@ -28,6 +28,7 @@
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(get_type_test);
+using pni::io::invalid_object_error;
 
 //-----------------------------------------------------------------------------
 void get_type_test::setUp()
@@ -60,7 +61,6 @@ void get_type_test::test_group()
         
     object_type object = root;
     CPPUNIT_ASSERT_THROW(get_type(object),type_error);
-
 }
 
 //-----------------------------------------------------------------------------
@@ -68,11 +68,13 @@ void get_type_test::test_field()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject object = field;
-    CPPUNIT_ASSERT(is_valid(object));
 
-    type_id_t value = get_type(object);
     CPPUNIT_ASSERT(get_type(object) == type_id_t::UINT32);
+    CPPUNIT_ASSERT(get_type(field)  == type_id_t::UINT32);
 
+    CPPUNIT_ASSERT_THROW(get_type(h5::nxfield()),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(get_type(h5::nxobject(h5::nxfield())),
+                         invalid_object_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -83,6 +85,11 @@ void get_type_test::test_attribute()
     shape_t shape;
     object_type object = field.attributes["temp"];
     CPPUNIT_ASSERT(get_type(object) == type_id_t::FLOAT32);
+    CPPUNIT_ASSERT(get_type(field.attributes["temp"])==type_id_t::FLOAT32);
+
+    CPPUNIT_ASSERT_THROW(get_type(h5::nxattribute()),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(get_type(h5::nxobject(h5::nxattribute())),
+                         invalid_object_error);
     
 }
 

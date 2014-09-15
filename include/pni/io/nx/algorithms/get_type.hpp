@@ -31,33 +31,77 @@ namespace nx{
     using namespace pni::core;
 
     //!
+    //! \ingroup algorithm_code
+    //! \brief get type 
+    //!
+    //! Get the type ID of a field or attribute. If the type of the object 
+    //! is not an attribute or field type compilation will fails due to an 
+    //! static_insert within the template.
+    //!
+    //! \throws invalid_object_error if the object is not valid
+    //! \throws type_error if the data type used is not suppported
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam OTYPE object template
+    //! \tparam IMPID implementation ID
+    //!
+    //! \param o object reference
+    //! \return type ID
+    //!
+    template<
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID
+            >
+    type_id_t get_type(const OTYPE<IMPID> &o)
+    {
+        typedef OTYPE<IMPID> object_type;
+        typedef typename nxobject_trait<IMPID>::field_type field_type;
+        typedef typename nxobject_trait<IMPID>::attribute_type attribute_type;
+
+        static_assert(std::is_same<object_type,field_type>::value ||
+                      std::is_same<object_type,attribute_type>::value,
+                      "OBJECT MUST BE A FIELD OR ATTRIBUTE TYPE!");
+
+        return o.type_id();
+    }
+
+    //------------------------------------------------------------------------
+    //!
     //! \ingroup algorithm_internal_code
     //! \brief get type visitor
     //!
     //! This visitor retrieves the type code of the data stored in a field or
     //! attribute For groups an exception is thrown as they do not have a rank.
-    //! \tparam VTYPE variant type
+    //!
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //!
     //! \sa get_type
     //!
-    template<typename VTYPE> 
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
     class get_type_visitor : public boost::static_visitor<type_id_t>
     {
         public:
             //! result type
             typedef type_id_t result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
 
             //-----------------------------------------------------------------
             //!
             //! \brief process group instances
             //!
             //! Throw an exception as a group cannot have a type.
-            //! \throws nxgroup_error groups do not have type
+            //! \throws type_error groups do not have type
             //! \param g group instance
             //! \return NONE type code - can be safely ignored 
             //!
@@ -76,6 +120,11 @@ namespace nx{
             //! \brief process field instances
             //!
             //! Returns the type of a field.
+            //!
+            //! \throws invalid_object_error if the field is not valid
+            //! \throws type_error if the data type is not supported
+            //! \throws object_error in case of any  other error
+            //!
             //! \param f field instance
             //! \return type code of field data
             //!
@@ -89,6 +138,11 @@ namespace nx{
             //! \brief process attribute instances
             //!
             //! Returns the type of the attribute.
+            //! 
+            //! \throws invalid_object_error if the attribute is not valid
+            //! \throws type_error if the data type is not supported
+            //! \throws object_error in case of any other error
+            //!
             //! \param a attribute instance
             //! \return type code of the attribute data
             //!
@@ -98,29 +152,40 @@ namespace nx{
             }
     };
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_code
-    //! \brief get type wrapper
+    //! \brief get type 
     //!
-    //! Wrapper function for the get_type_visitor template. This function 
-    //! returns the type code of the data in a field or attribute stored in 
-    //! a variant type.  If the stored object is a group type an exception 
-    //! will be thrown.
+    //! Get the type ID of a field or attribute. 
     /*!
     \code{.cpp}
     object_types field = get_object(root,path_to_field);
     type_id_t tc = get_type(field);
     \endcode
     */
-    //! \throws nxgroup_error if stored object is a group
-    //! \tparam VTYPE variant type
-    //! \param o instance of VTYPE
+    //!
+    //! \throws invalid_object_error if the object is not valid
+    //! \throws type_error if the data type is not supported or the object
+    //! is a group 
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute_type
+    //!
+    //! \param o object wrapped into nxobject
     //! \return value of type_id_t
     //!
-    template<typename VTYPE> 
-    typename get_type_visitor<VTYPE>::result_type get_type(const VTYPE &o)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    type_id_t get_type(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(get_type_visitor<VTYPE>(),o);
+        typedef get_type_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(),o);
     }
 
 //end of namespace
