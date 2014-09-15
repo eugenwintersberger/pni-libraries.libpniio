@@ -28,6 +28,7 @@
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(get_size_test);
+using pni::io::invalid_object_error;
 
 //-----------------------------------------------------------------------------
 void get_size_test::setUp()
@@ -61,6 +62,10 @@ void get_size_test::test_group()
         
     object_type object = root;
     CPPUNIT_ASSERT(get_size(object)==2);
+    CPPUNIT_ASSERT(get_size(root) == 2);
+    CPPUNIT_ASSERT_THROW(get_size(h5::nxgroup()),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(get_size(h5::nxobject(h5::nxgroup())),
+                         invalid_object_error);
 
 }
 
@@ -71,6 +76,10 @@ void get_size_test::test_field()
     object_type object = field;
 
     CPPUNIT_ASSERT(get_size(object) == 100);
+    CPPUNIT_ASSERT(get_size(field) == 100);
+    CPPUNIT_ASSERT_THROW(get_size(h5::nxfield()),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(get_size(h5::nxobject(h5::nxfield())),
+                         invalid_object_error);
 
 }
 
@@ -82,6 +91,10 @@ void get_size_test::test_attribute()
     shape_t shape;
     object_type object = attribute;
     CPPUNIT_ASSERT(get_size(object) == 16);
+    CPPUNIT_ASSERT(get_size(attribute) == 16);
+    CPPUNIT_ASSERT_THROW(get_size(h5::nxattribute()),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(get_size(h5::nxobject(h5::nxattribute())),
+                         invalid_object_error);
     
 }
 

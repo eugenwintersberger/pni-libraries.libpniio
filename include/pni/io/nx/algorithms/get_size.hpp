@@ -31,6 +31,34 @@ namespace nx{
     using namespace pni::core;
 
     //!
+    //! \ingroup algorithm_code
+    //! \brief get number of elements
+    //!
+    //! Return the number of elements stored in a group, field, or attribute.
+    //! In the case of a group this function template returns the number of 
+    //! children the group has. In the case of fields and attributes the number
+    //! of elements are stored in the particular instance.
+    //!
+    //! \throws invalid_object_error if the object is not valid
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam OTYPE object template
+    //! \tparam IPMID implementation ID argument of the object template
+    //!
+    //! \param o reference to the group, field, or attribute object
+    //! \return number of elements
+    //! 
+    template<
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID
+            >
+    size_t get_size(const OTYPE<IMPID> &o)
+    {
+        return o.size();
+    }
+
+    //-------------------------------------------------------------------------
+    //!
     //! \ingroup algorithm_internal_code
     //! \brief get size visitor
     //!
@@ -41,25 +69,32 @@ namespace nx{
     //! \tparam VTYPE variant type
     //! \sa get_size
     //!
-    template<typename VTYPE> 
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
     class get_size_visitor : public boost::static_visitor<size_t>
     {
         public:
             //! result type
             typedef size_t result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
 
             //-----------------------------------------------------------------
             //!
             //! \brief process group instances
             //!
             //! Return the number of children attached to this group.
-            //! \throws nxgroup_error groups do not have type
+            //! 
+            //! \throws invalid_object_error if group is invalid
+            //! \throws object_error in case of any other error
+            //! 
             //! \param g group instance
             //! \return number of children
             //!
@@ -73,6 +108,10 @@ namespace nx{
             //! \brief process field instances
             //!
             //! Returns the size of a field.
+            //! 
+            //! \throws invalid_object_error if the field is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \param f field instance
             //! \return size of the field
             //!
@@ -86,6 +125,10 @@ namespace nx{
             //! \brief process attribute instances
             //!
             //! Returns the size of the attribute.
+            //! 
+            //! \throws invalid_object_error if the attribute is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \param a attribute instance
             //! \return size of the attribute
             //!
@@ -97,27 +140,39 @@ namespace nx{
 
     //!
     //! \ingroup algorithm_code
-    //! \brief get size wrapper
+    //! \brief get size 
     //!
-    //! This function is a wrapper to the get_size_visitor template. It 
-    //! returns the total number of elements held by a field or attribute 
-    //! stored in a variant type. If the stored object is agroup an 
-    //! exception will be thrown.
+    //! Return the number of elements stored in a group, field, or attribute.
+    //! In the case of a group this function template returns the number of 
+    //! children the group has. In the case of fields and attributes the number
+    //! of elements are stored in the particular instance.
+    //!
     /*!
     \code{.cpp}
     object_types field = get_object(root,path_to_field);
     auto s = get_size(field);
     \endcode
     */
-    //! \throws nxgroup_error if stored object is a group
-    //! \tparam VTYPE variant type
-    //! \param o instance of VTYPE
+    //! \throws invalid_object_error if object is not valid
+    //! \throws object_error in case of any other error
+    //! 
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! 
+    //! \param o instance of nxobject
     //! \return size of the object
     //!
-    template<typename VTYPE> 
-    typename get_size_visitor<VTYPE>::result_type get_size(const VTYPE &o)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    size_t get_size(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(get_size_visitor<VTYPE>(),o);
+        typedef get_size_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+
+        return boost::apply_visitor(visitor_type(),o);
     }
 
 //end of namespace
