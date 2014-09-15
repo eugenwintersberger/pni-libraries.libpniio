@@ -28,6 +28,7 @@
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(set_unit_test);
+using pni::io::invalid_object_error;
 
 //-----------------------------------------------------------------------------
 void set_unit_test::setUp()
@@ -64,13 +65,14 @@ void set_unit_test::test_field()
 
     h5::nxobject object = field;
     CPPUNIT_ASSERT_NO_THROW(set_unit(object,"m"));
-    string buffer;
-    field.attributes["units"].read(buffer);
-    CPPUNIT_ASSERT(buffer == "m");
-    CPPUNIT_ASSERT_NO_THROW(set_unit(object,"mm"));
-    field.attributes["units"].read(buffer);
-    CPPUNIT_ASSERT(buffer == "mm");
+    CPPUNIT_ASSERT_NO_THROW(get_unit(object)=="m");
 
+    CPPUNIT_ASSERT_NO_THROW(set_unit(field,"mm"));
+    CPPUNIT_ASSERT_NO_THROW(get_unit(field)=="mm");
+
+    CPPUNIT_ASSERT_THROW(set_unit(h5::nxfield(),"mm"),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(set_unit(h5::nxobject(h5::nxfield()),"mm"),
+                         invalid_object_error);
 }
 
 //-----------------------------------------------------------------------------

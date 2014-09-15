@@ -28,13 +28,50 @@ namespace io{
 namespace nx{
 
     //!
+    //! \ingroup algorithm_code
+    //! \brief set the unit
+    //!
+    //! Set the unit for a field. The unit is stored in an attribute with name 
+    //! "units" of data type string. The attribute is scalar.
+    //!
+    //! \throws invalid_object_error if field is not valid
+    //! \throws type_error if data type is not supported
+    //! \throws io_error if writing of the value fails
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam FTYPE field type
+    //!
+    //! \param field instance of the field 
+    //! \param value the value for the units attribute
+    //!
+    template<typename FTYPE> 
+    void set_unit(const FTYPE &field,const string &value)
+    {
+        typedef nximp_code_map<FTYPE> map_type;
+        typedef typename nxobject_trait<map_type::icode>::field_type field_type;
+
+        static_assert(std::is_same<field_type,FTYPE>::value,
+                      "A UNIT CAN ONLY SET ON A FIELD TYPE!");
+
+        auto attribute = field.attributes.template create<string>("units",true);
+        attribute.write(value);
+    }
+
+
+    //-------------------------------------------------------------------------
+    //!
     //! \ingroup algorithm_internal_code
     //! \brief set unit visitor
     //!
-    //! This visitors sets the unit on a field stored in the variant type.
-    //! \tparam VTYPE variant type
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
     //!
-    template<typename VTYPE> 
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
     class set_unit_visitor : public boost::static_visitor<void>
     {
         private:
@@ -43,11 +80,11 @@ namespace nx{
             //! result type
             typedef void result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
        
             //-----------------------------------------------------------------
             //!
@@ -61,8 +98,8 @@ namespace nx{
             //!
             //! \brief process groups
             //!
-            //! Groups do not have a unit. Thus an exception will be thrown.
-            //! \throws nxgroup_error groups have no unit
+            //! \throws type_error cannot attach a unit to a group
+            //!
             //! \param g group instance
             //! \return nothing
             //!
@@ -80,23 +117,26 @@ namespace nx{
             //! \brief process fields
             //!
             //! Sets the units attribute of the field. 
-            //! \throws nxattribute_error in case of IO errors 
+            //!
+            //! \throws invalid_object_error if field is not valid
+            //! \throws type_error if data type is not supported
+            //! \throws io_error if writing of the value fails
+            //! \throws object_error in case of any other error
+            //!
             //! \param f field instance
             //! \return nothing
             //!
             result_type operator()(const field_type &f) const
             {
-                f.attributes.template create<string>("units",true).write(_unit);
+                set_unit(f,_unit);
             }
 
             //-----------------------------------------------------------------
             //!
             //! \brief process attributes
             //!
-            //! As attributes do not have a unit this method throws an 
-            //! exception.
+            //! \throws type_error cannot attach a unit to an attribute
             //!
-            //! \throws nxattribute_error attributes do not have units
             //! \param a attribute instance
             //! \return nothing
             //!
@@ -110,24 +150,36 @@ namespace nx{
 #pragma GCC diagnostic pop
     };
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_code
-    //! \brief set unit wrapper
+    //! \brief set unit 
     //!
-    //! Wrapper function for the set_unit_visitor template.
-    //! \throws nxgroup_error if the stored object is a group
-    //! \throws nxattribute_error in case of attribute IO errors or if 
-    //! the stored object is an attribute
-    //! \tparam VTYPE variant type
-    //! \param o instance of VTYPE
-    //! \param s unit string
-    //! \return nothing
+    //! Set the unit for a field. The unit is stored in an attribute with name 
+    //! "units" of data type string. The attribute is scalar.
     //!
-    template<typename VTYPE> 
-    typename set_unit_visitor<VTYPE>::result_type 
-    set_unit(const VTYPE &o,const string &s)
+    //! \throws invalid_object_error if field is not valid
+    //! \throws type_error if data type is not supported
+    //! \throws io_error if writing of the value fails
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //!
+    //! \param o instance of the parent object
+    //! \param s content of the unit string
+    //!
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    void set_unit(const nxobject<GTYPE,FTYPE,ATYPE> &o,const string &s)
     {
-        return boost::apply_visitor(set_unit_visitor<VTYPE>(s),o);
+        typedef set_unit_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+
+        return boost::apply_visitor(visitor_type(s),o);
     }
 
 //end of namespace
