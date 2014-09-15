@@ -28,14 +28,16 @@
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(get_unit_test);
+using pni::io::invalid_object_error;
 
 //-----------------------------------------------------------------------------
 void get_unit_test::setUp()
 {
-    file = h5::nxfile::create_file("is_valid.nx",true,0);
+    file = h5::nxfile::create_file("get_unit_test.nx",true,0);
     root = file.root();
     group = root.create_group("group","NXentry");
     field = root.create_field<uint32>("data");
+    field.attributes.create<string>("units").write("m");
 }
 
 //-----------------------------------------------------------------------------
@@ -54,7 +56,7 @@ void get_unit_test::test_group()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
         
     object_type object = group;
-    CPPUNIT_ASSERT_THROW(set_unit(object,"m"),type_error);
+    CPPUNIT_ASSERT_THROW(get_unit(object),type_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -63,8 +65,12 @@ void get_unit_test::test_field()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     object_type object = field;
-    CPPUNIT_ASSERT_NO_THROW(set_unit(object,"m"));
-    CPPUNIT_ASSERT(get_unit(object)=="m");
+    CPPUNIT_ASSERT_NO_THROW(get_unit(object)=="m");
+    CPPUNIT_ASSERT_NO_THROW(get_unit(field)=="m");
+
+    CPPUNIT_ASSERT_THROW(get_unit(h5::nxfield()),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(get_unit(h5::nxobject(h5::nxfield())),
+                         invalid_object_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -73,7 +79,7 @@ void get_unit_test::test_attribute()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     object_type object = group.attributes["NX_class"];
-    CPPUNIT_ASSERT_THROW(set_unit(object,"m"),type_error);
+    CPPUNIT_ASSERT_THROW(get_unit(object),type_error);
    
 }
 

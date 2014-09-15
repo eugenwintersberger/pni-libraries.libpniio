@@ -22,8 +22,6 @@
 #pragma once
 
 #include "../nxobject_traits.hpp"
-#include "get_path.hpp"
-
 namespace pni{
 namespace io{
 namespace nx{
@@ -32,10 +30,27 @@ namespace nx{
     //! \ingroup algorithm_code
     //! \brief get the unit of a field
     //!
-    //! Return the unit string for a field 
+    //! Return the unit string of a field. This function works only for field 
+    //! types as attributes cannot store unit information.
+    //! 
+    //! \tparam invalid_object_error if the field is not valid
+    //! \tparam shape_mismatch_error if the unit attribute is not scalar
+    //! \tparam io_error if reading the attribute failed
+    //! \tparam type_error if the type used for the units attribute is not 
+    //! supported
+    //! \tparam object_error in case of any other error
+    //!
+    //! \param field instance of the Nexus field
+    //! \return content of the units string
     //!
     template<typename FTYPE> string get_unit(const FTYPE &field)
     {
+        typedef nximp_code_map<FTYPE> imp_map;
+        typedef typename nxobject_trait<imp_map::icode>::field_type field_type;
+        
+        static_assert(std::is_same<FTYPE,field_type>::value,
+                      "UNIT CAN ONLY BE RETRIEFVED FROM A FIELD TYPE!");
+
         string buffer;
 
         if(field.attributes.exists("units"))
@@ -44,6 +59,7 @@ namespace nx{
         return buffer;
     }
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_internal_code
     //! \brief get unit visitor
@@ -51,25 +67,31 @@ namespace nx{
     //! Retrieves the unit string of a field stored in the variant type.
     //! \tparam VTYPE variant type
     //!
-    template<typename VTYPE> 
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
     class get_unit_visitor : public boost::static_visitor<string>
     {
         public:
             //! result type
             typedef string result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
     
             //-----------------------------------------------------------------
             //!
             //! \brief process groups
             //!
             //! Groups have no units thus an exception is thrown.
-            //! \throws nxgroup_error groups have no unit
+            //! \throws type_error cannot retrieve units information from a 
+            //! type
+            //!
             //! \param g group instance
             //! \return an empty string - to be ignored
             //!
@@ -77,8 +99,9 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
-                throw key_error(EXCEPTION_RECORD,
-                        "Group ["+get_path(g)+"] does not have a unit!");
+                throw type_error(EXCEPTION_RECORD,
+                        "Cannot retreive a unit from a group!");
+
                 return result_type();
             }
 #pragma GCC diagnostic pop
@@ -90,8 +113,13 @@ namespace nx{
             //! Retrieve the value of the fields unit attribute. If the field 
             //! does not have a units attribute an empty string is returned.
             //!
-            //! \throws nxattribute_error in case of problems with attribute 
-            //! access
+            //! \tparam invalid_object_error if the field is not valid
+            //! \tparam shape_mismatch_error if the unit attribute is not scalar
+            //! \tparam io_error if reading the attribute failed
+            //! \tparam type_error if the type used for the units attribute is not 
+            //! supported
+            //! \tparam object_error in case of any other error
+            //!
             //! \param f field instance
             //! \return unit string
             //!
@@ -105,7 +133,9 @@ namespace nx{
             //! \brief process attributes
             //!
             //! Attributes do not posses units - an exception will be thrown.
-            //! \throw nxattribute_error attributes do not have units
+            //!
+            //! \throw type_error cannot retrieve unit from an attribute
+            //!
             //! \param a attribute instance
             //! \return an empty string - to be ignored
             //!
@@ -114,15 +144,16 @@ namespace nx{
             result_type operator()(const attribute_type &a) const
             {
                 throw type_error(EXCEPTION_RECORD,
-                        "Attribute ["+a.name()+"] does  not have a unit!");
+                        "Cannot retrieve a unit from an attribute type!");
                 return result_type();
             }
 #pragma GCC diagnostic pop
     };
 
+    //------------------------------------------------------------------------
     //!
-    //! \ingroup algorithm_internal_code
-    //! \brief get unit wrapper
+    //! \ingroup algorithm_internal
+    //! \brief get unit 
     //!
     //! Wrapper function for the get_unit_visitor. It returns the the unit 
     //! string associated with a field stored in the variant type. If the 
@@ -130,18 +161,29 @@ namespace nx{
     //! If a field does not posses a unit attribute an empty string is 
     //! returned.
     //!
-    //! \throws nxgroup_error if the stored object is a group
-    //! \throws nxattribute_error if there are IO errors with attributes 
-    //! or the stored object is an attribute
-    //! \tparam VTYPE variant type
+    //! \tparam invalid_object_error if the field is not valid
+    //! \tparam shape_mismatch_error if the unit attribute is not scalar
+    //! \tparam io_error if reading the attribute failed
+    //! \tparam type_error if the type used for the units attribute is not 
+    //! supported
+    //! \tparam object_error in case of any other error
+    //!
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //!
     //! \param o instance of VTYPE
     //! \return unit string
     //!
-    template<typename ...TYPES> 
-    typename get_unit_visitor<boost::variant<TYPES...>>::result_type 
-    get_unit(const boost::variant<TYPES...> &o)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    string get_unit(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(get_unit_visitor<boost::variant<TYPES...>>(),o);
+        typedef get_unit_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(),o);
     }
 
 //end of namespace
