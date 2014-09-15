@@ -27,7 +27,52 @@ namespace pni{
 namespace io{
 namespace nx{
 
+    //!
+    //! \ingroup algorithm_code
+    //! \brief get shape
+    //!
+    //! Returns the shape of an attribute or field type. In the case of any
+    //! other type compilation fails due to an internal static_assert statement.
+    //! The container type used to retrieve the shape information must be
+    //! provided by the user as a template parameter.
+    //!
+    /*!
+    \code{.cpp}
+    nxfield field = get_object(root,path_to_field);
+    auto shape = get_shape<shape_t>(field);
+    \endcode
+    */
+    //!
+    //! \throws invalid_object_error if the object is not valid
+    //! \throws object_error in case of any other error
+    //! 
+    //! \tparam CTYPE container type for the shape
+    //! \tparam OTYPE object template 
+    //! \tparam IMPID implementation ID
+    //!
+    //! \param object the object for which the shape should be determined
+    //!
+    //! \return instance of CTYPE with shape information
+    //! 
+    template<
+             typename CTYPE,
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID
+            >
+    CTYPE get_shape(const OTYPE<IMPID> &object)
+    {
+        typedef OTYPE<IMPID> object_type;
+        typedef typename nxobject_trait<IMPID>::field_type field_type;
+        typedef typename nxobject_trait<IMPID>::attribute_type attribute_type;
+        typedef std::is_same<object_type,field_type> field_check_type;
+        typedef std::is_same<object_type,attribute_type> attribute_check_type;
+        static_assert(field_check_type::value || attribute_check_type::value,
+                      "OBJECT MUST BE A FIELD OR ATTRIBUTE TYPE!");
 
+        return object.template shape<CTYPE>();
+    }
+
+    //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_internal_code
     //! \brief get shape visitor
@@ -37,12 +82,17 @@ namespace nx{
     //! wrapper template function.
     //!
     //! \tparam CTYPE container type for the shape
-    //! \tparam VTYPE variant type
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //!
     //! \sa get_shape
     //!
     template<
              typename CTYPE,
-             typename VTYPE
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
             > 
     class get_shape_visitor : public boost::static_visitor<CTYPE>
     {
@@ -50,18 +100,18 @@ namespace nx{
             //! result type
             typedef CTYPE result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
 
             //-----------------------------------------------------------------
             //!
             //! \brief process group instances
             //!
             //! Throw an exception as a group cannot have a shape.
-            //! \throws nxgroup_error groups do not have shapes
+            //! \throws type_error 
             //! \param g group instance
             //! \return empty instance of CTYPE
             //!
@@ -80,6 +130,10 @@ namespace nx{
             //! \brief process field instances
             //!
             //! Returns the shape of a field.
+            //! 
+            //! \throws invalid_object_error if the object is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \param f field instance
             //! \return instance of CTYPE with elements per dimension
             //!
@@ -93,6 +147,10 @@ namespace nx{
             //! \brief process attribute instances
             //!
             //! Returns the shape of the attribute.
+            //!
+            //! \throws invalid_object_error if the object is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \param a attribute instance
             //! \return instance of CTYPE with elements per dimension
             //!
@@ -104,28 +162,41 @@ namespace nx{
 
     //!
     //! \ingroup algorithm_code
-    //! \brief get shape wrapper
+    //! \brief get shape 
     //!
-    //! Wrapper function for the get_shape_visitor template. This function 
-    //! returns the shape (number of elements along each dimension) of a field 
-    //! or an attribute stored in the variant type. 
-    //! If the stored object is a group type an exception will be thrown.   
+    //! Returns the shape of an attribute or field type. In the case of any
+    //! other type compilation fails due to an internal static_assert statement.
+    //! The container type used to retrieve the shape information must be
+    //! provided by the user as a template parameter.
+    //!
     /*!
     \code{.cpp}
     object_types field = get_object(root,path_to_field);
     auto shape = get_shape<shape_t>(field);
     \endcode
     */
-    //! \throws nxgroup_error if stored object is a group
+    //! \throws invalid_object_error if the object is not valid
+    //! \throws object_error in case of any other error
+    //!
     //! \tparam CTYPE container type for the shape
-    //! \tparam VTYPE variant type
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //!
     //! \param o instance of VTYPE
     //! \return an instance of CTYPE with the elements for each dimension
     //!
-    template<typename CTYPE,typename VTYPE> 
-    typename get_shape_visitor<CTYPE,VTYPE>::result_type get_shape(const VTYPE &o)
+    template<
+             typename CTYPE,
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    CTYPE get_shape(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(get_shape_visitor<CTYPE,VTYPE>(),o);
+        typedef get_shape_visitor<CTYPE,GTYPE,FTYPE,ATYPE> visitor_type;
+
+        return boost::apply_visitor(visitor_type(),o);
     }
 
 //end of namespace

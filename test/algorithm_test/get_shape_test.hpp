@@ -47,6 +47,15 @@ class get_shape_test : public CppUnit::TestFixture
 
         shape_t field_shape,attr_shape;
 
+        template<typename CTYPE>
+        void check_shape(const CTYPE &shape,const CTYPE &orig_shape)
+        {
+            for(auto oiter = shape.begin(), siter = orig_shape.begin();
+                     oiter != shape.end();
+                     ++oiter,++siter)
+                CPPUNIT_ASSERT(*oiter == *siter);
+        }
+
     public:
         void setUp();
         void tearDown();

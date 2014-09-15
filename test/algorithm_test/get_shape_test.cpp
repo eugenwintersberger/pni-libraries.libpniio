@@ -71,10 +71,9 @@ void get_shape_test::test_field()
     shape_t shape;
 
     CPPUNIT_ASSERT_NO_THROW(shape = get_shape<shape_t>(object));
-    for(auto oiter = field_shape.begin(), siter = shape.begin();
-             oiter != field_shape.end();
-        ++oiter,++siter)
-        CPPUNIT_ASSERT(*oiter == *siter);
+    check_shape(shape,field_shape);
+    CPPUNIT_ASSERT_NO_THROW(shape = get_shape<shape_t>(field));
+    check_shape(shape,field_shape);
 }
 
 //-----------------------------------------------------------------------------
@@ -85,10 +84,8 @@ void get_shape_test::test_attribute()
     shape_t shape;
     h5::nxobject object = field.attributes["temp"];
     CPPUNIT_ASSERT_NO_THROW(shape = get_shape<shape_t>(object));
-
-    for(auto oiter = attr_shape.begin(), siter = shape.begin();
-             oiter != attr_shape.end();
-        ++oiter,++siter)
-        CPPUNIT_ASSERT(*oiter == *siter);
+    check_shape(shape,attr_shape);
+    CPPUNIT_ASSERT_NO_THROW(shape = get_shape<shape_t>(field.attributes["temp"]));
+    check_shape(shape,attr_shape);
 }
 
