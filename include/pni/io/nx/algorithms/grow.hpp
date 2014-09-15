@@ -31,15 +31,43 @@ namespace nx{
     using namespace pni::core;
 
     //!
+    //! \ingroup algorithm_code
+    //! \brief grow a field
+    //! 
+    //! \throws invalid_object_error if the field is not active
+    //! \throws index_error if dimension exceeds the rank
+    //! \throws object_error in case of any other error
+    //! 
+    //! \tparam OTYPE object template
+    //! \tparam IMPID implementation ID of the object
+    //! 
+    //! \param o the object to grow
+    //! \param dimension index of the dimension which to extend
+    //! \param extend number of elements by which to extend
+    //!
+    template<
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID
+            >
+    void grow(OTYPE<IMPID> &o,size_t dimension=0,size_t extend=1)
+    {
+        o.grow(dimension,extend);
+    }
+
+    //------------------------------------------------------------------------
+    //!
     //! \ingroup algorithm_internal_code
     //! \brief grow visitor
     //!
-    //!  This visitor grows a field along a particular dimensions. 
-    //! Exceptions will be thrown for group and attribute objects.
-    //! \tparam VTYPE variant type
-    //! \sa grow
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
     //!
-    template<typename VTYPE> 
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
     class grow_visitor : public boost::static_visitor<void>
     {
         private:
@@ -51,11 +79,11 @@ namespace nx{
             //! result type
             typedef void result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef ATYPE attribute_type;
 
             //-----------------------------------------------------------------
             //!
@@ -73,8 +101,8 @@ namespace nx{
             //!
             //! \brief process group instances
             //!
-            //! A group cannot grow - thus an exception is thrown.
-            //! \throws nxgroup_error 
+            //! \throws type_error
+            //!
             //! \param g group instance
             //! \return nothing
             //!
@@ -92,6 +120,11 @@ namespace nx{
             //! \brief process field instances
             //!
             //! Grows the field along a particular dimenension.
+            //!
+            //! \throws invalid_object_error if the field is not active
+            //! \throws index_error if dimension exceeds the rank
+            //! \throws object_error in case of any other error
+            //! 
             //! \param f field instance
             //! \return nothing
             //!
@@ -104,8 +137,8 @@ namespace nx{
             //!
             //! \brief process attribute instances
             //!
-            //! Throw an exception as an attribute cannot grow.
-            //! \throw nxattribute_error
+            //! \throw type_error
+            //!
             //! \param a attribute instance
             //! \return nothing
             //!
@@ -119,37 +152,41 @@ namespace nx{
 #pragma GCC diagnostic pop
     };
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_code
-    //! \brief grow wrapper
+    //! \brief grow  object
     //!
-    //! This function is a wrapper to the grow_visitor. It grows a field 
-    //! along a particular dimension. As groups and attribute cannot be 
-    //! grown exceptions will be thrown if the stored type is of a group or 
-    //! attribute type.
     /*!
     \code{.cpp}
-    object_types field = get_object(root,path_to_field);
+    auto field = get_object(root,path_to_field);
     grow(field,1,10);
     \endcode
     */
-    //! If called without specifying the dimension and the extend by which to 
-    //! grow the field will be extended by one element along the first 
-    //! dimension.
     //!
-    //! \throws nxgroup_error if stored object is a group
-    //! \throws nxattribute_error if the stored object is an attribute type
-    //! \tparam VTYPE variant type
-    //! \param o instance of VTYPE
+    //! \throws invalid_object_error if the field is not active
+    //! \throws index_error if dimension exceeds the rank
+    //! \throws type_error if the wrapped object is a group or attribute
+    //! \throws object_error in the case of any other error
+    //!
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //!
+    //! \param o instance of nxobject
     //! \param d dimension along which to grow
     //! \param e extent by which to grow along d
     //! \return nothing
     //!
-    template<typename VTYPE> 
-    typename grow_visitor<VTYPE>::result_type 
-    grow(VTYPE &o,size_t d=0,size_t e=1)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    void grow(nxobject<GTYPE,FTYPE,ATYPE> &o,size_t d=0,size_t e=1)
     {
-        return boost::apply_visitor(grow_visitor<VTYPE>(d,e),o);
+        typedef grow_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(d,e),o);
     }
 
 //end of namespace
