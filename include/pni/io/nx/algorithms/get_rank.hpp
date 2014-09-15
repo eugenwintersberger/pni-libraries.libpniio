@@ -27,31 +27,64 @@ namespace pni{
 namespace io{
 namespace nx{
 
+    //!
+    //! \ingroup algorithm_code
+    //! \brief get rank
+    //!
+    //! Return the number of dimensions of an attribute or field.
+    //!
+    //! \throws invalid_object_error if object is not valid
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam OTYPE object template
+    //! \tparam IMPID implementation ID of the object
+    //!
+    //! \param o reference to the field or attribute
+    //! \return number of dimensions
+    //!
+    template<
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID
+            >
+    size_t get_rank(const OTYPE<IMPID> &o)
+    {
+        typedef nxobject_trait<IMPID> trait_type;
+        typedef typename trait_type::field_type field_type;
+        typedef typename trait_type::attribute_type attribute_type;
 
+        static_assert(std::is_same<field_type,OTYPE<IMPID>>::value ||
+                      std::is_same<attribute_type,OTYPE<IMPID>>::value,
+                      "THE RANK CAN ONLY BE OBTAINED FROM FIELDS AND"
+                      " ATTRIBUTE!");
+
+        return o.rank();
+    }
+
+    //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_internal_code
     //! \brief get rank visitor
     //!
-    //! This visitor retrieves the rank (the number of dimensions) of a 
-    //! field or attribute stored in a variant type.  If the object stored 
-    //! in the variant is a group an exception will be thrown.
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
     //!
-    //! \tparam CTYPE container type for the shape
-    //! \tparam VTYPE variant type
-    //! \sa get_rank
-    //!
-    template<typename VTYPE> 
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
     class get_rank_visitor : public boost::static_visitor<size_t>
     {
         public:
             //! result type
             typedef size_t result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type; 
+            typedef ATYPE attribute_type; 
 
             //-----------------------------------------------------------------
             //!
@@ -59,7 +92,7 @@ namespace nx{
             //!
             //! Throw an exception as a group cannot have a rank.
             //!
-            //! \throws nxgroup_error groups do not have a rank
+            //! \throws type_error groups do not have a rank
             //! \param g group instance
             //! \return 0
             //!
@@ -78,12 +111,16 @@ namespace nx{
             //! \brief process field instances
             //!
             //! Returns the rank of a field.
+            //!
+            //! \throws invalid_object_error if object is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \param f field instance
             //! \return number of dimensions
             //!
             result_type operator()(const field_type &f) const
             {
-                return f.rank();
+                return get_rank(f);
             }
 
             //-----------------------------------------------------------------
@@ -91,6 +128,10 @@ namespace nx{
             //! \brief process attribute instances
             //! 
             //! Returns the rank of the attribute.
+            //!
+            //! \throws invalid_object_error if object is not valid
+            //! \throws object_error in case of any other error
+            //!
             //! \param a attribute instance
             //! \return number of dimensions
             //!
@@ -100,30 +141,41 @@ namespace nx{
             }
     };
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_code
-    //! \brief get rank wrapper
+    //! \brief get rank 
     //!
-    //! Wrapper function for the get_rank_visitor template. This function 
-    //! returns the rank (number of dimensions) of a field or an attribute 
-    //! stored in the variant type.  If the stored object is a group type 
-    //! an exception will be thrown.
+    //! Return the number of dimensions of a field or attribute wrapped in an 
+    //! instance of nxobject.
+    //!
     /*!
     \code{.cpp}
-    object_types field = get_object(root,path_to_field);
-    auto shape = get_shape<shape_t>(field);
+    auto field = get_object(root,path_to_field);
+    size_t r = get_rank(field);
     \endcode
     */
-    //! \throws nxgroup_error if stored object is a group
-    //! \tparam CTYPE container type for the shape
-    //! \tparam VTYPE variant type
-    //! \param o instance of VTYPE
+    //!
+    //! \throws invalid_object_error if object is not valid
+    //! \throws type_error if the wrapped object is a group
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //!
+    //! \param o object instance
     //! \return number of dimensions
     //!
-    template<typename VTYPE> 
-    typename get_rank_visitor<VTYPE>::result_type get_rank(const VTYPE &o)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            > 
+    size_t get_rank(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        return boost::apply_visitor(get_rank_visitor<VTYPE>(),o);
+        typedef get_rank_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        return boost::apply_visitor(visitor_type(),o);
     }
 
 //end of namespace

@@ -28,6 +28,7 @@
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(get_rank_test);
+using pni::io::invalid_object_error;
 
 //-----------------------------------------------------------------------------
 void get_rank_test::setUp()
@@ -69,6 +70,11 @@ void get_rank_test::test_field()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     h5::nxobject object = field;
     CPPUNIT_ASSERT(get_rank(object)==3);
+    CPPUNIT_ASSERT(get_rank(field) ==3);
+
+    CPPUNIT_ASSERT_THROW(get_rank(h5::nxfield()),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(get_rank(h5::nxobject(h5::nxfield())),
+                         invalid_object_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -78,5 +84,10 @@ void get_rank_test::test_attribute()
 
     h5::nxobject object = field.attributes["temp"];
     CPPUNIT_ASSERT(get_rank(object)==2);
+    CPPUNIT_ASSERT(get_rank(field.attributes["temp"])==2);
+
+    CPPUNIT_ASSERT_THROW(get_rank(h5::nxattribute()),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(get_rank(h5::nxobject(h5::nxattribute())),
+                         invalid_object_error);
 }
 
