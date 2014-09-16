@@ -33,8 +33,9 @@ void write_log(const string &logfile,nxfield &field)
 int main(int argc,char **argv)
 {
     nxfile file = nxfile::create_file("nxstrfield_ex2.h5",true,0);
+    nxgroup root = file.root();
 
-    nxfield field = file.create_field<string>("logfile",{0});
+    nxfield field = root.create_field<string>("logfile",{0});
     std::cout<<"Write log file ..."<<std::endl;
     write_log("nxstrfield_ex2.log",field);
    

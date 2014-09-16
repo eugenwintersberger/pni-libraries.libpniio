@@ -7,24 +7,26 @@
 using namespace pni::io::nx::h5;
 using namespace pni::core;
 
-int main(int argc,char **argv){
+int main(int argc,char **argv)
+{
     //create the file
     nxfile file = nxfile::create_file("nxnumfield_ex1.h5",true,0);
+    nxgroup root = file.root();
 
     //create a array data 
-    darray<uint16> data(shape_t{1024,512});
+    auto  data = dynamic_array<uint16>::create(shape_t{1024,512});
     std::fill(data.begin(),data.end(),1);
 
 	//automatic from memory object
-    nxfield field = file.create_field<uint16>("detector",data.shape<shape_t>());
-    field.attr<string>("units").write("cps");
-    field.attr<string>("long_name").write("detector data");
+    nxfield field = root.create_field<uint16>("detector",data.shape<shape_t>());
+    field.attributes.create<string>("units").write("cps");
+    field.attributes.create<string>("long_name").write("detector data");
 
     //creating fields from scalars
     float32 motor = 1.2;
-    field = file.create_field<float32>("omega");
-    field.attr<string>("units").write("degree");
-    field.attr<string>("long_name").write("motor moega of goniometer");
+    field = root.create_field<float32>("omega");
+    field.attributes.create<string>("units").write("degree");
+    field.attributes.create<string>("long_name").write("motor moega of goniometer");
 
     file.close();
 

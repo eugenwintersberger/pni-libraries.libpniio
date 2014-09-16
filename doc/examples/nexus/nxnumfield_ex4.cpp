@@ -6,22 +6,24 @@
 using namespace pni::core;
 using namespace pni::io::nx::h5;
 
-typedef darray<float32> data_array;
+typedef dynamic_array<float32> data_array;
+typedef std::vector<uint16>   buffer_type;
 
 void create_data(string fname)
 {
     shape_t shape{2,3};
 
-    dbuffer<uint16> datab{1,2,3,4,5,6};
-    dbuffer<uint16> bgb{1,2,0,0,1,0};
+    buffer_type datab{1,2,3,4,5,6};
+    buffer_type bgb{1,2,0,0,1,0};
 
-    darray<uint16> data(shape,datab);
-    darray<uint16> bg(shape,bgb);
+    auto data = dynamic_array<uint16>::create(shape,datab);
+    auto bg   = dynamic_array<uint16>::create(shape,bgb);
 
     nxfile file = nxfile::create_file(fname,true,0);
-    file.create_field<uint16>("detector",shape).write(data);
-    file.create_field<uint16>("background",shape).write(bg);
-    file.create_field<float32>("ctime").write(1.23);
+    nxgroup root = file.root();
+    root.create_field<uint16>("detector",shape).write(data);
+    root.create_field<uint16>("background",shape).write(bg);
+    root.create_field<float32>("ctime").write(1.23);
     file.close();
 }
 
@@ -43,23 +45,24 @@ int main(int argc,char **argv)
 {
     shape_t shape{2,3};
 
-    numarray<data_array> frame(shape);
-    numarray<data_array> background(shape);
-    numarray<data_array> cdata(shape);
+    auto frame = data_array::create(shape);
+    auto background = data_array::create(shape);
+    auto cdata = data_array::create(shape);
     float32 ctime;
 
     create_data("nxnumfield_ex4.h5");
 
     //reading data
     nxfile file = nxfile::open_file("nxnumfield_ex4.h5",true);
+    nxgroup root = file.root();
 
-    nxfield field = file["detector"];
+    nxfield field = root["detector"];
     field.read(frame);
 
-    field = file["background"];
+    field = root["background"];
     field.read(background);
 
-    field = file["ctime"];
+    field = root["ctime"];
     field.read(ctime);
     
     std::cout<<"detector data:"<<std::endl;

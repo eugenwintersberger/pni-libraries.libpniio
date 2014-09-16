@@ -3,12 +3,11 @@
 #include <fstream>
 #include <pni/io/nx/nx.hpp>
 #include <pni/core/types.hpp>
-#include <pni/core/dbuffer.hpp>
 
 using namespace pni::io::nx::h5;
 using namespace pni::core;
 
-typedef dbuffer<binary> bin_buffer;
+typedef std::vector<binary> bin_buffer;
 
 void read_image(const string &n,nxfield &field);
 void write_image(nxfield &f,const string &n);
@@ -17,8 +16,9 @@ void write_image(nxfield &f,const string &n);
 int main(int argc,char **argv)
 {
     nxfile file = nxfile::create_file("nxbinfield_ex1.h5",true,0); 
+    nxgroup root = file.root();
 
-    nxfield field = file.create_field<binary>("image",{0});
+    nxfield field = root.create_field<binary>("image",{0});
     read_image("nexus.png",field); 
     write_image(field,"test.png");
     
@@ -37,7 +37,7 @@ void read_image(const string &n,nxfield &field)
     bin_buffer buffer((size_t)istream.tellg());
     //reset stream position
     istream.seekg(0,std::ifstream::beg);
-    istream.read((char *)buffer.ptr(),buffer.size());
+    istream.read((char *)buffer.data(),buffer.size());
 
     istream.close();
 
@@ -53,6 +53,6 @@ void write_image(nxfield &field,const string &n)
     ostream.open(n,std::ostream::binary);
     bin_buffer buffer(field.size());
     field.read(buffer);
-    ostream.write((char *)buffer.ptr(),buffer.size());
+    ostream.write((char *)buffer.data(),buffer.size());
     ostream.close();
 }

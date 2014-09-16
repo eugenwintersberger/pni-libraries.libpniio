@@ -8,11 +8,12 @@ using namespace pni::io::nx::h5;
 
 void write_data(string fname,size_t np,size_t nx,size_t ny)
 {
-    darray<uint32> frame(shape_t{nx,ny});
+    auto frame = dynamic_array<uint32>::create(shape_t{nx,ny});
 
     nxfile file = nxfile::create_file(fname,true,0);
+    nxgroup root = file.root();
 
-    nxgroup g = file.create_group("/scan_1/instrument/detector","NXdetector");
+    nxgroup g = root.create_group("/scan_1/instrument/detector","NXdetector");
     nxfield data = g.create_field<uint32>("data",shape_t{0,nx,ny});
 
     for(size_t i=0;i<np;i++)
@@ -32,10 +33,11 @@ void write_data(string fname,size_t np,size_t nx,size_t ny)
 
 void read_data(string fname,size_t np,size_t nx,size_t ny)
 {
-    darray<float64> data(shape_t{np,ny});
+    auto data = dynamic_array<float64>::create(shape_t{np,ny}) ;
 
     nxfile file = nxfile::open_file(fname,false);
-    nxfield field = file["/scan_1/instrument/detector/data"];
+    nxgroup root = file.root();
+    nxfield field = root["/scan_1/instrument/detector/data"];
 
     for(size_t i=0;i<nx;i++)
     {

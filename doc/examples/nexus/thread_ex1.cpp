@@ -54,17 +54,19 @@ class writer
             _log_data.grow(0);
 
             //write the data
-            _log_time(_log_time.dim(0)-1).write(nxdate_time::get_date_time_str());
-            _log_data(_log_data.dim(0)-1).write(s);
+            _log_time(_log_time.size()-1).write(nxdate_time::get_date_time_str());
+            _log_data(_log_data.size()-1).write(s);
 
             //flush the new log entry
             _log_file.flush();
         }
 
         //method creating the initial structure of the log
-        void __init_log(){
+        void __init_log()
+        {
             //create log group
-            auto g = _log_file.create_group("log");
+            h5::nxgroup root = _log_file.root();
+            auto g = root.create_group("log");
 
             //create a field with holding the timestamp when the 
             //log was created
@@ -105,7 +107,7 @@ class writer
                 {
                     __write_entry(log_entry);
                 }
-                catch(shape_missmatch_error &e)
+                catch(shape_mismatch_error &e)
                 {
                     std::cout<<e<<std::endl;
                     break;

@@ -37,6 +37,7 @@ else(DOXYGEN_FOUND)
 endif(DOXYGEN_FOUND)
 
 add_subdirectory(ug)
+add_subdirectory(examples)
 
 add_custom_target(doc DEPENDS api_doc ug_doc)
 
