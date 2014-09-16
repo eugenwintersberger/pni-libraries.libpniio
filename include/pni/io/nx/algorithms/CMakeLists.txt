@@ -30,7 +30,9 @@ set(HEADER_FILES as_attribute.hpp
                  read.hpp 
                  set_class.hpp 
                  set_unit.hpp 
-                 write.hpp)
+                 write.hpp
+                 utils.hpp
+                 )
 
 install(FILES ${HEADER_FILES} 
     DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/pni/io/nx/algorithms)

@@ -542,6 +542,7 @@ namespace nx{
             //! \throws invalid_object_error if group is not valid
             //! \throws key_error if child does not exist
             //! \throws type_error if child type is not supported
+            //! \throws value_error if name contains a '/' character
             //! \throws object_error in case of any other error
             //!
             //! \param n path or name of the object to open
@@ -550,6 +551,10 @@ namespace nx{
             typename nxobject_trait<IMPID>::object_type 
             at(const string &n) const
             {
+                if(find(n.begin(),n.end(),'/')!=n.end())
+                    throw value_error(EXCEPTION_RECORD,
+                            "Invalid character in object name!");
+
                 object_imp_type object =  _imp.at(n);
 
                 if(object.nxobject_type() == nxobject_type::NXFIELD)
@@ -571,6 +576,7 @@ namespace nx{
             //! \throws invalid_object_error if group is not valid
             //! \throws key_error if child does not exist
             //! \throws type_error if child type is not supported
+            //! \throws value_error if name contains a '/' value error
             //! \throws object_error in case of any other error
             //!
             //! \param n name or path of the object

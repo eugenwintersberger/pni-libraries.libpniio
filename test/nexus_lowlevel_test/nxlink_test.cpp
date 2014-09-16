@@ -88,17 +88,17 @@ void nxlink_test::test_field_internal_link()
 
     link(target_field,location,"detector_data_3");
 
-    h5::nxfield field_1 = as_field(root_group["links/detector_data_1"]);
+    h5::nxfield field_1 = get_object(root_group,"links/detector_data_1");
     CPPUNIT_ASSERT(field_1.is_valid());
     CPPUNIT_ASSERT(field_1.size() == 1);
     CPPUNIT_ASSERT(field_1.type_id() == type_id_t::UINT16);
     
-    h5::nxfield field_2 = as_field(root_group["links/detector_data_2"]);
+    h5::nxfield field_2 = get_object(root_group,"links/detector_data_2");
     CPPUNIT_ASSERT(field_2.is_valid());
     CPPUNIT_ASSERT(field_2.size() == 1);
     CPPUNIT_ASSERT(field_2.type_id() == type_id_t::UINT16);
     
-    h5::nxfield field_3 = root_group["links/detector_data_3"];
+    h5::nxfield field_3 = get_object(root_group,"links/detector_data_3");
     CPPUNIT_ASSERT(field_3.is_valid());
     CPPUNIT_ASSERT(field_3.size() == 1);
     CPPUNIT_ASSERT(field_3.type_id() == type_id_t::UINT16);
@@ -151,17 +151,17 @@ void nxlink_test::test_group_internal_link()
     link(target_group,location,"detector_3");
     
     string buffer;
-    h5::nxgroup group_1 = root_group["links/detector_1"];
+    h5::nxgroup group_1 = get_object(root_group,"links/detector_1");
     CPPUNIT_ASSERT(group_1.is_valid());
     group_1.attributes["NX_class"].read(buffer);
     CPPUNIT_ASSERT(buffer == "NXdetector");
     
-    h5::nxgroup group_2 = root_group["links/detector_2"];
+    h5::nxgroup group_2 = get_object(root_group,"links/detector_2");
     CPPUNIT_ASSERT(group_2.is_valid());
     group_2.attributes["NX_class"].read(buffer);
     CPPUNIT_ASSERT(buffer == "NXdetector");
     
-    h5::nxgroup group_3 = root_group["links/detector_3"];
+    h5::nxgroup group_3 = get_object(root_group,"links/detector_3");
     CPPUNIT_ASSERT(group_3.is_valid());
     group_3.attributes["NX_class"].read(buffer);
     CPPUNIT_ASSERT(buffer == "NXdetector");

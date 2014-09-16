@@ -202,18 +202,13 @@ void NXGroupTest::test_comparison()
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     nxgroup g1 = _f.root().create_group("hello").create_group("world");
-    nxgroup g2 = _f.root()["/hello/world"];
+    nxgroup g2 = _f.root()["hello"];
+    g2 = g2["world"];
 
     CPPUNIT_ASSERT(g1 == g2);
 
-    g2 = _f.root()["/hello"];
+    g2 = _f.root()["hello"];
     CPPUNIT_ASSERT(g1 != g2);
-
-    /*
-    g1.link("/link");
-    g2 = _f["/link"];
-    CPPUNIT_ASSERT(g1 == g2);
-    */
 
 }
 

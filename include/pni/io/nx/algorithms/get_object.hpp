@@ -29,10 +29,7 @@
 #include "get_root.hpp"
 #include "get_attribute.hpp"
 #include "get_child.hpp"
-
-#ifdef NOFOREACH
-#include <boost/foreach.hpp>
-#endif
+#include "utils.hpp"
 
 namespace pni{
 namespace io{
@@ -59,15 +56,19 @@ namespace nx{
     //! \param path reference to the path
     //! \return the requested object as nxobject instance
     //! 
-    template<typename OTYPE> 
-    auto get_object(const OTYPE &o,const nxpath &path)
+    template<
+             typename OTYPE,
+             typename PATHT
+            > 
+    auto get_object(const OTYPE &o,const PATHT &path)
     ->decltype(get_parent(o))
     {
         typedef decltype(get_parent(o)) object_type;
         object_type target = o;
+        nxpath p = get_path(path);
 
         //traverse over the path
-        for(auto element: path)
+        for(auto element: p)
         {
             if(element.first =="/")
                 target = get_root(target);
@@ -80,8 +81,8 @@ namespace nx{
         }
 
         //if an attribute was requested 
-        if(!path.attribute().empty())
-            target = get_attribute(target,path.attribute());
+        if(!p.attribute().empty())
+            target = get_attribute(target,p.attribute());
         
         return target;
     }
