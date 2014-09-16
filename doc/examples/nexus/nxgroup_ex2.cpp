@@ -36,6 +36,7 @@ int main(int argc,char **argv)
     attr.write(wa);
    
     auto ra = dynamic_array<float32>::create(attr.shape<shape_t>());
+    attr.read(ra);
     for(size_t i=0;i<ra.size();i++) std::cout<<wa[i]<<" "<<ra[i]<<std::endl;
 
     file.close();

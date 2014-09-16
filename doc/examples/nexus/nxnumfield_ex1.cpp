@@ -21,10 +21,12 @@ int main(int argc,char **argv)
     nxfield field = root.create_field<uint16>("detector",data.shape<shape_t>());
     field.attributes.create<string>("units").write("cps");
     field.attributes.create<string>("long_name").write("detector data");
+    field.write(data);
 
     //creating fields from scalars
     float32 motor = 1.2;
     field = root.create_field<float32>("omega");
+    field.write(motor);
     field.attributes.create<string>("units").write("degree");
     field.attributes.create<string>("long_name").write("motor moega of goniometer");
 

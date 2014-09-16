@@ -11,10 +11,14 @@ void write_data(string fname,size_t np,size_t nx,size_t ny)
     auto frame = dynamic_array<uint32>::create(shape_t{nx,ny});
 
     nxfile file = nxfile::create_file(fname,true,0);
-    nxgroup root = file.root();
 
-    nxgroup g = root.create_group("/scan_1/instrument/detector","NXdetector");
-    nxfield data = g.create_field<uint32>("data",shape_t{0,nx,ny});
+    nxgroup g = file.root().create_group("scan","NXentry");
+    g = g.create_group("instrument","NXinstrument");
+    g = g.create_group("detector","NXdetector");
+
+    nxdeflate_filter filter(8,true);
+    nxfield data = g.create_field<uint32>("data",shape_t{0,nx,ny},
+                                          shape_t{1,nx,ny},filter);
 
     for(size_t i=0;i<np;i++)
     {
@@ -31,35 +35,35 @@ void write_data(string fname,size_t np,size_t nx,size_t ny)
     file.close();
 }
 
-void read_data(string fname,size_t np,size_t nx,size_t ny)
+//----------------------------------------------------------------------------
+void read_data(const nxpath &path)
 {
-    auto data = dynamic_array<float64>::create(shape_t{np,ny}) ;
+    typedef dynamic_array<float64> array_type;
 
-    nxfile file = nxfile::open_file(fname,false);
-    nxgroup root = file.root();
-    nxfield field = root["/scan_1/instrument/detector/data"];
-
-    for(size_t i=0;i<nx;i++)
-    {
-        field(slice(0,np),i,slice(0,ny)).read(data);
-    }
+    nxfile file = nxfile::open_file(path.filename(),false);
+    nxfield field = get_object(file.root(),path);
+    
+    auto data = array_type::create(field.shape<shape_t>());
+    
+    field.read(data);
 
     //close everything
     field.close();
     file.close();
 }
 
+//----------------------------------------------------------------------------
 int main(int argc,char **argv)
 {
-    string fname="simple_io.h5";
-    size_t nx = 10;
-    size_t ny = 20;
-    size_t np = 100;
+    string fname="simple_io.nxs";
 
     std::cout<<"writing data ..."<<std::endl;
-    write_data(fname,np,nx,ny);
+    write_data(fname,100,10,20);
+
     std::cout<<"reading data ..."<<std::endl;
-    read_data(fname,np,nx,ny);
+    string target_path = "simple_io.nxs://:NXentry/:NXinstrument/"
+                         ":NXdetector/data";
+    read_data(nxpath::from_string(target_path));
     std::cout<<"program finished ..."<<std::endl;
 
     return 0;

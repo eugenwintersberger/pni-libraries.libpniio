@@ -82,7 +82,8 @@ NXGroup scan_setup(NXFile &file,const String &scan){
     return scan_group;
 }
 
-int main(int argc,char **argv){
+int main(int argc,char **argv)
+{
     file_record frec;
     mem_record mrec;
     std::vector<String> rkeys;

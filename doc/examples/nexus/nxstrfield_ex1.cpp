@@ -14,6 +14,7 @@ int main(int argc,char **argv)
     nxgroup root = file.root();
 
     nxfield field = root.create_field<string>("text");
+    field.write("hello world");
 
     field.close();
     file.close();

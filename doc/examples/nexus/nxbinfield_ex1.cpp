@@ -7,7 +7,7 @@
 using namespace pni::io::nx::h5;
 using namespace pni::core;
 
-typedef std::vector<binary> bin_buffer;
+typedef dynamic_array<binary> bin_buffer;
 
 void read_image(const string &n,nxfield &field);
 void write_image(nxfield &f,const string &n);
@@ -34,7 +34,7 @@ void read_image(const string &n,nxfield &field)
     //determine the size of the stream
     //and allocate buffer
     istream.seekg(0,std::ifstream::end);
-    bin_buffer buffer((size_t)istream.tellg());
+    auto buffer = bin_buffer::create(shape_t{{(size_t)istream.tellg()}});
     //reset stream position
     istream.seekg(0,std::ifstream::beg);
     istream.read((char *)buffer.data(),buffer.size());
@@ -51,7 +51,7 @@ void write_image(nxfield &field,const string &n)
     std::ofstream ostream;
 
     ostream.open(n,std::ostream::binary);
-    bin_buffer buffer(field.size());
+    auto  buffer = bin_buffer::create(shape_t{{field.size()}});
     field.read(buffer);
     ostream.write((char *)buffer.data(),buffer.size());
     ostream.close();

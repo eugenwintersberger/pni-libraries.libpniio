@@ -17,8 +17,8 @@ using namespace pni::io::nx;
 class io_queue
 {
     private:
-        std::mutex _mutex;
-        std::queue<string> _queue;
+        std::mutex              _mutex;
+        std::queue<string>      _queue;
         std::condition_variable _data_ready;
     public:
         void push(const string &value)
@@ -28,6 +28,7 @@ class io_queue
             _data_ready.notify_one();
         }
 
+        //--------------------------------------------------------------------
         void blocking_pop(string &value)
         {
             std::unique_lock<std::mutex> lock(_mutex);
@@ -41,32 +42,31 @@ class io_queue
 class writer
 {
     private:
-        string _filename;
-        io_queue &_queue;
-        h5::nxfile  _log_file;
-        h5::nxfield _log_data;
-        h5::nxfield _log_time;
+        string      _filename;
+        io_queue   &_queue;
+        h5::nxfile  _file;
+        h5::nxfield _data;
+        h5::nxfield _time;
 
         //private method writing a single log entry
-        void __write_entry(const string &s){
+        void _write_entry(const string &s){
             //grow the data fields by one element
-            _log_time.grow(0);
-            _log_data.grow(0);
+            _time.grow(0);
+            _data.grow(0);
 
             //write the data
-            _log_time(_log_time.size()-1).write(nxdate_time::get_date_time_str());
-            _log_data(_log_data.size()-1).write(s);
+            _time(_time.size()-1).write(nxdate_time::get_date_time_str());
+            _data(_data.size()-1).write(s);
 
             //flush the new log entry
-            _log_file.flush();
+            _file.flush();
         }
 
         //method creating the initial structure of the log
-        void __init_log()
+        void _init_log()
         {
             //create log group
-            h5::nxgroup root = _log_file.root();
-            auto g = root.create_group("log");
+            auto g = _file.root().create_group("log");
 
             //create a field with holding the timestamp when the 
             //log was created
@@ -75,11 +75,11 @@ class writer
 
             
             //create log data and timestamp field
-            _log_data = g.create_field<string>("data",{0});
-            _log_time = g.create_field<string>("timestamp",{0}); 
+            _data = g.create_field<string>("data",{0});
+            _time = g.create_field<string>("timestamp",{0}); 
 
             //flush the file after initialization
-            _log_file.flush();
+            _file.flush();
         }
     public:
         writer(const string &fname,io_queue &q):
@@ -90,13 +90,13 @@ class writer
         void operator()(){
             std::cout<<"create file"<<std::endl;
             //works with HDF5
-            _log_file = h5::nxfile::create_file(_filename,true);
+            _file = h5::nxfile::create_file(_filename,true);
 
             //initialize the log
-            __init_log();
+            _init_log();
 
             //write an initial log entry
-            __write_entry("Starting new log");
+            _write_entry("Starting new log");
 
             while(true)
             {
@@ -105,19 +105,19 @@ class writer
                 if(log_entry == "quit") break;
                 try
                 {
-                    __write_entry(log_entry);
+                    _write_entry(log_entry);
                 }
                 catch(shape_mismatch_error &e)
                 {
                     std::cout<<e<<std::endl;
                     break;
                 }
-                _log_file.flush();
+                _file.flush();
             }
 
 
             //close the log file when finished
-            _log_file.close();
+            _file.close();
         }
 };
 
