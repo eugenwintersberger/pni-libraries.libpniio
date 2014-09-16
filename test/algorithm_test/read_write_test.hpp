@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,7 +17,7 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Jul 5, 2013
+//  Created on: Sep 16, 2014
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 #pragma once
@@ -28,18 +28,23 @@
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 #include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/algorithms/read.hpp>
 #include <pni/io/nx/algorithms/write.hpp>
+#include <pni/io/nx/nxobject_traits.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx;
 
-class write_test : public CppUnit::TestFixture
+class read_write_test : public CppUnit::TestFixture
 {
-        CPPUNIT_TEST_SUITE(write_test);
+        CPPUNIT_TEST_SUITE(read_write_test);
         CPPUNIT_TEST(test_field_full);
+        CPPUNIT_TEST(test_field_object_full);
         CPPUNIT_TEST(test_field_partial);
+        CPPUNIT_TEST(test_field_object_partial);
         CPPUNIT_TEST(test_group);
         CPPUNIT_TEST(test_attribute_full);
+        CPPUNIT_TEST(test_attribute_string);
         CPPUNIT_TEST_SUITE_END();
 
         h5::nxfile file;
@@ -51,6 +56,7 @@ class write_test : public CppUnit::TestFixture
 
         typedef dynamic_array<uint32> farray_t;
         typedef dynamic_array<int16> aarray_t;
+        typedef nxobject_trait<nximp_code::HDF5>::object_type object_type;
         farray_t field_wdata;
         farray_t field_rdata;
         aarray_t attr_wdata;
@@ -61,10 +67,12 @@ class write_test : public CppUnit::TestFixture
         void setUp();
         void tearDown();
         
+        void test_field_object_full();
         void test_field_full();
         void test_field_partial();
+        void test_field_object_partial();
         void test_group();
         void test_attribute_full();
-
+        void test_attribute_string();
 };
 

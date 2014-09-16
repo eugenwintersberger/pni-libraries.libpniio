@@ -22,10 +22,9 @@ set(SOURCES as_attribute_test.cpp
             is_field_test.cpp
             is_group_test.cpp
             is_valid_test.cpp
-            read_test.cpp
+            read_write_test.cpp
             set_class_test.cpp
             set_unit_test.cpp
-            write_test.cpp
             algorithm_test.cpp
             get_name_test.cpp
             get_filename_test.cpp

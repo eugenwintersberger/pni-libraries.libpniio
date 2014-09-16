@@ -28,6 +28,32 @@ namespace pni{
 namespace io{
 namespace nx{
 
+    using namespace pni::core;
+
+    //!
+    //! \ingroup algorithm_code
+    //! \brief read data
+    //! 
+    //! Read data form an attribute or field type instance.  This function 
+    //! tempalte reads the entire content of the field or attribute. 
+    //! The exceptions which are thrown here depend on ATYPE. 
+    //! 
+    //! \throws invalid_object_error if the field is not valid
+    //! \throws io_error if reading the data fails
+    //! \throws type_error if the data type of ATYPE is not supported
+    //! \throws memory_not_allocated_error if ATYPE is an array type and its
+    //! internal buffer has no memory associated with it
+    //! \throws size_mismatch_error if the number of elements of ATYPE and the 
+    //! field do not match
+    //! \throws object_error in case of any other error
+    //! 
+    //! \tparam OTYPE object template 
+    //! \tparam IMPID implementation ID for the object
+    //! \tparam ATYPE array type where to store the data
+    //! 
+    //! \param o field or attribute instance
+    //! \param a container instance
+    //! 
     template<
              template<nximp_code> class OTYPE,
              nximp_code IMPID,
@@ -35,24 +61,75 @@ namespace nx{
             >
     void read(const OTYPE<IMPID> &o,ATYPE &a)
     {
+        typedef nxobject_trait<IMPID> trait_type;
+        typedef typename trait_type::field_type field_type;
+        typedef typename trait_type::attribute_type attribute_type;
+
+        static_assert(std::is_same<OTYPE<IMPID>,field_type>::value || 
+                      std::is_same<OTYPE<IMPID>,attribute_type>::value,
+                      "WRITE CAN ONLY BE USED WITH FIELDS AND "
+                      "ATTRIBUTES!");
         o.read(a);
     }
 
-    
-    using namespace pni::core;
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup algorithm_code
+    //! \brief read data
+    //! 
+    //! Read data form an attribute or field type instance. This function 
+    //! allows reading only a part of the field by passing a multiindex 
+    //! selection to the function.
+    //! The exceptions which are thrown here depend on ATYPE. 
+    //! 
+    //! \throws shape_mismatch_error if selection and field rank do not match
+    //! \throws invalid_object_error if the field is not valid
+    //! \throws io_error if reading the data fails
+    //! \throws type_error if the data type of ATYPE is not supported
+    //! \throws memory_not_allocated_error if ATYPE is an array type and its
+    //! internal buffer has no memory associated with it
+    //! \throws size_mismatch_error if the number of elements of ATYPE and the 
+    //! field do not match
+    //! \throws object_error in case of any other error
+    //! 
+    //! \tparam OTYPE object template 
+    //! \tparam IMPID implementation ID for the object
+    //! \tparam ATYPE array type where to store the data
+    //! \tparam ITYPES index types
+    //! 
+    //! \param o field or attribute instance
+    //! \param a container instance
+    //! \param indices selection indices passed as variadic arguments
+    //! 
+    template<
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID,
+             typename ATYPE,
+             typename ...ITYPES
+            >
+    void read(const OTYPE<IMPID> &o,ATYPE &a,ITYPES ...indices)
+    {
+        typedef nxobject_trait<IMPID> trait_type;
+        typedef typename trait_type::field_type field_type;
+        typedef typename trait_type::attribute_type attribute_type;
 
+        static_assert(std::is_same<OTYPE<IMPID>,field_type>::value || 
+                      std::is_same<OTYPE<IMPID>,attribute_type>::value,
+                      "WRITE CAN ONLY BE USED WITH FIELDS AND "
+                      "ATTRIBUTES!");
+
+        o(indices...).read(a);
+    }
+    
+    //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_internal_code
     //! \brief read visitor
     //!
-    //! This visitor reads data from a field or an attribute. Partial IO is
-    //! supported only for fields. If partial IO is tried on an attribute 
-    //! object a selection will be thrown. As one cannot write data to a group 
-    //! an exception will be thrown if the stored type is a group type.
-    //!
     //! \tparam ATYPE target array type
-    //! \tparam VTYPE variant type
-    //! \sa read
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field_type
+    //! \tparam ATTYPE attribute type
     //!
     template<
              typename ATYPE,
@@ -115,7 +192,18 @@ namespace nx{
             //! \brief process field instances
             //!
             //! Read data from a field
-            //! \throws nxfield_error in case of IO errors
+            //!
+            //! \throws shape_mismatch_error if selection and field rank do not
+            //! match
+            //! \throws invalid_object_error if the field is not valid
+            //! \throws io_error if reading the data fails
+            //! \throws type_error if the data type of ATYPE is not supported
+            //! \throws memory_not_allocated_error if ATYPE is an array type 
+            //! and its internal buffer has no memory associated with it
+            //! \throws size_mismatch_error if the number of elements of 
+            //! ATYPE and the field do not match
+            //! \throws object_error in case of any other error
+            //!
             //! \param f field instance
             //! \return nothing
             //!
@@ -135,8 +223,15 @@ namespace nx{
             //! empty an exception will be thrown as partial IO is not 
             //! supported on attributes.
             //!
-            //! \throw nxattribute_error in case or IO errors or partial IO 
-            //! on an attribute
+            //! \throws invalid_object_error if the field is not valid
+            //! \throws io_error if reading the data fails
+            //! \throws type_error if the data type of ATYPE is not supported
+            //! \throws memory_not_allocated_error if ATYPE is an array type 
+            //! and its internal buffer has no memory associated with it
+            //! \throws size_mismatch_error if the number of elements of 
+            //! ATYPE and the field do not match
+            //! \throws object_error in case of any other error
+            //! 
             //! \param a attribute instance
             //! \return nothing
             //!
@@ -150,9 +245,10 @@ namespace nx{
             }
     };
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_code
-    //! \brief read wrapper
+    //! \brief read data from a field or attribute
     //!
     //! This function template is a wrapper for the read_visitor. It will 
     //! read data from the field or attribute stored in the variant type. 
@@ -160,54 +256,22 @@ namespace nx{
     //! group an exception will be thrown if the object stored in the variant 
     //! type is a group object.
     //!
-    //! Simple IO can be done with
-    /*!
-    \code{.cpp}
-    darray<float64> data = ....;
-    object_types field = get_object(root,path_to_field);
-
-    //here the entire field is read 
-    read(field,data);
-    \endcode
-    */
-    //! Due to some limitations of the variadic template engine partial IO 
-    //! has a bit unintuitive syntax. 
-    /*!
-    \code{.cpp}
-    darray<float64> frame = ...;
-    auto field = get_object(root,path_to_field);
-
-    //here we read the slice (10,:1024,:512)
-    read(field,frame,10,slice(0,1024),slice(0,512));
-    \endcode
-    */
-    //! Partial IO is however only supported for field but not for attributes. 
-    //! The following code will work
-    /*!
-    \code{.cpp}
-    auto attribute = get_object(root,path_to_attribiute);
-    
-    string value;
-    read(attribute,value);
-    \endcode
-    */
-    //! but this one will not
-    /*!
-    \code{.cpp}
-    auto field = get_object(root,path_to_field);
-    auto attr = create_attribute<float32>(field,"tensor",shape_t{3,3});
-
-    //this will fail
-    float32 buffer;
-    read(attr,buffer,0,0); //throws an exception
-    \endcode
-    */
-    //! \throws nxgroup_error if stored object is a group
-    //! \throws nxattribute_error for partial IO on an attribute
-    //! \throws nxfield_error for IO errors during reading from field
-    //! \tparam ATYPE data holding type
-    //! \tparam VTYPE variant type
+    //! \throws shape_mismatch_error if selection and field rank do not match
+    //! \throws invalid_object_error if the field is not valid
+    //! \throws io_error if reading the data fails
+    //! \throws type_error if the data type of ATYPE is not supported
+    //! \throws memory_not_allocated_error if ATYPE is an array type and its
+    //! internal buffer has no memory associated with it
+    //! \throws size_mismatch_error if the number of elements of ATYPE and the 
+    //! field do not match
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam ATYPE target type for the read 
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATTYPE attribute type
     //! \tparam ITPYES index types
+    //!
     //! \param o instance of VTYPE
     //! \param a instance of ATYPE with the data
     //! \param indices index type instances
@@ -227,7 +291,45 @@ namespace nx{
         return boost::apply_visitor(visitor,o);
     }
 
-    template<typename ATYPE,typename GTYPE,typename FTYPE,typename ATTYPE>
+
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup algorithm_code
+    //! \brief read data from a field or attribute
+    //!
+    //! This function template is a wrapper for the read_visitor. It will 
+    //! read data from the field or attribute stored in the variant type. 
+    //! Partial IO is supported only for fields. As data cannot be read from a
+    //! group an exception will be thrown if the object stored in the variant 
+    //!  
+    //! \throws shape_mismatch_error if selection and field rank do not match
+    //! \throws invalid_object_error if the field is not valid
+    //! \throws io_error if reading the data fails
+    //! \throws type_error if the data type of ATYPE is not supported or the
+    //! object passed by the user holds a group instance
+    //! \throws memory_not_allocated_error if ATYPE is an array type and its
+    //! internal buffer has no memory associated with it
+    //! \throws size_mismatch_error if the number of elements of ATYPE and the 
+    //! field do not match
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam ATYPE target type for the read 
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATTYPE attribute type
+    //! \tparam ITPYES index types
+    //!
+    //! \param o instance of VTYPE
+    //! \param a instance of ATYPE with the data
+    //! \param indices index type instances
+    //! \return nothing
+    //!
+    template<
+             typename ATYPE,
+             typename GTYPE,
+             typename FTYPE,
+             typename ATTYPE
+            >
     void read(nxobject<GTYPE,FTYPE,ATTYPE> &o,ATYPE &a,const std::vector<slice> &sel)
     {
         typedef read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE> visitor_t;

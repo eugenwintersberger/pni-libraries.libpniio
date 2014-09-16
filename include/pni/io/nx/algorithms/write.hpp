@@ -30,21 +30,110 @@ namespace nx{
     
     using namespace pni::core;
 
+    //------------------------------------------------------------------------
+    //! 
+    //! \ingroup algorithm_code
+    //! \brief write data to an attribute or field
+    //!
+    //! This function writes the entire data from a field. 
+    //! 
+    //! \throws invalid_object_error if the field is not valid
+    //! \throws io_error if writing the data fails
+    //! \throws type_error if the data type of ATYPE is not supported
+    //! \throws memory_not_allocated_error if ATYPE is an array type and its
+    //! internal buffer has no memory associated with it
+    //! \throws size_mismatch_error if the number of elements of ATYPE and the 
+    //! field do not match
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam OTYPE object template
+    //! \tparam IMPID implementation ID of the object
+    //! \tparam ATYPE storage type where the data is stored
+    //!
+    //! \param o object instance to which to write the data
+    //! \param a instance from which to write the data
+    //!
+    template<
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID,
+             typename ATYPE
+            >
+    void write(const OTYPE<IMPID> &o,const ATYPE &a)
+    {
+        typedef nxobject_trait<IMPID> trait_type;
+        typedef typename trait_type::field_type field_type;
+        typedef typename trait_type::attribute_type attribute_type;
+
+        static_assert(std::is_same<OTYPE<IMPID>,field_type>::value || 
+                      std::is_same<OTYPE<IMPID>,attribute_type>::value,
+                      "WRITE CAN ONLY BE USED WITH FIELDS AND "
+                      "ATTRIBUTES!");
+        o.write(a);
+    }
+
+    //------------------------------------------------------------------------
+    //! 
+    //! \ingroup algorithm_code
+    //! \brief write data to an attribute or field
+    //!
+    //! This function writes the entire data from a field. 
+    //! 
+    //! \throws shape_mismatch_error if selection and field rank do not match
+    //! \throws invalid_object_error if the field is not valid
+    //! \throws io_error if reading the data fails
+    //! \throws type_error if the data type of ATYPE is not supported
+    //! \throws memory_not_allocated_error if ATYPE is an array type and its
+    //! internal buffer has no memory associated with it
+    //! \throws size_mismatch_error if the number of elements of ATYPE and the 
+    //! field do not match
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam OTYPE object template
+    //! \tparam IMPID implementation ID of the object
+    //! \tparam ATYPE storage type where the data is stored
+    //! \tparam ITYPES index types 
+    //!
+    //! \param o object instance to which to write the data
+    //! \param a instance from which to write the data
+    //! \param indices selection indices passed as variadic arguments
+    //!
+    template<
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID,
+             typename ATYPE,
+             typename ...ITYPES
+            >
+    void write(const OTYPE<IMPID> &o,const ATYPE &a,ITYPES ...indices)
+    {
+        typedef nxobject_trait<IMPID> trait_type;
+        typedef typename trait_type::field_type field_type;
+        typedef typename trait_type::attribute_type attribute_type;
+
+        static_assert(std::is_same<OTYPE<IMPID>,field_type>::value || 
+                      std::is_same<OTYPE<IMPID>,attribute_type>::value,
+                      "WRITE CAN ONLY BE USED WITH FIELDS AND "
+                      "ATTRIBUTES!");
+        
+        o(indices...).write(a);
+    }
+
+    //-------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_internal_code
     //! \brief write visitor
     //!
-    //! This visitor writes data to  a field or attribute. Partial IO is 
-    //! supported only for fields. If partial IO is tried on an attribute 
-    //! object a selection will be thrown. As one cannot write data to a 
-    //! group an exception will be thrown if the stored type is a group type.
+    //! \tparam ATYPE source type
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam AATYPE attribute type
     //!
-    //! \tparam VTYPE variant type
     //! \sa write
     //!
     template<
              typename ATYPE,
-             typename VTYPE
+             typename GTYPE,
+             typename FTYPE,
+             typename AATYPE
             > 
     class write_visitor : public boost::static_visitor<void>
     {
@@ -60,11 +149,11 @@ namespace nx{
             //! result type
             typedef void result_type;
             //! Nexus group type
-            typedef typename nxobject_group<VTYPE>::type group_type;
+            typedef GTYPE group_type;
             //! Nexus field type
-            typedef typename nxobject_field<VTYPE>::type field_type;
+            typedef FTYPE field_type;
             //! Nexus attribute type
-            typedef typename nxobject_attribute<VTYPE>::type attribute_type;
+            typedef AATYPE attribute_type;
 
             //-----------------------------------------------------------------
             //!
@@ -101,7 +190,18 @@ namespace nx{
             //! \brief process field instances
             //!
             //! Write data to a field
-            //! \throws nxfield_error in case of IO errors
+            //!
+            //! \throws shape_mismatch_error if selection and field rank do not
+            //! match
+            //! \throws invalid_object_error if the field is not valid
+            //! \throws io_error if writing the data fails
+            //! \throws type_error if the data type of ATYPE is not supported
+            //! \throws memory_not_allocated_error if ATYPE is an array type 
+            //! and its internal buffer has no memory associated with it
+            //! \throws size_mismatch_error if the number of elements of 
+            //! ATYPE and the field do not match
+            //! \throws object_error in case of any other error
+            //!
             //! \param f field instance
             //! \return nothing
             //!
@@ -121,8 +221,16 @@ namespace nx{
             //! empty an exception will be thrown as partial IO is not 
             //! supported on attributes.
             //!
-            //! \throw nxattribute_error in case or IO errors or partial IO 
-            //! on an attribute
+            //! \throws invalid_object_error if the field is not valid
+            //! \throws io_error if reading the data fails
+            //! \throws type_error if the data type of ATYPE is not supported or
+            //! the selection is not empty
+            //! \throws memory_not_allocated_error if ATYPE is an array type 
+            //! and its internal buffer has no memory associated with it
+            //! \throws size_mismatch_error if the number of elements of 
+            //! ATYPE and the field do not match
+            //! \throws object_error in case of any other error
+            //!
             //! \param a attribute instance
             //! \return nothing
             //!
@@ -136,6 +244,7 @@ namespace nx{
             }
     };
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_code
     //! \brief write wrapper
@@ -146,67 +255,35 @@ namespace nx{
     //! group an exception will be thrown if the object stored in the variant 
     //! type is a group object.
     //!
-    //! Simple IO can be done with
-    /*!
-    \code{.cpp}
-    darray<float64> data = ....;
-    object_types field = get_object(root,path_to_field);
-
-    //here the entire field is written 
-    write(field,data);
-    \endcode
-    */
-    //! Due to some limitations of the variadic template engine partial IO 
-    //! has a bit unintuitive syntax. 
-    /*!
-    \code{.cpp}
-    darray<float64> frame = ...;
-    auto field = get_object(root,path_to_field);
-
-    //here we write the slice (10,:1024,:512)
-    write(field,frame,10,slice(0,1024),slice(0,512));
-    \endcode
-    */
-    //! Partial IO is however only supported for field but not for attributes. 
-    //! The following code will work
-    /*!
-    \code{.cpp}
-    auto field = get_object(root,path_to_field);
-
-    write(create_attribute<string>(field,"units"),"string");
-    \endcode
-    */
-    //! but this one will not
-    /*!
-    \code{.cpp}
-    auto field = get_object(root,path_to_field);
-
-    auto attr = create_attribute<float32>(field,"tensor",shape_t{3,3});
-
-    //this will fail
-    write(attr,float32(1.23),0,0);
-    \endcode
-    */
-    //! \throws nxgroup_error if stored object is a group
-    //! \throws nxattribute_error for partial IO on an attribute
+    //! \throws shape_mismatch_error if selection and field rank do not match
+    //! \throws invalid_object_error if the field is not valid
+    //! \throws io_error if writing the data fails
+    //! \throws type_error if the data type of ATYPE is not supported
+    //! \throws memory_not_allocated_error if ATYPE is an array type and its
+    //! internal buffer has no memory associated with it
+    //! \throws size_mismatch_error if the number of elements of ATYPE and the 
+    //! field do not match
+    //! \throws object_error in case of any other error
+    //!
     //! \tparam ATYPE data holding type
     //! \tparam VTYPE variant type
     //! \tparam ITPYES index types
     //! \param o instance of VTYPE
     //! \param a instance of ATYPE with the data
     //! \param indices index type instances
-    //! \return nothing
     //!
     template<
              typename ATYPE,
-             typename VTYPE,
+             typename GTYPE,
+             typename FTYPE,
+             typename AATYPE,
              typename ...ITYPES 
             > 
-    typename write_visitor<ATYPE,VTYPE>::result_type 
-    write(VTYPE &o,const ATYPE &a,ITYPES ...indices)
+    void write(nxobject<GTYPE,FTYPE,AATYPE> &o,const ATYPE &a,ITYPES ...indices)
     {
+        typedef write_visitor<ATYPE,GTYPE,FTYPE,AATYPE> visitor_type;
         std::vector<slice> sel{slice(indices)...};
-        return boost::apply_visitor(write_visitor<ATYPE,VTYPE>(a,sel),o);
+        return boost::apply_visitor(visitor_type(a,sel),o);
     }
 
 //end of namespace
