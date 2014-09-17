@@ -80,7 +80,7 @@ namespace h5{
             //! Static method to open an exing file. Using the ro flag one can 
             //! open the file either for read/write or for read-only acess.
             //! 
-            //! \throws type_error if the file is not an HDF5 file
+            //! \throws file_error if the file is not an HDF5 file
             //! \throws object_error in case of any object creation error
             //! \throws invalid_object_error if the file object opened is not
             //! valid
@@ -136,7 +136,8 @@ namespace h5{
             //! \brief return true if file is read-only
             //!
             //! \throws invalid_object_error if file is not valid
-            //! \throws object_error if file intent cannot be retrieved
+            //! \throws file_error if file intent cannot be retrieved
+            //! \throws object_error in case of any other error
             //!
             //! \return true if readonly, false otherwise
             //!

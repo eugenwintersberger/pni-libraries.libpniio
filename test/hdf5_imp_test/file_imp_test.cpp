@@ -28,7 +28,6 @@
 
 CPPUNIT_TEST_SUITE_REGISTRATION(file_imp_test);
 
-
 //----------------------------------------------------------------------------
 void file_imp_test::setUp() { }
 
@@ -43,8 +42,8 @@ void file_imp_test::test_creation()
 
 
     //should raise an exception because the file is not an HDF5 file
-    CPPUNIT_ASSERT_THROW(file_imp::open("hdf5_imp_test",false),type_error);
-    CPPUNIT_ASSERT_THROW(file_imp::open("hdf5_imp_test",true),type_error);
+    CPPUNIT_ASSERT_THROW(file_imp::open("hdf5_imp_test",false),file_error);
+    CPPUNIT_ASSERT_THROW(file_imp::open("hdf5_imp_test",true),file_error);
     //should throw an exception because the file does not exist.
     CPPUNIT_ASSERT_THROW(file_imp::open("blablabla.h5",false),object_error);
     CPPUNIT_ASSERT_THROW(file_imp::open("blablabla.h5",true),object_error);

@@ -30,6 +30,7 @@ extern "C"{
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <pni/io/exceptions.hpp>
 #include <pni/io/nx/h5/file_imp.hpp>
 
 using namespace pni::core;

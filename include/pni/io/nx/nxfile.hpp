@@ -134,11 +134,10 @@ namespace nx{
             //!
             //! Static method opening an existing file.
             //!
-            //! \throws type_error if the file is not an HDF5 file
             //! \throws invalid_object_error if the new file object is not 
             //! valid
             //! \throws object_error in case of any other error
-            //! \throws nxfile_error in case of errors
+            //! \throws file_error if the file is not an HDF5 file
             //!
             //! \param n name of the file
             //! \param ro open read only if true
@@ -206,6 +205,7 @@ namespace nx{
             //! \brief check read only
             //!
             //! \throws invalid_object_error if file is not valid
+            //! \throws file_error if the file intent cannot be retrieved
             //! \throws object_error in case of any other error
             //! 
             //! \return true if file is read-onlye, false otherwise

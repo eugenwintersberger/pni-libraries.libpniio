@@ -74,7 +74,7 @@ namespace h5{
     {
         //check if the file is a valid HDF5 file
         if(!H5Fis_hdf5(path.c_str()))
-            throw type_error(EXCEPTION_RECORD, 
+            throw file_error(EXCEPTION_RECORD, 
                   "File ["+path+"] is not an HDF5 file!\n\n"+
                   get_h5_error_string());
 
@@ -163,7 +163,7 @@ namespace h5{
 
         unsigned int stat;
         if(H5Fget_intent(_object.id(),&stat)<0)
-            throw object_error(EXCEPTION_RECORD,"Cannot retrieve file intent!");
+            throw file_error(EXCEPTION_RECORD,"Cannot retrieve file intent!");
 
         if(stat==H5F_ACC_RDWR) return false;
         return true;
