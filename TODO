@@ -3,9 +3,7 @@ Todo list for libpniio
 
 TODO for new relase libpniio1.0.9.5
 -----------------------------------
-1.) get linking right
-2.) get common functionality for low level and variant types
-3.) get partial IO for attributes
-4.) improve testing
+1.) get partial IO for attributes
+2.) improve testing
 
 
