@@ -287,7 +287,7 @@ template<typename APTYPE> void NXAttributeTest<APTYPE>::test_array()
     array o1(data);
     
     _parent.attributes.template create<string>("test",s).write(o1);
-    array o2 = dynamic_array<string>::create(s);
+    array o2(dynamic_array<string>::create(s));
     _parent.attributes["test"].read(o2);
 
 }

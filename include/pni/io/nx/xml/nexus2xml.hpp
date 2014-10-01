@@ -132,6 +132,16 @@ namespace xml{
 
         return attr_node;
     }
+    
+    template<typename OTYPE>
+    void create_attribute(const OTYPE &aparent,node &p)
+    {
+        for(auto a: aparent.attributes)
+        {
+            if(get_name(a) == "NX_class") continue;
+            p.add_child("attribute",attribute2xml(a));
+        }
+    }
 
     //-------------------------------------------------------------------------
     //!
@@ -153,6 +163,7 @@ namespace xml{
         {
             key = "field";
             child = field2xml(const_cast<VTYPE&>(p));
+            create_attribute(as_field(p),child);
         }
         else if(is_group(p))
         {
@@ -161,22 +172,10 @@ namespace xml{
             //add the actual group to the parent node
             child =  group2xml(p);
 
-            //obtain al child nodes
-            vector_t objects;
-            get_children(p,objects);
-
             //iterate over the children 
-            for(auto o: objects) nexus2xml(o,child);
-        }
+            for(auto o: as_group(p)) nexus2xml(o,child);
 
-        //in the end we have to add attributes
-        vector_t attributes;
-        get_attributes(p,attributes);
-
-        for(auto a: attributes)
-        {
-            if(get_name(a) == "NX_class") continue;
-            child.add_child("attribute",attribute2xml(a));
+            create_attribute(as_group(p),child);
         }
             
         //now everything is done and we have to 
