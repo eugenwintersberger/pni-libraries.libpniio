@@ -156,7 +156,6 @@ namespace xml{
     //!
     template<typename VTYPE> void nexus2xml(const VTYPE &p,node &n)
     {
-        typedef std::vector<VTYPE> vector_t;
         node child;
         string key;
         if(is_field(p))

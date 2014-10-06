@@ -57,10 +57,11 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     endif()
     
     add_definitions(-std=c++11)
+    add_definitions(-DGNU_CXX)
 endif()
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    message("found clang compliler...")
+    message("found clang compiler...")
 
     add_definitions(-Wextra -pedantic -Wall)
     if(CMAKE_BUILD_TYPE MATCHES RELEASE)
@@ -73,6 +74,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 
     #for this version the compiler has to support c++11 flag
     add_definitions(-std=c++11)
+    add_definitions(-DCLANG_CXX)
 endif()
 
 #=================configure installation parameters============================
