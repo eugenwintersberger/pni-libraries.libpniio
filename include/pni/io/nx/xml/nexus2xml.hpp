@@ -100,7 +100,7 @@ namespace xml{
         auto group_name = get_name(group);
         string group_class;
         if(get_path(group) == "/") 
-            group_class == "NXroot";
+            group_class = "NXroot";
         else
             group_class = get_class(group);
 

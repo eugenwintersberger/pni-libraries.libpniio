@@ -49,10 +49,6 @@ class object_imp_test:public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE_END();
     private:
         hid_t file;
-        hid_t group;
-        hid_t type;
-        hid_t dataspace;
-        hid_t dataset;
 
     public:
         void setUp();

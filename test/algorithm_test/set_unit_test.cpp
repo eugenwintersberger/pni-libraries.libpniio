@@ -65,10 +65,16 @@ void set_unit_test::test_field()
 
     h5::nxobject object = field;
     CPPUNIT_ASSERT_NO_THROW(set_unit(object,"m"));
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-comparison"
     CPPUNIT_ASSERT_NO_THROW(get_unit(object)=="m");
+#pragma GCC diagnostic pop
 
     CPPUNIT_ASSERT_NO_THROW(set_unit(field,"mm"));
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-comparison"
     CPPUNIT_ASSERT_NO_THROW(get_unit(field)=="mm");
+#pragma GCC diagnostic pop
 
     CPPUNIT_ASSERT_THROW(set_unit(h5::nxfield(),"mm"),invalid_object_error);
     CPPUNIT_ASSERT_THROW(set_unit(h5::nxobject(h5::nxfield()),"mm"),

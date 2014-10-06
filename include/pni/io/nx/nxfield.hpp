@@ -590,7 +590,7 @@ namespace nx{
                     throw size_mismatch_error(EXCEPTION_RECORD,
                                               "Field is not scalar!");
 
-                _imp.write(type_id_map<T>::type_id,index_vector_type{{1}},&value);
+                _imp.write(type_id_map<T>::type_id,index_vector_type({1}),&value);
             }
 
             //----------------------------------------------------------------

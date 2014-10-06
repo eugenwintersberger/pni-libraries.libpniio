@@ -45,7 +45,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 #setup for GNU CXX compiler
-if(CMAKE_COMPILER_IS_GNUCXX)
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     message("found GNU compiler ...")
     add_definitions(-g -Wall -Wextra -pedantic)
     if(CMAKE_BUILD_TYPE MATCHES RELEASE)
@@ -55,30 +55,24 @@ if(CMAKE_COMPILER_IS_GNUCXX)
         message("setup for debug build ...")
         add_definitions(-O0)
     endif()
+    
+    add_definitions(-std=c++11)
 endif()
 
-#=====================need to check compiler flags=============================
-#check for supported c++11 flags
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    message("found clang compliler...")
 
-#store the original state of CMAKE_REQUIRED_FLAGS
-set(CMAKE_REQUIRED_FLAGS_ORIG "${CMAKE_REQUIRED_FLAGS}")
-
-set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS_ORIG} -std=c++11")
-check_cxx_source_compiles("int main() { return 0; }" HAS_CXX11_FLAG)
-
-set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS_ORIG} -std=c++0x")
-check_cxx_source_compiles("int main() { return 0; }" HAS_CXX0X_FLAG)
-
-if(HAS_CXX11_FLAG)
-    add_definitions(-std=c++11)
-    set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS_ORIG} -std=c++11")
-else()
-    if(HAS_CXX0X_FLAG)
-        add_definitions(-std=c++0x)
-        set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS_ORIG} -std=c++0x")
-    else()
-        message(FATAL_ERROR,"Compiler does not support C++11 compiler flag")
+    add_definitions(-Wextra -pedantic -Wall)
+    if(CMAKE_BUILD_TYPE MATCHES RELEASE)
+        message("setup for release build ...")
+        add_definitions(-O3 -g)
+    elseif(CMAKE_BUILD_TYPE MATCHES DEBUG)
+        message("setup for debug build ...")
+        add_definitions(-O0 -g -fno-inline -DDEBUG)
     endif()
+
+    #for this version the compiler has to support c++11 flag
+    add_definitions(-std=c++11)
 endif()
 
 #=================configure installation parameters============================
@@ -88,7 +82,7 @@ include(configure/InstallConfig.cmake)
 include(configure/CheckTypeSize.cmake)
 
 #=================try to figure out some compiler capabilities=================
-include(configure/CheckCompilerCaps.cmake)
+#include(configure/CheckCompilerCaps.cmake)
 
 #==========================check for libraries=====================================
 #the only thing we have to do here is to check for pnicore

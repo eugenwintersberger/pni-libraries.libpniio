@@ -74,8 +74,8 @@ namespace h5 {
     //=============Constructors and destructors================================
     h5dataspace::h5dataspace():
         _object(),
-        _dims{{1}},
-        _maxdims{{H5S_UNLIMITED}}
+        _dims({1}),
+        _maxdims({H5S_UNLIMITED})
     {
         _object = object_imp(H5Screate_simple(1,_dims.data(),_maxdims.data()));
     }

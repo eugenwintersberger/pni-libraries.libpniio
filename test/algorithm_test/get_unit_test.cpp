@@ -65,8 +65,11 @@ void get_unit_test::test_field()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     object_type object = field;
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-comparison"
     CPPUNIT_ASSERT_NO_THROW(get_unit(object)=="m");
     CPPUNIT_ASSERT_NO_THROW(get_unit(field)=="m");
+#pragma GCC diagnostic pop
 
     CPPUNIT_ASSERT_THROW(get_unit(h5::nxfield()),invalid_object_error);
     CPPUNIT_ASSERT_THROW(get_unit(h5::nxobject(h5::nxfield())),
