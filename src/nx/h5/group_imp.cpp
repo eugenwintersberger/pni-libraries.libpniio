@@ -135,6 +135,12 @@ namespace h5{
     }
 
     //------------------------------------------------------------------------
+    void group_imp::remove(size_t i) const
+    {
+        remove(get_name(at(i))); 
+    }
+
+    //------------------------------------------------------------------------
     string group_imp::filename() const
     {
         return get_filename(_object);

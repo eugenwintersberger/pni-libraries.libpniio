@@ -147,6 +147,19 @@ namespace h5{
             //!
             void remove(const string &n) const;
 
+            //----------------------------------------------------------------
+            //!
+            //! \brief remove an object
+            //!
+            //! Remove the i-th object from the group. 
+            //!
+            //! \throws index_error if i exceeds the total number of children
+            //! \throws invalid_object_error if the group is not valid
+            //! \throws object_error  in case of any other error
+            //!
+            //! \param i the index of the child to remove
+            //! 
+            void remove(size_t i) const;
             //-----------------------------------------------------------------
             //! 
             //! \brief check for the existance of an object

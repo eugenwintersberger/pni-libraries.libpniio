@@ -232,7 +232,7 @@ template<typename T> void NXAttributeTest<APTYPE>::test_scalar_attribute()
     T write_value = create_scalar_data<T>();
     //write from object
     _parent.attributes.template create<T>("a1").write(write_value);
-    _parent.attributes["a1"].write((const T *)&write_value);
+    _parent.attributes["a1"].write(1,(const T *)&write_value);
     //write from pointer
     _f.flush();
        
@@ -241,7 +241,7 @@ template<typename T> void NXAttributeTest<APTYPE>::test_scalar_attribute()
     //read to object
     _parent.attributes["a1"].read(read_value);
     //read to memory
-    _parent.attributes["a1"].read(&read_value);
+    _parent.attributes["a1"].read(1,&read_value);
 
     check_equality(write_value,read_value);
 

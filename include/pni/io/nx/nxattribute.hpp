@@ -229,9 +229,14 @@ namespace nx{
             //! \param data pointer to the data
             //! 
             template<typename T>
-            void write(const T *data) const
+            void write(size_t n,const T *data) const
             {
                 static_assert(!std::is_pointer<T>::value,"no const pointer");
+                
+                if(n!=size())
+                    throw size_mismatch_error(EXCEPTION_RECORD,
+                            "Memory and attribute size do not match!");
+
                 _imp.write(type_id_map<T>::type_id,data);
             }
 
@@ -396,8 +401,12 @@ namespace nx{
             //! \param value pointer to memory
             //!
             template<typename T>
-            void read(T *value) const
+            void read(size_t n,T *value) const
             {
+                if(n!=size())
+                    throw size_mismatch_error(EXCEPTION_RECORD,
+                            "Memory and attribute size do not match!");
+
                 _imp.read(type_id_map<T>::type_id,value);
             }
 
