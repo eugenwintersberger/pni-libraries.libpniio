@@ -107,22 +107,60 @@ bigger}
     \end{minipage}
 \end{figure}
 
+%%%---------------------------------------------------------------------------
 \subsection{Layer 1 objects}
 
 \begin{figure}[tb]
     \centering
-    \begin{minipage}[c]{0.4\linewidth}
+    \begin{minipage}[c]{0.6\linewidth}
     \centering
-    \missingfigure{Need a figure for the layer1}
+    \begin{tikzpicture}
+        [element/.style={fill=desyorange,text=desywhite,
+                         shape=ellipse,minimum width=3cm}]
+
+         \node [element] (group) at (180:2){\textsf{\textbf{NXgroup}}};
+         \node [element] (field) at (0:2) {\textsf{\textbf{NXfield}}};
+         \node [element] (attribute) at (270:2){\textsf{\textbf{NXattribute}}};
+
+         \path (field.west) edge 
+                node[very near end,above] {$1$} 
+                node[very near start,above] {$n$} 
+                (group.east);
+        \path (field.south) edge 
+                node[very near start,right] {$1$} 
+                node[very near end,right] {$n$} 
+                (attribute.north east);
+        \path (group.south) edge 
+                node[very near start,left] {$1$} 
+                node[very near end,left] {$n$} 
+        (attribute.north west);
+        \path (group) edge [in=30,out=60,loop above] node [above] {$n$} ();
+    \end{tikzpicture}
     %%\resizebox{\linewidth}{!}{\includegraphics{pics/layer1.pdf}}
     \end{minipage}
-    \hspace{0.05\linewidth}
-    \begin{minipage}[c]{0.5\linewidth}
+    \hfill
+    \begin{minipage}[c]{0.39\linewidth}
     \caption{{\small The basic objects of the first layer in the Nexus object
-    model.}}
+    model and their relation to each other.}}
     \label{fig:nxintro:layer1}
     \end{minipage}
 \end{figure}
+
+Figure~\ref{fig:nxintro:layer1} shows an overview of the basic Nexus objects
+provided by the first layer of the Nexus layer hierarchy. 
+\begin{description}
+    \item[NXgroup] is a container which can hold instances of fields and other
+        groups.
+    \item[NXfield] stores numerical and other data.
+    \item[NXattribute] instances of NXgroup and NXfield can be enhanced with
+        attributes which can store additional metadata about an object.
+\end{description}
+Attributes behave a little like fields as will be shown later. These three types
+form the basement for all other objects in the above layers. 
+It should be mentioned that attributes are heavily used by the NIAC to add
+metadata to a group or field. It is thus not wise to make too extensive use of
+attributes as a Nexus user as it my cause name clashes with future attributes
+defined by the NIAC.
 
 \subsection{Layer 2 objects}
 
