@@ -1,0 +1,117 @@
+%%%describing the basic usage
+
+This chapter deals with the basic interface provided by the layer 1 types
+implemented in \libpniio. All types concerning Nexus reside in one of the
+namespaces embedded in {\tt pni::io::nx}. The namespaces below this one 
+indicate either a particular storage backend (currently only HDF5 is
+implemented).
+
+To use the Nexus part of the library just add 
+\begin{minted}{cpp}
+#include <pni/io/nx/nx.hpp>
+\end{minted}
+to your source file. 
+
+%%%===========================================================================
+\section{Dealing with files}
+The most fundamental thing one wants to do is to create, open, and close files. 
+A typical usage pattern for a file object would look like this
+\begin{minted}{cpp}
+#include <pni/io/nx/nx.hpp>
+
+using namespace pni::io::nx;
+
+int main(int argc,char **argv)
+{
+    h5::nxfile file = h5::nxfile::create_file("test.nxs");
+    //... code omitted ...
+    file.close();
+
+    return 0;
+}
+\end{minted}
+To create the file we use the {\tt create\_file} static member method of the
+{\tt nxfile} class. The available signatures for this function are
+\begin{minted}{cpp}
+create_file(const string &n,bool ow=false, ssize_t ssize = 0);
+create_file(const string &n,bool ow);
+create_file(const string &n,ssize_t ssize);
+\end{minted}
+\todo{Add the missing create\_file signatures to the library}
+The arguments have the following meaning
+\begin{center}
+\begin{tabular}{l|l}
+argument & description \\
+\hline\hline
+{\tt const string \&n} & name of the file \\
+\hline
+{\tt bool ow} & overwrite an existing file \\
+\hline
+{\tt ssize\_t sszie} & split size \\
+\hline
+\end{tabular}
+\end{center}
+It is important to note the last argument {\tt ssize}. If this argument is
+passed and not equal $0$ the HDF5 backend will use the split-driver to write the
+data. In this case the file will be split into individual files of size {\tt
+ssize} (in MByte). This requires the file name to be a valid C format string
+containing an integer index as shown in the next example
+\begin{minted}{cpp}
+h5::nxfile file = h5::nxfile::create_file("test.%04i.nxs",1024);
+\end{minted}
+Here the split driver will produced files of $1$GByte size with file names
+\begin{minted}{bash}
+test.0001.nxs
+test.0002.nxs
+test.0003.nxs
+...
+\end{minted}
+If a file already exist the {\tt open\_file} static member function of the {\tt
+nxfile} should be used. 
+Its signature is rather simple 
+\begin{minted}{cpp}
+open_file(const string &n,bool ro=true)
+\end{minted}
+where the first argument is again the name of the file to open. The second
+optional argument determines whether the file will be opened read-only (the
+default) or in read-write mode. 
+
+The file type provides some more methods which should be mentioned here briefly 
+\begin{center}
+\begin{tabular}{l|l}
+method & description\\
+\hline\hline
+{\tt flush()} & call this method after writing data to ensure that it is written
+to disk \\
+\hline
+{\tt is\_valid()} & return true if the file is valid \\
+\hline
+{\tt close()} & close a file \\
+\hline
+{\tt is\_readonly()} & returns true if the file was opened in read-only mode \\
+\hline
+{\tt root()} & return the root group of the file \\
+\hline
+\end{tabular}
+\end{center}
+There are two important remarks to make about files. The first concerns the {\tt
+close()} method. It is usually not necessary to call this method explicitly as
+the file will be closed automatically when it looses scope. 
+The second bears the {\tt flush()} method. This is a rather useful method and
+should be called anytime a particular amount of data which can be considered
+consistent has been submitted to the file for writing. The {\tt flush()} method 
+tells the operating system to take over and write the data.
+
+
+%%%===========================================================================
+\section{Working with groups}
+
+%%%===========================================================================
+\section{Working with fields}
+
+%%%===========================================================================
+\section{Iterating groups}
+
+%%%===========================================================================
+\section{Working with attributes}
+

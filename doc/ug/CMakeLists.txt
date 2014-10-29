@@ -9,6 +9,7 @@ set(SOURCES tex/installation.tex
             tex/nexus_introduction.tex
             tex/nexus_path.tex
             tex/usage.tex
+            tex/basic_usage.tex
             )
 
 foreach(TEX_FILE ${SOURCES}) 
