@@ -16,13 +16,32 @@ managements efforts to keep related information aligned.
 \end{enumerate}
 \begin{figure}[tb]
     \centering
-    \begin{minipage}[c]{0.4\linewidth}
+    \begin{minipage}[c]{0.5\linewidth}
     \centering
-    \missingfigure{Need a figure of the old fs tree}
+    \begin{tikzpicture}
+        [ every node/.style = {draw=black,thick,anchor=west,minimum width=3cm,
+                               minimum height=0.5cm},
+          directory node/.style = {draw=blue},
+          grow via three points={ one child at (0.5,-0.8) and two children at
+          (0.5,-0.8) and (0.5,-1.6)},
+          edge from parent path = { (\tikzparentnode.south) |- (\tikzchildnode.west)}]
+        \node[directory node]{{\tt run\_01}}
+        child { node {{\tt ASCII data}}}
+        child { node [directory node] {{\tt images}} 
+            child{ node {{\tt image\_001.tif}}}
+            child{ node {{\tt image\_002.tif}}}
+            child{ node {\dots}}
+            child{ node {{\tt image\_100.tif}}}
+        }
+        child [missing] {}
+        child [missing] {}
+        child [missing] {}
+        child [missing] {};
+    \end{tikzpicture}
     %%\resizebox{\linewidth}{!}{\includegraphics{pics/old_fstree.pdf}}
     \end{minipage}
-    \hspace{0.05\linewidth}
-    \begin{minipage}[c]{0.5\linewidth}
+    \hfill
+    \begin{minipage}[c]{0.48\linewidth}
     \caption{{\small A typical directory structure used at todays synchrotron
     experiments. Scalar data is stored in a single ASCII file while detector
     data is stored as individual image files in a separate directory.}}

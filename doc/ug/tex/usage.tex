@@ -2,7 +2,10 @@
 
 In this section we will have a short look on how to make your code working the
 \libpniio. The key to make using \libpniio\ simple is the usage of {\tt
-pkg-config}. 
+pkg-config}. The rational behind the design descission to focus on {\tt
+pkg-config} as the central element for build systems is simple: it works for
+virtually all build systems. It is even available for Windows (though not very
+often used). 
 
 \section{From the command line}
 
@@ -17,4 +20,31 @@ necessary compiler and linker flags to build and link the code.
 
 \section{From within a Makefile}
 
+{\tt pkg-config} can be used in a Makefile by putting the following at the top
+of your Makefile
+\begin{minted}{make}
+CPPFLAGS=-O2 -g -std=c++11 $(shell pkg-config --cflags pniio)
+LDFLAGS=$(shell pkg-config --libs pniio)
+\end{minted}
+
 \section{With CMake}
+
+For {\tt cmake} the {\tt FindPkgConfig} module provides access to the
+functionality of {\tt pkg-config}. The following snippet from a {\tt
+CMakeLists.txt} file shows how to use it for \libpniio
+\begin{minted}{cmake}
+#load pkg-config package
+include(FindPkgConfig)
+
+#search for the pniio library 
+pkg_search_module(PNIIO REQUIRED pniio)
+link_directories(${PNIIO_LIBRARY_DIRS})
+include_directories(${PNIIO_INCLUDE_DIRS})
+add_definitions(${PNIIO_CFLAGS})
+
+set(SOURCE ...)
+
+add_executable(myprog ${SOURCE})
+target_link_libraries(myprog ${PNIIO_LIBRARIES})
+\end{minted}
+
