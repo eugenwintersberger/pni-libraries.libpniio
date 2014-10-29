@@ -84,14 +84,25 @@ bigger}
 
 \begin{figure}[tb]
     \centering
-    \begin{minipage}[c]{0.4\linewidth}
-    \centering
-    \missingfigure{Need a figure of the Nexus layers}
-    %%%\resizebox{\linewidth}{!}{\includegraphics{pics/nxlayers.pdf}}
-    \end{minipage}
-    \hspace{0.05\linewidth}
     \begin{minipage}[c]{0.5\linewidth}
-    \caption{{\small Nexus can be considered to consist of three layers}}
+    \centering
+    \begin{tikzpicture}
+       [layer/.style={fill=desycyan,shape=rectangle,draw=black,
+                      minimum width=0.9\linewidth,
+                      minimum height=1cm,
+                      text=desywhite,align=left,
+                      rounded corners=2mm}]
+       \matrix[row sep=0.3cm]{
+        \node [layer] { \textsf{\textbf{ Layer 3: application definitions}}}; \\
+        \node [layer] { \textsf{\textbf{ Layer 2: base classes}}}; \\
+        \node [layer] { \textsf{\textbf{ Layer 1: basic objects}}}; \\
+        };
+    \end{tikzpicture}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[c]{0.45\linewidth}
+    \caption{{\small Nexus can be considered to consist of three layers where
+    each layer represents a particular level of abstraction.}}
     \label{fig:nxintro:layers}
     \end{minipage}
 \end{figure}
