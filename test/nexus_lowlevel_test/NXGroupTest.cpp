@@ -126,7 +126,7 @@ void NXGroupTest::test_parent()
     nxgroup g = _f.root().create_group("detector").create_group("modules");
     nxgroup p = g.parent();
     CPPUNIT_ASSERT(p.name() == "detector");
-    CPPUNIT_ASSERT(p.parent().name() == "/");
+    CPPUNIT_ASSERT(nxgroup(p.parent()).name() == "/");
 }
 
 //------------------------------------------------------------------------------

@@ -613,7 +613,7 @@ namespace nx{
             //!
             //! \return parent object
             //!
-            group_type parent() const
+            typename nxobject_trait<IMPID>::object_type parent() const
             {
                 group_type g(imp_type(_imp.parent()));
                 return g;
