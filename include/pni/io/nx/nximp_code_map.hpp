@@ -34,16 +34,16 @@ namespace nx{
     //!
     //! This type map maps a particular implementation type to a type code.
     //!
-    template<typename T> struct nximp_code_map
+    template<typename T> struct nximp_code_map;
+        /*
     {
             static const nximp_code icode; //!< implementation code
-    };
+    };*/
 
 #define NXIMPCODEMAPDECL(type,impcode)\
-    template<> class nximp_code_map<type>\
+    template<> struct nximp_code_map<type>\
     {\
-        public:\
-            static const nximp_code icode = impcode;\
+        static const nximp_code icode = impcode;\
     }
 
 //end of namespace

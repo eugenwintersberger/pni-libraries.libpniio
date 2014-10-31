@@ -65,7 +65,18 @@ namespace h5{
     {
         //check for open objects in the file
         if(_object.is_valid()) flush();
-
+#ifdef DEBUG
+        std::cerr<<"Open files:      "<< 
+        H5Fget_obj_count(_object.id(),H5F_OBJ_FILE)<<std::endl;
+        std::cerr<<"Open data sets:  "<<
+        H5Fget_obj_count(_object.id(),H5F_OBJ_DATASET)<<std::endl;
+        std::cerr<<"Open groups:     "<<
+        H5Fget_obj_count(_object.id(),H5F_OBJ_GROUP)<<std::endl;
+        std::cerr<<"Open data type:  "<<
+        H5Fget_obj_count(_object.id(),H5F_OBJ_DATATYPE)<<std::endl;
+        std::cerr<<"Open attributes: "<<
+        H5Fget_obj_count(_object.id(),H5F_OBJ_ATTR)<<std::endl;
+#endif
         _object.close();
     }
     

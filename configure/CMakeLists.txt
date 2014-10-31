@@ -54,6 +54,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     elseif(CMAKE_BUILD_TYPE MATCHES DEBUG)
         message("setup for debug build ...")
         add_definitions(-O0)
+        add_definitions(-DDEBUG)
     endif()
     
     add_definitions(-std=c++11)

@@ -112,3 +112,18 @@ void NXFileTest::test_open()
 
 }
 
+//----------------------------------------------------------------------------
+void NXFileTest::test_closing()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    nxfile f = nxfile::create_file("nxfile_test.nxs",true,0);
+    nxgroup root = f.root();
+
+    root.close();
+    f.close();
+
+    CPPUNIT_ASSERT_NO_THROW(f = nxfile::create_file("nxfile_test.nxs",true,0));
+
+}
+
