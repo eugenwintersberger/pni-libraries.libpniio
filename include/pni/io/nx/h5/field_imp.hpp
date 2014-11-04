@@ -60,6 +60,7 @@ namespace h5{
             h5dataspace _file_space;
             //! local selection object
             selection _selection;
+            bool _selection_applied;
 
 
             //!
@@ -271,7 +272,7 @@ namespace h5{
             //!
             //! \throw object_error in case of any error
             //!
-            void clear_selections() const;
+            void clear_selections() ;
 
             //===================reading data methods==========================
             //! 

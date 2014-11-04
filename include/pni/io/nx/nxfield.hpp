@@ -745,7 +745,7 @@ namespace nx{
             //!
             //! \return new field instance with clearn selection
             //!
-            field_type operator()() const
+            field_type operator()() 
             {
                 _imp.clear_selections();
                 return *this;

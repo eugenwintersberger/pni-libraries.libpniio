@@ -7,16 +7,16 @@ indicate either a particular storage backend (currently only HDF5 is
 implemented).
 
 To use the Nexus part of the library just add 
-\begin{minted}{cpp}
+\begin{cppcode}
 #include <pni/io/nx/nx.hpp>
-\end{minted}
+\end{cppcode}
 to your source file. 
 
 %%%===========================================================================
 \section{Dealing with files}
 The most fundamental thing one wants to do is to create, open, and close files. 
 A typical usage pattern for a file object would look like this
-\begin{minted}{cpp}
+\begin{cppcode}
 #include <pni/io/nx/nx.hpp>
 
 using namespace pni::io::nx;
@@ -29,14 +29,14 @@ int main(int argc,char **argv)
 
     return 0;
 }
-\end{minted}
+\end{cppcode}
 To create the file we use the {\tt create\_file} static member method of the
 {\tt nxfile} class. The available signatures for this function are
-\begin{minted}{cpp}
+\begin{cppcode}
 create_file(const string &n,bool ow=false, ssize_t ssize = 0);
 create_file(const string &n,bool ow);
 create_file(const string &n,ssize_t ssize);
-\end{minted}
+\end{cppcode}
 \todo{Add the missing create\_file signatures to the library}
 The arguments have the following meaning
 \begin{center}
@@ -56,9 +56,9 @@ passed and not equal $0$ the HDF5 backend will use the split-driver to write the
 data. In this case the file will be split into individual files of size {\tt
 ssize} (in MByte). This requires the file name to be a valid C format string
 containing an integer index as shown in the next example
-\begin{minted}{cpp}
+\begin{cppcode}
 h5::nxfile file = h5::nxfile::create_file("test.%04i.nxs",1024);
-\end{minted}
+\end{cppcode}
 Here the split driver will produced files of $1$GByte size with file names
 \begin{minted}{bash}
 test.0001.nxs
@@ -69,9 +69,9 @@ test.0003.nxs
 If a file already exist the {\tt open\_file} static member function of the {\tt
 nxfile} should be used. 
 Its signature is rather simple 
-\begin{minted}{cpp}
+\begin{cppcode}
 open_file(const string &n,bool ro=true)
-\end{minted}
+\end{cppcode}
 where the first argument is again the name of the file to open. The second
 optional argument determines whether the file will be opened read-only (the
 default) or in read-write mode. 
@@ -110,18 +110,18 @@ Nexus groups are instances of the {\tt nxgroup} template. They can be considered
 as containers for fields and other groups and expose an STL compliant interface. 
 The most important group is the root group (the top level group of the Nexus
 tree). It can be obtained from an opened file via the {\tt root()} method
-\begin{minted}{cpp}
+\begin{cppcode}
 h5::nxfile file = h5::nxfile::open_file("test.nxs");
 h5::nxgroup root = file.root();
-\end{minted}
+\end{cppcode}
 
 \subsection{Creating groups}
 
 A new group can be created using the {\tt create\_group} method of a group
 instance
-\begin{minted}{cpp}
+\begin{cppcode}
 h5::nxgroup entry = root.create_group("scan_1","NXentry");
-\end{minted}
+\end{cppcode}
 This method takes two arguments where the first one is mandatory and denotes the
 name of the group while the second one is optional and determines the Nexus
 class of the group. If the last argument is omitted a simple HDF5 group is
@@ -138,10 +138,10 @@ The {\tt size()} method returns the number of (direct) children of a group.
 Those children can be accessed via the {\tt at()} method or the
 {\tt []} operator. Those functions/operators take either the name or the index 
 of a child as its argument
-\begin{minted}{cpp}
+\begin{cppcode}
 h5::nxgroup root = file.root();
 h5::nxgroup entry = root["entry"];
-\end{minted}
+\end{cppcode}
 Unlike for STL containers both access variants ({\tt at()} or {\tt []}) will 
 throw an exception if a particular child could not be found or the index passed
 to them exceeds the total number of children of the group.
@@ -184,13 +184,69 @@ be extendible if needed. :w
 
 Field creation is rather complex as there are many options which should be taken
 into account. Lets start with a simple example
-\begin{minted}{cpp}
+\begin{cppcode}
 h5::nxgroup entry = root["entry"];
 h5::nxfield field = entry.create_field<float32>("temperature");
-\end{minted}
+\end{cppcode}
 This creates a 1D field
 
 \subsection{Reading and writing data}
+
+Fields provide two basic methods for reading and writing data: {\tt read()} and 
+{\tt write()}. 
+Both member functions accept a single argument which can be an instance of the
+following types
+\begin{center}
+    \begin{tabular}{l|p{0.6\linewidth}}
+        {\bf type} & {\bf description} \\
+        \hline
+        \hline
+        {\tt mdarray<...>} & an instance of the {\tt mdarray} template \\
+        \hline
+        {\tt array} & an instance of the array type erasure \\
+        \hline
+        {\tt T\& } & a single scalar value of the fields element type or a 
+        convertible type \\
+        \hline
+    \end{tabular}
+\end{center}
+There is an additional version of the {\tt read()} and {\tt write()} methods
+with the signatures {\tt read(size\_t n,T *value)}
+and {\tt write(size\_t n,T *value)}. These functions exist as interface to
+legacy C code where only pointers are available. As the user has to provide the
+number of elements in the memory region where the pointers point to these
+functions try to add some additional safety.
+
+A typical example would look like this
+\begin{cppcode}
+auto data = dynamic_array<uint32>::create(shape_t{1024,1024});
+h5::nxfield background = ....;
+
+//writing
+background.write(data);
+
+//reading
+background.read(data);
+\end{cppcode}
+
+\subsection{Partial reading and writing}
+
+Nexus fields support partial IO with the {\tt ()} operator which applies
+selections to the field instances. 
+\begin{cppcode}
+h5::nxfield spectra = ...;
+
+auto s = spectra.shape<shape_t>();
+
+auto spectrum = dynamic_array<uint32>::create(shape_t{s[1]});
+
+for(size_t i=0;i<s[0];++i)
+{
+    spectra(i,slice(0,s[1])).read(spectrum);
+    .... process data ...
+}
+\end{cppcode}
+The selection mechanism works the same as for the {\tt mdarray} template. 
 
 \subsection{Field inquiry}
 
@@ -198,6 +254,44 @@ This creates a 1D field
 \section{Iterating groups}\label{section:group_iteration}
 
 \subsection{Simple iteration}
+
+The {\tt nxgroup} type provides an STL compliant iterator interface to iterate
+over the direct children of a group. In this very simple example we loop over 
+all entries stored in a file
+\begin{cppcode}
+h5::nxgroup root = f.root();
+
+for(auto entry: root)
+    std::cout<<entry.name()<<std::endl;
+\end{cppcode}
+Another interesting example would be to count all instances of {\tt NXdetector} 
+within an instrument group
+\begin{cppcode}
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/algorithms.hpp>
+
+using namespace pni::core;
+using namespace pni::io::nx;
+
+//predicate function
+bool is_detector(const h5::nxobject &o)
+{
+    if(is_group(o)) return is_class(o,"NXdetector");
+    else return false;
+}
+
+int main(int argc,char **argv)
+{
+    h5::nxfile file = h5::nxfile::open_file("test.nxs");
+    h5::nxgroup instrument = get_object(root,"/:NXentry/:NXinstrument");
+
+    size_t ndetectors = std::count_if(instrument.begin(),instrument.end(),
+                                      is_detector);
+    std::cout<<"Found "<<ndetectors<<" detectors!"<<std::endl;
+    return 0;
+}
+\end{cppcode}
 
 \subsection{Recursive iteration}
 

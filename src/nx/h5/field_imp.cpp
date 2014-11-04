@@ -57,7 +57,8 @@ namespace h5{
     field_imp::field_imp() noexcept
         :_object(),
          _file_space(),
-         _selection()
+         _selection(),
+         _selection_applied(false)
     { } 
     
     //-----------------------------------------------------------------
@@ -65,7 +66,8 @@ namespace h5{
     field_imp::field_imp(object_imp &&o):
         _object(std::move(o)),
         _file_space(),
-        _selection()
+        _selection(),
+        _selection_applied(false)
     {
         if(get_hdf5_type(_object) != h5object_type::DATASET)
             throw type_error(EXCEPTION_RECORD,
@@ -73,7 +75,7 @@ namespace h5{
         _update();
     }
     
-    //-----------------------------------------------------------------
+    //---------------------------------------------------------------------
     field_imp::field_imp(const group_imp &parent,
                          const string &name,
                          type_id_t tid,
@@ -112,7 +114,7 @@ namespace h5{
         _throw_if_not_valid(EXCEPTION_RECORD,
                             "Cannot obtain the shape of an invalid field!");
 
-        if(_file_space.has_selection())
+        if(_selection_applied)
             return effective_shape(_selection);
         else
             return _file_space.shape();
@@ -133,7 +135,7 @@ namespace h5{
         _throw_if_not_valid(EXCEPTION_RECORD,
                             "Cannot obtain the size from an invalid field!");
 
-        if(_file_space.has_selection())
+        if(_selection_applied)
             return pni::io::nx::h5::size(_selection); 
         else
             return _file_space.size();
@@ -145,7 +147,7 @@ namespace h5{
         _throw_if_not_valid(EXCEPTION_RECORD,
                             "Cannot determine the rank of an invalid field!");
        
-        if(_file_space.has_selection())
+        if(_selection_applied)
             return effective_rank(_selection); 
         else
             return _file_space.rank();
@@ -158,16 +160,22 @@ namespace h5{
                                const object_imp &xfer_list,
                                void *ptr) const
     {
+        if(_selection_applied) _file_space.apply_selection(_selection);
+
         if(H5Dread(_object.id(),memtype.object().id(),
                              memspace.id(),filespace.id(),
                              xfer_list.id(),ptr)<0)
         {
+            if(_selection_applied) _file_space.reset_selection();
+
             io_error error(EXCEPTION_RECORD, 
                     "Error reading data to dataset ["
                     +get_path(_object)+"]!\n\n"+
                     get_h5_error_string());
             throw error;
         }
+        
+        if(_selection_applied) _file_space.reset_selection();
     }
     
     //------------------------------------------------------------------------
@@ -224,8 +232,9 @@ namespace h5{
         const h5datatype &memory_type = get_type(tid);
         h5dataspace memory_space{shape};
 
-        if(_file_space.has_selection())
+        if(_selection_applied)
             memory_space = h5dataspace(_selection.count());
+
 
         if(tid == type_id_t::STRING)
         {
@@ -251,13 +260,25 @@ namespace h5{
                                 const h5dataspace &filespace,
                                 const void *ptr) const
     {
+
+        if(_selection_applied) _file_space.apply_selection(_selection);
+
         //write data to disk
         if(H5Dwrite(_object.id(),memtype.object().id(),memspace.id(),
                     filespace.id(),H5P_DEFAULT,ptr)<0)
+        {
+            //reset the selection if write fails
+            if(_selection_applied) _file_space.reset_selection();
+
             throw io_error(EXCEPTION_RECORD, 
                 "Error writing data to dataset ["
                 +get_path(_object)+"]!\n\n"+
                 get_h5_error_string());
+
+        }
+       
+        //reset the selection after the writing
+        if(_selection_applied) _file_space.reset_selection();
     }
 
     //-------------------------------------------------------------------------
@@ -363,14 +384,13 @@ namespace h5{
                     "Field and selection rank do not match!");
 
         _selection.update(s);
-        _file_space.apply_selection(_selection);
+        _selection_applied = true;
     }
 
     //------------------------------------------------------------------------
-    void field_imp::clear_selections() const
+    void field_imp::clear_selections() 
     {
-        if(_file_space.is_valid())
-            _file_space.reset_selection();
+        _selection_applied=false;
     }
 
     
