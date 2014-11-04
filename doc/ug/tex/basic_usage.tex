@@ -106,12 +106,106 @@ tells the operating system to take over and write the data.
 %%%===========================================================================
 \section{Working with groups}
 
+Nexus groups are instances of the {\tt nxgroup} template. They can be considered
+as containers for fields and other groups and expose an STL compliant interface. 
+The most important group is the root group (the top level group of the Nexus
+tree). It can be obtained from an opened file via the {\tt root()} method
+\begin{minted}{cpp}
+h5::nxfile file = h5::nxfile::open_file("test.nxs");
+h5::nxgroup root = file.root();
+\end{minted}
+
+\subsection{Creating groups}
+
+A new group can be created using the {\tt create\_group} method of a group
+instance
+\begin{minted}{cpp}
+h5::nxgroup entry = root.create_group("scan_1","NXentry");
+\end{minted}
+This method takes two arguments where the first one is mandatory and denotes the
+name of the group while the second one is optional and determines the Nexus
+class of the group. If the last argument is omitted a simple HDF5 group is
+created (without an {\tt NX\_class}  attribute).
+
+Like a file a group can be closed using its {\tt close()} method. However, as
+with files this is not necessary as the group will be closed automatically when
+it looses scope.
+
+\subsection{Accessing children}
+
+To some extent {\tt nxgroup} tries to mimic the behavior of an STL container. 
+The {\tt size()} method returns the number of (direct) children of a group. 
+Those children can be accessed via the {\tt at()} method or the
+{\tt []} operator. Those functions/operators take either the name or the index 
+of a child as its argument
+\begin{minted}{cpp}
+h5::nxgroup root = file.root();
+h5::nxgroup entry = root["entry"];
+\end{minted}
+Unlike for STL containers both access variants ({\tt at()} or {\tt []}) will 
+throw an exception if a particular child could not be found or the index passed
+to them exceeds the total number of children of the group.
+
+\subsection{Group inquiry}
+
+Like files, groups have a couple of inquiry functions. The most important ones
+are shown here
+\begin{center}
+\begin{tabular}{l|l}
+method & description \\
+\hline\hline
+{\tt is\_valid()} & returns true if the group is valid \\
+\hline
+{\tt name()} & returns the name of the group (not its full path though!) \\
+\hline
+{\tt size()} & returns the number of children for this particular group \\
+\hline
+{\tt parent()} & returns the parent group for this particular group \\
+\hline
+{\tt filename()} & returns the name of the file where this group is stored \\
+\hline
+\end{tabular}
+\end{center}
+
+
+
 %%%===========================================================================
 \section{Working with fields}
 
+Fields are the data holding units in Nexus.  In \libpniio\ fields are 
+implemented by the {\tt nxfield} template. Before diving into the details there
+are some important general remarks which must be made. One can imagine a field as a
+multidimensional array of virtually arbitrary data. It is impossible to create 
+a scalar field with \libpniio. The reason for this is simple: every field should
+be extendible if needed. :w
+
+
+\subsection{Creating fields}
+
+Field creation is rather complex as there are many options which should be taken
+into account. Lets start with a simple example
+\begin{minted}{cpp}
+h5::nxgroup entry = root["entry"];
+h5::nxfield field = entry.create_field<float32>("temperature");
+\end{minted}
+This creates a 1D field
+
+\subsection{Reading and writing data}
+
+\subsection{Field inquiry}
+
 %%%===========================================================================
-\section{Iterating groups}
+\section{Iterating groups}\label{section:group_iteration}
+
+\subsection{Simple iteration}
+
+\subsection{Recursive iteration}
+
+\subsection{Deleting items}
+
+
 
 %%%===========================================================================
 \section{Working with attributes}
+
 

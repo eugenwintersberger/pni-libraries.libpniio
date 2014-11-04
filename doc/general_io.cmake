@@ -10,3 +10,9 @@
 These classes are dedicated for generating objects from strings using the boost
 spirit parser framework.
 */
+
+/*!
+\ingroup general_io
+\defgroup io_error_classes Exceptions
+
+*/
