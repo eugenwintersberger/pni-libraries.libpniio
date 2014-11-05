@@ -33,6 +33,7 @@
 #include <pni/io/nx/h5/attribute_utils.hpp>
 #include <pni/io/nx/h5/string_utils.hpp>
 #include <pni/io/nx/h5/h5_error_stack.hpp>
+#include <pni/io/nx/h5/selection_guard.hpp>
 
 namespace pni{
 namespace io{
@@ -160,22 +161,16 @@ namespace h5{
                                const object_imp &xfer_list,
                                void *ptr) const
     {
-        if(_selection_applied) _file_space.apply_selection(_selection);
+        typedef selection_guard<h5dataspace> guard_type;
+        guard_type guard(_selection,_file_space,_selection_applied);
 
         if(H5Dread(_object.id(),memtype.object().id(),
                              memspace.id(),filespace.id(),
                              xfer_list.id(),ptr)<0)
-        {
-            if(_selection_applied) _file_space.reset_selection();
-
-            io_error error(EXCEPTION_RECORD, 
+            throw io_error(EXCEPTION_RECORD, 
                     "Error reading data to dataset ["
                     +get_path(_object)+"]!\n\n"+
                     get_h5_error_string());
-            throw error;
-        }
-        
-        if(_selection_applied) _file_space.reset_selection();
     }
     
     //------------------------------------------------------------------------
@@ -260,25 +255,17 @@ namespace h5{
                                 const h5dataspace &filespace,
                                 const void *ptr) const
     {
-
-        if(_selection_applied) _file_space.apply_selection(_selection);
+        typedef selection_guard<h5dataspace> guard_type;
+        guard_type guard(_selection,_file_space,_selection_applied);
 
         //write data to disk
         if(H5Dwrite(_object.id(),memtype.object().id(),memspace.id(),
                     filespace.id(),H5P_DEFAULT,ptr)<0)
-        {
-            //reset the selection if write fails
-            if(_selection_applied) _file_space.reset_selection();
-
             throw io_error(EXCEPTION_RECORD, 
                 "Error writing data to dataset ["
                 +get_path(_object)+"]!\n\n"+
                 get_h5_error_string());
 
-        }
-       
-        //reset the selection after the writing
-        if(_selection_applied) _file_space.reset_selection();
     }
 
     //-------------------------------------------------------------------------
