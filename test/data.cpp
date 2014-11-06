@@ -31,7 +31,7 @@ template<> string create_scalar_data<string>()
 }
 
 //-----------------------------------------------------------------------------
-template<> Bool create_scalar_data<Bool>()
+template<> bool create_scalar_data<bool>()
 {
     return true;
 }
@@ -52,9 +52,9 @@ template<> std::vector<string> create_array_data(size_t n)
 }
 
 //-----------------------------------------------------------------------------
-template<> std::vector<Bool> create_array_data(size_t n)
+template<> std::vector<bool> create_array_data(size_t n)
 {
-    std::vector<Bool> v(n);
+    std::vector<bool> v(n);
 
     for(size_t i=0;i<n;i++)
     {
