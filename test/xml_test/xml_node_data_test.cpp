@@ -160,11 +160,10 @@ void xml_node_data_test::test_read_array_float()
     CPPUNIT_ASSERT_NO_THROW(a = xml::node_data<array>::read(child,' '));
     CPPUNIT_ASSERT(a.type_id() == type_id_t::FLOAT64);
     CPPUNIT_ASSERT(a.size() == 5);
-    auto aiter = a.begin();
     auto viter = int_vec.begin();
 
-    while(aiter!=a.end())
-        CPPUNIT_ASSERT_DOUBLES_EQUAL((aiter++)->as<float64>(),*(viter++),1.e-8);
+    for(auto v: a)
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(v.as<float64>(),*(viter++),1.e-8);
 
 }
 
@@ -182,9 +181,8 @@ void xml_node_data_test::test_read_array_int_blank()
     CPPUNIT_ASSERT(v.size() == 7);
 
     auto diter = int_vec.begin();
-    auto aiter = v.begin();
-    while(aiter!=v.end())
-        CPPUNIT_ASSERT(*(diter++) == (aiter++)->as<int32>());
+    for(auto a: v)
+        CPPUNIT_ASSERT(*(diter++) == a.as<int32>());
 }
 
 //-----------------------------------------------------------------------------
@@ -201,9 +199,8 @@ void xml_node_data_test::test_read_array_int_comma()
     CPPUNIT_ASSERT(v.size() == 7);
 
     auto diter = int_vec.begin();
-    auto aiter = v.begin();
-    while(aiter!=v.end())
-        CPPUNIT_ASSERT(*(diter++) == (aiter++)->as<int32>());
+    for(auto a: v)
+        CPPUNIT_ASSERT(*(diter++) == a.as<int32>());
 }
 
 //-----------------------------------------------------------------------------
@@ -220,9 +217,8 @@ void xml_node_data_test::test_read_array_int_semicolon()
     CPPUNIT_ASSERT(v.size() == 7);
 
     auto diter = int_vec.begin();
-    auto aiter = v.begin();
-    while(aiter!=v.end())
-        CPPUNIT_ASSERT(*(diter++) == (aiter++)->as<int32>());
+    for(auto a: v)
+        CPPUNIT_ASSERT(*(diter++) == a.as<int32>());
 }
 
 //-----------------------------------------------------------------------------

@@ -198,11 +198,10 @@ void xml_attribute_test::test_read_array_int()
     CPPUNIT_ASSERT_NO_THROW(a = xml::attribute_data<array>::read(child,"data",' '));
     CPPUNIT_ASSERT(a.type_id() == type_id_t::INT32);
     CPPUNIT_ASSERT(a.size() == 5);
-    auto aiter = a.begin();
     auto viter = int_vec.begin();
 
-    while(aiter!=a.end())
-        CPPUNIT_ASSERT((aiter++)->as<int32>() == *(viter++));
+    for(auto v: a)
+        CPPUNIT_ASSERT(v.as<int32>() == *(viter++));
 
 }
 
@@ -220,11 +219,10 @@ void xml_attribute_test::test_read_array_float()
     CPPUNIT_ASSERT_NO_THROW(a = xml::attribute_data<array>::read(child,"data",' '));
     CPPUNIT_ASSERT(a.type_id() == type_id_t::FLOAT64);
     CPPUNIT_ASSERT(a.size() == 5);
-    auto aiter = a.begin();
     auto viter = int_vec.begin();
 
-    while(aiter!=a.end())
-        CPPUNIT_ASSERT_DOUBLES_EQUAL((aiter++)->as<float64>(),*(viter++),1.e-8);
+    for(auto v: a) 
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(v.as<float64>(),*(viter++),1.e-8);
 
 }
 

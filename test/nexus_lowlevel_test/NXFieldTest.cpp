@@ -306,7 +306,7 @@ void NXFieldTest::test_io_array()
     for(auto iter1=o.begin(),iter2=o2.begin();
         iter1!=o.end();
         ++iter1,++iter2)
-        check_equality(iter1->as<float64>(),iter2->as<float64>());
+        check_equality((*iter1).as<float64>(),(*iter2).as<float64>());
 
 }
 

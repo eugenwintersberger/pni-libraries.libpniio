@@ -60,9 +60,7 @@ void array_parser_test::test_int1_array()
     parse(start_iter,stop_iter,array_parser_t(),a);
 
     auto viter = int_vec.begin();
-    auto aiter = a.begin();
-    while(aiter != a.end())
-        check_equality((aiter++)->as<int32>(),*(viter++));
+    for(auto v: a) check_equality(v.as<int32>(),*(viter++));
 
 }
 
@@ -76,9 +74,7 @@ void array_parser_test::test_int2_array()
     parse(start_iter,stop_iter,array_parser_t('(',')',';'),a);
 
     auto viter = int_vec.begin();
-    auto aiter = a.begin();
-    while(aiter != a.end())
-        check_equality((aiter++)->as<int32>(),*(viter++));
+    for(auto v: a) check_equality(v.as<int32>(),*(viter++));
 
 }
 
@@ -92,9 +88,7 @@ void array_parser_test::test_int3_array()
     parse(start_iter,stop_iter,array_parser_t(';'),a);
 
     auto viter = int_vec.begin();
-    auto aiter = a.begin();
-    while(aiter != a.end())
-        check_equality((aiter++)->as<int32>(),*(viter++));
+    for(auto v: a) check_equality(v.as<int32>(),*(viter++));
 
 }
 
@@ -108,9 +102,7 @@ void array_parser_test::test_int4_array()
     parse(start_iter,stop_iter,array_parser_t(' '),a);
 
     auto viter = int_vec.begin();
-    auto aiter = a.begin();
-    while(aiter != a.end())
-        check_equality((aiter++)->as<int32>(),*(viter++));
+    for(auto v: a) check_equality(v.as<int32>(),*(viter++));
 
 }
 
@@ -125,9 +117,7 @@ void array_parser_test::test_int5_array()
 
     std::vector<int> v{2,2,3,4,5,6,10};
     auto viter = v.begin();
-    auto aiter = a.begin();
-    while(aiter != a.end())
-        check_equality((aiter++)->as<int32>(),*(viter++));
+    for(auto v: a) check_equality(v.as<int32>(),*(viter++));
 
 }
 
@@ -141,9 +131,7 @@ void array_parser_test::test_float1_array()
     parse(start_iter,stop_iter,array_parser_t(),a);
 
     auto viter = float_vec.begin();
-    auto aiter = a.begin();
-    while(aiter != a.end())
-        check_equality((aiter++)->as<float64>(),*(viter++));
+    for(auto v: a) check_equality(v.as<float64>(),*(viter++));
 }
 
 //-----------------------------------------------------------------------------
@@ -156,9 +144,7 @@ void array_parser_test::test_float2_array()
     parse(start_iter,stop_iter,array_parser_t('(',')',';'),a);
 
     auto viter = float_vec.begin();
-    auto aiter = a.begin();
-    while(aiter != a.end())
-        check_equality((aiter++)->as<float64>(),*(viter++));
+    for(auto v: a) check_equality(v.as<float64>(),*(viter++));
 }
 
 //-----------------------------------------------------------------------------
@@ -171,9 +157,7 @@ void array_parser_test::test_float3_array()
     parse(start_iter,stop_iter,array_parser_t(';'),a);
 
     auto viter = float_vec.begin();
-    auto aiter = a.begin();
-    while(aiter != a.end())
-        check_equality((aiter++)->as<float64>(),*(viter++));
+    for(auto v: a) check_equality(v.as<float64>(),*(viter++));
 }
 
 //-----------------------------------------------------------------------------
@@ -186,7 +170,5 @@ void array_parser_test::test_float4_array()
     parse(start_iter,stop_iter,array_parser_t(' '),a);
 
     auto viter = float_vec.begin();
-    auto aiter = a.begin();
-    while(aiter != a.end())
-        check_equality((aiter++)->as<float64>(),*(viter++));
+    for(auto v: a) check_equality(v.as<float64>(),*(viter++));
 }

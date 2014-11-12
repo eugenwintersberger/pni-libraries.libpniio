@@ -30,6 +30,8 @@
 #include "type_imp.hpp"
 #include "h5dataspace.hpp"
 #include "h5datatype.hpp"
+#include "selection.hpp"
+#include "selection_guard.hpp"
 
 namespace pni{
 namespace io{
@@ -53,6 +55,9 @@ namespace h5{
             h5dataspace _dspace; 
             //! handler to the datatype object of the attribute
             h5datatype  _dtype;   
+
+            selection _selection;
+            bool _apply_selection;
 
             //-----------------------------------------------------------------
             //! 
@@ -267,6 +272,13 @@ namespace h5{
             //! \throws object_error in case of any other error
             //! 
             void close();
+
+            //=================================================================
+            // selection management
+            //=================================================================
+            void apply_selection(const type_imp::selection_vector_type &s);
+
+            void clear_selection();
     };
 
 

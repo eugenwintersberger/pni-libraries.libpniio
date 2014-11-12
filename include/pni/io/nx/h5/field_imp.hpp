@@ -60,9 +60,10 @@ namespace h5{
             h5dataspace _file_space;
             //! local selection object
             selection _selection;
+            //! check whether to apply the selection
             bool _selection_applied;
 
-
+            //----------------------------------------------------------------
             //!
             //! \brief update internal parameters
             //! 
