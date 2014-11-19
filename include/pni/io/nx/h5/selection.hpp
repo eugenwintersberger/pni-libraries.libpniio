@@ -248,9 +248,25 @@ namespace h5{
     //------------------------------------------------------------------------
     //!
     //! \ingroup nxh5_classes
+    //! 
+    //! Create a selection from a slice vector. 
+    //! 
+    //! \param s reference to the slice vector
+    //! \return selection instance
     //!
     selection create_selection(const type_imp::selection_vector_type &s);
 
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup nxh5_classes
+    //!
+    //! Create a slice vector from a selection. Such a slice vector might 
+    //! be used to create an array selection from an mdarray instance. 
+    //! 
+    //! \param s reference to the selection object
+    //! \return slice vector
+    //! 
+    type_imp::selection_vector_type create_slice_vector(const selection &s);
 
 
 

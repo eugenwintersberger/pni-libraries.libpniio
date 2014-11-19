@@ -56,7 +56,7 @@ namespace h5{
             //! handler to the datatype object of the attribute
             h5datatype  _dtype;   
 
-            selection _selection;
+            selection  _selection;
             bool _apply_selection;
 
             //-----------------------------------------------------------------
@@ -85,7 +85,26 @@ namespace h5{
             //! \param memtype type of data in memory
             //! \param ptr pointer to the target location in memory
             //!
-            void _read_data(const h5datatype &memtype,void *ptr) const;
+            void _from_disk(const h5datatype &memtype,void *ptr) const;
+
+            //----------------------------------------------------------------
+            void _read_selection(const h5datatype &memtype, void *ptr) const;
+
+            //----------------------------------------------------------------
+            template<typename T> 
+            void _read_selection_typed(const h5datatype &memtype,
+                                       T *ptr) const
+            {
+                typedef dynamic_array<T> array_type;
+                
+                //create buffer array and read data
+                auto a = array_type::create(shape());
+                _from_disk(memtype,a.data());
+
+                //apply selection and copy data to the output buffer
+                auto view = a(create_slice_vector(_selection));
+                std::copy(view.begin(),view.end(),ptr);
+            }
 
             //-----------------------------------------------------------------
             //! 
@@ -98,7 +117,31 @@ namespace h5{
             //! \param memtype memory datatype 
             //! \param ptr pointer to the source region in memory
             //!
-            void _write_data(const h5datatype &memtype,const void *ptr) const;
+            void _to_disk(const h5datatype &memtype,const void *ptr) const;
+
+            //----------------------------------------------------------------
+            void _write_selection(const h5datatype &memtype,
+                                  const void *ptr) const;
+   
+            //------------------------------------------------------------------
+            template<typename T>
+            void _write_selection_typed(const h5datatype &memtype,
+                                        const T *ptr) const
+            {
+                typedef dynamic_array<T> array_type; 
+
+                //create buffer array and read data
+                auto a = array_type::create(shape());
+                _from_disk(memtype,a.data());
+
+                //get view on the array and copy original data
+                auto view = a(create_slice_vector(_selection));
+                std::copy(ptr,ptr+view.size(),view.begin());
+
+                //write data back
+                _to_disk(memtype,a.data());
+            }
+
         
         public:
             //==============-====constructors and destructors===================

@@ -17,6 +17,7 @@ set(HEADER_FILES
                 object_imp.hpp
                 type_imp.hpp
                 selection.hpp
+                selection_guard.hpp
                  )
 
 

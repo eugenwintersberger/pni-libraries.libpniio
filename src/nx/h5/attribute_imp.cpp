@@ -59,14 +59,18 @@ namespace h5{
     attribute_imp::attribute_imp() noexcept 
         :_object(),
          _dspace(),
-         _dtype()
+         _dtype(),
+         _selection(),
+         _apply_selection(false)
     {}
     
     //-------------------------------------------------------------------------
     attribute_imp::attribute_imp(object_imp &&object)
         :_object(std::move(object)),
          _dspace(),
-         _dtype()
+         _dtype(),
+         _selection(),
+         _apply_selection(false)
     {
         if(get_hdf5_type(_object) != h5object_type::ATTRIBUTE)
             throw type_error(EXCEPTION_RECORD,
@@ -117,7 +121,10 @@ namespace h5{
             throw invalid_object_error(EXCEPTION_RECORD,
                     "Cannot obtain shape from an invalid object!");
 
-        return _dspace.shape();
+        if(_apply_selection)
+            return effective_shape(_selection);
+        else
+            return _dspace.shape();
     }
     
     //-------------------------------------------------------------------------
@@ -127,7 +134,10 @@ namespace h5{
             throw invalid_object_error(EXCEPTION_RECORD,
                     "Cannot obtain size from an invalid attribute!");
 
-        return _dspace.size(); 
+        if(_apply_selection)
+            return pni::io::nx::h5::size(_selection);
+        else
+            return _dspace.size(); 
     }
 
     //-------------------------------------------------------------------------
@@ -136,8 +146,31 @@ namespace h5{
         if(!is_valid())
             throw invalid_object_error(EXCEPTION_RECORD,
                     "Cannot obtain rank from an invalid attribute!");
+        
+        if(_apply_selection)
+            return effective_rank(_selection);
+        else
+            return _dspace.rank(); 
+    }
+    //-------------------------------------------------------------------------
+    // Implementation of IO related methods
+    //-------------------------------------------------------------------------
+    void attribute_imp::_to_disk(const h5datatype &memtype,
+                                 const void *ptr) const
+    {
+        if(H5Awrite(_object.id(),memtype.object().id(),ptr)<0)
+            throw io_error(EXCEPTION_RECORD,
+                    "Error writing attribute ["+name()+"]!\n\n"
+                    +get_h5_error_string());
 
-        return _dspace.rank(); 
+    }
+    
+    //-------------------------------------------------------------------------
+    void attribute_imp::_from_disk(const h5datatype &memtype,void *ptr) const
+    {
+        if(H5Aread(_object.id(),memtype.object().id(),ptr)<0)
+            throw io_error(EXCEPTION_RECORD,"Error reading attribute ["
+                    +name()+"]!\n\n"+get_h5_error_string());
     }
     
     //-------------------------------------------------------------------------
@@ -152,23 +185,63 @@ namespace h5{
             auto s = static_cast<const string*>(ptr);
             std::vector<const char*> ptrs(size());
             for(size_t i=0;i<size();i++) ptrs[i] = s[i].data();
-            _write_data(_dtype,static_cast<const void*>(ptrs.data()));
+            if(_apply_selection)
+                _write_selection(_dtype,static_cast<const void*>(ptrs.data()));
+            else
+                _to_disk(_dtype,static_cast<const void*>(ptrs.data()));
         }
         else
         {
             const h5datatype &mem_type = get_type(tid);
-            _write_data(mem_type,ptr);
+            if(_apply_selection)
+                _write_selection(_dtype,ptr);
+            else
+                _to_disk(mem_type,ptr);
         }
     }
 
+
     //-------------------------------------------------------------------------
-    void attribute_imp::_write_data(const h5datatype &memtype,const void *ptr)
-        const
+    void attribute_imp::_write_selection(const h5datatype &memtype, 
+                                         const void *ptr) const
     {
-        if(H5Awrite(_object.id(),memtype.object().id(),ptr)<0)
-            throw io_error(EXCEPTION_RECORD,
-                    "Error writing attribute ["+name()+"]!\n\n"
-                    +get_h5_error_string());
+        type_id_t tid = type_id();
+
+        //first we have to readback data
+        if(tid == type_id_t::UINT8)
+            _write_selection_typed<uint8>(memtype,(uint8*)ptr);
+        else if(tid == type_id_t::INT8)
+            _write_selection_typed<int8>(memtype,(int8*)ptr);
+        else if(tid == type_id_t::UINT16)
+            _write_selection_typed<uint16>(memtype,(uint16*)ptr);
+        else if(tid == type_id_t::INT16)
+            _write_selection_typed<int16>(memtype,(int16*)ptr);
+        else if(tid == type_id_t::UINT32)
+            _write_selection_typed<uint32>(memtype,(uint32*)ptr);
+        else if(tid == type_id_t::INT32)
+            _write_selection_typed<int32>(memtype,(int32*)ptr);
+        else if(tid == type_id_t::UINT64)
+            _write_selection_typed<uint64>(memtype,(uint64*)ptr);
+        else if(tid == type_id_t::INT64)
+            _write_selection_typed<int64>(memtype,(int64*)ptr);
+        else if(tid == type_id_t::FLOAT32)
+            _write_selection_typed<float32>(memtype,(float32*)ptr);
+        else if(tid == type_id_t::FLOAT64)
+            _write_selection_typed<float64>(memtype,(float64*)ptr);
+        else if(tid == type_id_t::FLOAT128)
+            _write_selection_typed<float128>(memtype,(float128*)ptr);
+        else if(tid == type_id_t::COMPLEX32)
+            _write_selection_typed<complex32>(memtype,(complex32*)ptr);
+        else if(tid == type_id_t::COMPLEX64)
+            _write_selection_typed<complex64>(memtype,(complex64*)ptr);
+        else if(tid == type_id_t::COMPLEX128)
+            _write_selection_typed<complex128>(memtype,(complex128*)ptr);
+        else if(tid == type_id_t::BOOL)
+            _write_selection_typed<bool_t>(memtype,(bool_t*)ptr);
+        else if(tid == type_id_t::STRING)
+            _write_selection_typed<string>(memtype,(string*)ptr);
+        else 
+            type_error(EXCEPTION_RECORD,"");
 
     }
 
@@ -186,7 +259,12 @@ namespace h5{
         if(is_static_string(_dtype))
         {
             char_vector_type str_data(size()*static_string_size(_dtype));
-            _read_data(_dtype,static_cast<void *>(str_data.data()));
+
+            if(_apply_selection)
+                _read_selection(_dtype,static_cast<void*>(str_data.data()));
+            else
+                _from_disk(_dtype,static_cast<void *>(str_data.data()));
+
             copy_from_vector(str_data,
                              size(),
                              static_string_size(_dtype),
@@ -195,29 +273,86 @@ namespace h5{
         else if(is_vl_string(_dtype))
         {
             char_ptr_vector_type str_pointers(size());
-            _read_data(_dtype,static_cast<void *>(str_pointers.data()));
+
+            if(_apply_selection)
+                _read_selection(_dtype,static_cast<void*>(str_pointers.data()));
+            else
+                _from_disk(_dtype,static_cast<void *>(str_pointers.data()));
+
             copy_from_vector(str_pointers,size(),static_cast<string*>(ptr));
         }
         else
         {
             const h5datatype &mem_type = get_type(tid);
-            _read_data(mem_type,ptr);
+            _from_disk(mem_type,ptr);
         }
 
     }
 
-    //-------------------------------------------------------------------------
-    void attribute_imp::_read_data(const h5datatype &memtype,void *ptr) const
+
+    //------------------------------------------------------------------------
+    void attribute_imp::_read_selection(const h5datatype &memtype,
+                                        void *ptr) const
     {
-        if(H5Aread(_object.id(),memtype.object().id(),ptr)<0)
-            throw io_error(EXCEPTION_RECORD,"Error reading attribute ["
-                    +name()+"]!\n\n"+get_h5_error_string());
-    }
+        type_id_t tid = type_id();
+
+        //first we have to readback data
+        if(tid == type_id_t::UINT8)
+            _read_selection_typed<uint8>(memtype,(uint8*)ptr);
+        else if(tid == type_id_t::INT8)
+            _read_selection_typed<int8>(memtype,(int8*)ptr);
+        else if(tid == type_id_t::UINT16)
+            _read_selection_typed<uint16>(memtype,(uint16*)ptr);
+        else if(tid == type_id_t::INT16)
+            _read_selection_typed<int16>(memtype,(int16*)ptr);
+        else if(tid == type_id_t::UINT32)
+            _read_selection_typed<uint32>(memtype,(uint32*)ptr);
+        else if(tid == type_id_t::INT32)
+            _read_selection_typed<int32>(memtype,(int32*)ptr);
+        else if(tid == type_id_t::UINT64)
+            _read_selection_typed<uint64>(memtype,(uint64*)ptr);
+        else if(tid == type_id_t::INT64)
+            _read_selection_typed<int64>(memtype,(int64*)ptr);
+        else if(tid == type_id_t::FLOAT32)
+            _read_selection_typed<float32>(memtype,(float32*)ptr);
+        else if(tid == type_id_t::FLOAT64)
+            _read_selection_typed<float64>(memtype,(float64*)ptr);
+        else if(tid == type_id_t::FLOAT128)
+            _read_selection_typed<float128>(memtype,(float128*)ptr);
+        else if(tid == type_id_t::COMPLEX32)
+            _read_selection_typed<complex32>(memtype,(complex32*)ptr);
+        else if(tid == type_id_t::COMPLEX64)
+            _read_selection_typed<complex64>(memtype,(complex64*)ptr);
+        else if(tid == type_id_t::COMPLEX128)
+            _read_selection_typed<complex128>(memtype,(complex128*)ptr);
+        else if(tid == type_id_t::BOOL)
+            _read_selection_typed<bool_t>(memtype,(bool_t*)ptr);
+        else if(tid == type_id_t::STRING)
+            _read_selection_typed<string>(memtype,(string*)ptr);
+        else 
+            type_error(EXCEPTION_RECORD,"");
+
+
+    } 
 
     //-------------------------------------------------------------------------
     void attribute_imp::close()
     {
         _object.close();
+    }
+
+    //------------------------------------------------------------------------
+    void attribute_imp::apply_selection(const type_imp::selection_vector_type &s)
+    {
+        _selection = create_selection(s);
+        _apply_selection = true;
+    }
+
+    //------------------------------------------------------------------------
+    void attribute_imp::clear_selection()
+    {
+        _selection = selection();
+        _apply_selection = false;
     }
            
 
