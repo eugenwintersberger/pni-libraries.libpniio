@@ -164,6 +164,24 @@ namespace h5{
                     +get_h5_error_string());
 
     }
+
+    //------------------------------------------------------------------------
+    void attribute_imp::_write_all(type_id_t tid,const void *ptr) const
+    {
+
+        if(tid==type_id_t::STRING)
+        {
+            auto s = static_cast<const string*>(ptr);
+            std::vector<const char*> ptrs(_dspace.size());
+            for(size_t i=0;i<_dspace.size();i++) ptrs[i] = s[i].data();
+            _to_disk(_dtype,static_cast<const void*>(ptrs.data()));
+        }
+        else
+        {
+            const h5datatype &mem_type = get_type(tid);
+            _to_disk(mem_type,ptr);
+        }
+    }
     
     //-------------------------------------------------------------------------
     void attribute_imp::_from_disk(const h5datatype &memtype,void *ptr) const
@@ -180,66 +198,49 @@ namespace h5{
             throw invalid_object_error(EXCEPTION_RECORD,
                     "Cannot write data to invalid attribut!");
 
-        if(tid==type_id_t::STRING)
-        {
-            auto s = static_cast<const string*>(ptr);
-            std::vector<const char*> ptrs(size());
-            for(size_t i=0;i<size();i++) ptrs[i] = s[i].data();
-            if(_apply_selection)
-                _write_selection(_dtype,static_cast<const void*>(ptrs.data()));
-            else
-                _to_disk(_dtype,static_cast<const void*>(ptrs.data()));
-        }
-        else
-        {
-            const h5datatype &mem_type = get_type(tid);
-            if(_apply_selection)
-                _write_selection(_dtype,ptr);
-            else
-                _to_disk(mem_type,ptr);
-        }
+        if(_apply_selection)
+            _write_selection(tid,ptr);
+        else 
+            _write_all(tid,ptr);
     }
 
 
     //-------------------------------------------------------------------------
-    void attribute_imp::_write_selection(const h5datatype &memtype, 
-                                         const void *ptr) const
+    void attribute_imp::_write_selection(type_id_t tid,const void *ptr) const
     {
-        type_id_t tid = type_id();
-
         //first we have to readback data
         if(tid == type_id_t::UINT8)
-            _write_selection_typed<uint8>(memtype,(uint8*)ptr);
+            _write_selection_typed<uint8>(tid,(uint8*)ptr);
         else if(tid == type_id_t::INT8)
-            _write_selection_typed<int8>(memtype,(int8*)ptr);
+            _write_selection_typed<int8>(tid,(int8*)ptr);
         else if(tid == type_id_t::UINT16)
-            _write_selection_typed<uint16>(memtype,(uint16*)ptr);
+            _write_selection_typed<uint16>(tid,(uint16*)ptr);
         else if(tid == type_id_t::INT16)
-            _write_selection_typed<int16>(memtype,(int16*)ptr);
+            _write_selection_typed<int16>(tid,(int16*)ptr);
         else if(tid == type_id_t::UINT32)
-            _write_selection_typed<uint32>(memtype,(uint32*)ptr);
+            _write_selection_typed<uint32>(tid,(uint32*)ptr);
         else if(tid == type_id_t::INT32)
-            _write_selection_typed<int32>(memtype,(int32*)ptr);
+            _write_selection_typed<int32>(tid,(int32*)ptr);
         else if(tid == type_id_t::UINT64)
-            _write_selection_typed<uint64>(memtype,(uint64*)ptr);
+            _write_selection_typed<uint64>(tid,(uint64*)ptr);
         else if(tid == type_id_t::INT64)
-            _write_selection_typed<int64>(memtype,(int64*)ptr);
+            _write_selection_typed<int64>(tid,(int64*)ptr);
         else if(tid == type_id_t::FLOAT32)
-            _write_selection_typed<float32>(memtype,(float32*)ptr);
+            _write_selection_typed<float32>(tid,(float32*)ptr);
         else if(tid == type_id_t::FLOAT64)
-            _write_selection_typed<float64>(memtype,(float64*)ptr);
+            _write_selection_typed<float64>(tid,(float64*)ptr);
         else if(tid == type_id_t::FLOAT128)
-            _write_selection_typed<float128>(memtype,(float128*)ptr);
+            _write_selection_typed<float128>(tid,(float128*)ptr);
         else if(tid == type_id_t::COMPLEX32)
-            _write_selection_typed<complex32>(memtype,(complex32*)ptr);
+            _write_selection_typed<complex32>(tid,(complex32*)ptr);
         else if(tid == type_id_t::COMPLEX64)
-            _write_selection_typed<complex64>(memtype,(complex64*)ptr);
+            _write_selection_typed<complex64>(tid,(complex64*)ptr);
         else if(tid == type_id_t::COMPLEX128)
-            _write_selection_typed<complex128>(memtype,(complex128*)ptr);
+            _write_selection_typed<complex128>(tid,(complex128*)ptr);
         else if(tid == type_id_t::BOOL)
-            _write_selection_typed<bool_t>(memtype,(bool_t*)ptr);
+            _write_selection_typed<bool_t>(tid,(bool_t*)ptr);
         else if(tid == type_id_t::STRING)
-            _write_selection_typed<string>(memtype,(string*)ptr);
+            _write_selection_typed<string>(tid,(string*)ptr);
         else 
             type_error(EXCEPTION_RECORD,"");
 
@@ -254,36 +255,36 @@ namespace h5{
             throw invalid_object_error(EXCEPTION_RECORD,
                     "Cannot read data from invalid attribute!");
 
+        if(_apply_selection)
+            _read_selection(tid,ptr);
+        else
+            _read_all(tid,ptr);
+    }
+
+    //------------------------------------------------------------------------
+    void attribute_imp::_read_all(type_id_t tid,void *ptr) const
+    {
         //if the type is not a variable length string memory must be allocated
         //for each string in the attribute
+        const h5datatype &mem_type = get_type(tid);
+
         if(is_static_string(_dtype))
         {
-            char_vector_type str_data(size()*static_string_size(_dtype));
-
-            if(_apply_selection)
-                _read_selection(_dtype,static_cast<void*>(str_data.data()));
-            else
-                _from_disk(_dtype,static_cast<void *>(str_data.data()));
-
+            char_vector_type str_data(_dspace.size()*static_string_size(_dtype));
+            _from_disk(_dtype,static_cast<void *>(str_data.data()));
             copy_from_vector(str_data,
-                             size(),
+                             _dspace.size(),
                              static_string_size(_dtype),
                              static_cast<string*>(ptr));
         }
         else if(is_vl_string(_dtype))
         {
-            char_ptr_vector_type str_pointers(size());
-
-            if(_apply_selection)
-                _read_selection(_dtype,static_cast<void*>(str_pointers.data()));
-            else
-                _from_disk(_dtype,static_cast<void *>(str_pointers.data()));
-
-            copy_from_vector(str_pointers,size(),static_cast<string*>(ptr));
+            char_ptr_vector_type str_pointers(_dspace.size());
+            _from_disk(_dtype,static_cast<void *>(str_pointers.data()));
+            copy_from_vector(str_pointers,_dspace.size(),static_cast<string*>(ptr));
         }
         else
         {
-            const h5datatype &mem_type = get_type(tid);
             _from_disk(mem_type,ptr);
         }
 
@@ -291,44 +292,41 @@ namespace h5{
 
 
     //------------------------------------------------------------------------
-    void attribute_imp::_read_selection(const h5datatype &memtype,
-                                        void *ptr) const
+    void attribute_imp::_read_selection(type_id_t tid,void *ptr) const
     {
-        type_id_t tid = type_id();
-
         //first we have to readback data
         if(tid == type_id_t::UINT8)
-            _read_selection_typed<uint8>(memtype,(uint8*)ptr);
+            _read_selection_typed<uint8>(tid,(uint8*)ptr);
         else if(tid == type_id_t::INT8)
-            _read_selection_typed<int8>(memtype,(int8*)ptr);
+            _read_selection_typed<int8>(tid,(int8*)ptr);
         else if(tid == type_id_t::UINT16)
-            _read_selection_typed<uint16>(memtype,(uint16*)ptr);
+            _read_selection_typed<uint16>(tid,(uint16*)ptr);
         else if(tid == type_id_t::INT16)
-            _read_selection_typed<int16>(memtype,(int16*)ptr);
+            _read_selection_typed<int16>(tid,(int16*)ptr);
         else if(tid == type_id_t::UINT32)
-            _read_selection_typed<uint32>(memtype,(uint32*)ptr);
+            _read_selection_typed<uint32>(tid,(uint32*)ptr);
         else if(tid == type_id_t::INT32)
-            _read_selection_typed<int32>(memtype,(int32*)ptr);
+            _read_selection_typed<int32>(tid,(int32*)ptr);
         else if(tid == type_id_t::UINT64)
-            _read_selection_typed<uint64>(memtype,(uint64*)ptr);
+            _read_selection_typed<uint64>(tid,(uint64*)ptr);
         else if(tid == type_id_t::INT64)
-            _read_selection_typed<int64>(memtype,(int64*)ptr);
+            _read_selection_typed<int64>(tid,(int64*)ptr);
         else if(tid == type_id_t::FLOAT32)
-            _read_selection_typed<float32>(memtype,(float32*)ptr);
+            _read_selection_typed<float32>(tid,(float32*)ptr);
         else if(tid == type_id_t::FLOAT64)
-            _read_selection_typed<float64>(memtype,(float64*)ptr);
+            _read_selection_typed<float64>(tid,(float64*)ptr);
         else if(tid == type_id_t::FLOAT128)
-            _read_selection_typed<float128>(memtype,(float128*)ptr);
+            _read_selection_typed<float128>(tid,(float128*)ptr);
         else if(tid == type_id_t::COMPLEX32)
-            _read_selection_typed<complex32>(memtype,(complex32*)ptr);
+            _read_selection_typed<complex32>(tid,(complex32*)ptr);
         else if(tid == type_id_t::COMPLEX64)
-            _read_selection_typed<complex64>(memtype,(complex64*)ptr);
+            _read_selection_typed<complex64>(tid,(complex64*)ptr);
         else if(tid == type_id_t::COMPLEX128)
-            _read_selection_typed<complex128>(memtype,(complex128*)ptr);
+            _read_selection_typed<complex128>(tid,(complex128*)ptr);
         else if(tid == type_id_t::BOOL)
-            _read_selection_typed<bool_t>(memtype,(bool_t*)ptr);
+            _read_selection_typed<bool_t>(tid,(bool_t*)ptr);
         else if(tid == type_id_t::STRING)
-            _read_selection_typed<string>(memtype,(string*)ptr);
+            _read_selection_typed<string>(tid,(string*)ptr);
         else 
             type_error(EXCEPTION_RECORD,"");
 

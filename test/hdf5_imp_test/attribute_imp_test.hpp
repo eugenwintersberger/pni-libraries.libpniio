@@ -197,7 +197,7 @@ template<typename T> void attribute_imp_test::test_array_attribute_partial()
     type_imp::index_vector_type s{10,20};
     type_imp::selection_vector_type selection{slice(0,10),slice(1)};
     auto write = dynamic_array<T>::create(shape_t{10});
-    static_array<T,10,20> read;
+    static_array<T,10> read;
     type_id_t tid = type_id_map<T>::type_id;
 
     std::vector<T> b = create_array_data<T>(write.size());
@@ -211,10 +211,11 @@ template<typename T> void attribute_imp_test::test_array_attribute_partial()
     a.apply_selection(selection);
     //write data
     a.write(tid,write.data());
-    a.clear_selection();
     //read data back
     a.read(tid,read.data());
+    //release selection
+    a.clear_selection();
 
     //compare data
-    for(size_t i=0;i<a.size();i++) check_equality(read[i],write[i]);
+    for(size_t i=0;i<write.size();i++) check_equality(read[i],write[i]);
 }

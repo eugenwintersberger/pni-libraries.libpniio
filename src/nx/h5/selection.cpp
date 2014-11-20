@@ -207,8 +207,13 @@ namespace h5{
         
         for(;offset_iter != end_iter;++offset_iter,++stride_iter,++count_iter)
         {
-            slice d(*offset_iter,(*count_iter)*(*stride_iter),*stride_iter);
-            slices.push_back(d);
+            size_t first = *offset_iter;
+            size_t last  = (*count_iter)*(*stride_iter);
+            size_t stride = *stride_iter;
+
+            if(first == last) last=first+1;
+
+            slices.push_back(slice(first,last,stride));
         }
 
         return slices;

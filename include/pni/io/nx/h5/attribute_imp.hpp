@@ -87,19 +87,20 @@ namespace h5{
             //!
             void _from_disk(const h5datatype &memtype,void *ptr) const;
 
+            void _read_all(type_id_t tid,void *ptr) const;
+
             //----------------------------------------------------------------
-            void _read_selection(const h5datatype &memtype, void *ptr) const;
+            void _read_selection(type_id_t tid, void *ptr) const;
 
             //----------------------------------------------------------------
             template<typename T> 
-            void _read_selection_typed(const h5datatype &memtype,
-                                       T *ptr) const
+            void _read_selection_typed(type_id_t tid,T *ptr) const
             {
                 typedef dynamic_array<T> array_type;
                 
                 //create buffer array and read data
                 auto a = array_type::create(_dspace.shape());
-                _from_disk(memtype,a.data());
+                _read_all(tid,a.data());
 
                 //apply selection and copy data to the output buffer
                 auto view = a(create_slice_vector(_selection));
@@ -119,27 +120,27 @@ namespace h5{
             //!
             void _to_disk(const h5datatype &memtype,const void *ptr) const;
 
+            void _write_all(type_id_t tid,const void *ptr) const;
+
             //----------------------------------------------------------------
-            void _write_selection(const h5datatype &memtype,
-                                  const void *ptr) const;
+            void _write_selection(const type_id_t tid,const void *ptr) const;
    
             //------------------------------------------------------------------
             template<typename T>
-            void _write_selection_typed(const h5datatype &memtype,
-                                        const T *ptr) const
+            void _write_selection_typed(type_id_t tid,const T *ptr) const
             {
                 typedef dynamic_array<T> array_type; 
 
                 //create buffer array and read data
                 auto a = array_type::create(_dspace.shape());
-                _from_disk(memtype,a.data());
+                _read_all(tid,a.data());
 
                 //get view on the array and copy original data
                 auto view = a(create_slice_vector(_selection));
                 std::copy(ptr,ptr+view.size(),view.begin());
 
                 //write data back
-                _to_disk(memtype,a.data());
+                _write_all(tid,a.data());
             }
 
         
