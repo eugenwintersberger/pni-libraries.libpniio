@@ -19,7 +19,7 @@
 //
 // Created on: Jul 16, 2014
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-///
+//
 #pragma once
 
 extern "C" {
@@ -28,6 +28,7 @@ extern "C" {
 
 #include "../common.hpp"
 #include "../data.hpp"
+#include "../uniform_distribution.hpp"
 
 #include <pni/io/nx/h5/file_imp.hpp>
 #include <pni/io/nx/h5/group_imp.hpp>
@@ -38,12 +39,12 @@ extern "C" {
 
 using namespace pni::io::nx::h5;
 
-/*!
-\ingroup test_suites
-\brief test H5Attribute objects
-
-Testing instances of H5Attribute.
-*/
+//!
+//! \ingroup test_suites
+//! \brief test H5Attribute objects
+//! 
+//! Testing instances of H5Attribute.
+//!
 class attribute_imp_test:public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(attribute_imp_test);
@@ -146,6 +147,9 @@ class attribute_imp_test:public CppUnit::TestFixture
 template<typename T> void attribute_imp_test::test_scalar_attribute()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    typedef uniform_distribution<T> dist_type;
+    dist_type generator;
+
     type_id_t tid = type_id_map<T>::type_id;
     attribute_imp a(create_attribute(root_group.object(),
                                      "a1",
@@ -154,7 +158,7 @@ template<typename T> void attribute_imp_test::test_scalar_attribute()
                                      false));
 
     //write data
-    auto write = create_scalar_data<T>();
+    auto write = generator();
     a.write(tid,&write);
     //read data back and check equality
     T read;
@@ -166,56 +170,68 @@ template<typename T> void attribute_imp_test::test_scalar_attribute()
 template<typename T> void attribute_imp_test::test_array_attribute()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    typedef uniform_distribution<T> dist_type;
 
+    dist_type generator;
     type_imp::index_vector_type s{10,20};
-    auto write = dynamic_array<T>::create(s);
-    static_array<T,10,20> read;
     type_id_t tid = type_id_map<T>::type_id;
 
-    std::vector<T> b = create_array_data<T>(write.size());
-    std::copy(b.begin(),b.end(),write.begin());
-    
+    //create the attribute
     attribute_imp a(create_attribute(root_group.object(),
                                      "a1",
                                      get_type(tid), 
                                      h5dataspace(s),
                                      false));
+
+    //generate data for writing
+    auto write = dynamic_array<T>::create(s);
+    std::generate(write.begin(),write.end(),generator);
+    
     //write data
     a.write(tid,write.data());
+
     //read data back
+    static_array<T,10,20> read;
     a.read(tid,read.data());
 
     //compare data
-    for(size_t i=0;i<a.size();i++) check_equality(read[i],write[i]);
+    CPPUNIT_ASSERT(std::equal(write.begin(),write.end(),read.begin()));
 }
 
 //-----------------------------------------------------------------------------
 template<typename T> void attribute_imp_test::test_array_attribute_partial()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    typedef uniform_distribution<T> dist_type;
 
+    dist_type generator;
     type_imp::index_vector_type s{10,20};
-    type_imp::selection_vector_type selection{slice(0,10),slice(1)};
-    auto write = dynamic_array<T>::create(shape_t{10});
-    static_array<T,10> read;
     type_id_t tid = type_id_map<T>::type_id;
 
-    std::vector<T> b = create_array_data<T>(write.size());
-    std::copy(b.begin(),b.end(),write.begin());
-    
+    //create the attribute
     attribute_imp a(create_attribute(root_group.object(),
                                      "a1",
                                      get_type(tid), 
                                      h5dataspace(s),
                                      false));
-    a.apply_selection(selection);
-    //write data
-    a.write(tid,write.data());
-    //read data back
-    a.read(tid,read.data());
-    //release selection
-    a.clear_selection();
 
-    //compare data
-    for(size_t i=0;i<write.size();i++) check_equality(read[i],write[i]);
+    auto write = dynamic_array<T>::create(shape_t{10});
+    static_array<T,10> read;
+
+    for(size_t i=0;i<s[1];++i)
+    {
+        type_imp::selection_vector_type selection{slice(0,10),slice(i)};
+
+        std::generate(write.begin(),write.end(),generator);
+    
+        a.apply_selection(selection);
+        //write data
+        a.write(tid,write.data());
+        //read data back
+        a.read(tid,read.data());
+        //release selection
+        a.clear_selection();
+        
+        CPPUNIT_ASSERT(std::equal(write.begin(),write.end(),read.begin()));
+    }
 }
