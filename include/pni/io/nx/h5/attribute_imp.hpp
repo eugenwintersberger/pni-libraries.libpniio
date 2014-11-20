@@ -98,7 +98,7 @@ namespace h5{
                 typedef dynamic_array<T> array_type;
                 
                 //create buffer array and read data
-                auto a = array_type::create(shape());
+                auto a = array_type::create(_dspace.shape());
                 _from_disk(memtype,a.data());
 
                 //apply selection and copy data to the output buffer
@@ -131,7 +131,7 @@ namespace h5{
                 typedef dynamic_array<T> array_type; 
 
                 //create buffer array and read data
-                auto a = array_type::create(shape());
+                auto a = array_type::create(_dspace.shape());
                 _from_disk(memtype,a.data());
 
                 //get view on the array and copy original data

@@ -202,12 +202,13 @@ namespace h5{
         auto end_iter    = s.offset().end();
         auto stride_iter = s.stride().begin();
         auto count_iter  = s.count().begin();
+
         type_imp::selection_vector_type slices;
         
         for(;offset_iter != end_iter;++offset_iter,++stride_iter,++count_iter)
         {
-            slice s(*offset_iter,(*count_iter)*(*stride_iter),*stride_iter);
-            slices.push_back(s);
+            slice d(*offset_iter,(*count_iter)*(*stride_iter),*stride_iter);
+            slices.push_back(d);
         }
 
         return slices;
