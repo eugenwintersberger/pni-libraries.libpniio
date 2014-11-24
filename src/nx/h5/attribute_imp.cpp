@@ -241,6 +241,8 @@ namespace h5{
             _write_selection_typed<bool_t>(tid,(bool_t*)ptr);
         else if(tid == type_id_t::STRING)
             _write_selection_typed<string>(tid,(string*)ptr);
+        else if(tid == type_id_t::BINARY)
+            _write_selection_typed<binary>(tid,(binary*)ptr);
         else 
             type_error(EXCEPTION_RECORD,"");
 
@@ -327,6 +329,8 @@ namespace h5{
             _read_selection_typed<bool_t>(tid,(bool_t*)ptr);
         else if(tid == type_id_t::STRING)
             _read_selection_typed<string>(tid,(string*)ptr);
+        else if(tid == type_id_t::BINARY)
+            _read_selection_typed<binary>(tid,(binary*)ptr);
         else 
             type_error(EXCEPTION_RECORD,"");
 

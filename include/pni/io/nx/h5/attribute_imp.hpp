@@ -75,7 +75,7 @@ namespace h5{
             
             //----------------------------------------------------------------
             //! 
-            //! \brief read data to void
+            //! \brief copy data from disk to memory
             //! 
             //! Read attribute data from disk using memtype memory
             //! representation.
@@ -87,12 +87,61 @@ namespace h5{
             //!
             void _from_disk(const h5datatype &memtype,void *ptr) const;
 
+            //----------------------------------------------------------------
+            //!
+            //! \brief read the entire attribute
+            //! 
+            //! This function reads the entire attribute from the disk and 
+            //! stores its content to a memory location refered to by ptr. 
+            //! The function sliently assumes that the user has allocated 
+            //! enough memory to keep all the data. 
+            //! 
+            //! \throws io_error in case of read problems
+            //! 
+            //! \param tid type ID of the underlying data type
+            //! \param ptr pointer to the memory location 
+            //! 
             void _read_all(type_id_t tid,void *ptr) const;
 
             //----------------------------------------------------------------
+            //!
+            //! \brief read part of the attribute
+            //! 
+            //! This function reads only the part of the attribute determined 
+            //! by the selection applied to it. This function is just 
+            //! dispatching by evaluating the data type to a different
+            //! function which finally reads the data.
+            //! It is assumed that the memory referenced by the pointer is 
+            //! large enough to hold the selected data.
+            //! 
+            //! \throws type_error if the type id cannot be handled 
+            //! \throws io_error in case of read or write errors
+            //! 
+            //! \param tid ID of the type used to allocate memory
+            //! \param ptr pointer to memory
+            //! 
             void _read_selection(type_id_t tid, void *ptr) const;
 
             //----------------------------------------------------------------
+            //!
+            //! \brief read part of the attribute
+            //!
+            //! Template member function to read only a selection of the 
+            //! data stored in the attribute. The way how selections are 
+            //! read is rather simple. First the entire content of the data is 
+            //! read from disk to a multidimensional array. Subsequently the 
+            //! selection is applied on this array and the content of the 
+            //! resulting view is copied to the target memory. 
+            //! The function assumes that the memory refered to by ptr is 
+            //! large enough to keep the selected data. 
+            //! 
+            //! \throws 
+            //! \throws io_error if data could not be retrieved 
+            //! 
+            //! \tparam T data type in memory
+            //! \param tid type ID of data in memory
+            //! \param ptr pointer to target memory
+            //! 
             template<typename T> 
             void _read_selection_typed(type_id_t tid,T *ptr) const
             {
@@ -120,6 +169,7 @@ namespace h5{
             //!
             void _to_disk(const h5datatype &memtype,const void *ptr) const;
 
+            //----------------------------------------------------------------
             void _write_all(type_id_t tid,const void *ptr) const;
 
             //----------------------------------------------------------------

@@ -65,4 +65,5 @@ template<typename T> void check_equality(const T &a,const T &b)
 
 void check_equality(const string &a,const string &b);
 void check_equality(const bool &a,const bool &b);
+void check_equality(const binary &a,const binary &b);
 

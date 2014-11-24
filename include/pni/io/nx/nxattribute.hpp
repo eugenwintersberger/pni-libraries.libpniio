@@ -527,6 +527,27 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //!
+            //! \brief apply selection to an attribute
+            //!
+            //! 
+            template<typename ...ITYPES>
+            attribute_type operator()(ITYPES ...indices) const
+            {
+                //generate a copy of the attribute
+                attribute_type a(*this);
+
+                //generate a selection vector
+                typename type_type::selection_vector_type selection{slice(indices)...};
+
+                //apply the selection
+                a._imp.apply_selection(selection);
+
+                return a;
+
+            }
+
+            //-----------------------------------------------------------------
+            //!
             //! \brief return parent object
             //! 
             //! This method returns the parent object of a 

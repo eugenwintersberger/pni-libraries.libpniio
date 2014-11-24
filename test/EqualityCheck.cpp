@@ -34,3 +34,8 @@ void check_equality(const bool &a,const bool &b)
 {
     CPPUNIT_ASSERT(a == b);
 }
+
+void check_equality(const binary &a,const binary &b)
+{
+    CPPUNIT_ASSERT(a == b);
+}

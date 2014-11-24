@@ -27,6 +27,7 @@
 #pragma once
 #include "../common.hpp"
 #include "../data.hpp"
+#include "../uniform_distribution.hpp"
 #include <pni/core/arrays.hpp>
 #include <pni/io/exceptions.hpp>
 using pni::io::invalid_object_error;
@@ -103,6 +104,30 @@ template<typename APTYPE> class NXAttributeTest: public CppUnit::TestFixture
         CPPUNIT_TEST(test_array_attribute<sarray<binary> >);
         CPPUNIT_TEST(test_array_attribute<sarray<string> >);
 
+        CPPUNIT_TEST(test_partial_scalar<uint8>);
+        CPPUNIT_TEST(test_partial_scalar<int8>);
+        CPPUNIT_TEST(test_partial_scalar<uint16>);
+        CPPUNIT_TEST(test_partial_scalar<int16>);
+        CPPUNIT_TEST(test_partial_scalar<uint32>);
+        CPPUNIT_TEST(test_partial_scalar<int32>);
+        CPPUNIT_TEST(test_partial_scalar<uint64>);
+        CPPUNIT_TEST(test_partial_scalar<int64>);
+
+        CPPUNIT_TEST(test_partial_scalar<float32>);
+        CPPUNIT_TEST(test_partial_scalar<float64>);
+        CPPUNIT_TEST(test_partial_scalar<float128>);
+        
+        CPPUNIT_TEST(test_partial_scalar<complex32>);
+        CPPUNIT_TEST(test_partial_scalar<complex64>);
+        CPPUNIT_TEST(test_partial_scalar<complex128>);
+
+        CPPUNIT_TEST(test_partial_scalar<bool_t>);
+        CPPUNIT_TEST(test_partial_scalar<binary>);
+        CPPUNIT_TEST(test_partial_scalar<string>);
+
+
+        CPPUNIT_TEST(test_partial_array<uint8>);
+
         CPPUNIT_TEST(test_array);
         
         CPPUNIT_TEST_SUITE_END();
@@ -131,6 +156,8 @@ template<typename APTYPE> class NXAttributeTest: public CppUnit::TestFixture
         void test_creation();
         void test_array();
         template<typename T> void test_scalar_attribute();
+        template<typename T> void test_partial_scalar();
+        template<typename T> void test_partial_array();
         template<typename ATYPE> void test_array_attribute();
 };
 
@@ -292,3 +319,59 @@ template<typename APTYPE> void NXAttributeTest<APTYPE>::test_array()
 
 }
 
+//----------------------------------------------------------------------------
+template<typename APTYPE> 
+template<typename T>
+void NXAttributeTest<APTYPE>::test_partial_scalar()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    typedef uniform_distribution<T> generator_type; 
+    
+    generator_type generator;
+    
+    _parent.attributes.template create<T>("test",_shape);
+
+    auto a = _parent.attributes["test"](0,0);
+
+    //test shape and rank
+    CPPUNIT_ASSERT(a.size()==1);
+    CPPUNIT_ASSERT(a.rank()==0);
+    CPPUNIT_ASSERT(a.template shape<shape_t>() == shape_t{});
+
+    T write = generator();
+    a.write(write);
+
+    T read;
+    a.read(read);
+
+    check_equality(write,read);
+}
+
+//----------------------------------------------------------------------------
+template<typename APTYPE>
+template<typename T>
+void NXAttributeTest<APTYPE>::test_partial_array()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    typedef uniform_distribution<T> generator_type;
+    typedef dynamic_array<T> array_type;
+
+    generator_type generator;
+
+    _parent.attributes.template create<T>("test",_shape);
+
+    auto a = _parent.attributes["test"](slice(0,10),1);
+    
+    CPPUNIT_ASSERT(a.rank() == 1);
+    CPPUNIT_ASSERT(a.template shape<shape_t>() == shape_t{10});
+    CPPUNIT_ASSERT(a.size() == 10);
+
+    auto write = array_type::create(a.template shape<shape_t>());
+    auto read  = array_type::create(a.template shape<shape_t>());
+    std::generate(write.begin(),write.end(),generator);
+
+    a.write(write);
+    a.read(read);
+
+    CPPUNIT_ASSERT(std::equal(write.begin(),write.end(),read.begin()));
+}
