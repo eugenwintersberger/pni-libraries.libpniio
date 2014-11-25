@@ -7,7 +7,8 @@ set(HEADER_FILES attribute_data.hpp
                  node_data.hpp 
                  shape2dim.hpp 
                  xml_lowlevel.hpp 
-                 xml_node.hpp)
+                 xml_node.hpp
+                 shape.hpp)
 
 install(FILES ${HEADER_FILES} 
     DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/pni/io/nx/xml)

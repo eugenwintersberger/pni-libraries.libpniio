@@ -216,11 +216,7 @@ namespace xml{
     template<typename PTYPE>
     void create_attributes(const PTYPE &p,const node &pnode)
     {
-#ifdef NOFOREACH
-        BOOST_FOREACH(auto child, pnode)
-#else
         for(auto child: pnode)
-#endif
         {
             if(child.first == "attribute")
             {

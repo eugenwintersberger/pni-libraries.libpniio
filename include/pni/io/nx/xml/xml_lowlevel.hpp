@@ -1,24 +1,24 @@
-/*
- * (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- * Created on: Jul 8, 2013
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- */
+//
+// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+//************************************************************************
+// Created on: Jul 8, 2013
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
 
 #pragma once
 #include <sstream>
@@ -36,11 +36,6 @@
 #include "create_field_visitor.hpp"
 #include "dim2shape.hpp"
 
-#ifdef NOFOREACH
-#include <boost/foreach.hpp>
-#endif
-
-
 
 namespace pni{
 namespace io{
@@ -50,26 +45,24 @@ namespace xml{
     using namespace pni::core;
 
     //--------------------------------------------------------------------------
-    /*!
-    \ingroup xml_lowlevel_utils
-    \brief create objects from XML
-
-    Recursively creates the objects as described in the XML file below parent.
-    \throws parser_error in case of XML parsing problems
-    \throws nxgroup_error in case of group creation or access issues
-    \throws nxfield_error in case of field creation issues
-    \tparam PTYPE parent type
-    \param parent instance of PTYPE
-    \param t ptree instance with the XML data
-    */
+    //!
+    //! \ingroup xml_lowlevel_utils
+    //! \brief create objects from XML
+    //!
+    //! Recursively creates the objects as described in the XML file below 
+    //! parent.
+    //! 
+    //! \throws parser_error in case of XML parsing problems
+    //! \throws nxgroup_error in case of group creation or access issues
+    //! \throws nxfield_error in case of field creation issues
+    //! \tparam PTYPE parent type
+    //! \param parent instance of PTYPE
+    //! \param t ptree instance with the XML data
+    //!
     template<typename PTYPE>
     void create_objects(const PTYPE &parent,node &t)
     {
-#ifdef NOFOREACH
-        BOOST_FOREACH(auto child,t)
-#else
         for(auto child: t)
-#endif
         {
             if(child.first == "group")
             {

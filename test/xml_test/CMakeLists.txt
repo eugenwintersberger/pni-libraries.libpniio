@@ -2,7 +2,8 @@ set(SOURCES xml_test.cpp
             xml_attribute_test.cpp
             xml_lowlevel_test.cpp
             xml_node_data_test.cpp
-            xml_node_test.cpp)
+            xml_node_test.cpp
+            xml_shape_test.cpp)
 
 set(XMLFILES dim1.xml
              dim2.xml
