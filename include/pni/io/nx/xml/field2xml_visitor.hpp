@@ -27,7 +27,7 @@
 #include "xml_node.hpp"
 #include "node_data.hpp"
 #include "attribute_data.hpp"
-#include "shape2dim.hpp"
+#include "shape.hpp"
 
 namespace pni{
 namespace io{
@@ -177,18 +177,18 @@ namespace xml{
                 //read the shape of the field if it got one
                 //All exceptions will be cought as this is not a mandatory
                 //information.
-                shape_t shape;
+                shape_t s;
                 try
                 {
                     node dim_node = _xml_node.get_child("dimensions");
-                    shape = dim2shape(dim_node);
+                    s = shape::from_xml(dim_node);
                 }
                 catch(...)
                 {}
 
                 //at this point we should have gathered enough information in order to
                 //create the field.
-                auto f = pni::io::nx::create_field(g,name,str2typeid[type],shape);
+                auto f = pni::io::nx::create_field(g,name,str2typeid[type],s);
 
                 //OK - in the next step we try to gather some optional information that
                 //might be stored in the field.

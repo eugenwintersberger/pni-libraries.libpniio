@@ -34,7 +34,6 @@
 #include "attribute_data.hpp"
 #include "create_group_visitor.hpp"
 #include "create_field_visitor.hpp"
-#include "dim2shape.hpp"
 
 
 namespace pni{

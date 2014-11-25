@@ -26,12 +26,8 @@
 #include <utility>
 #include "xml_node.hpp"
 #include "../algorithms.hpp"
-#include "shape2dim.hpp"
+#include "shape.hpp"
 #include <boost/algorithm/string.hpp>
-
-#ifdef NOFOREACH
-#include <boost/foreach.hpp>
-#endif
 
 namespace pni{
 namespace io{
@@ -63,9 +59,9 @@ namespace xml{
         field_node.put("<xmlattr>.name",field_name);
         field_node.put("<xmlattr>.type",field_type);
 
-        auto shape = get_shape<shape_t>(field);
-        if(shape.size())
-            field_node.add_child("dimensions",shape2dim(shape));
+        auto s = get_shape<shape_t>(field);
+        if(s.size())
+            field_node.add_child("dimensions",shape::to_xml(s));
 
         if((get_rank(field)==1)&&(get_type(field)==type_id_t::STRING))
         {

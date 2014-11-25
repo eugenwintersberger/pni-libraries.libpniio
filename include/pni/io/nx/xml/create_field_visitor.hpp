@@ -26,7 +26,7 @@
 #include "xml_node.hpp"
 #include "node_data.hpp"
 #include "attribute_data.hpp"
-#include "dim2shape.hpp"
+#include "shape.hpp"
 #include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 
@@ -177,11 +177,11 @@ namespace xml{
                 //read the shape of the field if it got one
                 //All exceptions will be cought as this is not a mandatory
                 //information. By default we assume a single scalar field.
-                shape_t shape{1};
+                shape_t s{1};
                 try
                 {
                     node dim_node = _xml_node.get_child("dimensions");
-                    shape = dim2shape(dim_node);
+                    s = shape::from_xml<shape_t>(dim_node);
                 }
                 catch(...)
                 {}
@@ -189,7 +189,8 @@ namespace xml{
                 //at this point we should have gathered enough information in order to
                 //create the field.
                 type_id_t type_id = type_id_from_str(type);
-                field_type f = pni::io::nx::create_field(result_type(g),type_id,name,shape);
+                field_type f =
+                    pni::io::nx::create_field(result_type(g),type_id,name,s);
 
 
                 //OK - in the next step we try to gather some optional information that

@@ -48,11 +48,6 @@ class xml_lowlevel_test : public CppUnit::TestFixture
     private:
         CPPUNIT_TEST_SUITE(xml_lowlevel_test);
         CPPUNIT_TEST(test_create_group);
-        CPPUNIT_TEST(test_dim2shape_1);
-        CPPUNIT_TEST(test_dim2shape_2);
-        CPPUNIT_TEST(test_dim2shape_3);
-        CPPUNIT_TEST(test_dim2shape_4);
-        CPPUNIT_TEST(test_dim2shape_5);
         CPPUNIT_TEST(test_createfield_1);
         CPPUNIT_TEST(test_createfield_2);
         CPPUNIT_TEST(test_createfield_3);
@@ -78,11 +73,6 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         void tearDown();
         
         void test_create_group();
-        void test_dim2shape_1();
-        void test_dim2shape_2();
-        void test_dim2shape_3();
-        void test_dim2shape_4();
-        void test_dim2shape_5();
         void test_createfield_1();
         void test_createfield_2();
         void test_createfield_3();
