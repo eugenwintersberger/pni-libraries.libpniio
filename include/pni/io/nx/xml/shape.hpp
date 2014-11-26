@@ -145,14 +145,15 @@ namespace xml{
         //! \return node instance with shape information
         //!
         template<typename DTYPE>
-        node to_xml(const DTYPE &dim)
+        static node to_xml(const DTYPE &dim)
         {
             node dimensions;
 
             dimensions.put("<xmlattr>.rank",dim.size());
 
             size_t index = 1;
-            for(auto s: dim) dimensions.push_back(iv_to_node(index++,s));
+            for(auto s: dim) 
+                dimensions.push_back(make_pair("dim",iv_to_node(index++,s)));
 
             return dimensions;
         }

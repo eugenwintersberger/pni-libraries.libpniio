@@ -21,6 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <pni/io/nx/xml/attribute_data.hpp>
 #include "xml_field_test.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(xml_field_test);
@@ -117,4 +118,23 @@ void xml_field_test::test_from_xml_5()
     CPPUNIT_ASSERT(shape[0] == 100);
     CPPUNIT_ASSERT(shape[1] == 55);
     CPPUNIT_ASSERT(shape[2] == 10);
+}
+
+//-----------------------------------------------------------------------------
+void xml_field_test::test_to_xml_1()
+{
+    typedef xml::attribute_data<string> attr_data;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+   
+    shape_t s{3,4};
+    field = root_group.create_field<float32>("data",s);
+    field.attributes.create<string>("units").write("nm");
+    field.attributes.create<string>("long_name").write("testing data");
+
+    xml::node n = xml::field::to_xml(field);
+
+    CPPUNIT_ASSERT(attr_data::read(n,"name")=="data");
+    CPPUNIT_ASSERT(attr_data::read(n,"type")=="float32");
+    CPPUNIT_ASSERT(attr_data::read(n,"units")=="nm");
+    CPPUNIT_ASSERT(attr_data::read(n,"long_name")=="testing data");
 }

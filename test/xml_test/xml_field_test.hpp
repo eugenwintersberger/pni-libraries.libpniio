@@ -42,6 +42,7 @@ class xml_field_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_from_xml_3);
         CPPUNIT_TEST(test_from_xml_4);
         CPPUNIT_TEST(test_from_xml_5);
+        CPPUNIT_TEST(test_to_xml_1);
         CPPUNIT_TEST_SUITE_END();
 
         xml::node root,child;
@@ -60,7 +61,5 @@ class xml_field_test : public CppUnit::TestFixture
         void test_from_xml_3();
         void test_from_xml_4();
         void test_from_xml_5();
-
-
-
+        void test_to_xml_1();
 };
