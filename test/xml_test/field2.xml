@@ -1,1 +1,1 @@
-<field name="data" type="float32">1.0</field>
+<field name="data" type="float32" long_name="testing data" units="nm">1.0</field>

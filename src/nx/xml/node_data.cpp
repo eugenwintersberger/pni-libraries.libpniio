@@ -87,6 +87,48 @@ namespace xml{
         
         return !value.empty();
     }
+    
+    //------------------------------------------------------------------------
+    value read_node(type_id_t tid,const node &n)
+    {
+        if(tid == type_id_t::UINT8)
+            return value(node_data<uint8>::read(n));
+        else if(tid == type_id_t::INT8)
+            return value(node_data<int8>::read(n));
+        else if(tid == type_id_t::UINT16)
+            return value(node_data<uint16>::read(n));
+        else if(tid == type_id_t::INT16)
+            return value(node_data<int16>::read(n));
+        else if(tid == type_id_t::UINT32)
+            return value(node_data<uint32>::read(n));
+        else if(tid == type_id_t::INT32)
+            return value(node_data<int32>::read(n));
+        else if(tid == type_id_t::UINT64)
+            return value(node_data<uint64>::read(n));
+        else if(tid == type_id_t::INT64)
+            return value(node_data<int16>::read(n));
+        else if(tid == type_id_t::FLOAT32)
+            return value(node_data<float32>::read(n));
+        else if(tid == type_id_t::FLOAT64)
+            return value(node_data<float64>::read(n));
+        else if(tid == type_id_t::FLOAT128)
+            return value(node_data<float128>::read(n));
+        else if(tid == type_id_t::COMPLEX32)
+            return value(node_data<complex32>::read(n));
+        else if(tid == type_id_t::COMPLEX64)
+            return value(node_data<complex64>::read(n));
+        else if(tid == type_id_t::COMPLEX128)
+            return value(node_data<complex128>::read(n));
+        else if(tid == type_id_t::BINARY)
+            return value(node_data<binary>::read(n));
+        else if(tid == type_id_t::STRING)
+            return value(node_data<string>::read(n));
+        else if(tid == type_id_t::BOOL)
+            return value(node_data<bool_t>::read(n));
+        else 
+            throw type_error(EXCEPTION_RECORD,
+                    "Unsupported data type!");
+    }
 
 
 //end of namespace

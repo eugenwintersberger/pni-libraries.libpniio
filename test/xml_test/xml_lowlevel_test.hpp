@@ -48,11 +48,6 @@ class xml_lowlevel_test : public CppUnit::TestFixture
     private:
         CPPUNIT_TEST_SUITE(xml_lowlevel_test);
         CPPUNIT_TEST(test_create_group);
-        CPPUNIT_TEST(test_createfield_1);
-        CPPUNIT_TEST(test_createfield_2);
-        CPPUNIT_TEST(test_createfield_3);
-        CPPUNIT_TEST(test_createfield_4);
-        CPPUNIT_TEST(test_createfield_5);
         CPPUNIT_TEST(test_create_objects_1);
         CPPUNIT_TEST_SUITE_END();
 

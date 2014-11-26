@@ -23,6 +23,7 @@
 #pragma once
 
 #include "../../exceptions.hpp"
+#include <pni/core/type_erasures.hpp>
 #include <pni/core/arrays.hpp>
 #include "xml_node.hpp"
 
@@ -84,6 +85,10 @@ namespace xml{
 
     };
 
+    //------------------------------------------------------------------------
+    value read_node(type_id_t tid,const node &n);
+
+
     //-------------------------------------------------------------------------
     //!
     //! \ingroup xml_lowlevel_utils
@@ -110,6 +115,7 @@ namespace xml{
         //! Reading array data from a string without start and stop character 
         //! but with a single element separator.
         //!
+        //! \throws parser_error in case of parsing issues
         //! \param dnode XML node to read data from
         //! \param sep separator character.
         //! \return array with data
@@ -123,6 +129,7 @@ namespace xml{
         //! Reading array data not only using a separator character but also 
         //! a start and a stop character. 
         //!
+        //! \throws parser_error in case of parsing errors
         //! \param dnode XML node where to read data from
         //! \param start start symbol for the array
         //! \param stop stop symbol for the array
@@ -138,6 +145,7 @@ namespace xml{
         //! Read array data using a custom reader. In this case you can setup 
         //! the parser in your own code.
         //!
+        //! \throws parser_error in case of parsing errors
         //! \param dnode XML node from which to read data
         //! \param p parser 
         //! \return array with node data
