@@ -21,6 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <boost/property_tree/xml_parser.hpp>
 #include "xml_shape_test.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(xml_shape_test);
@@ -92,4 +93,47 @@ void xml_shape_test::test_read_5()
 
     CPPUNIT_ASSERT_THROW(xml::shape::from_xml<shape_t>(child),
                          pni::io::parser_error);
+}
+
+//----------------------------------------------------------------------------
+void xml_shape_test::test_read_6()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    root = xml::create_from_file("dim6.xml");
+    child = root.get_child("dimensions");
+    auto s = xml::shape::from_xml<shape_t>(child);
+    CPPUNIT_ASSERT(s.size() == 0);
+}
+
+//----------------------------------------------------------------------------
+void xml_shape_test::test_write_1()
+{
+    using namespace boost::property_tree;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    shape_t s{55,100};
+
+    root = xml::node();
+    root.add_child("dimensions",xml::shape::to_xml(s));
+
+    write_xml("test.xml",root);
+
+    CPPUNIT_ASSERT(!std::system("xmldiff -c test.xml dim1.xml"));
+}
+
+//----------------------------------------------------------------------------
+void xml_shape_test::test_write_2()
+{
+    using namespace boost::property_tree;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    shape_t s;
+
+    root = xml::node();
+    root.add_child("dimensions",xml::shape::to_xml(s));
+
+    write_xml("test.xml",root);
+
+    CPPUNIT_ASSERT(!std::system("xmldiff -c test.xml dim6.xml"));
 }

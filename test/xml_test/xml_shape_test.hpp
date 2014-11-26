@@ -42,6 +42,9 @@ class xml_shape_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_read_3);
         CPPUNIT_TEST(test_read_4);
         CPPUNIT_TEST(test_read_5);
+        CPPUNIT_TEST(test_read_6);
+        CPPUNIT_TEST(test_write_1);
+        CPPUNIT_TEST(test_write_2);
         CPPUNIT_TEST_SUITE_END();
 
         xml::node root;
@@ -57,5 +60,7 @@ class xml_shape_test : public CppUnit::TestFixture
         void test_read_3();
         void test_read_4();
         void test_read_5();
-
+        void test_read_6();
+        void test_write_1();
+        void test_write_2();
 };

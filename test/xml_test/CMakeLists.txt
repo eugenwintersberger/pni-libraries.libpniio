@@ -12,6 +12,7 @@ set(XMLFILES dim1.xml
              dim3.xml
              dim4.xml
              dim5.xml
+             dim6.xml
              field1.xml
              field2.xml
              field3.xml
