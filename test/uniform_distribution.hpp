@@ -57,7 +57,9 @@ template<typename T> class uniform_distribution
             _engine(),
             _distribution(0.2*type_info<T>::min(),
                           0.2*type_info<T>::max())
-        { }
+        { 
+            _engine.seed(std::random_device()()); 
+        }
 
         T operator()() 
         {
@@ -76,7 +78,9 @@ template<typename T> class uniform_distribution<std::complex<T> >
             _engine(),
             _distribution(0.2*type_info<float32>::min(),
                           0.2*type_info<float32>::max())
-        {}
+        {
+            _engine.seed(std::random_device()()); 
+        }
         
         std::complex<T> operator()()
         {
@@ -95,7 +99,9 @@ template<> class uniform_distribution<bool_t>
         uniform_distribution():
             _engine(),
             _distribution(0,1)
-        {}
+        {
+            _engine.seed(std::random_device()()); 
+        }
 
         bool_t operator()()
         {
@@ -113,7 +119,9 @@ template<> class uniform_distribution<binary>
         uniform_distribution():
             _engine(),
             _distribution(0,255)
-        {}
+        {
+            _engine.seed(std::random_device()());
+        }
 
         binary operator()() 
         {
