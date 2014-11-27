@@ -49,7 +49,7 @@ void xml_field_test::test_from_xml_1()
     root = xml::create_from_file("field1.xml");
     child = root.get_child("field");
 
-    CPPUNIT_ASSERT_NO_THROW(field = xml::field::from_xml(root_group,child));
+    CPPUNIT_ASSERT_NO_THROW(field = xml::field::object_from_xml(root_group,child));
     CPPUNIT_ASSERT(is_valid(field));
     CPPUNIT_ASSERT(get_rank(field) == 1);
     CPPUNIT_ASSERT(get_size(field) == 1);
@@ -68,15 +68,14 @@ void xml_field_test::test_from_xml_2()
     root = xml::create_from_file("field2.xml");
     child = root.get_child("field");
 
-    CPPUNIT_ASSERT_NO_THROW(field = xml::field::from_xml(root_group,child,true));
+    CPPUNIT_ASSERT_NO_THROW(field = xml::field::object_from_xml(root_group,child));
     CPPUNIT_ASSERT(is_valid(field));
     CPPUNIT_ASSERT(get_rank(field) == 1);
     CPPUNIT_ASSERT(get_size(field) == 1);
     CPPUNIT_ASSERT(get_type(field) == type_id_t::FLOAT32);
 
-    float32 buffer;
-    read(field,buffer);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(buffer,1.,1.e-8);
+    array data = xml::field::data_from_xml(child);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(data[0].as<float32>(),1.,1.e-8);
 }
 
 //-----------------------------------------------------------------------------
@@ -87,7 +86,7 @@ void xml_field_test::test_from_xml_3()
     root = xml::create_from_file("field3.xml");
     child = root.get_child("field");
 
-    CPPUNIT_ASSERT_THROW(xml::field::from_xml(root_group,child),
+    CPPUNIT_ASSERT_THROW(xml::field::object_from_xml(root_group,child),
                          pni::io::parser_error);
 }
 
@@ -99,7 +98,7 @@ void xml_field_test::test_from_xml_4()
     root = xml::create_from_file("field4.xml");
     child = root.get_child("field");
 
-    CPPUNIT_ASSERT_THROW(xml::field::from_xml(root_group,child),
+    CPPUNIT_ASSERT_THROW(xml::field::object_from_xml(root_group,child),
                          pni::io::parser_error);
 }
 
@@ -111,7 +110,7 @@ void xml_field_test::test_from_xml_5()
     root = xml::create_from_file("field5.xml");
     child = root.get_child("field");
 
-    field = xml::field::from_xml(root_group,child);
+    field = xml::field::object_from_xml(root_group,child);
 
     CPPUNIT_ASSERT(is_valid(field));
     CPPUNIT_ASSERT(get_rank(field) == 3);
@@ -134,7 +133,7 @@ void xml_field_test::test_to_xml_1()
     field.attributes.create<string>("units").write("nm");
     field.attributes.create<string>("long_name").write("testing data");
 
-    xml::node n = xml::field::to_xml(field);
+    xml::node n = xml::field::object_to_xml(field);
 
     CPPUNIT_ASSERT(attr_data::read(n,"name")=="data");
     CPPUNIT_ASSERT(attr_data::read(n,"type")=="float32");
@@ -161,7 +160,7 @@ void xml_field_test::test_to_xml_2()
     field.write(data);
 
     root = xml::node();
-    xml::node n = xml::field::to_xml(field,true);
+    xml::node n = xml::field::object_to_xml(field);
     root.add_child("field",n);
 
     CPPUNIT_ASSERT(attr_data::read(n,"name")=="data");
@@ -183,7 +182,7 @@ void xml_field_test::test_to_xml_3()
     field.attributes.create<string>("long_name").write("some text");
 
     root = xml::node();
-    xml::node n = xml::field::to_xml(field,true);
+    xml::node n = xml::field::object_to_xml(field,true);
     root.add_child("field",n);
     std::cout<<root<<std::endl;
 }

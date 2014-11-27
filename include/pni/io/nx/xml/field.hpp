@@ -38,81 +38,104 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace xml{
+
+    using namespace pni::core;
    
     //!
     //! \ingroup xml_lowlevel_utils
     //! \brief read and write field data
     struct field
     {
+        //! type to retrieve string attributes
         typedef attribute_data<string> string_attribute;
+        //! type to retrieve size_t attributes
         typedef attribute_data<size_t> size_attribute;
 
+        //--------------------------------------------------------------------
+        //!
+        //! \brief return field size
+        //! 
+        //! \throws parser_error in case of an error
+        //! 
         static size_t size(const node &field_node);
 
+        //--------------------------------------------------------------------
+        //!
+        //! \brief return field rank
+        //! 
+        //! \throws parser_error in case of an error
+        //! 
         static size_t rank(const node &field_node);
 
+        //--------------------------------------------------------------------
+        //!
+        //! \brief return field name
+        //! 
+        //! \throws parser_error in case of an error
+        //! 
         static string name(const node &field_node);
 
+        //--------------------------------------------------------------------
+        //!
+        //! \brief return field unit
+        //! 
+        //! \throws parser_error in case of an error
+        //! 
         static string unit(const node &field_node);
 
+        //--------------------------------------------------------------------
+        //!
+        //! \brief return field shape
+        //! 
+        //! \throws parser_error in case of an error
+        //! 
         static shape_t shape(const node &field_node);
 
+        static string long_name(const node &file_node);
 
+        //--------------------------------------------------------------------
+        //!
+        //! \throws parser_error if attribute cannot be read
+        //! \throws type_error if type cannot be translated 
+        //!
+        static type_id_t type_id(const node &field_node);
+
+
+        //--------------------------------------------------------------------
+        //!
+        //! \throws parser_error if XML parsing operations fail
         template<typename GTYPE>
         static typename GTYPE::field_type 
-        from_xml(const GTYPE &parent,const node &field_node, 
-                 bool with_data=false,char separator=' ')
+        object_from_xml(const GTYPE &parent,const node &field_node)
         {
-            typedef attribute_data<string> attr_data;
             typedef typename GTYPE::field_type field_type;
             typedef typename GTYPE::value_type object_type;
 
-            type_id_t tid  = type_id_from_str(attr_data::read(field_node,"type"));
-            auto name      = attr_data::read(field_node,"name");
-            auto long_name = attr_data::read(field_node,"long_name");
-            auto units     = attr_data::read(field_node,"units");
 
-            shape_t s{1}; 
-            if(field_node.count("dimensions"))
-                s = dimensions::from_xml(field_node.get_child("dimensions"));
+            field_type f = create_field(object_type(parent),
+                                        type_id(field_node),
+                                        name(field_node),
+                                        shape(field_node));
+            
+            string ln    = long_name(field_node);
+            string units = unit(field_node);
 
-            field_type field = create_field(object_type(parent),tid,name,s);
-            field.attributes.template create<string>("units").write(units);
-            field.attributes.template create<string>("long_name").write(long_name);
-
-            if(with_data && has_data(field_node))
-            {
-                array data = make_array(tid,s);
-                if(data.size() == 1)
-                    data[0] = read_node(tid,field_node);
-                else 
-                    data = node_data<array>::read(field_node,separator);
-
-                field.write(data);
-            }
-
+            //set mandatory attributes
+            f.attributes.template create<string>("units").write(units);
+            f.attributes.template create<string>("long_name").write(ln);
         
-            return field;
+            return f;
         }
 
         //--------------------------------------------------------------------
-        template<typename DTYPE> 
-        static DTYPE data_from_xml(const node &field_node)
-        {
-
-
-        }
+        static array data_from_xml(const node &field_node,char separator=' ');
 
         //--------------------------------------------------------------------
-        template<typename DTYPE>
-        static void data_to_xml(const DTYPE &data,const node &field_node)
-        {
-
-        }
+        static void data_to_xml(const array &data, node &field_node);
 
         //-----------------------------------------------------------------
         template<typename FTYPE>
-        static node to_xml(const FTYPE &field,bool with_data=false,
+        static node object_to_xml(const FTYPE &field,bool with_data=false,
                                   char separator=' ')
         {
             node field_node;
@@ -133,16 +156,6 @@ namespace xml{
             if(s.size() && (field.size()!=1))
                 field_node.add_child("dimensions",dimensions::to_xml(s));
 
-            //write data if requested by the user
-            if(with_data)
-            {
-                if(s.empty()) s = shape_t{1};
-                array data = make_array(field.type_id(),s);
-                field.read(data);
-                std::stringstream ss;
-                ss<<data;
-                field_node.put_value(ss.str());
-            }
             
             return field_node;
         }
