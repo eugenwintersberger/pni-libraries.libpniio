@@ -10,6 +10,7 @@ set(HEADER_FILES attribute_data.hpp
                  group.hpp
                  shape.hpp
                  attribute.hpp
+                 dimensions.hpp
                  )
 
 install(FILES ${HEADER_FILES} 

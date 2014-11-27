@@ -31,7 +31,7 @@
 #include "../algorithms/get_name.hpp"
 #include "../algorithms/get_unit.hpp"
 #include "xml_node.hpp"
-#include "shape.hpp"
+#include "dimensions.hpp"
 
 
 namespace pni{
@@ -44,6 +44,19 @@ namespace xml{
     //! \brief read and write field data
     struct field
     {
+        typedef attribute_data<string> string_attribute;
+        typedef attribute_data<size_t> size_attribute;
+
+        static size_t size(const node &field_node);
+
+        static size_t rank(const node &field_node);
+
+        static string name(const node &field_node);
+
+        static string unit(const node &field_node);
+
+        static shape_t shape(const node &field_node);
+
 
         template<typename GTYPE>
         static typename GTYPE::field_type 
@@ -61,7 +74,7 @@ namespace xml{
 
             shape_t s{1}; 
             if(field_node.count("dimensions"))
-                s = shape::from_xml<shape_t>(field_node.get_child("dimensions"));
+                s = dimensions::from_xml(field_node.get_child("dimensions"));
 
             field_type field = create_field(object_type(parent),tid,name,s);
             field.attributes.template create<string>("units").write(units);
@@ -86,6 +99,7 @@ namespace xml{
         template<typename DTYPE> 
         static DTYPE data_from_xml(const node &field_node)
         {
+
 
         }
 
@@ -117,7 +131,7 @@ namespace xml{
             //write the shape if it is not scalar field
             auto s = field.template shape<shape_t>();
             if(s.size() && (field.size()!=1))
-                field_node.add_child("dimensions",shape::to_xml(s));
+                field_node.add_child("dimensions",dimensions::to_xml(s));
 
             //write data if requested by the user
             if(with_data)

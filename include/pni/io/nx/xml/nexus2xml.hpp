@@ -26,7 +26,7 @@
 #include <utility>
 #include "xml_node.hpp"
 #include "../algorithms.hpp"
-#include "shape.hpp"
+#include "dimensions.hpp"
 #include <boost/algorithm/string.hpp>
 
 namespace pni{
@@ -61,7 +61,7 @@ namespace xml{
 
         auto s = get_shape<shape_t>(field);
         if(s.size())
-            field_node.add_child("dimensions",shape::to_xml(s));
+            field_node.add_child("dimensions",dimensions::to_xml(s));
 
         if((get_rank(field)==1)&&(get_type(field)==type_id_t::STRING))
         {

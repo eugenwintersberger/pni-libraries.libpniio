@@ -32,7 +32,7 @@
 #include "../algorithms/get_class.hpp"
 #include "../algorithms/set_class.hpp"
 #include "xml_node.hpp"
-#include "shape.hpp"
+#include "attribute_data.hpp"
 
 
 namespace pni{

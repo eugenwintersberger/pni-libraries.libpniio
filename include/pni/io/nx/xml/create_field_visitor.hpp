@@ -26,7 +26,7 @@
 #include "xml_node.hpp"
 #include "node_data.hpp"
 #include "attribute_data.hpp"
-#include "shape.hpp"
+#include "dimensions.hpp"
 #include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 
@@ -181,7 +181,7 @@ namespace xml{
                 try
                 {
                     node dim_node = _xml_node.get_child("dimensions");
-                    s = shape::from_xml<shape_t>(dim_node);
+                    s = dimensions::from_xml(dim_node);
                 }
                 catch(...)
                 {}

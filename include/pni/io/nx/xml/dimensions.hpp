@@ -17,10 +17,9 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Created on: Nov 25, 2014
+// Created on: Nov 27, 2014
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-
 #pragma once
 
 #include "xml_node.hpp"
@@ -33,33 +32,37 @@ namespace xml{
 
     //!
     //! \ingroup xml_lowlevel_utils
+    //! \brief index-value type
+    //!
+    //! This type describes an index value pair used in NXDL to describe a 
+    //! single dimension. The first component is the index of the particular 
+    //! dimensions while the second one denotes the number of elements 
+    //! along this dimension.
+    //! 
+    typedef std::pair<size_t,size_t> index_value_type;
+
+    //!
+    //! \ingroup xml_lowlevel_utils
+    //! 
+    //! Operator required to sort containers using index_value_type as their
+    //! element type. index-value pairs are ordered by their dimension index.
+    //! This operator returns true if the index component of the LHS is 
+    //! smaller than the index component of the RHS.
+    //1
+    bool operator<(const index_value_type &lhs,const index_value_type &rhs);
+
+
+    //!
+    //! \ingroup xml_lowlevel_utils
     //! \brief reading and writing dimensions
     //!
     //! This structure provides two static methods to read and write the 
     //! dimensions of a field or attribute to an XML tag. 
     //!
-    struct shape
+    struct dimensions
     {
-        //! a pair type to store the index and the value of a dimension
-        typedef std::pair<size_t,size_t> iv_type;
-        //! vector of index/value pairs
-        typedef std::vector<iv_type>     iv_vector;
+        typedef std::vector<index_value_type>  iv_vector;
 
-        //--------------------------------------------------------------------
-        //! 
-        //! \brief compare index/value pairs
-        //! 
-        //! This comperator is used to order index/value pairs. These pairs
-        //! are ordered by their index. 
-        //!
-        //! \param a LHS of the operation
-        //! \param b RHS of the operation
-        //! \return true if the LHS is smaller than the RHS
-        //!
-        static bool iv_comp(const iv_type &a,const iv_type &b)
-        {
-            return a.first < b.first; 
-        }
 
         //--------------------------------------------------------------------
         //!
@@ -72,13 +75,7 @@ namespace xml{
         //! \param value number of elements along this dimension
         //! \return node with dim attributes
         //!
-        static node iv_to_node(size_t index,size_t value)
-        {
-            node dim;
-            dim.put("<xmlattr>.index",index);
-            dim.put("<xmlattr>.value",value);
-            return dim;
-        }
+        static node index_value_to_node(size_t index,size_t value);
 
         //--------------------------------------------------------------------
         //!
@@ -87,14 +84,12 @@ namespace xml{
         //! Reads the dimension information from a dim tag. A index/value pair
         //! is returned.
         //! 
-        //! \param n node which should be a dim type
+        //! \param dim_node node which should be a dim type
         //! \return index value pair for the dim entry
         //!
-        static iv_type iv_from_node(const node &n)
-        {
-            return iv_type{attribute_data<size_t>::read(n,"index"),
-                           attribute_data<size_t>::read(n,"value")};
-        }
+        static index_value_type index_value_from_node(const node &dim_node);
+
+        static shape_t from_xml(const node &dims);
 
         //--------------------------------------------------------------------
         //!
@@ -112,26 +107,11 @@ namespace xml{
         template<typename DTYPE>
         static DTYPE from_xml(const node &dims)
         {
-            iv_vector buffer;
-
-            //read all index value pairs
-            for(auto dim: dims)
-                if(dim.first == "dim")
-                    buffer.push_back(iv_from_node(dim.second));
-
-            if(buffer.size()!=attribute_data<size_t>::read(dims,"rank"))
-                throw shape_mismatch_error(EXCEPTION_RECORD,
-                        "Rank in dimensions tag does not match number of dim values!");
-
-            std::sort(buffer.begin(),buffer.end(),iv_comp);
-
-            DTYPE result;
-            auto iter = buffer.begin();
-            std::generate_n(std::back_inserter(result),buffer.size(),
-                          [&iter](){ return (iter++)->second; });
-            return result;
-
+            shape_t s = from_xml(dims);
+            return DTYPE(s.begin(),s.end());
         }
+
+        static node to_xml(const shape_t &s);
 
         //--------------------------------------------------------------------
         //!
@@ -147,15 +127,8 @@ namespace xml{
         template<typename DTYPE>
         static node to_xml(const DTYPE &dim)
         {
-            node dimensions;
-
-            dimensions.put("<xmlattr>.rank",dim.size());
-
-            size_t index = 1;
-            for(auto s: dim) 
-                dimensions.push_back(make_pair("dim",iv_to_node(index++,s)));
-
-            return dimensions;
+            shape_t s(dim.begin(),dim.end());
+            return to_xml(s);
         }
 
     };
