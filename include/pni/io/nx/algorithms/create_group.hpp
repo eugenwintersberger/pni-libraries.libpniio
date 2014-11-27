@@ -93,6 +93,7 @@ namespace nx{
             //!
             //! \throws invalid_object_error if the parent is not valid
             //! \throws object_error in case of any other error 
+            //! \throws value_error if the name for the group was not set
             //!
             //! \param g parent group instance
             //! \return new group stored as object_types
@@ -164,7 +165,7 @@ namespace nx{
     //-------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_code
-    //!\brief create_group wrapper
+    //! \brief create_group wrapper
     //!
     //! Wrapper function for the create_group_visitor. This wrapper creates a 
     //! new group of a particular name and class directly below the parent 
@@ -172,17 +173,22 @@ namespace nx{
     //! argument must be non-empty. If an empty string is passed as the groups 
     //! class then the NX_class attribute will not be set.
     //!
-    //! \throws invalid_object_error if stored object is a group
+    //! \throws invalid_object_error if the parent is not valid
+    //! \throws key_error if an element in the path provided by the user does
+    //! not exist
+    //! \throws type_error if the parent object is not a group
     //! \throws object_error in case of any other error
+    //! \throws value_error if the user did not provide a name for the new
+    //! group
+    //! \throws io_error if metadata retrieval failed 
     //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
     //! \tparam PATHT path type
     //!
-    //! \param o instance of VTYPE with the parent group
-    //! \param n name of the new group
-    //! \param c Nexus class of the group
+    //! \param o reference to the parent 
+    //! \param path the path or name of the new group
     //! \return object_types with the newly created group
     //!
     template<

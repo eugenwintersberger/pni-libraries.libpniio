@@ -52,6 +52,16 @@ namespace xml{
         //! \brief create group from XML
         //!
         //! \throws parser_error in case of parsing problems
+        //!
+        //! \throws invalid_object_error if the parent is not valid
+        //! \throws parser_error if the content of the group node is illformed 
+        //! and cannot be parsed
+        //! \throws io_error if metadadata writing failed
+        //! \throws key_error if the group already exists or the name is
+        //! otherwise invalid. 
+        //! \throws object_error in case of any other error
+        //!
+        //! \tparam GTYPE group type
         //! \param parent the parent group of the new group
         //! \param group_node the node storing the group data
         //! \return group instance
@@ -80,6 +90,22 @@ namespace xml{
         }
 
         //-----------------------------------------------------------------
+        //!
+        //! \brief write group to XML
+        //!
+        //! Create an XML group from a Nexus group. 
+        //!
+        //! \throws parser_error in case of problems parsing required XML
+        //! attributes
+        //! \throws type_error if the passed type is not a group type
+        //! \throws io_error if retrievel of group properties failed 
+        //! \throws invalid_object_error if the group is not valid
+        //! \throws object_error in case of any other error
+        //!
+        //! \tparam GTYPE group type
+        //! \param group instance of GTYPE
+        //! \return node with group information
+        //!
         template<typename GTYPE>
         static node to_xml(const GTYPE &group)
         {
