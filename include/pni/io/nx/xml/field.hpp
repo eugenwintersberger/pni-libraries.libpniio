@@ -82,10 +82,24 @@ namespace xml{
             return field;
         }
 
+        //--------------------------------------------------------------------
+        template<typename DTYPE> 
+        static DTYPE data_from_xml(const node &field_node)
+        {
+
+        }
+
+        //--------------------------------------------------------------------
+        template<typename DTYPE>
+        static void data_to_xml(const DTYPE &data,const node &field_node)
+        {
+
+        }
+
         //-----------------------------------------------------------------
         template<typename FTYPE>
         static node to_xml(const FTYPE &field,bool with_data=false,
-                           char separator=' ')
+                                  char separator=' ')
         {
             node field_node;
 
