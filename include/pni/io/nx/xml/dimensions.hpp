@@ -41,6 +41,7 @@ namespace xml{
     //! 
     typedef std::pair<size_t,size_t> index_value_type;
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup xml_lowlevel_utils
     //! 
@@ -51,7 +52,7 @@ namespace xml{
     //1
     bool operator<(const index_value_type &lhs,const index_value_type &rhs);
 
-
+    //------------------------------------------------------------------------
     //!
     //! \ingroup xml_lowlevel_utils
     //! \brief reading and writing dimensions
@@ -61,8 +62,34 @@ namespace xml{
     //!
     struct dimensions
     {
+        //! vector type to hold index-value pairs
         typedef std::vector<index_value_type>  iv_vector;
 
+        //--------------------------------------------------------------------
+        //!
+        //! \brief get number of dimensions
+        //! 
+        //! Return the number of dimensions a particular dimensions tags spans.
+        //! If the object is scalar this function returns 0.
+        //!
+        //! \param dim node with dimension information
+        //! \return number of dimensions
+        //!
+        static size_t rank(const node &dim);
+
+        //--------------------------------------------------------------------
+        //!
+        //! \brief get size of an object
+        //! 
+        //! This returns the number of elements which can be stored by an 
+        //! object //! of a particular dimension. If the rank of the object 
+        //! is 0 this function returns 1 indicating that this is a 
+        //! scalar object. 
+        //! 
+        //! \param dim node with dimension information
+        //! \return number of elements
+        //!
+        static size_t size(const node &dim);
 
         //--------------------------------------------------------------------
         //!
@@ -89,15 +116,25 @@ namespace xml{
         //!
         static index_value_type index_value_from_node(const node &dim_node);
 
+        //--------------------------------------------------------------------
+        //!
+        //! \brief return shape
+        //! 
+        //! Returns a container of type shape_t whose elements are the 
+        //! numbers of elements along each dimension. 
+        //! 
+        //! \throws parser_error if a tag cannot be read
+        //! \param dims node with dimension information
+        //! \return instance of shape_t
         static shape_t from_xml(const node &dims);
 
         //--------------------------------------------------------------------
         //!
-        //! \brief get dimension information from node
+        //! \brief return shape
         //! 
-        //! Create a shape container from a 'dim' node. The resulting 
-        //! container holds the number of elements along each dimension
-        //! of the field. 
+        //! Return the number of elements along each dimension. The container
+        //! type used is determined at compile time from the template 
+        //! parameter.
         //! 
         //! \throws parser_error  in case of parsing errors
         //! \tparam DTYPE container type
@@ -111,17 +148,26 @@ namespace xml{
             return DTYPE(s.begin(),s.end());
         }
 
+        //--------------------------------------------------------------------
+        //!
+        //! \brief create dimension node
+        //! 
+        //! Create a dimensions node from a container with shape information.
+        //! 
+        //! \param s reference to the shape container
+        //! \return XML node with dimension information
+        //! 
         static node to_xml(const shape_t &s);
 
         //--------------------------------------------------------------------
         //!
-        //! \brief write shape information
+        //! \brief create dimension node
         //! 
-        //! Write the shape information from a container of type DTYPE to 
-        //! an XML node (which should be named dim). 
+        //! Create a dimension node from shape information stored in a
+        //! container. 
         //! 
         //! \tparam DTYPE container type
-        //! \param dim container instance with the data
+        //! \param dim container instance with shape information
         //! \return node instance with shape information
         //!
         template<typename DTYPE>
