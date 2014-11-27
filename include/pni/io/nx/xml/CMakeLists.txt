@@ -6,6 +6,8 @@ set(HEADER_FILES attribute_data.hpp
                  node_data.hpp 
                  xml_lowlevel.hpp 
                  xml_node.hpp
+                 field.hpp
+                 group.hpp
                  shape.hpp)
 
 install(FILES ${HEADER_FILES} 

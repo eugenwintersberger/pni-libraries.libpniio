@@ -23,6 +23,7 @@
 
 #include <pni/io/nx/xml/attribute_data.hpp>
 #include "xml_field_test.hpp"
+#include "../uniform_distribution.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(xml_field_test);
 
@@ -86,7 +87,8 @@ void xml_field_test::test_from_xml_3()
     root = xml::create_from_file("field3.xml");
     child = root.get_child("field");
 
-    CPPUNIT_ASSERT_THROW(xml::field::from_xml(root_group,child),pni::io::parser_error);
+    CPPUNIT_ASSERT_THROW(xml::field::from_xml(root_group,child),
+                         pni::io::parser_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -97,7 +99,8 @@ void xml_field_test::test_from_xml_4()
     root = xml::create_from_file("field4.xml");
     child = root.get_child("field");
 
-    CPPUNIT_ASSERT_THROW(xml::field::from_xml(root_group,child),pni::io::parser_error);
+    CPPUNIT_ASSERT_THROW(xml::field::from_xml(root_group,child),
+                         pni::io::parser_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -137,4 +140,50 @@ void xml_field_test::test_to_xml_1()
     CPPUNIT_ASSERT(attr_data::read(n,"type")=="float32");
     CPPUNIT_ASSERT(attr_data::read(n,"units")=="nm");
     CPPUNIT_ASSERT(attr_data::read(n,"long_name")=="testing data");
+}
+
+//-----------------------------------------------------------------------------
+void xml_field_test::test_to_xml_2()
+{
+    using namespace pni::io::nx::xml;
+    typedef xml::attribute_data<string> attr_data;
+    typedef uniform_distribution<float32> distribution_type;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    distribution_type distribution;
+   
+    shape_t s{3,4};
+    auto data = dynamic_array<float32>::create(s);
+    std::generate(data.begin(),data.end(),distribution);
+    field = root_group.create_field<float32>("data",s);
+    field.attributes.create<string>("units").write("nm");
+    field.attributes.create<string>("long_name").write("testing data");
+    field.write(data);
+
+    root = xml::node();
+    xml::node n = xml::field::to_xml(field,true);
+    root.add_child("field",n);
+
+    CPPUNIT_ASSERT(attr_data::read(n,"name")=="data");
+    CPPUNIT_ASSERT(attr_data::read(n,"type")=="float32");
+    CPPUNIT_ASSERT(attr_data::read(n,"units")=="nm");
+    CPPUNIT_ASSERT(attr_data::read(n,"long_name")=="testing data");
+    std::cout<<root<<std::endl;
+}
+
+//----------------------------------------------------------------------------
+void xml_field_test::test_to_xml_3()
+{
+    using namespace pni::io::nx::xml;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    field = root_group.create_field<string>("text");
+    field.write("hello world");
+    field.attributes.create<string>("units").write("none");
+    field.attributes.create<string>("long_name").write("some text");
+
+    root = xml::node();
+    xml::node n = xml::field::to_xml(field,true);
+    root.add_child("field",n);
+    std::cout<<root<<std::endl;
 }
