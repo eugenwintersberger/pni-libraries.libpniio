@@ -95,15 +95,36 @@ namespace xml{
 
         //--------------------------------------------------------------------
         //!
+        //! \brief get type id
+        //! 
+        //! Retrieves the type id of the field described by the XML node.
+        //! 
         //! \throws parser_error if attribute cannot be read
         //! \throws type_error if type cannot be translated 
+        //! 
+        //! \param field_node the node with field information
+        //! \return type id of the field
         //!
         static type_id_t type_id(const node &field_node);
 
 
         //--------------------------------------------------------------------
         //!
+        //! \brief create field from XML
+        //! 
+        //! Creates a new field object below parent according to the 
+        //! information storde in the actual XML node.
+        //! 
         //! \throws parser_error if XML parsing operations fail
+        //!
+        //! \param parent the parent object for the new field
+        //! \param field_node XML node with field information
+        //! \param type_error if the data type is not supported
+        //! \param invalid_object_error if the parent is not a valid object
+        //! \param object_error in case of any other error
+        //!
+        //! \return field instance
+        //!
         template<typename GTYPE>
         static typename GTYPE::field_type 
         object_from_xml(const GTYPE &parent,const node &field_node)
@@ -128,15 +149,53 @@ namespace xml{
         }
 
         //--------------------------------------------------------------------
+        //!
+        //! \brief get data from XML
+        //! 
+        //! Reads the data stored with the XML field node. 
+        //!
+        //! \throws type_error if the fields data type is not supported
+        //! \throws parser_error in case of errors during parsing data text
+        //!
+        //! \param field_node the XML node with the data
+        //! \param separator the separator character used to separate array 
+        //! items
+        //! \return instance of array with the data
+        //! 
         static array data_from_xml(const node &field_node,char separator=' ');
 
         //--------------------------------------------------------------------
+        //!
+        //! \brief write data to a node
+        //! 
+        //! Write data from an array to a field node. 
+        //!
+        //! \throws size_mismatch_error if field and data size do not match
+        //!
+        //! \param array the container with data
+        //! \param field_node node with field data
+        //!
         static void data_to_xml(const array &data, node &field_node);
 
         //-----------------------------------------------------------------
+        //!
+        //! \brief create XML object from field
+        //!
+        //! Create an XML object from a field. No data is included in the
+        //! XML output. But it could easily be added with the data_to_xml
+        //! function. 
+        //!
+        //! \throws parser_error in case of IO errors on the XML side
+        //! \throws invalid_object_error if the field is not valid
+        //! \throws io_error in case of metadata retrieval fails
+        //! \throws type_error if data type of the field cannot be handled
+        //! \throws object_error in case of any other error
+        //!
+        //! \tparam FTYPE field type
+        //! \param field reference to the field instance
+        //! \return XML node object with field information
         template<typename FTYPE>
-        static node object_to_xml(const FTYPE &field,bool with_data=false,
-                                  char separator=' ')
+        static node object_to_xml(const FTYPE &field)
         {
             node field_node;
 
@@ -156,11 +215,8 @@ namespace xml{
             if(s.size() && (field.size()!=1))
                 field_node.add_child("dimensions",dimensions::to_xml(s));
 
-            
             return field_node;
         }
-
-
     };
 
 

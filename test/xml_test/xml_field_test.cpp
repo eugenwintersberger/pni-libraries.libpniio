@@ -182,7 +182,7 @@ void xml_field_test::test_to_xml_3()
     field.attributes.create<string>("long_name").write("some text");
 
     root = xml::node();
-    xml::node n = xml::field::object_to_xml(field,true);
+    xml::node n = xml::field::object_to_xml(field);
     root.add_child("field",n);
     std::cout<<root<<std::endl;
 }
