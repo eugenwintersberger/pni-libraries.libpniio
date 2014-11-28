@@ -6,6 +6,7 @@ set(HEADER_FILES attribute_data.hpp
                  node_data.hpp 
                  xml_lowlevel.hpp 
                  xml_node.hpp
+                 io_object.hpp
                  field.hpp
                  group.hpp
                  shape.hpp

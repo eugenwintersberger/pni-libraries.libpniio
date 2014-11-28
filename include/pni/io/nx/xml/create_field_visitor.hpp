@@ -181,7 +181,7 @@ namespace xml{
                 try
                 {
                     node dim_node = _xml_node.get_child("dimensions");
-                    s = dimensions::from_xml(dim_node);
+                    s = dimensions::object_from_xml(dim_node);
                 }
                 catch(...)
                 {}

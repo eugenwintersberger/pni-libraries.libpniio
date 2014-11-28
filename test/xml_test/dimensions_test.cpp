@@ -72,7 +72,7 @@ void dimensions_test::test_read_1()
     
     setup_xml("dim1.xml");
 
-    auto shape = xml::dimensions::from_xml<test_shape>(child);
+    auto shape = xml::dimensions::object_from_xml<test_shape>(child);
     CPPUNIT_ASSERT(shape.size()==2);
     CPPUNIT_ASSERT(shape.front() == 55);
     CPPUNIT_ASSERT(shape.back()  == 100);
@@ -85,7 +85,7 @@ void dimensions_test::test_read_2()
     
     setup_xml("dim2.xml");
 
-    CPPUNIT_ASSERT_THROW(xml::dimensions::from_xml<test_shape>(child),
+    CPPUNIT_ASSERT_THROW(xml::dimensions::object_from_xml<test_shape>(child),
                          shape_mismatch_error);
 }
 
@@ -96,7 +96,7 @@ void dimensions_test::test_read_3()
     
     setup_xml("dim3.xml");
 
-    CPPUNIT_ASSERT_THROW(xml::dimensions::from_xml<shape_t>(child),
+    CPPUNIT_ASSERT_THROW(xml::dimensions::object_from_xml<shape_t>(child),
                          pni::io::parser_error);
 }
 
@@ -107,7 +107,7 @@ void dimensions_test::test_read_4()
     
     setup_xml("dim4.xml");
 
-    CPPUNIT_ASSERT_THROW(xml::dimensions::from_xml<shape_t>(child),
+    CPPUNIT_ASSERT_THROW(xml::dimensions::object_from_xml<shape_t>(child),
                          pni::io::parser_error);
 }
 
@@ -119,7 +119,7 @@ void dimensions_test::test_read_5()
     setup_xml("dim5.xml");
     child = root.get_child("dimensions");
 
-    CPPUNIT_ASSERT_THROW(xml::dimensions::from_xml<shape_t>(child),
+    CPPUNIT_ASSERT_THROW(xml::dimensions::object_from_xml<shape_t>(child),
                          pni::io::parser_error);
 }
 
@@ -129,7 +129,7 @@ void dimensions_test::test_read_6()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     setup_xml("dim6.xml");
-    auto s = xml::dimensions::from_xml<shape_t>(child);
+    auto s = xml::dimensions::object_from_xml<shape_t>(child);
     CPPUNIT_ASSERT(s.size() == 0);
 }
 
@@ -142,7 +142,7 @@ void dimensions_test::test_write_1()
     shape_t s{55,100};
 
     root = xml::node();
-    root.add_child("dimensions",xml::dimensions::to_xml(s));
+    root.add_child("dimensions",xml::dimensions::object_to_xml(s));
 
     write_xml("test.xml",root);
 
@@ -158,7 +158,7 @@ void dimensions_test::test_write_2()
     shape_t s;
 
     root = xml::node();
-    root.add_child("dimensions",xml::dimensions::to_xml(s));
+    root.add_child("dimensions",xml::dimensions::object_to_xml(s));
 
     write_xml("test.xml",root);
 

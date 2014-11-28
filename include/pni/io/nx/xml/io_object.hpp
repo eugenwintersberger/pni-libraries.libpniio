@@ -1,0 +1,109 @@
+//
+// (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+// Created on: Nov 28, 2014
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+
+#pragma once
+
+#include <pni/core/types.hpp>
+
+#include "xml_node.hpp"
+#include "attribute_data.hpp"
+
+namespace pni{
+namespace io{
+namespace nx{
+namespace xml{
+
+    using namespace pni::core;
+
+    struct io_object
+    {
+        //! type to retrieve string attributes
+        typedef attribute_data<string> string_attribute;
+        //! type to retrieve size_t attributes
+        typedef attribute_data<size_t> size_attribute;
+
+        //--------------------------------------------------------------------
+        //!
+        //! \brief return object size
+        //! 
+        //! \throws parser_error in case of an error
+        //! \param io_node XML node with IO object metadata
+        //! \return number of elements stored in the object
+        //! 
+        static size_t size(const node &io_node);
+
+        //--------------------------------------------------------------------
+        //!
+        //! \brief return object rank
+        //! 
+        //! This function returns the number of dimensions an IO object has. 
+        //! For attributes this function must be overloaded. 
+        //!
+        //! \throws parser_error in case of an error
+        //! \param io_node XML node with IO object metadata
+        //! \return number of dimensions
+        //! 
+        static size_t rank(const node &io_node);
+
+        //--------------------------------------------------------------------
+        //!
+        //! \brief return object name
+        //! 
+        //! \throws parser_error in case of an error
+        //! \param io_node XML node with object metadata
+        //! \return name of the object
+        //! 
+        static string name(const node &io_node);
+        
+        //--------------------------------------------------------------------
+        //!
+        //! \brief return object shape
+        //! 
+        //! \throws parser_error in case of an error
+        //! \param io_node XML node with object metadata
+        //! \return shape information
+        //! 
+        static shape_t shape(const node &io_node);
+        
+        //--------------------------------------------------------------------
+        //!
+        //! \brief get type id
+        //! 
+        //! Retrieves the type id of the field described by the XML node.
+        //! 
+        //! \throws parser_error if attribute cannot be read
+        //! \throws type_error if type cannot be translated 
+        //! 
+        //! \param io_node the node with field information
+        //! \return type id of the field
+        //!
+        static type_id_t type_id(const node &io_node);
+
+    };
+
+//end of namespace
+}
+}
+}
+}
+

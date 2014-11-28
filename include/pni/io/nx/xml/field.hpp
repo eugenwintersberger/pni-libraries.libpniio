@@ -32,6 +32,7 @@
 #include "../algorithms/get_unit.hpp"
 #include "xml_node.hpp"
 #include "dimensions.hpp"
+#include "io_object.hpp"
 
 
 namespace pni{
@@ -44,69 +45,31 @@ namespace xml{
     //!
     //! \ingroup xml_lowlevel_utils
     //! \brief read and write field data
-    struct field
+    struct field : public io_object
     {
-        //! type to retrieve string attributes
-        typedef attribute_data<string> string_attribute;
-        //! type to retrieve size_t attributes
-        typedef attribute_data<size_t> size_attribute;
-
-        //--------------------------------------------------------------------
-        //!
-        //! \brief return field size
-        //! 
-        //! \throws parser_error in case of an error
-        //! 
-        static size_t size(const node &field_node);
-
-        //--------------------------------------------------------------------
-        //!
-        //! \brief return field rank
-        //! 
-        //! \throws parser_error in case of an error
-        //! 
-        static size_t rank(const node &field_node);
-
-        //--------------------------------------------------------------------
-        //!
-        //! \brief return field name
-        //! 
-        //! \throws parser_error in case of an error
-        //! 
-        static string name(const node &field_node);
 
         //--------------------------------------------------------------------
         //!
         //! \brief return field unit
         //! 
         //! \throws parser_error in case of an error
+        //!
+        //! \param field_node XML node with field information
+        //! \return string with the unit
         //! 
         static string unit(const node &field_node);
 
         //--------------------------------------------------------------------
         //!
-        //! \brief return field shape
+        //! \brief return long name
         //! 
+        //! Obtain the long name from the XML node.
+        //!
         //! \throws parser_error in case of an error
-        //! 
-        static shape_t shape(const node &field_node);
-
-        static string long_name(const node &file_node);
-
-        //--------------------------------------------------------------------
+        //! \param field_node the XML node with the field information
+        //! \return string with long name information
         //!
-        //! \brief get type id
-        //! 
-        //! Retrieves the type id of the field described by the XML node.
-        //! 
-        //! \throws parser_error if attribute cannot be read
-        //! \throws type_error if type cannot be translated 
-        //! 
-        //! \param field_node the node with field information
-        //! \return type id of the field
-        //!
-        static type_id_t type_id(const node &field_node);
-
+        static string long_name(const node &field_node);
 
         //--------------------------------------------------------------------
         //!
@@ -213,7 +176,7 @@ namespace xml{
             //write the shape if it is not scalar field
             auto s = field.template shape<shape_t>();
             if(s.size() && (field.size()!=1))
-                field_node.add_child("dimensions",dimensions::to_xml(s));
+                field_node.add_child("dimensions",dimensions::object_to_xml(s));
 
             return field_node;
         }

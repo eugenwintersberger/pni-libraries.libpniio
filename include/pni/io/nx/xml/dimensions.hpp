@@ -126,7 +126,7 @@ namespace xml{
         //! \throws parser_error if a tag cannot be read
         //! \param dims node with dimension information
         //! \return instance of shape_t
-        static shape_t from_xml(const node &dims);
+        static shape_t object_from_xml(const node &dims);
 
         //--------------------------------------------------------------------
         //!
@@ -142,9 +142,9 @@ namespace xml{
         //! \return instance of DTYPE with the shape information
         //! 
         template<typename DTYPE>
-        static DTYPE from_xml(const node &dims)
+        static DTYPE object_from_xml(const node &dims)
         {
-            shape_t s = from_xml(dims);
+            shape_t s = object_from_xml(dims);
             return DTYPE(s.begin(),s.end());
         }
 
@@ -157,7 +157,7 @@ namespace xml{
         //! \param s reference to the shape container
         //! \return XML node with dimension information
         //! 
-        static node to_xml(const shape_t &s);
+        static node object_to_xml(const shape_t &s);
 
         //--------------------------------------------------------------------
         //!
@@ -171,10 +171,10 @@ namespace xml{
         //! \return node instance with shape information
         //!
         template<typename DTYPE>
-        static node to_xml(const DTYPE &dim)
+        static node object_to_xml(const DTYPE &dim)
         {
             shape_t s(dim.begin(),dim.end());
-            return to_xml(s);
+            return object_to_xml(s);
         }
 
     };

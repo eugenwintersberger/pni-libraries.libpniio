@@ -61,7 +61,7 @@ namespace xml{
 
         auto s = get_shape<shape_t>(field);
         if(s.size())
-            field_node.add_child("dimensions",dimensions::to_xml(s));
+            field_node.add_child("dimensions",dimensions::object_to_xml(s));
 
         if((get_rank(field)==1)&&(get_type(field)==type_id_t::STRING))
         {
