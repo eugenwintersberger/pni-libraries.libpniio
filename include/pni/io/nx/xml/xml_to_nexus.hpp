@@ -43,6 +43,20 @@ namespace nx{
 namespace xml{
 
     using namespace pni::core;
+    
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            >
+    void append_attributes(node &p,const nxobject<GTYPE,FTYPE,ATYPE> &parent)
+    {
+        for(auto child: p)
+        {
+            if(child.first=="attribute")
+                attribute::object_from_xml(parent,child.second);
+        }
+    }
 
     //--------------------------------------------------------------------------
     //!
@@ -53,11 +67,17 @@ namespace xml{
     //! parent.
     //! 
     //! \throws parser_error in case of XML parsing problems
-    //! \throws nxgroup_error in case of group creation or access issues
-    //! \throws nxfield_error in case of field creation issues
-    //! \tparam PTYPE parent type
-    //! \param parent instance of PTYPE
+    //! \throws invalid_object_error if the parent object is not valid
+    //! \throws io_error if data or metadata write failed
+    //! \throws type_error if a data type is involved that cannot be handled
+    //! \throws object_error in case of any other error
+    //! 
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //!
     //! \param t ptree instance with the XML data
+    //! \param parent instance of nxobject
     //!
     template<
              typename GTYPE,
@@ -66,24 +86,28 @@ namespace xml{
             >
     void xml_to_nexus(node &t,const nxobject<GTYPE,FTYPE,ATYPE> parent)
     {
+        typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
         for(auto child: t)
         {
+            object_type object;
+
             if(child.first == "group")
             {
-                auto g = group::object_from_xml(parent,child.second);
+                object = group::object_from_xml(parent,child.second);
                 //recursive call of create_objects
-                xml_to_nexus(child.second,g);
+                xml_to_nexus(child.second,object);
             }
             else if(child.first == "field")
             {
-                field::object_from_xml(parent,child.second);
+                auto f = field::object_from_xml(parent,child.second);
             }
             else if(child.first == "link")
             {
-                auto name = attribute_data<string>::read(child.second,"name");
-                auto target = attribute_data<string>::read(child.second,"target");
-                //parent.link(name,target);
+                //NEED TO IMPLEMENT THIS
             }
+                
+            //append all attributes tagged in this child
+            append_attributes(child.second,object);
         }
     }
 
