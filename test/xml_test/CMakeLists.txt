@@ -4,7 +4,7 @@ set(SOURCES xml_test.cpp
             xml_node_data_test.cpp
             xml_node_test.cpp
             field_test.cpp
-            xml_group_test.cpp
+            group_test.cpp
             dimensions_test.cpp
             )
 

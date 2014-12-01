@@ -22,74 +22,74 @@
 //
 
 #include <boost/property_tree/xml_parser.hpp>
-#include "xml_group_test.hpp"
+#include "group_test.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(xml_group_test);
+CPPUNIT_TEST_SUITE_REGISTRATION(group_test);
 
-void xml_group_test::setUp()
+void group_test::setUp()
 {
     file = h5::nxfile::create_file("xml_gruop_test.nxs",true);
     root_group = file.root();
 }
 
 //----------------------------------------------------------------------------
-void xml_group_test::tearDown()
+void group_test::tearDown()
 {
-    root_group.close();
+    close(root_group);
     file.close();
 }
 
 //----------------------------------------------------------------------------
-void xml_group_test::set_xml(const string &fname)
+void group_test::set_xml(const string &fname)
 {
     root = xml::create_from_file(fname);
     child = root.get_child("group");
 }
 
 //----------------------------------------------------------------------------
-void xml_group_test::test_read_1()
+void group_test::test_read_1()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     set_xml("group1.xml");
 
-    h5::nxgroup g = xml::group::from_xml(root_group,child);
+    h5::nxobject g = xml::group::from_xml(root_group,child);
     CPPUNIT_ASSERT(is_valid(g));
-    CPPUNIT_ASSERT(g.name() == "hello");
+    CPPUNIT_ASSERT(get_name(g) == "hello");
     CPPUNIT_ASSERT(get_class(g) == "NXentry");
     
 }
 
 //----------------------------------------------------------------------------
-void xml_group_test::test_read_2()
+void group_test::test_read_2()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     set_xml("group2.xml");
 
-    h5::nxgroup g = xml::group::from_xml(root_group,child);
+    h5::nxobject g = xml::group::from_xml(root_group,child);
     CPPUNIT_ASSERT(is_valid(g));
     CPPUNIT_ASSERT(get_name(g)=="hello");
 }
 
 //----------------------------------------------------------------------------
-void xml_group_test::test_read_3()
+void group_test::test_read_3()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     set_xml("group3.xml");
 
-    h5::nxgroup g;
+    h5::nxobject g;
     CPPUNIT_ASSERT_THROW(g = xml::group::from_xml(root_group,child),
                          pni::io::parser_error);
 }
 
 //----------------------------------------------------------------------------
-void xml_group_test::test_write_1()
+void group_test::test_write_1()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    h5::nxgroup g = root_group.create_group("hello");
+    h5::nxobject g = create_group(root_group,"hello");
 
     xml::node root;
     xml::node gnode = xml::group::to_xml(g);

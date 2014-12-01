@@ -31,6 +31,7 @@
 #include "../algorithms/get_name.hpp"
 #include "../algorithms/get_class.hpp"
 #include "../algorithms/set_class.hpp"
+#include "../nxobject.hpp"
 #include "xml_node.hpp"
 #include "attribute_data.hpp"
 
@@ -62,20 +63,27 @@ namespace xml{
         //! \throws object_error in case of any other error
         //!
         //! \tparam GTYPE group type
+        //! \tparam FTYPE field type
+        //! \tparam ATYPE attribute type
         //! \param parent the parent group of the new group
         //! \param group_node the node storing the group data
         //! \return group instance
         //!
-        template<typename GTYPE>
-        static typename GTYPE::group_type 
-        from_xml(const GTYPE &parent,const node &group_node)
+        template<
+                 typename GTYPE,
+                 typename FTYPE,
+                 typename ATYPE
+                >
+        static nxobject<GTYPE,FTYPE,ATYPE>
+        from_xml(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
+                 const node &group_node)
         {
             typedef attribute_data<string> attr_data;
             typedef GTYPE group_type;
             typedef typename GTYPE::value_type object_type;
 
             auto name   = attr_data::read(group_node,"name");
-            group_type group = create_group(object_type(parent),name);
+            auto group = create_group(parent,name);
 
             try
             {
@@ -106,8 +114,12 @@ namespace xml{
         //! \param group instance of GTYPE
         //! \return node with group information
         //!
-        template<typename GTYPE>
-        static node to_xml(const GTYPE &group)
+        template<
+                 typename GTYPE,
+                 typename FTYPE,
+                 typename ATYPE
+                >
+        static node to_xml(const nxobject<GTYPE,FTYPE,ATYPE> &group)
         {
             node group_node;
 

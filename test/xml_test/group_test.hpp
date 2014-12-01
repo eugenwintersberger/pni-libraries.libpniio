@@ -33,10 +33,10 @@
 using namespace pni::core;
 using namespace pni::io::nx;
 
-class xml_group_test : public CppUnit::TestFixture
+class group_test : public CppUnit::TestFixture
 {
     private:
-        CPPUNIT_TEST_SUITE(xml_group_test);
+        CPPUNIT_TEST_SUITE(group_test);
         CPPUNIT_TEST(test_read_1);
         CPPUNIT_TEST(test_read_2);
         CPPUNIT_TEST(test_read_3);
@@ -48,7 +48,7 @@ class xml_group_test : public CppUnit::TestFixture
         string buffer;
 
         h5::nxfile file;
-        h5::nxgroup root_group;
+        h5::nxobject root_group;
 
         void set_xml(const string &fname);
 
