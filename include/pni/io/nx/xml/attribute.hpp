@@ -28,6 +28,12 @@
 #include <pni/core/type_erasures.hpp>
 
 #include "../algorithms/create_attribute.hpp"
+#include "../algorithms/as_attribute.hpp"
+#include "../algorithms/get_type.hpp"
+#include "../algorithms/get_name.hpp"
+#include "../algorithms/get_size.hpp"
+#include "../algorithms/get_shape.hpp"
+#include "../nxobject.hpp"
 #include "xml_node.hpp"
 #include "dimensions.hpp"
 #include "io_object.hpp"
@@ -47,25 +53,34 @@ namespace xml{
     {
         //!
         //! \brief create attribute from XML description
+        //! 
+        //! Create an attribute attached to a parent according to the 
+        //! information stored in the XML node. The parent must be 
+        //! either a field or a group type. 
+        //! 
+        //! \throws invalid_object_error if the parent is not valid
+        //! \throws type_error if the requested data type does not exist
+        //! \throws io_error if the attribute cannot be written 
+        //! \throws object_error in case of any other error
         //!
         //! \tparam PTYPE parent type
         //! \param parent reference to parent instance
         //! \param attr_node XML node with attribute description
         //! \return instance of an attribute type
         //!
-        template<typename PTYPE>
-        static typename PTYPE::attribute_type 
-        object_from_xml(const PTYPE &parent,const node &attr_node)
+        template<
+                 typename GTYPE,
+                 typename FTYPE,
+                 typename ATYPE
+                >
+        static typename nxobject<GTYPE,FTYPE,ATYPE>
+        object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
+                        const node &attr_node)
         {
-            typedef typename PTYPE::attribute_type  attribute_type;
-
             //create the attribute object
-            attribute_type attr = create_attribute(object_type(parent),
-                                                   type_id(attr_node),
-                                                   name(attr_node),
-                                                   shape(attr_node));
-            
-            return attr;
+            return  create_attribute(parent,type_id(attr_node),
+                                            name(attr_node),
+                                            shape(attr_node));
         }
 
         //-----------------------------------------------------------------
@@ -76,8 +91,12 @@ namespace xml{
         //! \param attr attribute instance
         //! \return XML node with the attribute metadata
         //!
-        template<typename ATYPE>
-        static node object_to_xml(const ATYPE &attr)
+        template<
+                 typename GTYPE,
+                 typename FTYPE,
+                 typename ATYPE
+                >
+        static node object_to_xml(const nxobject<GTYPE,FTYPE,ATYPE> &attr)
         {
             node attr_node;
 
@@ -89,13 +108,14 @@ namespace xml{
             //shape - otherwise the attribute is scalar
             if(get_size(attr)>1)
             {
-                auto shape = attr.template shape<shape_t>();
+                auto shape = get_shape<shape_t>(attr);
                 attr_node.add_child("dimensions", 
                                     dimensions::object_to_xml(shape));
             }
             
             return attr_node;
         }
+
 
     };
 

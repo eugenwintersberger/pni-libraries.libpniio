@@ -28,10 +28,13 @@
 #include <pni/core/type_erasures.hpp>
 
 #include "../algorithms/create_field.hpp"
+#include "../algorithms/create_attribute.hpp"
+#include "../algorithms/write.hpp"
 #include "../algorithms/get_name.hpp"
 #include "../algorithms/get_unit.hpp"
 #include "../algorithms/as_field.hpp"
 #include "../algorithms/as_group.hpp"
+#include "../algorithms/get_shape.hpp"
 #include "../nxobject.hpp"
 #include "xml_node.hpp"
 #include "dimensions.hpp"
@@ -80,11 +83,16 @@ namespace xml{
         //! \brief create field from XML
         //! 
         //! Creates a new field object below parent according to the 
-        //! information storde in the actual XML node.
+        //! information stored in the actual XML node.
         //! 
         //! \throws parser_error if XML parsing operations fail
+        //! \throws invalid_object_error if the parent is not valid
+        //! \throws type_error if the data type is not supported
+        //! \throws io_error if metadata cannot be written 
+        //! \throws object_error in case of any other error
         //!
-        //! \param parent the parent object for the new field
+        //! \tparam GTYPE group type
+        //! \param parent the parent group for the new field
         //! \param field_node XML node with field information
         //! \param type_error if the data type is not supported
         //! \param invalid_object_error if the parent is not a valid object
@@ -92,42 +100,30 @@ namespace xml{
         //!
         //! \return field instance
         //!
-        template<typename GTYPE>
-        static typename GTYPE::field_type 
-        object_from_xml(const GTYPE &parent,const node &field_node)
-        {
-            typedef typename GTYPE::field_type field_type;
-            typedef typename GTYPE::value_type object_type;
-
-
-            field_type f = create_field(object_type(parent),
-                                        type_id(field_node),
-                                        name(field_node),
-                                        shape(field_node));
-            
-            string ln    = long_name(field_node);
-            string units = unit(field_node);
-
-            //set mandatory attributes
-            f.attributes.template create<string>("units").write(units);
-            f.attributes.template create<string>("long_name").write(ln);
-        
-            return f;
-        }
-
-        //-----------------------------------------------------------------
         template<
                  typename GTYPE,
                  typename FTYPE,
                  typename ATYPE
                 >
-        static FTYPE 
+        static nxobject<GTYPE,FTYPE,ATYPE> 
         object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
                         const node &field_node)
         {
-            return object_from_xml(as_group(parent),field_node);
-        }
+            typedef FTYPE field_type;
+            typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
 
+
+            auto f = create_field(parent,type_id(field_node),
+                                  name(field_node),
+                                  shape(field_node));
+
+            write(create_attribute<string>(f,"long_name"),
+                  long_name(field_node));
+            write(create_attribute<string>(f,"units"),
+                  unit(field_node));
+        
+            return f;
+        }
 
         //-----------------------------------------------------------------
         //!
@@ -146,31 +142,6 @@ namespace xml{
         //! \tparam FTYPE field type
         //! \param field reference to the field instance
         //! \return XML node object with field information
-        template<typename FTYPE>
-        static node object_to_xml(const FTYPE &field)
-        {
-            node field_node;
-
-            //write name and type attributes
-            field_node.put("<xmlattr>.name",field.name());
-            field_node.put("<xmlattr>.type",
-                           str_from_type_id(field.type_id()));
-
-            field_node.put("<xmlattr>.units",get_unit(field));
-
-            string buffer;
-            field.attributes["long_name"].read(buffer);
-            field_node.put("<xmlattr>.long_name",buffer);
-
-            //write the shape if it is not scalar field
-            auto s = field.template shape<shape_t>();
-            if(s.size() && (field.size()!=1))
-                field_node.add_child("dimensions",dimensions::object_to_xml(s));
-
-            return field_node;
-        }
-
-        //--------------------------------------------------------------------
         template<
                  typename GTYPE,
                  typename FTYPE,
@@ -178,8 +149,25 @@ namespace xml{
                 >
         static node object_to_xml(const nxobject<GTYPE,FTYPE,ATYPE> &field)
         {
-            return object_to_xml(as_field(field));
+            node field_node;
+
+            //write name and type attributes
+            field_node.put("<xmlattr>.name",get_name(field));
+            field_node.put("<xmlattr>.type",str_from_type_id(get_type(field)));
+            field_node.put("<xmlattr>.units",get_unit(field));
+
+            string buffer;
+            read(get_attribute(field,"long_name"),buffer);
+            field_node.put("<xmlattr>.long_name",buffer);
+
+            //write the shape if it is not scalar field
+            auto s = get_shape<shape_t>(field);
+            if(s.size() && (get_size(field)!=1))
+                field_node.add_child("dimensions",dimensions::object_to_xml(s));
+
+            return field_node;
         }
+
     };
 
 

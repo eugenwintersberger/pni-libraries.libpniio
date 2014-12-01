@@ -45,7 +45,6 @@ class field_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_unit);
         CPPUNIT_TEST(test_from_xml_1);
         CPPUNIT_TEST(test_from_xml_2);
-        CPPUNIT_TEST(test_from_xml_2_with_object);
         CPPUNIT_TEST(test_from_xml_3);
         CPPUNIT_TEST(test_from_xml_4);
         CPPUNIT_TEST(test_from_xml_5);
@@ -61,8 +60,7 @@ class field_test : public CppUnit::TestFixture
         xml::node root,child;
 
         h5::nxfile file;
-        h5::nxgroup root_group;
-        h5::nxfield field;
+        h5::nxobject root_group,field;
         string buffer;
 
         void setup_xml(const string &fname);

@@ -291,6 +291,20 @@ namespace nx{
         return boost::apply_visitor(visitor,o);
     }
 
+    //------------------------------------------------------------------------
+    template<typename ATYPE,
+             typename GTYPE,
+             typename FTYPE,
+             typename ATTYPE,
+             typename ...ITYPES 
+            > 
+    void read(nxobject<GTYPE,FTYPE,ATTYPE> &&o,ATYPE &a,ITYPES ...indices)
+    {
+        typedef read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE> visitor_t;
+        std::vector<slice> sel{slice(indices)...};
+        visitor_t visitor(a,sel);
+        return boost::apply_visitor(visitor,o);
+    }
 
     //------------------------------------------------------------------------
     //!
@@ -337,6 +351,19 @@ namespace nx{
         return boost::apply_visitor(visitor,o);
     }
 
+    //------------------------------------------------------------------------
+    template<
+             typename ATYPE,
+             typename GTYPE,
+             typename FTYPE,
+             typename ATTYPE
+            >
+    void read(nxobject<GTYPE,FTYPE,ATTYPE> &&o,ATYPE &a,const std::vector<slice> &sel)
+    {
+        typedef read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE> visitor_t;
+        visitor_t visitor(a,sel);
+        return boost::apply_visitor(visitor,o);
+    }
 //end of namespace
 }
 }

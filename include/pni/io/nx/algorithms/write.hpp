@@ -279,10 +279,26 @@ namespace nx{
              typename AATYPE,
              typename ...ITYPES 
             > 
+    void write(nxobject<GTYPE,FTYPE,AATYPE> &&o,const ATYPE &a,ITYPES ...indices)
+    {
+        typedef write_visitor<ATYPE,GTYPE,FTYPE,AATYPE> visitor_type;
+        std::vector<slice> sel{slice(indices)...};
+        return boost::apply_visitor(visitor_type(a,sel),o);
+    }
+
+    //------------------------------------------------------------------------
+    template<
+             typename ATYPE,
+             typename GTYPE,
+             typename FTYPE,
+             typename AATYPE,
+             typename ...ITYPES
+            >
     void write(nxobject<GTYPE,FTYPE,AATYPE> &o,const ATYPE &a,ITYPES ...indices)
     {
         typedef write_visitor<ATYPE,GTYPE,FTYPE,AATYPE> visitor_type;
         std::vector<slice> sel{slice(indices)...};
+
         return boost::apply_visitor(visitor_type(a,sel),o);
     }
 

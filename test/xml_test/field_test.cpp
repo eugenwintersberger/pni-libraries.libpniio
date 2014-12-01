@@ -37,8 +37,8 @@ void field_test::setUp()
 //-----------------------------------------------------------------------------
 void field_test::tearDown()
 {
-    root_group.close();
-    field.close();
+    close(root_group);
+    close(field);
     file.close();
 }
 
@@ -213,19 +213,12 @@ void field_test::test_to_xml_1()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
    
     shape_t s{3,4};
-    field = root_group.create_field<float32>("data",s);
-    field.attributes.create<string>("units").write("nm");
-    field.attributes.create<string>("long_name").write("testing data");
+    field = create_field<float32>(root_group,"data",s);
+    write(create_attribute<string>(field,"units"),string("nm"));
+    write(create_attribute<string>(field,"long_name"),"testing data");
 
     xml::node n = xml::field::object_to_xml(field);
 
-    CPPUNIT_ASSERT(attr_data::read(n,"name")=="data");
-    CPPUNIT_ASSERT(attr_data::read(n,"type")=="float32");
-    CPPUNIT_ASSERT(attr_data::read(n,"units")=="nm");
-    CPPUNIT_ASSERT(attr_data::read(n,"long_name")=="testing data");
-
-    //test with object
-    n = xml::field::object_to_xml(h5::nxobject(field));
     CPPUNIT_ASSERT(attr_data::read(n,"name")=="data");
     CPPUNIT_ASSERT(attr_data::read(n,"type")=="float32");
     CPPUNIT_ASSERT(attr_data::read(n,"units")=="nm");
@@ -245,10 +238,10 @@ void field_test::test_to_xml_2()
     shape_t s{3,4};
     auto data = dynamic_array<float32>::create(s);
     std::generate(data.begin(),data.end(),distribution);
-    field = root_group.create_field<float32>("data",s);
-    field.attributes.create<string>("units").write("nm");
-    field.attributes.create<string>("long_name").write("testing data");
-    field.write(data);
+    field = create_field<float32>(root_group,"data",s);
+    write(create_attribute<string>(field,"units"),"nm");
+    write(create_attribute<string>(field,"long_name"),"testing data");
+    write(field,data);
 
     root = xml::node();
     xml::node n = xml::field::object_to_xml(field);
@@ -267,10 +260,10 @@ void field_test::test_to_xml_3()
     using namespace pni::io::nx::xml;
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    field = root_group.create_field<string>("text");
-    field.write("hello world");
-    field.attributes.create<string>("units").write("none");
-    field.attributes.create<string>("long_name").write("some text");
+    field = create_field<string>(root_group,"text");
+    write(field,"hello world");
+    write(create_attribute<string>(field,"units"),"none");
+    write(create_attribute<string>(field,"long_name"),"some text");
 
     root = xml::node();
     xml::node n = xml::field::object_to_xml(field);
@@ -311,9 +304,9 @@ void field_test::test_write_data_scalar()
     array data = make_array(type_id_t::FLOAT32,shape_t{1});
     data[0] = float32(1.234);
 
-    field = root_group.create_field<float32>("temperature");
-    field.attributes.create<string>("long_name").write("sample temperature");
-    field.attributes.create<string>("units").write("centigrade");
+    field = create_field<float32>(root_group,"temperature");
+    write(create_attribute<string>(field,"long_name"),"sample temperature");
+    write(create_attribute<string>(field,"units"),"centigrade");
 
     root = xml::node();
     xml::node n = xml::field::object_to_xml(field);
@@ -332,9 +325,9 @@ void field_test::test_write_data_array()
     array data = make_array(type_id_t::INT32,shape_t{3,2});
     std::copy(buffer.begin(),buffer.end(),data.begin());
 
-    field = root_group.create_field<int32>("matrix",shape_t{3,2});
-    field.attributes.create<string>("long_name").write("random data");
-    field.attributes.create<string>("units").write("a.u.");
+    field = create_field<int32>(root_group,"matrix",shape_t{3,2});
+    write(create_attribute<string>(field,"long_name"),"random data");
+    write(create_attribute<string>(field,"units"),"a.u.");
 
     root = xml::node();
     xml::node n = xml::field::object_to_xml(field);
