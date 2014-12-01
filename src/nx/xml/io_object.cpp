@@ -69,6 +69,34 @@ namespace xml{
     {
         return type_id_from_str(string_attribute::read(io_node,"type"));
     }
+    
+    //--------------------------------------------------------------------
+    array io_object::data_from_xml(const node &io_node,char separator)
+    {
+        array data = make_array(type_id(io_node),shape(io_node));
+
+        if(has_data(io_node))
+        {
+            if(data.size() == 1)
+                data[0] = read_node(type_id(io_node),io_node);
+            else 
+                data = node_data<array>::read(io_node,separator);
+        }
+
+        return data;
+    }
+
+    //------------------------------------------------------------------------
+    void io_object::data_to_xml(const array &data,node &io_node)
+    {
+        if(data.size()!=size(io_node))
+            throw size_mismatch_error(EXCEPTION_RECORD,
+                    "Array size and field size do not match!");
+
+        std::stringstream ss;
+        ss<<data;
+        io_node.put_value(ss.str());
+    }
 //end of namespace
 }
 }

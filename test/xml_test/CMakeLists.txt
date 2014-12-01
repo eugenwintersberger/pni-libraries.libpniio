@@ -3,7 +3,7 @@ set(SOURCES xml_test.cpp
             xml_lowlevel_test.cpp
             xml_node_data_test.cpp
             xml_node_test.cpp
-            xml_field_test.cpp
+            field_test.cpp
             xml_group_test.cpp
             dimensions_test.cpp
             )
@@ -22,6 +22,8 @@ set(XMLFILES dim1.xml
              field3.xml
              field4.xml
              field5.xml
+             field_test_data_scalar.xml
+             field_test_data_array.xml
              node_from_bad_file.xml
              node_from_str.xml
              object_tree1.xml)

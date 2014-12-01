@@ -111,34 +111,6 @@ namespace xml{
             return f;
         }
 
-        //--------------------------------------------------------------------
-        //!
-        //! \brief get data from XML
-        //! 
-        //! Reads the data stored with the XML field node. 
-        //!
-        //! \throws type_error if the fields data type is not supported
-        //! \throws parser_error in case of errors during parsing data text
-        //!
-        //! \param field_node the XML node with the data
-        //! \param separator the separator character used to separate array 
-        //! items
-        //! \return instance of array with the data
-        //! 
-        static array data_from_xml(const node &field_node,char separator=' ');
-
-        //--------------------------------------------------------------------
-        //!
-        //! \brief write data to a node
-        //! 
-        //! Write data from an array to a field node. 
-        //!
-        //! \throws size_mismatch_error if field and data size do not match
-        //!
-        //! \param array the container with data
-        //! \param field_node node with field data
-        //!
-        static void data_to_xml(const array &data, node &field_node);
 
         //-----------------------------------------------------------------
         //!

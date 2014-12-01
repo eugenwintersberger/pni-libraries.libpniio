@@ -33,10 +33,16 @@
 using namespace pni::core;
 using namespace pni::io::nx;
 
-class xml_field_test : public CppUnit::TestFixture
+class field_test : public CppUnit::TestFixture
 {
     private:
-        CPPUNIT_TEST_SUITE(xml_field_test);
+        CPPUNIT_TEST_SUITE(field_test);
+        CPPUNIT_TEST(test_name);
+        CPPUNIT_TEST(test_size);
+        CPPUNIT_TEST(test_rank);
+        CPPUNIT_TEST(test_shape);
+        CPPUNIT_TEST(test_long_name);
+        CPPUNIT_TEST(test_unit);
         CPPUNIT_TEST(test_from_xml_1);
         CPPUNIT_TEST(test_from_xml_2);
         CPPUNIT_TEST(test_from_xml_3);
@@ -45,6 +51,10 @@ class xml_field_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_to_xml_1);
         CPPUNIT_TEST(test_to_xml_2);
         CPPUNIT_TEST(test_to_xml_3);
+        CPPUNIT_TEST(test_read_data_scalar);
+        CPPUNIT_TEST(test_read_data_array);
+        CPPUNIT_TEST(test_write_data_scalar);
+        CPPUNIT_TEST(test_write_data_array);
         CPPUNIT_TEST_SUITE_END();
 
         xml::node root,child;
@@ -54,10 +64,22 @@ class xml_field_test : public CppUnit::TestFixture
         h5::nxfield field;
         string buffer;
 
+        void setup_xml(const string &fname);
+
     public:
         void setUp();
         void tearDown();
-
+    
+        void test_name();
+        void test_size();
+        void test_rank();
+        void test_shape();
+        void test_long_name();
+        void test_unit();
+        void test_read_data_scalar();
+        void test_read_data_array();
+        void test_write_data_scalar();
+        void test_write_data_array();
         void test_from_xml_1();
         void test_from_xml_2();
         void test_from_xml_3();

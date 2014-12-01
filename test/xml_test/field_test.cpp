@@ -21,20 +21,21 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <boost/property_tree/xml_parser.hpp>
 #include <pni/io/nx/xml/attribute_data.hpp>
-#include "xml_field_test.hpp"
+#include "field_test.hpp"
 #include "../uniform_distribution.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(xml_field_test);
+CPPUNIT_TEST_SUITE_REGISTRATION(field_test);
 
-void xml_field_test::setUp()
+void field_test::setUp()
 {
     file = h5::nxfile::create_file("xml_field_test.nxs",true);
     root_group = file.root();
 }
 
 //-----------------------------------------------------------------------------
-void xml_field_test::tearDown()
+void field_test::tearDown()
 {
     root_group.close();
     field.close();
@@ -42,12 +43,18 @@ void xml_field_test::tearDown()
 }
 
 //-----------------------------------------------------------------------------
-void xml_field_test::test_from_xml_1()
+void field_test::setup_xml(const string &fname)
+{
+    root = xml::create_from_file(fname);
+    child = root.get_child("field");
+}
+
+//-----------------------------------------------------------------------------
+void field_test::test_from_xml_1()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    root = xml::create_from_file("field1.xml");
-    child = root.get_child("field");
+    setup_xml("field1.xml");
 
     CPPUNIT_ASSERT_NO_THROW(field = xml::field::object_from_xml(root_group,child));
     CPPUNIT_ASSERT(is_valid(field));
@@ -61,12 +68,78 @@ void xml_field_test::test_from_xml_1()
 }
 
 //-----------------------------------------------------------------------------
-void xml_field_test::test_from_xml_2()
+void field_test::test_name()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    setup_xml("field1.xml");
+    CPPUNIT_ASSERT(xml::field::name(child)=="data");
+    setup_xml("field3.xml");
+    CPPUNIT_ASSERT_THROW(xml::field::name(child),pni::io::parser_error);
+}
+
+//-----------------------------------------------------------------------------
+void field_test::test_size()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    setup_xml("field1.xml");
+    CPPUNIT_ASSERT(xml::field::size(child)==1);
+    setup_xml("field5.xml");
+    CPPUNIT_ASSERT(xml::field::size(child)== 100*55*10);
+}
+
+//-----------------------------------------------------------------------------
+void field_test::test_rank()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    setup_xml("field1.xml");
+    CPPUNIT_ASSERT(xml::field::rank(child)==0);
+    setup_xml("field5.xml");
+    CPPUNIT_ASSERT(xml::field::rank(child)==3);
+}
+
+//-----------------------------------------------------------------------------
+void field_test::test_shape()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    setup_xml("field1.xml");
+    shape_t s;
+    CPPUNIT_ASSERT_NO_THROW(s = xml::field::shape(child));
+    CPPUNIT_ASSERT(s == shape_t{1});
+
+    setup_xml("field5.xml");
+    CPPUNIT_ASSERT_NO_THROW(s = xml::field::shape(child));
+    CPPUNIT_ASSERT(s == shape_t({100,55,10}));
+}
+
+//-----------------------------------------------------------------------------
+void field_test::test_long_name()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    setup_xml("field1.xml");
+    CPPUNIT_ASSERT(xml::field::long_name(child)=="motor along x-axis");
+    setup_xml("field5.xml");
+    CPPUNIT_ASSERT(xml::field::long_name(child)=="motor along x-axis");
+
+    setup_xml("field3.xml");
+    CPPUNIT_ASSERT_THROW(xml::field::long_name(child),pni::io::parser_error);
+}
+
+//-----------------------------------------------------------------------------
+void field_test::test_unit()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    setup_xml("field1.xml");
+    CPPUNIT_ASSERT(xml::field::unit(child)=="m");
+    setup_xml("field3.xml");
+    CPPUNIT_ASSERT_THROW(xml::field::unit(child),pni::io::parser_error);
+}
+
+//-----------------------------------------------------------------------------
+void field_test::test_from_xml_2()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    root = xml::create_from_file("field2.xml");
-    child = root.get_child("field");
+    setup_xml("field2.xml");
 
     CPPUNIT_ASSERT_NO_THROW(field = xml::field::object_from_xml(root_group,child));
     CPPUNIT_ASSERT(is_valid(field));
@@ -79,37 +152,31 @@ void xml_field_test::test_from_xml_2()
 }
 
 //-----------------------------------------------------------------------------
-void xml_field_test::test_from_xml_3()
+void field_test::test_from_xml_3()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    root = xml::create_from_file("field3.xml");
-    child = root.get_child("field");
-
+    setup_xml("field3.xml");
     CPPUNIT_ASSERT_THROW(xml::field::object_from_xml(root_group,child),
                          pni::io::parser_error);
 }
 
 //-----------------------------------------------------------------------------
-void xml_field_test::test_from_xml_4()
+void field_test::test_from_xml_4()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    root = xml::create_from_file("field4.xml");
-    child = root.get_child("field");
-
+    setup_xml("field4.xml");
     CPPUNIT_ASSERT_THROW(xml::field::object_from_xml(root_group,child),
                          pni::io::parser_error);
 }
 
 //-----------------------------------------------------------------------------
-void xml_field_test::test_from_xml_5()
+void field_test::test_from_xml_5()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    root = xml::create_from_file("field5.xml");
-    child = root.get_child("field");
-
+    setup_xml("field5.xml");
     field = xml::field::object_from_xml(root_group,child);
 
     CPPUNIT_ASSERT(is_valid(field));
@@ -123,7 +190,7 @@ void xml_field_test::test_from_xml_5()
 }
 
 //-----------------------------------------------------------------------------
-void xml_field_test::test_to_xml_1()
+void field_test::test_to_xml_1()
 {
     typedef xml::attribute_data<string> attr_data;
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
@@ -142,7 +209,7 @@ void xml_field_test::test_to_xml_1()
 }
 
 //-----------------------------------------------------------------------------
-void xml_field_test::test_to_xml_2()
+void field_test::test_to_xml_2()
 {
     using namespace pni::io::nx::xml;
     typedef xml::attribute_data<string> attr_data;
@@ -171,7 +238,7 @@ void xml_field_test::test_to_xml_2()
 }
 
 //----------------------------------------------------------------------------
-void xml_field_test::test_to_xml_3()
+void field_test::test_to_xml_3()
 {
     using namespace pni::io::nx::xml;
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
@@ -186,3 +253,71 @@ void xml_field_test::test_to_xml_3()
     root.add_child("field",n);
     std::cout<<root<<std::endl;
 }
+
+//---------------------------------------------------------------------------
+void field_test::test_read_data_scalar()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    setup_xml("field_test_data_scalar.xml");
+    
+    array data = xml::field::data_from_xml(child);
+    CPPUNIT_ASSERT(data.size()==1);
+    CPPUNIT_ASSERT(data.rank()==1);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(float32(1.234),data[0].as<float32>(),1.e-8);
+} 
+
+//---------------------------------------------------------------------------
+void field_test::test_read_data_array()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    setup_xml("field_test_data_array.xml");
+    std::vector<int32> ref_data{-1,2,-3,4,-5,6};
+
+    array data = xml::field::data_from_xml(child);
+    auto iter = ref_data.begin();
+    for(auto d:data)
+        CPPUNIT_ASSERT(d.as<int32>()==*(iter++));
+}
+
+//----------------------------------------------------------------------------
+void field_test::test_write_data_scalar()
+{
+    using namespace boost::property_tree;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    array data = make_array(type_id_t::FLOAT32,shape_t{1});
+    data[0] = float32(1.234);
+
+    field = root_group.create_field<float32>("temperature");
+    field.attributes.create<string>("long_name").write("sample temperature");
+    field.attributes.create<string>("units").write("centigrade");
+
+    root = xml::node();
+    xml::node n = xml::field::object_to_xml(field);
+    xml::field::data_to_xml(data,n);
+    root.add_child("field",n);
+    write_xml("test_field_scalar.xml",root);
+    CPPUNIT_ASSERT(!std::system("xmldiff -c test_field_scalar.xml field_test_data_scalar.xml"));
+}
+
+//----------------------------------------------------------------------------
+void field_test::test_write_data_array()
+{
+    using namespace boost::property_tree;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::vector<int32> buffer{-1,2,-3,4,-5,6};
+    array data = make_array(type_id_t::INT32,shape_t{3,2});
+    std::copy(buffer.begin(),buffer.end(),data.begin());
+
+    field = root_group.create_field<int32>("matrix",shape_t{3,2});
+    field.attributes.create<string>("long_name").write("random data");
+    field.attributes.create<string>("units").write("a.u.");
+
+    root = xml::node();
+    xml::node n = xml::field::object_to_xml(field);
+    xml::field::data_to_xml(data,n);
+    root.add_child("field",n);
+    write_xml("test_field_array.xml",root);
+    CPPUNIT_ASSERT(!std::system("xmldiff -c test_field_array.xml field_test_data_array.xml"));
+}
+
+
