@@ -117,11 +117,22 @@ namespace xml{
                                   name(field_node),
                                   shape(field_node));
 
-            write(create_attribute<string>(f,"long_name"),
-                  long_name(field_node));
-            write(create_attribute<string>(f,"units"),
-                  unit(field_node));
-        
+            try
+            {
+                write(create_attribute<string>(f,"long_name"),
+                      long_name(field_node));
+            }
+            catch(pni::io::parser_error &error)
+            {}
+
+            try
+            {
+                write(create_attribute<string>(f,"units"),
+                      unit(field_node));
+            }
+            catch(pni::io::parser_error &error)
+            {}
+
             return f;
         }
 

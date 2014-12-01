@@ -73,7 +73,7 @@ namespace xml{
                  typename FTYPE,
                  typename ATYPE
                 >
-        static typename nxobject<GTYPE,FTYPE,ATYPE>
+        static nxobject<GTYPE,FTYPE,ATYPE>
         object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
                         const node &attr_node)
         {

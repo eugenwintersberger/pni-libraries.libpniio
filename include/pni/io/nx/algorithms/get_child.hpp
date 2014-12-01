@@ -52,7 +52,7 @@ namespace nx{
     //! \return child as instance of nxobject
     //!
     template<typename OTYPE> 
-    auto get_child(const OTYPE &o,const string &n,const string &c)
+    auto get_child(const OTYPE &o,const string &n,const string &c="")
     ->decltype(get_parent(o))
     {
         typedef decltype(get_parent(o)) object_type;

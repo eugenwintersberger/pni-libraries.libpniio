@@ -22,12 +22,12 @@
 //
 
 #include <vector>
-#include "xml_lowlevel_test.hpp"
+#include "xml_to_nexus_test.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(xml_lowlevel_test);
+CPPUNIT_TEST_SUITE_REGISTRATION(xml_to_nexus_test);
 
 //-----------------------------------------------------------------------------
-void xml_lowlevel_test::setUp() 
+void xml_to_nexus_test::setUp() 
 {
     file = h5::nxfile::create_file("xml_lowlevel_test.nx",true);
     root_group = file.root();
@@ -35,7 +35,7 @@ void xml_lowlevel_test::setUp()
 }
 
 //-----------------------------------------------------------------------------
-void xml_lowlevel_test::tearDown() 
+void xml_to_nexus_test::tearDown() 
 { 
     close(group);
     close(root_group);
@@ -45,46 +45,39 @@ void xml_lowlevel_test::tearDown()
 
 
 //-----------------------------------------------------------------------------
-void xml_lowlevel_test::test_create_group()
+void xml_to_nexus_test::test_create_group()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     //test creation with full specification
     root = xml::create_from_string("<group name=\"entry\" type=\"NXentry\"/>");
-    child = root.get_child("group");
-    group = xml::create_group(root_group,child);
-    CPPUNIT_ASSERT(get_name(group) == "entry");
-    CPPUNIT_ASSERT(get_class(group) == "NXentry");
-    CPPUNIT_ASSERT(is_valid(group));
+    xml::xml_to_nexus(root,root_group);
+    CPPUNIT_ASSERT(get_name(get_child(root_group,"entry")) == "entry");
+    CPPUNIT_ASSERT(get_class(get_child(root_group,"entry")) == "NXentry");
+    CPPUNIT_ASSERT(is_valid(get_child(root_group,"entry")));
 
     //test test creation without NX_class
     root = xml::create_from_string("<group name=\"entry2\"> </group>");
-    child = root.get_child("group");
-    group = xml::create_group(root_group,child);
-    CPPUNIT_ASSERT(get_name(group) == "entry2");
-    CPPUNIT_ASSERT(is_valid(group));
+    xml::xml_to_nexus(root,root_group);
+    CPPUNIT_ASSERT(is_valid(get_child(root_group,"entry2")));
 
     //test exception without name
     root = xml::create_from_string("<group type=\"entry2\"> </group>");
-    child = root.get_child("group");
-    CPPUNIT_ASSERT_THROW(xml::create_group(root_group,child),
+    CPPUNIT_ASSERT_THROW(xml::xml_to_nexus(root,root_group),
             pni::io::parser_error);
 
     //test creation of an already existing group
     root = xml::create_from_string("<group name=\"entry2\"> </group>");
-    child = root.get_child("group");
-    CPPUNIT_ASSERT_THROW(xml::create_group(root_group,child),
+    CPPUNIT_ASSERT_THROW(xml::xml_to_nexus(root,root_group),
             pni::io::object_error);
 
 }
 
 
 //-----------------------------------------------------------------------------
-void xml_lowlevel_test::test_create_objects_1()
+void xml_to_nexus_test::test_create_objects_1()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     root = xml::create_from_file("object_tree1.xml");
-    
-    CPPUNIT_ASSERT_NO_THROW(xml::create_objects(root_group,root));
-    
+    CPPUNIT_ASSERT_NO_THROW(xml::xml_to_nexus(root,root_group));
 }

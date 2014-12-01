@@ -1,6 +1,6 @@
 set(SOURCES xml_test.cpp
             xml_attribute_test.cpp
-            xml_lowlevel_test.cpp
+            xml_to_nexus_test.cpp
             xml_node_data_test.cpp
             xml_node_test.cpp
             field_test.cpp

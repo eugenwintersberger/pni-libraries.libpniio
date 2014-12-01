@@ -27,7 +27,7 @@
 #include <random>
 
 #include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/xml.hpp>
+#include <pni/io/nx/xml/xml_to_nexus.hpp>
 #include <pni/core/arrays.hpp>
 #include <pni/io/nx/algorithms.hpp>
 
@@ -43,10 +43,10 @@ static const string node_from_string_str = "<node>\n<group> </group>\n<group>"
 static const string node_from_bad_str = "this has to fail";
 
 
-class xml_lowlevel_test : public CppUnit::TestFixture
+class xml_to_nexus_test : public CppUnit::TestFixture
 {
     private:
-        CPPUNIT_TEST_SUITE(xml_lowlevel_test);
+        CPPUNIT_TEST_SUITE(xml_to_nexus_test);
         CPPUNIT_TEST(test_create_group);
         CPPUNIT_TEST(test_create_objects_1);
         CPPUNIT_TEST_SUITE_END();
@@ -68,11 +68,5 @@ class xml_lowlevel_test : public CppUnit::TestFixture
         void tearDown();
         
         void test_create_group();
-        void test_createfield_1();
-        void test_createfield_2();
-        void test_createfield_3();
-        void test_createfield_4();
-        void test_createfield_5();
         void test_create_objects_1();
-
 };

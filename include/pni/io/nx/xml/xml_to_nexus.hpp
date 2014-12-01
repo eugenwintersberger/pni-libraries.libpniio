@@ -25,15 +25,16 @@
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 #include "../nx.hpp"
-#include "../nxobject_traits.hpp"
+#include "../nxobject.hpp"
 #include "../../exceptions.hpp"
 #include "../../parsers/array_parser.hpp"
 
 #include "xml_node.hpp"
 #include "node_data.hpp"
 #include "attribute_data.hpp"
-#include "create_group_visitor.hpp"
-#include "create_field_visitor.hpp"
+#include "group.hpp"
+#include "attribute.hpp"
+#include "field.hpp"
 
 
 namespace pni{
@@ -58,20 +59,24 @@ namespace xml{
     //! \param parent instance of PTYPE
     //! \param t ptree instance with the XML data
     //!
-    template<typename PTYPE>
-    void create_objects(const PTYPE &parent,node &t)
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            >
+    void xml_to_nexus(node &t,const nxobject<GTYPE,FTYPE,ATYPE> parent)
     {
         for(auto child: t)
         {
             if(child.first == "group")
             {
-                auto g = pni::io::nx::xml::create_group(parent,child.second);
+                auto g = group::object_from_xml(parent,child.second);
                 //recursive call of create_objects
-                create_objects(g,child.second);
+                xml_to_nexus(child.second,g);
             }
             else if(child.first == "field")
             {
-                 create_field(parent,child.second);
+                field::object_from_xml(parent,child.second);
             }
             else if(child.first == "link")
             {

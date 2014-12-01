@@ -75,7 +75,7 @@ namespace xml{
                  typename ATYPE
                 >
         static nxobject<GTYPE,FTYPE,ATYPE>
-        from_xml(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
+        object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
                  const node &group_node)
         {
             typedef attribute_data<string> attr_data;
@@ -119,7 +119,7 @@ namespace xml{
                  typename FTYPE,
                  typename ATYPE
                 >
-        static node to_xml(const nxobject<GTYPE,FTYPE,ATYPE> &group)
+        static node object_to_xml(const nxobject<GTYPE,FTYPE,ATYPE> &group)
         {
             node group_node;
 

@@ -22,6 +22,6 @@
 #pragma once
 
 #include "xml/xml_node.hpp"
-#include "xml/xml_lowlevel.hpp"
+#include "xml/nexus_to_xml.hpp"
 #include "xml/node_data.hpp"
-#include "xml/nexus2xml.hpp"
+#include "xml/xml_to_nexus.hpp"

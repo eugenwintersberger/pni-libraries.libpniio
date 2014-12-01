@@ -53,7 +53,7 @@ void group_test::test_read_1()
 
     set_xml("group1.xml");
 
-    h5::nxobject g = xml::group::from_xml(root_group,child);
+    h5::nxobject g = xml::group::object_from_xml(root_group,child);
     CPPUNIT_ASSERT(is_valid(g));
     CPPUNIT_ASSERT(get_name(g) == "hello");
     CPPUNIT_ASSERT(get_class(g) == "NXentry");
@@ -67,7 +67,7 @@ void group_test::test_read_2()
 
     set_xml("group2.xml");
 
-    h5::nxobject g = xml::group::from_xml(root_group,child);
+    h5::nxobject g = xml::group::object_from_xml(root_group,child);
     CPPUNIT_ASSERT(is_valid(g));
     CPPUNIT_ASSERT(get_name(g)=="hello");
 }
@@ -80,7 +80,7 @@ void group_test::test_read_3()
     set_xml("group3.xml");
 
     h5::nxobject g;
-    CPPUNIT_ASSERT_THROW(g = xml::group::from_xml(root_group,child),
+    CPPUNIT_ASSERT_THROW(g = xml::group::object_from_xml(root_group,child),
                          pni::io::parser_error);
 }
 
@@ -92,7 +92,7 @@ void group_test::test_write_1()
     h5::nxobject g = create_group(root_group,"hello");
 
     xml::node root;
-    xml::node gnode = xml::group::to_xml(g);
+    xml::node gnode = xml::group::object_to_xml(g);
     root.add_child("group",gnode);
     write_xml("test.xml",root);
 
