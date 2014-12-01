@@ -30,9 +30,13 @@
 #include "../algorithms/create_field.hpp"
 #include "../algorithms/get_name.hpp"
 #include "../algorithms/get_unit.hpp"
+#include "../algorithms/as_field.hpp"
+#include "../algorithms/as_group.hpp"
+#include "../nxobject.hpp"
 #include "xml_node.hpp"
 #include "dimensions.hpp"
 #include "io_object.hpp"
+
 
 
 namespace pni{
@@ -111,6 +115,19 @@ namespace xml{
             return f;
         }
 
+        //-----------------------------------------------------------------
+        template<
+                 typename GTYPE,
+                 typename FTYPE,
+                 typename ATYPE
+                >
+        static FTYPE 
+        object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
+                        const node &field_node)
+        {
+            return object_from_xml(as_group(parent),field_node);
+        }
+
 
         //-----------------------------------------------------------------
         //!
@@ -151,6 +168,17 @@ namespace xml{
                 field_node.add_child("dimensions",dimensions::object_to_xml(s));
 
             return field_node;
+        }
+
+        //--------------------------------------------------------------------
+        template<
+                 typename GTYPE,
+                 typename FTYPE,
+                 typename ATYPE
+                >
+        static node object_to_xml(const nxobject<GTYPE,FTYPE,ATYPE> &field)
+        {
+            return object_to_xml(as_field(field));
         }
     };
 

@@ -45,6 +45,7 @@ class field_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_unit);
         CPPUNIT_TEST(test_from_xml_1);
         CPPUNIT_TEST(test_from_xml_2);
+        CPPUNIT_TEST(test_from_xml_2_with_object);
         CPPUNIT_TEST(test_from_xml_3);
         CPPUNIT_TEST(test_from_xml_4);
         CPPUNIT_TEST(test_from_xml_5);
@@ -82,6 +83,7 @@ class field_test : public CppUnit::TestFixture
         void test_write_data_array();
         void test_from_xml_1();
         void test_from_xml_2();
+        void test_from_xml_2_with_object();
         void test_from_xml_3();
         void test_from_xml_4();
         void test_from_xml_5();

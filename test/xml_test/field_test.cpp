@@ -147,8 +147,22 @@ void field_test::test_from_xml_2()
     CPPUNIT_ASSERT(get_size(field) == 1);
     CPPUNIT_ASSERT(get_type(field) == type_id_t::FLOAT32);
 
-    array data = xml::field::data_from_xml(child);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(data[0].as<float32>(),1.,1.e-8);
+}
+
+//-----------------------------------------------------------------------------
+void field_test::test_from_xml_2_with_object()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    setup_xml("field2.xml");
+    
+    h5::nxobject parent(root_group);
+    CPPUNIT_ASSERT_NO_THROW(field = xml::field::object_from_xml(parent,child));
+    CPPUNIT_ASSERT(is_valid(field));
+    CPPUNIT_ASSERT(get_rank(field) == 1);
+    CPPUNIT_ASSERT(get_size(field) == 1);
+    CPPUNIT_ASSERT(get_type(field) == type_id_t::FLOAT32);
+
 }
 
 //-----------------------------------------------------------------------------
@@ -159,6 +173,9 @@ void field_test::test_from_xml_3()
     setup_xml("field3.xml");
     CPPUNIT_ASSERT_THROW(xml::field::object_from_xml(root_group,child),
                          pni::io::parser_error);
+    CPPUNIT_ASSERT_THROW(xml::field::object_from_xml(h5::nxobject(root_group),child),
+                         pni::io::parser_error);
+                                                
 }
 
 //-----------------------------------------------------------------------------
@@ -202,6 +219,13 @@ void field_test::test_to_xml_1()
 
     xml::node n = xml::field::object_to_xml(field);
 
+    CPPUNIT_ASSERT(attr_data::read(n,"name")=="data");
+    CPPUNIT_ASSERT(attr_data::read(n,"type")=="float32");
+    CPPUNIT_ASSERT(attr_data::read(n,"units")=="nm");
+    CPPUNIT_ASSERT(attr_data::read(n,"long_name")=="testing data");
+
+    //test with object
+    n = xml::field::object_to_xml(h5::nxobject(field));
     CPPUNIT_ASSERT(attr_data::read(n,"name")=="data");
     CPPUNIT_ASSERT(attr_data::read(n,"type")=="float32");
     CPPUNIT_ASSERT(attr_data::read(n,"units")=="nm");
