@@ -105,6 +105,12 @@ namespace xml{
 
         return value;
     }
+
+    //------------------------------------------------------------------------
+    bool_t attribute_data<bool_t>::read(const node &n,const string &a)
+    {
+        return attribute_data<bool>::read(n,a);
+    }
     
     //-------------------------------------------------------------------------
     array attribute_data<array>::read(const node &dnode,const string &name,

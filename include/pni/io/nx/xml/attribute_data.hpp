@@ -151,6 +151,30 @@ namespace xml{
         //!
         static bool read(const node &n,const string &a);
     };
+    
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup xml_classes
+    //! \brief specialization of attribute_data for bool 
+    //! 
+    //! A specialization of the attribute_data template for bool values in 
+    //! node attributes. Boolean values can be encoded as "1"/"0", 
+    //! "true/false", or "True/False". 
+    template<> struct attribute_data<bool_t>
+    {
+        //!
+        //! \brief read an XML attribute as boolean value
+        //!
+        //! \throws parser_error in case of errors
+        //! \throws value_error if the attribute value is not a valid
+        //! bool represenation
+        //! 
+        //! \param n node instancen
+        //! \param a name of the attribute
+        //! \return return attribute value as boolean
+        //!
+        static bool_t read(const node &n,const string &a);
+    };
 
     //-------------------------------------------------------------------------
     //!

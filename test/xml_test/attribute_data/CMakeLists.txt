@@ -1,5 +1,6 @@
 set(SOURCES attribute_data.cpp
             scalar_attribute_fixture.cpp 
+            scalar_bool_attribute_fixture.cpp
     )
 
 
