@@ -29,7 +29,7 @@
 #include "../../exceptions.hpp"
 #include "../../parsers/array_parser.hpp"
 
-#include "xml_node.hpp"
+#include "node.hpp"
 #include "node_data.hpp"
 #include "attribute_data.hpp"
 #include "group.hpp"

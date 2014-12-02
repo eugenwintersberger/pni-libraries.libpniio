@@ -31,7 +31,7 @@
 #include "../algorithms/get_class.hpp"
 #include "../algorithms/set_class.hpp"
 #include "../nxobject.hpp"
-#include "xml_node.hpp"
+#include "node.hpp"
 #include "attribute_data.hpp"
 
 

@@ -34,7 +34,7 @@
 #include "../algorithms/get_size.hpp"
 #include "../algorithms/get_shape.hpp"
 #include "../nxobject.hpp"
-#include "xml_node.hpp"
+#include "node.hpp"
 #include "dimensions.hpp"
 #include "io_object.hpp"
 

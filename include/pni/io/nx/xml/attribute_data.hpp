@@ -27,7 +27,7 @@
 #include <pni/core/arrays.hpp>
 #include "../../parsers/array_parser.hpp"
 #include "../../exceptions.hpp"
-#include "xml_node.hpp"
+#include "node.hpp"
 #include "node_data.hpp"
 
 

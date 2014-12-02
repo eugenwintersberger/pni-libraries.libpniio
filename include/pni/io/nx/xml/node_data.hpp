@@ -24,7 +24,7 @@
 #include "../../exceptions.hpp"
 #include <pni/core/type_erasures.hpp>
 #include <pni/core/arrays.hpp>
-#include "xml_node.hpp"
+#include "node.hpp"
 
 namespace pni{
 namespace io{

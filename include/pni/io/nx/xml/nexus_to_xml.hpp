@@ -21,7 +21,7 @@
 //
 #pragma once
 
-#include "xml_node.hpp"
+#include "node.hpp"
 #include "../algorithms.hpp"
 #include "../nxobject.hpp"
 #include "field.hpp"

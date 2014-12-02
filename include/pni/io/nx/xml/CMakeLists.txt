@@ -2,7 +2,7 @@ set(HEADER_FILES attribute_data.hpp
                  nexus_to_xml.hpp 
                  node_data.hpp 
                  xml_to_nexus.hpp 
-                 xml_node.hpp
+                 node.hpp
                  io_object.hpp
                  field.hpp
                  group.hpp

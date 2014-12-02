@@ -24,7 +24,7 @@
 
 #include <pni/core/types.hpp>
 
-#include "xml_node.hpp"
+#include "node.hpp"
 #include "attribute_data.hpp"
 
 namespace pni{
