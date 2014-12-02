@@ -27,8 +27,10 @@
 #include <pni/core/arrays.hpp>
 #include "../../parsers/array_parser.hpp"
 #include "../../exceptions.hpp"
+#include <boost/numeric/conversion/converter.hpp>
 #include "node.hpp"
 #include "node_data.hpp"
+#include "default.hpp"
 
 
 namespace pni{
@@ -46,6 +48,8 @@ namespace xml{
     //! There is currently an issue with unsigned data types that produce an
     //! overflow wen parsing a number with a negative sign. This should be 
     //! fixed in future. See issue #26.
+    //! 
+    //! \tparam T value type 
     //!
     template<typename T> struct attribute_data
     {
@@ -57,17 +61,23 @@ namespace xml{
         //! node does not posses this attribute an exception will be thrown. 
         //! 
         //! \throws parser_error in case of errors
-        //! \tparam T value type 
+        //! \throws range_error if the attributes value does not fit in the 
+        //! range of T 
+        //! 
         //! \param n node instancen
         //! \param a name of the attribute
         //! \return attribute value as instance of T
         //!
         static T read(const node &n,const string &a)
         {
+            typedef typename mpl::at<max_type_map,T>::type safe_type;
+            typedef boost::numeric::converter<T,safe_type> safe_to_T;
+
             T value;
             try
             {
-                value = n.get<T>("<xmlattr>."+a);
+                auto safe = n.get<safe_type>("<xmlattr>."+a);
+                value = safe_to_T::convert(safe);
             }
             catch(boost::property_tree::ptree_bad_path &error)
             {
@@ -79,6 +89,16 @@ namespace xml{
                 throw pni::io::parser_error(EXCEPTION_RECORD,
                         "Error parsing attribute \""+a+"\"!");
             }
+            catch(boost::numeric::positive_overflow &error)
+            {
+                throw pni::core::range_error(EXCEPTION_RECORD,
+                        "Attribute value to large for requested type!");
+            }
+            catch(boost::numeric::negative_overflow &error)
+            {
+                throw pni::core::range_error(EXCEPTION_RECORD,
+                        "Attribute value to small for requested type!");
+            }
             catch(...)
             {
                 throw pni::io::parser_error(EXCEPTION_RECORD,
@@ -87,6 +107,49 @@ namespace xml{
 
             return value;
         }
+    };
+   
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup xml_classes
+    //! \brief specialization of attribute_data for string values
+    //!
+    template<> struct attribute_data<string>
+    {
+        //!
+        //! \brief read an XML attribute as string
+        //!
+        //! \throws parser_error in case of errors
+        //!
+        //! \param n node instancen
+        //! \param a name of the attribute
+        //! \return return string with attribute data
+        //!
+        static string read(const node &n,const string &a);
+    };
+    
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup xml_classes
+    //! \brief specialization of attribute_data for bool 
+    //! 
+    //! A specialization of the attribute_data template for bool values in 
+    //! node attributes. Boolean values can be encoded as "1"/"0", 
+    //! "true/false", or "True/False". 
+    template<> struct attribute_data<bool>
+    {
+        //!
+        //! \brief read an XML attribute as boolean value
+        //!
+        //! \throws parser_error in case of errors
+        //! \throws value_error if the attribute value is not a valid
+        //! bool represenation
+        //! 
+        //! \param n node instancen
+        //! \param a name of the attribute
+        //! \return return attribute value as boolean
+        //!
+        static bool read(const node &n,const string &a);
     };
 
     //-------------------------------------------------------------------------
@@ -176,95 +239,6 @@ namespace xml{
     //! \return true if attribute contains data, false otherwise
     //!
     bool has_data(const node &n,const string &name);
-   
-    //---------------------------------------------------------------------------
-    //!
-    //! \ingroup xml_classes
-    //! \brief create a single attribute
-    //!
-    //! Creates a single attribute of type T at a parent object. 
-    //! \tparam T data type of the attribute
-    //! \tparam PTYPE parent type
-    //! \param parent instance of the parent 
-    //! \param name name of the attribute
-    //! \param anode attribute XML node
-    //!
-    template<typename T,typename PTYPE> 
-    void create_attribute_from_node(const PTYPE &parent,const string &name,
-                                    const node &anode)
-    {
-        //create the attribute
-        auto attribute = parent.attributes. template create<T>(name);
-        if(has_data(anode))
-        {
-            //write data 
-            T buffer = node_data<T>::read(anode);
-            attribute.write(buffer);
-        }
-    }
-
-    //-------------------------------------------------------------------------
-    //!
-    //! \ingroup xml_classes
-    //! \brief create attributes below a parent
-    //!
-    //! Loop over all children in a parent and search for attribute tags. Every
-    //! attribute found is attached to the parent object. 
-    //! \tparam PTYPE parent type
-    //! \param p parent as instance of PTYPE
-    //! \param pnode parent node
-    //!
-    template<typename PTYPE>
-    void create_attributes(const PTYPE &p,const node &pnode)
-    {
-        for(auto child: pnode)
-        {
-            if(child.first == "attribute")
-            {
-                auto name = attribute_data<string>::read(child.second,"name");
-                auto type = attribute_data<string>::read(child.second,"type");
-
-                if(type == "uint8") 
-                    create_attribute_from_node<uint8>(p,name,child.second);
-                else if(type == "int8") 
-                    create_attribute_from_node<int8>(p,name,child.second);
-                else if(type == "uint16") 
-                    create_attribute_from_node<uint16>(p,name,child.second);
-                else if(type == "int16") 
-                    create_attribute_from_node<int16>(p,name,child.second);
-                else if(type == "uint32") 
-                    create_attribute_from_node<uint32>(p,name,child.second);
-                else if(type == "int32")  
-                    create_attribute_from_node<int32>(p,name,child.second);
-                else if(type == "uint64") 
-                    create_attribute_from_node<uint64>(p,name,child.second);
-                else if(type == "int64")  
-                    create_attribute_from_node<int64>(p,name,child.second);
-                else if(type == "float32") 
-                    create_attribute_from_node<float32>(p,name,child.second);
-                else if(type == "float64") 
-                    create_attribute_from_node<float64>(p,name,child.second);
-                else if(type == "float128") 
-                    create_attribute_from_node<float128>(p,name,child.second);
-                else if(type == "complex32") 
-                    create_attribute_from_node<complex32>(p,name,child.second);
-                else if(type == "complex64") 
-                    create_attribute_from_node<complex64>(p,name,child.second);
-                else if(type == "complex128") 
-                    create_attribute_from_node<complex128>(p,name,child.second);
-                else if(type == "string") 
-                    create_attribute_from_node<string>(p,name,child.second);
-                else
-                {
-                    string error_message = "Unknown data type ["+type+"]!";
-                    throw type_error(EXCEPTION_RECORD,error_message);
-                }
-
-            }
-        }
-
-    }
-
 
 
 //end of namespace

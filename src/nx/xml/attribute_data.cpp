@@ -54,6 +54,57 @@ namespace xml{
         return !value.empty();
 
     }
+
+    //-------------------------------------------------------------------------
+    string attribute_data<string>::read(const node &n,const string &a)
+    {
+        string value;
+        try
+        {
+            value = n.get<string>("<xmlattr>."+a);
+        }
+        catch(boost::property_tree::ptree_bad_path &error)
+        {
+            throw pni::io::parser_error(EXCEPTION_RECORD,
+                    "Attribute \""+a+"\" does not exist!");
+        }
+        catch(boost::property_tree::ptree_bad_data &error)
+        {
+            throw pni::io::parser_error(EXCEPTION_RECORD,
+                    "Error parsing attribute \""+a+"\"!");
+        }
+        catch(...)
+        {
+            throw pni::io::parser_error(EXCEPTION_RECORD,
+                    "Unknown error during parsing of attribute \""+a+"\"!");
+        }
+
+        return value;
+    }
+
+    //-------------------------------------------------------------------------
+    bool attribute_data<bool>::read(const node &n,const string &a)
+    {
+        auto s = attribute_data<string>::read(n,a);
+        bool value;
+
+        try
+        {
+            value = bool_string_map.at(s);
+        }
+        catch(std::out_of_range &error)
+        {
+            throw pni::core::value_error(EXCEPTION_RECORD,
+                    "The attribute value does not represent a boolean value!");
+        }
+        catch(...)
+        {
+            throw pni::io::parser_error(EXCEPTION_RECORD,
+                    "Unknown error parsing boolean attribute!");
+        }
+
+        return value;
+    }
     
     //-------------------------------------------------------------------------
     array attribute_data<array>::read(const node &dnode,const string &name,

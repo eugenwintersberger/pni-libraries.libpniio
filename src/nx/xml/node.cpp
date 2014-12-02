@@ -33,6 +33,8 @@ namespace io{
 namespace nx{
 namespace xml{
 
+    using namespace boost::property_tree;
+
     node create_from_string(const string &s)
     {
         std::stringstream stream(s.c_str());
@@ -41,11 +43,27 @@ namespace xml{
         {
             read_xml(stream,t);
         }
+        catch(ptree_bad_data &error)
+        {
+            throw pni::io::parser_error(EXCEPTION_RECORD,
+                    "A parser error occured due to invalid input data!");
+        }
+        catch(ptree_bad_path &error)
+        {
+            throw pni::io::parser_error(EXCEPTION_RECORD,
+                    "A parser error occured as the requested object could not"
+                    " be resolved!");
+        }
+        catch(ptree_error &error)
+        {
+            throw pni::io::parser_error(EXCEPTION_RECORD,
+                    "A general parser error has occured!");
+        }
         catch(...)
         {
             //whatever exception is thrown here is related to parsing
             throw pni::io::parser_error(EXCEPTION_RECORD,
-                    "Error parsing XML string!");
+                    "A unkown fatal error parsing XML string has occured!");
         }
 
         return t;

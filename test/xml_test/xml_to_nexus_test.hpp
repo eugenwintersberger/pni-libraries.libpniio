@@ -49,6 +49,7 @@ class xml_to_nexus_test : public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE(xml_to_nexus_test);
         CPPUNIT_TEST(test_create_group);
         CPPUNIT_TEST(test_create_objects_1);
+        CPPUNIT_TEST(test_igor);
         CPPUNIT_TEST_SUITE_END();
 
         xml::node root;
@@ -69,4 +70,5 @@ class xml_to_nexus_test : public CppUnit::TestFixture
         
         void test_create_group();
         void test_create_objects_1();
+        void test_igor();
 };

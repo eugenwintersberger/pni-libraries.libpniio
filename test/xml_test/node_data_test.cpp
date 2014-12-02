@@ -1,44 +1,44 @@
-/*
- * (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- *
- *  Created on: Jul 11, 2013
- *      Author: Eugen Wintersberger
- */
+//
+// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+//  Created on: Jul 11, 2013
+//      Author: Eugen Wintersberger
+//
 
 #include <vector>
-#include "xml_node_data_test.hpp"
+#include "node_data_test.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(xml_node_data_test);
+CPPUNIT_TEST_SUITE_REGISTRATION(node_data_test);
 
 //-----------------------------------------------------------------------------
-void xml_node_data_test::setUp() 
+void node_data_test::setUp() 
 { 
     int_vec = std::vector<int32>{1,2,3,4,5,6,10};
 }
 
 //-----------------------------------------------------------------------------
-void xml_node_data_test::tearDown() { }
+void node_data_test::tearDown() { }
 
 //-----------------------------------------------------------------------------
-void xml_node_data_test::test_has_data()
+void node_data_test::test_has_data()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     root = xml::create_from_string("<group>hello world</group>");
     child = root.get_child("group");
@@ -53,9 +53,9 @@ void xml_node_data_test::test_has_data()
 }
 
 //-----------------------------------------------------------------------------
-void xml_node_data_test::test_read_data_int()
+void node_data_test::test_read_data_int()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     root = xml::create_from_string("<group1>12</group1>"
                                    "<group2>-12</group2>"
@@ -83,9 +83,9 @@ void xml_node_data_test::test_read_data_int()
 }
 
 //------------------------------------------------------------------------------
-void xml_node_data_test::test_read_data_uint()
+void node_data_test::test_read_data_uint()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     root = xml::create_from_string("<group1>12</group1>"
                                    "<group2>-12</group2>"
@@ -115,9 +115,9 @@ void xml_node_data_test::test_read_data_uint()
 }
 
 //-----------------------------------------------------------------------------
-void xml_node_data_test::test_read_data_float()
+void node_data_test::test_read_data_float()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     root = xml::create_from_string("<group1>12.234</group1>"
                                    "<group2>-1.234e-13</group2>"
@@ -147,9 +147,9 @@ void xml_node_data_test::test_read_data_float()
 }
 
 //-----------------------------------------------------------------------------
-void xml_node_data_test::test_read_array_float()
+void node_data_test::test_read_array_float()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     root = xml::create_from_string("<group1>1. 2. 3.  3. 4.</group1>");
     child = root.get_child("group1");
@@ -168,9 +168,9 @@ void xml_node_data_test::test_read_array_float()
 }
 
 //-----------------------------------------------------------------------------
-void xml_node_data_test::test_read_array_int_blank()
+void node_data_test::test_read_array_int_blank()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     root = xml::create_from_string("<test> 1  2 3 4 5 6 10</test>");
     child = root.get_child("test");
@@ -186,9 +186,9 @@ void xml_node_data_test::test_read_array_int_blank()
 }
 
 //-----------------------------------------------------------------------------
-void xml_node_data_test::test_read_array_int_comma()
+void node_data_test::test_read_array_int_comma()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     root = xml::create_from_string("<test> 1 , 2 ,3  ,4 ,5, 6, 10 </test>");
     child = root.get_child("test");
@@ -204,9 +204,9 @@ void xml_node_data_test::test_read_array_int_comma()
 }
 
 //-----------------------------------------------------------------------------
-void xml_node_data_test::test_read_array_int_semicolon()
+void node_data_test::test_read_array_int_semicolon()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     root = xml::create_from_string("<test> 1 ; 2 ;3  ;4 ;5; 6; 10</test>");
     child = root.get_child("test");
@@ -222,9 +222,9 @@ void xml_node_data_test::test_read_array_int_semicolon()
 }
 
 //-----------------------------------------------------------------------------
-void xml_node_data_test::test_read_array_int_fail()
+void node_data_test::test_read_array_int_fail()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     root = xml::create_from_string("<test> a stupid text </test>");
     child = root.get_child("test");

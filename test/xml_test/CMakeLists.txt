@@ -15,6 +15,7 @@ set(XMLFILES group1.xml
              field3.xml
              field4.xml
              field5.xml
+             igor.xml
              field_test_data_scalar.xml
              field_test_data_array.xml
              node_from_bad_file.xml
@@ -27,6 +28,7 @@ foreach(XMLFILE ${XMLFILES})
 endforeach()
 
 add_subdirectory(dimensions)
+add_subdirectory(attribute_data)
 add_executable(xml_test ${SOURCES})
 target_link_libraries(xml_test pniio ${CPPUNIT_LIBRARIES})
 add_test(xml_test xml_test)

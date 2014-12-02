@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,9 +17,10 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Jul 11, 2013
-//      Author: Eugen Wintersberger
+//  Created on: Dec 2, 2014
+//      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
+
 #pragma once
 
 #include <boost/current_function.hpp>
@@ -28,36 +29,35 @@
 
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/xml.hpp>
-#include <pni/core/arrays.hpp>
 
-#include<cppunit/TestFixture.h>
-#include<cppunit/extensions/HelperMacros.h>
+#include <cppunit/TestFixture.h>
+#include <cppunit/extensions/HelperMacros.h>
 
 
 using namespace pni::core;
 using namespace pni::io::nx;
 
 
-static const string node_from_string_str = "<node>\n<group> </group>\n<group>"
-                                    " </group>\n<group> </group>\n </node>";
-static const string node_from_bad_str = "this has to fail";
- 
- 
+/*!
+\brief test for XML data operations
 
-class node_test : public CppUnit::TestFixture
+Test checks operations on XML node data. 
+*/
+class scalar_attribute_fixture : public CppUnit::TestFixture
 {
     private:
-        CPPUNIT_TEST_SUITE(node_test);
-        CPPUNIT_TEST(test_node_from_file);
-        CPPUNIT_TEST(test_node_from_string);
+        CPPUNIT_TEST_SUITE(scalar_attribute_fixture);
+        CPPUNIT_TEST(test_uint8);
+        CPPUNIT_TEST(test_int8);
+        CPPUNIT_TEST(test_float32);
         CPPUNIT_TEST_SUITE_END();
 
-        string xml_str1;
+        xml::node get_first(const string &s);
     public:
         void setUp();
         void tearDown();
         
-        void test_node_from_file();
-        void test_node_from_string();
-
+        void test_uint8();
+        void test_int8();
+        void test_float32();
 };

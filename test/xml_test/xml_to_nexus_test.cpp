@@ -81,3 +81,14 @@ void xml_to_nexus_test::test_create_objects_1()
     root = xml::create_from_file("object_tree1.xml");
     CPPUNIT_ASSERT_NO_THROW(xml::xml_to_nexus(root,root_group));
 }
+
+//-----------------------------------------------------------------------------
+void xml_to_nexus_test::test_igor()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    root = xml::create_from_file("igor.xml");
+    file = h5::nxfile::create_file("igor.nxs",true);
+    root_group = file.root();
+    CPPUNIT_ASSERT_NO_THROW(xml::xml_to_nexus(root,root_group));
+}

@@ -22,11 +22,15 @@
 #pragma once
 
 #include "../nxobject.hpp"
+#include <boost/mpl/map.hpp>
+#include <map>
 
 namespace pni{
 namespace io{
 namespace nx{
 namespace xml{
+
+    using namespace boost;
 
     //!
     //! \ingroup xml_classes
@@ -62,6 +66,39 @@ namespace xml{
 #pragma GCC diagnostic pop
     };
 
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup xml_classes
+    //! \brief maximum type maps
+    //! 
+    //! This map defines the maximum type for every numeric type provided 
+    //! by pnicore. It is used when reading data from an attribute or node. 
+    //! 
+    typedef mpl::map<
+        mpl::pair<uint8,uint64>,
+        mpl::pair<uint16,uint64>,
+        mpl::pair<uint32,uint64>,
+        mpl::pair<uint64,uint64>,
+        mpl::pair<int8,int64>,
+        mpl::pair<int16,int64>,
+        mpl::pair<int32,int64>,
+        mpl::pair<int64,int64>,
+        mpl::pair<float32,float128>,
+        mpl::pair<float64,float128>,
+        mpl::pair<float128,float128> > max_type_map;
+
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup xml_classes
+    //! \brief bool representation map
+    //! 
+    //! A static map with all valid representations of boolean values.
+    //! 
+    static const std::map<string,bool>  bool_string_map{
+        {"1",true},{"0",false},
+        {"True",true},{"False",false},
+        {"true",true},{"false",false}
+    };
 //end of namespace
 }
 }
