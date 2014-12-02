@@ -19,7 +19,6 @@
 // Created on: Jul 15, 2013
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-
 #pragma once
 
 #include "../../exceptions.hpp"
@@ -33,7 +32,7 @@ namespace nx{
 namespace xml{
 
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! \brief xml data reader
     //! 
     //! This class template provides a static reader function to retrieve the 
@@ -86,12 +85,16 @@ namespace xml{
     };
 
     //------------------------------------------------------------------------
+    //!
+    //! \ingroup xml_classes
+    //! \brief read value from node
+    //! 
     value read_node(type_id_t tid,const node &n);
 
 
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! \brief read array data from a node
     //!
     //! This is a specialization of the node_data<T> template allowing the 
@@ -156,7 +159,7 @@ namespace xml{
 
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! \brief check node data
     //!
     //! Returns true if a node contains any data. False otherwise.

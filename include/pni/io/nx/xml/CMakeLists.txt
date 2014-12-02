@@ -6,9 +6,9 @@ set(HEADER_FILES attribute_data.hpp
                  io_object.hpp
                  field.hpp
                  group.hpp
-                 shape.hpp
                  attribute.hpp
                  dimensions.hpp
+                 default.hpp
                  )
 
 install(FILES ${HEADER_FILES} 

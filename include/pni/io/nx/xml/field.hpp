@@ -50,7 +50,7 @@ namespace xml{
     using namespace pni::core;
    
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! \brief read and write field data
     struct field : public io_object
     {
@@ -112,26 +112,17 @@ namespace xml{
             typedef FTYPE field_type;
             typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
 
-
             auto f = create_field(parent,type_id(field_node),
                                   name(field_node),
                                   shape(field_node));
 
-            try
-            {
+            if(has_attribute(field_node,"long_name"))
                 write(create_attribute<string>(f,"long_name"),
                       long_name(field_node));
-            }
-            catch(pni::io::parser_error &error)
-            {}
 
-            try
-            {
+            if(has_attribute(field_node,"units"))
                 write(create_attribute<string>(f,"units"),
                       unit(field_node));
-            }
-            catch(pni::io::parser_error &error)
-            {}
 
             return f;
         }

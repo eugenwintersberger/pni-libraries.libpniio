@@ -47,7 +47,7 @@ namespace xml{
     using namespace pni::core;
    
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! \brief read and write attributes
     struct attribute : public io_object
     {

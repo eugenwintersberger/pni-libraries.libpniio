@@ -1,6 +1,6 @@
 /*!
 \ingroup nexus_io
-\defgroup nexus_xml_utilities XML utilities
+\defgroup xml_classes XML utilities
 
 Creating the structure of a Nexus file can be rather tedious when coded
 statically. Additionally such an approach is usually rather inflexible and thus
@@ -17,14 +17,3 @@ BOOST::property_tree providing a non-validating XML parser.  However, for our
 purpose validation is not really required. 
 */
 
-/*!
-\ingroup nexus_xml_utilities
-\defgroup xml_lowlevel_utils XML low level utilities
-
-*/
-
-/*!
-\ingroup nexus_xml_utilities
-\defgroup nexus_xml_level2_utils NXDL base class utilities
-
-*/

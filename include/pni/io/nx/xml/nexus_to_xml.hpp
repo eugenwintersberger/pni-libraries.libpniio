@@ -21,10 +21,6 @@
 //
 #pragma once
 
-//#include <boost/algorithm/string.hpp>
-//#include <iostream>
-//#include <vector>
-//#include <utility>
 #include "xml_node.hpp"
 #include "../algorithms.hpp"
 #include "../nxobject.hpp"
@@ -38,22 +34,32 @@ namespace io{
 namespace nx{
 namespace xml{
 
-    /*
-    We need to specify some things here
-    .) how do we handle non-Nexus groups? This are groups without an NX_class
-    attribute
-    .) how do we handle data - read it or not.
-
-       */
 
     using namespace pni::core;
     using namespace pni::io::nx;
 
-    
-    template<typename OTYPE>
-    void append_attributes(const OTYPE &aparent,node &p)
+   
+    //!
+    //! \ingroup xml_classes
+    //! \brief append attributes from a nexus type to XML
+    //!
+    //! Reads all attribtues from a Nexus node and append them to an 
+    //! XML node. 
+    //! 
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \param parent the object with the attributes
+    //! \param p XML node to which attribute tags should be appended
+    //! 
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE
+            >
+    void append_attributes(const nxobject<GTYPE,FTYPE,ATYPE> &parent,node &p)
     {
-        for(auto a: aparent.attributes)
+        for(auto a: parent.attributes)
         {
             if(get_name(a) == "NX_class") continue;
             p.add_child("attribute",attribute::object_to_xml(a));
@@ -62,7 +68,7 @@ namespace xml{
 
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup xml_lowleve_utils
+    //! \ingroup xml_classes
     //! \brief nexus to XML conversion
     //! 
     //! Converts the structure of a Nexus tree as stored below p into a XML 

@@ -31,7 +31,7 @@ namespace nx{
 namespace xml{
 
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! \brief index-value type
     //!
     //! This type describes an index value pair used in NXDL to describe a 
@@ -43,7 +43,7 @@ namespace xml{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! 
     //! Operator required to sort containers using index_value_type as their
     //! element type. index-value pairs are ordered by their dimension index.
@@ -54,7 +54,7 @@ namespace xml{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! \brief reading and writing dimensions
     //!
     //! This structure provides two static methods to read and write the 

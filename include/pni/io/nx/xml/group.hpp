@@ -20,7 +20,6 @@
 // Created on: Nov 26, 2014
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-
 #pragma once
 
 #include <pni/core/types.hpp>
@@ -44,7 +43,7 @@ namespace xml{
     using namespace pni::core;
    
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! \brief read and write groups
     struct group
     {

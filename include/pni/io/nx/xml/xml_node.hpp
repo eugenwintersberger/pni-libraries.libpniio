@@ -19,7 +19,6 @@
 // Created on: Jul 11, 2013
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-
 #pragma once
 
 #include <pni/core/types.hpp>
@@ -33,7 +32,7 @@ namespace xml{
     using namespace pni::core;
 
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! \brief alias for ptree
     //! 
     //! This alias creates the new type name node which can be used within 
@@ -44,7 +43,7 @@ namespace xml{
 
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! \brief create xml node from string
     //!
     //! \throws parser_error in case of parsing problems
@@ -55,7 +54,7 @@ namespace xml{
 
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! \brief create xml node from file
     //! 
     //! \throws pni::io::parser_error in case of parsing issues
@@ -67,7 +66,7 @@ namespace xml{
 
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! \brief XML stream output
     //! 
     //! Write property tree structure as XML to an output stream.

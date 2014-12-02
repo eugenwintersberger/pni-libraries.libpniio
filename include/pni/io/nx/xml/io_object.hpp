@@ -20,7 +20,6 @@
 // Created on: Nov 28, 2014
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-
 #pragma once
 
 #include <pni/core/types.hpp>
@@ -36,7 +35,7 @@ namespace xml{
     using namespace pni::core;
 
     //!
-    //! \ingroup xml_lowlevel_classes
+    //! \ingroup xml_classes
     //! \brief general IO objects
     //!
     //! This class provides functions common for field and attribute nodes. 

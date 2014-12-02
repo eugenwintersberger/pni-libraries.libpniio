@@ -39,7 +39,7 @@ namespace xml{
     using namespace pni::core;
 
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! \brief XML attribute data
     //! 
     //! Provide a single static read method to read data from an attribute.
@@ -91,7 +91,7 @@ namespace xml{
 
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! \brief read array data from attribute
     //!
     //! Provide several static methods to read array data from an attribute. 
@@ -153,7 +153,7 @@ namespace xml{
 
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! \brief check for attributes existance
     //!
     //! Returns true if an attribute exists on a node. 
@@ -165,7 +165,7 @@ namespace xml{
 
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! \brief check if an attribute has non-empty data
     //!
     //! Returns true if the attribute contains data. Use this function in 
@@ -179,6 +179,7 @@ namespace xml{
    
     //---------------------------------------------------------------------------
     //!
+    //! \ingroup xml_classes
     //! \brief create a single attribute
     //!
     //! Creates a single attribute of type T at a parent object. 
@@ -204,7 +205,7 @@ namespace xml{
 
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! \brief create attributes below a parent
     //!
     //! Loop over all children in a parent and search for attribute tags. Every

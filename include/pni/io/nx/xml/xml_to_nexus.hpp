@@ -19,8 +19,8 @@
 // Created on: Jul 8, 2013
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-
 #pragma once
+
 #include <sstream>
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
@@ -35,6 +35,7 @@
 #include "group.hpp"
 #include "attribute.hpp"
 #include "field.hpp"
+#include "default.hpp"
 
 
 namespace pni{
@@ -43,24 +44,55 @@ namespace nx{
 namespace xml{
 
     using namespace pni::core;
-    
+   
+    //!
+    //! \ingroup xml_classes
+    //! \brief append xml attributes to Nexus object
+    //!
+    //! Function template appends the attributes described by the attribute
+    //! tags with in an XML node to a Nexus object. By default, the attributes 
+    //! are only created according to their XML definitions. No data is
+    //! transfered from the attribute tags to the corresponding attributes.
+    //! Data transfer can be triggered for particular attributes by passing a 
+    //! predicate function as the last argument to this template. 
+    //!
+    //! \throws parser_error if XML parsing fails
+    //! \throws invalid_object_error if the parent is not valid
+    //! \throws type_error if the datatype requested by XML cannot be handled
+    //! \throws io_error in case of metadata or data IO fails
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! 
+    //! \param p XML node from which to read the attributes
+    //! \param parent the nexus object to which the attributes shall be attached
+    //! \param write_data predicate which decides if data should be written
+    //!
     template<
              typename GTYPE,
              typename FTYPE,
              typename ATYPE
             >
-    void append_attributes(node &p,const nxobject<GTYPE,FTYPE,ATYPE> &parent)
+    void append_attributes(node &p,const nxobject<GTYPE,FTYPE,ATYPE> &parent,
+                           const nxobject_predicate<GTYPE,FTYPE,ATYPE> &write_data)
     {
         for(auto child: p)
         {
             if(child.first=="attribute")
-                attribute::object_from_xml(parent,child.second);
+            {
+                auto a = attribute::object_from_xml(parent,child.second);
+                if(write_data(a))
+                    write(a,io_object::data_from_xml(child.second));
+            }
         }
     }
 
+
     //--------------------------------------------------------------------------
     //!
-    //! \ingroup xml_lowlevel_utils
+    //! \ingroup xml_classes
     //! \brief create objects from XML
     //!
     //! Recursively creates the objects as described in the XML file below 
@@ -84,7 +116,9 @@ namespace xml{
              typename FTYPE,
              typename ATYPE
             >
-    void xml_to_nexus(node &t,const nxobject<GTYPE,FTYPE,ATYPE> parent)
+    void xml_to_nexus(node &t,const nxobject<GTYPE,FTYPE,ATYPE> parent,
+                      const nxobject_predicate<GTYPE,FTYPE,ATYPE> &write_data =
+                      write_no_data())
     {
         typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
         for(auto child: t)
@@ -107,7 +141,10 @@ namespace xml{
             }
                 
             //append all attributes tagged in this child
-            append_attributes(child.second,object);
+            append_attributes(child.second,object,write_data);
+
+            if(write_data(object))
+                write(object,io_object::data_from_xml(child.second));
         }
     }
 

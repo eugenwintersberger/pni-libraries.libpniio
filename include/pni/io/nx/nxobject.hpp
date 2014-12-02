@@ -41,6 +41,23 @@ namespace nx{
              typename ATYPE
             >
     using nxobject = boost::variant<GTYPE,FTYPE,ATYPE>;
+   
+    //!
+    //! \ingroup nexus_lowlevel
+    //! \brief nxobject predicate
+    //! 
+    //! This template alias defines a std::function template which can be used
+    //! for predicates related to nxobject instances. 
+    //! 
+    //! \tparam G group type
+    //! \tparam F field type
+    //! \tparam A attribute type
+    template<
+             typename G,
+             typename F,
+             typename A
+            >
+    using nxobject_predicate = std::function<bool(const nxobject<G,F,A> &)>;
 
 //end of namespace
 }
