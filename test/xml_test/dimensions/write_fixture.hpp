@@ -17,7 +17,7 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Nov 27, 2014
+//  Created on: Dec 2, 2014
 //      Author: Eugen Wintersberger
 //
 #pragma once
@@ -34,41 +34,18 @@
 using namespace pni::core;
 using namespace pni::io::nx;
 
-class dimensions_test : public CppUnit::TestFixture
+class write_fixture : public CppUnit::TestFixture
 {
     private:
-        CPPUNIT_TEST_SUITE(dimensions_test);
-        CPPUNIT_TEST(test_read_1);
-        CPPUNIT_TEST(test_read_2);
-        CPPUNIT_TEST(test_read_3);
-        CPPUNIT_TEST(test_read_4);
-        CPPUNIT_TEST(test_read_5);
-        CPPUNIT_TEST(test_read_6);
+        CPPUNIT_TEST_SUITE(write_fixture);
         CPPUNIT_TEST(test_write_1);
         CPPUNIT_TEST(test_write_2);
-        CPPUNIT_TEST(test_rank);
-        CPPUNIT_TEST(test_size);
         CPPUNIT_TEST_SUITE_END();
-
-        xml::node root;
-        xml::node child;
-        string buffer;
-        typedef std::list<size_t> test_shape;
-
-        void setup_xml(const string &fname);
 
     public:
         void setUp();
         void tearDown();
         
-        void test_read_1();
-        void test_read_2();
-        void test_read_3();
-        void test_read_4();
-        void test_read_5();
-        void test_read_6();
         void test_write_1();
         void test_write_2();
-        void test_rank();
-        void test_size();
 };

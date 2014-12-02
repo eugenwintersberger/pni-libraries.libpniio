@@ -1,20 +1,13 @@
 set(SOURCES xml_test.cpp
             xml_attribute_test.cpp
             xml_to_nexus_test.cpp
-            xml_node_data_test.cpp
-            xml_node_test.cpp
+            node_data_test.cpp
+            node_test.cpp
             field_test.cpp
             group_test.cpp
-            dimensions_test.cpp
             )
 
-set(XMLFILES dim1.xml
-             dim2.xml
-             dim3.xml
-             dim4.xml
-             dim5.xml
-             dim6.xml
-             group1.xml
+set(XMLFILES group1.xml
              group2.xml
              group3.xml
              field1.xml
@@ -33,6 +26,7 @@ foreach(XMLFILE ${XMLFILES})
     configure_file(${XMLFILE} ${XMLFILE} COPYONLY)
 endforeach()
 
+add_subdirectory(dimensions)
 add_executable(xml_test ${SOURCES})
 target_link_libraries(xml_test pniio ${CPPUNIT_LIBRARIES})
 add_test(xml_test xml_test)
