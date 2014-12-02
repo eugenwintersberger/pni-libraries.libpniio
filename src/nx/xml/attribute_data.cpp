@@ -62,6 +62,7 @@ namespace xml{
         try
         {
             value = n.get<string>("<xmlattr>."+a);
+            boost::algorithm::trim(value);
         }
         catch(boost::property_tree::ptree_bad_path &error)
         {
