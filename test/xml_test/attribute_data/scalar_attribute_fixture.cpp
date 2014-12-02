@@ -47,6 +47,9 @@ void scalar_attribute_fixture::test_uint8()
     
     xml::node n = get_first("<test number=\"1\" />");
     CPPUNIT_ASSERT(attr_data::read(n,"number")==1);
+    
+    n = get_first("<test number=\"  2    \" />");
+    CPPUNIT_ASSERT(attr_data::read(n,"number")==2);
 
     //this should overflow
     n = get_first("<test number=\"500\"/>");
