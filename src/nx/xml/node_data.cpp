@@ -79,6 +79,63 @@ namespace xml{
     }
 
     //-------------------------------------------------------------------------
+    string node_data<string>::read(const node &dnode)
+    {
+        try
+        {
+            return dnode.get_value<string>();
+        }
+        catch(boost::property_tree::ptree_bad_data &error)
+        {
+            throw parser_error(EXCEPTION_RECORD,
+                    "Bad string data in tag!");
+        }
+        catch(...)
+        {
+            throw parser_error(EXCEPTION_RECORD,
+                    "Unknown error when reading string data from tag!");
+        }
+
+    }
+
+    //-------------------------------------------------------------------------
+    bool node_data<bool>::read(const node &dnode)
+    {
+        auto str_rep = node_data<string>::read(dnode);
+
+        try
+        {
+            return bool_string_map.at(str_rep);
+        }
+        catch(std::out_of_range &error)
+        {
+            throw pni::core::value_error(EXCEPTION_RECORD,
+                    "Node data is not a valid bool representation!");
+        }
+        catch(...)
+        {
+            throw pni::io::parser_error(EXCEPTION_RECORD,
+                    "Unkonwn error when converting string to bool!");
+        }
+    }
+
+    //------------------------------------------------------------------------
+    bool_t node_data<bool_t>::read(const node &dnode)
+    {
+        return node_data<bool>::read(dnode);
+    }
+
+    //------------------------------------------------------------------------
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+    binary node_data<binary>::read(const node &dnode)
+    {
+        throw pni::core::not_implemented_error(EXCEPTION_RECORD,
+                "Reading binary data from XML is currently not supported!");
+    }
+#pragma GCC diagnostic pop
+
+    //-------------------------------------------------------------------------
     bool has_data(const node &n)
     {
         using boost::algorithm::trim;

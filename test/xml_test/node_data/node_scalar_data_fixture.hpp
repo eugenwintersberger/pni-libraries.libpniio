@@ -56,8 +56,6 @@ class node_scalar_data_fixture : public CppUnit::TestFixture
         xml::node root;
         xml::node child;
 
-        std::vector<int32> int_vec;
-        std::vector<float64> float_vec;
     public:
         void setUp();
         void tearDown();

@@ -24,7 +24,9 @@
 #include "../../exceptions.hpp"
 #include <pni/core/type_erasures.hpp>
 #include <pni/core/arrays.hpp>
+#include <boost/numeric/conversion/converter.hpp>
 #include "node.hpp"
+#include "default.hpp"
 
 namespace pni{
 namespace io{
@@ -53,16 +55,24 @@ namespace xml{
         //! This function retrieves the data stored in an XML node as an 
         //! instance of type T. An exception is thrown in case of errors. 
         //!
-        //! \throws parser_error 
+        //! \throws parser_error in case of parsing problems
+        //! \throws range_error if the data stored does not fit into the 
+        //! type requested by the user
+        //! 
         //! \param dnode node from which to read data
         //! \return instance of T with the data
         //!
         static T read(const node &dnode)
         {
+            typedef typename mpl::at<max_type_map,T>::type safe_type;
+            typedef boost::numeric::converter<T,safe_type> safe_to_T;
+
             T value;
+            safe_type buffer;
             try
             {
-                value = dnode.template get_value<T>();
+                buffer = dnode.template get_value<safe_type>();
+                value = safe_to_T::convert(buffer);
             }
             catch(boost::property_tree::ptree_bad_data &error)
             {
@@ -71,6 +81,16 @@ namespace xml{
                 throw parser_error(EXCEPTION_RECORD,
                         "Node data \""+buffer+"\" cannot be converted to"
                         +str_from_type_id(id)+"!");
+            }
+            catch(boost::numeric::positive_overflow &error)
+            {
+                throw pni::core::range_error(EXCEPTION_RECORD,
+                        "Node data to large for requested type!");
+            }
+            catch(boost::numeric::negative_overflow &error)
+            {
+                throw pni::core::range_error(EXCEPTION_RECORD,
+                        "Node data to small for requested type!");
             }
             catch(...)
             {
@@ -85,10 +105,93 @@ namespace xml{
     };
 
     //------------------------------------------------------------------------
+    //! 
+    //! \ingroup xml_classes
+    //! \brief node_data specialization for string
+    //!
+    template<> struct node_data<string>
+    {
+        //!
+        //! \brief read string data from node
+        //! 
+        //! \throws parser_error in case of any parser errors
+        //!
+        //! \param dnode node from which to read data
+        //! \return string holding the nodes data
+        //!
+        static string read(const node &dnode);
+    };
+
+    //------------------------------------------------------------------------
+    //! 
+    //! \ingroup xml_classes
+    //! \brief node_data specialization for bool
+    //! 
+    template<> struct node_data<bool>
+    {
+        //! 
+        //! \brief read bool data from node
+        //! 
+        //! \throws parser_error in case of parser problems
+        //! \throws value_error if the value cannot be converted to bool
+        //! 
+        //! \param dnode the node holding the data
+        //! \return boolean value stored in the node
+        //!
+        static bool read(const node &dnode);
+    };
+
+    //------------------------------------------------------------------------
+    //! 
+    //! \ingroup xml_classes
+    //! \brief node_data specialization for bool_t
+    //! 
+    //! This is basically the same as the specialization for bool.
+    template<> struct node_data<bool_t>
+    {
+        //! 
+        //! \brief read bool data from node
+        //! 
+        //! \throws parser_error in case of parser problems
+        //! \throws value_error if the value cannot be converted to bool
+        //! 
+        //! \param dnode the node holding the data
+        //! \return boolean value stored in the node
+        //!
+        static bool_t read(const node &dnode);
+    };
+
+    //------------------------------------------------------------------------
+    //! 
+    //! \ingroup xml_classes
+    //! \brief node_data specialization for binary
+    //! 
+    //! This is currently not implemented. 
+    template<> struct node_data<binary>
+    {
+        //! 
+        //! \brief currently not implemented
+        //! 
+        //! \throws not_implemented_error as this function is not implemented
+        //! yet
+        //! 
+        static binary read(const node &dnode);
+    };
+
+    //------------------------------------------------------------------------
     //!
     //! \ingroup xml_classes
     //! \brief read value from node
     //! 
+    //! \throws parser_error in case of any parser error
+    //! \throws type_error if the type given by tid cannot be handled
+    //! \throws range_error if a numeric type does not fit into the 
+    //! target type determined by tid
+    //! 
+    //! \param tid type id of the target type
+    //! \param n node from which to read data
+    //! \return the read value as an instance of value
+    //!
     value read_node(type_id_t tid,const node &n);
 
 
@@ -119,6 +222,7 @@ namespace xml{
         //! but with a single element separator.
         //!
         //! \throws parser_error in case of parsing issues
+        //!
         //! \param dnode XML node to read data from
         //! \param sep separator character.
         //! \return array with data
@@ -133,6 +237,7 @@ namespace xml{
         //! a start and a stop character. 
         //!
         //! \throws parser_error in case of parsing errors
+        //!
         //! \param dnode XML node where to read data from
         //! \param start start symbol for the array
         //! \param stop stop symbol for the array

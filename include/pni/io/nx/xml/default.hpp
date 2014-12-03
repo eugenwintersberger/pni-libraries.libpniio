@@ -85,7 +85,10 @@ namespace xml{
         mpl::pair<int64,int64>,
         mpl::pair<float32,float128>,
         mpl::pair<float64,float128>,
-        mpl::pair<float128,float128> > max_type_map;
+        mpl::pair<float128,float128>,
+        mpl::pair<complex32,complex128>,
+        mpl::pair<complex64,complex128>,
+        mpl::pair<complex128,complex128>> max_type_map;
 
     //------------------------------------------------------------------------
     //!
