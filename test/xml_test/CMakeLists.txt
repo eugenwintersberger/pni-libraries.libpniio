@@ -1,7 +1,6 @@
 set(SOURCES xml_test.cpp
             xml_attribute_test.cpp
             xml_to_nexus_test.cpp
-            node_data_test.cpp
             node_test.cpp
             field_test.cpp
             group_test.cpp
@@ -29,6 +28,7 @@ endforeach()
 
 add_subdirectory(dimensions)
 add_subdirectory(attribute_data)
+add_subdirectory(node_data)
 add_executable(xml_test ${SOURCES})
 target_link_libraries(xml_test pniio ${CPPUNIT_LIBRARIES})
 add_test(xml_test xml_test)

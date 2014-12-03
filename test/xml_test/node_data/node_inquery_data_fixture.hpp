@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,7 +17,7 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Jul 16, 2013
+//  Created on: Dec 3, 2014
 //      Author: Eugen Wintersberger
 //
 
@@ -44,39 +44,19 @@ using namespace pni::io::nx;
 
 Test checks operations on XML node data. 
 */
-class node_data_test : public CppUnit::TestFixture
+class node_inquery_data_fixture : public CppUnit::TestFixture
 {
     private:
-        CPPUNIT_TEST_SUITE(node_data_test);
+        CPPUNIT_TEST_SUITE(node_inquery_data_fixture);
         CPPUNIT_TEST(test_has_data);
-        CPPUNIT_TEST(test_read_data_int);
-        CPPUNIT_TEST(test_read_data_uint);
-        CPPUNIT_TEST(test_read_data_float);
-        CPPUNIT_TEST(test_read_array_int_blank);
-        CPPUNIT_TEST(test_read_array_int_comma);
-        CPPUNIT_TEST(test_read_array_int_semicolon);
-        CPPUNIT_TEST(test_read_array_int_fail);
-        CPPUNIT_TEST(test_read_array_float);
         CPPUNIT_TEST_SUITE_END();
 
         xml::node root;
         xml::node child;
 
-        std::vector<int32> int_vec;
-        std::vector<float64> float_vec;
     public:
         void setUp();
         void tearDown();
        
         void test_has_data();
-        void test_read_array_int_blank();
-        void test_read_array_int_comma();
-        void test_read_array_int_semicolon();
-        void test_read_array_int_fail();
-        void test_read_data_int();
-        void test_read_data_uint();
-        void test_read_data_float();
-        void test_read_array_float();
-
-
 };
