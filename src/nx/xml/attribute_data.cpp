@@ -22,145 +22,63 @@
 
 #include <pni/io/nx/xml/attribute_data.hpp>
 #include <boost/algorithm/string.hpp>
+#include <pni/io/exceptions.hpp>
 
 namespace pni{
 namespace io{
 namespace nx{
 namespace xml{
 
+    attribute_data::attribute_data(const string &name):
+        object_data(),
+        _name(name)
+    {}
 
     //-------------------------------------------------------------------------
-    bool has_attribute(const node &n,const string &name) 
+    string attribute_data::read(const node &n) const
     {
         try
         {
-            n.get<string>("<xmlattr>."+name);
-        }
-        catch(...)
-        {
-            //as we catch all exceptions here we do not have a problem
-            return false;
-        }
-        return true;
-    }
-   
-    //-------------------------------------------------------------------------
-    bool has_data(const node &n,const string &name)
-    {
-        using boost::algorithm::trim;
-        auto value = attribute_data<string>::read(n,name);
-        trim(value);
-         
-        return !value.empty();
-
-    }
-
-    //-------------------------------------------------------------------------
-    string attribute_data<string>::read(const node &n,const string &a)
-    {
-        string value;
-        try
-        {
-            value = n.get<string>("<xmlattr>."+a);
-            boost::algorithm::trim(value);
+            string data =  n.get<string>(attribute_path(_name));
+            boost::algorithm::trim(data);
+            return data;
         }
         catch(boost::property_tree::ptree_bad_path &error)
         {
-            throw pni::io::parser_error(EXCEPTION_RECORD,
-                    "Attribute \""+a+"\" does not exist!");
+            throw key_error(EXCEPTION_RECORD,
+                    "Attribute ("+_name+") does not exist!");
         }
         catch(boost::property_tree::ptree_bad_data &error)
         {
-            throw pni::io::parser_error(EXCEPTION_RECORD,
-                    "Error parsing attribute \""+a+"\"!");
+            throw pni::core::value_error(EXCEPTION_RECORD,
+                    "Malformed data - cannot read attribute!");
         }
         catch(...)
         {
             throw pni::io::parser_error(EXCEPTION_RECORD,
-                    "Unknown error during parsing of attribute \""+a+"\"!");
+                    "Unknown error when reading attribute!");
         }
-
-        return value;
     }
 
     //-------------------------------------------------------------------------
-    bool attribute_data<bool>::read(const node &n,const string &a)
+    void attribute_data::write(const string &data,node &n) const
     {
-        auto s = attribute_data<string>::read(n,a);
-        bool value;
-
         try
         {
-            value = bool_string_map.at(s);
+            n.put<string>(attribute_path(_name),data);
         }
-        catch(std::out_of_range &error)
+        catch(boost::property_tree::ptree_bad_data &error)
         {
             throw pni::core::value_error(EXCEPTION_RECORD,
-                    "The attribute value does not represent a boolean value!");
+                    "Malformed data - cannot write attribute!");
         }
         catch(...)
         {
             throw pni::io::parser_error(EXCEPTION_RECORD,
-                    "Unknown error parsing boolean attribute!");
+                    "Unkown error during writing attribute!");
         }
-
-        return value;
-    }
-
-    //------------------------------------------------------------------------
-    bool_t attribute_data<bool_t>::read(const node &n,const string &a)
-    {
-        return attribute_data<bool>::read(n,a);
     }
     
-    //-------------------------------------------------------------------------
-    array attribute_data<array>::read(const node &dnode,const string &name,
-                                      char sep)
-    {
-        return read(dnode,name,array_parser_t(sep));
-    }
-   
-    //--------------------------------------------------------------------------
-    array attribute_data<array>::read(const node &dnode,const string &name,
-                                      char start,char stop, char sep)
-    {
-        return read(dnode,name,array_parser_t(start,stop,sep));
-    }
-
-    //-------------------------------------------------------------------------
-    array attribute_data<array>::read(const node &dnode,const string &name,
-                                      const array_parser_t &p)
-    {
-        using boost::spirit::qi::parse;
-        using boost::algorithm::trim;
-        
-        //read the node data as a string
-        auto text = attribute_data<string>::read(dnode,name);
-        trim(text);
-
-        array a;
-        try
-        {
-            a= array_from_string(text,p);
-        }
-        catch(...)
-        {
-            throw parser_error(EXCEPTION_RECORD,
-                    "Error parsing string \""+text+"\" to an array!");
-        }
-
-        try
-        {
-            a.size();
-        }
-        catch(...)
-        {
-            throw parser_error(EXCEPTION_RECORD,
-                    "Error parsing string \""+text+"\" to an array!");
-        }
-
-        return a;
-    }
 //end of namespace
 }
 }

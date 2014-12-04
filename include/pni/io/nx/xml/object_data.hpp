@@ -49,10 +49,8 @@ namespace xml{
             //! \brief read data
             //! 
             //! Read data as string from an XML object. If the object has 
-            //! no data a value_error exception is thrown. 
+            //! no data an empty string is returned.
             //!
-            //! \throws value_error if the node has no data
-            //! 
             //! \param n the node object from which to read data
             //! \return string with node data
             //! 
@@ -68,7 +66,7 @@ namespace xml{
             //! \param n node where to write the data
             //! \param data a string with the encoded data
             //!
-            virtual void write(const node &n,const string &data) const = 0;
+            virtual void write(const string &data,node &n) const = 0;
     };
 
 

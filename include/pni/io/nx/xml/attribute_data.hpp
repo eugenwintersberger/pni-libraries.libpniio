@@ -24,13 +24,8 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
-#include "../../parsers/array_parser.hpp"
-#include "../../exceptions.hpp"
-#include <boost/numeric/conversion/converter.hpp>
 #include "node.hpp"
-#include "node_data.hpp"
-#include "default.hpp"
+#include "object_data.hpp"
 
 
 namespace pni{
@@ -42,228 +37,67 @@ namespace xml{
 
     //!
     //! \ingroup xml_classes
-    //! \brief XML attribute data
+    //! \brief attribute IO 
     //! 
-    //! Provide a single static read method to read data from an attribute.
-    //! There is currently an issue with unsigned data types that produce an
-    //! overflow wen parsing a number with a negative sign. This should be 
-    //! fixed in future. See issue #26.
+    //! This child class of object_data manages data IO for XML attributes.
+    //! For for each attribute name a new instance of this class has to 
+    //! be created. As the name of the attribute is crucial for this 
+    //! class it is not default constructible.
     //! 
-    //! \tparam T value type 
-    //!
-    template<typename T> struct attribute_data
+    class attribute_data : public object_data
     {
-        //!
-        //! \brief read an XML attribute from a node
-        //!
-        //! Reads an attribute from an XML node and returns it as a value of 
-        //! type T.  If the attribute string cannot be converted to T or the 
-        //! node does not posses this attribute an exception will be thrown. 
-        //! 
-        //! \throws parser_error in case of errors
-        //! \throws range_error if the attributes value does not fit in the 
-        //! range of T 
-        //! 
-        //! \param n node instancen
-        //! \param a name of the attribute
-        //! \return attribute value as instance of T
-        //!
-        static T read(const node &n,const string &a)
-        {
-            typedef typename mpl::at<max_type_map,T>::type safe_type;
-            typedef boost::numeric::converter<T,safe_type> safe_to_T;
+        private:
+            string _name; //!< the name of the attribute
+        public:
+            // no default construction possible
+            attribute_data() = delete;
 
-            T value;
-            try
-            {
-                auto safe = n.get<safe_type>("<xmlattr>."+a);
-                value = safe_to_T::convert(safe);
-            }
-            catch(boost::property_tree::ptree_bad_path &error)
-            {
-                throw pni::io::parser_error(EXCEPTION_RECORD,
-                        "Attribute \""+a+"\" does not exist!");
-            }
-            catch(boost::property_tree::ptree_bad_data &error)
-            {
-                throw pni::io::parser_error(EXCEPTION_RECORD,
-                        "Error parsing attribute \""+a+"\"!");
-            }
-            catch(boost::numeric::positive_overflow &error)
-            {
-                throw pni::core::range_error(EXCEPTION_RECORD,
-                        "Attribute value to large for requested type!");
-            }
-            catch(boost::numeric::negative_overflow &error)
-            {
-                throw pni::core::range_error(EXCEPTION_RECORD,
-                        "Attribute value to small for requested type!");
-            }
-            catch(...)
-            {
-                throw pni::io::parser_error(EXCEPTION_RECORD,
-                        "Unknown error during parsing of attribute \""+a+"\"!");
-            }
+            //----------------------------------------------------------------
+            //! 
+            //! \brief constructor
+            //! 
+            //! This constructor with the name of the attribute to 
+            //! read or write. 
+            //! 
+            //! \param name attribute name
+            //! 
+            explicit attribute_data(const string &name);
 
-            return value;
-        }
+            //----------------------------------------------------------------
+            //! 
+            //! \brief read data 
+            //! 
+            //! Read the data from an attribute attached to node parent. The 
+            //! data is returned as a string where all leading and trailing 
+            //! blanks have been removed.
+            //! 
+            //! \throws key_error if the attribute does not exist at this node
+            //! \throws value_error if data is illformed 
+            //! \throws parser_error in case of any other error
+            //! 
+            //! \param parent the parent node to which the attribute is attached
+            //! \return data as string
+            //! 
+            virtual string read(const node &parent) const;
+
+            //----------------------------------------------------------------
+            //! 
+            //! \brief write data
+            //! 
+            //! Write data to an attribute attached to its parent node. If the 
+            //! attribute does not exist it will be created. The data is passed 
+            //! as a string. The input string is not modified in any way.
+            //! If the attribute has already data it will be overwritten.
+            //! 
+            //! \throws value_error if the data is illformed 
+            //! \throws parser_error in case of any other error
+            //! 
+            //! \param data the string to write
+            //! \param parent the parent node to which the attribute is
+            //! attached
+            //! 
+            virtual void write(const string &data,node &parent) const;
     };
-   
-    //------------------------------------------------------------------------
-    //!
-    //! \ingroup xml_classes
-    //! \brief specialization of attribute_data for string values
-    //!
-    template<> struct attribute_data<string>
-    {
-        //!
-        //! \brief read an XML attribute as string
-        //!
-        //! \throws parser_error in case of errors
-        //!
-        //! \param n node instancen
-        //! \param a name of the attribute
-        //! \return return string with attribute data
-        //!
-        static string read(const node &n,const string &a);
-    };
-    
-    //------------------------------------------------------------------------
-    //!
-    //! \ingroup xml_classes
-    //! \brief specialization of attribute_data for bool 
-    //! 
-    //! A specialization of the attribute_data template for bool values in 
-    //! node attributes. Boolean values can be encoded as "1"/"0", 
-    //! "true/false", or "True/False". 
-    template<> struct attribute_data<bool>
-    {
-        //!
-        //! \brief read an XML attribute as boolean value
-        //!
-        //! \throws parser_error in case of errors
-        //! \throws value_error if the attribute value is not a valid
-        //! bool represenation
-        //! 
-        //! \param n node instancen
-        //! \param a name of the attribute
-        //! \return return attribute value as boolean
-        //!
-        static bool read(const node &n,const string &a);
-    };
-    
-    //------------------------------------------------------------------------
-    //!
-    //! \ingroup xml_classes
-    //! \brief specialization of attribute_data for bool 
-    //! 
-    //! A specialization of the attribute_data template for bool values in 
-    //! node attributes. Boolean values can be encoded as "1"/"0", 
-    //! "true/false", or "True/False". 
-    template<> struct attribute_data<bool_t>
-    {
-        //!
-        //! \brief read an XML attribute as boolean value
-        //!
-        //! \throws parser_error in case of errors
-        //! \throws value_error if the attribute value is not a valid
-        //! bool represenation
-        //! 
-        //! \param n node instancen
-        //! \param a name of the attribute
-        //! \return return attribute value as boolean
-        //!
-        static bool_t read(const node &n,const string &a);
-    };
-
-    //-------------------------------------------------------------------------
-    //!
-    //! \ingroup xml_classes
-    //! \brief read array data from attribute
-    //!
-    //! Provide several static methods to read array data from an attribute. 
-    //!
-    template<> struct attribute_data<array>
-    {
-        
-        //! iterator type for parsing array data
-        typedef string::const_iterator iterator_t;
-        //! parser type 
-        typedef pni::io::array_parser<iterator_t> array_parser_t;
-
-        //!
-        //! \brief reading array data
-        //!
-        //! Reading array data from a string without start and stop character 
-        //! but with a single element separator.
-        //!
-        //! \param n XML node holding the attribute
-        //! \param name name of the attribute
-        //! \param sep separator character.
-        //! \return array with data
-        //!
-        static array read(const node &n,const string &name,char sep);
-
-        //---------------------------------------------------------------------
-        //!
-        //! \brief reading array data
-        //!
-        //! Reading array data not only using a separator character but also 
-        //! a start and a stop character. 
-        //!
-        //! \param n XML node holding theattribute
-        //! \param name name of the attribute to read data from
-        //! \param start start symbol for the array
-        //! \param stop stop symbol for the array
-        //! \param sep element separator symbol
-        //! \return instance of array with node data
-        //!
-        static array read(const node &n,const string &name,
-                          char start,char stop,char sep);
-
-        //---------------------------------------------------------------------
-        //!
-        //! \brief reading array data
-        //!
-        //! Read array data using a custom reader. In this case you can setup 
-        //! the parser in your own code.
-        //!
-        //! \param n XML node from which to read data
-        //! \param name attribute name
-        //! \param p parser 
-        //! \return array with node data
-        //!
-        static array read(const node &n,const string &name,
-                          const array_parser_t &p);
-
-    };
-
-    //-------------------------------------------------------------------------
-    //!
-    //! \ingroup xml_classes
-    //! \brief check for attributes existance
-    //!
-    //! Returns true if an attribute exists on a node. 
-    //! \param n node instance 
-    //! \param name name of the attribute
-    //! \return true if attribute exists, false otherwise
-    //!
-    bool has_attribute(const node &n,const string &name) ;
-
-    //-------------------------------------------------------------------------
-    //!
-    //! \ingroup xml_classes
-    //! \brief check if an attribute has non-empty data
-    //!
-    //! Returns true if the attribute contains data. Use this function in 
-    //! order to check if one should read data or not.
-    //!
-    //! \param n node holding the attribute
-    //! \param name name of the attribute
-    //! \return true if attribute contains data, false otherwise
-    //!
-    bool has_data(const node &n,const string &name);
-
 
 //end of namespace
 }

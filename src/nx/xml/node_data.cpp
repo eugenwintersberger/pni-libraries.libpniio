@@ -31,123 +31,22 @@ namespace io{
 namespace nx{
 namespace xml{
 
-
-    //-------------------------------------------------------------------------
-    array node_data<array>::read(const node &dnode,char sep)
+    string node_data::read(const node &n) const
     {
-        return read(dnode,array_parser_t(sep));
-    }
-   
-    //--------------------------------------------------------------------------
-    array node_data<array>::read(const node &dnode,char start,char stop,
-                                 char sep)
-    {
-        return read(dnode,array_parser_t(start,stop,sep));
+        string data = n.data();
+        boost::algorithm::trim(data);
+        return data;
     }
 
     //-------------------------------------------------------------------------
-    array node_data<array>::read(const node &dnode,const array_parser_t &p)
+    void node_data::write(const string &data,node &n) const
     {
-        using boost::spirit::qi::parse;
-        using boost::algorithm::trim;
-        //read the node data as a string
-        auto text = node_data<string>::read(dnode);
-        trim(text);
-
-        array a;
-        try
-        {
-            a= array_from_string(text,p);
-        }
-        catch(...)
-        {
-            throw parser_error(EXCEPTION_RECORD,
-                    "Error parsing string \""+text+"\" to an array!");
-        }
-
-        try
-        {
-            a.size();
-        }
-        catch(...)
-        {
-            throw parser_error(EXCEPTION_RECORD,
-                    "Error parsing string \""+text+"\" to an array!");
-        }
-
-        return a;
+        n.put_value(data);
     }
 
-    //-------------------------------------------------------------------------
-    string node_data<string>::read(const node &dnode)
-    {
-        try
-        {
-            string data= dnode.get_value<string>();
-            boost::algorithm::trim(data);
-            return data;
-        }
-        catch(boost::property_tree::ptree_bad_data &error)
-        {
-            throw parser_error(EXCEPTION_RECORD,
-                    "Bad string data in tag!");
-        }
-        catch(...)
-        {
-            throw parser_error(EXCEPTION_RECORD,
-                    "Unknown error when reading string data from tag!");
-        }
-
-    }
-
-    //-------------------------------------------------------------------------
-    bool node_data<bool>::read(const node &dnode)
-    {
-        auto str_rep = node_data<string>::read(dnode);
-
-        try
-        {
-            return bool_string_map.at(str_rep);
-        }
-        catch(std::out_of_range &error)
-        {
-            throw pni::core::value_error(EXCEPTION_RECORD,
-                    "Node data is not a valid bool representation!");
-        }
-        catch(...)
-        {
-            throw pni::io::parser_error(EXCEPTION_RECORD,
-                    "Unkonwn error when converting string to bool!");
-        }
-    }
-
-    //------------------------------------------------------------------------
-    bool_t node_data<bool_t>::read(const node &dnode)
-    {
-        return node_data<bool>::read(dnode);
-    }
-
-    //------------------------------------------------------------------------
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-    binary node_data<binary>::read(const node &dnode)
-    {
-        throw pni::core::not_implemented_error(EXCEPTION_RECORD,
-                "Reading binary data from XML is currently not supported!");
-    }
-#pragma GCC diagnostic pop
-
-    //-------------------------------------------------------------------------
-    bool has_data(const node &n)
-    {
-        using boost::algorithm::trim;
-        auto value = node_data<string>::read(n);
-        trim(value);
-        
-        return !value.empty();
-    }
     
     //------------------------------------------------------------------------
+    /*
     value read_node(type_id_t tid,const node &n)
     {
         if(tid == type_id_t::UINT8)
@@ -188,6 +87,7 @@ namespace xml{
             throw type_error(EXCEPTION_RECORD,
                     "Unsupported data type!");
     }
+    */
 
 
 //end of namespace

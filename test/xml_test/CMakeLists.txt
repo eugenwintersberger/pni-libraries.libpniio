@@ -17,6 +17,7 @@ foreach(XMLFILE ${XMLFILES})
 endforeach()
 
 add_subdirectory(node)
+add_subdirectory(object_data)
 #add_subdirectory(dimensions)
 #add_subdirectory(attribute_data)
 #add_subdirectory(node_data)

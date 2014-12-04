@@ -12,7 +12,7 @@ foreach(XMLFILE ${XMLFILES})
     configure_file(${XMLFILE} ${XMLFILE} COPYONLY)
 endforeach()
 
-add_executable(run_test ${SOURCES})
-target_link_libraries(run_test pniio ${CPPUNIT_LIBRARIES})
+add_executable(node_test ${SOURCES})
+target_link_libraries(node_test pniio ${CPPUNIT_LIBRARIES})
 add_test(NAME "XML::node"
-         COMMAND run_test)
+         COMMAND node_test)
