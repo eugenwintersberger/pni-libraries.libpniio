@@ -1,6 +1,7 @@
 set(SOURCES run_test.cpp
             uint_fixture.cpp     
             int_fixture.cpp     
+            float_fixture.cpp
     )
 
 
