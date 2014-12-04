@@ -25,6 +25,7 @@
 #include <pni/core/types.hpp>
 #include "../../parsers/array_parser.hpp"
 
+#include <boost/algorithm/string/trim.hpp>
 #include <boost/numeric/conversion/converter.hpp>
 #include "default.hpp"
 
@@ -74,6 +75,13 @@ namespace xml{
 
         typedef typename mpl::at<max_type_map,T>::type safe_type;
         typedef boost::numeric::converter<T,safe_type> safe_to_T;
+
+        string input_string(data);
+        boost::algorithm::trim(input_string);
+
+        if(std::is_unsigned<T>::value && input_string[0]=='-')
+            throw range_error(EXCEPTION_RECORD,
+                    "Try to parse a negative value to an unsigned type!");
 
         T value;
         try
