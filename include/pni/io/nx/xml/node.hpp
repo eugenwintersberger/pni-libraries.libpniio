@@ -64,6 +64,46 @@ namespace xml{
     //!
     node create_from_file(const string &s);
 
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup xml_classes
+    //! \brief create an attribute path
+    //! 
+    //! This function is inteded for internal use only. It creates a valid 
+    //! attribute path from an attribute name.
+    //! 
+    //! \param name the name of the attribute
+    //! \return a valid property tree attribute path
+    //! 
+    string attribute_path(const string &name);
+
+
+    //------------------------------------------------------------------------
+    //! 
+    //! \ingroup xml_classes
+    //! \brief get attribute node 
+    //! 
+    //! Returns an attribute node from its parent node. 
+    //! 
+    //! \throws key_error if the attribute does not exist
+    //! \throws parser_error in case of any other error
+    //!
+    //! \param parent the node from which to retrieve the attribute
+    //! \param name the name of the attribute
+    //! \return node representing the attribute
+    //! 
+    node get_attribute(const node &parent,const string &name);
+
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup xml_classes
+    //! \brief check for attribute existance
+    //! 
+    //! Returns true if the node parent has a an attribute name attached to it.
+    //! Otherwise false is returned.
+    //!
+    bool has_attribute(const node &parent,const string &name);
+
     //-------------------------------------------------------------------------
     //!
     //! \ingroup xml_classes

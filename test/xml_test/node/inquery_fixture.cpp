@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,49 +17,41 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Jul 11, 2013
+//  Created on: Dec 4, 2014
 //      Author: Eugen Wintersberger
 //
 
-#include "node_test.hpp"
+#include "inquery_fixture.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(node_test);
-
-//-----------------------------------------------------------------------------
-void node_test::setUp() { }
+CPPUNIT_TEST_SUITE_REGISTRATION(inquery_fixture);
 
 //-----------------------------------------------------------------------------
-void node_test::tearDown() { } 
+void inquery_fixture::setUp() 
+{ 
 
-//-----------------------------------------------------------------------------
-void node_test::test_node_from_file()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    xml::node n = xml::create_from_file("node_from_str.xml");
-    CPPUNIT_ASSERT(!n.empty());
-    CPPUNIT_ASSERT(n.size() == 1);
-
-    CPPUNIT_ASSERT_THROW(xml::create_from_file("bla.xml"),
-                         file_error);
-
-    CPPUNIT_ASSERT_THROW(xml::create_from_file("node_from_bad_file.xml"),
-            pni::io::parser_error);
-
-    
+    group = xml::create_from_file("inquery.xml").get_child("group");
 }
 
 //-----------------------------------------------------------------------------
-void node_test::test_node_from_string()
+void inquery_fixture::tearDown() { } 
+
+//-----------------------------------------------------------------------------
+void inquery_fixture::test_get_attribute()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    CPPUNIT_ASSERT_NO_THROW(xml::get_attribute(group,"name"));
+
+    //not a well formed XML file
+    CPPUNIT_ASSERT_THROW(xml::get_attribute(group,"type"), pni::core::key_error);
+}
+
+//-----------------------------------------------------------------------------
+void inquery_fixture::test_has_attribute()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    xml::node n = xml::create_from_string(node_from_string_str);
-
-    CPPUNIT_ASSERT(!n.empty());
-    CPPUNIT_ASSERT(n.size() == 1);
-
-    CPPUNIT_ASSERT_THROW(xml::create_from_string(node_from_bad_str),
-            pni::io::parser_error);
+    CPPUNIT_ASSERT(xml::has_attribute(group,"name"));
+    CPPUNIT_ASSERT(!xml::has_attribute(group,"type"));
 }
 

@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,7 +17,7 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Jul 11, 2013
+//  Created on: Dec 4, 2014
 //      Author: Eugen Wintersberger
 //
 #pragma once
@@ -44,12 +44,12 @@ static const string node_from_bad_str = "this has to fail";
  
  
 
-class node_test : public CppUnit::TestFixture
+class creation_fixture : public CppUnit::TestFixture
 {
     private:
-        CPPUNIT_TEST_SUITE(node_test);
-        CPPUNIT_TEST(test_node_from_file);
-        CPPUNIT_TEST(test_node_from_string);
+        CPPUNIT_TEST_SUITE(creation_fixture);
+        CPPUNIT_TEST(test_from_file);
+        CPPUNIT_TEST(test_from_string);
         CPPUNIT_TEST_SUITE_END();
 
         string xml_str1;
@@ -57,7 +57,6 @@ class node_test : public CppUnit::TestFixture
         void setUp();
         void tearDown();
         
-        void test_node_from_file();
-        void test_node_from_string();
-
+        void test_from_file();
+        void test_from_string();
 };

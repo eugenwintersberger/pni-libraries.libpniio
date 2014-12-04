@@ -90,6 +90,39 @@ namespace xml{
 
         return t;
     }
+
+    //------------------------------------------------------------------------
+    string attribute_path(const string &name)
+    {
+        return "<xmlattr>."+name;
+    }
+
+    //------------------------------------------------------------------------
+    node get_attribute(const node &parent,const string &name)
+    {
+        try
+        {
+            return parent.get_child(attribute_path(name));
+        }
+        catch(ptree_bad_path &error)
+        {
+            throw key_error(EXCEPTION_RECORD, "Attribute not found!");
+        }
+        catch(...)
+        {
+            throw parser_error(EXCEPTION_RECORD,
+                    "Unkown error when retrieving attribute!");
+        }
+    }
+
+    //------------------------------------------------------------------------
+    bool has_attribute(const node &parent,const string &name)
+    {
+        auto attr = parent.get_child_optional(attribute_path(name));
+
+        return attr;
+    }
+
     //------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const node &n)
     {
