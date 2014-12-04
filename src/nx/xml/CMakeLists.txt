@@ -4,7 +4,7 @@ set(SOURCES
             node.cpp
             decoder.cpp
             #io_object.cpp
-            #dimensions.cpp
+            dimensions.cpp
             #field.cpp
             )
 

@@ -24,6 +24,7 @@
 
 #include "node.hpp"
 #include "attribute_data.hpp"
+#include "decoder.hpp"
 
 namespace pni{
 namespace io{
@@ -64,6 +65,11 @@ namespace xml{
     {
         //! vector type to hold index-value pairs
         typedef std::vector<index_value_type>  iv_vector;
+
+        static attribute_data index_attribute;
+        static attribute_data value_attribute;
+        static attribute_data rank_attribute;
+        static size_t_decoder_type size_t_decoder;
 
         //--------------------------------------------------------------------
         //!
@@ -178,6 +184,7 @@ namespace xml{
         }
 
     };
+
 
 //end of namespace
 }

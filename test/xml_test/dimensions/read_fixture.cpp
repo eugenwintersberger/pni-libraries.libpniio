@@ -73,7 +73,7 @@ void read_fixture::test_read_3()
     setup_xml("dim3.xml");
 
     CPPUNIT_ASSERT_THROW(xml::dimensions::object_from_xml<shape_t>(child),
-                         pni::io::parser_error);
+                         pni::io::key_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -84,7 +84,7 @@ void read_fixture::test_read_4()
     setup_xml("dim4.xml");
 
     CPPUNIT_ASSERT_THROW(xml::dimensions::object_from_xml<shape_t>(child),
-                         pni::io::parser_error);
+                         pni::io::key_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ void read_fixture::test_read_5()
     child = root.get_child("dimensions");
 
     CPPUNIT_ASSERT_THROW(xml::dimensions::object_from_xml<shape_t>(child),
-                         pni::io::parser_error);
+                         pni::io::key_error);
 }
 
 //----------------------------------------------------------------------------

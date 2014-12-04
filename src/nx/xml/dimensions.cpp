@@ -27,6 +27,11 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace xml{
+
+    attribute_data dimensions::index_attribute = attribute_data("index");
+    attribute_data dimensions::value_attribute = attribute_data("value");
+    attribute_data dimensions::rank_attribute = attribute_data("rank");
+    size_t_decoder_type dimensions::size_t_decoder = size_t_decoder_type();
     
     bool operator<(const index_value_type &lhs,const index_value_type &rhs)
     {
@@ -46,9 +51,8 @@ namespace xml{
     //------------------------------------------------------------------------
      index_value_type dimensions::index_value_from_node(const node &dim_node)
     {
-        typedef attribute_data<size_t> attr_data;
-        return {attr_data::read(dim_node,"index"),
-                attr_data::read(dim_node,"value")};
+        return {size_t_decoder.decode(index_attribute.read(dim_node)),
+                size_t_decoder.decode(value_attribute.read(dim_node))};
     }
 
      //-----------------------------------------------------------------------
@@ -78,7 +82,7 @@ namespace xml{
             if(dim.first == "dim")
                 buffer.push_back(index_value_from_node(dim.second));
 
-        if(buffer.size()!=attribute_data<size_t>::read(dims,"rank"))
+        if(buffer.size()!=size_t_decoder.decode(rank_attribute.read(dims)))
             throw shape_mismatch_error(EXCEPTION_RECORD,
                     "Rank in dimensions tag does not match number of dim values!");
 

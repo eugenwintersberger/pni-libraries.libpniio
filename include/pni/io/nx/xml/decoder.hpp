@@ -110,6 +110,8 @@ namespace xml{
         return value;
     }
 
+    typedef decoder<size_t> size_t_decoder_type;
+
 
     //------------------------------------------------------------------------
     //!
