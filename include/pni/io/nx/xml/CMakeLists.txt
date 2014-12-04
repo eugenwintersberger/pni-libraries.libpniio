@@ -9,6 +9,7 @@ set(HEADER_FILES attribute_data.hpp
                  attribute.hpp
                  dimensions.hpp
                  default.hpp
+                 object_data.hpp
                  )
 
 install(FILES ${HEADER_FILES} 

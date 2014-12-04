@@ -83,7 +83,9 @@ namespace xml{
     {
         try
         {
-            return dnode.get_value<string>();
+            string data= dnode.get_value<string>();
+            boost::algorithm::trim(data);
+            return data;
         }
         catch(boost::property_tree::ptree_bad_data &error)
         {
