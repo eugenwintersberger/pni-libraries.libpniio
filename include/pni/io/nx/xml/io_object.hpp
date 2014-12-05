@@ -26,6 +26,8 @@
 
 #include "node.hpp"
 #include "attribute_data.hpp"
+#include "decoder.hpp"
+#include "attribute_data.hpp"
 
 namespace pni{
 namespace io{
@@ -42,10 +44,11 @@ namespace xml{
     //!
     struct io_object
     {
+
         //! type to retrieve string attributes
-        typedef attribute_data<string> string_attribute;
-        //! type to retrieve size_t attributes
-        typedef attribute_data<size_t> size_attribute;
+        static attribute_data name_attribute;
+        static attribute_data type_attribute;
+        static string_decoder_type string_decoder;
 
         //--------------------------------------------------------------------
         //!

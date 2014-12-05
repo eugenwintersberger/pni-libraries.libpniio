@@ -111,6 +111,7 @@ namespace xml{
     }
 
     typedef decoder<size_t> size_t_decoder_type;
+    typedef decoder<string> string_decoder_type;
 
 
     //------------------------------------------------------------------------

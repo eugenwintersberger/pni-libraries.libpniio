@@ -3,7 +3,7 @@ set(SOURCES
             node_data.cpp 
             node.cpp
             decoder.cpp
-            #io_object.cpp
+            io_object.cpp
             dimensions.cpp
             #field.cpp
             )

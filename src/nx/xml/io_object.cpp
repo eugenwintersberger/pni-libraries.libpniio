@@ -23,12 +23,17 @@
 
 #include <pni/io/nx/xml/io_object.hpp>
 #include <pni/io/nx/xml/dimensions.hpp>
+#include <pni/io/nx/xml/node_data.hpp>
 
 
 namespace pni{
 namespace io{
 namespace nx{
 namespace xml{
+
+    attribute_data io_object::name_attribute = attribute_data("name");
+    attribute_data io_object::type_attribute = attribute_data("type");
+    string_decoder_type io_object::string_decoder = string_decoder_type();
    
     template<typename T>
     value convert(type_id_t tid,T v)
@@ -136,7 +141,7 @@ namespace xml{
     //------------------------------------------------------------------------
     string io_object::name(const node &io_node)
     {
-        return string_attribute::read(io_node,"name");
+        return string_decoder.decode(name_attribute.read(io_node));
     }
     
     //------------------------------------------------------------------------
@@ -152,30 +157,45 @@ namespace xml{
     //------------------------------------------------------------------------
     type_id_t io_object::type_id(const node &io_node)
     {
-        return type_id_from_str(string_attribute::read(io_node,"type"));
+        string type = string_decoder.decode(type_attribute.read(io_node));
+        return type_id_from_str(type);
     }
     
     //--------------------------------------------------------------------
     array io_object::data_from_xml(const node &io_node,char separator)
     {
-        type_id_t tid = type_id(io_node);
-        array data = make_array(tid,shape(io_node));
+        decoder<array> dec(separator);
 
-        if(has_data(io_node))
+        //read string representation from the node
+        string data_rep = node_data().read(io_node);
+
+        if(!data_rep.empty())
         {
+            //read shape and type id from the node
+            type_id_t tid = type_id(io_node);
+            shape_t   s   = shape(io_node);
+
+            //create the output array
+            array data = make_array(tid,s);
+            const auto buffer = dec.decode(data_rep);
+            size_t index=0;
+            for(const auto v: buffer) 
+                data[index++] = convert(tid,static_cast<value>(v));
+
+            /*
             if(data.size() == 1)
-                data[0] = read_node(type_id(io_node),io_node);
+                data[0] = read_node(tid,io_node);
             else 
             {
-                const auto buffer = node_data<array>::read(io_node,separator);
-                size_t index=0;
-                for(const auto v: buffer) 
-                    data[index++] = convert(tid,static_cast<value>(v));
+                decoder_type decoder(separator);
 
             }
+            */
+
+            return data;
         }
 
-        return data;
+        return array();
     }
 
     //------------------------------------------------------------------------
