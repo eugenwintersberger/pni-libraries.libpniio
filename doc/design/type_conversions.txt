@@ -1,0 +1,31 @@
+Some thoughts about type conversion
+===================================
+
+This is particularly interesting when decisions should be between static and
+dynamic polymorphism. A tropical situation in this code are the image readers. 
+At the time of writing the reading routines where implemented as templates
+which take any kind of container to store the image data. 
+However, using templates for this purpose has some drawbacks. One of the most
+important ones is that the reading functions can not be virtual. 
+Consequently we cannot use dynamic polymorphism. As the type of image to read is
+in most cases a runtime decision depending on the users input dynamic
+polymorphism is exactly what we want. 
+On the other hand side, using static polymorphism ensures correct type
+conversion. In particular we have in principle the possibility to choose the
+data type in the container exactly as the one used in the file. 
+This sounds great at the first place but is entirely unrealistic. 
+This is simply due to different demands the writing and the reading program have
+on the data type they use to represent the object they want to write. 
+
+The writer most probably wants to use a type as small as possible (lets say
+uint8) in order to keep the files small and thus reduce the required bandwidth
+of the IO device. The reader in contrary has different requirements. 
+Consider an analysis program that wants to read detector data in order to
+perform computations. The most appropriate type for this task is to use a 
+64 Bit floating point type. This leads to type conversions in the most cases. 
+
+One argument in favor of templates and static polymorphism would be the higher
+performance such code usually achieves. This might be true for purely
+computationally expensive tasks. However, if IO is involved in most cases the
+I/O bandwidth is the limiting factor not the performance of the decoding
+algorithm. 
