@@ -60,11 +60,14 @@ namespace io{
             using namespace boost::fusion;
             using namespace boost::phoenix;
             using boost::spirit::qi::_1;
-            value_rule = (*blank>>(
-                         (int_>>!(char_('.')|char_('e')))[_val = _1] 
+            value_rule = (*blank>>
+                         (
+                         (int_>>!(char_('.')|char_('e')))[_val =
+                         construct<pni::core::value>(_1)] 
                           || 
-                          double_[_val = _1]
-                        ));
+                          double_[_val = construct<pni::core::value>(_1)]
+                         )
+                         );
         }
     };
 
