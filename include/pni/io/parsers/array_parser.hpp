@@ -80,6 +80,7 @@ namespace io{
 
     };
 
+    //------------------------------------------------------------------------
     //!
     //! \ingroup parser_classes
     //! \brief array parser
@@ -128,13 +129,13 @@ namespace io{
         }
 
         //---------------------------------------------------------------------
-        /*!
-        \brief constructor
-
-        \param start start symbol
-        \param stop end symbol
-        \param del data delimiter symbol
-        */
+        //!
+        //! \brief constructor
+        //!
+        //! \param start start symbol
+        //! \param stop end symbol
+        //! \param del data delimiter symbol
+        //!
         array_parser(char start,char stop,char del):
             array_parser::base_type(array_rule),
             _start_sign(start),
@@ -145,13 +146,14 @@ namespace io{
         }
 
         //---------------------------------------------------------------------
-        /*!
-        \brief constructor
-
-        Using this constructor is setting up the array parser in a way so that
-        no start and stop symbol are required.
-        \param del delimiter symbol
-        */
+        //!
+        //! \brief constructor
+        //! 
+        //! Using this constructor is setting up the array parser in a way 
+        //! so that no start and stop symbol are required.
+        //!
+        //! \param del delimiter symbol
+        //! 
         array_parser(char del):
             array_parser::base_type(array_rule),
             delimiter_(del)
@@ -166,9 +168,10 @@ namespace io{
             array_rule = (data_rule)[_val = array_construction(_1)];
         }
 
-
         //---------------------------------------------------------------------
+        //!
         //! Initialization function used by all constructors
+        //!
         void init()
         {
             using namespace pni::core;
@@ -182,8 +185,6 @@ namespace io{
                          [_val = array_construction(_1)];
 
         }
-
-
     };
 
 

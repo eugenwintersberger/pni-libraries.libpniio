@@ -1,31 +1,31 @@
-/*
- * (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- * This file is part of libpniio.
- *
- * libpniio is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * libpniio is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
- *************************************************************************
- *
- * Created on: May 6, 2013
- *     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
- *
- */
+//
+// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+//
+// Created on: May 6, 2013
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+//
 
 #pragma once
 
 #include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
+#include <pni/core/arrays/slice.hpp>
 
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
@@ -33,25 +33,28 @@
 namespace pni{
 namespace io{
 
+    //!
+    //! \ingroup parser_classes
+    //! \brief slice parser
+    //!
+    //! This parser reads slice objects from a string. A slice is represented 
+    //! by three numbers: the start index, the last index, and a stride. 
+    //! In string representation these three values are written as
     /*!
-    \ingroup parser_classes
-    \brief slice parser
-
-    This parser reads slice objects from a string. A slice is represented by
-    three numbers: the start index, the last index, and a stride. 
-    In string representation these three values are written as
     \code
     start:stop:stride
     \endcode
-    where a \c : is used as separator between the numbers. There are several
-    flavors of strings that can be used to denote a slice 
-    \li \c start - here stop is assumed to be start+1 and stride=1.
-    \li \c start:stop - where stride is assumed to be 1
-    \li \c :stop - where start=0 and stride = 1
-    \li \c :stop:stride - where start is assumed to be 0
-
-    This parser is capable of managing all these variations. It can be used like
-    this
+    */
+    //! where a \c : is used as separator between the numbers. There are 
+    //! several flavors of strings that can be used to denote a slice 
+    //! \li \c start - here stop is assumed to be start+1 and stride=1.
+    //! \li \c start:stop - where stride is assumed to be 1
+    //! \li \c :stop - where start=0 and stride = 1
+    //! \li \c :stop:stride - where start is assumed to be 0
+    //!
+    //! This parser is capable of managing all these variations. It can be 
+    //! used like this
+    /*!
     \code 
     typedef string::iterator iterator_t;
     typedef slice_parser<iterator_t> parser_t;
@@ -62,9 +65,10 @@ namespace io{
     parse(slice_str.begin(),slice_str.end(),parser,s);
 
     \endcode
-
-    \tparam ITERT iterator type for the parser
     */
+    //!
+    //! \tparam ITERT iterator type for the parser
+    //!
     template<typename ITERT>
     struct slice_parser: boost::spirit::qi::grammar<ITERT,
                                                     boost::spirit::qi::locals<size_t,size_t,size_t>,

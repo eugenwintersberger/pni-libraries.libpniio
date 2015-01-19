@@ -206,7 +206,7 @@ namespace xml{
                     "Array size and field size do not match!");
 
         std::stringstream ss;
-        ss<<data;
+        //ss<<data;
         io_node.put_value(ss.str());
     }
 //end of namespace

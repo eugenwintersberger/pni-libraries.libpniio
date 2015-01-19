@@ -80,12 +80,13 @@ namespace io{
         array_parser<ITERT> array_;
     
         //---------------------------------------------------------------------
-        /*!
-        \brief default constructor
-
-        In this case blanks are used as column delimiters, [ and ] as array
-        start and stop symbols, and a ',' as the array element delimiter. 
-        */
+        //!
+        //! \brief default constructor
+        //!
+        //! In this case blanks are used as column delimiters, [ and ] as 
+        //! array start and stop symbols, and a ',' as the array element 
+        //! delimiter. 
+        //!
         record_parser() : 
             record_parser::base_type(record_rule),
             delimiter_(),
@@ -95,14 +96,15 @@ namespace io{
         }
 
         //---------------------------------------------------------------------
-        /*! 
-        \brief constructor
-
-        \param column_separator the character separating the individual columns
-        \param array_start character staring an array
-        \param array_stop character finishing an array
-        \param array_separator character separating array elements
-        */
+        //! 
+        //! \brief constructor
+        //!
+        //! \param column_separator the character separating the individual 
+        //! columns
+        //! \param array_start character staring an array
+        //! \param array_stop character finishing an array
+        //! \param array_separator character separating array elements
+        //!
         record_parser(char column_separator,
                       char array_start,char array_stop,
                       char array_separator) :
@@ -114,7 +116,9 @@ namespace io{
         }
 
         //---------------------------------------------------------------------
+        //!
         //! initialization method called by each constructor
+        //!
         void init() 
         {
             using namespace boost::spirit::qi;
