@@ -30,6 +30,9 @@
 namespace pni{
 namespace io{
 
+    using namespace pni;
+    using namespace boost::spirit;
+
     //!
     //! \ingroup parser_classes
     //! \brief delimiter parser
@@ -61,7 +64,7 @@ namespace io{
             using namespace boost::fusion;
             using namespace boost::phoenix;
             //default behavior - at least one whitespace is a valid delimiter
-            delimiter = +blank;
+            delimiter = +boost::spirit::qi::blank;
         }
 
         //--------------------------------------------------------------------
@@ -74,9 +77,9 @@ namespace io{
             using namespace boost::fusion;
             using namespace boost::phoenix;
             if(symbol == ' ')
-                delimiter = +blank;
+                delimiter = +qi::blank;
             else
-                delimiter = *blank>>char_(symbol)>>*blank;
+                delimiter = *qi::blank>>char_(symbol)>>*qi::blank;
         }
 
     };

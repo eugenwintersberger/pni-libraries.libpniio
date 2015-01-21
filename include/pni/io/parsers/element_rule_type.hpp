@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2015 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,41 +17,42 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Created on: Dec 3, 2014
+// Created on: Jan 20, 2015
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 //
+
 #pragma once
 
-#include <pni/core/types.hpp>
-#include <boost/mpl/map.hpp>
+#include<pni/core/types.hpp>
+#include<pni/core/type_erasures.hpp>
+#include<vector>
 
-#include <boost/spirit/include/qi_real.hpp>
-#include <boost/spirit/include/qi_uint.hpp>
-#include <boost/spirit/include/qi_int.hpp>
+#include <boost/spirit/include/qi.hpp>
+#include <boost/spirit/include/phoenix.hpp>
 
-#include <boost/spirit/home/qi/numeric/uint.hpp>
-
+#include "complex_parser.hpp"
 
 namespace pni{
 namespace io{
 
-    using namespace pni::core;
-    using namespace boost;
+    template<
+             typename ITERT,
+             typename T
+            >
+    struct element_rule_type
+    {
+        typedef typename  mpl::at<spirit_parsers,T>::type type;
+    };
 
-    /*
-    typedef mpl::map<
-        mpl::pair<uint16,spirit::qi::ushort_parser>,
-        mpl::pair<uint32,spirit::uint_>,
-        mpl::pair<uint64,spirit::ulong_>,
-        mpl::pair<int16,spirit::short_>,
-        mpl::pair<int32,spirit::int_>,
-        mpl::pair<int64,spirit::long_>,
-        mpl::pair<float32,spirit::float_>,
-        mpl::pair<float64,spirit::double_>,
-        mpl::pair<float128,spirit::long_double_>
-        > parser_type_map;
-        */
+    template<
+             typename ITERT,
+             typename T
+            >
+    struct element_rule_type<ITERT,std::complex<T>>
+    {
+        typedef complex_parser<ITERT,T> type;
+    };
 
 //end of namespace
 }

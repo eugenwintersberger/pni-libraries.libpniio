@@ -35,14 +35,11 @@
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
 
+#include "spirit_parsers.hpp"
+
 namespace pni{
 namespace io{
 
-    typedef boost::mpl::map<
-        boost::mpl::pair<pni::core::float32,decltype(boost::spirit::qi::float_)>,
-        boost::mpl::pair<pni::core::float64,decltype(boost::spirit::qi::double_)>,
-        boost::mpl::pair<pni::core::float128,decltype(boost::spirit::qi::long_double)>
-        > type_parser_map;
 
     template<
              typename ITERT,
@@ -66,7 +63,7 @@ namespace io{
     struct complex_parser: public complex_grammar<ITERT,BASET>
     {
         typedef std::complex<BASET> result_type;
-        typename boost::mpl::at<type_parser_map,BASET>::type base_parser;
+        typename boost::mpl::at<spirit_parsers,BASET>::type base_parser;
         //!rule matching a single numeric value
         boost::spirit::qi::rule<ITERT,BASET()> number_rule;
         //! rule obtaining the sign
