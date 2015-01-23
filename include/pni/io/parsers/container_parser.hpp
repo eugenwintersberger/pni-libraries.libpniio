@@ -55,8 +55,6 @@ namespace io{
     //! In their string representation container data is assumed to be embraced 
     //! between a start and a stop token. The elements are assumed to be 
     //! separated by a delimiter token.
-    //! 
-    //! 
     //!
     //! \tparam ITERT input iterator type
     //! \tparam CTYPE container type

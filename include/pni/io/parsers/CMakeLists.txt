@@ -7,6 +7,10 @@ set(HEADER_FILES array_parser.hpp
                  spirit_parsers.hpp
                  element_rule_type.hpp
                  container_parser.hpp
+                 parser.hpp
+                 primitive_type_parser.hpp
+                 string_parser.hpp
+                 byte_integer_parser.hpp
                  )
 
 install(FILES ${HEADER_FILES} 

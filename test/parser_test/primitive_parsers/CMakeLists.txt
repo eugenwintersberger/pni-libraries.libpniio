@@ -1,0 +1,12 @@
+set(SOURCES primitive_parsers_test.cpp
+            uint8_parser_test.cpp
+            uint16_parser_test.cpp
+            int8_parser_test.cpp
+            int16_parser_test.cpp
+            string_parser_test.cpp
+           )
+
+add_executable(primitive_parsers_test ${SOURCES} $<TARGET_OBJECTS:test_common>)
+target_link_libraries(primitive_parsers_test pniio ${CPPUNIT_LIBRARIES})
+add_test("parsers:primitive_parsers" primitive_parsers_test)
+

@@ -41,11 +41,11 @@ namespace io{
     std::remove_const<decltype(p)>::type
 
     typedef mpl::map<
-        mpl::pair<core::uint8 ,spirit::qi::uint_parser<core::uint8,10,1,3> >,
+        mpl::pair<core::uint8 ,spirit::qi::uint_parser<core::uint8,10,1,4> >,
         mpl::pair<core::uint16,PARSER_TYPE(spirit::qi::ushort_)>,
         mpl::pair<core::uint32,PARSER_TYPE(spirit::qi::uint_)  >,
         mpl::pair<core::uint64,PARSER_TYPE(spirit::qi::ulong_) >,
-        mpl::pair<core::int8,  PARSER_TYPE(spirit::qi::lit)    >,
+        mpl::pair<core::int8 ,spirit::qi::uint_parser<core::int8,10,1,4> >,
         mpl::pair<core::int16, PARSER_TYPE(spirit::qi::short_) >,
         mpl::pair<core::int32, PARSER_TYPE(spirit::qi::int_)   >,
         mpl::pair<core::int64, PARSER_TYPE(spirit::long_)      >,

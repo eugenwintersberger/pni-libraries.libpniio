@@ -17,44 +17,14 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Created on: Jan 20, 2015
+// Created on: Jan 21, 2015
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 //
 
 #pragma once
 
-#include<pni/core/types.hpp>
-#include<pni/core/type_erasures.hpp>
-#include<vector>
+#include "primitive_type_parser.hpp"
+#include "string_parser.hpp"
+#include "byte_integer_parser.hpp"
 
-#include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix.hpp>
-
-#include "complex_parser.hpp"
-
-namespace pni{
-namespace io{
-
-    template<
-             typename ITERT,
-             typename T
-            >
-    struct element_rule_type
-    {
-        typedef typename  mpl::at<spirit_parsers,T>::type type;
-    };
-
-    //------------------------------------------------------------------------
-    template<
-             typename ITERT,
-             typename T
-            >
-    struct element_rule_type<ITERT,std::complex<T>>
-    {
-        typedef complex_parser<ITERT,T> type;
-    };
-
-//end of namespace
-}
-}
