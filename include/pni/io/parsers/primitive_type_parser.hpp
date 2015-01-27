@@ -27,6 +27,7 @@
 
 #include<pni/core/types.hpp>
 #include<vector>
+#include<limits>
 
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
@@ -50,6 +51,11 @@ namespace io{
     //! In addition it catches all spirit exceptions and wraps them 
     //! into a parser_error exception. 
     //! 
+    //! Use this parser to parse a single primitive value from a string.
+    //! The input data must be trimmed - so no leading or trailing 
+    //! blanks are allowed. The string is supposed to end with the last 
+    //! character assembling the value to parse.
+    //! 
     //! \tparam ITERT iterator type
     //! \tparam T     primitive data type
     //! \tparam is_primitive is set to truen when T is a primitive type
@@ -64,6 +70,7 @@ namespace io{
         public:
             typedef ITERT iterator_type;
             typedef T     value_type;
+            typedef qi::expectation_failure<iterator_type> expectation_error;
         private:
             typedef element_rule_type<iterator_type,value_type> rule_type ;
             typedef typename  rule_type::type parser_type;
@@ -85,11 +92,28 @@ namespace io{
                 iterator_type stop  = data.end();
                 value_type result;
 
-                if(!qi::parse(start,stop,_parser_instance,result))
+                try
+                {
+                    if(!qi::parse(start,stop,_parser_instance>qi::eoi,result))
+                    {
+                        throw parser_error(EXCEPTION_RECORD,
+                                "Failure parsing primitive type!");
+                    }
+
+                    //need to check for the condition that the value becomes
+                    //infinity and throw an exception
+                    if((result == std::numeric_limits<value_type>::infinity()) 
+                        ||
+                       (result == -std::numeric_limits<value_type>::infinity()))
+                        throw parser_error(EXCEPTION_RECORD,
+                                "Value is infinity!");
+                }
+                catch(const expectation_error &error)
                 {
                     throw parser_error(EXCEPTION_RECORD,
-                            "Failure parsing primitive type!");
+                            "Syntax error!");
                 }
+
                 return result;
             }
     };
