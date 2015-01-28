@@ -37,19 +37,18 @@ void int64_parser_test::test_regular_value()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    result_type v = parser_type().parse("12");
-    CPPUNIT_ASSERT(v==12);
-
-    v=parser_type().parse("-100");
-    CPPUNIT_ASSERT(v==-100);
+    CPPUNIT_ASSERT(p.parse("12")==12);
+    CPPUNIT_ASSERT(p.parse("0") == 0);
+    CPPUNIT_ASSERT(p.parse("-100")==-100);
 }
 
 //-----------------------------------------------------------------------------
-void int64_parser_test::test_overflow()
+void int64_parser_test::test_invalid_input()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    CPPUNIT_ASSERT_THROW(parser_type().parse("18446744073709551617"),parser_error);
-    CPPUNIT_ASSERT_THROW(parser_type().parse("-18446744073709551617"),parser_error);
+    CPPUNIT_ASSERT_THROW(p.parse("a34"),parser_error);
+    CPPUNIT_ASSERT_THROW(p.parse("3x3"),parser_error);
+    CPPUNIT_ASSERT_THROW(p.parse("-1844a"),parser_error);
 }
 

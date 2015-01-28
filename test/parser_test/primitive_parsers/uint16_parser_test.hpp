@@ -39,18 +39,19 @@ class uint16_parser_test:public CppUnit::TestFixture
 {
 	CPPUNIT_TEST_SUITE(uint16_parser_test);
     CPPUNIT_TEST(test_regular_value);
-    CPPUNIT_TEST(test_overflow);
+    CPPUNIT_TEST(test_invalid_input);
 	CPPUNIT_TEST_SUITE_END();
 
     typedef uint16                 result_type; 
     typedef string::const_iterator iterator_type;
     typedef parser<iterator_type,result_type> parser_type;
+    parser_type p;
 
 public:
 	void setUp();
 	void tearDown();
     void test_regular_value();
-    void test_overflow();
+    void test_invalid_input();
 };
 
 

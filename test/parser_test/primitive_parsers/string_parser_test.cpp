@@ -39,11 +39,8 @@ void string_parser_test::test_regular_value()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    result_type v = parser_type().parse("12");
-    CPPUNIT_ASSERT(v=="12");
-
-    v = parser_type().parse("34 ");
-    CPPUNIT_ASSERT(v=="34");
+    CPPUNIT_ASSERT(p.parse("hello world") == "hello world");
+    CPPUNIT_ASSERT(p.parse(" this is a text") == " this is a text");
 }
 
 

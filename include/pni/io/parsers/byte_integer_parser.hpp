@@ -66,10 +66,18 @@ namespace io{
                 uint16 tmp;
                 value_type result;
 
-                if(!qi::parse(start,stop,_parser_instance,tmp))
+                try
+                {
+                    if(!qi::parse(start,stop,_parser_instance>qi::eoi,tmp))
+                    {
+                        throw parser_error(EXCEPTION_RECORD,
+                                "Failure parsing primitive type!");
+                    }
+                }
+                catch(...)
                 {
                     throw parser_error(EXCEPTION_RECORD,
-                            "Failure parsing primitive type!");
+                            "Failed parsing uint8 value!");
                 }
 
                 try
@@ -114,10 +122,18 @@ namespace io{
                 int16 tmp;
                 value_type result;
 
-                if(!qi::parse(start,stop,_parser_instance,tmp))
+                try
+                {
+                    if(!qi::parse(start,stop,_parser_instance>qi::eoi,tmp))
+                    {
+                        throw parser_error(EXCEPTION_RECORD,
+                                "Failure parsing primitive type!");
+                    }
+                }
+                catch(...)
                 {
                     throw parser_error(EXCEPTION_RECORD,
-                            "Failure parsing primitive type!");
+                            "Failed parsing int8 value!");
                 }
 
                 try

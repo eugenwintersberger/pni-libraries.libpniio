@@ -101,13 +101,6 @@ namespace io{
                                 "Failure parsing primitive type!");
                     }
 
-                    //need to check for the condition that the value becomes
-                    //infinity and throw an exception
-                    if((result == std::numeric_limits<value_type>::infinity()) 
-                        ||
-                       (result == -std::numeric_limits<value_type>::infinity()))
-                        throw parser_error(EXCEPTION_RECORD,
-                                "Value is infinity!");
                 }
                 catch(const expectation_error &error)
                 {

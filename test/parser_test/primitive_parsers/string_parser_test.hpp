@@ -45,6 +45,7 @@ class string_parser_test:public CppUnit::TestFixture
     typedef string::const_iterator iterator_type;
 
     typedef parser<iterator_type,result_type> parser_type;
+    parser_type p;
 
 public:
 	void setUp();

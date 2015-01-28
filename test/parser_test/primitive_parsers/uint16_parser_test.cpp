@@ -38,18 +38,19 @@ void uint16_parser_test::tearDown() {}
 void uint16_parser_test::test_regular_value()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    result_type v = parser_type().parse("12");
-    CPPUNIT_ASSERT(v==12);
+ 
+    CPPUNIT_ASSERT(p.parse("12")==12);
+    CPPUNIT_ASSERT(p.parse("0") == 0);
+    CPPUNIT_ASSERT(p.parse("04")==4);
 }
 
 //-----------------------------------------------------------------------------
-void uint16_parser_test::test_overflow()
+void uint16_parser_test::test_invalid_input()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    CPPUNIT_ASSERT_THROW(parser_type().parse("100000"),parser_error);
-    CPPUNIT_ASSERT_THROW(parser_type().parse("-100000"),parser_error);
-    CPPUNIT_ASSERT_THROW(parser_type().parse("-1"),parser_error);
+  
+    CPPUNIT_ASSERT_THROW(p.parse("x10"),parser_error);
+    CPPUNIT_ASSERT_THROW(p.parse("0z10"),parser_error);
+    CPPUNIT_ASSERT_THROW(p.parse("10l"),parser_error);
 }
 

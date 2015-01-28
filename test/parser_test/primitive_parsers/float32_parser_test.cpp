@@ -37,26 +37,22 @@ void float32_parser_test::test_regular_value()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    result_type v = p.parse("12");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(12,v,1.e-8);
-
-    v = p.parse("-1.234e+4");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(-1.234e+4,v,1.e-8);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(12,p.parse("12"),1.e-8);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(-1.234e+4,p.parse("-1.234e+4"),1.e-8);
 }
 
 //-----------------------------------------------------------------------------
-void float32_parser_test::test_overflow()
+void float32_parser_test::test_invalid_input()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     CPPUNIT_ASSERT_THROW(p.parse("1.ab"),parser_error);
     CPPUNIT_ASSERT_THROW(p.parse(" 1."),parser_error);
     CPPUNIT_ASSERT_THROW(p.parse("1. "),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse("1.E+100"),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse("-1.E+100"),parser_error);
-    result_type v = p.parse("1.E-200");
-    CPPUNIT_ASSERT_THROW(p.parse("1.E-100"),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse("-1.E-100"),parser_error);
+    CPPUNIT_ASSERT_THROW(p.parse("x1."),parser_error);
+    CPPUNIT_ASSERT_THROW(p.parse("-1x."),parser_error);
+    CPPUNIT_ASSERT_THROW(p.parse("1.ex"),parser_error);
+    CPPUNIT_ASSERT_THROW(p.parse("1.e-1x"),parser_error);
     
 }
 
