@@ -26,8 +26,6 @@
 
 #include "node.hpp"
 #include "attribute_data.hpp"
-#include "decoder.hpp"
-#include "attribute_data.hpp"
 #include "node_data.hpp"
 #include "../../parsers/parser.hpp"
 
@@ -50,7 +48,6 @@ namespace xml{
         //! type to retrieve string attributes
         static attribute_data name_attribute;
         static attribute_data type_attribute;
-        static string_decoder_type string_decoder;
 
         //--------------------------------------------------------------------
         //!
