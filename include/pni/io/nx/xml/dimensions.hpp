@@ -24,7 +24,7 @@
 
 #include "node.hpp"
 #include "attribute_data.hpp"
-#include "decoder.hpp"
+#include "../../parsers/primitive_type_parser.hpp"
 
 namespace pni{
 namespace io{
@@ -65,11 +65,12 @@ namespace xml{
     {
         //! vector type to hold index-value pairs
         typedef std::vector<index_value_type>  iv_vector;
+        typedef pni::core::string::const_iterator iterator_type;
+        typedef pni::io::parser<iterator_type,size_t> size_t_parser_type;
 
         static attribute_data index_attribute;
         static attribute_data value_attribute;
         static attribute_data rank_attribute;
-        static size_t_decoder_type size_t_decoder;
 
         //--------------------------------------------------------------------
         //!

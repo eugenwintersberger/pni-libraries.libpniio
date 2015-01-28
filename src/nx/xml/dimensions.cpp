@@ -30,8 +30,7 @@ namespace xml{
 
     attribute_data dimensions::index_attribute = attribute_data("index");
     attribute_data dimensions::value_attribute = attribute_data("value");
-    attribute_data dimensions::rank_attribute = attribute_data("rank");
-    size_t_decoder_type dimensions::size_t_decoder = size_t_decoder_type();
+    attribute_data dimensions::rank_attribute  = attribute_data("rank");
     
     bool operator<(const index_value_type &lhs,const index_value_type &rhs)
     {
@@ -51,15 +50,15 @@ namespace xml{
     //------------------------------------------------------------------------
      index_value_type dimensions::index_value_from_node(const node &dim_node)
     {
-        return {size_t_decoder.decode(index_attribute.read(dim_node)),
-                size_t_decoder.decode(value_attribute.read(dim_node))};
+        size_t_parser_type p;
+        return {p.parse(index_attribute.read(dim_node)),
+                p.parse(value_attribute.read(dim_node))};
     }
 
      //-----------------------------------------------------------------------
      size_t dimensions::rank(const node &dim)
      {
-        shape_t shape = object_from_xml(dim);
-        return shape.size();
+        return size_t_parser_type().parse(rank_attribute.read(dim));
      }
 
      //-----------------------------------------------------------------------
@@ -76,13 +75,14 @@ namespace xml{
      shape_t dimensions::object_from_xml(const node &dims) 
      {
         iv_vector buffer;
+        size_t_parser_type p;
 
         //read all index value pairs
         for(auto dim: dims)
             if(dim.first == "dim")
                 buffer.push_back(index_value_from_node(dim.second));
 
-        if(buffer.size()!=size_t_decoder.decode(rank_attribute.read(dims)))
+        if(buffer.size()!=rank(dims))
             throw shape_mismatch_error(EXCEPTION_RECORD,
                     "Rank in dimensions tag does not match number of dim values!");
 
