@@ -17,7 +17,7 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Jan 20, 2015
+//  Created on: Jan 27, 2015
 //      Author: Eugen Wintersberger
 //
 
@@ -25,34 +25,36 @@
 
 #include <boost/current_function.hpp>
 #include <pni/io/parsers/parser.hpp>
+#include <pni/io/exceptions.hpp>
 #include <pni/core/types.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
-#include "../TestHelpers.hpp"
+#include "../../TestHelpers.hpp"
 
 using namespace pni::core;
 using namespace pni::io;
 
-class container_parser_test:public CppUnit::TestFixture 
+class float32_parser_test:public CppUnit::TestFixture 
 {
-	CPPUNIT_TEST_SUITE(container_parser_test);
-    CPPUNIT_TEST(test_simple);
-    CPPUNIT_TEST(test_overflow);
-	CPPUNIT_TEST_SUITE_END();
+        CPPUNIT_TEST_SUITE(float32_parser_test);
+        CPPUNIT_TEST(test_regular_value);
+        CPPUNIT_TEST(test_overflow);
+        CPPUNIT_TEST_SUITE_END();
 
-    typedef string::const_iterator iterator_t;
-    typedef std::vector<uint8> result_type;
-    typedef parser<iterator_t,result_type> parser_type;
+        typedef float32                  result_type; 
+        typedef string::const_iterator iterator_type;
+    
+        typedef parser<iterator_type,result_type> parser_type;
 
-public:
-	void setUp();
-	void tearDown();
-    void test_simple();
-    void test_overflow();
+        parser_type p;
+
+    public:
+        void setUp();
+        void tearDown();
+        void test_regular_value();
+        void test_overflow();
 };
-
-
 
 

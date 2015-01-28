@@ -34,6 +34,7 @@
 #include "../exceptions.hpp"
 #include "element_rule_type.hpp"
 #include "delimiter_parser.hpp"
+#include "primitive_type_parser.hpp"
 
 
 namespace pni{
@@ -41,6 +42,7 @@ namespace io{
 
     using namespace pni;
     using namespace boost::spirit;
+
 
     //------------------------------------------------------------------------
     //!
@@ -56,115 +58,100 @@ namespace io{
     //! between a start and a stop token. The elements are assumed to be 
     //! separated by a delimiter token.
     //!
+    //! The container can be any STL compliant container type.
+    //!
     //! \tparam ITERT input iterator type
     //! \tparam CTYPE container type
     //!
     template<
              typename ITERT,
-             typename CTYPE
-            > 
-    struct container_parser : qi::grammar<ITERT,CTYPE()>
+             typename T
+            >
+    class parser<ITERT,std::vector<T>,false>
     {
-        //================public types=========================================
-        //! element type of the container
-        typedef typename CTYPE::value_type value_type;
-        //! element rule
-        typename element_rule_type<ITERT,value_type>::type element_;
-        //! container rule
-        qi::rule<ITERT,CTYPE()> container_rule;
+        public:
+            typedef std::vector<T>  result_type;
+            typedef ITERT           iterator_type;
+            typedef qi::expectation_failure<iterator_type> expectation_error;
+        private:
+            typedef T value_type; 
+            //! element rule
+            typename element_rule_type<ITERT,value_type>::type element_;
 
-        //=======================local variables===============================
-        //! starting symbol
-        char _start_token;
-        //! end symbol
-        char _stop_token;
-        //! parser for delimiters
-        delimiter_parser<ITERT> delimiter_;
+            //! starting symbol
+            char _start_token;
+            //! end symbol
+            char _stop_token;
+            //! parser for delimiters
+            delimiter_parser<ITERT> delimiter_;
 
-        //====================methods and constructor===========================
-        //! default constructor
-        container_parser() : 
-            container_parser::base_type(container_rule),
-            _start_token('['),
-            _stop_token(']'),
-            delimiter_(',')
+        public:
+            //! default constructor
+            parser() : 
+                _start_token('['),
+                _stop_token(']'),
+                delimiter_(',')
 
-        {
-            init();
-        }
+            { }
 
-        //---------------------------------------------------------------------
-        //!
-        //! \brief constructor
-        //!
-        //! \param start start symbol
-        //! \param stop end symbol
-        //! \param del data delimiter symbol
-        //!
-        container_parser(char start,char stop,char del):
-            container_parser::base_type(container_rule),
-            _start_token(start),
-            _stop_token(stop),
-            delimiter_(del)
-        {
-            init();
-        }
+            //-----------------------------------------------------------------
+            //!
+            //! \brief constructor
+            //!
+            //! \param start start symbol
+            //! \param stop end symbol
+            //! \param del data delimiter symbol
+            //!
+            parser(char start,char stop,char del):
+                _start_token(start),
+                _stop_token(stop),
+                delimiter_(del)
+            { }
 
-        //---------------------------------------------------------------------
-        //!
-        //! Initialization function used by all constructors
-        //!
-        void init()
-        {
-            using namespace boost::spirit::qi;
+            //-----------------------------------------------------------------
+            //!
+            //! \ingroup parser_classes
+            //! \brief extract array data from string 
+            //!
+            //! This template function can be used to extract an array from a
+            //! string  using a parser type. Most naturally this parser would 
+            //! be an instance of array_parser. An exception is thrown either 
+            //! when the string represents data that cannot be parsed by the 
+            //! parser or when the resulting array has a length 0.
+            //!
+            //! \throws parser_error in case of errors
+            //! \tparam PTYPE parser type
+            //! \param s string to parse
+            //! \param p parser instance
+            //! \return array instance
+            //!
+            result_type  parse(const core::string &s) const
+            {
+                using namespace pni::core;
+                iterator_type start_iter = s.begin();
+                iterator_type stop_iter  = s.end();
 
-            container_rule = _start_token > (element_ % delimiter_) >
-                _stop_token;    
-        }
+                result_type container;
+                try
+                {
+                    qi::parse(start_iter,stop_iter,
+                              _start_token > 
+                              (element_ % delimiter_) 
+                              > _stop_token 
+                              ,container);
+                }
+                catch(...)
+                {
+                    throw parser_error(EXCEPTION_RECORD,
+                            "Cannot parse array data from string: "
+                            "\""+s+"\"!");
+                }
+
+                return container;
+            }
+
     };
 
-
-    //!
-    //! \ingroup parser_classes
-    //! \brief extract array data from string 
-    //!
-    //! This template function can be used to extract an array from a string 
-    //! using a parser type. Most naturally this parser would be an instance 
-    //! of array_parser. An exception is thrown either when the string 
-    //! represents data that cannot be parsed by the parser or when the 
-    //! resulting array has a length 0.
-    //!
-    //! \throws parser_error in case of errors
-    //! \tparam PTYPE parser type
-    //! \param s string to parse
-    //! \param p parser instance
-    //! \return array instance
-    //!
-    template<typename CTYPE>
-    CTYPE  container_from_string(const core::string &s)
-    {
-        using namespace pni::core;
-        typedef typename CTYPE::iterator_type iterator_type;
-        typedef container_parser<iterator_type,CTYPE> parser_type;
-        parser_type parser;
-
-        iterator_type start_iter = s.begin();
-        iterator_type stop_iter  = s.end();
-
-        CTYPE container;
-        try
-        {
-            parse(start_iter,stop_iter,parser,container);
-        }
-        catch(...)
-        {
-            throw parser_error(EXCEPTION_RECORD,
-                    "Cannot parse array data from string: "
-                    "\""+s+"\"!");
-        }
-
-        return container;
-    }
 
 //end of namespace
 }

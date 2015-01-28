@@ -1,8 +1,13 @@
 set(SOURCES primitive_parsers_test.cpp
             uint8_parser_test.cpp
             uint16_parser_test.cpp
+            uint32_parser_test.cpp
+            uint64_parser_test.cpp
             int8_parser_test.cpp
             int16_parser_test.cpp
+            int32_parser_test.cpp
+            int64_parser_test.cpp
+            float32_parser_test.cpp
             string_parser_test.cpp
            )
 

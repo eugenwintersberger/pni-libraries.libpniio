@@ -27,4 +27,5 @@
 #include "primitive_type_parser.hpp"
 #include "string_parser.hpp"
 #include "byte_integer_parser.hpp"
+#include "container_parser.hpp"
 

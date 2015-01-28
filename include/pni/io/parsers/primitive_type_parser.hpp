@@ -31,6 +31,7 @@
 
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
+#include <boost/mpl/map.hpp>
 
 #include "../exceptions.hpp"
 #include "element_rule_type.hpp"
@@ -86,7 +87,7 @@ namespace io{
             //! \throws parser_error in case of any problems
             //! \param data the string with input data
             //! \return instance of the primitive type
-            value_type parse(const string &data)
+            value_type parse(const string &data) const
             {
                 iterator_type start = data.begin();
                 iterator_type stop  = data.end();
