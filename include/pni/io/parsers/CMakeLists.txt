@@ -11,6 +11,7 @@ set(HEADER_FILES array_parser.hpp
                  primitive_type_parser.hpp
                  string_parser.hpp
                  byte_integer_parser.hpp
+                 bool_parser.hpp
                  )
 
 install(FILES ${HEADER_FILES} 

@@ -39,7 +39,6 @@ class string_parser_test:public CppUnit::TestFixture
 {
 	CPPUNIT_TEST_SUITE(string_parser_test);
     CPPUNIT_TEST(test_regular_value);
-    CPPUNIT_TEST(test_with_terminator);
 	CPPUNIT_TEST_SUITE_END();
 
     typedef string                 result_type; 
@@ -51,7 +50,6 @@ public:
 	void setUp();
 	void tearDown();
     void test_regular_value();
-    void test_with_terminator();
 };
 
 

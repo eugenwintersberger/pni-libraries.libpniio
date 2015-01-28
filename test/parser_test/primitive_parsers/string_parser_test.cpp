@@ -46,13 +46,6 @@ void string_parser_test::test_regular_value()
     CPPUNIT_ASSERT(v=="34");
 }
 
-//-----------------------------------------------------------------------------
-void string_parser_test::test_with_terminator()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-        
-    result_type v = parser_type(';').parse("100 ;");
-    CPPUNIT_ASSERT(v=="100 ");
-}
+
 
 

@@ -48,30 +48,25 @@ void data_from_xml_fixture::test_scalar()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     xml::node o = get_object("object3.xml","field1");
-    array data = xml::io_object::data_from_xml(o);
+    auto data = xml::io_object::data_from_xml<float32>(o);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(1.23,data,1.e-6);
 
-    CPPUNIT_ASSERT(data.size() == 1);
-    CPPUNIT_ASSERT(data.rank() == 1);
-    CPPUNIT_ASSERT(data.type_id() == type_id_t::FLOAT32);
-    CPPUNIT_ASSERT(data.shape<shape_t>() == shape_t({1}));
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(data[0].as<float32>(),1.23,1.e-7);
 }
 
 //----------------------------------------------------------------------------
 void data_from_xml_fixture::test_array()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    typedef std::vector<uint32> vector_type;
     
     xml::node o = get_object("object3.xml","field2");
-    array data = xml::io_object::data_from_xml(o);
-
-    CPPUNIT_ASSERT(data.size() == 6);
-    CPPUNIT_ASSERT(data.rank() == 2);
-    CPPUNIT_ASSERT(data.type_id() == type_id_t::UINT32);
-    CPPUNIT_ASSERT(data.shape<shape_t>() == shape_t({3,2}));
+    auto data = xml::io_object::data_from_xml<vector_type>(o,' ');
+    std::cout<<data.size()<<std::endl;
+    CPPUNIT_ASSERT(data.size()==6);
 
     for(uint32 i=0;i<6;++i)
-        CPPUNIT_ASSERT(data[i].as<uint32>()==i+1);
+        CPPUNIT_ASSERT(data[i]==i+1);
 }
 
 //----------------------------------------------------------------------------
@@ -81,7 +76,8 @@ void data_from_xml_fixture::test_string()
     
     xml::node o = get_object("object3.xml","field3");
 
-    auto text = xml::io_object::data_from_xml(o)[0].as<string>();
+    CPPUNIT_ASSERT(xml::io_object::type_id(o)==type_id_t::STRING);
+    auto text = xml::io_object::data_from_xml<string>(o);
     boost::algorithm::trim(text);
     std::cout<<text<<std::endl;
     CPPUNIT_ASSERT(text == "This is a stupid text");
@@ -93,15 +89,15 @@ void data_from_xml_fixture::test_bool()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     xml::node o = get_object("object3.xml","field4");
-    CPPUNIT_ASSERT(xml::io_object::data_from_xml(o)[0].as<bool_t>());
+    CPPUNIT_ASSERT(xml::io_object::data_from_xml<bool_t>(o));
 
     o = get_object("object3.xml","field5");
-    CPPUNIT_ASSERT(!xml::io_object::data_from_xml(o)[0].as<bool_t>());
+    CPPUNIT_ASSERT(!xml::io_object::data_from_xml<bool_t>(o));
 
     o = get_object("object3.xml","field6");
-    CPPUNIT_ASSERT_THROW(xml::io_object::data_from_xml(o),
-                         pni::core::value_error);
+    CPPUNIT_ASSERT_THROW(xml::io_object::data_from_xml<bool_t>(o),
+                         pni::io::parser_error);
     o = get_object("object3.xml","field7");
-    CPPUNIT_ASSERT_THROW(xml::io_object::data_from_xml(o),
+    CPPUNIT_ASSERT_THROW(xml::io_object::data_from_xml<bool_t>(o),
                          pni::io::parser_error);
 }

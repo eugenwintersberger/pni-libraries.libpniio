@@ -40,33 +40,11 @@ namespace io{
         public:
             typedef core::string value_type;
             typedef ITERT        iterator_type;
-        private:
-            char _terminator;
-        public:
-            parser():
-                _terminator(' ') 
-            {} 
 
-            //-----------------------------------------------------------------
-            parser(char terminator):
-                _terminator(terminator)
-            {}
 
             core::string parse(const string &data)
             {
-                iterator_type start = data.begin();
-                iterator_type stop  = data.end();
-
-                value_type result; 
-
-                if(!qi::parse(start,stop,*(!qi::lit(_terminator)>>qi::char_)
-                                         >>(_terminator|qi::eoi),result))
-                {
-                    throw parser_error(EXCEPTION_RECORD,
-                            "Failure parsing input string!");
-                }
-
-                return result;
+                return data;
             }
     };
 

@@ -68,21 +68,6 @@ namespace xml{
 
     };
 
-    //------------------------------------------------------------------------
-    //!
-    //! \ingroup xml_classes
-    //! \brief read value from node
-    //! 
-    //! \throws parser_error in case of any parser error
-    //! \throws type_error if the type given by tid cannot be handled
-    //! \throws range_error if a numeric type does not fit into the 
-    //! target type determined by tid
-    //! 
-    //! \param tid type id of the target type
-    //! \param n node from which to read data
-    //! \return the read value as an instance of value
-    //!
-    value read_node(type_id_t tid,const node &n);
 
 //end of namespace
 }

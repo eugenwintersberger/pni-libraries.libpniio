@@ -128,17 +128,19 @@ namespace io{
             result_type  parse(const core::string &s) const
             {
                 using namespace pni::core;
-                iterator_type start_iter = s.begin();
-                iterator_type stop_iter  = s.end();
 
                 result_type container;
+
+                auto rule = element_ % delimiter_;
+
                 try
                 {
-                    qi::parse(start_iter,stop_iter,
-                              _start_token > 
-                              (element_ % delimiter_) 
-                              > _stop_token 
-                              ,container);
+                    if((_start_token == ' ') && (_stop_token == ' '))
+                        qi::parse(s.begin(),s.end(),element_%delimiter_,container);
+                    else
+                        qi::parse(s.begin(),s.end(),
+                                  _start_token>(element_ % delimiter_)>_stop_token,
+                                  container);
                 }
                 catch(...)
                 {

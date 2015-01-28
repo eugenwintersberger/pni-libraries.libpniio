@@ -28,6 +28,8 @@
 #include "attribute_data.hpp"
 #include "decoder.hpp"
 #include "attribute_data.hpp"
+#include "node_data.hpp"
+#include "../../parsers/parser.hpp"
 
 namespace pni{
 namespace io{
@@ -132,7 +134,25 @@ namespace xml{
         //! items
         //! \return instance of array with the data
         //! 
-        static array data_from_xml(const node &field_node,char separator=' ');
+        template<typename T>
+        static T data_from_xml(const node &io_node)
+        {
+            typedef string::const_iterator iterator_type;
+            pni::io::parser<iterator_type,T> p;
+
+            return p.parse(node_data().read(io_node));
+
+        }
+
+        template<typename CTYPE>
+        static CTYPE data_from_xml(const node &io_node,char separator,
+                char start=' ',char stop=' ')
+        {
+            typedef string::const_iterator iterator_type;
+            pni::io::parser<iterator_type,CTYPE> p(start,stop,separator);
+
+            return p.parse(node_data().read(io_node));
+        }
 
         //--------------------------------------------------------------------
         //!
