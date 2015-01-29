@@ -15,6 +15,7 @@ set(SOURCES primitive_parsers_test.cpp
             complex128_parser_test.cpp
             string_parser_test.cpp
             bool_parser_test.cpp
+            value_parser_test.cpp
            )
 
 add_executable(primitive_parsers_test ${SOURCES} $<TARGET_OBJECTS:test_common>)

@@ -32,6 +32,7 @@
 #include <boost/spirit/include/phoenix.hpp>
 
 #include "complex_rule.hpp"
+#include "value_rule.hpp"
 
 namespace pni{
 namespace io{
@@ -53,6 +54,14 @@ namespace io{
     struct element_rule_type<ITERT,std::complex<T>>
     {
         typedef complex_rule<ITERT,T> type;
+    };
+
+
+    //------------------------------------------------------------------------
+    template<typename ITERT>
+    struct element_rule_type<ITERT,pni::core::value>
+    {
+        typedef value_rule<ITERT> type;
     };
 
 //end of namespace
