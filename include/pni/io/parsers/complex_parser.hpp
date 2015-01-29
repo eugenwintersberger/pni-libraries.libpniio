@@ -40,12 +40,20 @@
 namespace pni{
 namespace io{
 
+    template<typename BASET>
+    using locals = boost::spirit::qi::locals<BASET,BASET,BASET>;
+
 
     template<
              typename ITERT,
              typename BASET
             >
-    using complex_grammar = boost::spirit::qi::grammar<ITERT,std::complex<BASET>()>;
+    using complex_grammar = boost::spirit::qi::grammar
+                            <
+                             ITERT,
+                             locals<BASET>, 
+                             std::complex<BASET>()
+                            >;
    
     //!
     //! \ingroup parser_classes
@@ -60,7 +68,7 @@ namespace io{
     //! \tparam ITERT iterator type
     //!
     template<typename ITERT,typename BASET>
-    struct complex_parser: public complex_grammar<ITERT,BASET>
+    struct complex_parser:  complex_grammar<ITERT,BASET>
     {
         typedef std::complex<BASET> result_type;
         typename boost::mpl::at<spirit_parsers,BASET>::type base_parser;
@@ -69,11 +77,11 @@ namespace io{
         //! rule obtaining the sign
         boost::spirit::qi::rule<ITERT,BASET()> sign_rule;
         //! rule matching the separator i,j,I 
-        boost::spirit::qi::rule<ITERT>       i_rule;
+        boost::spirit::qi::rule<ITERT>    i_rule;
         //! rule determining the imaginary part
-        boost::spirit::qi::rule<ITERT,BASET()> imag_rule;
+        boost::spirit::qi::rule<ITERT,BASET()>  imag_rule;
         //! rule defining the entire complex number
-        boost::spirit::qi::rule<ITERT,result_type()> complex_rule;
+        boost::spirit::qi::rule<ITERT,locals<BASET>,result_type()> complex_rule;
 
         //!default constructor
         complex_parser() : complex_parser::base_type(complex_rule)
@@ -85,13 +93,16 @@ namespace io{
             using boost::spirit::qi::_1;
 
             number_rule = base_parser[_val = _1];
-            sign_rule   = char_('+')[_val=1] | char_('-')[_val=-1.];
+            sign_rule   = char_('+')[_val=1] | char_('-')[_val=-1.] ;
             i_rule      = (char_('i') | char_('j') | char_('I'))>!sign_rule;
-            imag_rule   = sign_rule[_val = _1]>i_rule>number_rule[_val *= _1];
+            imag_rule   = i_rule>number_rule[_val = _1];
 
-            complex_rule = number_rule[_val = construct<result_type>(_1,0)] || 
-                           imag_rule[_val += construct<result_type>(0,_1)];
-                         
+            complex_rule = eps[_a = 0,_b = 1, _c = 0] >> 
+                           (
+                            (number_rule[_a = _1] || (sign_rule[_b = _1] > imag_rule[_c = _1]))
+                            |
+                            (sign_rule[_b = _1] || imag_rule[_c = _1])
+                            )[_val = construct<result_type>(_a,_b*_c)] ; 
                          
         }
     };
