@@ -26,6 +26,8 @@
 
 CPPUNIT_TEST_SUITE_REGISTRATION(complex32_parser_test);
 
+#define NUM_RES 1.e-6
+
 //-----------------------------------------------------------------------------
 void complex32_parser_test::setUp() { }
 
@@ -38,20 +40,20 @@ void complex32_parser_test::test_regular_value_for_j()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     result_type result = p.parse("1.0+j2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(1.0),result.real(),1.e-6);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+2.0),result.imag(),1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+1.0),result.real(),NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+2.0),result.imag(),NUM_RES);
 
     result = p.parse("-1.0+j2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),1.e-6);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(2.0),result.imag(),1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+2.0),result.imag(),NUM_RES);
 
     result = p.parse("1.0-j2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(1.0),result.real(),1.e-6);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-2.0),result.imag(),1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+1.0),result.real(),NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-2.0),result.imag(),NUM_RES);
     
     result = p.parse("-1.0-j2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),1.e-6);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-2.0),result.imag(),1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-2.0),result.imag(),NUM_RES);
 }
 
 //-----------------------------------------------------------------------------
@@ -60,20 +62,20 @@ void complex32_parser_test::test_regular_value_for_i()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     result_type result = p.parse("1.0+i2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(1.0),result.real(),1.e-6);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+2.0),result.imag(),1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+1.0),result.real(),NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+2.0),result.imag(),NUM_RES);
 
     result = p.parse("-1.0+i2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),1.e-6);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(2.0),result.imag(),1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+2.0),result.imag(),NUM_RES);
 
     result = p.parse("1.0-i2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(1.0),result.real(),1.e-6);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-2.0),result.imag(),1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+1.0),result.real(),NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-2.0),result.imag(),NUM_RES);
     
     result = p.parse("-1.0-i2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),1.e-6);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-2.0),result.imag(),1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-2.0),result.imag(),NUM_RES);
 }
 
 //-----------------------------------------------------------------------------
@@ -82,20 +84,20 @@ void complex32_parser_test::test_regular_value_for_I()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     result_type result = p.parse("1.0+I2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(1.0),result.real(),1.e-6);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+2.0),result.imag(),1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+1.0),result.real(),NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+2.0),result.imag(),NUM_RES);
 
     result = p.parse("-1.0+I2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),1.e-6);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(2.0),result.imag(),1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+2.0),result.imag(),NUM_RES);
 
     result = p.parse("1.0-I2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(1.0),result.real(),1.e-6);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-2.0),result.imag(),1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+1.0),result.real(),NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-2.0),result.imag(),NUM_RES);
     
     result = p.parse("-1.0-I2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),1.e-6);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-2.0),result.imag(),1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-2.0),result.imag(),NUM_RES);
 }
 //-----------------------------------------------------------------------------
 void complex32_parser_test::test_invalid_input()
@@ -107,7 +109,6 @@ void complex32_parser_test::test_invalid_input()
     CPPUNIT_ASSERT_THROW(p.parse("1.e+3-I1e+x"),parser_error);
     CPPUNIT_ASSERT_THROW(p.parse("1.+j-1"),parser_error);
     CPPUNIT_ASSERT_THROW(p.parse("1.+j+1"),parser_error);
-
     CPPUNIT_ASSERT_THROW(p.parse("1.j2"),parser_error);
 }
 
@@ -115,16 +116,16 @@ void complex32_parser_test::test_invalid_input()
 void complex32_parser_test::test_complex_zero()
 {
     result_type result = p.parse("0.+i0.");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.imag(),1.e-6);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.real(),1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.imag(),NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.real(),NUM_RES);
     
     result = p.parse("0.+I0.");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.imag(),1.e-6);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.real(),1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.imag(),NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.real(),NUM_RES);
     
     result = p.parse("0.+j0.");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.imag(),1.e-6);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.real(),1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.imag(),NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.real(),NUM_RES);
 }
 
 //----------------------------------------------------------------------------
@@ -133,8 +134,16 @@ void complex32_parser_test::test_real_only()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     result_type result = p.parse("1.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(1.0),result.real(),1.e-6);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.imag(),1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(1.0),result.real(),NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.imag(),NUM_RES);
+
+    result = p.parse("-1.0");
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.imag(), NUM_RES);
+    
+    result = p.parse("+1.0");
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(1.0),result.real(),NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.imag(),NUM_RES);
 }
 
 //----------------------------------------------------------------------------
@@ -143,10 +152,14 @@ void complex32_parser_test::test_imag_only()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     result_type result = p.parse("-i1e+6");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.real(),1.e-6);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1e+6),result.imag(),1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.real(),  NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1e+6),result.imag(),NUM_RES);
+    
+    result = p.parse("+i1e+6");
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.real(), NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(1e+6),result.imag(),NUM_RES);
     
     result = p.parse("i2e+6");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.real(),1.e-6);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(2e+6),result.imag(),1.e-6);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.real(), NUM_RES);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(2e+6),result.imag(),NUM_RES);
 }
