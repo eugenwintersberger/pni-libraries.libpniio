@@ -1,12 +1,12 @@
 set(HEADER_FILES spirit_rules.hpp
                  complex_rule.hpp
-                 
+                 delimiter_rule.hpp 
+                 element_rule_type.hpp
+
                  array_parser.hpp 
-                 delimiter_parser.hpp 
                  record_parser.hpp 
                  slice_parser.hpp 
                  value_parser.hpp
-                 element_rule_type.hpp
                  container_parser.hpp
                  parser.hpp
                  primitive_type_parser.hpp

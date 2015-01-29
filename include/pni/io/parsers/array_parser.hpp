@@ -35,7 +35,7 @@
 
 #include "../exceptions.hpp"
 #include "value_parser.hpp"
-#include "delimiter_parser.hpp"
+#include "delimiter_rule.hpp"
 
 
 namespace pni{
@@ -114,7 +114,7 @@ namespace io{
         //! parser for values
         value_parser<ITERT> value_;
         //! parser for delimiters
-        delimiter_parser<ITERT> delimiter_;
+        delimiter_rule<ITERT> delimiter_;
 
         //====================methods and constructor===========================
         //! default constructor

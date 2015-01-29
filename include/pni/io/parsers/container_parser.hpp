@@ -33,7 +33,7 @@
 
 #include "../exceptions.hpp"
 #include "element_rule_type.hpp"
-#include "delimiter_parser.hpp"
+#include "delimiter_rule.hpp"
 #include "primitive_type_parser.hpp"
 
 
@@ -83,7 +83,7 @@ namespace io{
             //! end symbol
             char _stop_token;
             //! parser for delimiters
-            delimiter_parser<ITERT> delimiter_;
+            delimiter_rule<ITERT> delimiter_;
 
         public:
             //! default constructor

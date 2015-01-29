@@ -49,15 +49,15 @@ namespace io{
     //! \tparam ITERT iterator type for the parser
     //!
     template<typename ITERT >
-    struct delimiter_parser : boost::spirit::qi::grammar<ITERT,pni::core::string()>
+    struct delimiter_rule : boost::spirit::qi::grammar<ITERT,pni::core::string()>
     {
         //! main parser rule
         boost::spirit::qi::rule<ITERT,pni::core::string()> delimiter;
 
         //--------------------------------------------------------------------
         //!default constructor
-        delimiter_parser() : 
-            delimiter_parser::base_type(delimiter)
+        delimiter_rule() : 
+            delimiter_rule::base_type(delimiter)
         {
             using namespace pni::core;
             using namespace boost::spirit::qi;
@@ -69,8 +69,8 @@ namespace io{
 
         //--------------------------------------------------------------------
         //! constructor
-        delimiter_parser(char symbol):
-            delimiter_parser::base_type(delimiter)
+        delimiter_rule(char symbol):
+            delimiter_rule::base_type(delimiter)
         {
             using namespace pni::core;
             using namespace boost::spirit::qi;

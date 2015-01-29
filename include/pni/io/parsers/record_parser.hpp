@@ -32,7 +32,7 @@
 #include <boost/variant.hpp>
 
 #include "value_parser.hpp"
-#include "delimiter_parser.hpp"
+#include "delimiter_rule.hpp"
 #include "array_parser.hpp"
 
 
@@ -75,7 +75,7 @@ namespace io{
         //! the value parser 
         value_parser<ITERT> value_;
         //! the delimiter parser
-        delimiter_parser<ITERT> delimiter_;
+        delimiter_rule<ITERT> delimiter_;
         //! the array parser
         array_parser<ITERT> array_;
     
