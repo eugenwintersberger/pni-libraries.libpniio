@@ -11,6 +11,8 @@ set(SOURCES primitive_parsers_test.cpp
             float64_parser_test.cpp
             float128_parser_test.cpp
             complex32_parser_test.cpp
+            complex64_parser_test.cpp
+            complex128_parser_test.cpp
             string_parser_test.cpp
             bool_parser_test.cpp
            )
