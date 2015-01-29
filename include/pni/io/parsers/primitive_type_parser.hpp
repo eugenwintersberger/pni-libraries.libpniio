@@ -34,7 +34,7 @@
 #include <boost/mpl/map.hpp>
 
 #include "../exceptions.hpp"
-#include "element_rule_type.hpp"
+#include "get_rule_type.hpp"
 
 namespace pni{
 namespace io{
@@ -70,13 +70,11 @@ namespace io{
     {
         public:
             typedef ITERT iterator_type;
-            typedef T     value_type;
+            typedef T     result_type;
             typedef qi::expectation_failure<iterator_type> expectation_error;
         private:
-            typedef element_rule_type<iterator_type,value_type> rule_type ;
-            typedef typename  rule_type::type parser_type;
+            typename get_rule_type<iterator_type,result_type>::type _rule;
 
-            parser_type _parser_instance;
         public:
             //!
             //! \brief parser primitive type
@@ -87,15 +85,13 @@ namespace io{
             //! \throws parser_error in case of any problems
             //! \param data the string with input data
             //! \return instance of the primitive type
-            value_type parse(const string &data) const
+            result_type parse(const string &data) const
             {
-                iterator_type start = data.begin();
-                iterator_type stop  = data.end();
-                value_type result;
+                result_type result;
 
                 try
                 {
-                    if(!qi::parse(start,stop,_parser_instance>qi::eoi,result))
+                    if(!qi::parse(data.begin(),data.end(),_rule>qi::eoi,result))
                     {
                         throw parser_error(EXCEPTION_RECORD,
                                 "Failure parsing primitive type!");
@@ -111,6 +107,7 @@ namespace io{
                 return result;
             }
     };
+
 
 //end of namespace
 }

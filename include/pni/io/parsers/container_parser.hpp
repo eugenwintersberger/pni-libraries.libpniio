@@ -32,7 +32,7 @@
 #include<vector>
 
 #include "../exceptions.hpp"
-#include "element_rule_type.hpp"
+#include "get_rule_type.hpp"
 #include "delimiter_rule.hpp"
 #include "primitive_type_parser.hpp"
 
@@ -76,7 +76,7 @@ namespace io{
         private:
             typedef T value_type; 
             //! element rule
-            typename element_rule_type<ITERT,value_type>::type element_;
+            typename get_rule_type<ITERT,value_type>::type element_rule_;
 
             //! starting symbol
             char _start_token;
@@ -131,15 +131,13 @@ namespace io{
 
                 result_type container;
 
-                auto rule = element_ % delimiter_;
-
                 try
                 {
                     if((_start_token == ' ') && (_stop_token == ' '))
-                        qi::parse(s.begin(),s.end(),element_%delimiter_,container);
+                        qi::parse(s.begin(),s.end(),element_rule_%delimiter_,container);
                     else
                         qi::parse(s.begin(),s.end(),
-                                  _start_token>(element_ % delimiter_)>_stop_token,
+                                  _start_token>(element_rule_ % delimiter_)>_stop_token,
                                   container);
                 }
                 catch(...)

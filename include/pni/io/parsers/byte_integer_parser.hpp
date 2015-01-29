@@ -43,12 +43,11 @@ namespace io{
     {
         public:
             typedef ITERT iterator_type;
-            typedef uint8 value_type;
+            typedef uint8 result_type;
         private:
-            typedef element_rule_type<iterator_type,uint16> rule_type ;
-            typedef typename  rule_type::type parser_type;
+            typedef typename get_rule_type<iterator_type,uint16>::type  rule_type;
 
-            parser_type _parser_instance;
+            rule_type _rule;
         public:
             //!
             //! \brief parser primitive type
@@ -59,16 +58,16 @@ namespace io{
             //! \throws parser_error in case of any problems
             //! \param data the string with input data
             //! \return instance of the primitive type
-            value_type parse(const string &data)
+            result_type parse(const string &data)
             {
                 iterator_type start = data.begin();
                 iterator_type stop  = data.end();
                 uint16 tmp;
-                value_type result;
+                result_type result;
 
                 try
                 {
-                    if(!qi::parse(start,stop,_parser_instance>qi::eoi,tmp))
+                    if(!qi::parse(start,stop,_rule>qi::eoi,tmp))
                     {
                         throw parser_error(EXCEPTION_RECORD,
                                 "Failure parsing primitive type!");
@@ -82,7 +81,7 @@ namespace io{
 
                 try
                 {
-                    result = convert<value_type>(tmp);
+                    result = convert<result_type>(tmp);
                 }
                 catch(...)
                 {
@@ -99,12 +98,11 @@ namespace io{
     {
         public:
             typedef ITERT iterator_type;
-            typedef int8 value_type;
+            typedef int8  result_type;
         private:
-            typedef element_rule_type<iterator_type,int16> rule_type ;
-            typedef typename  rule_type::type parser_type;
+            typedef typename get_rule_type<iterator_type,int16>::type rule_type ;
 
-            parser_type _parser_instance;
+            rule_type _rule;
         public:
             //!
             //! \brief parser primitive type
@@ -115,16 +113,16 @@ namespace io{
             //! \throws parser_error in case of any problems
             //! \param data the string with input data
             //! \return instance of the primitive type
-            value_type parse(const string &data)
+            result_type parse(const string &data)
             {
                 iterator_type start = data.begin();
                 iterator_type stop  = data.end();
                 int16 tmp;
-                value_type result;
+                result_type result;
 
                 try
                 {
-                    if(!qi::parse(start,stop,_parser_instance>qi::eoi,tmp))
+                    if(!qi::parse(start,stop,_rule>qi::eoi,tmp))
                     {
                         throw parser_error(EXCEPTION_RECORD,
                                 "Failure parsing primitive type!");
@@ -138,7 +136,7 @@ namespace io{
 
                 try
                 {
-                    result = convert<value_type>(tmp);
+                    result = convert<result_type>(tmp);
                 }
                 catch(...)
                 {

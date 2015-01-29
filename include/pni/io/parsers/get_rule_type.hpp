@@ -41,7 +41,7 @@ namespace io{
              typename ITERT,
              typename T
             >
-    struct element_rule_type
+    struct get_rule_type
     {
         typedef typename  mpl::at<spirit_rules,T>::type type;
     };
@@ -51,7 +51,7 @@ namespace io{
              typename ITERT,
              typename T
             >
-    struct element_rule_type<ITERT,std::complex<T>>
+    struct get_rule_type<ITERT,std::complex<T>>
     {
         typedef complex_rule<ITERT,T> type;
     };
@@ -59,7 +59,7 @@ namespace io{
 
     //------------------------------------------------------------------------
     template<typename ITERT>
-    struct element_rule_type<ITERT,pni::core::value>
+    struct get_rule_type<ITERT,pni::core::value>
     {
         typedef value_rule<ITERT> type;
     };
