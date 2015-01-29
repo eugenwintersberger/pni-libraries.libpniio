@@ -53,7 +53,7 @@ namespace io{
         mpl::pair<core::float64, PARSER_TYPE(spirit::double_)     >,
         mpl::pair<core::float128,PARSER_TYPE(spirit::long_double) >,
         mpl::pair<core::bool_t,  PARSER_TYPE(spirit::bool_)       >
-        > spirit_parsers;
+        > spirit_rules;
 
 //end of namespace
 }

@@ -31,7 +31,7 @@
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
 
-#include "complex_parser.hpp"
+#include "complex_rule.hpp"
 
 namespace pni{
 namespace io{
@@ -42,7 +42,7 @@ namespace io{
             >
     struct element_rule_type
     {
-        typedef typename  mpl::at<spirit_parsers,T>::type type;
+        typedef typename  mpl::at<spirit_rules,T>::type type;
     };
 
     //------------------------------------------------------------------------
@@ -52,7 +52,7 @@ namespace io{
             >
     struct element_rule_type<ITERT,std::complex<T>>
     {
-        typedef complex_parser<ITERT,T> type;
+        typedef complex_rule<ITERT,T> type;
     };
 
 //end of namespace

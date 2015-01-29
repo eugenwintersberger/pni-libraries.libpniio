@@ -3,7 +3,6 @@ set(SOURCES array_parser_test.cpp
             slice_parser_test.cpp
             value_parser_test.cpp
             parser_test.cpp
-            complex_parser_test.cpp
             container_parser_test.cpp
            )
 

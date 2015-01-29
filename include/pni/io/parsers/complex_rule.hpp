@@ -35,7 +35,7 @@
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
 
-#include "spirit_parsers.hpp"
+#include "spirit_rules.hpp"
 
 namespace pni{
 namespace io{
@@ -68,10 +68,10 @@ namespace io{
     //! \tparam ITERT iterator type
     //!
     template<typename ITERT,typename BASET>
-    struct complex_parser:  complex_grammar<ITERT,BASET>
+    struct complex_rule:  complex_grammar<ITERT,BASET>
     {
         typedef std::complex<BASET> result_type;
-        typename boost::mpl::at<spirit_parsers,BASET>::type base_parser;
+        typename boost::mpl::at<spirit_rules,BASET>::type base_parser;
         //!rule matching a single numeric value
         boost::spirit::qi::rule<ITERT,BASET()> number_rule;
         //! rule obtaining the sign
@@ -81,10 +81,10 @@ namespace io{
         //! rule determining the imaginary part
         boost::spirit::qi::rule<ITERT,BASET()>  imag_rule;
         //! rule defining the entire complex number
-        boost::spirit::qi::rule<ITERT,locals<BASET>,result_type()> complex_rule;
+        boost::spirit::qi::rule<ITERT,locals<BASET>,result_type()> complex_;
 
         //!default constructor
-        complex_parser() : complex_parser::base_type(complex_rule)
+        complex_rule() : complex_rule::base_type(complex_)
         {
             using namespace pni::core;
             using namespace boost::spirit::qi;
@@ -97,12 +97,12 @@ namespace io{
             i_rule      = (char_('i') | char_('j') | char_('I'))>!sign_rule;
             imag_rule   = i_rule>number_rule[_val = _1];
 
-            complex_rule = eps[_a = 0,_b = 1, _c = 0] >> 
-                           (
-                            (number_rule[_a = _1] || (sign_rule[_b = _1] > imag_rule[_c = _1]))
-                            |
-                            (sign_rule[_b = _1] || imag_rule[_c = _1])
-                            )[_val = construct<result_type>(_a,_b*_c)] ; 
+            complex_= eps[_a = 0,_b = 1, _c = 0] >> 
+                      (
+                       (number_rule[_a = _1] || (sign_rule[_b = _1] > imag_rule[_c = _1]))
+                       |
+                       (sign_rule[_b = _1] || imag_rule[_c = _1])
+                      )[_val = construct<result_type>(_a,_b*_c)] ; 
                          
         }
     };
