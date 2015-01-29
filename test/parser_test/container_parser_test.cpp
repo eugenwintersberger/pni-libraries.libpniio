@@ -34,6 +34,15 @@ void container_parser_test::setUp() { }
 void container_parser_test::tearDown() {}
 
 //-----------------------------------------------------------------------------
+void container_parser_test::test_default()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    result_type result = parser_type().parse("1 2 3 4 5");
+
+    CPPUNIT_ASSERT(result.size()==5);
+}
+//-----------------------------------------------------------------------------
 void container_parser_test::test_simple()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;

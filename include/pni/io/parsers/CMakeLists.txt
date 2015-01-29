@@ -3,11 +3,12 @@ set(HEADER_FILES spirit_rules.hpp
                  delimiter_rule.hpp 
                  value_rule.hpp
                  get_rule_type.hpp
+                 sequence_rule.hpp
 
                  array_parser.hpp 
                  record_parser.hpp 
                  slice_parser.hpp 
-                 container_parser.hpp
+                 vector_parser.hpp
                  parser.hpp
                  primitive_type_parser.hpp
                  string_parser.hpp

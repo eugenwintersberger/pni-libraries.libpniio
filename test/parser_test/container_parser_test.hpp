@@ -38,6 +38,7 @@ using namespace pni::io;
 class container_parser_test:public CppUnit::TestFixture 
 {
 	CPPUNIT_TEST_SUITE(container_parser_test);
+    CPPUNIT_TEST(test_default);
     CPPUNIT_TEST(test_simple);
     CPPUNIT_TEST(test_overflow);
 	CPPUNIT_TEST_SUITE_END();
@@ -49,6 +50,7 @@ class container_parser_test:public CppUnit::TestFixture
 public:
 	void setUp();
 	void tearDown();
+    void test_default();
     void test_simple();
     void test_overflow();
 };

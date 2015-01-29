@@ -32,7 +32,7 @@
 #include<vector>
 
 #include "../exceptions.hpp"
-#include "get_rule_type.hpp"
+#include "sequence_rule.hpp"
 #include "delimiter_rule.hpp"
 #include "primitive_type_parser.hpp"
 
@@ -74,39 +74,27 @@ namespace io{
             typedef ITERT           iterator_type;
             typedef qi::expectation_failure<iterator_type> expectation_error;
         private:
-            typedef T value_type; 
-            //! element rule
-            typename get_rule_type<ITERT,value_type>::type element_rule_;
+            sequence_rule<ITERT,result_type> sequence_;
 
-            //! starting symbol
-            char _start_token;
-            //! end symbol
-            char _stop_token;
-            //! parser for delimiters
-            delimiter_rule<ITERT> delimiter_;
 
         public:
+            //-----------------------------------------------------------------
             //! default constructor
-            parser() : 
-                _start_token('['),
-                _stop_token(']'),
-                delimiter_(',')
-
-            { }
+            parser() : sequence_() 
+            {}
 
             //-----------------------------------------------------------------
-            //!
-            //! \brief constructor
-            //!
-            //! \param start start symbol
-            //! \param stop end symbol
-            //! \param del data delimiter symbol
-            //!
-            parser(char start,char stop,char del):
-                _start_token(start),
-                _stop_token(stop),
-                delimiter_(del)
-            { }
+            parser(char del): sequence_(del) 
+            {}
+
+            //-----------------------------------------------------------------
+            parser(char start,char stop) : sequence_(start,stop) 
+            {}
+
+            //-----------------------------------------------------------------
+            parser(char start,char stop,char del) : sequence_(start,stop,del) 
+            {}
+
 
             //-----------------------------------------------------------------
             //!
@@ -133,12 +121,11 @@ namespace io{
 
                 try
                 {
-                    if((_start_token == ' ') && (_stop_token == ' '))
-                        qi::parse(s.begin(),s.end(),element_rule_%delimiter_,container);
-                    else
-                        qi::parse(s.begin(),s.end(),
-                                  _start_token>(element_rule_ % delimiter_)>_stop_token,
-                                  container);
+                    if(!qi::parse(s.begin(),s.end(),sequence_>qi::eoi,container))
+                    {
+                        throw parser_error(EXCEPTION_RECORD,
+                                "Error parsing sequence!");
+                    }
                 }
                 catch(...)
                 {

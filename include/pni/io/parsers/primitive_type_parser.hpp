@@ -1,4 +1,3 @@
-
 //
 // (c) Copyright 2015 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
