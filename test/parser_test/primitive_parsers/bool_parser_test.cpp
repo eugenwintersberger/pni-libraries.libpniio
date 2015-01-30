@@ -37,8 +37,8 @@ void bool_parser_test::test_regular_value()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    CPPUNIT_ASSERT(p.parse("true"));
-    CPPUNIT_ASSERT(!p.parse("false"));
+    CPPUNIT_ASSERT(p("true"));
+    CPPUNIT_ASSERT(!p("false"));
 }
 
 //----------------------------------------------------------------------------
@@ -46,12 +46,12 @@ void bool_parser_test::test_invalid_input()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    CPPUNIT_ASSERT_THROW(p.parse("abc"),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse("True"),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse("False"),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse("Xtrue"),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse("1"),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse("0"),parser_error);
+    CPPUNIT_ASSERT_THROW(p("abc"),parser_error);
+    CPPUNIT_ASSERT_THROW(p("True"),parser_error);
+    CPPUNIT_ASSERT_THROW(p("False"),parser_error);
+    CPPUNIT_ASSERT_THROW(p("Xtrue"),parser_error);
+    CPPUNIT_ASSERT_THROW(p("1"),parser_error);
+    CPPUNIT_ASSERT_THROW(p("0"),parser_error);
 }
 
 

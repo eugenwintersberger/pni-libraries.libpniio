@@ -37,8 +37,8 @@ void float128_parser_test::test_regular_value()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(12,p.parse("12"),1.e-8);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(-1.234e+4,p.parse("-1.234e+4"),1.e-8);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(12,p("12"),1.e-8);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(-1.234e+4,p("-1.234e+4"),1.e-8);
 }
 
 //-----------------------------------------------------------------------------
@@ -46,13 +46,13 @@ void float128_parser_test::test_invalid_input()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    CPPUNIT_ASSERT_THROW(p.parse("1.ab"),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse(" 1."),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse("1. "),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse("x1."),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse("-1x."),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse("1.ex"),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse("1.e-1x"),parser_error);
+    CPPUNIT_ASSERT_THROW(p("1.ab"),parser_error);
+    CPPUNIT_ASSERT_THROW(p(" 1."),parser_error);
+    CPPUNIT_ASSERT_THROW(p("1. "),parser_error);
+    CPPUNIT_ASSERT_THROW(p("x1."),parser_error);
+    CPPUNIT_ASSERT_THROW(p("-1x."),parser_error);
+    CPPUNIT_ASSERT_THROW(p("1.ex"),parser_error);
+    CPPUNIT_ASSERT_THROW(p("1.e-1x"),parser_error);
     
 }
 

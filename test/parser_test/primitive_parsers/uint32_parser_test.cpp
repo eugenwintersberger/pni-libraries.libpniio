@@ -37,9 +37,9 @@ void uint32_parser_test::test_regular_value()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    CPPUNIT_ASSERT(p.parse("12") == 12);
-    CPPUNIT_ASSERT(p.parse("0")  == 0);
-    CPPUNIT_ASSERT(p.parse("04") == 4);
+    CPPUNIT_ASSERT(p("12") == 12);
+    CPPUNIT_ASSERT(p("0")  == 0);
+    CPPUNIT_ASSERT(p("04") == 4);
 }
 
 //-----------------------------------------------------------------------------
@@ -47,9 +47,9 @@ void uint32_parser_test::test_invalid_input()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
   
-    CPPUNIT_ASSERT_THROW(p.parse("x10"),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse("1x0"),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse("10x"),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse("-10"),parser_error);
+    CPPUNIT_ASSERT_THROW(p("x10"),parser_error);
+    CPPUNIT_ASSERT_THROW(p("1x0"),parser_error);
+    CPPUNIT_ASSERT_THROW(p("10x"),parser_error);
+    CPPUNIT_ASSERT_THROW(p("-10"),parser_error);
 }
 

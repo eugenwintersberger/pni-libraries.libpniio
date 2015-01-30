@@ -115,7 +115,7 @@ namespace io{
             //! \param p parser instance
             //! \return array instance
             //!
-            result_type  parse(const core::string &s) const
+            result_type  operator()(const core::string &s) const
             {
                 using namespace pni::core;
                 

@@ -39,9 +39,9 @@ void int8_parser_test::test_regular_value()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    CPPUNIT_ASSERT(p.parse("12")  == 12);
-    CPPUNIT_ASSERT(p.parse("0")   == 0);
-    CPPUNIT_ASSERT(p.parse("-100")== -100);
+    CPPUNIT_ASSERT(p("12")  == 12);
+    CPPUNIT_ASSERT(p("0")   == 0);
+    CPPUNIT_ASSERT(p("-100")== -100);
 }
 
 //-----------------------------------------------------------------------------
@@ -49,8 +49,8 @@ void int8_parser_test::test_invalid_input()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
   
-    CPPUNIT_ASSERT_THROW(p.parse("a10"),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse("-10a"),parser_error);
-    CPPUNIT_ASSERT_THROW(p.parse("-10a0"),parser_error);
+    CPPUNIT_ASSERT_THROW(p("a10"),parser_error);
+    CPPUNIT_ASSERT_THROW(p("-10a"),parser_error);
+    CPPUNIT_ASSERT_THROW(p("-10a0"),parser_error);
 }
 

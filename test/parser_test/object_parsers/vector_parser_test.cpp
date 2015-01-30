@@ -38,7 +38,8 @@ void vector_parser_test::test_default()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    result_type result = parser_type().parse("1 2 3 4 5");
+    parser_type p;
+    result_type result = p("1 2 3 4 5");
 
     CPPUNIT_ASSERT(result.size()==5);
 }
@@ -47,8 +48,9 @@ void vector_parser_test::test_default()
 void vector_parser_test::test_simple()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    result_type result = parser_type('[',']',',').parse("[1,2,3,4,5]");
+   
+    parser_type p('[',']',',');
+    result_type result = p("[1,2,3,4,5]");
     std::cerr<<result.size()<<std::endl;
     CPPUNIT_ASSERT(result.size() == 5);
 }
@@ -58,5 +60,6 @@ void vector_parser_test::test_overflow()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    CPPUNIT_ASSERT_THROW(parser_type('[',']',',').parse("[10,-20,10]"),parser_error);
+    parser_type p('[',']',',');
+    CPPUNIT_ASSERT_THROW(p("[10,-20,10]"),parser_error);
 }

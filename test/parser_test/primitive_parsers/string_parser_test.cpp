@@ -39,8 +39,8 @@ void string_parser_test::test_regular_value()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    CPPUNIT_ASSERT(p.parse("hello world") == "hello world");
-    CPPUNIT_ASSERT(p.parse(" this is a text") == " this is a text");
+    CPPUNIT_ASSERT(p("hello world") == "hello world");
+    CPPUNIT_ASSERT(p(" this is a text") == " this is a text");
 }
 
 

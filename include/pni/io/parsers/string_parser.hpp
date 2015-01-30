@@ -34,6 +34,12 @@ namespace io{
 
 
     //------------------------------------------------------------------------
+    //!
+    //! \ingroup parser_classes
+    //! \brief string parser
+    //! 
+    //! This spcialization of the parser template is for string types. 
+    //!
     template<typename ITERT>
     class parser<ITERT,core::string>
     {
@@ -42,7 +48,7 @@ namespace io{
             typedef ITERT        iterator_type;
 
 
-            core::string parse(const string &data)
+            core::string operator()(const string &data) const
             {
                 return data;
             }

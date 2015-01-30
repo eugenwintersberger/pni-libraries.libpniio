@@ -84,7 +84,7 @@ namespace io{
             //! \throws parser_error in case of any problems
             //! \param data the string with input data
             //! \return instance of the primitive type
-            result_type parse(const string &data) const
+            result_type operator()(const string &data) const
             {
                 read_type   buffer;
                 

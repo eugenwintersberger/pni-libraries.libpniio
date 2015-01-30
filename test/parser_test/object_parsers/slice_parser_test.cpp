@@ -42,19 +42,19 @@ void slice_parser_test::test_full_parser()
     string s1 = "1:10";
     string s2 = "10:100:2";
     string s3 = "5";
-    slice s = p.parse(s1);
+    slice s = p(s1);
 
     CPPUNIT_ASSERT(s.first() == 1);
     CPPUNIT_ASSERT(s.last()  == 10);
     CPPUNIT_ASSERT(s.stride() == 1);
 
-    s = p.parse(s2);
+    s = p(s2);
     
     CPPUNIT_ASSERT(s.first() == 10);
     CPPUNIT_ASSERT(s.last()  == 100);
     CPPUNIT_ASSERT(s.stride() == 2);
     
-    s = p.parse(s3);
+    s = p(s3);
     
     CPPUNIT_ASSERT(s.first() == 5);
     CPPUNIT_ASSERT(s.last()  == 6);
@@ -70,13 +70,13 @@ void slice_parser_test::test_half_parser()
     string s1 = ":100";
     string s2 = ":200:3";
     
-    slice s = p.parse(s1);
+    slice s = p(s1);
 
     CPPUNIT_ASSERT(s.first() == 0);
     CPPUNIT_ASSERT(s.last()  == 100);
     CPPUNIT_ASSERT(s.stride() == 1);
 
-    s = p.parse(s2);
+    s = p(s2);
     
     CPPUNIT_ASSERT(s.first() == 0);
     CPPUNIT_ASSERT(s.last()  == 200);

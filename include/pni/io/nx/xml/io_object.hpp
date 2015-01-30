@@ -137,18 +137,7 @@ namespace xml{
             typedef string::const_iterator iterator_type;
             pni::io::parser<iterator_type,T> p;
 
-            return p.parse(node_data().read(io_node));
-
-        }
-
-        template<typename CTYPE>
-        static CTYPE data_from_xml(const node &io_node,char separator,
-                char start=' ',char stop=' ')
-        {
-            typedef string::const_iterator iterator_type;
-            pni::io::parser<iterator_type,CTYPE> p(start,stop,separator);
-
-            return p.parse(node_data().read(io_node));
+            return p(node_data().read(io_node));
         }
 
         //--------------------------------------------------------------------
