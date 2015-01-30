@@ -1,6 +1,4 @@
 set(SOURCES 
-            #array_parser_test.cpp
-            #record_parser_test.cpp
             slice_parser_test.cpp
             parser_test.cpp
             container_parser_test.cpp

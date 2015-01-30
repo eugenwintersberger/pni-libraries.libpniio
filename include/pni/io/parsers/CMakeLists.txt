@@ -5,8 +5,6 @@ set(HEADER_FILES spirit_rules.hpp
                  get_rule_type.hpp
                  sequence_rule.hpp
 
-                 array_parser.hpp 
-                 record_parser.hpp 
                  slice_parser.hpp 
                  vector_parser.hpp
                  parser.hpp
