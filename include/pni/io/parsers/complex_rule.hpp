@@ -39,60 +39,59 @@
 
 namespace pni{
 namespace io{
-
-    template<typename BASET>
-    using locals = boost::spirit::qi::locals<BASET,BASET,BASET>;
-
-
-    template<
-             typename ITERT,
-             typename BASET
-            >
-    using complex_grammar = boost::spirit::qi::grammar
-                            <
-                             ITERT,
-                             locals<BASET>, 
-                             std::complex<BASET>()
-                            >;
-   
+ 
+    using namespace pni::core;
+    using namespace boost::spirit;
     //!
     //! \ingroup parser_classes
-    //! \brief value parser
+    //! \brief complex number rule
     //!
-    //! Parser reading an integer or floating point number from a string and 
-    //! stores it into an instance of pni::core::value. The parser is able 
-    //! of infering the appropriate data type from its string representation. 
-    //! Currently all integers are interpreted as INT32 and all floating 
-    //! point numbers as FLOAT64 types.
-    //! 
+    //! This rule can be used to parse complex numbers. Complex numbers are 
+    //! represented as A(+|-)(I|i|j)B or, if only imaginary, as 
+    //! (+|-)(I|i|j)B. The imaginary part is denoted either by i, j, or I. 
+    //! No blanks are allowed between real and imaginary part. 
+    //!
     //! \tparam ITERT iterator type
+    //! \tparam CTYPE complex type
     //!
-    template<typename ITERT,typename BASET>
-    struct complex_rule:  complex_grammar<ITERT,BASET>
+    template<
+             typename ITERT,
+             typename CTYPE
+            >
+    struct complex_rule:  qi::grammar<ITERT,
+                                      qi::locals<
+                                      typename core::type_info<CTYPE>::base_type,
+                                      typename core::type_info<CTYPE>::base_type,
+                                      typename core::type_info<CTYPE>::base_type
+                                      >,
+                                      CTYPE()>
     {
-        typedef std::complex<BASET> result_type;
-        typename boost::mpl::at<spirit_rules,BASET>::type base_parser;
+        //! result type of the rule
+        typedef CTYPE result_type;
+        typedef typename core::type_info<result_type>::base_type base_t;
+
+        //! rule to parse the base type
+        typename boost::mpl::at<spirit_rules,base_t>::type base_rule;
+
         //!rule matching a single numeric value
-        boost::spirit::qi::rule<ITERT,BASET()> number_rule;
+        boost::spirit::qi::rule<ITERT,base_t()> number_rule;
         //! rule obtaining the sign
-        boost::spirit::qi::rule<ITERT,BASET()> sign_rule;
+        boost::spirit::qi::rule<ITERT,base_t()> sign_rule;
         //! rule matching the separator i,j,I 
-        boost::spirit::qi::rule<ITERT>    i_rule;
+        boost::spirit::qi::rule<ITERT>         i_rule;
         //! rule determining the imaginary part
-        boost::spirit::qi::rule<ITERT,BASET()>  imag_rule;
+        boost::spirit::qi::rule<ITERT,base_t()> imag_rule;
         //! rule defining the entire complex number
-        boost::spirit::qi::rule<ITERT,locals<BASET>,result_type()> complex_;
+        boost::spirit::qi::rule<ITERT,qi::locals<base_t,base_t,base_t>,result_type()> complex_;
 
         //!default constructor
         complex_rule() : complex_rule::base_type(complex_)
         {
-            using namespace pni::core;
             using namespace boost::spirit::qi;
-            using namespace boost::fusion;
             using namespace boost::phoenix;
             using boost::spirit::qi::_1;
 
-            number_rule = base_parser[_val = _1];
+            number_rule = base_rule[_val = _1];
             sign_rule   = char_('+')[_val=1] | char_('-')[_val=-1.] ;
             i_rule      = (char_('i') | char_('j') | char_('I'))>!sign_rule;
             imag_rule   = i_rule>number_rule[_val = _1];

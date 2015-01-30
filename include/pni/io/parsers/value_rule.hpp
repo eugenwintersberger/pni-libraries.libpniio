@@ -122,7 +122,7 @@ namespace io{
     {
         typename boost::mpl::at<spirit_rules,int64>::type   integer_rule_;
         typename boost::mpl::at<spirit_rules,float64>::type float_rule_;
-        complex_rule<ITERT,float64>                         complex_rule_;
+        complex_rule<ITERT,complex64>                         complex_rule_;
         //!value reading rule
         boost::spirit::qi::rule<ITERT,pni::core::value()> value_;
         boost::spirit::qi::rule<ITERT> sign_rule;

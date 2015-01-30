@@ -53,7 +53,7 @@ namespace io{
             >
     struct get_rule_type<ITERT,std::complex<T>>
     {
-        typedef complex_rule<ITERT,T> type;
+        typedef complex_rule<ITERT,std::complex<T>> type;
     };
 
 
