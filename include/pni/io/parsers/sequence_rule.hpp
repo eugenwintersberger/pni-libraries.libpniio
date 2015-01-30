@@ -68,23 +68,43 @@ namespace io{
             >
     struct sequence_rule : qi::grammar<ITERT,ST()>
     {
+        //! value type of the sequence type
         typedef typename ST::value_type value_type; 
-        //! element rule
+        //! rule to parse the value_type of the sequence
         typename get_rule_type<ITERT,value_type>::type element_rule_;
 
+        //! delimiter rule
         delimiter_rule<ITERT> delimiter_;
+
+        //! a possible start symbol
         char start_symbol_;
+        //! a possible stop symbol
         char stop_symbol_;
+        //! the full rule to parse the sequence
         qi::rule<ITERT,ST()> sequence_;
 
         //--------------------------------------------------------------------
-        //! default constructor
+        //!
+        //! \brief default constructor
+        //!
+        //! When using the default constructor the elements are assumed to be 
+        //! separated by an arbitrary number of blanks. No start and stop 
+        //! symbol are taken into account.
+        //!
         sequence_rule() : sequence_rule::base_type(sequence_)
         { 
             sequence_ = element_rule_ %(+qi::blank); 
         }
 
         //--------------------------------------------------------------------
+        //!
+        //! \brief constructor
+        //!
+        //! This version of the sequence_rule constructor allows passing a
+        //! a custom delimiter symbol. The delimiter_rule class is used 
+        //! to parse the delimiter. Thus, the delimiter symbol can have an 
+        //! arbitrary number of preceding and tailing blanks. 
+        //!
         sequence_rule(char del): 
             sequence_rule::base_type(sequence_),
             delimiter_(del)
@@ -93,6 +113,14 @@ namespace io{
         }
 
         //--------------------------------------------------------------------
+        //!
+        //! \brief constructor
+        //! 
+        //! Set a start and stop symbol. In this case the rule expects that the 
+        //! sequence is embraced into a start and stop symbol. However, the 
+        //! individual elements are still separated by an arbitrary number of
+        //! blanks. 
+        //!
         sequence_rule(char start,char stop):
             sequence_rule::base_type(sequence_),
             start_symbol_(start),
@@ -102,6 +130,12 @@ namespace io{
         }
 
         //--------------------------------------------------------------------
+        //!
+        //! \brief constructor
+        //! 
+        //! Customizes the start and stop symbol as well as the delimiter 
+        //! symbol. 
+        //! 
         sequence_rule(char start,char stop,char del):
             sequence_rule::base_type(sequence_),
             delimiter_(del),
