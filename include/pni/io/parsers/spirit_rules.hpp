@@ -40,6 +40,13 @@ namespace io{
 #define PARSER_TYPE(p)\
     std::remove_const<decltype(p)>::type
 
+    //!
+    //! \ingroup parser_classes
+    //! \brief spirit rule map
+    //!
+    //! This MPL map provides a mapping from data types to their appropriate
+    //! parsing rules provided by the boost::spirit library.
+    //!
     typedef mpl::map<
         mpl::pair<core::uint8 ,spirit::qi::uint_parser<core::uint8,10,1,4> >,
         mpl::pair<core::uint16,PARSER_TYPE(spirit::qi::ushort_)>,

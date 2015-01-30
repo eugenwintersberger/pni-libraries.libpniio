@@ -37,27 +37,57 @@
 namespace pni{
 namespace io{
 
+    //!
+    //! \ingroup parser_classes
+    //! \brief obtain rule type
+    //! 
+    //! This template provides the appropriate rule to parse a value of a 
+    //! given data type T. This rule may also depends on the iterator type
+    //! which is passed as the first template parameters.
+    //!
+    //! \tparam ITERT iterator type
+    //! \tparam T data type for which to select the parsing rule
+    //!
     template<
              typename ITERT,
              typename T
             >
     struct get_rule_type
     {
+        //! parsing rule for T 
         typedef typename  mpl::at<spirit_rules,T>::type type;
     };
 
     //------------------------------------------------------------------------
+    //!
+    //! \ingroup parser_classes
+    //! \brief obtain rule for complex numbers
+    //!
+    //! This specialization of the get_rule_type template for complex number
+    //! types. 
+    //!
+    //! \tparam ITERT iterator type
+    //! \tparam T base type for the complex type
+    //!
     template<
              typename ITERT,
              typename T
             >
     struct get_rule_type<ITERT,std::complex<T>>
     {
+        //! parsing rule for the complex type
         typedef complex_rule<ITERT,std::complex<T>> type;
     };
 
-
     //------------------------------------------------------------------------
+    //!
+    //! \ingroup parser_classes
+    //! \brief obtain rule for parsing values
+    //!
+    //! This specialization provides the rule type for parsing value instances.
+    //! 
+    //! \tparam ITERT iterator type
+    //! 
     template<typename ITERT>
     struct get_rule_type<ITERT,pni::core::value>
     {
