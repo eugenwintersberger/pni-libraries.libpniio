@@ -21,7 +21,6 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 //
-
 #pragma once
 
 #include<pni/core/types.hpp>
@@ -33,6 +32,7 @@
 
 #include "complex_rule.hpp"
 #include "value_rule.hpp"
+#include "slice_rule.hpp"
 
 namespace pni{
 namespace io{
@@ -92,6 +92,21 @@ namespace io{
     struct get_rule_type<ITERT,pni::core::value>
     {
         typedef value_rule<ITERT> type;
+    };
+
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup parser_classes
+    //! \brief obtain rule for parsing slices
+    //! 
+    //! This specialization provides the rule type for parsing slices. 
+    //! 
+    //! \tparam ITERT iterator type
+    //! 
+    template<typename ITERT>
+    struct get_rule_type<ITERT,pni::core::slice>
+    {
+        typedef slice_rule<ITERT> type;
     };
 
 //end of namespace

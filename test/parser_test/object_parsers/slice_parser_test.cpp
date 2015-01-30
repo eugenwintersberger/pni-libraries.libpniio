@@ -42,28 +42,19 @@ void slice_parser_test::test_full_parser()
     string s1 = "1:10";
     string s2 = "10:100:2";
     string s3 = "5";
-    iterator_t start,stop;
-    slice s;
-
-    start = s1.begin();
-    stop = s2.end();
-    parse(start,stop,parser,s);
+    slice s = p.parse(s1);
 
     CPPUNIT_ASSERT(s.first() == 1);
     CPPUNIT_ASSERT(s.last()  == 10);
     CPPUNIT_ASSERT(s.stride() == 1);
 
-    start = s2.begin();
-    stop  = s2.end();
-    parse(start,stop,parser,s);
+    s = p.parse(s2);
     
     CPPUNIT_ASSERT(s.first() == 10);
     CPPUNIT_ASSERT(s.last()  == 100);
     CPPUNIT_ASSERT(s.stride() == 2);
     
-    start = s3.begin();
-    stop  = s3.end();
-    parse(start,stop,parser,s);
+    s = p.parse(s3);
     
     CPPUNIT_ASSERT(s.first() == 5);
     CPPUNIT_ASSERT(s.last()  == 6);
@@ -78,20 +69,14 @@ void slice_parser_test::test_half_parser()
 
     string s1 = ":100";
     string s2 = ":200:3";
-    iterator_t start,stop;
-    slice s;
-
-    start = s1.begin();
-    stop = s2.end();
-    parse(start,stop,parser,s);
+    
+    slice s = p.parse(s1);
 
     CPPUNIT_ASSERT(s.first() == 0);
     CPPUNIT_ASSERT(s.last()  == 100);
     CPPUNIT_ASSERT(s.stride() == 1);
 
-    start = s2.begin();
-    stop  = s2.end();
-    parse(start,stop,parser,s);
+    s = p.parse(s2);
     
     CPPUNIT_ASSERT(s.first() == 0);
     CPPUNIT_ASSERT(s.last()  == 200);

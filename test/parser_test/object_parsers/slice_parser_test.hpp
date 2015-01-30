@@ -24,9 +24,8 @@
 #pragma once
 
 #include <boost/current_function.hpp>
-#include <pni/io/parsers/slice_parser.hpp>
+#include <pni/io/parsers.hpp>
 #include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
@@ -43,9 +42,10 @@ class slice_parser_test:public CppUnit::TestFixture
     CPPUNIT_TEST(test_half_parser);
 	CPPUNIT_TEST_SUITE_END();
 
-    typedef string::const_iterator iterator_t;
-    typedef slice_parser<iterator_t> slice_parser_t;
-    slice_parser_t parser;
+    typedef slice                              return_type;
+    typedef string::const_iterator             iterator_type;
+    typedef parser<iterator_type,return_type>  parser_type;
+    parser_type p;
 public:
 	void setUp();
 	void tearDown();

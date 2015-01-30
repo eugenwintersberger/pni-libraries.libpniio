@@ -20,8 +20,6 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 //
-
-
 #pragma once
 
 #include <sstream>
@@ -33,7 +31,6 @@
 #include "../exceptions.hpp"
 #include "get_rule_type.hpp"
 #include "delimiter_rule.hpp"
-#include "primitive_type_parser.hpp"
 
 
 namespace pni{

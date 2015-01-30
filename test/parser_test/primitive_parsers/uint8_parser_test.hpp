@@ -24,7 +24,7 @@
 #pragma once
 
 #include <boost/current_function.hpp>
-#include <pni/io/parsers/parser.hpp>
+#include <pni/io/parsers.hpp>
 #include <pni/core/types.hpp>
 
 #include<cppunit/TestFixture.h>

@@ -4,11 +4,10 @@ set(HEADER_FILES spirit_rules.hpp
                  value_rule.hpp
                  get_rule_type.hpp
                  sequence_rule.hpp
+                 slice_rule.hpp 
 
-                 slice_parser.hpp 
                  vector_parser.hpp
                  parser.hpp
-                 primitive_type_parser.hpp
                  string_parser.hpp
                  byte_integer_parser.hpp
                  )

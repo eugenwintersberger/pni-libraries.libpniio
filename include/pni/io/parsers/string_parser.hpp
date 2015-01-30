@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "primitive_type_parser.hpp"
+#include "parser.hpp"
 
 namespace pni{
 namespace io{
@@ -35,7 +35,7 @@ namespace io{
 
     //------------------------------------------------------------------------
     template<typename ITERT>
-    class parser<ITERT,core::string,true>
+    class parser<ITERT,core::string>
     {
         public:
             typedef core::string value_type;

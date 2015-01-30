@@ -34,7 +34,7 @@
 #include "../exceptions.hpp"
 #include "sequence_rule.hpp"
 #include "delimiter_rule.hpp"
-#include "primitive_type_parser.hpp"
+#include "parser.hpp"
 
 
 namespace pni{
@@ -67,7 +67,7 @@ namespace io{
              typename ITERT,
              typename T
             >
-    class parser<ITERT,std::vector<T>,false>
+    class parser<ITERT,std::vector<T>>
     {
         public:
             typedef std::vector<T>  result_type;
