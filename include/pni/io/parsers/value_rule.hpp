@@ -37,57 +37,10 @@
 namespace pni{
 namespace io{
 
-    class value_constructor_visitor 
-        : public boost::static_visitor<pni::core::value>
-    {
-        public:
-            pni::core::value operator()(const pni::core::int64 &v) const
-            {
-                return value(v);
-            }
+    using namespace pni;
+    using namespace boost::spirit;
 
-            pni::core::value operator()(const pni::core::complex64 &v) const
-            {
-                return value(v);
-            }
 
-            pni::core::value operator()(const pni::core::float64 &v) const
-            {
-                return value(v);
-            }
-    };
-
-    //!
-    //! \ingroup parser_classes
-    //! \brief array construction lazy function
-    //! 
-    //! This is the implementation of a lazy function for phoenix which can 
-    //! be used to create an array from a container. 
-    //!
-    struct value_constructor
-    {
-        //! determine the return type of the function
-        template<typename Sig> struct result
-        {
-            //! the return type
-            typedef pni::core::value type;
-        };
-
-        //---------------------------------------------------------------------
-        /*!
-        \brief lazy function implementation
-
-        This operator finally implements the lazy function. 
-        \tparam Arg argument type
-        \param n container with input data
-        \return instance of pni::core::array
-        */
-        template<typename Arg> pni::core::value operator()(Arg const &n) const
-        {
-            return boost::apply_visitor(value_constructor_visitor(),n);
-        }
-
-    };
    
     //!
     //! \ingroup parser_classes
@@ -114,27 +67,110 @@ namespace io{
     //!
     //! The input string is assumed to be stripped from all leading and trailing
     //! blank and newline symbols.
+    //! The rule is only default constructible. No additional options have to 
+    //! be applied.
     //! 
     //! \tparam ITERT iterator type
     //!
     template<typename ITERT>
-    struct value_rule : boost::spirit::qi::grammar<ITERT,pni::core::value()>
+    struct value_rule : qi::grammar<ITERT,core::value()>
     {
+        //--------------------------------------------------------------------
+        // definition of internal classes used by the value_rule
+        //--------------------------------------------------------------------
+        //!
+        //! \brief visitor for value construction
+        //!
+        //! This visitor is used to construct a value instance from a 
+        //! boost::variant<int64,float64,complex64> instance. This visitor is
+        //! used by the value_constructor which is by again called by 
+        //! value_rule to construct a value instance. Most of the member 
+        //! functions plainly pass through their input arguments.
+        //! 
+        //! \sa value_rule
+        //! \sa value_constructor
+        class value_constructor_visitor : 
+            public boost::static_visitor<core::value>
+        {
+            public:
+                //!
+                //! \brief int64 value construction
+                //! 
+                core::value operator()(const core::int64 &v) const
+                {
+                    return value(v);
+                }
+                
+                //!
+                //! \brief complex64 value construction
+                //! 
+                core::value operator()(const core::complex64 &v) const
+                {
+                    return value(v);
+                }
+
+                //!
+                //! \brief float64 value construction
+                //! 
+                core::value operator()(const core::float64 &v) const
+                {
+                    return value(v);
+                }
+        };
+
+        //--------------------------------------------------------------------
+        //!
+        //! \brief value construction lazy function
+        //! 
+        //! This is the implementation of a lazy function for phoenix which 
+        //! can be used to create a value instance from the parsed data item.
+        //!
+        struct value_constructor
+        {
+            //! determine the return type of the function
+            template<typename Sig> struct result
+            {
+                //! the return type
+                typedef core::value type;
+            };
+
+            //-----------------------------------------------------------------
+            //!
+            //! \brief lazy function implementation
+            //!
+            //! This operator finally implements the lazy function. 
+            //!
+            //! \tparam Arg argument type
+            //! \param n container with input data
+            //! \return instance of pni::core::array
+            //!
+            template<typename Arg> 
+            core::value operator()(Arg const &n) const
+            {
+                return boost::apply_visitor(value_constructor_visitor(),n);
+            }
+
+        };
+
+        //--------------------------------------------------------------------
+        // here starts the implementation of the rule
+        //--------------------------------------------------------------------
         typename boost::mpl::at<spirit_rules,int64>::type   integer_rule_;
         typename boost::mpl::at<spirit_rules,float64>::type float_rule_;
-        complex_rule<ITERT,complex64>                         complex_rule_;
+        complex_rule<ITERT,complex64>                       complex_rule_;
         //!value reading rule
-        boost::spirit::qi::rule<ITERT,pni::core::value()> value_;
-        boost::spirit::qi::rule<ITERT> sign_rule;
-        boost::spirit::qi::rule<ITERT> float_signs;
+        qi::rule<ITERT,core::value()> value_;
+        qi::rule<ITERT>               sign_rule;
+        qi::rule<ITERT>               float_signs;
         boost::phoenix::function<value_constructor> construct_value;
 
+        //--------------------------------------------------------------------
         //!default constructor
         value_rule() : value_rule::base_type(value_)
         {
-            using namespace pni::core;
+            //using namespace pni::core;
             using namespace boost::spirit::qi;
-            using namespace boost::fusion;
+            //using namespace boost::fusion;
             using namespace boost::phoenix;
             using boost::spirit::qi::_1;
 
