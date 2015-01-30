@@ -32,75 +32,13 @@
 
 #include "../exceptions.hpp"
 #include "get_rule_type.hpp"
+#include "conversion_trait.hpp"
 
 namespace pni{
 namespace io{
 
     using namespace boost::spirit;
     using namespace pni;
-
-    //!
-    //! \ingroup parser_classes
-    //! \brief default conversion trait
-    //!
-    //! Conversion trait used to convert parsed data to the requested 
-    //! type. In this default version nothing has to be done as the 
-    //! type read from the string is the same as the type requested by
-    //! the user.
-    //! 
-    //! \tparam T result type
-    //! 
-    template<typename T>
-    struct conversion_trait
-    {
-        typedef T result_type;
-        typedef T read_type;
-
-        static result_type convert(read_type &&v) 
-        { 
-            return v; 
-        }
-    };
-
-    //------------------------------------------------------------------------
-    //! 
-    //! \ingroup parser_classes
-    //! \brief uint8 conversion trait
-    //! 
-    //! Specialization of the conversion_trait template for the uint8 type. 
-    //! In this special case uint16 is used for parsing the data.
-    //!
-    template<>
-    struct conversion_trait<uint8>
-    {
-        typedef uint8  result_type;
-        typedef uint16 read_type;
-
-        static result_type convert(read_type &&v) 
-        { 
-            return pni::core::convert<result_type>(v); 
-        }
-    };
-
-    //------------------------------------------------------------------------
-    //! 
-    //! \ingroup parser_classes
-    //! \brief int8 conversion trait
-    //! 
-    //! Specialization of the conversion_trait template for the int8 type. 
-    //! In this special case int16 is used for parsing the data.
-    //!
-    template<>
-    struct conversion_trait<int8>
-    {
-        typedef int8  result_type;
-        typedef int16 read_type;
-
-        static result_type convert(read_type &&v) 
-        { 
-            return pni::core::convert<result_type>(v); 
-        }
-    };
 
     //------------------------------------------------------------------------
     //!

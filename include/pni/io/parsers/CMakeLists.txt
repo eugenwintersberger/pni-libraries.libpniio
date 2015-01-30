@@ -5,11 +5,11 @@ set(HEADER_FILES spirit_rules.hpp
                  get_rule_type.hpp
                  sequence_rule.hpp
                  slice_rule.hpp 
+                 conversion_trait.hpp
 
                  vector_parser.hpp
                  parser.hpp
                  string_parser.hpp
-                 byte_integer_parser.hpp
                  )
 
 install(FILES ${HEADER_FILES} 

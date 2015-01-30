@@ -21,8 +21,6 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 //
-
-
 #pragma once
 
 #include <sstream>
@@ -32,6 +30,7 @@
 #include<vector>
 
 #include "../exceptions.hpp"
+#include "conversion_trait.hpp"
 #include "sequence_rule.hpp"
 #include "delimiter_rule.hpp"
 #include "parser.hpp"
@@ -74,7 +73,10 @@ namespace io{
             typedef ITERT           iterator_type;
             typedef qi::expectation_failure<iterator_type> expectation_error;
         private:
-            sequence_rule<ITERT,result_type> sequence_;
+            typedef conversion_trait<T> trait_type;
+            typedef typename trait_type::read_type read_type;
+            typedef std::vector<read_type> buffer_type;
+            sequence_rule<ITERT,buffer_type> sequence_;
 
 
         public:
@@ -116,8 +118,8 @@ namespace io{
             result_type  parse(const core::string &s) const
             {
                 using namespace pni::core;
-
-                result_type container;
+                
+                buffer_type container;
 
                 try
                 {
@@ -134,7 +136,24 @@ namespace io{
                             "\""+s+"\"!");
                 }
 
-                return container;
+                //perform the conversion to the requested type - maybe not the
+                //best solution - but should be sufficient for now.
+                //Remove this code when we found a better way to handle (u)int8 
+                //values.
+                try
+                {
+                    result_type result;
+                    for(auto e: container)
+                        result.push_back(trait_type::convert(e));
+
+                    return result;
+                    
+                }
+                catch(...)
+                {
+                    throw parser_error(EXCEPTION_RECORD,
+                            "Error during type conversion!");
+                }
             }
 
     };
