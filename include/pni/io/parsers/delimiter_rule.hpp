@@ -39,47 +39,56 @@ namespace io{
     //!
     //! This parser is used for delimiters which for instance separate 
     //! columns in a CSV file. By default the separator is at least one blank 
-    //! symbol.  Alternatively one can define a special single character as 
-    //! a delimiter.  This character can be preceded and followed by an 
+    //! symbol. Alternatively one can define a special single character as 
+    //! a delimiter. This character can be preceded and followed by an 
     //! arbitrary number of blanks. 
     //!
     //! This parser itself is hardly usefull. However, it is a quite handy 
-    //! component in connection with other parser.
+    //! component in connection with other parsers (for instance the 
+    //! sequence_parser).
     //!
     //! \tparam ITERT iterator type for the parser
+    //! \sa sequence_parser
     //!
     template<typename ITERT >
-    struct delimiter_rule : boost::spirit::qi::grammar<ITERT,pni::core::string()>
+    struct delimiter_rule : qi::grammar<ITERT,core::string()>
     {
         //! main parser rule
-        boost::spirit::qi::rule<ITERT,pni::core::string()> delimiter;
+        boost::spirit::qi::rule<ITERT,core::string()> delimiter;
 
         //--------------------------------------------------------------------
-        //!default constructor
+        //!
+        //! \brief default constructor
+        //!
+        //! Using the default constructor the delimiter will match one plus 
+        //! an arbitrary number of blanks.
+        //! 
         delimiter_rule() : 
             delimiter_rule::base_type(delimiter)
         {
-            using namespace pni::core;
-            using namespace boost::spirit::qi;
-            using namespace boost::fusion;
-            using namespace boost::phoenix;
             //default behavior - at least one whitespace is a valid delimiter
-            delimiter = +boost::spirit::qi::blank;
+            delimiter = +qi::blank;
         }
 
         //--------------------------------------------------------------------
-        //! constructor
+        //!
+        //! \brief constructor
+        //!
+        //! The resulting delimiter rule will match the symbol passed to the 
+        //! constructor as a delimiter symbol. The symbol can be surrounded  
+        //! by an arbitrary number of blanks. If symbol is set to ' ' 
+        //! the delimiter rule will behave as created with the default 
+        //! constructor.
+        //! 
+        //! \param symbol the delimiter symbol
+        //!
         delimiter_rule(char symbol):
             delimiter_rule::base_type(delimiter)
         {
-            using namespace pni::core;
-            using namespace boost::spirit::qi;
-            using namespace boost::fusion;
-            using namespace boost::phoenix;
             if(symbol == ' ')
                 delimiter = +qi::blank;
             else
-                delimiter = *qi::blank>>char_(symbol)>>*qi::blank;
+                delimiter = *qi::blank>>qi::char_(symbol)>>*qi::blank;
         }
 
     };
