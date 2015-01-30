@@ -21,20 +21,20 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "container_parser_test.hpp"
-#include "../EqualityCheck.hpp"
+#include "vector_parser_test.hpp"
+#include "../../EqualityCheck.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(container_parser_test);
+CPPUNIT_TEST_SUITE_REGISTRATION(vector_parser_test);
 
-
-//-----------------------------------------------------------------------------
-void container_parser_test::setUp() { }
 
 //-----------------------------------------------------------------------------
-void container_parser_test::tearDown() {}
+void vector_parser_test::setUp() { }
 
 //-----------------------------------------------------------------------------
-void container_parser_test::test_default()
+void vector_parser_test::tearDown() {}
+
+//-----------------------------------------------------------------------------
+void vector_parser_test::test_default()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
@@ -42,8 +42,9 @@ void container_parser_test::test_default()
 
     CPPUNIT_ASSERT(result.size()==5);
 }
+
 //-----------------------------------------------------------------------------
-void container_parser_test::test_simple()
+void vector_parser_test::test_simple()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
@@ -53,7 +54,7 @@ void container_parser_test::test_simple()
 }
 
 //-----------------------------------------------------------------------------
-void container_parser_test::test_overflow()
+void vector_parser_test::test_overflow()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 

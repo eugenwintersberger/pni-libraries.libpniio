@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2015 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,44 +17,40 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Jan 20, 2015
+//  Created on: May 06, 2013
 //      Author: Eugen Wintersberger
 //
 
 #pragma once
 
 #include <boost/current_function.hpp>
-#include <pni/io/parsers/parser.hpp>
+#include <pni/io/parsers/slice_parser.hpp>
 #include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
-#include "../TestHelpers.hpp"
+#include "../../TestHelpers.hpp"
 
 using namespace pni::core;
 using namespace pni::io;
 
-class container_parser_test:public CppUnit::TestFixture 
+class slice_parser_test:public CppUnit::TestFixture 
 {
-	CPPUNIT_TEST_SUITE(container_parser_test);
-    CPPUNIT_TEST(test_default);
-    CPPUNIT_TEST(test_simple);
-    CPPUNIT_TEST(test_overflow);
+	CPPUNIT_TEST_SUITE(slice_parser_test);
+    CPPUNIT_TEST(test_full_parser);
+    CPPUNIT_TEST(test_half_parser);
 	CPPUNIT_TEST_SUITE_END();
 
     typedef string::const_iterator iterator_t;
-    typedef std::vector<uint8> result_type;
-    typedef parser<iterator_t,result_type> parser_type;
-
+    typedef slice_parser<iterator_t> slice_parser_t;
+    slice_parser_t parser;
 public:
 	void setUp();
 	void tearDown();
-    void test_default();
-    void test_simple();
-    void test_overflow();
+	void test_full_parser();
+    void test_half_parser();
 };
-
-
 
 
