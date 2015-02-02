@@ -39,7 +39,9 @@ class int8_vector_parser_test:public CppUnit::TestFixture
 {
 	CPPUNIT_TEST_SUITE(int8_vector_parser_test);
     CPPUNIT_TEST(test_default);
-    CPPUNIT_TEST(test_simple);
+    CPPUNIT_TEST(test_start_stop);
+    CPPUNIT_TEST(test_delimiter);
+    CPPUNIT_TEST(test_full);
 	CPPUNIT_TEST_SUITE_END();
 
     typedef string::const_iterator iterator_type;
@@ -50,7 +52,9 @@ public:
 	void setUp();
 	void tearDown();
     void test_default();
-    void test_simple();
+    void test_start_stop();
+    void test_delimiter();
+    void test_full();
 };
 
 

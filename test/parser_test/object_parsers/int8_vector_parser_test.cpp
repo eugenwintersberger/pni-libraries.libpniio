@@ -39,19 +39,39 @@ void int8_vector_parser_test::test_default()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     parser_type p;
-    result_type result = p("1 2 -3 4 -5");
+    result_type result = p("1 2 -3 4  -5");
 
     CPPUNIT_ASSERT(result.size()==5);
 }
 
 //-----------------------------------------------------------------------------
-void int8_vector_parser_test::test_simple()
+void int8_vector_parser_test::test_start_stop()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    parser_type p('(',')');
+    result_type result = p("( 1 2 -3 4  -5   )");
+    CPPUNIT_ASSERT(result.size()==5);
+}
+
+//-----------------------------------------------------------------------------
+void int8_vector_parser_test::test_delimiter()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    parser_type p(';');
+    result_type result = p("1;2 ;-3; 4 ; -5");
+
+    CPPUNIT_ASSERT(result.size()==5);
+}
+
+//-----------------------------------------------------------------------------
+void int8_vector_parser_test::test_full()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
    
     parser_type p('[',']',',');
-    result_type result = p("[1,2,3,4,5]");
-    std::cerr<<result.size()<<std::endl;
+    result_type result = p("[1,2 ,3, 4  ,  5]");
     CPPUNIT_ASSERT(result.size() == 5);
 }
 

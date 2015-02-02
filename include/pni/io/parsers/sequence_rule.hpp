@@ -123,7 +123,9 @@ namespace io{
             start_symbol_(start),
             stop_symbol_(stop)
         {
-            sequence_ = start_symbol_>(element_rule_ % (+qi::blank))>stop_symbol_;
+            sequence_ = start_symbol_>qi::omit[*qi::blank]>
+                        (element_rule_ % (+qi::blank))>
+                        qi::omit[*qi::blank]>stop_symbol_;
         }
 
         //--------------------------------------------------------------------

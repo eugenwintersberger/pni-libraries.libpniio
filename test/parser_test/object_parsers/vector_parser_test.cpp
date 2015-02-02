@@ -51,7 +51,6 @@ void vector_parser_test::test_simple()
    
     parser_type p('[',']',',');
     result_type result = p("[1,2,3,4,5]");
-    std::cerr<<result.size()<<std::endl;
     CPPUNIT_ASSERT(result.size() == 5);
 }
 
