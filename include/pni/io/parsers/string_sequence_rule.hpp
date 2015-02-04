@@ -138,7 +138,7 @@ namespace io{
         {
             start_ = qi::char_(start)>>*qi::blank;
             stop_  = *qi::blank>>qi::char_(stop);
-            delimiter_ = qi::char_(del);
+            delimiter_ = *qi::blank>>qi::char_(del)>>*qi::blank;
 
             element_rule_ = *(qi::char_-(qi::lit(stop)|delimiter_));
             sequence_ = start_>(element_rule_ % delimiter_)>stop_;
