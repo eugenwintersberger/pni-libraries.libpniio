@@ -110,7 +110,9 @@ namespace io{
             sequence_rule::base_type(sequence_),
             delimiter_(del)
         {
-            sequence_ = element_rule_ % delimiter_;
+            sequence_ = qi::omit[*qi::blank]>>
+                        (element_rule_ % delimiter_)>>
+                        qi::omit[*qi::blank];
         }
 
         //--------------------------------------------------------------------
