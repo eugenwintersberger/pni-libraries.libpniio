@@ -92,7 +92,9 @@ namespace io{
         //!
         sequence_rule() : sequence_rule::base_type(sequence_)
         { 
-            sequence_ = element_rule_ %(+qi::blank); 
+            sequence_ = qi::omit[*qi::blank]>>
+                        (element_rule_ %(+qi::blank))>>
+                        qi::omit[*qi::blank]; 
         }
 
         //--------------------------------------------------------------------
