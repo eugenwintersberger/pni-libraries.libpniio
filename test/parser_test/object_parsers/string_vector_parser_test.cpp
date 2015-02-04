@@ -51,6 +51,9 @@ void string_vector_parser_test::test_start_stop()
     parser_type p('(',')');
     result_type result = p("( true false   false true  true )");
     CPPUNIT_ASSERT(result.size()==5);
+
+    result_type ref{"true","false","false","true","true"};
+    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
 }
 
 //-----------------------------------------------------------------------------
@@ -59,9 +62,11 @@ void string_vector_parser_test::test_delimiter()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     parser_type p(';');
-    result_type result = p("true;false ;true; true ; false");
-
+    result_type result = p(" true;false ;true; true ; false   ");
     CPPUNIT_ASSERT(result.size()==5);
+
+    result_type ref{"true","false","true","true","false"};
+    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
 }
 
 //-----------------------------------------------------------------------------
@@ -70,7 +75,12 @@ void string_vector_parser_test::test_full()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
    
     parser_type p('[',']',',');
-    result_type result = p("[ hello world , this  ,is some, stpuid  ,  text!  ]");
+    result_type result = p("[ hello world , this  ,is some, stupid  ,  text!  ]");
     CPPUNIT_ASSERT(result.size() == 5);
+
+    for(auto s: result) std::cout<<s<<std::endl;
+
+    result_type ref{"hello world","this","is some","stupid","text!"};
+    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
 }
 

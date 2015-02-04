@@ -25,6 +25,8 @@
 
 #include <sstream>
 
+#include <boost/algorithm/string.hpp>
+#include <boost/spirit/include/phoenix.hpp>
 #include<pni/core/types.hpp>
 #include<pni/core/error.hpp>
 #include<vector>
@@ -38,6 +40,31 @@ namespace io{
 
     using namespace pni;
     using namespace boost::spirit;
+
+    //!
+    //! \ingroup parser_classes
+    //! \brief lazy string trimming
+    //! 
+    //! This lazy function is used to remove leading and trailing blanks 
+    //! from strings. 
+    //!
+    struct trim_string
+    {
+        //! return type
+        template<typename Sig> struct result
+        {
+            typedef core::string type;
+        };
+
+        //! implementation
+        template<typename Arg>
+        core::string operator()(Arg const &n) const
+        {
+            string output(n.begin(),n.end());
+            boost::trim(output);
+            return output;
+        }
+    };
 
 
     //------------------------------------------------------------------------
@@ -75,6 +102,8 @@ namespace io{
         //! the full rule to parse the sequence
         qi::rule<ITERT,ST()> sequence_;
 
+        boost::phoenix::function<trim_string> trim;
+
         //--------------------------------------------------------------------
         //!
         //! \brief default constructor
@@ -85,8 +114,11 @@ namespace io{
         //!
         string_sequence_rule() : string_sequence_rule::base_type(sequence_)
         { 
+            using qi::_val;
+            using qi::_1;
+
             delimiter_ = +qi::blank;
-            element_rule_ = *(qi::char_-qi::blank);
+            element_rule_ = (*(qi::char_-delimiter_))[_val = trim(_1)];
             sequence_ = element_rule_ % delimiter_; 
         }
 
@@ -100,10 +132,13 @@ namespace io{
         //! arbitrary number of preceding and tailing blanks. 
         //!
         string_sequence_rule(char del): 
-            string_sequence_rule::base_type(sequence_),
-            delimiter_(qi::char_(del))
+            string_sequence_rule::base_type(sequence_)
         {
-            element_rule_ = *(qi::char_-delimiter_);
+            using qi::_val;
+            using qi::_1;
+
+            delimiter_ = qi::char_(del);
+            element_rule_ = (*(qi::char_-delimiter_))[_val = trim(_1)];
             sequence_ = element_rule_ % delimiter_;
         }
 
@@ -119,10 +154,13 @@ namespace io{
         string_sequence_rule(char start,char stop):
             string_sequence_rule::base_type(sequence_)
         {
+            using qi::_1;
+            using qi::_val;
+
             start_ = qi::char_(start)>*qi::blank;
             stop_  = *qi::blank>qi::char_(stop);
             delimiter_ = (+qi::blank);
-            element_rule_ = +(qi::char_-(qi::lit(stop)|qi::blank));
+            element_rule_ = (+(qi::char_-(qi::lit(stop)|delimiter_)))[_val=trim(_1)];
             sequence_ = start_> (element_rule_ % delimiter_)>stop_;
         }
 
@@ -136,11 +174,12 @@ namespace io{
         string_sequence_rule(char start,char stop,char del):
             string_sequence_rule::base_type(sequence_)
         {
-            start_ = qi::char_(start)>>*qi::blank;
-            stop_  = *qi::blank>>qi::char_(stop);
-            delimiter_ = *qi::blank>>qi::char_(del)>>*qi::blank;
+            start_ = qi::char_(start)>*qi::blank;
+            stop_  = *qi::blank>qi::char_(stop);
+            delimiter_ = qi::char_(del);
 
-            element_rule_ = *(qi::char_-(qi::lit(stop)|delimiter_));
+            element_rule_ = (*(qi::char_-(qi::lit(stop)|delimiter_)))[qi::_val =
+                trim(qi::_1)];
             sequence_ = start_>(element_rule_ % delimiter_)>stop_;
         }
 

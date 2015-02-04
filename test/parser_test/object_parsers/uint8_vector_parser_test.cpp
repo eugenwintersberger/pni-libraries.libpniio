@@ -17,82 +17,82 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Jan 30, 2015
+//  Created on: Feb 4, 2015
 //      Author: Eugen Wintersberger
 //
 
-#include "int8_vector_parser_test.hpp"
+#include "uint8_vector_parser_test.hpp"
 #include "../../EqualityCheck.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(int8_vector_parser_test);
+CPPUNIT_TEST_SUITE_REGISTRATION(uint8_vector_parser_test);
 
 
 //-----------------------------------------------------------------------------
-void int8_vector_parser_test::setUp() 
+void uint8_vector_parser_test::setUp() 
 { 
-    ref=result_type{1,2,-3,4,-5};
+    ref=result_type{1,2,3,4,5};
 }
 
 //-----------------------------------------------------------------------------
-void int8_vector_parser_test::tearDown() {}
+void uint8_vector_parser_test::tearDown() {}
 
 //-----------------------------------------------------------------------------
-void int8_vector_parser_test::test_default()
+void uint8_vector_parser_test::test_default()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     parser_type p;
-    result_type result = p("1 2 -3 4 -5");
+    result_type result = p("1 2 3 4 5");
 
     CPPUNIT_ASSERT(result.size()==5);
     CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
 
-    result = p("  1  2    -3  4   -5   ");
+    result = p("  1  2    3  4   5   ");
     CPPUNIT_ASSERT(result.size()==5);
     CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
 }
 
 //-----------------------------------------------------------------------------
-void int8_vector_parser_test::test_start_stop()
+void uint8_vector_parser_test::test_start_stop()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     parser_type p('(',')');
-    result_type result = p("( 1 2 -3 4  -5   )");
+    result_type result = p("( 1 2 3 4  5   )");
     CPPUNIT_ASSERT(result.size()==5);
     CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
 
-    result = p("(1 2 -3 4 -5)");
+    result = p("(1 2 3 4 5)");
     CPPUNIT_ASSERT(result.size()==5);
     CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
 }
 
 //-----------------------------------------------------------------------------
-void int8_vector_parser_test::test_delimiter()
+void uint8_vector_parser_test::test_delimiter()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     parser_type p(';');
-    result_type result = p("1;2;-3;4;-5");
+    result_type result = p("1;2;3;4;5");
     CPPUNIT_ASSERT(result.size()==5);
     CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
     
-    result = p("  1; 2 ;-3   ;  4; -5  ");
+    result = p("  1; 2 ;3   ;  4; 5  ");
     CPPUNIT_ASSERT(result.size()==5);
     CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
 }
 
 //-----------------------------------------------------------------------------
-void int8_vector_parser_test::test_full()
+void uint8_vector_parser_test::test_full()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
    
     parser_type p('[',']',',');
-    result_type result = p("[1,2,-3,4,-5]");
+    result_type result = p("[1,2,3,4,5]");
     CPPUNIT_ASSERT(result.size() == 5);
     CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
 
-    result = p("[  1, 2,  -3  , 4,  -5  ]");
+    result = p("[  1, 2,  3  , 4,  5  ]");
     CPPUNIT_ASSERT(result.size() == 5);
     CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
 

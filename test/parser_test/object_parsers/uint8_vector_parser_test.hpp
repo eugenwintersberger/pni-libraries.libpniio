@@ -17,7 +17,7 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Jan 30, 2015
+//  Created on: Feb 4, 2015
 //      Author: Eugen Wintersberger
 //
 
@@ -35,9 +35,9 @@
 using namespace pni::core;
 using namespace pni::io;
 
-class int8_vector_parser_test:public CppUnit::TestFixture 
+class uint8_vector_parser_test:public CppUnit::TestFixture 
 {
-	CPPUNIT_TEST_SUITE(int8_vector_parser_test);
+	CPPUNIT_TEST_SUITE(uint8_vector_parser_test);
     CPPUNIT_TEST(test_default);
     CPPUNIT_TEST(test_start_stop);
     CPPUNIT_TEST(test_delimiter);
@@ -45,7 +45,7 @@ class int8_vector_parser_test:public CppUnit::TestFixture
 	CPPUNIT_TEST_SUITE_END();
 
     typedef string::const_iterator iterator_type;
-    typedef std::vector<int8> result_type;
+    typedef std::vector<uint8> result_type;
     typedef parser<iterator_type,result_type> parser_type;
 
     result_type ref;
