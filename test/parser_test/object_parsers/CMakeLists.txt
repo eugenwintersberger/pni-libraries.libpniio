@@ -3,6 +3,7 @@ set(SOURCES object_parsers_test.cpp
             vector_parser_test.cpp
             int8_vector_parser_test.cpp
             bool_vector_parser_test.cpp
+            string_vector_parser_test.cpp
            )
 
 add_executable(object_parsers_test ${SOURCES} $<TARGET_OBJECTS:test_common>)

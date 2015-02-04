@@ -27,6 +27,7 @@
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/joint_view.hpp>
 
+#include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/qi_real.hpp>
 #include <boost/spirit/include/qi_uint.hpp>
 #include <boost/spirit/include/qi_int.hpp>

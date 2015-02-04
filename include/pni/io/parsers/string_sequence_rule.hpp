@@ -16,11 +16,12 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Created on: Jan 29, 2015
+// Created on: Feb 2, 2015
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 //
 #pragma once
+
 
 #include <sstream>
 
@@ -31,7 +32,6 @@
 #include "../exceptions.hpp"
 #include "get_rule_type.hpp"
 #include "delimiter_rule.hpp"
-
 
 namespace pni{
 namespace io{
@@ -63,22 +63,15 @@ namespace io{
              typename ITERT,
              typename ST
             >
-    struct sequence_rule : qi::grammar<ITERT,ST()>
+    struct string_sequence_rule : qi::grammar<ITERT,ST()>
     {
-        //! value type of the sequence type
-        typedef typename ST::value_type value_type; 
-        //! rule to parse the value_type of the sequence
-        typename get_rule_type<ITERT,value_type>::type element_rule_;
-
+        qi::rule<ITERT,core::string()> element_rule_;
         //! delimiter rule
-        delimiter_rule<ITERT> delimiter_;
-
+        //delimiter_rule<ITERT> delimiter_;
         qi::rule<ITERT> start_;
         qi::rule<ITERT> stop_;
-        //! a possible start symbol
-        char start_symbol_;
-        //! a possible stop symbol
-        char stop_symbol_;
+        qi::rule<ITERT> delimiter_;
+
         //! the full rule to parse the sequence
         qi::rule<ITERT,ST()> sequence_;
 
@@ -90,9 +83,11 @@ namespace io{
         //! separated by an arbitrary number of blanks. No start and stop 
         //! symbol are taken into account.
         //!
-        sequence_rule() : sequence_rule::base_type(sequence_)
+        string_sequence_rule() : string_sequence_rule::base_type(sequence_)
         { 
-            sequence_ = element_rule_ %(+qi::blank); 
+            delimiter_ = +qi::blank;
+            element_rule_ = *(qi::char_-qi::blank);
+            sequence_ = element_rule_ % delimiter_; 
         }
 
         //--------------------------------------------------------------------
@@ -104,10 +99,11 @@ namespace io{
         //! to parse the delimiter. Thus, the delimiter symbol can have an 
         //! arbitrary number of preceding and tailing blanks. 
         //!
-        sequence_rule(char del): 
-            sequence_rule::base_type(sequence_),
-            delimiter_(del)
+        string_sequence_rule(char del): 
+            string_sequence_rule::base_type(sequence_),
+            delimiter_(qi::char_(del))
         {
+            element_rule_ = *(qi::char_-delimiter_);
             sequence_ = element_rule_ % delimiter_;
         }
 
@@ -120,12 +116,14 @@ namespace io{
         //! individual elements are still separated by an arbitrary number of
         //! blanks. 
         //!
-        sequence_rule(char start,char stop):
-            sequence_rule::base_type(sequence_),
-            start_(start>qi::omit[*qi::blank]),
-            stop_(qi::omit[*qi::blank]>stop)
+        string_sequence_rule(char start,char stop):
+            string_sequence_rule::base_type(sequence_)
         {
-            sequence_ = start_> (element_rule_ % (+qi::blank))>stop_;
+            start_ = qi::char_(start)>*qi::blank;
+            stop_  = *qi::blank>qi::char_(stop);
+            delimiter_ = (+qi::blank);
+            element_rule_ = +(qi::char_-(qi::lit(stop)|qi::blank));
+            sequence_ = start_> (element_rule_ % delimiter_)>stop_;
         }
 
         //--------------------------------------------------------------------
@@ -135,12 +133,14 @@ namespace io{
         //! Customizes the start and stop symbol as well as the delimiter 
         //! symbol. 
         //! 
-        sequence_rule(char start,char stop,char del):
-            sequence_rule::base_type(sequence_),
-            delimiter_(del),
-            start_(start>qi::omit[*qi::blank]),
-            stop_(qi::omit[*qi::blank]>stop)
+        string_sequence_rule(char start,char stop,char del):
+            string_sequence_rule::base_type(sequence_)
         {
+            start_ = qi::char_(start)>>*qi::blank;
+            stop_  = *qi::blank>>qi::char_(stop);
+            delimiter_ = qi::char_(del);
+
+            element_rule_ = *(qi::char_-(qi::lit(stop)|delimiter_));
             sequence_ = start_>(element_rule_ % delimiter_)>stop_;
         }
 

@@ -31,9 +31,9 @@
 
 #include "../exceptions.hpp"
 #include "conversion_trait.hpp"
-#include "sequence_rule.hpp"
 #include "delimiter_rule.hpp"
 #include "parser.hpp"
+#include "get_sequence_rule.hpp"
 
 
 namespace pni{
@@ -76,7 +76,8 @@ namespace io{
             typedef conversion_trait<T> trait_type;
             typedef typename trait_type::read_type read_type;
             typedef std::vector<read_type> buffer_type;
-            sequence_rule<ITERT,buffer_type> sequence_;
+            typename get_sequence_rule<ITERT,buffer_type>::type sequence_;
+            //sequence_rule<ITERT,buffer_type> sequence_;
 
 
         public:

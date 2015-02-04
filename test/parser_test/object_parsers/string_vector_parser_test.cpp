@@ -17,61 +17,60 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Jan 30, 2015
+//  Created on: Feb 2, 2015
 //      Author: Eugen Wintersberger
 //
 
-#include "int8_vector_parser_test.hpp"
+#include "string_vector_parser_test.hpp"
 #include "../../EqualityCheck.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(int8_vector_parser_test);
+CPPUNIT_TEST_SUITE_REGISTRATION(string_vector_parser_test);
 
 
 //-----------------------------------------------------------------------------
-void int8_vector_parser_test::setUp() { }
+void string_vector_parser_test::setUp() { }
 
 //-----------------------------------------------------------------------------
-void int8_vector_parser_test::tearDown() {}
+void string_vector_parser_test::tearDown() {}
 
 //-----------------------------------------------------------------------------
-void int8_vector_parser_test::test_default()
+void string_vector_parser_test::test_default()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     parser_type p;
-    result_type result = p("1 2 -3 4  -5");
-
+    result_type result = p("hello this  bla    test  word");
     CPPUNIT_ASSERT(result.size()==5);
 }
 
 //-----------------------------------------------------------------------------
-void int8_vector_parser_test::test_start_stop()
+void string_vector_parser_test::test_start_stop()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     parser_type p('(',')');
-    result_type result = p("( 1 2 -3 4  -5   )");
+    result_type result = p("( true false   false true  true )");
     CPPUNIT_ASSERT(result.size()==5);
 }
 
 //-----------------------------------------------------------------------------
-void int8_vector_parser_test::test_delimiter()
+void string_vector_parser_test::test_delimiter()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     parser_type p(';');
-    result_type result = p("1;2 ;-3; 4 ; -5");
+    result_type result = p("true;false ;true; true ; false");
 
     CPPUNIT_ASSERT(result.size()==5);
 }
 
 //-----------------------------------------------------------------------------
-void int8_vector_parser_test::test_full()
+void string_vector_parser_test::test_full()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
    
     parser_type p('[',']',',');
-    result_type result = p("[ 1,2 ,3, 4  ,  5  ]");
+    result_type result = p("[ hello world , this  ,is some, stpuid  ,  text!  ]");
     CPPUNIT_ASSERT(result.size() == 5);
 }
 

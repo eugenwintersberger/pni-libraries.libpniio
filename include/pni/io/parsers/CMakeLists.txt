@@ -4,6 +4,8 @@ set(HEADER_FILES spirit_rules.hpp
                  value_rule.hpp
                  get_rule_type.hpp
                  sequence_rule.hpp
+                 string_sequence_rule.hpp
+                 get_sequence_rule.hpp
                  slice_rule.hpp 
                  conversion_trait.hpp
 
