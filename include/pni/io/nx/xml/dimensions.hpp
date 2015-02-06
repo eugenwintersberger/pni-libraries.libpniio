@@ -24,7 +24,7 @@
 
 #include "node.hpp"
 #include "attribute_data.hpp"
-#include "../../parsers/primitive_type_parser.hpp"
+#include "../../parsers.hpp"
 
 namespace pni{
 namespace io{

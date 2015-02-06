@@ -61,8 +61,7 @@ void data_from_xml_fixture::test_array()
     typedef std::vector<uint32> vector_type;
     
     xml::node o = get_object("object3.xml","field2");
-    auto data = xml::io_object::data_from_xml<vector_type>(o,' ');
-    std::cout<<data.size()<<std::endl;
+    auto data = xml::io_object::data_from_xml<vector_type>(o);
     CPPUNIT_ASSERT(data.size()==6);
 
     for(uint32 i=0;i<6;++i)

@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,32 +17,43 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Created on: Jul 15, 2013
+// Created on: Nov 28, 2014
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
+#pragma once
 
+#include <pni/core/types.hpp>
+#include <pni/core/error.hpp>
 
-#include <pni/io/parsers/array_parser.hpp>
-#include <pni/io/nx/xml/node_data.hpp>
-#include <boost/algorithm/string.hpp>
+#include "node.hpp"
+#include "io_object.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
 namespace xml{
 
-    string node_data::read(const node &n) const
+    //!
+    //! \ingroup xml_classes
+    //! \brief generate an array 
+    template<typename ATYPE> ATYPE make_array(const node &data)
     {
-        string data = n.data();
-        boost::algorithm::trim(data);
-        return data;
+        typedef typename ATYPE::storage_type storage_type;
+        shape_t      shape;
+
+        //determine the shape of the array
+        if(io_object::rank(data)==0)
+            shape = shape_t{1};
+        else
+            shape = io_object::shape(data);
+       
+        //read the daata
+        auto buffer = io_object::data_from_xml<storage_type>(data);
+
+        return ATYPE::create(std::move(shape),std::move(buffer));
     }
 
-    //-------------------------------------------------------------------------
-    void node_data::write(const string &data,node &n) const
-    {
-        n.put_value(data);
-    }
+
 
 //end of namespace
 }

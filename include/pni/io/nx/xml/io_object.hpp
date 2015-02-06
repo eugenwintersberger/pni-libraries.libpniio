@@ -121,7 +121,10 @@ namespace xml{
         //!
         //! \brief get data from XML
         //! 
-        //! Reads the data stored with the XML field node. 
+        //! Reads the data stored with the XML field node. It is important 
+        //! to understand that an XML node itself can only store simple 
+        //! one dimensional containers. It does not provide enough 
+        //! information to construct a multidimensional array.
         //!
         //! \throws type_error if the fields data type is not supported
         //! \throws parser_error in case of errors during parsing data text

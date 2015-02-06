@@ -32,27 +32,28 @@
 \title{{\Huge{\tt libpniio} Users Guide}}
 \author{Eugen Wintersberger}
 
-\newcommand{\libpnicore}{{\tt libpnicore}}
-\newcommand{\libpniio}{{\tt libpniio}}
-\newcommand{\sdarray}{{\tt static\_array}}
-\newcommand{\darray}{{\tt dynamic\_array}}
-\newcommand{\farray}{{\tt fixed\_dim\_array}}
-\newcommand{\mdarray}{{\tt mdarray}}
-\newcommand{\arrayview}{{\tt array\_view}}
-\newcommand{\arrayerasure}{{\tt array}}
-\newcommand{\numarray}{{\tt numeric\_array}}
-\newcommand{\cmake}{{\tt cmake}}
-\newcommand{\pkgconfig}{{\tt pkg-config}}
-\newcommand{\gcc}{{\tt gcc}}
-\newcommand{\nxfield}{\tt nxfield}
-\newcommand{\nxobject}{\tt nxobject}
-\newcommand{\nxgroup}{\tt nxgroup}
-\newcommand{\nxattribute}{\tt nxattribute}
-\newcommand{\nxpath}{\tt nxpath}
+\newcommand{\libpnicore}{\texttt{libpnicore}}
+\newcommand{\libpniio}{\texttt{libpniio}}
+\newcommand{\sdarray}{\texttt{static\_array}}
+\newcommand{\darray}{\texttt{dynamic\_array}}
+\newcommand{\farray}{\texttt{fixed\_dim\_array}}
+\newcommand{\mdarray}{\texttt{mdarray}}
+\newcommand{\arrayview}{\texttt{array\_view}}
+\newcommand{\arrayerasure}{\texttt{array}}
+\newcommand{\numarray}{\texttt{numeric\_array}}
+\newcommand{\cmake}{\texttt{cmake}}
+\newcommand{\pkgconfig}{\texttt{pkg-config}}
+\newcommand{\gcc}{\texttt{gcc}}
+\newcommand{\nxfield}{\texttt{nxfield}}
+\newcommand{\nxobject}{\texttt{nxobject}}
+\newcommand{\nxgroup}{\texttt{nxgroup}}
+\newcommand{\nxattribute}{\texttt{nxattribute}}
+\newcommand{\nxpath}{\texttt{nxpath}}
+\newcommand{\cpp}[1]{\texttt{#1}}
 
 %\bibliographystyle{plainnat}
 
-\newminted{cpp}{frame=lines}
+\newminted{cpp}{fontsize=\small,frame=lines}
 
 \begin{document}
 \maketitle
@@ -72,7 +73,9 @@
 \FloatBarrier
 
 \chapter{Legacy format support}\label{chapter:legacy_formats}
+\input{tex/legacy.tex}
 \FloatBarrier
+
 
 \chapter{Getting started with Nexus}\label{chapter:nexus_quickstart}
 \input{tex/nexus_introduction.tex}
@@ -90,9 +93,13 @@
 \FloatBarrier
 
 \chapter{Nexus and XML}
+\input{tex/xml.tex}
 \FloatBarrier
 
-
+\appendix
+\chapter{Parsing ASCII data}\label{appendix:parsers}
+\input{tex/parsing_ascii.tex}
+\FloatBarrier
 
 
 %\bibliography{libpniio_ug}
