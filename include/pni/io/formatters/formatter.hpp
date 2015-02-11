@@ -23,6 +23,7 @@
 //
 #pragma once
 
+#include <vector>
 #include <iterator>
 #include <pni/core/types.hpp>
 #include <boost/spirit/include/karma.hpp>
@@ -35,6 +36,14 @@ namespace io{
     using namespace pni;
     using namespace boost::spirit;
 
+    //!
+    //! \ingroup formatter_classes
+    //! \brief scalar formatter
+    //! 
+    //! This is the default implementation of a formatter. It is intended to 
+    //! be used with scalar and complex primitive types. 
+    //! 
+    //! \tparam T primitive type
     template<typename T> 
     class formatter
     {
@@ -57,6 +66,38 @@ namespace io{
             }
 
             
+    };
+
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief vector formatter
+    //!
+    //! Specialization of the default formatter for vectors.  The elements of
+    //! the vector must be of a primitive type.
+    //!
+    //! \tparam T element type of the vector
+    //!
+    template<typename T> 
+    class formatter<std::vector<T>>
+    {
+        private:
+            typedef std::back_insert_iterator<core::string> iterator_type;
+            typedef typename get_generator<iterator_type,T>::type generator_type; 
+
+            generator_type generator;
+
+        public:
+
+            core::string operator()(const std::vector<T> &v) const
+            {
+                core::string buffer;
+                iterator_type inserter(buffer);
+
+                karma::generate(inserter,generator % ' ',v);
+
+                return buffer;
+            }
     };
 
 //end of namespace

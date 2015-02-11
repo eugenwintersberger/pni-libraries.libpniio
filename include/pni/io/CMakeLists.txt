@@ -8,6 +8,7 @@ set(HEADER_FILES column_info.hpp
                  strutils.hpp
                  exceptions.hpp
                  parsers.hpp
+                 formatters.hpp
                  )
 
 install(FILES ${HEADER_FILES} 

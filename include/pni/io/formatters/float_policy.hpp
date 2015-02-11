@@ -42,6 +42,7 @@ namespace io{
     template<typename T>
     struct float_policy : boost::spirit::karma::real_policies<T>
     {
+        //--------------------------------------------------------------------
         //!
         //! \brief use scientific format by default
         //!
@@ -53,6 +54,7 @@ namespace io{
         }
 #pragma GCC diagnostic pop
 
+        //--------------------------------------------------------------------
         //! 
         //! \brief set output to full number precision
         //!
@@ -81,6 +83,7 @@ namespace io{
     {
         typedef boost::spirit::karma::real_policies<T> base_type;
 
+        //--------------------------------------------------------------------
         //!
         //! \brief use scientific format by default
         //!
@@ -94,6 +97,7 @@ namespace io{
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
+        //--------------------------------------------------------------------
         //!
         //! \brief always use maximum precision of required
         //!
@@ -103,6 +107,7 @@ namespace io{
         }
 #pragma GCC diagnostic pop
 
+        //--------------------------------------------------------------------
         //!
         //! \brief add sign and I in front of the output
         //!

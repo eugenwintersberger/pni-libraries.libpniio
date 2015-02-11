@@ -1,1 +1,2 @@
 add_subdirectory(primitive_formatter_test)
+add_subdirectory(compound_formatter_test)
