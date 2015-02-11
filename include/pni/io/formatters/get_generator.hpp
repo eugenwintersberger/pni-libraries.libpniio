@@ -132,23 +132,37 @@ namespace io{
     //------------------------------------------------------------------------
     // GENERATORS FOR FLOATING POINT TYPES
     //------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief get generator for float32
+    //!
     template<typename ITERT> struct get_generator<ITERT,float32>
     {
         typedef karma::real_generator<float32,float_policy<float32>> type;
     };
     
     //------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief get generator for float64
+    //!
     template<typename ITERT> struct get_generator<ITERT,float64>
     {
         typedef karma::real_generator<float64,float_policy<float64>> type;
     };
 
     //------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief get generator for float128
+    //!
     template<typename ITERT> struct get_generator<ITERT,float128>
     {
         typedef karma::real_generator<float128,float_policy<float128>> type;
     };
 
+    //------------------------------------------------------------------------
+    // GENERATORS FOR COMPLEX FLOATING POINT TYPES
     //------------------------------------------------------------------------
     //!
     //! \ingroup formatter_classes
@@ -165,6 +179,18 @@ namespace io{
     struct get_generator<ITERT,std::complex<T>>
     {
         typedef complex_generator<ITERT,T> type;
+    };
+
+    //-------------------------------------------------------------------------
+    // GENERATORS FOR BOOLEAN VALUES
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief get generator for bool_t
+    //!
+    template<typename ITERT> struct get_generator<ITERT,bool_t>
+    {
+        typedef karma::bool_generator<bool> type;
     };
 
 //end of namespace
