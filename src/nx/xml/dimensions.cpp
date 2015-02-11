@@ -51,14 +51,14 @@ namespace xml{
      index_value_type dimensions::index_value_from_node(const node &dim_node)
     {
         size_t_parser_type p;
-        return {p.parse(index_attribute.read(dim_node)),
-                p.parse(value_attribute.read(dim_node))};
+        return {p(index_attribute.read(dim_node)),
+                p(value_attribute.read(dim_node))};
     }
 
      //-----------------------------------------------------------------------
      size_t dimensions::rank(const node &dim)
      {
-        return size_t_parser_type().parse(rank_attribute.read(dim));
+        return size_t_parser_type()(rank_attribute.read(dim));
      }
 
      //-----------------------------------------------------------------------
