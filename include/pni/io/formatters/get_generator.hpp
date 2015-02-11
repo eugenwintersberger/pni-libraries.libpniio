@@ -47,6 +47,8 @@ namespace io{
     template<typename ITERT, typename T> struct get_generator;
 
     //------------------------------------------------------------------------
+    // GENERATORS FOR UNSIGNED INTEGER TYPES
+    //------------------------------------------------------------------------
     //!
     //! \ingroup formatter_classes
     //! \brief get generator for uint8
@@ -85,7 +87,50 @@ namespace io{
     {
         typedef karma::uint_generator<uint64> type;
     };
+    //------------------------------------------------------------------------
+    // GENERATORS FOR SIGNED INTEGER TYPES
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief get generator for uint8
+    //!
+    template<typename ITERT> struct get_generator<ITERT,int8>
+    {
+        typedef karma::int_generator<int8> type;
+    };
 
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief get generator for int16
+    //!
+    template<typename ITERT> struct get_generator<ITERT,int16>
+    {
+        typedef karma::int_generator<int16> type;
+    };
+
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief get generator for int32
+    //!
+    template<typename ITERT> struct get_generator<ITERT,int32>
+    {
+        typedef karma::int_generator<int32> type;
+    };
+
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief get generator for int64
+    //!
+    template<typename ITERT> struct get_generator<ITERT,int64>
+    {
+        typedef karma::int_generator<int64> type;
+    };
+
+    //------------------------------------------------------------------------
+    // GENERATORS FOR FLOATING POINT TYPES
     //------------------------------------------------------------------------
     template<typename ITERT> struct get_generator<ITERT,float32>
     {
