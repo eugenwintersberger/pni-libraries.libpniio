@@ -18,5 +18,6 @@ add_subdirectory("cbf")
 add_subdirectory("fio")
 add_subdirectory("nx")
 add_subdirectory("parsers")
+add_subdirectory("formatters")
 add_subdirectory("tiff")
 
