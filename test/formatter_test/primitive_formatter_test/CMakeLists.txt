@@ -1,5 +1,8 @@
 set(SOURCES primitive_formatters_test.cpp
             uint8_formatter_test.cpp
+            uint16_formatter_test.cpp
+            uint32_formatter_test.cpp
+            uint64_formatter_test.cpp
             float32_formatter_test.cpp
             float64_formatter_test.cpp
 

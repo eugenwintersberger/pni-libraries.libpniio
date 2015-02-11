@@ -21,24 +21,25 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "uint8_formatter_test.hpp"
+#include "uint32_formatter_test.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(uint8_formatter_test);
-
-//-----------------------------------------------------------------------------
-void uint8_formatter_test::setUp() { }
+CPPUNIT_TEST_SUITE_REGISTRATION(uint32_formatter_test);
 
 //-----------------------------------------------------------------------------
-void uint8_formatter_test::tearDown() {}
+void uint32_formatter_test::setUp() { }
 
 //-----------------------------------------------------------------------------
-void uint8_formatter_test::test_format()
+void uint32_formatter_test::tearDown() {}
+
+//-----------------------------------------------------------------------------
+void uint32_formatter_test::test_format()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
    
     CPPUNIT_ASSERT(format(input_type(12)) == "12");
     CPPUNIT_ASSERT(format(input_type(0)) == "0");
-    CPPUNIT_ASSERT(format(input_type(255)) == "255");
+    CPPUNIT_ASSERT(format(input_type(4294967295)) == "4294967295");
+	
 }
 
 

@@ -47,15 +47,43 @@ namespace io{
     template<typename ITERT, typename T> struct get_generator;
 
     //------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief get generator for uint8
+    //!
     template<typename ITERT> struct get_generator<ITERT,uint8>
     {
         typedef karma::uint_generator<uint8> type;
     };
 
     //------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief get generator for uint16
+    //!
     template<typename ITERT> struct get_generator<ITERT,uint16>
     {
         typedef karma::uint_generator<uint16> type;
+    };
+
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief get generator for uint32
+    //!
+    template<typename ITERT> struct get_generator<ITERT,uint32>
+    {
+        typedef karma::uint_generator<uint32> type;
+    };
+
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief get generator for uint64
+    //!
+    template<typename ITERT> struct get_generator<ITERT,uint64>
+    {
+        typedef karma::uint_generator<uint64> type;
     };
 
     //------------------------------------------------------------------------
