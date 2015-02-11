@@ -29,10 +29,22 @@
 
 namespace pni{
 namespace io{
-   
+  
+    //!
+    //! \ingroup formatter_classes
+    //! \brief policy for real numbers
+    //!
+    //! Formatting policy for real numbers. The current policy differs 
+    //! from the C++ default in two ways
+    //! \li by default always the scientific format is used
+    //! \li if required the ouput precision is the full precision of the type
+    //!
     template<typename T>
     struct float_policy : boost::spirit::karma::real_policies<T>
     {
+        //!
+        //! \brief use scientific format by default
+        //!
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
         static int floatfield(T n)
@@ -41,6 +53,9 @@ namespace io{
         }
 #pragma GCC diagnostic pop
 
+        //! 
+        //! \brief set output to full number precision
+        //!
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
         static int precision(T n)
@@ -49,20 +64,26 @@ namespace io{
         }
 #pragma GCC diagnostic pop
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-        static bool trailing_zeros(T n)
-        {
-            return false;
-        }
-#pragma GCC diagnostic pop
     };
 
     //------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief real policy for imaginary part 
+    //! 
+    //! This is a special policy for real numbers which represent the imaginary 
+    //! part of a complex number. It shares all the properties of the default
+    //! float_policy but always adds the sign in front of the integer part
+    //! and seperates the sign by an 'I' to indicate the imaginary part of a
+    //! complex number
     template<typename T> 
     struct imag_policy : boost::spirit::karma::real_policies<T>
     {
         typedef boost::spirit::karma::real_policies<T> base_type;
+
+        //!
+        //! \brief use scientific format by default
+        //!
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
         static int floatfield(T n)
@@ -73,12 +94,18 @@ namespace io{
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
+        //!
+        //! \brief always use maximum precision of required
+        //!
         static int precision(T n)
         {
             return std::numeric_limits<T>::digits10;
         }
 #pragma GCC diagnostic pop
 
+        //!
+        //! \brief add sign and I in front of the output
+        //!
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
         template<typename OITER>

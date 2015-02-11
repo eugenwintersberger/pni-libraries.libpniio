@@ -21,35 +21,25 @@
 //      Author: Eugen Wintersberger
 //
 
-#pragma once
+#include "uint8_formatter_test.hpp"
 
-#include <boost/current_function.hpp>
-#include <pni/io/formatters/formatter.hpp>
-#include <pni/io/exceptions.hpp>
-#include <pni/core/types.hpp>
+CPPUNIT_TEST_SUITE_REGISTRATION(uint8_formatter_test);
 
-#include<cppunit/TestFixture.h>
-#include<cppunit/extensions/HelperMacros.h>
+//-----------------------------------------------------------------------------
+void uint8_formatter_test::setUp() { }
 
-#include "../TestHelpers.hpp"
+//-----------------------------------------------------------------------------
+void uint8_formatter_test::tearDown() {}
 
-using namespace pni::core;
-using namespace pni::io;
-
-class float32_formatter_test:public CppUnit::TestFixture 
+//-----------------------------------------------------------------------------
+void uint8_formatter_test::test_format()
 {
-        CPPUNIT_TEST_SUITE(float32_formatter_test);
-        CPPUNIT_TEST(test_format);
-        CPPUNIT_TEST_SUITE_END();
-
-        typedef float32            input_type; 
-        typedef formatter<input_type> formatter_type;
-        formatter_type format;
-
-    public:
-        void setUp();
-        void tearDown();
-        void test_format();
-};
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+   
+    string result = format(input_type(12));
+    CPPUNIT_ASSERT(result == "12");
+    CPPUNIT_ASSERT(format(input_type(0)) == "0");
+    CPPUNIT_ASSERT(format(input_type(255)) == "255");
+}
 
 

@@ -36,17 +36,17 @@ void complex32_formatter_test::test_format()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
    
-    string result = format(input_type(1.2,3.4));
-    CPPUNIT_ASSERT(result == "1.2e00+I3.4e00");
+    string result = format(input_type(1.256987,3.452907));
+    CPPUNIT_ASSERT(result == "1.256987e00+I3.452907e00");
+    
+    result = format(input_type(1.256987,-3.452907));
+    CPPUNIT_ASSERT(result == "1.256987e00-I3.452907e00");
 
-    result = format(input_type(1.2,-3.4));
-    CPPUNIT_ASSERT(result == "1.2e00-I3.4e00");
-
-    result = format(input_type(-1.2,-3.4));
-    CPPUNIT_ASSERT(result == "-1.2e00-I3.4e00");
-
-    result = format(input_type(-1.2,3.4));
-    CPPUNIT_ASSERT(result == "-1.2e00+I3.4e00");
+    result = format(input_type(-1.256987,-3.452907));
+    CPPUNIT_ASSERT(result == "-1.256987e00-I3.452907e00");
+    
+    result = format(input_type(-1.256987,3.452907));
+    CPPUNIT_ASSERT(result == "-1.256987e00+I3.452907e00");
 }
 
 
