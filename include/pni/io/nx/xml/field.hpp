@@ -110,9 +110,6 @@ namespace xml{
         object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
                         const node &field_node)
         {
-            typedef FTYPE field_type;
-            typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
-
             auto f = create_field(parent,type_id(field_node),
                                   name(field_node),
                                   shape(field_node));
