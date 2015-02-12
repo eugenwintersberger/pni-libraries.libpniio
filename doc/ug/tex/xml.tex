@@ -1,11 +1,25 @@
 %%%documentation concerning the XML functions
 
-As Nexus organizes data objects in a tree like manner, XML is the obvious ASCII
-representation for a Nexus file.
+As \nexus\ organizes data objects in a tree like manner, XML is the obvious ASCII
+representation for a \nexus\ file.
 \libpniio\ thus provides a small but powerful set of functions to read and write 
-Nexus data objects from and to XML files. The framework is based on the 
-\cpp{boost::property\_tree} library. 
-There are several use cases which should be discussed briefly in 
+\nexus\ data objects from and to XML files. The framework is based on the 
+\cpp{boost::property\_tree} library. Clearly, the XML functionality provided 
+by \libpniio\ does in no case replace a full XML parser. For instance, there are
+no functions provided to manipulate the the XML content returned from 
+any of the functions. However, as the \cpp{node} type used to represent 
+XML data is an alias for the \cpp{boost::property\_tree} node type, one can use
+functions from \cpp{boost::property\_tree} to do some additional work with the
+XML results.
+\libpniio\ provides two interfaces\
+\begin{itemize}
+\item a high level interface which consists of basically two functions. The high
+level interface is described in section~\ref{sec:xml:highlevel}
+\item And a low level interface -- these are the classes and functions used to
+build the high level interface (described in section~\ref{sec:xml:lowlevel}).
+\end{itemize}
+Aside from this there are some simple functions which are common to both
+interfaces and described in section~\ref{sec:xml:basic}.
 
 %%%---------------------------------------------------------------------------
 \section{Use cases}\label{sec:xml:usecases}
@@ -15,12 +29,12 @@ ASCII. Though it has received some competitors like JSON, when it comes to
 complex structures XML is still the tool of choice\footnote{In fact, JSON
 becomes quickly virtually unreadable if the structure becomes too deeply
 nested.}
-In this section some use cases for Nexus and XML will be presented. 
+In this section some use cases for \nexus\ and XML will be presented. 
 
 \subsection{Standard compliance verification of a file}
 
-An always recurring request is the possibility to check a Nexus file with
-respect to its compliance to the current standard. As the Nexus standard 
+An always recurring request is the possibility to check a \nexus\ file with
+respect to its compliance to the current standard. As the \nexus\ standard 
 itself is defined in XML it would be reasonable to create an XML representation
 of the file to check and use one of the available XML validation tools to 
 verify the compliance of the file towards a particular standard. 
@@ -32,12 +46,12 @@ over the network using a remote service for validation
 \item it is at least in principle human readable 
 \item many of the required tools already exist. 
 \end{itemize}
-On step in this entire process is to convert a Nexus file to its ASCII XML 
+On step in this entire process is to convert a \nexus\ file to its ASCII XML 
 representation.
 
-\subsection{Generating Nexus structures from XML}
+\subsection{Generating \nexus\ structures from XML}
 
-The structure of a Nexus file can become rather complex. In a rather complex 
+The structure of a \nexus\ file can become rather complex. In a rather complex 
 environment like at a synchrotron beamline it would be naive to use static 
 code to create the file. A more feasible approach would be to implement 
 generic code which generates the structure of a file from an XML template. 
@@ -49,16 +63,88 @@ of another program written in whatever language is reasonable for this purpose.
 In some situations a $3$rd party may needs to process some of the metadata 
 stored in the file while not having access to the file. One possible application
 would be a data catalogue. Instead of making the file available the XML dump 
-of the Nexus file could be sent to the system while moving the Nexus file 
+of the \nexus\ file could be sent to the system while moving the \nexus\ file 
 to its final location on the storage system.
 
 %%%---------------------------------------------------------------------------
-\section{Nexus objects from XML}\label{sec:xml::nxtoxml}
+\section{Basic XML handling}{\label{sec:xml:basic}
+
+All XML related functions and classes resided within a separate namespace 
+\cpp{pni::io::nx::xml}. An XML document is represented by an instance of 
+type \cpp{node}. \cpp{node} is an alias for \cpp{boost::property\_tree::ptree}. 
+Thus it can be used along with all functions an methods provided by the 
+\cpp{ptree} type provided by \cpp{boost::property\_tree}. Aside from the 
+functionality from \cpp{boost::property\_tree} \libpniio\ provides some 
+\nexus\ related convenience functions. 
+
+An instance of \cpp{node} can be created either from a string
+\begin{cppcode}
+    xml::node n = xml::create_from_string(xmldata);
+\end{cppcode}
+where \cpp{xmldata} is a string with the XML content, 
+or from a file
+\begin{cppcode}
+    xml::node n = xml::create_from_file(fname);
+\end{cppcode}
+where \cpp{fname} is a string with the name of the file. Both functions 
+return the root node of the XML document. See the \cpp{property\_tree}
+documentation in the \cpp{BOOST} distribution for more information what one can
+do with such an object. For the rest of this chapter no additional knowledge
+about \cpp{BOOST}s \cpp{property\_tree} library is required.
+To write the content of a node to a stream one can use the default 
+output stream operator
+\begin{cppcode}
+    xml::node n = ....;
+    std::cout<<n<<std::endl;
+\end{cppcode}
+
+
+%%%===========================================================================
+\section{High level XML interface}\label{sec:xml:highlevel}
+
+The high-level XML interface basically consists of two function templates 
+\begin{description}
+\item[xml\_to\_nexus] which creates \nexus\ objects from XML templates
+\item[nexus\_to\_xml] which generates XML from \nexus\ objects.
+\end{description}
+Additionally there are some convenience functions available. All of this will be
+described in more detail in this section.
 
 %%%---------------------------------------------------------------------------
-\section{XML from Nexus objects}\label{sec:xml::xmltonx}
+\section{\nexus\ objects from XML}\label{sec:xml::nxtoxml}
 
-The work horse for Nexus to XML conversion is the \cpp{nexus\_to\_xml} function
+Creating \nexus\ objects from XML might be the most common operation performed 
+by this part of the library. The next example illustrates the most common 
+use case 
+\begin{cppcode}
+#include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/xml.hpp>
+
+using namespace pni::io::nx;
+
+int main(int argc,char **argv)
+{
+    xml::node n = ....;
+    h5::nxfile f = ....;
+    h5::nxgroup root = f.root();
+    
+    xml::xml_to_nexus(n,root);
+
+    return 0;
+}
+\end{cppcode}
+Here, the structure of a \nexus\ tree is described by XML and then converted 
+to \nexus\ by means of the \cpp{xml\_to\_nexus} function. The first argument 
+of this function is the XML node while the second is the parent object 
+below which the new structure should be created. All data already available 
+in the XML file will be stored in the fields and attributes of the created
+\nexus\-tree. 
+
+
+%%%---------------------------------------------------------------------------
+\subsection{XML from \nexus\ objects}\label{sec:xml:xmltonx}
+
+The work horse for \nexus\ to XML conversion is the \cpp{nexus\_to\_xml} function
 template. The most probably simplest use case is demonstrated in the next
 example 
 \begin{cppcode}
@@ -79,17 +165,17 @@ int main(int argc,char **argv)
     return 0;
 }
 \end{cppcode}
-Here, the entire structure of the Nexus file is stored below the XML root node 
+Here, the entire structure of the \nexus\ file is stored below the XML root node 
 which is at the end dumped to standard output.
 This simple example already raises an important question: how to deal with the
-data stored in the Nexus file. As Nexus files can be used to store large amounts
+data stored in the \nexus\ file. As \nexus\ files can be used to store large amounts
 of data it would not be wise to convert all this data to ASCII (think about a 3D
 image stack stored in the file). However, some data might be required. 
 The \cpp{nexus\_to\_xml} template thus provides a third optional argument which 
 is a predicate function which decides for which field or attribute data will be
 written to the file. 
 The signature of the predicate is 
-\begin{minted}[fontsize=\tiny]{cpp}
+\begin{minted}[fontsize=\small]{cpp}
 template<
          typename GTYPE,
          typename FTYPE,
@@ -105,7 +191,7 @@ A much better approach is to check for certain properties of an object.
 For the previous example a possible predicate could look like this
 \begin{cppcode}
 //code omitted 
-bool write_predicate(const h5::nxobject &o)
+bool write_scalars(const h5::nxobject &o)
 {
     if(is_field(o) || is_attribute(o))
     {
@@ -118,7 +204,7 @@ bool write_predicate(const h5::nxobject &o)
 int main(int argc,char **argv)
 {
     //code omitted 
-    xml::nexus_to_xml(root,root_node,write_predicate);
+    xml::nexus_to_xml(root,root_node,write_scalars);
 
     //code omitted
     return 0;
@@ -128,5 +214,11 @@ This predicate determines that only the data from fields and attributes
 is written to the XML tree if their size is equal to $1$ (in other words -- only
 scalars are written to the file). 
 Such an approach keeps the resulting XML document small while using a rather 
-general predicate which would match quite a lot of use cases.
+general predicate which would match quite a lot of use cases. The default 
+policy is to write no data.
+
+
+%%%===========================================================================
+\section{The XML low level interface}\label{sec:xml:lowlevel}
+
 

@@ -74,18 +74,6 @@ namespace xml{
         return type_id_from_str(type_attribute.read(io_node));
     }
     
-
-    //------------------------------------------------------------------------
-    void io_object::data_to_xml(const array &data,node &io_node)
-    {
-        if(data.size()!=size(io_node))
-            throw size_mismatch_error(EXCEPTION_RECORD,
-                    "Array size and field size do not match!");
-
-        std::stringstream ss;
-        //ss<<data;
-        io_node.put_value(ss.str());
-    }
 //end of namespace
 }
 }

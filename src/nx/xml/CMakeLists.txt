@@ -4,6 +4,7 @@ set(SOURCES
             node.cpp
             io_object.cpp
             dimensions.cpp
+            array_utils.cpp
             #field.cpp
             )
 

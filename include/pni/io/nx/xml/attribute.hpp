@@ -56,7 +56,8 @@ namespace xml{
         //! 
         //! Create an attribute attached to a parent according to the 
         //! information stored in the XML node. The parent must be 
-        //! either a field or a group type. 
+        //! either a field or a group type. No attribute data is 
+        //! copied from the Nexus object to the XML node.
         //! 
         //! \throws invalid_object_error if the parent is not valid
         //! \throws type_error if the requested data type does not exist
@@ -86,6 +87,9 @@ namespace xml{
         //-----------------------------------------------------------------
         //!
         //! \brief write attribute to XML
+        //!
+        //! Create an XML attribute from a Nexus attribute. No data will 
+        //! be transfered. 
         //!
         //! \tparam ATYPE attribute type
         //! \param attr attribute instance

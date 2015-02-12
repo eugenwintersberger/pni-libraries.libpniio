@@ -24,6 +24,7 @@
 
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
+#include <pni/core/type_erasures.hpp>
 
 #include "node.hpp"
 #include "io_object.hpp"
@@ -36,6 +37,13 @@ namespace xml{
     //!
     //! \ingroup xml_classes
     //! \brief generate an array 
+    //!
+    //! This function template generates an instance of an mdarray 
+    //! from a data node and stores the data in this array. The data type
+    //! is determined by the user and must match the data type stored in the 
+    //! array. 
+    //!
+    //! 
     template<typename ATYPE> ATYPE make_array(const node &data)
     {
         typedef typename ATYPE::storage_type storage_type;
@@ -52,6 +60,18 @@ namespace xml{
 
         return ATYPE::create(std::move(shape),std::move(buffer));
     }
+
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup xml_classes
+    //! \brief generate an array type erasure
+    //! 
+    //! This specialization of the make_array function template returns an 
+    //! array type erasure. This function is particularly useful in situations
+    //! where we only need to transfer data and the data type is of no further 
+    //! importants. 
+    //!
+    template<> array make_array(const node &data);
 
 
 

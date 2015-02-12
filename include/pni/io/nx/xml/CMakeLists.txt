@@ -10,6 +10,7 @@ set(HEADER_FILES attribute_data.hpp
                  dimensions.hpp
                  default.hpp
                  object_data.hpp
+                 array_utils.hpp
                  )
 
 install(FILES ${HEADER_FILES} 

@@ -83,7 +83,8 @@ namespace xml{
         //! \brief create field from XML
         //! 
         //! Creates a new field object below parent according to the 
-        //! information stored in the actual XML node.
+        //! information stored in the actual XML node. The data stored 
+        //! in the XML node is not copied to the field automatically.
         //! 
         //! \throws parser_error if XML parsing operations fail
         //! \throws invalid_object_error if the parent is not valid
@@ -133,7 +134,8 @@ namespace xml{
         //!
         //! Create an XML object from a field. No data is included in the
         //! XML output. But it could easily be added with the data_to_xml
-        //! function. 
+        //! function. No data is copied from the field instance to the 
+        //! XML node.
         //!
         //! \throws parser_error in case of IO errors on the XML side
         //! \throws invalid_object_error if the field is not valid
