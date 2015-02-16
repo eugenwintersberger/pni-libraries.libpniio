@@ -113,7 +113,6 @@ namespace io{
             //! \throws parser_error in case of errors
             //! \tparam PTYPE parser type
             //! \param s string to parse
-            //! \param p parser instance
             //! \return array instance
             //!
             result_type  operator()(const core::string &s) const

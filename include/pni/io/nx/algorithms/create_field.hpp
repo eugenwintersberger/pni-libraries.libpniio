@@ -193,7 +193,7 @@ namespace nx{
     //! \param location the root location where the field should be created
     //! \param path a string or nxpath object with the path to the field
     //! \param shape the initial shape of the field
-    //! \param chunkd the chunkd shape of the field
+    //! \param chunk the chunkd shape of the field
     //! \param filter reference to the filter object
     //!
     //! \return field type wrapped into an nxobject instance
@@ -304,7 +304,7 @@ namespace nx{
             > 
     nxobject<GTYPE,FTYPE,ATYPE> 
     create_field(const nxobject<GTYPE,FTYPE,ATYPE> &parent,const PATHT &path,
-                 const STYPE &shape={1})
+                 const STYPE &shape = {1})
     {
         STYPE chunk(shape);
         chunk.front() = 1;

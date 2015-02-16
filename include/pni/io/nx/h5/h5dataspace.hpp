@@ -268,6 +268,9 @@ namespace h5 {
         //! \brief output operator
         //! 
         //! \throws invalid_object_error if dataspace is not valid
+        //! \param o output stream
+        //! \param s HDF5 dataspace
+        //! \return modified output stream
         //!
         std::ostream &operator<<(std::ostream &o,const h5dataspace &s);
 

@@ -108,6 +108,7 @@ namespace h5{
     //! \throws key_error if attribute does not exist 
     //! \throws object_error in case of other errors
     //!
+    //! \param parent reference to the parent object of the attribute
     //! \param n name of the attribute
     //! \return attribute object
     //!

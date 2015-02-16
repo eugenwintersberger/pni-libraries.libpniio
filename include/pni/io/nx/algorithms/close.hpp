@@ -39,6 +39,7 @@ namespace nx{
     //! \throws type_error if internal object type is not supported
     //!
     //! \tparam OTYPE object type
+    //! \param o instance of the object to close
     //!
     template<typename OTYPE> void close(OTYPE &o)
     {

@@ -335,7 +335,7 @@ namespace nx{
     //!
     //! \param o instance of VTYPE
     //! \param a instance of ATYPE with the data
-    //! \param indices index type instances
+    //! \param sel selection from which to read
     //! \return nothing
     //!
     template<

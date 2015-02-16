@@ -72,7 +72,7 @@ namespace h5{
     //! \throws io_error in case of any IO related error.
     //! \throws type_error object is not a group or dataset
     //!
-    //! \param id of the object
+    //! \param object reference to the object from which to retrieve the path
     //! \return path as string
     //!
     string get_path(const object_imp &object);
@@ -93,6 +93,7 @@ namespace h5{
     //! \throws io_error in case of data retrieval issues
     //! \throws type_error if object type cannot be determined
     //!
+    //! \param obj reference to the object from which to retrieve the name
     //! \return name of the object
     //!
     string get_name(const object_imp &obj);
@@ -112,7 +113,7 @@ namespace h5{
     //! \throws object_error if validity check fails
     //! \throws type_error if the object is of an inappropriate type
     //!
-    //! \param id the HDF5 ID of the object
+    //! \param object the HDF5 object from which to retrieve the parent path
     //! \return path to the parent
     //! 
     string get_parent_path(const object_imp &object);
@@ -130,8 +131,9 @@ namespace h5{
     //! \throws object_error in case of any other error
     //! \throws type_error if the type of the object is unkown or could not be 
     //! determined
-    //! \thorws io_error in case of any IO related errors
+    //! \throws io_error in case of any IO related errors
     //!
+    //! \param obj reference to the object from which to retrieve the parent
     //! \return object instance of the parent
     //!
     object_imp get_parent(const object_imp &obj);

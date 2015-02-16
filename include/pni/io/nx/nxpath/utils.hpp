@@ -40,6 +40,10 @@ namespace nx{
     //! 
     //! Append an element to a path. 
     //! 
+    //! \param p the path to which to append
+    //! \param gname the name of the group to append
+    //! \param gclass the class of the group which to append
+    //! 
     void append(nxpath &p,const string &gname,const string &gclass);
 
     //!
@@ -274,7 +278,7 @@ namespace nx{
     \endcode
     */
     //!
-    //! \param o reference to the output stream
+    //! \param stream reference to the output stream
     //! \param p reference to the path
     //! \return reference to the output operator
     //!

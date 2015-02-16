@@ -179,9 +179,10 @@ namespace nx{
     //! \tparam ATYPE attribute type
     //! \tparam STYPE shape container type
     //! 
-    //! \param o instance of VTYPE with the parent group
-    //! \param n name of the new attribute
-    //! \param s shape of the attribute
+    //! \param parent instance of parent object
+    //! \param name name of the new attribute
+    //! \param shape shape of the attribute
+    //! \param overwrite if true an existing attribute will be overwritten
     //! \return attribute as an instance of nxobject
     //!
     template<
@@ -228,9 +229,9 @@ namespace nx{
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
     //! 
-    //! \param o instance of VTYPE with the parent group
-    //! \param n name of the new attribute
-    //! \param s shape of the attribute
+    //! \param parent instance of the parent
+    //! \param name name of the new attribute
+    //! \param overwrite if true overwrite an existing attribute of equal name
     //! \return attribute as an instance of nxobject
     //!
     template<

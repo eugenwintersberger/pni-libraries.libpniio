@@ -45,7 +45,7 @@ namespace nx{
     //! \tparam PTYPE parent type template
     //! \tparam IMPID parent type implementation id
     //!
-    //! \param p refernece to parent instance
+    //! \param parent refernece to parent instance
     //! \param name attributes name
     //! \return attribute type
     //! 

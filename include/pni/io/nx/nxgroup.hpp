@@ -812,6 +812,8 @@ namespace nx{
     //! \throws type_error if internal types could not be determined
     //! \throws object_error in case of any other error
     //!
+    //! \param a group instance on the LHS of the operator
+    //! \param b group instance on the RHS of the operator
     //! \return true if group are equal, false otherwise
     //!
     template<nximp_code IMPID>
@@ -831,6 +833,8 @@ namespace nx{
     //! \throws type_error if the internal types could not be determined
     //! \throws object_error in case of any other error
     //!
+    //! \param a group instance on the LHS of the operator
+    //! \param b group instance on the RHS of the operator
     //! \return true if not equal, false otherwise
     //!
     template<nximp_code IMPID>
