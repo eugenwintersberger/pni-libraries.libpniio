@@ -69,51 +69,72 @@ namespace io{
     class parser<ITERT,std::vector<T>>
     {
         public:
+            //! result type for the parser
             typedef std::vector<T>  result_type;
+            //! input iterator type
             typedef ITERT           iterator_type;
+            //! parser exception type
             typedef qi::expectation_failure<iterator_type> expectation_error;
         private:
+            //! conversion trait used during parsing
             typedef conversion_trait<T> trait_type;
+            //! data type to read 
             typedef typename trait_type::read_type read_type;
+            //! buffer type used for reading
             typedef std::vector<read_type> buffer_type;
+            //! rule type to parse the sequence
             typename get_sequence_rule<ITERT,buffer_type>::type sequence_;
-            //sequence_rule<ITERT,buffer_type> sequence_;
-
 
         public:
             //-----------------------------------------------------------------
-            //! default constructor
+            //!
+            //! \brief default constructor
+            //! 
             parser() : sequence_() 
             {}
 
             //-----------------------------------------------------------------
+            //! 
+            //! \brief constructor
+            //! 
+            //! \param del delimiter symbol for the sequence
+            //!
             parser(char del): sequence_(del) 
             {}
 
             //-----------------------------------------------------------------
+            //! 
+            //! \brief constructor
+            //! 
+            //! \param start the start symbol for the sequence
+            //! \param stop  the stop symbol for the sequence
+            //!
             parser(char start,char stop) : sequence_(start,stop) 
             {}
 
             //-----------------------------------------------------------------
+            //!
+            //! \brief constructor
+            //! 
+            //! \param start the start symbol for the sequence
+            //! \param stop  the stop symbol for the sequence
+            //! \param del   the delimiter symbol for the sequence
+            //! 
             parser(char start,char stop,char del) : sequence_(start,stop,del) 
             {}
 
 
             //-----------------------------------------------------------------
             //!
-            //! \ingroup parser_classes
-            //! \brief extract array data from string 
+            //! \brief parse a string
             //!
-            //! This template function can be used to extract an array from a
-            //! string  using a parser type. Most naturally this parser would 
-            //! be an instance of array_parser. An exception is thrown either 
-            //! when the string represents data that cannot be parsed by the 
-            //! parser or when the resulting array has a length 0.
+            //! Parses a string and stores the result in a vector. 
             //!
             //! \throws parser_error in case of errors
-            //! \tparam PTYPE parser type
+            //! \throws range_error in the case of an error during conversion
+            //! 
             //! \param s string to parse
-            //! \return array instance
+            //! \return instance of std::vector with the parsed data
             //!
             result_type  operator()(const core::string &s) const
             {

@@ -59,7 +59,9 @@ namespace nx{
     class nxattribute
     {
         public:
+            //! implementation type of the attribute
             typedef typename nximp_map<IMPID>::attribute_imp   implementation_type;
+            //! implementation of the type trait
             typedef typename nximp_map<IMPID>::type_imp type_type;
             //! define the actual type of this object
             typedef nxattribute<IMPID>                attribute_type;
@@ -226,6 +228,7 @@ namespace nx{
             //! \throws object_error in case of any other error
             //! 
             //! \tparam T data type of the pointer
+            //! \param n the number of elements to read to memory
             //! \param data pointer to the data
             //! 
             template<typename T>
@@ -398,6 +401,7 @@ namespace nx{
             //! \throws object_error in case of any other error
             //! 
             //! \tparam T data type to read to
+            //! \param n the size of the memory referred to by the pointer
             //! \param value pointer to memory
             //!
             template<typename T>

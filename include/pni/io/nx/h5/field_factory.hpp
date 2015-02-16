@@ -77,6 +77,13 @@ namespace h5{
             //! a filter.
             //! 
             //! \throws object_error in case of errors
+            //!
+            //! \param parent the parent for the field
+            //! \param name the name of the field
+            //! \param create_plist creation property list
+            //! \param type the datatype for the field
+            //! \param space the dataspace for the field
+            //! \return instance of field implementation
             //! 
             static field_imp create(const object_imp &parent,
                                     const string &name,

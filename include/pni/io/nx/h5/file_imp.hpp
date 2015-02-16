@@ -52,6 +52,7 @@ namespace h5{
     class file_imp
     {
         private:
+            //! the HDF5 object
             object_imp _object;
         public:
             //===============constructors and destructors======================
@@ -105,7 +106,7 @@ namespace h5{
             //! \throws object_error in case of object creation fails
             //! \throws invalid_object_error if the created file is not valid
             //!
-            //! \param n file name
+            //! \param path the path to the file to create
             //! \param ow overwrite existing file if true
             //! \param ssize split size
             //! \return instance of H5File

@@ -155,13 +155,19 @@ namespace io{
         //--------------------------------------------------------------------
         // here starts the implementation of the rule
         //--------------------------------------------------------------------
+        //! rule for parsing an integer
         typename boost::mpl::at<spirit_rules,int64>::type   integer_rule_;
+        //! rule for parsing a floating point number
         typename boost::mpl::at<spirit_rules,float64>::type float_rule_;
+        //! rule for parsing a complex number
         complex_rule<ITERT,complex64>                       complex_rule_;
         //!value reading rule
         qi::rule<ITERT,core::value()> value_;
+        //! rule to match the + or - sign
         qi::rule<ITERT>               sign_rule;
+        //! rule to match . or e used to denote a floating point number
         qi::rule<ITERT>               float_signs;
+        //! lazy function to assemble a value instance
         boost::phoenix::function<value_constructor> construct_value;
 
         //--------------------------------------------------------------------

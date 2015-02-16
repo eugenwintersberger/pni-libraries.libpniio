@@ -56,7 +56,9 @@ namespace h5{
             //! handler to the datatype object of the attribute
             h5datatype  _dtype;   
 
+            //! selection instance
             selection  _selection;
+            //! flag determining whether or not the selection is set
             bool _apply_selection;
 
             //-----------------------------------------------------------------
@@ -170,12 +172,43 @@ namespace h5{
             void _to_disk(const h5datatype &memtype,const void *ptr) const;
 
             //----------------------------------------------------------------
+            //!
+            //! \brief write all data
+            //! 
+            //! Write all data to the attribute. 
+            //! 
+            //! \param tid type ID of the the data 
+            //! \param ptr a pointer to the memory where the data resides in
+            //! memory
+            //! 
             void _write_all(type_id_t tid,const void *ptr) const;
 
             //----------------------------------------------------------------
+            //! 
+            //! \brief write selection
+            //! 
+            //! Write the data to the selection applied to an attribute. 
+            //!
+            //! \param tid type id of the data in memory
+            //! \param ptr pointer to the memory where the data is stored
+            //! 
             void _write_selection(const type_id_t tid,const void *ptr) const;
    
             //------------------------------------------------------------------
+            //! 
+            //! \brief write data to selection
+            //! 
+            //! Write typed data to a selection. This function performs the 
+            //! following steps
+            //! \li read all data from the attribute and store it in an array
+            //! \li apply the selection to the array and create a view
+            //! \li copy the data to the view
+            //! \li write back the total array 
+            //! 
+            //! \tparam T type of the data to write
+            //! \param tid type ID of the data
+            //! \param ptr pointer to memory where the data is stored 
+            //! 
             template<typename T>
             void _write_selection_typed(type_id_t tid,const T *ptr) const
             {
@@ -212,7 +245,7 @@ namespace h5{
             //! \throws invalid_object_error if object is not valid
             //! \throws object_error in case of any other error
             //!
-            //! \param id HDF5 id of the attribute object.
+            //! \param object rvalue reference to an HDF5 object
             //!
             explicit attribute_imp(object_imp &&object);
 
@@ -370,8 +403,21 @@ namespace h5{
             //=================================================================
             // selection management
             //=================================================================
+            //!
+            //! \brief apply a selection to the attribute
+            //! 
+            //! Applies a selection to the attribute. 
+            //! 
+            //! \param s a selection vector
+            //! 
             void apply_selection(const type_imp::selection_vector_type &s);
 
+            //----------------------------------------------------------------
+            //!
+            //! \brief remove selection
+            //! 
+            //! Removes a selection from an attribute. 
+            //!
             void clear_selection();
     };
 

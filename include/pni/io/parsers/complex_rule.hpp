@@ -68,6 +68,7 @@ namespace io{
     {
         //! result type of the rule
         typedef CTYPE result_type;
+        //! base type of the complex number type
         typedef typename core::type_info<result_type>::base_type base_t;
 
         //! rule to parse the base type

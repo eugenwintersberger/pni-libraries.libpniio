@@ -55,6 +55,7 @@ namespace io{
     //!
     template<typename ITERT> struct get_generator<ITERT,uint8>
     {
+        //! generator type
         typedef karma::uint_generator<uint8> type;
     };
 
@@ -65,6 +66,7 @@ namespace io{
     //!
     template<typename ITERT> struct get_generator<ITERT,uint16>
     {
+        //! generator type
         typedef karma::uint_generator<uint16> type;
     };
 
@@ -75,6 +77,7 @@ namespace io{
     //!
     template<typename ITERT> struct get_generator<ITERT,uint32>
     {
+        //! generator type
         typedef karma::uint_generator<uint32> type;
     };
 
@@ -85,6 +88,7 @@ namespace io{
     //!
     template<typename ITERT> struct get_generator<ITERT,uint64>
     {
+        //! generator type
         typedef karma::uint_generator<uint64> type;
     };
     //------------------------------------------------------------------------
@@ -96,6 +100,7 @@ namespace io{
     //!
     template<typename ITERT> struct get_generator<ITERT,int8>
     {
+        //! generator type
         typedef karma::int_generator<int8> type;
     };
 
@@ -106,6 +111,7 @@ namespace io{
     //!
     template<typename ITERT> struct get_generator<ITERT,int16>
     {
+        //! generator type
         typedef karma::int_generator<int16> type;
     };
 
@@ -116,6 +122,7 @@ namespace io{
     //!
     template<typename ITERT> struct get_generator<ITERT,int32>
     {
+        //! generator type
         typedef karma::int_generator<int32> type;
     };
 
@@ -126,6 +133,7 @@ namespace io{
     //!
     template<typename ITERT> struct get_generator<ITERT,int64>
     {
+        //! generator type
         typedef karma::int_generator<int64> type;
     };
 
@@ -138,6 +146,7 @@ namespace io{
     //!
     template<typename ITERT> struct get_generator<ITERT,float32>
     {
+        //! generator type
         typedef karma::real_generator<float32,float_policy<float32>> type;
     };
     
@@ -148,6 +157,7 @@ namespace io{
     //!
     template<typename ITERT> struct get_generator<ITERT,float64>
     {
+        //! generator type
         typedef karma::real_generator<float64,float_policy<float64>> type;
     };
 
@@ -158,6 +168,7 @@ namespace io{
     //!
     template<typename ITERT> struct get_generator<ITERT,float128>
     {
+        //! generator type
         typedef karma::real_generator<float128,float_policy<float128>> type;
     };
 
@@ -171,13 +182,14 @@ namespace io{
     //! Provides the generator for complex types 
     //! 
     //! \tparam ITERT iterator type
-    //! \tparma T base type of the complex number
+    //! \tparam T base type of the complex number
     template<
              typename ITERT,
              typename T
             >
     struct get_generator<ITERT,std::complex<T>>
     {
+        //! generator type
         typedef complex_generator<ITERT,T> type;
     };
 
@@ -190,6 +202,7 @@ namespace io{
     //!
     template<typename ITERT> struct get_generator<ITERT,bool_t>
     {
+        //! generator type
         typedef karma::bool_generator<bool> type;
     };
 

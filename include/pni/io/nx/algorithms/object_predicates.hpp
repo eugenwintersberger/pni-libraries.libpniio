@@ -42,8 +42,11 @@ namespace nx{
     //!
     template<typename OTYPE> struct object_predicates
     {
+        //! the type of the object to deal with 
         typedef OTYPE object_type;
+        //! the type of the predicate function
         typedef std::function<bool(const object_type &o)> function_type;
+        //! virtually a back reference to this structure itself
         typedef object_predicates<OTYPE> predicate_type;
 
         //--------------------------------------------------------------------

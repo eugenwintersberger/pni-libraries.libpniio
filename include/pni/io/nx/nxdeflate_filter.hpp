@@ -43,7 +43,9 @@ namespace nx{
     class nxdeflate_filter:public nxfilter<FIMP>
     {
         public:
+            //! filter implementation type
             typedef FIMP imp_type;
+            //! self reference to this filter type
             typedef nxdeflate_filter<FIMP> filter_type;
             //====================constructors and destructor==================
             //!

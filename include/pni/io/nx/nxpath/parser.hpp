@@ -52,8 +52,12 @@ namespace parsers{
     template<typename ITERT>
     struct id_parser : qi::grammar<ITERT,string()>
     {
+        //! the major rule to parse an ID
         qi::rule<ITERT,string()> id_rule;
 
+        //! 
+        //! \brief default constructor
+        //!
         id_parser() : id_parser::base_type(id_rule)
         {
             id_rule = +qi::char_("-_a-zA-Z0-9");
@@ -82,13 +86,17 @@ namespace parsers{
                                         nxpath::element_type()
                                        >
     {
+        //! a single path element type
         typedef nxpath::element_type element_type;
 
-        //! rule for a single component
+        //! rule for a name
         qi::rule<ITERT,string()> name_rule;
+        //! rule for a class
         qi::rule<ITERT,string()> class_rule;
+        //! rule for dots
         qi::rule<ITERT,string()> dot_rule;
-
+    
+        //! rule for an entire ID
         id_parser<ITERT> id_;
         
         //! rule for a group element
@@ -172,6 +180,7 @@ namespace parsers{
                                        >,
                                        nxpath()>
     {
+        //! rule for the path
         qi::rule<ITERT,
                  locals
                  <
@@ -180,14 +189,21 @@ namespace parsers{
                  >,
                  nxpath()> nxpath_rule;
 
+        //! rule for the root part of the path
         qi::rule<ITERT,nxpath::element_type()> root_rule;
                 
-        //add parser for the filepath
+        //!parser for an individual Nexus ID
         id_parser<ITERT> id_;
 
-        //add parser for the elements
+        //! parser for a single element
         elements_parser<ITERT> element_rule;
 
+        //--------------------------------------------------------------------
+        //!
+        //! \brief constructor
+        //!
+        //! \param fname the filename of the path
+        //!
         nxpath_parser(const string &fname="") :
             nxpath_parser::base_type(nxpath_rule),
             _filename(fname)
@@ -229,6 +245,7 @@ namespace parsers{
         }
 
         private:
+            //! the filename part
             string _filename;
     };
 

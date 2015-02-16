@@ -47,7 +47,9 @@ namespace nx{
     template<typename FIMP> class nxfilter
     {
         public:
+            //! implementation type
             typedef FIMP imp_type;
+            //! the actual filter type
             typedef nxfilter<imp_type> filter_type;
         private:
             imp_type _imp; //!< filter implementation object

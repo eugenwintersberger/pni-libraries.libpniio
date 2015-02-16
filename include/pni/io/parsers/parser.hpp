@@ -66,12 +66,18 @@ namespace io{
     class parser 
     {
         public:
+            //! iterator type
             typedef ITERT iterator_type;
+            //! result type of the parsing process
             typedef T     result_type;
+            //! parser exception type
             typedef qi::expectation_failure<iterator_type> expectation_error;
         private:
+            //! conversion trait type
             typedef conversion_trait<result_type>   trait_type;
+            //! type used for reading the data
             typedef typename trait_type::read_type  read_type;
+            //! rule which will be used to read the data
             typename get_rule_type<iterator_type,read_type>::type _rule;
 
         public:
@@ -84,6 +90,7 @@ namespace io{
             //! \throws parser_error in case of any problems
             //! \param data the string with input data
             //! \return instance of the primitive type
+            //!
             result_type operator()(const string &data) const
             {
                 read_type   buffer;

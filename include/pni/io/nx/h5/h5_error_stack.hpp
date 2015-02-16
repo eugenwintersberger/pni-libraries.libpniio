@@ -56,9 +56,13 @@ using pni::core::string;
     class h5_error_stack 
     {
         public:
+            //! the element type of the stack - the error type
             typedef h5_error value_type;
+            //! container type to store errors
             typedef std::vector<value_type> container_type;
+            //! non-const iterator type
             typedef container_type::iterator iterator;
+            //! const iterator type
             typedef container_type::const_iterator const_iterator;
         private:
             //! id of the error stack

@@ -81,6 +81,7 @@ namespace io{
     template<typename T> 
     struct imag_policy : boost::spirit::karma::real_policies<T>
     {
+        //! policy to parse the base type
         typedef boost::spirit::karma::real_policies<T> base_type;
 
         //--------------------------------------------------------------------

@@ -78,6 +78,12 @@ namespace nx{
             //! \tparam Arg1 type of the first argument
             //! \tparam Arg2 type of the second argument
             //! \tparam Arg3 type of the third argument
+            //!
+            //! \param c reference to the container
+            //! \param arg1 first argument
+            //! \param arg2 second argument
+            //! \param arg3 third argument
+            //!
             template <
                       typename C, 
                       typename Arg1, 

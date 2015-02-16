@@ -39,15 +39,28 @@ namespace io{
     //! \brief string parser
     //! 
     //! This spcialization of the parser template is for string types. 
+    //! 
+    //! \param ITERT input iterator type
     //!
     template<typename ITERT>
     class parser<ITERT,core::string>
     {
         public:
+            //! the output type of the parser
             typedef core::string value_type;
+            //! the input iterator type
             typedef ITERT        iterator_type;
 
-
+            //----------------------------------------------------------------
+            //! 
+            //! \brief parser a string
+            //! 
+            //! This function does virtually nothing elsen than just pass 
+            //! the input argument through.
+            //!
+            //! \param data input string
+            //! \return unchanged input string
+            //! 
             core::string operator()(const string &data) const
             {
                 return data;

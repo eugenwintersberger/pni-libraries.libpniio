@@ -110,6 +110,8 @@ namespace xml{
     //!
     //! \param t ptree instance with the XML data
     //! \param parent instance of nxobject
+    //! \param write_data predicate function determining when data should be
+    //! written
     //!
     template<
              typename GTYPE,

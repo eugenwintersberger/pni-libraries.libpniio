@@ -82,6 +82,7 @@ namespace nx{
             //!
             //! \param n name of the attribute
             //! \param s shape of the attribute
+            //! \param o overwrite flag
             //!
             create_attribute_visitor(const string &n,const STYPE &s,bool o):
                 _name(n),

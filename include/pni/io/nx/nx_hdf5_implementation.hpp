@@ -66,13 +66,21 @@ namespace nx{
     //! 
     template<> struct nxobject_trait<nximp_code::HDF5>
     {
-        typedef h5::nxfile           file_type;
+        //! file type for the HDF5 implementation
+        typedef h5::nxfile           file_type;  
+        //! group type for the HDF5 implementation
         typedef h5::nxgroup          group_type;
+        //! field type for the HDF5 implementation 
         typedef h5::nxfield          field_type;
+        //! attribute type for the HDF5 implementation
         typedef h5::nxattribute      attribute_type;
+        //! link type for the HDF5 implementation
         typedef h5::h5link           link_type;
+        //! filter type for the HDF5 implementation
         typedef h5::nxfilter         filter_type;
+        //! deflate filter type for the HDF5 implementation
         typedef h5::nxdeflate_filter deflate_type;
+        //! object type for the HDF5 implementation
         typedef h5::nxobject         object_type;
     };
 

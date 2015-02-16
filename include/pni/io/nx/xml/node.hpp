@@ -36,7 +36,7 @@ namespace xml{
     //! \brief alias for ptree
     //! 
     //! This alias creates the new type name node which can be used within 
-    //! the xml namespace instread of boost::property_tree::ptree;
+    //! the xml namespace instead of boost::property_tree::ptree;
     //!
     using node = boost::property_tree::ptree;
 
@@ -69,7 +69,7 @@ namespace xml{
     //! \ingroup xml_classes
     //! \brief create an attribute path
     //! 
-    //! This function is inteded for internal use only. It creates a valid 
+    //! This function is intended for internal use only. It creates a valid 
     //! attribute path from an attribute name.
     //! 
     //! \param name the name of the attribute
@@ -97,10 +97,14 @@ namespace xml{
     //-------------------------------------------------------------------------
     //!
     //! \ingroup xml_classes
-    //! \brief check for attribute existance
+    //! \brief check for attribute existence
     //! 
     //! Returns true if the node parent has a an attribute name attached to it.
     //! Otherwise false is returned.
+    //!
+    //! \param parent reference to the parent node
+    //! \param name the attributes name
+    //! \return true if the attribute exists, false otherwise
     //!
     bool has_attribute(const node &parent,const string &name);
 

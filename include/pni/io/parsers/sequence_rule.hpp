@@ -73,7 +73,9 @@ namespace io{
         //! delimiter rule
         delimiter_rule<ITERT> delimiter_;
 
+        //! rule for the start symbol of the sequence
         qi::rule<ITERT> start_;
+        //! rule for the stop symbol of the sequence
         qi::rule<ITERT> stop_;
         //! a possible start symbol
         char start_symbol_;
@@ -106,6 +108,8 @@ namespace io{
         //! to parse the delimiter. Thus, the delimiter symbol can have an 
         //! arbitrary number of preceding and tailing blanks. 
         //!
+        //! \param del the delimiter symbol used in the rule
+        //! 
         sequence_rule(char del): 
             sequence_rule::base_type(sequence_),
             delimiter_(del)
@@ -124,6 +128,9 @@ namespace io{
         //! individual elements are still separated by an arbitrary number of
         //! blanks. 
         //!
+        //! \param start the start symbol used for the sequence
+        //! \param stop the stop symbol used for the sequence
+        //!
         sequence_rule(char start,char stop):
             sequence_rule::base_type(sequence_),
             start_(start>qi::omit[*qi::blank]),
@@ -138,7 +145,11 @@ namespace io{
         //! 
         //! Customizes the start and stop symbol as well as the delimiter 
         //! symbol. 
-        //! 
+        //!
+        //! \param start the start symbol for the sequence
+        //! \param stop  the stop symbol for the sequence
+        //! \param del   the delimiter symbol for the sequence
+        //!
         sequence_rule(char start,char stop,char del):
             sequence_rule::base_type(sequence_),
             delimiter_(del),

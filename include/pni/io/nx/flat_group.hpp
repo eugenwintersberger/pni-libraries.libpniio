@@ -118,6 +118,9 @@ namespace nx{
             //! \throws type_error if group conversion fails
             //! \throws object_error in case of any other error
             //!
+            //! \param parent the parent group from which all elements should be 
+            //! gahtered
+            //!
             explicit flat_group(const group_type &parent):
                 _container()
             { 
@@ -125,42 +128,95 @@ namespace nx{
             }
 
             //------------------------------------------------------------------
+            //!
+            //! \brief get element 
+            //! 
+            //! Return the element with index from the group. 
+            //!
+            //! \param index the index of the child in the recursive group
+            //! \return copy of the child stored at index
+            //!
             value_type operator[](size_t index) const noexcept
             {
                 return _container[index];
             }
 
             //------------------------------------------------------------------
+            //!
+            //! \brief get element reference
+            //!
+            //! Return a reference to the element addressed by index in the 
+            //! recursive group.
+            //! 
+            //! \param index the index of the child
+            //! \return reference to the child
+            //!
             value_type &operator[](size_t index) noexcept
             {
                 return _container[index];
             }
 
             //------------------------------------------------------------------
+            //!
+            //! \brief get size
+            //! 
+            //! Return the total number of elements attached (recursively) 
+            //! below this group.
+            //! 
+            //! \return number of children (direct or indirect)
+            //!
             size_t size() const noexcept
             {
                 return _container.size();
             }
 
             //------------------------------------------------------------------
+            //! 
+            //! \brief get iterator to first
+            //! 
+            //! Return a non const iterator to the first element in the group
+            //! 
+            //! \return interator to first element
+            //! 
             iterator begin() noexcept
             {
                 return _container.begin();
             }
 
             //------------------------------------------------------------------
+            //! 
+            //! \brief get iterator to last+1
+            //!
+            //! Return a non const iterator to the last+1 element in the group.
+            //! 
+            //! \return iterator to the last+1 element
+            //!
             iterator end() noexcept
             {
                 return _container.end();
             }
 
             //------------------------------------------------------------------
+            //! 
+            //! \brief get iterator to first
+            //! 
+            //! Return a const iterator to the first element in the group
+            //! 
+            //! \return const interator to first element
+            //! 
             const_iterator begin() const noexcept
             {
                 return _container.begin();
             }
 
             //------------------------------------------------------------------
+            //! 
+            //! \brief get iterator to last+1
+            //!
+            //! Return a const iterator to the last+1 element in the group.
+            //! 
+            //! \return const iterator to the last+1 element
+            //!
             const_iterator end() const noexcept
             {
                 return _container.end();

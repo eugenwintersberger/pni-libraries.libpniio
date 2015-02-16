@@ -46,8 +46,9 @@ namespace xml{
     struct io_object
     {
 
-        //! type to retrieve string attributes
+        //! type to retrieve the name attribute
         static attribute_data name_attribute;
+        //! type to retrieve the type attribute
         static attribute_data type_attribute;
 
         //--------------------------------------------------------------------
@@ -130,9 +131,7 @@ namespace xml{
         //! \throws type_error if the fields data type is not supported
         //! \throws parser_error in case of errors during parsing data text
         //!
-        //! \param field_node the XML node with the data
-        //! \param separator the separator character used to separate array 
-        //! items
+        //! \param io_node the XML node with the data
         //! \return instance of array with the data
         //! 
         template<typename T>

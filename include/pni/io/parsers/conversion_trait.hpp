@@ -45,14 +45,34 @@ namespace io{
     template<typename T>
     struct conversion_trait
     {
+        //! the type requested by the user
         typedef T result_type;
+        //! the type to read
         typedef T read_type;
 
+        //! 
+        //! \brief conversion function 
+        //! 
+        //! Conversion function taking an rvalue reference. 
+        //! 
+        //! \param v rvalue reference for type to convert
+        //! \return new value of type result_type
+        //! 
         static result_type convert(read_type &&v) 
         { 
             return v; 
         }
 
+        //--------------------------------------------------------------------
+        //!
+        //! \brief conversion function
+        //! 
+        //! Conversion function taking an lvalue reference to the source 
+        //! value. 
+        //! 
+        //! \param v lvalue reference to the value to convert
+        //! \return new value of type result_type
+        //! 
         static result_type convert(const read_type &v)
         {
             return v;
@@ -70,14 +90,42 @@ namespace io{
     template<>
     struct conversion_trait<uint8>
     {
+        //! the type requested by the user
         typedef uint8  result_type;
+        //! the type to read
         typedef uint16 read_type;
 
+        //------------------------------------------------------------------
+        //! 
+        //! \brief convert uint16 to uint8
+        //!
+        //! Takes an rvalue reference to an uint16 value and converts it to 
+        //! uint8. If the value of the input exceeds the numeric range of 
+        //! uint8 a range_error exception is thrown. 
+        //! 
+        //! \throws range_error if input value exceeds range of output type
+        //!
+        //! \param v rvalue reference to input
+        //! \return new value of type uint8
+        //!
         static result_type convert(read_type &&v) 
         { 
             return pni::core::convert<result_type>(v); 
         }
 
+        //------------------------------------------------------------------
+        //! 
+        //! \brief convert uint16 to uint8
+        //!
+        //! Takes an lvalue reference to an uint16 value and converts it to 
+        //! uint8. If the value of the input exceeds the numeric range of 
+        //! uint8 a range_error exception is thrown. 
+        //! 
+        //! \throws range_error if input value exceeds range of output type
+        //!
+        //! \param v lvalue reference to input
+        //! \return new value of type uint8
+        //!
         static result_type convert(const read_type &v)
         {
             return pni::core::convert<result_type>(v);
@@ -95,14 +143,42 @@ namespace io{
     template<>
     struct conversion_trait<int8>
     {
+        //! the type requested by the user
         typedef int8  result_type;
+        //! the type used for reading
         typedef int16 read_type;
 
+        //------------------------------------------------------------------
+        //! 
+        //! \brief convert int16 to int8
+        //!
+        //! Takes an rvalue reference to an int16 value and converts it to 
+        //! int8. If the value of the input exceeds the numeric range of 
+        //! int8 a range_error exception is thrown. 
+        //! 
+        //! \throws range_error if input value exceeds range of output type
+        //!
+        //! \param v rvalue reference to input
+        //! \return new value of type int8
+        //!
         static result_type convert(read_type &&v) 
         { 
             return pni::core::convert<result_type>(v); 
         }
 
+        //------------------------------------------------------------------
+        //! 
+        //! \brief convert int16 to int8
+        //!
+        //! Takes an lvalue reference to an int16 value and converts it to 
+        //! int8. If the value of the input exceeds the numeric range of 
+        //! int8 a range_error exception is thrown. 
+        //! 
+        //! \throws range_error if input value exceeds range of output type
+        //!
+        //! \param v lvalue reference to input
+        //! \return new value of type int8
+        //!
         static result_type convert(const read_type &v)
         {
             return pni::core::convert<result_type>(v);

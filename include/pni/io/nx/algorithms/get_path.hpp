@@ -83,6 +83,16 @@ namespace nx{
     class get_path_visitor : public boost::static_visitor<string>
     {
         private:
+            //!
+            //! \brief assembles the group element name
+            //! 
+            //! This function assembles the string representation of a 
+            //! path element. 
+            //! 
+            //! \param name group name
+            //! \param type group class
+            //! \return string representation of the element
+            //!
             string element_name(const string &name,const string &type) const
             {
                 string ename(name);

@@ -45,12 +45,17 @@ namespace xml{
     //------------------------------------------------------------------------
     //!
     //! \ingroup xml_classes
+    //! \brief comparison operator for index_value_type
     //! 
     //! Operator required to sort containers using index_value_type as their
     //! element type. index-value pairs are ordered by their dimension index.
     //! This operator returns true if the index component of the LHS is 
     //! smaller than the index component of the RHS.
-    //1
+    //!
+    //! \param lhs left handside of the operator
+    //! \param rhs right handside of the operator
+    //! \return true if index of lhs is small than that of rhs, false otherwise
+    //! 
     bool operator<(const index_value_type &lhs,const index_value_type &rhs);
 
     //------------------------------------------------------------------------
@@ -65,11 +70,16 @@ namespace xml{
     {
         //! vector type to hold index-value pairs
         typedef std::vector<index_value_type>  iv_vector;
+        //! input iterator type
         typedef pni::core::string::const_iterator iterator_type;
+        //! parser for size_t values
         typedef pni::io::parser<iterator_type,size_t> size_t_parser_type;
 
+        //! static instance of index attribute reader
         static attribute_data index_attribute;
+        //! static instance of value attribute reader
         static attribute_data value_attribute;
+        //! static instance of rank attribute reader
         static attribute_data rank_attribute;
 
         //--------------------------------------------------------------------
@@ -145,7 +155,7 @@ namespace xml{
         //! 
         //! \throws parser_error  in case of parsing errors
         //! \tparam DTYPE container type
-        //! \param node a dim node
+        //! \param dims a dim node
         //! \return instance of DTYPE with the shape information
         //! 
         template<typename DTYPE>

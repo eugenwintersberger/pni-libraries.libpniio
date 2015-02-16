@@ -43,17 +43,30 @@ namespace nx{
     class nxattribute_manager
     {
         public:
+            //! self-reference to this manager type
             typedef nxattribute_manager<OTYPE> manager_type;
+            //! the attribute type
             typedef typename OTYPE::attribute_type attribute_type;
+            //! alias to the attribute type
             typedef attribute_type value_type;
+            //! iterator type
             typedef pni::core::container_iterator<const manager_type> iterator;
+            //! implementation type for the parent object of the manager
             typedef typename OTYPE::imp_type imp_type;
         private:
+            //! implementation of the type traits
             typedef typename OTYPE::type_type type_imp;
+            //! reference to the implementation of the parent
             imp_type &_imp;
         public:
+            //! 
+            //! \brief constructor
+            //! 
+            //! \param imp reference to the parent implementation
+            //! 
             nxattribute_manager(imp_type &imp):_imp(imp) {}
 
+            //----------------------------------------------------------------
             //! 
             //! \brief create an array attribute
             //!

@@ -124,7 +124,22 @@ namespace nx{
 
             //===================private functions============================
 
-            template<typename CTYPE,typename STYPE> 
+            //!
+            //! \brief automatic chunk creation
+            //! 
+            //! This utility function creates auomatically a chunk shape for 
+            //! a given field shape. Basically, what it does is to copy the 
+            //! shape and than replace the first element with a 1.
+            //! 
+            //! \tparam CTYPE container type for the chunk
+            //! \tparam STYPE container type for the shape
+            //! \param shape reference to STYPE with shape data
+            //! \return instance of CTYPE with chunk data
+            //! 
+            template<
+                     typename CTYPE,
+                     typename STYPE
+                    > 
             CTYPE _create_auto_chunk(const STYPE &shape) const
             {
                 auto chunk = container_utils<CTYPE>::create(shape.size());
@@ -195,6 +210,7 @@ namespace nx{
             //! \param n name of the field
             //! \param shape container with shape information
             //! \param chunk container with chunk shape data
+            //! \param filter reference to a filter instance
             //! \return field instance
             //!
             template<
@@ -463,7 +479,7 @@ namespace nx{
             //! \tparam CTYPES container type for the field shape
             //!
             //! \param n name of the field
-            //! \param s shape of the field
+            //! \param shape shape of the field
             //! \param filter implementation
             //! \return instance of NXField
             //!

@@ -43,6 +43,8 @@ namespace xml{
     //! is determined by the user and must match the data type stored in the 
     //! array. 
     //!
+    //! \param data the XML node holding the daata
+    //! \return instance of ATYPE with the data
     //! 
     template<typename ATYPE> ATYPE make_array(const node &data)
     {
@@ -69,7 +71,10 @@ namespace xml{
     //! This specialization of the make_array function template returns an 
     //! array type erasure. This function is particularly useful in situations
     //! where we only need to transfer data and the data type is of no further 
-    //! importants. 
+    //! important. 
+    //!
+    //! \param data the XML node with data
+    //! \return instance of array with the data
     //!
     template<> array make_array(const node &data);
 

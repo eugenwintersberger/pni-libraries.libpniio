@@ -47,6 +47,7 @@ namespace h5{
     class h5datatype
     {
         private:
+            //! HDF5 object representing the data type
             object_imp _object;
         public:
             //======================Constructors and destructors===============

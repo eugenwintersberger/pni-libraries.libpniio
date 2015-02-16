@@ -53,6 +53,7 @@ namespace h5{
     class group_imp
     {
         private:
+            //! the HDF5 object representing the group
             object_imp _object;
         public:
             //==========constructors and destructors===========================
@@ -215,6 +216,7 @@ namespace h5{
             //! \throws invalid_object_error if the group is not valid
             //! \throws type_error if object type is unkown
             //! \throws object_error in case of errors
+            //! \return HDF5 object referring to the groups parent
             //! 
             object_imp parent() const;
 

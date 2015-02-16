@@ -91,6 +91,7 @@ namespace io{
     template<typename ITERT>
     struct get_rule_type<ITERT,pni::core::value>
     {
+        //! rule type for parsing value type erasures
         typedef value_rule<ITERT> type;
     };
 
@@ -106,6 +107,7 @@ namespace io{
     template<typename ITERT>
     struct get_rule_type<ITERT,pni::core::slice>
     {
+        //! rule type for parsing a slice
         typedef slice_rule<ITERT> type;
     };
 

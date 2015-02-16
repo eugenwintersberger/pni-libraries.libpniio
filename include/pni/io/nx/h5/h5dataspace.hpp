@@ -86,6 +86,9 @@ namespace h5 {
             type_imp::index_vector_type _maxdims; 
 
             //-----------------------------------------------------------------
+            //! 
+            //! \brief initialize buffers
+            //! 
             void __init_buffers() noexcept;
 
             //-----------------------------------------------------------------
@@ -100,6 +103,10 @@ namespace h5 {
             //!
             void __update_dataspace();
 
+            //----------------------------------------------------------------
+            //!
+            //! \brief update the buffers
+            //!
             void __update_buffers();
 
         public:

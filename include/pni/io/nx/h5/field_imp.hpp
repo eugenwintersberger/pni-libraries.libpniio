@@ -85,7 +85,7 @@ namespace h5{
             //! 
             //! \throws io_error in case of errors
             //! 
-            //! \param memtye memory data type
+            //! \param memtype memory data type
             //! \param memspace memory data space
             //! \param filespace file data space
             //! \param xfer_list data transfer property list
@@ -173,6 +173,7 @@ namespace h5{
             //!
             //! \param parent the parent group for the field
             //! \param name the name of the field
+            //! \param tid  type ID of the data type used for the field
             //! \param shape the number of elements along each dimension
             //! \param chunk the chunk shape
             //! \param filter reference to an optional filter 
@@ -289,6 +290,7 @@ namespace h5{
             //! \throws io_error in case of IO failure
             //!
             //! \param tid type id of the original data type in memory
+            //! \param shape the shape of the data to read
             //! \param ptr pointer to memory where the data should be stored.
             //!
             void read(type_id_t tid,const type_imp::index_vector_type &shape,
@@ -310,6 +312,7 @@ namespace h5{
             //! data type
             //!
             //! \param tid type id for the strings
+            //! \param shape the shape of the data to write
             //! \param ptr pointer to the memory region from which to read
             //!
             void write(type_id_t tid,const type_imp::index_vector_type &shape,

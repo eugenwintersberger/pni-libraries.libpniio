@@ -280,6 +280,14 @@ namespace nx{
             {}
 
             //-----------------------------------------------------------------
+            //! 
+            //! \brief constructor
+            //! 
+            //! Constructs a field from an instance of nxobject. 
+            //!
+            //! \throws type_error if o does not store a field 
+            //! \param o reference to nxobject that should hold a field
+            //! 
             nxfield(const typename nxobject_trait<IMPID>::object_type &o):
                 _imp(),
                 attributes(_imp)
@@ -301,6 +309,9 @@ namespace nx{
             //!
             //! \brief copy assignment operator
             //!
+            //! \param f lvalue reference to a field
+            //! \return reference to the new field
+            //! 
             field_type &operator=(const field_type &f)
             {
                 if(this == &f) return *this;
@@ -312,6 +323,9 @@ namespace nx{
             //----------------------------------------------------------------
             //!
             //! \brief move assignment operator
+            //!
+            //! \param f rvalue reference to an instance of nxfield
+            //! \return reference to nxfield
             //!
             field_type &operator=(field_type &&f)
             {
@@ -326,6 +340,9 @@ namespace nx{
             //! \brief conversion assignment
             //!
             //! \throws type_error if object is not a field
+            //! 
+            //! \param o lvalue reference to an instance of nxobject
+            //! \return reference to the new field
             //!
             field_type &operator=(const typename nxobject_trait<IMPID>::object_type &o)
             {
@@ -488,6 +505,8 @@ namespace nx{
             //! \throws object_error in case of any other error
             //! 
             //! \tparam T data type to read (in memory)
+            //! 
+            //! \param n number of elements that should be read to values
             //! \param values pointer to memory reagion
             //!
             template<typename T> 
@@ -609,6 +628,8 @@ namespace nx{
             //! data type
             //! 
             //! \tparam T memory data type of the source
+            //!
+            //! \param n number of elements that should be written to the field
             //! \param value pointer to memory region
             //! 
             template<typename T> void write(size_t n,const T *value) const
@@ -829,6 +850,7 @@ namespace nx{
             //! \brief check validity
             //!
             //! \throws object_error validity check fails
+            //! \return true if the field is valid, false otherwise
             //!
             bool is_valid() const noexcept 
             { 

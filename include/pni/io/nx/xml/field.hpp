@@ -95,9 +95,6 @@ namespace xml{
         //! \tparam GTYPE group type
         //! \param parent the parent group for the new field
         //! \param field_node XML node with field information
-        //! \param type_error if the data type is not supported
-        //! \param invalid_object_error if the parent is not a valid object
-        //! \param object_error in case of any other error
         //!
         //! \return field instance
         //!

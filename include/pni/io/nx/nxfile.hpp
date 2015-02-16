@@ -55,7 +55,9 @@ namespace nx{
     template<nximp_code IMPID> class nxfile
     {
         public:
+            //! implementation type 
             typedef typename nximp_map<IMPID>::file_imp imp_type;
+            //! Nexus file type
             typedef nxfile<IMPID>              file_type;
         private:
             //! implementation instance

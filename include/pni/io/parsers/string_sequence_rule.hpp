@@ -50,13 +50,25 @@ namespace io{
     //!
     struct trim_string
     {
-        //! return type
+        //! 
+        //! \brief return type of the lazy function
+        //! 
         template<typename Sig> struct result
         {
-            typedef core::string type;
+            typedef core::string type; //!< return value 
         };
 
-        //! implementation
+        //--------------------------------------------------------------------
+        //! 
+        //! \brief trim implementation
+        //! 
+        //! Implements string trimming (stripping of all leading and trailing
+        //! blanks) as a lazy function.
+        //! 
+        //! \tparam Arg input argument type
+        //! \param n input argument
+        //! \return string with all leading and trailing blanks removed
+        //!
         template<typename Arg>
         core::string operator()(Arg const &n) const
         {
@@ -84,7 +96,7 @@ namespace io{
     //! The container can be any STL compliant container type.
     //!
     //! \tparam ITERT input iterator type
-    //! \tparam CTYPE container type
+    //! \tparam ST container type
     //!
     template<
              typename ITERT,
@@ -92,16 +104,19 @@ namespace io{
             >
     struct string_sequence_rule : qi::grammar<ITERT,ST()>
     {
+        //! rule to parse a single element of the sequence
         qi::rule<ITERT,core::string()> element_rule_;
-        //! delimiter rule
-        //delimiter_rule<ITERT> delimiter_;
+        //! rule for the start symbol of the sequence
         qi::rule<ITERT> start_;
+        //! rule for the stop symbol for the sequence
         qi::rule<ITERT> stop_;
+        //! rule for the delimiter symbol for the sequence
         qi::rule<ITERT> delimiter_;
 
         //! the full rule to parse the sequence
         qi::rule<ITERT,ST()> sequence_;
 
+        //! lazy function to trim the read string
         boost::phoenix::function<trim_string> trim;
 
         //--------------------------------------------------------------------
@@ -131,6 +146,8 @@ namespace io{
         //! to parse the delimiter. Thus, the delimiter symbol can have an 
         //! arbitrary number of preceding and tailing blanks. 
         //!
+        //! \param del delimiter character for the sequence
+        //! 
         string_sequence_rule(char del): 
             string_sequence_rule::base_type(sequence_)
         {
@@ -151,6 +168,9 @@ namespace io{
         //! individual elements are still separated by an arbitrary number of
         //! blanks. 
         //!
+        //! \param start the start symbol for the sequence
+        //! \param stop  the stop symbol for the sequence
+        //!
         string_sequence_rule(char start,char stop):
             string_sequence_rule::base_type(sequence_)
         {
@@ -170,6 +190,10 @@ namespace io{
         //! 
         //! Customizes the start and stop symbol as well as the delimiter 
         //! symbol. 
+        //!
+        //! \param start the start symbol for the sequence
+        //! \param stop  the stop symbol for the sequence
+        //! \param del   the delimiter symbol for the sequence
         //! 
         string_sequence_rule(char start,char stop,char del):
             string_sequence_rule::base_type(sequence_)
