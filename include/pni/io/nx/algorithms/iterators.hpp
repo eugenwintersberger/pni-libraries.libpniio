@@ -28,25 +28,41 @@ namespace io{
 namespace nx{
 
     //------------------------------------------------------------------------
+    //!
+    //! \ingroup algorithm_code
+    //! \brief get iterator to first element
+    //!
+    //! Returns an iterator to the first child element of a group object. 
+    //! 
+    //! \param group reference to a group instance
+    //! \return iterator to first child
+    //!
     template<
              template<nximp_code> class OTYPE,
              nximp_code IMPID
             >
-    auto begin(const OTYPE<IMPID> &object) 
-    -> decltype(object.begin())
+    auto begin(const OTYPE<IMPID> &group) -> decltype(group.begin())
     {
-        return object.begin();
+        return group.begin();
     }
 
     //------------------------------------------------------------------------
+    //!
+    //! \ingroup algorithm_code
+    //! \brief get iterator to last element
+    //! 
+    //! Returns an iterator to the last+1 child of a group. 
+    //! 
+    //! \param group reference to the group instance
+    //! \return iterator to last+1 element
+    //! 
     template<
              template<nximp_code> class OTYPE,
              nximp_code IMPID
             >
-    auto end(const OTYPE<IMPID> &object) 
-    -> decltype(object.end())
+    auto end(const OTYPE<IMPID> &group) -> decltype(group.end())
     {
-        return object.end();
+        return group.end();
     }
 
     //------------------------------------------------------------------------
@@ -54,7 +70,9 @@ namespace nx{
     //! \ingroup algorithm_internal_code
     //! \brief get iterator to first element
     //! 
-    //! Visitor wrapper for the get_child function.
+    //! This visitor returns an iterator to the first child attached to a group
+    //! or throws a type_error exception of the passed nxobject instance is not
+    //! a group.
     //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
@@ -90,8 +108,10 @@ namespace nx{
             //!
             //! \brief process fields
             //!
-            //! Fields cannot have children - throw an exception here.
-            //! \throws nxfield_error no children for fields
+            //! Throws type_error as fields do not have children over which 
+            //! we can iterate.
+            //!
+            //! \throws type_error in any case
             //! \param f field instance
             //! \return to be ignored
             //!
@@ -108,10 +128,9 @@ namespace nx{
             //!
             //! \brief process attributes
             //!
-            //! Like fields attributes cannot have children - throw an 
-            //! exception here.
+            //! Throws type_error - an attribute does not have an interator.
             //!
-            //! \throws nxattribute_error no children for attributes
+            //! \throws type_error in any case
             //! \param a attribute instance
             //! \return to be ignored
             //!
@@ -126,21 +145,22 @@ namespace nx{
 #pragma GCC diagnostic pop
     };
 
+    //========================================================================
     //!
     //! \ingroup algorithm_code
-    //! \brief get child wrapper
+    //! \brief get iterator to first child
     //!
-    //! Wrapper function for the get_child_visitor template. 
+    //! Returns an iterator to the first child attached to a group stored 
+    //! in an nxobject instance. If the nxobject instance does not hold 
+    //! a group type_error is thrown.
     //!
     //! \throws type_error if the stored object is not a group
     //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
-    //! \param o parent object as nxobject
-    //! \param n the childs name
-    //! \param c the childs class (only for groups)
-    //! \return the requested child as nxobject
+    //! \param o group object
+    //! \return iterator to the first child
     //!
     template<
              typename GTYPE,
@@ -160,7 +180,9 @@ namespace nx{
     //! \ingroup algorithm_internal_code
     //! \brief get iterator to last element
     //! 
-    //! Visitor wrapper for the get_child function.
+    //! Returns the iterator to the last+1 element attached to a group instance. 
+    //! If the nxobject instanced passed does not hold a group instance 
+    //! type_error is thrown
     //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
@@ -195,9 +217,9 @@ namespace nx{
             //-----------------------------------------------------------------
             //!
             //! \brief process fields
+            //! 
+            //! \throws type_error in any case 
             //!
-            //! Fields cannot have children - throw an exception here.
-            //! \throws nxfield_error no children for fields
             //! \param f field instance
             //! \return to be ignored
             //!
@@ -214,10 +236,7 @@ namespace nx{
             //!
             //! \brief process attributes
             //!
-            //! Like fields attributes cannot have children - throw an 
-            //! exception here.
-            //!
-            //! \throws nxattribute_error no children for attributes
+            //! \throws type_error in any case
             //! \param a attribute instance
             //! \return to be ignored
             //!
@@ -234,19 +253,19 @@ namespace nx{
 
     //!
     //! \ingroup algorithm_code
-    //! \brief get child wrapper
+    //! \brief get iterator to last+1 child
     //!
-    //! Wrapper function for the get_child_visitor template. 
+    //! Return an interator to the last+1 child attached to a group stored 
+    //! in an instance of nxobject or throw type_error if the nxobject 
+    //! instance does not hold  a gruop.
     //!
     //! \throws type_error if the stored object is not a group
     //!
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
-    //! \param o parent object as nxobject
-    //! \param n the childs name
-    //! \param c the childs class (only for groups)
-    //! \return the requested child as nxobject
+    //! \param o the group from which we want the iterator
+    //! \return iterator to last+1 child 
     //!
     template<
              typename GTYPE,

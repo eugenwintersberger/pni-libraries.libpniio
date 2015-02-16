@@ -172,21 +172,6 @@ namespace nx{
         return stream;
     }
 
-    //------------------------------------------------------------------------
-    std::ostream &operator<<(std::ostream &stream,
-                             const nxpath::elements_type &e)
-    {
-        if(!e.size()) return stream;
-
-        for(auto v: e) 
-        {
-            stream<<e;
-            }
-
-        return stream;
-
-    }
-
     //--------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &stream,const nxpath &p)
     {

@@ -42,6 +42,17 @@ namespace nx{
         //!
         struct insert
         {
+            //!
+            //! \brief result type
+            //! 
+            //! Result type for the lazy function. This type is void as the 
+            //! inserter does not return any value - it rather modifies 
+            //! the input container.
+            //! 
+            //! \tparam C container type
+            //! \tparam Arg1 type of the first argument
+            //! \tparam Arg2 type of the second argument
+            //! \tparam Arg3 type of the third argument
             template <
                 typename C
               , typename Arg1
@@ -51,12 +62,28 @@ namespace nx{
             class result
             {
 
-            public:
+                public:
 
-                typedef void type;
+                    typedef void type; //!< result type
             };
 
-            template <typename C, typename Arg1, typename Arg2, typename Arg3>
+            //----------------------------------------------------------------
+            //!
+            //! \brief insert implementation
+            //!
+            //! Implementation of the insert operation. This is rather simple 
+            //! the function just calls the containers insert function.
+            //!
+            //! \tparam C container type
+            //! \tparam Arg1 type of the first argument
+            //! \tparam Arg2 type of the second argument
+            //! \tparam Arg3 type of the third argument
+            template <
+                      typename C, 
+                      typename Arg1, 
+                      typename Arg2, 
+                      typename Arg3
+                     >
             void operator()( C& c, Arg1 const& arg1, Arg2 const& arg2, Arg3 const& arg3) const
             {
                 c.insert(arg1, arg2, arg3);

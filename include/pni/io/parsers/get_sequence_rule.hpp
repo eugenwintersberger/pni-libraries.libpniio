@@ -30,6 +30,17 @@ namespace pni{
 namespace io{
 
 
+    //!
+    //! \ingroup parser_classes
+    //! \brief get rule for sequences
+    //! 
+    //! Return the rule to parser general sequences except for string 
+    //! sequences. For the latter ones a specialization exists. 
+    //! 
+    //! \tparam ITERT iterator type
+    //! \tparam ST sequence type
+    //! \tparam has_string marks if the value type of a container is a string
+    //!
     template<
              typename ITERT,
              typename ST,
@@ -38,17 +49,27 @@ namespace io{
             >
     struct get_sequence_rule
     {
-        typedef sequence_rule<ITERT,ST> type;
+        typedef sequence_rule<ITERT,ST> type; //!< rule type
     };
 
 
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup parser_classes
+    //! \brief get string sequence rule
+    //! 
+    //! Specialization of get_sequence_rule for string sequences. 
+    //! 
+    //! \tparam ITERT iterator type
+    //! \tparam ST sequence type
+    //! 
     template<
              typename ITERT,
              typename ST
             >
     struct get_sequence_rule<ITERT,ST,true>
     {
-        typedef string_sequence_rule<ITERT,ST> type;
+        typedef string_sequence_rule<ITERT,ST> type; //!< rule type
     };
 
 //end of namespace
