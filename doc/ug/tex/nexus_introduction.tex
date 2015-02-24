@@ -12,8 +12,9 @@ systems degenerate
 \item to access data in an individual image file a new file handler has to be
 created 
 \item image and scalar data is stored in different files which increases the
-managements efforts to keep related information aligned.
+managements efforts to keep related information together.
 \end{enumerate}
+%%%---------------------------------------------------------------------------
 \begin{figure}[tb]
     \centering
     \begin{minipage}[c]{0.5\linewidth}
@@ -48,40 +49,41 @@ managements efforts to keep related information aligned.
     \label{fig:nxintro:old_fstree}
     \end{minipage}
 \end{figure}
+%%%---------------------------------------------------------------------------
 
-Nexus is a binary file format which attempts to solve all of these problems.
-Nexus can keep scalar and multidimensional data within a single file and allows
-to organize data in trees. Additional attributes can be attached to each object
-in a file storing metadata which might be required for later analysis of the
-data. It must be noted that Nexus is not a physical file format itself. It is
-rather a set of rules how data must be organized within a particular format in
-order to become a valid Nexus file. Currently the following physical file
-formats are supported by the original Nexus API
+\nexus\ is a binary file format which attempts to solve all of these problems.
+\nexus\ can keep scalar and multidimensional data within a single file and allows
+to organize the data within the file in a tree like mannger. Additional
+attributes can be attached to each object in a file, storing metadata which might
+be required for later analysis. It must be noted that \nexus\ is not a
+physical file format itself. It is rather a set of rules how data must be
+organized within a particular format in order to become a valid Nexus file.
+Currently the following physical file formats are supported by the original
+Nexus API
 \begin{itemize}
-\item XML -- currently only used for file structure validation
+\item XML -- only used for file structure validation
 \item HDF4 -- for historical reasons, should not be used for new data
 \item HDF5 -- the current standard storage backend for Nexus files. 
 \end{itemize}
 One of the aims of \libpniio\ is to provide an abstraction layer between the
 user and the storage backend. As \libpniio\ currently supports only HDF5 this is
 rather artificial. However, \libpniio\ provides the architecture to include
-other file formats to be used with Nexus too. 
-There has been a lot of confusion what physical file format Nexus files are.
-Many users think that Nexus has its own phyisical file format. This is in fact
-not true. Just to avoid any further confusion fo the reader let me make this
+other file formats to be used with \nexus\ too. 
+There has been a lot of confusion what physical file format \nexus\ files are.
+Many users think that \nexus\ has its own phyisical file format. This is in fact
+not true. Just to avoid any further confusion for the reader let me make this
 clear once and for all
 \begin{quote}
-{\huge
-{\color{red}Every Nexus file written by \libpniio\ is also a valid HDF5 file!}
+\huge\sffamily\textbf{Every \nexus\ file written by \libpniio\ is also a valid HDF5 file!}
 \todo[caption={fix quote},inline]{This quote needs better formating. Maybe the
 text should go into a box and the margins to the surrounding text must be
 bigger}
-}
 \end{quote}
 
 %%%===========================================================================
 \section{The Nexus layer model}
 
+%%%---------------------------------------------------------------------------
 \begin{figure}[tb]
     \centering
     \begin{minipage}[c]{0.5\linewidth}
@@ -106,10 +108,20 @@ bigger}
     \label{fig:nxintro:layers}
     \end{minipage}
 \end{figure}
-
 %%%---------------------------------------------------------------------------
+As already mentioned in the previous section, \nexus\ can be considered as a set
+of rules describing the logical organization of data within a file. 
+\nexus, for this purpose, utilizes types defined in three different layers as 
+shown in Fig.~\ref{fig:nxintro:layers}.
+Each group of types defined in a layer is used for a particular purpose. Layer~1
+provides the basic brick-stones from which the \nexus\ standard is build of. 
+Layer~2 provides collections of Layer~1 instances representing concrete beamline
+components as well as abstract concepts. Layer~3 finally can be used to define 
+file formats for particular experimental techniques. 
+
 \subsection{Layer 1 objects}
 
+%%%---------------------------------------------------------------------------
 \begin{figure}[tb]
     \centering
     \begin{minipage}[c]{0.6\linewidth}
@@ -145,22 +157,30 @@ bigger}
     \label{fig:nxintro:layer1}
     \end{minipage}
 \end{figure}
+%%%---------------------------------------------------------------------------
 
-Figure~\ref{fig:nxintro:layer1} shows an overview of the basic Nexus objects
-provided by the first layer of the Nexus layer hierarchy. 
-\begin{description}
-    \item[NXgroup] is a container which can hold instances of fields and other
-        groups.
-    \item[NXfield] stores numerical and other data.
-    \item[NXattribute] instances of NXgroup and NXfield can be enhanced with
+The first layer in the \nexus\ layer model provides the fundamental types used 
+to define the organizational structure of data in a file.
+Figure~\ref{fig:nxintro:layer1} shows an overview of relation between the basic
+Layer~1 objects types.
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{m{0.2\linewidth}m{0.6\linewidth}}
+    \textbf{NXgroup} &  is a container which can hold instances of fields and 
+        other groups. \\
+    \textbf{NXfield}  & stores numerical and other data. \\
+    \textbf{NXattribute} & instances of NXgroup and NXfield can be enhanced with
         attributes which can store additional metadata about an object.
-\end{description}
+\end{tabular}
+\end{center}
 Attributes behave a little like fields as will be shown later. These three types
 form the basement for all other objects in the above layers. 
 It should be mentioned that attributes are heavily used by the NIAC to add
 metadata to a group or field. It is thus not wise to make too extensive use of
 attributes as a Nexus user as it my cause name clashes with future attributes
 defined by the NIAC.
+
+The focus of \libpniio\ is this first layer of the \nexus\ hierarchy.
 
 \subsection{Layer 2 objects}
 
@@ -178,9 +198,4 @@ The third layer finally provides concepts to standardize the structure of a
 Nexus data tree for particular scientific applications and methods. 
 These so called \emph{Application Definitions} are defined by the NIAC in
 collaboration with the scientific community.
-
-\section{\libpniio\ focus}
-
-\libpniio\ focuses on types from the first layer. Higher level types and
-functions might be added in future.
 

@@ -16,7 +16,7 @@
 \usepackage{minted}    %% excellent source code formating
 \usepackage{tikz}
 
-\usetikzlibrary{trees,shapes.geometric,positioning}
+\usetikzlibrary{trees,shapes.geometric,positioning,calc}
 
 \definecolor[named]{desycyan}{rgb}{0,0.648,0.918}
 \definecolor[named]{desyorange}{rgb}{0.945,0.555,0}
@@ -55,52 +55,66 @@
 %\bibliographystyle{plainnat}
 
 \newminted{cpp}{fontsize=\small,frame=lines}
+\newminted{xml}{fontsize=\small}
 
 \begin{document}
 \maketitle
 \tableofcontents
 \listoftodos
 
+%%%---------------------------------------------------------------------------
 \chapter{Introduction}\label{chapter:introduction}
 \input{tex/introduction.tex}
 \FloatBarrier
 
+%%%---------------------------------------------------------------------------
 \chapter{Installation}\label{chapter:installation}
 \input{tex/installation.tex}
 \FloatBarrier
 
+%%%---------------------------------------------------------------------------
 \chapter{Using the library}\label{chapter:usage}
 \input{tex/usage.tex}
 \FloatBarrier
 
+%%%---------------------------------------------------------------------------
 \chapter{Legacy format support}\label{chapter:legacy_formats}
 \input{tex/legacy.tex}
 \FloatBarrier
 
-
+%%%---------------------------------------------------------------------------
 \chapter{Getting started with \nexus}\label{chapter:nexus_quickstart}
 \input{tex/nexus_introduction.tex}
 \FloatBarrier
 
-\chapter{Addressing \nexus\ object - the \nexus-path}
+%%%---------------------------------------------------------------------------
+\chapter{Addressing \nexus\ object - the \nexus-path}\label{chapter:nxpath}
 \input{tex/nexus_path.tex}
 \FloatBarrier
 
+%%%---------------------------------------------------------------------------
 \chapter{Basic usage of \libpniio}
 \input{tex/basic_usage.tex}
 \FloatBarrier
 
+%%%---------------------------------------------------------------------------
 \chapter{Using algorithms}
 \FloatBarrier
 
+%%%---------------------------------------------------------------------------
 \chapter{\nexus\ and XML}
 \input{tex/xml.tex}
 \FloatBarrier
 
+%%%---------------------------------------------------------------------------
 \appendix
 \chapter{Parsing ASCII data}\label{appendix:parsers}
 \input{tex/parsing_ascii.tex}
 \FloatBarrier
+
+%%%---------------------------------------------------------------------------
+\chapter{\nexus-XML serialization}
+\input{tex/nexus_xml.tex}
 
 
 %\bibliography{libpniio_ug}
