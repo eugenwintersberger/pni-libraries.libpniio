@@ -127,3 +127,44 @@ void NXFileTest::test_closing()
 
 }
 
+//----------------------------------------------------------------------------
+void NXFileTest::test_create_split()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    nxfile f= nxfile::create_file("nxfile_test.%05i.nxs",true,size_t(2));
+    nxgroup root = f.root();
+
+    auto data = dynamic_array<float64>::create(shape_t{100000});
+    nxfield field = root.create_field<float64>("data",{0,100000});
+
+    for(size_t i=0;i<10;++i)
+    {
+        std::fill(data.begin(),data.end(),float64(i));
+        field.grow(0);
+        field(i,slice(0,100000)).write(data);
+    }
+
+}
+
+//----------------------------------------------------------------------------
+void NXFileTest::test_open_split()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    nxfile f = nxfile::open_file("nxfile_test.%05i.nxs");
+    nxgroup root = f.root();
+
+    nxfield field = root["data"];
+    auto data = dynamic_array<float64>::create(shape_t{100000});
+
+    for(size_t i=0;i<10;++i)
+    {
+        field(i,slice(0,100000)).read(data);
+        CPPUNIT_ASSERT(std::all_of(data.begin(),data.end(),
+                       [&i](float64 v){return v==float64(i);}
+                       ));
+    }
+
+}
+
