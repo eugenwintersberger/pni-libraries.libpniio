@@ -32,32 +32,21 @@ namespace io{
 namespace nx{
     using namespace pni::core;
 
-    //forward declaration of path 
-    class nxpath;
 
-    //! \ingroup nxpath_code 
-    //! \brief append element 
-    //! 
-    //! Append an element to a path. 
-    //! 
-    //! \param p the path to which to append
-    //! \param gname the name of the group to append
-    //! \param gclass the class of the group which to append
-    //! 
-    void append(nxpath &p,const string &gname,const string &gclass);
-
+    //------------------------------------------------------------------------
     //!
     //! \ingroup nxpath_code
-    //! \brief prepend element
-    //! 
-    //! Prepend an element to the beginning of a path.
-    //! 
-    //! \param p path 
-    //! \param gname group name of the element
-    //! \param gclass group class of the element
+    //! \brief create object element
     //!
-    void prepend(nxpath &p,const string &gname,const string &gclass);
-
+    //! This utilty function creates an element for the object section of a 
+    //! Nexus path. 
+    //!
+    //! \throws value_error if both arguments are empty strings
+    //!
+    //! \param name the name of the object
+    //! \param type the type of the object
+    //! \return instance of object element
+    nxpath::element_type object_element(const string &name,const string &type);
 
     //------------------------------------------------------------------------
     //!
@@ -111,13 +100,24 @@ namespace nx{
     //--------------------------------------------------------------------------
     //!
     //! \ingroup nxpath_code
-    //! \brief convert path to string 
+    //! \brief check if path has a file section
+    //! 
+    //! Return true if an instance of nxpath has a non-empty file section. 
     //!
-    //! Convert a Nexus path to a string. 
-    //! \param p reference to nexus path
-    //! \return string representation of p
+    //! \param p reference to an instance of nxpath
+    //! \return true if path has a file section, false otherwise
+    bool has_file_section(const nxpath &p);
+
+    //------------------------------------------------------------------------
     //!
-    string string_from_path(const nxpath &p);
+    //! \ingroup nxpath_code
+    //! \brief check if path has an attribute section
+    //!
+    //! Return true if an instance of nxpath has a non-empty attribute section.
+    //! 
+    //! \param p reference to an instance of nxpath
+    //! \return true if the path has an attribute section, false otherweise.
+    bool has_attribute_section(const nxpath &p);
     
     //------------------------------------------------------------------------
     //!

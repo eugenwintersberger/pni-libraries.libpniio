@@ -30,15 +30,14 @@ namespace pni{
 namespace io{
 namespace nx{
 
-    void append(nxpath &p,const string &gname,const string &gclass)
-    {
-        p.push_back(nxpath::element_type{gname,gclass});
-    }
-
     //--------------------------------------------------------------------------
-    void prepend(nxpath &p,const string &gname,const string &gclass)
+    nxpath::element_type object_element(const string &name,const string &type)
     {
-        p.push_front(nxpath::element_type{gname,gclass});
+        if(name.empty()&&type.empty())
+            throw value_error(EXCEPTION_RECORD,
+                    "Namen and type of the object are empty!");
+
+        return nxpath::element_type{name,type};
     }
 
     //--------------------------------------------------------------------------
@@ -72,28 +71,17 @@ namespace nx{
     }
 
     //--------------------------------------------------------------------------
-    string string_from_path(const nxpath &p)
+    bool has_file_section(const nxpath &p)
     {
-        string ostr;
-        if(!p.filename().empty())
-            ostr += p.filename()+"://";
+        if(p.filename().empty()) return false;
+        return true;
+    }
 
-        if(is_absolute(p)) ostr += "/";
-
-        //dump groups
-        auto slash_iter = p.begin();
-        std::advance(slash_iter,p.size()-1);
-        for(auto iter = p.begin();iter!=p.end();++iter)
-        {
-            if(!iter->first.empty()) ostr += iter->first;
-            if(!iter->second.empty()) ostr += ":"+iter->second;
-            if(iter!=slash_iter) ostr += "/";
-        }
-
-        if(!p.attribute().empty())
-            ostr += "@"+p.attribute();
-
-        return ostr;
+    //-------------------------------------------------------------------------
+    bool has_attribute_section(const nxpath &p)
+    {
+        if(p.attribute().empty()) return false;
+        return true;
     }
     
     //-------------------------------------------------------------------------
