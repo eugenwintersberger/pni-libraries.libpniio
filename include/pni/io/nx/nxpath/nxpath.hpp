@@ -171,6 +171,9 @@ namespace nx{
             //! 
             //! Append a new element to the end of the Nexus path. 
             //!
+            //! \throws value_error if one tries to push_back a root group 
+            //! to a non-empty path
+            //!
             //! \param o element to append
             //! 
             void push_back(const element_type &o);

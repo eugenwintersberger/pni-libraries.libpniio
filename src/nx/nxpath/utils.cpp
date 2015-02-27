@@ -172,8 +172,18 @@ namespace nx{
     //--------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &stream,const nxpath &p)
     {
-        if(!p.filename().empty()) stream<<p.filename()<<":/";
+        //write the file name
+        if(!p.filename().empty()) 
+        {
+            stream<<p.filename();
+       
+            //if the object section has some content we have to add the 
+            //leading :/ to the output stream, denoting the end of the 
+            //file section
+            if(p.size()) stream<<":/";
+        }
 
+        //write the object section
         size_t index = 0;
         for(auto e: p)
         {
@@ -182,6 +192,7 @@ namespace nx{
                 stream<<"/";
         }
 
+        //write the attribute section
         if(!p.attribute().empty()) stream<<"@"<<p.attribute();
 
         return stream;

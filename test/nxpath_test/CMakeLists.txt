@@ -1,6 +1,8 @@
 set(SOURCES nxpath_tests.cpp
             nxpath_test.cpp
             nxpath_create_test.cpp
+            nxpath_push_test.cpp
+            nxpath_pop_test.cpp
            )
 
 set(PARSERSRC nxpath_parser_tests.cpp 
@@ -14,6 +16,10 @@ set(UTILSRC nxpath_utils_tests.cpp
             test_is_complete.cpp
             test_has_name.cpp
             test_has_class.cpp
+            test_is_absolute.cpp
+            test_has_file_section.cpp
+            test_has_attribute_section.cpp
+            test_split_path.cpp
            )
 add_executable(nxpath_parser_tests ${PARSERSRC} $<TARGET_OBJECTS:test_common>)
 add_executable(nxpath_tests ${SOURCES} $<TARGET_OBJECTS:test_common>)

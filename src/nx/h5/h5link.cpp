@@ -48,7 +48,7 @@ namespace h5{
             string element = iter->first;
             if(element.empty())
                 throw pni::core::value_error(EXCEPTION_RECORD,
-                        "The Nexus path ["+string_from_path(p)+"]"
+                        "The Nexus path ["+nxpath::to_string(p)+"]"
                         " contains element without a name!");
 
             //add element

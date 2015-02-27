@@ -186,7 +186,6 @@ namespace nx{
     //!
     bool is_complete(const nxpath::element_type &e);
 
-
     //--------------------------------------------------------------------------
     //!
     //! \ingroup nxpath_code

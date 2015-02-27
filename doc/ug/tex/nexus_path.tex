@@ -1,5 +1,27 @@
 %%% describing how to address Nexus objects
 
+\newcommand{\fsection}{\textit{file section}}
+\newcommand{\fsep}{\texttt{://}}
+\newcommand{\osection}{\textit{object section}}
+\newcommand{\asep}{\texttt{@}}
+\newcommand{\asection}{\textit{attribute section}}
+\newcommand{\nsection}{\textit{name section}}
+\newcommand{\csection}{\textit{class section}}
+\newcommand{\csep}{\texttt{:}}
+\newcommand{\osep}{\texttt{/}}
+\newcommand{\cgroup}{\texttt{.}}
+\newcommand{\pgroup}{\texttt{..}}
+
+%%%---------------------------------------------------------------------------
+Objects within a \nexus-file can be referenced by a path. Though being very
+similar to a Unix file system path, a \nexus-path provides much more
+flexibility. It reflects one of the key features of \nexus: types. 
+A \nexus-path can reference an object not only via its name (as HDF5 does) but
+also by its type. Hence, under certain conditions, it is possible to construct
+a path which is independent of the names choosen within a file.
+
+%%%===========================================================================
+\section{Introduction}
 %%----------------------------------------------------------------------------
 \begin{figure}[tb]
 \centering
@@ -8,46 +30,125 @@
                  minimum height = 0.75cm,
                  minimum width  = 1cm,
                  node distance = 0.5cm}]
-\node (filenode) [cnode] {filepath};
-\node (filesep)  [cnode,right = of filenode] {://};
-\node (objnode)  [cnode,right = of filesep]  {name:class/name:class/name};
-\node (attrsep)  [cnode,right = of objnode]  {@};
-\node (attrnode) [cnode,right = of attrsep]  {attribute name};
+\node (filenode) [cnode] {\texttt{filepath}};
+\node (filesep)  [cnode,right = of filenode] {\texttt{://}};
+\node (objnode)  [cnode,right = of filesep] {\texttt{name:class/:class/name}};
+\node (attrsep)  [cnode,right = of objnode]  {\texttt{@}};
+\node (attrnode) [cnode,right = of attrsep]  {\texttt{attribute name}};
 
 \draw (filenode)--(filesep)--(objnode)--(attrsep)--(attrnode);
 
 \draw[dashed] ($(filenode.west)+(-2mm,2mm)$) --
-              node[below right=0.25cm and 0.75cm]{file section} 
+              node[below right=0.25cm and 0.75cm]{\fsection} 
               +(0,-1.5cm);
 \draw[dashed] ($(filesep.east)+(2mm,2mm)$)  --
-              node[below right=0.25cm and 1.5cm]{object section}
+              node[below right=0.25cm and 1.5cm]{\osection}
               +(0,-1.5cm);
 \draw[dashed] ($(attrsep.west)+(-2mm,2mm)$) --
-              node[below right=0.25cm and 0.8cm]{attribute section}
+              node[below right=0.25cm and 0.8cm]{\asection}
               +(0,-1.5cm);
 \draw[dashed] ($(attrnode.east)+(2mm,2mm)$)  -- +(0,-1.5cm);
 
 \end{tikzpicture}
 \caption{\small\label{fig:path:structure}
-The basic structure of a \nexus\ path as used by \libpniio.
+The basic structure of a \nexus\ path as used by \libpniio. The \fsection\
+stores the Unix path to the data file. The \osection\ the
+path to the field or group within the file and the \asection\
+holds the name of an attribute attached to the object referenced by the
+previous path.
 }
 \end{figure}
 %%----------------------------------------------------------------------------
+\begin{figure}[tb]
+\centering
+\begin{minipage}[c]{0.6\linewidth}
+\begin{tikzpicture}
+[cnode/.style = {rounded corners,draw=black,
+                 minimum height = 0.75cm,
+                 minimum width  = 1cm,
+                 node distance = 0.5cm}]
+\node (name) [cnode,minimum width=3cm] {\texttt{name}};
+\node (sep)  [cnode,right = of name] {\texttt{:}};
+\node (class) [cnode,right = of sep,minimum width=3cm] {\texttt{class}};
+\draw (name) -- (sep) -- (class);
 
-\nexus objects are addressed by a path whose principal structure is depicted in
-Fig.~\ref{fig:path:structure}. Every path consists of three sections
+\draw[dashed] ($(name.east)+(2mm,2mm)$) -- 
+              node[below right= 0.25cm and 1.4cm]{\csection}
+              node[below left =0.25cm and 0.5cm]{\nsection}
+              +(0,-1.5cm);
+
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.39\linewidth}
+\caption{\small\label{fig:path:object} 
+Structure of the elements in the \emph{object section} of a \nexus-path.
+}
+\end{minipage}
+\end{figure}
+%%%===========================================================================
+\subsection{The structure of a \nexus-path}
+
+Figure~\ref{fig:path:structure} shows the principal structure of a \nexus-path
+as used by \libpniio. Such a path comprises three major sections
 \begin{center}
 \renewcommand{\arraystretch}{1.5}
 \begin{tabular}{m{0.2\linewidth}m{0.65\linewidth}}
- \emph{file section}     & this section contains a Unix path to the data file  \\
+ \emph{file section}      & which references the \nexus-file on the file system.
+ It must thus be a valid file system path on the operating system platform in
+ use.  \\
  \emph{object section}    & describing the location of an object within the file \\
- \emph{attribute section} & which stores the name of an attribute attached to the 
-                     object referenced by the residual path
+ \emph{attribute section} & referencing an attribute attached to the object 
+ pointed to by the residual path. The attribute is identified by its name.
 \end{tabular}
 \end{center}
-The file and the object section are separated by a \cpp{://} while the object 
-and the attribute by a \cpp{@} string. The file as well as the object section
-are optional. 
+As shown in Fig.~\ref{fig:path:structure} the file and the object sections are 
+separated by \fsep\ while the object and attribute sections use \asep\ as a
+delimiter. Both, the file and the attribute section, are optional.
+ The individual elements in the object section are separated by a
+single \osep. Every element in the \osection\ is composed of two parts
+(see Fig.~\ref{fig:path:object}): the \nsection\ and the \csection 
+separated by a \csep. Whether or not the \nsection\ and/or the \csection\ must
+be present in order to reference an element depends on the circumstances. 
+There are three possible situations
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{m{0.15\linewidth}m{0.75\linewidth}}
+\emph{name:class} & this is a full identifier for a group. It determines its
+name as well as its type. As fields have no type they cannot be referenced by
+such an expression. \\
+\emph{name} & if only the name is given the referenced object can be either a
+group or a field. However, in the case of a field, this must be the last element
+in the object path (as fields cannot have additional children). \\
+\emph{:class} & if only the class is given the referenced object must be a
+group. Denote the leading colon in this expression. It is necessary to
+distinguish such an expression from a mere name.
+\end{tabular}
+\end{center}
+
+%%%===========================================================================
+\subsection{Some general path properties}
+
+A path is considered as \emph{absolute} if its \osection\ starts at the root
+group of the file. This is always  the case if 
+\begin{itemize}
+\item the \fsection\ of the path is not empty
+\item or, if no \fsection\ is given, the \osection\ starts with a leading \osep.
+\end{itemize}
+The latter condition is equivalent to the convention used for Unix file system
+paths while the former requires some explanation. 
+If the \fsection\ is not empty the \osection\ has to be considered absolute
+otherwise we would not know where to start searching for objects. 
+If no \fsection\ is provided the path can also be a relative path which
+references an object relative to an already given parent object.
+\todo{maybe we should present some example here}
+
+The \nexus-path implementation provided by \libpniio\ also understands 
+\cgroup\ and \pgroup\ where the former one refers to the current group while 
+the latter one to the parent group of the current group.
+
+%%%===========================================================================
+\subsection{Examples}
 Let's have a look on some examples. The following path addresses the data field 
 in the detector group of a file
 \begin{verbatim}
@@ -58,74 +159,93 @@ of the path. Indeed, this path can be written in a more general way with
 \begin{verbatim}
 /data/run/detector.nxs://:NXentry/:NXinstrument/:NXdetector/data
 \end{verbatim}
-where the parent groups of the \cpp{data} field are referenced implicitely vai
-their type.  This requires that only one instance of a particular type exists in
-its parent group. In the case that we have two detectors and each of them is
-stored in an instance of \cpp{NXdetector} the name of the detector must be
-provided explicitely 
+where the parent groups of the \cpp{data} field are referenced implicitly via
+their type.  This requires that only one instance of a particular type
+(\cpp{:NXentry}, \cpp{:NXinstrument}, etc.)  exists in its parent group. In the
+case that we have two detectors and each of them is stored as an instance of
+\cpp{NXdetector} below the \cpp{NXinstrument} group, the name of the detector
+must be provided explicitly 
 \begin{verbatim}
 /data/run/detector.nxs://:NXentry/:NXinstrument/det1:NXdetector/data
 \end{verbatim}
 The last group reference \cpp{det1:NXdetector} is the most precise 
 description of a group instance. Not only does it determined the name 
-of the group but alos its type.  This example already shows one of the 
+of the group but also its type.  This example already shows one of the 
 powers of \nexus. As long as only one instance of a particular type exists
 within a group it can be identified by its type rather than by its name. 
-In many situations it is thus possible to generate paths which are independent
-of all names.
+In many situations it is thus possible to generate paths which are virtually
+independent of all object names (in fact only the fields must be named as they
+have no type).
 
-If a path contains a \emph{file section} 
-the object section is assumed to be an absolute path. This means that 
-the search starts at the root group level of the file. 
-The situation is slightly different for a path without a file section. 
-Consider the following situations
+All path examples until now represented an absolute path (a path with a leading
+\fsection). In many situations no file must be specified. A typical application
+for paths without \fsection\ would be program where an object should be
+referenced by a path relative to a given parent object. 
+The path in the next example references the data field of the detector 
+relative to the top level instance of \cpp{NXentry}
 \begin{verbatim}
 :NXinstrument/detector/data 
 \end{verbatim}
-without a leading file section. In this case the path is assumed to 
-be relative to whatever parent object is involved in the subsequent 
-operation involving this path. 
-In order to make a path without a file section an absolute path it must 
-start with a \cpp{/} symbol. 
+In order to make a path without a \fsection\ \emph{absolute}, it must 
+start with a leading \cpp{/} as in the next example
 \begin{verbatim}
 /:NXentry/:NXinstrument/pilatus/data
 \end{verbatim}
-would thus denote an absolute path.
+
 In order to reference the root group of a file one can either use 
 \begin{verbatim}
 /
 \end{verbatim}
-a single \cpp{/} or, in case of a file section
+a single \osep\ or, in case of a file section
 \begin{verbatim}
 /data/run/detector.nxs://
 \end{verbatim}
-where the trailing \cpp{://} denotes the root group. In case of an absolute path
+where the trailing \fsep\ denotes the root group. In case of an absolute path
 the root group is always included in the path object (as will be shown later). 
 
-As Unix paths, a \nexus-path also understands the \cpp{.} and \cpp{..} groups 
-where the former one denotes the current group and the latter one the parent 
-group of the current group.
+Finally an application for  \pgroup\ should be discussed. Lets assume that the
+current parent is the detector group and we want to address the diameter field
+of an instance of \cpp{NXpnihole} located one level above. We could do this with
+\begin{verbatim}
+../:NXpnihole/diameter
+\end{verbatim}
+where \pgroup\ indicates that one should move to the parent group of the 
+current one.
 
 %%%===========================================================================
 \section{The \nxpath\ type}
 
-While users typically enter a path via a string, internally all \nexus\ paths 
-are represented by instances of \nxpath. \nxpath\ is basically a wrapper around 
-a \cpp{std::list} which holds the content of the object section. 
-Each element in this list is a \emph{name:class} pair. The file and attribute
-section can be set and retrieved via the \cpp{attribute} and \cpp{filename}
-methods. In order to set and retrieve the file section use
+In C++ a \nexus-path is represented by an instance of \nxpath. 
+To use \nxpath\ and its utility functions the appropriate header file must be 
+included 
+\begin{cppcode}
+#include <pni/io/nx/nxpath.hpp>
+\end{cppcode}
+\nxpath\ is an
+iterable over the elements of the \osection\ of a \nexus-path.  
+The optional \emph{file-} and \asection\ can be accessed via getter and setter
+methods like this
 \begin{cppcode}
 nxpath path = ...;
 path.filename("/data/run/detector.nxs"); //set file section
 std::cout<<path.filename()<<std::endl;   //retrieve file section
 \end{cppcode}
-and analogously for the attribute section
+and analogously for the \asection
 \begin{cppcode}
 nxpath path = ...;
 path.attribute("units");              //set attribute section
 std::cout<<path.units()<<std::endl;   //retrieve attribute section
 \end{cppcode}
+
+The elements of the \osection\ are stored as instances of 
+\cpp{std::pair<string,string>} where the first element of the pair holds the
+name of the element and the second the class (if available). 
+\nxpath\ provides an alias to the element type via the public member type
+\cpp{nxpath::element\_type}.
+Technically, \nxpath\ is a thin wrapper around a list of such
+\cpp{element\_type} (although not all the list functionality is exported).
+Consult the API documentation for a detailed description of \nxpath's interface.
+
 
 %%%---------------------------------------------------------------------------
 \subsection{Path construction}
@@ -135,16 +255,19 @@ a path from a string using the \cpp{from\_string} static member method
 \begin{cppcode}
 nxpath path = nxpath::from_string("/:NXentry/:NXinstrument/pilatus");
 \end{cppcode}
+\cpp{from\_string} has also a static counterpart method \cpp{to\_string} which 
+converts a path instance to its string representation.
+\begin{cppcode}
+nxpath path = ....;
+std::cout<<nxpath::to_string(path)<<std::endl;
+\end{cppcode}
 
 %%%---------------------------------------------------------------------------
 \subsection{Path iteration}
 
-As already mentioned in the beginning of this section, \nxpath\ is a thing 
-wrapper over a list with elements of type \cpp{std::pair<string,string>}. 
-Every instance of such a pair can either reference to a field or a 
-group. In fact only the last element can refer to a field. 
-The \nxpath\ type allows iteration over the elements of the objects section of
-the path. For this purpose \nxpath\ provides an STL compliant interface. 
+\nxpath\ provides an STL compliant iterator interface which allows easy
+iteration over all elements in the \osection\ of the path. Consider the 
+following example
 \begin{cppcode}
 nxpath p = nxpath::from_string("/:NXentry/:NXinstrument/pilatus/data");
 
@@ -163,15 +286,127 @@ As we can see from the above example: the first member of the
 \cpp{std::pair<string,string>} stored in the object section list is the 
 name of an object while the second is its type. In the case of a field 
 only the first (name) element will be set (a field does not have a 
-particular type).
+particular type). 
+The number of elements in the \osection\ of \nxpath\ can be obtained via the 
+\cpp{size} member function (which is the same as for any other STL container).
 
 %%%---------------------------------------------------------------------------
-\subsection{The general path interface}
+\subsection{Push and pop on object}
+
+Elements of the \osection\ of the path can be added using the \cpp{push\_back}
+and \cpp{push\_front} member functions. 
+\begin{cppcode}
+nxpath p = nxpath::from_string(":NXinstrument");
+std::cout<<p<<std::endl; // output: :NXinstrument
+
+p.push_back(object_element("","NXdetector"));
+std::cout<<p<<std::endl; // output: :NXinstrument/:NXdetector
+
+p.push_front(object_element("","NXentry"));
+std::cout<<p<<std::endl; // output: :NXentry/:NXinstrument/:NXdetector
+\end{cppcode}
+Like other STL containers \nxpath\ also provides the \cpp{front}, \cpp{back}, 
+\cpp{pop\_front}, and \cpp{pop\_back} member functions which have the 
+standard STL behavior. 
+\begin{cppcode}
+nxpath p = nxpath::from_string(":NXentry/:NXinstrument/:NXdetector");
+
+//get front and back elements from the object section
+nxpath::element_type entry = p.front();
+nxpath::element_type detector = p.back();
+
+std::cout<<p<<std::endl; // output: :NXentry/:NXinstrument/:NXdetector
+
+//remove front and back objects from the object section
+p.pop_front();
+p.pop_back();
+
+std::cout<<p<<std::endl; // output: :NXinstrument
+
+\end{cppcode}
+
+
 
 
 %%%===========================================================================
-\section{Path utility functions}
+\section{Utility functions}
 
+\subsection{Element utilities}
+
+There are a couple of utility functions available to work with the elements 
+stored in the \osection\ of the path.
+One important function is the \cpp{object\_element} function which 
+creates a single element for the \osection\ of a path. This is particularly 
+useful in connection with the \cpp{push\_back} and \cpp{push\_front} member 
+functions of \nxpath. 
+If for instance one wants to append a detector group to the object section
+we could use
+\begin{cppcode}
+nxpath p = ...;
+p.push_back(object_element("detector","NXdector"));
+\end{cppcode}
+\cpp{object\_element} takes two arguments: the first is the name of the object
+while the second its type (only relevant for groups). If both are empty strings
+and exception will be thrown.
+
+Furthermore there are some functions for querying the basic properties of an 
+element instance. Each of these functions returns a boolean value and takes
+an instance of \cpp{nxpath::element\_type} as its only argument.
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{m{0.2\linewidth}m{0.7\linewidth}}
+\cpp{is\_root\_element} & returns true if the element references the root group
+(with name \cpp{/} and type \cpp{NXroot})\\
+\cpp{is\_complete}      & return true if the element has a non-empty name and 
+                          type\\
+\cpp{has\_name}         & return true if the element has a non-empty name\\
+\cpp{has\_class}        & return true if the element has a non-empty type
+\end{tabular}
+\end{center}
+
+\subsection{\nxpath\ utilities}
+
+Three inquiry functions exist for \nxpath. Each of them returns a
+boolean and takes as their single argument a reference to an instance of \nxpath
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{m{0.3\linewidth}m{0.6\linewidth}}
+\cpp{is\_absolute}            & returns true if the path is an absolute path\\
+\cpp{has\_file\_section}      & returns true if the path has a non-empty file 
+                                section\\
+\cpp{has\_attribute\_section} & returns true if the path has a non-empty 
+                                attribute section
+\end{tabular}
+\end{center}
+The \cpp{split\_path} function divides an \nxpath\ into two partial paths 
+at a user defined position. 
+\begin{cppcode}
+string s = "test.nxs://:NXentry/:NXinstrument/detector@NX_class";
+nxpath p = nxpath::from_string(s);
+nxpath instrument_path,detector_path;
+split_path(p,3,instrument_path,detector_path);
+
+// output: test.nxs://:NXentry/:NXinstrument
+std::cout<<instrument_path<<std::endl; 
+// output: detector@NX_class
+std::cout<<detector_path<<std::endl;   
+\end{cppcode}
+The second argument to \cpp{split\_path} is the position where to perform the
+split. It is the index of the first element for the second path.
+To chop of the \fsection\ from a path one could use the following code
+\begin{cppcode}
+string s = "test.nxs://:NXentry/:NXinstrument/detector@NX_class";
+nxpath p = nxpath::from_string(s);
+nxpath instrument_path,detector_path;
+split_path(p,0,instrument_path,detector_path);
+
+// output: test.nxs
+std::cout<<instrument_path<<std::endl;
+// output: /:NXentry/:NXinstrument/detector@NX_class
+std::cout<<detector_path<<std::endl;   
+\end{cppcode}
+
+%%%===========================================================================
 \section{The grammar of a Nexus path}
 Lets first have a look on the grammar of a Nexus path in
 EBNF\footnote{EBNF=Extended Backus Naur Form}

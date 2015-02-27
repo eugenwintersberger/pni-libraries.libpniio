@@ -99,7 +99,11 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     void nxpath::push_back(const element_type &o) 
-    { 
+    {
+        if(is_root_element(o)&&size())
+            throw value_error(EXCEPTION_RECORD,
+                    "Cannot push back a root group to a non-empty path!");
+
         _elements.push_back(o); 
     }
 
