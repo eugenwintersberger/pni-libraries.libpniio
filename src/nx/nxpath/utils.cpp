@@ -30,14 +30,19 @@ namespace pni{
 namespace io{
 namespace nx{
 
+    void throw_if_empty(const nxpath::element_type &e, const exception_record &r)
+    {
+        if(e.first.empty()&&e.second.empty())
+            throw value_error(r,"Both name and type are empty!");
+    }
+
     //--------------------------------------------------------------------------
     nxpath::element_type object_element(const string &name,const string &type)
     {
-        if(name.empty()&&type.empty())
-            throw value_error(EXCEPTION_RECORD,
-                    "Namen and type of the object are empty!");
+        nxpath::element_type e = nxpath::element_type{name,type};
+        throw_if_empty(e,EXCEPTION_RECORD);
 
-        return nxpath::element_type{name,type};
+        return e;
     }
 
     //--------------------------------------------------------------------------
@@ -87,6 +92,8 @@ namespace nx{
     //-------------------------------------------------------------------------
     bool is_root_element(const nxpath::element_type &e)
     {
+        throw_if_empty(e,EXCEPTION_RECORD);
+
         return (has_name(e) && (e.first=="/") && 
                 has_class(e) && (e.second=="NXroot"));
     }
@@ -112,6 +119,8 @@ namespace nx{
     //--------------------------------------------------------------------------
     bool is_complete(const nxpath::element_type &e)
     {
+        throw_if_empty(e,EXCEPTION_RECORD);
+
         return has_name(e)&&has_class(e);
     }
 

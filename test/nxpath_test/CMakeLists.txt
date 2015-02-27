@@ -10,6 +10,10 @@ set(PARSERSRC nxpath_parser_tests.cpp
            )
 set(UTILSRC nxpath_utils_tests.cpp
             test_object_element.cpp
+            test_is_root_element.cpp
+            test_is_complete.cpp
+            test_has_name.cpp
+            test_has_class.cpp
            )
 add_executable(nxpath_parser_tests ${PARSERSRC} $<TARGET_OBJECTS:test_common>)
 add_executable(nxpath_tests ${SOURCES} $<TARGET_OBJECTS:test_common>)

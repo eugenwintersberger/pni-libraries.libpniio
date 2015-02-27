@@ -127,6 +127,8 @@ namespace nx{
     //! The root element has the form ("/","NXroot"). This function returns
     //! true if the passed element is the root element.
     //! 
+    //! \throw value_error if both name and type are empty strings
+    //! 
     //! \param e element instance
     //! \return true if root element, false otherwise
     //!
@@ -176,6 +178,8 @@ namespace nx{
     //! field must never be complete as it has no attribute NX_class. Thus, 
     //! this function can be used as a first check if a path element referes 
     //! to a field or to a group. 
+    //! 
+    //! \throws value_error if both parts of the element are empty strings
     //! 
     //! \param e reference to the path element
     //! \return true if element is complete, false otherwise
