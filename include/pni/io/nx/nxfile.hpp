@@ -152,9 +152,11 @@ namespace nx{
 
             //-----------------------------------------------------------------
             //! 
-            //! \brief create file
+            //! \brief create file family
             //! 
-            //! Static method to create a file. 
+            //! Static method to create a set of files. In the case of the HDF5
+            //! backend the family driver is used and the data is distributed 
+            //! over a bunch of files.
             //!
             //! \throws invalid_object_error if the newly created file object
             //! is not valid
@@ -162,12 +164,12 @@ namespace nx{
             //! \throws object_error in case of any other error
             //!
             //! \param n name of the file to create
-            //! \param ow overwrite existing file if true
             //! \param ssize split size (not implemented yet)
+            //! \param ow overwrite existing file if true
             //! \return instance of NXFile
             //!
             static file_type
-            create_file(const string &n,bool ow=false, ssize_t ssize = 0)
+            create_files(const string &n,ssize_t ssize,bool ow=false)
             {
                 file_type file = file_type(imp_type::create(n,ow,ssize));
 
@@ -190,6 +192,26 @@ namespace nx{
                 file.flush();
 
                 return file;
+            }
+
+            //-----------------------------------------------------------------
+            //!
+            //! \brief create single file 
+            //!
+            //! Creates a single file. 
+            //!
+            //! \throws invalid_object_error if the newly create file object is
+            //! not valid
+            //! \throws io_error if attribute writing failed
+            //! \throws object_error if object creation failed (in any other
+            //! case)
+            //! \param n name of the file
+            //! \param ow overwrite flag
+            //! \return file instance
+            static file_type
+            create_file(const string &n,bool ow=false)
+            {
+                return create_files(n,0,ow);
             }
 
             //-----------------------------------------------------------------

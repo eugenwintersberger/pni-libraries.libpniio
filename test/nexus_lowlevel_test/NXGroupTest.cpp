@@ -41,7 +41,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(NXGroupTest);
 void NXGroupTest::setUp()
 {
 	_fname = "test.group.h5";
-    _f = nxfile::create_file("NXGroupTest.h5",true,0);
+    _f = nxfile::create_file("NXGroupTest.h5",true);
 }
 
 //------------------------------------------------------------------------------
@@ -69,7 +69,7 @@ void NXGroupTest::test_linking()
     CPPUNIT_ASSERT_NO_THROW(get_object(_f.root(),nxpath::from_string("/scan_1/a_link")));
 
     //create some group in an external file
-    nxfile file = nxfile::create_file("NXGroupTest2.h5",true,0);
+    nxfile file = nxfile::create_file("NXGroupTest2.h5",true);
     file.root().create_group("test").create_group("data");
 
     //linke the external group

@@ -41,7 +41,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(NXFieldTest);
 //------------------------------------------------------------------------------
 void NXFieldTest::setUp()
 {
-    file = nxfile::create_file("NXFieldTest.h5",true,0);
+    file = nxfile::create_file("NXFieldTest.h5",true);
     root = file.root();
 
 	for(size_t i=0;i<n;i++) testdata[i] = i+1;

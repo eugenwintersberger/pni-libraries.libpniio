@@ -181,7 +181,7 @@ void NXAttributeTest<APTYPE>::create_parent(const nxfile &f,nxfield &p)
 template<typename APTYPE> void NXAttributeTest<APTYPE>::setUp()
 {
     //create the file where to store data
-    _f = nxfile::create_file("NXAttributeTest.nxs",true,0);
+    _f = nxfile::create_file("NXAttributeTest.nxs",true);
 
     //create the attribute parrent
     create_parent(_f,_parent);

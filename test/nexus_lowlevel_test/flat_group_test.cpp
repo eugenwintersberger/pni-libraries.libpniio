@@ -40,7 +40,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(flat_group_test);
 //------------------------------------------------------------------------------
 void flat_group_test::setUp()
 {
-    _f = h5::nxfile::create_file("flat_group_test.nxs",true,0);
+    _f = h5::nxfile::create_file("flat_group_test.nxs",true);
     h5::nxgroup g=_f.root();
     g = g.create_group("entry","NXentry");
     g.create_group("sample","NXsample");
