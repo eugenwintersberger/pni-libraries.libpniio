@@ -32,7 +32,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(close_test);
 //-----------------------------------------------------------------------------
 void close_test::setUp()
 {
-    file = h5::nxfile::create_file("close_test.nx",true,0);
+    file = h5::nxfile::create_file("close_test.nx",true);
     root = file.root();
     group = root.create_group("group","NXentry");
     field = root.create_field<uint32>("data");

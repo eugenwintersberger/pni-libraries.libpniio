@@ -32,7 +32,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(get_root_test);
 //-----------------------------------------------------------------------------
 void get_root_test::setUp()
 {
-    file = h5::nxfile::create_file("get_root_test.nx",true,0);
+    file = h5::nxfile::create_file("get_root_test.nx",true);
     root = file.root();
     group = root.create_group("group","NXentry");
     group.create_group("instrument","NXinstrument");

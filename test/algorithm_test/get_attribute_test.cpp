@@ -36,7 +36,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(get_attribute_test);
 //-----------------------------------------------------------------------------
 void get_attribute_test::setUp()
 {
-    file = h5::nxfile::create_file("is_valid.nx",true,0);
+    file = h5::nxfile::create_file("is_valid.nx",true);
     root = file.root();
     group = root.create_group("group","NXentry");
     group.create_group("instrument","NXinstrument");

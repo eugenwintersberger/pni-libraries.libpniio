@@ -33,7 +33,7 @@ using pni::io::invalid_object_error;
 //-----------------------------------------------------------------------------
 void get_unit_test::setUp()
 {
-    file = h5::nxfile::create_file("get_unit_test.nx",true,0);
+    file = h5::nxfile::create_file("get_unit_test.nx",true);
     root = file.root();
     group = root.create_group("group","NXentry");
     field = root.create_field<uint32>("data");

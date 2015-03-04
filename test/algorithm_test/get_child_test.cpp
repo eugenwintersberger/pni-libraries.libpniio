@@ -33,7 +33,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(get_child_test);
 //-----------------------------------------------------------------------------
 void get_child_test::setUp()
 {
-    file = h5::nxfile::create_file("groups.nx",true,0);
+    file = h5::nxfile::create_file("groups.nx",true);
     root = file.root();
     group = root.create_group("scan_1","NXentry");
     group.create_group("beamline","NXinstrument");

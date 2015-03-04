@@ -35,7 +35,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(set_class_test);
 //-----------------------------------------------------------------------------
 void set_class_test::setUp()
 {
-    file = h5::nxfile::create_file("is_valid.nx",true,0);
+    file = h5::nxfile::create_file("is_valid.nx",true);
     root = file.root();
     group = root.create_group("group","NXentry");
     field = root.create_field<uint32>("data");

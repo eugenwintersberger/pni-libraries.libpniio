@@ -35,7 +35,7 @@ void grow_test::setUp()
     field_shape = shape_t{1,10,10};
     attr_shape  = shape_t{4,4};
 
-    file = h5::nxfile::create_file("grow_test.nx",true,0);
+    file = h5::nxfile::create_file("grow_test.nx",true);
     root = file.root();
     group = root.create_group("group","NXentry");
     group.create_group("instrument","NXinstrument");

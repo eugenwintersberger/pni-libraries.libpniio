@@ -35,7 +35,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(get_name_test);
 //-----------------------------------------------------------------------------
 void get_name_test::setUp()
 {
-    file = h5::nxfile::create_file("get_name_test.nx",true,0);
+    file = h5::nxfile::create_file("get_name_test.nx",true);
     root = file.root();
     group = root.create_group("group","NXentry");
     field = root.create_field<uint32>("data");

@@ -35,7 +35,7 @@ void create_attribute_test::setUp()
     field_shape = shape_t{0,10,10};
     cs_shape  = shape_t{1,10,10};
 
-    file = h5::nxfile::create_file("create_attribute_test.nx",true,0);
+    file = h5::nxfile::create_file("create_attribute_test.nx",true);
     root = file.root();
     group = root.create_group("group","NXentry");
     group.create_group("instrument","NXinstrument");

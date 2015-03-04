@@ -36,7 +36,7 @@ void get_rank_test::setUp()
     field_shape = shape_t{0,10,10};
     attr_shape  = shape_t{4,4};
 
-    file = h5::nxfile::create_file("is_valid.nx",true,0);
+    file = h5::nxfile::create_file("is_valid.nx",true);
     root = file.root();
     group = root.create_group("group","NXentry");
     group.create_group("instrument","NXinstrument");

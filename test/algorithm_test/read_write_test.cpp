@@ -35,7 +35,7 @@ void read_write_test::setUp()
     field_shape = shape_t{2,3,5};
     attr_shape  = shape_t{2,3};
 
-    file = h5::nxfile::create_file("read_test.nx",true,0);
+    file = h5::nxfile::create_file("read_test.nx",true);
     root = file.root();
     group = root.create_group("group","NXentry");
     group.create_group("instrument","NXinstrument");
