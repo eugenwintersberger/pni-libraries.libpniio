@@ -1,7 +1,6 @@
 set(SOURCES nexus_lowlevel_test.cpp
             NXAttributeTest.cpp
             NXFieldTest.cpp
-            NXFileTest.cpp
             NXGroupTest.cpp
             nxlink_test.cpp
             NXSelectionTest.cpp
