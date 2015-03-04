@@ -10,6 +10,8 @@ set(SOURCES nexus_lowlevel_test.cpp
 
 set(NXFILESRC nxfile_tests.cpp
               nxfile_creation_test.cpp 
+              nxfile_open_single_file_test.cpp
+              nxfile_open_family_file_test.cpp
     )
 
 add_executable(nxfile_tests ${NXFILESRC} $<TARGET_OBJECTS:test_common>)

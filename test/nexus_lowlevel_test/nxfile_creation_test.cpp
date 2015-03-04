@@ -49,8 +49,11 @@ void nxfile_creation_test::test_simple()
     CPPUNIT_ASSERT(!f.is_valid());
 
 	//recreating the file should cause an error as the file already exists
-	CPPUNIT_ASSERT_THROW(h5::nxfile::create_file("nxfile_test.nxs",false)
+	CPPUNIT_ASSERT_THROW(h5::nxfile::create_file(fname,false)
             ,pni::io::object_error); //here we except an error
+
+    //opening the file read only - works  
+    //CPPUNIT_ASSERT_THROW(h5::nxfile::open_file(fname),object_error);
 }
 
 //------------------------------------------------------------------------------
