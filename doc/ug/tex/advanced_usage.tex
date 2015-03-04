@@ -1,0 +1,55 @@
+%%%===========================================================================
+\section{The mysterious \nxobject}\label{section:nxobject}
+
+%%%===========================================================================
+\section{Iterating groups}\label{section:group_iteration}
+
+\subsection{Simple iteration}
+
+The {\tt nxgroup} type provides an STL compliant iterator interface to iterate
+over the direct children of a group. In this very simple example we loop over 
+all entries stored in a file
+\begin{cppcode}
+h5::nxgroup root = f.root();
+
+for(auto entry: root)
+    std::cout<<entry.name()<<std::endl;
+\end{cppcode}
+Another interesting example would be to count all instances of {\tt NXdetector} 
+within an instrument group
+\begin{cppcode}
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/algorithms.hpp>
+
+using namespace pni::core;
+using namespace pni::io::nx;
+
+//predicate function
+bool is_detector(const h5::nxobject &o)
+{
+    if(is_group(o)) return is_class(o,"NXdetector");
+    else return false;
+}
+
+int main(int argc,char **argv)
+{
+    h5::nxfile file = h5::nxfile::open_file("test.nxs");
+    h5::nxgroup instrument = get_object(root,"/:NXentry/:NXinstrument");
+
+    size_t ndetectors = std::count_if(instrument.begin(),instrument.end(),
+                                      is_detector);
+    std::cout<<"Found "<<ndetectors<<" detectors!"<<std::endl;
+    return 0;
+}
+\end{cppcode}
+
+\subsection{Recursive iteration}
+
+\subsection{Deleting items}
+
+%%%===========================================================================
+\section{Using algorithms}
+
+
+

@@ -24,7 +24,7 @@
 //
 
 #include <boost/current_function.hpp>
-#include "nxgroup_creation_test.hpp"
+#include "nxgroup_access_test.hpp"
 
 #include<cppunit/extensions/HelperMacros.h>
 
@@ -35,78 +35,69 @@
 
 using pni::io::invalid_object_error;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxgroup_creation_test);
+CPPUNIT_TEST_SUITE_REGISTRATION(nxgroup_access_test);
 
 //------------------------------------------------------------------------------
-void nxgroup_creation_test::setUp()
+void nxgroup_access_test::setUp()
 {
-	_fname = "nxgroup_creation_test.nxs";
+	_fname = "nxgroup_access_test.nxs";
     _f = h5::nxfile::create_file(_fname,true);
     _root = _f.root();
+    _child = _root.create_group("entry","NXentry");
 }
 
 //------------------------------------------------------------------------------
-void nxgroup_creation_test::tearDown()
+void nxgroup_access_test::tearDown()
 {
+    _child.close();
     _root.close();
 	_f.close();
 }
 
 //------------------------------------------------------------------------------
-void nxgroup_creation_test::test_simple()
+void nxgroup_access_test::test_operator_index()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    h5::nxgroup g;
 
-    CPPUNIT_ASSERT_NO_THROW( g = _root.create_group("test"));
-    CPPUNIT_ASSERT(g.is_valid());
-    CPPUNIT_ASSERT(g.name() == "test");
+    CPPUNIT_ASSERT(_root.size()==1);
 
-    //throw an exception if the group already exists
-    CPPUNIT_ASSERT_THROW(_root.create_group("test"),object_error);
-
-    CPPUNIT_ASSERT_THROW(_root.create_group("test2/data"),object_error);
-
+    h5::nxgroup g = _root[0];
+    CPPUNIT_ASSERT(g.name()=="entry");
+    
+    CPPUNIT_ASSERT_THROW(_root[1],index_error);
 }
 
 //------------------------------------------------------------------------------
-void nxgroup_creation_test::test_with_class()
+void nxgroup_access_test::test_operator_name()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    h5::nxgroup g;
-    CPPUNIT_ASSERT_NO_THROW( g = _root.create_group("test","NXentry"));
-    CPPUNIT_ASSERT(g.is_valid());
-    CPPUNIT_ASSERT(g.name()=="test");
-    CPPUNIT_ASSERT(get_class(g)=="NXentry");
-   
-    CPPUNIT_ASSERT_THROW(_root.create_group("test","NXinstrument"),object_error);
-    CPPUNIT_ASSERT_THROW(_root.create_group("test2/data","NXdata"),object_error);
+    CPPUNIT_ASSERT(_root.size()==1);
+
+    h5::nxgroup g = _root["entry"];
+    CPPUNIT_ASSERT(g.name()=="entry");
+    
+    CPPUNIT_ASSERT_THROW(_root["nothing"],key_error);
 }
 
 //------------------------------------------------------------------------------
-void nxgroup_creation_test::test_copy_construction()
+void nxgroup_access_test::test_at_index()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    h5::nxgroup g;
-    g = _root.create_group("test");
-    h5::nxgroup g2 = g;
-    CPPUNIT_ASSERT(g.is_valid());
-    CPPUNIT_ASSERT(g2.is_valid());
-
+    h5::nxgroup g = _root.at(0);
+    CPPUNIT_ASSERT(g.name()=="entry");
+    
+    CPPUNIT_ASSERT_THROW(_root.at(1),index_error);
 }
 
 //------------------------------------------------------------------------------
-void nxgroup_creation_test::test_move_construction()
+void nxgroup_access_test::test_at_name()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    h5::nxgroup g;
-    g = _root.create_group("test");
-    h5::nxgroup g2 = std::move(g);
-    CPPUNIT_ASSERT(!g.is_valid());
-    CPPUNIT_ASSERT(g2.is_valid());
+    h5::nxgroup g = _root.at("entry");
+    CPPUNIT_ASSERT(g.name()=="entry");
+    
+    CPPUNIT_ASSERT_THROW(_root.at("nothing"),key_error);
 }
-
-

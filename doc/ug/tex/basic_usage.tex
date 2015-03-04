@@ -19,68 +19,7 @@ to your source file.
 
 %%%===========================================================================
 \section{Working with groups}
-
-Nexus groups are instances of the {\tt nxgroup} template. They can be considered
-as containers for fields and other groups and expose an STL compliant interface. 
-The most important group is the root group (the top level group of the Nexus
-tree). It can be obtained from an opened file via the {\tt root()} method
-\begin{cppcode}
-h5::nxfile file = h5::nxfile::open_file("test.nxs");
-h5::nxgroup root = file.root();
-\end{cppcode}
-
-\subsection{Creating groups}
-
-A new group can be created using the {\tt create\_group} method of a group
-instance
-\begin{cppcode}
-h5::nxgroup entry = root.create_group("scan_1","NXentry");
-\end{cppcode}
-This method takes two arguments where the first one is mandatory and denotes the
-name of the group while the second one is optional and determines the Nexus
-class of the group. If the last argument is omitted a simple HDF5 group is
-created (without an {\tt NX\_class}  attribute).
-
-Like a file a group can be closed using its {\tt close()} method. However, as
-with files this is not necessary as the group will be closed automatically when
-it looses scope.
-
-\subsection{Accessing children}
-
-To some extent {\tt nxgroup} tries to mimic the behavior of an STL container. 
-The {\tt size()} method returns the number of (direct) children of a group. 
-Those children can be accessed via the {\tt at()} method or the
-{\tt []} operator. Those functions/operators take either the name or the index 
-of a child as its argument
-\begin{cppcode}
-h5::nxgroup root = file.root();
-h5::nxgroup entry = root["entry"];
-\end{cppcode}
-Unlike for STL containers both access variants ({\tt at()} or {\tt []}) will 
-throw an exception if a particular child could not be found or the index passed
-to them exceeds the total number of children of the group.
-
-\subsection{Group inquiry}
-
-Like files, groups have a couple of inquiry functions. The most important ones
-are shown here
-\begin{center}
-\begin{tabular}{l|l}
-method & description \\
-\hline\hline
-{\tt is\_valid()} & returns true if the group is valid \\
-\hline
-{\tt name()} & returns the name of the group (not its full path though!) \\
-\hline
-{\tt size()} & returns the number of children for this particular group \\
-\hline
-{\tt parent()} & returns the parent group for this particular group \\
-\hline
-{\tt filename()} & returns the name of the file where this group is stored \\
-\hline
-\end{tabular}
-\end{center}
-
+\input{tex/nexus_groups.tex}
 
 
 %%%===========================================================================
@@ -165,55 +104,7 @@ The selection mechanism works the same as for the {\tt mdarray} template.
 \subsection{Field inquiry}
 
 %%%===========================================================================
-\section{Iterating groups}\label{section:group_iteration}
-
-\subsection{Simple iteration}
-
-The {\tt nxgroup} type provides an STL compliant iterator interface to iterate
-over the direct children of a group. In this very simple example we loop over 
-all entries stored in a file
-\begin{cppcode}
-h5::nxgroup root = f.root();
-
-for(auto entry: root)
-    std::cout<<entry.name()<<std::endl;
-\end{cppcode}
-Another interesting example would be to count all instances of {\tt NXdetector} 
-within an instrument group
-\begin{cppcode}
-#include <pni/core/types.hpp>
-#include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/algorithms.hpp>
-
-using namespace pni::core;
-using namespace pni::io::nx;
-
-//predicate function
-bool is_detector(const h5::nxobject &o)
-{
-    if(is_group(o)) return is_class(o,"NXdetector");
-    else return false;
-}
-
-int main(int argc,char **argv)
-{
-    h5::nxfile file = h5::nxfile::open_file("test.nxs");
-    h5::nxgroup instrument = get_object(root,"/:NXentry/:NXinstrument");
-
-    size_t ndetectors = std::count_if(instrument.begin(),instrument.end(),
-                                      is_detector);
-    std::cout<<"Found "<<ndetectors<<" detectors!"<<std::endl;
-    return 0;
-}
-\end{cppcode}
-
-\subsection{Recursive iteration}
-
-\subsection{Deleting items}
-
-
-
-%%%===========================================================================
 \section{Working with attributes}
+
 
 

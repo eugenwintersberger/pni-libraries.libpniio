@@ -16,6 +16,8 @@ set(NXFILESRC nxfile_tests.cpp
 
 set(NXGROUPSRC nxgroup_tests.cpp
                nxgroup_creation_test.cpp
+               nxgroup_access_test.cpp
+               nxgroup_misc_test.cpp
               )
 
 add_executable(nxfile_tests ${NXFILESRC} $<TARGET_OBJECTS:test_common>)

@@ -15,6 +15,8 @@ set(SOURCES tex/installation.tex
             tex/xml.tex
             tex/nexus_xml.tex
             tex/nexus_files.tex
+            tex/nexus_groups.tex
+            tex/advanced_usage.tex
             )
 
 foreach(TEX_FILE ${SOURCES}) 
