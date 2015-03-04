@@ -74,14 +74,12 @@ namespace nx{
             //! \brief copy constrcutor
             //!
             nxfile(const file_type &file):_imp(file._imp) { }
-
-
+            
             //-----------------------------------------------------------------
             //!
             //! \brief move constructor
             //!
             nxfile(file_type &&f):_imp(std::move(f._imp)) { }
-            
             
             //-----------------------------------------------------------------
             //!
@@ -103,7 +101,6 @@ namespace nx{
                     r.close();
                 }
             }
-
                 
             //================assigment operator===============================
             //!

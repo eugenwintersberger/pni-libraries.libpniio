@@ -12,6 +12,7 @@ set(NXFILESRC nxfile_tests.cpp
               nxfile_creation_test.cpp 
               nxfile_open_single_file_test.cpp
               nxfile_open_family_file_test.cpp
+              nxfile_misc_test.cpp
     )
 
 add_executable(nxfile_tests ${NXFILESRC} $<TARGET_OBJECTS:test_common>)

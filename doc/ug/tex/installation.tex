@@ -4,3 +4,13 @@
 \section{Install precompiled packages}
 
 \section{Install from sources}
+
+\subsection{Running tests}
+
+In order to run the tests use 
+\begin{minted}{bash}
+> make cleanup test
+\end{minted}
+The \cpp{cleanup} target removes the test artifacts from previous test runs.
+This is important as some of the tests may fail if the old artifacts are still
+present.
