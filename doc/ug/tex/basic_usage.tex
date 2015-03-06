@@ -24,84 +24,8 @@ to your source file.
 
 %%%===========================================================================
 \section{Working with fields}
+\input{tex/nexus_fields.tex}
 
-Fields are the data holding units in Nexus.  In \libpniio\ fields are 
-implemented by the {\tt nxfield} template. Before diving into the details there
-are some important general remarks which must be made. One can imagine a field as a
-multidimensional array of virtually arbitrary data. It is impossible to create 
-a scalar field with \libpniio. The reason for this is simple: every field should
-be extendible if needed. :w
-
-
-\subsection{Creating fields}
-
-Field creation is rather complex as there are many options which should be taken
-into account. Lets start with a simple example
-\begin{cppcode}
-h5::nxgroup entry = root["entry"];
-h5::nxfield field = entry.create_field<float32>("temperature");
-\end{cppcode}
-This creates a 1D field
-
-\subsection{Reading and writing data}
-
-Fields provide two basic methods for reading and writing data: {\tt read()} and 
-{\tt write()}. 
-Both member functions accept a single argument which can be an instance of the
-following types
-\begin{center}
-    \begin{tabular}{l|p{0.6\linewidth}}
-        {\bf type} & {\bf description} \\
-        \hline
-        \hline
-        {\tt mdarray<...>} & an instance of the {\tt mdarray} template \\
-        \hline
-        {\tt array} & an instance of the array type erasure \\
-        \hline
-        {\tt T\& } & a single scalar value of the fields element type or a 
-        convertible type \\
-        \hline
-    \end{tabular}
-\end{center}
-There is an additional version of the {\tt read()} and {\tt write()} methods
-with the signatures {\tt read(size\_t n,T *value)}
-and {\tt write(size\_t n,T *value)}. These functions exist as interface to
-legacy C code where only pointers are available. As the user has to provide the
-number of elements in the memory region where the pointers point to these
-functions try to add some additional safety.
-
-A typical example would look like this
-\begin{cppcode}
-auto data = dynamic_array<uint32>::create(shape_t{1024,1024});
-h5::nxfield background = ....;
-
-//writing
-background.write(data);
-
-//reading
-background.read(data);
-\end{cppcode}
-
-\subsection{Partial reading and writing}
-
-Nexus fields support partial IO with the {\tt ()} operator which applies
-selections to the field instances. 
-\begin{cppcode}
-h5::nxfield spectra = ...;
-
-auto s = spectra.shape<shape_t>();
-
-auto spectrum = dynamic_array<uint32>::create(shape_t{s[1]});
-
-for(size_t i=0;i<s[0];++i)
-{
-    spectra(i,slice(0,s[1])).read(spectrum);
-    .... process data ...
-}
-\end{cppcode}
-The selection mechanism works the same as for the {\tt mdarray} template. 
-
-\subsection{Field inquiry}
 
 %%%===========================================================================
 \section{Working with attributes}

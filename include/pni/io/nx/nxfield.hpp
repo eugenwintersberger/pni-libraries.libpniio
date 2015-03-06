@@ -472,7 +472,7 @@ namespace nx{
             \endcode
             */
             //!
-            //! \throws shape_mismatch_error if dataset is not scalar
+            //! \throws size_mismatch_error if dataset is not scalar
             //! \throws invalid_object_error if field is not valid
             //! \throws type_error if argument type cannot be handled
             //! \throws io_error in case of IO failure
@@ -485,7 +485,7 @@ namespace nx{
             {
                 typedef typename type_type::index_vector_type index_vector_type;
                 if(size() != 1)
-                    throw shape_mismatch_error(EXCEPTION_RECORD,
+                    throw size_mismatch_error(EXCEPTION_RECORD,
                                               "Field is not scalar!");
 
                 _imp.read(type_id_map<T>::type_id,index_vector_type{1},&value);
@@ -499,6 +499,7 @@ namespace nx{
             //! poitner values. This method does not check any shape or 
             //! size bounds. 
             //! 
+            //! \throws size_mismatch_error if n does not match the array size
             //! \throws invalid_object_error if field is not valid
             //! \throws type_error if argument type cannot be handled
             //! \throws io_error in case of IO failure
@@ -513,6 +514,9 @@ namespace nx{
             void read(size_t n,T *values) const
             {
                 typedef typename type_type::index_vector_type index_vector_type;
+                if(n!=size())
+                    throw size_mismatch_error(EXCEPTION_RECORD,
+                            "Field size does not match memory size!");
 
                 _imp.read(type_id_map<T>::type_id,index_vector_type{n},values);
             }
@@ -621,6 +625,7 @@ namespace nx{
             //! checking. It assumes that the region of memory is large 
             //! enough. 
             //! 
+            //! \throws size_mismatch_error if n does not match field size
             //! \throws invalid_object_error in case of IO errors
             //! \throws io_error in case of IO errors
             //! \throws object_error  in case of all other errors
@@ -635,6 +640,10 @@ namespace nx{
             template<typename T> void write(size_t n,const T *value) const
             {
                 typedef typename type_type::index_vector_type index_vector_type;
+
+                if(n!=size())
+                    throw size_mismatch_error(EXCEPTION_RECORD,
+                            "Field size does not match memory size!");
 
                 _imp.write(type_id_map<T>::type_id,index_vector_type{{n}},
                            static_cast<const void*>(value));
