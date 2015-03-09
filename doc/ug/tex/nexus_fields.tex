@@ -221,3 +221,17 @@ selections successively.
 
 %%%===========================================================================
 \subsection{Field inquiry}
+
+Fields share a set of inquiry functions with groups. These are \cpp{name()}, 
+\cpp{filename()}, and \cpp{is\_valid()}. In addition to these functions
+there are also some member functions which are special for fields. 
+The \cpp{size()} member function returns the total number of elements 
+stored in a field. If a selection has been applied to the field \cpp{size()}
+returns the total number of elements selected. 
+\cpp{type\_id()} returns the Id of the field elements data type. 
+The \cpp{shape()} template function returns a container, which can be passed as
+a template parameter, with the number of elements along each dimension. 
+\begin{cppcode}
+h5::nxfield field = ...;
+auto s = field.shape<shape_t>();
+\end{cppcode}

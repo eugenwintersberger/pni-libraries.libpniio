@@ -25,6 +25,7 @@ set(NXFIELDSRC nxfield_tests.cpp
                nxfield_io_test.cpp
                nxfield_grow_test.cpp
                nxfield_partial_io_test.cpp
+               nxfield_inquiry_test.cpp
     )
 
 add_executable(nxfile_tests ${NXFILESRC} $<TARGET_OBJECTS:test_common>)
