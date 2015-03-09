@@ -44,6 +44,7 @@ class nxfield_partial_io_test: public CppUnit::TestFixture
 	CPPUNIT_TEST(test_scalar_selection);
     CPPUNIT_TEST(test_strip_selection);
     CPPUNIT_TEST(test_view_to_selection);
+    CPPUNIT_TEST(test_field_and_selection);
 	CPPUNIT_TEST_SUITE_END();
     static const string filename;
     static const shape_t shape;
@@ -66,6 +67,7 @@ public:
     void test_scalar_selection();
     void test_strip_selection();
     void test_view_to_selection();
+    void test_field_and_selection();
 };
 
 template<typename T>
@@ -168,11 +170,37 @@ void nxfield_partial_io_test<T>::test_view_to_selection()
         //write data
         field(i,s).write(write(i,s));
         //read back data
-        //auto r = read(i,s);
+        //auto r = read(i,s); //this code works too
         //field(i,s).read(r);
         field(i,s).read(read(i,s));
     }
     
     for(size_t i=0;i<write.size();++i) check_equality(write[i],read[i]);
 
+}
+
+//----------------------------------------------------------------------------
+template<typename T>
+void nxfield_partial_io_test<T>::test_field_and_selection()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    //create the selection
+    auto selection = field(0,slice(0,4));
+
+    CPPUNIT_ASSERT(field.rank() == 2);
+    CPPUNIT_ASSERT(field.size() == 12);
+
+    CPPUNIT_ASSERT(selection.rank() == 1);
+    CPPUNIT_ASSERT(selection.size() == 4);
+
+    auto write_full = mdarray_type::create(shape);
+    std::generate(write_full.begin(),write_full.end(),rand_dist);
+    field.write(write_full);
+
+    auto read_selection = mdarray_type::create(selection.template shape<shape_t>());
+    selection.read(read_selection);
+
+    for(size_t i=0;i<shape[0];++i)
+        check_equality(read_selection(i),write_full(0,i));
 }
