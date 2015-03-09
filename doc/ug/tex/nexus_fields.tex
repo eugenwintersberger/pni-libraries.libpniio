@@ -99,14 +99,50 @@ size do not match a \cpp{size\_mismatch\_exception} is thrown.
 %%%===========================================================================
 \subsection{Growing fields}
 
-\begin{figure}
-\begin{tikzpicture} [field/.style = {thick,step=5mm} ]
-\draw[field] (0mm,0mm) node[anchor = east,above=3mm] {before growth} grid (50mm,5mm); 
-\draw[field] (0mm,-10mm) node[anchor=east] {after growth} grid +(50mm,5mm);
-\draw[field,color=red] (50mm,-10mm)  grid +(20mm,5mm);
-\end{tikzpicture}
+%%%---------------------------------------------------------------------------
+\begin{figure}[tb]
+\centering
+\begin{minipage}[c]{0.3\linewidth}
+    \begin{cppcode}
+h5::nxfield f = ...;
+//..... code omitted ......
+f.grow(0,4);
+    \end{cppcode}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.65\linewidth}
+    \begin{tikzpicture} [field/.style = {thick,step=5mm} ]
+    \draw[field] (0mm,0mm) node[anchor = east,yshift=+2.5mm] {before growth} grid (50mm,5mm); 
+    \draw[field] (0mm,-10mm) node[anchor=east,yshift=+2.5mm] {after growth} grid +(50mm,5mm);
+    \draw[field,color=red] (50mm,-10mm)  grid +(20mm,5mm);
+    \end{tikzpicture}
+\end{minipage}
+\caption{{\small\label{fig:field:growth1d} Growing a one dimensional field 
+by $4$ elements.}}
 \end{figure}
+%%%---------------------------------------------------------------------------
 
+%%%---------------------------------------------------------------------------
+\begin{figure}[tb]
+    \begin{minipage}[c]{0.3\linewidth}
+        \begin{cppcode}
+h5::nxfield f = ...;
+//..... code omitted .....
+f.grow(1,4);
+        \end{cppcode}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[c]{0.65\linewidth}
+        \begin{tikzpicture} [field/.style = {thick,step=5mm} ]
+        \draw[field] (0mm,0mm) node[anchor = north,xshift=10mm] {before growth} grid (20mm,50mm); 
+        \draw[field] (39.9mm,0mm) node[anchor=north,xshift=20mm] {after growth} grid +(20mm,50mm);
+        \draw[field,color=red] (59.9mm,0mm)  grid +(20.1mm,50mm);
+        \end{tikzpicture}
+    \end{minipage}
+    \caption{{\small\label{fig:field:growth2d} Growing a two dimensional field
+    by $4$ elements along its second dimension.}}
+\end{figure}
+%%%---------------------------------------------------------------------------
 The reason why there are no purely scalar fields is that during an experiment 
 one would append data to a field as the measurement progresses. 
 For this purpose \nxfield\ provides a \cpp{grow()} method which allows to 
@@ -117,27 +153,71 @@ void grow(size_t e,size_t n=1)
 \end{cppcode}
 where the first (mandatory) argument is the index of the dimension along which
 the field should grow and the second (optional) argument contains the number of 
-elements by which to grow. 
+elements by which to grow. Figures~\ref{fig:field:growth1d} and
+\ref{fig:field:growth2d} show examples of growing a one and a two dimensional
+field respectively.
+
+The canonical application for this feature would be to add content to a field 
+as an experiment progresses. Using such a pattern we can start with a field 
+of $0$ size and then add points if required. The principal code would look like
+this
+\begin{cppcode}
+h5::nxfile f = ...;
+h5::nxfield data = detector_group.create_field<uint16>("spectra",
+                                                       shape_t{0,1024});
+size_t index = 0;
+while(true)
+{
+    data.grow(0,1); //grow by one element along first dimension
+    //...... code omitted ....
+}
+\end{cppcode}
+Note here that the initial shape of the field is $(0,1024)$. Such a pattern 
+removes the burden of determining the number of points, recorded during 
+an experiment, before the experiment starts. If the measurement is stopped 
+somewhere in between the number of points written to the file matches exactly
+the number of points recorded.  
+It is important to note that one cannot extend the size of a field only along
+\emph{existing} dimensions. It is not possible to change the rank of a field via
+the growth method. Every attempt to do so will raise an \cpp{index\_error}
+exception.
+How to write the data will be explained in the next section.
 
 %%%===========================================================================
 \subsection{Partial reading and writing}
 
-Nexus fields support partial IO with the {\tt ()} operator which applies
-selections to the field instances. 
+The previous section explained how to adjust the size of fields dynamically. 
+What is still missing is how to write data to such a growing field. The 
+\cpp{read()} and \cpp{write()} member functions used so far are always writing
+the entire content of the field. This is not really what we want. 
+Thus, \libpniio s \nxfield\ type provides partial IO quite similar to the 
+\cpp{mdarray} template of \libpnicore. 
+
+The best way to understand partial IO is to have a look on an example. We thus
+will complete the previous one 
+
 \begin{cppcode}
-h5::nxfield spectra = ...;
+h5::nxfile f = ...;
+h5::nxfield data = detector_group.create_field<uint16>("spectra",
+                                                       shape_t{0,1024});
+auto buffer = dynamic_array<uint16>::create_array(shape_t{1024});
 
-auto s = spectra.shape<shape_t>();
-
-auto spectrum = dynamic_array<uint32>::create(shape_t{s[1]});
-
-for(size_t i=0;i<s[0];++i)
+size_t index = 0;
+while(true)
 {
-    spectra(i,slice(0,s[1])).read(spectrum);
-    .... process data ...
+    data.grow(0,1); //grow by one element along first dimension
+    //...... code omitted ....
+
+    //write data
+    data(index++,slice(0,1024)).write(buffer);
 }
 \end{cppcode}
-The selection mechanism works the same as for the {\tt mdarray} template. 
+The important line of code here is the last one in the \cpp{for}-loop. To obtain
+a selection of a field we can use the \cpp{()} operator of \nxfield. 
+The selection works the same as for \cpp{mdarray}. However, the return value is 
+a new field instance with the selection set. One currently cannot apply more
+selections successively. 
+
 
 %%%===========================================================================
 \subsection{Field inquiry}
