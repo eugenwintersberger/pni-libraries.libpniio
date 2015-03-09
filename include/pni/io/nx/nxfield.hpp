@@ -228,7 +228,7 @@ namespace nx{
                     throw size_mismatch_error(EXCEPTION_RECORD,
                             "Array and field size do not match!");
 
-                _imp.write(pni::io::type_id(a),
+                _imp.write(pni::core::type_id(a),
                            a.template shape<index_vector_type>(),a.data()); 
             }
 
@@ -561,6 +561,29 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
+            template<typename ATYPE>
+            void read(array_view<ATYPE> &v) const
+            {
+                if(v.is_contiguous())
+                    _read_array(v);
+                else
+                {
+                    typedef typename ATYPE::value_type value_type;
+                    typedef dynamic_array<value_type> buffer_type;
+                    auto buffer = buffer_type::create(v.shape<shape_t>());
+                    _read_array(buffer);
+                    std::copy(buffer.begin(),buffer.end(),v.begin());
+                }
+            }
+            
+            //-----------------------------------------------------------------
+            template<typename ATYPE>
+            void read(array_view<ATYPE> &&v) const
+            {
+                read(v);
+            }
+
+            //-----------------------------------------------------------------
             //!
             //! \brief read data to a array instance
             //! 
@@ -678,6 +701,45 @@ namespace nx{
             void write(const mdarray<STORAGE,IMAP,IPA> &a) const
             {
                 _write_array(a);
+            }
+
+            //-----------------------------------------------------------------
+            //!
+            //! \brief write data from array view
+            //!
+            //! This function writes data from an array view. In principle this 
+            //! function works the same as for mdarray. However, there can be 
+            //! a significant performance penalty when the selection is not
+            //! contiguous. In this case the content of the view must be copied 
+            //! to a temporary buffer before being writen to disk.
+            //!
+            //! \throws memory_not_allocated_error if array buffer not 
+            //! allocated
+            //! \throws size_mismatch_error if array and field size do not 
+            //! match
+            //! \throws invalid_object_error if field is not valid
+            //! \throws object_error in case of any other error
+            //! \throws type_error if array type cannot be handled
+            //! \throws io_error in case of IO errors
+            //!
+            //! \tparam ATYPE the array type of the view
+            //! 
+            //! \param v array view instance
+            //!
+            template<typename ATYPE>
+            void write(const array_view<ATYPE> &v) const
+            {
+                if(v.is_contiguous())
+                    _write_array(v);
+                else
+                {
+                    typedef typename ATYPE::value_type value_type;
+                    typedef dynamic_array<value_type> array_type;
+                    auto buffer =  array_type::create(v.shape<shape_t>());
+                    std::copy(v.begin(),v.end(),buffer.begin());
+                    write(buffer);
+                }
+
             }
 
            
