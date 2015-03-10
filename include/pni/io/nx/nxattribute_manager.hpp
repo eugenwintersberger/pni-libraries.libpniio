@@ -88,7 +88,7 @@ namespace nx{
                      typename T,
                      typename CTYPE
                     > 
-            attribute_type create(const string &n, const CTYPE &s,bool ov=true) const
+            attribute_type create(const string &n, const CTYPE &s,bool ov=false) const
             {
                 type_id_t tid = type_id_map<T>::type_id;
 
