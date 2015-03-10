@@ -216,6 +216,40 @@ namespace nx{
 
             //----------------------------------------------------------------
             //!
+            //! \brief write view data to an attribute
+            //! 
+            //! Write the data reference by an array view to the attribute. 
+            //! 
+            //! \throws memory_not_allocated_error if array buffer is not 
+            //! allocated
+            //! \throws size_mismatch_errror if array and attribute shape 
+            //! do not match
+            //! \throws io_error in case of IO errors
+            //! \throws invalid_object_error if the object is not valid
+            //! \throws type_error if the datatype stored in the array is not 
+            //! supported
+            //! \throws object_error in case of any other error
+            //! 
+            //! \tparam ATYPE array type of the view
+            //! \param v refernence to an array_view instance
+            //! 
+            template<typename ATYPE>
+            void write(const array_view<ATYPE> &v) const
+            {
+                if(v.is_contiguous())
+                    _write_array(v);
+                else
+                {
+                    typedef typename ATYPE::value_type value_type;
+                    typedef dynamic_array<value_type> array_type;
+                    auto buffer =  array_type::create(v.shape<shape_t>());
+                    std::copy(v.begin(),v.end(),buffer.begin());
+                    write(buffer);
+                }
+            }
+
+            //----------------------------------------------------------------
+            //!
             //! \brief write data from a plain C pointer
             //!
             //! This method is for interoperability with old C-code. 
@@ -347,6 +381,29 @@ namespace nx{
             }
             
             //-----------------------------------------------------------------
+            template<typename ATYPE>
+            void read(array_view<ATYPE> &v) const
+            {
+                if(v.is_contiguous())
+                    _read_array(v);
+                else
+                {
+                    typedef typename ATYPE::value_type value_type;
+                    typedef dynamic_array<value_type> buffer_type;
+                    auto buffer = buffer_type::create(v.shape<shape_t>());
+                    _read_array(buffer);
+                    std::copy(buffer.begin(),buffer.end(),v.begin());
+                }
+            }
+            
+            //-----------------------------------------------------------------
+            template<typename ATYPE>
+            void read(array_view<ATYPE> &&v) const
+            {
+                read(v);
+            }
+
+            //-----------------------------------------------------------------
             //!
             //! \brief read data to array
             //!
@@ -363,6 +420,7 @@ namespace nx{
             {
                 _read_array(a);
             }
+            
 
             //-----------------------------------------------------------------
             //!

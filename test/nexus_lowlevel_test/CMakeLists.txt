@@ -30,6 +30,7 @@ set(NXATTRSRC nxattribute_tests.cpp
               nxattribute_creation_test.cpp
               nxattribute_access_test.cpp
               nxattribute_io_test.cpp
+              nxattribute_view_io_test.cpp
    )
 
 add_executable(nxfile_tests ${NXFILESRC} $<TARGET_OBJECTS:test_common>)
