@@ -28,6 +28,7 @@ set(NXFIELDSRC nxfield_tests.cpp
 
 set(NXATTRSRC nxattribute_tests.cpp
               nxattribute_creation_test.cpp
+              nxattribute_access_test.cpp
    )
 
 add_executable(nxfile_tests ${NXFILESRC} $<TARGET_OBJECTS:test_common>)

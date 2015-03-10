@@ -142,6 +142,7 @@ void nxattribute_creation_test<T>::test_scalar_with_overwrite()
     CPPUNIT_ASSERT_NO_THROW(attr = parent.attributes.template create<T>("test"));
     CPPUNIT_ASSERT(attr.is_valid());
     CPPUNIT_ASSERT(attr.size() == 1);
+    CPPUNIT_ASSERT(attr.rank() == 1);
     CPPUNIT_ASSERT(attr.type_id() == type_id_map<T>::type_id);
 
     //try to create a new attribute of same name should throw
