@@ -91,7 +91,7 @@ namespace nx{
             void _write_array(const ATYPE &a) const
             {
                 check_allocation_state(a,EXCEPTION_RECORD);
-                check_equal_shape(a,*this,EXCEPTION_RECORD);
+                check_equal_size(a,*this,EXCEPTION_RECORD);
 
                 _imp.write(pni::core::type_id(a),a.data());
             }
@@ -118,7 +118,7 @@ namespace nx{
             void _read_array(ATYPE &a) const
             {
                 check_allocation_state(a,EXCEPTION_RECORD);
-                check_equal_shape(a,*this,EXCEPTION_RECORD);
+                check_equal_size(a,*this,EXCEPTION_RECORD);
 
 
                 _imp.read(pni::core::type_id(a),a.data());
@@ -191,7 +191,7 @@ namespace nx{
             //!
             //! \throws memory_not_allocated_error if array buffer is not 
             //! allocated
-            //! \throws shape_mismatch_errror if array and attribute shape 
+            //! \throws size_mismatch_errror if array and attribute shape 
             //! do not match
             //! \throws io_error in case of IO errors
             //! \throws invalid_object_error if the object is not valid
@@ -222,6 +222,8 @@ namespace nx{
             //! It writes data referenced by a plain pointer. It is assumed 
             //! that the user has allocated enough memory.
             //! 
+            //! \throws size_mismatch_error if memory and attribute size do not
+            //! match
             //! \throws io_error in case of a general IO error
             //! \throws type_error if data type not supported by the library
             //! \throws invalid_object_error if attribute not valid
@@ -250,7 +252,7 @@ namespace nx{
             //! Write a single scalar value. This throws an exception if the 
             //! field is not scalar (size=1).
             //!
-            //! \throws shape_mismatch_error if field is not scalar
+            //! \throws size_mismatch_error if field is not scalar
             //! \throws io_error in case of a general IO error
             //! \throws invalid_object_error in case of an invalid field object
             //! \throws type_error in case the datatype is not supported
@@ -265,7 +267,7 @@ namespace nx{
                 static_assert(!std::is_pointer<T>::value,"no const pointer");
 
                 if(size()!=1)
-                    throw shape_mismatch_error(EXCEPTION_RECORD,
+                    throw size_mismatch_error(EXCEPTION_RECORD,
                             "Field is not scalar!");
 
                 _imp.write(type_id_map<T>::type_id,&value);
@@ -279,7 +281,7 @@ namespace nx{
             //! This is a special implementation of write for classical 
             //! C-strings.
             //! 
-            //! \throws shape_mismatch_error if field is not scalar
+            //! \throws size_mismatch_error if field is not scalar
             //! \throws invalid_object_error if field is not valid
             //! \throws io_error in case of a general IO error
             //! \throws object_error in case of any other error
@@ -299,7 +301,7 @@ namespace nx{
             //!
             //! \throws memory_not_allocated_error if array buffer is not 
             //! allocated
-            //! \throws shape_mismatch_errror if array and attribute shape 
+            //! \throws size_mismatch_errror if array and attribute shape 
             //! do not match
             //! \throws type_error if data type not supported
             //! \throws invalid_object_error if field is not valid
@@ -321,7 +323,7 @@ namespace nx{
             //!
             //! \throws memory_not_allocated_error if array buffer is not 
             //! allocated
-            //! \throws shape_mismatch_error if array and attribute shape do 
+            //! \throws size_mismatch_error if array and attribute shape do 
             //! not match
             //! \throws invalid_object_error if field is not valid
             //! \throws type_error if data type is not supported
@@ -350,7 +352,7 @@ namespace nx{
             //!
             //! \throws memory_not_allocated_error if array not allocated
             //! \throws type_error if data type is not supported
-            //! \throws shape_mismatch_error if array shape does not match
+            //! \throws size_mismatch_error if array shape does not match
             //! \throws invalid_object_error if field is not valid
             //! \throws io_error in case of a general IO error
             //! \throws object_error in case of any other error
@@ -368,7 +370,7 @@ namespace nx{
             //!
             //! Read a single scalar value.
             //!
-            //! \throws shape_mismatch_error if the attribute is not scalar
+            //! \throws size_mismatch_error if the attribute is not scalar
             //! \throws invalid_object_error if the attribute is not valid
             //! \throws io_error in case of a general IO error
             //! \throws type_error if data type is not supported
@@ -381,7 +383,7 @@ namespace nx{
             void read(T &value) const
             {
                 if(size()!=1)
-                    throw shape_mismatch_error(EXCEPTION_RECORD,
+                    throw size_mismatch_error(EXCEPTION_RECORD,
                             "Try to read a scalar from an array field!");
 
                 _imp.read(type_id_map<T>::type_id,&value);
@@ -395,6 +397,7 @@ namespace nx{
             //! This method is for compatability with old C-code.
             //! It is assumed that enough memory is allocated.
             //!
+            //! \throws size_mismatch_error if n and attribute size do not match
             //! \throws type_error if T is not supported
             //! \throws invalid_object_error if attribute is not valid
             //! \throws io_error in case of a general IO error

@@ -30,6 +30,7 @@
 
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
+#include <pni/core/error.hpp>
 
 #include "nxattribute_manager.hpp"
 #include "nxobject_traits.hpp"
@@ -185,13 +186,8 @@ namespace nx{
             void _read_array(ATYPE &a) const
             {
                 typedef typename type_type::index_vector_type index_vector_type;
-                if(a.size() == 0)
-                    throw memory_not_allocated_error(EXCEPTION_RECORD,
-                                     "Target array buffer not allocated!");
-
-                if(a.size()!=size())
-                    throw size_mismatch_error(EXCEPTION_RECORD,
-                            "Array and field size do not match!");
+                check_allocation_state(a,EXCEPTION_RECORD);
+                check_equal_size(a,*this,EXCEPTION_RECORD);
 
                 _imp.read(pni::core::type_id(a),
                           a.template shape<index_vector_type>(),a.data());
@@ -220,13 +216,8 @@ namespace nx{
             void _write_array(const ATYPE &a) const
             {
                 typedef typename type_type::index_vector_type index_vector_type;
-                if(a.size() == 0)
-                    throw memory_not_allocated_error(EXCEPTION_RECORD,
-                                     "Source array buffer not allocated!");
-
-                if(a.size()!=size())
-                    throw size_mismatch_error(EXCEPTION_RECORD,
-                            "Array and field size do not match!");
+                check_allocation_state(a,EXCEPTION_RECORD);
+                check_equal_size(a,*this,EXCEPTION_RECORD);
 
                 _imp.write(pni::core::type_id(a),
                            a.template shape<index_vector_type>(),a.data()); 
