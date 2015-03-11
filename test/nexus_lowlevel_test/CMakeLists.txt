@@ -1,5 +1,4 @@
 set(SOURCES nexus_lowlevel_test.cpp
-            NXAttributeTest.cpp
             NXGroupTest.cpp
             nxlink_test.cpp
             flat_group_test.cpp
@@ -32,6 +31,7 @@ set(NXATTRSRC nxattribute_tests.cpp
               nxattribute_io_test.cpp
               nxattribute_view_io_test.cpp
               nxattribute_partial_io_test.cpp
+              nxattribute_manage_test.cpp
    )
 
 add_executable(nxfile_tests ${NXFILESRC} $<TARGET_OBJECTS:test_common>)

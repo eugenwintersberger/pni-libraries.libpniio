@@ -1,0 +1,182 @@
+
+Attributes are quite similar to fields. They can be attached to either a group
+or a field to provide additional information (metadata) for a particular field
+or group. Unlike fields attributes cannot 
+\begin{itemize}
+\item use compression
+\item grow.
+\end{itemize}
+HDF5 attributes also do not support partial IO. However, \libpniio\ provides
+partial IO for attributes in its implementation.
+Attributes can be accessed from their parent object (field or group instance)
+via the public attribute \cpp{attributes}. \cpp{attributes} is an instance of 
+the \cpp{nxattribute\_manager} template class. The details about
+\cpp{nxattribute\_manager} is only of interest for developers working on
+\libpniio\ and hence will not be discussed here. Only the interface
+\cpp{nxattribute\_manager} exposes is of interest and will be discussed in this
+section. 
+
+%%%===========================================================================
+\subsection{Creating attributes}
+
+Attributes are created via the \cpp{create()} template member functions 
+provided by \cpp{nxattribute\_manager}. These functions are quite similar to
+those used to create fields below groups. 
+\begin{cppcode}
+h5::nxfield f = ....;
+auto units = f.attributes.create<string>("units");
+\end{cppcode}
+This short snippet creates an instance of \cpp{nxattribute} the template 
+type used to represent attributes in memory. The newly created attribute 
+is scalar and can store a single string. 
+Multidimensional attributes can be constructed by adding a container with 
+shape information to the argument list of the \cpp{create} template.
+\begin{cppcode}
+h5::nxfield f = ...;
+auto matrix = f.attributes.create<float32>("transformation",shape_t{3,3});
+
+std::cout<<matrix.rank()<<std::endl; //output is 2
+\end{cppcode}
+It is important here to note that even a scalar attribute has a rank of $1$. 
+This might not be the obvious choice but makes fields and attributes more 
+consistent. To check if an attribute is a scalar one could use the \cpp{size()}
+member function of an attribute. If the \cpp{size()} returns $1$ the attribute
+can be considered as scalar.
+
+When one tries to create an attribute on an object which already has an
+attribute of the same name an \cpp{object\_error} exception will be thrown. 
+\begin{cppcode}
+h5::nxfield f = ....;
+f.attributes.create<string>("units"); //create the original attribute
+f.attributes.create<float32>("units"); //would throw object_error
+\end{cppcode}
+However, an attribute can be overwritten with 
+\begin{cppcode}
+h5::nxfield f = ....;
+
+//create the original attribute
+f.attributes.create<string>("units"); 
+
+//overwrite original attribute
+f.attributes.create<float32>("units",true); 
+\end{cppcode}
+where the last argument of the second call to \cpp{create()} allows to 
+overwrite an existing attribute. A similar call exists for multidimensional 
+attributes
+\begin{cppcode}
+h5::nxfield f = ....;
+
+//create the original attribute
+f.attributes.create<string>("units",shape_t{3});       
+
+//replace the original "units" attribute
+f.attributes.create<float32>("units",shape_t{3,4},true); 
+\end{cppcode}
+
+%%%===========================================================================
+\subsection{Attribute inquiry}
+
+Attributes and fields share the same set of inquiry methods. Thus, see 
+Section~\ref{section:field:inquiry} for details.
+
+%%%===========================================================================
+\subsection{Accessing an objects attributes}
+
+The attribute manager instance associated with each field or group exposes a
+very minimalistic but STL compliant container interface. 
+Its \cpp{size()} returns the number of attributes attached to an object. 
+One can access each attribute either by its index
+\begin{cppcode}
+h5::nxgroup g = ....;
+
+for(size_t i=0;i<g.attributes.size();++i) 
+    std::cout<<g.attributes[i].name()<<std::endl;
+\end{cppcode}
+or by its name
+\begin{cppcode}
+h5::nxgroup g = ....;
+auto attr = g.attributes["NX_class"];
+\end{cppcode}
+When using the \cpp{[]} operator with a numeric index an \cpp{index\_error}
+exception will be thrown if the index exceeds the total number of attributes. 
+Similarly, \cpp{[]}, when used with an attributes name, will throw a
+\cpp{key\_error} exception.
+One can also iterate over all attributes, either by using the standard 
+\cpp{begin()} and \cpp{end()} functions to retrieve iterators, or by using the
+more modern for-each construction
+\begin{cppcode}
+h5::nxfield f = ....;
+for(auto attr: f.attributes)
+    std::cout<<attr.name()<<std::endl;
+\end{cppcode}
+
+
+%%%===========================================================================
+\subsection{Reading and writing data from and to attributes}
+
+Data IO for attributes works exactly the same as for fields with the exception
+that attributes cannot be changed in size. 
+A simple example for writing and reading a string attribute would look like this
+\begin{cppcode}
+string unit = "nm";
+h5::nxfield f = ....;
+auto attr = f.attributes.create<string>("units");
+attr.write(unit);
+//...... code omitted ......
+attr.read(unit);
+\end{cppcode}
+The read/write member functions also accept instances of the \cpp{mdarray}
+template as well as of \cpp{array}. Like for fields a pointer version exists 
+to interact safely with legacy C libraries
+\begin{cppcode}
+size_t size = 9;
+double *matrix = get_matrix_from_c_code();
+
+h5::nxfield f = ....;
+auto attr = f.attributes.create<float64>("matrix",shape_t{3,3});
+attr.write(n,matrix);
+\end{cppcode}
+Reading works pretty much the same, however, you have to allocate memory before
+reading the data from the attribute
+\begin{cppcode}
+h5::nxfield f = ....;
+auto attr = f.attributes["matrix"]; //obtain the attribute from the field
+float64 *matrix = allocate_memory(attr.size());
+
+attr.write(attr.size(),matrix);
+\end{cppcode}
+Unlike standard HDF5 attributes support \libpniio's \nexus-attributes partial
+IO. Partial IO with attributes works exactly the same way as with field
+\begin{cppcode}
+h5::nxfield f = ...;
+auto attr = f.attributes.create<float64>("matrix",shape_t{3,3});
+auto row  = dynamic_array<T>::create(shape_t{3});
+//........... code omitted .......
+for(size_t i=0;i<3;++i)
+{
+    row = .....; //fill row buffer with data
+    attr(i,slice(0,3)).write(row);
+}
+\end{cppcode}
+For reading data just replace the \cpp{write} with \cpp{read}. It should be
+mentioned that using partial IO on attributes, though it works, can be
+significantly slower than writing the entire attribute in a single step. 
+
+%%%===========================================================================
+
+\subsection{Attribute management}
+
+There are two functions left of the \cpp{nxattribute\_manager} interface. 
+One is the \cpp{exists()} member function which can be used to check for the
+existence of a particular attribute. 
+\begin{cppcode}
+if(!field.attributes.exists("units"))
+    std::cerr<<"Field does not have a units attribute!"<<std::endl;
+\end{cppcode}
+An attribute can be removed from an object using the \cpp{remove()} method. 
+\begin{cppcode}
+if(field.attributes.exists("units"))
+    field.attributes.remove("units");
+\end{cppcode}
+The \cpp{remove} method throws \cpp{key\_error} if the attribute to delete does
+not exists.
