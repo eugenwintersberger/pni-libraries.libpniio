@@ -16,7 +16,13 @@
 \usepackage{minted}    %% excellent source code formating
 \usepackage{tikz}
 
-\usetikzlibrary{trees,shapes.geometric,positioning,calc}
+\usetikzlibrary{trees,
+                shapes.geometric,
+                positioning,
+                calc,
+                shapes.multipart,
+                fit,
+                backgrounds}
 
 \definecolor[named]{desycyan}{rgb}{0,0.648,0.918}
 \definecolor[named]{desyorange}{rgb}{0.945,0.555,0}
@@ -48,10 +54,34 @@
 \newcommand{\nxobject}{\texttt{nxobject}}
 \newcommand{\nxgroup}{\texttt{nxgroup}}
 \newcommand{\nxattribute}{\texttt{nxattribute}}
+\newcommand{\nxdata}{\texttt{NXdata}}
+\newcommand{\nxinstrument}{\texttt{NXinstrument}}
+\newcommand{\nxentry}{\texttt{NXentry}}
+\newcommand{\nxdetector}{\texttt{NXdetector}}
 \newcommand{\nxfile}{\texttt{nxfile}}
 \newcommand{\nxpath}{\texttt{nxpath}}
 \newcommand{\cpp}[1]{\texttt{#1}}
 \newcommand{\nexus}{NeXus}
+    
+\tikzset{nxgroup/.style = {rectangle split,
+                     rectangle split parts=2,
+                     draw,
+                     rounded corners
+                    },
+         nxfieldv/.style = {
+                     rectangle split, 
+                     rectangle split parts=#1,
+                     draw, 
+                     rounded corners
+         },
+         nxfieldh/.style = {                   
+                     rectangle split, 
+                     rectangle split horizontal,
+                     rectangle split parts=#1,
+                     draw, 
+                     rounded corners
+         }
+        } 
 
 %\bibliographystyle{plainnat}
 

@@ -18,6 +18,7 @@ set(SOURCES tex/installation.tex
             tex/nexus_groups.tex
             tex/nexus_fields.tex
             tex/nexus_attributes.tex
+            tex/nexus_links.tex
             tex/advanced_usage.tex
             )
 

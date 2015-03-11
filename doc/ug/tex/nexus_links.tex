@@ -1,0 +1,220 @@
+
+%%%---------------------------------------------------------------------------
+\begin{figure}
+\centering
+\begin{tikzpicture}
+    \node[nxgroup] (entry) {\nodepart{one} entry \nodepart{two} \nxentry};
+    \node[nxgroup,right = of entry] (instrument) {\nodepart{one} instrument 
+                               \nodepart{two} \nxinstrument};
+    \node[nxgroup, right = of instrument] (detector) {\nodepart{one} detector
+                             \nodepart{two} \nxdetector};
+    \node[nxfieldh=5, right = of detector] (detectordata) 
+                                        {\nodepart{one} data
+                                         \nodepart{two} $1.2$ 
+                                         \nodepart{three} $4.3$ 
+                                         \nodepart{four} $7.89$ 
+                                         \nodepart{five} \dots
+                                         };
+    \node[nxgroup, below = of instrument] (data) {\nodepart{one} data
+                         \nodepart{two} \nxdata};
+    \node[nxfieldh=2,right = of data] (datalink)
+                                   {\nodepart{one} data
+                                    \nodepart{two}
+                                    \texttt{../instrument/detector/data}
+                                   };
+
+    \draw[thick,->] (entry.east) -- (instrument.west);
+    \draw[thick,->] (instrument.east) -- (detector.west);
+    \draw[thick,->] (detector.east) -- (detectordata.west);
+    \draw[thick,->] ($(entry.east)!0.5!(instrument.west)$) |- (data.west);
+    \draw[thick,->] (data.east)--(datalink.west);
+    \draw[thick,dashed,->] (datalink.north) --
+                           node[midway,right] {link}
+                           (detectordata.south west);
+\end{tikzpicture}
+\caption{{\small\label{fig:link:internal_link}
+Links can be used to make data available in two different group without
+duplicating the data. Here the data stored in the detector is also available
+below the data group in the entry group of the tree. 
+}}
+\end{figure}
+%%%---------------------------------------------------------------------------
+
+%%%---------------------------------------------------------------------------
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[level distance = 2cm]
+        \node[nxgroup] (master entry) { entry \nodepart{two} \nxentry}
+          [growth parent anchor = north east] 
+          child { 
+                  node[nxgroup] (master instrument) {instrument 
+                                               \nodepart{two} \nxinstrument}
+                  child {
+                    node[nxgroup] (master detector) { detector
+                                               \nodepart{two} \nxdetector}
+                      child{
+                        node[nxfieldv=2] (master link) { data \nodepart{two} 
+                        \texttt{\tiny
+                        detector.nxs://entry/instrument/detector/data} 
+                        }
+                      }
+                  }
+                };
+
+         \node[nxgroup,right = 7cm of master entry] (detector entry) 
+                 { entry \nodepart{two} \nxentry}
+          [growth parent anchor = north east] 
+          child { 
+                  node[nxgroup] (detector instrument) {instrument 
+                                               \nodepart{two} \nxinstrument}
+                  child {
+                    node[nxgroup] (detector detector) { detector
+                                               \nodepart{two} \nxdetector}
+                      child{
+                        node[nxfieldv=2] (detector data) 
+                        { data \nodepart{two} 
+                          \begin{tikzpicture}
+                          \draw[step=1mm] (0,0) grid (20mm,5mm); 
+                          \end{tikzpicture}
+                        }
+                      }
+                  }
+                };
+        
+            \draw[thick,dashed,->] (master link.south) .. 
+                                   controls ($(master link.south)!0.1!(detector
+                                   data.south)+(0cm,-1.5cm)$) and 
+                                   ($(master link.south)!0.9!(detector
+                                   data.south)+(0cm,-1.5cm)$)
+                                   .. node[midway,below]{external link}(detector data.south);
+
+            \begin{scope}[on background layer]
+                \node[rectangle, draw,rounded corners,fit=(master entry)(master
+                link)] (master file){};
+                \node[above = 0.25cm of master file,align=center] {\nexus\
+                master file\\ \texttt{master.nxs}};
+                \node[rectangle, draw,rounded corners,fit=(detector entry)
+                (detector data)] (detector file) {};
+                \node[above = 0.25cm of detector file,align=center] 
+                {\nexus\ detector file\\ \texttt{detector.nxs}};
+            \end{scope}
+    \end{tikzpicture}
+    \caption{{\small\label{fig:link:external_link}
+    An external link used to reference the data stored in a separate detector
+    file via the data field in the master file. The master file is what the user
+    typically uses to access the data. 
+    }}
+\end{figure}
+%%%---------------------------------------------------------------------------
+
+One of the key features of \nexus\ is its support for links. Like on a file
+system linking allows for making data available at different positions in the
+\nexus\ group hierarchy without data duplication. 
+A typical application for a link would be the data stored in \nxdata\ instance
+of a \nexus-file. \nexus\ distinguishes two kinds of links
+\begin{itemize}
+\item internal links - where the link and its target are located in the same
+file
+\item and external links - where the target resides in a different file than the 
+link.
+\end{itemize}
+For both kinds of links there are canonical use cases. 
+The standard use case for internal links is depicted in
+Fig.~\ref{fig:link:internal_link}. Here the link is used to reference the data
+stored in the detector group of the file in its data group\footnote{This group
+is used for programms to quickly find plottable data.}.
+By using links we only have to store the data once (in the detector group) and
+can make it available at any other position in the file.
+
+The default use case for external links is shown in
+Fig.~\ref{fig:link:external_link}. In many cases detector write to a network
+storage while entirely bypassing the control system of the experiment. This is
+typically done when the detector has to record images hat a very hight rate
+which could not have been achieved if all the data has to be pumped through the
+control systems software stack. 
+In the best case, as shown in Fig.~\ref{fig:link:external_link}, the detector
+already writes its data in a \nexus\ file which contains nothing else than the
+detector images. While the detector is recording images the control system
+writes all the metadata and other relevant data to a master file (this data is
+usually rather small and not recorded at low frequency). As a result we end up
+with two files and the user would have to access metadata through the master
+file and the detector images via the detector file. By using external links 
+it is possible to make data within a \nexus-file availabe that is originally
+stored in a different \nexus-file. Now the user can access the detector data via
+the master file as it would be stored directly within this file.
+The only thing the user has to remember is that he or she needs to copy two
+files when movin the data to a different storage.
+
+%%%===========================================================================
+\subsection{Create internal links}
+
+To create an internal link the \cpp{pni::io::nx} namespace provides the
+\cpp{link()} function template which exists in several overloaded versions.
+All of them differ virtually only in the way how the link target is referenced
+which is the first argument of \cpp{link()}. The second and third argument are
+the parent group for the new link and its name.
+
+The most intuitive version of the \cpp{link()} function template references the
+target object directly via their group or field instance. The next example shows
+the canonical case where a new link to the detector data is generated below the
+data group. 
+\begin{cppcode}
+h5::nxfile  f          = h5::nxfile::open_file(data,true);
+h5::nxgroup entry      = f.root()["entry"];
+h5::nxgroup instrument = entry["instrument"];
+h5::nxgroup detector   = instrument["detector"];
+h5::nxgroup datagroup  = entry["data"];
+h5::nxfield det_data   = detector["data"];
+
+link(det_data,data_group,"data");
+\end{cppcode}
+With this approach only internal links can be created as the target and the
+parent object for the new link must be located in the same file. 
+This approach is rather tedious as we have to open all the groups (for now we
+have no better way - see the advanced section). However, one can exploit a
+feature that \nexus-links have in common with file system links: the target
+object must be available when the link is created. Consequently we can describe
+the target also merely by its path
+\begin{cppcode}
+h5::nxgroup data_group = ...;
+
+link("../instrument/detector/data",data_group,"data");
+\end{cppcode}
+Here the first argument (the target) is described by a string with the path to
+the target. In this case the path is relative to the parent group of the link. 
+Alternatively one can also use an instance of \cpp{nxpath} to reference the 
+target object
+\begin{cppcode}
+h5::nxgroup data_group = ....;
+nxpath target_path = nxpath::from_string("../instrument/detector/data");
+
+link(target_path,data_group,"name");
+\end{cppcode}
+There is one important restriction a path has to obey when it should be used as
+a reference to a link target: the path must not contain type only elements. 
+For instance the path \cpp{"../:NXinstrument/:NXdetector/data"} would be a
+perfect valid \nexus-path. However, when using such a path \cpp{link} will throw
+a \cpp{value\_error} exception. The reason for this is simple: \libpniio\
+currently uses the HDF5 linking mechanism which has no idea about \nexus-group
+types!
+Thus, as a rule of thumb, use only names within the path used to reference a
+link target. 
+
+%%%===========================================================================
+\subsection{Create external links}
+
+To create external links within a \nexus-file use the \cpp{link} function as for
+internal links. However, only the string and path version of \cpp{link} can be
+used to create external links. 
+The only thing one has to do in order to obtain a link add the filename to the
+path. Lets start again with the canonic example, the external detector file
+\begin{cppcode}
+h5::nxgroup detector_group = ....; //open the detector group in the master file
+
+link("detector.nxs://entry/instrument/detector/data",detector_group,"data");
+
+
+\end{cppcode}
+
+%%%===========================================================================
+\subsection{Link inquiry}

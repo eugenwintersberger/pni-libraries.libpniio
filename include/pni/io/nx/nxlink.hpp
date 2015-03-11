@@ -83,12 +83,32 @@ namespace nx{
         //determine the utility class perfroming linking
         typedef typename nxobject_trait<IMPID>::link_type link_type;
 
-        if(!target.filename().empty())
+
+        if(has_file_section(target))
+        {
             //create an external link
             link_type::create_external_link(target,g.imp(),name);
+        }
         else
+        {
+            nxpath real_target = target;
+
+            if(!is_absolute(real_target))
+            {
+                GTYPE<IMPID> parent = g;
+                while(real_target.front().first=="..")
+                {
+                    parent = parent.parent();
+                    real_target.pop_front();
+                }
+
+                real_target = join(nxpath::from_string(get_path(parent)),real_target);
+                std::cout<<nxpath::to_string(real_target)<<std::endl;
+            }
+
             //create an internal link
-            link_type::create_internal_link(target,g.imp(),name);
+            link_type::create_internal_link(real_target,g.imp(),name);
+        }
     }
 
     //-------------------------------------------------------------------------

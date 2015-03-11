@@ -105,7 +105,6 @@ namespace h5{
 
         string target_path = _nx2hdf5path(target);
 
-
         herr_t err = H5Lcreate_soft(target_path.c_str(),loc.object().id(),
                                     name.c_str(),H5P_DEFAULT,H5P_DEFAULT);
         if(err < 0)
