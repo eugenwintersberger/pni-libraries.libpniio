@@ -189,6 +189,42 @@ namespace nx{
     //--------------------------------------------------------------------------
     //!
     //! \ingroup nxpath_code
+    //! \brief check if path is empty
+    //! 
+    //! A path is considered empty if does not contain
+    //! \li a file section
+    //! \li an object section
+    //! \li and an attribute section
+    //! 
+    //! If this is the case this function returns true. In fact a default 
+    //! constructed path is empty.
+    //! \param p path to check
+    //! \return true if the path is empty
+    bool is_empty(const nxpath &p);
+
+    //--------------------------------------------------------------------------
+    //!
+    //! \ingroup nxpath_code
+    //! \brief join two paths
+    //! 
+    //! Join two paths together. This operation can only be carried out if the 
+    //! paths satisfiy some criteria
+    //! \li a must not have an attribute set
+    //! \li b must not have the file section set
+    //! \li b must not be an absolute path
+    //! 
+    //! If one of these requirements is not satisfied value_error is thrown. 
+    //! If one of the paths is empty the other one is returned unchanged.
+    //! 
+    //! \throws value_error if join requirements are not met by either a or b
+    //! \param a first path 
+    //! \param b second path
+    //! \return joined path 
+    nxpath join(const nxpath &a,const nxpath &b);
+
+    //--------------------------------------------------------------------------
+    //!
+    //! \ingroup nxpath_code
     //! \brief input operator for a nexus path
     //! 
     //! Constructing a nexus path from a stream. Analogously to the output 

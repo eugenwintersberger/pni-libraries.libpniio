@@ -124,6 +124,43 @@ namespace nx{
         return has_name(e)&&has_class(e);
     }
 
+    //--------------------------------------------------------------------------
+    bool is_empty(const nxpath &p)
+    {
+        return !has_file_section(p) && 
+               !has_attribute_section(p) &&
+                (p.size() == 0);
+    }
+
+    //--------------------------------------------------------------------------
+    nxpath join(const nxpath &a,const nxpath &b)
+    {
+        if(is_empty(a) && is_empty(b)) return nxpath();
+        
+        if(is_empty(a)) return b;
+        if(is_empty(b)) return a;
+
+        if(has_attribute_section(a))
+            throw value_error(EXCEPTION_RECORD,"First path must not have an "
+                    "attribute section!");
+
+        if(is_absolute(b))
+            throw value_error(EXCEPTION_RECORD,"Second path must not be"
+                    " absolute!");
+
+        if(has_file_section(b))
+            throw value_error(EXCEPTION_RECORD,"Second path must not have a "
+                    "file section!");
+
+        //ok - here we are ready to do the join
+        nxpath::elements_type elements;
+
+        for(auto e: a) elements.push_back(e);
+        for(auto e: b) elements.push_back(e);
+        
+        return nxpath(a.filename(),elements,b.attribute());
+    }
+
 
     //--------------------------------------------------------------------------
     std::istream &operator>>(std::istream &i,nxpath &p)

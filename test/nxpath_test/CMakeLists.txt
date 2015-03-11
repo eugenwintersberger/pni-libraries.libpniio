@@ -20,6 +20,8 @@ set(UTILSRC nxpath_utils_tests.cpp
             test_has_file_section.cpp
             test_has_attribute_section.cpp
             test_split_path.cpp
+            test_is_empty.cpp
+            test_join.cpp
            )
 add_executable(nxpath_parser_tests ${PARSERSRC} $<TARGET_OBJECTS:test_common>)
 add_executable(nxpath_tests ${SOURCES} $<TARGET_OBJECTS:test_common>)

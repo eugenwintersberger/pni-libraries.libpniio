@@ -34,22 +34,29 @@ set(NXATTRSRC nxattribute_tests.cpp
               nxattribute_manage_test.cpp
    )
 
+set(NXLINKSRC nxlink_tests.cpp
+              nxlink_internal_test.cpp
+   )
+
 add_executable(nxfile_tests ${NXFILESRC} $<TARGET_OBJECTS:test_common>)
 add_executable(nexus_lowlevel_test ${SOURCES} $<TARGET_OBJECTS:test_common>)
 add_executable(nxgroup_tests ${NXGROUPSRC} $<TARGET_OBJECTS:test_common>)
 add_executable(nxfield_tests ${NXFIELDSRC} $<TARGET_OBJECTS:test_common>)
 add_executable(nxattribute_tests ${NXATTRSRC} $<TARGET_OBJECTS:test_common>)
+add_executable(nxlink_tests ${NXLINKSRC} $<TARGET_OBJECTS:test_common>)
 
 target_link_libraries(nexus_lowlevel_test pniio ${CPPUNIT_LIBRARIES})
 target_link_libraries(nxfile_tests pniio ${CPPUNIT_LIBRARIES})
 target_link_libraries(nxgroup_tests pniio ${CPPUNIT_LIBRARIES})
 target_link_libraries(nxfield_tests pniio ${CPPUNIT_LIBRARIES})
 target_link_libraries(nxattribute_tests pniio ${CPPUNIT_LIBRARIES})
+target_link_libraries(nxlink_tests pniio ${CPPUNIT_LIBRARIES})
 
 add_test(nexus_lowlevel_test nexus_lowlevel_test)
 add_test("Nexus_Layer_1:nxfile" nxfile_tests)
 add_test("Nexus_Layer_1:nxgroup" nxgroup_tests)
 add_test("Nexus_Layer_1:nxfield" nxfield_tests)
 add_test("Nexus_Layer_1:nxattribute" nxattribute_tests)
+add_test("Nexus_Layer_1:nxlink" nxlink_tests)
 
 add_custom_target(cleanup COMMAND rm -rf *.nxs *.h5)
