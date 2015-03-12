@@ -198,7 +198,15 @@ a \cpp{value\_error} exception. The reason for this is simple: \libpniio\
 currently uses the HDF5 linking mechanism which has no idea about \nexus-group
 types!
 Thus, as a rule of thumb, use only names within the path used to reference a
-link target. 
+link target.
+
+There is some other subtle issue with paths to link targets. They must not
+comprise intermediate parent directory references (\cpp{..}). 
+This cannot be handled by HDF5 correctly. \cpp{..} is only allowed at the 
+beginning of a relative path. Absolute paths must not contain any \cpp{..} 
+elements. 
+Thus \cpp{../../entry/instrument} would be a valid target path for a link, 
+but \cpp{/../entry/../entry} would not. 
 
 %%%===========================================================================
 \subsection{Create external links}
@@ -212,9 +220,35 @@ path. Lets start again with the canonic example, the external detector file
 h5::nxgroup detector_group = ....; //open the detector group in the master file
 
 link("detector.nxs://entry/instrument/detector/data",detector_group,"data");
-
-
 \end{cppcode}
 
 %%%===========================================================================
 \subsection{Link inquiry}
+
+\libpniio\ (or better HDF5) distinguishes three kinds of links
+\begin{inlinetab}{m{0.3\linewidth}m{0.5\linewidth}}
+hard links & these are links to an object which are typically created 
+             from the parent object to a newly created field or group \\
+soft links & this is what one typically creates with the \cpp{link} function
+template \\
+external links &  are links that reference an object in a different file.
+\end{inlinetab}
+The major difference between hard- and soft-links is the fact that the latter
+ones can dangle (the object they point to must not exist). 
+\libpniio\ provides utility functions to check what kind of link one deals with. 
+\begin{cppcode}
+h5::nxgroup parent = ...;
+string name = "data";
+
+if(is_hard_link(parent,name))
+    std::cout<<"hard link";
+else if(is_soft_link(parent,name))
+    std::cout<<"soft link";
+else if(is_external_link(parent,name))
+    std::cout<<"external link";
+else
+    std::cout<<"unkown link type";
+\end{cppcode}
+Each of the function takes the parent object of the link as its first and the
+name of the link as its second argument. 
+

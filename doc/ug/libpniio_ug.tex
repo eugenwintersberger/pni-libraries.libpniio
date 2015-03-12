@@ -16,6 +16,10 @@
 \usepackage{minted}    %% excellent source code formating
 \usepackage{tikz}
 
+
+%%%---------------------------------------------------------------------------
+%%% loading tikz libraries
+%%%---------------------------------------------------------------------------
 \usetikzlibrary{trees,
                 shapes.geometric,
                 positioning,
@@ -24,20 +28,49 @@
                 fit,
                 backgrounds}
 
+%%%---------------------------------------------------------------------------
+%%% define tikz styles
+%%%---------------------------------------------------------------------------
+\tikzset{nxgroup/.style = {rectangle split,
+                     rectangle split parts=2,
+                     draw,
+                     rounded corners
+                    },
+         nxfieldv/.style = {
+                     rectangle split, 
+                     rectangle split parts=#1,
+                     draw, 
+                     rounded corners
+         },
+         nxfieldh/.style = {                   
+                     rectangle split, 
+                     rectangle split horizontal,
+                     rectangle split parts=#1,
+                     draw, 
+                     rounded corners
+         }
+        } 
+
+
+%%%---------------------------------------------------------------------------
+%%% Setup for hyperref
+%%%---------------------------------------------------------------------------
+\hypersetup{pdftitle={libpniio 1.0.0 Users Guide },
+        	pdfborder=0 0 0,
+	    	colorlinks=false}
+
+
+%%%---------------------------------------------------------------------------
+%%% Define some colors
+%%%---------------------------------------------------------------------------
 \definecolor[named]{desycyan}{rgb}{0,0.648,0.918}
 \definecolor[named]{desyorange}{rgb}{0.945,0.555,0}
 \definecolor[named]{desygray}{rgb}{0.465,0.465,0.465}
 \definecolor[named]{desywhite}{rgb}{1,1,1}
 
-\hypersetup{pdftitle={libpniio API review 2013 },
-        	pdfborder=0 0 0,
-	    	colorlinks=false}
-
-\setcapindent{0em}
-
-\title{{\Huge{\tt libpniio} Users Guide}}
-\author{Eugen Wintersberger}
-
+%%%---------------------------------------------------------------------------
+%%% Define some local commands
+%%%---------------------------------------------------------------------------
 \newcommand{\libpnicore}{\texttt{libpnicore}}
 \newcommand{\libpniio}{\texttt{libpniio}}
 \newcommand{\sdarray}{\texttt{static\_array}}
@@ -62,31 +95,42 @@
 \newcommand{\nxpath}{\texttt{nxpath}}
 \newcommand{\cpp}[1]{\texttt{#1}}
 \newcommand{\nexus}{NeXus}
+
+%%%---------------------------------------------------------------------------
+%%% Define some local environments
+%%%---------------------------------------------------------------------------
+\newenvironment{inlinetab}[1]
+{
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{#1}
+}
+{
+\end{tabular}
+\end{center}
+}
     
-\tikzset{nxgroup/.style = {rectangle split,
-                     rectangle split parts=2,
-                     draw,
-                     rounded corners
-                    },
-         nxfieldv/.style = {
-                     rectangle split, 
-                     rectangle split parts=#1,
-                     draw, 
-                     rounded corners
-         },
-         nxfieldh/.style = {                   
-                     rectangle split, 
-                     rectangle split horizontal,
-                     rectangle split parts=#1,
-                     draw, 
-                     rounded corners
-         }
-        } 
-
-%\bibliographystyle{plainnat}
-
+%%%---------------------------------------------------------------------------
+%%% define some custom environments for minted
+%%%---------------------------------------------------------------------------
 \newminted{cpp}{fontsize=\small}
 \newminted{xml}{fontsize=\small}
+
+%%%---------------------------------------------------------------------------
+%%% misc. setup for the document
+%%%---------------------------------------------------------------------------
+%%% we need this to avoid hanging paragraphs in figure captions
+\setcapindent{0em}
+
+%%%need to setup the bibliography style
+%\bibliographystyle{plainnat}
+
+
+%%%---------------------------------------------------------------------------
+%%% Start here with the document
+%%%---------------------------------------------------------------------------
+\title{{\Huge{\tt libpniio} Users Guide}}
+\author{Eugen Wintersberger}
 
 \begin{document}
 \maketitle
