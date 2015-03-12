@@ -54,14 +54,24 @@ void nxlink_internal_test::tearDown()
 	target_file.close();
 }
 
+//----------------------------------------------------------------------------
+void nxlink_internal_test::test_is_hard_link()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    CPPUNIT_ASSERT(is_hard_link(h5::nxgroup(target_file.root()),"entry"));
+    CPPUNIT_ASSERT(is_hard_link(target_group,"data"));
+}
+
 //------------------------------------------------------------------------------
 void nxlink_internal_test::test_field_by_instance()
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     CPPUNIT_ASSERT_NO_THROW(link(target_field,location,"link_field"));
     h5::nxfield field = location["link_field"];
     CPPUNIT_ASSERT(get_unit(field)=="au");
+    CPPUNIT_ASSERT(is_soft_link(location,"link_field"));
 }
 
 //----------------------------------------------------------------------------
@@ -73,6 +83,7 @@ void nxlink_internal_test::test_field_by_string_absolute()
 
     h5::nxfield field = location["link_field"];
     CPPUNIT_ASSERT(get_unit(field)=="au");
+    CPPUNIT_ASSERT(is_soft_link(location,"link_field"));
 
 }
 
@@ -85,7 +96,7 @@ void nxlink_internal_test::test_field_by_string_relative()
 
     h5::nxfield field = location["link_field"];
     CPPUNIT_ASSERT(get_unit(field)=="au");
-
+    CPPUNIT_ASSERT(is_soft_link(location,"link_field"));
 }
 
 //----------------------------------------------------------------------------
@@ -98,6 +109,7 @@ void nxlink_internal_test::test_field_by_path_relative()
 
     h5::nxfield field = location["link_field"];
     CPPUNIT_ASSERT(get_unit(field)=="au");
+    CPPUNIT_ASSERT(is_soft_link(location,"link_field"));
 }
 
 //----------------------------------------------------------------------------
@@ -110,6 +122,7 @@ void nxlink_internal_test::test_field_by_path_absolute()
 
     h5::nxfield field = location["link_field"];
     CPPUNIT_ASSERT(get_unit(field)=="au");
+    CPPUNIT_ASSERT(is_soft_link(location,"link_field"));
 }
 
 //------------------------------------------------------------------------------
@@ -120,8 +133,7 @@ void nxlink_internal_test::test_group_by_instance()
     CPPUNIT_ASSERT_NO_THROW(link(target_group,location,"link_group"));
     h5::nxgroup g = location["link_group"];
     CPPUNIT_ASSERT(get_class(g)=="NXdetector");
-
-
+    CPPUNIT_ASSERT(is_soft_link(location,"link_group"));
 }
 
 //----------------------------------------------------------------------------
@@ -132,6 +144,7 @@ void nxlink_internal_test::test_group_by_string_relative()
     CPPUNIT_ASSERT_NO_THROW(link("../entry/detector",location,"link_group"));
     h5::nxgroup g = location["link_group"];
     CPPUNIT_ASSERT(get_class(g)=="NXdetector");
+    CPPUNIT_ASSERT(is_soft_link(location,"link_group"));
 }
 
 //----------------------------------------------------------------------------
@@ -141,6 +154,7 @@ void nxlink_internal_test::test_group_by_string_absolute()
     CPPUNIT_ASSERT_NO_THROW(link("/entry/detector",location,"link_group"));
     h5::nxgroup g = location["link_group"];
     CPPUNIT_ASSERT(get_class(g)=="NXdetector");
+    CPPUNIT_ASSERT(is_soft_link(location,"link_group"));
 }
 //----------------------------------------------------------------------------
 void nxlink_internal_test::test_group_by_path_relative()
@@ -151,6 +165,7 @@ void nxlink_internal_test::test_group_by_path_relative()
     CPPUNIT_ASSERT_NO_THROW(link(p,location,"link_group"));
     h5::nxgroup g = location["link_group"];
     CPPUNIT_ASSERT(get_class(g)=="NXdetector");
+    CPPUNIT_ASSERT(is_soft_link(location,"link_group"));
 }
 
 //----------------------------------------------------------------------------
@@ -162,6 +177,7 @@ void nxlink_internal_test::test_group_by_path_absolute()
     CPPUNIT_ASSERT_NO_THROW(link(p,location,"link_group"));
     h5::nxgroup g = location["link_group"];
     CPPUNIT_ASSERT(get_class(g)=="NXdetector");
+    CPPUNIT_ASSERT(is_soft_link(location,"link_group"));
 }
 
 //----------------------------------------------------------------------------

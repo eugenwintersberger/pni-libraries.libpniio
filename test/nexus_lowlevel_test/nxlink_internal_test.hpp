@@ -46,6 +46,7 @@ class nxlink_internal_test: public CppUnit::TestFixture
     CPPUNIT_TEST(test_group_by_path_relative);
     CPPUNIT_TEST(test_group_by_path_absolute);
     CPPUNIT_TEST(test_error);
+    CPPUNIT_TEST(test_is_hard_link);
 	CPPUNIT_TEST_SUITE_END();
 private:
     h5::nxfile  target_file;
@@ -66,6 +67,7 @@ public:
     void test_group_by_path_relative();
     void test_group_by_path_absolute();
     void test_error();
+    void test_is_hard_link();
 
 };
 

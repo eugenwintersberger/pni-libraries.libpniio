@@ -66,6 +66,7 @@ void nxlink_external_test::test_field_by_string()
 
     h5::nxfield field = location["link_field"];
     CPPUNIT_ASSERT(get_unit(field)=="au");
+    CPPUNIT_ASSERT(is_external_link(location,"link_field"));
 }
 
 //----------------------------------------------------------------------------
@@ -79,6 +80,7 @@ void nxlink_external_test::test_field_by_path()
 
     h5::nxfield field = location["link_field"];
     CPPUNIT_ASSERT(get_unit(field)=="au");
+    CPPUNIT_ASSERT(is_external_link(location,"link_field"));
 }
 
 //----------------------------------------------------------------------------
@@ -90,6 +92,7 @@ void nxlink_external_test::test_group_by_string()
                                  location,"link_group"));
     h5::nxgroup g = location["link_group"];
     CPPUNIT_ASSERT(get_class(g)=="NXdetector");
+    CPPUNIT_ASSERT(is_external_link(location,"link_group"));
 }
 
 //----------------------------------------------------------------------------
@@ -102,6 +105,7 @@ void nxlink_external_test::test_group_by_path()
     CPPUNIT_ASSERT_NO_THROW(link(p,location,"link_group"));
     h5::nxgroup g = location["link_group"];
     CPPUNIT_ASSERT(get_class(g)=="NXdetector");
+    CPPUNIT_ASSERT(is_external_link(location,"link_group"));
 }
 
 //----------------------------------------------------------------------------
