@@ -31,7 +31,12 @@
 namespace pni{
 namespace io{
 namespace nx{
-
+  
+    //internal function - should not show up in the official documentation
+    //
+    // This function throws value_error when the target path contains
+    // intermediate ..!
+    void __check_target_path(const nxpath &target);
     
     //!
     //! \ingroup nexus_lowlevel
@@ -86,6 +91,7 @@ namespace nx{
 
         if(has_file_section(target))
         {
+            __check_target_path(target);
             //create an external link
             link_type::create_external_link(target,g.imp(),name);
         }
@@ -103,8 +109,10 @@ namespace nx{
                 }
 
                 real_target = join(nxpath::from_string(get_path(parent)),real_target);
-                std::cout<<nxpath::to_string(real_target)<<std::endl;
             }
+           
+            //the target path must not contain any element with ..
+            __check_target_path(real_target);
 
             //create an internal link
             link_type::create_internal_link(real_target,g.imp(),name);

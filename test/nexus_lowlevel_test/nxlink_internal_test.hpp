@@ -38,10 +38,14 @@ class nxlink_internal_test: public CppUnit::TestFixture
     CPPUNIT_TEST(test_field_by_instance);
     CPPUNIT_TEST(test_field_by_string_absolute);
     CPPUNIT_TEST(test_field_by_string_relative);
-    CPPUNIT_TEST(test_field_by_path);
+    CPPUNIT_TEST(test_field_by_path_relative);
+    CPPUNIT_TEST(test_field_by_path_absolute);
     CPPUNIT_TEST(test_group_by_instance);
-    CPPUNIT_TEST(test_group_by_string);
-    CPPUNIT_TEST(test_group_by_path);
+    CPPUNIT_TEST(test_group_by_string_relative);
+    CPPUNIT_TEST(test_group_by_string_absolute);
+    CPPUNIT_TEST(test_group_by_path_relative);
+    CPPUNIT_TEST(test_group_by_path_absolute);
+    CPPUNIT_TEST(test_error);
 	CPPUNIT_TEST_SUITE_END();
 private:
     h5::nxfile  target_file;
@@ -54,10 +58,14 @@ public:
     void test_field_by_instance();
     void test_field_by_string_absolute();
     void test_field_by_string_relative();
-    void test_field_by_path();
+    void test_field_by_path_relative();
+    void test_field_by_path_absolute();
     void test_group_by_instance();
-    void test_group_by_string();
-    void test_group_by_path();
+    void test_group_by_string_relative();
+    void test_group_by_string_absolute();
+    void test_group_by_path_relative();
+    void test_group_by_path_absolute();
+    void test_error();
 
 };
 

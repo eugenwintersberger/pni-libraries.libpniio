@@ -1,4 +1,5 @@
 set(SOURCES nxdate_time.cpp
+            nxlink.cpp
             )
 
 add_subdirectory(h5)

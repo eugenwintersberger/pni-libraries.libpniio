@@ -87,31 +87,93 @@ void nxlink_internal_test::test_field_by_string_relative()
     CPPUNIT_ASSERT(get_unit(field)=="au");
 
 }
+
 //----------------------------------------------------------------------------
-void nxlink_internal_test::test_field_by_path()
+void nxlink_internal_test::test_field_by_path_relative()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    nxpath target = nxpath::from_string("../entry:NXentry/detector:NXdetector/data");
+    CPPUNIT_ASSERT_NO_THROW(link(target,location,"link_field"));
+
+    h5::nxfield field = location["link_field"];
+    CPPUNIT_ASSERT(get_unit(field)=="au");
+}
+
+//----------------------------------------------------------------------------
+void nxlink_internal_test::test_field_by_path_absolute()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-}
+    nxpath target = nxpath::from_string("/entry:NXentry/detector:NXdetector/data");
+    CPPUNIT_ASSERT_NO_THROW(link(target,location,"link_field"));
 
+    h5::nxfield field = location["link_field"];
+    CPPUNIT_ASSERT(get_unit(field)=="au");
+}
 
 //------------------------------------------------------------------------------
 void nxlink_internal_test::test_group_by_instance()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    CPPUNIT_ASSERT_NO_THROW(link(target_group,location,"link_group"));
+    h5::nxgroup g = location["link_group"];
+    CPPUNIT_ASSERT(get_class(g)=="NXdetector");
+
 
 }
 
 //----------------------------------------------------------------------------
-void nxlink_internal_test::test_group_by_string()
+void nxlink_internal_test::test_group_by_string_relative()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
+    CPPUNIT_ASSERT_NO_THROW(link("../entry/detector",location,"link_group"));
+    h5::nxgroup g = location["link_group"];
+    CPPUNIT_ASSERT(get_class(g)=="NXdetector");
 }
 
 //----------------------------------------------------------------------------
-void nxlink_internal_test::test_group_by_path()
+void nxlink_internal_test::test_group_by_string_absolute()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    CPPUNIT_ASSERT_NO_THROW(link("/entry/detector",location,"link_group"));
+    h5::nxgroup g = location["link_group"];
+    CPPUNIT_ASSERT(get_class(g)=="NXdetector");
+}
+//----------------------------------------------------------------------------
+void nxlink_internal_test::test_group_by_path_relative()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
+    nxpath p = nxpath::from_string("../entry:NXentry/detector:NXdetector");
+    CPPUNIT_ASSERT_NO_THROW(link(p,location,"link_group"));
+    h5::nxgroup g = location["link_group"];
+    CPPUNIT_ASSERT(get_class(g)=="NXdetector");
+}
+
+//----------------------------------------------------------------------------
+void nxlink_internal_test::test_group_by_path_absolute()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    nxpath p = nxpath::from_string("/entry:NXentry/detector:NXdetector");
+    CPPUNIT_ASSERT_NO_THROW(link(p,location,"link_group"));
+    h5::nxgroup g = location["link_group"];
+    CPPUNIT_ASSERT(get_class(g)=="NXdetector");
+}
+
+//----------------------------------------------------------------------------
+void nxlink_internal_test::test_error()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    CPPUNIT_ASSERT_THROW(link("/:NXentry/detector/data",location,"link"),
+                         value_error);
+    CPPUNIT_ASSERT_THROW(link(nxpath::from_string("/:NXentry/detector/data"),
+                         location,"link"),value_error);
+
+    CPPUNIT_ASSERT_THROW(link("/entry/../detector/data",location,"link"),
+                         value_error);
 }
