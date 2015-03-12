@@ -37,7 +37,8 @@ namespace nx{
     // This function throws value_error when the target path contains
     // intermediate ..!
     void __check_target_path(const nxpath &target);
-    
+   
+    //------------------------------------------------------------------------
     //!
     //! \ingroup nexus_lowlevel
     //! \brief create a link

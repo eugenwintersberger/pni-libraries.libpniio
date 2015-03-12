@@ -36,6 +36,7 @@ set(NXATTRSRC nxattribute_tests.cpp
 
 set(NXLINKSRC nxlink_tests.cpp
               nxlink_internal_test.cpp
+              nxlink_external_test.cpp
    )
 
 add_executable(nxfile_tests ${NXFILESRC} $<TARGET_OBJECTS:test_common>)
