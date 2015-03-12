@@ -91,17 +91,14 @@ Structure of the elements in the \emph{object section} of a \nexus-path.
 
 Figure~\ref{fig:path:structure} shows the principal structure of a \nexus-path
 as used by \libpniio. Such a path comprises three major sections
-\begin{center}
-\renewcommand{\arraystretch}{1.5}
-\begin{tabular}{m{0.2\linewidth}m{0.65\linewidth}}
+\begin{inlinetab}{m{0.2\linewidth}m{0.65\linewidth}}
  \emph{file section}      & which references the \nexus-file on the file system.
  It must thus be a valid file system path on the operating system platform in
  use.  \\
  \emph{object section}    & describing the location of an object within the file \\
  \emph{attribute section} & referencing an attribute attached to the object 
  pointed to by the residual path. The attribute is identified by its name.
-\end{tabular}
-\end{center}
+\end{inlinetab}
 As shown in Fig.~\ref{fig:path:structure} the file and the object sections are 
 separated by \fsep\ while the object and attribute sections use \asep\ as a
 delimiter. Both, the file and the attribute section, are optional.
@@ -111,9 +108,7 @@ single \osep. Every element in the \osection\ is composed of two parts
 separated by a \csep. Whether or not the \nsection\ and/or the \csection\ must
 be present in order to reference an element depends on the circumstances. 
 There are three possible situations
-\begin{center}
-\renewcommand{\arraystretch}{1.5}
-\begin{tabular}{m{0.15\linewidth}m{0.75\linewidth}}
+\begin{inlinetab}{m{0.15\linewidth}m{0.75\linewidth}}
 \emph{name:class} & this is a full identifier for a group. It determines its
 name as well as its type. As fields have no type they cannot be referenced by
 such an expression. \\
@@ -123,8 +118,7 @@ in the object path (as fields cannot have additional children). \\
 \emph{:class} & if only the class is given the referenced object must be a
 group. Denote the leading colon in this expression. It is necessary to
 distinguish such an expression from a mere name.
-\end{tabular}
-\end{center}
+\end{inlinetab}
 
 %%%===========================================================================
 \subsection{Some general path properties}
@@ -352,32 +346,29 @@ and exception will be thrown.
 Furthermore there are some functions for querying the basic properties of an 
 element instance. Each of these functions returns a boolean value and takes
 an instance of \cpp{nxpath::element\_type} as its only argument.
-\begin{center}
-\renewcommand{\arraystretch}{1.3}
-\begin{tabular}{m{0.2\linewidth}m{0.7\linewidth}}
+\begin{inlinetab}{m{0.2\linewidth}m{0.7\linewidth}}
 \cpp{is\_root\_element} & returns true if the element references the root group
 (with name \cpp{/} and type \cpp{NXroot})\\
 \cpp{is\_complete}      & return true if the element has a non-empty name and 
                           type\\
 \cpp{has\_name}         & return true if the element has a non-empty name\\
 \cpp{has\_class}        & return true if the element has a non-empty type
-\end{tabular}
-\end{center}
+\end{inlinetab}
 
 \subsection{\nxpath\ utilities}
 
 Three inquiry functions exist for \nxpath. Each of them returns a
 boolean and takes as their single argument a reference to an instance of \nxpath
-\begin{center}
-\renewcommand{\arraystretch}{1.3}
-\begin{tabular}{m{0.3\linewidth}m{0.6\linewidth}}
-\cpp{is\_absolute}            & returns true if the path is an absolute path\\
-\cpp{has\_file\_section}      & returns true if the path has a non-empty file 
+\begin{inlinetab}{m{0.3\linewidth}m{0.6\linewidth}}
+\cpp{is\_absolute}            & returns \cpp{true} if the path is an absolute path\\
+\cpp{has\_file\_section}      & returns \cpp{true} if the path has a non-empty file 
                                 section\\
-\cpp{has\_attribute\_section} & returns true if the path has a non-empty 
-                                attribute section
-\end{tabular}
-\end{center}
+\cpp{has\_attribute\_section} & returns \cpp{true} if the path has a non-empty 
+                                attribute section \\
+\cpp{is\_empty}                & returns \cpp{true} if a path has neither a
+\fsection, an \asection, and an \osection. This situation would be equivalent to
+a default constructed path object.
+\end{inlinetab}
 The \cpp{split\_path} function divides an \nxpath\ into two partial paths 
 at a user defined position. 
 \begin{cppcode}
@@ -405,6 +396,31 @@ std::cout<<instrument_path<<std::endl;
 // output: /:NXentry/:NXinstrument/detector@NX_class
 std::cout<<detector_path<<std::endl;   
 \end{cppcode}
+Two paths can be joined using the \cpp{join()} function. 
+\begin{cppcode}
+nxpath a = nxpath::from_string("file.nxs://:NXentry/:NXinstrument");
+nxpath b = nxpath::from_string("pilatus300k:NXdetector/data");
+nxpath c = join(a,b);
+std::cout<<c<<std::endl;
+
+//would output
+//file.nxs://:NXentry/:NXinstrument/pilatus300k:NXdetector/data"
+\end{cppcode}
+There are several restrictions to the two path arguments \cpp{a} and \cpp{b}
+passed to the \cpp{join()} funtion
+\begin{itemize}
+\item \cpp{a} must not have an \asection
+\item \cpp{b} must not have a \fsection
+\item \cpp{b} must not be an absolute path.
+\end{itemize}
+If any of these restrictions are violated \cpp{join()} throws
+\cpp{value\_error}. There are additional special conditions which should be
+taken into account and where the above rules do not apply
+\begin{inlinetab}{m{0.2\linewidth}m{0.1\linewidth}m{0.3\linewidth}}
+\cpp{a} empty, \cpp{b} not &$\rightarrow$ & return \cpp{b} unchanged \\
+\cpp{b} empty, \cpp{a} not &$\rightarrow$ & return \cpp{a} unchanged \\
+\cpp{a} and \cpp{b} empty  &$\rightarrow$ & return an empty path object
+\end{inlinetab}
 
 %%%===========================================================================
 \section{The grammar of a Nexus path}
