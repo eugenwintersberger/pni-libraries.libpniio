@@ -34,8 +34,8 @@ void get_root_test::setUp()
 {
     file = h5::nxfile::create_file("get_root_test.nx",true);
     root = file.root();
-    group = root.create_group("group","NXentry");
-    group.create_group("instrument","NXinstrument");
+    group = root.create_group("entry","NXentry");
+    instrument = group.create_group("instrument","NXinstrument");
     field = group.create_field<uint32>("data");
 
 }
@@ -46,23 +46,28 @@ void get_root_test::tearDown()
     field.close();
     group.close();
     root.close();
+    instrument.close();
     file.close();
 }
-
 
 //-----------------------------------------------------------------------------
 void get_root_test::test_group()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    h5::nxgroup g = as_group(get_child(group,"instrument",""));
     CPPUNIT_ASSERT(get_name(get_root(group))=="/");
-
     CPPUNIT_ASSERT(get_name(get_root(root))=="/");
+    CPPUNIT_ASSERT(get_name(get_root(instrument))=="/");
+}
 
+//-----------------------------------------------------------------------------
+void get_root_test::test_nxobject_group()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
     CPPUNIT_ASSERT(get_name(get_root(h5::nxobject(group)))=="/");
     CPPUNIT_ASSERT(get_name(get_root(h5::nxobject(root)))=="/");
-
+    CPPUNIT_ASSERT(get_name(get_root(h5::nxobject(instrument)))=="/");
 }
 
 //-----------------------------------------------------------------------------
@@ -71,8 +76,14 @@ void get_root_test::test_field()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
     CPPUNIT_ASSERT(get_name(get_root(field)) == "/");
-    CPPUNIT_ASSERT(get_name(get_root(h5::nxobject(field))) == "/");
+}
 
+//-----------------------------------------------------------------------------
+void get_root_test::test_nxobject_field()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    CPPUNIT_ASSERT(get_name(get_root(h5::nxobject(field))) == "/");
 }
 
 //-----------------------------------------------------------------------------
@@ -83,6 +94,15 @@ void get_root_test::test_attribute()
     h5::nxattribute a = group.attributes["NX_class"];
     
     CPPUNIT_ASSERT(get_name(get_root(a))=="/");
+}
+
+//-----------------------------------------------------------------------------
+void get_root_test::test_nxobject_attribute()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+   
+    h5::nxattribute a = group.attributes["NX_class"];
+    
     CPPUNIT_ASSERT(get_name(get_root(h5::nxobject(a)))=="/");
 }
 

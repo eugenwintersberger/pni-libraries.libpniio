@@ -38,6 +38,9 @@ using namespace pni::io::nx;
 class get_root_test : public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(get_root_test);
+        CPPUNIT_TEST(test_nxobject_field);
+        CPPUNIT_TEST(test_nxobject_attribute);
+        CPPUNIT_TEST(test_nxobject_group);
         CPPUNIT_TEST(test_field);
         CPPUNIT_TEST(test_group);
         CPPUNIT_TEST(test_attribute);
@@ -45,7 +48,7 @@ class get_root_test : public CppUnit::TestFixture
 
         h5::nxfile file;
         h5::nxfield field;
-        h5::nxgroup group,root;
+        h5::nxgroup group,root,instrument;
 
     public:
         void setUp();
@@ -54,6 +57,9 @@ class get_root_test : public CppUnit::TestFixture
         void test_field();
         void test_group();
         void test_attribute();
+        void test_nxobject_field();
+        void test_nxobject_group();
+        void test_nxobject_attribute();
 
 };
 

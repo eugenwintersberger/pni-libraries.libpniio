@@ -26,7 +26,7 @@
                 calc,
                 shapes.multipart,
                 fit,
-                backgrounds}
+            backgrounds}
 
 %%%---------------------------------------------------------------------------
 %%% define tikz styles
@@ -48,6 +48,10 @@
                      rectangle split parts=#1,
                      draw, 
                      rounded corners
+         },
+         classnode/.style = {
+            draw,rounded corners,minimum width=3cm,
+            minimum height=1cm,thick
          }
         } 
 
@@ -94,6 +98,7 @@
 \newcommand{\nxfile}{\texttt{nxfile}}
 \newcommand{\nxpath}{\texttt{nxpath}}
 \newcommand{\cpp}[1]{\texttt{#1}}
+\newcommand{\cppul}[1]{\underline{\texttt{#1}}}
 \newcommand{\nexus}{NeXus}
 
 %%%---------------------------------------------------------------------------
@@ -123,7 +128,7 @@
 \setcapindent{0em}
 
 %%%need to setup the bibliography style
-%\bibliographystyle{plainnat}
+\bibliographystyle{plainnat}
 
 
 %%%---------------------------------------------------------------------------
@@ -168,13 +173,13 @@
 \FloatBarrier
 
 %%%---------------------------------------------------------------------------
-\chapter{Basic usage of \libpniio}
+\chapter{Basic usage of \libpniio}\label{chapter:basicusage}
 \input{tex/basic_usage.tex}
 \FloatBarrier
 
 
 %%%---------------------------------------------------------------------------
-\chapter{\libpniio\ in more detail}
+\chapter{\libpniio\ in more detail}\label{chapter:advancedusage}
 \input{tex/advanced_usage.tex}
 \FloatBarrier
 
@@ -194,6 +199,6 @@
 \input{tex/nexus_xml.tex}
 
 
-%\bibliography{libpniio_ug}
+\bibliography{libpniio_ug}
 
 \end{document}

@@ -26,12 +26,19 @@ foreach(TEX_FILE ${SOURCES})
     configure_file(${TEX_FILE} ${TEX_FILE} COPYONLY)
 endforeach()
 
+configure_file(latexmkrc latexmkrc COPYONLY)
+configure_file(libpniio_ug.bib libpniio_ug.bib COPYONLY)
+
 configure_file(${MASTER} ${MASTER} COPYONLY)
+#add_custom_command(OUTPUT libpniio_ug.pdf 
+#                   COMMAND ${PDFLATEX_COMPILER} -shell-escape libpniio_ug.tex
+#                   #COMMAND ${BIBTEX_COMMAND} libpniio_ug
+#                   COMMAND ${PDFLATEX_COMPILER} -shell-escape libpniio_ug.tex
+#                   COMMAND ${PDFLATEX_COMPILER} -shell-escape libpniio_ug.tex
+#                   DEPENDS ${MASTER} ${SOURCES}
+#                   )
 add_custom_command(OUTPUT libpniio_ug.pdf 
-                   COMMAND ${PDFLATEX_COMPILER} -shell-escape libpniio_ug.tex
-                   #COMMAND ${BIBTEX_COMMAND} libpniio_ug
-                   COMMAND ${PDFLATEX_COMPILER} -shell-escape libpniio_ug.tex
-                   COMMAND ${PDFLATEX_COMPILER} -shell-escape libpniio_ug.tex
+                   COMMAND latexmk -pdf -bibtex libpniio_ug.tex
                    DEPENDS ${MASTER} ${SOURCES}
                    )
 

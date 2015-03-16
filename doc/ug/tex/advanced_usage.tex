@@ -1,6 +1,261 @@
 %%%===========================================================================
 \section{The mysterious \nxobject}\label{section:nxobject}
 
+In section~\ref{chapter:basicusage} we have discussed the basic usage of
+\libpniio\ and the careful reader my already observed some missing concepts
+\begin{itemize}
+\item what is the mysterious return type of the \cpp{parent()} member function
+every field, group, or attribute possesses?
+\item if \cpp{nxgroup} is like a container -- can we use iteration with it?
+\end{itemize}
+Indeed solving the first riddle leads to a good solution for the iteration
+problem as both are coupled by the fact that \cpp{nxgroup} is not just a simple
+container type as the STL containers, it is rather a heterogeneous container. 
+
+%%%---------------------------------------------------------------------------
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \node[classnode] (nxobject) {\cpp{nxobject}};
+        \node[classnode,below left = of nxobject] (nxfield) {\cpp{nxfield}};
+        \node[classnode,below right = of nxobject] (nxgroup) {\cpp{nxgroup}};
+
+
+        \path[draw] (nxfield.north) |- ++(0cm,0.5cm)-|(nxobject.south);
+        \path[draw,->] (nxgroup.north) |- ++(0cm,0.5cm)-|(nxobject.south);
+    \end{tikzpicture}
+    \caption{{\small\label{fig:advanced:hierarchy}
+    The default procedure in OOP to obtain a mast object which can either represent a
+    field or a group would be inheritance. In this schema \nxfield\ and
+    \nxgroup\ are both descendants of \nxobject. 
+    }}
+\end{figure}
+%%%---------------------------------------------------------------------------
+
+But lets start at the beginning -- the return type of \cpp{parent()}. If we
+would have only fields and groups the situation would be easy: the return type
+of the \cpp{parent()} function for a field or group would always be
+\cpp{nxgroup} (as fields cannot have children for their own). 
+However, what about attributes. They can be attached to fields or groups. Thus,
+also the return type would be either a field or a group. Unfortunately, a
+function (and thus a method too) can only have one return type. We would need a
+return type that could represent either a field or a group. 
+The classical approach to solve such an issue in object oriented programming
+would be a class hierarchy as depicted in Fig.~\ref{fig:advanced:hierarchy}.
+
+However, this approach has some flaws. What interface should be base class
+expose. In fact, the parts of their interface \nxfield\ and \nxgroup have in
+common also matches those of \nxattribute\ too. However, all three classes are
+from a semantic point of view to different to be derived from a single base
+class.  There is also a less philosophical problem. \nxfield\ and \nxgroup\ are
+in fact templates whose template parameter is the implementation type (the same
+is true for \nxattribute). The basic idea was to implement a \emph{pointer to
+implementation} pattern with template (so in fact no pointers) following an
+approach presented by \cite{vandevoorde:2002}. This approach has severe
+consequences for a base class approach: as the base class would need access to
+the particular implementation and thus the implementation type, a class 
+hierarchy must be assembled for each implementation type. During the 
+development of \libpniio\ such an approach was once used and has proven to be 
+far to complex. 
+
+To circumvent all this issues and in general avoid design by inheritance (as
+suggested by \cite{gof:1995}) a different approach was taken. You may have
+already recognized in the API documentation an instance of type \nxobject. 
+\nxobject\ mimics a bit the behavior of a base class but in reality it is
+something entirely different. It is an instance of a \emph{variant} template 
+provided by the \cpp{boost::variant} library.
+\nxobject\ thus can hold either an instance of \nxgroup, \nxfield, or
+\nxattribute. It is thus the perfect return type for the \cpp{parent()} 
+member function of field, groups, and attributes. Indeed \nxobject\ is also what
+the \cpp{[]} operators and the \cpp{at()} member function of \nxgroup\ returns. 
+By the special design of the constructor as well as the assignment operator
+of \nxfield, \nxgroup, and \nxattribute, these objects can be directly
+constructed from an instance of \nxobject\ if the instance of \nxobject\ holds
+an instance of the appropriate type. 
+Thus, \nxobject\ is rather transparent to the user. 
+In the next sections \ref{section:algorithms} and \ref{section:group_iteration}
+we will see how to work with instance of \nxobject\ effectively.
+
+It is important to understand that \nxobject\ depends on the particular
+implementation in use. Thus it is part of the particular implementation
+namespace. As \libpniio\ currently only uses HDF5 the appropriate type would be 
+\cpp{h5::nxobject}.
+
+%%%===========================================================================
+\section{Using algorithms}\label{section:algorithms}
+
+\nxobject\ does not expose any interface functions. Thus, all operations on 
+instances of \nxobject\ are implemented as algorithms using the visitor pattern. 
+Algorithms can be used by adding 
+\begin{cppcode}
+#include <pni/io/nx/algorithms.hpp>
+\end{cppcode}
+at the top of a source file. All the function templates provided 
+reside with in the \cpp{pni::io::nx} namespace. 
+Some of the algorithms also work with the standard types like \nxfield,
+\nxgroup, and \nxattribute. Which one will be explained in the following
+section.
+
+\subsection{Basic inquiry and conversion}
+
+When accessing the elements of a group or when retrieving the parent object of
+an attribute the first question one may raises is: what kind of object is stored
+in the \nxobject\ instance. 
+There are basically three simple functions: \cpp{is\_attribute()},
+\cpp{is\_field()}, and \cpp{is\_group()}. Each of these functions takes as their
+single argument an instance of \nxobject. 
+\begin{cppcode}
+h5::nxgroup g = file.root();
+
+for(size_t i=0;i<g.size();++i)
+{
+    auto object = g[i]; //this returns an instance of nxobject 
+
+    if(is_field(object))
+        std::cout<<"found a field"<<std::endl;
+    else if(is_group(object))
+        std::cout<<"found a group"<<std::endl;
+    else
+        std::cout<<"found unknown object type!"<<std::endl;
+}
+\end{cppcode}
+The first line in this example, \cpp{h5::nxgroup g = file.root();} is a 
+good example for implicit conversion. In fact \cpp{root()} returns an instance
+of \nxobject\ rather than of \nxgroup. However, \nxgroup\ can be constructed 
+from \nxobject\ as long as \nxobject\ stores an instance of \nxgroup.
+
+There are also three conversion function templates available: \cpp{as\_field()}, 
+\cpp{as\_group()}, and \cpp{as\_attribute()} each taking an instance of 
+\nxobject\ and returning a field, group, or attribute instance. If the 
+\nxobject\ argument does not store a value of appropriate type a
+\cpp{type\_error} exception will be thrown. 
+We could modify the \cpp{if} block in the above example with 
+\begin{cppcode}
+if(is_field(object))
+    do_something_with_field(as_field(object));
+else if(is_group(object))
+    do_something_else_with_groups(as_group(object));
+else
+    std::cout<<"found unknown object type!"<<std::endl;
+\end{cppcode}
+None of these algorithms will work on either \nxfield, \nxgroup, or
+\nxattribute. It would not make too much sense to ask an instance of \nxfield\
+whether or not it is a field. We know this already. 
+
+\subsection{Common algorithms for fields, groups, and attributes}
+
+Fields, groups, and attributes share a set of common member functions which can
+be accessed by a set of algorithms acting on an instance of \nxobject\ which 
+stores either a field, a group, or an attribute. 
+
+\subsubsection{\cppul{is\_valid()}}
+
+One of the most important questions to ask from an object is whether or not it
+is valid. The \cpp{is\_valid()} algorithms does exactly that. It behaves like 
+the \cpp{is\_valid()} member function of \nxgroup, \nxfield, or \nxattribute. 
+Indeed, this algorithms does not only work for \nxobject, \nxgroup, \nxfield,
+and \nxattribute\ but also for \nxfile. Using it is fairly simple 
+\begin{cppcode}
+auto object = .....; 
+
+if(!is_valid(object))
+    std::cerr<<"Object not valid!"<<std::endl;
+\end{cppcode}
+The return value is of type \cpp{bool} and has the value \cpp{true} when the
+object is valid, \cpp{false} otherwise.
+
+\subsubsection{\cppul{close()}}
+
+This template function works for \nxgroup, \nxfield, \nxattribute, and
+\nxobject. It does what the name suggests: it calls the \cpp{close()} method of
+the object passed as its only argument. 
+\begin{cppcode}
+auto object = ...; //can be either a field,group, attribute, or object
+
+close(object);
+\end{cppcode}
+This function template has no return value.
+
+\subsubsection{\cppul{get\_filename()}}
+
+Calls the \cpp{get\_filename()} method on the object passed as an argument. The
+function template works with \nxobject, \nxfield, \nxgroup, and \nxattribute. 
+\begin{cppcode}
+auto object = ...; //can be either a field,group, attribute, or object
+
+std::cout<<"File is: "<<get_filename(object)<<std::endl;
+\end{cppcode}
+The return value is a string with the name of the file.
+
+\subsubsection{\cppul{get\_root()}}
+
+Returns the root group of the file an object belongs to. I accepts \nxobject,
+\nxattribute, \nxfield, and \nxgroup\ instances as arguments. 
+\begin{cppcode}
+auto object = ...; //can be either a field,group, attribute, or object
+
+h5::nxgroup root = get_root(object);
+\end{cppcode}
+The root group is returned as an instance of \nxobject. As shown in the short
+code snippet above we do not have to care about this as \nxgroup\ can be
+constructed from an \nxobject.
+
+\subsubsection{\cppul{get\_name()}}
+
+Returns the name of an object. The function templates takes an instance of 
+\nxobject, \nxfield, \nxattribute, \nxgroup\ as its only argument
+\begin{cppcode}
+auto object = ...; //can be either a field,group, attribute, or object
+
+std::cout<<"Name: "<<get_name(object)<<std::endl;
+\end{cppcode}
+The name is returned as a string. If the object is not valid an
+\cpp{invalid\_object\_error} exception is thrown.
+
+\subsubsection{\cppul{get\_parent()}}
+
+Return the parent of an object. Takes an instance of \nxobject, \nxfield,
+\nxattribute, and \nxgroup\ as its only argument
+\begin{cppcode}
+auto object = ...; //can be either a field,group, attribute, or object
+auto p = get_parent(object);
+\end{cppcode}
+The parent object is returned as an instance of \nxobject. If the object is not
+valid an \cpp{invalid\_object\_error} is thrown.
+
+\subsubsection{\cppul{get\_path()}}
+
+The \cpp{get\_path} function template takes either an \nxobject, \nxattribute,
+\nxfield, and \nxgroup\ as its single argument.
+\begin{cppcode}
+auto object = ...; //can be either a field,group, attribute, or object
+std::cout<<get_path(object)<<std::endl;
+\end{cppcode}
+The path is returned as a string. This is maybe not seem to be the best approach
+but strings are most probably more often printed than used for iteration. 
+However is a path object is required one can always do
+\begin{cppcode}
+nxpath p = nxpath::from_string(get_path(object));
+\end{cppcode}
+
+\subsubsection{\underline{\cpp{get\_size()}}}
+
+Returns the size of an object. This function template accepts an instance of 
+\nxobject, \nxattribute, \nxfield, or \nxgroup\ as its single input argument.
+\begin{cppcode}
+auto object = ...; //can be either a field,group, attribute, or object
+size_t n = get_size(object);
+\end{cppcode}
+The interpretation is slightly different whether or not the argument 
+represents a group, a field, or an attribute. 
+\begin{itemize}
+\item for fields and attributes the return value is the total number of 
+elements stored in the field or attribute 
+\item for groups it is the total number of children.
+\end{itemize}
+
+
+
 %%%===========================================================================
 \section{Iterating groups}\label{section:group_iteration}
 
@@ -51,11 +306,6 @@ int main(int argc,char **argv)
 
 %%%===========================================================================
 \section{Custom field chunks}\label{section:field_chunks}
-
-\
-
-%%%===========================================================================
-\section{Using algorithms}
 
 
 
