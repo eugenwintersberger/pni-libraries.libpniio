@@ -269,6 +269,26 @@ namespace nx{
         
         return create_field<T>(parent,path,shape,chunk,filter);
     }
+    
+    template<
+             typename T,
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE,
+             typename STYPE,
+             typename PATHT,
+             typename FILTERIMP
+            > 
+    nxobject<GTYPE,FTYPE,ATYPE> 
+    create_field(const nxobject<GTYPE,FTYPE,ATYPE> &parent,const PATHT &path,
+                 const STYPE &shape,const nxfilter<FILTERIMP> &filter)
+    {
+        //create the default filter
+        STYPE chunk(shape);
+        chunk.front() = 1;
+        
+        return create_field<T>(parent,path,shape,chunk,filter);
+    }
 
     //------------------------------------------------------------------------
     //!
