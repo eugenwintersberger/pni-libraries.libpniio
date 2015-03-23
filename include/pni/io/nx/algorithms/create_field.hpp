@@ -270,6 +270,36 @@ namespace nx{
         return create_field<T>(parent,path,shape,chunk,filter);
     }
     
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup algorithm_code
+    //! \brief field construction template
+    //!
+    //! This template does field construction with filters. Only the primary
+    //! shape of the field is given by the user. The chunk shape will be 
+    //! created automatically.
+    //! 
+    //! \throws invalid_object_error if the parent is not valid
+    //! \throws type_error if the data type is not supported
+    //! \throws size_mismatch_error if chunk-shape and shape do not
+    //! match
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam T data type of the new field
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \tparam STYPE shape type
+    //! \tparam PATHT path type
+    //! \tparam FILTERIMP filter implementation type
+    //!
+    //! \param parent the parent object for the field
+    //! \param path string or nxpath with the location of the field
+    //! \param shape the shape of the field
+    //! \param filter reference to the filter to use
+    //!
+    //! \return field type wrapped into an nxobject instance
+    //!
     template<
              typename T,
              typename GTYPE,
@@ -366,43 +396,29 @@ namespace nx{
     nxobject<GTYPE,FTYPE,ATYPE>
     create_field(const nxobject<GTYPE,FTYPE,ATYPE> &o,type_id_t tid,ARGTS...args)
     {
-        if(tid == type_id_t::UINT8)
-            return create_field<uint8>(o,args...);
-        else if(tid == type_id_t::INT8)
-            return create_field<int8>(o,args...);
-        else if(tid == type_id_t::UINT16)
-            return create_field<uint16>(o,args...);
-        else if(tid == type_id_t::INT16)
-            return create_field<int16>(o,args...);
-        else if(tid == type_id_t::UINT32)
-            return create_field<uint32>(o,args...);
-        else if(tid == type_id_t::INT32)
-            return create_field<int32>(o,args...);
-        else if(tid == type_id_t::UINT64)
-            return create_field<uint64>(o,args...);
-        else if(tid == type_id_t::INT64)
-            return create_field<int64>(o,args...);
-        else if(tid == type_id_t::FLOAT32)
-            return create_field<float32>(o,args...);
-        else if(tid == type_id_t::FLOAT64)
-            return create_field<float64>(o,args...);
-        else if(tid == type_id_t::FLOAT128)
-            return create_field<float128>(o,args...);
-        else if(tid == type_id_t::COMPLEX32)
-            return create_field<complex32>(o,args...);
-        else if(tid == type_id_t::COMPLEX64)
-            return create_field<complex64>(o,args...);
-        else if(tid == type_id_t::COMPLEX128)
-            return create_field<complex128>(o,args...);
-        else if(tid == type_id_t::BINARY)
-            return create_field<binary>(o,args...);
-        else if(tid == type_id_t::STRING)
-            return create_field<string>(o,args...);
-        else if(tid == type_id_t::BOOL)
-            return create_field<bool_t>(o,args...);
-        else
-            throw type_error(EXCEPTION_RECORD,
-                    "Unknown type id!");
+        switch(tid)
+        {
+            case type_id_t::UINT8:  return create_field<uint8>(o,args...);
+            case type_id_t::INT8:   return create_field<int8>(o,args...);
+            case type_id_t::UINT16: return create_field<uint16>(o,args...);
+            case type_id_t::INT16:  return create_field<int16>(o,args...);
+            case type_id_t::UINT32: return create_field<uint32>(o,args...);
+            case type_id_t::INT32:  return create_field<int32>(o,args...);
+            case type_id_t::UINT64: return create_field<uint64>(o,args...);
+            case type_id_t::INT64:  return create_field<int64>(o,args...);
+            case type_id_t::FLOAT32:  return create_field<float32>(o,args...);
+            case type_id_t::FLOAT64:  return create_field<float64>(o,args...);
+            case type_id_t::FLOAT128: return create_field<float128>(o,args...);
+            case type_id_t::COMPLEX32:  return create_field<complex32>(o,args...);
+            case type_id_t::COMPLEX64:  return create_field<complex64>(o,args...);
+            case type_id_t::COMPLEX128: return create_field<complex128>(o,args...);
+            case type_id_t::BINARY:     return create_field<binary>(o,args...);
+            case type_id_t::STRING:     return create_field<string>(o,args...);
+            case type_id_t::BOOL:       return create_field<bool_t>(o,args...);
+            default:
+                throw type_error(EXCEPTION_RECORD,
+                        "Unknown type id!");
+        };
     }
 
 //end of namespace

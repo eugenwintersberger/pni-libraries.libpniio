@@ -52,9 +52,22 @@ void create_group_test::tearDown()
     file.close();
 }
 
+//-----------------------------------------------------------------------------
+void create_group_test::test_group_name_only()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    auto gi = get_child(h5::nxobject(group),"instrument","");
+    h5::nxobject ng;
+    CPPUNIT_ASSERT_NO_THROW(ng = create_group(gi,"detector"));
+    CPPUNIT_ASSERT(is_valid(ng));
+    CPPUNIT_ASSERT(get_name(ng)=="detector");
+    CPPUNIT_ASSERT(get_class(ng)=="");
+    CPPUNIT_ASSERT(is_group(ng));
+}
 
 //-----------------------------------------------------------------------------
-void create_group_test::test_group()
+void create_group_test::test_group_name_and_class()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
@@ -63,6 +76,7 @@ void create_group_test::test_group()
     CPPUNIT_ASSERT_NO_THROW(ng = create_group(gi,"detector:NXdetector"));
     CPPUNIT_ASSERT(is_valid(ng));
     CPPUNIT_ASSERT(get_name(ng)=="detector");
+    CPPUNIT_ASSERT(get_class(ng)=="NXdetector");
     CPPUNIT_ASSERT(is_group(ng));
 }
 
@@ -79,12 +93,25 @@ void create_group_test::test_group_from_path()
     CPPUNIT_ASSERT(is_group(ng));
     CPPUNIT_ASSERT(get_name(ng) == "log");
     CPPUNIT_ASSERT(pni::io::nx::is_class(ng,"NXlog"));
-ng = create_group(gi, nxpath::from_string("../../entry2:NXentry"));
-    //CPPUNIT_ASSERT_NO_THROW();
+    CPPUNIT_ASSERT_NO_THROW(ng = create_group(gi, 
+                   nxpath::from_string("../../entry2:NXentry")));
     CPPUNIT_ASSERT(is_valid(ng));
     CPPUNIT_ASSERT(is_group(ng));
     CPPUNIT_ASSERT(get_name(ng) == "entry2");
     CPPUNIT_ASSERT(pni::io::nx::is_class(ng,"NXentry"));
+}
+
+//-----------------------------------------------------------------------------
+void create_group_test::test_errors()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    auto gi = get_child(h5::nxobject(group),"instrument","");
+    CPPUNIT_ASSERT_THROW(create_group(gi,":NXdetector"),value_error);
+    CPPUNIT_ASSERT_THROW(create_group(gi,":NXdetector/collection:NXcollection"),
+                         key_error);
+
+
 }
 
 //-----------------------------------------------------------------------------

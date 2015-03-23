@@ -172,6 +172,8 @@ namespace nx{
     //! group.  In order to successfully create a group at least the name 
     //! argument must be non-empty. If an empty string is passed as the groups 
     //! class then the NX_class attribute will not be set.
+    //! The function does not create intermediate groupw which do not exist.
+    //! In this case an key_error exception will be thrown.
     //!
     //! \throws invalid_object_error if the parent is not valid
     //! \throws key_error if an element in the path provided by the user does

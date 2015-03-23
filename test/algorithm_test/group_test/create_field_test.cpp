@@ -28,6 +28,23 @@
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(create_field_test<uint8>);
+CPPUNIT_TEST_SUITE_REGISTRATION(create_field_test<int8>);
+CPPUNIT_TEST_SUITE_REGISTRATION(create_field_test<uint16>);
+CPPUNIT_TEST_SUITE_REGISTRATION(create_field_test<int16>);
+CPPUNIT_TEST_SUITE_REGISTRATION(create_field_test<uint32>);
+CPPUNIT_TEST_SUITE_REGISTRATION(create_field_test<int32>);
+CPPUNIT_TEST_SUITE_REGISTRATION(create_field_test<uint64>);
+CPPUNIT_TEST_SUITE_REGISTRATION(create_field_test<int64>);
 
+CPPUNIT_TEST_SUITE_REGISTRATION(create_field_test<float32>);
+CPPUNIT_TEST_SUITE_REGISTRATION(create_field_test<float64>);
+CPPUNIT_TEST_SUITE_REGISTRATION(create_field_test<float128>);
+CPPUNIT_TEST_SUITE_REGISTRATION(create_field_test<complex32>);
+CPPUNIT_TEST_SUITE_REGISTRATION(create_field_test<complex64>);
+CPPUNIT_TEST_SUITE_REGISTRATION(create_field_test<complex128>);
+
+CPPUNIT_TEST_SUITE_REGISTRATION(create_field_test<bool_t>);
+CPPUNIT_TEST_SUITE_REGISTRATION(create_field_test<string>);
+CPPUNIT_TEST_SUITE_REGISTRATION(create_field_test<binary>);
 
 

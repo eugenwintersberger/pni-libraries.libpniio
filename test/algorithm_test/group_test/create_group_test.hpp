@@ -37,9 +37,11 @@ class create_group_test : public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(create_group_test);
         CPPUNIT_TEST(test_field);
-        CPPUNIT_TEST(test_group);
+        CPPUNIT_TEST(test_group_name_only);
+        CPPUNIT_TEST(test_group_name_and_class);
         CPPUNIT_TEST(test_group_from_path);
         CPPUNIT_TEST(test_attribute);
+        CPPUNIT_TEST(test_errors);
         CPPUNIT_TEST_SUITE_END();
 
         h5::nxfile file;
@@ -54,9 +56,11 @@ class create_group_test : public CppUnit::TestFixture
         void tearDown();
         
         void test_field();
-        void test_group();
+        void test_group_name_only();
+        void test_group_name_and_class();
         void test_group_from_path();
         void test_attribute();
+        void test_errors();
 
 };
 
