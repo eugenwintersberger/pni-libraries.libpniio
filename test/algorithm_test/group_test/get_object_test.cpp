@@ -82,6 +82,23 @@ void get_object_test::test_absolute()
 }
 
 //-----------------------------------------------------------------------------
+void get_object_test::test_relative_only()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    auto o = get_object(group,"../");
+    CPPUNIT_ASSERT(is_valid(o));
+    CPPUNIT_ASSERT(get_name(o)=="/");
+    CPPUNIT_ASSERT(get_class(o)=="NXroot");
+
+    o = get_object(root,"/:NXentry/:NXinstrument/:NXdetector");
+    o = get_object(o,"../../");
+    CPPUNIT_ASSERT(get_name(o)=="group");
+    CPPUNIT_ASSERT(get_class(o)=="NXentry");
+
+}
+
+//-----------------------------------------------------------------------------
 void get_object_test::test_relative()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;

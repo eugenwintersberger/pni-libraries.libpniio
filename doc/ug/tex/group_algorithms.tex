@@ -2,7 +2,7 @@
 The set of algorithms described in this section make only sense in connection 
 with a group object.
 
-%%%---------------------------------------------------------------------------
+%%%===========================================================================
 \subsubsection{\cppul{create\_field()}}
 
 The \cpp{create\_field} function template works only with an instance of
@@ -55,7 +55,7 @@ auto field = create_field(detector,type_id::FLOAT64,"background",shape,comp);
 where the second argument is the type ID of the desired data type. All other
 arguments are the same as for the previous versions of \cpp{create\_field}.
 
-%%%---------------------------------------------------------------------------
+%%%===========================================================================
 \subsubsection{\cppul{create\_group()}}
 
 Creating groups using algorithms is much more powerful than the standard
@@ -81,7 +81,7 @@ to determined position, name, and class of the new group.
 
 
 
-%%%---------------------------------------------------------------------------
+%%%===========================================================================
 \subsubsection{\cppul{get\_child()}}
 
 Retrieves the child of a group object. The child can be identified either by its
@@ -117,12 +117,12 @@ auto detector_1 = get_child(instrument,"det_1","NXdetector");
 In all, of the last three examples, if there are more than one instance in the 
 parent which would satisfy the requirement, the first one will be returned. 
 
-%%%---------------------------------------------------------------------------
+%%%===========================================================================
 \subsubsection{\cppul{get\_children()}}
 \todo[inline]{To be implemented}
 
 
-%%%---------------------------------------------------------------------------
+%%%===========================================================================
 \subsubsection{\cppul{get\_class()}}
 
 The \cpp{get\_class} function template works for instances of \nxgroup\ and
@@ -136,7 +136,8 @@ else
 \end{cppcode}
 If the attribute is not set or does not exist the function returns an empty
 string. 
-%%%---------------------------------------------------------------------------
+
+%%%===========================================================================
 \subsubsection{\cppul{get\_object()}}
 
 Aside from the \cpp{get\_child} function template, this is most probably one of
@@ -155,13 +156,14 @@ auto detector = ....;
 auto monitor  = get_object(detector,"/:NXentry/:NXmonitor");
 \end{cppcode}
 Quite similar to \cpp{get\_child}, if several objects exist that would match
-the path, the first one will be returned. 
+the path, the first one will be returned. The path to the object can be passed 
+either as a string or as an instance of \nxpath.
 
-%%%---------------------------------------------------------------------------
+%%%===========================================================================
 \subsubsection{\cppul{get\_objects()}}
 \todo[inline]{To be implemented!}
 
-%%%---------------------------------------------------------------------------
+%%%===========================================================================
 \subsubsection{\cppul{is\_class()}}
 
 The \cpp{is\_class} function template checks if a group is an instance of a
@@ -176,7 +178,7 @@ This function works for instances of \nxgroup\ as well as for \nxobject.  If
 \nxobject\ does not hold an instance of \nxgroup\ a \cpp{type\_error} exception
 will be thrown.
 
-%%%---------------------------------------------------------------------------
+%%%===========================================================================
 \subsubsection{\cppul{set\_class()}}
 
 Set the base class type for a particular group. 

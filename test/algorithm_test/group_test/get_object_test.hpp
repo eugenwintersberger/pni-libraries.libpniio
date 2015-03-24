@@ -38,6 +38,7 @@ class get_object_test : public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE(get_object_test);
         CPPUNIT_TEST(test_absolute);
         CPPUNIT_TEST(test_relative);
+        CPPUNIT_TEST(test_relative_only);
         CPPUNIT_TEST(test_errors);
         CPPUNIT_TEST_SUITE_END();
 
@@ -51,7 +52,7 @@ class get_object_test : public CppUnit::TestFixture
         
         void test_absolute();
         void test_relative();
-
+        void test_relative_only();
         void test_errors();
 
 };
