@@ -64,6 +64,15 @@ void get_class_test::test_group()
 }
 
 //-----------------------------------------------------------------------------
+void get_class_test::test_not_exists()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    auto o = create_group(object_type(group),"log");
+    CPPUNIT_ASSERT(get_class(o)=="");
+}
+
+//-----------------------------------------------------------------------------
 void get_class_test::test_field()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;

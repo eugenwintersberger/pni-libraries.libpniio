@@ -26,7 +26,6 @@
 #include<boost/current_function.hpp>
 
 #include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/algorithms/get_class.hpp>
 
@@ -39,6 +38,7 @@ class get_class_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_field);
         CPPUNIT_TEST(test_group);
         CPPUNIT_TEST(test_attribute);
+        CPPUNIT_TEST(test_not_exists);
         CPPUNIT_TEST_SUITE_END();
 
         h5::nxfile file;
@@ -55,6 +55,6 @@ class get_class_test : public CppUnit::TestFixture
         void test_field();
         void test_group();
         void test_attribute();
-
+        void test_not_exists();
 };
 

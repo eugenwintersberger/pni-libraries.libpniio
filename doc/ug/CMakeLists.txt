@@ -20,6 +20,9 @@ set(SOURCES tex/installation.tex
             tex/nexus_attributes.tex
             tex/nexus_links.tex
             tex/advanced_usage.tex
+            tex/group_algorithms.tex
+            tex/basic_algorithms.tex
+            tex/nxobject.tex
             )
 
 foreach(TEX_FILE ${SOURCES}) 

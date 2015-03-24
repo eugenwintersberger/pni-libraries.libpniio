@@ -56,7 +56,7 @@ namespace nx{
     ->decltype(get_parent(o))
     {
         typedef decltype(get_parent(o)) object_type;
-
+        
         object_type object(o); //convert the input always to nxobject
         if(!is_group(object))
             throw type_error(EXCEPTION_RECORD,"Function expects a group!");

@@ -1,0 +1,80 @@
+
+In section~\ref{chapter:basicusage} we have discussed the basic usage of
+\libpniio\ and the careful reader my already observed some missing concepts
+\begin{itemize}
+\item what is the mysterious return type of the \cpp{parent()} member function
+every field, group, or attribute possesses?
+\item if \cpp{nxgroup} is like a container -- can we use iteration with it?
+\end{itemize}
+Indeed solving the first riddle leads to a good solution for the iteration
+problem as both are coupled by the fact that \cpp{nxgroup} is not just a simple
+container type as the STL containers, it is rather a heterogeneous container. 
+
+%%%---------------------------------------------------------------------------
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \node[classnode] (nxobject) {\cpp{nxobject}};
+        \node[classnode,below left = of nxobject] (nxfield) {\cpp{nxfield}};
+        \node[classnode,below right = of nxobject] (nxgroup) {\cpp{nxgroup}};
+
+
+        \path[draw] (nxfield.north) |- ++(0cm,0.5cm)-|(nxobject.south);
+        \path[draw,->] (nxgroup.north) |- ++(0cm,0.5cm)-|(nxobject.south);
+    \end{tikzpicture}
+    \caption{{\small\label{fig:advanced:hierarchy}
+    The default procedure in OOP to obtain a mast object which can either represent a
+    field or a group would be inheritance. In this schema \nxfield\ and
+    \nxgroup\ are both descendants of \nxobject. 
+    }}
+\end{figure}
+%%%---------------------------------------------------------------------------
+
+But lets start at the beginning -- the return type of \cpp{parent()}. If we
+would have only fields and groups the situation would be easy: the return type
+of the \cpp{parent()} function for a field or group would always be
+\cpp{nxgroup} (as fields cannot have children for their own). 
+However, what about attributes. They can be attached to fields or groups. Thus,
+also the return type would be either a field or a group. Unfortunately, a
+function (and thus a method too) can only have one return type. We would need a
+return type that could represent either a field or a group. 
+The classical approach to solve such an issue in object oriented programming
+would be a class hierarchy as depicted in Fig.~\ref{fig:advanced:hierarchy}.
+
+However, this approach has some flaws. What interface should be base class
+expose. In fact, the parts of their interface \nxfield\ and \nxgroup have in
+common also matches those of \nxattribute\ too. However, all three classes are
+from a semantic point of view to different to be derived from a single base
+class.  There is also a less philosophical problem. \nxfield\ and \nxgroup\ are
+in fact templates whose template parameter is the implementation type (the same
+is true for \nxattribute). The basic idea was to implement a \emph{pointer to
+implementation} pattern with template (so in fact no pointers) following an
+approach presented by \cite{vandevoorde:2002}. This approach has severe
+consequences for a base class approach: as the base class would need access to
+the particular implementation and thus the implementation type, a class 
+hierarchy must be assembled for each implementation type. During the 
+development of \libpniio\ such an approach was once used and has proven to be 
+far to complex. 
+
+To circumvent all this issues and in general avoid design by inheritance (as
+suggested by \cite{gof:1995}) a different approach was taken. You may have
+already recognized in the API documentation an instance of type \nxobject. 
+\nxobject\ mimics a bit the behavior of a base class but in reality it is
+something entirely different. It is an instance of a \emph{variant} template 
+provided by the \cpp{boost::variant} library.
+\nxobject\ thus can hold either an instance of \nxgroup, \nxfield, or
+\nxattribute. It is thus the perfect return type for the \cpp{parent()} 
+member function of field, groups, and attributes. Indeed \nxobject\ is also what
+the \cpp{[]} operators and the \cpp{at()} member function of \nxgroup\ returns. 
+By the special design of the constructor as well as the assignment operator
+of \nxfield, \nxgroup, and \nxattribute, these objects can be directly
+constructed from an instance of \nxobject\ if the instance of \nxobject\ holds
+an instance of the appropriate type. 
+Thus, \nxobject\ is rather transparent to the user. 
+In the next sections \ref{section:algorithms} and \ref{section:group_iteration}
+we will see how to work with instance of \nxobject\ effectively.
+
+It is important to understand that \nxobject\ depends on the particular
+implementation in use. Thus it is part of the particular implementation
+namespace. As \libpniio\ currently only uses HDF5 the appropriate type would be 
+\cpp{h5::nxobject}.
