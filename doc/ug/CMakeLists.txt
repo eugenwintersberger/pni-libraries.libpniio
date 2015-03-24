@@ -23,6 +23,7 @@ set(SOURCES tex/installation.tex
             tex/group_algorithms.tex
             tex/basic_algorithms.tex
             tex/nxobject.tex
+            tex/field_attr_algorithms.tex
             )
 
 foreach(TEX_FILE ${SOURCES}) 
