@@ -44,7 +44,7 @@ int main(int argc,char **argv)
     runner.addTest(registry.makeTest());
     runner.eventManager().addListener(&progress);
     
-    std::ofstream os("algorithm_test.xml");
+    std::ofstream os("attribute_test.xml");
     runner.setOutputter(new CppUnit::XmlOutputter(&runner.result(),os));
     
     bool result = runner.run();
