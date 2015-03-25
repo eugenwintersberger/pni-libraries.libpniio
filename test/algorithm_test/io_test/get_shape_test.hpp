@@ -36,13 +36,14 @@ using namespace pni::io::nx;
 class get_shape_test : public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(get_shape_test);
-        CPPUNIT_TEST(test_field);
+        CPPUNIT_TEST(test_mdim_field);
+        CPPUNIT_TEST(test_scalar_field);
         CPPUNIT_TEST(test_group);
-        CPPUNIT_TEST(test_attribute);
+        CPPUNIT_TEST(test_mdim_attribute);
+        CPPUNIT_TEST(test_scalar_attribute);
         CPPUNIT_TEST_SUITE_END();
 
         h5::nxfile file;
-        h5::nxfield field;
         h5::nxgroup group,root;
 
         shape_t field_shape,attr_shape;
@@ -60,9 +61,11 @@ class get_shape_test : public CppUnit::TestFixture
         void setUp();
         void tearDown();
         
-        void test_field();
+        void test_mdim_field();
+        void test_scalar_field();
         void test_group();
-        void test_attribute();
+        void test_mdim_attribute();
+        void test_scalar_attribute();
 
 };
 

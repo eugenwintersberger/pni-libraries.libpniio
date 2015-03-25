@@ -35,18 +35,15 @@ void get_shape_test::setUp()
     field_shape = shape_t{0,10,10};
     attr_shape  = shape_t{4,4};
 
-    file = h5::nxfile::create_file("is_valid.nx",true);
+    file = h5::nxfile::create_file("get_shape_test.nxs",true);
     root = file.root();
     group = root.create_group("group","NXentry");
     group.create_group("instrument","NXinstrument");
-    field = root.create_field<uint32>("data",field_shape);
-    field.attributes.create<float32>("temp",attr_shape);
 }
 
 //-----------------------------------------------------------------------------
 void get_shape_test::tearDown() 
 { 
-    field.close();
     group.close();
     root.close();
     file.close();
@@ -63,29 +60,52 @@ void get_shape_test::test_group()
 }
 
 //-----------------------------------------------------------------------------
-void get_shape_test::test_field()
+void get_shape_test::test_mdim_field()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    h5::nxobject object = field;
+    
+    h5::nxfield field = group.create_field<float32>("tmp",field_shape);
+    h5::nxobject obj = field;
 
-    shape_t shape;
-
-    CPPUNIT_ASSERT_NO_THROW(shape = get_shape<shape_t>(object));
-    check_shape(shape,field_shape);
-    CPPUNIT_ASSERT_NO_THROW(shape = get_shape<shape_t>(field));
-    check_shape(shape,field_shape);
+    check_shape(field_shape,get_shape<shape_t>(field));
+    check_shape(field_shape,get_shape<shape_t>(obj));
 }
 
 //-----------------------------------------------------------------------------
-void get_shape_test::test_attribute()
+void get_shape_test::test_scalar_field()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    shape_t shape;
-    h5::nxobject object = field.attributes["temp"];
-    CPPUNIT_ASSERT_NO_THROW(shape = get_shape<shape_t>(object));
-    check_shape(shape,attr_shape);
-    CPPUNIT_ASSERT_NO_THROW(shape = get_shape<shape_t>(field.attributes["temp"]));
-    check_shape(shape,attr_shape);
+    h5::nxfield field = group.create_field<float32>("tmp");
+    h5::nxobject obj = field;
+
+    check_shape(shape_t{1},get_shape<shape_t>(field));
+    check_shape(shape_t{1},get_shape<shape_t>(obj));
 }
+
+//-----------------------------------------------------------------------------
+void get_shape_test::test_mdim_attribute()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    h5::nxattribute attr = group.attributes.create<float32>("strian",
+                           attr_shape);
+    h5::nxobject object = attr;
+    
+    check_shape(attr_shape,get_shape<shape_t>(attr));
+    check_shape(attr_shape,get_shape<shape_t>(object));
+}
+
+//-----------------------------------------------------------------------------
+void get_shape_test::test_scalar_attribute()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    h5::nxattribute attr = group.attributes.create<float32>("strian");
+    h5::nxobject object = attr;
+    
+    check_shape(shape_t{},get_shape<shape_t>(attr));
+    check_shape(shape_t{},get_shape<shape_t>(object));
+}
+
 

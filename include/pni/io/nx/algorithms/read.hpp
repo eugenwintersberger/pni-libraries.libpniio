@@ -238,8 +238,7 @@ namespace nx{
             result_type operator()(const attribute_type &a) 
             {
                 if(_selection.size())
-                    throw type_error(EXCEPTION_RECORD,
-                            "Partial IO currently not supported on attribute!");
+                    a(_selection).read(_data);
                 else
                     a.read(_data);
             }

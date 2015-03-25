@@ -32,9 +32,13 @@
 #include <pni/io/nx/algorithms/write.hpp>
 #include <pni/io/nx/nxobject_traits.hpp>
 
+#include "../../uniform_distribution.hpp"
+#include "../../EqualityCheck.hpp"
+
 using namespace pni::core;
 using namespace pni::io::nx;
 
+template<typename T>
 class read_write_test : public CppUnit::TestFixture
 {
         CPPUNIT_TEST_SUITE(read_write_test);
@@ -44,24 +48,37 @@ class read_write_test : public CppUnit::TestFixture
         CPPUNIT_TEST(test_field_object_partial);
         CPPUNIT_TEST(test_group);
         CPPUNIT_TEST(test_attribute_full);
-        CPPUNIT_TEST(test_attribute_string);
+        CPPUNIT_TEST(test_attribute_partial);
+        CPPUNIT_TEST(test_attribute_object_full);
+        CPPUNIT_TEST(test_attribute_object_partial);
         CPPUNIT_TEST_SUITE_END();
 
-        h5::nxfile file;
+        typedef T value_type;
+        typedef uniform_distribution<value_type> distribution_type;
+        typedef std::vector<value_type> container_type;
+        typedef dynamic_array<value_type> array_type;
+        typedef nxobject_trait<nximp_code::HDF5>::object_type object_type;
+
+        container_type buffer;
+        distribution_type random_generator;
+
+        h5::nxfile  file;
         h5::nxfield field;
-        h5::nxgroup group,root;
+        h5::nxgroup root;
         h5::nxattribute attribute;
 
-        shape_t field_shape,attr_shape;
+        shape_t shape;
+        array_type wbuffer;
+        array_type rbuffer;
+        slice sl1,sl2;
 
-        typedef dynamic_array<uint32> farray_t;
-        typedef dynamic_array<int16> aarray_t;
-        typedef nxobject_trait<nximp_code::HDF5>::object_type object_type;
-        farray_t field_wdata;
-        farray_t field_rdata;
-        aarray_t attr_wdata;
-        aarray_t attr_rdata;
-
+        template<typename CTYPE> void is_equal(const CTYPE &a,const CTYPE &b)
+        {
+            for(auto aiter = a.begin(),biter=b.begin();
+                     aiter!=a.end();
+                     ++aiter,++biter)
+                check_equality(*aiter,*biter);
+        }
         
     public:
         void setUp();
@@ -73,6 +90,178 @@ class read_write_test : public CppUnit::TestFixture
         void test_field_object_partial();
         void test_group();
         void test_attribute_full();
-        void test_attribute_string();
+        void test_attribute_partial();
+        void test_attribute_object_full();
+        void test_attribute_object_partial();
 };
 
+//-----------------------------------------------------------------------------
+template<typename T>
+void read_write_test<T>::setUp()
+{
+    shape = shape_t{2,3,5};
+
+    file = h5::nxfile::create_file("read_write_test.nxs",true);
+    root = file.root();
+    field     = root.create_field<value_type>("data",shape);
+    attribute = field.attributes.create<value_type>("temp",shape);
+
+    random_generator = distribution_type();
+    buffer = container_type(field.size());
+    std::generate(buffer.begin(),buffer.end(),random_generator);
+
+    wbuffer = array_type::create(shape,buffer);
+    rbuffer = array_type::create(shape);
+    sl1 = slice(0,3);
+    sl2 = slice(0,5);
+}
+
+//-----------------------------------------------------------------------------
+template<typename T>
+void read_write_test<T>::tearDown() 
+{ 
+    attribute.close();
+    field.close();
+    root.close();
+    file.close();
+}
+
+//-----------------------------------------------------------------------------
+template<typename T>
+void read_write_test<T>::test_group()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        
+    object_type object = root;
+    CPPUNIT_ASSERT_THROW(write(object,array_type()),type_error);
+
+}
+
+//-----------------------------------------------------------------------------
+template<typename T>
+void read_write_test<T>::test_field_full()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+   
+    CPPUNIT_ASSERT_NO_THROW(write(field,wbuffer));
+    CPPUNIT_ASSERT_NO_THROW(read(field,rbuffer));
+
+    is_equal(wbuffer,rbuffer);
+}
+
+//-----------------------------------------------------------------------------
+template<typename T>
+void read_write_test<T>::test_field_object_full()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    object_type object = field;
+   
+    CPPUNIT_ASSERT_NO_THROW(write(object,wbuffer));
+    CPPUNIT_ASSERT_NO_THROW(read(object,rbuffer));
+
+    is_equal(wbuffer,rbuffer);
+}
+
+//-----------------------------------------------------------------------------
+template<typename T>
+void read_write_test<T>::test_field_partial()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    wbuffer = array_type::create(shape_t{3,5});
+    rbuffer = array_type::create(shape_t{3,5});
+
+    //write data
+    for(size_t i=0;i<2;++i)
+    {
+        std::generate(wbuffer.begin(),wbuffer.end(),random_generator);
+        CPPUNIT_ASSERT_NO_THROW(write(field,wbuffer,i,sl1,sl2));
+        CPPUNIT_ASSERT_NO_THROW(read(field,rbuffer,i,sl1,sl2));
+
+        is_equal(wbuffer,rbuffer);
+    }
+}
+
+//-----------------------------------------------------------------------------
+template<typename T>
+void read_write_test<T>::test_field_object_partial()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    object_type object = field;
+    wbuffer = array_type::create(shape_t{3,5});
+    rbuffer = array_type::create(shape_t{3,5});
+
+    //write data
+    for(size_t i=0;i<2;++i)
+    {
+        std::generate(wbuffer.begin(),wbuffer.end(),random_generator);
+        CPPUNIT_ASSERT_NO_THROW(write(object,wbuffer,i,sl1,sl2));
+        CPPUNIT_ASSERT_NO_THROW(read(object,rbuffer,i,sl1,sl2));
+        is_equal(wbuffer,rbuffer);
+    }
+}
+
+//-----------------------------------------------------------------------------
+template<typename T>
+void read_write_test<T>::test_attribute_full()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    CPPUNIT_ASSERT_NO_THROW(write(attribute,wbuffer));
+    CPPUNIT_ASSERT_NO_THROW(read(attribute,rbuffer));
+
+    is_equal(wbuffer,rbuffer);
+}
+
+//-----------------------------------------------------------------------------
+template<typename T>
+void read_write_test<T>::test_attribute_object_full()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    h5::nxobject object = attribute;
+    
+    CPPUNIT_ASSERT_NO_THROW(write(object,wbuffer));
+    CPPUNIT_ASSERT_NO_THROW(read(object,rbuffer));
+
+    is_equal(wbuffer,rbuffer);
+}
+//-----------------------------------------------------------------------------
+template<typename T>
+void read_write_test<T>::test_attribute_partial()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+
+    wbuffer = array_type::create(shape_t{3,5});
+    rbuffer = array_type::create(shape_t{3,5});
+
+    //write data
+    for(size_t i=0;i<2;++i)
+    {
+        std::generate(wbuffer.begin(),wbuffer.end(),random_generator);
+        CPPUNIT_ASSERT_NO_THROW(write(attribute,wbuffer,i,sl1,sl2));
+        CPPUNIT_ASSERT_NO_THROW(read(attribute,rbuffer,i,sl1,sl2));
+        is_equal(wbuffer,rbuffer);
+    }
+}
+//-----------------------------------------------------------------------------
+template<typename T>
+void read_write_test<T>::test_attribute_object_partial()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    h5::nxobject object = attribute;
+
+    wbuffer = array_type::create(shape_t{3,5});
+    rbuffer = array_type::create(shape_t{3,5});
+
+    //write data
+    for(size_t i=0;i<2;++i)
+    {
+        std::generate(wbuffer.begin(),wbuffer.end(),random_generator);
+        write(object,wbuffer,i,sl1,sl2);
+        CPPUNIT_ASSERT_NO_THROW(write(object,wbuffer,i,sl1,sl2));
+        CPPUNIT_ASSERT_NO_THROW(read(object,rbuffer,i,sl1,sl2));
+        is_equal(wbuffer,rbuffer);
+    }
+}

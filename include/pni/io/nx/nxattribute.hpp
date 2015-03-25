@@ -612,6 +612,22 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
+            attribute_type operator()(const std::vector<slice> &indices) const
+            {
+                //generate a copy of the attribute
+                attribute_type a(*this);
+
+                //generate a selection vector
+                typename type_type::selection_vector_type selection(indices.size());
+                std::copy(indices.begin(),indices.end(),selection.begin());
+
+                //apply the selection
+                a._imp.apply_selection(selection);
+
+                return a;
+            }
+
+            //-----------------------------------------------------------------
             //!
             //! \brief return parent object
             //! 
