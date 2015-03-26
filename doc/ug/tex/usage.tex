@@ -48,3 +48,9 @@ add_executable(myprog ${SOURCE})
 target_link_libraries(myprog ${PNIIO_LIBRARIES})
 \end{minted}
 
+\section{Dealing with updates and bug fixes}
+
+Like \libpnicore, \libpniio\ is for most of its parts a template library. This
+ensures good performance but comes at a price. Unlike binary only libraries
+programs have to be rebuilt when a new version of \libpniio\ shall be used. 
+

@@ -1,0 +1,142 @@
+Chunking is an important issue but requires some more detailed information about
+how the data is stored. That's why this section concludes this advanced usage
+chapter. Chunking is particularly important for multidimensional data. 
+The chunking feature is unique to the HDF5 library und thus maybe not available 
+in future other implementations.
+
+\subsection{What are chunks?}
+
+%%%---------------------------------------------------------------------------
+\begin{figure}[tb]
+    \centering
+    \begin{tikzpicture}
+        \node (data) {
+        \begin{tikzpicture}
+            \draw[thick,step=0.5cm] (0,0) grid (10cm,3cm);
+        \end{tikzpicture}
+        };
+
+        \node[above left = -0cm and -0.25cm of data] (origin) {(0,0)};
+        \draw[->] (origin.south) -- node[below=0.5cm] {i} +(0,-1cm);
+        \draw[->] (origin.east) -- node[right=0.5cm] {j} +(1cm,0);
+
+        \begin{scope}[on background layer]
+        \node[rectangle,rounded corners,draw,fit=(origin)(data)](frame){};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{{\small\label{fig:no_chunks}
+    Nexus field without chunks: $i$ denotes the slow and $j$ the fast dimension.
+    The entire field has to be written as once.
+    }}
+\end{figure}
+%%%---------------------------------------------------------------------------
+Without chunking a field is always accessed as a whole. This can be severe issue
+if the field is very large (maybe even larger than the available main memory).
+Figure~\ref{fig:no_chunks} shows such a situation. 
+Consequently, whenever data is accessed the entire field has to be read or
+written from and to the disk.
+In order to avoid this situation data can be subdivided in to smaller
+\emph{chunks}. Assuming a multidimensional field, chunks can be considered as
+slices (selections) within this field. A single chunk is contiguously written to
+disk. However, the next chunk might be written on an entirely different location
+within the file rather than 
+In order to avoid this situation data is written in smaller portions: the so
+called \emph{chunks}. A chunk can be considered a slice of the multidimensional
+field which should be written. This slice represents the unit of data which 
+is contiguously written to disk. 
+%%%---------------------------------------------------------------------------
+\begin{figure}[tb]
+    \centering
+    \begin{tikzpicture}
+        \node[outer sep=0cm,node distance=0cm] (cl1) 
+        { \tikz\draw[thick,step=0.25cm] (0,0) grid +(5cm,0.25cm);};
+
+        \foreach \co / \ca in {1/2,2/3,3/4,4/5}
+            \node[below = -0.28cm of cl\co,outer sep=0cm,node distance=0cm]
+            (cl\ca) 
+            { \tikz\draw[thick,step=0.25cm] (0,0) grid +(5cm,0.25cm);};
+
+        %%%---------------draw the chunks--------------------------------
+        \node[above right = 0cm and 1cm of cl1] (chunk1) {
+        \tikz \draw[thick,step=0.25cm] (0,0) grid +(5cm,0.25cm);
+        };
+
+        \foreach \co / \ca in {1/2,2/3,3/4,4/5}
+            \node[below = 0cm of chunk\co] (chunk\ca) {
+            \tikz \draw[thick,step=0.25cm] (0,0) grid +(5cm,0.25cm);
+            };
+
+        %%%-----------------draw connections between chunks and slices--------
+        \foreach \cn in {1,2,3,4,5}
+            \draw[thick,->] (cl\cn.east) -- (chunk\cn.west);
+       
+        %%%---------------draw chunk index------------------------------------
+        \foreach \cn in {1,2,3,4,5}
+            \node[right = 0cm of chunk\cn,red] {\cn};
+
+        \node[above=of cl1] {field without chunks};
+        \node[above=of chunk1] {field with chunks};
+
+    \end{tikzpicture}
+    \caption{{\small\label{fig:with_chunks}
+    The field from Fig.~\ref{fig:no_chunks} is distributed over several chunks. 
+    In this case the chunks are chosen along the fast dimension of the field 
+    which is usually a good choice (assuming C-ordering of multidimensional
+    data). The red numbers indicate the chunk index. The individual chunks do
+    not have to be stored consecutively  in memory.
+    }}
+\end{figure}
+%%%---------------------------------------------------------------------------
+Figure~\ref{fig:with_chunks} shows an example how a \nexus\ field is distributed
+over several chunks. In this example the chunks have been chosen along the 
+fast dimension. This is typically a good choice if multidimensional data is
+stored in C-order. 
+Chunking is entirely transparent to the user. The way how fields are distributed
+in chunks does not influence the read and write functions. However, it can have
+significant influence on the performance. This is particularly true when using
+compression. Without chunks the entire field is compressed. This can cause
+dramatic performance penalties when accessing data as the entire data must be
+read from disk and afterwards been inflated. When using chunks the compression
+is only applied to a single chunk. Though this may slightly reduced the
+compression ration which can be achieved, it can given an extreme performance
+boost when reading data. Only the chunk where the requested data resides in must
+be read from disk and being inflated. 
+
+\subsection{Setting the chunk shape}
+
+The size of a chunk must be set during field creation. Usually you do not have
+to care about chunking. By default \libpniio\ sets the chunks shape to a
+reasonable value. However, in some special cases you may want to use a 
+custom chunk shape. 
+This can be done with the \nxgroup\ member function templates used to create
+field, and with the corresponding algorithm function. 
+For the former one you can use
+\begin{cppcode}
+h5::nxgroup detector = get_object(root,":NXentry/:NXinstrument/:NXdetector");
+
+shape_t shape = {0,1024,1024};
+shape_t chunk = {1,1024,1024};
+
+h5::nxfield data = detector.create_field<uint32>("data",shape,chunk);
+\end{cppcode}
+Here we start with shape where the first dimension is $0$. The idea is to grow
+the field along this dimension with every detector frame which should be stored. 
+The chunk shape, however, must not be of size $0$ (it would also not make
+sense). We chose here a chunk shape which covers a single frame. For 2D
+detectors this is a quite reasonable choice. 
+This can also be used along with a compression filter
+\begin{cppcode}
+h5::nxdeflate_filter comp(2,true);
+h5::nxgroup detector = get_object(root,":NXentry/:NXinstrument/:NXdetector");
+
+shape_t shape = {0,1024,1024};
+shape_t chunk = {1,1024,1024};
+
+h5::nxfield data = detector.create_field<uint32>("data",shape,chunk,comp);
+\end{cppcode}
+The same is true for algorithms version of \cpp{create\_field}. The last line of
+the above snippet would change to
+\begin{cppcode}
+h5::nxfield data = create_field(h5::nxobject(detector),"data",shape,chunk,comp);
+\end{cppcode}
+

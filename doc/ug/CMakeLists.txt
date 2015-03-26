@@ -24,6 +24,8 @@ set(SOURCES tex/installation.tex
             tex/basic_algorithms.tex
             tex/nxobject.tex
             tex/field_attr_algorithms.tex
+            tex/chunks.tex
+            tex/removing_objects.tex
             )
 
 foreach(TEX_FILE ${SOURCES}) 
