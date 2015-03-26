@@ -3,6 +3,8 @@ set(SOURCES nxpath_tests.cpp
             nxpath_create_test.cpp
             nxpath_push_test.cpp
             nxpath_pop_test.cpp
+            test_element_equality.cpp
+            nxpath_equality_test.cpp
            )
 
 set(PARSERSRC nxpath_parser_tests.cpp 

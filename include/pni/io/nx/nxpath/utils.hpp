@@ -244,6 +244,18 @@ namespace nx{
     //--------------------------------------------------------------------------
     //!
     //! \ingroup nxpath_code
+    //! \brief equality operator for path elements
+    //! 
+    //! 
+    bool operator==(const nxpath::element_type &a,
+                    const nxpath::element_type &b);
+
+    bool operator!=(const nxpath::element_type &a,
+                    const nxpath::element_type &b);
+
+    //--------------------------------------------------------------------------
+    //!
+    //! \ingroup nxpath_code
     //! \brief equality operator for two path objects
     //!
     //! Compare to path objects. They are considered equal if both paths 

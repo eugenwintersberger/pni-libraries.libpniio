@@ -171,6 +171,110 @@ namespace nx{
         return i;
     }
 
+    //========================================================================
+    // Utility functions for the implementation of the element equality check
+    //
+    bool rule_1(const nxpath::element_type &a,
+                const nxpath::element_type &b)
+    {
+        if(is_complete(a) && is_complete(b))
+            return (a.first==b.first) && (a.second == b.second);
+        else 
+            return false;
+    }
+
+    //------------------------------------------------------------------------
+    bool rule_2_applies(const nxpath::element_type &a,
+                        const nxpath::element_type &b)
+    {
+        if(!a.second.empty() && !b.second.empty())
+        {
+            if(a.first.empty() && !b.first.empty())
+                return true;
+            else if(!a.first.empty() && b.first.empty())
+                return true;
+            else
+                return false;
+        }
+
+        return false;
+    }
+
+    //------------------------------------------------------------------------
+    inline bool both_no_name(const nxpath::element_type &a,
+                      const nxpath::element_type &b)
+    {
+        return a.first.empty() && b.first.empty();
+    }
+
+    //------------------------------------------------------------------------
+    inline bool both_no_class(const nxpath::element_type &a,
+                              const nxpath::element_type &b)
+    {
+        return a.second.empty() && b.second.empty();
+    }
+
+    //------------------------------------------------------------------------
+    inline bool both_have_name(const nxpath::element_type &a,
+                               const nxpath::element_type &b)
+    {
+        return !a.first.empty() && !b.first.empty();
+    }
+
+    //------------------------------------------------------------------------
+    inline bool both_have_class(const nxpath::element_type &a,
+                                const nxpath::element_type &b)
+    {
+        return !a.second.empty() && !b.second.empty();
+    }
+
+    //------------------------------------------------------------------------
+    bool rule_3_applies(const nxpath::element_type &a,
+                        const nxpath::element_type &b)
+    {
+        if(both_no_name(a,b) && both_have_class(a,b))
+            return true;
+        else if(both_have_name(a,b) && both_no_class(a,b))
+            return true;
+        else 
+            return false;
+    }
+
+    //------------------------------------------------------------------------
+    bool rule_3(const nxpath::element_type &a,
+                const nxpath::element_type &b)
+    {
+        if(both_no_name(a,b))
+            return a.second == b.second;
+        else if(both_no_class(a,b))
+            return a.first == b.first;
+        else
+            return false;
+    }
+
+    //-------------------------------------------------------------------------
+    bool operator==(const nxpath::element_type &a,
+                    const nxpath::element_type &b)
+    {
+        //if both are complete paths we have to check the equality of 
+        //each of their elements
+        if(rule_1(a,b)) return true;
+        
+        if(rule_2_applies(a,b))
+            return a.second == b.second;
+
+        if(rule_3_applies(a,b)) return rule_3(a,b);
+    
+        return false;
+    }
+
+    //-------------------------------------------------------------------------
+    bool operator!=(const nxpath::element_type &a,
+                    const nxpath::element_type &b)
+    {
+        return !(a==b);
+    }
+
     //--------------------------------------------------------------------------
     bool operator==(const nxpath &lhs,const nxpath &rhs)
     {
@@ -178,12 +282,12 @@ namespace nx{
 
         if(rhs.size() != lhs.size()) return false;
 
-        for(auto lhs_iter = lhs.begin(), rhs_iter = rhs.begin();
-                 lhs_iter != lhs.end();
-                 ++lhs_iter,++rhs_iter)
+        for(auto liter = lhs.begin(),riter = rhs.begin();
+                 liter!=lhs.end();
+                 ++liter,++riter)
         {
-            if((lhs_iter->first != rhs_iter->first)||
-               (lhs_iter->second != rhs_iter->second)) return false;
+            if(*liter!=*riter)
+                return false;
         }
 
         if(lhs.attribute() != rhs.attribute()) return false;

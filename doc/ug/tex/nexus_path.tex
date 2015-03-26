@@ -133,13 +133,75 @@ The latter condition is equivalent to the convention used for Unix file system
 paths while the former requires some explanation. 
 If the \fsection\ is not empty the \osection\ has to be considered absolute
 otherwise we would not know where to start searching for objects. 
-If no \fsection\ is provided the path can also be a relative path which
-references an object relative to an already given parent object.
+If no \fsection\ is provided the path can also refer to an object relative to
+a particular parent object.
 \todo{maybe we should present some example here}
 
 The \nexus-path implementation provided by \libpniio\ also understands 
 \cgroup\ and \pgroup\ where the former one refers to the current group while 
 the latter one to the parent group of the current group.
+
+%%%===========================================================================
+\subsection{Equality of two \nexus-paths}
+
+A critical question is when to consider two \nexus-paths as being equal. 
+In the most general case one would say: two paths are equal if they \emph{can}
+reference the same object. In the case of \nexus\ this leads to an interesting 
+effect. Consider the following three paths
+\begin{verbatim}
+a = /entry/instrument/detector/data
+b = /entry:NXentry/instrument:NXinstrument/detector:NXdetector/data
+c = /:NXentry/:NXinstrument/:NXdetector/data
+\end{verbatim}
+and ask the question which of these three paths are equivalent (can address the
+same object in a \nexus-tree). All three paths could be used to address the 
+data field in the detector group of the file. However, it would be difficult to 
+prove only from the paths themselves that this is the case. While $a=b$ and
+$b=c$ is relatively simple, what about $a=c$? While $a$ does not provide 
+any type information, $c$ has all the names removes (except for the name of the
+field). The only thing $a$ and $c$ have in common is the name of the field 
+they refer to.
+
+An easier approach might be to ask for the equality of two elements, $a$ and
+$b$, of the 
+\osection\ of a path. The obvious case for equality is if 
+\begin{quote}
+    $a$ and $b$ are considered to be equal if their name and class strings are
+    equal. 
+\end{quote}
+For instance, let $a=(\mathrm{entry},\mathrm{NXentry})$ and
+$b=(\mathrm{entry},\mathrm{NXentry})$. According to the previous rule $a=b$.
+
+Furthermore, we can propose a second rule
+\begin{quote}
+    $a$ and $b$ can be considered equal if their class component is equal 
+    and only one of them has the name attribute set. 
+\end{quote}
+This would be the case if $a=(,\mathrm{NXentry})$ and
+$b=(\mathrm{entry},\mathrm{NXentry})$. This is somehow logical if we consider
+that $a$ is just a more general version of $b$. However, it is crucial that only
+one of them has a non empty name attribute. Otherwise this rule would violate
+rule one.
+
+The third rule states
+\begin{quote}
+    If $a$ and $b$ have both either their name \emph{or} their class attribute
+    set and those are equal.
+\end{quote}
+For names $a$ and $b$ would be equal for instance of $a(\mathrm{entry},)$ and 
+$b=(\mathrm{entry},)$. The same is true for the class attribute. 
+$a$ and $b$ are equal if $a=(,\mathrm{NXentry})$ and $b=(,\mathrm{NXentry})$.
+
+In all other cases $a$ and $b$ would be not equal. For instance $a\not=b$ if 
+$a=(\mathrm{entry},)$ and $b=(,\mathrm{NXentry})$. It is also clear that for
+fields (which have only a name) the name must be equivalent to be considered as
+equal. 
+
+This rules also solve the above problem. Indeed $a=b$ and $b=c$ but $a\not=c$. 
+This may sounds awkward from a mathematical point of view. But it has several
+advantages as will be shown later.
+The comparison operators for \cpp{nxpath::element\_type} are implemented
+following the above rules.
 
 %%%===========================================================================
 \subsection{Examples}
