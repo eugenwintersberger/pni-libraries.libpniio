@@ -1,5 +1,8 @@
 %%%documentation concerning the XML functions
 
+In many cases (see Section~\ref{sec:xml::usecases}) an ASCII representation of a
+\nexus-file is required. 
+
 As \nexus\ organizes data objects in a tree like manner, XML is the obvious ASCII
 representation for a \nexus\ file.
 \libpniio\ thus provides a small but powerful set of functions to read and write 
@@ -24,33 +27,10 @@ interfaces and described in section~\ref{sec:xml:basic}.
 %%%---------------------------------------------------------------------------
 \section{Use cases}\label{sec:xml:usecases}
 
-XML is a powerful and mature technology for representing structured data in 
-ASCII. Though it has received some competitors like JSON, when it comes to 
-complex structures XML is still the tool of choice\footnote{In fact, JSON
-becomes quickly virtually unreadable if the structure becomes too deeply
-nested.}
-In this section some use cases for \nexus\ and XML will be presented. 
-
-\subsection{Standard compliance verification of a file}
-
-An always recurring request is the possibility to check a \nexus\ file with
-respect to its compliance to the current standard. As the \nexus\ standard 
-itself is defined in XML it would be reasonable to create an XML representation
-of the file to check and use one of the available XML validation tools to 
-verify the compliance of the file towards a particular standard. 
-Using the XML representation of the file instead of the file directly has 
-several advantages 
-\begin{itemize}
-\item being rather small, the XML representation can also be transfered 
-over the network using a remote service for validation
-\item it is at least in principle human readable 
-\item many of the required tools already exist. 
-\end{itemize}
-On step in this entire process is to convert a \nexus\ file to its ASCII XML 
-representation.
-
 \subsection{Generating \nexus\ structures from XML}
 
+\nexus-files, when properly used, can store much more information than a typical
+ASCII data file.
 The structure of a \nexus\ file can become rather complex. In a rather complex 
 environment like at a synchrotron beamline it would be naive to use static 
 code to create the file. A more feasible approach would be to implement 
