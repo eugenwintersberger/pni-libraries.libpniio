@@ -36,6 +36,8 @@ void get_object_test::setUp()
     root = file.root();
     group = root.create_group("group","NXentry");
     h5::nxgroup tg = group.create_group("instrument","NXinstrument");
+    tg.create_group("with.dot");
+    tg.create_group("without_dot");
     tg.create_group("detector","NXdetector");
     tg.create_field<uint32>("data",shape_t{0,1024,1024});
     tg.create_group("source","NXsource");
@@ -124,5 +126,9 @@ void get_object_test::test_errors()
 
     p = nxpath::from_string(":NXinstrument@hello");
     CPPUNIT_ASSERT_THROW(get_object(group,p),key_error);
+
+    CPPUNIT_ASSERT_THROW(get_object(root,":NXentry/:NXinstrument/with.dot"),
+            pni::io::parser_error);
+    CPPUNIT_ASSERT_NO_THROW(get_object(root,":NXentry/:NXinstrument/without_dot"));
 }
 
