@@ -1,5 +1,6 @@
 set(SOURCES field_inquery_fixture.cpp
             field_to_xml_fixture.cpp
+            field_from_xml_fixture.cpp
             )
 
 set(XMLFILES field1.xml
