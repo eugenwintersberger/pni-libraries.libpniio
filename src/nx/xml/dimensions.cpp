@@ -21,6 +21,7 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
+#include <pni/io/nx/xml/node_data.hpp>
 #include <pni/io/nx/xml/dimensions.hpp>
 
 namespace pni{
@@ -28,10 +29,6 @@ namespace io{
 namespace nx{
 namespace xml{
 
-    attribute_data dimensions::index_attribute = attribute_data("index");
-    attribute_data dimensions::value_attribute = attribute_data("value");
-    attribute_data dimensions::rank_attribute  = attribute_data("rank");
-    
     bool operator<(const index_value_type &lhs,const index_value_type &rhs)
     {
         return lhs.first<rhs.first;
@@ -51,14 +48,18 @@ namespace xml{
      index_value_type dimensions::index_value_from_node(const node &dim_node)
     {
         size_t_parser_type p;
-        return {p(index_attribute.read(dim_node)),
-                p(value_attribute.read(dim_node))};
+        node index_attribute = get_attribute(dim_node,"index");
+        node value_attribute = get_attribute(dim_node,"value");
+
+        return {p(node_data::read(index_attribute)),
+                p(node_data::read(value_attribute))};
     }
 
      //-----------------------------------------------------------------------
      size_t dimensions::rank(const node &dim)
      {
-        return size_t_parser_type()(rank_attribute.read(dim));
+        node type_attribute = get_attribute(dim,"rank");
+        return size_t_parser_type()(node_data::read(type_attribute));
      }
 
      //-----------------------------------------------------------------------

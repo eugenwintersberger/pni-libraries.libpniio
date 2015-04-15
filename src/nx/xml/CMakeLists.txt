@@ -1,6 +1,4 @@
-set(SOURCES 
-            attribute_data.cpp 
-            node_data.cpp 
+set(SOURCES node_data.cpp 
             node.cpp
             io_object.cpp
             dimensions.cpp

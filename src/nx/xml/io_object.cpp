@@ -30,10 +30,6 @@ namespace io{
 namespace nx{
 namespace xml{
 
-    attribute_data io_object::name_attribute = attribute_data("name");
-    attribute_data io_object::type_attribute = attribute_data("type");
-
-
     //------------------------------------------------------------------------
     size_t io_object::size(const node &io_node)
     {
@@ -55,7 +51,8 @@ namespace xml{
     //------------------------------------------------------------------------
     string io_object::name(const node &io_node)
     {
-        return name_attribute.read(io_node);
+        node name_attribute = get_attribute(io_node,"name");
+        return node_data::read(name_attribute);
     }
     
     //------------------------------------------------------------------------
@@ -71,7 +68,8 @@ namespace xml{
     //------------------------------------------------------------------------
     type_id_t io_object::type_id(const node &io_node)
     {
-        return type_id_from_str(type_attribute.read(io_node));
+        node type_attribute = get_attribute(io_node,"type");
+        return type_id_from_str(node_data::read(type_attribute));
     }
     
 //end of namespace

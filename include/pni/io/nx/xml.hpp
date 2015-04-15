@@ -22,9 +22,8 @@
 #pragma once
 
 #include "xml/node.hpp"
-#include "xml/object_data.hpp"
 #include "xml/node_data.hpp"
-#include "xml/attribute_data.hpp"
+#include "xml/dimensions.hpp"
 //#include "xml/nexus_to_xml.hpp"
 //#include "xml/node_data.hpp"
 //#include "xml/xml_to_nexus.hpp"

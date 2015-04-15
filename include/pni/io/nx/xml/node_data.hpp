@@ -25,7 +25,6 @@
 #include "../../exceptions.hpp"
 #include "node.hpp"
 #include "default.hpp"
-#include "object_data.hpp"
 
 namespace pni{
 namespace io{
@@ -38,7 +37,7 @@ namespace xml{
     //! 
     //! This child class of object_data manages data IO for XML nodes.
     //! 
-    class node_data : public object_data
+    class node_data
     {
         public:
 
@@ -52,7 +51,7 @@ namespace xml{
             //! \param n node from which to read
             //! \return data as string
             //! 
-            virtual string read(const node &n) const;
+            static string read(const node &n);
    
             //----------------------------------------------------------------
             //!
@@ -61,10 +60,10 @@ namespace xml{
             //! Data passed by the user will be written unaltered to to the 
             //! node. Already existing data will be replaced.
             //! 
-            //! \param data the data which to write to the node
             //! \param n the node to which to write
+            //! \param data the data which to write to the node
             //! 
-            virtual void write(const string &data,node &n) const; 
+            static void write(node &n,const string &data); 
 
     };
 

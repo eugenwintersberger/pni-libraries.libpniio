@@ -1,7 +1,6 @@
 set(SOURCES node_data.cpp
-            node_scalar_data_fixture.cpp
-            node_array_data_fixture.cpp
-            node_inquery_data_fixture.cpp
+            child_node_io_fixture.cpp
+            attribute_node_io_fixture.cpp
     )
 
 

@@ -30,7 +30,7 @@ namespace io{
 namespace nx{
 namespace xml{
 
-    string node_data::read(const node &n) const
+    string node_data::read(const node &n) 
     {
         string data = n.data();
         boost::algorithm::trim(data);
@@ -38,7 +38,7 @@ namespace xml{
     }
 
     //-------------------------------------------------------------------------
-    void node_data::write(const string &data,node &n) const
+    void node_data::write(node &n,const string &data) 
     {
         n.put_value(data);
     }

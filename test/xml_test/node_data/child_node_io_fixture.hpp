@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2015 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,7 +17,7 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Dec 3, 2014
+//  Created on: Apr 15, 2015
 //      Author: Eugen Wintersberger
 //
 
@@ -39,24 +39,31 @@ using namespace pni::core;
 using namespace pni::io::nx;
 
 
-/*!
-\brief test for XML data operations
-
-Test checks operations on XML node data. 
-*/
-class node_inquery_data_fixture : public CppUnit::TestFixture
+//!
+//! \brief test for XML data operations
+//! 
+//! Test checks operations on XML node data. 
+//! 
+class child_node_io_fixture : public CppUnit::TestFixture
 {
     private:
-        CPPUNIT_TEST_SUITE(node_inquery_data_fixture);
-        CPPUNIT_TEST(test_has_data);
+        CPPUNIT_TEST_SUITE(child_node_io_fixture);
+        CPPUNIT_TEST(test_read_scalar);
+        CPPUNIT_TEST(test_read_array);
+        CPPUNIT_TEST(test_write_scalar);
+        CPPUNIT_TEST(test_write_array);
         CPPUNIT_TEST_SUITE_END();
 
         xml::node root;
+        xml::node root_array;
         xml::node child;
 
     public:
         void setUp();
         void tearDown();
        
-        void test_has_data();
+        void test_read_scalar();
+        void test_read_array();
+        void test_write_scalar();
+        void test_write_array();
 };

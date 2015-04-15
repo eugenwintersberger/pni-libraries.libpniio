@@ -1,5 +1,4 @@
-set(HEADER_FILES attribute_data.hpp 
-                 nexus_to_xml.hpp 
+set(HEADER_FILES nexus_to_xml.hpp 
                  node_data.hpp 
                  xml_to_nexus.hpp 
                  node.hpp
@@ -9,7 +8,6 @@ set(HEADER_FILES attribute_data.hpp
                  attribute.hpp
                  dimensions.hpp
                  default.hpp
-                 object_data.hpp
                  array_utils.hpp
                  )
 
