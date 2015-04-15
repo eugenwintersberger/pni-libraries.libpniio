@@ -1,5 +1,5 @@
 set(HEADER_FILES nexus_to_xml.hpp 
-                 node_data.hpp 
+                 data_node.hpp 
                  xml_to_nexus.hpp 
                  node.hpp
                  io_object.hpp

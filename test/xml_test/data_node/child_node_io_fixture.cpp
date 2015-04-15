@@ -53,12 +53,12 @@ void child_node_io_fixture::test_read_scalar()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     using namespace pni::io::nx::xml;
     
-    CPPUNIT_ASSERT(node_data::read(root.get_child("group1"))=="12");
-    CPPUNIT_ASSERT(node_data::read(root.get_child("group2"))=="-12");
-    CPPUNIT_ASSERT(node_data::read(root.get_child("group3"))=="bla");
-    CPPUNIT_ASSERT(node_data::read(root.get_child("group4"))=="12.3");
-    CPPUNIT_ASSERT(node_data::read(root.get_child("group5"))=="100000");
-    CPPUNIT_ASSERT(node_data::read(root.get_child("group6"))=="-1000000");
+    CPPUNIT_ASSERT(data_node::read(root.get_child("group1"))=="12");
+    CPPUNIT_ASSERT(data_node::read(root.get_child("group2"))=="-12");
+    CPPUNIT_ASSERT(data_node::read(root.get_child("group3"))=="bla");
+    CPPUNIT_ASSERT(data_node::read(root.get_child("group4"))=="12.3");
+    CPPUNIT_ASSERT(data_node::read(root.get_child("group5"))=="100000");
+    CPPUNIT_ASSERT(data_node::read(root.get_child("group6"))=="-1000000");
 }
 
 //------------------------------------------------------------------------------
@@ -67,10 +67,10 @@ void child_node_io_fixture::test_read_array()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     using namespace pni::io::nx::xml;
 
-    CPPUNIT_ASSERT(node_data::read(root_array.get_child("group1"))== 
+    CPPUNIT_ASSERT(data_node::read(root_array.get_child("group1"))== 
                    "12 23 34.2  34 23");
 
-    CPPUNIT_ASSERT(node_data::read(root_array.get_child("group2"))== 
+    CPPUNIT_ASSERT(data_node::read(root_array.get_child("group2"))== 
                    "12 23 34.2  34 23");
 }
 
@@ -80,8 +80,8 @@ void child_node_io_fixture::test_write_scalar()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     using namespace pni::io::nx::xml;
 
-    node_data::write(child,"1234");
-    CPPUNIT_ASSERT(node_data::read(child)=="1234");
+    data_node::write(child,"1234");
+    CPPUNIT_ASSERT(data_node::read(child)=="1234");
 
 }
 
@@ -91,7 +91,7 @@ void child_node_io_fixture::test_write_array()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     using namespace pni::io::nx::xml;
 
-    node_data::write(child," 1 2    4 5 5  ");
-    CPPUNIT_ASSERT(node_data::read(child)=="1 2    4 5 5");
+    data_node::write(child," 1 2    4 5 5  ");
+    CPPUNIT_ASSERT(data_node::read(child)=="1 2    4 5 5");
 
 }

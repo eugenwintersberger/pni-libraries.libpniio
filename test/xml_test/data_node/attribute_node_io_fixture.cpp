@@ -54,22 +54,22 @@ void attribute_node_io_fixture::test_read_scalar()
     root = root.get_child("group");
     node attr;
     CPPUNIT_ASSERT_NO_THROW(attr = xml::get_attribute(root,"attr1"));
-    CPPUNIT_ASSERT(node_data::read(attr)=="12");
+    CPPUNIT_ASSERT(data_node::read(attr)=="12");
 
     CPPUNIT_ASSERT_NO_THROW(attr = xml::get_attribute(root,"attr2"));
-    CPPUNIT_ASSERT(node_data::read(attr)=="-12");
+    CPPUNIT_ASSERT(data_node::read(attr)=="-12");
 
     CPPUNIT_ASSERT_NO_THROW(attr = xml::get_attribute(root,"attr3"));
-    CPPUNIT_ASSERT(node_data::read(attr)=="bla");
+    CPPUNIT_ASSERT(data_node::read(attr)=="bla");
 
     CPPUNIT_ASSERT_NO_THROW(attr = xml::get_attribute(root,"attr4"));
-    CPPUNIT_ASSERT(node_data::read(attr)=="12.3");
+    CPPUNIT_ASSERT(data_node::read(attr)=="12.3");
 
     CPPUNIT_ASSERT_NO_THROW(attr = xml::get_attribute(root,"attr5"));
-    CPPUNIT_ASSERT(node_data::read(attr)=="100000");
+    CPPUNIT_ASSERT(data_node::read(attr)=="100000");
 
     CPPUNIT_ASSERT_NO_THROW(attr = xml::get_attribute(root,"attr6"));
-    CPPUNIT_ASSERT(node_data::read(attr)=="-1000000");
+    CPPUNIT_ASSERT(data_node::read(attr)=="-1000000");
 }
 
 //-----------------------------------------------------------------------------
@@ -81,10 +81,10 @@ void attribute_node_io_fixture::test_read_array()
     root_array = root_array.get_child("group");
     node attr;
     CPPUNIT_ASSERT_NO_THROW(attr = xml::get_attribute(root_array,"attr1"));
-    CPPUNIT_ASSERT(node_data::read(attr)=="12 23 34.2  34 23");
+    CPPUNIT_ASSERT(data_node::read(attr)=="12 23 34.2  34 23");
 
     CPPUNIT_ASSERT_NO_THROW(attr = xml::get_attribute(root_array,"attr2"));
-    CPPUNIT_ASSERT(node_data::read(attr)=="12 23 34.2  34 23");
+    CPPUNIT_ASSERT(data_node::read(attr)=="12 23 34.2  34 23");
 }
 
 //-----------------------------------------------------------------------------
@@ -93,8 +93,8 @@ void attribute_node_io_fixture::test_write_scalar()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     using namespace pni::io::nx::xml;
     
-    node_data::write(child,"1234");
-    CPPUNIT_ASSERT(node_data::read(child)=="1234");
+    data_node::write(child,"1234");
+    CPPUNIT_ASSERT(data_node::read(child)=="1234");
 }
 
 //-----------------------------------------------------------------------------
@@ -103,7 +103,7 @@ void attribute_node_io_fixture::test_write_array()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     using namespace pni::io::nx::xml;
 
-    node_data::write(child," 1 2    4 5 5  ");
-    CPPUNIT_ASSERT(node_data::read(child)=="1 2    4 5 5");
+    data_node::write(child," 1 2    4 5 5  ");
+    CPPUNIT_ASSERT(data_node::read(child)=="1 2    4 5 5");
 }
 

@@ -22,7 +22,7 @@
 //
 
 
-#include <pni/io/nx/xml/node_data.hpp>
+#include <pni/io/nx/xml/data_node.hpp>
 #include <boost/algorithm/string.hpp>
 
 namespace pni{
@@ -30,7 +30,7 @@ namespace io{
 namespace nx{
 namespace xml{
 
-    string node_data::read(const node &n) 
+    string data_node::read(const node &n) 
     {
         string data = n.data();
         boost::algorithm::trim(data);
@@ -38,7 +38,7 @@ namespace xml{
     }
 
     //-------------------------------------------------------------------------
-    void node_data::write(node &n,const string &data) 
+    void data_node::write(node &n,const string &data) 
     {
         n.put_value(data);
     }

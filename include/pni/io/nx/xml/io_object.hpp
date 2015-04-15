@@ -25,7 +25,7 @@
 #include <pni/core/types.hpp>
 
 #include "node.hpp"
-#include "node_data.hpp"
+#include "data_node.hpp"
 #include "../../parsers.hpp"
 #include "../../formatters.hpp"
 
@@ -133,7 +133,7 @@ namespace xml{
             typedef string::const_iterator iterator_type;
             pni::io::parser<iterator_type,T> p;
 
-            return p(node_data::read(io_node));
+            return p(data_node::read(io_node));
         }
 
         //--------------------------------------------------------------------

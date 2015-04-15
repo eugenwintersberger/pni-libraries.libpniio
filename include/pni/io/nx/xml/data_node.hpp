@@ -37,7 +37,7 @@ namespace xml{
     //! 
     //! This child class of object_data manages data IO for XML nodes.
     //! 
-    class node_data
+    class data_node
     {
         public:
 

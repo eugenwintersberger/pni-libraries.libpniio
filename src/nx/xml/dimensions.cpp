@@ -21,7 +21,7 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include <pni/io/nx/xml/node_data.hpp>
+#include <pni/io/nx/xml/data_node.hpp>
 #include <pni/io/nx/xml/dimensions.hpp>
 
 namespace pni{
@@ -51,15 +51,15 @@ namespace xml{
         node index_attribute = get_attribute(dim_node,"index");
         node value_attribute = get_attribute(dim_node,"value");
 
-        return {p(node_data::read(index_attribute)),
-                p(node_data::read(value_attribute))};
+        return {p(data_node::read(index_attribute)),
+                p(data_node::read(value_attribute))};
     }
 
      //-----------------------------------------------------------------------
      size_t dimensions::rank(const node &dim)
      {
         node type_attribute = get_attribute(dim,"rank");
-        return size_t_parser_type()(node_data::read(type_attribute));
+        return size_t_parser_type()(data_node::read(type_attribute));
      }
 
      //-----------------------------------------------------------------------

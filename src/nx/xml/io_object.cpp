@@ -52,7 +52,7 @@ namespace xml{
     string io_object::name(const node &io_node)
     {
         node name_attribute = get_attribute(io_node,"name");
-        return node_data::read(name_attribute);
+        return data_node::read(name_attribute);
     }
     
     //------------------------------------------------------------------------
@@ -69,7 +69,7 @@ namespace xml{
     type_id_t io_object::type_id(const node &io_node)
     {
         node type_attribute = get_attribute(io_node,"type");
-        return type_id_from_str(node_data::read(type_attribute));
+        return type_id_from_str(data_node::read(type_attribute));
     }
     
 //end of namespace
