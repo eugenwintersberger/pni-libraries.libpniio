@@ -30,7 +30,7 @@
 #include "../../parsers/array_parser.hpp"
 
 #include "node.hpp"
-#include "node_data.hpp"
+#include "data_node.hpp"
 #include "attribute_data.hpp"
 #include "group.hpp"
 #include "attribute.hpp"
@@ -84,7 +84,7 @@ namespace xml{
             {
                 auto a = attribute::object_from_xml(parent,child.second);
                 if(write_data(a))
-                    write(a,io_object::data_from_xml(child.second));
+                    write(a,io_node::data_from_xml(child.second));
             }
         }
     }
@@ -146,7 +146,7 @@ namespace xml{
             append_attributes(child.second,object,write_data);
 
             if(write_data(object))
-                write(object,io_object::data_from_xml(child.second));
+                write(object,io_node::data_from_xml(child.second));
         }
     }
 

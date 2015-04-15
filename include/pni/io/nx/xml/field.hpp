@@ -38,7 +38,7 @@
 #include "../nxobject.hpp"
 #include "node.hpp"
 #include "dimensions.hpp"
-#include "io_object.hpp"
+#include "io_node.hpp"
 
 
 
@@ -52,7 +52,7 @@ namespace xml{
     //!
     //! \ingroup xml_classes
     //! \brief read and write field data
-    struct field : public io_object
+    struct field : public io_node
     {
 
         //--------------------------------------------------------------------

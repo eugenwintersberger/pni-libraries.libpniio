@@ -21,7 +21,7 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include <pni/io/nx/xml/io_object.hpp>
+#include <pni/io/nx/xml/io_node.hpp>
 #include <pni/io/nx/xml/dimensions.hpp>
 
 
@@ -31,7 +31,7 @@ namespace nx{
 namespace xml{
 
     //------------------------------------------------------------------------
-    size_t io_object::size(const node &io_node)
+    size_t io_node::size(const node &io_node)
     {
         if(io_node.count("dimensions"))
             return dimensions::size(io_node.get_child("dimensions"));
@@ -40,7 +40,7 @@ namespace xml{
     }
 
     //------------------------------------------------------------------------
-    size_t io_object::rank(const node &io_node)
+    size_t io_node::rank(const node &io_node)
     {
         if(io_node.count("dimensions"))
             return dimensions::rank(io_node.get_child("dimensions"));
@@ -49,14 +49,14 @@ namespace xml{
     }
 
     //------------------------------------------------------------------------
-    string io_object::name(const node &io_node)
+    string io_node::name(const node &io_node)
     {
         node name_attribute = get_attribute(io_node,"name");
         return data_node::read(name_attribute);
     }
     
     //------------------------------------------------------------------------
-    shape_t io_object::shape(const node &io_node)
+    shape_t io_node::shape(const node &io_node)
     {
         shape_t shape{1};
         if(io_node.count("dimensions"))
@@ -66,7 +66,7 @@ namespace xml{
     }
 
     //------------------------------------------------------------------------
-    type_id_t io_object::type_id(const node &io_node)
+    type_id_t io_node::type_id(const node &io_node)
     {
         node type_attribute = get_attribute(io_node,"type");
         return type_id_from_str(data_node::read(type_attribute));

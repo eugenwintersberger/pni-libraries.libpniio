@@ -42,7 +42,7 @@ namespace xml{
     //!
     //! This class provides functions common for field and attribute nodes. 
     //!
-    struct io_object
+    struct io_node
     {
         //--------------------------------------------------------------------
         //!

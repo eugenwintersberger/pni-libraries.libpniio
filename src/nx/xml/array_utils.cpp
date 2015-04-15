@@ -32,7 +32,7 @@ namespace xml{
 
     array make_array(const node &data)
     {
-        type_id_t tid = io_object::type_id(data);
+        type_id_t tid = io_node::type_id(data);
 
         switch(tid)
         {
