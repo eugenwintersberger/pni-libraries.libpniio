@@ -1,6 +1,0 @@
-
-<group name="test" type="NXdetector">
-    <attribute name="attr_data" type="float128">
-        123.24354e-4
-    </attribute>
-</group>

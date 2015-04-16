@@ -1,6 +1,0 @@
-
-<group name="test" type="NXdetector">
-    <attribute name="attr_data" type="uint64">
-        4013945
-    </attribute>
-</group>

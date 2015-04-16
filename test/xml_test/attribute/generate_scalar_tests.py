@@ -47,6 +47,8 @@ xml_test_header="""
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <EqualityCheck.hpp>
+
 
 using namespace pni::core;
 using namespace pni::io::nx;
@@ -106,6 +108,11 @@ void scalar_attribute_test_{0.type_name}::test_inquery()
     CPPUNIT_ASSERT(xml::attribute::size(child)==1);
     CPPUNIT_ASSERT(xml::attribute::rank(child)==0);
     CPPUNIT_ASSERT(xml::attribute::type_id(child) == type_id_t::{0.type_id});
+   
+    {0.type_name} r{{{0.cpp_data}}};
+    auto data = xml::attribute::data_from_xml<{0.type_name}>(child);
+    check_equality(data,r);
+
 }}
 
 //-----------------------------------------------------------------------------
@@ -126,10 +133,15 @@ void scalar_attribute_test_{0.type_name}::test_create_object()
 """
 
 class TestData(object):
-    def __init__(self,tname,tid,data):
+    def __init__(self,tname,tid,data,cppdata=None):
         self.type_name = tname
         self.type_id   = tid
-        self.data      = data
+        self.data     = data
+
+        if cppdata:
+            self.cpp_data = cppdata
+        else:
+            self.cpp_data = data
 
 
 scalar_data = [TestData("uint8","UINT8","1"),
@@ -143,9 +155,9 @@ scalar_data = [TestData("uint8","UINT8","1"),
                TestData("float32","FLOAT32","2.3455"),
                TestData("float64","FLOAT64","-1.233e+4"),
                TestData("float128","FLOAT128","123.24354e-4"),
-               TestData("complex32","COMPLEX32","34.+j123.e-3"),
-               TestData("complex64","COMPLEX64","-23.-I8.203"),
-               TestData("complex128","COMPLEX128","123+I340")]
+               TestData("complex32","COMPLEX32","34.+j123.e-3","34.,123.e-3"),
+               TestData("complex64","COMPLEX64","-23.-I8.203","-23.,-8.203"),
+               TestData("complex128","COMPLEX128","123+I340","123,340")]
 
 def generate_filenames(data):
     xmlfile = "scalar_attribute_{0.type_name}.xml".format(data)

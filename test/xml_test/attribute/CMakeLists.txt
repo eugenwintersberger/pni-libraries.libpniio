@@ -1,42 +1,39 @@
-set(SOURCES attribute_tests.cpp
-            scalar_attribute_test_complex128.cpp
-            scalar_attribute_test_complex32.cpp
-            scalar_attribute_test_complex64.cpp
-            scalar_attribute_test_float128.cpp
-            scalar_attribute_test_float32.cpp
-            scalar_attribute_test_float64.cpp
-            scalar_attribute_test_int16.cpp
-            scalar_attribute_test_int32.cpp
-            scalar_attribute_test_int64.cpp
-            scalar_attribute_test_int8.cpp
-            scalar_attribute_test_uint16.cpp
-            scalar_attribute_test_uint32.cpp
-            scalar_attribute_test_uint64.cpp
-            scalar_attribute_test_uint8.cpp
-            )
 
-set(XMLFILES  scalar_attribute_complex128.xml
-              scalar_attribute_complex32.xml
-              scalar_attribute_complex64.xml
-              scalar_attribute_float128.xml
-              scalar_attribute_float32.xml
-              scalar_attribute_float64.xml
-              scalar_attribute_int16.xml
-              scalar_attribute_int32.xml
-              scalar_attribute_int64.xml
-              scalar_attribute_int8.xml
-              scalar_attribute_uint16.xml
-              scalar_attribute_uint32.xml
-              scalar_attribute_uint64.xml
-              scalar_attribute_uint8.xml
-             )
+#-----------------------------------------------------------------------------
+# list of types for which tests should be generated
+#-----------------------------------------------------------------------------
+set(TYPES uint8 int8 uint16 int16 uint32 int32 uint64 int64
+          float32 float64 float128 complex32 complex128)
 
+#-----------------------------------------------------------------------------
+# copy generator scripts
+#-----------------------------------------------------------------------------
+configure_file(generate_scalar_tests.py generate_scalar_tests.py COPYONLY)
 
-foreach(XMLFILE ${XMLFILES})
-    configure_file(${XMLFILE} ${XMLFILE} COPYONLY)
+#-----------------------------------------------------------------------------
+# generate files required for scalar tests
+#-----------------------------------------------------------------------------
+#generate the list of required files
+set(SCALAR_SRCS)
+foreach(TYPE ${TYPES})
+    set(XMLFILE scalar_attribute_${TYPE}.xml)
+    set(CPPFILE scalar_attribute_test_${TYPE}.cpp)
+    set(HPPFILE scalar_attribute_test_${TYPE}.hpp)
+
+    list(INSERT SCALAR_SRCS ${HPPFILE} ${CPPFILE} ${XMLFILE})
 endforeach()
 
-add_executable(attribute_tests ${SOURCES})
+#generate the files by calling the appropriate Python script
+add_custom_command(OUTPUT ${SCALAR_SRCS}
+                   COMMAND python generate_scalar_tests.py
+                   DEPENDS generate_scalar_tests.py
+                   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+
+#-----------------------------------------------------------------------------
+# finally build the test target
+#-----------------------------------------------------------------------------
+include_directories(${CMAKE_SOURCE_DIR}/test)
+add_executable(attribute_tests attribute_tests.cpp ${SCALAR_SRCS})
 target_link_libraries(attribute_tests pniio ${CPPUNIT_LIBRARIES})
 add_test(NAME "XML::attribute_tests"
          COMMAND attribute_tests)
