@@ -24,6 +24,7 @@
 #include "xml/node.hpp"
 #include "xml/data_node.hpp"
 #include "xml/dimensions.hpp"
+#include "xml/attribute.hpp"
 //#include "xml/nexus_to_xml.hpp"
 //#include "xml/node_data.hpp"
 //#include "xml/xml_to_nexus.hpp"

@@ -1,0 +1,6 @@
+
+<group name="test" type="NXdetector">
+    <attribute name="attr_data" type="complex32">
+        34.+j123.e-3
+    </attribute>
+</group>

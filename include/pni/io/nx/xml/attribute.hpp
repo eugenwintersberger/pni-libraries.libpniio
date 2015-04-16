@@ -49,6 +49,7 @@ namespace xml{
     //!
     //! \ingroup xml_classes
     //! \brief read and write attributes
+    //!
     struct attribute : public io_node
     {
         //!

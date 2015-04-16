@@ -1,0 +1,6 @@
+
+<group name="test" type="NXdetector">
+    <attribute name="attr_data" type="complex64">
+        -23.-I8.203
+    </attribute>
+</group>

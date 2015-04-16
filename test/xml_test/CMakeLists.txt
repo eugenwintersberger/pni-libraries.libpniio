@@ -1,10 +1,3 @@
-set(SOURCES #xml_test.cpp
-    #xml_attribute_test.cpp
-    #        xml_to_nexus_test.cpp
-    #        node_test.cpp
-    #        group_test.cpp
-            )
-
 set(XMLFILES group1.xml
              group2.xml
              group3.xml
@@ -20,6 +13,7 @@ add_subdirectory(node)
 add_subdirectory(dimensions)
 add_subdirectory(io_node)
 add_subdirectory(data_node)
+add_subdirectory(attribute)
 #add_subdirectory(field)
 #add_executable(xml_test ${SOURCES})
 #target_link_libraries(xml_test pniio ${CPPUNIT_LIBRARIES})
