@@ -143,11 +143,11 @@ namespace xml{
         //! Write data from value to the XML io_node. 
         //! 
         //! \tparam T type to write
-        //! \param value instance of T from which to read data
         //! \param io_node the XML node to which to write the data
+        //! \param value instance of T from which to read data
         //!
         template<typename T>
-        static void data_to_xml(const T &value,node &io_node)
+        static void data_to_xml(node &io_node,const T &value)
         {
             typedef formatter<T> formatter_type; 
             formatter_type f;

@@ -77,8 +77,8 @@ namespace xml{
         object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
                         const node &group_node)
         {
-            typedef GTYPE group_type;
-            typedef typename GTYPE::value_type object_type;
+            //typedef GTYPE group_type;
+            //typedef typename GTYPE::value_type object_type;
 
             //check if the group tag provides a name attribute
             if(!has_attribute(group_node,"name"))

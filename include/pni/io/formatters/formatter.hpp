@@ -80,6 +80,26 @@ namespace io{
             
     };
 
+    template<> class formatter<core::string>
+    {
+        public:
+            core::string operator()(const core::string &value) const
+            {
+                return value;
+            }
+    };
+
+    template<> class formatter<bool>
+    {
+        public:
+            core::string operator()(const bool &value) const
+            {
+                if(value) return "true";
+                
+                return "false";
+            }
+    };
+
     //------------------------------------------------------------------------
     //!
     //! \ingroup formatter_classes

@@ -59,6 +59,7 @@ class scalar_attribute_test_{0.type_name} : public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE(scalar_attribute_test_{0.type_name});
         CPPUNIT_TEST(test_inquery);
         CPPUNIT_TEST(test_create_object);
+        CPPUNIT_TEST(test_from_object);
         CPPUNIT_TEST_SUITE_END();
 
         xml::node root;
@@ -73,6 +74,7 @@ class scalar_attribute_test_{0.type_name} : public CppUnit::TestFixture
        
         void test_inquery();
         void test_create_object();
+        void test_from_object();
 }};
 """
 
@@ -87,7 +89,7 @@ void scalar_attribute_test_{0.type_name}::setUp()
     file = h5::nxfile::create_file("scalar_attribute_test_{0.type_name}.nxs",
                                     true);
     h5::nxgroup root = file.root();
-    group = root.create_group("test");
+    group = root.create_group("test","NXdetector");
 }}
 
 //-----------------------------------------------------------------------------
@@ -130,6 +132,31 @@ void scalar_attribute_test_{0.type_name}::test_create_object()
     CPPUNIT_ASSERT(attr.rank() == 1);
     CPPUNIT_ASSERT(attr.type_id() == type_id_t::{0.type_id});
 }}
+
+//-----------------------------------------------------------------------------
+void scalar_attribute_test_{0.type_name}::test_from_object()
+{{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    using namespace pni::io::nx::xml;
+   
+    h5::nxobject attr = create_attribute<{0.type_name}>(group,"attr_data");
+    {0.type_name} r{{{0.cpp_data}}};
+    write(attr,r);
+
+    root = xml::node();
+    root.add_child("group",xml::group::object_to_xml(group));
+    xml::node attr_node = xml::attribute::object_to_xml(attr);
+    xml::attribute::data_to_xml(attr_node,r);
+    child = root.add_child("group.attribute",attr_node);
+
+    CPPUNIT_ASSERT(xml::attribute::size(child) == 1);
+    CPPUNIT_ASSERT(xml::attribute::rank(child) == 0);
+    CPPUNIT_ASSERT(xml::attribute::type_id(child) ==
+                   type_id_t::{0.type_id});
+
+    std::cout<<root<<std::endl;
+
+}}
 """
 
 class TestData(object):
@@ -157,7 +184,13 @@ scalar_data = [TestData("uint8","UINT8","1"),
                TestData("float128","FLOAT128","123.24354e-4"),
                TestData("complex32","COMPLEX32","34.+j123.e-3","34.,123.e-3"),
                TestData("complex64","COMPLEX64","-23.-I8.203","-23.,-8.203"),
-               TestData("complex128","COMPLEX128","123+I340","123,340")]
+               TestData("complex128","COMPLEX128","123+I340","123,340"),
+               TestData("string","STRING","hello world, a text",
+                        "\"hello world, a text\""),
+               TestData("bool","BOOL","true")
+
+               ]
+
 
 def generate_filenames(data):
     xmlfile = "scalar_attribute_{0.type_name}.xml".format(data)

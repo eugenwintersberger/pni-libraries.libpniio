@@ -107,7 +107,7 @@ namespace xml{
 
             //write name and type attributes
             attr_node.put("<xmlattr>.name",get_name(attr));
-            attr_node.put("<xmlattr>.type",get_type(attr));
+            attr_node.put("<xmlattr>.type",str_from_type_id(get_type(attr)));
 
             //if the attribute has more than one element we have to add its
             //shape - otherwise the attribute is scalar
