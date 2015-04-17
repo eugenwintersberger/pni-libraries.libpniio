@@ -11,5 +11,5 @@ endforeach()
 
 add_executable(run_test ${SOURCES})
 target_link_libraries(run_test pniio ${CPPUNIT_LIBRARIES})
-add_test(NAME "XML::io_object"
+add_test(NAME "XML::io_node"
          COMMAND run_test)

@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2015 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -44,7 +44,7 @@ int main(int argc,char **argv)
     runner.addTest(registry.makeTest());
     runner.eventManager().addListener(&progress);
     
-    std::ofstream os("result.xml");
+    std::ofstream os("attribute_tests.xml");
     runner.setOutputter(new CppUnit::XmlOutputter(&runner.result(),os));
     
     bool result = runner.run();

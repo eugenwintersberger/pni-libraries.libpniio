@@ -48,7 +48,7 @@ void data_from_xml_fixture::test_scalar()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     xml::node o = get_object("object3.xml","field1");
-    auto data = xml::io_object::data_from_xml<float32>(o);
+    auto data = xml::io_node::data_from_xml<float32>(o);
     CPPUNIT_ASSERT_DOUBLES_EQUAL(1.23,data,1.e-6);
 
 }
@@ -61,7 +61,7 @@ void data_from_xml_fixture::test_array()
     typedef std::vector<uint32> vector_type;
     
     xml::node o = get_object("object3.xml","field2");
-    auto data = xml::io_object::data_from_xml<vector_type>(o);
+    auto data = xml::io_node::data_from_xml<vector_type>(o);
     CPPUNIT_ASSERT(data.size()==6);
 
     for(uint32 i=0;i<6;++i)
@@ -75,8 +75,8 @@ void data_from_xml_fixture::test_string()
     
     xml::node o = get_object("object3.xml","field3");
 
-    CPPUNIT_ASSERT(xml::io_object::type_id(o)==type_id_t::STRING);
-    auto text = xml::io_object::data_from_xml<string>(o);
+    CPPUNIT_ASSERT(xml::io_node::type_id(o)==type_id_t::STRING);
+    auto text = xml::io_node::data_from_xml<string>(o);
     boost::algorithm::trim(text);
     std::cout<<text<<std::endl;
     CPPUNIT_ASSERT(text == "This is a stupid text");
@@ -88,15 +88,15 @@ void data_from_xml_fixture::test_bool()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
     xml::node o = get_object("object3.xml","field4");
-    CPPUNIT_ASSERT(xml::io_object::data_from_xml<bool_t>(o));
+    CPPUNIT_ASSERT(xml::io_node::data_from_xml<bool_t>(o));
 
     o = get_object("object3.xml","field5");
-    CPPUNIT_ASSERT(!xml::io_object::data_from_xml<bool_t>(o));
+    CPPUNIT_ASSERT(!xml::io_node::data_from_xml<bool_t>(o));
 
     o = get_object("object3.xml","field6");
-    CPPUNIT_ASSERT_THROW(xml::io_object::data_from_xml<bool_t>(o),
+    CPPUNIT_ASSERT_THROW(xml::io_node::data_from_xml<bool_t>(o),
                          pni::io::parser_error);
     o = get_object("object3.xml","field7");
-    CPPUNIT_ASSERT_THROW(xml::io_object::data_from_xml<bool_t>(o),
+    CPPUNIT_ASSERT_THROW(xml::io_node::data_from_xml<bool_t>(o),
                          pni::io::parser_error);
 }

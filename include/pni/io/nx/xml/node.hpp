@@ -45,6 +45,8 @@ namespace xml{
     //!
     //! \ingroup xml_classes
     //! \brief create xml node from string
+    //! 
+    //! Parses a string provided by the user and returns an XML node from it.
     //!
     //! \throws parser_error in case of parsing problems
     //! \param s string from which to read the data
@@ -56,6 +58,9 @@ namespace xml{
     //!
     //! \ingroup xml_classes
     //! \brief create xml node from file
+    //!
+    //! Reads XML data from a file and returns an XML node refering to the 
+    //! root element of the XML tree.
     //! 
     //! \throws pni::io::parser_error in case of parsing issues
     //! \throws file_error in case of problems opening the file

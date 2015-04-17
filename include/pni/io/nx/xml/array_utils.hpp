@@ -27,7 +27,7 @@
 #include <pni/core/type_erasures.hpp>
 
 #include "node.hpp"
-#include "io_object.hpp"
+#include "io_node.hpp"
 
 namespace pni{
 namespace io{
@@ -52,13 +52,13 @@ namespace xml{
         shape_t      shape;
 
         //determine the shape of the array
-        if(io_object::rank(data)==0)
+        if(io_node::rank(data)==0)
             shape = shape_t{1};
         else
-            shape = io_object::shape(data);
+            shape = io_node::shape(data);
        
         //read the daata
-        auto buffer = io_object::data_from_xml<storage_type>(data);
+        auto buffer = io_node::data_from_xml<storage_type>(data);
 
         return ATYPE::create(std::move(shape),std::move(buffer));
     }

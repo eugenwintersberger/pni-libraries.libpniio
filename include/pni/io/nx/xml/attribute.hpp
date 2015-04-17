@@ -36,7 +36,7 @@
 #include "../nxobject.hpp"
 #include "node.hpp"
 #include "dimensions.hpp"
-#include "io_object.hpp"
+#include "io_node.hpp"
 
 
 namespace pni{
@@ -49,7 +49,8 @@ namespace xml{
     //!
     //! \ingroup xml_classes
     //! \brief read and write attributes
-    struct attribute : public io_object
+    //!
+    struct attribute : public io_node
     {
         //!
         //! \brief create attribute from XML description

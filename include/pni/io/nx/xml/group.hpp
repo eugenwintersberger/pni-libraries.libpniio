@@ -32,7 +32,7 @@
 #include "../algorithms/set_class.hpp"
 #include "../nxobject.hpp"
 #include "node.hpp"
-#include "attribute_data.hpp"
+#include "data_node.hpp"
 
 
 namespace pni{
@@ -75,23 +75,32 @@ namespace xml{
                 >
         static nxobject<GTYPE,FTYPE,ATYPE>
         object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
-                 const node &group_node)
+                        const node &group_node)
         {
-            typedef attribute_data<string> attr_data;
             typedef GTYPE group_type;
             typedef typename GTYPE::value_type object_type;
 
-            auto name   = attr_data::read(group_node,"name");
-            auto group = create_group(parent,name);
+            //check if the group tag provides a name attribute
+            if(!has_attribute(group_node,"name"))
+                throw value_error(EXCEPTION_RECORD,
+                        "XML group does not provide a name!");
 
-            try
+            //fetch the name for the group
+            node name_attr = get_attribute(group_node,"name");
+            string name    = data_node::read(name_attr);
+
+            //create the group
+            auto group     = create_group(parent,name);
+
+            //if the tag has a type attribute add its value as an NX_class
+            //attribute
+            if(has_attribute(group_node,"type"))
             {
-                auto gclass = attr_data::read(group_node,"type");    
+                node class_attr = get_attribute(group_node,"type");
+                string gclass = data_node::read(class_attr);
+
                 set_class(group,gclass);
             }
-            catch(...)
-            {}
-
             
             return group;
         }

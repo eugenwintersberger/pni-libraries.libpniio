@@ -25,8 +25,7 @@
 #include <pni/core/types.hpp>
 
 #include "node.hpp"
-#include "attribute_data.hpp"
-#include "node_data.hpp"
+#include "data_node.hpp"
 #include "../../parsers.hpp"
 #include "../../formatters.hpp"
 
@@ -43,14 +42,8 @@ namespace xml{
     //!
     //! This class provides functions common for field and attribute nodes. 
     //!
-    struct io_object
+    struct io_node
     {
-
-        //! type to retrieve the name attribute
-        static attribute_data name_attribute;
-        //! type to retrieve the type attribute
-        static attribute_data type_attribute;
-
         //--------------------------------------------------------------------
         //!
         //! \brief return object size
@@ -140,7 +133,7 @@ namespace xml{
             typedef string::const_iterator iterator_type;
             pni::io::parser<iterator_type,T> p;
 
-            return p(node_data().read(io_node));
+            return p(data_node::read(io_node));
         }
 
         //--------------------------------------------------------------------

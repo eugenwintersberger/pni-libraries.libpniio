@@ -45,9 +45,9 @@ xml::node inquery_fixture::get_object(const string &f,const string &n) const
 void inquery_fixture::test_name()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    CPPUNIT_ASSERT(xml::io_object::name(get_object("object1.xml","object1"))
+    CPPUNIT_ASSERT(xml::io_node::name(get_object("object1.xml","object1"))
                    =="hello");
-    CPPUNIT_ASSERT_THROW(xml::io_object::name(get_object("object1.xml","object2")),
+    CPPUNIT_ASSERT_THROW(xml::io_node::name(get_object("object1.xml","object2")),
                     pni::io::key_error);
 }
 
@@ -55,9 +55,9 @@ void inquery_fixture::test_name()
 void inquery_fixture::test_size()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    CPPUNIT_ASSERT(xml::io_object::size(get_object("object2.xml","object1"))==1);
+    CPPUNIT_ASSERT(xml::io_node::size(get_object("object2.xml","object1"))==1);
 
-    CPPUNIT_ASSERT(xml::io_object::size(get_object("object2.xml","object2"))==
+    CPPUNIT_ASSERT(xml::io_node::size(get_object("object2.xml","object2"))==
             40);
 }
 
@@ -73,7 +73,7 @@ void inquery_fixture::test_rank()
 void inquery_fixture::test_shape()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    shape_t s = xml::io_object::shape(get_object("object2.xml","object1"));
+    shape_t s = xml::io_node::shape(get_object("object2.xml","object1"));
     CPPUNIT_ASSERT(s == shape_t({1}));
 
     s = xml::field::shape(get_object("object2.xml","object2"));
