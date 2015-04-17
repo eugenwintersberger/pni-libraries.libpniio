@@ -1,8 +1,5 @@
 %%%documentation concerning the XML functions
 
-In many cases (see Section~\ref{sec:xml::usecases}) an ASCII representation of a
-\nexus-file is required. 
-
 As \nexus\ organizes data objects in a tree like manner, XML is the obvious ASCII
 representation for a \nexus\ file.
 \libpniio\ thus provides a small but powerful set of functions to read and write 
@@ -25,29 +22,7 @@ Aside from this there are some simple functions which are common to both
 interfaces and described in section~\ref{sec:xml:basic}.
 
 %%%---------------------------------------------------------------------------
-\section{Use cases}\label{sec:xml:usecases}
-
-\subsection{Generating \nexus\ structures from XML}
-
-\nexus-files, when properly used, can store much more information than a typical
-ASCII data file.
-The structure of a \nexus\ file can become rather complex. In a rather complex 
-environment like at a synchrotron beamline it would be naive to use static 
-code to create the file. A more feasible approach would be to implement 
-generic code which generates the structure of a file from an XML template. 
-The template could be generated either manually by the user or by means 
-of another program written in whatever language is reasonable for this purpose. 
-
-\subsection{Metadata ingestion of a file}
-
-In some situations a $3$rd party may needs to process some of the metadata 
-stored in the file while not having access to the file. One possible application
-would be a data catalogue. Instead of making the file available the XML dump 
-of the \nexus\ file could be sent to the system while moving the \nexus\ file 
-to its final location on the storage system.
-
-%%%---------------------------------------------------------------------------
-\section{Basic XML handling}{\label{sec:xml:basic}
+\subsection{Basic XML handling}{\label{sec:xml:basic}
 
 All XML related functions and classes resided within a separate namespace 
 \cpp{pni::io::nx::xml}. An XML document is represented by an instance of 
@@ -80,7 +55,7 @@ output stream operator
 
 
 %%%===========================================================================
-\section{High level XML interface}\label{sec:xml:highlevel}
+\subsection{High level XML interface}\label{sec:xml:highlevel}
 
 The high-level XML interface basically consists of two function templates 
 \begin{description}
@@ -91,7 +66,7 @@ Additionally there are some convenience functions available. All of this will be
 described in more detail in this section.
 
 %%%---------------------------------------------------------------------------
-\section{\nexus\ objects from XML}\label{sec:xml::nxtoxml}
+\subsection{\nexus\ objects from XML}\label{sec:xml::nxtoxml}
 
 Creating \nexus\ objects from XML might be the most common operation performed 
 by this part of the library. The next example illustrates the most common 
@@ -122,7 +97,7 @@ in the XML file will be stored in the fields and attributes of the created
 
 
 %%%---------------------------------------------------------------------------
-\subsection{XML from \nexus\ objects}\label{sec:xml:xmltonx}
+\subsubsection{XML from \nexus\ objects}\label{sec:xml:xmltonx}
 
 The work horse for \nexus\ to XML conversion is the \cpp{nexus\_to\_xml} function
 template. The most probably simplest use case is demonstrated in the next
@@ -199,6 +174,6 @@ policy is to write no data.
 
 
 %%%===========================================================================
-\section{The XML low level interface}\label{sec:xml:lowlevel}
+\subsection{The XML low level interface}\label{sec:xml:lowlevel}
 
 
