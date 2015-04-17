@@ -201,4 +201,110 @@ policy is to write no data.
 %%%===========================================================================
 \section{The XML low level interface}\label{sec:xml:lowlevel}
 
+The entire XML stack in \libpniio\ is based upon the \cpp{boost::property\_tree} 
+library. The \cpp{pni::io::nx::xml::ptree} type is nothing else than an alias to
+the \cpp{node} type provided by the \cpp{property\_tree} library.
+
+%%%----------------------------------------------------------------------------
+\subsection{Basic \cpp{node}-operations}
+
+In order to simplify the work with \cpp{boost::property\_tree} \libpniio\ has
+introduced some convenience functions. 
+To create a new XML node one could use either 
+\begin{cppcode}
+xml::node = xml::create_from_string("....");
+\end{cppcode}
+or
+\begin{cppcode}
+xml::node = xml::create_from_file("filename.xml");
+\end{cppcode}
+The former function returns a node which refers to the root element of the 
+XML structure provided by a string passed to the function as its only argument. 
+The latter one reads the XML data from a file and returns a handle to its 
+root element too.
+
+\cpp{boost::property\_tree} uses nodes to store attributes of a tag which are 
+accessible under a special name. To make accessing the attributes simpler 
+there two functions.  
+\begin{cppcode}
+if(xml::has_attribute(field_node,"units"))
+{
+    xml::units_node = get_attribute(field_node,"units");
+
+    // do something with the attribute
+}
+\end{cppcode}
+\cpp{has\_attribute} returns true of a node possesses a particular attribute of
+given name and \cpp{get\_attribute} returns a node instance referring to this 
+attribute. 
+The \cpp{xml::node} type and its related functions are provided by the
+\cpp{xml/node.hpp} header file.
+
+%%%---------------------------------------------------------------------------
+\subsection{Handling tags}
+
+Each tag in \libpniio's XML protocol is handled by an individual class and its
+static methods. Each of these \emph{tag}-classes provides two major methods 
+\cpp{object\_from\_xml} and \cpp{object\_to\_xml}. The former one creates a new
+object of the tags type in memory while the latter one creates an XML
+representation from a particular type.
+
+\subsubsection{The \cpp{dimensions} tag}
+
+The \cpp{dimensions} tag provides information about the number of elements 
+along each dimension of a multi-dimensional field or attribute. This tag is
+handled by the \cpp{dimensions} class provided by \cpp{xml/dimensions.hpp}
+header file. 
+The \cpp{dimensions} class allows for inquiry of the \cpp{dimensions} tag within
+the XML structure. 
+\begin{cppcode}
+xml::node dims = .....;
+
+std::cout<<"rank: "<<dimensions::rank(dims)<<std::endl;
+std::cout<<"size: "<<dimensions::size(dims)<<std::endl;
+\end{cppcode}
+The \cpp{rank} member function returns the number of dimensions of the 
+dimensions tag and the \cpp{size} method the total number of elements 
+described by the \cpp{dimensions}-tag.
+
+The memory representation of the \cpp{dimensions}-tag is a container 
+whose elements are of type \cpp{size\_t} or any other compatible integer type. 
+The default container is the \cpp{shape\_t} type provided by \libpnicore. 
+To create an instance of \cpp{shape\_t} use
+\begin{cppcode}
+shape_t shape = dimensions::object_from_xml(dims);
+\end{cppcode}
+However, there is also a template version of \cpp{object\_from\_xml} 
+\begin{cppcode}
+typedef std::list<uint128> dim_type;
+auto shape = dimensions::object_from_xml<dim_type>(dims);
+\end{cppcode}
+which can be used to store the number of elements in an arbitrary container.
+
+The inverse operation, building a \cpp{dimensions}-tag from a container is 
+implemented by the \cpp{object\_to\_xml} member function. 
+\begin{cppcode}
+shape_t shape{...};
+xml::node dim_node = dimensions::object_to_xml(shape);
+\end{cppcode}
+This template member function accepts an arbitrary container with integer 
+elements as its only argument and return a \cpp{xml::node} instance 
+with the shape data.
+
+
+\subsubsection{The \cpp{attribute} tag}
+\todo[inline]{Describe attribute tag handling}
+
+\subsubsection{The \cpp{group} tag}
+\todo[inline]{Describe group tag handling}
+
+\subsubsection{The \cpp{field} tag}
+\todo[inline]{Describe field tag handling}
+
+\subsubsection{The \cpp{link} tag}
+\todo[inline]{Describe link tag handling}
+
+
+
+
 
