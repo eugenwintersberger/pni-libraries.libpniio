@@ -29,9 +29,9 @@ xml_scalar_attribute="""
 <group name="test" type="NXdetector">
     <attribute name="attr_data" type="{0.type_name}">
         <dimensions rank="1">
-            <dim index="1" value="3">
+            <dim index="1" value="3"/>
         </dimensions>
-        {0.data[0]} {0.data[1]} {0.data[2]}
+        {0.data}
     </attribute>
 </group>
 """
@@ -84,7 +84,7 @@ class multidim_attribute_test_{0.type_name} : public CppUnit::TestFixture
 xml_test_source="""
 #include "multidim_attribute_test_{0.type_name}.hpp"
 
-typedef dynamic_array<{0.type_name}> array_type;
+typedef std::vector<{0.type_name}> array_type;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(multidim_attribute_test_{0.type_name});
 
@@ -109,18 +109,20 @@ void multidim_attribute_test_{0.type_name}::test_inquery()
 {{
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    root = xml::create_from_file("scalar_attribute_{0.type_name}.xml");
+    root = xml::create_from_file("multidim_attribute_{0.type_name}.xml");
     child = root.get_child("group.attribute");
-
+    
     CPPUNIT_ASSERT(xml::attribute::size(child)==3);
     CPPUNIT_ASSERT(xml::attribute::rank(child)==1);
     CPPUNIT_ASSERT(xml::attribute::type_id(child) == type_id_t::{0.type_id});
    
-    auto  r = array_type::create(shape_t{{3}},
-                                 array_type::storage_type{{{0.cpp_data}}});
+    array_type r{{{0.cpp_data}}};
     auto data = xml::attribute::data_from_xml<array_type>(child);
 
-    CPPUNIT_ASSERT(std::equal(data.begin(),data.end(),r.begin()));
+    for(auto r_iter = r.begin(),d_iter = data.begin();
+        d_iter != data.end();
+        ++d_iter,++r_iter)
+        check_equality(*d_iter,*r_iter);
 }}
 
 //-----------------------------------------------------------------------------
@@ -128,13 +130,13 @@ void multidim_attribute_test_{0.type_name}::test_create_object()
 {{
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    root = xml::create_from_file("scalar_attribute_{0.type_name}.xml");
+    root = xml::create_from_file("multidim_attribute_{0.type_name}.xml");
     child = root.get_child("group.attribute");
 
     //attach the attribute to the group
     h5::nxattribute attr = xml::attribute::object_from_xml(group,child);
 
-    CPPUNIT_ASSERT(attr.size() == 1);
+    CPPUNIT_ASSERT(attr.size() == 3);
     CPPUNIT_ASSERT(attr.rank() == 1);
     CPPUNIT_ASSERT(attr.type_id() == type_id_t::{0.type_id});
 }}
@@ -147,9 +149,8 @@ void multidim_attribute_test_{0.type_name}::test_from_object()
    
     h5::nxobject attr = create_attribute<{0.type_name}>(group,
                         "attr_data",shape_t{{3}});
-    auto r = array_type::create(shape_t{{3}},
-                                array_type::storage_type{{{0.cpp_data}}});
-    write(attr,r);
+    array_type r{{{0.cpp_data}}};
+    CPPUNIT_ASSERT_NO_THROW(write(attr,r));
 
     root = xml::node();
     root.add_child("group",xml::group::object_to_xml(group));
@@ -157,8 +158,8 @@ void multidim_attribute_test_{0.type_name}::test_from_object()
     xml::attribute::data_to_xml(attr_node,r);
     child = root.add_child("group.attribute",attr_node);
 
-    CPPUNIT_ASSERT(xml::attribute::size(child) == 1);
-    CPPUNIT_ASSERT(xml::attribute::rank(child) == 0);
+    CPPUNIT_ASSERT(xml::attribute::size(child) == 3);
+    CPPUNIT_ASSERT(xml::attribute::rank(child) == 1);
     CPPUNIT_ASSERT(xml::attribute::type_id(child) ==
                    type_id_t::{0.type_id});
 
@@ -179,29 +180,38 @@ class TestData(object):
             self.cpp_data = data
 
 
-mdim_data =    [TestData("uint8", "UINT8", "1,2,3"),
-               TestData("int8",  "INT8",  "-4,3,-10"),
-               TestData("uint16","UINT16","200,300,400"),
-               TestData("int16", "INT16", "-234,500,-34"),
-               TestData("uint32","UINT32","4000,-2000,345"),
-               TestData("int32", "INT32", "23456,3453,40392"),
-               TestData("uint64","UINT64","4013945,39458,14056"),
-               TestData("int64", "INT64", "-4013945,304213,-405982"),
+mdim_data =    [TestData("uint8", "UINT8", "1 2 3","1, 2, 3"),
+               TestData("int8",  "INT8",  "-4 3 -10","-4, 3, -10"),
+               TestData("uint16","UINT16","200 300 400",
+                                          "200, 300, 400"),
+               TestData("int16", "INT16", "-234 500 -34",
+                                          "-234, 500, -34"),
+               TestData("uint32","UINT32","4000 2000 345",
+                                          "4000, 2000, 345"),
+               TestData("int32", "INT32", "23456 -3453 40392",
+                                          "23456, -3453, 40392"),
+               TestData("uint64","UINT64","4013945 39458 14056",
+                                          "4013945,39458,14056"),
+               TestData("int64", "INT64", "-4013945 304213 -405982",
+                                          "-4013945, 304213, -405982"),
 
-               TestData("float32", "FLOAT32", "2.3455,-34.e+2,-42.e-5"),
-               TestData("float64", "FLOAT64", "-1.233e+4,239e-3,30495.e-8"),
-               TestData("float128","FLOAT128","123.24354e-4,40394.e-4,1.23e+5"),
+               TestData("float32", "FLOAT32", "2.3455 -34.e+2 -42.e-5",
+                                              "2.3455, -34.e+2, -42.e-5"),
+               TestData("float64", "FLOAT64", "-1.233e+4 239e-3 30495.e-8",
+                                              "-1.233e+4, 239e-3, 30495.e-8"),
+               TestData("float128","FLOAT128","123.24354e-4 40394.e-4 1.23e+5",
+                                              "123.24354e-4, 40394.e-4, 1.23e+5"),
 
                TestData("complex32", "COMPLEX32",
-                        "34.+j123.e-3,34.e-2+I98.3,453.98-i743.29",
+                        "34.+j123.e-3 34.e-2+I98.3 453.98-i743.29",
                         "{34.,123.e-3},{34.e-2,98.3},{453.98,-743.29}"),
                TestData("complex64", "COMPLEX64",
-                        "-23.-I8.203,893e+4-j23.12,9.e-8+I732e+3",
+                        "-23.-I8.203 893e+4-j23.12 9.e-8+I732e+3",
                         "{-23.,-8.203},{893e+4,-23.12},{9.e-8,732e+3}"),
                TestData("complex128","COMPLEX128",
-                        "123+I340,-I34.9,345.2",
+                        "123+I340 -I34.9 345.2",
                         "{123,340},{0.,-34.9},{345.2,0.}"),
-               TestData("bool_t","BOOL","true,true,false")
+               TestData("bool_t","BOOL","true true false","true,true,false")
 
                ]
 

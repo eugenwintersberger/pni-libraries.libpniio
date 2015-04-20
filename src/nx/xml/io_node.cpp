@@ -69,7 +69,12 @@ namespace xml{
     type_id_t io_node::type_id(const node &io_node)
     {
         node type_attribute = get_attribute(io_node,"type");
-        return type_id_from_str(data_node::read(type_attribute));
+        string type_code = data_node::read(type_attribute);
+
+        //need to handle the special case of a boolean type
+        if(type_code == "bool_t") type_code = "bool";
+
+        return type_id_from_str(type_code);
     }
     
 //end of namespace

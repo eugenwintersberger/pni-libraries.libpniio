@@ -279,6 +279,28 @@ namespace nx{
                 _imp.write(type_id_map<T>::type_id,data);
             }
 
+            //----------------------------------------------------------------
+            //!
+            //! \brief write data from a vector
+            //! 
+            //! Write data stored in an STL vector to an attribute. 
+            //!
+            //! \throws size_mismatch_error if memory and attribute size do not
+            //! match
+            //! \throws io_error in case of a general IO error
+            //! \throws type_error if data type not supported by the library
+            //! \throws invalid_object_error if attribute not valid
+            //! \throws object_error in case of any other error
+            //! 
+            //! \tparam T value type of the vector
+            //! \param data reference to the vector
+            //! 
+            template<typename T>
+            void write(const std::vector<T> &data) const
+            {
+                write(data.size(),data.data());
+            }
+
             //-----------------------------------------------------------------
             //! 
             //! \brief write a single scalar value
@@ -475,6 +497,26 @@ namespace nx{
                 _imp.read(type_id_map<T>::type_id,value);
             }
 
+            //---------------------------------------------------------------
+            //!
+            //! \brief read data to an STL vector
+            //!
+            //! Read data from an attribute to an STL vector.
+            //!
+            //! \throws size_mismatch_error if n and attribute size do not match
+            //! \throws type_error if T is not supported
+            //! \throws invalid_object_error if attribute is not valid
+            //! \throws io_error in case of a general IO error
+            //! \throws object_error in case of any other error
+            //! 
+            //! \tparam T data type to read to
+            //! \param data reference to the vector
+            //!
+            template<typename T>
+            void read(std::vector<T> &data) const
+            {
+                read(data.size(),data.data());
+            }
 
             //============simple maintenance methods========================
             //!

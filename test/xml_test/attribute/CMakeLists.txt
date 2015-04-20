@@ -38,7 +38,7 @@ add_custom_command(OUTPUT ${SCALAR_SRCS}
 set(MDIM_SRCS)
 foreach(TYPE ${TYPES})
         
-        if("${TYPE}" NOT STREQUAL "string")
+        if(NOT "${TYPE}" STREQUAL "string")
             set(XMLFILE multidim_attribute_${TYPE}.xml)
             set(CPPFILE multidim_attribute_test_${TYPE}.cpp)
             set(HPPFILE multidim_attribute_test_${TYPE}.hpp)
