@@ -205,6 +205,7 @@ namespace io{
         //! generator type
         typedef karma::bool_generator<bool> type;
     };
+    
 
 //end of namespace
 }
