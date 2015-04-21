@@ -482,7 +482,7 @@ namespace nx{
                 _imp.read(type_id_map<T>::type_id,index_vector_type{1},&value);
             }
            
-            //----------------------------------------------------------------
+            //-----------------------------------------------------------------
             //!
             //! \brief reading data to memory
             //! 
@@ -510,6 +510,29 @@ namespace nx{
                             "Field size does not match memory size!");
 
                 _imp.read(type_id_map<T>::type_id,index_vector_type{n},values);
+            }
+            
+            //-----------------------------------------------------------------
+            //!
+            //! \brief reading data vector
+            //! 
+            //! Read from disk and store it to an STL vector. 
+            //! 
+            //! \throws size_mismatch_error if the size of the vector does not
+            //!         match the size of the field
+            //! \throws invalid_object_error if field is not valid
+            //! \throws type_error if argument type cannot be handled
+            //! \throws io_error in case of IO failure
+            //! \throws object_error in case of any other error
+            //! 
+            //! \tparam T value type of the vector
+            //!             
+            //! \param data reference to the STL vector where to store the data
+            //!
+            template<typename T>
+            void read(std::vector<T> &data) const
+            {
+                read(data.size(),data.data());
             }
 
 
@@ -630,7 +653,7 @@ namespace nx{
                 _imp.write(type_id_map<T>::type_id,index_vector_type({1}),&value);
             }
 
-            //----------------------------------------------------------------
+            //-----------------------------------------------------------------
             //! 
             //! \brief write data from memory
             //! 
@@ -661,6 +684,30 @@ namespace nx{
 
                 _imp.write(type_id_map<T>::type_id,index_vector_type{{n}},
                            static_cast<const void*>(value));
+            }
+            
+            //-----------------------------------------------------------------
+            //! 
+            //! \brief write data from vector
+            //! 
+            //! Write data stored in an STL vector to disk.
+            //! 
+            //! \throws size_mismatch_error if the size of the vector does 
+            //!         not match the size of the field
+            //! \throws invalid_object_error in case of IO errors
+            //! \throws io_error in case of IO errors
+            //! \throws object_error  in case of all other errors
+            //! \throws type_error if tid does not have a corresponding HDF5
+            //!         data type
+            //! 
+            //! \tparam T value type of the vector
+            //! 
+            //! \param data reference to the STL vector
+            //! 
+            template<typename T>
+            void write(const std::vector<T> &data) const
+            {
+                write(data.size(),data.data());
             }
 
             //----------------------------------------------------------------

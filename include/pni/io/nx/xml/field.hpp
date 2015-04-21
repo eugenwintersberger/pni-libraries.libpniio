@@ -105,16 +105,56 @@ namespace xml{
                 >
         static nxobject<GTYPE,FTYPE,ATYPE> 
         object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
-                        const node &field_node)
+                        const node &field_node)                                            
         {
-            auto f = create_field(parent,type_id(field_node),
-                                  name(field_node),
-                                  shape(field_node));
-
+            typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
+            //determine basic field parameters
+            string field_name   = name(field_node);
+            shape_t field_shape = shape(field_node);
+            type_id_t tid       = type_id(field_node);                                
+            
+            //if the field tag contains a strategy tag we have to check
+            //for possible compression attributes
+            bool use_compression = false;
+            bool use_shuffle = false;
+            size_t compression_rate = 0;
+            auto strategy = field_node.get_child_optional("strategy");
+            if(strategy)
+            {                             
+                if(has_attribute(*strategy,"compression"))
+                    use_compression = data_from_xml<bool>(
+                    get_attribute(*strategy,"compression"));
+                    
+                if(has_attribute(*strategy,"shuffle"))
+                    use_shuffle = data_from_xml<bool>(
+                    get_attribute(*strategy,"shuffle"));
+                    
+                if(has_attribute(*strategy,"rate"))
+                    compression_rate = data_from_xml<size_t>(
+                    get_attribute(*strategy,"rate"));
+                    
+            }
+            
+            //construct the field object
+            object_type f;
+            if(use_compression)
+            {
+                typedef nximp_code_map<GTYPE> map_type;
+                typedef nxobject_trait<map_type::icode> trait_type;
+                typedef typename trait_type::deflate_type deflate_type;
+                
+                deflate_type comp(compression_rate,use_shuffle);
+                f = create_field(parent,tid,field_name,field_shape,comp);
+            }
+            else
+                f = create_field(parent,tid,field_name,field_shape);
+                                  
+            //add long name if requested by XML
             if(has_attribute(field_node,"long_name"))
                 write(create_attribute<string>(f,"long_name"),
                       long_name(field_node));
 
+            //add units if requested by XML
             if(has_attribute(field_node,"units"))
                 write(create_attribute<string>(f,"units"),
                       unit(field_node));
@@ -145,22 +185,33 @@ namespace xml{
                  typename FTYPE,
                  typename ATYPE
                 >
-        static node object_to_xml(const nxobject<GTYPE,FTYPE,ATYPE> &field)
+        static node object_to_xml(const nxobject<GTYPE,FTYPE,ATYPE> &f)
         {
-            node field_node;
+            node field_node;            
+            FTYPE fo = as_field(f); //throw type_error if f is not a field
+            string buffer;
 
             //write name and type attributes
-            field_node.put("<xmlattr>.name",get_name(field));
-            field_node.put("<xmlattr>.type",str_from_type_id(get_type(field)));
-            field_node.put("<xmlattr>.units",get_unit(field));
-
-            string buffer;
-            read(get_attribute(field,"long_name"),buffer);
-            field_node.put("<xmlattr>.long_name",buffer);
+            field_node.put("<xmlattr>.name",fo.name());
+            field_node.put("<xmlattr>.type",str_from_type_id(fo.type_id()));
+            
+            //add a units attribute if the original field has one
+            if(fo.attributes.exists("units"))
+            {                
+                fo.attributes["units"].read(buffer);
+                field_node.put("<xmlattr>.units",buffer);
+            }
+            
+            //add a long_name attributes if the original field has one
+            if(fo.attributes.exists("long_name"))
+            {                
+                fo.attributes["long_name"].read(buffer);
+                field_node.put("<xmlattr>.long_name",buffer);
+            }
 
             //write the shape if it is not scalar field
-            auto s = get_shape<shape_t>(field);
-            if(s.size() && (get_size(field)!=1))
+            auto s = get_shape<shape_t>(f);
+            if(s.size() && (get_size(f)!=1))
                 field_node.add_child("dimensions",dimensions::object_to_xml(s));
 
             return field_node;

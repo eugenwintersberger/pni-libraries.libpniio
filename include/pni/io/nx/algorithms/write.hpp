@@ -162,7 +162,8 @@ namespace nx{
             //! \param data reference to the data holding instance
             //! \param s selection of what to write
             //!
-            write_visitor(const ATYPE &data,const selection_t &s=selection_t()):
+            write_visitor(const ATYPE &data,
+                          const selection_t &s=selection_t()):
                 _data(data),
                 _selection(s)
             {}
@@ -223,8 +224,8 @@ namespace nx{
             //!
             //! \throws invalid_object_error if the field is not valid
             //! \throws io_error if reading the data fails
-            //! \throws type_error if the data type of ATYPE is not supported or
-            //! the selection is not empty
+            //! \throws type_error if the data type of ATYPE is not supported 
+            //!         or the selection is not empty
             //! \throws memory_not_allocated_error if ATYPE is an array type 
             //! and its internal buffer has no memory associated with it
             //! \throws size_mismatch_error if the number of elements of 
@@ -278,7 +279,8 @@ namespace nx{
              typename AATYPE,
              typename ...ITYPES 
             > 
-    void write(nxobject<GTYPE,FTYPE,AATYPE> &&o,const ATYPE &a,ITYPES ...indices)
+    void write(nxobject<GTYPE,FTYPE,AATYPE> &&o,const ATYPE &a,
+               ITYPES ...indices)
     {
         typedef write_visitor<ATYPE,GTYPE,FTYPE,AATYPE> visitor_type;
         std::vector<slice> sel{slice(indices)...};

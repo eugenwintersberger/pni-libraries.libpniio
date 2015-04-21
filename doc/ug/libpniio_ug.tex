@@ -27,40 +27,52 @@
                 calc,
                 shapes.multipart,
                 fit,
-            backgrounds}
+                backgrounds}
 
 %%%---------------------------------------------------------------------------
 %%% define tikz styles
 %%%---------------------------------------------------------------------------
-\tikzset{nxgroup/.style = {rectangle split,
-                     rectangle split parts=2,
-                     draw,
-                     rounded corners
-                    },
-         nxfieldv/.style = {
-                     rectangle split, 
-                     rectangle split parts=#1,
-                     draw, 
-                     rounded corners
+\tikzset{nxgroup/.style = 
+         {
+            rectangle split,
+            rectangle split parts=2,
+            draw,
+            rounded corners
          },
-         nxfieldh/.style = {                   
-                     rectangle split, 
-                     rectangle split horizontal,
-                     rectangle split parts=#1,
-                     draw, 
-                     rounded corners
+         nxfieldv/.style = 
+         {
+            rectangle split, 
+            rectangle split parts=#1,
+            draw, 
+            rounded corners
          },
-         classnode/.style = {
-            draw,rounded corners,minimum width=3cm,
+         nxfieldh/.style = 
+         {                   
+            rectangle split, 
+            rectangle split horizontal,
+            rectangle split parts=#1,
+            draw,
+            rounded corners
+         },         
+         classnode/.style = 
+         {
+            draw,
+            rounded corners,
+            minimum width=3cm,
             minimum height=1cm,thick
-         }
-
-         artifact/.style = {
-            rectangle,draw,thick
          },
-
-         process/.style = {
-            rectangle,rounded corners,thick,draw
+         artifact/.style = 
+         {
+            rectangle,
+            draw,
+            thick
+         },
+         process/.style = 
+         {
+            rectangle,
+            rounded corners,
+            thick,
+            draw
          }
 } 
 

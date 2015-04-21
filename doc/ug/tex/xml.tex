@@ -1,20 +1,20 @@
 %%%documentation concerning the XML functions
 
-As \nexus\ organizes data objects in a tree like manner, XML is the obvious ASCII
-representation for a \nexus\ file.
-\libpniio\ thus provides a small but powerful set of functions to read and write 
-\nexus\ data objects from and to XML files. The framework is based on the 
+As \nexus\ organizes data objects in a tree like manner, XML is the obvious 
+ASCII representation for a \nexus\ file.
+\libpniio\ thus provides a small but powerful set of functions to read and 
+write \nexus\ data objects from and to XML files. The framework is based on the 
 \cpp{boost::property\_tree} library. Clearly, the XML functionality provided 
-by \libpniio\ does in no case replace a full XML parser. For instance, there are
-no functions provided to manipulate the the XML content returned from 
-any of the functions. However, as the \cpp{node} type used to represent 
-XML data is an alias for the \cpp{boost::property\_tree} node type, one can use
+by \libpniio\ does in no case replace a full XML parser. For instance, there 
+are no functions provided to manipulate the the XML content returned from 
+any of the functions. However, as the \cpp{node} type used to represent XML 
+data is an alias for the \cpp{boost::property\_tree} node type, one can use
 functions from \cpp{boost::property\_tree} to do some additional work with the
 XML results.
 \libpniio\ provides two interfaces\
 \begin{itemize}
-\item a high level interface which consists of basically two functions. The high
-level interface is described in section~\ref{sec:xml:highlevel}
+\item a high level interface which consists of basically two functions. The 
+high level interface is described in section~\ref{sec:xml:highlevel}
 \item And a low level interface -- these are the classes and functions used to
 build the high level interface (described in section~\ref{sec:xml:lowlevel}).
 \end{itemize}
@@ -22,7 +22,7 @@ Aside from this there are some simple functions which are common to both
 interfaces and described in section~\ref{sec:xml:basic}.
 
 %%%---------------------------------------------------------------------------
-\subsection{Basic XML handling}{\label{sec:xml:basic}
+\subsection{Basic XML handling}\label{sec:xml:basic}
 
 All XML related functions and classes resided within a separate namespace 
 \cpp{pni::io::nx::xml}. An XML document is represented by an instance of 
@@ -54,7 +54,7 @@ output stream operator
 \end{cppcode}
 
 
-%%%===========================================================================
+%%%============================================================================
 \subsection{High level XML interface}\label{sec:xml:highlevel}
 
 The high-level XML interface basically consists of two function templates 
@@ -62,8 +62,8 @@ The high-level XML interface basically consists of two function templates
 \item[xml\_to\_nexus] which creates \nexus\ objects from XML templates
 \item[nexus\_to\_xml] which generates XML from \nexus\ objects.
 \end{description}
-Additionally there are some convenience functions available. All of this will be
-described in more detail in this section.
+Additionally there are some convenience functions available. All of this will 
+be described in more detail in this section.
 
 %%%---------------------------------------------------------------------------
 \subsection{\nexus\ objects from XML}\label{sec:xml::nxtoxml}
@@ -99,9 +99,9 @@ in the XML file will be stored in the fields and attributes of the created
 %%%---------------------------------------------------------------------------
 \subsubsection{XML from \nexus\ objects}\label{sec:xml:xmltonx}
 
-The work horse for \nexus\ to XML conversion is the \cpp{nexus\_to\_xml} function
-template. The most probably simplest use case is demonstrated in the next
-example 
+The work horse for \nexus\ to XML conversion is the \cpp{nexus\_to\_xml} 
+function template. The most probably simplest use case is demonstrated in the 
+next example 
 \begin{cppcode}
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/xml.hpp>
@@ -120,12 +120,13 @@ int main(int argc,char **argv)
     return 0;
 }
 \end{cppcode}
-Here, the entire structure of the \nexus\ file is stored below the XML root node 
-which is at the end dumped to standard output.
+Here, the entire structure of the \nexus\ file is stored below the XML root 
+node which is at the end dumped to standard output.
 This simple example already raises an important question: how to deal with the
-data stored in the \nexus\ file. As \nexus\ files can be used to store large amounts
-of data it would not be wise to convert all this data to ASCII (think about a 3D
-image stack stored in the file). However, some data might be required. 
+data stored in the \nexus\ file. As \nexus\ files can be used to store large 
+amounts of data it would not be wise to convert all this data to ASCII (think 
+about a 3D image stack stored in the file). However, some data might be 
+required. 
 The \cpp{nexus\_to\_xml} template thus provides a third optional argument which 
 is a predicate function which decides for which field or attribute data will be
 written to the file. 
@@ -141,9 +142,9 @@ bool predicate(const nxobject<GTYPE,FTYPE,ATYPE> &o);
 The function returns \cpp{true} if the data of a particular object should be 
 included in the XML output. 
 It is wise to not make this function to specific. Thus, the name of a field 
-is not a good criterion for deciding whether or not to write data. 
-A much better approach is to check for certain properties of an object. 
-For the previous example a possible predicate could look like this
+is not a good criterion for deciding whether or not to write data. A much 
+better approach is to check for certain properties of an object. For the 
+previous example a possible predicate could look like this
 \begin{cppcode}
 //code omitted 
 bool write_scalars(const h5::nxobject &o)
@@ -166,8 +167,8 @@ int main(int argc,char **argv)
 }
 \end{cppcode}
 This predicate determines that only the data from fields and attributes 
-is written to the XML tree if their size is equal to $1$ (in other words -- only
-scalars are written to the file). 
+is written to the XML tree if their size is equal to $1$ (in other words -- 
+only scalars are written to the file). 
 Such an approach keeps the resulting XML document small while using a rather 
 general predicate which would match quite a lot of use cases. The default 
 policy is to write no data.
@@ -176,9 +177,10 @@ policy is to write no data.
 %%%===========================================================================
 \subsection{The XML low level interface}\label{sec:xml:lowlevel}
 
-The entire XML stack in \libpniio\ is based upon the \cpp{boost::property\_tree} 
-library. The \cpp{pni::io::nx::xml::ptree} type is nothing else than an alias to
-the \cpp{node} type provided by the \cpp{property\_tree} library.
+The entire XML stack in \libpniio\ is based upon the 
+\cpp{boost::property\_tree} library. The \cpp{pni::io::nx::xml::ptree} type is 
+nothing else than an alias to the \cpp{node} type provided by the 
+\cpp{property\_tree} library.
 
 %%%----------------------------------------------------------------------------
 \subsection{Basic \cpp{node}-operations}
@@ -215,7 +217,62 @@ attribute.
 The \cpp{xml::node} type and its related functions are provided by the
 \cpp{xml/node.hpp} header file.
 
-%%%---------------------------------------------------------------------------
+%%%----------------------------------------------------------------------------
+\subsection{Utility classes}
+
+There are two utility classes which should be described before we are dealing 
+with the special classes for individual tasks. The two classes are 
+\begin{description}
+    \item[\cpp{data\_node}] a simple and special node which can be used to 
+    retrieve data from a node. 
+    \item[\cpp{io\_node}] the base class for the \cpp{attribute} and 
+    \cpp{field} class.
+\end{description}
+The \cpp{data\_node} class provides only two static methods \cpp{read} and 
+\cpp{write}. Both methods deal with the entire data content stored in a tag. 
+To read the textual data stored in a tag one can simply use
+\begin{cppcode}
+xml::node n = ...;
+string data = data_node::read(n);
+\end{cppcode}
+and to write 
+\begin{cppcode}
+xml::node n = ....;
+string data = ....;
+data_node::write(n,data);
+\end{cppcode}
+The \cpp{io\_node} class is used to access common properties of the 
+\cpp{attribute} and \cpp{field} tag. The properties in common to 
+attributes and fields are
+\begin{itemize}
+    \item data type
+    \item number of dimensions (rank)
+    \item number of elements along each dimension (shape)
+    \item total number of elements stored in the tag (size).
+\end{itemize}
+The usage of the corresponding static methods is fairly simple 
+\begin{cppcode}
+xml::node n = ....;
+auto shape = xml::io_node::shape<shape_t>(n);
+size_t rank = xml::io_node::rank(n);
+size_t size = xml::io_node::size(n);
+std::cout<<"Type ID: "<<xml::io_node::type_id(n)<<std::endl;
+\end{cppcode}
+In addition to those methods there are two template methods which can be used 
+to retrieve data from or to write data to the node. To read a single 
+scalar value use
+\begin{cppcode}
+xml::node n = ...;
+auto data = xml::io_node::data_from_xml<float64>(n);
+\end{cppcode}
+one can also use \cpp{std::vector} 
+\begin{cppcode}
+xml::node n = ...;
+auto data = xml::io_node::data_from_xml<std::vector<float64>>(n);
+\end{cppcode}
+
+
+%%%----------------------------------------------------------------------------
 \subsection{Handling tags}
 
 Each tag in \libpniio's XML protocol is handled by an individual class and its
@@ -224,14 +281,15 @@ static methods. Each of these \emph{tag}-classes provides two major methods
 object of the tags type in memory while the latter one creates an XML
 representation from a particular type.
 
+%%%----------------------------------------------------------------------------
 \subsubsection{The \cpp{dimensions} tag}
 
 The \cpp{dimensions} tag provides information about the number of elements 
 along each dimension of a multi-dimensional field or attribute. This tag is
 handled by the \cpp{dimensions} class provided by \cpp{xml/dimensions.hpp}
 header file. 
-The \cpp{dimensions} class allows for inquiry of the \cpp{dimensions} tag within
-the XML structure. 
+The \cpp{dimensions} class allows for inquiry of the \cpp{dimensions} tag 
+within the XML structure. 
 \begin{cppcode}
 xml::node dims = .....;
 
@@ -266,16 +324,36 @@ This template member function accepts an arbitrary container with integer
 elements as its only argument and return a \cpp{xml::node} instance 
 with the shape data.
 
-
+%%%----------------------------------------------------------------------------
 \subsubsection{The \cpp{attribute} tag}
-\todo[inline]{Describe attribute tag handling}
+The \cpp{attribute} tag is handled by a class of the same name which is 
+a child class of \cpp{io\_node}. Aside from the inherited interface from 
+\cpp{io\_node} the \cpp{attribute} class adds two additional static methods 
+\begin{description}
+    \item[\cpp{object\_from\_xml}] which generates an attribute from an 
+    XML attribute tag
+    \item[\cpp{object\_to\_xml}] which converts a \nexus\ attribute to 
+    an XML tag.
+\end{description}
+It is important to note that this class deals only with attributes which 
+are described by the attribute tag an not those which are part of the 
+tag itself. 
 
+%%%----------------------------------------------------------------------------
 \subsubsection{The \cpp{group} tag}
 \todo[inline]{Describe group tag handling}
 
+%%%----------------------------------------------------------------------------
 \subsubsection{The \cpp{field} tag}
-\todo[inline]{Describe field tag handling}
+The \cpp{field} tag is handled by the \cpp{field} class which behaves pretty 
+much as the \cpp{attribute} class. There is one major exception from the 
+point of XML: fields do support compression. Currently only HDF5s deflate
+compression is supported. To add compression use the \cpp{strategy} tag 
+inside the \cpp{field} tag. The usage of the \cpp{strategy} tag is a 
+remenesance from Jan Kotanskies \nexus\ data server. It might be replaced 
+in future as more compression algorithms become available. 
 
+%%%----------------------------------------------------------------------------
 \subsubsection{The \cpp{link} tag}
 \todo[inline]{Describe link tag handling}
 

@@ -32,7 +32,7 @@ add_custom_command(OUTPUT ${SCALAR_SRCS}
                    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 
 #-----------------------------------------------------------------------------
-# generate files required for scalar tests
+# generate files required for multidimensional tests
 #-----------------------------------------------------------------------------
 #generate the list of required files
 set(MDIM_SRCS)

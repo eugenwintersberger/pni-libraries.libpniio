@@ -3,7 +3,7 @@ set(SOURCES data_node.cpp
             io_node.cpp
             dimensions.cpp
             array_utils.cpp
-            #field.cpp
+            field.cpp
             )
 
 add_library(xml_objects OBJECT ${SOURCES})

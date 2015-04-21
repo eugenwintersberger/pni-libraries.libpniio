@@ -34,13 +34,29 @@ namespace xml{
     //------------------------------------------------------------------------
     string field::unit(const node &field_node)
     {
-        return string_attribute::read(field_node,"units");
+        string unit;
+        
+        if(has_attribute(field_node,"units"))
+        {
+            node attr_node = get_attribute(field_node,"units");
+            unit = data_node::read(attr_node);
+        }
+        
+        return unit;
     }
 
     //------------------------------------------------------------------------
     string field::long_name(const node &field_node)
     {
-        return string_attribute::read(field_node,"long_name");
+        string long_name;
+        
+        if(has_attribute(field_node,"long_name"))
+        {
+            node attr_node = get_attribute(field_node,"long_name");
+            long_name = data_node::read(attr_node);
+        }
+        
+        return long_name;
     }
 
 
