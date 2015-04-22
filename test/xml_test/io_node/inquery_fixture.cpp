@@ -22,7 +22,6 @@
 //
 
 #include <boost/property_tree/xml_parser.hpp>
-#include <pni/io/nx/xml/attribute_data.hpp>
 #include "inquery_fixture.hpp"
 #include "../../uniform_distribution.hpp"
 

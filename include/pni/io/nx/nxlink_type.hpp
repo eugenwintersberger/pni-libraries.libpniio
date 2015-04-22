@@ -23,6 +23,8 @@
 
 #pragma once
 
+#include <iostream>
+
 namespace pni{
 namespace io{
 namespace nx{
@@ -51,6 +53,8 @@ namespace nx{
                              EXTERNAL,//!< denotes an external link
                              ATTRIBUTE //!< returned by attributes
                            };
+                           
+    std::ostream &operator<<(std::ostream &stream,const nxlink_type &ltype);
 //end of namespace
 }
 }

@@ -60,15 +60,21 @@ namespace nx{
         object_type object(o); //convert the input always to nxobject
         if(!is_group(object))
             throw type_error(EXCEPTION_RECORD,"Function expects a group!");
-
-        auto predicate = object_predicates<object_type>::create(n,c);
-        auto iter = std::find_if(begin(object),end(object),predicate);
-
-        if(iter == end(object))
-            throw key_error(EXCEPTION_RECORD,"Keys not found!");
-
-        return *iter;
-
+            
+        if(!n.empty()) //if object name is given
+        {
+            if(!c.empty()) //if object class is given
+                return get_object_by_name_and_class(object,n,c);            
+            else  //if no object class is given            
+                return get_object_by_name(object,n);                
+        }
+        else if(!c.empty()) //if only the class is provided by the user        
+            return get_object_by_class(object,c);                    
+        
+        //if the user has neither provided a name or a class there is 
+        //something wrong
+        throw value_error(EXCEPTION_RECORD,
+            "get_child() requires a name or a class for the search!");        
     }
 
     //------------------------------------------------------------------------

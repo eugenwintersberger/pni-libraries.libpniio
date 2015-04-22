@@ -22,7 +22,6 @@
 //
 
 #include <boost/property_tree/xml_parser.hpp>
-#include <pni/io/nx/xml/attribute_data.hpp>
 #include "data_from_xml_fixture.hpp"
 #include "../../uniform_distribution.hpp"
 #include <boost/algorithm/string/trim.hpp>

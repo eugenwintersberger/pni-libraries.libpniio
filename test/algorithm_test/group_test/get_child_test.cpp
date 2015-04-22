@@ -46,6 +46,17 @@ void get_child_test::setUp()
 }
 
 //-----------------------------------------------------------------------------
+void get_child_test::test_single_child()
+{
+    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    auto c = get_child(root,"scan_1");
+    CPPUNIT_ASSERT(is_group(c));
+    CPPUNIT_ASSERT(get_name(c)=="scan_1");
+    CPPUNIT_ASSERT(get_class(c)=="NXentry");
+}
+
+//-----------------------------------------------------------------------------
 void get_child_test::test_group_by_index()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;

@@ -91,7 +91,7 @@ namespace h5{
 
         return object_imp(H5Oopen_by_idx(_object.id(),".",
                                          H5_INDEX_NAME,
-                                         H5_ITER_INC,
+                                         H5_ITER_NATIVE,
                                          hsize_t(i),
                                          H5P_DEFAULT));
     }

@@ -36,6 +36,7 @@
 #include "attribute.hpp"
 #include "field.hpp"
 #include "default.hpp"
+#include "link.hpp"
 
 
 namespace pni{
@@ -138,8 +139,8 @@ namespace xml{
                 auto f = field::object_from_xml(parent,child.second);
             }
             else if(child.first == "link")
-            {
-                //NEED TO IMPLEMENT THIS
+            {                
+                link::object_from_xml(parent,child.second);
             }
                 
             //append all attributes tagged in this child

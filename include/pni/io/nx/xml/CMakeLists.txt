@@ -9,6 +9,7 @@ set(HEADER_FILES nexus_to_xml.hpp
                  dimensions.hpp
                  default.hpp
                  array_utils.hpp
+                 link.hpp
                  )
 
 install(FILES ${HEADER_FILES} 

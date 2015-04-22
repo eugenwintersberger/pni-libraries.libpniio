@@ -31,134 +31,105 @@
 namespace pni{
 namespace io{
 namespace nx{
-
+    
     //!
-    //! \ingroup algorithm_internal_code
-    //! \brief object predicates 
+    //! \ingroup algorithm_code
+    //! \brief search for object by name
     //! 
-    //! This template class provides predicate methods for object selection. 
-    //! 
-    //! \tparam OTYPE object type
+    //! Search for an object stored below its parent by name. The parent must
+    //! be an instance of nxgroup or nxobject wrapping a group instance. 
+    //! IF the object could not be found a key_error exception is thrown. 
     //!
-    template<typename OTYPE> struct object_predicates
+    //! \throws key_error if no object with the requested name exists
+    //! \throws invalid_object_error if the parent is not a valid object
+    //! \throws io_error in case of errors during object meta data retrieval 
+    //! \throws object_error in case of any object construction or destruction
+    //!                      problem
+    //! 
+    //! \param parent the parent object 
+    //! \param name the name of the requested object
+    //! 
+    //! \return the requested object as an instance of nxobject
+    template<typename OTYPE> 
+    OTYPE get_object_by_name(const OTYPE &parent,const string &name)
     {
-        //! the type of the object to deal with 
-        typedef OTYPE object_type;
-        //! the type of the predicate function
-        typedef std::function<bool(const object_type &o)> function_type;
-        //! virtually a back reference to this structure itself
-        typedef object_predicates<OTYPE> predicate_type;
-
-        //--------------------------------------------------------------------
-        //!
-        //! \brief name predicate
-        //!
-        //! This predicate function returns true for a name match. This
-        //! predicate can be applied to fields as well as groups.
-        //!
-        //! \throws invalid_object_error if the object is not valid
-        //! \throws type_error if the type does not support name retrieval
-        //! \throws io_error if name retrieval fails
-        //! \throws object_error in case of any other error
-        //!
-        //! \param o object to check
-        //! \param name the name to match
-        //! \return true of o's name matches name
-        //!
-        static
-        bool by_name(const OTYPE &o,const string &name)
-        {
-            return get_name(o) == name;
-        }
-
-        //--------------------------------------------------------------------
-        //!
-        //! \brief class match
-        //!
-        //! This predicate function returns true for a class match. If the 
-        //! object is a field type the predicate returns false in any case.
-        //! Naturally this predicate makes only sense for groups.
-        //!
-        //! \throws invalid_object_error if the object is not valid
-        //! \throws shape_mismatch_error if the NX_class attribute is not 
-        //! scalar
-        //! \throws type_error if NX_class is of inappropriate type
-        //! \throws io_error if attribute retrieval failed
-        //! \throws object_error in case of any other error
-        //! 
-        //! \param o object to check
-        //! \param c Nexus class name
-        //! \return true if o's NX_class attribute matches c
-        //!
-        static
-        bool by_class(const OTYPE &o,const string &c)
-        { 
-            if(is_field(o)) return false;
-            return is_class(o,c);
-        }
-
-        //--------------------------------------------------------------------
-        //!
-        //! \brief name and class match
-        //!
-        //! This function returns true in the case of a name and class match.
-        //! like the has_class predicate it makes only sense for groups.
-        //!
-        //! \throws invalid_object_error if the group is not valid
-        //! \throws shape_mismatch_error if the NX_class attribute is not a 
-        //! scalar
-        //! \throws type_error if the NX_class attribute is not of string type
-        //! \throws io_error if name or class retrieval fails
-        //! \throws object_error in case of any other error
-        //!
-        //! \param o object to check
-        //! \param n object name to match
-        //! \param c object class to match
-        //! \return true if o's class and name match n and c, false otherwise
-        //!
-        static
-        bool by_name_and_class(const OTYPE &o,const string &n,const string &c)
-        {
-            if(is_field(o)) return false;
-            return by_name(o,n) && by_class(o,c);
-        }
-
-        //--------------------------------------------------------------------
-        //!
-        //! \brief create predicate function
-        //!
-        //! Static function creating a predicate function which can be used 
-        //! in an STL algorithm. 
-        //!
-        //! \throws key_error value_error if n and c are empty
-        //! \throws object_error if the predicate creation fails for some 
-        //! other reason.
-        //! 
-        //! \param n name to look for 
-        //! \param c Nexus type to look for
-        //! \return predicate function
-        //!
-        static function_type create(const string &n,const string &c)
-        {
-            using std::placeholders::_1;
-
-            if(n.empty() && c.empty())
-                throw key_error(EXCEPTION_RECORD,"'name' and 'class' field are"
-                        "emtpy - do not know what to search for!");
-            else if((!n.empty()) && (!c.empty()))
-                //search for name and class
-                return std::bind(&predicate_type::by_name_and_class,_1,n,c);
-            else if((!n.empty()) && (c.empty()))
-                return std::bind(&predicate_type::by_name,_1,n);
-            else if((n.empty()) && (!c.empty()))
-                return std::bind(&predicate_type::by_class,_1,c);
-            else
-                throw value_error(EXCEPTION_RECORD,
-                        "Could not create predicate function!");
-        }
-
-    };
-
+        auto group = as_group(parent);
+        
+        if(!group.has_child(name))
+            throw key_error(EXCEPTION_RECORD,
+                "Group has no child ["+name+"]!");
+        
+        return group[name];
+    }
+    
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup algorithm_code
+    //! \brief search for object by name and class
+    //! 
+    //! This function searches for an object by its name and class. Obviously
+    //! such an object can only be a group as fields do not have a class 
+    //! attribute. 
+    //!
+    //! The function first tries to find an object with a matching name. 
+    //! If it finds such an object it checks if it is a group and throws a 
+    //! type_error exception if it is not. In the case of a group the 
+    //! function continues to check if the group type matches. 
+    //!
+    //! \throws invalid_object_error if the parent object is not valid
+    //! \throws io_error in case of errors during retrieving object metadata
+    //! \throws type_error if the object found by name is not a group
+    //! \throws key_error if no object of the requested name and class 
+    //!                   could be found
+    //! \throws object_error in any case of errors during object creation,
+    //!                      destruction, or copying 
+    //!
+    //! \tparam OTYPE object type
+    //! \param parent the parent object
+    //! \param name the name of the requested group
+    //! \param c the class of the requested group
+    //! \return a group object of matching name and class
+    //!
+    template<typename OTYPE>
+    OTYPE get_object_by_name_and_class(const OTYPE &parent,
+                                       const string &name,
+                                       const string &c)
+    {
+        auto result = get_object_by_name(parent,name);
+        
+        if(is_field(result))
+            throw type_error(EXCEPTION_RECORD,
+                "Object is a field and thus does not have a class!");
+        
+        if(!is_class(result,c))
+            throw key_error(EXCEPTION_RECORD,
+                "No object ["+name+":"+c+"] found!");
+                
+        return result;        
+    }
+    
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup algorithm_code
+    //! \brief find object by class
+    //! 
+    //! 
+    template<typename OTYPE>
+    OTYPE get_object_by_class(const OTYPE &parent,string c)
+    {
+        auto iter = std::find_if(begin(parent),end(parent),
+                    [&c](const OTYPE &o) { 
+                        if(is_field(o)) return false;
+                        
+                        return is_class(o,c);
+                    });
+                    
+        if(iter == end(parent))
+            throw key_error(EXCEPTION_RECORD,
+                "No group of class ["+c+"] found!");
+                
+        return *iter;
+    }
 
 
 //end of namespace

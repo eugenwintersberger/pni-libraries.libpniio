@@ -28,6 +28,35 @@
 namespace pni{
 namespace io{
 namespace nx{
+    
+    
+    template<
+             typename CTYPE,
+             typename OTYPE
+            >
+    void get_children(const OTYPE &p,const string &c,CTYPE &container)
+    {
+        typedef decltype(get_parent(p)) object_type; 
+        
+        object_type parent(p); //whatever OTYPE is we go here for an object 
+                               //type
+                               
+        //check if the parent is a group instance and throw an exception
+        //if otherwise
+        if(!is_group(parent))
+            throw type_error(EXCEPTION_RECORD,
+                "The parent object must be a group!");
+                
+        //iterate over all children
+        for(auto iter = begin(parent); iter!=end(parent);++iter)
+        {
+            //shortcut evaluation - if is_group is false the class 
+            //is not checked
+            if(is_group(*iter) && is_class(*iter,c))
+                container.push_back(*iter);
+        }
+        
+    }
 
     //!
     //! \ingroup algorithm_code
@@ -59,25 +88,13 @@ namespace nx{
              typename CTYPE,
              typename OTYPE
             > 
-    CTYPE get_children(const OTYPE &o,const string &c)
+    CTYPE get_children(const OTYPE &parent,const string &c)
     {
-        typedef decltype(get_parent(o)) object_type;
-        object_type object(o); //convert the input always to nxobject
-
-        if(!is_group(object))
-            throw type_error(EXCEPTION_RECORD,"Function expects a group!");
-
-
-        auto predicate = object_predicates<object_type>::create("",c);
+        CTYPE container;
         
-        CTYPE result;
+        get_children(parent,c,container);
         
-        for(auto iter = begin(object);iter!=end(object);++iter)
-        {
-            if(predicate(*iter)) result.push_back(*iter);
-        }
-
-        return result;
+        return container;
     }
 
 

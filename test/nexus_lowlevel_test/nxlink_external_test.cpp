@@ -64,7 +64,7 @@ void nxlink_external_test::test_field_by_string()
     CPPUNIT_ASSERT_NO_THROW(link(target_file_name+"://entry/detector/data",
                             location,"link_field"));
 
-    h5::nxfield field = location["link_field"];
+    h5::nxfield field = get_object(location,"link_field");
     CPPUNIT_ASSERT(get_unit(field)=="au");
     CPPUNIT_ASSERT(is_external_link(location,"link_field"));
 }
