@@ -81,7 +81,7 @@ void group_test::test_read_3()
 
     h5::nxobject g;
     CPPUNIT_ASSERT_THROW(g = xml::group::object_from_xml(root_group,child),
-                         pni::io::parser_error);
+                         pni::io::value_error);
 }
 
 //----------------------------------------------------------------------------

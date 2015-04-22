@@ -1,4 +1,4 @@
-set(SOURCES run_test.cpp
+set(SOURCES io_node_tests.cpp
             inquery_fixture.cpp
             data_from_xml_fixture.cpp
             )

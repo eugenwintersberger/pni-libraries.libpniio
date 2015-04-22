@@ -1,5 +1,0 @@
-<field name="temperature" type="float32" 
-    long_name="sample temperature" units="centigrade">
-    1.234
-</field>
-

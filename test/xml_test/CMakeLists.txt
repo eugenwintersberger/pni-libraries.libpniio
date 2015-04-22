@@ -1,7 +1,4 @@
-set(XMLFILES group1.xml
-             group2.xml
-             group3.xml
-             igor.xml
+set(XMLFILES igor.xml
              object_tree1.xml)
 
 
@@ -15,6 +12,7 @@ add_subdirectory(io_node)
 add_subdirectory(data_node)
 add_subdirectory(attribute)
 add_subdirectory(field)
+add_subdirectory(group)
 #add_executable(xml_test ${SOURCES})
 #target_link_libraries(xml_test pniio ${CPPUNIT_LIBRARIES})
 #add_test(xml_test xml_test)
