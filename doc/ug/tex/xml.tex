@@ -66,7 +66,7 @@ Additionally there are some convenience functions available. All of this will
 be described in more detail in this section.
 
 %%%---------------------------------------------------------------------------
-\subsection{\nexus\ objects from XML}\label{sec:xml::nxtoxml}
+\subsubsection{\nexus\ objects from XML}\label{sec:xml::nxtoxml}
 
 Creating \nexus\ objects from XML might be the most common operation performed 
 by this part of the library. The next example illustrates the most common 
@@ -183,7 +183,7 @@ nothing else than an alias to the \cpp{node} type provided by the
 \cpp{property\_tree} library.
 
 %%%----------------------------------------------------------------------------
-\subsection{Basic \cpp{node}-operations}
+\subsubsection{Basic \cpp{node}-operations}
 
 In order to simplify the work with \cpp{boost::property\_tree} \libpniio\ has
 introduced some convenience functions. 
@@ -218,7 +218,7 @@ The \cpp{xml::node} type and its related functions are provided by the
 \cpp{xml/node.hpp} header file.
 
 %%%----------------------------------------------------------------------------
-\subsection{Utility classes}
+\subsubsection{Utility classes}
 
 There are two utility classes which should be described before we are dealing 
 with the special classes for individual tasks. The two classes are 
@@ -273,7 +273,7 @@ auto data = xml::io_node::data_from_xml<std::vector<float64>>(n);
 
 
 %%%----------------------------------------------------------------------------
-\subsection{Handling tags}
+\subsubsection{Handling tags}
 
 Each tag in \libpniio's XML protocol is handled by an individual class and its
 static methods. Each of these \emph{tag}-classes provides two major methods 
@@ -341,7 +341,11 @@ tag itself.
 
 %%%----------------------------------------------------------------------------
 \subsubsection{The \cpp{group} tag}
-\todo[inline]{Describe group tag handling}
+The group tag is a simple container which can store either field or other group
+tags. The group tag has two attributes: the name of the group and its
+(base)class. At least the name of the group is mandatory and must be available
+in any case. The base class is optional. If not provided, a non-\nexus\ group
+without an \cpp{NX\_class} attribute will be created.
 
 %%%----------------------------------------------------------------------------
 \subsubsection{The \cpp{field} tag}
@@ -355,7 +359,14 @@ in future as more compression algorithms become available.
 
 %%%----------------------------------------------------------------------------
 \subsubsection{The \cpp{link} tag}
-\todo[inline]{Describe link tag handling}
+
+The link tag indicates that the object that should be created is a link to
+another object. Like the group tag it has only two attributes: the name of the
+link within its parent group and the target to which the link should refer. 
+The target can be either an object in the same file (internal link) or an object
+in a different file (an external link). The \cpp{link} class which processes 
+the information provided by the link tag has only an \cpp{object\_from\_xml} 
+method as links are not indicated in XML output. 
 
 
 
