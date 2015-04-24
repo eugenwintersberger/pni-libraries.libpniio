@@ -25,13 +25,13 @@
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 #include "../nx.hpp"
+#include "../algorithms.hpp"
 #include "../nxobject.hpp"
 #include "../../exceptions.hpp"
-#include "../../parsers/array_parser.hpp"
+#include "../../parsers.hpp"
 
 #include "node.hpp"
 #include "data_node.hpp"
-#include "attribute_data.hpp"
 #include "group.hpp"
 #include "attribute.hpp"
 #include "field.hpp"
@@ -45,6 +45,70 @@ namespace nx{
 namespace xml{
 
     using namespace pni::core;
+    
+    //-------------------------------------------------------------------------
+    template<
+             typename T,
+             typename OTYPE
+            >
+    void write_node_data(OTYPE &object,const node &n)
+    {
+        typedef std::vector<T> buffer_type;
+        
+        auto buffer = io_node::data_from_xml<buffer_type>(n);
+                
+        write(object,buffer);
+        
+    }
+    
+    //-------------------------------------------------------------------------
+    template<typename OTYPE>
+    void write_node_data(OTYPE &object,const node &n)
+    {                   
+        switch(get_type(object))
+        {   
+            case type_id_t::UINT8:
+                write_node_data<uint8>(object,n); break;
+            case type_id_t::INT8:
+                write_node_data<int8>(object,n); break;
+            case type_id_t::UINT16:
+                write_node_data<uint16>(object,n); break;
+            case type_id_t::INT16:
+                write_node_data<int16>(object,n); break;
+            case type_id_t::UINT32:
+                write_node_data<uint32>(object,n); break;
+            case type_id_t::INT32:
+                write_node_data<int32>(object,n); break;
+            case type_id_t::UINT64:
+                write_node_data<uint64>(object,n); break;
+            case type_id_t::INT64:
+                write_node_data<int64>(object,n); break;
+            case type_id_t::FLOAT32:
+                write_node_data<float32>(object,n); break;
+            case type_id_t::FLOAT64:
+                write_node_data<float64>(object,n); break;
+            case type_id_t::FLOAT128:
+                write_node_data<float128>(object,n); break;
+            case type_id_t::COMPLEX32:
+                write_node_data<complex32>(object,n); break;
+            case type_id_t::COMPLEX64:
+                write_node_data<complex64>(object,n); break;
+            case type_id_t::COMPLEX128:
+                write_node_data<complex128>(object,n); break;
+            case type_id_t::BOOL:
+                write_node_data<bool_t>(object,n); break;
+            case type_id_t::STRING:
+                //need some special handling for string data - only support
+                //scalar strings
+                write(object,io_node::data_from_xml<string>(n));                                
+                //write_node_data<string>(object,n);
+                break;            
+            default:
+                throw type_error(EXCEPTION_RECORD,
+                    "Unrecognized data type!");
+        }
+        
+    }
    
     //!
     //! \ingroup xml_classes
@@ -74,18 +138,19 @@ namespace xml{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename PTYPE
             >
-    void append_attributes(node &p,const nxobject<GTYPE,FTYPE,ATYPE> &parent,
-                           const nxobject_predicate<GTYPE,FTYPE,ATYPE> &write_data)
+    void append_attributes(node &p,nxobject<GTYPE,FTYPE,ATYPE> &parent,
+                           PTYPE write_data)
     {
         for(auto child: p)
         {
             if(child.first=="attribute")
             {
                 auto a = attribute::object_from_xml(parent,child.second);
-                if(write_data(a))
-                    write(a,io_node::data_from_xml(child.second));
+                //if(write_data(a))
+                //    write(a,io_node::data_from_xml(child.second));
             }
         }
     }
@@ -117,38 +182,56 @@ namespace xml{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename PTYPE
             >
-    void xml_to_nexus(node &t,const nxobject<GTYPE,FTYPE,ATYPE> parent,
-                      const nxobject_predicate<GTYPE,FTYPE,ATYPE> &write_data =
-                      write_no_data())
+    void xml_to_nexus(node &t,nxobject<GTYPE,FTYPE,ATYPE> &parent,
+                      PTYPE write_data)
     {
-        typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
+        //typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
         for(auto child: t)
-        {
-            object_type object;
-
+        {            
             if(child.first == "group")
             {
-                object = group::object_from_xml(parent,child.second);
+                auto g = group::object_from_xml(parent,child.second);
                 //recursive call of create_objects
-                xml_to_nexus(child.second,object);
+                xml_to_nexus(child.second,g,write_data);
+                                
             }
             else if(child.first == "field")
             {
                 auto f = field::object_from_xml(parent,child.second);
+                
+                if(write_data(f) && !data_node::read(child.second).empty()) 
+                    write_node_data(f,child.second);
+                
+                //need to call here xml_to_nexus recursively to add
+                //custom attributes
+                xml_to_nexus(child.second,f,write_data);                
             }
             else if(child.first == "link")
             {                
                 link::object_from_xml(parent,child.second);
             }
+            else if(child.first == "attribute")
+            {
+                //attach attributes to the parent object
+                auto a = attribute::object_from_xml(parent,child.second);
                 
-            //append all attributes tagged in this child
-            append_attributes(child.second,object,write_data);
-
-            if(write_data(object))
-                write(object,io_node::data_from_xml(child.second));
+                if(write_data(a) && !data_node::read(child.second).empty())
+                    write_node_data(a,child.second);
+            }                                        
         }
+    }
+    
+    template<
+             typename GTYPE,
+             typename FTYPE,
+             typename ATYPE             
+            >
+    void xml_to_nexus(node &t,nxobject<GTYPE,FTYPE,ATYPE> &parent)
+    {
+       xml_to_nexus(t,parent,write_no_data());
     }
 
 //end of namespace 

@@ -1,0 +1,46 @@
+<group name="scan_1" type="NXentry">
+    <group name="instrument" type="NXinstrument">
+        
+        <group name="detector" type="NXdetector">
+            <field name="depends_on" type="str">
+                transformation/gamma
+            </field>
+            
+            <group name="transformation" type="NXtransformations">
+                <field name="gamma" type="float64" units="degree">
+                    <attribute name="depends_on" type="str">
+                        delta
+                    </attribute>
+                    <attribute name="transformation_type" type="str">
+                        rotation
+                    </attribute>
+                    <attribute name="vector" type="float64">
+                        <dimensions rank="1">
+                            <dim value="3" index="1"/>
+                        </dimensions>
+                        1 0 0
+                    </attribute>                    
+                </field>
+                
+                <field name="delta" type="float64" units="degree">
+                    <attribute name="transformation_type" type="str">
+                        rotation
+                    </attribute>
+                    <attribute name="vector" type="float64">
+                        <dimensions rank="1">
+                            <dim index="1" value="3"/>
+                        </dimensions>
+                        0 0 1
+                    </attribute>
+                </field>
+                
+                
+            </group>
+            
+            <link name="data" 
+                      target="detector_data_file.nxs://scan_1/instrument/detector/data"/>
+        </group>
+        
+    </group>
+
+</group>

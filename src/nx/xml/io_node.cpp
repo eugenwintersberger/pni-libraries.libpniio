@@ -33,8 +33,9 @@ namespace xml{
     //------------------------------------------------------------------------
     size_t io_node::size(const node &io_node)
     {
-        if(io_node.count("dimensions"))
-            return dimensions::size(io_node.get_child("dimensions"));
+        auto dims = io_node.get_child_optional("dimensions");
+        if(dims)
+            return dimensions::size(*dims);
         else
             return 1;
     }
@@ -42,8 +43,9 @@ namespace xml{
     //------------------------------------------------------------------------
     size_t io_node::rank(const node &io_node)
     {
-        if(io_node.count("dimensions"))
-            return dimensions::rank(io_node.get_child("dimensions"));
+        auto dims = io_node.get_child_optional("dimensions");
+        if(dims)
+            return dimensions::rank(*dims);
         else 
             return 0;
     }
@@ -59,8 +61,9 @@ namespace xml{
     shape_t io_node::shape(const node &io_node)
     {
         shape_t shape{1};
-        if(io_node.count("dimensions"))
-            shape = dimensions::object_from_xml(io_node.get_child("dimensions"));
+        auto dims = io_node.get_child_optional("dimensions");
+        if(dims)
+            shape = dimensions::object_from_xml(*dims);
 
         return shape;
     }
