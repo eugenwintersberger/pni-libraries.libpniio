@@ -141,6 +141,38 @@ namespace io{
                 return buffer;
             }
     };
+    
+    template<> 
+    class formatter<std::vector<core::string>>
+    {
+        private:
+            //! output iterator type
+            typedef std::back_insert_iterator<core::string> iterator_type;
+            //! generator type
+            //typedef typename get_generator<iterator_type,T>::type generator_type; 
+            //! generator instance
+            //generator_type generator;
+
+        public:
+
+            //! 
+            //! \brief generate output
+            //! 
+            //! Take the input vector and return its string representation. 
+            //!
+            //! \param v input vector
+            //! \return string representation of the input vector
+            //! 
+            core::string operator()(const std::vector<core::string> &v) const
+            {
+                core::string buffer;
+                iterator_type inserter(buffer);
+
+                karma::generate(inserter,karma::string % '\n',v);
+
+                return buffer;
+            }
+    };
 
 //end of namespace
 }

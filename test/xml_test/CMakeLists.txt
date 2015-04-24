@@ -15,4 +15,5 @@ add_subdirectory(field)
 add_subdirectory(group)
 add_subdirectory(link)
 add_subdirectory(xml_to_nexus)
+add_subdirectory(nexus_to_xml)
 
