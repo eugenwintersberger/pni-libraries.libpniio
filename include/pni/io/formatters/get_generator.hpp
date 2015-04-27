@@ -28,6 +28,7 @@
 
 #include "float_policy.hpp"
 #include "complex_generator.hpp"
+#include "value_generator.hpp"
 
 namespace pni{
 namespace io{
@@ -191,6 +192,12 @@ namespace io{
     {
         //! generator type
         typedef complex_generator<ITERT,T> type;
+    };
+    
+    template<typename ITERT>
+    struct get_generator<ITERT,value>
+    {
+        typedef value_generator<ITERT> type;
     };
 
     //-------------------------------------------------------------------------

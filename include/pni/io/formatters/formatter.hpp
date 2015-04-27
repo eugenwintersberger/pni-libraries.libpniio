@@ -26,6 +26,7 @@
 #include <vector>
 #include <iterator>
 #include <pni/core/types.hpp>
+#include <pni/core/type_erasures.hpp>
 #include <boost/spirit/include/karma.hpp>
 
 #include "get_generator.hpp"
@@ -67,38 +68,71 @@ namespace io{
             //! \param value a value of type T
             //! \return string representation of value
             //! 
-            core::string operator()(const T &value) const
+            core::string operator()(const T &v) const
             {
                 core::string buffer;
                 iterator_type inserter(buffer);
 
-                karma::generate(inserter,generator,value);
+                karma::generate(inserter,generator,v);
 
                 return buffer;
-            }
-
-            
+            }            
     };
-
+    
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief formatter for strings
+    //! 
+    //! A specialization of the formatter template for scalar values for 
+    //! strings. In fact this formatter does nothing else than passing 
+    //! the string through to output. 
+    //!
     template<> class formatter<core::string>
     {
         public:
-            core::string operator()(const core::string &value) const
+            core::string operator()(const core::string &v) const
             {
-                return value;
+                return v;
             }
     };
 
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief formatter for bool
+    //! 
+    //! A specialization of the formatter template for scalar boolean values.
+    //!
     template<> class formatter<bool>
     {
         public:
-            core::string operator()(const bool &value) const
+            core::string operator()(const bool &v) const
             {
-                if(value) return "true";
+                if(v) return "true";
                 
                 return "false";
             }
     };
+    
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief formatter for value_ref type erasure
+    //! 
+    //! A specialization of the formatter template for scalar values for the 
+    //! value_ref type erasure.
+    //!
+    template<> class formatter<core::value_ref>
+    {
+        public:
+            core::string operator()(const core::value_ref &v) const
+            {
+                return formatter<core::value>()(core::to_value(v));
+            }
+    };
+
+ 
 
     //------------------------------------------------------------------------
     //!
@@ -142,6 +176,7 @@ namespace io{
             }
     };
     
+    //-------------------------------------------------------------------------
     template<> 
     class formatter<std::vector<core::string>>
     {
@@ -173,6 +208,56 @@ namespace io{
                 return buffer;
             }
     };
+    
+    //-------------------------------------------------------------------------
+    /*
+    template<>
+    class formatter<core::array>
+    {
+        private:
+            formatter<core::value> value_formatter;
+            
+            char _start;  //start symbol for the sequence
+            char _stop;   //stop symbol for the sequence
+            char _sep;    //element seperator
+            
+        public:
+            formatter():
+                _sep(' ')
+            {}
+            
+            //-----------------------------------------------------------------
+            formatter(char sep):
+                _sep(sep)
+            {}
+            
+            //-----------------------------------------------------------------
+            formatter(char start,char stop,char sep):
+                _start(start),
+                _stop(stop),
+                _sep(sep)
+            {}
+            
+            //-----------------------------------------------------------------
+            core::string operator()(const core::array &v) const
+            {
+                core::string result;
+                
+                auto iter     = v.begin();
+                auto end_iter = v.end();
+                
+                //return an empty string if the array has no content
+                if(iter==end_iter) return result;
+                
+                result += value_formatter(*iter);
+                
+                for(++iter;iter!=end_iter;++iter)
+                    result += _sep + value_formatter(*iter);
+                
+                return result;
+            }
+            
+    };*/
 
 //end of namespace
 }

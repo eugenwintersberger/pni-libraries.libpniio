@@ -13,6 +13,7 @@ set(SOURCES primitive_formatters_test.cpp
             complex32_formatter_test.cpp
 
             bool_formatter_test.cpp
+            value_formatter_test.cpp
            )
 
 add_executable(primitive_formatter_test ${SOURCES} $<TARGET_OBJECTS:test_common>)
