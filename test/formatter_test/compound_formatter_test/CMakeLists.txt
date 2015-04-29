@@ -1,6 +1,7 @@
 set(SOURCES compound_formatters_test.cpp
             int8_vector_formatter_test.cpp
             bool_vector_formatter_test.cpp
+            mdarray_formatter_test.cpp
             array_formatter_test.cpp
            )
 

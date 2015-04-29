@@ -17,41 +17,33 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Apr 28, 2015
+//  Created on: Apr 29, 2015
 //      Author: Eugen Wintersberger
 //
 
 #include <pni/io/container_io_config.hpp>
-#include "array_formatter_test.hpp"
+#include "mdarray_formatter_test.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(array_formatter_test);
+CPPUNIT_TEST_SUITE_REGISTRATION(mdarray_formatter_test);
 
 //-----------------------------------------------------------------------------
-void array_formatter_test::setUp() 
+void mdarray_formatter_test::setUp() 
 { 
-    typedef dynamic_array<int8> array_type;
-    auto data = array_type::create(shape_t{4},
-                                   array_type::storage_type{1,2,3,4});
-    input = input_type(data);
+    input = input_type::create(shape_t{4},
+                               input_type::storage_type{1,2,3,4});    
 }
 
 //-----------------------------------------------------------------------------
-void array_formatter_test::tearDown() {}
+void mdarray_formatter_test::tearDown() {}
 
 //-----------------------------------------------------------------------------
-void array_formatter_test::test_default()
+void mdarray_formatter_test::test_default()
 {
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;   
-    formatter<value> value_formatter;
-    const array &r = input;
-    for(auto iter = r.begin(); iter!=r.end(); ++ iter)
-        std::cout<<value_formatter(*iter)<<" ";
-        
-    std::cout<<std::endl;
-        
-        
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+     
     try
     {
+        std::cout<<format(input)<<std::endl;
         CPPUNIT_ASSERT(format(input)=="1 2 3 4");
     }
     catch(value_error &error)
@@ -61,7 +53,7 @@ void array_formatter_test::test_default()
 }
 
 //-----------------------------------------------------------------------------
-void array_formatter_test::test_costum_sep()
+void mdarray_formatter_test::test_costum_sep()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
   
@@ -70,7 +62,7 @@ void array_formatter_test::test_costum_sep()
 }
 
 //-----------------------------------------------------------------------------
-void array_formatter_test::test_costum_start_stop()
+void mdarray_formatter_test::test_costum_start_stop()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
   

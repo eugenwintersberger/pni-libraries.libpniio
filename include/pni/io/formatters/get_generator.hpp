@@ -59,7 +59,12 @@ namespace io{
     //! 
     template<typename ITERT> struct get_generator<ITERT,value>
     {
-        typedef value_generator<ITERT> type;
+        typedef value_generator<ITERT,value> type;
+    };
+    
+    template<typename ITERT> struct get_generator<ITERT,value_ref>
+    {
+        typedef value_generator<ITERT,value_ref> type;
     };
    
     

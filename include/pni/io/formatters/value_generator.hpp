@@ -39,8 +39,6 @@ namespace io{
     using namespace pni::core;
     using namespace boost::spirit;
     
-    template<typename ITERT,typename T>
-    using my_uint_karma = karma::uint_generator<T>;
 
     //!
     //! \ingroup formatter_classes
@@ -51,9 +49,10 @@ namespace io{
     //! \tparam OITER output iterator
     //! \tparam T base type for the copmlex type
     template<
-             typename OITER             
+             typename OITER,       
+             typename VTYPE
             >
-    struct value_generator : karma::grammar<OITER,value()>
+    struct value_generator : karma::grammar<OITER,VTYPE()>
     {
         //!
         //! \brief get real part
@@ -74,9 +73,10 @@ namespace io{
             };
             
             template<typename T>
-            static string _to_string(const value &v)
+            static string _to_string(const VTYPE &v)
             {
-                typedef typename boost::mpl::at<generator_map,T>::type generator_type;                
+                typedef boost::mpl::at<generator_map,T> at_type;
+                typedef typename at_type::type generator_type;                
                 
                 string formatter_result;
                 iterator_type inserter(formatter_result);
@@ -97,7 +97,7 @@ namespace io{
             //! \return real part of the complex number
             //!
             template<typename Arg>
-            string operator()(Arg const &n) const
+            string operator()(const Arg &n) const
             {
                 switch(type_id(n))
                 {
@@ -134,14 +134,14 @@ namespace io{
                     case type_id_t::STRING:
                         return n.template as<string>();                            
                     case type_id_t::NONE:
+                        return "NONE";
                         throw value_error(EXCEPTION_RECORD,
                             "Passed an uninitialized value!");
                     default:
                         throw type_error(EXCEPTION_RECORD,
                             "The value instances holds an unkown type!");
                     
-                }
-                return "hello world";
+                }                
             }
         };
         
@@ -151,7 +151,7 @@ namespace io{
         boost::phoenix::function<lazy_to_string> to_string;      
        
         //! total rule for complex numbers
-        karma::rule<OITER,value()>  value_rule; 
+        karma::rule<OITER,VTYPE()>  value_rule; 
 
         //!
         //! \brief default constructor

@@ -31,6 +31,7 @@
 
 #include "../container_io_config.hpp"
 #include "get_generator.hpp"
+#include "spirit_container_traits.hpp"
 
 namespace pni{
 namespace io{
@@ -115,30 +116,22 @@ namespace io{
             }
     };
     
-    
-    //------------------------------------------------------------------------
-    //!
-    //! \ingroup formatter_classes
-    //! \brief vector formatter
-    //!
-    //! Specialization of the default formatter for vectors.  The elements of
-    //! the vector must be of a primitive type.
-    //!
-    //! \tparam T element type of the vector
-    //!
-    template<typename T> 
-    class formatter<std::vector<T>>
+    //-------------------------------------------------------------------------
+    template<typename CTYPE>
+    class container_formatter
     {
         private:
+            typedef CTYPE container_type;
             //! output iterator type
             typedef std::back_insert_iterator<core::string> iterator_type;
+            //! element type of the container
+            typedef typename container_type::value_type value_type;
             //! generator type
-            typedef typename get_generator<iterator_type,T>::type generator_type; 
+            typedef get_generator<iterator_type,value_type> getter_type;
+            typedef typename getter_type::type generator_type; 
             //! generator instance
             generator_type generator;
-
-        public:           
-
+        public:
             //! 
             //! \brief generate output
             //! 
@@ -147,8 +140,9 @@ namespace io{
             //! \param v input vector
             //! \return string representation of the input vector
             //! 
-            core::string operator()(const std::vector<T> &v,
-                                    const container_io_config config = container_io_config()) const
+            core::string operator()(const container_type &v,
+                                    const container_io_config config = 
+                                    container_io_config()) const
             {
                 core::string buffer;
                 iterator_type inserter(buffer);                
@@ -168,7 +162,91 @@ namespace io{
                 }                    
                
                 return buffer;
+            }                
+    };
+    
+    
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief vector formatter
+    //!
+    //! Specialization of the default formatter for vectors.  The elements of
+    //! the vector must be of a primitive type.
+    //!
+    //! \tparam T element type of the vector
+    //!
+    template<typename T> 
+    class formatter<std::vector<T>>
+    {
+        private:
+            typedef container_formatter<std::vector<T>> formatter_type;
+            formatter_type f;
+
+        public:           
+
+            //! 
+            //! \brief generate output
+            //! 
+            //! Take the input vector and return its string representation. 
+            //!
+            //! \param v input vector
+            //! \return string representation of the input vector
+            //! 
+            core::string operator()(const std::vector<T> &v,
+                                    const container_io_config config = 
+                                    container_io_config()) const
+            {
+                return f(v,config);
             }
+    };
+    
+    //-------------------------------------------------------------------------
+    template<>
+    class formatter<core::array>
+    {
+        private:
+            typedef container_formatter<core::array> formatter_type;
+            formatter_type f;           
+            
+        public:            
+            
+            //-----------------------------------------------------------------
+            core::string operator()(const core::array &v,
+                                    const container_io_config &config = 
+                                          container_io_config()) const
+            {
+                return f(v,config);
+            }
+            
+    };
+    
+    //-------------------------------------------------------------------------
+    template<typename ...OTYPES>
+    class formatter<mdarray<OTYPES...>>
+    {
+        private:
+            typedef mdarray<OTYPES...> container_type;      
+            typedef container_formatter<container_type> formatter_type;
+            formatter_type f;
+
+        public:           
+
+            //! 
+            //! \brief generate output
+            //! 
+            //! Take the input vector and return its string representation. 
+            //!
+            //! \param v input vector
+            //! \return string representation of the input vector
+            //! 
+            core::string operator()(const mdarray<OTYPES...> &v,
+                                    const container_io_config config = 
+                                    container_io_config()) const                                    
+            {          
+                return f(v,config);
+            }
+        
     };
     
     //-------------------------------------------------------------------------
@@ -204,46 +282,7 @@ namespace io{
             }
     };
     
-    //-------------------------------------------------------------------------
-    template<>
-    class formatter<core::array>
-    {
-        private:
-            //! output iterator type
-            typedef std::back_insert_iterator<core::string> iterator_type;            
-            //! generator type
-            typedef typename get_generator<iterator_type,core::value>::type generator_type; 
-            //! generator instance
-            generator_type generator;          
-            
-        public:            
-            
-            //-----------------------------------------------------------------
-            core::string operator()(const core::array &v,
-                                    const container_io_config &config = 
-                                          container_io_config()) const
-            {
-                core::string buffer;
-                iterator_type inserter(buffer);                
-                
-                auto sep_rule  = karma::char_(config.seperator());                
-                auto cont_rule = generator % sep_rule;
-                
-                if(config.start_symbol() && config.stop_symbol())
-                {                                   
-                    karma::generate(inserter,config.start_symbol()<<
-                                             cont_rule<<
-                                             config.stop_symbol(),v);
-                }
-                else
-                {
-                    karma::generate(inserter,cont_rule,v);   
-                }                    
-               
-                return buffer;
-            }
-            
-    };
+    
 
 //end of namespace
 }
