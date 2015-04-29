@@ -133,6 +133,9 @@ namespace io{
                         return _to_string<bool_t>(n);
                     case type_id_t::STRING:
                         return n.template as<string>();                            
+                    case type_id_t::NONE:
+                        throw value_error(EXCEPTION_RECORD,
+                            "Passed an uninitialized value!");
                     default:
                         throw type_error(EXCEPTION_RECORD,
                             "The value instances holds an unkown type!");
@@ -141,7 +144,6 @@ namespace io{
                 return "hello world";
             }
         };
-
         
 
         //-------------------------------------------------------------------

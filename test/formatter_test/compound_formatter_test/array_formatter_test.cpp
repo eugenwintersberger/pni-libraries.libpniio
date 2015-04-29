@@ -17,34 +17,44 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Feb 11, 2015
+//  Created on: Apr 28, 2015
 //      Author: Eugen Wintersberger
 //
 
 #include <pni/io/container_io_config.hpp>
-#include "int8_vector_formatter_test.hpp"
+#include "array_formatter_test.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(int8_vector_formatter_test);
+CPPUNIT_TEST_SUITE_REGISTRATION(array_formatter_test);
 
 //-----------------------------------------------------------------------------
-void int8_vector_formatter_test::setUp() 
+void array_formatter_test::setUp() 
 { 
-    input = input_type{1,2,3,4};
+    typedef dynamic_array<int8> array_type;
+    auto data = array_type::create(shape_t{4},
+                                   array_type::storage_type{1,2,3,4});
+    input = input_type(data);
 }
 
 //-----------------------------------------------------------------------------
-void int8_vector_formatter_test::tearDown() {}
+void array_formatter_test::tearDown() {}
 
 //-----------------------------------------------------------------------------
-void int8_vector_formatter_test::test_default()
+void array_formatter_test::test_default()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-      
-    CPPUNIT_ASSERT(format(input)=="1 2 3 4");
+     
+    try
+    {
+        CPPUNIT_ASSERT(format(input)=="1 2 3 4");
+    }
+    catch(value_error &error)
+    {
+        std::cerr<<error<<std::endl;
+    }
 }
 
 //-----------------------------------------------------------------------------
-void int8_vector_formatter_test::test_costum_sep()
+void array_formatter_test::test_costum_sep()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
   
@@ -53,11 +63,22 @@ void int8_vector_formatter_test::test_costum_sep()
 }
 
 //-----------------------------------------------------------------------------
-void int8_vector_formatter_test::test_costum_start_stop()
+void array_formatter_test::test_costum_start_stop()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
   
     container_io_config config('(',')');  
-    std::cout<<format(input,config)<<std::endl;  
+    try
+    {
+        std::cout<<format(input,config)<<std::endl;  
+    }
+    catch(type_error &error)
+    {
+        std::cerr<<error<<std::endl;
+    }
+    catch(value_error &error)
+    {
+        std::cerr<<error<<std::endl;
+    }
     CPPUNIT_ASSERT(format(input,config)=="(1 2 3 4)");
 }

@@ -17,7 +17,7 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Feb 11, 2015
+//  Created on: Aor 28, 2015
 //      Author: Eugen Wintersberger
 //
 
@@ -36,16 +36,15 @@
 using namespace pni::core;
 using namespace pni::io;
 
-class int8_vector_formatter_test:public CppUnit::TestFixture 
+class array_formatter_test:public CppUnit::TestFixture 
 {
-        CPPUNIT_TEST_SUITE(int8_vector_formatter_test);
+        CPPUNIT_TEST_SUITE(array_formatter_test);
         CPPUNIT_TEST(test_default);
         CPPUNIT_TEST(test_costum_sep);
         CPPUNIT_TEST(test_costum_start_stop);
         CPPUNIT_TEST_SUITE_END();
 
-        typedef int8                       element_type;
-        typedef std::vector<element_type>  input_type; 
+        typedef array  input_type; 
         typedef formatter<input_type>      formatter_type;        
         formatter_type format;
         input_type     input;

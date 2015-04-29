@@ -6,6 +6,7 @@ set(SOURCES column_info.cpp
              image_reader.cpp
              spreadsheet_reader.cpp
              exceptions.cpp
+             container_io_config.cpp
              strutils.cpp)
 
 

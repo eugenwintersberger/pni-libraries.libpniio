@@ -9,6 +9,7 @@ set(HEADER_FILES column_info.hpp
                  exceptions.hpp
                  parsers.hpp
                  formatters.hpp
+                 container_io_config.hpp
                  )
 
 install(FILES ${HEADER_FILES} 

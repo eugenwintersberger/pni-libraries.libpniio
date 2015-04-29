@@ -1,6 +1,7 @@
 set(SOURCES compound_formatters_test.cpp
             int8_vector_formatter_test.cpp
             bool_vector_formatter_test.cpp
+            array_formatter_test.cpp
            )
 
 add_executable(compound_formatter_test ${SOURCES} $<TARGET_OBJECTS:test_common>)
