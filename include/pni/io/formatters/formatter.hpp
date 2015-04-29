@@ -117,6 +117,17 @@ namespace io{
     };
     
     //-------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief formatter for containers
+    //! 
+    //! Most of the container formatters are using this code. Do not 
+    //! instantiate this template class by yourself. This will be done by the 
+    //! specializations of the formatter template for the various container 
+    //! types. 
+    //! 
+    //! \tparam CTYPE container type
+    //! 
     template<typename CTYPE>
     class container_formatter
     {
@@ -137,7 +148,8 @@ namespace io{
             //! 
             //! Take the input vector and return its string representation. 
             //!
-            //! \param v input vector
+            //! \param v input container
+            //! \param config output configuration for the container
             //! \return string representation of the input vector
             //! 
             core::string operator()(const container_type &v,
@@ -202,11 +214,19 @@ namespace io{
     };
     
     //-------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_classes
+    //! \brief formatter for the array type erasure
+    //! 
+    //! This is a specialization of the formatter template for instances of the 
+    //! array type erasure. 
+    //! 
     template<>
     class formatter<core::array>
     {
         private:
-            typedef container_formatter<core::array> formatter_type;
+            typedef std::vector<core::value> container_type;
+            typedef container_formatter<container_type> formatter_type;
             formatter_type f;           
             
         public:            
@@ -216,12 +236,26 @@ namespace io{
                                     const container_io_config &config = 
                                           container_io_config()) const
             {
-                return f(v,config);
+                //there seems to be a crucial problem with the array iterator
+                //have not figured this out yet. However, we should use it 
+                //with care!
+                container_type c(v.size());
+                std::copy(v.begin(),v.end(),c.begin());
+                return f(c,config);
             }
             
     };
     
     //-------------------------------------------------------------------------
+    //! 
+    //! \ingroup formatter_classes
+    //! \brief formatter for mdarray instances
+    //! 
+    //! Specialization of the formatter template for instances of the mdarray
+    //! template. 
+    //! 
+    //! \tparam OTYPES template parameters for mdarray
+    //! 
     template<typename ...OTYPES>
     class formatter<mdarray<OTYPES...>>
     {
@@ -250,17 +284,18 @@ namespace io{
     };
     
     //-------------------------------------------------------------------------
+    //! 
+    //! \ingroup formatter_classes
+    //! \brief formatter for a string vector
+    //! 
+    //! Specialization of the formatter template for a vector of strings. 
+    //! 
     template<> 
     class formatter<std::vector<core::string>>
     {
         private:
             //! output iterator type
-            typedef std::back_insert_iterator<core::string> iterator_type;
-            //! generator type
-            //typedef typename get_generator<iterator_type,T>::type generator_type; 
-            //! generator instance
-            //generator_type generator;
-
+            typedef std::back_insert_iterator<core::string> iterator_type;           
         public:
 
             //! 

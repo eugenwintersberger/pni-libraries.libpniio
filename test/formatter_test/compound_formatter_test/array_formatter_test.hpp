@@ -42,6 +42,7 @@ class array_formatter_test:public CppUnit::TestFixture
         CPPUNIT_TEST(test_default);
         CPPUNIT_TEST(test_costum_sep);
         CPPUNIT_TEST(test_costum_start_stop);
+        CPPUNIT_TEST(test_full_costum);
         CPPUNIT_TEST_SUITE_END();
 
         typedef array  input_type; 
@@ -55,6 +56,7 @@ class array_formatter_test:public CppUnit::TestFixture
         void test_default();
         void test_costum_sep();
         void test_costum_start_stop();
+        void test_full_costum();
 };
 
 

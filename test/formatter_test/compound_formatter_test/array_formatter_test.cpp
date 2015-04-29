@@ -42,22 +42,8 @@ void array_formatter_test::tearDown() {}
 void array_formatter_test::test_default()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;   
-    formatter<value> value_formatter;
-    const array &r = input;
-    for(auto iter = r.begin(); iter!=r.end(); ++ iter)
-        std::cout<<value_formatter(*iter)<<" ";
-        
-    std::cout<<std::endl;
-        
-        
-    try
-    {
-        CPPUNIT_ASSERT(format(input)=="1 2 3 4");
-    }
-    catch(value_error &error)
-    {
-        std::cerr<<error<<std::endl;
-    }
+    
+    CPPUNIT_ASSERT(format(input)=="1 2 3 4");
 }
 
 //-----------------------------------------------------------------------------
@@ -74,18 +60,15 @@ void array_formatter_test::test_costum_start_stop()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
   
-    container_io_config config('(',')');  
-    try
-    {
-        std::cout<<format(input,config)<<std::endl;  
-    }
-    catch(type_error &error)
-    {
-        std::cerr<<error<<std::endl;
-    }
-    catch(value_error &error)
-    {
-        std::cerr<<error<<std::endl;
-    }
+    container_io_config config('(',')');     
     CPPUNIT_ASSERT(format(input,config)=="(1 2 3 4)");
+}
+
+//-----------------------------------------------------------------------------
+void array_formatter_test::test_full_costum()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    container_io_config config('[',']',';');
+    CPPUNIT_ASSERT(format(input,config)=="[1;2;3;4]");
 }

@@ -61,3 +61,12 @@ void int8_vector_formatter_test::test_costum_start_stop()
     std::cout<<format(input,config)<<std::endl;  
     CPPUNIT_ASSERT(format(input,config)=="(1 2 3 4)");
 }
+
+//-----------------------------------------------------------------------------
+void int8_vector_formatter_test::test_full_costum()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    container_io_config config('[',']',';');
+    CPPUNIT_ASSERT(format(input,config)=="[1;2;3;4]");
+}

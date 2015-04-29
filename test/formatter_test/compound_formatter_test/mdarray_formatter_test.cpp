@@ -40,16 +40,8 @@ void mdarray_formatter_test::tearDown() {}
 void mdarray_formatter_test::test_default()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-     
-    try
-    {
-        std::cout<<format(input)<<std::endl;
-        CPPUNIT_ASSERT(format(input)=="1 2 3 4");
-    }
-    catch(value_error &error)
-    {
-        std::cerr<<error<<std::endl;
-    }
+        
+    CPPUNIT_ASSERT(format(input)=="1 2 3 4");
 }
 
 //-----------------------------------------------------------------------------
@@ -67,17 +59,14 @@ void mdarray_formatter_test::test_costum_start_stop()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
   
     container_io_config config('(',')');  
-    try
-    {
-        std::cout<<format(input,config)<<std::endl;  
-    }
-    catch(type_error &error)
-    {
-        std::cerr<<error<<std::endl;
-    }
-    catch(value_error &error)
-    {
-        std::cerr<<error<<std::endl;
-    }
     CPPUNIT_ASSERT(format(input,config)=="(1 2 3 4)");
+}
+
+//-----------------------------------------------------------------------------
+void mdarray_formatter_test::test_full_costum()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    container_io_config config('[',']',';');
+    CPPUNIT_ASSERT(format(input,config)=="[1;2;3;4]");
 }
