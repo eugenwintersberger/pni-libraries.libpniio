@@ -123,6 +123,17 @@ namespace h5{
             //! \param ptr pointer to memory
             //! 
             void _read_selection(type_id_t tid, void *ptr) const;
+            
+            //-----------------------------------------------------------------
+            //!
+            //! \brief get shape for IO
+            //! 
+            //! This is a workaround function. It returns the shape of the 
+            //! attribute for IO. This is particularly useful in the case of 
+            //! a scalar attribute which would return an empty shape. 
+            //! For IO such a shape would lead to a segmentation fault. 
+            //! 
+            type_imp::index_vector_type _get_io_shape() const;
 
             //----------------------------------------------------------------
             //!
@@ -147,10 +158,10 @@ namespace h5{
             template<typename T> 
             void _read_selection_typed(type_id_t tid,T *ptr) const
             {
-                typedef dynamic_array<T> array_type;
+                typedef dynamic_array<T> array_type;                            
                 
                 //create buffer array and read data
-                auto a = array_type::create(_dspace.shape());
+                auto a = array_type::create(_get_io_shape());
                 _read_all(tid,a.data());
 
                 //apply selection and copy data to the output buffer
@@ -212,10 +223,10 @@ namespace h5{
             template<typename T>
             void _write_selection_typed(type_id_t tid,const T *ptr) const
             {
-                typedef dynamic_array<T> array_type; 
+                typedef dynamic_array<T> array_type;                             
 
                 //create buffer array and read data
-                auto a = array_type::create(_dspace.shape());
+                auto a = array_type::create(_get_io_shape());
                 _read_all(tid,a.data());
 
                 //get view on the array and copy original data

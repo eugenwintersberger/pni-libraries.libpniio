@@ -356,6 +356,16 @@ namespace h5{
         _selection = selection();
         _apply_selection = false;
     }
+    
+    //-------------------------------------------------------------------------
+    type_imp::index_vector_type attribute_imp::_get_io_shape() const
+    {
+        type_imp::index_vector_type s = _dspace.shape();
+        if(size()==1 && s.size() ==0)
+            s = type_imp::index_vector_type{1};
+            
+        return s;        
+    }
            
 
 //end of namespace
