@@ -17,7 +17,7 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Mar 26, 2015
+//  Created on: May 4, 2015
 //      Author: Eugen Wintersberger
 //
 
@@ -34,24 +34,39 @@ void nxpath_equality_test::setUp() { }
 void nxpath_equality_test::tearDown() {}
 
 //----------------------------------------------------------------------------
-void nxpath_equality_test::test_1()
+void nxpath_equality_test::test_equality()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-  
-    p1 = nxpath::from_string(":NXentry/:NXinstrument/:NXdetector");
-    p2 = nxpath::from_string("entry:NXentry/instrument:NXinstrument/detector:NXdetector");
-    CPPUNIT_ASSERT(p1==p2);
-
-    p2 = nxpath::from_string("scan_1:NXentry/instrument/detector:NXdetector");
-    CPPUNIT_ASSERT(p1!=p2);
+    
+    CPPUNIT_ASSERT(nxpath::from_string("test.nxs://") == 
+                   nxpath::from_string("test.nxs://"));
+                   
+    CPPUNIT_ASSERT(nxpath::from_string("/:NXentry")==
+                   nxpath::from_string("/:NXentry"));
+                   
+    CPPUNIT_ASSERT(nxpath::from_string("/:NXentry@NX_class") == 
+                   nxpath::from_string("/:NXentry@NX_class"));
+                   
+    CPPUNIT_ASSERT(nxpath::from_string(":NXinstrument/:NXdetector/data")==
+                   nxpath::from_string(":NXinstrument/:NXdetector/data"));
+        
+    CPPUNIT_ASSERT(nxpath::from_string(":NXdetector/data@units")==
+                   nxpath::from_string(":NXdetector/data@units"));
 }
 
 //----------------------------------------------------------------------------
-void nxpath_equality_test::test_2()
+void nxpath_equality_test::test_inequality()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    p1 = nxpath::from_string("entry/:NXinstrument/detector_1");
-    p2 = nxpath::from_string("entry/beamline:NXinstrument/detector_1");
-    CPPUNIT_ASSERT(p1==p2);
+     CPPUNIT_ASSERT(nxpath::from_string("test.nxs://") != 
+                   nxpath::from_string("test2.nxs://"));
+                   
+    CPPUNIT_ASSERT(nxpath::from_string("/:NXentry")!=
+                   nxpath::from_string(":NXentry"));
+                       
+                   
+    CPPUNIT_ASSERT(nxpath::from_string(":NXinstrument/:NXdetector/data")!=
+                   nxpath::from_string(":NXinstrument/:NXdetector/data@units"));
+        
 }

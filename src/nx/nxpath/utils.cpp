@@ -251,10 +251,10 @@ namespace nx{
         else
             return false;
     }
-
+    
     //-------------------------------------------------------------------------
-    bool operator==(const nxpath::element_type &a,
-                    const nxpath::element_type &b)
+    bool match(const nxpath::element_type &a,
+               const nxpath::element_type &b)
     {
         //if both are complete paths we have to check the equality of 
         //each of their elements
@@ -266,6 +266,37 @@ namespace nx{
         if(rule_3_applies(a,b)) return rule_3(a,b);
     
         return false;
+    }
+    
+    //-------------------------------------------------------------------------
+    bool match(const nxpath &a,const nxpath &b)
+    {
+        //paths of different size cannot match
+        if(a.size() != b.size()) return false;
+
+        //iterate over all elements of the object sections
+        for(auto liter = a.begin(),riter = b.begin();
+                 liter!=a.end();
+                 ++liter,++riter)
+        {
+            if(!match(*liter,*riter)) return false;
+        }
+
+        //finally we need to check the attribute section
+        if(a.attribute() != b.attribute()) return false;
+        
+        return true;
+    }
+
+    //-------------------------------------------------------------------------
+    bool operator==(const nxpath::element_type &a,
+                    const nxpath::element_type &b)
+    {
+        if(a.first != b.first) return false;
+        
+        if(a.second != b.second) return false;
+        
+        return true;
     }
 
     //-------------------------------------------------------------------------
@@ -279,20 +310,12 @@ namespace nx{
     bool operator==(const nxpath &lhs,const nxpath &rhs)
     {
         if(lhs.filename()!=rhs.filename()) return false;
-
-        if(rhs.size() != lhs.size()) return false;
-
-        for(auto liter = lhs.begin(),riter = rhs.begin();
-                 liter!=lhs.end();
-                 ++liter,++riter)
-        {
-            if(*liter!=*riter)
-                return false;
-        }
-
+        
+        if(lhs.size() != rhs.size()) return false;
+        
         if(lhs.attribute() != rhs.attribute()) return false;
-
-        return true;
+        
+        return std::equal(lhs.begin(),lhs.end(),rhs.begin());
     }
 
     //--------------------------------------------------------------------------

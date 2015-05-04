@@ -17,7 +17,7 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: May 4, 2015
+//  Created on: Mar 26, 2015
 //      Author: Eugen Wintersberger
 //
 
@@ -42,21 +42,20 @@ using namespace pni::io::nx;
 //! 
 //! Test the nxpath class
 //!
-class test_element_equality:public CppUnit::TestFixture 
+class nxpath_match_test:public CppUnit::TestFixture 
 {
-	CPPUNIT_TEST_SUITE(test_element_equality);
-    CPPUNIT_TEST(test_equality);
-    CPPUNIT_TEST(test_inequality);    
+	CPPUNIT_TEST_SUITE(nxpath_match_test);
+    CPPUNIT_TEST(test_1);
+    CPPUNIT_TEST(test_2);
 	CPPUNIT_TEST_SUITE_END();
 
-    typedef nxpath::element_type element_type;
-
+    nxpath p1,p2;
 public:
 	void setUp();
 	void tearDown();
     
-    void test_equality();
-    void test_inequality();
+    void test_1();
+    void test_2();
 };
 
 

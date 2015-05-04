@@ -31,6 +31,9 @@ namespace pni{
 namespace io{
 namespace nx{
     using namespace pni::core;
+    
+    bool match(const nxpath &a,const nxpath &b);
+    bool match(const nxpath::element_type &a,const nxpath::element_type &b);
 
 
     //------------------------------------------------------------------------

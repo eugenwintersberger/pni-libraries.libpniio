@@ -3,8 +3,8 @@ set(SOURCES nxpath_tests.cpp
             nxpath_create_test.cpp
             nxpath_push_test.cpp
             nxpath_pop_test.cpp
-            test_element_equality.cpp
-            nxpath_equality_test.cpp
+            test_element_equality.cpp 
+            nxpath_equality_test.cpp                   
            )
 
 set(PARSERSRC nxpath_parser_tests.cpp 
@@ -24,6 +24,8 @@ set(UTILSRC nxpath_utils_tests.cpp
             test_split_path.cpp
             test_is_empty.cpp
             test_join.cpp
+            nxpath_match_test.cpp
+            test_element_match.cpp
            )
 add_executable(nxpath_parser_tests ${PARSERSRC} $<TARGET_OBJECTS:test_common>)
 add_executable(nxpath_tests ${SOURCES} $<TARGET_OBJECTS:test_common>)

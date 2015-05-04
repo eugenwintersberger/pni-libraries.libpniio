@@ -17,7 +17,7 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Mar 26, 2015
+//  Created on: May 4, 2015
 //      Author: Eugen Wintersberger
 //
 
@@ -34,45 +34,46 @@ void test_element_equality::setUp() { }
 void test_element_equality::tearDown() {}
 
 //----------------------------------------------------------------------------
-void test_element_equality::test_rule_1()
+void test_element_equality::test_equality()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    CPPUNIT_ASSERT(element_type("entry","NXentry")==
+    CPPUNIT_ASSERT(element_type("entry","NXentry") == 
                    element_type("entry","NXentry"));
 
-    CPPUNIT_ASSERT(element_type("scan_1","NXentry")!=
-                   element_type("entry","NXentry"));
-    
-    CPPUNIT_ASSERT(element_type("entry","NXentry")!=
-                   element_type("entry","NXinstrument"));
-    
-}
-
-//----------------------------------------------------------------------------
-void test_element_equality::test_rule_2()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    CPPUNIT_ASSERT(element_type("entry","NXentry")==
+    CPPUNIT_ASSERT(element_type("","NXentry") == 
                    element_type("","NXentry"));
-    CPPUNIT_ASSERT(element_type("","NXentry")==
-                   element_type("entry","NXentry"));
-
-    CPPUNIT_ASSERT(element_type("","NXinstrument")!=
-                   element_type("control","NXmonitor"));
-    CPPUNIT_ASSERT(element_type("detector","NXdetector")!=
-                   element_type("","NXmonitor"));
+    
+    CPPUNIT_ASSERT(element_type("entry","") == 
+                   element_type("entry",""));
+    
 }
 
 //----------------------------------------------------------------------------
-void test_element_equality::test_rule_3()
+void test_element_equality::test_inequality()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    CPPUNIT_ASSERT(element_type("entry","NXentry") !=
+                   element_type("scan_1","NXentry"));
+    CPPUNIT_ASSERT(element_type("entry","NXinstrument") !=
+                   element_type("entry","NXentry"));
+                   
+    CPPUNIT_ASSERT(element_type("","NXentry")!=
+                   element_type("entry","NXentry"));
+    CPPUNIT_ASSERT(element_type("entry","NXentry")!=
+                   element_type("entry",""));
 
-    CPPUNIT_ASSERT(element_type("entry","")==element_type("entry",""));
-    CPPUNIT_ASSERT(element_type("","NXentry")==element_type("","NXentry"));
-
-    CPPUNIT_ASSERT(element_type("entry","")!=element_type("scan",""));
-    CPPUNIT_ASSERT(element_type("","NXentry")!=element_type("","NXinstrument"));
+    CPPUNIT_ASSERT(element_type("entry","NXentry") != 
+                   element_type("","NXentry"));
+    CPPUNIT_ASSERT(element_type("","NXentry") != 
+                   element_type("entry","NXentry"));
+                   
+    CPPUNIT_ASSERT(element_type("","NXentry") != 
+                   element_type("","NXinstrument"));
+    CPPUNIT_ASSERT(element_type("entry","") !=
+                   element_type("scan1",""));
+   
 }
+
+

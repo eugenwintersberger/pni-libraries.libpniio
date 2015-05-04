@@ -144,17 +144,71 @@ the latter one to the parent group of the current group.
 %%%===========================================================================
 \subsection{Equality of two \nexus-paths}
 
-A critical question is when to consider two \nexus-paths as being equal. 
-In the most general case one would say: two paths are equal if they \emph{can}
-reference the same object. In the case of \nexus\ this leads to an interesting 
-effect. Consider the following three paths
+Two \nexus-paths are considered to be equal if all of their elements are equal.
+
+\subsection{Matching paths}
+
+Two paths are considered as \emph{matching} if one can deduce from their
+structure that they reference the same object within a \nexus-file. 
+It is important to realize that this question must be answered independent of a 
+particular file. Only the path object itself is of relevance. This leads two some
+surprising effects. Consider the following three paths
 \begin{verbatim}
 a = /entry/instrument/detector/data
 b = /entry:NXentry/instrument:NXinstrument/detector:NXdetector/data
 c = /:NXentry/:NXinstrument/:NXdetector/data
 \end{verbatim}
-and ask the question which of these three paths are equivalent (can address the
-same object in a \nexus-tree). All three paths could be used to address the 
+It is obvious for path \cpp{a} and \cpp{b} that they reference the same object. 
+The same is true for the paths \cpp{b} and \cpp{c}. Surprisingly, \cpp{a} and
+\cpp{c} do not match. As \cpp{a} does not provide any type information for each 
+of its nodes we cannot be sure that it references the same object as \cpp{c}. 
+Thus, \emph{matching} is not the same as equality. If a \cpp{match} would be the
+same as equality we would get
+\begin{align}
+    a = b \land b=c\mbox{ but } a\not= c
+\end{align}
+which, from a mathematical point of view, makes no sense.
+and reason about which of those paths are matching (according to the above 
+definition). Before diving deeper in the matching paths problem lets first
+discuss what is it good for. 
+
+\subsubsection{Applications for path matching}
+
+Consider a file which stores several instances of \cpp{NXdetector} within its 
+\cpp{NXinstrument} group and that this file has also several entries (in other
+words, several measurements are stored in a single file). 
+Furthermore we assume that we would have a
+hypothetical function \cpp{match(const \nxpath\ \&a,const \nxpath\ \&b)} which 
+returns true if the two paths \cpp{a} and \cpp{b} match and false otherwise. 
+Consider the case where we would like to obtain the detector groups for all
+entries in the file. This could easily be done with the following piece of code
+\begin{cppcode}
+typedef std::vector<h5::nxobject> detectors_type;
+typedef std::back_inserter<detectors_type> detector_inserter; 
+
+detectors_type detectors;
+detector_inserter inserter(detectors);
+
+nxpath pref = nxpath::from_string("/:NXentry/:NXinstrument/:NXdetector");
+h5::nxfile f = .....;
+
+auto flat_root = make_flat(f.root());
+
+std::copy_if(flat_root.begin(),flat_root.end(),inserter,
+             [&pref](const h5::nxobject &o) { return match(pref,get_path(o);});
+\end{cppcode}
+Another situation would be that we would like to know how many entries
+(measurements) are stored in a particular file. 
+\begin{cppcode}
+nxpath pref = nxpath::from_string("/:NXentry");
+h5::nxfile  f = ....;
+h5::nxgroup root = f.root();
+size_t nentries = std::count_if(root.begin(),root.end(),
+                                [&pref](const h5::nxobject &o) 
+                                {return match(get_path(o),pref);});
+\end{cppcode}
+
+All three paths could be used to address the 
 data field in the detector group of the file. However, it would be difficult to 
 prove only from the paths themselves that this is the case. While $a=b$ and
 $b=c$ is relatively simple, what about $a=c$? While $a$ does not provide 
