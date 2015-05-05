@@ -56,7 +56,7 @@ void read_single_value(size_t i,const nxfield &field)
 //----------------------------------------------------------------------------
 int main(int argc,char **argv)
 {
-    nxfile file = nxfile::create_file("nxnumfield_ex2.h5",true,0);
+    nxfile file = nxfile::create_file("nxnumfield_ex2.h5",true);
     
     //create field
     nxfield field = create_field(file.root());

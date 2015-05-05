@@ -15,7 +15,7 @@ void write_image(nxfield &f,const string &n);
 //----------------------------------------------------------
 int main(int argc,char **argv)
 {
-    nxfile file = nxfile::create_file("nxbinfield_ex1.h5",true,0); 
+    nxfile file = nxfile::create_file("nxbinfield_ex1.h5",true); 
     nxgroup root = file.root();
 
     nxfield field = root.create_field<binary>("image",{0});

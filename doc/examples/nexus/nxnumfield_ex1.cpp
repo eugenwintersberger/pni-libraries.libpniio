@@ -10,7 +10,7 @@ using namespace pni::core;
 int main(int argc,char **argv)
 {
     //create the file
-    nxfile file = nxfile::create_file("nxnumfield_ex1.h5",true,0);
+    nxfile file = nxfile::create_file("nxnumfield_ex1.h5",true);
     nxgroup root = file.root();
 
     //create a array data 

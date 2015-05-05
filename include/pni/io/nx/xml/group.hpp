@@ -88,6 +88,9 @@ namespace xml{
             //fetch the name for the group
             node name_attr = get_attribute(group_node,"name");
             string name    = data_node::read(name_attr);
+            
+            if(name == "/"  && get_name(parent) == "/")
+                return parent;
 
             //create the group
             auto group     = create_group(parent,name);

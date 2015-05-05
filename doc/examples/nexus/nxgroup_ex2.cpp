@@ -9,7 +9,7 @@ using namespace pni::core;
 
 int main(int argc,char **argv)
 {
-    nxfile file = nxfile::create_file("nxgroup_ex2.h5",true,0);
+    nxfile file = nxfile::create_file("nxgroup_ex2.h5",true);
     nxgroup root = file.root();
     nxgroup g = root.create_group("data");
 
@@ -25,7 +25,7 @@ int main(int argc,char **argv)
     attr = g.attributes.create<float32>("temperature");
     attr.write(389.2343);
     float64 temp;
-    attr.read<float64>(temp);
+    attr.read(temp);
     std::cout<<temp<<std::endl;
 
     //a array attribute

@@ -5,7 +5,7 @@ using namespace pni::io::nx::h5;
 
 int main(int argc,char **argv)
 {
-    nxfile file  = nxfile::create_file("nxgroup_ex1.h5",true,0);
+    nxfile file  = nxfile::create_file("nxgroup_ex1.h5",true);
     nxgroup root = file.root();
 
     //create groups

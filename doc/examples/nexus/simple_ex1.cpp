@@ -88,7 +88,7 @@ int main(int argc,char **argv)
     mem_record mrec;
     std::vector<String> rkeys;
 
-    NXFile f = NXFile::create_file("simple_ex1.nx.h5",true,0);
+    NXFile f = NXFile::create_file("simple_ex1.nx.h5",true);
     
     NXGroup scan = scan_setup(f,"scan_1");
     f.flush();

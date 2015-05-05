@@ -16,6 +16,8 @@ set(SOURCES Makefile
             NXHelper.cpp
             NXHelper.hpp
             thread_ex1.cpp
+            nxpath_match.xml
+            nxpath_match.cpp
             )
 #Motor.hpp
 #record_parser.cpp

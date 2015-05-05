@@ -19,7 +19,7 @@ void create_data(string fname)
     auto data = dynamic_array<uint16>::create(shape,datab);
     auto bg   = dynamic_array<uint16>::create(shape,bgb);
 
-    nxfile file = nxfile::create_file(fname,true,0);
+    nxfile file = nxfile::create_file(fname,true);
     nxgroup root = file.root();
     root.create_field<uint16>("detector",shape).write(data);
     root.create_field<uint16>("background",shape).write(bg);

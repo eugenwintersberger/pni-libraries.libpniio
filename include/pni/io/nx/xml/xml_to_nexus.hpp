@@ -26,7 +26,7 @@
 #include <pni/core/arrays.hpp>
 #include "../nx.hpp"
 #include "../algorithms.hpp"
-#include "../nxobject.hpp"
+#include "../nxobject_traits.hpp"
 #include "../../exceptions.hpp"
 #include "../../parsers.hpp"
 
@@ -47,6 +47,30 @@ namespace xml{
     using namespace pni::core;
     
     //-------------------------------------------------------------------------
+    //!
+    //! \ingroup xml_classes
+    //! \brief write data from buffer 
+    //! 
+    //! Read data from the CDATA section of an XML tag and store it in an 
+    //! NeXus object. The data type used for reading the data is determined 
+    //! by the user supplied template parameter.
+    //! 
+    //! \throws type_error if the data type cannot be read or handled by the 
+    //!                    write function
+    //! \throws parser_error if the data could not be read from the CDATA
+    //!                      section of the tag
+    //! \throws invalid_object_error if the target object is not valid
+    //! \throws io_error if writing the data fails       
+    //! \throws size_mismatch_error if the amount of data read from CDATA
+    //!                             does not match the size of the NeXus
+    //!                             object
+    //! \throws object_error in case of any other error
+    //! 
+    //! \tparam T data type to use for writing
+    //! \tparam OTYPE object type to which to write the data
+    //! \param object the object instance to which to write the data
+    //! \param n the node holding the data
+    //! 
     template<
              typename T,
              typename OTYPE
@@ -62,6 +86,29 @@ namespace xml{
     }
     
     //-------------------------------------------------------------------------
+    //!
+    //! \ingroup xml_classes
+    //! \brief write node data 
+    //! 
+    //! Write the data stored in an XML tag to a NeXus object. This is 
+    //! a utilty function which calles an appropriate instantiation of the 
+    //! write_node_data function template for every particular data type. 
+    //! 
+    //! \throws type_error if the data type cannot be read or handled by the 
+    //!                    write function
+    //! \throws parser_error if the data could not be read from the CDATA
+    //!                      section of the tag
+    //! \throws invalid_object_error if the target object is not valid
+    //! \throws io_error if writing the data fails       
+    //! \throws size_mismatch_error if the amount of data read from CDATA
+    //!                             does not match the size of the NeXus
+    //!                             object
+    //! \throws object_error in case of any other error
+    //!     
+    //! \tparam OTYPE object type to which to write the data
+    //! \param object the object instance to which to write the data
+    //! \param n the node holding the data
+    //! 
     template<typename OTYPE>
     void write_node_data(OTYPE &object,const node &n)
     {                   
@@ -106,53 +153,7 @@ namespace xml{
             default:
                 throw type_error(EXCEPTION_RECORD,
                     "Unrecognized data type!");
-        }
-        
-    }
-   
-    //!
-    //! \ingroup xml_classes
-    //! \brief append xml attributes to Nexus object
-    //!
-    //! Function template appends the attributes described by the attribute
-    //! tags with in an XML node to a Nexus object. By default, the attributes 
-    //! are only created according to their XML definitions. No data is
-    //! transfered from the attribute tags to the corresponding attributes.
-    //! Data transfer can be triggered for particular attributes by passing a 
-    //! predicate function as the last argument to this template. 
-    //!
-    //! \throws parser_error if XML parsing fails
-    //! \throws invalid_object_error if the parent is not valid
-    //! \throws type_error if the datatype requested by XML cannot be handled
-    //! \throws io_error in case of metadata or data IO fails
-    //! \throws object_error in case of any other error
-    //!
-    //! \tparam GTYPE group type
-    //! \tparam FTYPE field type
-    //! \tparam ATYPE attribute type
-    //! 
-    //! \param p XML node from which to read the attributes
-    //! \param parent the nexus object to which the attributes shall be attached
-    //! \param write_data predicate which decides if data should be written
-    //!
-    template<
-             typename GTYPE,
-             typename FTYPE,
-             typename ATYPE,
-             typename PTYPE
-            >
-    void append_attributes(node &p,nxobject<GTYPE,FTYPE,ATYPE> &parent,
-                           PTYPE write_data)
-    {
-        for(auto child: p)
-        {
-            if(child.first=="attribute")
-            {
-                auto a = attribute::object_from_xml(parent,child.second);
-                //if(write_data(a))
-                //    write(a,io_node::data_from_xml(child.second));
-            }
-        }
+        }        
     }
 
 
@@ -162,7 +163,7 @@ namespace xml{
     //! \brief create objects from XML
     //!
     //! Recursively creates the objects as described in the XML file below 
-    //! parent.
+    //! parent. The parent is passed as a reference to an instance of nxobject.
     //! 
     //! \throws parser_error in case of XML parsing problems
     //! \throws invalid_object_error if the parent object is not valid
@@ -224,6 +225,27 @@ namespace xml{
         }
     }
     
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup xml_classes
+    //! \brief create objects from XML
+    //!
+    //! A version of xml_to_nexus where no data is written to the file at all.
+    //! The parent is passed as a reference to nxobject.
+    //! 
+    //! \throws parser_error in case of XML parsing problems
+    //! \throws invalid_object_error if the parent object is not valid
+    //! \throws io_error if data or metadata write failed
+    //! \throws type_error if a data type is involved that cannot be handled
+    //! \throws object_error in case of any other error
+    //! 
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //!
+    //! \param t ptree instance with the XML data
+    //! \param parent instance of nxobject  
+    //!
     template<
              typename GTYPE,
              typename FTYPE,
@@ -232,6 +254,77 @@ namespace xml{
     void xml_to_nexus(node &t,nxobject<GTYPE,FTYPE,ATYPE> &parent)
     {
        xml_to_nexus(t,parent,write_no_data());
+    }
+        
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup xml_classes
+    //! \brief create objects from XML
+    //!
+    //! An overload of the xml_to_nexus function template where the parent
+    //! is passed as an instance of nxgroup. 
+    //! 
+    //! \throws parser_error in case of XML parsing problems
+    //! \throws invalid_object_error if the parent object is not valid
+    //! \throws io_error if data or metadata write failed
+    //! \throws type_error if a data type is involved that cannot be handled
+    //! \throws object_error in case of any other error
+    //! 
+    //! \tparam OTYPE parent template
+    //! \tparam IMPID implementation ID
+    //! \tparam PTYPE data writer predicate
+    //!
+    //! \param t XML node from which to construct the Nexus structure
+    //! \param group the parent group below which the structure should be 
+    //!              generated
+    //! \param write_data predicate to determine whether or tag data 
+    //!                   should be written to the file
+    //!
+    template<
+             template<pni::io::nx::nximp_code> class OTYPE,
+             pni::io::nx::nximp_code IMPID,
+             typename PTYPE
+            >
+    void xml_to_nexus(node &t,OTYPE<IMPID> &group,PTYPE write_data)
+    {
+        typedef typename nxobject_trait<IMPID>::object_type object_type;
+        object_type o = group;
+        xml_to_nexus(t,o,write_data);
+    }
+    
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup xml_classes
+    //! \brief create objects from XML
+    //!
+    //! An overload of the xml_to_nexus function template where the parent
+    //! is passed as an instance of nxgroup. 
+    //! 
+    //! \throws parser_error in case of XML parsing problems
+    //! \throws invalid_object_error if the parent object is not valid
+    //! \throws io_error if data or metadata write failed
+    //! \throws type_error if a data type is involved that cannot be handled
+    //! \throws object_error in case of any other error
+    //! 
+    //! \tparam OTYPE parent template
+    //! \tparam IMPID implementation ID
+    //! \tparam PTYPE data writer predicate
+    //!
+    //! \param t XML node from which to construct the Nexus structure
+    //! \param group the parent group below which the structure should be 
+    //!              generated
+    //! \param write_data predicate to determine whether or tag data 
+    //!                   should be written to the file
+    //!
+    template<
+             template<pni::io::nx::nximp_code> class OTYPE,
+             pni::io::nx::nximp_code IMPID
+            >
+    void xml_to_nexus(node &t,OTYPE<IMPID> &group)
+    {
+        typedef typename nxobject_trait<IMPID>::object_type object_type;
+        object_type o=group;
+        xml_to_nexus(t,o,write_no_data());
     }
 
 //end of namespace 

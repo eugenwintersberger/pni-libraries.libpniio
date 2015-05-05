@@ -10,7 +10,7 @@ void write_data(string fname,size_t np,size_t nx,size_t ny)
 {
     auto frame = dynamic_array<uint32>::create(shape_t{nx,ny});
 
-    nxfile file = nxfile::create_file(fname,true,0);
+    nxfile file = nxfile::create_file(fname,true);
 
     nxgroup g = file.root().create_group("scan","NXentry");
     g = g.create_group("instrument","NXinstrument");
