@@ -21,6 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <boost/current_function.hpp>
 #include "uint8_formatter_test.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(uint8_formatter_test);

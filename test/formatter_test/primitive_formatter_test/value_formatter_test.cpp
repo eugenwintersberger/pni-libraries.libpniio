@@ -21,6 +21,9 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <pni/core/types.hpp>
+#include <pni/core/type_erasures.hpp>
+#include <boost/current_function.hpp>
 #include "value_formatter_test.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(value_formatter_test);

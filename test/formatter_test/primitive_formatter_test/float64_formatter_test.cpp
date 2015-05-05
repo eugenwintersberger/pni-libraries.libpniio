@@ -21,6 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <boost/current_function.hpp>
 #include "float64_formatter_test.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(float64_formatter_test);
