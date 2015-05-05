@@ -23,16 +23,12 @@
 
 #pragma once
 
-#include <boost/current_function.hpp>
 #include <pni/io/formatters/formatter.hpp>
-#include <pni/io/exceptions.hpp>
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
-
-#include "../../TestHelpers.hpp"
 
 using namespace pni::core;
 using namespace pni::io;

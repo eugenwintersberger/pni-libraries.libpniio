@@ -21,6 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <boost/current_function.hpp>
 #include <pni/io/container_io_config.hpp>
 #include "array_formatter_test.hpp"
 

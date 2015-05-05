@@ -21,6 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <boost/current_function.hpp>
 #include "bool_vector_formatter_test.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(bool_vector_formatter_test);

@@ -21,6 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <boost/current_function.hpp>
 #include <pni/io/container_io_config.hpp>
 #include "int8_vector_formatter_test.hpp"
 
