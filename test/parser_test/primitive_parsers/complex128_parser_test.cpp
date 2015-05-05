@@ -21,8 +21,9 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <boost/current_function.hpp>
+#include <pni/io/exceptions.hpp>
 #include "complex128_parser_test.hpp"
-#include "../../EqualityCheck.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(complex128_parser_test);
 

@@ -21,8 +21,8 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <boost/current_function.hpp>
 #include "uint16_parser_test.hpp"
-#include "../../EqualityCheck.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(uint16_parser_test);
 

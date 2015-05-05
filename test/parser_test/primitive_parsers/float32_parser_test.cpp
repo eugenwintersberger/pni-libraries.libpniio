@@ -21,8 +21,9 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <pni/io/exceptions.hpp>
+#include <boost/current_function.hpp>
 #include "float32_parser_test.hpp"
-#include "../../EqualityCheck.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(float32_parser_test);
 
