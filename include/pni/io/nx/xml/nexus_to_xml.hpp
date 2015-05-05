@@ -39,6 +39,19 @@ namespace xml{
     using namespace pni::core;
     using namespace pni::io::nx;
     
+    //!
+    //! \ingroup xml_classes
+    //! \brief write data from Nexus to XML
+    //! 
+    //! This function template writes data from a Nexus object to the CDATA
+    //! section of an XML tag. 
+    //! 
+    //! \tparam T data type to use
+    //! \tparam OTYPE Nexus object type
+    //! 
+    //! \param o Nexus object from which to read the data
+    //! \param n XML tag where to store the data
+    //! 
     template<
              typename T,
              typename OTYPE
@@ -52,6 +65,17 @@ namespace xml{
     }
     
     //-------------------------------------------------------------------------
+    //!
+    //! \ingroup xml_classes
+    //! \brief write data from a Nexus object to XML
+    //! 
+    //! Read data from a Nexus object and store it to the CDATA section 
+    //! of an XML tag. This function template only does type dispatching. 
+    //! 
+    //! \tparam OTYPE Nexus object type
+    //! \param p the Nexus object from which to read the data
+    //! \param n the XML node where to store the data
+    //! 
     template<typename OTYPE> void write_object_data(OTYPE &p,node &n)
     {
         switch(get_type(p))
@@ -87,7 +111,8 @@ namespace xml{
             case type_id_t::STRING:
                 write_object_data<string>(p,n); break;
             default:
-                std::cout<<"do nothing"<<std::endl;
+                throw type_error(EXCEPTION_RECORD,
+                "Cannot handle Nexus data type!");
         }
     }
 
@@ -97,13 +122,23 @@ namespace xml{
     //! \brief append attributes from a nexus type to XML
     //!
     //! Reads all attribtues from a Nexus node and append them to an 
-    //! XML node. 
+    //! XML node. There are several attribute which are omitted as they 
+    //! are part of the XML tag 
+    //! \li NX_class whose content is written in the type attribute
+    //! \li units which goes to the units attribute
+    //! \li long_name which goes to the long_name tag attribute
+    //!
+    //! Whether or not data form the Nexus object is written to the XML output
+    //! depends on the write_predicate. This is a callable which takes the 
+    //! Nexus object as its only argument and returns true if the 
+    //! data should be written or false otherwise. 
     //! 
-    //! \tparam GTYPE group type
-    //! \tparam FTYPE field type
-    //! \tparam ATYPE attribute type
+    //! \tparam OTYPE Nexus object type
+    //! \tparam PTYPE write predicate type    
     //! \param parent the object with the attributes
     //! \param p XML node to which attribute tags should be appended
+    //! \param write_predicate function object determinig when to write data
+    //!                        to the XML output
     //! 
     template<
              typename OTYPE,
@@ -134,11 +169,21 @@ namespace xml{
     //! \ingroup xml_classes
     //! \brief nexus to XML conversion
     //! 
-    //! Converts the structure of a Nexus tree as stored below p into a XML 
-    //! tree strucure and stores it below n. 
-    //! \tparam VTYPE variant type with the root object
+    //! Converts the structure of a Nexus tree stored below p into an XML 
+    //! tree below n. The Nexus parent object p is provided as an instance of
+    //! nxobject.
+    //! Which data from the Nexus file goes to the XML output is determined 
+    //! by the write_predicate, a functor taking a single Nexus object 
+    //! as its argument and returns true if the data should be written and 
+    //! false otherwise.
+    //! 
+    //! \tparam GTYPE Nexus group type
+    //! \tparam FTYPE Nexus field type
+    //! \tparam ATYPE Nexus attribute type
+    //! \tparam PTYPE write predicate type
     //! \param p parent object 
     //! \param n XML node
+    //! \param write_data functor determining which data to write
     //!
     template<
              typename GTYPE,
@@ -179,6 +224,51 @@ namespace xml{
     }
     
     //-------------------------------------------------------------------------
+    //!
+    //! \ingroup xml_classes
+    //! \brief nexus to XML conversion
+    //! 
+    //! Converts the content of Nexus object to XML. Here the Nexus object is 
+    //! is passed as an instance of nxattribute, nxgroup, or nxfield. 
+    //! The write_predicate functor determines which data is written to the 
+    //! XML output. 
+    //! 
+    //! \tparam OTYPE Nexus object type
+    //! \tparam IMPID implementation ID
+    //! \tparam PTYPE predicate type
+    //! \param o parent object 
+    //! \param n XML node
+    //! \param write_predicate the functor determining which data to write
+    //!
+    template<
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID,
+             typename PTYPE
+            >
+    void nexus_to_xml(OTYPE<IMPID> &o,node &n,PTYPE write_predicate)
+    {
+        typedef decltype(get_parent(o)) object_type;
+        object_type obj = o;
+        nexus_to_xml(obj,n,write_predicate);
+    }
+    
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup xml_classes
+    //! \brief nexus to XML conversion
+    //! 
+    //! Converts the structure of a Nexus tree stored below p into an XML 
+    //! tree below n. The Nexus parent object p is provided as an instance of
+    //! nxobject.
+    //! This template function takes no write predicate and thus no data 
+    //! from the Nexus file is written to the XML output.
+    //! 
+    //! \tparam GTYPE Nexus group type
+    //! \tparam FTYPE Nexus field type
+    //! \tparam ATYPE Nexus attribute type    
+    //! \param p parent object 
+    //! \param n XML node
+    //!
     template<
              typename GTYPE,
              typename FTYPE,
@@ -187,6 +277,19 @@ namespace xml{
     void nexus_to_xml(nxobject<GTYPE,FTYPE,ATYPE> &p,node &n)
     {
         nexus_to_xml(p,n,write_no_data());
+    }
+    
+    //-------------------------------------------------------------------------
+    template<
+             template<nximp_code> class OTYPE,
+             nximp_code IMPID
+            >
+    void nexus_to_xml(OTYPE<IMPID> &o,node &n)
+    {
+        typedef decltype(get_parent(o)) object_type;
+        object_type obj = o;
+        
+        nexus_to_xml(o,n);
     }
 
 //end of namespace

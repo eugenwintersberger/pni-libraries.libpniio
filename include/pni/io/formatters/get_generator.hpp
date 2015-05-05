@@ -46,6 +46,7 @@ namespace io{
     //!
     template<typename ITERT, typename T> struct get_generator
     {
+        //! generator type
         typedef typename mpl::at<primitive_generators<ITERT>,T>::type type;
     };
 
@@ -59,11 +60,19 @@ namespace io{
     //! 
     template<typename ITERT> struct get_generator<ITERT,value>
     {
+        //! generator type
         typedef value_generator<ITERT,value> type;
     };
     
+    //!
+    //! \ingroup formatter_classes
+    //! \brief get generator for value_ref
+    //! 
+    //! Get a generator for the value_ref type erasure.
+    //!
     template<typename ITERT> struct get_generator<ITERT,value_ref>
     {
+        //! generator type
         typedef value_generator<ITERT,value_ref> type;
     };
    
