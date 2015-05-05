@@ -21,6 +21,8 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <pni/io/nx/algorithms/close.hpp>
+#include <pni/io/nx/algorithms/get_child.hpp>
 #include <fstream>
 #include <vector>
 #include "simple_structure_with_data_test.hpp"

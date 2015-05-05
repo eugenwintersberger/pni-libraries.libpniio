@@ -21,6 +21,8 @@
 //
 #pragma once
 
+#include <pni/core/error.hpp>
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 
 namespace pni{
@@ -119,6 +121,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Fields do not have children!");
             }
@@ -138,6 +141,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Attributes do not have children!");
 
@@ -227,6 +231,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Fields do not have children!");
             }
@@ -244,6 +249,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Attributes do not have children!");
 

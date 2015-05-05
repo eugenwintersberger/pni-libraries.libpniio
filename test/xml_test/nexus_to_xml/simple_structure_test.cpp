@@ -23,6 +23,7 @@
 
 #include <fstream>
 #include <vector>
+#include <pni/io/nx/algorithms/get_child.hpp>
 #include "simple_structure_test.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(simple_structure_test);

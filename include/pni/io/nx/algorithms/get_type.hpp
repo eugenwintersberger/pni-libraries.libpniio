@@ -22,6 +22,8 @@
 #pragma once
 
 #include <pni/core/types.hpp>
+#include <pni/core/error.hpp>
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 
 namespace pni{

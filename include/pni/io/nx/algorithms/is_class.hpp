@@ -21,6 +21,9 @@
 //
 #pragma once
 
+#include <pni/core/types.hpp>
+#include <pni/core/error.hpp>
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 #include "get_class.hpp"
 
@@ -52,7 +55,7 @@ namespace nx{
              template<nximp_code> class OTYPE,
              nximp_code IMPID
             >
-    bool is_class(const OTYPE<IMPID> &object,const string &type)
+    bool is_class(const OTYPE<IMPID> &object,const pni::core::string &type)
     {
         return get_class(object)==type;
     }
@@ -75,7 +78,7 @@ namespace nx{
     class is_class_visitor : public boost::static_visitor<bool>
     {
         private:
-            string _class; //!< class type
+            pni::core::string _class; //!< class type
         public:
             //! result type
             typedef bool result_type;
@@ -92,7 +95,7 @@ namespace nx{
             //!
             //! \param s class type
             //!
-            is_class_visitor(const string &s):_class(s) {}
+            is_class_visitor(const pni::core::string &s):_class(s) {}
            
             //-----------------------------------------------------------------
             //!
@@ -124,6 +127,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Fields do not have a class!");
                 return false;
@@ -142,6 +146,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Attributes do not have a class!");
                 return false;
@@ -175,7 +180,8 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    bool is_class(const nxobject<GTYPE,FTYPE,ATYPE> &o,const string &c)
+    bool is_class(const nxobject<GTYPE,FTYPE,ATYPE> &o,
+                  const pni::core::string &c)
     {
         typedef is_class_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
         return boost::apply_visitor(visitor_type(c),o);

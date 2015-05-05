@@ -21,6 +21,7 @@
 //
 #pragma once
 
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 #include "is_field.hpp"
 #include "get_name.hpp"
@@ -52,8 +53,10 @@ namespace nx{
     //! 
     //! \return the requested object as an instance of nxobject
     template<typename OTYPE> 
-    OTYPE get_object_by_name(const OTYPE &parent,const string &name)
+    OTYPE get_object_by_name(const OTYPE &parent,const pni::core::string &name)
     {
+        using namespace pni::core;
+
         auto group = as_group(parent);
         
         if(!group.has_child(name))
@@ -93,9 +96,10 @@ namespace nx{
     //!
     template<typename OTYPE>
     OTYPE get_object_by_name_and_class(const OTYPE &parent,
-                                       const string &name,
-                                       const string &c)
+                                       const pni::core::string &name,
+                                       const pni::core::string &c)
     {
+        using namespace pni::core;
         auto result = get_object_by_name(parent,name);
         
         if(is_field(result))
@@ -116,8 +120,10 @@ namespace nx{
     //! 
     //! 
     template<typename OTYPE>
-    OTYPE get_object_by_class(const OTYPE &parent,string c)
+    OTYPE get_object_by_class(const OTYPE &parent,pni::core::string c)
     {
+        using namespace pni::core;
+
         auto iter = std::find_if(begin(parent),end(parent),
                     [&c](const OTYPE &o) { 
                         if(is_field(o)) return false;

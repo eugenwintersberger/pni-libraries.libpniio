@@ -194,8 +194,6 @@ namespace xml{
     void nexus_to_xml(nxobject<GTYPE,FTYPE,ATYPE> &p,node &n,
                       PTYPE write_predicate)
     {
-        typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
-
         node child;
         string key;
         if(is_field(p))

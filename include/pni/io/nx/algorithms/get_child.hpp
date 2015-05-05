@@ -21,6 +21,7 @@
 //
 #pragma once
 
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 #include "object_predicates.hpp"
 #include "iterators.hpp"
@@ -55,9 +56,11 @@ namespace nx{
     //! \return child as instance of nxobject
     //!
     template<typename OTYPE> 
-    auto get_child(const OTYPE &o,const string &n,const string &c="")
+    auto get_child(const OTYPE &o,const pni::core::string &n,
+                   const pni::core::string &c="")
     ->decltype(get_parent(o))
     {
+        using namespace pni::core;
         typedef decltype(get_parent(o)) object_type;
         
         object_type object(o); //convert the input always to nxobject
@@ -143,6 +146,7 @@ namespace nx{
     auto get_child(const nxobject<GTYPE,FTYPE,ATYPE> &parent,size_t index)
     ->decltype(get_parent(parent))
     {
+        using namespace pni::core;
         if(!is_group(parent))
             throw type_error(EXCEPTION_RECORD,"Parent must be a group");
 

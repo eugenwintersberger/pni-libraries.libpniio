@@ -28,8 +28,6 @@
 
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/xml.hpp>
-#include <pni/core/arrays.hpp>
-#include <pni/io/nx/algorithms.hpp>
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
