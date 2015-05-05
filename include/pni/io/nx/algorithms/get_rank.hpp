@@ -21,6 +21,8 @@
 //
 #pragma once
 
+#include <pni/core/error.hpp>
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 
 namespace pni{
@@ -100,6 +102,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "A group does not have a shape!");
                 return size_t(0);
