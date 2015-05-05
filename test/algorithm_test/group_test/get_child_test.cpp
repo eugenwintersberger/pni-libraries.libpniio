@@ -22,7 +22,8 @@
 //
 
 #include <boost/current_function.hpp>
-#include<cppunit/extensions/HelperMacros.h>
+#include <pni/io/nx/algorithms/get_child.hpp>
+#include <cppunit/extensions/HelperMacros.h>
 
 #include "get_child_test.hpp"
 

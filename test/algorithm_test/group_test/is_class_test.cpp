@@ -21,8 +21,8 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
+#include <pni/io/nx/algorithms/is_class.hpp>
 #include <boost/current_function.hpp>
-#include<cppunit/extensions/HelperMacros.h>
 
 #include "is_class_test.hpp"
 

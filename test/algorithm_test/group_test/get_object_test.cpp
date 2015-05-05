@@ -21,8 +21,9 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
+#include <pni/io/nx/algorithms/get_object.hpp>
 #include <boost/current_function.hpp>
-#include<cppunit/extensions/HelperMacros.h>
+#include <cppunit/extensions/HelperMacros.h>
 
 #include "get_object_test.hpp"
 

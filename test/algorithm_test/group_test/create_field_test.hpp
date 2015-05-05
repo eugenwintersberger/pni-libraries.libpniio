@@ -26,7 +26,6 @@
 #include<boost/current_function.hpp>
 
 #include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/algorithms/create_field.hpp>
 #include <pni/io/nx/algorithms/is_valid.hpp>
