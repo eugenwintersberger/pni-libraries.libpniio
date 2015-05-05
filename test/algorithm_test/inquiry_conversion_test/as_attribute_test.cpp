@@ -22,8 +22,7 @@
 //
 
 #include <boost/current_function.hpp>
-#include<cppunit/extensions/HelperMacros.h>
-
+#include <pni/io/nx/algorithms/as_attribute.hpp>
 #include "as_attribute_test.hpp"
 
 

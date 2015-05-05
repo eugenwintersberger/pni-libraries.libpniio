@@ -21,6 +21,7 @@
 //
 #pragma once
 
+#include <pni/core/error.hpp>
 #include "../nxobject.hpp"
 
 namespace pni{
@@ -72,6 +73,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                       "Object is not an instance of nxattribute "
                       "but of s nxgroup!");
@@ -95,6 +97,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Object is not an instance of nxattribute "
                         "but of nxfield!");

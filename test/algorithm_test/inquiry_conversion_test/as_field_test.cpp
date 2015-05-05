@@ -22,8 +22,7 @@
 //
 
 #include <boost/current_function.hpp>
-#include<cppunit/extensions/HelperMacros.h>
-
+#include <pni/io/nx/algorithms/as_field.hpp>
 #include "as_field_test.hpp"
 
 

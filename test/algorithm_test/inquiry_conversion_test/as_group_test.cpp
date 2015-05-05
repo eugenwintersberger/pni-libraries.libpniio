@@ -22,8 +22,7 @@
 //
 
 #include <boost/current_function.hpp>
-#include<cppunit/extensions/HelperMacros.h>
-
+#include <pni/io/nx/algorithms/as_group.hpp>
 #include "as_group_test.hpp"
 
 
