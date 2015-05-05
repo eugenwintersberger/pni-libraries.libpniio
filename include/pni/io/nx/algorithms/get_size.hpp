@@ -22,6 +22,7 @@
 #pragma once
 
 #include <pni/core/types.hpp>
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 
 namespace pni{

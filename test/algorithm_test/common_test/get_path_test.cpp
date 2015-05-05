@@ -21,8 +21,9 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
+#include <pni/io/nx/algorithms/get_path.hpp>
 #include <boost/current_function.hpp>
-#include<cppunit/extensions/HelperMacros.h>
+#include <cppunit/extensions/HelperMacros.h>
 
 #include "get_path_test.hpp"
 

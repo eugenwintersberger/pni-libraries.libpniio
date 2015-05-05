@@ -22,8 +22,9 @@
 //
 
 #include <boost/current_function.hpp>
-#include<cppunit/extensions/HelperMacros.h>
+#include <cppunit/extensions/HelperMacros.h>
 #include <pni/io/exceptions.hpp>
+#include <pni/io/nx/algorithms/get_filename.hpp>
 
 #include "get_filename_test.hpp"
 

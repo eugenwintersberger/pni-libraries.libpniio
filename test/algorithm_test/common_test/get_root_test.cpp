@@ -21,8 +21,11 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
+#include <pni/io/nx/algorithms/get_root.hpp>
+#include <pni/io/nx/algorithms/get_name.hpp>
+#include <pni/io/nx/algorithms/get_child.hpp>
 #include <boost/current_function.hpp>
-#include<cppunit/extensions/HelperMacros.h>
+#include <cppunit/extensions/HelperMacros.h>
 
 #include "get_root_test.hpp"
 

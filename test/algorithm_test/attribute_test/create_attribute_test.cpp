@@ -21,9 +21,6 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include <boost/current_function.hpp>
-#include<cppunit/extensions/HelperMacros.h>
-
 #include "create_attribute_test.hpp"
 
 
