@@ -22,9 +22,8 @@
 ///
 
 #include <boost/current_function.hpp>
-#include <boost/lexical_cast.hpp>
-#include<cppunit/extensions/HelperMacros.h>
-
+#include <boost/current_function.hpp>
+#include <pni/io/cbf/cbf_reader.hpp>
 #include "cbf_reader_test.hpp"
 
 

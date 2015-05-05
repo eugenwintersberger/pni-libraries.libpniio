@@ -21,9 +21,11 @@
  *      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
  */
 
+#include <vector>
+#include <pni/core/types.hpp>
+#include <pni/io/tiff/tiff_reader.hpp>
 #include <boost/current_function.hpp>
-#include <boost/lexical_cast.hpp>
-#include<cppunit/extensions/HelperMacros.h>
+#include <cppunit/extensions/HelperMacros.h>
 
 #include "tiff_reader_test.hpp"
 

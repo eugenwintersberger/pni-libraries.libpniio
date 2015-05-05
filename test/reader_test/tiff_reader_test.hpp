@@ -23,11 +23,7 @@
 #pragma once
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
-#include<boost/current_function.hpp>
 
-#include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
-#include <pni/io/tiff/tiff_reader.hpp>
 
 using namespace pni::core;
 using namespace pni::io;
