@@ -22,9 +22,6 @@
 //
 #pragma once
 
-#include <list>
-#include <boost/current_function.hpp>
-
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/xml/dimensions.hpp>
 #include <cppunit/TestFixture.h>

@@ -21,6 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <boost/current_function.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include "inquery_fixture.hpp"
 

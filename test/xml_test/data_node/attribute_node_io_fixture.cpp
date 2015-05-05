@@ -21,7 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <vector>
+#include <boost/current_function.hpp>
 #include "attribute_node_io_fixture.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(attribute_node_io_fixture);

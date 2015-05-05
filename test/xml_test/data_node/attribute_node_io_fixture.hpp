@@ -23,13 +23,8 @@
 
 #pragma once
 
-#include <boost/current_function.hpp>
-#include <functional>
-#include <random>
-
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/xml.hpp>
-#include <pni/core/arrays.hpp>
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
