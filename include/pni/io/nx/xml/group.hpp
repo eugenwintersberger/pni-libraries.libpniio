@@ -27,6 +27,7 @@
 #include <pni/core/type_erasures.hpp>
 
 #include "../algorithms/create_field.hpp"
+#include "../algorithms/create_group.hpp"
 #include "../algorithms/get_name.hpp"
 #include "../algorithms/get_class.hpp"
 #include "../algorithms/set_class.hpp"

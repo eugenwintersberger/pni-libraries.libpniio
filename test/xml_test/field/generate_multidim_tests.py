@@ -92,6 +92,7 @@ class multidim_field_test_{0.type_name} : public CppUnit::TestFixture
 """
 
 xml_test_source="""
+#include <pni/io/nx/algorithms/create_field.hpp>
 #include "multidim_field_test_{0.type_name}.hpp"
 
 typedef std::vector<{0.type_name}> array_type;

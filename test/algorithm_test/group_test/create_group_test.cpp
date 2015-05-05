@@ -21,8 +21,11 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
+#include <pni/io/nx/algorithms/create_group.hpp>
+#include <pni/io/nx/algorithms/is_valid.hpp>
+
 #include <boost/current_function.hpp>
-#include<cppunit/extensions/HelperMacros.h>
+#include <cppunit/extensions/HelperMacros.h>
 
 #include "create_group_test.hpp"
 

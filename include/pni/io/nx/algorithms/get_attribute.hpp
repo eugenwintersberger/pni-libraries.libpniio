@@ -21,6 +21,8 @@
 //
 #pragma once
 
+#include <pni/core/types.hpp>
+#include <pni/core/error.hpp>
 #include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 
@@ -54,7 +56,7 @@ namespace nx{
              nximp_code IMPID
            >
     typename nxobject_trait<IMPID>::object_type
-    get_attribute(const PTYPE<IMPID> &parent,const string &name)
+    get_attribute(const PTYPE<IMPID> &parent,const pni::core::string &name)
     {
         return parent.attributes[name];
     }
@@ -82,7 +84,7 @@ namespace nx{
                                   >
     {
         private:
-            string _attribute; //!< name of the attribute to retrieve
+            pni::core::string _attribute; //!< name of the attribute to retrieve
         public:
             //! result type
             typedef ATYPE result_type;
@@ -100,7 +102,9 @@ namespace nx{
             //! Setting up the visitor. 
             //! \param attr name of the attribute to retrieve
             //!
-            get_attribute_visitor(const string &attr):_attribute(attr) {}
+            get_attribute_visitor(const pni::core::string &attr):
+                _attribute(attr) 
+            {}
           
             //---------------------------------------------------------------------
             //!
@@ -156,6 +160,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Attributes cannot have attributes by themself!");
                 return result_type();
@@ -190,7 +195,7 @@ namespace nx{
             > 
     nxobject<GTYPE,FTYPE,ATYPE>
     get_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
-                  const string &name)
+                  const pni::core::string &name)
     {
         typedef get_attribute_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
         return boost::apply_visitor(visitor_type(name),parent);

@@ -22,6 +22,7 @@
 //
 #pragma once
 
+#include <functional>
 #include <boost/variant.hpp>
 
 namespace pni{

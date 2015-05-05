@@ -21,8 +21,11 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
+#include <pni/io/nx/algorithms/get_attribute.hpp>
+#include <pni/io/nx/algorithms/is_valid.hpp>
+#include <pni/io/nx/algorithms/get_name.hpp>
 #include <boost/current_function.hpp>
-#include<cppunit/extensions/HelperMacros.h>
+#include <cppunit/extensions/HelperMacros.h>
 #include <pni/io/exceptions.hpp>
 
 #include "get_attribute_test.hpp"

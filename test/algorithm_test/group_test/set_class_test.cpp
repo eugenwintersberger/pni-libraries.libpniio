@@ -21,8 +21,10 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
+#include <pni/io/nx/algorithms/set_class.hpp>
+#include <pni/io/nx/algorithms/is_group.hpp>
 #include <boost/current_function.hpp>
-#include<cppunit/extensions/HelperMacros.h>
+#include <cppunit/extensions/HelperMacros.h>
 #include <pni/io/exceptions.hpp>
 
 using pni::io::invalid_object_error;

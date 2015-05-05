@@ -29,6 +29,10 @@
 #include <pni/core/arrays.hpp>
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/algorithms/create_field.hpp>
+#include <pni/io/nx/algorithms/is_valid.hpp>
+#include <pni/io/nx/algorithms/get_rank.hpp>
+#include <pni/io/nx/algorithms/get_size.hpp>
+#include <pni/io/nx/algorithms/get_type.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx;

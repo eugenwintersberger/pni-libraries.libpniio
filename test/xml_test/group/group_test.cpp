@@ -21,6 +21,10 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <pni/io/nx/algorithms/close.hpp>
+#include <pni/io/nx/algorithms/is_valid.hpp>
+#include <pni/io/nx/algorithms/get_name.hpp>
+#include <pni/io/nx/algorithms/get_class.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include "group_test.hpp"
 

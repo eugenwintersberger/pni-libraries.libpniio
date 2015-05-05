@@ -22,6 +22,8 @@
 //
 #pragma once
 
+#include <pni/core/types.hpp>
+#include <pni/core/error.hpp>
 #include "../nxobject_traits.hpp"
 
 namespace pni{
@@ -49,9 +51,9 @@ namespace nx{
              template<nximp_code> class OTYPE,
              nximp_code IMPID
             >
-    string get_class(const OTYPE<IMPID> &group)
+    pni::core::string get_class(const OTYPE<IMPID> &group)
     {
-        string group_class;
+        pni::core::string group_class;
         if(group.attributes.exists("NX_class"))
             group.attributes["NX_class"].read(group_class);
 
@@ -74,11 +76,11 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    class get_class_visitor : public boost::static_visitor<string>
+    class get_class_visitor : public boost::static_visitor<pni::core::string>
     {
         public:
             //! result type
-            typedef string result_type;
+            typedef pni::core::string result_type;
             //! Nexus group type
             typedef GTYPE group_type;
             //! Nexus field type
@@ -125,6 +127,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Fields do not have a class!");
                 return result_type();
@@ -148,6 +151,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Attributes do not have a class!");
                 return result_type();
@@ -179,7 +183,7 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    string get_class(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    pni::core::string get_class(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
         typedef get_class_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
         return boost::apply_visitor(visitor_type(),o);

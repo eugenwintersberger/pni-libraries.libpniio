@@ -24,6 +24,9 @@
 #include "../nxobject_traits.hpp"
 #include "object_predicates.hpp"
 #include "iterators.hpp"
+#include "is_group.hpp"
+#include "get_parent.hpp"
+#include "is_valid.hpp"
 
 namespace pni{
 namespace io{

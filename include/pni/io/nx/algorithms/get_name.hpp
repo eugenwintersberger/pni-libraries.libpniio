@@ -21,6 +21,7 @@
 //
 #pragma once
 
+#include <pni/core/types.hpp>
 #include "../nximp_code.hpp"
 #include "../nxobject.hpp"
 
@@ -54,7 +55,7 @@ namespace nx{
              template<nximp_code> class OTYPE,
              nximp_code IMPID
             >
-    string get_name(const OTYPE<IMPID> &o)
+    pni::core::string get_name(const OTYPE<IMPID> &o)
     {
         return o.name();
     }
@@ -78,11 +79,11 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    class get_name_visitor : public boost::static_visitor<string>
+    class get_name_visitor : public boost::static_visitor<pni::core::string>
     {
         public:
             //! result type
-            typedef string result_type;
+            typedef pni::core::string result_type;
             //! Nexus group type
             typedef GTYPE group_type;
             //! Nexus field type
@@ -172,7 +173,7 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    string get_name(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    pni::core::string get_name(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
         typedef get_name_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
         return boost::apply_visitor(visitor_type(),o);

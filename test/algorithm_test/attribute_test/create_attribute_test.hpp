@@ -30,6 +30,11 @@
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/exceptions.hpp>
 #include <pni/io/nx/algorithms/create_attribute.hpp>
+#include <pni/io/nx/algorithms/is_attribute.hpp>
+#include <pni/io/nx/algorithms/get_rank.hpp>
+#include <pni/io/nx/algorithms/get_size.hpp>
+#include <pni/io/nx/algorithms/get_type.hpp>
+#include <pni/io/nx/algorithms/get_shape.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx;

@@ -22,13 +22,13 @@
 #pragma once
 
 #include <pni/core/types.hpp>
+#include <pni/core/error.hpp>
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
-    
-    using namespace pni::core;
 
     //!
     //! \ingroup algorithm_code
@@ -110,6 +110,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "One cannot grow a group object!");
             }
@@ -146,6 +147,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                     "An attribute cannot be grown!");
             }

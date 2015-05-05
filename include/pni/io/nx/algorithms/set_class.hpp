@@ -21,7 +21,10 @@
 //
 #pragma once
 
+#include <pni/core/types.hpp>
+#include <pni/core/error.hpp>
 #include "../nxobject_traits.hpp"
+#include "is_group.hpp"
 
 namespace pni{
 namespace io{
@@ -48,8 +51,9 @@ namespace nx{
              template<nximp_code> class OTYPE,
              nximp_code IMPID
             >
-    void set_class(const OTYPE<IMPID> &o,const string &nxclass)
+    void set_class(const OTYPE<IMPID> &o,const pni::core::string &nxclass)
     {
+        using namespace pni::core;
         typedef typename nxobject_trait<IMPID>::object_type object_type;
         typedef typename nxobject_trait<IMPID>::field_type field_type;
         typedef typename nxobject_trait<IMPID>::attribute_type attribute_type;
@@ -88,7 +92,7 @@ namespace nx{
     class set_class_visitor : public boost::static_visitor<void>
     {
         private:
-            string _class; //!< Nexus class
+            pni::core::string _class; //!< Nexus class
         public:
             //! result type
             typedef void result_type;
@@ -105,7 +109,7 @@ namespace nx{
             //!
             //! \param s class type as string
             //!
-            set_class_visitor(const string &s):_class(s) {}
+            set_class_visitor(const pni::core::string &s):_class(s) {}
 
             //-----------------------------------------------------------------
             //!
@@ -137,6 +141,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,"Fields do not have a class!");
             }
 #pragma GCC diagnostic pop
@@ -154,6 +159,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Attributes do not have a class!");
             }
@@ -184,7 +190,8 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    void set_class(const nxobject<GTYPE,FTYPE,ATYPE> &o,const string &c)
+    void set_class(const nxobject<GTYPE,FTYPE,ATYPE> &o,
+                   const pni::core::string &c)
     {
         typedef set_class_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
          boost::apply_visitor(visitor_type(c),o);

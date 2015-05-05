@@ -21,6 +21,9 @@
 //
 #pragma once
 
+#include <pni/core/types.hpp>
+#include <pni/core/error.hpp>
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 
 namespace pni{
@@ -45,8 +48,9 @@ namespace nx{
     //! \param value the value for the units attribute
     //!
     template<typename FTYPE> 
-    void set_unit(const FTYPE &field,const string &value)
+    void set_unit(const FTYPE &field,const pni::core::string &value)
     {
+        using namespace pni::core;
         typedef nximp_code_map<FTYPE> map_type;
         typedef typename nxobject_trait<map_type::icode>::field_type field_type;
 
@@ -75,7 +79,7 @@ namespace nx{
     class set_unit_visitor : public boost::static_visitor<void>
     {
         private:
-            string _unit; //!< unit string
+            pni::core::string _unit; //!< unit string
         public:
             //! result type
             typedef void result_type;
@@ -92,7 +96,7 @@ namespace nx{
             //!
             //! \param s unit string
             //!
-            set_unit_visitor(const string &s):_unit(s) {}
+            set_unit_visitor(const pni::core::string &s):_unit(s) {}
            
             //-----------------------------------------------------------------
             //!
@@ -107,6 +111,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Groups do not have units!");
             }
@@ -144,6 +149,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Attributes do not have units!");
             }
@@ -175,7 +181,8 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    void set_unit(const nxobject<GTYPE,FTYPE,ATYPE> &o,const string &s)
+    void set_unit(const nxobject<GTYPE,FTYPE,ATYPE> &o,
+                  const pni::core::string &s)
     {
         typedef set_unit_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
 

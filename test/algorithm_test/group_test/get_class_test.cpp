@@ -21,8 +21,10 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
+#include <pni/io/nx/algorithms/create_group.hpp>
+#include <pni/io/nx/algorithms/get_class.hpp>
 #include <boost/current_function.hpp>
-#include<cppunit/extensions/HelperMacros.h>
+#include <cppunit/extensions/HelperMacros.h>
 #include <pni/io/exceptions.hpp>
 
 #include "get_class_test.hpp"

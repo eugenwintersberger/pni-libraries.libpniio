@@ -21,14 +21,13 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 #pragma once
-#include<cppunit/TestFixture.h>
-#include<cppunit/extensions/HelperMacros.h>
-#include<boost/current_function.hpp>
+#include <cppunit/TestFixture.h>
+#include <cppunit/extensions/HelperMacros.h>
+#include <boost/current_function.hpp>
 
 #include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
 #include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/algorithms/set_unit.hpp>
+
 
 using namespace pni::core;
 using namespace pni::io::nx;

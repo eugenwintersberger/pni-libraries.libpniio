@@ -79,6 +79,7 @@ class scalar_field_test_{0.type_name} : public CppUnit::TestFixture
 """
 
 xml_test_source="""
+#include <pni/io/nx/algorithms/create_field.hpp>
 #include "scalar_field_test_{0.type_name}.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(scalar_field_test_{0.type_name});

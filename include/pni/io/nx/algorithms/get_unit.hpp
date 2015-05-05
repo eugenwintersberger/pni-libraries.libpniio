@@ -21,7 +21,11 @@
 //
 #pragma once
 
+#include <pni/core/types.hpp>
+#include <pni/core/error.hpp>
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
+
 namespace pni{
 namespace io{
 namespace nx{
@@ -43,7 +47,7 @@ namespace nx{
     //! \param field instance of the Nexus field
     //! \return content of the units string
     //!
-    template<typename FTYPE> string get_unit(const FTYPE &field)
+    template<typename FTYPE> pni::core::string get_unit(const FTYPE &field)
     {
         typedef nximp_code_map<FTYPE> imp_map;
         typedef typename nxobject_trait<imp_map::icode>::field_type field_type;
@@ -51,7 +55,7 @@ namespace nx{
         static_assert(std::is_same<FTYPE,field_type>::value,
                       "UNIT CAN ONLY BE RETRIEFVED FROM A FIELD TYPE!");
 
-        string buffer;
+        pni::core::string buffer;
 
         if(field.attributes.exists("units"))
             field.attributes["units"].read(buffer);
@@ -72,11 +76,11 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    class get_unit_visitor : public boost::static_visitor<string>
+    class get_unit_visitor : public boost::static_visitor<pni::core::string>
     {
         public:
             //! result type
-            typedef string result_type;
+            typedef pni::core::string result_type;
             //! Nexus group type
             typedef GTYPE group_type;
             //! Nexus field type
@@ -99,6 +103,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Cannot retreive a unit from a group!");
 
@@ -143,6 +148,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Cannot retrieve a unit from an attribute type!");
                 return result_type();
@@ -180,7 +186,7 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    string get_unit(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    pni::core::string get_unit(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
         typedef get_unit_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
         return boost::apply_visitor(visitor_type(),o);

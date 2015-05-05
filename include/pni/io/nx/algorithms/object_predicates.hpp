@@ -25,6 +25,7 @@
 #include "is_field.hpp"
 #include "get_name.hpp"
 #include "is_class.hpp"
+#include "as_group.hpp"
 #include <type_traits>
 #include <functional>
 

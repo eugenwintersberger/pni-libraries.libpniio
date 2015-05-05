@@ -33,7 +33,7 @@
 #include "nximp_map.hpp"
 #include "nxobject_traits.hpp"
 #include "nxobject_type.hpp"
-#include "algorithms.hpp"
+#include "algorithms/as_attribute.hpp"
 #include "../exceptions.hpp"
 
 
