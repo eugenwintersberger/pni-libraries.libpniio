@@ -21,8 +21,8 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <boost/current_function.hpp>
 #include "vector_parser_test.hpp"
-#include "../../EqualityCheck.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(vector_parser_test);
 
