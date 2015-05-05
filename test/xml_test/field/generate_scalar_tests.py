@@ -36,19 +36,12 @@ xml_scalar_attribute="""
 xml_test_header="""
 #pragma once
 
-#include <boost/current_function.hpp>
-#include <functional>
-#include <random>
-
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/xml.hpp>
-#include <pni/core/arrays.hpp>
-
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
 #include <EqualityCheck.hpp>
-
 
 using namespace pni::core;
 using namespace pni::io::nx;
@@ -79,6 +72,7 @@ class scalar_field_test_{0.type_name} : public CppUnit::TestFixture
 """
 
 xml_test_source="""
+#include <boost/current_function.hpp>
 #include <pni/io/nx/algorithms/create_field.hpp>
 #include "scalar_field_test_{0.type_name}.hpp"
 
