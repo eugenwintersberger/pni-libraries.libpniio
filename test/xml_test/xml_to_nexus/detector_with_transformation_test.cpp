@@ -21,7 +21,8 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <vector>
+#include <boost/current_function.hpp>
+#include <pni/io/nx/algorithms/close.hpp>
 #include "detector_with_transformation_test.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(detector_with_transformation_test);

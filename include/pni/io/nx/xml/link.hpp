@@ -21,6 +21,7 @@
 //
 #pragma once
 
+#include "../algorithms/as_group.hpp"
 #include "data_node.hpp"
 #include "../nxlink.hpp"
 

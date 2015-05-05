@@ -21,6 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <boost/current_function.hpp>
 #include "creation_fixture.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(creation_fixture);

@@ -22,7 +22,6 @@
 //
 #pragma once
 
-#include <boost/current_function.hpp>
 
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/xml/field.hpp>

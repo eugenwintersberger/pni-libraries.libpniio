@@ -22,14 +22,8 @@
 //
 #pragma once
 
-#include <boost/current_function.hpp>
-#include <functional>
-#include <random>
-
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/xml/xml_to_nexus.hpp>
-#include <pni/core/arrays.hpp>
-#include <pni/io/nx/algorithms.hpp>
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>

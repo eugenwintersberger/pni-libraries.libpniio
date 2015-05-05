@@ -34,7 +34,7 @@
 
 #include "nxattribute_manager.hpp"
 #include "nxobject_traits.hpp"
-#include "algorithms/get_path.hpp"
+#include "algorithms/as_field.hpp"
 
 
 namespace pni{

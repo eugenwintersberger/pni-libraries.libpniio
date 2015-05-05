@@ -1,5 +1,4 @@
-set(XMLFILES igor.xml
-             object_tree1.xml)
+set(XMLFILES igor.xml)
 
 
 foreach(XMLFILE ${XMLFILES})

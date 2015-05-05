@@ -21,7 +21,8 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <vector>
+#include <boost/current_function.hpp>
+#include <pni/io/nx/algorithms/get_object.hpp>
 #include "internal_link_test.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(internal_link_test);

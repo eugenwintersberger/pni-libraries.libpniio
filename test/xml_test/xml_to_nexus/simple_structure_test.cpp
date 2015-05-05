@@ -21,7 +21,8 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <vector>
+#include <boost/current_function.hpp>
+#include <pni/io/nx/algorithms/close.hpp>
 #include "simple_structure_test.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(simple_structure_test);

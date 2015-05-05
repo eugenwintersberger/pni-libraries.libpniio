@@ -22,10 +22,7 @@
 //
 #pragma once
 
-#include <boost/current_function.hpp>
-#include <functional>
-#include <random>
-
+#include <vector>
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/xml.hpp>
 

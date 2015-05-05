@@ -21,7 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <vector>
+#include <boost/current_function.hpp>
 #include "detector_master_file_test.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(detector_master_file_test);

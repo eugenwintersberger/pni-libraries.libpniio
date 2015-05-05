@@ -21,8 +21,8 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <boost/current_function.hpp>
 #include <fstream>
-#include <vector>
 #include <pni/io/nx/algorithms/get_child.hpp>
 #include "simple_structure_test.hpp"
 
