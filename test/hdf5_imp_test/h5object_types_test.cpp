@@ -27,6 +27,7 @@
 #include <pni/io/nx/h5/attribute_utils.hpp>
 
 
+using namespace pni::core;
 CPPUNIT_TEST_SUITE_REGISTRATION(h5object_types_test);
 
 using pni::io::object_error;

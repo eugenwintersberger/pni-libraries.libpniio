@@ -29,6 +29,7 @@
 
 CPPUNIT_TEST_SUITE_REGISTRATION(hdf5_utilities_test);
 
+using namespace pni::core;
 using pni::io::object_error;
 using pni::io::invalid_object_error;
 

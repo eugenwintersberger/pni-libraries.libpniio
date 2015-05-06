@@ -87,9 +87,10 @@ namespace nx{
                      typename T,
                      typename CTYPE
                     > 
-            attribute_type create(const string &n, const CTYPE &s,bool ov=false) const
+            attribute_type create(const pni::core::string &n, 
+                                        const CTYPE &s,bool ov=false) const
             {
-                type_id_t tid = type_id_map<T>::type_id;
+                pni::core::type_id_t tid = pni::core::type_id_map<T>::type_id;
 
                 return attribute_type(_imp.attr(n,
                                                 tid,
@@ -115,9 +116,10 @@ namespace nx{
             //! \return an instance of nxattribute
             //!
             template<typename T> 
-            attribute_type create(const string &n,bool ov=false) const
+            attribute_type create(const pni::core::string &n,
+                                  bool ov=false) const
             {
-                return create<T>(n,shape_t{1},ov);
+                return create<T>(n,pni::core::shape_t{1},ov);
             }
 
             //-----------------------------------------------------------------
@@ -136,7 +138,7 @@ namespace nx{
             //! \param n name of the attribute
             //! \return instance of nxattribute
             //!
-            attribute_type operator[](const string &n) const
+            attribute_type operator[](const pni::core::string &n) const
             {
                 return attribute_type(_imp.attr(n));
             }
@@ -174,7 +176,7 @@ namespace nx{
             //!
             //! \param n name of the attribute
             //!
-            void remove(const string &n) const
+            void remove(const pni::core::string &n) const
             {
                 _imp.del_attr(n);
             }
@@ -192,7 +194,7 @@ namespace nx{
             //! \param n name of the attribute
             //! \return true if n exists otherwise false
             //!
-            bool exists(const string &n) const
+            bool exists(const pni::core::string &n) const
             {
                 return _imp.has_attr(n);
             }

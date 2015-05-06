@@ -33,6 +33,7 @@ namespace io{
 namespace nx{
 namespace xml{
 
+    using namespace pni::core;
     using namespace boost::property_tree;
 
     node create_from_string(const string &s)

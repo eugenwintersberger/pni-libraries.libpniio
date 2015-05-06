@@ -78,7 +78,7 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    class get_filename_visitor : public boost::static_visitor<string>
+    class get_filename_visitor : public boost::static_visitor<pni::core::string>
     {
         public:
             //! result type

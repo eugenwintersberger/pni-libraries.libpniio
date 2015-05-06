@@ -31,7 +31,7 @@ namespace io{
     //implementation of the  default constructor
     column_info::column_info():
         _name(),
-        _tid(type_id_t::NONE),
+        _tid(pni::core::type_id_t::NONE),
         _shape()
     {}
 

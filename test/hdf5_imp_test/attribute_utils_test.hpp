@@ -51,7 +51,7 @@ class attribute_utils_test:public CppUnit::TestFixture
         object_imp root;
 
         object_imp create_attribute(const object_imp &parent,
-                                    const string &name) const;
+                                    const pni::core::string &name) const;
     public:
         void setUp();
         void tearDown();

@@ -239,8 +239,8 @@ namespace nx{
                 else
                 {
                     typedef typename ATYPE::value_type value_type;
-                    typedef dynamic_array<value_type> array_type;
-                    auto buffer =  array_type::create(v.shape<shape_t>());
+                    typedef pni::core::dynamic_array<value_type> array_type;
+                    auto buffer =  array_type::create(v.shape<pni::core::shape_t>());
                     std::copy(v.begin(),v.end(),buffer.begin());
                     write(buffer);
                 }
@@ -366,7 +366,7 @@ namespace nx{
             //!
             //! \param a instance of array
             //!
-            void write(const array &a) const
+            void write(const pni::core::array &a) const
             {
                 _write_array(a);
             }
@@ -411,8 +411,8 @@ namespace nx{
                 else
                 {
                     typedef typename ATYPE::value_type value_type;
-                    typedef dynamic_array<value_type> buffer_type;
-                    auto buffer = buffer_type::create(v.shape<shape_t>());
+                    typedef pni::core::dynamic_array<value_type> buffer_type;
+                    auto buffer = buffer_type::create(v.shape<pni::core::shape_t>());
                     _read_array(buffer);
                     std::copy(buffer.begin(),buffer.end(),v.begin());
                 }
@@ -438,7 +438,7 @@ namespace nx{
             //!
             //! \param a instance of array 
             //!
-            void read(array &a) const
+            void read(pni::core::array &a) const
             {
                 _read_array(a);
             }
@@ -579,7 +579,7 @@ namespace nx{
             //!
             //! \return type id of the elements stored in the field
             //!
-            type_id_t type_id() const { return _imp.type_id(); }
+            pni::core::type_id_t type_id() const { return _imp.type_id(); }
 
             //--------------------------------------------------------------
             //! 

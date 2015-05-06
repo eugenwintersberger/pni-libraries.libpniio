@@ -1,5 +1,4 @@
 set(SOURCES nexus_lowlevel_test.cpp
-            NXGroupTest.cpp
             nxlink_test.cpp
             flat_group_test.cpp
            )

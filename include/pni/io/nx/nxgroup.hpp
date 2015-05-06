@@ -137,7 +137,7 @@ namespace nx{
                     > 
             CTYPE _create_auto_chunk(const STYPE &shape) const
             {
-                auto chunk = container_utils<CTYPE>::create(shape.size());
+                auto chunk = pni::core::container_utils<CTYPE>::create(shape.size());
 
                 std::copy(shape.begin(),shape.end(),chunk.begin());
                 chunk.front()=1;
@@ -177,7 +177,7 @@ namespace nx{
                                      const CTYPE &chunk) const
             {
                 return field_type(field_imp_type(_imp,n,
-                                  type_id_map<T>::type_id,
+                                  pni::core::type_id_map<T>::type_id,
                                   type_type::to_index_vector(shape),
                                   type_type::to_index_vector(chunk)));
 
@@ -220,7 +220,7 @@ namespace nx{
                          const nxfilter<FIMP> &filter) const
             {
                 return field_type(field_imp_type(_imp,n,
-                                    type_id_map<T>::type_id,
+                                    pni::core::type_id_map<T>::type_id,
                                     type_type::to_index_vector(shape),
                                     type_type::to_index_vector(chunk),
                                     filter.imp()));
@@ -343,7 +343,7 @@ namespace nx{
             //! \return a new instance of nxgroup
             //!
             group_type create_group(const pni::core::string &n,
-                                    const pni::core::string &type=string()) const
+                                    const pni::core::string &type=pni::core::string()) const
             {
                 //we need to do here two things
                 //we have to check if the particular group type
@@ -389,7 +389,7 @@ namespace nx{
             //!
             template<
                      typename T,
-                     typename CTYPE = shape_t
+                     typename CTYPE = pni::core::shape_t
                     >
             field_type create_field(const pni::core::string &n,
                                     const CTYPE &shape={1}) const

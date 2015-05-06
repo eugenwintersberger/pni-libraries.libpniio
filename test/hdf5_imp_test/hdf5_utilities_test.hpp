@@ -26,9 +26,9 @@ extern "C" {
 }
 
 
-#include<cppunit/TestFixture.h>
-#include<cppunit/extensions/HelperMacros.h>
-#include<boost/current_function.hpp>
+#include <cppunit/TestFixture.h>
+#include <cppunit/extensions/HelperMacros.h>
+#include <boost/current_function.hpp>
 
 #include <pni/io/nx/h5/object_imp.hpp>
 #include <pni/io/nx/h5/hdf5_utilities.hpp>
@@ -53,11 +53,11 @@ class hdf5_utilities_test:public CppUnit::TestFixture
 
         object_imp create_link_create_list() const;
         object_imp create_group(const object_imp &parent,
-                                const string &name) const;
+                                const pni::core::string &name) const;
         object_imp create_dataset(const object_imp &parent,
-                                  const string &name) const;
+                                  const pni::core::string &name) const;
         object_imp create_attribute(const object_imp &parent,
-                                    const string &name) const;
+                                    const pni::core::string &name) const;
     public:
         void setUp();
         void tearDown();
