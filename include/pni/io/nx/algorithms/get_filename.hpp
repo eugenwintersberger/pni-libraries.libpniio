@@ -55,7 +55,7 @@ namespace nx{
              template<nximp_code> class OTYPE,
              nximp_code IMPID
             >
-    string get_filename(const OTYPE<IMPID> &o)
+    pni::core::string get_filename(const OTYPE<IMPID> &o)
     {
         return o.filename();
     }
@@ -82,7 +82,7 @@ namespace nx{
     {
         public:
             //! result type
-            typedef string result_type;
+            typedef pni::core::string result_type;
             //! Nexus group type
             typedef GTYPE group_type;
             //! Nexus field type
@@ -176,7 +176,7 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    string get_filename(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    pni::core::string get_filename(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
         typedef get_filename_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
         return boost::apply_visitor(visitor_type(),o);

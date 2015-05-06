@@ -35,10 +35,13 @@
 #include <pni/io/nx/algorithms/get_size.hpp>
 #include <pni/io/nx/algorithms/get_type.hpp>
 #include <pni/io/nx/algorithms/get_shape.hpp>
+#include <pni/io/nx/algorithms/is_valid.hpp>
+#include <pni/io/nx/algorithms/get_name.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx;
 using pni::io::invalid_object_error;
+using pni::io::object_error;
 
 template<typename T>
 class create_attribute_test : public CppUnit::TestFixture

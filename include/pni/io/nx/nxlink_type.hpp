@@ -54,6 +54,17 @@ namespace nx{
                              ATTRIBUTE //!< returned by attributes
                            };
                            
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup nexus_lowlevel
+    //! \brief ouput operator for link type enumeration
+    //! 
+    //! Writes the textual representation of a link type enum to the output
+    //! stream.
+    //! 
+    //! \param stream output stream
+    //! \param ltype reference to a link type
+    //! \return output stream
     std::ostream &operator<<(std::ostream &stream,const nxlink_type &ltype);
 //end of namespace
 }

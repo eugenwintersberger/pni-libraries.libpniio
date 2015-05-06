@@ -23,6 +23,7 @@
 #pragma once
 
 #include <pni/core/types.hpp>
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 #include "../nximp_code_map.hpp"
 #include "../nxfilter.hpp"
@@ -32,8 +33,6 @@
 namespace pni{
 namespace io{
 namespace nx{
-    
-    using namespace pni::core;
 
     //-------------------------------------------------------------------------
     //!
@@ -75,10 +74,10 @@ namespace nx{
             //! define the filter type
             typedef FILTERT filter_type;
         private:
-            string _name;   //!< the name of the field
-            STYPE  _shape;  //!< shape of field
-            STYPE  _cshape; //!< chunk shape of the field
-            filter_type  _filter; //!< reference to the filter
+            pni::core::string _name;   //!< the name of the field
+            STYPE  _shape;             //!< shape of field
+            STYPE  _cshape;            //!< chunk shape of the field
+            filter_type  _filter;      //!< reference to the filter
         public:
 
             //----------------------------------------------------------------
@@ -91,7 +90,7 @@ namespace nx{
             //! \param cs chunk shape
             //! \param filter filter instance to use
             //!
-            create_field_visitor(const string &n,const STYPE &s,
+            create_field_visitor(const pni::core::string &n,const STYPE &s,
                                  const STYPE &cs,const filter_type &filter):
                 _name(n),
                 _shape(s),
@@ -138,6 +137,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Cannot create a group below a field!");
                 return result_type();
@@ -161,6 +161,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Cannot create a group below an attribute!");
                 return result_type();
@@ -216,7 +217,7 @@ namespace nx{
 
         nxpath fpath = get_path(path);
 
-        string field_name = fpath.back().first;
+        pni::core::string field_name = fpath.back().first;
         nxpath parent_path(fpath);
         parent_path.pop_back();
 
@@ -396,6 +397,7 @@ namespace nx{
     nxobject<GTYPE,FTYPE,ATYPE>
     create_field(const nxobject<GTYPE,FTYPE,ATYPE> &o,type_id_t tid,ARGTS...args)
     {
+        using namespace pni::core;
         switch(tid)
         {
             case type_id_t::UINT8:  return create_field<uint8>(o,args...);

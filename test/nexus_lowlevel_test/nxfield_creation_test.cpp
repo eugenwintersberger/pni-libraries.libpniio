@@ -21,9 +21,6 @@
 
 //implementation of the arrayshape test
 
-#include<cppunit/extensions/HelperMacros.h>
-
-#include <pni/io/nx/nx.hpp>
 #include "nxfield_creation_test.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<uint8>);

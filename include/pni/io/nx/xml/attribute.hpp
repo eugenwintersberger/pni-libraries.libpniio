@@ -24,15 +24,12 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
-#include <pni/core/type_erasures.hpp>
 
 #include "../algorithms/create_attribute.hpp"
-#include "../algorithms/as_attribute.hpp"
 #include "../algorithms/get_type.hpp"
 #include "../algorithms/get_name.hpp"
-#include "../algorithms/get_size.hpp"
 #include "../algorithms/get_shape.hpp"
+#include "../algorithms/get_size.hpp"
 #include "../nxobject.hpp"
 #include "node.hpp"
 #include "dimensions.hpp"
@@ -42,9 +39,7 @@
 namespace pni{
 namespace io{
 namespace nx{
-namespace xml{
-
-    using namespace pni::core;
+namespace xml{    
    
     //!
     //! \ingroup xml_classes
@@ -107,7 +102,7 @@ namespace xml{
 
             //write name and type attributes
             attr_node.put("<xmlattr>.name",get_name(attr));
-            attr_node.put("<xmlattr>.type",str_from_type_id(get_type(attr)));
+            attr_node.put("<xmlattr>.type",pni::core::str_from_type_id(get_type(attr)));
 
             //if the attribute has more than one element we have to add its
             //shape - otherwise the attribute is scalar

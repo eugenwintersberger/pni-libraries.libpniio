@@ -29,7 +29,10 @@
 #include <sstream>
 
 #include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
+#include <pni/core/arrays/mdarray.hpp>
+#include <pni/core/arrays/array_view.hpp>
+#include <pni/core/arrays/slice.hpp>
+#include <pni/core/type_erasures/array.hpp>
 #include <pni/core/error.hpp>
 
 #include "nxattribute_manager.hpp"
@@ -39,13 +42,7 @@
 
 namespace pni{
 namespace io{
-namespace nx{
-
-    using namespace pni::core;
-    //need this here to avoid name collisions with tango headers.
-    using pni::core::array;
-    using pni::core::string;
-    using pni::core::exception;
+namespace nx{    
 
     //! 
     //! \ingroup nexus_lowlevel
@@ -150,8 +147,9 @@ namespace nx{
             //! \param fshape field shape
             //! \return error message
             //!
-            static string _shape_mismatch_error_message(const shape_t
-                    &ashape,const shape_t &fshape) 
+            static pni::core::string 
+            _shape_mismatch_error_message(const pni::core::shape_t &ashape,
+                                          const pni::core::shape_t &fshape) 
             {
                 std::stringstream ss;
                 ss<<"Array shape ( ";
@@ -185,6 +183,8 @@ namespace nx{
             template<typename ATYPE> 
             void _read_array(ATYPE &a) const
             {
+                using namespace pni::core;
+                
                 typedef typename type_type::index_vector_type index_vector_type;
                 check_allocation_state(a,EXCEPTION_RECORD);
                 check_equal_size(a,*this,EXCEPTION_RECORD);
@@ -215,6 +215,8 @@ namespace nx{
             template<typename ATYPE> 
             void _write_array(const ATYPE &a) const
             {
+                using namespace pni::core;
+                
                 typedef typename type_type::index_vector_type index_vector_type;
                 check_allocation_state(a,EXCEPTION_RECORD);
                 check_equal_size(a,*this,EXCEPTION_RECORD);
@@ -386,7 +388,7 @@ namespace nx{
             //! 
             //! \return data type ID
             //!
-            type_id_t type_id() const 
+            pni::core::type_id_t type_id() const 
             { 
                 return _imp.type_id(); 
             }
@@ -474,6 +476,8 @@ namespace nx{
             //!
             template<typename T> void read(T &value) const
             {
+                using namespace pni::core;
+                
                 typedef typename type_type::index_vector_type index_vector_type;
                 if(size() != 1)
                     throw size_mismatch_error(EXCEPTION_RECORD,
@@ -504,6 +508,7 @@ namespace nx{
             template<typename T> 
             void read(size_t n,T *values) const
             {
+                using namespace pni::core;
                 typedef typename type_type::index_vector_type index_vector_type;
                 if(n!=size())
                     throw size_mismatch_error(EXCEPTION_RECORD,
@@ -569,14 +574,14 @@ namespace nx{
                      typename IMAP,
                      typename IPA
                     >
-            void read(mdarray<STORAGE,IMAP,IPA> &array) const
+            void read(pni::core::mdarray<STORAGE,IMAP,IPA> &array) const
             {
                 _read_array(array);
             }
 
             //-----------------------------------------------------------------
             template<typename ATYPE>
-            void read(array_view<ATYPE> &v) const
+            void read(pni::core::array_view<ATYPE> &v) const
             {
                 if(v.is_contiguous())
                     _read_array(v);
@@ -584,7 +589,7 @@ namespace nx{
                 {
                     typedef typename ATYPE::value_type value_type;
                     typedef dynamic_array<value_type> buffer_type;
-                    auto buffer = buffer_type::create(v.shape<shape_t>());
+                    auto buffer = buffer_type::create(v.shape<pni::core::shape_t>());
                     _read_array(buffer);
                     std::copy(buffer.begin(),buffer.end(),v.begin());
                 }
@@ -592,7 +597,7 @@ namespace nx{
             
             //-----------------------------------------------------------------
             template<typename ATYPE>
-            void read(array_view<ATYPE> &&v) const
+            void read(pni::core::array_view<ATYPE> &&v) const
             {
                 read(v);
             }
@@ -644,6 +649,7 @@ namespace nx{
             //! 
             template<typename T> void write(const T &value) const
             {
+                using namespace pni::core;
                 typedef typename type_type::index_vector_type index_vector_type;
                 static_assert(!std::is_pointer<T>::value,"no pointer");
                 if(_imp.size()!=1) 
@@ -676,6 +682,7 @@ namespace nx{
             //! 
             template<typename T> void write(size_t n,const T *value) const
             {
+                using namespace pni::core;
                 typedef typename type_type::index_vector_type index_vector_type;
 
                 if(n!=size())
@@ -736,7 +743,7 @@ namespace nx{
                      typename IMAP,
                      typename IPA
                     >
-            void write(const mdarray<STORAGE,IMAP,IPA> &a) const
+            void write(const pni::core::mdarray<STORAGE,IMAP,IPA> &a) const
             {
                 _write_array(a);
             }
@@ -765,7 +772,7 @@ namespace nx{
             //! \param v array view instance
             //!
             template<typename ATYPE>
-            void write(const array_view<ATYPE> &v) const
+            void write(const pni::core::array_view<ATYPE> &v) const
             {
                 if(v.is_contiguous())
                     _write_array(v);
@@ -773,7 +780,7 @@ namespace nx{
                 {
                     typedef typename ATYPE::value_type value_type;
                     typedef dynamic_array<value_type> array_type;
-                    auto buffer =  array_type::create(v.shape<shape_t>());
+                    auto buffer =  array_type::create(v.shape<pni::core::shape_t>());
                     std::copy(v.begin(),v.end(),buffer.begin());
                     write(buffer);
                 }
@@ -821,7 +828,7 @@ namespace nx{
             //!
             //! \param a reference to array erasure
             //!
-            void write(const array &a) const
+            void write(const pni::core::array &a) const
             {
                 _write_array(a);
             }
@@ -857,10 +864,10 @@ namespace nx{
             template<typename ...ITYPES>
             field_type operator()(ITYPES ...indices) const
             {
-                typedef std::vector<slice> container_type;
+                typedef std::vector<pni::core::slice> container_type;
                 field_type new_field(*this);
 
-                new_field._imp.apply_selection(container_type({slice(indices)...}));
+                new_field._imp.apply_selection(container_type({pni::core::slice(indices)...}));
 
                 return new_field;
             }
@@ -899,7 +906,7 @@ namespace nx{
             //! \param selection container with instances of slice
             //! \return instance of NXField with selection set
             //!
-            field_type operator()(const std::vector<slice> &selection)  const
+            field_type operator()(const std::vector<pni::core::slice> &selection)  const
             {
                 field_type new_field(*this);
                 new_field._imp.apply_selection(selection);
@@ -917,7 +924,7 @@ namespace nx{
             //!
             //! \return name of the field
             //!
-            string name() const 
+            pni::core::string name() const 
             { 
                 return _imp.name(); 
             }
@@ -936,7 +943,7 @@ namespace nx{
             //!
             //! \return name of the file
             //!
-            string filename() const 
+            pni::core::string filename() const 
             {
                 return _imp.filename();
             }

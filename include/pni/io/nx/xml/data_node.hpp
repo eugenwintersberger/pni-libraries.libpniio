@@ -22,9 +22,8 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include "../../exceptions.hpp"
 #include "node.hpp"
-#include "default.hpp"
+
 
 namespace pni{
 namespace io{
@@ -51,7 +50,7 @@ namespace xml{
             //! \param n node from which to read
             //! \return data as string
             //! 
-            static string read(const node &n);
+            static pni::core::string read(const node &n);
    
             //----------------------------------------------------------------
             //!
@@ -63,7 +62,7 @@ namespace xml{
             //! \param n the node to which to write
             //! \param data the data which to write to the node
             //! 
-            static void write(node &n,const string &data); 
+            static void write(node &n,const pni::core::string &data); 
 
     };
 

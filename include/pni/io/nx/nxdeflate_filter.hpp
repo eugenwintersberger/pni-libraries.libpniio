@@ -26,11 +26,7 @@
 
 namespace pni{
 namespace io {
-namespace nx{
-    //need this here to avoid name collisions with tango headers.
-    using pni::core::array;
-    using pni::core::string;
-    using pni::core::exception;
+namespace nx{   
 
     //!
     //! \ingroup nexus_lowlevel
@@ -57,7 +53,7 @@ namespace nx{
             //!
             //! \brief standard constructor
             //!
-            explicit nxdeflate_filter(uint32 r,bool s) noexcept:
+            explicit nxdeflate_filter(pni::core::uint32 r,bool s) noexcept:
                 nxfilter<FIMP>(imp_type(r,s))
             { }
 
@@ -78,7 +74,7 @@ namespace nx{
             //!
             //! \param r compression ratio
             //! 
-            void compression_rate(uint32 r)
+            void compression_rate(pni::core::uint32 r)
             {
                 this->imp().compression_rate(r);
             }
@@ -87,7 +83,7 @@ namespace nx{
             //!
             //! \brief get compression rate
             //!
-            uint32 compression_rate() const noexcept
+            pni::core::uint32 compression_rate() const noexcept
             {
                 return this->imp().compression_rate();
             }

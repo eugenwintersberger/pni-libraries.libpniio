@@ -21,8 +21,8 @@
 //
 #pragma once
 
+#include "../nximp_code.hpp"
 #include "../nxobject.hpp"
-#include "../nxobject_traits.hpp"
 #include "object_predicates.hpp"
 #include "iterators.hpp"
 #include "is_group.hpp"

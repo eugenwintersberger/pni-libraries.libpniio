@@ -28,8 +28,7 @@
 
 namespace pni{
 namespace io{
-namespace nx{
-    using pni::io::object_error;
+namespace nx{    
 
     //!
     //! \ingroup nexus_lowlevel

@@ -22,6 +22,8 @@
 #pragma once
 
 #include <pni/core/types.hpp>
+#include <pni/core/arrays/slice.hpp>
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 
 namespace pni{
@@ -139,7 +141,7 @@ namespace nx{
     {
         public: 
             //! selection type for partial IO
-            typedef std::vector<slice> selection_t;
+            typedef std::vector<pni::core::slice> selection_t;
         private:
             //! reference to the data holding object
             const ATYPE &_data;
@@ -181,6 +183,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "One cannot write data to a group object!");
             }
@@ -283,7 +286,7 @@ namespace nx{
                ITYPES ...indices)
     {
         typedef write_visitor<ATYPE,GTYPE,FTYPE,AATYPE> visitor_type;
-        std::vector<slice> sel{slice(indices)...};
+        std::vector<pni::core::slice> sel{pni::core::slice(indices)...};
         return boost::apply_visitor(visitor_type(a,sel),o);
     }
 
@@ -298,7 +301,7 @@ namespace nx{
     void write(nxobject<GTYPE,FTYPE,AATYPE> &o,const ATYPE &a,ITYPES ...indices)
     {
         typedef write_visitor<ATYPE,GTYPE,FTYPE,AATYPE> visitor_type;
-        std::vector<slice> sel{slice(indices)...};
+        std::vector<pni::core::slice> sel{pni::core::slice(indices)...};
 
         return boost::apply_visitor(visitor_type(a,sel),o);
     }

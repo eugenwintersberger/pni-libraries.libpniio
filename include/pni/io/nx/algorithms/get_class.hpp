@@ -24,7 +24,8 @@
 
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
-#include "../nxobject_traits.hpp"
+#include "../nximp_code.hpp"
+#include "../nxobject.hpp"
 
 namespace pni{
 namespace io{

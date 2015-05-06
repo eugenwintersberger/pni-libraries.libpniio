@@ -57,7 +57,7 @@ namespace nx{
     //! \param p string representation of a path
     //! \return path object generated from the input string
     //!
-    nxpath get_path(const string &p);
+    nxpath get_path(const pni::core::string &p);
 
     //------------------------------------------------------------------------
     //!
@@ -73,7 +73,7 @@ namespace nx{
     //!
     //! \return path referening to the attribute
     //!
-    nxpath get_attribute_path(const string &p);
+    nxpath get_attribute_path(const pni::core::string &p);
 
     //------------------------------------------------------------------------
     //!

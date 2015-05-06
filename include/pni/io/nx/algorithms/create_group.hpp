@@ -22,15 +22,13 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include "../nxobject_traits.hpp"
+#include "../nxobject.hpp"
 #include "get_object.hpp"
 #include "utils.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
-    
-    using namespace pni::core;
 
     //!
     //! \ingroup algorithm_internal_code
@@ -57,9 +55,9 @@ namespace nx{
     {
         private:
             //! the name of the group
-            string _name; 
+            pni::core::string _name; 
             //! the Nexus class of the group
-            string _class; 
+            pni::core::string _class; 
         public:
             //! result type
             typedef nxobject<GTYPE,FTYPE,ATYPE> result_type;
@@ -78,7 +76,8 @@ namespace nx{
             //! \param n name of the group
             //! \param c class of the group
             //!
-            create_group_visitor(const string &n,const string &c):
+            create_group_visitor(const pni::core::string &n,
+                                 const pni::core::string &c):
                 _name(n),
                 _class(c)
             {}
@@ -100,6 +99,8 @@ namespace nx{
             //!
             result_type operator()(const group_type &g) const
             {
+                using namespace pni::core;
+                
                 group_type group;
                 if(!_name.empty())
                 {
@@ -133,6 +134,8 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const field_type &f) const
             {
+                using namespace pni::core;
+                
                 throw type_error(EXCEPTION_RECORD,
                         "Cannot create a group below a field!");
                 return result_type();
@@ -155,6 +158,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const attribute_type &a) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Cannot create a group below an attribute!");
                 return result_type();

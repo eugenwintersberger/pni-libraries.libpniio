@@ -23,12 +23,11 @@
 
 #pragma once
 
-#include<cppunit/TestFixture.h>
-#include<cppunit/extensions/HelperMacros.h>
+#include <cppunit/TestFixture.h>
+#include <cppunit/extensions/HelperMacros.h>
 
 #include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
-
+#include <pni/io/exceptions.hpp>
 #include <pni/io/nx/nx.hpp>
 
 using namespace pni::core;
@@ -124,7 +123,8 @@ void nxattribute_creation_test<T>::test_scalar_no_overwrite()
     CPPUNIT_ASSERT(attr.type_id() == type_id_map<T>::type_id);
 
     //try to create a new attribute of same name should throw
-    CPPUNIT_ASSERT_THROW(parent.attributes.template create<T>("test"),object_error);
+    CPPUNIT_ASSERT_THROW(parent.attributes.template create<T>("test"),
+                         pni::io::object_error);
 
 }
 
@@ -167,7 +167,8 @@ void nxattribute_creation_test<T>::test_multidim_no_overwrite()
     CPPUNIT_ASSERT(check_shape(attr.template shape<shape_t>(),shape));
 
     //try to create a new attribute of same name should throw
-    CPPUNIT_ASSERT_THROW(parent.attributes.template create<T>("test",shape),object_error);
+    CPPUNIT_ASSERT_THROW(parent.attributes.template create<T>("test",shape),
+                         pni::io::object_error);
 }
 
 //----------------------------------------------------------------------------

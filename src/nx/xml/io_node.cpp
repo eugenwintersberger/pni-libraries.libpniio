@@ -51,16 +51,16 @@ namespace xml{
     }
 
     //------------------------------------------------------------------------
-    string io_node::name(const node &io_node)
+    pni::core::string io_node::name(const node &io_node)
     {
         node name_attribute = get_attribute(io_node,"name");
         return data_node::read(name_attribute);
     }
     
     //------------------------------------------------------------------------
-    shape_t io_node::shape(const node &io_node)
+    pni::core::shape_t io_node::shape(const node &io_node)
     {
-        shape_t shape{1};
+        pni::core::shape_t shape{1};
         auto dims = io_node.get_child_optional("dimensions");
         if(dims)
             shape = dimensions::object_from_xml(*dims);
@@ -69,15 +69,15 @@ namespace xml{
     }
 
     //------------------------------------------------------------------------
-    type_id_t io_node::type_id(const node &io_node)
+    pni::core::type_id_t io_node::type_id(const node &io_node)
     {
         node type_attribute = get_attribute(io_node,"type");
-        string type_code = data_node::read(type_attribute);
+        pni::core::string type_code = data_node::read(type_attribute);
 
         //need to handle the special case of a boolean type
         if(type_code == "bool_t") type_code = "bool";
 
-        return type_id_from_str(type_code);
+        return pni::core::type_id_from_str(type_code);
     }
     
 //end of namespace

@@ -22,13 +22,14 @@
 #pragma once
 
 #include <pni/core/types.hpp>
+#include <pni/core/arrays/slice.hpp>
+#include <vector>
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
-
-    using namespace pni::core;
 
     //!
     //! \ingroup algorithm_code
@@ -141,7 +142,7 @@ namespace nx{
     {
         public: 
             //! selection type for partial IO
-            typedef std::vector<slice> selection_t;
+            typedef std::vector<pni::core::slice> selection_t;
         private:
             //! reference to the data holding object
             ATYPE &_data;
@@ -182,6 +183,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "One cannot read data to a group object!");
             }
@@ -285,7 +287,7 @@ namespace nx{
     void read(nxobject<GTYPE,FTYPE,ATTYPE> &o,ATYPE &a,ITYPES ...indices)
     {
         typedef read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE> visitor_t;
-        std::vector<slice> sel{slice(indices)...};
+        std::vector<pni::core::slice> sel{pni::core::slice(indices)...};
         visitor_t visitor(a,sel);
         return boost::apply_visitor(visitor,o);
     }
@@ -300,7 +302,7 @@ namespace nx{
     void read(nxobject<GTYPE,FTYPE,ATTYPE> &&o,ATYPE &a,ITYPES ...indices)
     {
         typedef read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE> visitor_t;
-        std::vector<slice> sel{slice(indices)...};
+        std::vector<pni::core::slice> sel{pni::core::slice(indices)...};
         visitor_t visitor(a,sel);
         return boost::apply_visitor(visitor,o);
     }

@@ -26,6 +26,7 @@ namespace nx{
     
     void __check_target_path(const nxpath &target)
     {
+        using namespace pni::core;
         for(auto e: target)
             if(e.first == "..")
                 throw value_error(EXCEPTION_RECORD,

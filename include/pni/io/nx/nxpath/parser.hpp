@@ -50,10 +50,10 @@ namespace parsers{
     //! a group name or an attribute name. 
     //!
     template<typename ITERT>
-    struct id_parser : qi::grammar<ITERT,string()>
+    struct id_parser : qi::grammar<ITERT,pni::core::string()>
     {
         //! the major rule to parse an ID
-        qi::rule<ITERT,string()> id_rule;
+        qi::rule<ITERT,pni::core::string()> id_rule;
 
         //! 
         //! \brief default constructor
@@ -82,7 +82,7 @@ namespace parsers{
     template<typename ITERT> 
     struct element_parser : qi::grammar<
                                         ITERT,
-                                        locals<string,string>,
+                                        locals<pni::core::string,pni::core::string>,
                                         nxpath::element_type()
                                        >
     {
@@ -90,17 +90,17 @@ namespace parsers{
         typedef nxpath::element_type element_type;
 
         //! rule for a name
-        qi::rule<ITERT,string()> name_rule;
+        qi::rule<ITERT,pni::core::string()> name_rule;
         //! rule for a class
-        qi::rule<ITERT,string()> class_rule;
+        qi::rule<ITERT,pni::core::string()> class_rule;
         //! rule for dots
-        qi::rule<ITERT,string()> dot_rule;
+        qi::rule<ITERT,pni::core::string()> dot_rule;
     
         //! rule for an entire ID
         id_parser<ITERT> id_;
         
         //! rule for a group element
-        qi::rule< ITERT,locals<string,string>,nxpath::element_type()> element_rule;
+        qi::rule< ITERT,locals<pni::core::string,pni::core::string>,nxpath::element_type()> element_rule;
 
         //! default constructor
         element_parser() : element_parser::base_type(element_rule)
@@ -176,7 +176,7 @@ namespace parsers{
                                        locals
                                        <
                                            nxpath::elements_type,
-                                           string
+                                           pni::core::string
                                        >,
                                        nxpath()>
     {
@@ -185,7 +185,7 @@ namespace parsers{
                  locals
                  <
                      nxpath::elements_type,
-                     string
+                     pni::core::string
                  >,
                  nxpath()> nxpath_rule;
 
@@ -204,7 +204,7 @@ namespace parsers{
         //!
         //! \param fname the filename of the path
         //!
-        nxpath_parser(const string &fname="") :
+        nxpath_parser(const pni::core::string &fname="") :
             nxpath_parser::base_type(nxpath_rule),
             _filename(fname)
         {
@@ -246,7 +246,7 @@ namespace parsers{
 
         private:
             //! the filename part
-            string _filename;
+            pni::core::string _filename;
     };
 
     //------------------------------------------------------------------------
@@ -261,7 +261,7 @@ namespace parsers{
     //! \param input string from which to construct the path
     //! \return nxpath instance
     //!
-    nxpath parse_path(const string &input);
+    nxpath parse_path(const pni::core::string &input);
 
 //end of parser namespace
 }

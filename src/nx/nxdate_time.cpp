@@ -22,14 +22,20 @@
 //
 
 #include <pni/io/nx/nxdate_time.hpp>
+#include <boost/date_time/local_time_adjustor.hpp>
+#include <boost/date_time/c_local_time_adjustor.hpp>
+
 
 namespace pni {
 namespace io {
 namespace nx {
 
     //---------------------------------------------------------------------
-    string nxdate_time::__get_utc_delta()
+    pni::core::string nxdate_time::__get_utc_delta()
     {
+        using namespace boost::posix_time;
+        using namespace boost::gregorian;
+        
         typedef boost::date_time::c_local_adjustor<ptime> local_adj;
         //get utc time
         ptime utc_time    = microsec_clock::universal_time();
@@ -43,28 +49,34 @@ namespace nx {
         char buffer[1024];
         std::sprintf(buffer,"%+03li00",(long)delta.hours());
 
-        return string(buffer);
+        return pni::core::string(buffer);
     }
 
     //---------------------------------------------------------------------
-    string nxdate_time::__get_date_time_str(const ptime &t)
+    pni::core::string nxdate_time::__get_date_time_str(const boost::posix_time::ptime &t)
     {
-
+        using namespace pni::core;
         string dtime = to_iso_extended_string(t);
         string utc_delta = __get_utc_delta();
         return dtime+utc_delta;
     }
 
     //---------------------------------------------------------------------
-    string nxdate_time::get_date_time_str(){
+    pni::core::string nxdate_time::get_date_time_str()
+    {
+        using namespace boost::posix_time;
+        using namespace boost::gregorian;
+        
         ptime t = microsec_clock::local_time();
         return __get_date_time_str(t);
 
     }
 
     //---------------------------------------------------------------------
-    string nxdate_time::get_date_time_str(const time_t &t)
+    pni::core::string nxdate_time::get_date_time_str(const time_t &t)
     {
+        using namespace boost::posix_time;
+        using namespace boost::gregorian;
         return __get_date_time_str(from_time_t(t));
     }
 

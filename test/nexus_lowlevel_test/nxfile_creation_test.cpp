@@ -21,9 +21,7 @@
 
 //implementation of the arrayshape test
 
-#include<cppunit/extensions/HelperMacros.h>
-
-#include <pni/io/nx/nx.hpp>
+#include <pni/io/exceptions.hpp>
 #include "nxfile_creation_test.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(nxfile_creation_test);
@@ -71,7 +69,8 @@ void nxfile_creation_test::test_with_overwrite()
 	
     CPPUNIT_ASSERT_NO_THROW(f = h5::nxfile::create_file(fname,true));
     //should throw because the file is already open - cannot create a new one
-    CPPUNIT_ASSERT_THROW(h5::nxfile::create_file(fname,true),object_error);
+    CPPUNIT_ASSERT_THROW(h5::nxfile::create_file(fname,true),
+                         pni::io::object_error);
 
 }
 

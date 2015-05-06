@@ -25,10 +25,12 @@
 
 #pragma once
 
-#include <pni/core/arrays.hpp>
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
-#include <pni/core/type_erasures.hpp>
+#include <pni/core/arrays/mdarray.hpp>
+#include <pni/core/arrays/array_view.hpp>
+#include <pni/core/arrays/slice.hpp>
+#include <pni/core/type_erasures/array.hpp>
 
 #include "nximp_map.hpp"
 #include "nxobject_traits.hpp"
@@ -40,13 +42,7 @@
 namespace pni{
 namespace io{
 namespace nx{
-
-    using namespace pni::core;
-    //need this here to avoid name collisions with tango headers.
-    using pni::core::array;
-    using pni::core::string;
-    using pni::core::exception;
-
+ 
     //! 
     //! \ingroup nexus_lowlevel
     //! \brief attribute object
@@ -90,6 +86,7 @@ namespace nx{
             template<typename ATYPE> 
             void _write_array(const ATYPE &a) const
             {
+                using namespace pni::core;
                 check_allocation_state(a,EXCEPTION_RECORD);
                 check_equal_size(a,*this,EXCEPTION_RECORD);
 
@@ -117,6 +114,7 @@ namespace nx{
             template<typename ATYPE> 
             void _read_array(ATYPE &a) const
             {
+                using namespace pni::core;
                 check_allocation_state(a,EXCEPTION_RECORD);
                 check_equal_size(a,*this,EXCEPTION_RECORD);
 
@@ -209,7 +207,7 @@ namespace nx{
                      typename IMAP,
                      typename IPA
                     >
-            void write(const mdarray<STORAGE,IMAP,IPA> &o) const
+            void write(const pni::core::mdarray<STORAGE,IMAP,IPA> &o) const
             {
                 _write_array(o);
             }
@@ -234,7 +232,7 @@ namespace nx{
             //! \param v refernence to an array_view instance
             //! 
             template<typename ATYPE>
-            void write(const array_view<ATYPE> &v) const
+            void write(const pni::core::array_view<ATYPE> &v) const
             {
                 if(v.is_contiguous())
                     _write_array(v);
@@ -270,6 +268,7 @@ namespace nx{
             template<typename T>
             void write(size_t n,const T *data) const
             {
+                using namespace pni::core;
                 static_assert(!std::is_pointer<T>::value,"no const pointer");
                 
                 if(n!=size())
@@ -320,6 +319,7 @@ namespace nx{
             template<typename T > 
             void write(const T &value) const
             {
+                using namespace pni::core;
                 static_assert(!std::is_pointer<T>::value,"no const pointer");
 
                 if(size()!=1)
@@ -347,7 +347,7 @@ namespace nx{
             //!
             void write(const char *value) const
             {
-                string s(value);
+                pni::core::string s(value);
                 write(s);
             }
 
@@ -397,14 +397,14 @@ namespace nx{
                      typename IMAP,
                      typename IPA
                     > 
-            void read(mdarray<STORAGE,IMAP,IPA> &o) const
+            void read(pni::core::mdarray<STORAGE,IMAP,IPA> &o) const
             {
                 _read_array(o);
             }
             
             //-----------------------------------------------------------------
             template<typename ATYPE>
-            void read(array_view<ATYPE> &v) const
+            void read(pni::core::array_view<ATYPE> &v) const
             {
                 if(v.is_contiguous())
                     _read_array(v);
@@ -420,7 +420,7 @@ namespace nx{
             
             //-----------------------------------------------------------------
             template<typename ATYPE>
-            void read(array_view<ATYPE> &&v) const
+            void read(pni::core::array_view<ATYPE> &&v) const
             {
                 read(v);
             }
@@ -462,6 +462,7 @@ namespace nx{
             template<typename T> 
             void read(T &value) const
             {
+                using namespace pni::core;
                 if(size()!=1)
                     throw size_mismatch_error(EXCEPTION_RECORD,
                             "Try to read a scalar from an array field!");
@@ -490,6 +491,7 @@ namespace nx{
             template<typename T>
             void read(size_t n,T *value) const
             {
+                using namespace pni::core;
                 if(n!=size())
                     throw size_mismatch_error(EXCEPTION_RECORD,
                             "Memory and attribute size do not match!");
@@ -531,6 +533,7 @@ namespace nx{
             template<typename CTYPE> 
             CTYPE shape() const
             {
+                using namespace pni::core;
                 if(!is_valid())
                     throw invalid_object_error(EXCEPTION_RECORD,
                             "Cannot get shape from invalid attribute!");
@@ -611,7 +614,7 @@ namespace nx{
             //!
             //! \return string with the attributes name
             //!
-            string name() const { return _imp.name(); }
+            pni::core::string name() const { return _imp.name(); }
 
             //---------------------------------------------------------------
             //!
@@ -627,7 +630,7 @@ namespace nx{
             //!
             //! \return name of the file
             //!
-            string filename() const 
+            pni::core::string filename() const 
             {
                 return _imp.filename();
             }
@@ -644,7 +647,7 @@ namespace nx{
                 attribute_type a(*this);
 
                 //generate a selection vector
-                typename type_type::selection_vector_type selection{slice(indices)...};
+                typename type_type::selection_vector_type selection{pni::core::slice(indices)...};
 
                 //apply the selection
                 a._imp.apply_selection(selection);
@@ -654,7 +657,7 @@ namespace nx{
             }
 
             //-----------------------------------------------------------------
-            attribute_type operator()(const std::vector<slice> &indices) const
+            attribute_type operator()(const std::vector<pni::core::slice> &indices) const
             {
                 //generate a copy of the attribute
                 attribute_type a(*this);
@@ -683,6 +686,7 @@ namespace nx{
             //!
             typename nxobject_trait<IMPID>::object_type parent() const
             {
+                using namespace pni::core;
                 typedef typename nxobject_trait<IMPID>::group_type group_type;
                 typedef typename nxobject_trait<IMPID>::field_type field_type;
                 typedef typename nximp_map<IMPID>::group_imp group_imp_type;

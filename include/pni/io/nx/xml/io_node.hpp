@@ -32,9 +32,7 @@
 namespace pni{
 namespace io{
 namespace nx{
-namespace xml{
-
-    using namespace pni::core;
+namespace xml{    
 
     //!
     //! \ingroup xml_classes
@@ -130,7 +128,7 @@ namespace xml{
         template<typename T>
         static T data_from_xml(const node &io_node)
         {
-            typedef string::const_iterator iterator_type;
+            typedef pni::core::string::const_iterator iterator_type;
             pni::io::parser<iterator_type,T> p;
 
             return p(data_node::read(io_node));

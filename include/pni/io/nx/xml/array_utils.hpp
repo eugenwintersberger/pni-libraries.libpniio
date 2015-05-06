@@ -49,11 +49,11 @@ namespace xml{
     template<typename ATYPE> ATYPE make_array(const node &data)
     {
         typedef typename ATYPE::storage_type storage_type;
-        shape_t      shape;
+        pni::core::shape_t      shape;
 
         //determine the shape of the array
         if(io_node::rank(data)==0)
-            shape = shape_t{1};
+            shape = pni::core::shape_t{1};
         else
             shape = io_node::shape(data);
        

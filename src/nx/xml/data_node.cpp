@@ -30,15 +30,15 @@ namespace io{
 namespace nx{
 namespace xml{
 
-    string data_node::read(const node &n) 
+    pni::core::string data_node::read(const node &n) 
     {
-        string data = n.data();
+        pni::core::string data = n.data();
         boost::algorithm::trim(data);
         return data;
     }
 
     //-------------------------------------------------------------------------
-    void data_node::write(node &n,const string &data) 
+    void data_node::write(node &n,const pni::core::string &data) 
     {
         n.put_value(data);
     }

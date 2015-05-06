@@ -22,7 +22,6 @@
 //
 #pragma once
 
-#include <vector>
 #include <utility>
 #include <pni/core/types.hpp>
 #include <list>
@@ -30,8 +29,7 @@
 namespace pni{
 namespace io{
 namespace nx{
-
-    using namespace pni::core;
+        
     //!
     //! \ingroup nxpath_code
     //! \brief Nexus path class
@@ -65,7 +63,7 @@ namespace nx{
     {
         public: 
             //! object element (groupname:class)
-            typedef std::pair<string,string> element_type;
+            typedef std::pair<pni::core::string,pni::core::string> element_type;
             //! a list of subsequent objects
             typedef std::list<element_type> elements_type;
             //! iterator over elements
@@ -75,9 +73,9 @@ namespace nx{
 
         private:
             //! name of the file
-            string _file_name;
+            pni::core::string _file_name;
             //! name of an attribute
-            string _attribute_name;
+            pni::core::string _attribute_name;
             //! list of groups
             elements_type _elements;
 
@@ -95,8 +93,9 @@ namespace nx{
             //! \param groups a list of elements for the object path
             //! \param attr the optional name of an attribute
             //!
-            explicit nxpath(const string &file,const elements_type &groups,
-                            const string &attr);
+            explicit nxpath(const pni::core::string &file,
+                            const elements_type &groups,
+                            const pni::core::string &attr);
            
             //-----------------------------------------------------------------
             //!
@@ -110,7 +109,7 @@ namespace nx{
             //!
             //! \return path instance
             //!
-            static nxpath from_string(const string &input);
+            static nxpath from_string(const pni::core::string &input);
 
             //-----------------------------------------------------------------
             //!
@@ -121,7 +120,7 @@ namespace nx{
             //! \param p reference to path instance
             //! \return string representation of the path
             //!
-            static string to_string(const nxpath &p);
+            static pni::core::string to_string(const nxpath &p);
            
             //===============public member methods=============================
             //!
@@ -145,25 +144,25 @@ namespace nx{
             //!
             //! \brief return the filename
             //!
-            string filename() const noexcept;
+            pni::core::string filename() const noexcept;
 
             //----------------------------------------------------------------
             //!
             //! \brief set the filename
             //!
-            void filename(const string &f);
+            void filename(const pni::core::string &f);
 
             //-----------------------------------------------------------------
             //!
             //! \brief return the attribute name
             //!
-            string attribute() const noexcept;
+            pni::core::string attribute() const noexcept;
 
             //----------------------------------------------------------------
             //!
             //! \brief set the attribute name
             //!
-            void attribute(const string &a);
+            void attribute(const pni::core::string &a);
 
             //-----------------------------------------------------------------
             //!

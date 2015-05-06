@@ -22,6 +22,7 @@
 //
 
 #include <sstream>
+#include <pni/core/error.hpp>
 #include <pni/io/nx/nxpath/nxpath.hpp>
 #include <pni/io/nx/nxpath/parser.hpp>
 #include <pni/io/nx/nxpath/utils.hpp>
@@ -39,21 +40,22 @@ namespace nx{
     {}
 
     //-------------------------------------------------------------------------
-    nxpath::nxpath(const string &file,const nxpath::elements_type &objects,
-                   const string &attr):
+    nxpath::nxpath(const pni::core::string &file,
+                   const nxpath::elements_type &objects,
+                   const pni::core::string &attr):
         _file_name(file),
         _attribute_name(attr),
         _elements(objects)
     {}
 
     //-------------------------------------------------------------------------
-    nxpath nxpath::from_string(const string &input)
+    nxpath nxpath::from_string(const pni::core::string &input)
     {
         return parsers::parse_path(input);
     }
 
     //-------------------------------------------------------------------------
-    string nxpath::to_string(const nxpath &p)
+    pni::core::string nxpath::to_string(const nxpath &p)
     {
         std::stringstream str_stream;
         str_stream<<p;
@@ -74,25 +76,25 @@ namespace nx{
     }
     
     //-------------------------------------------------------------------------
-    string nxpath::filename() const noexcept 
+    pni::core::string nxpath::filename() const noexcept 
     { 
         return _file_name; 
     }
     
     //-------------------------------------------------------------------------
-    void nxpath::filename(const string &f) 
+    void nxpath::filename(const pni::core::string &f) 
     {
         _file_name = f; 
     }
     
     //-------------------------------------------------------------------------
-    string nxpath::attribute() const noexcept 
+    pni::core::string nxpath::attribute() const noexcept 
     { 
         return _attribute_name; 
     }
 
     //-------------------------------------------------------------------------
-    void nxpath::attribute(const string &a) 
+    void nxpath::attribute(const pni::core::string &a) 
     { 
         _attribute_name = a; 
     }
@@ -100,6 +102,7 @@ namespace nx{
     //-------------------------------------------------------------------------
     void nxpath::push_back(const element_type &o) 
     {
+        using namespace pni::core;
         if(is_root_element(o)&&size())
             throw value_error(EXCEPTION_RECORD,
                     "Cannot push back a root group to a non-empty path!");

@@ -40,13 +40,13 @@ namespace nx{
     }
 
     //------------------------------------------------------------------------
-    nxpath get_path(const string &p)
+    nxpath get_path(const pni::core::string &p)
     {
         return nxpath::from_string(p);
     }
 
     //------------------------------------------------------------------------
-    nxpath get_attribute_path(const string &p)
+    nxpath get_attribute_path(const pni::core::string &p)
     {
         return get_path(".@"+p);
     }

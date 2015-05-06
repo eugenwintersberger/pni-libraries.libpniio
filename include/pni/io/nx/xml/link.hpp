@@ -52,7 +52,7 @@ namespace xml{
             //! 
             //! \param link_node the XML node describing the link
             //! \return string with the name of the link
-            static string get_link_name(const node &link_node);
+            static pni::core::string get_link_name(const node &link_node);
             
             //-----------------------------------------------------------------
             //!
@@ -65,7 +65,7 @@ namespace xml{
             //!
             //! \param link_node XML node describing the link
             //! \return string with the path to the link target
-            static string get_link_target(const node &link_node);
+            static pni::core::string get_link_target(const node &link_node);
             
         public:
         
@@ -111,9 +111,9 @@ namespace xml{
                                const node &link_node)
     {
         //will throw key error if name attribute does not exist
-        string link_name = get_link_name(link_node);
+        pni::core::string link_name = get_link_name(link_node);
         //will thorw key_error if target attribute does not exist
-        string link_target = get_link_target(link_node);
+        pni::core::string link_target = get_link_target(link_node);
         
         //will throw type_error if the parent is not a group
         GTYPE parent_group = as_group(parent);

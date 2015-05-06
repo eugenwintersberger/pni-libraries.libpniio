@@ -22,8 +22,6 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-
-#include "../nxobject_traits.hpp"
 #include "get_parent.hpp"
 
 namespace pni{

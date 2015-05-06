@@ -21,10 +21,10 @@
 
 //implementation of the arrayshape test
 
-#include<cppunit/extensions/HelperMacros.h>
-
-#include <pni/io/nx/nx.hpp>
 #include "nxfile_open_single_file_test.hpp"
+#include <pni/io/exceptions.hpp>
+
+using pni::io::object_error;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(nxfile_open_single_file_test);
 

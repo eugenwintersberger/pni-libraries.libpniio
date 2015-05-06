@@ -26,17 +26,12 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-
 #include "nximp_map.hpp"
 
 
 namespace pni{
 namespace io{
-namespace nx{
-    using namespace pni::core;
-    //need this here to avoid name collisions with tango headers.
-    using pni::core::string;
-    using pni::core::exception;
+namespace nx{   
 
     //! 
     //! \ingroup nexus_lowlevel

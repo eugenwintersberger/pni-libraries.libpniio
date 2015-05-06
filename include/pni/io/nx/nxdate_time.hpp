@@ -22,22 +22,15 @@
 
 #pragma once
 
-#include<ctime>
-#include<boost/date_time/posix_time/posix_time.hpp>
-#include<boost/date_time/local_time_adjustor.hpp>
-#include<boost/date_time/c_local_time_adjustor.hpp>
+#include <ctime>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <pni/core/types.hpp>
 
 namespace pni {
 namespace io {
-namespace nx {
-    using namespace pni::core;
-    using namespace boost::posix_time;
-    using namespace boost::gregorian;
-
-    //need this here to avoid name collisions with tango headers.
-    using pni::core::string;
-
+namespace nx {    
+  
+    
     //! 
     //! \ingroup nexus_lowlevel
     //! \brief date time factory
@@ -53,9 +46,9 @@ namespace nx {
     {
         private:
             //! get date time from ptime 
-            static string __get_date_time_str(const ptime &t);
+            static pni::core::string __get_date_time_str(const boost::posix_time::ptime &t);
             //! get delta to UTC as a string
-            static string __get_utc_delta();
+            static pni::core::string __get_utc_delta();
         public:
             //-----------------------------------------------------------------
             //! 
@@ -66,7 +59,7 @@ namespace nx {
             //!
             //! \return Nexus date-time string
             //!
-            static string get_date_time_str();
+            static pni::core::string get_date_time_str();
 
             //-----------------------------------------------------------------
             //! 
@@ -78,7 +71,7 @@ namespace nx {
             //! \param t time as time_t
             //! \return Nexus date-time string
             //!
-            static string get_date_time_str(const time_t &t);
+            static pni::core::string get_date_time_str(const time_t &t);
     };
 
 //end of namepsace

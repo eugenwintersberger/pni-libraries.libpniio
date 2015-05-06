@@ -33,8 +33,9 @@ namespace parsers{
 
     namespace algo = boost::algorithm; 
 
-    nxpath parse_path(const string &input)
+    nxpath parse_path(const pni::core::string &input)
     {
+        using namespace pni::core;
         typedef string::iterator iterator_type;
         typedef nxpath_parser<iterator_type> parser_type;
 

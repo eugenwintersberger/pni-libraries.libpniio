@@ -23,16 +23,16 @@
 
 #pragma once
 
-#include<cppunit/TestFixture.h>
-#include<cppunit/extensions/HelperMacros.h>
-
+#include <cppunit/TestFixture.h>
+#include <cppunit/extensions/HelperMacros.h>
 #include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
-
 #include <pni/io/nx/nx.hpp>
+#include <pni/io/exceptions.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx;
+
+using pni::io::object_error;
 
 template<typename T>
 class nxfield_creation_test: public CppUnit::TestFixture 

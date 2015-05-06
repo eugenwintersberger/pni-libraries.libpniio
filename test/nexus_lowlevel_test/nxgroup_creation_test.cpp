@@ -24,16 +24,15 @@
 //
 
 #include <boost/current_function.hpp>
-#include "nxgroup_creation_test.hpp"
-
-#include<cppunit/extensions/HelperMacros.h>
-
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/nxobject_type.hpp>
 #include <pni/io/nx/algorithms.hpp>
 #include <pni/io/exceptions.hpp>
 
+#include "nxgroup_creation_test.hpp"
+
 using pni::io::invalid_object_error;
+using pni::io::object_error;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(nxgroup_creation_test);
 

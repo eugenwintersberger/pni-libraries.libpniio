@@ -29,8 +29,6 @@
 namespace pni{
 namespace io{
 namespace nx{
-    
-    using namespace pni::core;
 
     //!
     //! \ingroup algorithm_code
@@ -54,7 +52,7 @@ namespace nx{
              template<nximp_code> class OTYPE,
              nximp_code IMPID
             >
-    type_id_t get_type(const OTYPE<IMPID> &o)
+    pni::core::type_id_t get_type(const OTYPE<IMPID> &o)
     {
         typedef OTYPE<IMPID> object_type;
         typedef typename nxobject_trait<IMPID>::field_type field_type;
@@ -86,11 +84,11 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    class get_type_visitor : public boost::static_visitor<type_id_t>
+    class get_type_visitor : public boost::static_visitor<pni::core::type_id_t>
     {
         public:
             //! result type
-            typedef type_id_t result_type;
+            typedef pni::core::type_id_t result_type;
             //! Nexus group type
             typedef GTYPE group_type;
             //! Nexus field type
@@ -111,6 +109,7 @@ namespace nx{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             result_type operator()(const group_type &g) const
             {
+                using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "A group does not have a type!");
                 return type_id_t::NONE;
@@ -184,7 +183,7 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    type_id_t get_type(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    pni::core::type_id_t get_type(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
         typedef get_type_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
         return boost::apply_visitor(visitor_type(),o);

@@ -30,15 +30,19 @@ namespace pni{
 namespace io{
 namespace nx{
 
-    void throw_if_empty(const nxpath::element_type &e, const exception_record &r)
+    void throw_if_empty(const nxpath::element_type &e, 
+                        const pni::core::exception_record &r)
     {
+        using namespace pni::core;
         if(e.first.empty()&&e.second.empty())
             throw value_error(r,"Both name and type are empty!");
     }
 
     //--------------------------------------------------------------------------
-    nxpath::element_type object_element(const string &name,const string &type)
+    nxpath::element_type object_element(const pni::core::string &name,
+                                        const pni::core::string &type)
     {
+        using namespace pni::core;
         nxpath::element_type e = nxpath::element_type{name,type};
         throw_if_empty(e,EXCEPTION_RECORD);
 
@@ -48,7 +52,7 @@ namespace nx{
     //--------------------------------------------------------------------------
     void split_path(const nxpath &p,size_t s,nxpath &p1,nxpath &p2)
     {
-
+        using namespace pni::core;
         if(s>=p.size())
         {
             std::stringstream ss;
@@ -92,6 +96,7 @@ namespace nx{
     //-------------------------------------------------------------------------
     bool is_root_element(const nxpath::element_type &e)
     {
+        using namespace pni::core;
         throw_if_empty(e,EXCEPTION_RECORD);
 
         return (has_name(e) && (e.first=="/") && 
@@ -119,6 +124,7 @@ namespace nx{
     //--------------------------------------------------------------------------
     bool is_complete(const nxpath::element_type &e)
     {
+        using namespace pni::core;
         throw_if_empty(e,EXCEPTION_RECORD);
 
         return has_name(e)&&has_class(e);
@@ -135,6 +141,7 @@ namespace nx{
     //--------------------------------------------------------------------------
     nxpath join(const nxpath &a,const nxpath &b)
     {
+        using namespace pni::core;
         if(is_empty(a) && is_empty(b)) return nxpath();
         
         if(is_empty(a)) return b;
@@ -165,7 +172,7 @@ namespace nx{
     //--------------------------------------------------------------------------
     std::istream &operator>>(std::istream &i,nxpath &p)
     {   
-        string buffer;
+        pni::core::string buffer;
         i>>buffer;
         p = nxpath::from_string(buffer);
         return i;

@@ -37,11 +37,6 @@
 namespace pni{
 namespace io{
 namespace nx{
-    using namespace pni::core;
-    //need this here to avoid name collisions with tango headers.
-    using pni::core::array;
-    using pni::core::string;
-    using pni::core::exception;
 
     //! 
     //! \ingroup nexus_lowlevel
@@ -177,7 +172,8 @@ namespace nx{
                      typename T,
                      typename CTYPE
                     >
-            field_type _create_field(const string &n,const CTYPE &shape,
+            field_type _create_field(const pni::core::string &n,
+                                     const CTYPE &shape,
                                      const CTYPE &chunk) const
             {
                 return field_type(field_imp_type(_imp,n,
@@ -219,7 +215,7 @@ namespace nx{
                       typename FIMP
                     > 
             field_type
-            _create_field(const string &n,const CTYPE &shape,
+            _create_field(const pni::core::string &n,const CTYPE &shape,
                          const CTYPE &chunk,
                          const nxfilter<FIMP> &filter) const
             {
@@ -346,8 +342,8 @@ namespace nx{
             //! \param type nexus class type
             //! \return a new instance of nxgroup
             //!
-            group_type create_group(const string &n,
-                                    const string &type=string()) const
+            group_type create_group(const pni::core::string &n,
+                                    const pni::core::string &type=string()) const
             {
                 //we need to do here two things
                 //we have to check if the particular group type
@@ -358,7 +354,7 @@ namespace nx{
                 //if the type string is not empty we write the 
                 //appropriate attribute.
                 if(!type.empty())
-                    g.attributes.template create<string>("NX_class").write(type);
+                    g.attributes.template create<pni::core::string>("NX_class").write(type);
 
                 return g;
             }
@@ -395,9 +391,11 @@ namespace nx{
                      typename T,
                      typename CTYPE = shape_t
                     >
-            field_type create_field(const string &n,
+            field_type create_field(const pni::core::string &n,
                                     const CTYPE &shape={1}) const
             {
+                using namespace pni::core;
+                
                 if(!shape.size())
                     throw size_mismatch_error(EXCEPTION_RECORD,
                             "Shape container must not be empty!");
@@ -442,9 +440,9 @@ namespace nx{
             //!
             template<
                      typename T, 
-                     typename CTYPE=shape_t
+                     typename CTYPE=pni::core::shape_t
                     > 
-            field_type create_field(const string &n,
+            field_type create_field(const pni::core::string &n,
                                     const CTYPE &shape,
                                     const CTYPE &chunk) const
             {
@@ -488,9 +486,12 @@ namespace nx{
                      typename CTYPES,
                      typename FIMP
                     > 
-            field_type create_field(const string &n,const CTYPES &shape,
+            field_type create_field(const pni::core::string &n,
+                                    const CTYPES &shape,
                                     const nxfilter<FIMP> &filter) const
             {
+                using namespace pni::core;
+                
                 if(!shape.size())
                     throw size_mismatch_error(EXCEPTION_RECORD,
                             "Shape must not be empty!");
@@ -540,7 +541,8 @@ namespace nx{
                      typename CTYPEC,
                      typename FIMP
                     > 
-            field_type create_field(const string &n,const CTYPES &s,
+            field_type create_field(const pni::core::string &n,
+                                    const CTYPES &s,
                                     const CTYPEC &cs,
                                     const nxfilter<FIMP> &filter) const
             {
@@ -565,8 +567,10 @@ namespace nx{
             //! \return object
             //!
             typename nxobject_trait<IMPID>::object_type 
-            at(const string &n) const
+            at(const pni::core::string &n) const
             {
+                using namespace pni::core;
+                
                 if(find(n.begin(),n.end(),'/')!=n.end())
                     throw value_error(EXCEPTION_RECORD,
                             "Invalid character in object name!");
@@ -599,7 +603,7 @@ namespace nx{
             //! \return object
             //!
             typename nxobject_trait<IMPID>::object_type 
-            operator[](const string &n) const
+            operator[](const pni::core::string &n) const
             {
                 return at(n);
             }
@@ -654,6 +658,8 @@ namespace nx{
             typename nxobject_trait<IMPID>::object_type 
             at(size_t i) const
             {
+                using namespace pni::core;
+                
                 object_imp_type obj_imp(_imp.at(i));
 
                 if(obj_imp.nxobject_type() == nxobject_type::NXFIELD)
@@ -698,9 +704,9 @@ namespace nx{
             //! \param n name of the link (object) to look for
             //! \return true if the object exist, false otherwise
             //!
-            bool has_child(const string &n) const
+            bool has_child(const pni::core::string &n) const
             { 
-                if(n.find('/')==string::npos)
+                if(n.find('/')==pni::core::string::npos)
                     return _imp.has_child(n); 
                 else
                     return false;
@@ -723,7 +729,7 @@ namespace nx{
             //!
             //! \param n name of the link to delete
             //!
-            void remove(const string &n) const{ _imp.remove(n); }
+            void remove(const pni::core::string &n) const{ _imp.remove(n); }
 
             //-----------------------------------------------------------------
             //! 
@@ -766,7 +772,7 @@ namespace nx{
             //! 
             //! \return group name
             //!
-            string name() const { return _imp.name(); }
+            pni::core::string name() const { return _imp.name(); }
 
             //---------------------------------------------------------------
             //!
@@ -782,7 +788,7 @@ namespace nx{
             //!
             //! \return name of the file
             //!
-            string filename() const 
+            pni::core::string filename() const 
             {
                 return _imp.filename();
             }

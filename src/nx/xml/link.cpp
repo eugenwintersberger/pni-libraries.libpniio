@@ -28,8 +28,9 @@ namespace io{
 namespace nx{
 namespace xml{
     
-    string link::get_link_name(const node &link_node)
+    pni::core::string link::get_link_name(const node &link_node)
     {
+        using namespace pni::core;
         if(!has_attribute(link_node,"name"))
             throw key_error(EXCEPTION_RECORD,
             "'link' node does not provide a 'name' attribute!");
@@ -38,8 +39,9 @@ namespace xml{
     }
             
     //-------------------------------------------------------------------------         
-    string link::get_link_target(const node &link_node)
-    {        
+    pni::core::string link::get_link_target(const node &link_node)
+    {       
+        using namespace pni::core; 
         if(!has_attribute(link_node,"target"))
             throw key_error(EXCEPTION_RECORD,
             "'link' node does not provide a 'target' attribute!");

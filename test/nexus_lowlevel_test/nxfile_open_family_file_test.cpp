@@ -21,9 +21,7 @@
 
 //implementation of the arrayshape test
 
-#include<cppunit/extensions/HelperMacros.h>
-
-#include <pni/io/nx/nx.hpp>
+#include <pni/io/exceptions.hpp>
 #include "nxfile_open_family_file_test.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(nxfile_open_family_file_test);
@@ -79,7 +77,8 @@ void nxfile_open_family_file_test::test_ro()
     CPPUNIT_ASSERT_NO_THROW(f2=h5::nxfile::open_file(filename));
 
     //should throw as the files are opened in read only mode
-    CPPUNIT_ASSERT_THROW(f.root().create_group("test"),object_error);
+    CPPUNIT_ASSERT_THROW(f.root().create_group("test"),
+                         pni::io::object_error);
 }
 
 //----------------------------------------------------------------------------
@@ -87,6 +86,7 @@ void nxfile_open_family_file_test::test_error()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    CPPUNIT_ASSERT_THROW(h5::nxfile::open_file("test.nxs"),object_error);
+    CPPUNIT_ASSERT_THROW(h5::nxfile::open_file("test.nxs"),
+                         pni::io::object_error);
 }
 

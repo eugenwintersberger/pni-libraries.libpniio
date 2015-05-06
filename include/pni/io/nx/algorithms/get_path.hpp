@@ -21,6 +21,7 @@
 //
 #pragma once
 
+#include <pni/core/types.hpp>
 #include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 #include "get_class.hpp"
@@ -28,7 +29,7 @@
 namespace pni{
 namespace io{
 namespace nx{
-    using namespace pni::core;
+    
 
     //!
     //! \ingroup algorithm_code
@@ -55,7 +56,7 @@ namespace nx{
               template<nximp_code> class OTYPE,
               nximp_code IMPID 
             >
-    string get_path(const OTYPE<IMPID> &o)
+    pni::core::string get_path(const OTYPE<IMPID> &o)
     {
         typedef typename nxobject_trait<IMPID>::object_type object_type;
 
@@ -80,7 +81,7 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    class get_path_visitor : public boost::static_visitor<string>
+    class get_path_visitor : public boost::static_visitor<pni::core::string>
     {
         private:
             //!
@@ -93,9 +94,10 @@ namespace nx{
             //! \param type group class
             //! \return string representation of the element
             //!
-            string element_name(const string &name,const string &type) const
+            pni::core::string element_name(const pni::core::string &name,
+                                           const pni::core::string &type) const
             {
-                string ename(name);
+                pni::core::string ename(name);
 
                 if((!type.empty()) && (type!="NXroot")) 
                     ename += ":" + type;
@@ -104,7 +106,7 @@ namespace nx{
             }
         public:
             //! result type
-            typedef string result_type;
+            typedef pni::core::string result_type;
             //! Nexus group type
             typedef GTYPE group_type;
             //! Nexus field type
@@ -134,11 +136,11 @@ namespace nx{
                 typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
 
                 //determine the name and the type of the group
-                string group_name = g.name();
-                string group_type = get_class(object_type(g));
+                pni::core::string group_name = g.name();
+                pni::core::string group_type = get_class(object_type(g));
                
                 //assemble the element name
-                string ename = element_name(group_name,group_type);
+                pni::core::string ename = element_name(group_name,group_type);
 
                 //the recursion is done when we arrived at the root group
                 if(group_type == "NXroot")
@@ -222,16 +224,16 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             > 
-    string get_path(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    pni::core::string get_path(const nxobject<GTYPE,FTYPE,ATYPE> &o)
     {
-        string path =  boost::apply_visitor(get_path_visitor<GTYPE,FTYPE,ATYPE>(),o);
+        pni::core::string path =  boost::apply_visitor(get_path_visitor<GTYPE,FTYPE,ATYPE>(),o);
 
         //repair two leading // which can happen in some cases
         if((path.size()>=2) && 
            (path[0]=='/')   && 
            (path[1]=='/'))
         {
-            return string(path,1,path.size()-1);
+            return pni::core::string(path,1,path.size()-1);
         }
         else
             return path;

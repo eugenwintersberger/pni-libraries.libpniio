@@ -23,8 +23,6 @@
 #pragma once
 
 #include <boost/variant.hpp>
-#include <boost/mpl/begin_end.hpp>
-#include <boost/mpl/deref.hpp>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/int.hpp>
 #include "nximp_code.hpp"

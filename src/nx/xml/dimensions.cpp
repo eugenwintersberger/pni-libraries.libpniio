@@ -65,7 +65,7 @@ namespace xml{
      //-----------------------------------------------------------------------
      size_t dimensions::size(const node &dim)
      {
-         shape_t shape = object_from_xml(dim);
+         pni::core::shape_t shape = object_from_xml(dim);
 
          return std::accumulate(shape.begin(),shape.end(),size_t(1),
                                 std::multiplies<size_t>());
@@ -89,7 +89,7 @@ namespace xml{
 
         std::sort(buffer.begin(),buffer.end());
 
-        shape_t result;
+        pni::core::shape_t result;
         auto iter = buffer.begin();
         std::generate_n(std::back_inserter(result),buffer.size(),
                       [&iter](){ return (iter++)->second; });
@@ -97,7 +97,7 @@ namespace xml{
      }
     
      //-----------------------------------------------------------------------
-     node dimensions::object_to_xml(const shape_t &shape) 
+     node dimensions::object_to_xml(const pni::core::shape_t &shape) 
      {
         node dim;
 

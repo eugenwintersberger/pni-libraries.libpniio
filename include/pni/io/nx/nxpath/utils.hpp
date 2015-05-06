@@ -29,8 +29,7 @@
 
 namespace pni{
 namespace io{
-namespace nx{
-    using namespace pni::core;
+namespace nx{    
     
     bool match(const nxpath &a,const nxpath &b);
     bool match(const nxpath::element_type &a,const nxpath::element_type &b);
@@ -49,7 +48,8 @@ namespace nx{
     //! \param name the name of the object
     //! \param type the type of the object
     //! \return instance of object element
-    nxpath::element_type object_element(const string &name,const string &type);
+    nxpath::element_type object_element(const pni::core::string &name,
+                                        const pni::core::string &type);
 
     //------------------------------------------------------------------------
     //!

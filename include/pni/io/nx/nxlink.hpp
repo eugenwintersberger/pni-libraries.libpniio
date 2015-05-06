@@ -83,7 +83,7 @@ namespace nx{
              nximp_code IMPID
             > 
     void link(const nxpath &target,const GTYPE<IMPID> &g,
-              const string &name)
+              const pni::core::string &name)
     {
 
         //determine the utility class perfroming linking
@@ -138,7 +138,8 @@ namespace nx{
     //! \param name the new name of the link
     //!
     template<typename GTYPE>
-    void link(const string &target,const GTYPE &g,const string &name)
+    void link(const pni::core::string &target,const GTYPE &g,
+              const pni::core::string &name)
     {
         nxpath path = nxpath::from_string(target);
         link(path,g,name);
@@ -162,9 +163,9 @@ namespace nx{
     //! \param name the new name of the link
     //!
     template<typename GTYPE>
-    void link(const char *target,const GTYPE &g,const string &name)
+    void link(const char *target,const GTYPE &g,const pni::core::string &name)
     {
-        link(string(target),g,name);
+        link(pni::core::string(target),g,name);
     }
 
     //-------------------------------------------------------------------------
@@ -199,7 +200,7 @@ namespace nx{
              typename STYPE,
              typename GTYPE
             >
-    void link(const STYPE &target,const GTYPE &g,const string &name)
+    void link(const STYPE &target,const GTYPE &g,const pni::core::string &name)
     {
         link(get_path(target),g,name);
     }
@@ -225,7 +226,8 @@ namespace nx{
              template<nximp_code> class GTYPE,
              nximp_code IMPID
             >
-    nxlink_type link_type(const GTYPE<IMPID> &parent,const string &name)
+    nxlink_type link_type(const GTYPE<IMPID> &parent,
+                          const pni::core::string &name)
     {
         typedef typename nxobject_trait<IMPID>::link_type link_type;
 
@@ -252,7 +254,7 @@ namespace nx{
     //! \return true if link is external, false otherwise
     //!
     template<typename GTYPE>
-    bool is_external_link(const GTYPE &parent,const string &name)
+    bool is_external_link(const GTYPE &parent,const pni::core::string &name)
     {
         return link_type(parent,name)==nxlink_type::EXTERNAL;
     }
@@ -277,7 +279,7 @@ namespace nx{
     //! \return true if link is soft, false otherwise
     //!
     template<typename GTYPE>
-    bool is_soft_link(const GTYPE &parent,const string &name)
+    bool is_soft_link(const GTYPE &parent,const pni::core::string &name)
     {
         return link_type(parent,name) == nxlink_type::SOFT;
     }
@@ -302,7 +304,7 @@ namespace nx{
     //! \return true if link is hard, false otherwise
     //!
     template<typename GTYPE>
-    bool is_hard_link(const GTYPE &parent,const string &name)
+    bool is_hard_link(const GTYPE &parent,const pni::core::string &name)
     {
         return link_type(parent,name) == nxlink_type::HARD;
     }

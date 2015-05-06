@@ -23,12 +23,9 @@
 
 #pragma once
 
-#include<cppunit/TestFixture.h>
-#include<cppunit/extensions/HelperMacros.h>
-
+#include <cppunit/TestFixture.h>
+#include <cppunit/extensions/HelperMacros.h>
 #include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
-
 #include <pni/io/nx/nx.hpp>
 
 using namespace pni::core;

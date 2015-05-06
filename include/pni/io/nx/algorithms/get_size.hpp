@@ -22,14 +22,13 @@
 #pragma once
 
 #include <pni/core/types.hpp>
+#include "../nximp_code.hpp"
 #include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
-    
-    using namespace pni::core;
 
     //!
     //! \ingroup algorithm_code

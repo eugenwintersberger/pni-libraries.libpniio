@@ -27,9 +27,7 @@
 namespace pni{
 namespace io{
 namespace nx{
-namespace xml{
-
-    using namespace pni::core;
+namespace xml{    
 
     //!
     //! \ingroup xml_classes
@@ -52,7 +50,7 @@ namespace xml{
     //! \param s string from which to read the data
     //! \return node instance
     //!
-    node create_from_string(const string &s);
+    node create_from_string(const pni::core::string &s);
 
     //-------------------------------------------------------------------------
     //!
@@ -67,7 +65,7 @@ namespace xml{
     //! \param s name of the file
     //! \return node instance
     //!
-    node create_from_file(const string &s);
+    node create_from_file(const pni::core::string &s);
 
     //------------------------------------------------------------------------
     //!
@@ -80,7 +78,7 @@ namespace xml{
     //! \param name the name of the attribute
     //! \return a valid property tree attribute path
     //! 
-    string attribute_path(const string &name);
+    pni::core::string attribute_path(const pni::core::string &name);
 
 
     //------------------------------------------------------------------------
@@ -97,7 +95,7 @@ namespace xml{
     //! \param name the name of the attribute
     //! \return node representing the attribute
     //! 
-    node get_attribute(const node &parent,const string &name);
+    node get_attribute(const node &parent,const pni::core::string &name);
 
     //-------------------------------------------------------------------------
     //!
@@ -111,7 +109,7 @@ namespace xml{
     //! \param name the attributes name
     //! \return true if the attribute exists, false otherwise
     //!
-    bool has_attribute(const node &parent,const string &name);
+    bool has_attribute(const node &parent,const pni::core::string &name);
 
     //-------------------------------------------------------------------------
     //!

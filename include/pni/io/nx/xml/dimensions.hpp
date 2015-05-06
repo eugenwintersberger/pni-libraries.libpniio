@@ -142,7 +142,7 @@ namespace xml{
             //! \throws parser_error if a tag cannot be read
             //! \param dims node with dimension information
             //! \return instance of shape_t
-            static shape_t object_from_xml(const node &dims);
+            static pni::core::shape_t object_from_xml(const node &dims);
 
             //-----------------------------------------------------------------
             //!
@@ -160,7 +160,7 @@ namespace xml{
             template<typename DTYPE>
             static DTYPE object_from_xml(const node &dims)
             {
-                shape_t s = object_from_xml(dims);
+                pni::core::shape_t s = object_from_xml(dims);
                 return DTYPE(s.begin(),s.end());
             }
 
@@ -174,7 +174,7 @@ namespace xml{
             //! \param s reference to the shape container
             //! \return XML node with dimension information
             //! 
-            static node object_to_xml(const shape_t &s);
+            static node object_to_xml(const pni::core::shape_t &s);
 
             //-----------------------------------------------------------------
             //!
@@ -190,7 +190,7 @@ namespace xml{
             template<typename DTYPE>
             static node object_to_xml(const DTYPE &dim)
             {
-                shape_t s(dim.begin(),dim.end());
+                pni::core::shape_t s(dim.begin(),dim.end());
                 return object_to_xml(s);
             }
 

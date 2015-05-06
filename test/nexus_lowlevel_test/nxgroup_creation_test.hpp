@@ -26,7 +26,6 @@
 #pragma once
 
 #include <pni/io/nx/nx.hpp>
-
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 

@@ -28,10 +28,7 @@
 namespace pni{
 namespace io{
 namespace nx{
-namespace xml{
-
-    using namespace boost;
-
+namespace xml{    
     //!
     //! \ingroup xml_classes
     //! \brief default data predicate
@@ -74,21 +71,21 @@ namespace xml{
     //! This map defines the maximum type for every numeric type provided 
     //! by pnicore. It is used when reading data from an attribute or node. 
     //! 
-    typedef mpl::map<
-        mpl::pair<uint8,uint64>,
-        mpl::pair<uint16,uint64>,
-        mpl::pair<uint32,uint64>,
-        mpl::pair<uint64,uint64>,
-        mpl::pair<int8,int64>,
-        mpl::pair<int16,int64>,
-        mpl::pair<int32,int64>,
-        mpl::pair<int64,int64>,
-        mpl::pair<float32,float128>,
-        mpl::pair<float64,float128>,
-        mpl::pair<float128,float128>,
-        mpl::pair<complex32,complex128>,
-        mpl::pair<complex64,complex128>,
-        mpl::pair<complex128,complex128>> max_type_map;
+    typedef boost::mpl::map<
+        boost::mpl::pair<pni::core::uint8,pni::core::uint64>,
+        boost::mpl::pair<pni::core::uint16,pni::core::uint64>,
+        boost::mpl::pair<pni::core::uint32,pni::core::uint64>,
+        boost::mpl::pair<pni::core::uint64,pni::core::uint64>,
+        boost::mpl::pair<pni::core::int8,pni::core::int64>,
+        boost::mpl::pair<pni::core::int16,pni::core::int64>,
+        boost::mpl::pair<pni::core::int32,pni::core::int64>,
+        boost::mpl::pair<pni::core::int64,pni::core::int64>,
+        boost::mpl::pair<pni::core::float32,pni::core::float128>,
+        boost::mpl::pair<pni::core::float64,pni::core::float128>,
+        boost::mpl::pair<pni::core::float128,pni::core::float128>,
+        boost::mpl::pair<pni::core::complex32,pni::core::complex128>,
+        boost::mpl::pair<pni::core::complex64,pni::core::complex128>,
+        boost::mpl::pair<pni::core::complex128,pni::core::complex128>> max_type_map;
 
     //------------------------------------------------------------------------
     //!
@@ -97,7 +94,7 @@ namespace xml{
     //! 
     //! A static map with all valid representations of boolean values.
     //! 
-    static const std::map<string,bool>  bool_string_map{
+    static const std::map<pni::core::string,bool>  bool_string_map{
         {"1",true},{"0",false},
         {"True",true},{"False",false},
         {"true",true},{"false",false}
