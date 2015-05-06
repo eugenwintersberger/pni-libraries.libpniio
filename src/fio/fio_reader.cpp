@@ -32,7 +32,7 @@ namespace io{
     //======================private member functions===========================
     void fio_reader::_parse_file(std::ifstream &stream)
     {
-        string::value_type buffer; 
+        pni::core::string::value_type buffer; 
         while(!stream.eof())
         {
             //read a character
@@ -63,8 +63,8 @@ namespace io{
     //-------------------------------------------------------------------------
     void fio_reader::_parse_parameters(std::ifstream &stream)
     {
-        string::value_type buffer;
-        string param_name;
+        pni::core::string::value_type buffer;
+        pni::core::string param_name;
         //clear the parameter map
         _param_map.clear();
 
@@ -117,7 +117,7 @@ namespace io{
         boost::regex is_dcol("^\\s+[+-]?\\d+\\.?\\d*e?[+-]?\\d*.*");
         boost::smatch match;
 
-        string linebuffer;
+        pni::core::string linebuffer;
         std::streampos data_offset_tmp = 0;
         size_t nr = 0; //number of records
 
@@ -156,7 +156,8 @@ namespace io{
     }
 
     //-------------------------------------------------------------------------
-    void fio_reader::_get_parameter_data(std::ifstream &stream,string &value)
+    void fio_reader::_get_parameter_data(std::ifstream &stream,
+                                         pni::core::string &value)
         const
     {
         char buffer;
@@ -171,21 +172,21 @@ namespace io{
     }
 
     //=================implementation of static private methods================
-    type_id_t fio_reader::_typestr2id(const string &tstr)
+    pni::core::type_id_t fio_reader::_typestr2id(const pni::core::string &tstr)
     {
         if(tstr == "FLOAT") 
-            return type_id_t::FLOAT32;
+            return pni::core::type_id_t::FLOAT32;
         else if(tstr == "DOUBLE")
-            return type_id_t::FLOAT64;
+            return pni::core::type_id_t::FLOAT64;
         else
-            return type_id_t::NONE;
+            return pni::core::type_id_t::NONE;
     }
 
     //-------------------------------------------------------------------------
-    column_info fio_reader::_read_column_info(const string &line)
+    column_info fio_reader::_read_column_info(const pni::core::string &line)
     {
-        string cname;
-        string ctype;
+        pni::core::string cname;
+        pni::core::string ctype;
         size_t cindex;
         std::stringstream ss(line);
         ss>>cname>>cindex>>cname>>ctype;
@@ -194,14 +195,14 @@ namespace io{
     }
 
     //-------------------------------------------------------------------------
-    std::vector<string> fio_reader::_read_data_line(const string &line)
+    std::vector<pni::core::string> fio_reader::_read_data_line(const pni::core::string &line)
     {
         boost::regex dcol("[+-]?\\d+\\.?\\d*e?[+-]?\\d*");
-        std::vector<string> record;
+        std::vector<pni::core::string> record;
 
-        boost::match_results<string::const_iterator> imatch;
-        string::const_iterator start = line.begin();
-        string::const_iterator end   = line.end();
+        boost::match_results<pni::core::string::const_iterator> imatch;
+        pni::core::string::const_iterator start = line.begin();
+        pni::core::string::const_iterator end   = line.end();
         while(boost::regex_search(start,end,imatch,dcol,boost::match_default))
         {
             record.push_back(imatch.str());
@@ -225,7 +226,7 @@ namespace io{
 
     //-------------------------------------------------------------------------
     //standard constructor implementation
-    fio_reader::fio_reader(const string &n):
+    fio_reader::fio_reader(const pni::core::string &n):
         spreadsheet_reader(n),
         _param_map(),
         _data_offset(0)
@@ -259,9 +260,9 @@ namespace io{
     
     //-------------------------------------------------------------------------
     //implementation of parameter names
-    std::vector<string> fio_reader::parameter_names() const
+    std::vector<pni::core::string> fio_reader::parameter_names() const
     {
-        std::vector<string> pnames;
+        std::vector<pni::core::string> pnames;
 #ifdef NOFOREACH
         for(auto iter = _param_map.begin();iter!=_param_map.end();iter++)
         {

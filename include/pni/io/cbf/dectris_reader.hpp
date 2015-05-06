@@ -31,7 +31,6 @@
 #include "../image_info.hpp"
 #include "types.hpp"
 
-using namespace pni::core;
 
 namespace pni{
 namespace io{
@@ -97,7 +96,7 @@ namespace cbf{
     void dectris_reader::read_data_byte_offset(std::ifstream &is,
                                  const pni::io::image_info &info, CTYPE &data)
     {
-
+        using namespace pni::core;
         //unsigned long i;
         //size_t ecnt = 0; // element counter
         CBFT buffer = 0; // single element buffer

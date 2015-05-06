@@ -25,11 +25,11 @@
  */
 #pragma once
 
-#include<iostream>
-#include<sstream>
-#include<map>
-#include<boost/regex.hpp>
-#include<boost/current_function.hpp>
+#include <iostream>
+#include <sstream>
+#include <map>
+#include <boost/regex.hpp>
+#include <boost/current_function.hpp>
 
 #include <pni/core/arrays.hpp>
 #include "../spreadsheet_reader.hpp"
@@ -49,7 +49,7 @@ namespace io{
     {
         private:
             //! parameter stream positions
-            std::map<string,std::streampos> _param_map;
+            std::map<pni::core::string,std::streampos> _param_map;
             //! offset where real data starts
             std::streampos _data_offset; 
 
@@ -93,7 +93,7 @@ namespace io{
             \param tstr type string
             \return TypeID 
             */
-            static type_id_t _typestr2id(const string &tstr);
+            static pni::core::type_id_t _typestr2id(const pni::core::string &tstr);
 
             //-----------------------------------------------------------------
             /*! 
@@ -103,7 +103,7 @@ namespace io{
             \param line string object holding the lines content
             \return instance of ColumnInfo
             */
-            static column_info _read_column_info(const string &line);
+            static column_info _read_column_info(const pni::core::string &line);
           
             //------------------------------------------------------------------
             /*! 
@@ -115,7 +115,7 @@ namespace io{
             \param line input line
             \return vector with cell content as strings
             */
-            static std::vector<string> _read_data_line(const string &line);
+            static std::vector<pni::core::string> _read_data_line(const pni::core::string &line);
 
             //-----------------------------------------------------------------
             /*! 
@@ -138,7 +138,7 @@ namespace io{
             \param stream input stream
             \param value string value where to store parameter data
             */
-            void _get_parameter_data(std::ifstream &stream,string &value) const;
+            void _get_parameter_data(std::ifstream &stream,pni::core::string &value) const;
 
             //-------------------------------------------------------------------
             /*! 
@@ -166,7 +166,7 @@ namespace io{
             fio_reader(fio_reader &&r);
 
             //! standard constructor
-            fio_reader(const string &n);
+            fio_reader(const pni::core::string &n);
 
             //! destructor
             ~fio_reader();
@@ -195,7 +195,7 @@ namespace io{
             the file.
             \return parameter names
             */
-            std::vector<string> parameter_names() const;
+            std::vector<pni::core::string> parameter_names() const;
 
             //-----------------------------------------------------------------
             /*! 
@@ -206,7 +206,8 @@ namespace io{
             \param name parameter name
             \return parameter value as type T
             */
-            template<typename T> T parameter(const string &name) const;
+            template<typename T> 
+            T parameter(const pni::core::string &name) const;
            
             //-----------------------------------------------------------------
             /*! 
@@ -219,7 +220,8 @@ namespace io{
             \param n name of the column
             \return instance of ATYPE holding the data.
             */
-            template<typename CTYPE> CTYPE column(const string &n) const;
+            template<typename CTYPE> 
+            CTYPE column(const pni::core::string &n) const;
 
             //-----------------------------------------------------------------
             /*! 
@@ -235,7 +237,7 @@ namespace io{
             \param c instance of CTYPE that will in the end contain the data
             */
             template<typename CTYPE> 
-                void column(const string &n,CTYPE &c) const;
+                void column(const pni::core::string &n,CTYPE &c) const;
 
     };
     
@@ -247,7 +249,8 @@ namespace io{
     }
 
     //======================template implementation============================
-    template<typename T> T fio_reader::parameter(const string &name) const
+    template<typename T> 
+    T fio_reader::parameter(const pni::core::string &name) const
     {
         std::ifstream &stream = this->_get_stream();
         std::streampos opos = stream.tellg(); //backup old stream position
@@ -268,8 +271,9 @@ namespace io{
 
     //-------------------------------------------------------------------------
     template<typename CTYPE> 
-        void fio_reader::column(const string &n,CTYPE &c) const
+        void fio_reader::column(const pni::core::string &n,CTYPE &c) const
     {
+        using namespace pni::core;
         size_t cindex = 0; //column index
 
         try
@@ -296,7 +300,8 @@ namespace io{
 
 
     //-------------------------------------------------------------------------
-    template<typename CTYPE> CTYPE fio_reader::column(const string &n) const
+    template<typename CTYPE> 
+    CTYPE fio_reader::column(const pni::core::string &n) const
     {
         //create the container 
         //allocate a new array
@@ -310,14 +315,14 @@ namespace io{
 
     //-------------------------------------------------------------------------
     template<typename CTYPE> 
-        void fio_reader::_read_column(size_t index,CTYPE &c) const
+    void fio_reader::_read_column(size_t index,CTYPE &c) const
     {
         std::ifstream &stream = this->_get_stream();
         std::streampos orig_pos = stream.tellg();
         //move stream to data section
         stream.seekg(_data_offset,std::ios::beg);
 
-        string linebuffer;
+        pni::core::string linebuffer;
 #ifdef NOFOREACH
         for(auto iter = c.begin();iter!=c.end();++iter)
         {
@@ -339,7 +344,7 @@ namespace io{
                 throw file_error(EXCEPTION_RECORD,"Error reading data from file!"); 
             }
             //split data line
-            std::vector<string> string_data = this->_read_data_line(linebuffer);
+            std::vector<pni::core::string> string_data = this->_read_data_line(linebuffer);
             //set requested element to the string buffer
             std::stringstream ss(string_data[index]);
 

@@ -28,6 +28,8 @@
 
 namespace pni{
 namespace io{
+    
+    using namespace pni::core;
        
     //---------------------------------------------------------------------
     //implementation of the standard constructor

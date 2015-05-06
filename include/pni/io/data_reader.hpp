@@ -31,8 +31,7 @@
 
 namespace pni{
 namespace io{
-
-    using namespace pni::core;
+        
     //! 
     //! \ingroup general_io
     //! \brief base class for data readers
@@ -47,7 +46,7 @@ namespace io{
     {
         private:
             //! name of the file 
-            string _fname;           
+            pni::core::string _fname;           
             //! flag determining how files will be opened
             bool _is_binary;         
             //the stream is accessed via a unique pointer this allows moveing
@@ -71,7 +70,7 @@ namespace io{
             //! \return unique pointer to the input stream
             //!
             std::unique_ptr<std::ifstream> 
-                _open_stream(const string &fname) const;
+                _open_stream(const pni::core::string &fname) const;
         protected:
             //!
             //! \brief get stream
@@ -107,7 +106,7 @@ namespace io{
             //! \param fname name of the file
             //! \param binary if true stream will be opened in binary mode
             //!
-            explicit data_reader(const string &fname,bool binary=false);
+            explicit data_reader(const pni::core::string &fname,bool binary=false);
            
             //-----------------------------------------------------------------
             //! move constructor
@@ -146,7 +145,7 @@ namespace io{
             //!
             //! \param fname name of the file to read data from
             //!
-            void filename(const string &fname);
+            void filename(const pni::core::string &fname);
 
             //-------------------------------------------------------------
             //! close the file

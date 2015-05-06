@@ -33,8 +33,6 @@
 
 #include <pni/core/types.hpp>
 
-using namespace pni::core;
-
 
 namespace pni{
 namespace io{
@@ -76,7 +74,7 @@ namespace tiff{
         if(sizeof(ETYPE)*r.size()>4){
             //if the data does not fit into 4 Byte we interpret data as an
             //offset and move the stream pointer to this new position
-            int32 offset;
+            pni::core::int32 offset;
             stream.read((char *)(&offset),4);
             stream.seekg(offset,std::ios::beg);
         }
@@ -99,11 +97,11 @@ namespace tiff{
     //! is provided by this partial specialization of the IFDEntryReader 
     //! template.
     //!
-    template<> class ifd_entry_reader<string,string>
+    template<> class ifd_entry_reader<pni::core::string,pni::core::string>
     {
         public:
             //! read string entry 
-            static void read(std::vector<string> &r,std::ifstream &stream);
+            static void read(std::vector<pni::core::string> &r,std::ifstream &stream);
     };
 
 

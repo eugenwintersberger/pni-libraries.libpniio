@@ -36,9 +36,7 @@
 
 namespace pni {
 namespace io {
-namespace tiff {
-
-    using namespace pni::core;
+namespace tiff {    
 
     //! \ingroup image_io_tiff
     //! \brief reader for strip data in a TIFF file
@@ -48,7 +46,7 @@ namespace tiff {
             std::vector<size_t> _offsets;   //!< array with the file offsets of the strips
             std::vector<size_t> _byte_cnts; //!< array with byte counts for each strip
             std::vector<size_t> _bits_per_channel; //!< number of bits per channel
-            std::vector<type_id_t> _channel_types; //!< type ids of channel data
+            std::vector<pni::core::type_id_t> _channel_types; //!< type ids of channel data
 
             //-----------------------------------------------------------------
             //!
@@ -100,7 +98,7 @@ namespace tiff {
             strip_reader(const std::vector<size_t> &offsets,
                          const std::vector<size_t> &byte_counts,
                          const std::vector<size_t> &bits_per_channel,
-                         const std::vector<type_id_t> &channel_types);
+                         const std::vector<pni::core::type_id_t> &channel_types);
 
             //------------------------------------------------------------------
             //! destructor
@@ -148,7 +146,7 @@ namespace tiff {
             template<typename CTYPE> 
                 void read(size_t c,std::ifstream &stream,CTYPE &data) 
             {
-
+                using namespace pni::core;
                 //first we need to determine the datatype of the
 
                 if(this->_channel_types[c] == type_id_t::UINT8)

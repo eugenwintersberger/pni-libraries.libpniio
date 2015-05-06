@@ -26,8 +26,6 @@
 
 #include <pni/core/types.hpp>
 
-using namespace pni::core;
-
 namespace pni{
 namespace io{
 
@@ -41,13 +39,13 @@ namespace io{
     class image_channel_info
     {
         private:
-            type_id_t _tid;  //!< ID of the datatype used for this channel
+            pni::core::type_id_t _tid;  //!< ID of the datatype used for this channel
             size_t _bits; //!< number of bits per channel
         public:
             //-----------------------------------------------------------------
             //! default constructor
             image_channel_info():
-                _tid(type_id_t::NONE),
+                _tid(pni::core::type_id_t::NONE),
                 _bits(0)
             {}
 
@@ -58,7 +56,7 @@ namespace io{
             //! \param id Typd id for the channel
             //! \param bits number of bits used to store channel data
             //!
-            image_channel_info(const type_id_t &id,size_t bits):
+            image_channel_info(const pni::core::type_id_t &id,size_t bits):
                 _tid(id),
                 _bits(bits)
             {}
@@ -70,7 +68,7 @@ namespace io{
             //! Returns the TypeID for the channel described by this object.
             //! \return type ID 
             //!
-            type_id_t type_id() const { return _tid; }
+            pni::core::type_id_t type_id() const { return _tid; }
 
             //-----------------------------------------------------------------
             //!

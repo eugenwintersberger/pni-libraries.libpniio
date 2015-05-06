@@ -23,15 +23,13 @@
 //
 #pragma once
 
-#include<iostream>
-#include<vector>
-#include<numeric>
+#include <iostream>
+#include <vector>
+#include <numeric>
 
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
 #include "image_channel_info.hpp"
-
-using namespace pni::core;
 
 namespace pni{
 namespace io{
@@ -140,7 +138,7 @@ namespace io{
             //! Return a vector with the different types per channel.
             //! \return vector with data types for each channel
             //!
-            std::vector<type_id_t> types_per_channel() const;
+            std::vector<pni::core::type_id_t> types_per_channel() const;
 
             //-----------------------------------------------------------------
             //!

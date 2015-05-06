@@ -59,7 +59,7 @@ namespace io{
             spreadsheet_reader(spreadsheet_reader &&o);
 
             //! standard constructor
-            spreadsheet_reader(const string &n);
+            spreadsheet_reader(const pni::core::string &n);
 
             //==================protected member functions======================
             //!
@@ -101,8 +101,9 @@ namespace io{
             //! \param n name of the column
             //! \return column_info instance for this column
             //!
-            virtual column_info _get_column(const string &n) const
+            virtual column_info _get_column(const pni::core::string &n) const
             {
+                using namespace pni::core;
                 size_t i=0;
                 for(auto c: _columns_info)
                 {
@@ -216,7 +217,7 @@ namespace io{
             //! \param name of the column
             //! \return true if column exists, false otherwise
             //!
-            bool has_column(const string &name) const;
+            bool has_column(const pni::core::string &name) const;
 
             //-----------------------------------------------------------------
             //! 
@@ -227,7 +228,7 @@ namespace io{
             //! \param name name of the column
             //! \return numeric index 
             //!
-            size_t column_index(const string &name) const;
+            size_t column_index(const pni::core::string &name) const;
 
     };
 

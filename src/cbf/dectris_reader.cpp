@@ -36,6 +36,7 @@ namespace cbf{
     std::streampos dectris_reader::read_header(std::ifstream &is,
             std::vector<pni::io::image_info> &info,compression_id &ct)
     {
+        using namespace pni::core;
         uint8 byte;
         string linebuffer;
         size_t nx=0,ny=0,bits_per_pixel;

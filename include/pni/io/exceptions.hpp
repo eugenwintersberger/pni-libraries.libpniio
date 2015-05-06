@@ -27,10 +27,7 @@
 #include <pni/core/error.hpp>
 
 namespace pni{
-namespace io{
-    using namespace pni::core;
-    using pni::core::exception;
-    using pni::core::string;
+namespace io{   
 
     //! 
     //! \ingroup io_error_classes
@@ -39,7 +36,7 @@ namespace io{
     //! This exception is thrown in all situations where IO operations fail.
     //! This includes reading and writing of payload- or meta-data.
     //!
-    class io_error:public exception
+    class io_error:public pni::core::exception
     {
         public:
             //-----------------------------------------------------------------
@@ -48,7 +45,8 @@ namespace io{
 
             //-----------------------------------------------------------------
             //! constructor
-            explicit io_error(const exception_record &i,const string &d);
+            explicit io_error(const pni::core::exception_record &i,
+                              const pni::core::string &d);
 
             //-----------------------------------------------------------------
             //! destructor
@@ -67,7 +65,7 @@ namespace io{
     //!
     //! Exception is thrown when link operations fails.
     //!
-    class link_error:public exception
+    class link_error:public pni::core::exception
     {
         public:
             //-----------------------------------------------------------------
@@ -76,7 +74,8 @@ namespace io{
 
             //-----------------------------------------------------------------
             //! constructor
-            explicit link_error(const exception_record &i,const string &d);
+            explicit link_error(const pni::core::exception_record &i,
+                                const pni::core::string &d);
 
             //-----------------------------------------------------------------
             //! destructor
@@ -97,7 +96,7 @@ namespace io{
     //! expected to be thrown by all functions and methods that are somehow 
     //! related to parsing strings.
     //!
-    class parser_error:public exception
+    class parser_error:public pni::core::exception
     {
         public:
             //-----------------------------------------------------------------
@@ -106,7 +105,8 @@ namespace io{
 
             //-----------------------------------------------------------------
             //! constructor
-            explicit parser_error(const exception_record &i,const string &d);
+            explicit parser_error(const pni::core::exception_record &i,
+                                  const pni::core::string &d);
 
             //-----------------------------------------------------------------
             //! destructor
@@ -127,7 +127,7 @@ namespace io{
     //! An object uses this exception in cases where the user makes a request 
     //! on a feature not availabel as the object is in an invalid state.
     //!
-    class invalid_object_error:public exception
+    class invalid_object_error:public pni::core::exception
     {
         public:
             //-----------------------------------------------------------------
@@ -136,8 +136,8 @@ namespace io{
 
             //-----------------------------------------------------------------
             //! constructor
-            explicit invalid_object_error(const exception_record &i,
-                                          const string &d);
+            explicit invalid_object_error(const pni::core::exception_record &i,
+                                          const pni::core::string &d);
 
             //-----------------------------------------------------------------
             //! destructor
@@ -157,7 +157,7 @@ namespace io{
     //! Used for general errors on IO objects. This includes the failure 
     //! to create or close an object. 
     //!
-    class object_error:public exception
+    class object_error:public pni::core::exception
     {
         public:
             //-----------------------------------------------------------------
@@ -166,8 +166,8 @@ namespace io{
 
             //-----------------------------------------------------------------
             //! constructor
-            explicit object_error(const exception_record &i,
-                                          const string &d);
+            explicit object_error(const pni::core::exception_record &i,
+                                  const pni::core::string &d);
 
             //-----------------------------------------------------------------
             //! destructor

@@ -28,8 +28,6 @@
 #include <pni/core/types.hpp>
 #include <vector>
 
-using namespace pni::core;
-
 namespace pni{
 namespace io{
 
@@ -45,8 +43,8 @@ namespace io{
     class column_info
     {
         private:
-            string _name; //!< name of the columne
-            type_id_t _tid;  //!< type ID of column type
+            pni::core::string _name; //!< name of the columne
+            pni::core::type_id_t _tid;  //!< type ID of column type
             std::vector<size_t>  _shape; //!< shape of column data
         public:
             //====================constructors and destructor===================
@@ -74,7 +72,7 @@ namespace io{
             //! \param tid ID of the type stored in the column
             //! \param s shape of the column 
             //!
-            column_info(const string &n,type_id_t tid,
+            column_info(const pni::core::string &n,pni::core::type_id_t tid,
                         const std::vector<size_t> &s);
 
             //-----------------------------------------------------------------
@@ -106,7 +104,7 @@ namespace io{
             //! file (like for FIO). 
             //! \return type id of the column data
             //!
-            type_id_t type_id() const { return _tid; }
+            pni::core::type_id_t type_id() const { return _tid; }
 
             //-----------------------------------------------------------------
             //! 
@@ -115,7 +113,7 @@ namespace io{
             //! Return the name of the column.
             //! \return name 
             //!
-            string name() const { return _name; }
+            pni::core::string name() const { return _name; }
 
     };
 

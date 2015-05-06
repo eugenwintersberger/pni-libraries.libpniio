@@ -39,7 +39,7 @@ namespace io{
 
     //-------------------------------------------------------------------------
     //implementation of the standard constructor
-    image_reader::image_reader(const string &fname,bool binary):
+    image_reader::image_reader(const pni::core::string &fname,bool binary):
         data_reader(fname,binary)
     {}
 

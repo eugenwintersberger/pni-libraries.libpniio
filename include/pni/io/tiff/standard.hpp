@@ -31,7 +31,7 @@ namespace io{
 namespace tiff{
 
     //-------------------------------------------------------------------------    
-    std::map<uint16,string> tiff_tag_name_map = 
+    std::map<pni::core::uint16,pni::core::string> tiff_tag_name_map = 
     {
         {254,"NewSubfileType"},
         {255,"SubfileType"},
@@ -109,7 +109,7 @@ namespace tiff{
         {33432,"Copyright"} };
 
     //-------------------------------------------------------------------------
-    std::map<uint16,string> tiff_compression_tag_map = 
+    std::map<pni::core::uint16,pni::core::string> tiff_compression_tag_map = 
     {
         {1,"Uncompressed"}, {2,"CCITT 1D"},
         {3,"Group 3 Fax"}, {4,"Group 4 Fax"},
@@ -117,7 +117,7 @@ namespace tiff{
     };
 
     //-------------------------------------------------------------------------
-    std::map<uint16,string> tiff_photo_tag_map= 
+    std::map<pni::core::uint16,pni::core::string> tiff_photo_tag_map= 
     {
         {0,"WhiteIsZero"}, {1,"BlackIsZero"},
         {2,"RGB"}, {3,"RGB Palette"},

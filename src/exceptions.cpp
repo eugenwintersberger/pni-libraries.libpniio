@@ -25,7 +25,8 @@
 
 namespace pni{
 namespace io{
-
+    
+    using namespace pni::core;
     //--------------------------------------------------------------------------
     io_error::io_error():exception("io_error"){ }
 

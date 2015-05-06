@@ -43,7 +43,7 @@ namespace io{
 
     //-------------------------------------------------------------------------
     //standard constructor implementation
-    spreadsheet_reader::spreadsheet_reader(const string &n):
+    spreadsheet_reader::spreadsheet_reader(const pni::core::string &n):
         data_reader(n)
     {}
 
@@ -66,7 +66,7 @@ namespace io{
     }
 
     //=====================public methods implementation=======================
-    bool spreadsheet_reader::has_column(const string &name) const
+    bool spreadsheet_reader::has_column(const pni::core::string &name) const
     {
 #ifdef NOFOREACH
         for(auto iter = this->begin();iter!=this->end();++iter)
@@ -83,8 +83,9 @@ namespace io{
     }
 
     //-------------------------------------------------------------------------
-    size_t spreadsheet_reader::column_index(const string &name) const
+    size_t spreadsheet_reader::column_index(const pni::core::string &name) const
     {
+        using namespace pni::core;
         size_t index = 0;
 #ifdef NOFOREACH
         for(auto iter = this->begin();iter!=this->end();++iter)

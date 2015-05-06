@@ -29,7 +29,8 @@ namespace io{
 namespace tiff{
 
     void
-    ifd_entry_reader<string,string>::read(std::vector<string> &r,std::ifstream &stream)
+    ifd_entry_reader<pni::core::string,pni::core::string>::read(std::vector<pni::core::string> &r,
+                                          std::ifstream &stream)
     {
         //in the special case of strings the size of the vector comming from the
         //calling method is the number of bytes all strings stored occupy. We
@@ -43,15 +44,15 @@ namespace tiff{
         {
             //if data does not fit we interpret the 4 Bytes as offset and jump
             //to this position
-            int32 offset = 0;
+            pni::core::int32 offset = 0;
             stream.read((char *) (&offset), 4);
             stream.seekg(offset, std::ios::beg);
         }
 
         //start reading data
-        std::vector<string> result(0);
+        std::vector<pni::core::string> result(0);
         char buffer;
-        string s;
+        pni::core::string s;
 
         for (size_t i = 0; i < size; i++) 
         {

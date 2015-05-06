@@ -24,10 +24,7 @@
 #pragma once
 
 #include <iostream>
-
 #include <pni/core/types.hpp>
-
-using namespace pni::core;
 
 namespace pni{
 namespace io{
@@ -130,8 +127,8 @@ namespace tiff{
 
 
     //some default types 
-    typedef rational<uint32> uirational;
-    typedef rational<int32> irational;
+    typedef rational<pni::core::uint32> uirational;
+    typedef rational<pni::core::int32> irational;
 
 //end namespaces
 }

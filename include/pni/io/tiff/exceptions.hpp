@@ -26,8 +26,6 @@
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
 
-using namespace pni::core;
-
 namespace pni{
 namespace io{
 namespace tiff{
@@ -39,7 +37,7 @@ namespace tiff{
     //! This exception is thrown in cases where errors occur during reading 
     //! TIFF files.
     //!
-    class tiff_read_error:public exception
+    class tiff_read_error:public pni::core::exception
     {
         public:
             //! default constructor
@@ -48,7 +46,8 @@ namespace tiff{
 
             //! \param i signature of the exception issuer
             //! \param d description of the error
-            tiff_read_error(const exception_record &i,const string &d):
+            tiff_read_error(const pni::core::exception_record &i,
+                            const pni::core::string &d):
                 exception("tiff_read_error",i,d)
             {}
             //! destructor

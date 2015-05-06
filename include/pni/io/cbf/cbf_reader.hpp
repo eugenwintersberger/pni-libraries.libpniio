@@ -38,8 +38,6 @@
 #include "dectris_reader.hpp"
 #include "types.hpp"
 
-using namespace pni::core;
-
 namespace pni{
 namespace io{
 
@@ -102,7 +100,7 @@ namespace io{
             //! \throw file_error if the CBF flavor cannot be deduced
             //! \param fname name of the file
             //!
-            cbf_reader(const string &fname);
+            cbf_reader(const pni::core::string &fname);
 
             //-----------------------------------------------------------------
             //! destructor
@@ -185,6 +183,7 @@ namespace io{
     //-------------------------------------------------------------------------
     template<typename CTYPE> CTYPE cbf_reader::image(size_t i,size_t c) 
     {
+        using namespace pni::core;
         image_info info = _image_info[i];
         CTYPE data;
         try
@@ -215,6 +214,7 @@ namespace io{
     template<typename CTYPE> 
         void cbf_reader::image(CTYPE &data,size_t i,size_t c) 
     {
+        using namespace pni::core;
         //load image information and throw exception if image and container size
         //to not match
         image_info inf = _image_info[i];

@@ -42,7 +42,7 @@ namespace io{
 
     //---------------------------------------------------------------------
     //implementation of the standard constructor
-    cbf_reader::cbf_reader(const string &fname):
+    cbf_reader::cbf_reader(const pni::core::string &fname):
         image_reader(fname)
     {
         //here the file is immediately opened  - we have to parse the 
@@ -66,7 +66,9 @@ namespace io{
     }
 
     //===============implemenetation of private methods====================
-    void cbf_reader::_parse_file(){
+    void cbf_reader::_parse_file()
+    {
+        using namespace pni::core;
         char linebuffer[1024];
         std::ifstream &_istream = _get_stream();
 

@@ -59,6 +59,7 @@ namespace io{
     //implementation of check tiff
     void tiff_reader::_check_if_tiff(std::ifstream &stream)
     {
+        using namespace pni::core;
         std::streampos orig_pos = stream.tellg();
 
         //set stream to the correct position in the TIFF file
@@ -77,10 +78,10 @@ namespace io{
     
     //--------------------------------------------------------------------------
     //implementation of read IFD offset
-    int32 tiff_reader::_read_ifd_offset(std::ifstream &stream)
+    pni::core::int32 tiff_reader::_read_ifd_offset(std::ifstream &stream)
     {
         //no we need to read the IFD entries read the first IFD offset
-        int32 offset = 0;
+        pni::core::int32 offset = 0;
         stream.read((char*)(&offset),4);
         return offset;
     }
@@ -97,6 +98,7 @@ namespace io{
     //implementation of _read_image_info
     void tiff_reader::_read_ifds()
     {
+        using namespace pni::core;
         //obtain stream
         std::ifstream &stream = _get_stream();
 
@@ -177,6 +179,7 @@ namespace io{
     //---------------------------------------------------------------------
     type_id_t tiff_reader::_get_type_id(size_t bps,size_t sf) 
     {
+        using namespace pni::core;
         switch(sf)
         {
             case 1:

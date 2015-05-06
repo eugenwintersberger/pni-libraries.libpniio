@@ -90,7 +90,9 @@ namespace tiff{
     }
 
     //------------------------------------------------------------------------------
-    ifd_entry ifd::operator[](const string &n) const{
+    ifd_entry ifd::operator[](const string &n) const
+    {
+        using namespace pni::core;
 #ifdef NOFOREACH
         BOOST_FOREACH(auto entry,*this)
 #else

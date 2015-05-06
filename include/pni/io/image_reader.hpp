@@ -24,16 +24,14 @@
 
 #pragma once
 
-#include<iostream>
-#include<fstream>
-#include<string>
-#include<vector>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
 
 #include <pni/core/types.hpp>
 #include "data_reader.hpp"
 #include "image_info.hpp"
-
-using namespace pni::core;
 
 namespace pni{
 namespace io{
@@ -63,7 +61,8 @@ namespace io{
             //! move constructor
             image_reader(image_reader &&r);
             //! standard constructor taking the filename as string object
-            explicit image_reader(const string &fname,bool binary=false);
+            explicit image_reader(const pni::core::string &fname,
+                                  bool binary=false);
             
             //==================assignment operators===========================
             //!copy assignment is deleted
@@ -123,6 +122,7 @@ namespace io{
 #pragma GCC diagnostic ignored "-Wunused-parameter"
             template<typename ATYPE> ATYPE image(size_t i,size_t c=0) 
             {
+                using namespace pni::core;
                 throw not_implemented_error(EXCEPTION_RECORD,
                         "Method not implemented!");
 
@@ -151,6 +151,7 @@ namespace io{
             template<typename ATYPE> 
                 void image(ATYPE &array,size_t i,size_t c=0) 
             {
+                using namespace pni::core;
                 throw not_implemented_error(EXCEPTION_RECORD,
                         "Method not implemented!");
             }

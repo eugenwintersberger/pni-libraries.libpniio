@@ -75,18 +75,18 @@ namespace tiff{
 
     //map object associating IDFEntryTypeIds to PNI TypeIDs
     std::map<ifd_entry_type_id,type_id_t> entry_type_to_type_id = 
-                          {{ifd_entry_type_id::BYTE,type_id_t::UINT8},
-                          {ifd_entry_type_id::ASCII,type_id_t::STRING},
-                          {ifd_entry_type_id::SHORT,type_id_t::UINT16},
-                          {ifd_entry_type_id::LONG,type_id_t::UINT32},
-                          {ifd_entry_type_id::RATIONAL,type_id_t::FLOAT64},
-                          {ifd_entry_type_id::SBYTE,type_id_t::INT8},
-                          {ifd_entry_type_id::UNDEFINED,type_id_t::NONE},
-                          {ifd_entry_type_id::SSHORT,type_id_t::INT16},
-                          {ifd_entry_type_id::SLONG,type_id_t::INT32},
-                          {ifd_entry_type_id::SRATIONAL,type_id_t::FLOAT64},
-                          {ifd_entry_type_id::FLOAT,type_id_t::FLOAT32},
-                          {ifd_entry_type_id::DOUBLE,type_id_t::FLOAT64}};
+                          {{ifd_entry_type_id::BYTE,pni::core::type_id_t::UINT8},
+                          {ifd_entry_type_id::ASCII,pni::core::type_id_t::STRING},
+                          {ifd_entry_type_id::SHORT,pni::core::type_id_t::UINT16},
+                          {ifd_entry_type_id::LONG,pni::core::type_id_t::UINT32},
+                          {ifd_entry_type_id::RATIONAL,pni::core::type_id_t::FLOAT64},
+                          {ifd_entry_type_id::SBYTE,pni::core::type_id_t::INT8},
+                          {ifd_entry_type_id::UNDEFINED,pni::core::type_id_t::NONE},
+                          {ifd_entry_type_id::SSHORT,pni::core::type_id_t::INT16},
+                          {ifd_entry_type_id::SLONG,pni::core::type_id_t::INT32},
+                          {ifd_entry_type_id::SRATIONAL,pni::core::type_id_t::FLOAT64},
+                          {ifd_entry_type_id::FLOAT,pni::core::type_id_t::FLOAT32},
+                          {ifd_entry_type_id::DOUBLE,pni::core::type_id_t::FLOAT64}};
 
 
     //==================constructors and destructor========================
@@ -118,7 +118,7 @@ namespace tiff{
 
     //---------------------------------------------------------------------
     //implementation of the standard constructor
-    ifd_entry::ifd_entry(uint16 tag,ifd_entry_type_id tid,size_t size, 
+    ifd_entry::ifd_entry(pni::core::uint16 tag,ifd_entry_type_id tid,size_t size, 
                       std::streampos data):
         _tag(tag),
         _tid(tid),
@@ -159,13 +159,13 @@ namespace tiff{
     //===========implementation of static methods==========================
     ifd_entry ifd_entry::create_from_stream(std::ifstream &stream)
     {
-        uint16 tag = 0;
+        pni::core::uint16 tag = 0;
         stream.read((char *)(&tag),2);
         
-        uint16 tid = 0;
+        pni::core::uint16 tid = 0;
         stream.read((char *)(&tid),2);
 
-        uint32 count = 0;
+        pni::core::uint32 count = 0;
         stream.read((char *)(&count),4);
 
         ifd_entry e(tag,type_tag_to_entry_type_id[tid],count,stream.tellg());
@@ -183,7 +183,7 @@ namespace tiff{
     }
 
     //----------------------------------------------------------------------
-    string ifd_entry::name() const
+    pni::core::string ifd_entry::name() const
     {
        try{
            return tiff_tag_name_map[_tag];
@@ -193,15 +193,16 @@ namespace tiff{
     }
 
     //-----------------------------------------------------------------------
-    type_id_t ifd_entry::type_id() const
+    pni::core::type_id_t ifd_entry::type_id() const
     {
         return entry_type_to_type_id[_tid];
     }
 
     //-----------------------------------------------------------------------
-    void ifd_entry::_read_entry_data(std::vector<string> &r,
+    void ifd_entry::_read_entry_data(std::vector<pni::core::string> &r,
                                      std::ifstream &stream)
     {
+        using namespace pni::core;
         //now we have to walk through all types available in TIFF - not very
         //nice but we have no other choice at runtime
         if(this->_tid == ifd_entry_type_id::ASCII)

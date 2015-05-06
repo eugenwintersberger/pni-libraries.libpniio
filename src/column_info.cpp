@@ -53,7 +53,8 @@ namespace io{
 
     //-------------------------------------------------------------------------
     //implementation of the standard constructor
-    column_info::column_info(const string &n,type_id_t tid,
+    column_info::column_info(const pni::core::string &n,
+                             pni::core::type_id_t tid,
                              const std::vector<size_t> &s):
         _name(n),
         _tid(tid),

@@ -35,9 +35,7 @@
 
 
 namespace pni{
-namespace io{
-
-    using namespace pni::core;
+namespace io{    
 
     //! 
     //! \ingroup image_io_tiff
@@ -195,7 +193,7 @@ namespace io{
 
             //-----------------------------------------------------------------
             //! standard constructor
-            explicit tiff_reader(const string &fname);
+            explicit tiff_reader(const pni::core::string &fname);
 
             //-----------------------------------------------------------------
             //! copy constructor is deleted 
@@ -254,6 +252,7 @@ namespace io{
             //!
             template<typename CTYPE> CTYPE image(size_t i,size_t c=0) 
             {
+                using namespace pni::core;
                 image_info info = this->info(i);
                 CTYPE data;
                 try { data = CTYPE(info.npixels()); }
@@ -289,6 +288,7 @@ namespace io{
             template<typename CTYPE> 
             void image(CTYPE &data,size_t i,size_t c=0) 
             {
+                using namespace pni::core;
                 image_info info = this->info(i);
                 if(data.size() != info.npixels())
                 {

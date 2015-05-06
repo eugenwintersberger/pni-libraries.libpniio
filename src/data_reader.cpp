@@ -30,11 +30,12 @@
 namespace pni{
 namespace io{
 
+    using namespace pni::core;
     //================implementation of private methods=========================
     //default implementation
     std::unique_ptr<std::ifstream> data_reader::
-        _open_stream(const string &fname) const
-    {
+        _open_stream(const pni::core::string &fname) const
+    {        
         std::unique_ptr<std::ifstream> stream(new std::ifstream()); 
         if(!stream)
             throw memory_allocation_error(EXCEPTION_RECORD,
@@ -58,11 +59,12 @@ namespace io{
 
     //-------------------------------------------------------------------------
     //implementation of the standard constructor
-    data_reader::data_reader(const string &fname,bool binary):
+    data_reader::data_reader(const pni::core::string &fname,bool binary):
         _fname(fname),
         _is_binary(binary),
         _istream(_open_stream(fname))
     { 
+        
         if(_istream->fail())
             throw file_error(EXCEPTION_RECORD,
                     "Error opening file ["+fname+"]!");
