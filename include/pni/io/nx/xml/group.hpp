@@ -23,15 +23,13 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
-#include <pni/core/type_erasures.hpp>
 
+#include "../nxobject.hpp"
 #include "../algorithms/create_field.hpp"
 #include "../algorithms/create_group.hpp"
 #include "../algorithms/get_name.hpp"
 #include "../algorithms/get_class.hpp"
 #include "../algorithms/set_class.hpp"
-#include "../nxobject.hpp"
 #include "node.hpp"
 #include "data_node.hpp"
 
@@ -41,8 +39,6 @@ namespace io{
 namespace nx{
 namespace xml{
 
-    using namespace pni::core;
-   
     //!
     //! \ingroup xml_classes
     //! \brief read and write groups
@@ -78,6 +74,7 @@ namespace xml{
         object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
                         const node &group_node)
         {
+            using namespace pni::core; 
             //typedef GTYPE group_type;
             //typedef typename GTYPE::value_type object_type;
 
@@ -138,7 +135,7 @@ namespace xml{
             //write name and type attributes
             group_node.put("<xmlattr>.name",get_name(group));
 
-            string gclass = get_class(group);
+            pni::core::string gclass = get_class(group);
             if(!gclass.empty())
                 group_node.put("<xmlattr>.type",gclass);
             

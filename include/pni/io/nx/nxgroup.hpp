@@ -32,6 +32,7 @@
 #include "nxfilter.hpp"
 #include "../exceptions.hpp"
 #include "nxlink.hpp"
+#include "algorithms/as_group.hpp"
 
 
 namespace pni{

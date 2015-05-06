@@ -23,9 +23,10 @@
 
 #include <sstream>
 #include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
-#include "../nx.hpp"
-#include "../algorithms.hpp"
+#include <pni/core/error.hpp>
+#include "../algorithms/write.hpp"
+#include "../algorithms/get_type.hpp"
+#include "../nxobject.hpp"
 #include "../nxobject_traits.hpp"
 #include "../../exceptions.hpp"
 #include "../../parsers.hpp"
@@ -43,8 +44,6 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace xml{
-
-    using namespace pni::core;
     
     //-------------------------------------------------------------------------
     //!
@@ -111,7 +110,9 @@ namespace xml{
     //! 
     template<typename OTYPE>
     void write_node_data(OTYPE &object,const node &n)
-    {                   
+    { 
+        using namespace pni::core;
+
         switch(get_type(object))
         {   
             case type_id_t::UINT8:

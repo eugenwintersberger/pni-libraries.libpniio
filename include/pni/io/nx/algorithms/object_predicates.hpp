@@ -22,7 +22,7 @@
 #pragma once
 
 #include "../nxobject.hpp"
-#include "../nxobject_traits.hpp"
+#include "iterators.hpp"
 #include "is_field.hpp"
 #include "get_name.hpp"
 #include "is_class.hpp"

@@ -2,14 +2,15 @@
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 #include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/algorithms.hpp>
 
 using namespace pni::core;
-using namespace pni::io::nx::h5;
+using namespace pni::io::nx;
 
 //-----------------------------------------------------------------------------
-nxfield create_field(const nxgroup &parent)
+h5::nxfield create_field(const h5::nxgroup &parent)
 {
-    nxfield field = parent.create_field<uint32>("counter",
+    h5::nxfield field = parent.create_field<uint32>("counter",
                                               shape_t{0},
                                               shape_t{1});
 
@@ -20,7 +21,7 @@ nxfield create_field(const nxgroup &parent)
 }
 
 //----------------------------------------------------------------------------
-void write_data(uint32 n,nxfield &field)
+void write_data(uint32 n,h5::nxfield &field)
 {
     uint32 counter = 0;
 
@@ -32,7 +33,7 @@ void write_data(uint32 n,nxfield &field)
 }
 
 //----------------------------------------------------------------------------
-void read_all(const nxfield &field)
+void read_all(const h5::nxfield &field)
 {
     auto data = dynamic_array<int32>::create(shape_t{{field.size()}});
 
@@ -44,7 +45,7 @@ void read_all(const nxfield &field)
 }
 
 //----------------------------------------------------------------------------
-void read_single_value(size_t i,const nxfield &field)
+void read_single_value(size_t i,const h5::nxfield &field)
 {
     float32 value;
     
@@ -56,10 +57,10 @@ void read_single_value(size_t i,const nxfield &field)
 //----------------------------------------------------------------------------
 int main(int argc,char **argv)
 {
-    nxfile file = nxfile::create_file("nxnumfield_ex2.h5",true);
+    h5::nxfile file = h5::nxfile::create_file("nxnumfield_ex2.h5",true);
     
     //create field
-    nxfield field = create_field(file.root());
+    h5::nxfield field = create_field(file.root());
 
     //write stream
     write_data(20,field);

@@ -24,7 +24,6 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
 #include <pni/core/type_erasures.hpp>
 
 #include "../algorithms/create_field.hpp"
@@ -47,8 +46,6 @@ namespace io{
 namespace nx{
 namespace xml{
 
-    using namespace pni::core;
-   
     //!
     //! \ingroup xml_classes
     //! \brief read and write field data
@@ -64,7 +61,7 @@ namespace xml{
         //! \param field_node XML node with field information
         //! \return string with the unit
         //! 
-        static string unit(const node &field_node);
+        static pni::core::string unit(const node &field_node);
 
         //--------------------------------------------------------------------
         //!
@@ -76,7 +73,7 @@ namespace xml{
         //! \param field_node the XML node with the field information
         //! \return string with long name information
         //!
-        static string long_name(const node &field_node);
+        static pni::core::string long_name(const node &field_node);
 
         //--------------------------------------------------------------------
         //!
@@ -107,6 +104,8 @@ namespace xml{
         object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
                         const node &field_node)                                            
         {
+            using namespace pni::core;
+
             typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
             //determine basic field parameters
             string field_name   = name(field_node);
@@ -187,6 +186,8 @@ namespace xml{
                 >
         static node object_to_xml(const nxobject<GTYPE,FTYPE,ATYPE> &f)
         {
+            using namespace pni::core;
+
             node field_node;            
             FTYPE fo = as_field(f); //throw type_error if f is not a field
             string buffer;

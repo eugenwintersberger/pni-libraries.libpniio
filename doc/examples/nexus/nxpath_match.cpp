@@ -2,6 +2,7 @@
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/xml.hpp>
 #include <pni/io/nx/nxpath.hpp>
+#include <pni/io/nx/algorithms.hpp>
 #include <pni/io/nx/flat_group.hpp>
 
 #include <vector>

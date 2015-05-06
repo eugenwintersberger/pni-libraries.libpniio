@@ -1,23 +1,25 @@
-#include<pni/core/types.hpp>
-#include<pni/core/arrays.hpp>
-#include<pni/io/nx/nx.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
+#include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/algorithms.hpp>
+#include <pni/io/nx/nxpath.hpp>
 
 using namespace pni::core;
-using namespace pni::io::nx::h5;
+using namespace pni::io::nx;
 
 
 void write_data(string fname,size_t np,size_t nx,size_t ny)
 {
     auto frame = dynamic_array<uint32>::create(shape_t{nx,ny});
 
-    nxfile file = nxfile::create_file(fname,true);
+    h5::nxfile file = h5::nxfile::create_file(fname,true);
 
-    nxgroup g = file.root().create_group("scan","NXentry");
+    h5::nxgroup g = file.root().create_group("scan","NXentry");
     g = g.create_group("instrument","NXinstrument");
     g = g.create_group("detector","NXdetector");
 
-    nxdeflate_filter filter(8,true);
-    nxfield data = g.create_field<uint32>("data",shape_t{0,nx,ny},
+    h5::nxdeflate_filter filter(8,true);
+    h5::nxfield data = g.create_field<uint32>("data",shape_t{0,nx,ny},
                                           shape_t{1,nx,ny},filter);
 
     for(size_t i=0;i<np;i++)
@@ -40,8 +42,8 @@ void read_data(const nxpath &path)
 {
     typedef dynamic_array<float64> array_type;
 
-    nxfile file = nxfile::open_file(path.filename(),false);
-    nxfield field = get_object(file.root(),path);
+    h5::nxfile file = h5::nxfile::open_file(path.filename(),false);
+    h5::nxfield field = get_object(file.root(),path);
     
     auto data = array_type::create(field.shape<shape_t>());
     

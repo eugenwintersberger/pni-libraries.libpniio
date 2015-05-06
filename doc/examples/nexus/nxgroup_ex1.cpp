@@ -1,15 +1,18 @@
 //File: nxgroup_ex1.cpp
 #include<iostream>
 #include<pni/io/nx/nx.hpp>
-using namespace pni::io::nx::h5;
+#include<pni/io/nx/algorithms.hpp>
+
+using namespace pni::core;
+using namespace pni::io::nx;
 
 int main(int argc,char **argv)
 {
-    nxfile file  = nxfile::create_file("nxgroup_ex1.h5",true);
-    nxgroup root = file.root();
+    h5::nxfile file  = h5::nxfile::create_file("nxgroup_ex1.h5",true);
+    h5::nxgroup root = file.root();
 
     //create groups
-    nxgroup group = root.create_group("data1");
+    h5::nxgroup group = root.create_group("data1");
     group = group.create_group("dir");
     group = root.create_group("data2","NXentry");
     group = root.create_group("data3","NXentry").

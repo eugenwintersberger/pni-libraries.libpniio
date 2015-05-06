@@ -37,7 +37,7 @@ d4: d4.cpp NXHelper.cpp
 	$(CXX) -o $@ $< $(CPPFLAGS) $(LDFLAGS)
 
 thread_ex1: thread_ex1.cpp
-	$(CXX) -o $@ $< $(CPPFLAGS) $(LDFLAGS)
+	$(CXX) -o $@ $< $(CPPFLAGS) $(LDFLAGS) -lpthread
 
 nxnumfield_ex4: nxnumfield_ex4.cpp
 	$(CXX) -o $@ $< $(CPPFLAGS) $(LDFLAGS)
