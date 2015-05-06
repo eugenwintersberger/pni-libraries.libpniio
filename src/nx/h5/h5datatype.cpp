@@ -32,6 +32,8 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
+    
+    using namespace pni::core;
 
     //------------------------------------------------------------------------
     //map for basic numeric types

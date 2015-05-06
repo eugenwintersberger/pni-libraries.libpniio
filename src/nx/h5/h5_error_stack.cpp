@@ -30,11 +30,9 @@
 namespace pni {
 namespace io {
 namespace nx {
-namespace h5 {
+namespace h5 {   
 
-    using pni::io::object_error;
-    using pni::io::io_error;
-
+    using namespace pni::core;
 
     //--------------------------------------------------------------------------
 #pragma GCC diagnostic push

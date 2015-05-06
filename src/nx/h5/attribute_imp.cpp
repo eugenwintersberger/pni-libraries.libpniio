@@ -31,11 +31,9 @@
 namespace pni{
 namespace io{
 namespace nx{
-namespace h5{
-
-    using pni::io::io_error;
-    using pni::io::invalid_object_error;
-    using pni::io::object_error;
+namespace h5{    
+    
+    using namespace pni::core;
 
     //===============private methods===========================================
     void attribute_imp::__update()
@@ -72,6 +70,8 @@ namespace h5{
          _selection(),
          _apply_selection(false)
     {
+        using namespace pni::core;
+        
         if(get_hdf5_type(_object) != h5object_type::ATTRIBUTE)
             throw type_error(EXCEPTION_RECORD,
                     "Object is not an attribute instance!");
@@ -81,13 +81,13 @@ namespace h5{
     }
 
     //=========implementation of inquery methods===============================
-    type_id_t attribute_imp::type_id() const
+    pni::core::type_id_t attribute_imp::type_id() const
     {
         return pni::io::nx::h5::type_id(_dtype);
     }
 
     //-------------------------------------------------------------------------
-    string attribute_imp::name() const
+    pni::core::string attribute_imp::name() const
     {
         return get_name(_object);
     }
@@ -109,7 +109,7 @@ namespace h5{
     }
 
     //-------------------------------------------------------------------------
-    string attribute_imp::filename() const
+    pni::core::string attribute_imp::filename() const
     {
         return get_filename(_object);
     }
@@ -117,6 +117,8 @@ namespace h5{
     //-------------------------------------------------------------------------
     type_imp::index_vector_type attribute_imp::shape() const 
     {
+        using namespace pni::core;
+        
         if(!is_valid())
             throw invalid_object_error(EXCEPTION_RECORD,
                     "Cannot obtain shape from an invalid object!");
@@ -130,6 +132,7 @@ namespace h5{
     //-------------------------------------------------------------------------
     size_t attribute_imp::size() const 
     { 
+        using namespace pni::core;
         if(!is_valid())
             throw invalid_object_error(EXCEPTION_RECORD,
                     "Cannot obtain size from an invalid attribute!");
@@ -143,6 +146,7 @@ namespace h5{
     //-------------------------------------------------------------------------
     size_t attribute_imp::rank() const 
     { 
+        using namespace pni::core;
         if(!is_valid())
             throw invalid_object_error(EXCEPTION_RECORD,
                     "Cannot obtain rank from an invalid attribute!");
@@ -158,6 +162,7 @@ namespace h5{
     void attribute_imp::_to_disk(const h5datatype &memtype,
                                  const void *ptr) const
     {
+        using namespace pni::core;
         if(H5Awrite(_object.id(),memtype.object().id(),ptr)<0)
             throw io_error(EXCEPTION_RECORD,
                     "Error writing attribute ["+name()+"]!\n\n"
@@ -166,7 +171,7 @@ namespace h5{
     }
 
     //------------------------------------------------------------------------
-    void attribute_imp::_write_all(type_id_t tid,const void *ptr) const
+    void attribute_imp::_write_all(pni::core::type_id_t tid,const void *ptr) const
     {
 
         if(tid==type_id_t::STRING)
@@ -186,14 +191,16 @@ namespace h5{
     //-------------------------------------------------------------------------
     void attribute_imp::_from_disk(const h5datatype &memtype,void *ptr) const
     {
+        using namespace pni::core;
         if(H5Aread(_object.id(),memtype.object().id(),ptr)<0)
             throw io_error(EXCEPTION_RECORD,"Error reading attribute ["
                     +name()+"]!\n\n"+get_h5_error_string());
     }
     
     //-------------------------------------------------------------------------
-    void attribute_imp::write(type_id_t tid,const void *ptr) const
+    void attribute_imp::write(pni::core::type_id_t tid,const void *ptr) const
     {
+        using namespace pni::core;
         if(!is_valid())
             throw invalid_object_error(EXCEPTION_RECORD,
                     "Cannot write data to invalid attribut!");
@@ -206,8 +213,9 @@ namespace h5{
 
 
     //-------------------------------------------------------------------------
-    void attribute_imp::_write_selection(type_id_t tid,const void *ptr) const
+    void attribute_imp::_write_selection(pni::core::type_id_t tid,const void *ptr) const
     {
+        using namespace pni::core;
         //first we have to readback data
         if(tid == type_id_t::UINT8)
             _write_selection_typed<uint8>(tid,(uint8*)ptr);
@@ -251,8 +259,9 @@ namespace h5{
 
     //-------------------------------------------------------------------------
     //implementation to read to string
-    void attribute_imp::read(type_id_t tid,void *ptr) const
+    void attribute_imp::read(pni::core::type_id_t tid,void *ptr) const
     {
+        using namespace pni::core;
         if(!is_valid())
             throw invalid_object_error(EXCEPTION_RECORD,
                     "Cannot read data from invalid attribute!");
@@ -264,7 +273,7 @@ namespace h5{
     }
 
     //------------------------------------------------------------------------
-    void attribute_imp::_read_all(type_id_t tid,void *ptr) const
+    void attribute_imp::_read_all(pni::core::type_id_t tid,void *ptr) const
     {
         //if the type is not a variable length string memory must be allocated
         //for each string in the attribute
@@ -294,8 +303,10 @@ namespace h5{
 
 
     //------------------------------------------------------------------------
-    void attribute_imp::_read_selection(type_id_t tid,void *ptr) const
+    void attribute_imp::_read_selection(pni::core::type_id_t tid,void *ptr) const
     {
+        using namespace pni::core;
+        
         //first we have to readback data
         if(tid == type_id_t::UINT8)
             _read_selection_typed<uint8>(tid,(uint8*)ptr);

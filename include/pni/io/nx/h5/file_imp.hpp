@@ -32,10 +32,7 @@ extern "C"{
 namespace pni{
 namespace io{
 namespace nx{
-namespace h5{
-    using namespace pni::core;
-    //avoid namespace collisions with std
-    using pni::core::string;
+namespace h5{    
 
     //forward declaration of group implemenation
     class group_imp;
@@ -90,7 +87,7 @@ namespace h5{
             //! \param ro if true file will be in read only mode
             //! \return instance of file_imp
             //! 
-            static file_imp open(const string &n,bool ro=true);
+            static file_imp open(const pni::core::string &n,bool ro=true);
 
             //-----------------------------------------------------------------
             //! 
@@ -111,7 +108,7 @@ namespace h5{
             //! \param ssize split size
             //! \return instance of H5File
             //!
-            static file_imp create(const string &path,bool ow=false,
+            static file_imp create(const pni::core::string &path,bool ow=false,
                                    ssize_t ssize=0);
 
             //====================misc methods=================================

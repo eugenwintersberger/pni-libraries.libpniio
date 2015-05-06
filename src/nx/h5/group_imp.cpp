@@ -35,6 +35,8 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
+    
+    using namespace pni::core;
 
     //============implementation of constructors and destructors===============
     //implementation of the default constructor

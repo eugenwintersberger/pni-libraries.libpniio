@@ -37,10 +37,6 @@ namespace io {
 namespace nx {
 namespace h5 {
 
-    using namespace pni::core;
-    using pni::core::exception;
-    using pni::core::string;
-
     //! 
     //! \ingroup nxh5_error_classes
     //! \brief HDF5 error record
@@ -54,14 +50,14 @@ namespace h5 {
     class h5_error
     {
         private:
-            string _class_name;    //!< name of the error class
+            pni::core::string _class_name;    //!< name of the error class
             //! name of the source file where the error occurred
-            string _file_name;    
+            pni::core::string _file_name;    
             //! name of the HDF5 function where the error occurred
-            string _func_name;     
-            string _description;   //!< optional description of the error
-            string _minor_message; //!< minor message of the error
-            string _major_message; //!< major message of the error
+            pni::core::string _func_name;     
+            pni::core::string _description;   //!< optional description of the error
+            pni::core::string _minor_message; //!< minor message of the error
+            pni::core::string _major_message; //!< major message of the error
 
             //!
             //! \brief get error message
@@ -73,7 +69,7 @@ namespace h5 {
             //! \param mtype pointer to the message type
             //! \return content of the message as a string
             //!
-            static string get_message(hid_t mid,H5E_type_t *mtype);
+            static pni::core::string get_message(hid_t mid,H5E_type_t *mtype);
         public:
             //-----------------------------------------------------------------
             //! 
@@ -114,7 +110,7 @@ namespace h5 {
             //!
             //! \brief get class name
             //! 
-            string class_name() const;
+            pni::core::string class_name() const;
            
             //-----------------------------------------------------------------
             //!
@@ -130,7 +126,7 @@ namespace h5 {
             //! 
             //! \brief get major message
             //! 
-            string major_message() const;
+            pni::core::string major_message() const;
 
 
             //-----------------------------------------------------------------
@@ -147,43 +143,43 @@ namespace h5 {
             //! 
             //! \brief get minor message
             //! 
-            string minor_message() const;
+            pni::core::string minor_message() const;
 
             //-----------------------------------------------------------------
             //! 
             //! \brief get file name
             //! 
-            string file_name() const;
+            pni::core::string file_name() const;
 
             //-----------------------------------------------------------------
             //! 
             //! \brief get file name
             //! 
-            void file_name(const string &n);
+            void file_name(const pni::core::string &n);
 
             //-----------------------------------------------------------------
             //! 
             //! \brief get function name
             //! 
-            string func_name() const;
+            pni::core::string func_name() const;
 
             //-----------------------------------------------------------------
             //! 
             //! \brief set function name
             //! 
-            void func_name(const string &n);
+            void func_name(const pni::core::string &n);
 
             //-----------------------------------------------------------------
             //! 
             //! \brief get description
             //! 
-            string description() const;
+            pni::core::string description() const;
 
             //-----------------------------------------------------------------
             //! 
             //! \brief set description
             //! 
-            void description(const string &n);
+            void description(const pni::core::string &n);
            
            
     };

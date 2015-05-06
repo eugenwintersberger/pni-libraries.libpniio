@@ -34,7 +34,7 @@ namespace io{
 namespace nx {
 namespace h5 {
 
-    using pni::io::object_error;
+    using namespace pni::core;
 
     //====================private methods======================================
     void h5dataspace::__update_dataspace()

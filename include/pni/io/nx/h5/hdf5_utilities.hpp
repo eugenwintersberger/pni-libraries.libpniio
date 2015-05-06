@@ -32,9 +32,7 @@ namespace io{
 namespace nx{
 namespace h5{
 
-    class object_imp;
-
-    using namespace pni::core;
+    class object_imp;   
     
     //------------------------------------------------------------------------
     //!
@@ -55,7 +53,7 @@ namespace h5{
     //! \param object HDF5 object
     //! \return string with the file name
     //!
-    string get_filename(const object_imp &object);
+    pni::core::string get_filename(const object_imp &object);
     
     //-------------------------------------------------------------------------
     //!
@@ -75,7 +73,7 @@ namespace h5{
     //! \param object reference to the object from which to retrieve the path
     //! \return path as string
     //!
-    string get_path(const object_imp &object);
+    pni::core::string get_path(const object_imp &object);
 
     //------------------------------------------------------------------------
     //! 
@@ -96,7 +94,7 @@ namespace h5{
     //! \param obj reference to the object from which to retrieve the name
     //! \return name of the object
     //!
-    string get_name(const object_imp &obj);
+    pni::core::string get_name(const object_imp &obj);
 
     //------------------------------------------------------------------------
     //! 
@@ -116,7 +114,7 @@ namespace h5{
     //! \param object the HDF5 object from which to retrieve the parent path
     //! \return path to the parent
     //! 
-    string get_parent_path(const object_imp &object);
+    pni::core::string get_parent_path(const object_imp &object);
         
     //------------------------------------------------------------------------
     //!

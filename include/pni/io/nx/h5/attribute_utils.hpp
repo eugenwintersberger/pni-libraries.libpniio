@@ -29,10 +29,7 @@
 namespace pni{
 namespace io{
 namespace nx{
-namespace h5{
-    using namespace pni::core;
-    //avoid namespace collisions with std
-    using pni::core::string;
+namespace h5{    
 
     //forward declaration of object_imp
     class object_imp;
@@ -54,7 +51,7 @@ namespace h5{
     //! \param name the name of the attribute to look for
     //! \return true if exists, false otherwise
     //!
-    bool has_attribute(const object_imp &parent,const string &name);
+    bool has_attribute(const object_imp &parent,const pni::core::string &name);
             
     //------------------------------------------------------------------------
     //! 
@@ -70,7 +67,7 @@ namespace h5{
     //! \param parent reference to the parent object
     //! \param name the name of the attribute to delete
     //!
-    void delete_attribute(const object_imp &parent,const string &name);
+    void delete_attribute(const object_imp &parent,const pni::core::string &name);
 
     //-------------------------------------------------------------------------
     //!
@@ -90,7 +87,7 @@ namespace h5{
     //! \return the attribute as h5object
     //!
     object_imp create_attribute(const object_imp &parent,
-                                const string &name,
+                                const pni::core::string &name,
                                 const h5datatype &type,
                                 const h5dataspace &space,
                                 bool overwrite);
@@ -112,7 +109,7 @@ namespace h5{
     //! \param n name of the attribute
     //! \return attribute object
     //!
-    object_imp get_attribute_by_name(const object_imp &parent,const string &n);
+    object_imp get_attribute_by_name(const object_imp &parent,const pni::core::string &n);
 
 
     //-----------------------------------------------------------------

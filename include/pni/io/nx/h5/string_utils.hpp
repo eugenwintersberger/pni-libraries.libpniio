@@ -29,8 +29,6 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
-    
-    using namespace pni::core;
    
     //!
     //! \ingroup nxh5_classes
@@ -78,7 +76,7 @@ namespace h5{
     //! \param strings pointer to the first string instance
     //!
     void copy_from_vector(const char_vector_type &vector,size_t nstrs,
-                          size_t strsize,string *strings);
+                          size_t strsize,pni::core::string *strings);
 
     //-----------------------------------------------------------------------
     //!
@@ -95,7 +93,7 @@ namespace h5{
     //! \param strings pointer to the first string
     //!
     void copy_from_vector(const char_ptr_vector_type &vector,size_t nstrs,
-                          string *strings);
+                          pni::core::string *strings);
 
 }
 }

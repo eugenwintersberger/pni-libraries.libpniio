@@ -28,9 +28,7 @@
 namespace pni{
 namespace io{
 namespace nx{
-namespace h5{
-
-    using namespace pni::core;
+namespace h5{    
 
     //!
     //! \ingroup nxh5_classes

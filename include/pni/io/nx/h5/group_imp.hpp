@@ -35,12 +35,6 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
-
-    using namespace pni::core;
-    //avoid namespace collisions with std
-    using pni::core::exception;
-    using pni::core::string;
-    //class forward declarations            
     
     //! 
     //! \ingroup nxh5_classes
@@ -86,7 +80,8 @@ namespace h5{
             //! \param parent the parent group for the gnew group
             //! \param name the name of the new group
             //! 
-            explicit group_imp(const group_imp &parent,const string &name);
+            explicit group_imp(const group_imp &parent,
+                               const pni::core::string &name);
 
             //=================methods to open objects==========================
             //! 
@@ -108,7 +103,7 @@ namespace h5{
             //! \param name name of the child object
             //! \return object instance 
             //!
-            object_imp at(const string &name) const;
+            object_imp at(const pni::core::string &name) const;
 
             //-----------------------------------------------------------------
             //! 
@@ -146,7 +141,7 @@ namespace h5{
             //!
             //! \param n name of the object to remove
             //!
-            void remove(const string &n) const;
+            void remove(const pni::core::string &n) const;
 
             //----------------------------------------------------------------
             //!
@@ -176,7 +171,7 @@ namespace h5{
             //! \param name of the child node
             //! \return true if an object of name n exists
             //!
-            bool has_child(const string &name) const;
+            bool has_child(const pni::core::string &name) const;
 
             //-----------------------------------------------------------------
             //!
@@ -205,7 +200,7 @@ namespace h5{
             //!
             //! \return name of the group
             //! 
-            string name() const;
+            pni::core::string name() const;
 
             //---------------------------------------------------------------
             //! 
@@ -233,7 +228,7 @@ namespace h5{
             //! type
             //! 
             //! \return filename
-            string filename() const;
+            pni::core::string filename() const;
 
             //----------------------------------------------------------------
             //!
@@ -277,7 +272,8 @@ namespace h5{
             //! \param overwrite if true overwrite an existing attribute
             //! \return instance of attribute_imp
             //!
-            attribute_imp attr(const string &name,type_id_t tid,
+            attribute_imp attr(const pni::core::string &name,
+                               pni::core::type_id_t tid,
                                bool overwrite=false) const;
 
             //----------------------------------------------------------------
@@ -296,7 +292,8 @@ namespace h5{
             //! \param overwrite when true overwrite existing attribute
             //! \return instance of attribute_imp
             //! 
-            attribute_imp attr(const string &name,type_id_t tid,
+            attribute_imp attr(const pni::core::string &name,
+                               pni::core::type_id_t tid,
                                const type_imp::index_vector_type &shape,
                                bool overwrite=false) const;
 
@@ -311,7 +308,7 @@ namespace h5{
             //! \param name name of the requested attribute
             //! \return instance of attribute_imp
             //! 
-            attribute_imp attr(const string &name) const;
+            attribute_imp attr(const pni::core::string &name) const;
 
             //----------------------------------------------------------------
             //!
@@ -352,7 +349,7 @@ namespace h5{
             //! \param name the name of the looked up attribute
             //! \return true if attribute exists, flase otherwise
             //!
-            bool has_attr(const string &name) const;
+            bool has_attr(const pni::core::string &name) const;
 
             //----------------------------------------------------------------
             //!
@@ -367,7 +364,7 @@ namespace h5{
             //!
             //! \param name the name of the attribute to delete
             //! 
-            void del_attr(const string &name) const;
+            void del_attr(const pni::core::string &name) const;
 
 
     };

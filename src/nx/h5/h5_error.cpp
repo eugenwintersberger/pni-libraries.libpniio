@@ -33,7 +33,7 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
-    using pni::io::io_error;
+    using namespace pni::core;
 
     //--------------------------------------------------------------------------
     h5_error::h5_error() noexcept:

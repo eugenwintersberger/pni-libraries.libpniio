@@ -33,7 +33,7 @@ namespace io{
 namespace nx{
 namespace h5{
 
-    using pni::io::io_error;
+    using namespace pni::core;
 
     //-------------------------------------------------------------------------
     string get_filename(const object_imp &object)

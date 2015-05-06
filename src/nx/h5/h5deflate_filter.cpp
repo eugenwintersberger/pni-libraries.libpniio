@@ -27,6 +27,8 @@ namespace pni {
 namespace io {
 namespace nx {
 namespace h5 {
+    
+    using namespace pni::core;
 
     //-------------------------------------------------------------------------
     h5deflate_filter::h5deflate_filter() noexcept:

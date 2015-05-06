@@ -31,9 +31,8 @@ namespace io{
 namespace nx{
 namespace h5{
 
-    using pni::io::object_error;
-    using pni::io::invalid_object_error;
-
+    using namespace pni::core;
+    
     //=====================private member functions============================
     void object_imp::inc_ref()
     {

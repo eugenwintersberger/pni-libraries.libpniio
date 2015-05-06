@@ -43,9 +43,6 @@ namespace h5{
     class field_imp;
     class h5datatype;
 
-    //add namespace form core library
-    using namespace pni::core;
-
     //!
     //! \ingroup nxh5_classes
     //! \brief factory for field construction
@@ -86,7 +83,7 @@ namespace h5{
             //! \return instance of field implementation
             //! 
             static field_imp create(const object_imp &parent,
-                                    const string &name,
+                                    const pni::core::string &name,
                                     const object_imp &create_plist,
                                     const h5datatype &type,
                                     const h5dataspace &space);
@@ -152,8 +149,8 @@ namespace h5{
             //! \return field implemenation instance
             //!
             static field_imp create(const group_imp &parent,
-                                    const string &name,
-                                    type_id_t tid,
+                                    const pni::core::string &name,
+                                    pni::core::type_id_t tid,
                                     const type_imp::index_vector_type &shape,
                                     const type_imp::index_vector_type &chunk,
                                     const h5filter &filter);

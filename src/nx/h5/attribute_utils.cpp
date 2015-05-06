@@ -34,13 +34,13 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
-    using pni::io::object_error;
-    using pni::io::invalid_object_error;
-    using pni::core::key_error;
+ 
 
     //-------------------------------------------------------------------------
-    bool has_attribute(const object_imp &parent,const string &name) 
+    bool has_attribute(const object_imp &parent,const pni::core::string &name) 
     {
+        using namespace pni::core;
+        
         if(!parent.is_valid())
             throw invalid_object_error(EXCEPTION_RECORD,
                     "Cannot check attributes on an invalid HDF5 object!");
@@ -56,8 +56,10 @@ namespace h5{
     }
     
     //-------------------------------------------------------------------------
-    void delete_attribute(const object_imp &parent,const string &name) 
+    void delete_attribute(const object_imp &parent,const pni::core::string &name) 
     {
+        using namespace pni::core;
+        
         if(!has_attribute(parent,name))
             throw key_error(EXCEPTION_RECORD,
                     "Cannot delete attribute ["+name+"] from ["+
@@ -72,10 +74,14 @@ namespace h5{
     }
 
     //------------------------------------------------------------------------
-    object_imp create_attribute(const object_imp &parent,const string &name,
-                              const h5datatype &type,const h5dataspace &space,
-                              bool overwrite)
+    object_imp create_attribute(const object_imp &parent,
+                                const pni::core::string &name,
+                                const h5datatype &type,
+                                const h5dataspace &space,
+                                bool overwrite)
     {
+        using namespace pni::core;
+        
         //what to do if the attribute already exists?
         if(has_attribute(parent,name))
         {
@@ -99,8 +105,11 @@ namespace h5{
     }
 
     //------------------------------------------------------------------------
-    object_imp get_attribute_by_name(const object_imp &parent,const string &name) 
+    object_imp get_attribute_by_name(const object_imp &parent,
+                                     const pni::core::string &name) 
     {
+        using namespace pni::core;
+        
         if(!has_attribute(parent,name))
             throw key_error(EXCEPTION_RECORD,
                      "Object ["+get_path(parent)
@@ -113,6 +122,8 @@ namespace h5{
     //get number of attributes
     size_t get_number_of_attributes(const object_imp &parent) 
     {
+        using namespace pni::core;
+        
         if(!parent.is_valid())
             throw invalid_object_error(EXCEPTION_RECORD,
                     "Cannot obtain the number of attributes from an "
@@ -128,6 +139,7 @@ namespace h5{
     //implementation of opening an attribute by index
     object_imp get_attribute_by_index(const object_imp &parent,size_t i) 
     {
+        using namespace pni::core;
         if(i>=get_number_of_attributes(parent))
         {
             std::stringstream ss;

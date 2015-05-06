@@ -36,13 +36,7 @@ extern "C"{
 namespace pni{
 namespace io {
 namespace nx{
-namespace h5{
-
-    using namespace pni::core;
-    //avoid namespace collisions with std
-    using pni::core::exception;
-    using pni::core::string;
-    using pni::io::nx::nxpath;
+namespace h5{    
 
     class group_imp;
    
@@ -69,7 +63,7 @@ namespace h5{
             //! \param p Nexus path object
             //! \return HDF5 path as a string
             //!
-            static string _nx2hdf5path(const nxpath &p);
+            static pni::core::string _nx2hdf5path(const nxpath &p);
 
 
         public:
@@ -95,7 +89,7 @@ namespace h5{
             //!
             static void create_external_link(const nxpath &target,
                                              const group_imp &loc,
-                                             const string &name);
+                                             const pni::core::string &name);
 
             //-----------------------------------------------------------------
             //!
@@ -119,7 +113,7 @@ namespace h5{
             //!
             static void create_internal_link(const nxpath &target,
                                              const group_imp &loc,
-                                             const string &name);
+                                             const pni::core::string &name);
 
             //-----------------------------------------------------------------
             //!
@@ -138,7 +132,7 @@ namespace h5{
             //! \return link type
             //!
             static pni::io::nx::nxlink_type link_type(const group_imp &loc, 
-                                                      const string &name);
+                                                      const pni::core::string &name);
     };
 //end of namespace
 }

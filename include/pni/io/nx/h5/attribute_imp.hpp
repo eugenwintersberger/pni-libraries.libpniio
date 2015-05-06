@@ -36,11 +36,7 @@
 namespace pni{
 namespace io{
 namespace nx{
-namespace h5{
-    using namespace pni::core;
-    //avoid namespace collisions with std
-    using pni::core::exception;
-    using pni::core::string;
+namespace h5{   
 
     //! 
     //! \ingroup nxh5_classes
@@ -103,7 +99,7 @@ namespace h5{
             //! \param tid type ID of the underlying data type
             //! \param ptr pointer to the memory location 
             //! 
-            void _read_all(type_id_t tid,void *ptr) const;
+            void _read_all(pni::core::type_id_t tid,void *ptr) const;
 
             //----------------------------------------------------------------
             //!
@@ -122,7 +118,7 @@ namespace h5{
             //! \param tid ID of the type used to allocate memory
             //! \param ptr pointer to memory
             //! 
-            void _read_selection(type_id_t tid, void *ptr) const;
+            void _read_selection(pni::core::type_id_t tid, void *ptr) const;
             
             //-----------------------------------------------------------------
             //!
@@ -156,9 +152,9 @@ namespace h5{
             //! \param ptr pointer to target memory
             //! 
             template<typename T> 
-            void _read_selection_typed(type_id_t tid,T *ptr) const
+            void _read_selection_typed(pni::core::type_id_t tid,T *ptr) const
             {
-                typedef dynamic_array<T> array_type;                            
+                typedef pni::core::dynamic_array<T> array_type;                            
                 
                 //create buffer array and read data
                 auto a = array_type::create(_get_io_shape());
@@ -192,7 +188,7 @@ namespace h5{
             //! \param ptr a pointer to the memory where the data resides in
             //! memory
             //! 
-            void _write_all(type_id_t tid,const void *ptr) const;
+            void _write_all(pni::core::type_id_t tid,const void *ptr) const;
 
             //----------------------------------------------------------------
             //! 
@@ -203,7 +199,8 @@ namespace h5{
             //! \param tid type id of the data in memory
             //! \param ptr pointer to the memory where the data is stored
             //! 
-            void _write_selection(const type_id_t tid,const void *ptr) const;
+            void _write_selection(const pni::core::type_id_t tid,
+                                  const void *ptr) const;
    
             //------------------------------------------------------------------
             //! 
@@ -221,9 +218,9 @@ namespace h5{
             //! \param ptr pointer to memory where the data is stored 
             //! 
             template<typename T>
-            void _write_selection_typed(type_id_t tid,const T *ptr) const
+            void _write_selection_typed(pni::core::type_id_t tid,const T *ptr) const
             {
-                typedef dynamic_array<T> array_type;                             
+                typedef pni::core::dynamic_array<T> array_type;                             
 
                 //create buffer array and read data
                 auto a = array_type::create(_get_io_shape());
@@ -275,7 +272,7 @@ namespace h5{
             //! \param tid type id of allocated memory
             //! \param ptr pointer to the region of memory
             //!
-            void write(type_id_t tid,const void *ptr) const;
+            void write(pni::core::type_id_t tid,const void *ptr) const;
 
             //----------------------------------------------------------------
             //!
@@ -293,7 +290,7 @@ namespace h5{
             //! \param tid type id of memory
             //! \param ptr pointer to memory
             //!
-            void read(type_id_t tid,void *ptr) const;
+            void read(pni::core::type_id_t tid,void *ptr) const;
 
             //=================attribute inquery methods=======================
             //! 
@@ -316,7 +313,7 @@ namespace h5{
             //!
             //! \return type ID
             //!
-            type_id_t type_id() const;
+            pni::core::type_id_t type_id() const;
 
             //-----------------------------------------------------------------
             //! 
@@ -370,7 +367,7 @@ namespace h5{
             //!
             //! \return attribute name
             //!
-            string name() const;
+            pni::core::string name() const;
 
             //----------------------------------------------------------------
             //! 
@@ -385,7 +382,7 @@ namespace h5{
             //! 
             //! \return file name
             //! 
-            string filename() const;
+            pni::core::string filename() const;
 
             //-----------------------------------------------------------------
             //!

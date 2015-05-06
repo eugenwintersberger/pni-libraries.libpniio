@@ -33,9 +33,11 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
+    
+    using namespace pni::core;
 
     field_imp field_factory::create(const object_imp &parent,
-                                    const string &name,
+                                    const pni::core::string &name,
                                     const object_imp &create_plist,
                                     const h5datatype &type,
                                     const h5dataspace &space)
@@ -59,6 +61,8 @@ namespace h5{
     object_imp 
     field_factory::create_cplist(const type_imp::index_vector_type &chunk)
     {
+        using namespace pni::core;
+        
         if(!chunk.size())
             throw size_mismatch_error(EXCEPTION_RECORD,
                     "Chunk shape must not have rank zero!");
@@ -83,6 +87,8 @@ namespace h5{
     h5dataspace 
     field_factory::create_dataspace(const type_imp::index_vector_type &shape)
     {
+        using namespace pni::core;
+        
         type_imp::index_vector_type current_dims(shape);
 
         if(current_dims.empty()) 
@@ -95,12 +101,14 @@ namespace h5{
    
     //-----------------------------------------------------------------------
     field_imp field_factory::create(const group_imp &parent,
-                                    const string &name,
+                                    const pni::core::string &name,
                                     type_id_t tid,
                                     const type_imp::index_vector_type &shape,
                                     const type_imp::index_vector_type &chunk,
                                     const h5filter &filter)
     {
+        using namespace pni::core;
+        
         if(!parent.is_valid())
             throw invalid_object_error(EXCEPTION_RECORD,
                     "Parent group is invalid!");

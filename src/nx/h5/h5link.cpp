@@ -33,6 +33,8 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
+    
+    using namespace pni::core;
 
     //===============implementation of private methods=========================
     string h5link::_nx2hdf5path(const nxpath &p)
@@ -66,16 +68,18 @@ namespace h5{
     void h5link::create_external_link(const nxpath &path,const group_imp &loc,
                                       const string &name)
     {
+        using namespace pni::core; 
+        
         if(!loc.is_valid())
             throw pni::io::invalid_object_error(EXCEPTION_RECORD,
                     "Cannot create a link below an invalid group object!");
 
         if(path.filename().empty())
-            throw pni::io::value_error(EXCEPTION_RECORD,
+            throw value_error(EXCEPTION_RECORD,
                     "For an external link a target filename must be provided!");
 
         if(!is_absolute(path))
-            throw pni::io::value_error(EXCEPTION_RECORD,
+            throw value_error(EXCEPTION_RECORD,
                     "For an external link the target path must be absolute!");
 
         //convert the user provided path to an HDF5 path
@@ -94,12 +98,13 @@ namespace h5{
     void h5link::create_internal_link(const nxpath &target,const group_imp &loc,
                                       const string &name)
     {
+        using namespace pni::core;
         if(!loc.is_valid())
             throw pni::io::invalid_object_error(EXCEPTION_RECORD,
                     "Cannot create a link below an invalid group object!");
 
         if(!target.filename().empty())
-            throw pni::io::value_error(EXCEPTION_RECORD,
+            throw value_error(EXCEPTION_RECORD,
                     "Target paths for internal links must not contain a "
                     "filename!");
 

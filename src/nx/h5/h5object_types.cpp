@@ -33,12 +33,11 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
-    using pni::io::invalid_object_error;
-    using pni::core::type_error;
 
     //------------------------------------------------------------------------
     h5object_type get_hdf5_type(const object_imp &o)
     {
+        using namespace pni::core;
         //we obviously cannot retrieve the HDF5 type from an invalid object
         if(!o.is_valid())
             throw invalid_object_error(EXCEPTION_RECORD,
@@ -63,6 +62,7 @@ namespace h5{
     //------------------------------------------------------------------------
     pni::io::nx::nxobject_type get_nexus_type(const object_imp &o)
     {
+        using namespace pni::core;
         //if the object is not valid get_hdf5_object_type will 
         //throw invalid_object_error - do not have to do this here
         if(get_hdf5_type(o) == h5object_type::GROUP) 

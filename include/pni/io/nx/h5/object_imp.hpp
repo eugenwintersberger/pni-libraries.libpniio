@@ -35,9 +35,7 @@ extern "C"{
 namespace pni{
 namespace io{
 namespace nx{
-namespace h5{
-    //avoid namespace collisions with std
-    using pni::core::string;
+namespace h5{ 
 
     //! 
     //! \ingroup nxh5_classes

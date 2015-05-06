@@ -40,12 +40,6 @@ namespace nx {
 namespace h5 {
 
 
-using namespace pni::core;
-//avoid namespace collisions with std
-using pni::core::exception;
-using pni::core::string;
-
-
     //! 
     //! \ingroup nxh5_error_classes
     //! \brief HDF5 error stack
@@ -167,7 +161,7 @@ extern "C" herr_t _error_walker(unsigned n,const H5E_error2_t *eptr,
     //! 
     //! \return error messages
     //!
-    string get_h5_error_string();
+    pni::core::string get_h5_error_string();
 
 
 //end of namespace

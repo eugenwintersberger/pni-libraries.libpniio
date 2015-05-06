@@ -29,11 +29,7 @@
 namespace pni {
 namespace io {
 namespace nx {
-namespace h5 {
-
-    using namespace pni::core;
-    using pni::core::string;
-
+namespace h5 {  
     //! 
     //! \ingroup nxh5_classes
     //! \brief HDF5 deflate filter
@@ -47,7 +43,7 @@ namespace h5 {
     class h5deflate_filter:public h5filter 
     {
         private:
-            uint32 _comp_rate;   //!< compression rate
+            pni::core::uint32 _comp_rate;   //!< compression rate
             bool   _shuffle;     //!< shuffle flag
         public:
             //====================constructor and destructor===================
@@ -60,7 +56,7 @@ namespace h5 {
             //! 
             //! \brief constructor
             //! 
-            h5deflate_filter(uint32 rate,bool shuffle) noexcept;
+            h5deflate_filter(pni::core::uint32 rate,bool shuffle) noexcept;
            
             //===================public member functions=======================
             //! 
@@ -76,7 +72,7 @@ namespace h5 {
             //!
             //! \return compression rate
             //!
-            uint32 compression_rate() const noexcept;
+            pni::core::uint32 compression_rate() const noexcept;
 
             //-----------------------------------------------------------------
             //! 
@@ -87,7 +83,7 @@ namespace h5 {
             //! \throws range_error if compression rate above 9
             //! \param r compression rate (between 0 and 9).
             //!
-            void compression_rate(uint32 r);
+            void compression_rate(pni::core::uint32 r);
 
             //-----------------------------------------------------------------
             //!

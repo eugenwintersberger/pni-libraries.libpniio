@@ -39,9 +39,7 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
-    using pni::core::exception;
-    using pni::core::shape_mismatch_error;
-    using pni::core::string;
+    using namespace pni::core;
 
     //============implementation of private methods====================
     void field_imp::_update()
@@ -121,7 +119,7 @@ namespace h5{
             return _file_space.shape();
     }
     //------------------------------------------------------------------------
-    type_id_t field_imp::type_id() const 
+    pni::core::type_id_t field_imp::type_id() const 
     { 
         using pni::io::nx::h5::type_id;
         _throw_if_not_valid(EXCEPTION_RECORD,

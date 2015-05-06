@@ -36,6 +36,8 @@ namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
+    
+    using namespace pni::core;
 
     //=================private functions=======================================
     bool is_family_filename(const string &fname)

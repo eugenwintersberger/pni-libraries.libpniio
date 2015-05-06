@@ -37,10 +37,7 @@
 namespace pni{
 namespace io{
 namespace nx{
-namespace h5{
-
-    using namespace pni::core;
-    //avoid namespace collisions with std
+namespace h5{  
 
     //forward declarations
     class group_imp;
@@ -129,8 +126,8 @@ namespace h5{
             //! \param message the message which should be attached to the 
             //! exception
             //! 
-            void _throw_if_not_valid(const exception_record &record,
-                                     const string &message) const
+            void _throw_if_not_valid(const pni::core::exception_record &record,
+                                     const pni::core::string &message) const
             {
                 if(!is_valid())
                     throw invalid_object_error(record,message);
@@ -178,8 +175,9 @@ namespace h5{
             //! \param chunk the chunk shape
             //! \param filter reference to an optional filter 
             //! 
-            explicit field_imp(const group_imp &parent,const string &name,
-                               type_id_t tid,
+            explicit field_imp(const group_imp &parent,
+                               const pni::core::string &name,
+                               pni::core::type_id_t tid,
                                const type_imp::index_vector_type &shape,
                                const type_imp::index_vector_type &chunk,
                                const h5filter &filter = h5filter());
@@ -253,7 +251,7 @@ namespace h5{
             //!
             //! \return type id of the datatype of the dataset
             //!
-            type_id_t type_id() const ;
+            pni::core::type_id_t type_id() const ;
 
             //-----------------------------------------------------------------
             //!
@@ -293,7 +291,8 @@ namespace h5{
             //! \param shape the shape of the data to read
             //! \param ptr pointer to memory where the data should be stored.
             //!
-            void read(type_id_t tid,const type_imp::index_vector_type &shape,
+            void read(pni::core::type_id_t tid,
+                      const type_imp::index_vector_type &shape,
                       void *ptr) const;
 
             //===============writing data methods==============================
@@ -315,7 +314,8 @@ namespace h5{
             //! \param shape the shape of the data to write
             //! \param ptr pointer to the memory region from which to read
             //!
-            void write(type_id_t tid,const type_imp::index_vector_type &shape,
+            void write(pni::core::type_id_t tid,
+                       const type_imp::index_vector_type &shape,
                        const void *ptr) const;
 
 
@@ -334,7 +334,7 @@ namespace h5{
             //!
             //! \return name of the group
             //! 
-            string name() const;
+            pni::core::string name() const;
 
             //---------------------------------------------------------------
             //! 
@@ -364,7 +364,7 @@ namespace h5{
             //! 
             //! \return name of the file the field belongs to
             //!
-            string filename() const;
+            pni::core::string filename() const;
 
             //-----------------------------------------------------------------
             //!
@@ -409,7 +409,8 @@ namespace h5{
             //! \param overwrite if true overwrite an existing attribute
             //! \return instance of attribute_imp
             //!
-            attribute_imp attr(const string &name,type_id_t tid,
+            attribute_imp attr(const pni::core::string &name,
+                               pni::core::type_id_t tid,
                                bool overwrite=false) const;
 
             //----------------------------------------------------------------
@@ -428,7 +429,8 @@ namespace h5{
             //! \param overwrite when true overwrite existing attribute
             //! \return instance of attribute_imp
             //! 
-            attribute_imp attr(const string &name,type_id_t tid,
+            attribute_imp attr(const pni::core::string &name,
+                               pni::core::type_id_t tid,
                                const type_imp::index_vector_type &shape,
                                bool overwrite=false) const;
 
@@ -443,7 +445,7 @@ namespace h5{
             //! \param name name of the requested attribute
             //! \return instance of attribute_imp
             //! 
-            attribute_imp attr(const string &name) const;
+            attribute_imp attr(const pni::core::string &name) const;
 
             //----------------------------------------------------------------
             //!
@@ -483,7 +485,7 @@ namespace h5{
             //! \param name the name of the looked up attribute
             //! \return true if attribute exists, flase otherwise
             //!
-            bool has_attr(const string &name) const;
+            bool has_attr(const pni::core::string &name) const;
 
             //----------------------------------------------------------------
             //!
@@ -497,7 +499,7 @@ namespace h5{
             //! 
             //! \param name the name of the attribute to delete
             //! 
-            void del_attr(const string &name) const;
+            void del_attr(const pni::core::string &name) const;
     };
 
 

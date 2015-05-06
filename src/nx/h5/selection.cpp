@@ -31,6 +31,8 @@ namespace io{
 namespace nx{
 namespace h5{
 
+    using namespace pni::core;
+
     selection::selection() noexcept:
         _offset(),
         _stride(),
