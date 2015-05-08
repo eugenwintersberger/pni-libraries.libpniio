@@ -68,15 +68,15 @@ void flat_group_test::test_creation()
     //construct from a group type
     auto fgroup = make_flat(_f.root());
     CPPUNIT_ASSERT(fgroup.size() == 8);
-    //CPPUNIT_ASSERT_THROW(make_flat(h5::nxgroup()),invalid_object_error);
+    CPPUNIT_ASSERT_THROW(make_flat(h5::nxgroup()),invalid_object_error);
 
     //construct from an object 
     fgroup = make_flat(get_object(_f.root(),nxpath::from_string("entry:NXentry")));
     CPPUNIT_ASSERT(fgroup.size()==7);
 
-    /*
+    
     CPPUNIT_ASSERT_THROW(make_flat(h5::nxobject(h5::nxgroup())),
                          invalid_object_error);
-                         */
+                         
 }
 

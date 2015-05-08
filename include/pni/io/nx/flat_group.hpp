@@ -23,6 +23,7 @@
 #pragma once
 
 #include <vector>
+#include "algorithms/is_valid.hpp"
 #include "algorithms/is_group.hpp"
 #include "algorithms/as_group.hpp"
 #include "nxobject_traits.hpp"
@@ -124,6 +125,9 @@ namespace nx{
             explicit flat_group(const group_type &parent):
                 _container()
             { 
+                if(!is_valid(parent))
+                    throw invalid_object_error(EXCEPTION_RECORD,
+                    "Cannot create an flat group from an invalid object!");
                 append_children(parent); 
             }
 
