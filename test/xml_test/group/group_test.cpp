@@ -101,5 +101,6 @@ void group_test::test_write_1()
     root.add_child("group",gnode);
     write_xml("test.xml",root);
 
-    CPPUNIT_ASSERT(!std::system("xmldiff -c test.xml group2.xml"));
+    xml::node readback = xml::create_from_file("test.xml");
+    CPPUNIT_ASSERT(readback == root);
 }

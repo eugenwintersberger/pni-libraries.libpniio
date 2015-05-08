@@ -46,8 +46,10 @@ void write_fixture::test_write_1()
     root.add_child("dimensions",xml::dimensions::object_to_xml(s));
 
     write_xml("test.xml",root);
+    
+    xml::node readback = xml::create_from_file("test.xml");
 
-    CPPUNIT_ASSERT(!std::system("xmldiff -c test.xml dim1.xml"));
+    CPPUNIT_ASSERT(readback==root);
 }
 
 //----------------------------------------------------------------------------
@@ -63,5 +65,6 @@ void write_fixture::test_write_2()
 
     write_xml("test.xml",root);
 
-    CPPUNIT_ASSERT(!std::system("xmldiff -c test.xml dim6.xml"));
+    xml::node readback = xml::create_from_file("test.xml");
+    CPPUNIT_ASSERT(readback == root);
 }
