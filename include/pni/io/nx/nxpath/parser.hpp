@@ -64,6 +64,18 @@ namespace parsers{
         }
     };
     
+    //-------------------------------------------------------------------------
+    template<typename ITERT>
+    struct dot_parser : qi::grammar<ITERT,pni::core::string()>
+    {
+        qi::rule<ITERT,pni::core::string()> dot_rule;
+        
+        dot_parser() : dot_parser::base_type(dot_rule)
+        {
+            dot_rule = lit(".")[_val = _1]>>lit(".")[_val += _1];
+        }
+    };
+    
     //--------------------------------------------------------------------------
     //!
     //! \ingroup nxpath_code
