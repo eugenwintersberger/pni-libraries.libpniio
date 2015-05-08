@@ -143,7 +143,7 @@ namespace nx{
                 pni::core::string ename = element_name(group_name,group_type);
 
                 //the recursion is done when we arrived at the root group
-                if(group_type == "NXroot")
+                if((group_type == "NXroot") || (group_name == "/"))
                     return ename;
                 else
                     return get_path(g.parent()) + "/" + ename;
