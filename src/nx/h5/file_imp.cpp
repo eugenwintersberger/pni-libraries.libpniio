@@ -30,6 +30,8 @@
 
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 
+#include <boost/regex.hpp>
+
 #include <sstream>
 
 namespace pni{
@@ -42,8 +44,10 @@ namespace h5{
     //=================private functions=======================================
     bool is_family_filename(const string &fname)
     {
-        if(fname.find("%")!=string::npos) return true;
-        return false;
+        boost::regex r("%[[:digit:]]*[idu]");
+        
+        boost::smatch matches;
+        return boost::regex_search(fname,matches,r);        
     }
 
 
