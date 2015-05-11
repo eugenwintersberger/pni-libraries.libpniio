@@ -23,9 +23,9 @@
 
 #include <pni/io/nx/h5/h5datatype.hpp>
 #include <pni/io/nx/h5/h5_error_stack.hpp>
+#include <vector>
 
-#include <map>
-#include <unordered_map>
+#include "string_utils.hpp"
 
 
 namespace pni{
@@ -34,7 +34,11 @@ namespace nx{
 namespace h5{
     
     using namespace pni::core;
-
+    
+    typedef std::pair<type_id_t,h5datatype> id_type_pair_t;
+    
+    typedef std::vector<id_type_pair_t> id_type_pairs_t;
+    
     //------------------------------------------------------------------------
     //map for basic numeric types
     const static std::map<type_id_t,h5datatype> __base_type_map = 
@@ -116,6 +120,25 @@ namespace h5{
 
         return type;
     }
+    
+    h5datatype create_static_string()
+    {
+        string estr = "Error creating STRING type!";
+
+        h5datatype type(object_imp(H5Tcopy(H5T_C_S1)));
+
+        if(H5Tset_strpad(type.object().id(),H5T_STR_NULLTERM)<0)
+            throw object_error(EXCEPTION_RECORD,
+                    estr+"\n\n"+get_h5_error_string());
+
+        /*
+        if(H5Tset_cset(type.object().id(),H5T_CSET_UTF8)<0)
+            throw object_error(EXCEPTION_RECORD,
+                    estr+"\n\n"+get_h5_error_string());
+                    * */
+                            
+        return type;
+    }
 
     //-------------------------------------------------------------------------
     h5datatype create_binary()
@@ -144,19 +167,46 @@ namespace h5{
      {type_id_t::STRING,create_string()},
      {type_id_t::BINARY,create_binary()}
     };
+    
+#define CREATE_DTYPE(native_type)\
+    h5datatype(object_imp(H5Tcopy(native_type)))
+    
+    const static id_type_pairs_t id_type_pairs = 
+    {
+        id_type_pair_t{type_id_t::UINT8,   CREATE_DTYPE(H5T_NATIVE_UINT8)},
+        id_type_pair_t{type_id_t::INT8,    CREATE_DTYPE(H5T_NATIVE_INT8)},
+        id_type_pair_t{type_id_t::UINT16,  CREATE_DTYPE(H5T_NATIVE_UINT16)},
+        id_type_pair_t{type_id_t::INT16,   CREATE_DTYPE(H5T_NATIVE_INT16)},
+        id_type_pair_t{type_id_t::UINT32,  CREATE_DTYPE(H5T_NATIVE_UINT32)},
+        id_type_pair_t{type_id_t::INT32,   CREATE_DTYPE(H5T_NATIVE_INT32)},
+        id_type_pair_t{type_id_t::UINT64,  CREATE_DTYPE(H5T_NATIVE_UINT64)},
+        id_type_pair_t{type_id_t::INT64,   CREATE_DTYPE(H5T_NATIVE_INT64)},
+        id_type_pair_t{type_id_t::FLOAT32, CREATE_DTYPE(H5T_NATIVE_FLOAT)},
+        id_type_pair_t{type_id_t::FLOAT64, CREATE_DTYPE(H5T_NATIVE_DOUBLE)},
+        id_type_pair_t{type_id_t::FLOAT128,CREATE_DTYPE(H5T_NATIVE_LDOUBLE)},
+        id_type_pair_t{type_id_t::COMPLEX32, create_complex<complex32>()},
+        id_type_pair_t{type_id_t::COMPLEX64, create_complex<complex64>()},
+        id_type_pair_t{type_id_t::COMPLEX128,create_complex<complex128>()},
+        id_type_pair_t{type_id_t::BOOL,  create_bool()},
+        id_type_pair_t{type_id_t::STRING,create_string()},
+        id_type_pair_t{type_id_t::STRING,create_static_string()},
+        id_type_pair_t{type_id_t::BINARY,create_binary()}
+    };
 
     //------------------------------------------------------------------------
     const h5datatype &get_type(type_id_t id)
     {
-        try
-        {
-            return __id_2_type_map.at(id);
-        }
-        catch(std::out_of_range &error)
-        {
+        auto istart = id_type_pairs.begin();
+        auto iend   = id_type_pairs.end();
+        
+        auto result = std::find_if(istart,iend,[&id](const id_type_pair_t &p)
+                                   { return p.first == id; });
+                                   
+        if(result == iend)
             throw type_error(EXCEPTION_RECORD,
-                    "PNI type does not have a corresponding HDF5 data type!");
-        }
+                "PNI type does not have a corresponding HDF5 data type!");
+                
+        return result->second;        
     }
 
     //-------------------------------------------------------------------------
@@ -192,61 +242,33 @@ namespace h5{
         if(!o.object().is_valid())
             throw invalid_object_error(EXCEPTION_RECORD,
                     "Datatype object not valid - cannot fetch type id!");
-
-        for(const auto &p: __id_2_type_map)
-            if(p.second == o) return p.first;
+                    
+        auto istart = id_type_pairs.begin();
+        auto istop  = id_type_pairs.end();
         
-        throw type_error(EXCEPTION_RECORD,"HDF5 type is unkown!");
+        auto result = std::find_if(istart,istop,[&o](const id_type_pair_t &p)
+                                   { return p.second == o; });
+                                   
+        if(result == istop)
+            throw type_error(EXCEPTION_RECORD,"HDF5 type is unkown!");
+            
+        return result->first;
     }
-
-    //-------------------------------------------------------------------------
-    bool is_vl_string(const h5datatype &type)
-    {
-        //if the type is not even a string type we can immediately 
-        //return false
-        if(type_id(type)!=type_id_t::STRING) return false;
-
-        //check the string type
-        htri_t result = H5Tis_variable_str(type.object().id());
-
-        if(result >0)
-            return true;
-        else if(result == 0)
-            return false;
-        else
-            throw object_error(EXCEPTION_RECORD,
-                    "Cannot retrieve VL status of string type!");
-    }
-
-    //-------------------------------------------------------------------------
-    bool is_static_string(const h5datatype &type)
-    {
-        if(type_id(type)!=type_id_t::STRING) return false;
-
-        return !is_vl_string(type);
-    }
-
-    //-------------------------------------------------------------------------
-    size_t static_string_size(const h5datatype &type)
-    {
-        if(!is_static_string(type))
-            throw type_error(EXCEPTION_RECORD,
-                    "Data type is not a static string type!");
-
-        size_t size = H5Tget_size(type.object().id());
-        
-        if(!size)
-            throw object_error(EXCEPTION_RECORD,
-                    "Error retrieving the size of the string type!");
-
-        return size;
-    }
+    
+    
 
     //==========implementation of comparison operators=========================
 
     //! equality comparison
     bool operator==(const h5datatype &a,const h5datatype &b)
     {
+        //string type are always considered to be equal - we have to 
+        //take some special measures anyhow to deal with static and 
+        //variable length strings
+        if(is_string_type(a) && is_string_type(b)) return true;
+        
+        //if we are not dealing with string types we can savely use the 
+        //standard procedure of type comparison.
         htri_t result = H5Tequal(a.object().id(),b.object().id());
         if(result > 0 )
             return true;

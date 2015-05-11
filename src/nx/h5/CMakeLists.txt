@@ -17,6 +17,10 @@ set(SOURCES
             object_imp.cpp
             string_utils.cpp
             selection.cpp
+            nullterm_formatter.cpp
+            charpad_formatter.cpp
+            string_formatter.cpp
+            string_formatter_factory.cpp
             )
 
 
