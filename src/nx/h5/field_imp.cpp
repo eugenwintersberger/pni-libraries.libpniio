@@ -31,9 +31,9 @@
 #include <pni/io/nx/h5/field_factory.hpp>
 #include <pni/io/nx/h5/hdf5_utilities.hpp>
 #include <pni/io/nx/h5/attribute_utils.hpp>
-#include <pni/io/nx/h5/string_utils.hpp>
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 #include <pni/io/nx/h5/selection_guard.hpp>
+#include "string_utils.hpp"
 
 namespace pni{
 namespace io{
