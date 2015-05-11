@@ -48,8 +48,7 @@ class elements_parser_test:public CppUnit::TestFixture
 	CPPUNIT_TEST_SUITE(elements_parser_test);
     CPPUNIT_TEST(test_relative);
     CPPUNIT_TEST(test_relative_current);
-    CPPUNIT_TEST(test_relative_parent);
-    CPPUNIT_TEST(test_errors);
+    CPPUNIT_TEST(test_relative_parent);    
 	CPPUNIT_TEST_SUITE_END();
 
 
@@ -84,8 +83,7 @@ public:
     void test_relative();
     void test_relative_current();
     void test_relative_parent();
-
-    void test_errors();
+    
 
 
 };

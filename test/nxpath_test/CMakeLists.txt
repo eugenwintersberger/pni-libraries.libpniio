@@ -11,6 +11,7 @@ set(PARSERSRC nxpath_parser_tests.cpp
               nxpath_parser_test.cpp
               element_parser_test.cpp
               elements_parser_test.cpp
+              dot_parser_test.cpp
            )
 set(UTILSRC nxpath_utils_tests.cpp
             test_object_element.cpp

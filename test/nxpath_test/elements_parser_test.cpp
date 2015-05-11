@@ -115,25 +115,4 @@ void elements_parser_test::test_relative_parent()
 
 }
 
-//----------------------------------------------------------------------------
-void elements_parser_test::test_errors()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    set_input(":NXentry/..../data");
-    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
-                         expectation_error_type);
-
-    /*
-    set_input(":NXentry//data");
-    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
-                         expectation_error_type);
-                         */
-
-    /*
-    set_input(":NXentry../data");
-    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
-                         expectation_error_type);
-                         */
-
-}

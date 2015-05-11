@@ -17,7 +17,7 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Jun 11, 2014
+//  Created on: Jun 19, 2014
 //      Author: Eugen Wintersberger
 //
 
@@ -39,27 +39,27 @@ using namespace pni::io::nx::parsers;
 
 //!
 //! \ingroup test_code
-//! \brief test nxpath_parser
+//! \brief test element_parser
 //! 
-//! Test the nxpath_parser used for parsing a nexus path. 
+//! Test the element parser component for the Nexus path parser.
 //!
-class nxpath_parser_test:public CppUnit::TestFixture 
+class dot_parser_test:public CppUnit::TestFixture 
 {
-	CPPUNIT_TEST_SUITE(nxpath_parser_test);
-    CPPUNIT_TEST(test_element_path_only);
-    CPPUNIT_TEST(test_attribute);
-    CPPUNIT_TEST(test_errors);
+	CPPUNIT_TEST_SUITE(dot_parser_test);
+    CPPUNIT_TEST(test_one);
+    CPPUNIT_TEST(test_two);
+    CPPUNIT_TEST(test_many);   
 	CPPUNIT_TEST_SUITE_END();
 
     typedef string::const_iterator iterator_type;
-    typedef nxpath_parser<iterator_type> nxpath_parser_type;
-    nxpath_parser_type parser;
+    typedef dot_parser<iterator_type> parser_type;
     typedef boost::spirit::qi::expectation_failure<iterator_type> 
             expectation_error_type;
+    parser_type parser;
 
     iterator_type start_iter,stop_iter;
     string input;
-    nxpath output;
+    string output;
 
     void set_input(const string &value)
     {
@@ -71,19 +71,23 @@ public:
 	void setUp();
 	void tearDown();
 
+    //------------------------------------------------------------------------
+    //!
+    //! \brief test parsing current group
+    //!
+    void test_one();
 
     //------------------------------------------------------------------------
     //!
-    //! \brief test with object path only
+    //! \brief test parsing parent group
     //!
-    void test_element_path_only();
+    void test_two();
 
     //------------------------------------------------------------------------
     //!
-    //! \brief test with 
-    void test_attribute();
-    
-    void test_errors();
+    //! \brief test parsing a full element
+    //!
+    void test_many();    
 
 };
 

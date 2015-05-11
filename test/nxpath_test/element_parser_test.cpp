@@ -110,30 +110,12 @@ void element_parser_test::test_errors()
     //not allowede
     set_input("/");
     CPPUNIT_ASSERT(!qi::parse(start_iter,stop_iter,parser,output));
-
-    set_input("...");
-    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
-                         expectation_error_type);
-
-    /*
-    set_input("name..");
-    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
-                         expectation_error_type);
-                         */
     
-    set_input("..name");
-    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
-                         expectation_error_type);
 
     set_input(":.class");
     CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
                          expectation_error_type);
-
-    /*
-    set_input(":class.");
-    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
-                         expectation_error_type);
-                         */
+   
     
     set_input(":");
     CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
@@ -142,13 +124,5 @@ void element_parser_test::test_errors()
     set_input(": bla");
     CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
                          expectation_error_type);
-
-    //contains a character not allowed
-   
-    /*
-    set_input("hello$world");
-    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
-                         expectation_error_type);
-                         */
 
 }

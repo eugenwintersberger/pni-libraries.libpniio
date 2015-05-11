@@ -85,3 +85,25 @@ void nxpath_parser_test::test_attribute()
     CPPUNIT_ASSERT(output.attribute() == "name");
 
 }
+
+//-----------------------------------------------------------------------------
+void nxpath_parser_test::test_errors()
+{
+    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    
+    set_input("/:NXentry:/:NXinstrument");
+    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
+                          expectation_error_type);
+                          
+    set_input(".../:NXinstrument");
+    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
+                         expectation_error_type);
+                         
+    set_input("/:NXinstrument/$hello");
+    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
+                         expectation_error_type);
+                         
+    set_input("/:NXinstrument/ llo/instrument");
+    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
+                         expectation_error_type);
+}
