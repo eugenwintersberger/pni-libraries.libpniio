@@ -26,6 +26,7 @@
 #include <pni/io/nx/h5/hdf5_utilities.hpp>
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 #include "string_utils.hpp"
+#include "string_formatter_factory.hpp"
 
 
 namespace pni{
@@ -277,7 +278,7 @@ namespace h5{
     {
         //if the type is not a variable length string memory must be allocated
         //for each string in the attribute
-        const h5datatype &mem_type = get_type(tid);
+        const h5datatype &mem_type = get_type(tid);        
 
         if(is_static_string(_dtype))
         {
@@ -286,13 +287,17 @@ namespace h5{
             copy_from_vector(str_data,
                              _dspace.size(),
                              static_string_size(_dtype),
-                             static_cast<string*>(ptr));
+                             static_cast<string*>(ptr),
+                             string_formatter_factory::create(_dtype));
         }
         else if(is_vl_string(_dtype))
         {
             char_ptr_vector_type str_pointers(_dspace.size());
             _from_disk(_dtype,static_cast<void *>(str_pointers.data()));
-            copy_from_vector(str_pointers,_dspace.size(),static_cast<string*>(ptr));
+            copy_from_vector(str_pointers,
+                             _dspace.size(),
+                            static_cast<string*>(ptr),
+                            string_formatter_factory::create(_dtype));
         }
         else
         {

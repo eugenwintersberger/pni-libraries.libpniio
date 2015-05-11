@@ -22,8 +22,8 @@
 //
 #pragma once
 
-#include <pni/core/types.hpp>
-#include <memory>
+#include "string_formatter.hpp"
+#include <pni/io/nx/h5/h5datatype.hpp>
 
 namespace pni{
 namespace io{
@@ -35,14 +35,13 @@ namespace h5{
     //! \brief abstract string reader class
     //!
     //! This abstract class provides an interface for a string reader. 
-    class string_formatter
+    class string_formatter_factory
     {
         public:
-            virtual ~string_formatter();
-            virtual pni::core::string operator()(const pni::core::string &input) const;
+           static formatter_ptr create(const h5datatype &type);
     };    
 
-    typedef std::unique_ptr<string_formatter> formatter_ptr;
+    
 }
 }
 }

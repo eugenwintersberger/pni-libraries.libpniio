@@ -25,6 +25,7 @@
 #include <pni/core/types.hpp>
 #include <vector>
 #include <pni/io/nx/h5/h5datatype.hpp>
+#include "string_formatter.hpp"
 
 namespace pni{
 namespace io{
@@ -128,7 +129,8 @@ namespace h5{
     //! \param strings pointer to the first string instance
     //!
     void copy_from_vector(const char_vector_type &vector,size_t nstrs,
-                          size_t strsize,pni::core::string *strings);
+                          size_t strsize,pni::core::string *strings,
+                          const formatter_ptr &formatter);
 
     //-----------------------------------------------------------------------
     //!
@@ -145,7 +147,8 @@ namespace h5{
     //! \param strings pointer to the first string
     //!
     void copy_from_vector(const char_ptr_vector_type &vector,size_t nstrs,
-                          pni::core::string *strings);
+                          pni::core::string *strings,
+                          const formatter_ptr &formatter);
                           
     bool is_nullterm_str(const h5datatype &type);
     bool is_nullpad_str(const h5datatype &type);

@@ -34,6 +34,7 @@
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 #include <pni/io/nx/h5/selection_guard.hpp>
 #include "string_utils.hpp"
+#include "string_formatter_factory.hpp"
 
 namespace pni{
 namespace io{
@@ -191,7 +192,8 @@ namespace h5{
             _read_data(memory_type,memory_space,_file_space,xfer_plist,
                        static_cast<void*>(ptrs.data()));
        
-            copy_from_vector(ptrs,size(),static_cast<string*>(ptr));
+            copy_from_vector(ptrs,size(),static_cast<string*>(ptr),
+                             string_formatter_factory::create(file_type));
             H5Dvlen_reclaim(memory_type.object().id(),
                             memory_space.id(),
                             xfer_plist.id(),
@@ -206,7 +208,8 @@ namespace h5{
                        static_cast<void*>(ptrs.data()));
 
             copy_from_vector(ptrs,size(),static_string_size(file_type),
-                             static_cast<string *>(ptr));
+                             static_cast<string *>(ptr),
+                            string_formatter_factory::create(file_type));
         }
         else
             _read_data(memory_type,memory_space,_file_space,

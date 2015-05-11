@@ -85,7 +85,8 @@ namespace h5{
 
     //------------------------------------------------------------------------
     void copy_from_vector(const char_vector_type &vector,size_t nstrs,
-                          size_t strsize,string *strings)
+                          size_t strsize,string *strings,
+                          const formatter_ptr &formatter)
     {
         if(vector.size()!=nstrs*strsize)
             throw size_mismatch_error(EXCEPTION_RECORD,
@@ -93,19 +94,28 @@ namespace h5{
                     "required characater!");
 
         for(size_t i = 0;i<nstrs;++i)
-            strings[i] = string(vector.data()+i*strsize,strsize);
+        {
+            strings[i] = (*formatter)(string(vector.data()+i*strsize,strsize));
+            
+        }
     }
 
     //------------------------------------------------------------------------
     void copy_from_vector(const char_ptr_vector_type &vector,
-                          size_t nstrs,string *strings)
+                          size_t nstrs,string *strings,
+                          const formatter_ptr &formatter)
     {
         if(nstrs!=vector.size())
             throw size_mismatch_error(EXCEPTION_RECORD,
                     "Number of strings does not match vector size!");
 
-        std::copy_if(vector.begin(),vector.end(),strings,
-                     [](const char *v) { return v!=nullptr; });
+        for(const char *v: vector)
+        {
+            if(v==nullptr) continue; 
+            
+            *strings = (*formatter)(string(v));
+            strings++;
+        }
     }
     
     //-------------------------------------------------------------------------
