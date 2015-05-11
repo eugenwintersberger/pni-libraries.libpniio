@@ -23,8 +23,9 @@
 
 #include <pni/io/nx/h5/h5datatype.hpp>
 #include <pni/io/nx/h5/h5_error_stack.hpp>
-
 #include <vector>
+
+#include "string_utils.hpp"
 
 
 namespace pni{
@@ -38,69 +39,6 @@ namespace h5{
     
     typedef std::vector<id_type_pair_t> id_type_pairs_t;
     
-    //-------------------------------------------------------------------------
-    // IMPLEMENTATION OF STRING UTILITY FUNCTIONS
-    //
-    // These functions are private and thus should not be used by API 
-    // users at all
-    //-------------------------------------------------------------------------
-        
-    //utility function to check whether or not a data type is a string type
-    bool is_string_type(const h5datatype &type)
-    {
-        if(H5Tget_class(type.object().id())==H5T_STRING)
-            return true;
-        else
-            return false;
-    }
-
-    //-------------------------------------------------------------------------
-    bool is_vl_string(const h5datatype &type)
-    {
-        //if the type is not even a string type we can immediately 
-        //return false
-        if(!is_string_type(type)) return false;
-
-        //check the string type
-        htri_t result = H5Tis_variable_str(type.object().id());
-
-        if(result >0)
-            return true;
-        else if(result == 0)
-            return false;
-        else
-            throw object_error(EXCEPTION_RECORD,
-                    "Cannot retrieve VL status of string type!");
-    }
-
-    //-------------------------------------------------------------------------
-    bool is_static_string(const h5datatype &type)
-    {
-        if(!is_string_type(type)) return false;
-
-        return !is_vl_string(type);
-    }
-    
-    
-
-    //-------------------------------------------------------------------------
-    size_t static_string_size(const h5datatype &type)
-    {
-        if(!is_static_string(type))
-            throw type_error(EXCEPTION_RECORD,
-                    "Data type is not a static string type!");
-
-        size_t size = H5Tget_size(type.object().id());
-        
-        if(!size)
-            throw object_error(EXCEPTION_RECORD,
-                    "Error retrieving the size of the string type!");
-
-        return size;
-    }
-    
-    
-
     //------------------------------------------------------------------------
     //map for basic numeric types
     const static std::map<type_id_t,h5datatype> __base_type_map = 

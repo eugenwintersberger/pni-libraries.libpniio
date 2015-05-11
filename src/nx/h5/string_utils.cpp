@@ -30,6 +30,58 @@ namespace io{
 namespace nx{
 namespace h5{
     using namespace pni::core;
+    
+    //utility function to check whether or not a data type is a string type
+    bool is_string_type(const h5datatype &type)
+    {
+        if(H5Tget_class(type.object().id())==H5T_STRING)
+            return true;
+        else
+            return false;
+    }
+
+    //-------------------------------------------------------------------------
+    bool is_vl_string(const h5datatype &type)
+    {
+        //if the type is not even a string type we can immediately 
+        //return false
+        if(!is_string_type(type)) return false;
+
+        //check the string type
+        htri_t result = H5Tis_variable_str(type.object().id());
+
+        if(result >0)
+            return true;
+        else if(result == 0)
+            return false;
+        else
+            throw object_error(EXCEPTION_RECORD,
+                    "Cannot retrieve VL status of string type!");
+    }
+
+    //-------------------------------------------------------------------------
+    bool is_static_string(const h5datatype &type)
+    {
+        if(!is_string_type(type)) return false;
+
+        return !is_vl_string(type);
+    }
+    
+     //-------------------------------------------------------------------------
+    size_t static_string_size(const h5datatype &type)
+    {
+        if(!is_static_string(type))
+            throw type_error(EXCEPTION_RECORD,
+                    "Data type is not a static string type!");
+
+        size_t size = H5Tget_size(type.object().id());
+        
+        if(!size)
+            throw object_error(EXCEPTION_RECORD,
+                    "Error retrieving the size of the string type!");
+
+        return size;
+    }
 
     //------------------------------------------------------------------------
     void copy_from_vector(const char_vector_type &vector,size_t nstrs,
@@ -54,6 +106,24 @@ namespace h5{
 
         std::copy_if(vector.begin(),vector.end(),strings,
                      [](const char *v) { return v!=nullptr; });
+    }
+    
+    //-------------------------------------------------------------------------
+    bool is_nullterm_str(const h5datatype &type)
+    {
+        return H5T_STR_NULLTERM == H5Tget_strpad(type.object().id());
+    }
+    
+    //-------------------------------------------------------------------------
+    bool is_nullpad_str(const h5datatype &type)
+    {
+        return H5T_STR_NULLPAD == H5Tget_strpad(type.object().id());
+    }
+    
+    //-------------------------------------------------------------------------
+    bool is_spacepad_str(const h5datatype &type)
+    {
+        return H5T_STR_SPACEPAD == H5Tget_strpad(type.object().id());
     }
 
 //end of namespace

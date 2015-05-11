@@ -24,6 +24,7 @@
 
 #include <pni/core/types.hpp>
 #include <vector>
+#include <pni/io/nx/h5/h5datatype.hpp>
 
 namespace pni{
 namespace io{
@@ -31,7 +32,7 @@ namespace nx{
 namespace h5{
    
     //!
-    //! \ingroup nxh5_classes
+    //! \ingroup hdf5_internal_classes
     //! \brief vector type for individual characters
     //!
     //! This type is mainly used for reading strings of static size from a 
@@ -58,6 +59,57 @@ namespace h5{
     //! a field or attribute
     //!
     typedef std::vector<const char*> char_const_ptr_vector_type;
+    
+    //------------------------------------------------------------------------
+    //! 
+    //! \ingroup nxh5_classes
+    //! \brief check variable length string 
+    //! 
+    //! Returns true if the data type represents a variable length string 
+    //! type.
+    //! 
+    //! \throws object_error if type inquery fails
+    //! \throws invalid_object_error if type is not valid
+    //! \throws type_error if the datatype is not supported
+    //! 
+    //! \param type a type instance
+    //! \return true if VL string type, false otherwise
+    //!
+    bool is_vl_string(const h5datatype &type);
+
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup nxh5_classes
+    //! \brief check if static length string
+    //! 
+    //! Returns true if the data type represents a static length string. 
+    //! If type is not a string type at all false will be returned. 
+    //!
+    //! \throw object_error if information retrieval fails
+    //! \throw invalid_object_error if object not valid
+    //! \throw type_error if data type is not supported
+    //!
+    //! \param type instance of h5datatype
+    //! \return true if static string type, false otherwise
+    //!
+    bool is_static_string(const h5datatype &type);
+
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup nxh5_classes
+    //! \brief get static string size
+    //! 
+    //! Return the size of the strings for a static string size type. 
+    //! 
+    //! \throws type_error if type is not a static string type
+    //! \throws invalid_type_error if the type is not valid
+    //! \throws object_error in any other case
+    //!
+    //! \param type the datatype from which to retrieve the string size
+    //! \return number of characters in each string
+    //! 
+    size_t static_string_size(const h5datatype &type);
+
 
     //------------------------------------------------------------------------
     //!
@@ -94,6 +146,14 @@ namespace h5{
     //!
     void copy_from_vector(const char_ptr_vector_type &vector,size_t nstrs,
                           pni::core::string *strings);
+                          
+    bool is_nullterm_str(const h5datatype &type);
+    bool is_nullpad_str(const h5datatype &type);
+    bool is_spacepad_str(const h5datatype &type);
+    
+    bool is_string_type(const h5datatype &type);
+                          
+                          
 
 }
 }
