@@ -71,7 +71,9 @@ namespace parsers{
         catch(...)
         {
             throw pni::io::parser_error(EXCEPTION_RECORD,
-                    "Error parsing string to nxpath!");
+                    "Error parsing string ["+input+"] to nxpath!\n"
+                    "File section was:   ["+file_part+"]\n"
+                    "Object section was: ["+parser_input+"]");
         }
 
         return path;
