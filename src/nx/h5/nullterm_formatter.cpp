@@ -32,7 +32,7 @@ namespace h5{
     
     string nullterm_formatter::operator()(const string &input) const
     {
-        return string(input,0,input.size()-1);        
+        return string(input,0,input.find_last_not_of('\0')+1);        
     }
 
 }
