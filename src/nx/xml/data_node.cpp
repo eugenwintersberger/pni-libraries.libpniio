@@ -22,6 +22,7 @@
 //
 
 
+#include <algorithm>
 #include <pni/io/nx/xml/data_node.hpp>
 #include <boost/algorithm/string.hpp>
 
@@ -34,6 +35,11 @@ namespace xml{
     {
         pni::core::string data = n.data();
         boost::algorithm::trim(data);
+
+        //we do not care about line breaks - the data of a node is considered 
+        //a linear stream of elements.
+        std::replace(data.begin(),data.end(),'\n',' ');
+
         return data;
     }
 

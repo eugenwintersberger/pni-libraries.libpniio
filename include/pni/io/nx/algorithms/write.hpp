@@ -306,6 +306,23 @@ namespace nx{
         return boost::apply_visitor(visitor_type(a,sel),o);
     }
 
+    //------------------------------------------------------------------------
+    template<
+             typename ATYPE,
+             typename GTYPE,
+             typename FTYPE,
+             typename AATYPE
+            >
+    void write(nxobject<GTYPE,FTYPE,AATYPE> &o,const ATYPE &a,
+               const std::vector<pni::core::slice> &sel)
+    {
+        typedef write_visitor<ATYPE,GTYPE,FTYPE,AATYPE> visitor_type;
+
+        return boost::apply_visitor(visitor_type(a,sel),o);
+    }
+
+
+
 //end of namespace
 }
 }
