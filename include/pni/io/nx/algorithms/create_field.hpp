@@ -133,16 +133,13 @@ namespace nx{
             //! \param f field instance
             //! \return empty result type
             //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const field_type &f) const
+            result_type operator()(const field_type &) const
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Cannot create a group below a field!");
                 return result_type();
             }
-#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
             //!
@@ -157,16 +154,13 @@ namespace nx{
             //! \param a attribute instance
             //! \return an empty result type
             //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const attribute_type &a) const
+            result_type operator()(const attribute_type &) const
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Cannot create a group below an attribute!");
                 return result_type();
             }
-#pragma GCC diagnostic pop
     };
 
     //------------------------------------------------------------------------

@@ -123,16 +123,13 @@ namespace nx{
             //! \param f field instance
             //! \return can be ignored 
             //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const field_type &f) const
+            result_type operator()(const field_type &) const
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Fields do not have a class!");
                 return false;
             }
-#pragma GCC diagnostic pop
 
             //----------------------------------------------------------------
             //!
@@ -142,16 +139,13 @@ namespace nx{
             //! \param a attribute instance
             //! \return can be ignored
             //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const attribute_type &a) const
+            result_type operator()(const attribute_type &) const
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Attributes do not have a class!");
                 return false;
             }
-#pragma GCC diagnostic pop
     };
 
     //!

@@ -38,8 +38,6 @@ namespace xml{
     //!
     struct write_no_data
     {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
         //!
         //! \brief predicate function
         //! 
@@ -56,11 +54,10 @@ namespace xml{
                  typename FTYPE,
                  typename ATYPE
                 >
-        bool operator()(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+        bool operator()(const nxobject<GTYPE,FTYPE,ATYPE> &)
         {
             return false;
         }
-#pragma GCC diagnostic pop
     };
 
     //------------------------------------------------------------------------

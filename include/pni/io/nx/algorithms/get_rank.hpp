@@ -98,16 +98,13 @@ namespace nx{
             //! \param g group instance
             //! \return 0
             //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const group_type &g) const
+            result_type operator()(const group_type &) const
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "A group does not have a shape!");
                 return size_t(0);
             }
-#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
             //!

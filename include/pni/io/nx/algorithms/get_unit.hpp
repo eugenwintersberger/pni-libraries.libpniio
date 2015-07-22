@@ -99,9 +99,7 @@ namespace nx{
             //! \param g group instance
             //! \return an empty string - to be ignored
             //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const group_type &g) const
+            result_type operator()(const group_type &) const
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
@@ -109,7 +107,6 @@ namespace nx{
 
                 return result_type();
             }
-#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
             //!
@@ -144,16 +141,13 @@ namespace nx{
             //! \param a attribute instance
             //! \return an empty string - to be ignored
             //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const attribute_type &a) const
+            result_type operator()(const attribute_type &) const
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Cannot retrieve a unit from an attribute type!");
                 return result_type();
             }
-#pragma GCC diagnostic pop
     };
 
     //------------------------------------------------------------------------

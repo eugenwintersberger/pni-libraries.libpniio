@@ -107,15 +107,12 @@ namespace nx{
             //! \param g group instance
             //! \return nothing
             //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const group_type &g) const
+            result_type operator()(const group_type &) const
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Groups do not have units!");
             }
-#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
             //!
@@ -145,15 +142,12 @@ namespace nx{
             //! \param a attribute instance
             //! \return nothing
             //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const attribute_type &a) const
+            result_type operator()(const attribute_type &) const
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Attributes do not have units!");
             }
-#pragma GCC diagnostic pop
     };
 
     //------------------------------------------------------------------------

@@ -46,25 +46,19 @@ namespace io{
         //!
         //! \brief use scientific format by default
         //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-        static int floatfield(T n)
+        static int floatfield(T)
         {
             return 0;
         }
-#pragma GCC diagnostic pop
 
         //--------------------------------------------------------------------
         //! 
         //! \brief set output to full number precision
         //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-        static int precision(T n)
+        static int precision(T)
         {
             return std::numeric_limits<T>::digits10;
         }
-#pragma GCC diagnostic pop
 
     };
 
@@ -88,34 +82,26 @@ namespace io{
         //!
         //! \brief use scientific format by default
         //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-        static int floatfield(T n)
+        static int floatfield(T)
         {
             return 0;
         }
-#pragma GCC diagnostic pop
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
         //--------------------------------------------------------------------
         //!
         //! \brief always use maximum precision of required
         //!
-        static int precision(T n)
+        static int precision(T)
         {
             return std::numeric_limits<T>::digits10;
         }
-#pragma GCC diagnostic pop
 
         //--------------------------------------------------------------------
         //!
         //! \brief add sign and I in front of the output
         //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
         template<typename OITER>
-        static bool integer_part(OITER &sink,T n,bool sign,bool force_sign) 
+        static bool integer_part(OITER &sink,T n,bool sign,bool ) 
         {
             if(sign)
                 *(sink++) = '-';
@@ -126,7 +112,6 @@ namespace io{
 
             return base_type::integer_part(sink,n,false,false);
         }
-#pragma GCC diagnostic pop
 
     };
 

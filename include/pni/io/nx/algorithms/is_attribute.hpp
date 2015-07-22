@@ -63,13 +63,10 @@ namespace nx{
             //! \param g refernece to group instance
             //! \return false
             //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const group_type &g) const  noexcept
+            result_type operator()(const group_type &) const  noexcept
             { 
                 return false; 
             }
-#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
             //!
@@ -78,13 +75,10 @@ namespace nx{
             //! \param f reference to field instance
             //! \return false
             //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const field_type &f) const noexcept
+            result_type operator()(const field_type &) const noexcept
             { 
                 return false; 
             }
-#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
             //!
@@ -93,13 +87,10 @@ namespace nx{
             //! \param a reference to attribute instance
             //! \return true
             //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const attribute_type &a) const noexcept
+            result_type operator()(const attribute_type &) const noexcept
             { 
                 return true; 
             }
-#pragma GCC diagnostic pop
     };
 
     //------------------------------------------------------------------------

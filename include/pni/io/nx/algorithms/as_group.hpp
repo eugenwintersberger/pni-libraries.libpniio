@@ -82,9 +82,7 @@ namespace nx{
             //! \param f field instance
             //! \return empty instance of group_type
             //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const field_type &f) const
+            result_type operator()(const field_type &) const
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
@@ -92,7 +90,6 @@ namespace nx{
                         "but of nxfield!");
                 return result_type();
             }
-#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
             //!
@@ -105,9 +102,7 @@ namespace nx{
             //! \param a attribute instance
             //! \return invalid group instance
             //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const attribute_type &a) const
+            result_type operator()(const attribute_type &) const
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
@@ -115,7 +110,6 @@ namespace nx{
                         "but of nxattribute!");
                 return result_type();
             }
-#pragma GCC diagnostic pop
     };
 
     //!

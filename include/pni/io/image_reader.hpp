@@ -118,9 +118,7 @@ namespace io{
             //! \param c (default = 0) image channel to read
             //! \return instance of ArrayType holding the channel data
             //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-            template<typename ATYPE> ATYPE image(size_t i,size_t c=0) 
+            template<typename ATYPE> ATYPE image(size_t,size_t c) 
             {
                 using namespace pni::core;
                 throw not_implemented_error(EXCEPTION_RECORD,
@@ -128,7 +126,6 @@ namespace io{
 
                 return ATYPE(); //just to make the compiler happy
             }
-#pragma GCC diagnostic pop
            
             //-----------------------------------------------------------------
             //!
@@ -146,16 +143,13 @@ namespace io{
             //! \param i index of the image in the file
             //! \param c (default = 0) index of the channel from which to read data.
             //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
             template<typename ATYPE> 
-                void image(ATYPE &array,size_t i,size_t c=0) 
+                void image(ATYPE &,size_t,size_t c) 
             {
                 using namespace pni::core;
                 throw not_implemented_error(EXCEPTION_RECORD,
                         "Method not implemented!");
             }
-#pragma GCC diagnostic pop
 
     };
 

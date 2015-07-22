@@ -87,8 +87,6 @@ namespace cbf{
     };
 
     //-------------------------------------------------------------------------
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
     template<
              typename CBFT,
              typename CTYPE
@@ -162,7 +160,6 @@ namespace cbf{
         }
 
     }
-#pragma GCC diagnostic pop
 
 //end of namespace
 }

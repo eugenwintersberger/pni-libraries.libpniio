@@ -105,16 +105,13 @@ namespace nx{
             //! \param g group instance
             //! \return NONE type code - can be safely ignored 
             //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const group_type &g) const
+            result_type operator()(const group_type &) const
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "A group does not have a type!");
                 return type_id_t::NONE;
             }
-#pragma GCC diagnostic pop
 
             //-----------------------------------------------------------------
             //!

@@ -136,16 +136,13 @@ namespace nx{
             //! \param a attribute instance
             //! \return an empty result type
             //!
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-            result_type operator()(const attribute_type &a) const
+            result_type operator()(const attribute_type &) const
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
                         "Cannot create an attribute at an attribute!");
                 return result_type();
             }
-#pragma GCC diagnostic pop
     };
 
     //-------------------------------------------------------------------------
