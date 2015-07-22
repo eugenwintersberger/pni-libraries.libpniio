@@ -59,7 +59,7 @@ add_custom_command(OUTPUT ${MDIM_SRCS}
 # finally build the test target
 #-----------------------------------------------------------------------------
 include_directories(${CMAKE_SOURCE_DIR}/test)
-add_executable(attribute_tests attribute_tests.cpp ${SCALAR_SRCS} ${MDIM_SRCS}
+add_executable(attribute_tests EXCLUDE_FROM_ALL attribute_tests.cpp ${SCALAR_SRCS} ${MDIM_SRCS}
                $<TARGET_OBJECTS:test_common>)
 target_link_libraries(attribute_tests pniio ${CPPUNIT_LIBRARIES})
 add_test(NAME "XML::attribute_tests"

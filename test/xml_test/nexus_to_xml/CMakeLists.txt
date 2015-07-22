@@ -14,7 +14,7 @@ foreach(XMLFILE ${XMLFILES})
 endforeach()
 
 
-add_executable(nexus_to_xml_tests ${SOURCES})
-target_link_libraries(nexus_to_xml_tests pniio ${CPPUNIT_LIBRARIES})
+add_executable(nexus_to_xml_test EXCLUDE_FROM_ALL ${SOURCES})
+target_link_libraries(nexus_to_xml_test pniio ${CPPUNIT_LIBRARIES})
 
-add_test("XML::nexus_to_xml_tests" nexus_to_xml_tests)
+add_test("XML::nexus_to_xml_test" nexus_to_xml_test)

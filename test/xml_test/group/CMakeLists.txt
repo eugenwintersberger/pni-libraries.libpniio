@@ -9,7 +9,7 @@ foreach(XMLFILE ${XMLFILES})
     configure_file(${XMLFILE} ${XMLFILE} COPYONLY)
 endforeach()
 
-add_executable(group_tests ${SOURCES})
-target_link_libraries(group_tests pniio ${CPPUNIT_LIBRARIES})
+add_executable(group_test EXCLUDE_FROM_ALL ${SOURCES})
+target_link_libraries(group_test pniio ${CPPUNIT_LIBRARIES})
 add_test(NAME "XML::group_tests"
-         COMMAND group_tests)
+         COMMAND group_test)

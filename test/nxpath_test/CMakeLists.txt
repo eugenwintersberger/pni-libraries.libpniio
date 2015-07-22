@@ -28,13 +28,13 @@ set(UTILSRC nxpath_utils_tests.cpp
             nxpath_match_test.cpp
             test_element_match.cpp
            )
-add_executable(nxpath_parser_tests ${PARSERSRC} $<TARGET_OBJECTS:test_common>)
-add_executable(nxpath_tests ${SOURCES} $<TARGET_OBJECTS:test_common>)
-add_executable(nxpath_utils_test ${UTILSRC} $<TARGET_OBJECTS:test_common>)
+add_executable(nxpath_parser_tests EXCLUDE_FROM_ALL ${PARSERSRC} $<TARGET_OBJECTS:test_common>)
+add_executable(nxpath_tests EXCLUDE_FROM_ALL ${SOURCES} $<TARGET_OBJECTS:test_common>)
+add_executable(nxpath_utils_test EXCLUDE_FROM_ALL  ${UTILSRC} $<TARGET_OBJECTS:test_common>)
 target_link_libraries(nxpath_tests pniio ${CPPUNIT_LIBRARIES})
 target_link_libraries(nxpath_parser_tests pniio ${CPPUNIT_LIBRARIES})
 target_link_libraries(nxpath_utils_test pniio ${CPPUNIT_LIBRARIES})
-add_test(nxpath_tests nxpath_tests)
+add_test("nxpath:general_tests" nxpath_tests)
 add_test("nxpath:parser_tests" nxpath_parser_tests)
 add_test("nxpath:utilities" nxpath_utils_test)
 

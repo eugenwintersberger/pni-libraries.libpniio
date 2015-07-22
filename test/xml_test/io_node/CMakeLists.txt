@@ -9,7 +9,7 @@ foreach(XMLFILE ${XMLFILES})
     configure_file(${XMLFILE} ${XMLFILE} COPY_ONLY)
 endforeach()
 
-add_executable(run_test ${SOURCES})
-target_link_libraries(run_test pniio ${CPPUNIT_LIBRARIES})
+add_executable(io_node_test EXCLUDE_FROM_ALL ${SOURCES})
+target_link_libraries(io_node_test pniio ${CPPUNIT_LIBRARIES})
 add_test(NAME "XML::io_node"
-         COMMAND run_test)
+         COMMAND io_node_test)

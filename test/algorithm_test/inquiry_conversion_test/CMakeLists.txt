@@ -8,8 +8,8 @@ set(SOURCES inquiry_conversion_test.cpp
             )
 
 
-add_executable(inquiry_conversion_test ${SOURCES}
-               $<TARGET_OBJECTS:test_common>)
+add_executable(inquiry_conversion_test EXCLUDE_FROM_ALL ${SOURCES}
+       $<TARGET_OBJECTS:test_common>)
 target_link_libraries(inquiry_conversion_test pniio ${CPPUNIT_LIBRARIES})
 add_test("algorithms:inquiry_conversion" inquiry_conversion_test)
 

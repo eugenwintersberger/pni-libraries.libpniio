@@ -38,12 +38,12 @@ set(NXLINKSRC nxlink_tests.cpp
               nxlink_external_test.cpp
    )
 
-add_executable(nxfile_tests ${NXFILESRC} $<TARGET_OBJECTS:test_common>)
-add_executable(nexus_lowlevel_test ${SOURCES} $<TARGET_OBJECTS:test_common>)
-add_executable(nxgroup_tests ${NXGROUPSRC} $<TARGET_OBJECTS:test_common>)
-add_executable(nxfield_tests ${NXFIELDSRC} $<TARGET_OBJECTS:test_common>)
-add_executable(nxattribute_tests ${NXATTRSRC} $<TARGET_OBJECTS:test_common>)
-add_executable(nxlink_tests ${NXLINKSRC} $<TARGET_OBJECTS:test_common>)
+add_executable(nxfile_tests EXCLUDE_FROM_ALL ${NXFILESRC} $<TARGET_OBJECTS:test_common>)
+add_executable(nexus_lowlevel_test EXCLUDE_FROM_ALL ${SOURCES} $<TARGET_OBJECTS:test_common>)
+add_executable(nxgroup_tests EXCLUDE_FROM_ALL ${NXGROUPSRC} $<TARGET_OBJECTS:test_common>)
+add_executable(nxfield_tests EXCLUDE_FROM_ALL ${NXFIELDSRC} $<TARGET_OBJECTS:test_common>)
+add_executable(nxattribute_tests EXCLUDE_FROM_ALL ${NXATTRSRC} $<TARGET_OBJECTS:test_common>)
+add_executable(nxlink_tests EXCLUDE_FROM_ALL ${NXLINKSRC} $<TARGET_OBJECTS:test_common>)
 
 target_link_libraries(nexus_lowlevel_test pniio ${CPPUNIT_LIBRARIES})
 target_link_libraries(nxfile_tests pniio ${CPPUNIT_LIBRARIES})
@@ -52,7 +52,7 @@ target_link_libraries(nxfield_tests pniio ${CPPUNIT_LIBRARIES})
 target_link_libraries(nxattribute_tests pniio ${CPPUNIT_LIBRARIES})
 target_link_libraries(nxlink_tests pniio ${CPPUNIT_LIBRARIES})
 
-add_test(nexus_lowlevel_test nexus_lowlevel_test)
+add_test("Nexus_Layer_1:low-level-test" nexus_lowlevel_test)
 add_test("Nexus_Layer_1:nxfile" nxfile_tests)
 add_test("Nexus_Layer_1:nxgroup" nxgroup_tests)
 add_test("Nexus_Layer_1:nxfield" nxfield_tests)

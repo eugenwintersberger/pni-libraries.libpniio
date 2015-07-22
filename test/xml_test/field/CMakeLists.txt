@@ -58,12 +58,12 @@ add_custom_command(OUTPUT ${MDIM_SRCS}
 # finally build the test target
 #-----------------------------------------------------------------------------
 include_directories(${CMAKE_SOURCE_DIR}/test)
-add_executable(field_tests field_tests.cpp 
+add_executable(field_test EXCLUDE_FROM_ALL field_tests.cpp 
                             ${SCALAR_SRCS} 
                             ${MDIM_SRCS}
                             $<TARGET_OBJECTS:test_common>)
-target_link_libraries(field_tests pniio ${CPPUNIT_LIBRARIES})
+target_link_libraries(field_test pniio ${CPPUNIT_LIBRARIES})
 add_test(NAME "XML::field_tests"
-         COMMAND field_tests)
+         COMMAND field_test)
 
 

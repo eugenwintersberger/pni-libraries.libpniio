@@ -3,7 +3,7 @@ set(SOURCES tiff_reader_test.cpp
             cbf_reader_test.cpp
            )
 
-add_executable(reader_test ${SOURCES} $<TARGET_OBJECTS:test_common>)
+add_executable(reader_test EXCLUDE_FROM_ALL ${SOURCES} $<TARGET_OBJECTS:test_common>)
 target_link_libraries(reader_test pniio ${CPPUNIT_LIBRARIES})
 
 add_custom_command(TARGET reader_test PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy 
@@ -16,4 +16,4 @@ add_custom_command(TARGET reader_test PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy
     ${CMAKE_CURRENT_SOURCE_DIR}/reader_test.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/reader_test.cpp)
 
-add_test(reader_test reader_test)
+add_test(NAME "reader-test" COMMAND reader_test)

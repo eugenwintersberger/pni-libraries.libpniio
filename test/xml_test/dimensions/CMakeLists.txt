@@ -16,7 +16,7 @@ foreach(XMLFILE ${XMLFILES})
     configure_file(${XMLFILE} ${XMLFILE} COPYONLY)
 endforeach()
 
-add_executable(dimensions_test ${SOURCES})
+add_executable(dimensions_test EXCLUDE_FROM_ALL ${SOURCES})
 target_link_libraries(dimensions_test pniio ${CPPUNIT_LIBRARIES})
 add_test(NAME "XML::dimensions"
          COMMAND dimensions_test)

@@ -35,9 +35,7 @@ namespace h5 {
     using namespace pni::core;
 
     //--------------------------------------------------------------------------
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-    herr_t _error_walker(unsigned n,const H5E_error2_t *eptr,void *client_data)
+    herr_t _error_walker(unsigned ,const H5E_error2_t *eptr,void *client_data)
     {
         h5_error_stack *stack = (h5_error_stack *)client_data;
 
@@ -52,7 +50,6 @@ namespace h5 {
 
         return 0;
     }
-#pragma GCC diagnostic pop
 
     //--------------------------------------------------------------------------
     h5_error_stack::h5_error_stack() noexcept { } 

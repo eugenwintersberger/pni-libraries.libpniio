@@ -10,7 +10,7 @@ set(SOURCES close_test.cpp
            )
 
 
-add_executable(common_test ${SOURCES} $<TARGET_OBJECTS:test_common>)
+add_executable(common_test EXCLUDE_FROM_ALL ${SOURCES} $<TARGET_OBJECTS:test_common>)
 target_link_libraries(common_test pniio ${CPPUNIT_LIBRARIES})
 add_test("algorithms:common" common_test)
 

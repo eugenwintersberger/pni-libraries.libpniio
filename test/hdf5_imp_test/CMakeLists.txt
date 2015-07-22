@@ -14,7 +14,8 @@ set(SOURCES
             attribute_utils_test.cpp
            )
 
-add_executable(hdf5_imp_test ${SOURCES} $<TARGET_OBJECTS:test_common>)
+add_executable(hdf5_imp_test EXCLUDE_FROM_ALL ${SOURCES} $<TARGET_OBJECTS:test_common>)
 target_link_libraries(hdf5_imp_test pniio ${CPPUNIT_LIBRARIES})
-add_test(hdf5_imp_test hdf5_imp_test)
+add_test(NAME "HDF5:implementation-test" 
+         COMMAND hdf5_imp_test)
 
