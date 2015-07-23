@@ -20,7 +20,7 @@ set(MAJOR_VERSION "1")
 set(MINOR_VERSION "0")
 set(PATCH_VERSION "0")
 set(LIBRARY_VERSION "${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}")
-set(SO_VERSION "2")
+set(SO_VERSION ${LIBRARY_VERSION})
 
 include_directories("./include")
 
