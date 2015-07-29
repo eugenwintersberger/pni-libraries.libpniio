@@ -1,5 +1,3 @@
-
-NO_API_DOC           = YES
 PROJECT_NAME           = @CMAKE_PROJECT_NAME@
 PROJECT_NUMBER         =
 OUTPUT_DIRECTORY       = ./
@@ -61,11 +59,11 @@ WARN_NO_PARAMDOC       = YES
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/../include mainpage \
-                         algorithm_code ascii_io general_io \
-                         h5_implementation_classes \ 
-                         image_io implementation_interface nexus_io \
-                         nexus_utilities nxpath_code xml_code \
+INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/../include mainpage.dox \
+                         algorithm_code.dox ascii_io.dox general_io.dox \
+                         h5_implementation_classes.dox \ 
+                         image_io.dox nexus_io.dox \
+                         nexus_utilities.dox nxpath_code.dox xml_code.dox \
                          @CMAKE_CURRENT_SOURCE_DIR@/../src
 RECURSIVE              = YES
 EXCLUDE_SYMLINKS       = NO
@@ -194,7 +192,6 @@ SERVER_BASED_SEARCH    = NO
 LATEX_SOURCE_CODE      = NO
 MSCGEN_PATH            =
 DOT_NUM_THREADS        = 0
-DOT_FONTNAME           = FreeSans.ttf
 DOT_FONTSIZE           = 10
 DOT_FONTPATH           =
 DOT_GRAPH_MAX_NODES    = 50
