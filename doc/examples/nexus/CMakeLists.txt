@@ -23,4 +23,4 @@ set(SOURCES Makefile
 #record_parser.cpp
 
 install(FILES ${SOURCES} 
-    DESTINATION "${CMAKE_INSTALL_FULL_DOCDIR}/examples/nexus")
+    DESTINATION "${CMAKE_INSTALL_FULL_DOCDIR}${LIBRARY_VERSION}-doc/examples/nexus")
