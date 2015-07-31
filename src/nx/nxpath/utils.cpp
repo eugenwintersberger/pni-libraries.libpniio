@@ -296,6 +296,12 @@ namespace nx{
     }
 
     //-------------------------------------------------------------------------
+    bool match(const pni::core::string &a,const pni::core::string &b)
+    {
+        return match(nxpath::from_string(a),nxpath::from_string(b));
+    }
+
+    //-------------------------------------------------------------------------
     bool operator==(const nxpath::element_type &a,
                     const nxpath::element_type &b)
     {

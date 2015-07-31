@@ -30,8 +30,46 @@
 namespace pni{
 namespace io{
 namespace nx{    
-    
+
+    //!
+    //! \ingroup nxpath_code
+    //! \brief check if two paths are matching
+    //! 
+    //! See the users guide for details about when paths are considered as 
+    //! matching. 
+    //! 
+    //! \param a path as string
+    //! \param b path as string
+    //! \return true if the paths are matching, false otherwise
+    //!
+    bool match(const pni::core::string &a,const pni::core::string &b);
+
+    //-------------------------------------------------------------------------
+    //! 
+    //! \ingroup nxpath_code
+    //! \brief check if paths are matching
+    //! 
+    //! See the users guide for details about when paths are considered as 
+    //! matching.
+    //! 
+    //! \param a reference to first path
+    //! \param b reference to second path
+    //! \return true if paths are matching, false otherwise
+    //! 
     bool match(const nxpath &a,const nxpath &b);
+
+    //-------------------------------------------------------------------------
+    //! 
+    //! \ingroup nxpath_code
+    //! \brief check if path elements match
+    //! 
+    //! See the users guide for details about when paths elements are
+    //! considered as matching.
+    //! 
+    //! \param a reference to first path element
+    //! \param b reference to second path element
+    //! \return true if the elements are matching, false otherwise
+    //! 
     bool match(const nxpath::element_type &a,const nxpath::element_type &b);
 
 
