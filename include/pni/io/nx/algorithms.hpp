@@ -28,6 +28,7 @@
 #include "algorithms/is_valid.hpp"
 #include "algorithms/get_name.hpp"
 #include "algorithms/get_attribute.hpp"
+#include "algorithms/get_attributes.hpp"
 #include "algorithms/get_class.hpp"
 #include "algorithms/set_class.hpp"
 #include "algorithms/is_class.hpp"

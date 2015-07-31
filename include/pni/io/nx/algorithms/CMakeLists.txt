@@ -33,6 +33,7 @@ set(HEADER_FILES as_attribute.hpp
                  write.hpp
                  utils.hpp
                  get_children.hpp
+                 get_attributes.hpp
                  )
 
 install(FILES ${HEADER_FILES} 

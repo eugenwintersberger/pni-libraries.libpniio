@@ -1,6 +1,7 @@
 set(SOURCES attribute_test.cpp
             create_attribute_test.cpp
             get_attribute_test.cpp
+            get_attributes_test.cpp
 )
 
 
