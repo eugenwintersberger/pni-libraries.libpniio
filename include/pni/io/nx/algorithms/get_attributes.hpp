@@ -61,8 +61,12 @@ namespace nx{
     {
         typedef typename nxobject_trait<IMPID>::object_type object_type;
         typedef typename nxobject_trait<IMPID>::attribute_type attribute_type;
-        typedef typename nxobject_trait<IMPID>::group_type group_type;
-        typedef typename nxobject_trait<IMPID>::field_type field_type; 
+        typedef typename CTYPE::value_type value_type;
+
+        static_assert(std::is_same<value_type,object_type>::value || 
+                      std::is_same<value_type,attribute_type>::value,
+                      "The containers value_type must be either an attribute"
+                      " or an object type!");
         
         CTYPE attributes;
 
