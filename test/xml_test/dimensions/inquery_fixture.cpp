@@ -22,8 +22,10 @@
 //
 
 #include <boost/current_function.hpp>
-#include <boost/property_tree/xml_parser.hpp>
 #include "inquery_fixture.hpp"
+
+using namespace pni::core;
+using namespace pni::io::nx;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(inquery_fixture);
 

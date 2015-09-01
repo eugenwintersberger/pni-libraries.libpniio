@@ -23,7 +23,6 @@
 #pragma once
 
 #include "node.hpp"
-#include "../../parsers.hpp"
 
 namespace pni{
 namespace io{
@@ -73,11 +72,6 @@ namespace xml{
 
             //! vector type to hold index-value pairs
             typedef std::vector<index_value_type>  iv_vector;
-            //! input iterator type
-            typedef pni::core::string::const_iterator iterator_type;
-            //! parser for size_t values
-            typedef pni::io::parser<iterator_type,size_t> size_t_parser_type;
-
 
             //----------------------------------------------------------------
             //!

@@ -22,14 +22,10 @@
 //
 #pragma once
 
-#include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/xml/dimensions.hpp>
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
 
-using namespace pni::core;
-using namespace pni::io::nx;
 
 class write_fixture : public CppUnit::TestFixture
 {

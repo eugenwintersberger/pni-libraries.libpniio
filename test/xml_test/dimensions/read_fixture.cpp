@@ -21,9 +21,14 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <pni/core/types.hpp>
+#include <pni/core/error.hpp>
+#include <pni/io/exceptions.hpp>
 #include <boost/current_function.hpp>
-#include <boost/property_tree/xml_parser.hpp>
 #include "read_fixture.hpp"
+
+using namespace pni::io::nx;
+using namespace pni::core;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(read_fixture);
 
@@ -35,7 +40,7 @@ void read_fixture::tearDown()
 {}
 
 //----------------------------------------------------------------------------
-void read_fixture::setup_xml(const string &fname)
+void read_fixture::setup_xml(const pni::core::string &fname)
 {
     root = xml::create_from_file(fname);
     child = root.get_child("dimensions");
@@ -74,7 +79,7 @@ void read_fixture::test_read_3()
     setup_xml("dim3.xml");
 
     CPPUNIT_ASSERT_THROW(xml::dimensions::object_from_xml<shape_t>(child),
-                         pni::io::key_error);
+                         key_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -85,7 +90,7 @@ void read_fixture::test_read_4()
     setup_xml("dim4.xml");
 
     CPPUNIT_ASSERT_THROW(xml::dimensions::object_from_xml<shape_t>(child),
-                         pni::io::key_error);
+                         key_error);
 }
 
 //-----------------------------------------------------------------------------
@@ -97,7 +102,7 @@ void read_fixture::test_read_5()
     child = root.get_child("dimensions");
 
     CPPUNIT_ASSERT_THROW(xml::dimensions::object_from_xml<shape_t>(child),
-                         pni::io::key_error);
+                         key_error);
 }
 
 //----------------------------------------------------------------------------

@@ -22,14 +22,10 @@
 //
 #pragma once
 
-#include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/xml/dimensions.hpp>
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
-
-using namespace pni::core;
-using namespace pni::io::nx;
 
 class inquery_fixture : public CppUnit::TestFixture
 {
@@ -39,10 +35,10 @@ class inquery_fixture : public CppUnit::TestFixture
         CPPUNIT_TEST(test_size);
         CPPUNIT_TEST_SUITE_END();
 
-        xml::node root;
-        xml::node child;
+        pni::io::nx::xml::node root;
+        pni::io::nx::xml::node child;
 
-        void setup_xml(const string &fname);
+        void setup_xml(const pni::core::string &fname);
 
     public:
         void setUp();

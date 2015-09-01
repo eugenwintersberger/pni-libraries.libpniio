@@ -21,9 +21,13 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <pni/io/nx/xml/dimensions.hpp>
 #include <boost/current_function.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include "write_fixture.hpp"
+
+using namespace pni::core;
+using namespace pni::io::nx;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(write_fixture);
 
