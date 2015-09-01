@@ -26,10 +26,8 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 #include <pni/core/types.hpp>
-#include <pni/io/formatters/formatter.hpp>
 
 using namespace pni::core;
-using namespace pni::io;
 
 class complex32_formatter_test:public CppUnit::TestFixture 
 {
@@ -37,9 +35,7 @@ class complex32_formatter_test:public CppUnit::TestFixture
         CPPUNIT_TEST(test_format);
         CPPUNIT_TEST_SUITE_END();
 
-        typedef complex32            input_type; 
-        typedef formatter<input_type> formatter_type;
-        formatter_type format;
+        typedef pni::core::complex32            input_type; 
 
     public:
         void setUp();

@@ -21,6 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
+#include "formatters.hpp"
 #include <boost/current_function.hpp>
 #include "int32_formatter_test.hpp"
 

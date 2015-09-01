@@ -23,14 +23,12 @@
 
 #pragma once
 
-#include <pni/io/formatters/formatter.hpp>
 #include <pni/core/types.hpp>
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
 using namespace pni::core;
-using namespace pni::io;
 
 class float64_formatter_test:public CppUnit::TestFixture 
 {
@@ -38,9 +36,7 @@ class float64_formatter_test:public CppUnit::TestFixture
         CPPUNIT_TEST(test_format);
         CPPUNIT_TEST_SUITE_END();
 
-        typedef float64            input_type; 
-        typedef formatter<input_type> formatter_type;
-        formatter_type format;
+        typedef pni::core::float64            input_type; 
 
     public:
         void setUp();

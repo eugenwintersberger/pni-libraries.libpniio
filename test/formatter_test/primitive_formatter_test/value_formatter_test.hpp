@@ -23,14 +23,11 @@
 
 #pragma once
 
-#include <pni/io/formatters/formatter.hpp>
-
+#include <pni/core/type_erasures.hpp>
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
 
-using namespace pni::core;
-using namespace pni::io;
 
 class value_formatter_test:public CppUnit::TestFixture 
 {
@@ -53,9 +50,7 @@ class value_formatter_test:public CppUnit::TestFixture
         CPPUNIT_TEST(test_string);  
         CPPUNIT_TEST_SUITE_END();
 
-        typedef value                 input_type; 
-        typedef formatter<input_type> formatter_type;
-        formatter_type format;
+        typedef pni::core::value                 input_type; 
 
     public:
         void setUp();
