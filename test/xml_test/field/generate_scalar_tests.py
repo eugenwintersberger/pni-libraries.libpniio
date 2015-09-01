@@ -36,14 +36,12 @@ xml_scalar_attribute="""
 xml_test_header="""
 #pragma once
 
-#include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/xml.hpp>
+#include <pni/io/nx/xml/node.hpp>
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
 
 #include <EqualityCheck.hpp>
 
-using namespace pni::core;
 using namespace pni::io::nx;
 
 class scalar_field_test_{0.type_name} : public CppUnit::TestFixture
@@ -72,10 +70,17 @@ class scalar_field_test_{0.type_name} : public CppUnit::TestFixture
 """
 
 xml_test_source="""
+#include <pni/io/nx/nx.hpp>
 #include <boost/current_function.hpp>
 #include <pni/io/nx/algorithms/create_field.hpp>
+#include <pni/io/nx/algorithms/close.hpp>
+#include <pni/io/nx/algorithms/get_size.hpp>
+#include <pni/io/nx/xml/field.hpp>
+#include <pni/io/nx/xml/group.hpp>
+#include <pni/io/nx/xml/attribute.hpp>
 #include "scalar_field_test_{0.type_name}.hpp"
 
+using namespace pni::core;
 CPPUNIT_TEST_SUITE_REGISTRATION(scalar_field_test_{0.type_name});
 
 //-----------------------------------------------------------------------------
