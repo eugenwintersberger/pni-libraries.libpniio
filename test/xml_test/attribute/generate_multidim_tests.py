@@ -44,7 +44,7 @@ xml_test_header="""
 #include <random>
 
 #include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/xml.hpp>
+#include <pni/io/nx/xml/node.hpp>
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -82,6 +82,10 @@ class multidim_attribute_test_{0.type_name} : public CppUnit::TestFixture
 
 xml_test_source="""
 #include "multidim_attribute_test_{0.type_name}.hpp"
+#include <pni/io/nx/xml/attribute.hpp>
+#include <pni/io/nx/xml/group.hpp>
+#include <pni/io/nx/algorithms/close.hpp>
+#include <pni/io/nx/algorithms/write.hpp>
 
 typedef std::vector<{0.type_name}> array_type;
 

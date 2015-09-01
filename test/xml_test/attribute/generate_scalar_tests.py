@@ -41,7 +41,7 @@ xml_test_header="""
 #include <random>
 
 #include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/xml.hpp>
+#include <pni/io/nx/xml/node.hpp>
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -79,6 +79,10 @@ class scalar_attribute_test_{0.type_name} : public CppUnit::TestFixture
 
 xml_test_source="""
 #include "scalar_attribute_test_{0.type_name}.hpp"
+#include <pni/io/nx/xml/attribute.hpp>
+#include <pni/io/nx/xml/group.hpp>
+#include <pni/io/nx/algorithms/close.hpp>
+#include <pni/io/nx/algorithms/write.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION(scalar_attribute_test_{0.type_name});
 
