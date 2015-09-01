@@ -23,15 +23,10 @@
 
 #pragma once
 
-#include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/xml.hpp>
+#include <pni/io/nx/xml/data_node.hpp>
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/extensions/HelperMacros.h>
-
-
-using namespace pni::core;
-using namespace pni::io::nx;
 
 
 //!
@@ -49,9 +44,9 @@ class child_node_io_fixture : public CppUnit::TestFixture
         CPPUNIT_TEST(test_write_array);
         CPPUNIT_TEST_SUITE_END();
 
-        xml::node root;
-        xml::node root_array;
-        xml::node child;
+        pni::io::nx::xml::node root;
+        pni::io::nx::xml::node root_array;
+        pni::io::nx::xml::node child;
 
     public:
         void setUp();

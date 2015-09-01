@@ -28,7 +28,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION(child_node_io_fixture);
 
 //-----------------------------------------------------------------------------
 void child_node_io_fixture::setUp() 
-{ 
+{
+    using namespace pni::io::nx;
     root = xml::create_from_string("<group1>12</group1>"
                                    "<group2> -12    </group2>"
                                    "<group3>bla    </group3>"
