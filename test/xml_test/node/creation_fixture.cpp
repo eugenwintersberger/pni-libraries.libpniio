@@ -21,8 +21,13 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <pni/io/nx/xml/node.hpp>
+#include <pni/io/exceptions.hpp>
 #include <boost/current_function.hpp>
 #include "creation_fixture.hpp"
+
+using namespace pni::core;
+using namespace pni::io::nx;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(creation_fixture);
 

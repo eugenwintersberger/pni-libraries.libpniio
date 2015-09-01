@@ -22,20 +22,14 @@
 //
 #pragma once
 
-#include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/xml.hpp>
-
+#include <pni/core/types.hpp>
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 
-
-using namespace pni::core;
-using namespace pni::io::nx;
-
-
-static const string node_from_string_str = "<node>\n<group> </group>\n<group>"
+static const pni::core::string node_from_string_str = 
+                                    "<node>\n<group> </group>\n<group>"
                                     " </group>\n<group> </group>\n </node>";
-static const string node_from_bad_str = "this has to fail";
+static const pni::core::string node_from_bad_str = "this has to fail";
  
  
 
@@ -47,7 +41,7 @@ class creation_fixture : public CppUnit::TestFixture
         CPPUNIT_TEST(test_from_string);
         CPPUNIT_TEST_SUITE_END();
 
-        string xml_str1;
+        pni::core::string xml_str1;
     public:
         void setUp();
         void tearDown();

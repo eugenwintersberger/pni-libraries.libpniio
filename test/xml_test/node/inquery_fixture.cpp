@@ -24,6 +24,8 @@
 #include <boost/current_function.hpp>
 #include "inquery_fixture.hpp"
 
+using namespace pni::io::nx;
+
 CPPUNIT_TEST_SUITE_REGISTRATION(inquery_fixture);
 
 //-----------------------------------------------------------------------------
