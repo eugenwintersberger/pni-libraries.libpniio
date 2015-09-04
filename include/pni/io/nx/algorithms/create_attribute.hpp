@@ -239,6 +239,7 @@ namespace nx{
                      const pni::core::string &name,
                      bool overwrite=false)
     {
+        using namespace pni::core;
         return create_attribute<T>(parent,name,shape_t{},overwrite);
     }
     
@@ -286,7 +287,8 @@ namespace nx{
              typename ...ARGTS
             >
     nxobject<GTYPE,FTYPE,ATYPE>
-    create_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &o,type_id_t tid,
+    create_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &o,
+                     pni::core::type_id_t tid,
                      ARGTS ...args)
     {
         using namespace pni::core;

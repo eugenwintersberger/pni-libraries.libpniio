@@ -108,7 +108,7 @@ namespace xml{
             //shape - otherwise the attribute is scalar
             if(get_size(attr)>1)
             {
-                auto shape = get_shape<shape_t>(attr);
+                auto shape = get_shape<pni::core::shape_t>(attr);
                 attr_node.add_child("dimensions", 
                                     dimensions::object_to_xml(shape));
             }

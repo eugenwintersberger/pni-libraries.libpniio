@@ -79,10 +79,11 @@ class scalar_attribute_test_{0.type_name} : public CppUnit::TestFixture
 
 xml_test_source="""
 #include "scalar_attribute_test_{0.type_name}.hpp"
-#include <pni/io/nx/xml/attribute.hpp>
+#include "attr_utils.hpp"
 #include <pni/io/nx/xml/group.hpp>
 #include <pni/io/nx/algorithms/close.hpp>
 #include <pni/io/nx/algorithms/write.hpp>
+#include <pni/io/nx/algorithms/create_attribute.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION(scalar_attribute_test_{0.type_name});
 
@@ -110,12 +111,13 @@ void scalar_attribute_test_{0.type_name}::test_inquery()
     root = xml::create_from_file("scalar_attribute_{0.type_name}.xml");
     child = root.get_child("group.attribute");
 
-    CPPUNIT_ASSERT(xml::attribute::size(child)==1);
-    CPPUNIT_ASSERT(xml::attribute::rank(child)==0);
-    CPPUNIT_ASSERT(xml::attribute::type_id(child) == type_id_t::{0.type_id});
+    CPPUNIT_ASSERT(xml_test::attr::size(child)==1);
+    CPPUNIT_ASSERT(xml_test::attr::rank(child)==0);
+    CPPUNIT_ASSERT(xml_test::attr::type_id(child) == type_id_t::{0.type_id});
    
     {0.type_name} r{{{0.cpp_data}}};
-    auto data = xml::attribute::data_from_xml<{0.type_name}>(child);
+    {0.type_name} data;
+    xml_test::attr::data_from_xml(child,data);
     check_equality(data,r);
 
 }}
@@ -129,7 +131,7 @@ void scalar_attribute_test_{0.type_name}::test_create_object()
     child = root.get_child("group.attribute");
 
     //attach the attribute to the group
-    h5::nxattribute attr = xml::attribute::object_from_xml(group,child);
+    h5::nxattribute attr = xml_test::attr::object_from_xml(group,child);
 
     CPPUNIT_ASSERT(attr.size() == 1);
     CPPUNIT_ASSERT(attr.rank() == 1);
@@ -148,13 +150,13 @@ void scalar_attribute_test_{0.type_name}::test_from_object()
 
     root = xml::node();
     root.add_child("group",xml::group::object_to_xml(group));
-    xml::node attr_node = xml::attribute::object_to_xml(attr);
-    xml::attribute::data_to_xml(attr_node,r);
+    xml::node attr_node = xml_test::attr::object_to_xml(attr);
+    xml_test::attr::data_to_xml(r,attr_node);
     child = root.add_child("group.attribute",attr_node);
 
-    CPPUNIT_ASSERT(xml::attribute::size(child) == 1);
-    CPPUNIT_ASSERT(xml::attribute::rank(child) == 0);
-    CPPUNIT_ASSERT(xml::attribute::type_id(child) ==
+    CPPUNIT_ASSERT(xml_test::attr::size(child) == 1);
+    CPPUNIT_ASSERT(xml_test::attr::rank(child) == 0);
+    CPPUNIT_ASSERT(xml_test::attr::type_id(child) ==
                    type_id_t::{0.type_id});
 
     std::cout<<root<<std::endl;

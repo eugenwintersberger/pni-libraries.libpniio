@@ -79,6 +79,7 @@ namespace xml{
 
         return pni::core::type_id_from_str(type_code);
     }
+
     
 //end of namespace
 }
