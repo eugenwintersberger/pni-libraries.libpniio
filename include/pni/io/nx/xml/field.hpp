@@ -33,6 +33,7 @@
 #include "../algorithms/get_unit.hpp"
 #include "../algorithms/as_field.hpp"
 #include "../algorithms/as_group.hpp"
+#include "../algorithms/get_size.hpp"
 #include "../algorithms/get_shape.hpp"
 #include "../nxobject.hpp"
 #include "node.hpp"

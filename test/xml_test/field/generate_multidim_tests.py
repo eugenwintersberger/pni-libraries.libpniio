@@ -88,7 +88,7 @@ xml_test_source="""
 #include <pni/io/nx/algorithms/create_field.hpp>
 #include <pni/io/nx/algorithms/close.hpp>
 #include <pni/io/nx/algorithms/get_size.hpp>
-#include <pni/io/nx/xml/field.hpp>
+#include "field_utils.hpp"
 #include <pni/io/nx/xml/group.hpp>
 #include "multidim_field_test_{0.type_name}.hpp"
 
@@ -123,12 +123,13 @@ void multidim_field_test_{0.type_name}::test_inquery()
     root = xml::create_from_file("multidim_field_{0.type_name}.xml");
     child = root.get_child("group.field");
     
-    CPPUNIT_ASSERT(xml::field::size(child)==3);
-    CPPUNIT_ASSERT(xml::field::rank(child)==1);
-    CPPUNIT_ASSERT(xml::field::type_id(child) == type_id_t::{0.type_id});
+    CPPUNIT_ASSERT(xml_test::field_test::size(child)==3);
+    CPPUNIT_ASSERT(xml_test::field_test::rank(child)==1);
+    CPPUNIT_ASSERT(xml_test::field_test::type_id(child) == type_id_t::{0.type_id});
    
     array_type r{{{0.cpp_data}}};
-    auto data = xml::field::data_from_xml<array_type>(child);
+    array_type data;
+    xml_test::field_test::data_from_xml<array_type>(child,data);
 
     for(auto r_iter = r.begin(),d_iter = data.begin();
         d_iter != data.end();
@@ -145,7 +146,7 @@ void multidim_field_test_{0.type_name}::test_create_object()
     child = root.get_child("group.field");
 
     //attach the field to the group
-    h5::nxfield field = xml::field::object_from_xml(group,child);
+    h5::nxfield field = xml_test::field_test::object_from_xml(group,child);
 
     CPPUNIT_ASSERT(field.size() == 3);
     CPPUNIT_ASSERT(field.rank() == 1);
@@ -165,7 +166,7 @@ void multidim_field_test_{0.type_name}::test_create_compression_object()
     child_iter++;
 
     //attach the field to the group
-    h5::nxfield field = xml::field::object_from_xml(group,child_iter->second);
+    h5::nxfield field = xml_test::field_test::object_from_xml(group,child_iter->second);
 
     CPPUNIT_ASSERT(field.size() == 2048*512);
     CPPUNIT_ASSERT(field.rank() == 3);
@@ -186,13 +187,13 @@ void multidim_field_test_{0.type_name}::test_from_object()
     root = xml::node();
     root.add_child("group",xml::group::object_to_xml(group));
     xml::node field_node;
-    CPPUNIT_ASSERT_NO_THROW(field_node = xml::field::object_to_xml(field));
-    xml::field::data_to_xml(field_node,r);
+    CPPUNIT_ASSERT_NO_THROW(field_node = xml_test::field_test::object_to_xml(field));
+    xml_test::field_test::data_to_xml(r,field_node);
     child = root.add_child("group.field",field_node);
 
-    CPPUNIT_ASSERT(xml::field::size(child) == 3);
-    CPPUNIT_ASSERT(xml::field::rank(child) == 1);
-    CPPUNIT_ASSERT(xml::field::type_id(child) ==
+    CPPUNIT_ASSERT(xml_test::field_test::size(child) == 3);
+    CPPUNIT_ASSERT(xml_test::field_test::rank(child) == 1);
+    CPPUNIT_ASSERT(xml_test::field_test::type_id(child) ==
                    type_id_t::{0.type_id});    
 
 }}
