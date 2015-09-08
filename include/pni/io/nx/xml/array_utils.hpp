@@ -76,7 +76,7 @@ namespace xml{
     //! \param data the XML node with data
     //! \return instance of array with the data
     //!
-    template<> array make_array(const node &data);
+    template<> pni::core::array make_array(const node &data);
 
 
 

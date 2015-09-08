@@ -29,10 +29,6 @@
 namespace pni{
 namespace io{
 
-    using namespace boost::spirit;
-    using namespace pni;
-
-
     //------------------------------------------------------------------------
     //!
     //! \ingroup parser_classes
@@ -43,11 +39,11 @@ namespace io{
     //! \param ITERT input iterator type
     //!
     template<typename ITERT>
-    class parser<ITERT,core::string>
+    class parser<ITERT,pni::core::string>
     {
         public:
             //! the output type of the parser
-            typedef core::string value_type;
+            typedef pni::core::string value_type;
             //! the input iterator type
             typedef ITERT        iterator_type;
 
@@ -61,7 +57,7 @@ namespace io{
             //! \param data input string
             //! \return unchanged input string
             //! 
-            core::string operator()(const string &data) const
+            pni::core::string operator()(const pni::core::string &data) const
             {
                 return data;
             }

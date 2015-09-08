@@ -37,10 +37,6 @@
 namespace pni{
 namespace io{
 
-    using namespace pni;
-    using namespace boost::spirit;
-
-
    
     //!
     //! \ingroup parser_classes
@@ -73,7 +69,7 @@ namespace io{
     //! \tparam ITERT iterator type
     //!
     template<typename ITERT>
-    struct value_rule : qi::grammar<ITERT,core::value()>
+    struct value_rule : boost::spirit::qi::grammar<ITERT,pni::core::value()>
     {
         //--------------------------------------------------------------------
         // definition of internal classes used by the value_rule
@@ -90,31 +86,31 @@ namespace io{
         //! \sa value_rule
         //! \sa value_constructor
         class value_constructor_visitor : 
-            public boost::static_visitor<core::value>
+            public boost::static_visitor<pni::core::value>
         {
             public:
                 //!
                 //! \brief int64 value construction
                 //! 
-                core::value operator()(const core::int64 &v) const
+                pni::core::value operator()(const pni::core::int64 &v) const
                 {
-                    return value(v);
+                    return pni::core::value(v);
                 }
                 
                 //!
                 //! \brief complex64 value construction
                 //! 
-                core::value operator()(const core::complex64 &v) const
+                pni::core::value operator()(const pni::core::complex64 &v) const
                 {
-                    return value(v);
+                    return pni::core::value(v);
                 }
 
                 //!
                 //! \brief float64 value construction
                 //! 
-                core::value operator()(const core::float64 &v) const
+                pni::core::value operator()(const pni::core::float64 &v) const
                 {
-                    return value(v);
+                    return pni::core::value(v);
                 }
         };
 
@@ -131,7 +127,7 @@ namespace io{
             template<typename Sig> struct result
             {
                 //! the return type
-                typedef core::value type;
+                typedef pni::core::value type;
             };
 
             //-----------------------------------------------------------------
@@ -145,7 +141,7 @@ namespace io{
             //! \return instance of pni::core::array
             //!
             template<typename Arg> 
-            core::value operator()(Arg const &n) const
+            pni::core::value operator()(Arg const &n) const
             {
                 return boost::apply_visitor(value_constructor_visitor(),n);
             }
@@ -156,17 +152,25 @@ namespace io{
         // here starts the implementation of the rule
         //--------------------------------------------------------------------
         //! rule for parsing an integer
-        typename boost::mpl::at<spirit_rules,int64>::type   integer_rule_;
+        typename boost::mpl::at<
+                                spirit_rules,
+                                pni::core::int64
+                               >::type   integer_rule_;
+
         //! rule for parsing a floating point number
-        typename boost::mpl::at<spirit_rules,float64>::type float_rule_;
+        typename boost::mpl::at<
+                                spirit_rules,
+                                pni::core::float64
+                               >::type float_rule_;
+
         //! rule for parsing a complex number
-        complex_rule<ITERT,complex64>                       complex_rule_;
+        complex_rule<ITERT,pni::core::complex64> complex_rule_;
         //!value reading rule
-        qi::rule<ITERT,core::value()> value_;
+        boost::spirit::qi::rule<ITERT,pni::core::value()> value_;
         //! rule to match the + or - sign
-        qi::rule<ITERT>               sign_rule;
+        boost::spirit::qi::rule<ITERT>               sign_rule;
         //! rule to match . or e used to denote a floating point number
-        qi::rule<ITERT>               float_signs;
+        boost::spirit::qi::rule<ITERT>               float_signs;
         //! lazy function to assemble a value instance
         boost::phoenix::function<value_constructor> construct_value;
 

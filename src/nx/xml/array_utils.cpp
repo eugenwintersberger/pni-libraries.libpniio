@@ -29,8 +29,7 @@ namespace nx{
 namespace xml{
 
     
-
-    array make_array(const node &data)
+    pni::core::array make_array(const node &data)
     {
         using namespace pni::core;
         type_id_t tid = io_node::type_id(data);

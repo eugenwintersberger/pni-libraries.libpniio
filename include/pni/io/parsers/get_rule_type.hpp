@@ -55,7 +55,7 @@ namespace io{
     struct get_rule_type
     {
         //! parsing rule for T 
-        typedef typename  mpl::at<spirit_rules,T>::type type;
+        typedef typename  boost::mpl::at<spirit_rules,T>::type type;
     };
 
     //------------------------------------------------------------------------

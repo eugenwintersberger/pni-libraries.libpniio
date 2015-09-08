@@ -37,9 +37,6 @@
 namespace pni{
 namespace io{
 
-    using namespace boost::spirit;
-    using namespace pni;
-
     //------------------------------------------------------------------------
     //!
     //! \ingroup parser_classes
@@ -71,7 +68,7 @@ namespace io{
             //! result type of the parsing process
             typedef T     result_type;
             //! parser exception type
-            typedef qi::expectation_failure<iterator_type> expectation_error;
+            typedef boost::spirit::qi::expectation_failure<iterator_type> expectation_error;
         private:
             //! conversion trait type
             typedef conversion_trait<result_type>   trait_type;
@@ -91,8 +88,11 @@ namespace io{
             //! \param data the string with input data
             //! \return instance of the primitive type
             //!
-            result_type operator()(const string &data) const
+            result_type operator()(const pni::core::string &data) const
             {
+                using namespace boost::spirit;
+                using namespace pni::core;
+
                 read_type   buffer;
                 
                 try

@@ -35,9 +35,6 @@
 namespace pni{
 namespace io{
 
-    using namespace pni;
-    using namespace boost;
-
 #define PARSER_TYPE(p)\
     std::remove_const<decltype(p)>::type
 
@@ -48,20 +45,71 @@ namespace io{
     //! This MPL map provides a mapping from data types to their appropriate
     //! parsing rules provided by the boost::spirit library.
     //!
-    typedef mpl::map<
-        mpl::pair<core::uint8 ,spirit::qi::uint_parser<core::uint8,10,1,4> >,
-        mpl::pair<core::uint16,PARSER_TYPE(spirit::qi::ushort_)>,
-        mpl::pair<core::uint32,PARSER_TYPE(spirit::qi::uint_)  >,
-        mpl::pair<core::uint64,PARSER_TYPE(spirit::qi::ulong_) >,
-        mpl::pair<core::int8 ,spirit::qi::uint_parser<core::int8,10,1,4> >,
-        mpl::pair<core::int16, PARSER_TYPE(spirit::qi::short_) >,
-        mpl::pair<core::int32, PARSER_TYPE(spirit::qi::int_)   >,
-        mpl::pair<core::int64, PARSER_TYPE(spirit::long_)      >,
-        mpl::pair<core::float32, PARSER_TYPE(spirit::float_)      >,
-        mpl::pair<core::float64, PARSER_TYPE(spirit::double_)     >,
-        mpl::pair<core::float128,PARSER_TYPE(spirit::long_double) >,
-        mpl::pair<core::bool_t,  PARSER_TYPE(spirit::bool_)       >,
-        mpl::pair<bool,PARSER_TYPE(spirit::bool_)>
+    typedef boost::mpl::map<
+        boost::mpl::pair<
+                         pni::core::uint8 ,
+                         boost::spirit::qi::uint_parser<pni::core::uint8,
+                                                        10,1,4> 
+                        >,
+
+        boost::mpl::pair<pni::core::uint16,
+                         PARSER_TYPE(boost::spirit::qi::ushort_)
+                        >,
+
+        boost::mpl::pair<
+                         pni::core::uint32,
+                         PARSER_TYPE(boost::spirit::qi::uint_)  
+                        >,
+
+        boost::mpl::pair<
+                         pni::core::uint64,
+                         PARSER_TYPE(boost::spirit::qi::ulong_) 
+                        >,
+        boost::mpl::pair<
+                         pni::core::int8 ,
+                         boost::spirit::qi::uint_parser<pni::core::int8,
+                                                        10,1,4> 
+                        >,
+
+        boost::mpl::pair<
+                         pni::core::int16, 
+                         PARSER_TYPE(boost::spirit::qi::short_) 
+                        >,
+
+        boost::mpl::pair<
+                         pni::core::int32, 
+                         PARSER_TYPE(boost::spirit::qi::int_)   
+                        >,
+
+        boost::mpl::pair<
+                         pni::core::int64, 
+                         PARSER_TYPE(boost::spirit::long_)      
+                        >,
+
+        boost::mpl::pair<
+                         core::float32, 
+                         PARSER_TYPE(boost::spirit::float_)      
+                        >,
+
+        boost::mpl::pair<
+                         pni::core::float64, 
+                         PARSER_TYPE(boost::spirit::double_)     
+                        >,
+
+        boost::mpl::pair<
+                         pni::core::float128,
+                         PARSER_TYPE(boost::spirit::long_double) 
+                        >,
+
+        boost::mpl::pair<
+                         pni::core::bool_t,  
+                         PARSER_TYPE(boost::spirit::bool_)      
+                        >,
+
+        boost::mpl::pair<
+                         bool,
+                         PARSER_TYPE(boost::spirit::bool_)
+                        >
         > spirit_rules;
 
 //end of namespace

@@ -48,7 +48,7 @@ void inquery_fixture::test_name()
     CPPUNIT_ASSERT(xml::io_node::name(get_object("object1.xml","object1"))
                    =="hello");
     CPPUNIT_ASSERT_THROW(xml::io_node::name(get_object("object1.xml","object2")),
-                    pni::io::key_error);
+                    pni::core::key_error);
 }
 
 //-----------------------------------------------------------------------------

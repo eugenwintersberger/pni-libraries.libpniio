@@ -36,10 +36,6 @@
 namespace pni{
 namespace io{
 
-    using namespace pni;
-    using namespace boost::spirit;
-
-
     //------------------------------------------------------------------------
     //!
     //! \ingroup parser_classes
@@ -63,7 +59,7 @@ namespace io{
              typename ITERT,
              typename ST
             >
-    struct sequence_rule : qi::grammar<ITERT,ST()>
+    struct sequence_rule : boost::spirit::qi::grammar<ITERT,ST()>
     {
         //! value type of the sequence type
         typedef typename ST::value_type value_type; 
@@ -74,15 +70,15 @@ namespace io{
         delimiter_rule<ITERT> delimiter_;
 
         //! rule for the start symbol of the sequence
-        qi::rule<ITERT> start_;
+        boost::spirit::qi::rule<ITERT> start_;
         //! rule for the stop symbol of the sequence
-        qi::rule<ITERT> stop_;
+        boost::spirit::qi::rule<ITERT> stop_;
         //! a possible start symbol
         char start_symbol_;
         //! a possible stop symbol
         char stop_symbol_;
         //! the full rule to parse the sequence
-        qi::rule<ITERT,ST()> sequence_;
+        boost::spirit::qi::rule<ITERT,ST()> sequence_;
 
         //--------------------------------------------------------------------
         //!
@@ -94,6 +90,8 @@ namespace io{
         //!
         sequence_rule() : sequence_rule::base_type(sequence_)
         { 
+            using namespace boost::spirit;
+
             sequence_ = qi::omit[*qi::blank]>>
                         (element_rule_ %(+qi::blank))>>
                         qi::omit[*qi::blank]; 
@@ -114,6 +112,8 @@ namespace io{
             sequence_rule::base_type(sequence_),
             delimiter_(del)
         {
+            using namespace boost::spirit;
+
             sequence_ = qi::omit[*qi::blank]>>
                         (element_rule_ % delimiter_)>>
                         qi::omit[*qi::blank];
@@ -133,9 +133,10 @@ namespace io{
         //!
         sequence_rule(char start,char stop):
             sequence_rule::base_type(sequence_),
-            start_(start>qi::omit[*qi::blank]),
-            stop_(qi::omit[*qi::blank]>stop)
+            start_(start>boost::spirit::qi::omit[*boost::spirit::qi::blank]),
+            stop_(boost::spirit::qi::omit[*boost::spirit::qi::blank]>stop)
         {
+            using namespace boost::spirit;
             sequence_ = start_> (element_rule_ % (+qi::blank))>stop_;
         }
 
@@ -153,8 +154,8 @@ namespace io{
         sequence_rule(char start,char stop,char del):
             sequence_rule::base_type(sequence_),
             delimiter_(del),
-            start_(start>qi::omit[*qi::blank]),
-            stop_(qi::omit[*qi::blank]>stop)
+            start_(start>boost::spirit::qi::omit[*boost::spirit::qi::blank]),
+            stop_(boost::spirit::qi::omit[*boost::spirit::qi::blank]>stop)
         {
             sequence_ = start_>(element_rule_ % delimiter_)>stop_;
         }

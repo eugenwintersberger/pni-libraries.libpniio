@@ -39,10 +39,6 @@
 namespace pni{
 namespace io{
 
-    using namespace pni;
-    using namespace boost::spirit;
-
-
     //------------------------------------------------------------------------
     //!
     //! \ingroup parser_classes
@@ -74,7 +70,8 @@ namespace io{
             //! input iterator type
             typedef ITERT           iterator_type;
             //! parser exception type
-            typedef qi::expectation_failure<iterator_type> expectation_error;
+            typedef boost::spirit::qi::expectation_failure<iterator_type> 
+                    expectation_error;
         private:
             //! conversion trait used during parsing
             typedef conversion_trait<T> trait_type;
@@ -139,6 +136,7 @@ namespace io{
             result_type  operator()(const core::string &s) const
             {
                 using namespace pni::core;
+                using namespace boost::spirit;
                 
                 buffer_type container;
 

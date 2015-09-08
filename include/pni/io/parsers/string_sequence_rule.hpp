@@ -38,9 +38,6 @@
 namespace pni{
 namespace io{
 
-    using namespace pni;
-    using namespace boost::spirit;
-
     //!
     //! \ingroup parser_classes
     //! \brief lazy string trimming
@@ -55,7 +52,7 @@ namespace io{
         //! 
         template<typename Sig> struct result
         {
-            typedef core::string type; //!< return value 
+            typedef pni::core::string type; //!< return value 
         };
 
         //--------------------------------------------------------------------
@@ -70,9 +67,9 @@ namespace io{
         //! \return string with all leading and trailing blanks removed
         //!
         template<typename Arg>
-        core::string operator()(Arg const &n) const
+        pni::core::string operator()(Arg const &n) const
         {
-            string output(n.begin(),n.end());
+            pni::core::string output(n.begin(),n.end());
             boost::trim(output);
             return output;
         }
@@ -102,19 +99,19 @@ namespace io{
              typename ITERT,
              typename ST
             >
-    struct string_sequence_rule : qi::grammar<ITERT,ST()>
+    struct string_sequence_rule : boost::spirit::qi::grammar<ITERT,ST()>
     {
         //! rule to parse a single element of the sequence
-        qi::rule<ITERT,core::string()> element_rule_;
+        boost::spirit::qi::rule<ITERT,pni::core::string()> element_rule_;
         //! rule for the start symbol of the sequence
-        qi::rule<ITERT> start_;
+        boost::spirit::qi::rule<ITERT> start_;
         //! rule for the stop symbol for the sequence
-        qi::rule<ITERT> stop_;
+        boost::spirit::qi::rule<ITERT> stop_;
         //! rule for the delimiter symbol for the sequence
-        qi::rule<ITERT> delimiter_;
+        boost::spirit::qi::rule<ITERT> delimiter_;
 
         //! the full rule to parse the sequence
-        qi::rule<ITERT,ST()> sequence_;
+        boost::spirit::qi::rule<ITERT,ST()> sequence_;
 
         //! lazy function to trim the read string
         boost::phoenix::function<trim_string> trim;
@@ -129,6 +126,7 @@ namespace io{
         //!
         string_sequence_rule() : string_sequence_rule::base_type(sequence_)
         { 
+            using namespace boost::spirit;
             using qi::_val;
             using qi::_1;
 
@@ -151,6 +149,7 @@ namespace io{
         string_sequence_rule(char del): 
             string_sequence_rule::base_type(sequence_)
         {
+            using namespace boost::spirit;
             using qi::_val;
             using qi::_1;
 
@@ -174,6 +173,7 @@ namespace io{
         string_sequence_rule(char start,char stop):
             string_sequence_rule::base_type(sequence_)
         {
+            using namespace boost::spirit;
             using qi::_1;
             using qi::_val;
 
@@ -198,6 +198,7 @@ namespace io{
         string_sequence_rule(char start,char stop,char del):
             string_sequence_rule::base_type(sequence_)
         {
+            using namespace boost::spirit;
             start_ = qi::char_(start)>*qi::blank;
             stop_  = *qi::blank>qi::char_(stop);
             delimiter_ = qi::char_(del);

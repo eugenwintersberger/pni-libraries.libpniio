@@ -33,9 +33,6 @@
 namespace pni{
 namespace io{
 
-    using namespace pni;
-    using namespace boost::spirit;
-
     //!
     //! \ingroup parser_classes
     //! \brief slice parser
@@ -73,18 +70,19 @@ namespace io{
     //! \tparam ITERT iterator type for the parser
     //!
     template<typename ITERT>
-    struct slice_rule: qi::grammar<ITERT,
-                                   qi::locals<size_t,size_t,size_t>,
-                                   core::slice()>
+    struct slice_rule: boost::spirit::qi::grammar<ITERT,
+                                   boost::spirit::qi::locals<size_t,size_t,size_t>,
+                                   pni::core::slice()>
     {
         //! rule to parse a slice string
-        qi::rule<ITERT,
-                 qi::locals<size_t,size_t,size_t>,
-                 core::slice() > slice_;
+        boost::spirit::qi::rule<ITERT,
+                 boost::spirit::qi::locals<size_t,size_t,size_t>,
+                 pni::core::slice() > slice_;
 
         //! default constructor
         slice_rule() : slice_rule::base_type(slice_)
         {
+            using namespace boost::spirit;
             using namespace boost::spirit::qi;
             //using namespace boost::fusion;
             using namespace boost::phoenix;
@@ -95,7 +93,7 @@ namespace io{
                                                                  int_[_c=_1]))) 
                 |
                 ( ':' >> int_[_b = _1]>> -(':'>>int_[_c = _1]))
-              )[_val = construct<core::slice>(_a,_b,_c)];
+              )[_val = construct<pni::core::slice>(_a,_b,_c)];
         }
     };
 //end of namespace

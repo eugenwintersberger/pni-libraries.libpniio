@@ -30,9 +30,6 @@
 namespace pni{
 namespace io{
 
-    using namespace pni;
-    using namespace boost::spirit;
-
     //!
     //! \ingroup parser_classes
     //! \brief delimiter parser
@@ -51,10 +48,11 @@ namespace io{
     //! \sa sequence_parser
     //!
     template<typename ITERT >
-    struct delimiter_rule : qi::grammar<ITERT,core::string()>
+    struct delimiter_rule : boost::spirit::qi::grammar<ITERT,
+                                                       pni::core::string()>
     {
         //! main parser rule
-        boost::spirit::qi::rule<ITERT,core::string()> delimiter;
+        boost::spirit::qi::rule<ITERT,pni::core::string()> delimiter;
 
         //--------------------------------------------------------------------
         //!
@@ -66,6 +64,7 @@ namespace io{
         delimiter_rule() : 
             delimiter_rule::base_type(delimiter)
         {
+            using namespace boost::spirit;
             //default behavior - at least one whitespace is a valid delimiter
             delimiter = +qi::blank;
         }
@@ -85,6 +84,7 @@ namespace io{
         delimiter_rule(char symbol):
             delimiter_rule::base_type(delimiter)
         {
+            using namespace boost::spirit;
             if(symbol == ' ')
                 delimiter = +qi::blank;
             else

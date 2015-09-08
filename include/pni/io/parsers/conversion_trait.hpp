@@ -88,12 +88,12 @@ namespace io{
     //! In this special case uint16 is used for parsing the data.
     //!
     template<>
-    struct conversion_trait<uint8>
+    struct conversion_trait<pni::core::uint8>
     {
         //! the type requested by the user
-        typedef uint8  result_type;
+        typedef pni::core::uint8  result_type;
         //! the type to read
-        typedef uint16 read_type;
+        typedef pni::core::uint16 read_type;
 
         //------------------------------------------------------------------
         //! 
@@ -141,12 +141,12 @@ namespace io{
     //! In this special case int16 is used for parsing the data.
     //!
     template<>
-    struct conversion_trait<int8>
+    struct conversion_trait<pni::core::int8>
     {
         //! the type requested by the user
-        typedef int8  result_type;
+        typedef pni::core::int8  result_type;
         //! the type used for reading
-        typedef int16 read_type;
+        typedef pni::core::int16 read_type;
 
         //------------------------------------------------------------------
         //! 

@@ -32,7 +32,7 @@ namespace xml{
     
     typedef pni::core::string::const_iterator iterator_type;
     //! parser for size_t values
-   typedef pni::io::parser<iterator_type,size_t> size_t_parser_type;
+    typedef pni::io::parser<iterator_type,size_t> size_t_parser_type;
 
     bool operator<(const index_value_type &lhs,const index_value_type &rhs)
     {
@@ -78,8 +78,9 @@ namespace xml{
      }
 
      //-----------------------------------------------------------------------
-     shape_t dimensions::object_from_xml(const node &dims) 
+     pni::core::shape_t dimensions::object_from_xml(const node &dims) 
      {
+        using namespace pni::core;
         iv_vector buffer;
         size_t_parser_type p;
 
@@ -94,7 +95,7 @@ namespace xml{
 
         std::sort(buffer.begin(),buffer.end());
 
-        pni::core::shape_t result;
+        shape_t result;
         auto iter = buffer.begin();
         std::generate_n(std::back_inserter(result),buffer.size(),
                       [&iter](){ return (iter++)->second; });

@@ -84,7 +84,7 @@ namespace xml{
         //! \param io_node XML node with object metadata
         //! \return name of the object
         //! 
-        static string name(const node &io_node);
+        static pni::core::string name(const node &io_node);
         
         //--------------------------------------------------------------------
         //!
@@ -94,7 +94,7 @@ namespace xml{
         //! \param io_node XML node with object metadata
         //! \return shape information
         //! 
-        static shape_t shape(const node &io_node);
+        static pni::core::shape_t shape(const node &io_node);
         
         //--------------------------------------------------------------------
         //!
@@ -108,7 +108,7 @@ namespace xml{
         //! \param io_node the node with field information
         //! \return type id of the field
         //!
-        static type_id_t type_id(const node &io_node);
+        static pni::core::type_id_t type_id(const node &io_node);
         
         //--------------------------------------------------------------------
         //!

@@ -40,8 +40,6 @@
 namespace pni{
 namespace io{
  
-    using namespace pni::core;
-    using namespace boost::spirit;
     //!
     //! \ingroup parser_classes
     //! \brief complex number rule
@@ -58,18 +56,18 @@ namespace io{
              typename ITERT,
              typename CTYPE
             >
-    struct complex_rule:  qi::grammar<ITERT,
-                                      qi::locals<
-                                      typename core::type_info<CTYPE>::base_type,
-                                      typename core::type_info<CTYPE>::base_type,
-                                      typename core::type_info<CTYPE>::base_type
+    struct complex_rule:  boost::spirit::qi::grammar<ITERT,
+                                      boost::spirit::qi::locals<
+                                      typename pni::core::type_info<CTYPE>::base_type,
+                                      typename pni::core::type_info<CTYPE>::base_type,
+                                      typename pni::core::type_info<CTYPE>::base_type
                                       >,
                                       CTYPE()>
     {
         //! result type of the rule
         typedef CTYPE result_type;
         //! base type of the complex number type
-        typedef typename core::type_info<result_type>::base_type base_t;
+        typedef typename pni::core::type_info<result_type>::base_type base_t;
 
         //! rule to parse the base type
         typename boost::mpl::at<spirit_rules,base_t>::type base_rule;
@@ -83,7 +81,11 @@ namespace io{
         //! rule determining the imaginary part
         boost::spirit::qi::rule<ITERT,base_t()> imag_rule;
         //! rule defining the entire complex number
-        boost::spirit::qi::rule<ITERT,qi::locals<base_t,base_t,base_t>,result_type()> complex_;
+        boost::spirit::qi::rule<ITERT,
+                                boost::spirit::qi::locals<base_t,
+                                                          base_t,
+                                                          base_t>,
+                                result_type()> complex_;
 
         //!default constructor
         complex_rule() : complex_rule::base_type(complex_)
