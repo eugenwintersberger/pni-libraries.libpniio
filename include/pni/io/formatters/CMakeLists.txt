@@ -7,6 +7,8 @@ set(HEADER_FILES
 
                  get_generator.hpp
                  formatter.hpp                                  
+                 scalar_format.hpp
+                 vector_format.hpp
                  )
 
 install(FILES ${HEADER_FILES} 

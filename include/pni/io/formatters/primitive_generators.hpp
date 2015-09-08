@@ -33,53 +33,60 @@
 namespace pni{
 namespace io{
     
-    using namespace pni::core;
-    namespace mpl = boost::mpl;
-    using namespace boost::spirit;
-    
     //
     // First we need a unified template interface for all generator templates.
     // The first template argument should be the interator and the second
     // the attribute type.
     //
     template<typename ITERT,typename T>
-    using pni_io_uint_generator = karma::uint_generator<T>;
+    using pni_io_uint_generator = boost::spirit::karma::uint_generator<T>;
     
     template<typename ITERT,typename T>
-    using pni_io_int_generator  = karma::int_generator<T>;
+    using pni_io_int_generator  = boost::spirit::karma::int_generator<T>;
     
     template<typename ITERT,typename T>
-    using pni_io_real_generator = karma::real_generator<T,float_policy<T>>;
+    using pni_io_real_generator = boost::spirit::karma::real_generator<T,float_policy<T>>;
 
     template<typename ITERT,typename T>
     using pni_io_complex_generator = complex_generator<ITERT,T>;
     
     template<typename ITERT,typename T>
-    using pni_io_bool_generator = karma::bool_generator<T>;
+    using pni_io_bool_generator = boost::spirit::karma::bool_generator<T>;
     
     template<typename ITERT>
     using primitive_generators = 
-    mpl::map<
-        mpl::pair<uint8, pni_io_uint_generator<ITERT,uint8>>,
-        mpl::pair<uint16,pni_io_uint_generator<ITERT,uint16>>,
-        mpl::pair<uint32,pni_io_uint_generator<ITERT,uint32>>,
-        mpl::pair<uint64,pni_io_uint_generator<ITERT,uint64>>,
-        mpl::pair<int8, pni_io_int_generator<ITERT,int8>>,
-        mpl::pair<int16,pni_io_int_generator<ITERT,int16>>,
-        mpl::pair<int32,pni_io_int_generator<ITERT,int32>>,
-        mpl::pair<int64,pni_io_int_generator<ITERT,int64>>,
-        mpl::pair<float32,pni_io_real_generator<ITERT,float32>>,
-        mpl::pair<float64,pni_io_real_generator<ITERT,float64>>,
-        mpl::pair<float128,pni_io_real_generator<ITERT,float128>>,        
-        mpl::pair<bool_t,pni_io_bool_generator<ITERT,bool_t>>,
-        mpl::pair<complex32,pni_io_complex_generator<ITERT,float32>>,
-        mpl::pair<complex64,pni_io_complex_generator<ITERT,float64>>,
-        mpl::pair<complex128,pni_io_complex_generator<ITERT,float128>>
+    boost::mpl::map<
+        boost::mpl::pair<pni::core::uint8, 
+                         pni_io_uint_generator<ITERT,pni::core::uint8>>,
+        boost::mpl::pair<pni::core::uint16,
+                         pni_io_uint_generator<ITERT,pni::core::uint16>>,
+        boost::mpl::pair<pni::core::uint32,
+                         pni_io_uint_generator<ITERT,pni::core::uint32>>,
+        boost::mpl::pair<pni::core::uint64,
+                         pni_io_uint_generator<ITERT,pni::core::uint64>>,
+        boost::mpl::pair<pni::core::int8, 
+                         pni_io_int_generator<ITERT,pni::core::int8>>,
+        boost::mpl::pair<pni::core::int16,
+                         pni_io_int_generator<ITERT,pni::core::int16>>,
+        boost::mpl::pair<pni::core::int32,
+                         pni_io_int_generator<ITERT,pni::core::int32>>,
+        boost::mpl::pair<pni::core::int64,
+                         pni_io_int_generator<ITERT,pni::core::int64>>,
+        boost::mpl::pair<pni::core::float32,
+                         pni_io_real_generator<ITERT,pni::core::float32>>,
+        boost::mpl::pair<pni::core::float64,
+                         pni_io_real_generator<ITERT,pni::core::float64>>,
+        boost::mpl::pair<pni::core::float128,
+                         pni_io_real_generator<ITERT,pni::core::float128>>,        
+        boost::mpl::pair<pni::core::bool_t,
+                         pni_io_bool_generator<ITERT,pni::core::bool_t>>,
+        boost::mpl::pair<pni::core::complex32,
+                         pni_io_complex_generator<ITERT,pni::core::float32>>,
+        boost::mpl::pair<pni::core::complex64,
+                         pni_io_complex_generator<ITERT,pni::core::float64>>,
+        boost::mpl::pair<pni::core::complex128,
+                         pni_io_complex_generator<ITERT,pni::core::float128>>
     >;
-    
-
-    
-    
 
 //end of namespace
 }

@@ -36,9 +36,6 @@
 namespace pni{
 namespace io{
 
-    using namespace pni;
-    using namespace boost::spirit;
-
     //!
     //! \ingroup formatter_classes
     //! \brief scalar formatter
@@ -52,7 +49,7 @@ namespace io{
     {
         private: 
             //! output iterator type
-            typedef std::back_insert_iterator<core::string> iterator_type;
+            typedef std::back_insert_iterator<pni::core::string> iterator_type;
             //! generator type
             typedef typename get_generator<iterator_type,T>::type generator_type; 
             
@@ -70,9 +67,10 @@ namespace io{
             //! \param value a value of type T
             //! \return string representation of value
             //! 
-            core::string operator()(const T &v) const
+            pni::core::string operator()(const T &v) const
             {
-                core::string buffer;
+                using namespace boost::spirit;
+                pni::core::string buffer;
                 iterator_type inserter(buffer);
 
                 karma::generate(inserter,generator,v);
@@ -90,10 +88,10 @@ namespace io{
     //! strings. In fact this formatter does nothing else than passing 
     //! the string through to output. 
     //!
-    template<> class formatter<core::string>
+    template<> class formatter<pni::core::string>
     {
         public:
-            core::string operator()(const core::string &v) const
+            pni::core::string operator()(const pni::core::string &v) const
             {
                 return v;
             }
@@ -107,12 +105,12 @@ namespace io{
     //! A specialization of the formatter template for scalar values for the 
     //! value_ref type erasure.
     //!
-    template<> class formatter<core::value_ref>
+    template<> class formatter<pni::core::value_ref>
     {
         public:
-            core::string operator()(const core::value_ref &v) const
+            pni::core::string operator()(const pni::core::value_ref &v) const
             {
-                return formatter<core::value>()(core::to_value(v));
+                return formatter<pni::core::value>()(pni::core::to_value(v));
             }
     };
     
@@ -134,7 +132,7 @@ namespace io{
         private:
             typedef CTYPE container_type;
             //! output iterator type
-            typedef std::back_insert_iterator<core::string> iterator_type;
+            typedef std::back_insert_iterator<pni::core::string> iterator_type;
             //! element type of the container
             typedef typename container_type::value_type value_type;
             //! generator type
@@ -152,10 +150,11 @@ namespace io{
             //! \param config output configuration for the container
             //! \return string representation of the input vector
             //! 
-            core::string operator()(const container_type &v,
+            pni::core::string operator()(const container_type &v,
                                     const container_io_config config = 
                                     container_io_config()) const
             {
+                using namespace boost::spirit;
                 core::string buffer;
                 iterator_type inserter(buffer);                
                 
@@ -222,17 +221,17 @@ namespace io{
     //! array type erasure. 
     //! 
     template<>
-    class formatter<core::array>
+    class formatter<pni::core::array>
     {
         private:
-            typedef std::vector<core::value> container_type;
+            typedef std::vector<pni::core::value> container_type;
             typedef container_formatter<container_type> formatter_type;
             formatter_type f;           
             
         public:            
             
             //-----------------------------------------------------------------
-            core::string operator()(const core::array &v,
+            core::string operator()(const pni::core::array &v,
                                     const container_io_config &config = 
                                           container_io_config()) const
             {
@@ -257,10 +256,10 @@ namespace io{
     //! \tparam OTYPES template parameters for mdarray
     //! 
     template<typename ...OTYPES>
-    class formatter<mdarray<OTYPES...>>
+    class formatter<pni::core::mdarray<OTYPES...>>
     {
         private:
-            typedef mdarray<OTYPES...> container_type;      
+            typedef pni::core::mdarray<OTYPES...> container_type;      
             typedef container_formatter<container_type> formatter_type;
             formatter_type f;
 
@@ -274,7 +273,7 @@ namespace io{
             //! \param v input vector
             //! \return string representation of the input vector
             //! 
-            core::string operator()(const mdarray<OTYPES...> &v,
+            core::string operator()(const pni::core::mdarray<OTYPES...> &v,
                                     const container_io_config config = 
                                     container_io_config()) const                                    
             {          
@@ -291,11 +290,11 @@ namespace io{
     //! Specialization of the formatter template for a vector of strings. 
     //! 
     template<> 
-    class formatter<std::vector<core::string>>
+    class formatter<std::vector<pni::core::string>>
     {
         private:
             //! output iterator type
-            typedef std::back_insert_iterator<core::string> iterator_type;           
+            typedef std::back_insert_iterator<pni::core::string> iterator_type;           
         public:
 
             //! 
@@ -306,9 +305,10 @@ namespace io{
             //! \param v input vector
             //! \return string representation of the input vector
             //! 
-            core::string operator()(const std::vector<core::string> &v) const
+            pni::core::string operator()(const std::vector<pni::core::string> &v) const
             {
-                core::string buffer;
+                using namespace boost::spirit;
+                pni::core::string buffer;
                 iterator_type inserter(buffer);
 
                 karma::generate(inserter,karma::string % '\n',v);

@@ -20,6 +20,7 @@ add_subdirectory(cbf)
 add_subdirectory(fio)
 add_subdirectory(nx)
 add_subdirectory(tiff)
+add_subdirectory(formatters)
 
 add_library(pniio SHARED ${SOURCES} $<TARGET_OBJECTS:cbf_objects>
     $<TARGET_OBJECTS:fio_objects>
@@ -29,6 +30,7 @@ add_library(pniio SHARED ${SOURCES} $<TARGET_OBJECTS:cbf_objects>
     $<TARGET_OBJECTS:tiff_objects>
     $<TARGET_OBJECTS:nx_path>
     $<TARGET_OBJECTS:algorithms>
+    $<TARGET_OBJECTS:formatter_objects>
     )
 add_dependencies(pniio config.hpp)
 set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"

@@ -36,9 +36,6 @@
 namespace pni{
 namespace io{
 
-    using namespace pni::core;
-    using namespace boost::spirit;
-    
 
     //!
     //! \ingroup formatter_classes
@@ -52,7 +49,7 @@ namespace io{
              typename OITER,       
              typename VTYPE
             >
-    struct value_generator : karma::grammar<OITER,VTYPE()>
+    struct value_generator : boost::spirit::karma::grammar<OITER,VTYPE()>
     {
         //!
         //! \brief get real part
@@ -62,26 +59,26 @@ namespace io{
         //! 
         struct lazy_to_string
         {
-            typedef std::back_insert_iterator<core::string> iterator_type;
+            typedef std::back_insert_iterator<pni::core::string> iterator_type;
             typedef primitive_generators<iterator_type> generator_map;
             //!
             //! \brief result type of the lazy function
             //! 
             template<typename Sig> struct result
             {
-                typedef string type; //!< result type
+                typedef pni::core::string type; //!< result type
             };
             
             template<typename T>
-            static string _to_string(const VTYPE &v)
+            static pni::core::string _to_string(const VTYPE &v)
             {
                 typedef boost::mpl::at<generator_map,T> at_type;
                 typedef typename at_type::type generator_type;                
                 
-                string formatter_result;
+                pni::core::string formatter_result;
                 iterator_type inserter(formatter_result);
                 
-                karma::generate(inserter,generator_type(),v.template as<T>());
+                boost::spirit::karma::generate(inserter,generator_type(),v.template as<T>());
                 
                 return formatter_result;
             }
@@ -97,8 +94,10 @@ namespace io{
             //! \return real part of the complex number
             //!
             template<typename Arg>
-            string operator()(const Arg &n) const
+            pni::core::string operator()(const Arg &n) const
             {
+                using namespace pni::core;
+
                 switch(type_id(n))
                 {
                     case type_id_t::UINT8:
@@ -151,7 +150,7 @@ namespace io{
         boost::phoenix::function<lazy_to_string> to_string;      
        
         //! total rule for complex numbers
-        karma::rule<OITER,VTYPE()>  value_rule; 
+        boost::spirit::karma::rule<OITER,VTYPE()>  value_rule; 
 
         //!
         //! \brief default constructor
@@ -160,10 +159,10 @@ namespace io{
         //!
         value_generator(): value_generator::base_type(value_rule)
         {
-            using karma::_1;
-            using karma::_val;
+            using boost::spirit::karma::_1;
+            using boost::spirit::karma::_val;
 
-            value_rule = karma::string[_1 = to_string(_val)];
+            value_rule = boost::spirit::karma::string[_1 = to_string(_val)];
         }
         
     };

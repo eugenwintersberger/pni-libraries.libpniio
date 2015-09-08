@@ -10,6 +10,7 @@ set(HEADER_FILES column_info.hpp
                  parsers.hpp
                  formatters.hpp
                  container_io_config.hpp
+                 format.hpp
                  )
 
 install(FILES ${HEADER_FILES} 

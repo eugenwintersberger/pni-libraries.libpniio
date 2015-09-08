@@ -32,9 +32,6 @@
 namespace pni{
 namespace io{
     
-    using namespace pni::core;
-    using namespace boost::spirit;
-
     //!
     //! \ingroup formatter_classes
     //! \brief get generator for type
@@ -47,7 +44,7 @@ namespace io{
     template<typename ITERT, typename T> struct get_generator
     {
         //! generator type
-        typedef typename mpl::at<primitive_generators<ITERT>,T>::type type;
+        typedef typename boost::mpl::at<primitive_generators<ITERT>,T>::type type;
     };
 
     
@@ -58,22 +55,23 @@ namespace io{
     //! 
     //! Get a generator for a value type erasure. 
     //! 
-    template<typename ITERT> struct get_generator<ITERT,value>
+    template<typename ITERT> struct get_generator<ITERT,pni::core::value>
     {
         //! generator type
-        typedef value_generator<ITERT,value> type;
+        typedef value_generator<ITERT,pni::core::value> type;
     };
     
+    //-------------------------------------------------------------------------
     //!
     //! \ingroup formatter_classes
     //! \brief get generator for value_ref
     //! 
     //! Get a generator for the value_ref type erasure.
     //!
-    template<typename ITERT> struct get_generator<ITERT,value_ref>
+    template<typename ITERT> struct get_generator<ITERT,pni::core::value_ref>
     {
         //! generator type
-        typedef value_generator<ITERT,value_ref> type;
+        typedef value_generator<ITERT,pni::core::value_ref> type;
     };
    
     

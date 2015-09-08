@@ -24,8 +24,10 @@
 
 #include <pni/core/types.hpp>
 #include <boost/current_function.hpp>
-#include "formatters.hpp"
+#include <pni/io/formatters/scalar_format.hpp>
 #include "value_formatter_test.hpp"
+
+using namespace pni::io;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(value_formatter_test);
 

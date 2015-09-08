@@ -34,9 +34,6 @@
 namespace pni{
 namespace io{
 
-    using namespace pni::core;
-    using namespace boost::spirit;
-
     //!
     //! \ingroup formatter_classes
     //! \brief generator for complex numbers
@@ -49,7 +46,7 @@ namespace io{
              typename OITER,
              typename T
             >
-    struct complex_generator : karma::grammar<OITER,std::complex<T>()>
+    struct complex_generator : boost::spirit::karma::grammar<OITER,std::complex<T>()>
     {
         //!
         //! \brief get real part
@@ -125,11 +122,11 @@ namespace io{
         boost::phoenix::function<get_imag> imag;
 
         //! rule to produce the real part
-        karma::real_generator<T,float_policy<T>> float_rule; 
+        boost::spirit::karma::real_generator<T,float_policy<T>> float_rule; 
         //! rule to produce the imaginary part
-        karma::real_generator<T,imag_policy<T>>  imag_rule;
+        boost::spirit::karma::real_generator<T,imag_policy<T>>  imag_rule;
         //! total rule for complex numbers
-        karma::rule<OITER,std::complex<T>()>     complex_rule; 
+        boost::spirit::karma::rule<OITER,std::complex<T>()>     complex_rule; 
 
         //!
         //! \brief default constructor
@@ -138,8 +135,8 @@ namespace io{
         //!
         complex_generator(): complex_generator::base_type(complex_rule)
         {
-            using karma::_1;
-            using karma::_val;
+            using boost::spirit::karma::_1;
+            using boost::spirit::karma::_val;
 
             complex_rule = float_rule[_1 = real(_val)]<<
                            imag_rule[_1 = imag(_val)];

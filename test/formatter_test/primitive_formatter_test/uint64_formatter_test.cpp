@@ -21,9 +21,11 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "formatters.hpp"
 #include <boost/current_function.hpp>
+#include <pni/io/formatters/scalar_format.hpp>
 #include "uint64_formatter_test.hpp"
+
+using namespace pni::io;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(uint64_formatter_test);
 

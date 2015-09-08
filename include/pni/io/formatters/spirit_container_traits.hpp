@@ -29,8 +29,6 @@
 #include <boost/spirit/include/karma.hpp>
 
 
-
-
 namespace boost{
 namespace spirit{
 namespace traits{

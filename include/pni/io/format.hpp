@@ -17,31 +17,12 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Feb 11, 2015
-//      Author: Eugen Wintersberger
+// Created on: Feb 11, 2015
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
+//
+#pragma once
 
-#include <boost/current_function.hpp>
-#include <pni/io/formatters/scalar_format.hpp>
-#include "bool_formatter_test.hpp"
-
-CPPUNIT_TEST_SUITE_REGISTRATION(bool_formatter_test);
-
-using namespace pni::io;
-
-//-----------------------------------------------------------------------------
-void bool_formatter_test::setUp() { }
-
-//-----------------------------------------------------------------------------
-void bool_formatter_test::tearDown() {}
-
-//-----------------------------------------------------------------------------
-void bool_formatter_test::test_format()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    CPPUNIT_ASSERT(format(input_type(true)) == "true");
-    CPPUNIT_ASSERT(format(input_type(false)) == "false");
-}
-
+#include "formatters/scalar_format.hpp"
+#include "formatters/vector_format.hpp"
 

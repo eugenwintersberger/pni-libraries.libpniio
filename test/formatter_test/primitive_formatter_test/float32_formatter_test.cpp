@@ -22,8 +22,10 @@
 //
 
 #include "float32_formatter_test.hpp"
-#include "formatters.hpp"
+#include <pni/io/formatters/scalar_format.hpp>
 #include <boost/current_function.hpp>
+
+using namespace pni::io;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(float32_formatter_test);
 

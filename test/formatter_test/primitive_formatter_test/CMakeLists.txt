@@ -16,11 +16,9 @@ set(SOURCES primitive_formatters_test.cpp
             value_formatter_test.cpp
            )
 
-add_library(common_formatters OBJECT formatters.cpp)
 
 add_executable(primitive_formatter_test EXCLUDE_FROM_ALL ${SOURCES} 
-               $<TARGET_OBJECTS:test_common> 
-               $<TARGET_OBJECTS:common_formatters>)
+               $<TARGET_OBJECTS:test_common> )
 target_link_libraries(primitive_formatter_test pniio ${CPPUNIT_LIBRARIES})
 add_test("formatters:primitive_formatters" primitive_formatter_test)
 
