@@ -75,9 +75,10 @@ xml_test_source="""
 #include <pni/io/nx/algorithms/create_field.hpp>
 #include <pni/io/nx/algorithms/close.hpp>
 #include <pni/io/nx/algorithms/get_size.hpp>
+#include <pni/io/nx/algorithms/write.hpp>
+#include <pni/io/nx/algorithms/read.hpp>
 #include "field_utils.hpp"
 #include <pni/io/nx/xml/group.hpp>
-#include <pni/io/nx/xml/attribute.hpp>
 #include "scalar_field_test_{0.type_name}.hpp"
 
 using namespace pni::core;

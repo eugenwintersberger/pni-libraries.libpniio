@@ -88,6 +88,8 @@ xml_test_source="""
 #include <pni/io/nx/algorithms/create_field.hpp>
 #include <pni/io/nx/algorithms/close.hpp>
 #include <pni/io/nx/algorithms/get_size.hpp>
+#include <pni/io/nx/algorithms/write.hpp>
+#include <pni/io/nx/algorithms/read.hpp>
 #include "field_utils.hpp"
 #include <pni/io/nx/xml/group.hpp>
 #include "multidim_field_test_{0.type_name}.hpp"
@@ -129,7 +131,7 @@ void multidim_field_test_{0.type_name}::test_inquery()
    
     array_type r{{{0.cpp_data}}};
     array_type data;
-    xml_test::field_test::data_from_xml<array_type>(child,data);
+    xml_test::field_test::data_from_xml(child,data);
 
     for(auto r_iter = r.begin(),d_iter = data.begin();
         d_iter != data.end();
