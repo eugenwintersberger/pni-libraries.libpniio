@@ -51,6 +51,12 @@ void complex32_formatter_test::test_format()
     
     result = format(input_type(-1.256987,3.452907));
     CPPUNIT_ASSERT(result == "-1.256987e00+I3.452907e00");
+
+    result = format(input_type(0,3.45));
+    CPPUNIT_ASSERT(result == "0.0e00+I3.45e00");
+    
+    result = format(input_type(0,-3.45));
+    CPPUNIT_ASSERT(result == "0.0e00-I3.45e00");
 }
 
 
