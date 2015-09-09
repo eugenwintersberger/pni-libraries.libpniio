@@ -30,12 +30,38 @@ namespace io{
     //! \ingroup ascii_io
     //! \brief container IO configuration
     //!
-    //! This class stores all the configuration information required to 
-    //! read or write containers to or from ASCII data. 
-    //! Three parameters are provided 
-    //! \li the start symbol (typically an opening bracket [)
-    //! \li the stop symbol (typically a closing praket ])
-    //! \li and the seperator (can be a whitespace, comma, etc)
+    //! This type stores the parameters required to read and write container
+    //! data. 
+    //! 
+    //! * the start symbol (typically an opening bracket `[`)
+    //! * the stop symbol (typically a closing praket `]`)
+    //! * and the seperator (can be a whitespace, comma, etc)
+    //! 
+    //! Instances of this type are used for instance by the formatter<T>
+    //! template when used with container types. Instances of this class 
+    //! are only configuratble during construction. After its construction
+    //! only read only access to its members is possible.
+    //! 
+    //! The usage is rather simple. Configuration is done vai the constructor:
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+    //! //use a semicolon as a seperator for the container elements
+    //! container_io_config config_1(';');
+    //!
+    //! //use { and } to embrace the container elements
+    //! container_io_config config_2('{','}');
+    //!
+    //! //use { and } to embrace the container elements and a colon as a
+    //! //seperator
+    //! container_io_config config_3('{','}',':');
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //!
+    //! Once an instance of `container_io_config` is created its elements 
+    //! can be accessed 
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+    //! config_1.separator();
+    //! config_1.start_symbol();
+    //! config_1.stop_symbol();
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //!
     class container_io_config
     {
@@ -94,11 +120,11 @@ namespace io{
             
             //-----------------------------------------------------------------
             //! 
-            //! \brief get seperator symbol
-            //! \return the seperator symbol of the current configuration 
+            //! \brief get separator symbol
+            //! \return the separator symbol of the current configuration 
             //!         instance 
             //! 
-            char seperator() const;
+            char separator() const;
             
             //-----------------------------------------------------------------
             //!

@@ -57,7 +57,7 @@ namespace io{
     {}
     
     //-------------------------------------------------------------------------
-    char container_io_config::seperator() const
+    char container_io_config::separator() const
     {
         return _sep;
     }
