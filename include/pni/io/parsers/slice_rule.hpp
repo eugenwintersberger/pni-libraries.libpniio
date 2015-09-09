@@ -84,7 +84,6 @@ namespace io{
         {
             using namespace boost::spirit;
             using namespace boost::spirit::qi;
-            //using namespace boost::fusion;
             using namespace boost::phoenix;
             using qi::_1;
 

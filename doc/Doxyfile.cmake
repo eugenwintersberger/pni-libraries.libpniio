@@ -64,7 +64,7 @@ INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/../include mainpage.dox \
                          h5_implementation_classes.dox \ 
                          image_io.dox nexus_io.dox \
                          nexus_utilities.dox nxpath_code.dox xml_code.dox \
-                         @CMAKE_CURRENT_SOURCE_DIR@/../src
+                         @CMAKE_CURRENT_SOURCE_DIR@/../src 
 RECURSIVE              = YES
 EXCLUDE_SYMLINKS       = NO
 EXAMPLE_PATH           = examples

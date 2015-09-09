@@ -25,9 +25,6 @@
 #pragma once
 
 #include<pni/core/types.hpp>
-#include<vector>
-#include<limits>
-
 #include <boost/spirit/include/qi.hpp>
 
 #include "../exceptions.hpp"

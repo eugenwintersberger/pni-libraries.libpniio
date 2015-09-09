@@ -24,15 +24,14 @@
 
 #pragma once
 
-#include<pni/core/types.hpp>
-#include<pni/core/type_erasures.hpp>
-#include<vector>
-#include "spirit_rules.hpp"
-#include "complex_rule.hpp"
-
+#include <pni/core/types.hpp>
+#include <pni/core/type_erasures.hpp>
 #include <boost/variant.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
+
+#include "spirit_rules.hpp"
+#include "complex_rule.hpp"
 
 namespace pni{
 namespace io{

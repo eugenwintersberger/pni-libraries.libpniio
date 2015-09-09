@@ -24,18 +24,12 @@
 
 #pragma once
 
-#include<pni/core/types.hpp>
-#include<vector>
-#include<map>
-#include<complex>
-
-#include <boost/mpl/map.hpp>
-#include <boost/mpl/pair.hpp>
+// the spirit_rules.hpp header file pulls everything in we need 
+#include "spirit_rules.hpp"
 #include <boost/mpl/at.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
 
-#include "spirit_rules.hpp"
 
 namespace pni{
 namespace io{

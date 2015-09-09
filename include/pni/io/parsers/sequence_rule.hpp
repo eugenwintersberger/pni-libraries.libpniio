@@ -22,11 +22,8 @@
 //
 #pragma once
 
-#include <sstream>
-
 #include<pni/core/types.hpp>
 #include<pni/core/error.hpp>
-#include<vector>
 
 #include "../exceptions.hpp"
 #include "get_rule_type.hpp"

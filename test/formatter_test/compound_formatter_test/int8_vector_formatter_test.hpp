@@ -23,7 +23,6 @@
 
 #pragma once
 
-#include <pni/io/formatters/formatter.hpp>
 #include <pni/core/types.hpp>
 
 #include<cppunit/TestFixture.h>
@@ -43,8 +42,6 @@ class int8_vector_formatter_test:public CppUnit::TestFixture
 
         typedef int8                       element_type;
         typedef std::vector<element_type>  input_type; 
-        typedef formatter<input_type>      formatter_type;        
-        formatter_type format;
         input_type     input;
 
     public:

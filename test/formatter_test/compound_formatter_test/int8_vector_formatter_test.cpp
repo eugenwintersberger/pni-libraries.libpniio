@@ -23,7 +23,9 @@
 
 #include <boost/current_function.hpp>
 #include <pni/io/container_io_config.hpp>
+#include <pni/io/format.hpp>
 #include "int8_vector_formatter_test.hpp"
+
 
 CPPUNIT_TEST_SUITE_REGISTRATION(int8_vector_formatter_test);
 
@@ -59,7 +61,6 @@ void int8_vector_formatter_test::test_costum_start_stop()
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
   
     container_io_config config('(',')');  
-    std::cout<<format(input,config)<<std::endl;  
     CPPUNIT_ASSERT(format(input,config)=="(1 2 3 4)");
 }
 

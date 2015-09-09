@@ -23,9 +23,8 @@
 //
 #pragma once
 
-
+#include <pni/core/types.hpp>
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix.hpp>
 
 namespace pni{
 namespace io{

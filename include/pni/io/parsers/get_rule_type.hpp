@@ -23,13 +23,6 @@
 //
 #pragma once
 
-#include<pni/core/types.hpp>
-#include<pni/core/type_erasures.hpp>
-#include<vector>
-
-#include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix.hpp>
-
 #include "complex_rule.hpp"
 #include "value_rule.hpp"
 #include "slice_rule.hpp"

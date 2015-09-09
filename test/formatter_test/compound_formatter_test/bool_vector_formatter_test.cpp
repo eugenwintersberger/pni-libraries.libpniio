@@ -22,7 +22,9 @@
 //
 
 #include <boost/current_function.hpp>
+#include <pni/io/format.hpp>
 #include "bool_vector_formatter_test.hpp"
+using namespace pni::io;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(bool_vector_formatter_test);
 

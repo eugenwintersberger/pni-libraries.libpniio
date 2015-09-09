@@ -58,7 +58,7 @@ add_custom_command(OUTPUT ${MDIM_SRCS}
 #-----------------------------------------------------------------------------
 # build common code for attributes
 #-----------------------------------------------------------------------------
-add_library(attr_test_common OBJECT attr_utils.cpp)
+add_library(attr_test_common OBJECT EXCLUDE_FROM_ALL attr_utils.cpp)
 
 
 #-----------------------------------------------------------------------------

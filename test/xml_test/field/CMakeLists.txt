@@ -57,7 +57,7 @@ add_custom_command(OUTPUT ${MDIM_SRCS}
 #-----------------------------------------------------------------------------
 # finally build the test target
 #-----------------------------------------------------------------------------
-add_library(field_test_common OBJECT field_utils.cpp)
+add_library(field_test_common OBJECT EXCLUDE_FROM_ALL field_utils.cpp)
 
 include_directories(${CMAKE_SOURCE_DIR}/test ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(field_test EXCLUDE_FROM_ALL field_tests.cpp 

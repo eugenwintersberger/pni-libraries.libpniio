@@ -23,7 +23,7 @@
 
 #pragma once
 
-#include <pni/io/formatters/formatter.hpp>
+#include <pni/io/formatters/vector_format.hpp>
 #include <pni/core/types.hpp>
 
 #include<cppunit/TestFixture.h>
@@ -40,8 +40,6 @@ class bool_vector_formatter_test:public CppUnit::TestFixture
 
         typedef bool_t                     element_type;
         typedef std::vector<element_type>  input_type; 
-        typedef formatter<input_type>      formatter_type;
-        formatter_type format;
         input_type     input;
 
     public:

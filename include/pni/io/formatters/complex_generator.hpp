@@ -35,7 +35,7 @@ namespace pni{
 namespace io{
 
     //!
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief generator for complex numbers
     //!
     //! This is a karma generator for complex numbers. 
