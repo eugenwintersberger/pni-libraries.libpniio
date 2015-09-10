@@ -43,7 +43,14 @@ namespace io{
     //! This is the default implementation of a formatter. It is intended to 
     //! be used with scalar and complex primitive types. 
     //! 
-    //! \tparam T primitive type
+    //! formatter<T> works for the following types
+    //! 
+    //! \li all primitive types including complex and boolean 
+    //! \li std::vector<T> where T is one of the above types
+    //! \li pni::core::array
+    //! \li and the pni::core::mdarray template
+    //! 
+    //! \tparam T  the type which should be converted to a string
     template<typename T> 
     class formatter
     {
@@ -81,7 +88,7 @@ namespace io{
     
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief formatter for strings
     //! 
     //! A specialization of the formatter template for scalar values for 
@@ -99,7 +106,7 @@ namespace io{
     
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief formatter for value_ref type erasure
     //! 
     //! A specialization of the formatter template for scalar values for the 
@@ -116,7 +123,7 @@ namespace io{
     
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief formatter for containers
     //! 
     //! Most of the container formatters are using this code. Do not 
@@ -158,7 +165,7 @@ namespace io{
                 core::string buffer;
                 iterator_type inserter(buffer);                
                 
-                auto sep_rule  = karma::char_(config.seperator());                
+                auto sep_rule  = karma::char_(config.separator());                
                 auto cont_rule = generator % sep_rule;
                 
                 if(config.start_symbol() && config.stop_symbol())
@@ -179,7 +186,7 @@ namespace io{
     
     //------------------------------------------------------------------------
     //!
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief vector formatter
     //!
     //! Specialization of the default formatter for vectors.  The elements of
@@ -214,7 +221,7 @@ namespace io{
     
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief formatter for the array type erasure
     //! 
     //! This is a specialization of the formatter template for instances of the 
@@ -247,7 +254,7 @@ namespace io{
     
     //-------------------------------------------------------------------------
     //! 
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief formatter for mdarray instances
     //! 
     //! Specialization of the formatter template for instances of the mdarray
@@ -284,7 +291,7 @@ namespace io{
     
     //-------------------------------------------------------------------------
     //! 
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief formatter for a string vector
     //! 
     //! Specialization of the formatter template for a vector of strings. 

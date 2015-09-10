@@ -33,7 +33,7 @@ namespace pni{
 namespace io{
     
     //!
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief get generator for type
     //!
     //! Template to obtain the appropriate generator for a particular type. 
@@ -50,7 +50,7 @@ namespace io{
     
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief get generator for value
     //! 
     //! Get a generator for a value type erasure. 
@@ -63,7 +63,7 @@ namespace io{
     
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief get generator for value_ref
     //! 
     //! Get a generator for the value_ref type erasure.

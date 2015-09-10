@@ -36,7 +36,7 @@ namespace traits{
     //-------------------------------------------------------------------------
     // Traits for Karma and the mdarray template
     //-------------------------------------------------------------------------
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief mdarrya container trait
     //! 
     //! Trait to identify mdarray as a container type for boost::spirit::karma
@@ -49,7 +49,7 @@ namespace traits{
     
     //-------------------------------------------------------------------------
     //! 
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief mdarray iterator trait
     //! 
     //! Iterator trait for the mdarray template for boost::spirit::karma.
@@ -65,7 +65,7 @@ namespace traits{
     
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief begin trait for mdarray
     //! 
     //! Static function used by boost::spirit::karam to retrieve the iterator
@@ -91,7 +91,7 @@ namespace traits{
     
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief end trait for mdarray
     //! 
     //! Provides a static function used by boost::spirit::karam to retreive the 
@@ -119,7 +119,7 @@ namespace traits{
     // Traits for Karma and the array type erasure
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief container trait for array
     //! 
     //! Container trait used by boost::spirit::karma to identify the array
@@ -131,7 +131,7 @@ namespace traits{
     
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief iterator trait for array
     //! 
     //! Trait used by boost::spirit::karma to obtain the iterator type 
@@ -145,7 +145,7 @@ namespace traits{
     
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief begin trait for array
     //!
     //! Provides a static function used by boost::spirit::karma to retrieve 
@@ -170,7 +170,7 @@ namespace traits{
     
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief end trait for array
     //!
     //! Provides a static function used by boost::spirit::karma to retrieve

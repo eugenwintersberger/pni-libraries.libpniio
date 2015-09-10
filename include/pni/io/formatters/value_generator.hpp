@@ -38,13 +38,16 @@ namespace io{
 
 
     //!
-    //! \ingroup formatter_classes
-    //! \brief generator for complex numbers
+    //! \ingroup formatter_internal_classes
+    //! \brief generator for scalar type erasures 
     //!
-    //! This is a karma generator for complex numbers. 
+    //! This struct implements a generator for the scalar type earsure 
+    //! types provided by `libpnicore`: `pni::core::value` and 
+    //! `pni::core::value_ref`. 
     //!
     //! \tparam OITER output iterator
-    //! \tparam T base type for the copmlex type
+    //! \tparam VTYPE scalar type erasure type
+    //! 
     template<
              typename OITER,       
              typename VTYPE
@@ -52,15 +55,24 @@ namespace io{
     struct value_generator : boost::spirit::karma::grammar<OITER,VTYPE()>
     {
         //!
-        //! \brief get real part
+        //! \brief convert value type to a string 
         //! 
-        //! This is a lazy function returning the real part of a complex 
-        //! number.
+        //! This lazy function converts a value type (``value`` or
+        //! ``value_ref`` to a string. This conversion is done in a two 
+        //! step process 
+        //! 
+        //! * first the data type of the data stored in the type erasure is 
+        //!   determined 
+        //! * a primitive generator for that particular type is selected 
+        //!   and applied on the stored data which is extracted using the 
+        //!   ``as<T>`` member template of the value type. 
+        //! 
         //! 
         struct lazy_to_string
         {
             typedef std::back_insert_iterator<pni::core::string> iterator_type;
             typedef primitive_generators<iterator_type> generator_map;
+
             //!
             //! \brief result type of the lazy function
             //! 
@@ -68,7 +80,19 @@ namespace io{
             {
                 typedef pni::core::string type; //!< result type
             };
-            
+           
+            //!
+            //! \brief typed string conversion
+            //! 
+            //! This static member function implements the string conversion 
+            //! for a particular type. It selects the appropriate primitive
+            //! generator according to its template parameter T and performs
+            //! the formatting. 
+            //!
+            //! \tparam T the stored data type 
+            //! \param v reference to the type erasure object
+            //! \return string with the result of the conversion
+            //! 
             template<typename T>
             static pni::core::string _to_string(const VTYPE &v)
             {
@@ -78,7 +102,9 @@ namespace io{
                 pni::core::string formatter_result;
                 iterator_type inserter(formatter_result);
                 
-                boost::spirit::karma::generate(inserter,generator_type(),v.template as<T>());
+                boost::spirit::karma::generate(inserter,
+                                               generator_type(),
+                                               v.template as<T>());
                 
                 return formatter_result;
             }
@@ -89,9 +115,13 @@ namespace io{
             //! This function template actually implements the extraction of 
             //! the real part from a complex number.
             //! 
-            //! \tparam Arg argument type (must be a complex type)
-            //! \param n complex input argument
-            //! \return real part of the complex number
+            //! \throws value_error if the type erasure is not initialized 
+            //! \throws type_error if the type erasure stores an object of an
+            //!                    unkown type
+            //! 
+            //! \tparam Arg argument type (`value` or `value_ref`)
+            //! \param n reference to the scalar type erasure
+            //! \return string representation of the type erasures data
             //!
             template<typename Arg>
             pni::core::string operator()(const Arg &n) const

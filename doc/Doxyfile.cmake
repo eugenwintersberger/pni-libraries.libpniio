@@ -195,5 +195,5 @@ DOT_NUM_THREADS        = 0
 DOT_FONTSIZE           = 10
 DOT_FONTPATH           =
 DOT_GRAPH_MAX_NODES    = 50
-USE_MATHJAX = YES
+USE_MATHJAX = NO
 WARN_FORMAT            = '$file:$line: $text'

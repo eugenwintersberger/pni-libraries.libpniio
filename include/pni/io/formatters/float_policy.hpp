@@ -31,14 +31,22 @@ namespace pni{
 namespace io{
   
     //!
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief policy for real numbers
     //!
     //! Formatting policy for real numbers. The current policy differs 
     //! from the C++ default in two ways
-    //! \li by default always the scientific format is used
-    //! \li if required the ouput precision is the full precision of the type
-    //!
+    //! 
+    //! * by default always the scientific format is used
+    //! * if required the ouput precision is the full precision of the type
+    //! 
+    //! The idea behind this policy is to avoid accidental truncations of 
+    //! floating point numbers during ASCII output.
+    //! This policy is used in all cases where a floating point type should 
+    //! be converted to a character string.
+    //! 
+    //! \tparam T floating point type 
+    //! 
     template<typename T>
     struct float_policy : boost::spirit::karma::real_policies<T>
     {
@@ -64,14 +72,17 @@ namespace io{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup formatter_classes
+    //! \ingroup formatter_internal_classes
     //! \brief real policy for imaginary part 
     //! 
-    //! This is a special policy for real numbers which represent the imaginary 
+    //! This is a special policy for real numbers representing the imaginary 
     //! part of a complex number. It shares all the properties of the default
-    //! float_policy but always adds the sign in front of the integer part
-    //! and seperates the sign by an 'I' to indicate the imaginary part of a
-    //! complex number
+    //! float_policy but adds the sign in front of the integer part
+    //! and separates the sign by an 'I' from the residual floating point
+    //! number.
+    //! 
+    //! \tparam T floating point type
+    //! 
     template<typename T> 
     struct imag_policy : boost::spirit::karma::real_policies<T>
     {
@@ -99,7 +110,16 @@ namespace io{
         //--------------------------------------------------------------------
         //!
         //! \brief add sign and I in front of the output
+        //! 
+        //! Adds the leading sign and the `I` to the output.
         //!
+        //! \tparam OITER output iterator type
+        //! \param sink output iterator
+        //! \param n number 
+        //! \param sign true if a sign is set 
+        //! \return true if writting the output was successful, false
+        //!         otherwise
+        //! 
         template<typename OITER>
         static bool integer_part(OITER &sink,T n,bool sign,bool ) 
         {
@@ -112,7 +132,6 @@ namespace io{
 
             return base_type::integer_part(sink,n,false,false);
         }
-
     };
 
 
