@@ -31,7 +31,7 @@ namespace pni{
 namespace io{
 
     //!
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief obtain rule type
     //! 
     //! This template provides the appropriate rule to parse a value of a 
@@ -53,7 +53,7 @@ namespace io{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief obtain rule for complex numbers
     //!
     //! This specialization of the get_rule_type template for complex number
@@ -74,7 +74,7 @@ namespace io{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief obtain rule for parsing values
     //!
     //! This specialization provides the rule type for parsing value instances.
@@ -90,7 +90,7 @@ namespace io{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief obtain rule for parsing slices
     //! 
     //! This specialization provides the rule type for parsing slices. 

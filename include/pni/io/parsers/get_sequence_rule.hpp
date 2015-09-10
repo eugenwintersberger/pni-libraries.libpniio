@@ -31,7 +31,7 @@ namespace io{
 
 
     //!
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief get rule for sequences
     //! 
     //! Return the rule to parser general sequences except for string 
@@ -55,7 +55,7 @@ namespace io{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief get string sequence rule
     //! 
     //! Specialization of get_sequence_rule for string sequences. 

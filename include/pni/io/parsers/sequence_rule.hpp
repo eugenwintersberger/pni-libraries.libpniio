@@ -35,7 +35,7 @@ namespace io{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief container parser
     //! 
     //! This parser reads a linear container of data from a string. The data

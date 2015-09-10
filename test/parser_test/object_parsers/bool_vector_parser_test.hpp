@@ -41,9 +41,8 @@ class bool_vector_parser_test:public CppUnit::TestFixture
     CPPUNIT_TEST(test_full);
 	CPPUNIT_TEST_SUITE_END();
 
-    typedef string::const_iterator iterator_type;
     typedef std::vector<bool_t> result_type;
-    typedef parser<iterator_type,result_type> parser_type;
+    typedef parser<result_type> parser_type;
 
 public:
 	void setUp();

@@ -49,13 +49,15 @@ namespace io{
     //! The input data must be trimmed - so no leading or trailing 
     //! blanks are allowed. The string is supposed to end with the last 
     //! character assembling the value to parse.
+    //!
+    //! By default the output iterator is a const string iterator. 
     //! 
-    //! \tparam ITERT iterator type
     //! \tparam T     primitive data type
+    //! \tparam ITERT iterator type
     //!
     template<
-             typename ITERT,
-             typename T
+             typename T,
+             typename ITERT = pni::core::string::const_iterator
             >
     class parser 
     {

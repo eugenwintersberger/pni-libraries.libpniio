@@ -30,9 +30,8 @@ namespace io{
 namespace nx{
 namespace xml{
     
-    typedef pni::core::string::const_iterator iterator_type;
     //! parser for size_t values
-    typedef pni::io::parser<iterator_type,size_t> size_t_parser_type;
+    typedef pni::io::parser<size_t> size_t_parser_type;
 
     bool operator<(const index_value_type &lhs,const index_value_type &rhs)
     {

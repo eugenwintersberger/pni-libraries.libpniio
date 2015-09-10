@@ -46,9 +46,8 @@ class complex32_parser_test:public CppUnit::TestFixture
 
         typedef complex32              result_type; 
         typedef float32                base_type;
-        typedef string::const_iterator iterator_type;
     
-        typedef parser<iterator_type,result_type> parser_type;
+        typedef parser<result_type> parser_type;
         parser_type p;
 
     public:

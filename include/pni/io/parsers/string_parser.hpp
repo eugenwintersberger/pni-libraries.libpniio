@@ -31,7 +31,7 @@ namespace io{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief string parser
     //! 
     //! This spcialization of the parser template is for string types. 
@@ -39,7 +39,7 @@ namespace io{
     //! \param ITERT input iterator type
     //!
     template<typename ITERT>
-    class parser<ITERT,pni::core::string>
+    class parser<pni::core::string,ITERT>
     {
         public:
             //! the output type of the parser

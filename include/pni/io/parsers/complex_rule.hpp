@@ -35,7 +35,7 @@ namespace pni{
 namespace io{
  
     //!
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief complex number rule
     //!
     //! This rule can be used to parse complex numbers. Complex numbers are 

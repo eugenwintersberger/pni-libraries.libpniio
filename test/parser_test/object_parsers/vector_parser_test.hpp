@@ -40,9 +40,8 @@ class vector_parser_test:public CppUnit::TestFixture
     CPPUNIT_TEST(test_overflow);
 	CPPUNIT_TEST_SUITE_END();
 
-    typedef string::const_iterator iterator_t;
     typedef std::vector<uint8> result_type;
-    typedef parser<iterator_t,result_type> parser_type;
+    typedef parser<result_type> parser_type;
 
 public:
 	void setUp();

@@ -38,7 +38,7 @@ namespace io{
 
    
     //!
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief value rule
     //!
     //! This rule parses an input string and automatically selects the proper 

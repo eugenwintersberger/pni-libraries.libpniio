@@ -128,8 +128,7 @@ namespace xml{
         template<typename T>
         static T data_from_xml(const node &io_node)
         {
-            typedef pni::core::string::const_iterator iterator_type;
-            pni::io::parser<iterator_type,T> p;
+            pni::io::parser<T> p;
 
             return p(data_node::read(io_node));
         }

@@ -40,9 +40,7 @@ class float64_parser_test:public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE_END();
 
         typedef float64                  result_type; 
-        typedef string::const_iterator iterator_type;
-    
-        typedef parser<iterator_type,result_type> parser_type;
+        typedef parser<result_type> parser_type;
         parser_type p;
 
     public:

@@ -36,7 +36,7 @@ namespace io{
     std::remove_const<decltype(p)>::type
 
     //!
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief spirit rule map
     //!
     //! This MPL map provides a mapping from data types to their appropriate

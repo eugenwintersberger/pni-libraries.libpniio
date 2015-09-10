@@ -32,7 +32,7 @@ namespace pni{
 namespace io{
 
     //!
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief default conversion trait
     //!
     //! Conversion trait used to convert parsed data to the requested 
@@ -81,7 +81,7 @@ namespace io{
 
     //------------------------------------------------------------------------
     //! 
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief uint8 conversion trait
     //! 
     //! Specialization of the conversion_trait template for the uint8 type. 
@@ -134,7 +134,7 @@ namespace io{
 
     //------------------------------------------------------------------------
     //! 
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief int8 conversion trait
     //! 
     //! Specialization of the conversion_trait template for the int8 type. 

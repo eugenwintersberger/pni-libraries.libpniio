@@ -34,7 +34,7 @@ namespace pni{
 namespace io{
 
     //!
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief slice parser
     //!
     //! This parser reads slice objects from a string. A slice is represented 

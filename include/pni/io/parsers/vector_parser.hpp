@@ -41,7 +41,7 @@ namespace io{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief container parser
     //! 
     //! This parser reads a linear container of data from a string. The data
@@ -59,10 +59,10 @@ namespace io{
     //! \tparam CTYPE container type
     //!
     template<
-             typename ITERT,
-             typename T
+             typename T,
+             typename ITERT
             >
-    class parser<ITERT,std::vector<T>>
+    class parser<std::vector<T>,ITERT>
     {
         public:
             //! result type for the parser
@@ -79,8 +79,11 @@ namespace io{
             typedef typename trait_type::read_type read_type;
             //! buffer type used for reading
             typedef std::vector<read_type> buffer_type;
+            //! rule type
+            typedef typename get_sequence_rule<ITERT,buffer_type>::type 
+                             rule_type;
             //! rule type to parse the sequence
-            typename get_sequence_rule<ITERT,buffer_type>::type sequence_;
+            rule_type sequence_;
 
         public:
             //-----------------------------------------------------------------
@@ -174,7 +177,6 @@ namespace io{
                             "Error during type conversion!");
                 }
             }
-
     };
 
 

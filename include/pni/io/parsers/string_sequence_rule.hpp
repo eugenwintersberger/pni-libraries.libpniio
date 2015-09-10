@@ -39,7 +39,7 @@ namespace pni{
 namespace io{
 
     //!
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief lazy string trimming
     //! 
     //! This lazy function is used to remove leading and trailing blanks 
@@ -78,7 +78,7 @@ namespace io{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief container parser
     //! 
     //! This parser reads a linear container of data from a string. The data

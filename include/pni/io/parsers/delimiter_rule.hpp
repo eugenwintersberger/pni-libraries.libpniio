@@ -30,7 +30,7 @@ namespace pni{
 namespace io{
 
     //!
-    //! \ingroup parser_classes
+    //! \ingroup parser_internal_classes
     //! \brief delimiter parser
     //!
     //! This parser is used for delimiters which for instance separate 
