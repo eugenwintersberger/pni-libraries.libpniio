@@ -30,6 +30,8 @@ namespace io{
 namespace nx{
 namespace parsers{
 
+    using namespace boost::spirit;
+    using namespace boost::phoenix;
 
     namespace algo = boost::algorithm; 
 

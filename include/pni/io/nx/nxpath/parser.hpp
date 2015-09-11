@@ -38,8 +38,6 @@ namespace nx{
 //spirit framework.
 namespace parsers{
 
-    using namespace boost::spirit;
-    using namespace boost::phoenix;
 
     //------------------------------------------------------------------------
     //!
@@ -50,16 +48,18 @@ namespace parsers{
     //! a group name or an attribute name. 
     //!
     template<typename ITERT>
-    struct id_parser : qi::grammar<ITERT,pni::core::string()>
+    struct id_parser : boost::spirit::qi::grammar<ITERT,pni::core::string()>
     {
         //! the major rule to parse an ID
-        qi::rule<ITERT,pni::core::string()> id_rule;
+        boost::spirit::qi::rule<ITERT,pni::core::string()> id_rule;
 
         //! 
         //! \brief default constructor
         //!
         id_parser() : id_parser::base_type(id_rule)
         {
+            using namespace boost::spirit;
+            using namespace boost::phoenix;
             id_rule = +qi::char_("-_a-zA-Z0-9");
         }
     };
@@ -72,12 +72,14 @@ namespace parsers{
     //! Parser for one or two dots. 
     //! 
     template<typename ITERT>
-    struct dot_parser : qi::grammar<ITERT,pni::core::string()>
+    struct dot_parser : boost::spirit::qi::grammar<ITERT,pni::core::string()>
     {
-        qi::rule<ITERT,pni::core::string()> dot_rule;
+        boost::spirit::qi::rule<ITERT,pni::core::string()> dot_rule;
         
         dot_parser() : dot_parser::base_type(dot_rule)
         {
+            using namespace boost::spirit;
+            using namespace boost::phoenix;
             using qi::_1;
             dot_rule = lit(".")[_val = "."]||lit(".")[_val += "."];
         }
@@ -99,9 +101,9 @@ namespace parsers{
     //! \tparam ITERT iterator type for the parser
     //!
     template<typename ITERT> 
-    struct element_parser : qi::grammar<
+    struct element_parser : boost::spirit::qi::grammar<
                                         ITERT,
-                                        locals<
+                                        boost::spirit::locals<
                                                pni::core::string,
                                                pni::core::string
                                               >,
@@ -111,9 +113,11 @@ namespace parsers{
         //! a single path element type
         typedef nxpath::element_type element_type;
         //! string rule type
-        typedef qi::rule<ITERT,pni::core::string()> string_rule_type;
+        typedef boost::spirit::qi::rule<ITERT,pni::core::string()> 
+            string_rule_type;
         //! type for parser locals
-        typedef locals<pni::core::string,pni::core::string> locals_type;
+        typedef boost::spirit::locals<pni::core::string,pni::core::string> 
+            locals_type;
         
         string_rule_type name_rule;   //!< rule for a single name        
         string_rule_type class_rule;  //!< rule for a class
@@ -122,11 +126,14 @@ namespace parsers{
         dot_parser<ITERT> dots_;  //!< rule to parse dots
         
         //! rule for a full group element
-        qi::rule< ITERT,locals_type,nxpath::element_type()> element_rule;
+        boost::spirit::qi::rule< ITERT,locals_type,nxpath::element_type()> 
+            element_rule;
 
         //! default constructor
         element_parser() : element_parser::base_type(element_rule)
         {
+            using namespace boost::spirit;
+            using namespace boost::phoenix;
             using qi::_1;
     
             //a name is basically nothing else than a simple Nexus identifier
@@ -156,16 +163,18 @@ namespace parsers{
     //! \tparam ITERT iterator type for the parser
     //!
     template<typename ITERT>
-    struct elements_parser : qi::grammar<ITERT,nxpath::elements_type()>
+    struct elements_parser : boost::spirit::qi::grammar<ITERT,nxpath::elements_type()>
     {
         //! rule for the entire group portion
-        qi::rule<ITERT,nxpath::elements_type()> elements_rule;
+        boost::spirit::qi::rule<ITERT,nxpath::elements_type()> elements_rule;
         //! group element parser
         element_parser<ITERT> element_; 
 
         //! default constructor
         elements_parser() : elements_parser::base_type(elements_rule)
         {
+            using namespace boost::spirit;
+            using namespace boost::phoenix;
             //[push_back(_val,construct<nxpath::element_type>("/","NXroot"))] 
             elements_rule = (element_ % '/') >-lit("/");
         }
@@ -185,8 +194,8 @@ namespace parsers{
     //! \tparam ITERT iterator type
     //!
     template<typename ITERT>
-    struct nxpath_parser : qi::grammar<ITERT,
-                                       locals
+    struct nxpath_parser : boost::spirit::qi::grammar<ITERT,
+                                       boost::spirit::locals
                                        <
                                            nxpath::elements_type,
                                            pni::core::string
@@ -194,8 +203,8 @@ namespace parsers{
                                        nxpath()>
     {
         //! rule for the path
-        qi::rule<ITERT,
-                 locals
+        boost::spirit::qi::rule<ITERT,
+                 boost::spirit::locals
                  <
                      nxpath::elements_type,
                      pni::core::string
@@ -203,7 +212,7 @@ namespace parsers{
                  nxpath()> nxpath_rule;
 
         //! rule for the root part of the path
-        qi::rule<ITERT,nxpath::element_type()> root_rule;
+        boost::spirit::qi::rule<ITERT,nxpath::element_type()> root_rule;
                 
         //!parser for an individual Nexus ID
         id_parser<ITERT> id_;
@@ -221,6 +230,8 @@ namespace parsers{
             nxpath_parser::base_type(nxpath_rule),
             _filename(fname)
         {
+            using namespace boost::spirit;
+            using namespace boost::phoenix;
             using boost::spirit::qi::_1;
            // using boost::phoenix::merge;
             using boost::phoenix::ref;
