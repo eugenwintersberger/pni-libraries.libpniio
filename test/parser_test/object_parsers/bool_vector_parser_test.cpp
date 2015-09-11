@@ -23,6 +23,7 @@
 
 #include <boost/current_function.hpp>
 #include "bool_vector_parser_test.hpp"
+#include <pni/io/container_io_config.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION(bool_vector_parser_test);
 
@@ -49,7 +50,7 @@ void bool_vector_parser_test::test_start_stop()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    parser_type p('(',')');
+    parser_type p(container_io_config('(',')'));
     result_type result = p("( true false false true  true   )");
     CPPUNIT_ASSERT(result.size()==5);
 }
@@ -59,7 +60,7 @@ void bool_vector_parser_test::test_delimiter()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    parser_type p(';');
+    parser_type p(container_io_config(';'));
     result_type result = p("true;false ;true; true ; false");
 
     CPPUNIT_ASSERT(result.size()==5);
@@ -70,7 +71,7 @@ void bool_vector_parser_test::test_full()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
    
-    parser_type p('[',']',',');
+    parser_type p(container_io_config('[',']',','));
     result_type result = p("[true,false ,false, true  ,  true]");
     CPPUNIT_ASSERT(result.size() == 5);
 }

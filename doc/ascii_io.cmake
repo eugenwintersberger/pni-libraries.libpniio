@@ -12,7 +12,84 @@ support is only supported up to some elementary extent.
 \defgroup parser_classes Parsers: creating objects from strings
     
 These classes are dedicated for generating objects from strings using the boost
-spirit parser framework.
+spirit parser framework. The heart of the parser fraemwork is the
+parser<T,ITERT> template. To use it include `pni/io/parsers.hpp` in your source
+file. The pni::io::parser<T,ITERT>  template currently works for 
+
+\li all scalar primitive types as defined by `libpnicore` 
+\li and std::vector<T> where T is a scalar primitive type as defined by
+`libpnicore`
+
+In general the usage of the template is fairly easy. The following code snipped
+reads a single scalar from a string 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+#include <pni/core/types.hpp> 
+#include <pni/io/parsers.hpp>
+
+using namespace pni::core;
+using namespace pni::io;
+
+typedef parser<float64> float64_parser_type; 
+
+int main(int,char **)
+{
+    float64 data; 
+    string input; 
+    float64_parser_type p; 
+    
+    std::cin>>input;
+    data = p(input); 
+    return 0;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The ITERT template parameter normaly must not be set by the user. Its default
+value is `pni::core::string::const_iterator` which should meet the most common
+use cases. 
+In the same manner as a scalare one can read a comman separated list of
+floating point numbers from a string 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+#include <pni/core/types.hpp>
+#include <pni/io/parsers.hpp>
+#include <pni/io/container_io_config.hpp>
+#include <vector>
+
+using namespace pni::core;
+using namespace pni::io;
+
+typedef std::vector<float64> f64_v_type;
+typedef parser<f64_v_type> f64_v_parser_type; 
+
+int main(int, char**)
+{
+    f64_v_type data; 
+    string input; 
+    f64_v_parser_type p(container_io_config(','));
+
+    std::cin << input;
+    data = p(input);
+
+    return 0;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+When parsing a list of items to a vector all whitespace characters before or
+after the items are ignored or interpreted es separator symbols when
+whitespaces are used as separators. This is true for all types except for
+strings. Strings get some special treatment as described in the next section. 
+
+Parsing strings 
+---------------
+
+As always strings are different. When parsing a single string the input string
+is passed unchanged with all leading and trailing whitspace characters to the
+output. 
+When parsing a list of strings to a std::vector some special rules apply 
+
+\li if the separator for the list items is a whitespace multiple whitespaces
+are treated like a single one. Whitespace characters adjacent to a start symbol
+and those directly before a stop symbol are ignored. 
+\li for any other separator symbol only the whitespaces around the separator
+and after and before the start and stop symbol are ignored. 
+
 */
 
 /*!

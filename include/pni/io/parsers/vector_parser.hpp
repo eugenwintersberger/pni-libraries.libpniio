@@ -34,6 +34,7 @@
 #include "delimiter_rule.hpp"
 #include "parser.hpp"
 #include "get_sequence_rule.hpp"
+#include "../container_io_config.hpp"
 
 
 namespace pni{
@@ -82,47 +83,34 @@ namespace io{
             //! rule type
             typedef typename get_sequence_rule<ITERT,buffer_type>::type 
                              rule_type;
+            typedef std::unique_ptr<rule_type> rule_ptr;
             //! rule type to parse the sequence
-            rule_type sequence_;
+            rule_ptr sequence_;
+
+            static rule_ptr get_rule_from_config(const container_io_config &c) 
+            {
+                if(c.separator() && c.start_symbol() && c.stop_symbol())
+                    return rule_ptr(new rule_type(c.start_symbol(),
+                                                  c.stop_symbol(),
+                                                  c.separator()));
+                else if(c.start_symbol() && c.stop_symbol() && !c.separator())
+                    return rule_ptr(new rule_type(c.start_symbol(),
+                                                  c.stop_symbol()));
+                else if(c.separator() && !c.start_symbol() && !c.stop_symbol())
+                    return rule_ptr(new rule_type(c.separator()));
+                else 
+                    return rule_ptr(new rule_type());
+            }
 
         public:
             //-----------------------------------------------------------------
             //!
             //! \brief default constructor
             //! 
-            parser() : sequence_() 
+            parser(const container_io_config &config = 
+                         container_io_config()) 
+                : sequence_(get_rule_from_config(config))
             {}
-
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief constructor
-            //! 
-            //! \param del delimiter symbol for the sequence
-            //!
-            parser(char del): sequence_(del) 
-            {}
-
-            //-----------------------------------------------------------------
-            //! 
-            //! \brief constructor
-            //! 
-            //! \param start the start symbol for the sequence
-            //! \param stop  the stop symbol for the sequence
-            //!
-            parser(char start,char stop) : sequence_(start,stop) 
-            {}
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief constructor
-            //! 
-            //! \param start the start symbol for the sequence
-            //! \param stop  the stop symbol for the sequence
-            //! \param del   the delimiter symbol for the sequence
-            //! 
-            parser(char start,char stop,char del) : sequence_(start,stop,del) 
-            {}
-
 
             //-----------------------------------------------------------------
             //!
@@ -145,7 +133,7 @@ namespace io{
 
                 try
                 {
-                    if(!qi::parse(s.begin(),s.end(),sequence_>qi::eoi,container))
+                    if(!qi::parse(s.begin(),s.end(),(*sequence_)>qi::eoi,container))
                     {
                         throw parser_error(EXCEPTION_RECORD,
                                 "Error parsing sequence!");

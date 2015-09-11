@@ -153,7 +153,11 @@ namespace io{
             using qi::_val;
             using qi::_1;
 
-            delimiter_ = qi::char_(del);
+            if(del==' ')
+                delimiter_ = +qi::blank;
+            else
+                delimiter_ = qi::char_(del);
+
             element_rule_ = (*(qi::char_-delimiter_))[_val = trim(_1)];
             sequence_ = element_rule_ % delimiter_;
         }
@@ -179,8 +183,8 @@ namespace io{
 
             start_ = qi::char_(start)>*qi::blank;
             stop_  = *qi::blank>qi::char_(stop);
-            delimiter_ = (+qi::blank);
-            element_rule_ = (+(qi::char_-(qi::lit(stop)|delimiter_)))[_val=trim(_1)];
+            delimiter_ = +qi::blank;
+            element_rule_ = (+(qi::char_-(qi::lit(stop)|qi::blank)))[_val=trim(_1)];
             sequence_ = start_> (element_rule_ % delimiter_)>stop_;
         }
 
@@ -201,7 +205,11 @@ namespace io{
             using namespace boost::spirit;
             start_ = qi::char_(start)>*qi::blank;
             stop_  = *qi::blank>qi::char_(stop);
-            delimiter_ = qi::char_(del);
+
+            if(del==' ')
+                delimiter_ = +qi::blank;
+            else
+                delimiter_ = qi::char_(del);
 
             element_rule_ = (*(qi::char_-(qi::lit(stop)|delimiter_)))[qi::_val =
                 trim(qi::_1)];

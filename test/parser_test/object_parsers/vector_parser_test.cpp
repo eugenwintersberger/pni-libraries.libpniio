@@ -23,6 +23,7 @@
 
 #include <boost/current_function.hpp>
 #include "vector_parser_test.hpp"
+#include <pni/io/container_io_config.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION(vector_parser_test);
 
@@ -49,7 +50,7 @@ void vector_parser_test::test_simple()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
    
-    parser_type p('[',']',',');
+    parser_type p(container_io_config('[',']',','));
     result_type result = p("[1,2,3,4,5]");
     CPPUNIT_ASSERT(result.size() == 5);
 }
@@ -59,6 +60,6 @@ void vector_parser_test::test_overflow()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    parser_type p('[',']',',');
+    parser_type p(container_io_config('[',']',','));
     CPPUNIT_ASSERT_THROW(p("[10,-20,10]"),parser_error);
 }

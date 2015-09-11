@@ -23,6 +23,7 @@
 
 #include <boost/current_function.hpp>
 #include "float32_vector_parser_test.hpp"
+#include <pni/io/container_io_config.hpp>
 
 CPPUNIT_TEST_SUITE_REGISTRATION(float32_vector_parser_test);
 
@@ -57,7 +58,7 @@ void float32_vector_parser_test::test_start_stop()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    parser_type p('(',')');
+    parser_type p(container_io_config('(',')'));
     result_type result = p("( 1.2 3.e3 -3.4 4.429  -5.34e-3   )");
     CPPUNIT_ASSERT(result.size()==5);
     CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
@@ -72,7 +73,7 @@ void float32_vector_parser_test::test_delimiter()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    parser_type p(';');
+    parser_type p(container_io_config(';'));
     result_type result = p("1.2;3e3;-3.4;4.429;-5.34e-3");
     CPPUNIT_ASSERT(result.size()==5);
     CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
@@ -87,7 +88,7 @@ void float32_vector_parser_test::test_full()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
    
-    parser_type p('[',']',',');
+    parser_type p(container_io_config('[',']',','));
     result_type result = p("[1.2,3.e+3,-3.4,4.429,-5.34e-3]");
     CPPUNIT_ASSERT(result.size() == 5);
     CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));

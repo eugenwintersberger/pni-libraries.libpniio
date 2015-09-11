@@ -41,6 +41,7 @@ void string_parser_test::test_regular_value()
     
     CPPUNIT_ASSERT(p("hello world") == "hello world");
     CPPUNIT_ASSERT(p(" this is a text") == " this is a text");
+    CPPUNIT_ASSERT(p("this is more text  ") == "this is more text  ");
 }
 
 
