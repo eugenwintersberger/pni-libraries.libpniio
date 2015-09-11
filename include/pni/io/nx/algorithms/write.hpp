@@ -206,7 +206,7 @@ namespace nx{
             //! \param f field instance
             //! \return nothing
             //!
-            result_type operator()(field_type &f) const
+            result_type operator()(const field_type &f) const
             {
                 if(_selection.size())
                     f(_selection).write(_data);
@@ -235,7 +235,7 @@ namespace nx{
             //! \param a attribute instance
             //! \return nothing
             //!
-            result_type operator()(attribute_type &a) const
+            result_type operator()(const attribute_type &a) const
             {
                 if(_selection.size())
                     a(_selection).write(_data);
@@ -295,7 +295,7 @@ namespace nx{
              typename AATYPE,
              typename ...ITYPES
             >
-    void write(nxobject<GTYPE,FTYPE,AATYPE> &o,const ATYPE &a,ITYPES ...indices)
+    void write(const nxobject<GTYPE,FTYPE,AATYPE> &o,const ATYPE &a,ITYPES ...indices)
     {
         typedef write_visitor<ATYPE,GTYPE,FTYPE,AATYPE> visitor_type;
         std::vector<pni::core::slice> sel{pni::core::slice(indices)...};
@@ -310,7 +310,7 @@ namespace nx{
              typename FTYPE,
              typename AATYPE
             >
-    void write(nxobject<GTYPE,FTYPE,AATYPE> &o,const ATYPE &a,
+    void write(const nxobject<GTYPE,FTYPE,AATYPE> &o,const ATYPE &a,
                const std::vector<pni::core::slice> &sel)
     {
         typedef write_visitor<ATYPE,GTYPE,FTYPE,AATYPE> visitor_type;
