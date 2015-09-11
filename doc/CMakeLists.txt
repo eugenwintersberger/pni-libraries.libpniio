@@ -21,7 +21,7 @@ if(DOXYGEN_FOUND)
 
     #run doxygen
     add_custom_command(OUTPUT html COMMAND ${DOXYGEN_EXECUTABLE} Doxyfile)
-    add_custom_target(api_doc SOURCES "html")
+    add_custom_target(api_doc SOURCES "html" )
     install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/html"
         DESTINATION "${CMAKE_INSTALL_FULL_DOCDIR}${LIBRARY_VERSION}-doc"
         OPTIONAL

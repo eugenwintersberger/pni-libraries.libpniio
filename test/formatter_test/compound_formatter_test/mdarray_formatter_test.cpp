@@ -49,25 +49,22 @@ void mdarray_formatter_test::test_default()
 void mdarray_formatter_test::test_costum_sep()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-  
-    container_io_config config(';');    
-    CPPUNIT_ASSERT(format(input,config)=="1;2;3;4");
+    formatter_type f(container_io_config(';'));    
+    CPPUNIT_ASSERT(f(input)=="1;2;3;4");
 }
 
 //-----------------------------------------------------------------------------
 void mdarray_formatter_test::test_costum_start_stop()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-  
-    container_io_config config('(',')');  
-    CPPUNIT_ASSERT(format(input,config)=="(1 2 3 4)");
+    formatter_type f(container_io_config('(',')'));  
+    CPPUNIT_ASSERT(f(input)=="(1 2 3 4)");
 }
 
 //-----------------------------------------------------------------------------
 void mdarray_formatter_test::test_full_costum()
 {
     std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    container_io_config config('[',']',';');
-    CPPUNIT_ASSERT(format(input,config)=="[1;2;3;4]");
+    formatter_type f(container_io_config('[',']',';'));
+    CPPUNIT_ASSERT(f(input)=="[1;2;3;4]");
 }

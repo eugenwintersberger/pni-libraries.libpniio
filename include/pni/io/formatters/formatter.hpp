@@ -147,7 +147,13 @@ namespace io{
             typedef typename getter_type::type generator_type; 
             //! generator instance
             generator_type generator;
+            container_io_config _config;
         public:
+            container_formatter(const container_io_config &config = 
+                                      container_io_config()):
+                _config(config)
+            { }
+
             //! 
             //! \brief generate output
             //! 
@@ -157,22 +163,20 @@ namespace io{
             //! \param config output configuration for the container
             //! \return string representation of the input vector
             //! 
-            pni::core::string operator()(const container_type &v,
-                                    const container_io_config config = 
-                                    container_io_config()) const
+            pni::core::string operator()(const container_type &v) const
             {
                 using namespace boost::spirit;
                 core::string buffer;
                 iterator_type inserter(buffer);                
                 
-                auto sep_rule  = karma::char_(config.separator());                
+                auto sep_rule  = karma::char_(_config.separator());                
                 auto cont_rule = generator % sep_rule;
                 
-                if(config.start_symbol() && config.stop_symbol())
+                if(_config.start_symbol() && _config.stop_symbol())
                 {                                   
-                    karma::generate(inserter,config.start_symbol()<<
+                    karma::generate(inserter,_config.start_symbol()<<
                                              cont_rule<<
-                                             config.stop_symbol(),v);
+                                             _config.stop_symbol(),v);
                 }
                 else
                 {
@@ -202,6 +206,10 @@ namespace io{
             formatter_type f;
 
         public:           
+            formatter(const container_io_config &config = 
+                            container_io_config()):
+                f(config)
+            {}
 
             //! 
             //! \brief generate output
@@ -211,11 +219,9 @@ namespace io{
             //! \param v input vector
             //! \return string representation of the input vector
             //! 
-            core::string operator()(const std::vector<T> &v,
-                                    const container_io_config config = 
-                                    container_io_config()) const
+            core::string operator()(const std::vector<T> &v) const
             {
-                return f(v,config);
+                return f(v);
             }
     };
     
@@ -236,18 +242,20 @@ namespace io{
             formatter_type f;           
             
         public:            
+            formatter(const container_io_config &config = 
+                            container_io_config()):
+                f(config)
+            {}
             
             //-----------------------------------------------------------------
-            core::string operator()(const pni::core::array &v,
-                                    const container_io_config &config = 
-                                          container_io_config()) const
+            core::string operator()(const pni::core::array &v) const
             {
                 //there seems to be a crucial problem with the array iterator
                 //have not figured this out yet. However, we should use it 
                 //with care!
                 container_type c(v.size());
                 std::copy(v.begin(),v.end(),c.begin());
-                return f(c,config);
+                return f(c);
             }
             
     };
@@ -271,6 +279,10 @@ namespace io{
             formatter_type f;
 
         public:           
+            formatter(const container_io_config &config = 
+                            container_io_config()):
+                f(config)
+            {}
 
             //! 
             //! \brief generate output
@@ -280,11 +292,9 @@ namespace io{
             //! \param v input vector
             //! \return string representation of the input vector
             //! 
-            core::string operator()(const pni::core::mdarray<OTYPES...> &v,
-                                    const container_io_config config = 
-                                    container_io_config()) const                                    
+            core::string operator()(const pni::core::mdarray<OTYPES...> &v) const                                    
             {          
-                return f(v,config);
+                return f(v);
             }
         
     };

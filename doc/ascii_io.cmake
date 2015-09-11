@@ -142,17 +142,18 @@ typedef formatter<mca_type> mca_fmt_type;
 
 int main(int,char **)
 {
-    mca_fmt_type mca_fmt; 
+    mca_fmt_type mca_fmt(container_io_config('[',']',';')); 
     mca_type mca{1,20,84,11};
-    container_io_config mca_cfg('[',']',';');
+    container_io_config mca_cfg;
 
-    std::cout<<mca_fmt(mca,mca_cfg)<<std::endl;
+    std::cout<<mca_fmt(mca)<<std::endl;
 //    //  will output
 //    //  [1;20;84;11]
 
     return 0;
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+hello world
 */
 
 /*!

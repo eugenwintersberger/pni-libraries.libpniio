@@ -34,8 +34,8 @@ namespace io{
     string format(const std::vector<type> &v,\
                   const container_io_config &config) \
     {\
-        formatter<std::vector<type>> f; \
-        return f(v,config);  \
+        formatter<std::vector<type>> f(config); \
+        return f(v);  \
     }
 
     DEFINE_VECTOR_FORMAT(pni::core::uint8)
