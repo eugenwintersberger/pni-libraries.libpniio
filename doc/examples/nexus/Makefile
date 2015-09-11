@@ -1,10 +1,15 @@
 CPPFLAGS=-O0 -g -std=c++0x $(shell pkg-config --cflags pniio)
 LDFLAGS=$(shell pkg-config --libs pniio)
 
-all: nxfile_ex1 nxgroup_ex1 nxgroup_ex2 nxnumfield_ex1 nxnumfield_ex2 nxstrfield_ex1 nxstrfield_ex2 nxbinfield_ex1 simple_io thread_ex1 nxnumfield_ex4 nxpath_match
+all: nxfile_ex1 nxgroup_ex1 nxgroup_ex2 nxnumfield_ex1 nxnumfield_ex2 \
+	nxstrfield_ex1 nxstrfield_ex2 nxbinfield_ex1 simple_io thread_ex1 \
+	nxnumfield_ex4 nxpath_match count_entries
 
 nxfile_ex1: nxfile_ex1.cpp
 	$(CXX) -o $@ $< $(CPPFLAGS) $(LDFLAGS)
+
+count_entries: count_entries.cpp
+	$(CXX) $(CPPFLAGS) -o $@ $< $(LDFLAGS)
 
 nxgroup_ex1: nxgroup_ex1.cpp
 	$(CXX) -o $@ $< $(CPPFLAGS) $(LDFLAGS)
@@ -60,6 +65,7 @@ clean:
 	rm -r thread_ex1
 	rm -rf nxnumfield_ex4
 	rm -rf nxpath_match
+	rm -rf count_entries
 
 run:
 	./nxfile_ex1

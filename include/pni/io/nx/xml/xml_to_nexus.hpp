@@ -74,7 +74,7 @@ namespace xml{
              typename T,
              typename OTYPE
             >
-    void write_node_data(OTYPE &object,const node &n)
+    void write_node_data(const OTYPE &object,const node &n)
     {
         typedef std::vector<T> buffer_type;
         
@@ -109,7 +109,7 @@ namespace xml{
     //! \param n the node holding the data
     //! 
     template<typename OTYPE>
-    void write_node_data(OTYPE &object,const node &n)
+    void write_node_data(const OTYPE &object,const node &n)
     { 
         using namespace pni::core;
 
@@ -187,7 +187,7 @@ namespace xml{
              typename ATYPE,
              typename PTYPE
             >
-    void xml_to_nexus(node &t,nxobject<GTYPE,FTYPE,ATYPE> &parent,
+    void xml_to_nexus(const node &t,const nxobject<GTYPE,FTYPE,ATYPE> &parent,
                       PTYPE write_data)
     {
         //typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
@@ -252,7 +252,7 @@ namespace xml{
              typename FTYPE,
              typename ATYPE             
             >
-    void xml_to_nexus(node &t,nxobject<GTYPE,FTYPE,ATYPE> &parent)
+    void xml_to_nexus(const node &t,const nxobject<GTYPE,FTYPE,ATYPE> &parent)
     {
        xml_to_nexus(t,parent,write_no_data());
     }
@@ -286,7 +286,7 @@ namespace xml{
              pni::io::nx::nximp_code IMPID,
              typename PTYPE
             >
-    void xml_to_nexus(node &t,OTYPE<IMPID> &group,PTYPE write_data)
+    void xml_to_nexus(const node &t,const OTYPE<IMPID> &group,PTYPE write_data)
     {
         typedef typename nxobject_trait<IMPID>::object_type object_type;
         object_type o = group;
@@ -321,7 +321,7 @@ namespace xml{
              template<pni::io::nx::nximp_code> class OTYPE,
              pni::io::nx::nximp_code IMPID
             >
-    void xml_to_nexus(node &t,OTYPE<IMPID> &group)
+    void xml_to_nexus(const node &t,const OTYPE<IMPID> &group)
     {
         typedef typename nxobject_trait<IMPID>::object_type object_type;
         object_type o=group;

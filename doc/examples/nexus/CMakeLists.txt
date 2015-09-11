@@ -18,6 +18,7 @@ set(SOURCES Makefile
             thread_ex1.cpp
             nxpath_match.xml
             nxpath_match.cpp
+            count_entries.cpp
             )
 #Motor.hpp
 #record_parser.cpp
