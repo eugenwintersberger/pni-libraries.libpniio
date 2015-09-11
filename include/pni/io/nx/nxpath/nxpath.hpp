@@ -37,24 +37,22 @@ namespace nx{
     //! This class represents a full Nexus path. Such a path describes the 
     //! position of an object within a Nexus file. In general the path has 
     //! a form like this
-    /*!
-    \code
-    filename://entry:NXentry/instrument:NXinstrument/detector/data@attrname
-    \endcode
-    */
+    //!
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+    //! filename://entry:NXentry/instrument:NXinstrument/detector/data@attrname
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //! 
     //! More specific this can be written as
-    /*!
-    \code
-    [filename://]path
-    \endcode
-    */
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+    //! [filename://]path
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //!
     //! Usage
-    /*!
-    \code
-    string path_str = .....;
-    nxpath path = nxpath::from_string(path_str);
-    \endcode
-    */
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+    //! string path_str = .....;
+    //! nxpath path = nxpath::from_string(path_str);
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //! 
     //! A path can either be absolute or relative to a particular 
     //! object. However, a path with a filename part is always absolute (for
     //! obvious reasons).

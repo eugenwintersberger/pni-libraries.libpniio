@@ -32,7 +32,41 @@ namespace io{
 namespace nx{    
 
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_utils
+    //! \brief make a relative path
+    //! 
+    //! Take a given path and make it relative with respect to a particular 
+    //! other path (typically the path of a parent object). 
+    //! 
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+    //! nxpath entry = nxpath::from_string("/:NXentry");
+    //! nxpath det   = nxpath::from_string("/:NXentry/:NXinstrument/:NXdetector");
+    //! 
+    //! nxpath det_rel = make_relative(entry,det);
+    //! std::cout<<det_rel<<std::endl;
+    //! // output: :NXinstrument/:NXdetector
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //! 
+    //! For this procedure to work both paths must be absolute as we need a
+    //! common starting point (which would be the root group). In the case that 
+    //! Both 
+    //! 
+    //! * both paths must be absolute (as we need a common starting point which 
+    //!   would be the root group
+    //! * if boths paths have a file section it must be equal 
+    //! * if 
+    //! 
+    //! A typical application would be to find all instances of `NXdetector` 
+    //! in a given instrument group. 
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+    //! 
+    //! std::vector<h5::nxobject> detectors; 
+    //! 
+    //! 
+    nxpath make_relative(const nxpath &parent_path,const nxpath &orig_path);
+
+    //!
+    //! \ingroup nxpath_utils
     //! \brief check if two paths are matching
     //! 
     //! See the users guide for details about when paths are considered as 
@@ -46,7 +80,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     //! 
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_utils
     //! \brief check if paths are matching
     //! 
     //! See the users guide for details about when paths are considered as 
@@ -60,7 +94,7 @@ namespace nx{
 
     //-------------------------------------------------------------------------
     //! 
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_utils
     //! \brief check if path elements match
     //! 
     //! See the users guide for details about when paths elements are
@@ -75,7 +109,7 @@ namespace nx{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_utils
     //! \brief create object element
     //!
     //! This utilty function creates an element for the object section of a 
@@ -91,7 +125,7 @@ namespace nx{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_utils
     //! \brief split a nexus path
     //!
     //! Splits  a given Nexus path in to two parts at  a particular index s 
@@ -99,21 +133,21 @@ namespace nx{
     //! the size of the input path an exception will be thrown.
     //!
     //! The best is to have a look at the following example
-    /*!
-    \code{.cpp}
-    nxpath path = nxpath::from_string("file.nx:///entry:NXentry/instrument:NXinstrument/data");
-    nxpath p1,p2;
-    split_path(path,1,p1,p2);
-
-    std::cout<<p1<<std::endl;
-    std::cout<<p2<<std::endl;
-
-    // output
-    // file.nx:///entry:NXentry
-    // instrument:NXinstrument/data
-
-    \endcode
-    */
+    //!
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+    //! string srep = "file.nx:///entry:NXentry/instrument:NXinstrument/data";
+    //! nxpath path = nxpath::from_string(srep);
+    //! nxpath p1,p2;
+    //! split_path(path,1,p1,p2);
+    //! 
+    //! std::cout<<p1<<std::endl;
+    //! std::cout<<p2<<std::endl;
+    //! 
+    //! // output
+    //! // file.nx:///entry:NXentry
+    //! // instrument:NXinstrument/data
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //! 
     //! \throws pni::core::index_error if s exceeds input path size
     //! \param p original path
     //! \param s index where to split 
@@ -124,7 +158,7 @@ namespace nx{
 
     //--------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_utils
     //! \brief split path at last element
     //!
     //! Split the path at the last element. This is a particularly usefull 
@@ -140,7 +174,7 @@ namespace nx{
 
     //--------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_utils
     //! \brief check if path has a file section
     //! 
     //! Return true if an instance of nxpath has a non-empty file section. 
@@ -151,7 +185,7 @@ namespace nx{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_utils
     //! \brief check if path has an attribute section
     //!
     //! Return true if an instance of nxpath has a non-empty attribute section.
@@ -162,7 +196,7 @@ namespace nx{
     
     //------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_utils
     //! \brief check if element is root
     //!
     //! The root element has the form ("/","NXroot"). This function returns
@@ -177,7 +211,7 @@ namespace nx{
 
     //--------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_utils
     //!
     //! \param p path instance
     //! \return true if path is absolute, false otherwise
@@ -186,7 +220,7 @@ namespace nx{
 
     //--------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_utils
     //! \brief checks name part of a path element
     //!
     //! This function returns true when the path element passed to it has a 
@@ -199,7 +233,7 @@ namespace nx{
 
     //--------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_utils
     //! \brief checks class part of a path element
     //! 
     //! This function returns true when the path element passed to it has a
@@ -211,7 +245,7 @@ namespace nx{
 
     //--------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_utils
     //! \brief check element completness
     //! 
     //! A path element is considered as complete if both, name and class field 
@@ -229,7 +263,7 @@ namespace nx{
 
     //--------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_utils
     //! \brief check if path is empty
     //! 
     //! A path is considered empty if does not contain
@@ -245,7 +279,7 @@ namespace nx{
 
     //--------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_utils
     //! \brief join two paths
     //! 
     //! Join two paths together. This operation can only be carried out if the 
@@ -265,17 +299,18 @@ namespace nx{
 
     //--------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
-    //! \brief input operator for a nexus path
+    //! \ingroup nxpath_operators
+    //! \brief read path from an input stream
+    //! \relates nxpath
     //! 
     //! Constructing a nexus path from a stream. Analogously to the output 
     //! operator this is used to read a path from a stream-able source.
-    /*!
-    \code{.cpp}
-    nxpath p;
-    std::cin>>p;
-    \endcode
-    */
+    //!
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+    //! nxpath p;
+    //! std::cin>>p;
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //! 
     //! \param i reference to the input stream
     //! \param p reference to the path
     //! \return reference to the advanced original stream
@@ -284,20 +319,39 @@ namespace nx{
 
     //--------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_operators
     //! \brief equality operator for path elements
+    //! \relates nxpath
     //! 
+    //! Two path elements are considered equal if their name and, in the case 
+    //! of groups class, are equal. 
+    //! 
+    //! \param a reference to the element on the left handside of the operator
+    //! \param b reference to the element on the right handside of the operator
+    //! \return true if the elements are equal
     //! 
     bool operator==(const nxpath::element_type &a,
                     const nxpath::element_type &b);
 
+    //--------------------------------------------------------------------------
+    //!
+    //! \ingroup nxpath_operators
+    //! \brief inequality operator for path elements
+    //! \relates nxpath
+    //! 
+    //! 
+    //! \param a reference to the element on the left handside of the operator
+    //! \param b reference to the element on the right handside of the operator
+    //! \return true if the elements are no equal
+    //! 
     bool operator!=(const nxpath::element_type &a,
                     const nxpath::element_type &b);
 
     //--------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_operators
     //! \brief equality operator for two path objects
+    //! \relates nxpath
     //!
     //! Compare to path objects. They are considered equal if both paths 
     //! contain the same components. 
@@ -310,8 +364,9 @@ namespace nx{
 
     //--------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_operators
     //! \brief inequality operator for two path objects
+    //! \relates nxpath
     //!
     //! Compars two path objects and returns true if they are not equal. 
     //! \param lhs reference to the path on the left handside
@@ -322,8 +377,9 @@ namespace nx{
     
     //------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_operators
     //! \brief output operator for single elements
+    //! \relates nxpath
     //!
     //! Write a single object element to an output stream. 
     //!
@@ -334,41 +390,26 @@ namespace nx{
     std::ostream &operator<<(std::ostream &stream,
                              const nxpath::element_type &e);
 
-    //------------------------------------------------------------------------
-    //!
-    //! \ingroup nxpath_code
-    //! \brief output operator for object path
-    //!
-    //! Write an entire object path to an output stream
-    //!
-    //! \param stream output stream reference
-    //! \param e object path 
-    //! \return reference to the modified stream
-    //!
-    std::ostream &operator<<(std::ostream &stream,
-                             const nxpath::elements_type &e);
-
-
     //--------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_operators
     //! \brief output operator for a nexus path
+    //! \relatex nxpath
     //! 
     //! Prints a nexus path to an output stream. One can either use this to 
     //! write a Nexus path to standard out 
-    /*!
-    \code{.cpp}
-    nxpath p = ....;
-    std::cout<<p<<std::endl;
-    \endcode
-    */
+    //!
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+    //! nxpath p = ....;
+    //! std::cout<<p<<std::endl;
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //! 
     //! or to a string using the stringstream operator
-    /*!
-    \code{.cpp}
-    std::stringstream ss;
-    ss<<p;
-    \endcode
-    */
+    //!
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+    //! std::stringstream ss;
+    //! ss<<p;
+    //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //!
     //! \param stream reference to the output stream
     //! \param p reference to the path

@@ -31,7 +31,7 @@ namespace nx{
     namespace stl
     {
         //!
-        //! \ingroup nxpath_code
+        //! \ingroup nxpath_internal_code
         //! \brief custom inserter
         //!
         //! This is a specialized version of the standard STL inserter 

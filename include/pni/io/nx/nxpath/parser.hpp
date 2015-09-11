@@ -43,7 +43,7 @@ namespace parsers{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_internal_code
     //! \brief nexus identifier parser
     //!
     //! This code parsers a single Nexus identifier which would be a fieldname
@@ -66,7 +66,7 @@ namespace parsers{
     
     //-------------------------------------------------------------------------
     //! 
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_internal_code
     //! \brief parser dots
     //! 
     //! Parser for one or two dots. 
@@ -85,7 +85,7 @@ namespace parsers{
     
     //--------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_internal_code
     //! \brief parser for group elements
     //! 
     //! This parser handles a single group element of the group portion of 
@@ -143,7 +143,7 @@ namespace parsers{
     
     //-------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_internal_code
     //! \brief parser for group path
     //!
     //! Parser for the group portion of a Nexus path. The group portion has 
@@ -175,7 +175,7 @@ namespace parsers{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_internal_code
     //! \brief parser for a nexus path
     //!
     //! The parser has to local elements:
@@ -264,7 +264,7 @@ namespace parsers{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup nxpath_code
+    //! \ingroup nxpath_internal_code
     //! \brief parser string to path
     //!
     //! Parse a string input and generate a path instance from it. 
