@@ -23,7 +23,7 @@
 
 #include <pni/core/types.hpp>
 
-#include "../nxpath.hpp"
+#include "../nxpath/nxpath.hpp"
 #include "get_parent.hpp"
 #include "get_root.hpp"
 #include "get_attribute.hpp"

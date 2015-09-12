@@ -19,6 +19,7 @@ set(SOURCES Makefile
             nxpath_match.xml
             nxpath_match.cpp
             count_entries.cpp
+            count_detectors.cpp
             )
 #Motor.hpp
 #record_parser.cpp
