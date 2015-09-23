@@ -31,7 +31,7 @@ extern "C"{
 #include <pni/core/error.hpp>
 
 #include "../nxlink_type.hpp"
-#include "../nxpath.hpp"
+#include "../nxpath/nxpath.hpp"
 
 namespace pni{
 namespace io {

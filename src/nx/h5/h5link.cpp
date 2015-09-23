@@ -24,6 +24,7 @@
 
 #include <pni/io/nx/h5/h5link.hpp>
 #include <pni/io/nx/h5/group_imp.hpp>
+#include <pni/io/nx/nxpath/utils.hpp>
 
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 #include <pni/io/exceptions.hpp>

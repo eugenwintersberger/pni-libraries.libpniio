@@ -345,7 +345,7 @@ namespace nx{
              typename FTYPE,
              typename ATYPE,
              typename PATHT,
-             typename STYPE = shape_t
+             typename STYPE = pni::core::shape_t
             > 
     nxobject<GTYPE,FTYPE,ATYPE> 
     create_field(const nxobject<GTYPE,FTYPE,ATYPE> &parent,const PATHT &path,
@@ -389,7 +389,8 @@ namespace nx{
              typename ...ARGTS
             >
     nxobject<GTYPE,FTYPE,ATYPE>
-    create_field(const nxobject<GTYPE,FTYPE,ATYPE> &o,type_id_t tid,ARGTS...args)
+    create_field(const nxobject<GTYPE,FTYPE,ATYPE> &o,
+                 pni::core::type_id_t tid,ARGTS...args)
     {
         using namespace pni::core;
         switch(tid)

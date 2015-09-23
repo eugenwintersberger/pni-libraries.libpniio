@@ -24,9 +24,11 @@
 #pragma once
 
 #include "nxobject_traits.hpp"
-#include "nxpath.hpp"
+#include "nxpath/nxpath.hpp"
+#include "nxpath/utils.hpp"
 #include "nxlink_type.hpp"
 #include "algorithms/get_path.hpp"
+
 
 namespace pni{
 namespace io{

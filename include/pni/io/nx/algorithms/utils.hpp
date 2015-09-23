@@ -28,8 +28,6 @@ namespace pni{
 namespace io{
 namespace nx{
 
-    using namespace pni::core;
-
     //forward declaration of path
     class nxpath;
 

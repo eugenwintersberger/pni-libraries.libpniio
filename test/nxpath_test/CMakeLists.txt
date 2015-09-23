@@ -27,6 +27,7 @@ set(UTILSRC nxpath_utils_tests.cpp
             test_join.cpp
             nxpath_match_test.cpp
             test_element_match.cpp
+            test_make_relative.cpp
            )
 add_executable(nxpath_parser_tests EXCLUDE_FROM_ALL ${PARSERSRC} $<TARGET_OBJECTS:test_common>)
 add_executable(nxpath_tests EXCLUDE_FROM_ALL ${SOURCES} $<TARGET_OBJECTS:test_common>)
