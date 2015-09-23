@@ -147,7 +147,7 @@ namespace h5{
         vstring<<major<<"."<<minor<<"."<<rel;
    
         attribute_imp a(create_attribute(file,
-                                         "HDF5_verison",
+                                         "HDF5_version",
                                          get_type(type_id_t::STRING),
                                          h5dataspace(),
                                          true));
