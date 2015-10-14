@@ -30,6 +30,8 @@ namespace io{
 namespace nx{
 namespace xml{
 
+    using namespace pni::core;
+
 
     //------------------------------------------------------------------------
     string field::unit(const node &field_node)

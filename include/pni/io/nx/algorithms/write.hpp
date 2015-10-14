@@ -30,8 +30,6 @@ namespace pni{
 namespace io{
 namespace nx{
     
-    using namespace pni::core;
-
     //------------------------------------------------------------------------
     //! 
     //! \ingroup algorithm_code

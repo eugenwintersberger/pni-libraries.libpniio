@@ -342,7 +342,8 @@ namespace nx{
              typename FTYPE,
              typename ATTYPE
             >
-    void read(nxobject<GTYPE,FTYPE,ATTYPE> &o,ATYPE &a,const std::vector<slice> &sel)
+    void read(nxobject<GTYPE,FTYPE,ATTYPE> &o,ATYPE &a,
+              const std::vector<pni::core::slice> &sel)
     {
         typedef read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE> visitor_t;
         visitor_t visitor(a,sel);
@@ -356,7 +357,8 @@ namespace nx{
              typename FTYPE,
              typename ATTYPE
             >
-    void read(nxobject<GTYPE,FTYPE,ATTYPE> &&o,ATYPE &a,const std::vector<slice> &sel)
+    void read(nxobject<GTYPE,FTYPE,ATTYPE> &&o,ATYPE &a,
+                       const std::vector<pni::core::slice> &sel)
     {
         typedef read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE> visitor_t;
         visitor_t visitor(a,sel);
