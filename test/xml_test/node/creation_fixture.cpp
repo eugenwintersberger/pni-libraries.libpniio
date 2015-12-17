@@ -20,22 +20,16 @@
 //  Created on: Dec 4, 2014
 //      Author: Eugen Wintersberger
 //
+#define BOOST_TEST_MAIN
 
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/xml/node.hpp>
 #include <pni/io/exceptions.hpp>
-#include <boost/current_function.hpp>
-#include "creation_fixture.hpp"
 
 using namespace pni::core;
 using namespace pni::io::nx;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(creation_fixture);
-
-//-----------------------------------------------------------------------------
-void creation_fixture::setUp() { }
-
-//-----------------------------------------------------------------------------
-void creation_fixture::tearDown() { } 
+BOOST_AUTO_TEST_SUITE(creation_test);
 
 //-----------------------------------------------------------------------------
 void creation_fixture::test_from_file()
@@ -70,4 +64,8 @@ void creation_fixture::test_from_string()
     CPPUNIT_ASSERT_THROW(xml::create_from_string(node_from_bad_str),
             pni::io::parser_error);
 }
+
+
+BOOST_AUTO_TEST_SUITE_END()
+
 
