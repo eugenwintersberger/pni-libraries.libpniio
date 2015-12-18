@@ -1,15 +1,13 @@
-set(SOURCES group_tests.cpp
-            group_test.cpp            
-     )
+set(SOURCES group_test.cpp )
 
 set(XMLFILES  group1.xml group2.xml group3.xml)
-
 
 foreach(XMLFILE ${XMLFILES})
     configure_file(${XMLFILE} ${XMLFILE} COPYONLY)
 endforeach()
 
 add_executable(group_test EXCLUDE_FROM_ALL ${SOURCES})
-target_link_libraries(group_test pniio ${CPPUNIT_LIBRARIES})
+target_link_libraries(group_test pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_test(NAME "XML::group_tests"
          COMMAND group_test)
+add_dependencies(check group_test)

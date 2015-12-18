@@ -21,86 +21,93 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
+#define BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MODULE Test XML group creation 
+
+#include <boost/test/unit_test.hpp>
+#include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/xml/group.hpp>
+#include <pni/core/types.hpp>
 #include <pni/io/nx/algorithms/close.hpp>
 #include <pni/io/nx/algorithms/is_valid.hpp>
 #include <pni/io/nx/algorithms/get_name.hpp>
 #include <pni/io/nx/algorithms/get_class.hpp>
 #include <boost/property_tree/xml_parser.hpp>
-#include "group_test.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(group_test);
+using namespace pni::core;
+using namespace pni::io::nx;
 
-void group_test::setUp()
+struct group_test_fixture
 {
-    file = h5::nxfile::create_file("xml_gruop_test.nxs",true);
-    root_group = file.root();
-}
+    h5::nxfile file;
+    h5::nxobject root_group; 
 
-//----------------------------------------------------------------------------
-void group_test::tearDown()
-{
-    close(root_group);
-    file.close();
-}
+    group_test_fixture():
+        file(h5::nxfile::create_file("xml_group_test.nxs",true)),
+        root_group(file.root())
+    {}
 
-//----------------------------------------------------------------------------
-void group_test::set_xml(const string &fname)
-{
-    root = xml::create_from_file(fname);
-    child = root.get_child("group");
-}
+    ~group_test_fixture()
+    {
+        close(root_group);
+        close(file);
+    }
+};
 
-//----------------------------------------------------------------------------
-void group_test::test_read_1()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+BOOST_FIXTURE_TEST_SUITE(group_test,group_test_fixture)
 
-    set_xml("group1.xml");
 
-    h5::nxobject g = xml::group::object_from_xml(root_group,child);
-    CPPUNIT_ASSERT(is_valid(g));
-    CPPUNIT_ASSERT(get_name(g) == "hello");
-    CPPUNIT_ASSERT(get_class(g) == "NXentry");
-    
-}
+    //-------------------------------------------------------------------------
+    xml::node get_xml_group(const string &fname)
+    {
+        xml::node root = xml::create_from_file(fname);
+        return root.get_child("group");
+    }
 
-//----------------------------------------------------------------------------
-void group_test::test_read_2()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_read_1)
+    {
+        xml::node child = get_xml_group("group1.xml");
 
-    set_xml("group2.xml");
+        h5::nxobject g = xml::group::object_from_xml(root_group,child);
+        BOOST_CHECK(is_valid(g));
+        BOOST_CHECK_EQUAL(get_name(g),"hello");
+        BOOST_CHECK_EQUAL(get_class(g),"NXentry");
+        
+    }
 
-    h5::nxobject g = xml::group::object_from_xml(root_group,child);
-    CPPUNIT_ASSERT(is_valid(g));
-    CPPUNIT_ASSERT(get_name(g)=="hello");
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_read_2)
+    {
+        xml::node child = get_xml_group("group2.xml");
 
-//----------------------------------------------------------------------------
-void group_test::test_read_3()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        h5::nxobject g = xml::group::object_from_xml(root_group,child);
+        BOOST_CHECK(is_valid(g));
+        BOOST_CHECK_EQUAL(get_name(g),"hello");
+    }
 
-    set_xml("group3.xml");
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_read_3)
+    {
+        xml::node child = get_xml_group("group3.xml");
 
-    h5::nxobject g;
-    CPPUNIT_ASSERT_THROW(g = xml::group::object_from_xml(root_group,child),
-                         pni::core::value_error);
-}
+        h5::nxobject g;
+        BOOST_CHECK_THROW(g = xml::group::object_from_xml(root_group,child),
+                          pni::core::value_error);
+    }
 
-//----------------------------------------------------------------------------
-void group_test::test_write_1()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5::nxobject g = create_group(root_group,"hello");
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_write_1)
+    {
+        h5::nxobject g = create_group(root_group,"hello");
 
-    xml::node root;
-    xml::node gnode = xml::group::object_to_xml(g);
-    root.add_child("group",gnode);
-    write_xml("test.xml",root);
+        xml::node root;
+        xml::node gnode = xml::group::object_to_xml(g);
+        root.add_child("group",gnode);
+        write_xml("test.xml",root);
 
-    xml::node readback = xml::create_from_file("test.xml");
-    CPPUNIT_ASSERT(readback == root);
-}
+        xml::node readback = xml::create_from_file("test.xml");
+        BOOST_CHECK(readback == root);
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
