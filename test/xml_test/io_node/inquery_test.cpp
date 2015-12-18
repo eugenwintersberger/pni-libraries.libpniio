@@ -25,8 +25,13 @@
 
 #include <boost/test/unit_test.hpp>
 #include <boost/property_tree/xml_parser.hpp>
-#include "inquery_fixture.hpp"
+#include <pni/io/nx/xml/io_node.hpp>
+#include <pni/io/nx/xml/field.hpp>
+#include <pni/core/types.hpp>
 #include "../../uniform_distribution.hpp"
+
+using namespace pni::core;
+using namespace pni::io::nx;
 
 BOOST_AUTO_TEST_SUITE(inquery_test)
 
