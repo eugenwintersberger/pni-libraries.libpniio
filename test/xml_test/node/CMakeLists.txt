@@ -1,5 +1,4 @@
-set(SOURCES run_test.cpp
-            creation_fixture.cpp
+set(SOURCES creation_fixture.cpp
             inquery_fixture.cpp
      )
 
@@ -14,6 +13,6 @@ foreach(XMLFILE ${XMLFILES})
 endforeach()
 
 add_executable(node_test EXCLUDE_FROM_ALL ${SOURCES})
-target_link_libraries(node_test pniio ${CPPUNIT_LIBRARIES})
+target_link_libraries(node_test pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_test(NAME "XML::node" COMMAND node_test)
 add_dependencies(check node_test)

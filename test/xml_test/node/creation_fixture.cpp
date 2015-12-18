@@ -20,50 +20,54 @@
 //  Created on: Dec 4, 2014
 //      Author: Eugen Wintersberger
 //
-#define BOOST_TEST_MAIN
+#define BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MODULE hello world
 
 #include <boost/test/unit_test.hpp>
 #include <pni/io/nx/xml/node.hpp>
 #include <pni/io/exceptions.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/error.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx;
 
-BOOST_AUTO_TEST_SUITE(creation_test);
+static const string node_from_string_str = 
+                                    "<node>\n<group> </group>\n<group>"
+                                    " </group>\n<group> </group>\n </node>";
+static const string node_from_bad_str = "this has to fail";
 
-//-----------------------------------------------------------------------------
-void creation_fixture::test_from_file()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    xml::node n = xml::create_from_file("node_from_str.xml");
-    CPPUNIT_ASSERT(!n.empty());
-    CPPUNIT_ASSERT(n.size() == 1);
+BOOST_AUTO_TEST_SUITE(creation_test)
 
-    //has to fail because file does not exist
-    CPPUNIT_ASSERT_THROW(xml::create_from_file("bla.xml"),
-                         file_error);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_from_file)
+    {
+        xml::node n = xml::create_from_file("node_from_str.xml");
+        BOOST_CHECK(!n.empty());
+        BOOST_CHECK_EQUAL(n.size(),1);
 
-    //not a well formed XML file
-    CPPUNIT_ASSERT_THROW(xml::create_from_file("node_from_bad_file.xml"),
-            pni::io::parser_error);
+        //has to fail because file does not exist
+        BOOST_CHECK_THROW(xml::create_from_file("bla.xml"),
+                           file_error);
 
-    
-}
+        //not a well formed XML file
+        BOOST_CHECK_THROW(xml::create_from_file("node_from_bad_file.xml"),
+                           pni::io::parser_error);
 
-//-----------------------------------------------------------------------------
-void creation_fixture::test_from_string()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        
+    }
 
-    xml::node n = xml::create_from_string(node_from_string_str);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_from_string)
+    {
+        xml::node n = xml::create_from_string(node_from_string_str);
 
-    CPPUNIT_ASSERT(!n.empty());
-    CPPUNIT_ASSERT(n.size() == 1);
+        BOOST_CHECK(!n.empty());
+        BOOST_CHECK_EQUAL(n.size(),1);
 
-    CPPUNIT_ASSERT_THROW(xml::create_from_string(node_from_bad_str),
-            pni::io::parser_error);
-}
+        BOOST_CHECK_THROW(xml::create_from_string(node_from_bad_str),
+                           pni::io::parser_error);
+    }
 
 
 BOOST_AUTO_TEST_SUITE_END()

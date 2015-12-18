@@ -21,40 +21,43 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
-#include "inquery_fixture.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/io/nx/xml/node.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/error.hpp>
 
+using namespace pni::core;
 using namespace pni::io::nx;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(inquery_fixture);
-
-//-----------------------------------------------------------------------------
-void inquery_fixture::setUp() 
-{ 
-
-    group = xml::create_from_file("inquery.xml").get_child("group");
-}
-
-//-----------------------------------------------------------------------------
-void inquery_fixture::tearDown() { } 
-
-//-----------------------------------------------------------------------------
-void inquery_fixture::test_get_attribute()
+struct inquery_fixture
 {
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    xml::node group;
+
+    inquery_fixture():
+        group(xml::create_from_file("inquery.xml").get_child("group"))
+    {}
     
-    CPPUNIT_ASSERT_NO_THROW(xml::get_attribute(group,"name"));
+};
 
-    //not a well formed XML file
-    CPPUNIT_ASSERT_THROW(xml::get_attribute(group,"type"), pni::core::key_error);
-}
+BOOST_FIXTURE_TEST_SUITE(inquery_test,inquery_fixture)
 
-//-----------------------------------------------------------------------------
-void inquery_fixture::test_has_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    CPPUNIT_ASSERT(xml::has_attribute(group,"name"));
-    CPPUNIT_ASSERT(!xml::has_attribute(group,"type"));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_get_attribute)
+    {
+        
+        BOOST_CHECK_NO_THROW(xml::get_attribute(group,"name"));
 
+        //not a well formed XML file
+        BOOST_CHECK_THROW(xml::get_attribute(group,"type"), key_error);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_has_attribute)
+    {
+
+        BOOST_CHECK(xml::has_attribute(group,"name"));
+        BOOST_CHECK(!xml::has_attribute(group,"type"));
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
