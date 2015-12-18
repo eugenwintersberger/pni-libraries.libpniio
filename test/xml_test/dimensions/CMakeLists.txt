@@ -1,7 +1,6 @@
-set(SOURCES read_fixture.cpp
-            write_fixture.cpp
-            inquery_fixture.cpp
-            dimensions_test.cpp
+set(SOURCES read_test.cpp
+            write_test.cpp
+            inquery_test.cpp
             )
 
 set(XMLFILES dim1.xml
@@ -17,6 +16,8 @@ foreach(XMLFILE ${XMLFILES})
 endforeach()
 
 add_executable(dimensions_test EXCLUDE_FROM_ALL ${SOURCES})
-target_link_libraries(dimensions_test pniio ${CPPUNIT_LIBRARIES})
+target_link_libraries(dimensions_test pniio 
+                                      ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_test(NAME "XML::dimensions"
          COMMAND dimensions_test)
+add_dependencies(check dimensions_test)
