@@ -20,47 +20,67 @@
 //  Created on: Apr 22, 2015
 //      Author: Eugen Wintersberger
 //
+#define BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MODULE Test XML link construction
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/xml/link.hpp>
 #include <pni/io/nx/algorithms/get_object.hpp>
-#include "internal_link_test.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(internal_link_test);
+using namespace pni::core;
+using namespace pni::io::nx;
 
-//-----------------------------------------------------------------------------
-void internal_link_test::setUp() 
+
+struct internal_link_fixture
 {
-    //generate the basic NeXus file structure
-    nxs_file = h5::nxfile::create_file(nxs_file_name,true);
-    h5::nxgroup root_group = nxs_file.root();
-    
-    h5::nxgroup g = root_group.create_group("data","NXdata");
-    g.create_field<uint16>("data",shape_t{1,1024,2048});
-    
-    root_node = xml::create_from_file(xml_file_name);
-    link_node = root_node.get_child("link");
-}
+    static const string xml_file_name;
+    static const string nxs_file_name;
 
-//-----------------------------------------------------------------------------
-void internal_link_test::tearDown() 
-{     
-    nxs_file.close();
-} 
+    h5::nxfile nxs_file;
+    xml::node root_node;
+    xml::node link_node;
+
+    internal_link_fixture():
+        nxs_file(),
+        root_node(xml::create_from_file(xml_file_name)),
+        link_node(root_node.get_child("link"))
+    {
+        //generate the basic NeXus file structure
+        nxs_file = h5::nxfile::create_file(nxs_file_name,true);
+        h5::nxgroup root_group = nxs_file.root();
+        
+        h5::nxgroup g = root_group.create_group("data","NXdata");
+        g.create_field<uint16>("data",shape_t{1,1024,2048});
+    }
+
+    ~internal_link_fixture()
+    {
+        nxs_file.close();
+    }
+
+};
+
+const string internal_link_fixture::xml_file_name = "internal_link_test.xml";
+const string internal_link_fixture::nxs_file_name = "internal_link_test.nxs";
 
 
-//-----------------------------------------------------------------------------
-void internal_link_test::test_link()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    CPPUNIT_ASSERT(xml::has_attribute(link_node,"name"));
-    CPPUNIT_ASSERT(xml::has_attribute(link_node,"target"));
-    
-    h5::nxobject root = nxs_file.root();
-    xml::link::object_from_xml(root,link_node);
-    
-    h5::nxfield ldata = get_object(root,"linked_data");
-    CPPUNIT_ASSERT(ldata.size() == 1024*2048);
-    CPPUNIT_ASSERT(ldata.type_id() == type_id_t::UINT16);
-    CPPUNIT_ASSERT(ldata.rank() == 3);
+BOOST_FIXTURE_TEST_SUITE(internal_link_test,internal_link_fixture)
 
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_link)
+    {
+        BOOST_CHECK(xml::has_attribute(link_node,"name"));
+        BOOST_CHECK(xml::has_attribute(link_node,"target"));
+        
+        h5::nxobject root = nxs_file.root();
+        xml::link::object_from_xml(root,link_node);
+        
+        h5::nxfield ldata = get_object(root,"linked_data");
+        BOOST_CHECK_EQUAL(ldata.size(),1024*2048);
+        BOOST_CHECK_EQUAL(ldata.type_id(),type_id_t::UINT16);
+        BOOST_CHECK_EQUAL(ldata.rank(),3);
+    }
+
+BOOST_AUTO_TEST_SUITE_END()

@@ -21,13 +21,45 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/xml/link.hpp>
 #include <pni/io/nx/algorithms/get_object.hpp>
-#include "external_link_test.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(external_link_test);
+using namespace pni::core;
+using namespace pni::io::nx;
 
-void external_link_test::create_external_data()
+struct external_link_fixture
+{
+    static const string xml_file_name;
+    static const string nxs_data_file_name;
+    static const string nxs_link_file_name;
+    
+    h5::nxfile nxs_file;        
+    xml::node root_node;
+    xml::node link_node;
+
+    static void create_external_data();
+
+    external_link_fixture():
+        nxs_file(),
+        root_node(xml::create_from_file(xml_file_name)),
+        link_node(root_node.get_child("link"))
+    {
+        create_external_data();
+        //generate the basic NeXus file structure
+        nxs_file = h5::nxfile::create_file(nxs_link_file_name,true);
+    }
+
+    ~external_link_fixture()
+    {
+        nxs_file.close();
+    }
+
+};
+
+void external_link_fixture::create_external_data()
 {
     //generate the basic NeXus file structure
     h5::nxfile  file = h5::nxfile::create_file(nxs_data_file_name,true);
@@ -37,38 +69,26 @@ void external_link_test::create_external_data()
     g.create_field<uint16>("data",shape_t{1,1024,2048});
 }
 
-//-----------------------------------------------------------------------------
-void external_link_test::setUp() 
-{
-    create_external_data();
-    //generate the basic NeXus file structure
-    nxs_file = h5::nxfile::create_file(nxs_link_file_name,true);
-    
-    root_node = xml::create_from_file(xml_file_name);
-    link_node = root_node.get_child("link");
-}
+const string external_link_fixture::xml_file_name = "external_link_test.xml";
+const string external_link_fixture::nxs_data_file_name = "external_link_data.nxs";
+const string external_link_fixture::nxs_link_file_name = "external_link_link.nxs";
 
-//-----------------------------------------------------------------------------
-void external_link_test::tearDown() 
-{     
-    nxs_file.close();
-} 
+BOOST_FIXTURE_TEST_SUITE(external_link_test,external_link_fixture)
 
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_link)
+    {
+        BOOST_CHECK(xml::has_attribute(link_node,"name"));
+        BOOST_CHECK(xml::has_attribute(link_node,"target"));
+        
+        h5::nxobject root = nxs_file.root();
+        BOOST_CHECK_NO_THROW(xml::link::object_from_xml(root,link_node));
+        
+        h5::nxfield ldata;    
+        ldata = get_object(root,"linked_data");
+        BOOST_CHECK_EQUAL(ldata.size(),1024*2048);
+        BOOST_CHECK_EQUAL(ldata.type_id(),type_id_t::UINT16);
+        BOOST_CHECK_EQUAL(ldata.rank(),3);
+    }
 
-//-----------------------------------------------------------------------------
-void external_link_test::test_link()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    CPPUNIT_ASSERT(xml::has_attribute(link_node,"name"));
-    CPPUNIT_ASSERT(xml::has_attribute(link_node,"target"));
-    
-    h5::nxobject root = nxs_file.root();
-    CPPUNIT_ASSERT_NO_THROW(xml::link::object_from_xml(root,link_node));
-    
-    h5::nxfield ldata;    
-    ldata = get_object(root,"linked_data");
-    CPPUNIT_ASSERT(ldata.size() == 1024*2048);
-    CPPUNIT_ASSERT(ldata.type_id() == type_id_t::UINT16);
-    CPPUNIT_ASSERT(ldata.rank() == 3);
-
-}
+BOOST_AUTO_TEST_SUITE_END()
