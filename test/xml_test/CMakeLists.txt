@@ -7,7 +7,7 @@ endforeach()
 
 add_subdirectory(node)
 add_subdirectory(dimensions)
-#add_subdirectory(io_node)
+add_subdirectory(io_node)
 #add_subdirectory(data_node)
 #add_subdirectory(attribute)
 #add_subdirectory(field)
