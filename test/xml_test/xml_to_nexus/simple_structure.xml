@@ -6,11 +6,11 @@
     
     <group name="instrument" type="NXinstrument">
         <group name="storage_ring" type="NXsource">
-            <field name="distance" type="float64" unit="m"/>
+            <field name="distance" type="float64" units="m"/>
             <field name="name" type="str"/>
             <field name="type" type="str"/>
-            <field name="sigma_x" type="float64" unit="um"/>
-            <field name="sigma_y" type="float64" unit="um"/>
+            <field name="sigma_x" type="float64" units="um"/>
+            <field name="sigma_y" type="float64" units="um"/>
         </group>
         
     </group>

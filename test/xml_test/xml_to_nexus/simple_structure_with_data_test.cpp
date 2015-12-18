@@ -21,35 +21,50 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
+#include <boost/test/floating_point_comparison.hpp>
+#include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/xml/xml_to_nexus.hpp>
 #include <pni/io/nx/algorithms/close.hpp>
-#include "simple_structure_with_data_test.hpp"
+#include <pni/io/nx/algorithms/get_object.hpp>
+#include <pni/core/types.hpp>
+#include "utils.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(simple_structure_with_data_test);
+using namespace pni::core;
+using namespace pni::io::nx;
 
-//-----------------------------------------------------------------------------
-void simple_structure_with_data_test::setUp() 
-{
-    file = h5::nxfile::create_file(nxs_file,true);
-    root_group = file.root();
-    
-    root_node = xml::create_from_file(xml_file);
-}
+BOOST_AUTO_TEST_SUITE(simple_structure_with_data_test)
 
-//-----------------------------------------------------------------------------
-void simple_structure_with_data_test::tearDown() 
-{ 
-    close(root_group);
-    file.close();
-} 
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_simple)
+    {
+        h5::nxfile file = h5::nxfile::create_file("simple_structure_with_data.nxs",true);
+        h5::nxgroup root_group = file.root();
 
+        xml::node root_node = xml::create_from_file("simple_structure_with_data.xml");
+        
+        BOOST_CHECK_NO_THROW(xml::xml_to_nexus(root_node,root_group,
+                        [](const h5::nxobject &o) { return get_size(o) == 1; })
+                        );
 
-//-----------------------------------------------------------------------------
-void simple_structure_with_data_test::test_simple()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    xml::xml_to_nexus(root_node,root_group,
-                    [](const h5::nxobject &o) { return get_size(o) == 1; });
-}
+        auto o = get_object(root_group,":NXentry/title");
+        BOOST_CHECK_EQUAL(get_data<string>(o),"alignment scan");
+        o = get_object(root_group,":NXentry/experiment_identifier");
+        BOOST_CHECK_EQUAL(get_data<string>(o),"SI12453");
+        o = get_object(root_group,":NXentry/experiment_description");
+        BOOST_CHECK_EQUAL(get_data<string>(o),"Beamtime at PETRA III in March");
 
+        o = get_object(root_group,":NXentry/:NXinstrument/:NXsource/name");
+        BOOST_CHECK_EQUAL(get_data<string>(o),"PETRAIII");
+        o = get_object(root_group,":NXentry/:NXinstrument/:NXsource/type");
+        BOOST_CHECK_EQUAL(get_data<string>(o),"Synchrotron X-ray Source");
+        o = get_object(root_group,":NXentry/:NXinstrument/:NXsource/distance");
+        BOOST_CHECK_CLOSE(get_data<float64>(o),float64(40),1.e-16);
+        o = get_object(root_group,":NXentry/:NXinstrument/:NXsource/sigma_x");
+        BOOST_CHECK_CLOSE(get_data<float64>(o),float64(0.5),1.e-16);
+        o = get_object(root_group,":NXentry/:NXinstrument/:NXsource/sigma_y");
+        BOOST_CHECK_CLOSE(get_data<float64>(o),float64(0.4),1.e-16);
+
+    }
+
+BOOST_AUTO_TEST_SUITE_END()

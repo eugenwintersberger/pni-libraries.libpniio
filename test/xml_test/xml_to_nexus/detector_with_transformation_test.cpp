@@ -21,35 +21,45 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
+#include <boost/test/floating_point_comparison.hpp>
 #include <pni/io/nx/algorithms/close.hpp>
-#include "detector_with_transformation_test.hpp"
+#include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/xml/xml_to_nexus.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
+#include "utils.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(detector_with_transformation_test);
+using namespace pni::core;
+using namespace pni::io::nx;
 
-//-----------------------------------------------------------------------------
-void detector_with_transformation_test::setUp() 
-{
-    file = h5::nxfile::create_file(nxs_file,true);
-    root_group = file.root();
-    
-    root_node = xml::create_from_file(xml_file);
-}
-
-//-----------------------------------------------------------------------------
-void detector_with_transformation_test::tearDown() 
-{ 
-    close(root_group);
-    file.close();
-} 
+BOOST_AUTO_TEST_SUITE(detector_with_transformation_test)
 
 
-//-----------------------------------------------------------------------------
-void detector_with_transformation_test::test()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    xml::xml_to_nexus(root_node,root_group,
-                    [](const h5::nxobject &o) { return get_size(o) <= 3; });
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test)
+    {
+        typedef static_array<float64,3> vector_type;
+        h5::nxfile file = h5::nxfile::create_file("detector_with_transformation.nxs",true);
+        h5::nxobject root_group = file.root();
+        
+        xml::node root_node = xml::create_from_file("detector_with_transformation.xml");
+        
+        xml::xml_to_nexus(root_node,root_group,
+                        [](const h5::nxobject &o) { return get_size(o) <= 3; });
+
+        string base = ":NXentry/:NXinstrument/:NXdetector/:NXtransformations";
+        auto depends_on = get_object(root_group,base+"/gamma@depends_on");
+        auto type = get_object(root_group,base+"/gamma@transformation_type");
+        auto vector = get_object(root_group,base+"/gamma@vector");
+        BOOST_CHECK_EQUAL(get_data<string>(depends_on),"delta");
+        BOOST_CHECK_EQUAL(get_data<string>(type),"rotation");
+        auto v = get_data<vector_type>(vector);
+        shape_t ref{1,0,0};
+        BOOST_CHECK_EQUAL_COLLECTIONS(v.begin(),v.end(),ref.begin(),ref.end());
+
+
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
 

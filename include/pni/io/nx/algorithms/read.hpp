@@ -206,7 +206,7 @@ namespace nx{
             //! \param f field instance
             //! \return nothing
             //!
-            result_type operator()(field_type &f) 
+            result_type operator()(const field_type &f) const
             {
                 if(_selection.size())
                     f(_selection).read(_data);
@@ -234,7 +234,7 @@ namespace nx{
             //! \param a attribute instance
             //! \return nothing
             //!
-            result_type operator()(const attribute_type &a) 
+            result_type operator()(const attribute_type &a) const
             {
                 if(_selection.size())
                     a(_selection).read(_data);
@@ -281,7 +281,7 @@ namespace nx{
              typename ATTYPE,
              typename ...ITYPES 
             > 
-    void read(nxobject<GTYPE,FTYPE,ATTYPE> &o,ATYPE &a,ITYPES ...indices)
+    void read(const nxobject<GTYPE,FTYPE,ATTYPE> &o,ATYPE &a,ITYPES ...indices)
     {
         typedef read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE> visitor_t;
         std::vector<pni::core::slice> sel{pni::core::slice(indices)...};
@@ -342,7 +342,7 @@ namespace nx{
              typename FTYPE,
              typename ATTYPE
             >
-    void read(nxobject<GTYPE,FTYPE,ATTYPE> &o,ATYPE &a,
+    void read(const nxobject<GTYPE,FTYPE,ATTYPE> &o,ATYPE &a,
               const std::vector<pni::core::slice> &sel)
     {
         typedef read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE> visitor_t;

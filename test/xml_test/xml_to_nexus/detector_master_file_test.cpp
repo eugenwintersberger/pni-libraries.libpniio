@@ -21,46 +21,38 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
-#include "detector_master_file_test.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/io/nx/nx.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/xml/xml_to_nexus.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(detector_master_file_test);
+using namespace pni::core;
+using namespace pni::io::nx;
 
-//-----------------------------------------------------------------------------
-void detector_master_file_test::setUp() 
-{    
-}
+BOOST_AUTO_TEST_SUITE(detector_master_file_test)
 
-//-----------------------------------------------------------------------------
-void detector_master_file_test::tearDown() 
-{    
-} 
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_data_file)
+    {
+        h5::nxfile file = h5::nxfile::create_file("detector_data_file.nxs",true);
+        auto root_group = file.root();
+        
+        xml::node root_node = xml::create_from_file("detector_data_file.xml");
+        
+        xml::xml_to_nexus(root_node,root_group,
+                        [](const h5::nxobject &o) { return get_size(o) <= 3; });
+    }
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_master_file)
+    {
+        h5::nxfile file = h5::nxfile::create_file("detector_master_file.nxs",true);
+        auto root_group = file.root();
+        
+        xml::node root_node = xml::create_from_file("detector_master_file.xml");
+        
+        xml::xml_to_nexus(root_node,root_group,
+                        [](const h5::nxobject &o) { return get_size(o) <= 3; });
+    }
 
-
-//-----------------------------------------------------------------------------
-void detector_master_file_test::test_data_file()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    file = h5::nxfile::create_file(nxs_data_file,true);
-    root_group = file.root();
-    
-    root_node = xml::create_from_file(xml_data_file);
-    
-    xml::xml_to_nexus(root_node,root_group,
-                    [](const h5::nxobject &o) { return get_size(o) <= 3; });
-}
-//-----------------------------------------------------------------------------
-void detector_master_file_test::test_master_file()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    file = h5::nxfile::create_file(nxs_master_file,true);
-    root_group = file.root();
-    
-    root_node = xml::create_from_file(xml_master_file);
-    
-    xml::xml_to_nexus(root_node,root_group,
-                    [](const h5::nxobject &o) { return get_size(o) <= 3; });
-}
+BOOST_AUTO_TEST_SUITE_END()
 
