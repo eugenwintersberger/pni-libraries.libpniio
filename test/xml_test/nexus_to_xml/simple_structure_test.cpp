@@ -21,38 +21,37 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
 #include <fstream>
-#include <pni/io/nx/algorithms/get_child.hpp>
-#include "simple_structure_test.hpp"
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/xml/nexus_to_xml.hpp>
+#include <pni/io/nx/algorithms/close.hpp>
+#include <pni/io/nx/algorithms/get_object.hpp>
+#include <boost/property_tree/xml_parser.hpp>
+#include "../xml_test_common.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(simple_structure_test);
+using namespace pni::core;
+using namespace pni::io::nx;
+using namespace boost::property_tree;
 
-//-----------------------------------------------------------------------------
-void simple_structure_test::setUp() 
-{
-    file = h5::nxfile::open_file(nxs_file);
-    root_group = file.root();
-}
+BOOST_AUTO_TEST_SUITE(simple_structure_test)
 
-//-----------------------------------------------------------------------------
-void simple_structure_test::tearDown() 
-{ 
-    close(root_group);
-    file.close();
-} 
+    //-----------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test)
+    {
+        h5::nxfile file = h5::nxfile::open_file("simple_structure.nxs");
+        auto root_group = file.root();
+        
+        xml::node root_node;
+        auto p = get_object(root_group,":NXentry");
+        BOOST_CHECK_NO_THROW(xml::nexus_to_xml(p,root_node,
+                        [](const h5::nxobject &o) { return get_size(o) == 1;
+                        }));
+                       
+        xml::node refnode = xml::create_from_file("simple_structure.xml");
 
+        BOOST_CHECK(compare_trees(root_node,refnode));
+    }
 
-//-----------------------------------------------------------------------------
-void simple_structure_test::test_simple()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    using namespace pni::io::nx::xml;
-    
-    auto c = get_child(root_group,"","NXentry");
-    nexus_to_xml(c,root_node);
-    
-    std::ofstream stream(xml_file);
-    stream<<root_node;
-}
-
+BOOST_AUTO_TEST_SUITE_END()

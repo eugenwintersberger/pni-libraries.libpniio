@@ -1,5 +1,7 @@
 set(XMLFILES igor.xml)
 
+add_library(xml_test_common OBJECT xml_test_common.cpp)
+
 
 foreach(XMLFILE ${XMLFILES})
     configure_file(${XMLFILE} ${XMLFILE} COPYONLY)
@@ -14,5 +16,5 @@ add_subdirectory(data_node)
 add_subdirectory(group)
 add_subdirectory(link)
 add_subdirectory(xml_to_nexus)
-#add_subdirectory(nexus_to_xml)
+add_subdirectory(nexus_to_xml)
 
