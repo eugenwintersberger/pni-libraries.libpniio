@@ -1,0 +1,117 @@
+#include <boost/test/unit_test.hpp>
+#include <boost/test/floating_point_comparison.hpp>
+#include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/xml/node.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/algorithms/create_group.hpp>
+#include <pni/io/nx/algorithms/close.hpp>
+#include <pni/io/nx/algorithms/write.hpp>
+#include <pni/io/nx/algorithms/create_attribute.hpp>
+#include <complex>
+#include "field_utils.hpp"
+
+using namespace pni::core;
+using namespace pni::io::nx; 
+
+struct multidim_field_@TYPE@_fixture
+{
+    xml::node root;
+    xml::node child;
+
+    h5::nxfile file; 
+    h5::nxobject group;
+
+    multidim_field_@TYPE@_fixture():
+        root(),
+        child(),
+        file(h5::nxfile::create_file("multidim_field_test_@TYPE@.nxs",true)),
+        group(create_group(h5::nxobject(file.root()),"detector:NXdetector"))
+    {}
+
+    ~multidim_field_@TYPE@_fixture()
+    {
+        file.close();
+        close(group);
+    }
+
+};
+
+BOOST_FIXTURE_TEST_SUITE(multidim_field_test_@TYPE@,multidim_field_@TYPE@_fixture)
+
+
+    BOOST_AUTO_TEST_CASE(test_inquery)
+    {
+        typedef std::vector<@TYPE@> array_type;
+        BOOST_CHECK_NO_THROW(root = xml::create_from_file("multidim_field_test_@TYPE@.xml"));
+        BOOST_CHECK_NO_THROW(child = root.get_child("group.field"));
+        
+        BOOST_CHECK_EQUAL(xml_test::field_test::size(child),3);
+        BOOST_CHECK_EQUAL(xml_test::field_test::rank(child),1);
+        BOOST_CHECK_EQUAL(xml_test::field_test::type_id(child),type_id_t::@TYPEID@);
+       
+        array_type r{@CPP_DATA@};
+        array_type data;
+        xml_test::field_test::data_from_xml(child,data);
+
+        for(auto r_iter = r.begin(),d_iter = data.begin();
+            d_iter != data.end();
+            ++d_iter,++r_iter)
+        {
+            @EQUALITY_CHECK@
+        }
+
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_create_object)
+    {
+        root = xml::create_from_file("multidim_field_test_@TYPE@.xml");
+        child = root.get_child("group.field");
+
+        //attach the field to the group
+        h5::nxfield field = xml_test::field_test::object_from_xml(group,child);
+
+        BOOST_CHECK_EQUAL(field.size(),3);
+        BOOST_CHECK_EQUAL(field.rank(),1);
+        BOOST_CHECK_EQUAL(field.type_id(),type_id_t::@TYPEID@);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_create_compression_object)
+    {
+        root = xml::create_from_file("multidim_field_test_@TYPE@.xml");
+        root = root.get_child("group");
+        auto child_iter = root.begin();
+        child_iter++;
+        child_iter++;
+
+        //attach the field to the group
+        h5::nxfield field = xml_test::field_test::object_from_xml(group,child_iter->second);
+
+        BOOST_CHECK_EQUAL(field.size(),2048*512);
+        BOOST_CHECK_EQUAL(field.rank(),3);
+        BOOST_CHECK_EQUAL(field.type_id(),type_id_t::@TYPEID@);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_from_object)
+    {
+        typedef std::vector<@TYPE@> array_type;
+        h5::nxobject field = create_field<@TYPE@>(group,"data",shape_t{{3}});
+        array_type r{@CPP_DATA@};
+        BOOST_CHECK_NO_THROW(write(field,r));
+
+        root = xml::node();
+        root.add_child("group",xml::group::object_to_xml(group));
+        xml::node field_node;
+        BOOST_CHECK_NO_THROW(field_node = xml_test::field_test::object_to_xml(field));
+        xml_test::field_test::data_to_xml(r,field_node);
+        child = root.add_child("group.field",field_node);
+
+        BOOST_CHECK_EQUAL(xml_test::field_test::size(child),3);
+        BOOST_CHECK_EQUAL(xml_test::field_test::rank(child),1);
+        BOOST_CHECK_EQUAL(xml_test::field_test::type_id(child),type_id_t::@TYPEID@);    
+
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
