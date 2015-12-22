@@ -61,4 +61,41 @@ BOOST_FIXTURE_TEST_SUITE(array_attribute_test_@TYPE@,array_attr_@TYPE@_fixture)
         }
     }
 
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_create_object)
+    {
+        BOOST_CHECK_NO_THROW(root = xml::create_from_file("array_attribute_test_@TYPE@.xml"));
+        BOOST_CHECK_NO_THROW(child = root.get_child("group.attribute"));
+
+        //attach the attribute to the group
+        h5::nxattribute attr = xml_test::attr::object_from_xml(group,child);
+
+        BOOST_CHECK_EQUAL(attr.size(),3);
+        BOOST_CHECK_EQUAL(attr.rank(),1);
+        BOOST_CHECK_EQUAL(attr.type_id(),type_id_t::@TYPEID@);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_from_object)
+    {
+        using namespace pni::io::nx::xml;
+        typedef std::vector<@TYPE@> array_type;
+       
+        h5::nxobject attr = create_attribute<@TYPE@>(group,
+                            "attr_data",shape_t{{3}});
+        array_type r{@CPP_DATA@};
+        BOOST_CHECK_NO_THROW(write(attr,r));
+
+        root = xml::node();
+        root.add_child("group",xml::group::object_to_xml(group));
+        xml::node attr_node = xml_test::attr::object_to_xml(attr);
+        xml_test::attr::data_to_xml(r,attr_node);
+        child = root.add_child("group.attribute",attr_node);
+
+        BOOST_CHECK_EQUAL(xml_test::attr::size(child),3);
+        BOOST_CHECK_EQUAL(xml_test::attr::rank(child),1);
+        BOOST_CHECK_EQUAL(xml_test::attr::type_id(child),type_id_t::@TYPEID@);
+
+    }
+
 BOOST_AUTO_TEST_SUITE_END()
