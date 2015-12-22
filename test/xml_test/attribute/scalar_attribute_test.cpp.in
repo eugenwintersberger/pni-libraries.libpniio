@@ -1,0 +1,55 @@
+#include <boost/test/unit_test.hpp>
+#include <boost/test/floating_point_comparison.hpp>
+#include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/xml/node.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/algorithms/create_group.hpp>
+#include <pni/io/nx/algorithms/close.hpp>
+#include "attr_utils.hpp"
+
+using namespace pni::core;
+using namespace pni::io::nx; 
+
+struct scalar_attr_@TYPE@_fixture
+{
+    xml::node root;
+    xml::node child;
+
+    h5::nxfile file; 
+    h5::nxobject group;
+
+    scalar_attr_@TYPE@_fixture():
+        root(),
+        child(),
+        file(h5::nxfile::create_file("scalar_attribute_test_@TYPE@.nxs",true)),
+        group(create_group(h5::nxobject(file.root()),"detector:NXdetector"))
+    {}
+
+    ~scalar_attr_@TYPE@_fixture()
+    {
+        file.close();
+        close(group);
+    }
+
+};
+
+BOOST_FIXTURE_TEST_SUITE(scalar_attribute_test_@TYPE@,scalar_attr_@TYPE@_fixture)
+
+
+    BOOST_AUTO_TEST_CASE(test_inquery)
+    {
+        BOOST_CHECK_NO_THROW(root = xml::create_from_file("scalar_attribute_test_@TYPE@.xml"));
+        BOOST_CHECK_NO_THROW(child = root.get_child("group.attribute"));
+
+        BOOST_CHECK_EQUAL(xml_test::attr::size(child),1);
+        BOOST_CHECK_EQUAL(xml_test::attr::rank(child),0);
+        BOOST_CHECK_EQUAL(xml_test::attr::type_id(child),type_id_t::@TYPEID@);
+       
+        @TYPE@ expected{@CPP_DATA@};
+        @TYPE@ data;
+        BOOST_CHECK_NO_THROW(xml_test::attr::data_from_xml(child,data));
+        BOOST_CHECK_EQUAL(@TYPE@(data),expected);
+
+    }
+
+BOOST_AUTO_TEST_SUITE_END()

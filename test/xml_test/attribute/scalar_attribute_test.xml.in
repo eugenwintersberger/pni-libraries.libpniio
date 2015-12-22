@@ -1,0 +1,5 @@
+<group name="test" type="NXdetector">
+    <attribute name="attr_data" type="@TYPE@">
+        @DATA_STR@
+    </attribute>
+</group>
