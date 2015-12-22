@@ -1,0 +1,8 @@
+<group name="test" type="NXdetector">
+    <attribute name="attr_data" type="@TYPE@">
+        <dimensions rank="1">
+            <dim index="1" value="3"/>
+        </dimensions>
+        @DATA_STR@
+    </attribute>
+</group>
