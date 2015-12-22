@@ -27,6 +27,7 @@ list(LENGTH TYPES NTYPES)
 math(EXPR TYPERANGE "${NTYPES}-1")
 set(CPPFILES)
 set(XMLFILES)
+set(NXSFILES)
 
 foreach(index RANGE ${TYPERANGE})
     list(GET TYPES ${index} TYPE)
@@ -37,20 +38,36 @@ foreach(index RANGE ${TYPERANGE})
     message(STATUS "generate scalar attribute test for type ${TYPE} ...")
     set(XMLFILE scalar_attribute_test_${TYPE}.xml)
     list(APPEND XMLFILES ${XMLFILE})
+    list(APPEND NXSFILES "scalar_attribute_test_${TYPE}.nxs")
     configure_file(scalar_attribute_test.xml.in ${XMLFILE} @ONLY)
+    
+    if(TYPE STREQUAL float128)
+        message(STATUS "setup for float128 comparison")
+        set(EQUALITY_CHECK "BOOST_CHECK_CLOSE(@TYPE@(data),expected,1.e-14);")
+    elseif(TYPE STREQUAL complex128)
+        message(STATUS "setup for complex128 comnparison")
+        set(EQUALITY_CHECK "BOOST_CHECK_CLOSE(std::real(data),std::real(expected),1.e-14);\n\
+                            BOOST_CHECK_CLOSE(std::imag(data),std::imag(expected),1.e-1);")
+    else()
+        set(EQUALITY_CHECK "BOOST_CHECK_EQUAL(data,expected);")
+    endif()
 
     set(CPPFILE scalar_attribute_test_${TYPE}.cpp)
     list(APPEND CPPFILES ${CPPFILE})
     configure_file(scalar_attribute_test.cpp.in ${CPPFILE} @ONLY)
+
 
     if(index EQUAL 0)
 
         message(STATUS "Set flags for main file...")
         set_source_files_properties(${CPPFILE} PROPERTIES
             COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK;BOOST_TEST_MODULE=testing xml attributes")
-      endif()
+    endif()
                  
 endforeach()
+
+set_directory_properties(PROPPERTIES 
+                         ADDITIONAL_MAKE_CLEAN_FILES "${CPPFILES} ${XMLFILES} ${NXSFILES}")
            
 
 #-----------------------------------------------------------------------------

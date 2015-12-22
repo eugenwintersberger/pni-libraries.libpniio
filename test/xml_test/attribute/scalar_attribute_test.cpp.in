@@ -5,6 +5,7 @@
 #include <pni/core/types.hpp>
 #include <pni/io/nx/algorithms/create_group.hpp>
 #include <pni/io/nx/algorithms/close.hpp>
+#include <complex>
 #include "attr_utils.hpp"
 
 using namespace pni::core;
@@ -48,7 +49,8 @@ BOOST_FIXTURE_TEST_SUITE(scalar_attribute_test_@TYPE@,scalar_attr_@TYPE@_fixture
         @TYPE@ expected{@CPP_DATA@};
         @TYPE@ data;
         BOOST_CHECK_NO_THROW(xml_test::attr::data_from_xml(child,data));
-        BOOST_CHECK_EQUAL(@TYPE@(data),expected);
+        //BOOST_CHECK_EQUAL(@TYPE@(data),expected);
+        @EQUALITY_CHECK@
 
     }
 
