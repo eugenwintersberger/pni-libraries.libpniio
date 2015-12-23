@@ -20,47 +20,41 @@
 // Created on: Jul 14, 2014
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-#include "h5datatype_test.hpp"
-#include <boost/current_function.hpp>
+
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/h5/h5datatype.hpp>
+
+using namespace pni::core;
+using namespace pni::io::nx::h5;
 
 
-CPPUNIT_TEST_SUITE_REGISTRATION(h5datatype_test);
+BOOST_AUTO_TEST_SUITE(h5datatype_test)
 
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_type_id)
+    {
+        BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::UINT8)),type_id_t::UINT8);
+        BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::INT8)),type_id_t::INT8);
+        BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::UINT16)),type_id_t::UINT16);
+        BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::INT16)),type_id_t::INT16);
+        BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::UINT32)),type_id_t::UINT32);
+        BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::INT32)),type_id_t::INT32);
+        BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::UINT64)),type_id_t::UINT64);
+        BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::INT64)),type_id_t::INT64);
+        BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::FLOAT32)),type_id_t::FLOAT32);
+        BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::FLOAT64)),type_id_t::FLOAT64);
+        BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::FLOAT128)),type_id_t::FLOAT128);
+        BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::COMPLEX32)),
+                       type_id_t::COMPLEX32);
+        BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::COMPLEX64)),
+                       type_id_t::COMPLEX64);
+        BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::COMPLEX128)),
+                       type_id_t::COMPLEX128);
 
-//----------------------------------------------------------------------------
-void h5datatype_test::setUp()
-{
-}
+        BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::BOOL)) , type_id_t::BOOL);
+        BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::STRING)) , type_id_t::STRING);
+        BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::BINARY)) , type_id_t::BINARY);
+    }
 
-//----------------------------------------------------------------------------
-void h5datatype_test::tearDown()
-{
-}
-
-//----------------------------------------------------------------------------
-void h5datatype_test::test_type_id()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT(type_id(get_type(type_id_t::UINT8))==type_id_t::UINT8);
-    CPPUNIT_ASSERT(type_id(get_type(type_id_t::INT8))==type_id_t::INT8);
-    CPPUNIT_ASSERT(type_id(get_type(type_id_t::UINT16))==type_id_t::UINT16);
-    CPPUNIT_ASSERT(type_id(get_type(type_id_t::INT16))==type_id_t::INT16);
-    CPPUNIT_ASSERT(type_id(get_type(type_id_t::UINT32))==type_id_t::UINT32);
-    CPPUNIT_ASSERT(type_id(get_type(type_id_t::INT32))==type_id_t::INT32);
-    CPPUNIT_ASSERT(type_id(get_type(type_id_t::UINT64))==type_id_t::UINT64);
-    CPPUNIT_ASSERT(type_id(get_type(type_id_t::INT64))==type_id_t::INT64);
-    CPPUNIT_ASSERT(type_id(get_type(type_id_t::FLOAT32))==type_id_t::FLOAT32);
-    CPPUNIT_ASSERT(type_id(get_type(type_id_t::FLOAT64))==type_id_t::FLOAT64);
-    CPPUNIT_ASSERT(type_id(get_type(type_id_t::FLOAT128))==type_id_t::FLOAT128);
-    CPPUNIT_ASSERT(type_id(get_type(type_id_t::COMPLEX32))==
-                   type_id_t::COMPLEX32);
-    CPPUNIT_ASSERT(type_id(get_type(type_id_t::COMPLEX64))==
-                   type_id_t::COMPLEX64);
-    CPPUNIT_ASSERT(type_id(get_type(type_id_t::COMPLEX128))==
-                   type_id_t::COMPLEX128);
-
-    CPPUNIT_ASSERT(type_id(get_type(type_id_t::BOOL)) == type_id_t::BOOL);
-    CPPUNIT_ASSERT(type_id(get_type(type_id_t::STRING)) == type_id_t::STRING);
-    CPPUNIT_ASSERT(type_id(get_type(type_id_t::BINARY)) == type_id_t::BINARY);
-}
+BOOST_AUTO_TEST_SUITE_END()

@@ -20,159 +20,164 @@
 // Created on: Jul 23, 2012
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-#include "attribute_utils_test.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
 #include <pni/io/exceptions.hpp>
+#include <pni/io/nx/h5/object_imp.hpp>
+#include <pni/io/nx/h5/attribute_utils.hpp>
 #include <pni/io/nx/h5/h5datatype.hpp>
 #include <pni/io/nx/h5/h5dataspace.hpp>
 #include <pni/io/nx/h5/hdf5_utilities.hpp>
 #include <pni/io/nx/h5/attribute_utils.hpp>
 #include <pni/io/nx/nxobject_type.hpp>
-
-
-CPPUNIT_TEST_SUITE_REGISTRATION(attribute_utils_test);
+#include "h5_imp_test_utils.hpp"
 
 using namespace pni::core;
+using namespace pni::io::nx;
 using pni::io::object_error;
 using pni::io::invalid_object_error;
 
-//-----------------------------------------------------------------------------
-object_imp attribute_utils_test::create_attribute(const object_imp &parent,
-                                                  const string &name) const
+struct attribute_utils_test_fixture
 {
-    h5dataspace space;
-    const h5datatype &type = get_type(type_id_t::FLOAT32);
+    h5::object_imp file;
+    h5::object_imp root;
+    h5::object_imp attribute;
 
-    return object_imp{H5Acreate(parent.id(),name.c_str(),
-                                type.object().id(),
-                                space.id(),
-                                H5P_DEFAULT,H5P_DEFAULT)};
-}
+    //-------------------------------------------------------------------------
+    static h5::object_imp create_attribute(const h5::object_imp &parent,
+                                           const string &name) 
+    {
+        h5::h5dataspace space;
+        const h5::h5datatype &type = h5::get_type(type_id_t::FLOAT32);
 
-//-----------------------------------------------------------------------------
-void attribute_utils_test::setUp()
-{
-    file = object_imp(H5Fcreate("hdf5_utilities_test.h5",H5F_ACC_TRUNC,
-                               H5P_DEFAULT,H5P_DEFAULT));
+        return h5::object_imp{H5Acreate(parent.id(),name.c_str(),
+                                        type.object().id(),
+                                        space.id(),
+                                        H5P_DEFAULT,H5P_DEFAULT)};
+    }
 
-    root = object_imp{H5Gopen2(file.id(),"/",H5P_DEFAULT)};
+    //-------------------------------------------------------------------------
+    attribute_utils_test_fixture():
+        file(h5::object_imp(H5Fcreate("hdf5_utilities_test.h5",H5F_ACC_TRUNC,
+                                      H5P_DEFAULT,H5P_DEFAULT))),
+        root(h5::object_imp{H5Gopen2(file.id(),"/",H5P_DEFAULT)}),
+        attribute(create_attribute(root,"test"))
+    { }
+    //-------------------------------------------------------------------------
+    ~attribute_utils_test_fixture()
+    {
+        attribute.close();
+        root.close();
+        file.close();
+    }
+};
 
-    attribute = create_attribute(root,"test");
-}
 
-//-----------------------------------------------------------------------------
-void attribute_utils_test::tearDown()
-{
-    attribute.close();
-    root.close();
-    file.close();
-}
+BOOST_FIXTURE_TEST_SUITE(attribute_utils_test,attribute_utils_test_fixture)
 
-//----------------------------------------------------------------------------
-void attribute_utils_test::test_has_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-  
-    CPPUNIT_ASSERT(has_attribute(root,"test"));
-    CPPUNIT_ASSERT(!has_attribute(root,"bla"));
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_has_attribute)
+    {
+        BOOST_CHECK(h5::has_attribute(root,"test"));
+        BOOST_CHECK(!h5::has_attribute(root,"bla"));
 
-    CPPUNIT_ASSERT_THROW(has_attribute(object_imp(),"test"),invalid_object_error);
-}
+        BOOST_CHECK_THROW(h5::has_attribute(h5::object_imp(),"test"),
+                          invalid_object_error);
+    }
 
-//----------------------------------------------------------------------------
-void attribute_utils_test::test_delete_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_delete_attribute)
+    {
+        BOOST_CHECK_NO_THROW(h5::delete_attribute(root,"test"));
+        BOOST_CHECK(!h5::has_attribute(root,"test"));
 
-    CPPUNIT_ASSERT_NO_THROW(delete_attribute(root,"test"));
-    CPPUNIT_ASSERT(!has_attribute(root,"test"));
+        BOOST_CHECK_THROW(h5::delete_attribute(root,"test"),key_error);
+        BOOST_CHECK_THROW(h5::delete_attribute(h5::object_imp(),"test"),
+                          invalid_object_error);
+    }
 
-    CPPUNIT_ASSERT_THROW(delete_attribute(root,"test"),key_error);
-    CPPUNIT_ASSERT_THROW(delete_attribute(object_imp(),"test"),invalid_object_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_create_attribute)
+    {
+        using pni::io::nx::h5::create_attribute;
 
-//-----------------------------------------------------------------------------
-void attribute_utils_test::test_create_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    using pni::io::nx::h5::create_attribute;
+        BOOST_CHECK(!h5::has_attribute(root,"bla"));
+        //set overwrite to false - should work as the attribute does not exist
+        //yet
+        BOOST_CHECK_NO_THROW(create_attribute(root,"bla",
+                                              h5::get_type(type_id_t::FLOAT32),
+                                              h5::h5dataspace(),
+                                              false));
+        BOOST_CHECK(h5::has_attribute(root,"bla"));
 
-    CPPUNIT_ASSERT(!has_attribute(root,"bla"));
-    //set overwrite to false - should work as the attribute does not exist
-    //yet
-    CPPUNIT_ASSERT_NO_THROW(create_attribute(root,"bla",
-                                             get_type(type_id_t::FLOAT32),
-                                             h5dataspace(),
-                                             false));
-    CPPUNIT_ASSERT(has_attribute(root,"bla"));
+        //must throw - attribute already exists
+        BOOST_CHECK_THROW(create_attribute(root,"bla",
+                                           h5::get_type(type_id_t::FLOAT32),
+                                           h5::h5dataspace(),
+                                           false),object_error);
 
-    //must throw - attribute already exists
-    CPPUNIT_ASSERT_THROW(create_attribute(root,"bla",
-                                          get_type(type_id_t::FLOAT32),
-                                          h5dataspace(),
-                                          false),object_error);
+        //must  not throw - overwrite existing attribute
+        BOOST_CHECK_NO_THROW(create_attribute(root,"bla",
+                                              h5::get_type(type_id_t::INT16),
+                                              h5::h5dataspace(),
+                                              true));
 
-    //must  not throw - overwrite existing attribute
-    CPPUNIT_ASSERT_NO_THROW(create_attribute(root,"bla",
-                                             get_type(type_id_t::INT16),
-                                             h5dataspace(),
-                                             true));
+        BOOST_CHECK(h5::has_attribute(root,"bla"));
 
-    CPPUNIT_ASSERT(has_attribute(root,"bla"));
+        //must throw - attribute already exists
+        BOOST_CHECK_THROW(create_attribute(h5::object_imp(),"bla",
+                                           h5::get_type(type_id_t::FLOAT32),
+                                           h5::h5dataspace(),
+                                           false),invalid_object_error);
+        
+    }
 
-    //must throw - attribute already exists
-    CPPUNIT_ASSERT_THROW(create_attribute(object_imp(),"bla",
-                                          get_type(type_id_t::FLOAT32),
-                                          h5dataspace(),
-                                          false),invalid_object_error);
-    
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_get_number_of_attributes)
+    {
+        using pni::io::nx::h5::create_attribute;
+        
+        BOOST_CHECK_EQUAL(get_number_of_attributes(root),1);
 
-//----------------------------------------------------------------------------
-void attribute_utils_test::test_get_number_of_attributes()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    using pni::io::nx::h5::create_attribute;
-    
-    CPPUNIT_ASSERT(get_number_of_attributes(root)==1);
+        BOOST_CHECK_NO_THROW(create_attribute(root,"bla",
+                                              h5::get_type(type_id_t::FLOAT32),
+                                              h5::h5dataspace(),
+                                              false));
+        BOOST_CHECK_EQUAL(h5::get_number_of_attributes(root),2);
+        BOOST_CHECK_NO_THROW(h5::delete_attribute(root,"bla"));
+        BOOST_CHECK_EQUAL(h5::get_number_of_attributes(root),1);
+        BOOST_CHECK_NO_THROW(h5::delete_attribute(root,"test"));
+        BOOST_CHECK_EQUAL(h5::get_number_of_attributes(root),0);
 
-    CPPUNIT_ASSERT_NO_THROW(create_attribute(root,"bla",
-                                             get_type(type_id_t::FLOAT32),
-                                             h5dataspace(),
-                                             false));
-    CPPUNIT_ASSERT(get_number_of_attributes(root)==2);
-    CPPUNIT_ASSERT_NO_THROW(delete_attribute(root,"bla"));
-    CPPUNIT_ASSERT(get_number_of_attributes(root)==1);
-    CPPUNIT_ASSERT_NO_THROW(delete_attribute(root,"test"));
-    CPPUNIT_ASSERT(get_number_of_attributes(root)==0);
+        BOOST_CHECK_THROW(h5::get_number_of_attributes(h5::object_imp()),
+                          invalid_object_error);
+    }
 
-    CPPUNIT_ASSERT_THROW(get_number_of_attributes(object_imp()),invalid_object_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_get_attribute_by_name)
+    {
+        h5::object_imp att;
+        BOOST_CHECK_NO_THROW(att = h5::get_attribute_by_name(root,"test"));
+        BOOST_CHECK_EQUAL(h5::get_name(att),"test");
+        BOOST_CHECK_EQUAL(h5::get_nexus_type(att),nxobject_type::NXATTRIBUTE);
 
-//----------------------------------------------------------------------------
-void attribute_utils_test::test_get_attribute_by_name()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    object_imp att;
-    CPPUNIT_ASSERT_NO_THROW(att = get_attribute_by_name(root,"test"));
-    CPPUNIT_ASSERT(get_name(att) == "test");
-    CPPUNIT_ASSERT(get_nexus_type(att) == pni::io::nx::nxobject_type::NXATTRIBUTE);
+        BOOST_CHECK_THROW(h5::get_attribute_by_name(root,"bla"),key_error);
+        BOOST_CHECK_THROW(h5::get_attribute_by_name(h5::object_imp(),"test"),
+                          invalid_object_error);
+    }
 
-    CPPUNIT_ASSERT_THROW(get_attribute_by_name(root,"bla"),key_error);
-    CPPUNIT_ASSERT_THROW(get_attribute_by_name(object_imp(),"test"),invalid_object_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_get_attribute_by_index)
+    {
+        h5::object_imp att;
+        BOOST_CHECK_NO_THROW(att = h5::get_attribute_by_index(root,0));
+        BOOST_CHECK_EQUAL(h5::get_name(att),"test");
+        BOOST_CHECK_EQUAL(h5::get_nexus_type(att),nxobject_type::NXATTRIBUTE);
+        
+        BOOST_CHECK_THROW(h5::get_attribute_by_index(root,1),index_error);
+        BOOST_CHECK_THROW(h5::get_attribute_by_index(h5::object_imp(),0),
+                          invalid_object_error);
+    }
 
-//----------------------------------------------------------------------------
-void attribute_utils_test::test_get_attribute_by_index()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    object_imp att;
-    CPPUNIT_ASSERT_NO_THROW(att = get_attribute_by_index(root,0));
-    CPPUNIT_ASSERT(get_name(att) == "test");
-    CPPUNIT_ASSERT(get_nexus_type(att) == pni::io::nx::nxobject_type::NXATTRIBUTE);
-    
-    CPPUNIT_ASSERT_THROW(get_attribute_by_index(root,1),index_error);
-    CPPUNIT_ASSERT_THROW(get_attribute_by_index(object_imp(),0),invalid_object_error);
-}
+BOOST_AUTO_TEST_SUITE_END()
 

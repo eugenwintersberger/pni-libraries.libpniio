@@ -262,6 +262,16 @@ namespace h5 {
             //!
             void reset_selection() const noexcept;
 
+            //----------------------------------------------------------------
+            //! 
+            //! \brief get reference to object
+            //! 
+            //! Return a const reference to the object instance holding the 
+            //! HDF5 identifier of the dataset. 
+            //! 
+            //! \return reference to object instance
+            const object_imp &object() const noexcept;
+
         };
 
         //--------------------------------------------------------------------

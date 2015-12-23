@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2015 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,35 +17,35 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Created on: Jul 14, 2014
+// Created on: Dec 23, 2015
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 #pragma once
-extern "C"{
-#include <hdf5.h>
+#include <iostream>
+
+namespace pni{
+namespace io{
+namespace nx{
+
+    enum class nxobject_type;
+
+namespace h5{
+
+    class object_imp;
+    enum class h5object_type;
+}
+}
+}
 }
 
-#include<boost/current_function.hpp>
-#include <pni/core/types.hpp>
-
-#include<cppunit/TestFixture.h>
-#include<cppunit/extensions/HelperMacros.h>
-
-#include <pni/io/nx/h5/h5datatype.hpp>
-
-using namespace pni::core;
-using namespace pni::io::nx::h5;
-
-class h5datatype_test:public CppUnit::TestFixture
-{
-        CPPUNIT_TEST_SUITE(h5datatype_test);
-        CPPUNIT_TEST(test_type_id);
-        CPPUNIT_TEST_SUITE_END();
-    public:
-        void setUp();
-        void tearDown();
-        
-        void test_type_id();
+namespace std{
     
-};
+    ostream &operator<<(ostream &stream,
+                        const pni::io::nx::h5::object_imp &imp);
 
+    ostream &operator<<(ostream &stream,const 
+                        pni::io::nx::nxobject_type &type);
+
+    ostream &operator<<(ostream &stream,
+                        const pni::io::nx::h5::h5object_type &type);
+}

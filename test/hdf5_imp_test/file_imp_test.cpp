@@ -19,85 +19,80 @@
 //
 // Created on: Jul 16, 2014
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-///
-#include <boost/current_function.hpp>
+//
+
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
 #include <pni/io/exceptions.hpp>
-#include "file_imp_test.hpp"
+#include <pni/io/nx/h5/file_imp.hpp>
 #include <pni/io/nx/h5/group_imp.hpp>
 
+using namespace pni::core;
+using namespace pni::io::nx;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(file_imp_test);
+BOOST_AUTO_TEST_SUITE(file_imp_test)
 
-//----------------------------------------------------------------------------
-void file_imp_test::setUp() { }
-
-//----------------------------------------------------------------------------
-void file_imp_test::tearDown() { }
-
-//-----------------------------------------------------------------------------
-void file_imp_test::test_creation()
-{
-    using pni::io::object_error;
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_creation)
+    {
+        using pni::io::object_error;
 
 
-    //should raise an exception because the file is not an HDF5 file
-    CPPUNIT_ASSERT_THROW(file_imp::open("hdf5_imp_test",false),file_error);
-    CPPUNIT_ASSERT_THROW(file_imp::open("hdf5_imp_test",true),file_error);
-    //should throw an exception because the file does not exist.
-    CPPUNIT_ASSERT_THROW(file_imp::open("blablabla.h5",false),object_error);
-    CPPUNIT_ASSERT_THROW(file_imp::open("blablabla.h5",true),object_error);
+        //should raise an exception because the file is not an HDF5 file
+        BOOST_CHECK_THROW(h5::file_imp::open("hdf5_imp_test",false),file_error);
+        BOOST_CHECK_THROW(h5::file_imp::open("hdf5_imp_test",true),file_error);
+        //should throw an exception because the file does not exist.
+        BOOST_CHECK_THROW(h5::file_imp::open("blablabla.h5",false),object_error);
+        BOOST_CHECK_THROW(h5::file_imp::open("blablabla.h5",true),object_error);
 
-    //create a file
-    file_imp file(file_imp::create("file_imp_test.h5",true,0));
-    CPPUNIT_ASSERT(file.is_valid());
-    CPPUNIT_ASSERT_NO_THROW(file.close());
-    CPPUNIT_ASSERT(!file.is_valid());
+        //create a file
+        h5::file_imp file(h5::file_imp::create("file_imp_test.h5",true,0));
+        BOOST_CHECK(file.is_valid());
+        BOOST_CHECK_NO_THROW(file.close());
+        BOOST_CHECK(!file.is_valid());
 
-    //open the file in read/write mode
-    file = file_imp::open("file_imp_test.h5",false);
-    CPPUNIT_ASSERT(file.is_valid());
-    CPPUNIT_ASSERT(!file.is_readonly());
-    CPPUNIT_ASSERT_NO_THROW(file.close());
+        //open the file in read/write mode
+        file = h5::file_imp::open("file_imp_test.h5",false);
+        BOOST_CHECK(file.is_valid());
+        BOOST_CHECK(!file.is_readonly());
+        BOOST_CHECK_NO_THROW(file.close());
 
-    //open in read only mode
-    file = file_imp::open("file_imp_test.h5");
-    CPPUNIT_ASSERT(file.is_valid());
-    CPPUNIT_ASSERT(file.is_readonly());
+        //open in read only mode
+        file = h5::file_imp::open("file_imp_test.h5");
+        BOOST_CHECK(file.is_valid());
+        BOOST_CHECK(file.is_readonly());
 
-    //use the move constructor
-    file_imp file2 = std::move(file);
-    CPPUNIT_ASSERT(file2.is_valid());
-    CPPUNIT_ASSERT(!file.is_valid());
-    CPPUNIT_ASSERT_NO_THROW(file2.close());
+        //use the move constructor
+        h5::file_imp file2 = std::move(file);
+        BOOST_CHECK(file2.is_valid());
+        BOOST_CHECK(!file.is_valid());
+        BOOST_CHECK_NO_THROW(file2.close());
 
-}
+    }
 
-//-----------------------------------------------------------------------------
-void file_imp_test::test_assignment()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_assignment)
+    {
+        //can only test move assignment - copy assignment is not supported
+        //for file
+        h5::file_imp file1;
+        BOOST_CHECK_NO_THROW(file1 = h5::file_imp::create("file_imp_test.h5",true,0));
+        BOOST_CHECK(file1.is_valid());
+        h5::file_imp file2;
+        BOOST_CHECK(!file2.is_valid());
 
-    //can only test move assignment - copy assignment is not supported
-    //for file
-    file_imp file1;
-    CPPUNIT_ASSERT_NO_THROW(file1 = file_imp::create("file_imp_test.h5",true,0));
-    CPPUNIT_ASSERT(file1.is_valid());
-    file_imp file2;
-    CPPUNIT_ASSERT(!file2.is_valid());
+        BOOST_CHECK_NO_THROW(file2 = std::move(file1));
+        BOOST_CHECK(file2.is_valid());
+        BOOST_CHECK(!file1.is_valid());
 
-    CPPUNIT_ASSERT_NO_THROW(file2 = std::move(file1));
-    CPPUNIT_ASSERT(file2.is_valid());
-    CPPUNIT_ASSERT(!file1.is_valid());
+    }
 
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_root)
+    {
+        h5::file_imp file = h5::file_imp::create("file_imp_test.h5",true);
+        h5::group_imp root = file.root();
+        BOOST_CHECK_EQUAL(root.name(), "/");
+    }
 
-//----------------------------------------------------------------------------
-void file_imp_test::test_root()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    file_imp file = file_imp::create("file_imp_test.h5",true);
-    group_imp root = file.root();
-    CPPUNIT_ASSERT(root.name() == "/");
-}
+BOOST_AUTO_TEST_SUITE_END()

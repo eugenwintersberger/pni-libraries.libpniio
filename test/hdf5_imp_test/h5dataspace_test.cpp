@@ -21,154 +21,139 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 #include <list>
-#include "h5dataspace_test.hpp"
+#include <boost/test/unit_test.hpp>
 #include <pni/io/exceptions.hpp>
 
+#include <pni/io/nx/h5/h5dataspace.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(h5dataspace_test);
+using namespace pni::core;
+using namespace pni::io::nx::h5;
 
 
-//----------------------------------------------------------------------------
-void h5dataspace_test::setUp() { }
+BOOST_AUTO_TEST_SUITE(h5dataspace_test)
 
-//----------------------------------------------------------------------------
-void h5dataspace_test::tearDown(){ }
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_default_construction)
+    {
+        h5dataspace space;
+        BOOST_CHECK_EQUAL(space.rank(),1);
+        BOOST_CHECK_EQUAL(space.size(),1);
+    }
 
-//----------------------------------------------------------------------------
-void h5dataspace_test::test_default_construction()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_object_construction)
+    {
+        hsize_t dims[3] = {10,20,3};
+        h5dataspace space1(object_imp(H5Screate_simple(3,dims,dims)));
+        BOOST_CHECK_EQUAL(space1.rank(),3);
+        BOOST_CHECK_EQUAL(space1.size(),600);
+    }
 
-    h5dataspace space;
-    CPPUNIT_ASSERT(space.rank() == 1);
-    CPPUNIT_ASSERT(space.size() == 1);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_move_construction)
+    {
+        h5dataspace s1{{10,3}};
+        BOOST_CHECK(s1.is_valid());
+        BOOST_CHECK_EQUAL(s1.size(),30);
+        BOOST_CHECK_EQUAL(s1.rank(),2);
 
-//----------------------------------------------------------------------------
-void h5dataspace_test::test_object_construction()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5dataspace space1(object_imp(H5Screate_simple(3,dims,dims)));
-    CPPUNIT_ASSERT(space1.rank() == 3);
-    CPPUNIT_ASSERT(space1.size() == 600);
-}
+        h5dataspace s2(std::move(s1));
+        BOOST_CHECK(s2.is_valid());
+        BOOST_CHECK(!s1.is_valid());
+        BOOST_CHECK_EQUAL(s2.rank(),2);
+        BOOST_CHECK_EQUAL(s2.size(),30);
+    }
 
-//----------------------------------------------------------------------------
-void h5dataspace_test::test_move_construction()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5dataspace s1{{10,3}};
-    CPPUNIT_ASSERT(s1.is_valid());
-    CPPUNIT_ASSERT(s1.size() == 30);
-    CPPUNIT_ASSERT(s1.rank() == 2);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_copy_construction)
+    {
+        h5dataspace s1{{10,3}};
+        BOOST_CHECK(s1.is_valid());
+        BOOST_CHECK_EQUAL(s1.size(),30);
+        BOOST_CHECK_EQUAL(s1.rank(),2);
 
-    h5dataspace s2(std::move(s1));
-    CPPUNIT_ASSERT(s2.is_valid());
-    CPPUNIT_ASSERT(!s1.is_valid());
-    CPPUNIT_ASSERT(s2.rank() == 2);
-    CPPUNIT_ASSERT(s2.size() == 30);
-}
+        h5dataspace s2(s1);
+        BOOST_CHECK(s2.is_valid());
+        BOOST_CHECK(s1.is_valid());
+        BOOST_CHECK_EQUAL(s2.rank(),2);
+        BOOST_CHECK_EQUAL(s2.size(),30);
+    }
 
-//----------------------------------------------------------------------------
-void h5dataspace_test::test_copy_construction()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5dataspace s1{{10,3}};
-    CPPUNIT_ASSERT(s1.is_valid());
-    CPPUNIT_ASSERT(s1.size() == 30);
-    CPPUNIT_ASSERT(s1.rank() == 2);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_move_assignment)
+    {
+        h5dataspace s1{{10,3}};
+        BOOST_CHECK(s1.is_valid());
+        BOOST_CHECK_EQUAL(s1.size() , 30);
+        BOOST_CHECK_EQUAL(s1.rank() , 2);
 
-    h5dataspace s2(s1);
-    CPPUNIT_ASSERT(s2.is_valid());
-    CPPUNIT_ASSERT(s1.is_valid());
-    CPPUNIT_ASSERT(s2.rank() == 2);
-    CPPUNIT_ASSERT(s2.size() == 30);
-}
+        h5dataspace s2;
+        s2 = std::move(s1);
+        BOOST_CHECK(s2.is_valid());
+        BOOST_CHECK(!s1.is_valid());
+        BOOST_CHECK_EQUAL(s2.rank() , 2);
+        BOOST_CHECK_EQUAL(s2.size() , 30);
+    }
 
-//----------------------------------------------------------------------------
-void h5dataspace_test::test_move_assignment()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5dataspace s1{{10,3}};
-    CPPUNIT_ASSERT(s1.is_valid());
-    CPPUNIT_ASSERT(s1.size() == 30);
-    CPPUNIT_ASSERT(s1.rank() == 2);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_copy_assignment)
+    {
+        h5dataspace s1{{10,3}};
+        BOOST_CHECK(s1.is_valid());
+        BOOST_CHECK_EQUAL(s1.size() , 30);
+        BOOST_CHECK_EQUAL(s1.rank() , 2);
 
-    h5dataspace s2;
-    s2 = std::move(s1);
-    CPPUNIT_ASSERT(s2.is_valid());
-    CPPUNIT_ASSERT(!s1.is_valid());
-    CPPUNIT_ASSERT(s2.rank() == 2);
-    CPPUNIT_ASSERT(s2.size() == 30);
-}
+        h5dataspace s2;
+        s2 = s1;
+        BOOST_CHECK(s2.is_valid());
+        BOOST_CHECK(s1.is_valid());
+        BOOST_CHECK_EQUAL(s2.rank() , 2);
+        BOOST_CHECK_EQUAL(s2.size() , 30);
+    }
 
-//----------------------------------------------------------------------------
-void h5dataspace_test::test_copy_assignment()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5dataspace s1{{10,3}};
-    CPPUNIT_ASSERT(s1.is_valid());
-    CPPUNIT_ASSERT(s1.size() == 30);
-    CPPUNIT_ASSERT(s1.rank() == 2);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_container_construction)
+    {
+        typedef type_imp::index_vector_type list_type;
+        
+        list_type cdims={10,4,3};
 
-    h5dataspace s2;
-    s2 = s1;
-    CPPUNIT_ASSERT(s2.is_valid());
-    CPPUNIT_ASSERT(s1.is_valid());
-    CPPUNIT_ASSERT(s2.rank() == 2);
-    CPPUNIT_ASSERT(s2.size() == 30);
-}
+        h5dataspace s1(cdims);
+        BOOST_CHECK_EQUAL(s1.rank(),3);
+        BOOST_CHECK_EQUAL(s1.size(),120);
 
-//----------------------------------------------------------------------------
-void h5dataspace_test::test_container_construction()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef type_imp::index_vector_type list_type;
-    
-    list_type cdims={10,4,3};
+        h5dataspace s2{list_type{100,40,30}};
+        BOOST_CHECK_EQUAL(s2.rank(),3);
+        BOOST_CHECK_EQUAL(s2.size(),100*40*30);
+    }
 
-    h5dataspace s1(cdims);
-    CPPUNIT_ASSERT(s1.rank() == 3);
-    CPPUNIT_ASSERT(s1.size() == 120);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_current_iterator)
+    {
+        typedef type_imp::index_vector_type list_type;
+        list_type shape{20,40,10};
 
-    h5dataspace s2{list_type{100,40,30}};
-    CPPUNIT_ASSERT(s2.rank() == 3);
-    CPPUNIT_ASSERT(s2.size() == 100*40*30);
-}
+        h5dataspace space(shape);
+        
+        auto liter = shape.begin();
+        auto siter = space.shape().begin();
+        for(;siter!=space.shape().end();++siter,++liter)
+            BOOST_CHECK_EQUAL(*siter,*liter);
+    }
 
-//----------------------------------------------------------------------------
-void h5dataspace_test::test_current_iterator()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef type_imp::index_vector_type list_type;
-    list_type shape{20,40,10};
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_grow)
+    {
+        h5dataspace space{{10,20}};
 
-    h5dataspace space(shape);
-    
-    auto liter = shape.begin();
-    auto siter = space.shape().begin();
-    for(;siter!=space.shape().end();++siter,++liter)
-        CPPUNIT_ASSERT(*siter == *liter);
-}
+        BOOST_CHECK_NO_THROW(space.grow(0));
+        BOOST_CHECK_EQUAL(space.shape()[0],11);
+        BOOST_CHECK_NO_THROW(space.grow(0,4));
+        BOOST_CHECK_EQUAL(space.shape()[0],15);
+        BOOST_CHECK_NO_THROW(space.grow(1,2));
+        BOOST_CHECK_EQUAL(space.shape()[1],22);
 
-//----------------------------------------------------------------------------
-void h5dataspace_test::test_grow()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5dataspace space{{10,20}};
+        BOOST_CHECK_THROW(space.grow(10),index_error);
+    }
 
-    CPPUNIT_ASSERT_NO_THROW(space.grow(0));
-    CPPUNIT_ASSERT(space.shape()[0]==11);
-    CPPUNIT_ASSERT_NO_THROW(space.grow(0,4));
-    CPPUNIT_ASSERT(space.shape()[0] ==15);
-    CPPUNIT_ASSERT_NO_THROW(space.grow(1,2));
-    CPPUNIT_ASSERT(space.shape()[1]==22);
-
-    CPPUNIT_ASSERT_THROW(space.grow(10),index_error);
-}
+BOOST_AUTO_TEST_SUITE_END()

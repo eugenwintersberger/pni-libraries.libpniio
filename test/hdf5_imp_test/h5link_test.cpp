@@ -21,101 +21,99 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/nxpath.hpp>
 #include <pni/io/nx/nxlink_type.hpp>
-#include <boost/current_function.hpp>
-#include "h5link_test.hpp"
-#include <pni/io/nx/algorithms.hpp>
 #include <pni/io/exceptions.hpp>
+#include <pni/core/types.hpp>
 
 
-CPPUNIT_TEST_SUITE_REGISTRATION(h5link_test);
+#include <pni/io/nx/h5/h5link.hpp>
+#include <pni/io/nx/h5/file_imp.hpp>
+#include <pni/io/nx/h5/group_imp.hpp>
 
-//-----------------------------------------------------------------------------
-void h5link_test::setUp()
+using namespace pni::core;
+using namespace pni::io::nx;
+
+struct h5link_test_fixture
 {
-    try
+    h5::file_imp file1;
+    h5::file_imp file2;
+
+    h5link_test_fixture():
+        file1(h5::file_imp::create("h5link_test1.h5",true,0)),
+        file2(h5::file_imp::create("h5link_test2.h5",true,0))
+    {}
+
+    ~h5link_test_fixture()
     {
-        _file1 = h5::file_imp::create("h5link_test1.h5",true,0);
-        _file2 = h5::file_imp::create("h5link_test2.h5",true,0);
+        file1.close();
+        file2.close();
     }
-    catch(pni::io::object_error &error)
+};
+
+BOOST_FIXTURE_TEST_SUITE(h5link_test,h5link_test_fixture)
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_internal)
     {
-        std::cerr<<error<<std::endl;
+        h5::group_imp root_group(file1.root());
+        h5::group_imp g(root_group,"test");
+        //the original group should be a hard link
+        BOOST_CHECK(h5::h5link::link_type(root_group,"test") == nxlink_type::HARD);
+
+        //straight forward - the link name is just a single name
+        nxpath target = nxpath::from_string("/test");
+        BOOST_CHECK_NO_THROW(h5::h5link::create_internal_link(target,root_group,"link_1"));
+        BOOST_CHECK(root_group.has_child("link_1"));
+        h5::group_imp lg(root_group.at("link_1"));
+        //this should be now a soft link
+        BOOST_CHECK(h5::h5link::link_type(root_group,"link_1")==nxlink_type::SOFT);
+
+        //check for exceptions
+        target = nxpath::from_string("test.nx://test/data");
+        BOOST_CHECK_THROW(h5::h5link::create_internal_link(target,root_group,"link_2"),
+                          value_error);
+
+        target = nxpath::from_string("/:NXentry/data");
+        BOOST_CHECK_THROW(h5::h5link::create_internal_link(target,root_group,"link_3"),
+                          value_error);
     }
 
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_external)
+    {
+        h5::group_imp root_group(file1.root());
+        h5::group_imp g(root_group,"test");
+        BOOST_CHECK(h5::h5link::link_type(root_group,"test") == nxlink_type::HARD);
 
-//------------------------------------------------------------------------------
-void h5link_test::tearDown()
-{
-    _file1.close();
-    _file2.close();
-}
+        root_group = h5::group_imp(file2.root());
+        nxpath target = nxpath::from_string("h5link_test1.h5://test");
+        //create a link to the group data in the first file
+        BOOST_CHECK_NO_THROW(h5::h5link::create_external_link(target,root_group,"external"));
+        BOOST_CHECK(h5::h5link::link_type(root_group,"external") 
+                == nxlink_type::EXTERNAL);
+        BOOST_CHECK(root_group.has_child("external"));
 
-void h5link_test::test_internal()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    h5::group_imp root_group(_file1.root());
-    h5::group_imp g(root_group,"test");
-    //the original group should be a hard link
-    CPPUNIT_ASSERT(h5::h5link::link_type(root_group,"test") == nxlink_type::HARD);
-
-    //straight forward - the link name is just a single name
-    nxpath target = nxpath::from_string("/test");
-    CPPUNIT_ASSERT_NO_THROW(h5::h5link::create_internal_link(target,root_group,"link_1"));
-    CPPUNIT_ASSERT(root_group.has_child("link_1"));
-    h5::group_imp lg(root_group.at("link_1"));
-    //this should be now a soft link
-    CPPUNIT_ASSERT(h5::h5link::link_type(root_group,"link_1")==nxlink_type::SOFT);
-
-    //check for exceptions
-    target = nxpath::from_string("test.nx://test/data");
-    CPPUNIT_ASSERT_THROW(h5::h5link::create_internal_link(target,root_group,"link_2"),
-                         pni::core::value_error);
-
-    target = nxpath::from_string("/:NXentry/data");
-    CPPUNIT_ASSERT_THROW(h5::h5link::create_internal_link(target,root_group,"link_3"),
-                         pni::core::value_error);
-}
-
-//------------------------------------------------------------------------------
-void h5link_test::test_external()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    h5::group_imp root_group(_file1.root());
-    h5::group_imp g(root_group,"test");
-    CPPUNIT_ASSERT(h5::h5link::link_type(root_group,"test") == nxlink_type::HARD);
-
-    root_group = h5::group_imp(_file2.root());
-    nxpath target = nxpath::from_string("h5link_test1.h5://test");
-    //create a link to the group data in the first file
-    CPPUNIT_ASSERT_NO_THROW(h5::h5link::create_external_link(target,root_group,"external"));
-    CPPUNIT_ASSERT(h5::h5link::link_type(root_group,"external") 
-            == nxlink_type::EXTERNAL);
-    CPPUNIT_ASSERT(root_group.has_child("external"));
-
-    //echeck exceptions
-    target = nxpath::from_string("/test/data");
-    CPPUNIT_ASSERT_THROW(h5::h5link::create_external_link(target,root_group,"ext2"),
-            pni::core::value_error);
+        //echeck exceptions
+        target = nxpath::from_string("/test/data");
+        BOOST_CHECK_THROW(h5::h5link::create_external_link(target,root_group,"ext2"),
+                          value_error);
 
 
-    target = nxpath::from_string("h5link_test1.h5://:NXentry/data");
-    CPPUNIT_ASSERT_THROW(h5::h5link::create_external_link(target,root_group,"external"),
-            pni::core::value_error);
-}
+        target = nxpath::from_string("h5link_test1.h5://:NXentry/data");
+        BOOST_CHECK_THROW(h5::h5link::create_external_link(target,root_group,"external"),
+                          value_error);
+    }
 
-//-----------------------------------------------------------------------------
-void h5link_test::test_link_type()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_link_type)
+    {
+        h5::group_imp root_group = file1.root();
+        
+        //exception if child does not exist
+        BOOST_CHECK_THROW(h5::h5link::link_type(root_group,"test"),key_error);
+        
+    }
 
-    h5::group_imp root_group = _file1.root();
-    
-    //exception if child does not exist
-    CPPUNIT_ASSERT_THROW(h5::h5link::link_type(root_group,"test"),key_error);
-    
-}
+BOOST_AUTO_TEST_SUITE_END()

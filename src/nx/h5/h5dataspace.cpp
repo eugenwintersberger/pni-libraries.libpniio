@@ -210,6 +210,12 @@ namespace h5 {
     {
         H5Sselect_all(_object.id());
     }
+
+    //-------------------------------------------------------------------------
+    const object_imp &h5dataspace::object() const noexcept
+    {
+        return _object;
+    }
     
     //======================operators==========================================
     std::ostream &operator<<(std::ostream &o,const h5dataspace &s)
