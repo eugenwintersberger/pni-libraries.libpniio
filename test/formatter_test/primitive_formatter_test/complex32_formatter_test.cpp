@@ -21,42 +21,37 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
 #include <pni/io/formatters/scalar_format.hpp>
-#include "complex32_formatter_test.hpp"
 
+using namespace pni::core;
 using namespace pni::io;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(complex32_formatter_test);
+BOOST_AUTO_TEST_SUITE(complex32_formatter_test)
 
-//-----------------------------------------------------------------------------
-void complex32_formatter_test::setUp() { }
+    BOOST_AUTO_TEST_CASE(test)
+    {
+        typedef complex32 input_type; 
+        string result = format(input_type(1.256987,3.452907));
+        BOOST_CHECK_EQUAL(result,"1.256987e00+I3.452907e00");
+        
+        result = format(input_type(1.256987,-3.452907));
+        BOOST_CHECK_EQUAL(result,"1.256987e00-I3.452907e00");
 
-//-----------------------------------------------------------------------------
-void complex32_formatter_test::tearDown() {}
+        result = format(input_type(-1.256987,-3.452907));
+        BOOST_CHECK_EQUAL(result,"-1.256987e00-I3.452907e00");
+        
+        result = format(input_type(-1.256987,3.452907));
+        BOOST_CHECK_EQUAL(result,"-1.256987e00+I3.452907e00");
 
-//-----------------------------------------------------------------------------
-void complex32_formatter_test::test_format()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    string result = format(input_type(1.256987,3.452907));
-    CPPUNIT_ASSERT(result == "1.256987e00+I3.452907e00");
-    
-    result = format(input_type(1.256987,-3.452907));
-    CPPUNIT_ASSERT(result == "1.256987e00-I3.452907e00");
+        result = format(input_type(0,3.45));
+        BOOST_CHECK_EQUAL(result,"0.0e00+I3.45e00");
+        
+        result = format(input_type(0,-3.45));
+        BOOST_CHECK_EQUAL(result,"0.0e00-I3.45e00");
+    }
 
-    result = format(input_type(-1.256987,-3.452907));
-    CPPUNIT_ASSERT(result == "-1.256987e00-I3.452907e00");
-    
-    result = format(input_type(-1.256987,3.452907));
-    CPPUNIT_ASSERT(result == "-1.256987e00+I3.452907e00");
-
-    result = format(input_type(0,3.45));
-    CPPUNIT_ASSERT(result == "0.0e00+I3.45e00");
-    
-    result = format(input_type(0,-3.45));
-    CPPUNIT_ASSERT(result == "0.0e00-I3.45e00");
-}
+BOOST_AUTO_TEST_SUITE_END()
 
 

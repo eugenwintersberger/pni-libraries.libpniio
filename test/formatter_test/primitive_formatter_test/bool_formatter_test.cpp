@@ -21,27 +21,21 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/io/formatters/scalar_format.hpp>
-#include "bool_formatter_test.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(bool_formatter_test);
-
+using namespace pni::core;
 using namespace pni::io;
 
-//-----------------------------------------------------------------------------
-void bool_formatter_test::setUp() { }
+BOOST_AUTO_TEST_SUITE(bool_formatter_test)
 
-//-----------------------------------------------------------------------------
-void bool_formatter_test::tearDown() {}
+    //-----------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test)
+    {
+        BOOST_CHECK_EQUAL(format(bool_t(true)),"true");
+        BOOST_CHECK_EQUAL(format(bool_t(false)),"false");
+    }
 
-//-----------------------------------------------------------------------------
-void bool_formatter_test::test_format()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    CPPUNIT_ASSERT(format(input_type(true)) == "true");
-    CPPUNIT_ASSERT(format(input_type(false)) == "false");
-}
+BOOST_AUTO_TEST_SUITE_END()
 
 

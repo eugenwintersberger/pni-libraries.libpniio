@@ -21,30 +21,25 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
 #include <pni/io/formatters/scalar_format.hpp>
-#include "float64_formatter_test.hpp"
 
+using namespace pni::core;
 using namespace pni::io;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(float64_formatter_test);
+BOOST_AUTO_TEST_SUITE(float64_formatter_test)
 
-//-----------------------------------------------------------------------------
-void float64_formatter_test::setUp() { }
+    BOOST_AUTO_TEST_CASE(test)
+    {
+        typedef float64 input_type; 
+        string result = format(input_type(1.2));
+        BOOST_CHECK_EQUAL(result,"1.2e00");
 
-//-----------------------------------------------------------------------------
-void float64_formatter_test::tearDown() {}
+        result = format(input_type(-1.29387702983e-11));
+        BOOST_CHECK_EQUAL(result,"-1.29387702983e-11");
+    }
 
-//-----------------------------------------------------------------------------
-void float64_formatter_test::test_format()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-  
-    string result = format(input_type(1.2));
-    CPPUNIT_ASSERT(result=="1.2e00");
-
-    result = format(input_type(-1.29387702983e-11));
-    CPPUNIT_ASSERT(result=="-1.29387702983e-11");
-}
+BOOST_AUTO_TEST_SUITE_END()
 
 

@@ -21,30 +21,25 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
 #include <pni/io/formatters/scalar_format.hpp>
-#include "int8_formatter_test.hpp"
 
+using namespace pni::core;
 using namespace pni::io;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(int8_formatter_test);
+BOOST_AUTO_TEST_SUITE(int8_formatter_test)
 
-//-----------------------------------------------------------------------------
-void int8_formatter_test::setUp() { }
+    BOOST_AUTO_TEST_CASE(test)
+    {
+        typedef int8 input_type; 
+        BOOST_CHECK_EQUAL(format(input_type(12)),"12");
+        BOOST_CHECK_EQUAL(format(input_type(-100)),"-100");
+        BOOST_CHECK_EQUAL(format(input_type(0)),"0");
+        BOOST_CHECK_EQUAL(format(input_type(127)),"127");
+        BOOST_CHECK_EQUAL(format(input_type(-128)),"-128");
+    }
 
-//-----------------------------------------------------------------------------
-void int8_formatter_test::tearDown() {}
-
-//-----------------------------------------------------------------------------
-void int8_formatter_test::test_format()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    CPPUNIT_ASSERT(format(input_type(12)) == "12");
-    CPPUNIT_ASSERT(format(input_type(-100)) == "-100");
-    CPPUNIT_ASSERT(format(input_type(0)) == "0");
-    CPPUNIT_ASSERT(format(input_type(127)) == "127");
-    CPPUNIT_ASSERT(format(input_type(-128)) == "-128");
-}
+BOOST_AUTO_TEST_SUITE_END()
 
 

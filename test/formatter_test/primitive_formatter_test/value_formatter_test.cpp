@@ -23,171 +23,135 @@
 
 
 #include <pni/core/types.hpp>
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/io/formatters/scalar_format.hpp>
-#include "value_formatter_test.hpp"
-
-using namespace pni::io;
-
-CPPUNIT_TEST_SUITE_REGISTRATION(value_formatter_test);
 
 using namespace pni::core;
+using namespace pni::io;
 
-//-----------------------------------------------------------------------------
-void value_formatter_test::setUp() { }
+BOOST_AUTO_TEST_SUITE(value_formatter_test)
+    typedef value input_type;
 
-//-----------------------------------------------------------------------------
-void value_formatter_test::tearDown() {}
+    BOOST_AUTO_TEST_CASE(test_uint8)
+    {
+        typedef uint8 itype;
+        BOOST_CHECK_EQUAL(format(input_type(itype(12))),"12");   
+    }
 
-//-----------------------------------------------------------------------------
-void value_formatter_test::test_uint8()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef uint8 itype;
-   
-    CPPUNIT_ASSERT(format(input_type(itype(12)))=="12");   
-}
-
-//-----------------------------------------------------------------------------
-void value_formatter_test::test_int8()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef int8 itype;
-   
-    CPPUNIT_ASSERT(format(input_type(itype(12)))=="12");   
-    CPPUNIT_ASSERT(format(input_type(itype(-12)))=="-12");
-}
-
-//-----------------------------------------------------------------------------
-void value_formatter_test::test_uint16()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef uint16 itype;
-   
-    CPPUNIT_ASSERT(format(input_type(itype(12)))=="12");   
-}
-
-//-----------------------------------------------------------------------------
-void value_formatter_test::test_int16()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef int16 itype;
-   
-    CPPUNIT_ASSERT(format(input_type(itype(12)))=="12");   
-    CPPUNIT_ASSERT(format(input_type(itype(-12)))=="-12");
-}
-//-----------------------------------------------------------------------------
-void value_formatter_test::test_uint32()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef uint32 itype;
-   
-    CPPUNIT_ASSERT(format(input_type(itype(12)))=="12");   
-}
-
-//-----------------------------------------------------------------------------
-void value_formatter_test::test_int32()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef int32 itype;
-   
-    CPPUNIT_ASSERT(format(input_type(itype(12)))=="12");   
-    CPPUNIT_ASSERT(format(input_type(itype(-12)))=="-12");
-}
-
-//-----------------------------------------------------------------------------
-void value_formatter_test::test_uint64()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef uint64 itype;
-   
-    CPPUNIT_ASSERT(format(input_type(itype(12)))=="12");   
-}
-
-//-----------------------------------------------------------------------------
-void value_formatter_test::test_int64()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef int64 itype;
-   
-    CPPUNIT_ASSERT(format(input_type(itype(12)))=="12");   
-    CPPUNIT_ASSERT(format(input_type(itype(-12)))=="-12");
-}
-
-//-----------------------------------------------------------------------------
-void value_formatter_test::test_float32()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef float32 itype;
-   
-    CPPUNIT_ASSERT(format(input_type(itype(1.23e+4)))=="1.23e04");     
-    CPPUNIT_ASSERT(format(input_type(itype(-1.23e-4)))=="-1.23e-04");       
-}
-
-//-----------------------------------------------------------------------------
-void value_formatter_test::test_float64()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef float64 itype;
-   
-    CPPUNIT_ASSERT(format(input_type(itype(1.23e+4)))=="1.23e04");   
-    CPPUNIT_ASSERT(format(input_type(itype(1.23e+123)))=="1.23e123");  
-}
-
-//-----------------------------------------------------------------------------
-void value_formatter_test::test_float128()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef float128 itype;
-   
-    CPPUNIT_ASSERT(format(input_type(itype(1.23e+4)))=="1.23e04");       
-}
-//-----------------------------------------------------------------------------
-void value_formatter_test::test_complex32()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef complex32 itype;
-   
-    CPPUNIT_ASSERT(format(input_type(itype(1.23e+4,4.2)))=="1.23e04+I4.2e00");      
-    CPPUNIT_ASSERT(format(input_type(itype(-1.23e-4)))=="-1.23e-04+I0.0e00");       
-}
-
-//-----------------------------------------------------------------------------
-void value_formatter_test::test_complex64()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef complex64 itype;
-   
-    CPPUNIT_ASSERT(format(input_type(itype(1.23e+4,-4.2e+3)))=="1.23e04-I4.2e03");   
-    CPPUNIT_ASSERT(format(input_type(itype(0.0,-1.23e+123)))=="0.0e00-I1.23e123");  
-}
-
-//-----------------------------------------------------------------------------
-void value_formatter_test::test_complex128()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef complex128 itype;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_int8)
+    {
+        typedef int8 itype;
        
-    CPPUNIT_ASSERT(format(input_type(itype(1.23e+4,-4.2e+3)))=="1.23e04-I4.2e03");       
-}
+        BOOST_CHECK_EQUAL(format(input_type(itype(12))),"12");   
+        BOOST_CHECK_EQUAL(format(input_type(itype(-12))),"-12");
+    }
 
-//-----------------------------------------------------------------------------
-void value_formatter_test::test_bool()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef bool itype;
-       
-    bool_t v = true;
-    CPPUNIT_ASSERT(format(input_type(v))=="true"); 
-    v = false;      
-    CPPUNIT_ASSERT(format(input_type(v))=="false");       
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_uint16)
+    {
+        typedef uint16 itype;
+        BOOST_CHECK_EQUAL(format(input_type(itype(12))),"12");   
+    }
 
-//-----------------------------------------------------------------------------
-void value_formatter_test::test_string()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    typedef string itype;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_int16)
+    {
+        typedef int16 itype;
+        BOOST_CHECK_EQUAL(format(input_type(itype(12))),"12");   
+        BOOST_CHECK_EQUAL(format(input_type(itype(-12))),"-12");
+    }
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_uint32)
+    {
+        typedef uint32 itype;
+        BOOST_CHECK_EQUAL(format(input_type(itype(12))),"12");   
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_int32)
+    {
+        typedef int32 itype;
+        BOOST_CHECK_EQUAL(format(input_type(itype(12))),"12");   
+        BOOST_CHECK_EQUAL(format(input_type(itype(-12))),"-12");
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_uint64)
+    {
+        typedef uint64 itype;
+        BOOST_CHECK_EQUAL(format(input_type(itype(12))),"12");   
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_int64)
+    {
+        typedef int64 itype;
+        BOOST_CHECK_EQUAL(format(input_type(itype(12))),"12");   
+        BOOST_CHECK_EQUAL(format(input_type(itype(-12))),"-12");
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_float32)
+    {
+        typedef float32 itype;
+        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+4))),"1.23e04");     
+        BOOST_CHECK_EQUAL(format(input_type(itype(-1.23e-4))),"-1.23e-04");       
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_float64)
+    {
+        typedef float64 itype;
+        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+4))),"1.23e04");   
+        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+123))),"1.23e123");  
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_float128)
+    {
+        typedef float128 itype;
+        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+4))),"1.23e04");       
+    }
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_complex32)
+    {
+        typedef complex32 itype;
+        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+4,4.2))),"1.23e04+I4.2e00");      
+        BOOST_CHECK_EQUAL(format(input_type(itype(-1.23e-4))),"-1.23e-04+I0.0e00");       
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_complex64)
+    {
+        typedef complex64 itype;
        
-    CPPUNIT_ASSERT(format(input_type(itype("hello world")))=="hello world");       
-}
+        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+4,-4.2e+3))),"1.23e04-I4.2e03");   
+        BOOST_CHECK_EQUAL(format(input_type(itype(0.0,-1.23e+123))),"0.0e00-I1.23e123");  
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_complex128)
+    {
+        typedef complex128 itype;
+        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+4,-4.2e+3))),"1.23e04-I4.2e03");  
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_bool)
+    {
+        bool_t v = true;
+        BOOST_CHECK_EQUAL(format(input_type(v)),"true"); 
+        v = false;      
+        BOOST_CHECK_EQUAL(format(input_type(v)),"false");       
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_string)
+    {
+        typedef string itype;
+           
+        BOOST_CHECK_EQUAL(format(input_type(itype("hello world"))),"hello world");       
+    }
+
+BOOST_AUTO_TEST_SUITE_END()

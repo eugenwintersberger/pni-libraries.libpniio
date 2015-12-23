@@ -21,28 +21,23 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
 #include <pni/io/formatters/scalar_format.hpp>
-#include "uint16_formatter_test.hpp"
 
+using namespace pni::core;
 using namespace pni::io;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(uint16_formatter_test);
+BOOST_AUTO_TEST_SUITE(uint16_formatter_test)
 
-//-----------------------------------------------------------------------------
-void uint16_formatter_test::setUp() { }
+    BOOST_AUTO_TEST_CASE(test)
+    {
+        typedef uint16 input_type; 
+        BOOST_CHECK_EQUAL(format(input_type(12)),"12");
+        BOOST_CHECK_EQUAL(format(input_type(0)),"0");
+        BOOST_CHECK_EQUAL(format(input_type(65535)),"65535");
+    }
 
-//-----------------------------------------------------------------------------
-void uint16_formatter_test::tearDown() {}
-
-//-----------------------------------------------------------------------------
-void uint16_formatter_test::test_format()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    CPPUNIT_ASSERT(format(input_type(12)) == "12");
-    CPPUNIT_ASSERT(format(input_type(0)) == "0");
-    CPPUNIT_ASSERT(format(input_type(65535)) == "65535");
-}
+BOOST_AUTO_TEST_SUITE_END()
 
 

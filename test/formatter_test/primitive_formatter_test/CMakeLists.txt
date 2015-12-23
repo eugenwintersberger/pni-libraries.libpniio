@@ -1,4 +1,4 @@
-set(SOURCES primitive_formatters_test.cpp
+set(SOURCES 
             uint8_formatter_test.cpp
             uint16_formatter_test.cpp
             uint32_formatter_test.cpp
@@ -17,8 +17,14 @@ set(SOURCES primitive_formatters_test.cpp
            )
 
 
-add_executable(primitive_formatter_test EXCLUDE_FROM_ALL ${SOURCES} 
-               $<TARGET_OBJECTS:test_common> )
-target_link_libraries(primitive_formatter_test pniio ${CPPUNIT_LIBRARIES})
+
+set_source_files_properties(bool_formatter_test.cpp PROPERTIES 
+                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; \
+                            BOOST_TEST_MODULE=Testing primitive formatters")
+add_executable(primitive_formatter_test EXCLUDE_FROM_ALL ${SOURCES})
+target_link_libraries(primitive_formatter_test pniio 
+                      ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_test("formatters:primitive_formatters" primitive_formatter_test)
+
+add_dependencies(check primitive_formatter_test)
 
