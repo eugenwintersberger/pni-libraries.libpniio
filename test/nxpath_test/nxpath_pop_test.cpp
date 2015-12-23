@@ -21,50 +21,49 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "nxpath_pop_test.hpp"
-#include "../EqualityCheck.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
+#include <pni/io/nx/nxpath.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxpath_pop_test);
+using namespace pni::core;
+using namespace pni::io::nx;
 
-
-//----------------------------------------------------------------------------
-void nxpath_pop_test::setUp() 
-{ 
-    p = nxpath::from_string(":NXentry/:NXinstrument/:NXdetector");
-}
-
-//----------------------------------------------------------------------------
-void nxpath_pop_test::tearDown() {}
-
-//----------------------------------------------------------------------------
-void nxpath_pop_test::test_front()
+struct nxpath_pop_test_fixture
 {
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    nxpath::element_type e = p.front();
-    p.pop_front();
-    CPPUNIT_ASSERT(p.size() == 2);
-    CPPUNIT_ASSERT(nxpath::to_string(p)==":NXinstrument/:NXdetector");
-}
+    nxpath p;
 
-//----------------------------------------------------------------------------
-void nxpath_pop_test::test_back()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    nxpath::element_type e = p.back();
-    p.pop_back();
-    CPPUNIT_ASSERT(p.size() == 2);
-    CPPUNIT_ASSERT(nxpath::to_string(p)==":NXentry/:NXinstrument");
-}
+    nxpath_pop_test_fixture():
+        p(nxpath::from_string(":NXentry/:NXinstrument/:NXdetector"))
+    {}
+};
 
-//----------------------------------------------------------------------------
-void nxpath_pop_test::test_front_back()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    p.pop_front();
-    p.pop_back();
-    CPPUNIT_ASSERT(nxpath::to_string(p)==":NXinstrument");
-}
+BOOST_FIXTURE_TEST_SUITE(nxpath_pop_test,nxpath_pop_test_fixture)
+
+    BOOST_AUTO_TEST_CASE(test_front)
+    {
+        nxpath::element_type e = p.front();
+        p.pop_front();
+        BOOST_CHECK_EQUAL(p.size(),2);
+        BOOST_CHECK_EQUAL(nxpath::to_string(p),":NXinstrument/:NXdetector");
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_back)
+    {
+        nxpath::element_type e = p.back();
+        p.pop_back();
+        BOOST_CHECK_EQUAL(p.size() , 2);
+        BOOST_CHECK_EQUAL(nxpath::to_string(p),":NXentry/:NXinstrument");
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_front_back)
+    {
+        p.pop_front();
+        p.pop_back();
+        BOOST_CHECK_EQUAL(nxpath::to_string(p),":NXinstrument");
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
 

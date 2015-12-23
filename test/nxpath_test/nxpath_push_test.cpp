@@ -21,70 +21,61 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "nxpath_push_test.hpp"
-#include "../EqualityCheck.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
+#include <pni/io/nx/nxpath.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxpath_push_test);
+using namespace pni::core;
+using namespace pni::io::nx;
 
-
-//----------------------------------------------------------------------------
-void nxpath_push_test::setUp() 
-{ 
-    p = nxpath::from_string(":NXinstrument");
-}
-
-//----------------------------------------------------------------------------
-void nxpath_push_test::tearDown() {}
-
-//----------------------------------------------------------------------------
-void nxpath_push_test::test_front()
+struct nxpath_push_test_fixture
 {
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    nxpath p;
     
-    p.push_front(object_element("","NXentry"));
-    CPPUNIT_ASSERT(nxpath::to_string(p)==":NXentry/:NXinstrument");
+    nxpath_push_test_fixture():
+        p(nxpath::from_string(":NXinstrument"))
+    {}
+};
 
-}
+BOOST_FIXTURE_TEST_SUITE(nxpath_push_test,nxpath_push_test_fixture)
 
-//----------------------------------------------------------------------------
-void nxpath_push_test::test_back()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    p.push_back(object_element("","NXdetector"));
-    CPPUNIT_ASSERT(nxpath::to_string(p)==":NXinstrument/:NXdetector");
+    BOOST_AUTO_TEST_CASE(test_front)
+    {
+        p.push_front(object_element("","NXentry"));
+        BOOST_CHECK_EQUAL(nxpath::to_string(p),":NXentry/:NXinstrument");
+    }
 
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_back)
+    {
+        p.push_back(object_element("","NXdetector"));
+        BOOST_CHECK_EQUAL(nxpath::to_string(p),":NXinstrument/:NXdetector");
+    }
 
-//----------------------------------------------------------------------------
-void nxpath_push_test::test_front_back()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    p.push_front(object_element("","NXentry"));
-    p.push_back(object_element("","NXdetector"));
-    CPPUNIT_ASSERT(nxpath::to_string(p)==":NXentry/:NXinstrument/:NXdetector");
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_front_back)
+    {
+        p.push_front(object_element("","NXentry"));
+        p.push_back(object_element("","NXdetector"));
+        BOOST_CHECK_EQUAL(nxpath::to_string(p),":NXentry/:NXinstrument/:NXdetector");
+    }
 
-//----------------------------------------------------------------------------
-void nxpath_push_test::test_root_front()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    p.push_front(object_element("/","NXroot"));
-    CPPUNIT_ASSERT(nxpath::to_string(p)=="/:NXinstrument");
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_root_front)
+    {
+        p.push_front(object_element("/","NXroot"));
+        BOOST_CHECK_EQUAL(nxpath::to_string(p),"/:NXinstrument");
+    }
 
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_root_back)
+    {
+        nxpath::element_type root{"/","NXroot" };
+        BOOST_CHECK_THROW(p.push_back(root),value_error);
 
-//----------------------------------------------------------------------------
-void nxpath_push_test::test_root_back()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-  
-    nxpath::element_type root{"/","NXroot" };
+        p = nxpath();
+        BOOST_CHECK_NO_THROW(p.push_back(root));
+    }
 
-    CPPUNIT_ASSERT_THROW(p.push_back(root),value_error);
-
-    p = nxpath();
-    CPPUNIT_ASSERT_NO_THROW(p.push_back(root));
-}
+BOOST_AUTO_TEST_SUITE_END()

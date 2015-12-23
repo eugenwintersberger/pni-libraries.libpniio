@@ -21,158 +21,138 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "nxpath_create_test.hpp"
-#include "../EqualityCheck.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
+#include <pni/io/nx/nxpath.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxpath_create_test);
+using namespace pni::core;
+using namespace pni::io::nx;
 
+BOOST_AUTO_TEST_SUITE(nxpath_create_test)
 
-//----------------------------------------------------------------------------
-void nxpath_create_test::setUp() { }
+    BOOST_AUTO_TEST_CASE(test_abs_no_file)
+    {
+        nxpath p = nxpath::from_string("/");
+        BOOST_CHECK_EQUAL(p.size(),1);
+        BOOST_CHECK(is_absolute(p));
+        BOOST_CHECK_EQUAL(p.front().first,"/");
+        BOOST_CHECK_EQUAL(p.front().second,"NXroot");
 
-//----------------------------------------------------------------------------
-void nxpath_create_test::tearDown() {}
+        p = nxpath::from_string("/./:NXentry/:NXinstrument/");
+        BOOST_CHECK_EQUAL(p.size(),4);
+        BOOST_CHECK(is_absolute(p));
+        BOOST_CHECK_EQUAL(p.front().first,"/");
+        BOOST_CHECK_EQUAL(p.front().second,"NXroot");
 
-//----------------------------------------------------------------------------
-void nxpath_create_test::test_abs_no_file()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        p = nxpath::from_string("/../:NXentry/:NXinstrument");
+        BOOST_CHECK_EQUAL(p.size(),4);
+        BOOST_CHECK(is_absolute(p));
+        BOOST_CHECK_EQUAL(p.front().first,"/");
+        BOOST_CHECK_EQUAL(p.front().second,"NXroot");
 
-    nxpath p = nxpath::from_string("/");
-    CPPUNIT_ASSERT(p.size()==1);
-    CPPUNIT_ASSERT(is_absolute(p));
-    CPPUNIT_ASSERT(p.front().first=="/");
-    CPPUNIT_ASSERT(p.front().second=="NXroot");
+        p = nxpath::from_string("/.");
+        BOOST_CHECK_EQUAL(p.size() , 2);
+        BOOST_CHECK(is_absolute(p));
+        BOOST_CHECK_EQUAL(p.front().first,"/");
+        BOOST_CHECK_EQUAL(p.front().second,"NXroot");
+    }
 
-    p = nxpath::from_string("/./:NXentry/:NXinstrument/");
-    CPPUNIT_ASSERT(p.size()==4);
-    CPPUNIT_ASSERT(is_absolute(p));
-    CPPUNIT_ASSERT(p.front().first=="/");
-    CPPUNIT_ASSERT(p.front().second=="NXroot");
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_abs_no_file_with_attribute)
+    {
+        nxpath p = nxpath::from_string("/@date");
+        BOOST_CHECK_EQUAL(p.size(),1);
+        BOOST_CHECK(is_absolute(p));
+        BOOST_CHECK_EQUAL(p.front().first,"/");
+        BOOST_CHECK_EQUAL(p.front().second,"NXroot");
+        BOOST_CHECK_EQUAL(p.attribute(),"date");
 
-    p = nxpath::from_string("/../:NXentry/:NXinstrument");
-    CPPUNIT_ASSERT(p.size()==4);
-    CPPUNIT_ASSERT(is_absolute(p));
-    CPPUNIT_ASSERT(p.front().first=="/");
-    CPPUNIT_ASSERT(p.front().second=="NXroot");
+        p = nxpath::from_string("/./:NXentry/:NXinstrument/@date");
+        BOOST_CHECK_EQUAL(p.size(),4);
+        BOOST_CHECK(is_absolute(p));
+        BOOST_CHECK_EQUAL(p.front().first,"/");
+        BOOST_CHECK_EQUAL(p.front().second,"NXroot");
+        BOOST_CHECK_EQUAL(p.attribute(),"date");
 
-    p = nxpath::from_string("/.");
-    CPPUNIT_ASSERT(p.size() == 2);
-    CPPUNIT_ASSERT(is_absolute(p));
-    CPPUNIT_ASSERT(p.front().first=="/");
-    CPPUNIT_ASSERT(p.front().second=="NXroot");
+        p = nxpath::from_string("/../:NXentry/:NXinstrument@date");
+        BOOST_CHECK_EQUAL(p.size(),4);
+        BOOST_CHECK(is_absolute(p));
+        BOOST_CHECK_EQUAL(p.front().first,"/");
+        BOOST_CHECK_EQUAL(p.front().second,"NXroot");
+        BOOST_CHECK_EQUAL(p.attribute(),"date");
 
-}
+        p = nxpath::from_string("/.@date");
+        p = nxpath::from_string("/.");
+        BOOST_CHECK_EQUAL(p.size() , 2);
+        BOOST_CHECK(is_absolute(p));
+        BOOST_CHECK_EQUAL(p.front().first,"/");
+        BOOST_CHECK_EQUAL(p.front().second,"NXroot");
+    }
 
-//----------------------------------------------------------------------------
-void nxpath_create_test::test_abs_no_file_with_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_abs_with_file)
+    {
+        nxpath p = nxpath::from_string("test.nxs://");
+        BOOST_CHECK_EQUAL(p.size(),1);
+        BOOST_CHECK(is_absolute(p));
+        BOOST_CHECK_EQUAL(p.filename() , "test.nxs");
 
-    nxpath p = nxpath::from_string("/@date");
-    CPPUNIT_ASSERT(p.size()==1);
-    CPPUNIT_ASSERT(is_absolute(p));
-    CPPUNIT_ASSERT(p.front().first=="/");
-    CPPUNIT_ASSERT(p.front().second=="NXroot");
-    CPPUNIT_ASSERT(p.attribute()=="date");
+        p = nxpath::from_string("/data/run/test.nxs://");
+        BOOST_CHECK_EQUAL(p.size(),1);
+        BOOST_CHECK(is_absolute(p));
+        BOOST_CHECK_EQUAL(p.filename() , "/data/run/test.nxs");
+        
+        p= nxpath::from_string("test.nxs://:NXentry/:NXinstrument/pilatus:NXdetector");
+        BOOST_CHECK_EQUAL(p.size(),4);
+        BOOST_CHECK(is_absolute(p));
+        BOOST_CHECK_EQUAL(p.filename() , "test.nxs");
+    }
 
-    p = nxpath::from_string("/./:NXentry/:NXinstrument/@date");
-    CPPUNIT_ASSERT(p.size()==4);
-    CPPUNIT_ASSERT(is_absolute(p));
-    CPPUNIT_ASSERT(p.front().first=="/");
-    CPPUNIT_ASSERT(p.front().second=="NXroot");
-    CPPUNIT_ASSERT(p.attribute()=="date");
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_abs_with_file_with_attribute)
+    {
+        nxpath p = nxpath::from_string("test.nxs://@date");
+        BOOST_CHECK_EQUAL(p.size(),1);
+        BOOST_CHECK(is_absolute(p));
+        BOOST_CHECK_EQUAL(p.filename() , "test.nxs");
+        BOOST_CHECK_EQUAL(p.attribute() , "date");
 
-    p = nxpath::from_string("/../:NXentry/:NXinstrument@date");
-    CPPUNIT_ASSERT(p.size()==4);
-    CPPUNIT_ASSERT(is_absolute(p));
-    CPPUNIT_ASSERT(p.front().first=="/");
-    CPPUNIT_ASSERT(p.front().second=="NXroot");
-    CPPUNIT_ASSERT(p.attribute()=="date");
+        p= nxpath::from_string("/data/run/test.nxs://.@date");
+        BOOST_CHECK_EQUAL(p.size(),2);
+        BOOST_CHECK(is_absolute(p));
+        BOOST_CHECK_EQUAL(p.filename() , "/data/run/test.nxs");
+        BOOST_CHECK_EQUAL(p.attribute(),"date");
+        
+        p= nxpath::from_string("test.nxs://:NXentry/:NXinstrument/pilatus:NXdetector@date");
+        BOOST_CHECK_EQUAL(p.size(),4);
+        BOOST_CHECK(is_absolute(p));
+        BOOST_CHECK_EQUAL(p.filename() , "test.nxs");
+        BOOST_CHECK_EQUAL(p.attribute() , "date");
+    }
 
-    p = nxpath::from_string("/.@date");
-    p = nxpath::from_string("/.");
-    CPPUNIT_ASSERT(p.size() == 2);
-    CPPUNIT_ASSERT(is_absolute(p));
-    CPPUNIT_ASSERT(p.front().first=="/");
-    CPPUNIT_ASSERT(p.front().second=="NXroot");
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_rel_no_attribute)
+    {
+        //get an attribute
+        nxpath p = nxpath::from_string("scan_1/:NXinstrument/value");
+        BOOST_CHECK(!is_absolute(p));
+        BOOST_CHECK_EQUAL(p.size(),3);
+       
+        //get an attribute from the root group
+        p = nxpath::from_string(".");
+        BOOST_CHECK(!is_absolute(p));
+        BOOST_CHECK_EQUAL(p.size(),1);
 
-}
+        //get an attribute from the current group
+        p = nxpath::from_string("..");
+        BOOST_CHECK(!is_absolute(p));
+        BOOST_CHECK_EQUAL(p.size(),1);
 
-//----------------------------------------------------------------------------
-void nxpath_create_test::test_abs_with_file()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        //get an attribute from the parent group
+        p = nxpath::from_string("./:NXdetector");
+        BOOST_CHECK(!is_absolute(p));
+        BOOST_CHECK_EQUAL(p.size(),2);
+    }
 
-    nxpath p = nxpath::from_string("test.nxs://");
-    CPPUNIT_ASSERT(p.size()==1);
-    CPPUNIT_ASSERT(is_absolute(p));
-    CPPUNIT_ASSERT(p.filename() == "test.nxs");
-
-    p = nxpath::from_string("/data/run/test.nxs://");
-    CPPUNIT_ASSERT(p.size()==1);
-    CPPUNIT_ASSERT(is_absolute(p));
-    CPPUNIT_ASSERT(p.filename() == "/data/run/test.nxs");
-    
-    p= nxpath::from_string("test.nxs://:NXentry/:NXinstrument/pilatus:NXdetector");
-    CPPUNIT_ASSERT(p.size()==4);
-    CPPUNIT_ASSERT(is_absolute(p));
-    CPPUNIT_ASSERT(p.filename() == "test.nxs");
-}
-
-//----------------------------------------------------------------------------
-void nxpath_create_test::test_abs_with_file_with_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    nxpath p = nxpath::from_string("test.nxs://@date");
-    CPPUNIT_ASSERT(p.size()==1);
-    CPPUNIT_ASSERT(is_absolute(p));
-    CPPUNIT_ASSERT(p.filename() == "test.nxs");
-    CPPUNIT_ASSERT(p.attribute() == "date");
-
-    p= nxpath::from_string("/data/run/test.nxs://.@date");
-    CPPUNIT_ASSERT(p.size()==2);
-    CPPUNIT_ASSERT(is_absolute(p));
-    CPPUNIT_ASSERT(p.filename() == "/data/run/test.nxs");
-    CPPUNIT_ASSERT(p.attribute()=="date");
-    
-    p= nxpath::from_string("test.nxs://:NXentry/:NXinstrument/pilatus:NXdetector@date");
-    CPPUNIT_ASSERT(p.size()==4);
-    CPPUNIT_ASSERT(is_absolute(p));
-    CPPUNIT_ASSERT(p.filename() == "test.nxs");
-    CPPUNIT_ASSERT(p.attribute() == "date");
-
-}
-
-//----------------------------------------------------------------------------
-void nxpath_create_test::test_rel_no_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    //get an attribute
-    nxpath p = nxpath::from_string("scan_1/:NXinstrument/value");
-    CPPUNIT_ASSERT(!is_absolute(p));
-    CPPUNIT_ASSERT(p.size()==3);
-   
-    //get an attribute from the root group
-    p = nxpath::from_string(".");
-    CPPUNIT_ASSERT(!is_absolute(p));
-    CPPUNIT_ASSERT(p.size()==1);
-
-    //get an attribute from the current group
-    p = nxpath::from_string("..");
-    CPPUNIT_ASSERT(!is_absolute(p));
-    CPPUNIT_ASSERT(p.size()==1);
-
-    //get an attribute from the parent group
-    p = nxpath::from_string("./:NXdetector");
-    CPPUNIT_ASSERT(!is_absolute(p));
-    CPPUNIT_ASSERT(p.size()==2);
-}
-
-//----------------------------------------------------------------------------
-void nxpath_create_test::test_rel_with_attribute()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-}
+BOOST_AUTO_TEST_SUITE_END()

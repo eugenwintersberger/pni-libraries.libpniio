@@ -21,59 +21,63 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "test_element_equality.hpp"
-#include "../EqualityCheck.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
+#include <pni/io/nx/nxpath.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(test_element_equality);
+using namespace pni::core;
+using namespace pni::io::nx;
 
-
-//----------------------------------------------------------------------------
-void test_element_equality::setUp() { }
-
-//----------------------------------------------------------------------------
-void test_element_equality::tearDown() {}
-
-//----------------------------------------------------------------------------
-void test_element_equality::test_equality()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    CPPUNIT_ASSERT(element_type("entry","NXentry") == 
-                   element_type("entry","NXentry"));
-
-    CPPUNIT_ASSERT(element_type("","NXentry") == 
-                   element_type("","NXentry"));
+namespace std{
     
-    CPPUNIT_ASSERT(element_type("entry","") == 
-                   element_type("entry",""));
-    
+    ostream &operator<<(ostream &stream,const nxpath::element_type &e)
+    {
+        stream<<e.first<<":"<<e.second;
+        return stream;
+    }
 }
 
-//----------------------------------------------------------------------------
-void test_element_equality::test_inequality()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+BOOST_AUTO_TEST_SUITE(test_element_equality)
     
-    CPPUNIT_ASSERT(element_type("entry","NXentry") !=
-                   element_type("scan_1","NXentry"));
-    CPPUNIT_ASSERT(element_type("entry","NXinstrument") !=
-                   element_type("entry","NXentry"));
-                   
-    CPPUNIT_ASSERT(element_type("","NXentry")!=
-                   element_type("entry","NXentry"));
-    CPPUNIT_ASSERT(element_type("entry","NXentry")!=
-                   element_type("entry",""));
+    typedef nxpath::element_type element_type;
 
-    CPPUNIT_ASSERT(element_type("entry","NXentry") != 
-                   element_type("","NXentry"));
-    CPPUNIT_ASSERT(element_type("","NXentry") != 
-                   element_type("entry","NXentry"));
-                   
-    CPPUNIT_ASSERT(element_type("","NXentry") != 
-                   element_type("","NXinstrument"));
-    CPPUNIT_ASSERT(element_type("entry","") !=
-                   element_type("scan1",""));
-   
-}
+    BOOST_AUTO_TEST_CASE(test_equality)
+    {
+        BOOST_CHECK_EQUAL(element_type("entry","NXentry") , 
+                       element_type("entry","NXentry"));
 
+        BOOST_CHECK_EQUAL(element_type("","NXentry") , 
+                       element_type("","NXentry"));
+        
+        BOOST_CHECK_EQUAL(element_type("entry","") , 
+                       element_type("entry",""));
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_inequality)
+    {
+        BOOST_CHECK_NE(element_type("entry","NXentry") ,
+                       element_type("scan_1","NXentry"));
+        BOOST_CHECK_NE(element_type("entry","NXinstrument") ,
+                       element_type("entry","NXentry"));
+                       
+        BOOST_CHECK_NE(element_type("","NXentry"),
+                       element_type("entry","NXentry"));
+        BOOST_CHECK_NE(element_type("entry","NXentry"),
+                       element_type("entry",""));
+
+        BOOST_CHECK_NE(element_type("entry","NXentry") , 
+                       element_type("","NXentry"));
+        BOOST_CHECK_NE(element_type("","NXentry") , 
+                       element_type("entry","NXentry"));
+                       
+        BOOST_CHECK_NE(element_type("","NXentry") , 
+                       element_type("","NXinstrument"));
+        BOOST_CHECK_NE(element_type("entry","") ,
+                       element_type("scan1",""));
+       
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
 

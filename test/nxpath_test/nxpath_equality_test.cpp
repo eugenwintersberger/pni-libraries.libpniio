@@ -21,52 +21,48 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "nxpath_equality_test.hpp"
-#include "../EqualityCheck.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
+#include <pni/io/nx/nxpath.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxpath_equality_test);
+using namespace pni::core;
+using namespace pni::io::nx;
 
+BOOST_AUTO_TEST_SUITE(nxpath_equality_test)
 
-//----------------------------------------------------------------------------
-void nxpath_equality_test::setUp() { }
-
-//----------------------------------------------------------------------------
-void nxpath_equality_test::tearDown() {}
-
-//----------------------------------------------------------------------------
-void nxpath_equality_test::test_equality()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT(nxpath::from_string("test.nxs://") == 
-                   nxpath::from_string("test.nxs://"));
-                   
-    CPPUNIT_ASSERT(nxpath::from_string("/:NXentry")==
-                   nxpath::from_string("/:NXentry"));
-                   
-    CPPUNIT_ASSERT(nxpath::from_string("/:NXentry@NX_class") == 
-                   nxpath::from_string("/:NXentry@NX_class"));
-                   
-    CPPUNIT_ASSERT(nxpath::from_string(":NXinstrument/:NXdetector/data")==
-                   nxpath::from_string(":NXinstrument/:NXdetector/data"));
-        
-    CPPUNIT_ASSERT(nxpath::from_string(":NXdetector/data@units")==
-                   nxpath::from_string(":NXdetector/data@units"));
-}
-
-//----------------------------------------------------------------------------
-void nxpath_equality_test::test_inequality()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-     CPPUNIT_ASSERT(nxpath::from_string("test.nxs://") != 
-                   nxpath::from_string("test2.nxs://"));
-                   
-    CPPUNIT_ASSERT(nxpath::from_string("/:NXentry")!=
-                   nxpath::from_string(":NXentry"));
+    BOOST_AUTO_TEST_CASE(test_equality)
+    {
+        BOOST_CHECK_EQUAL(nxpath::from_string("test.nxs://") , 
+                       nxpath::from_string("test.nxs://"));
                        
-                   
-    CPPUNIT_ASSERT(nxpath::from_string(":NXinstrument/:NXdetector/data")!=
-                   nxpath::from_string(":NXinstrument/:NXdetector/data@units"));
-        
-}
+        BOOST_CHECK_EQUAL(nxpath::from_string("/:NXentry"),
+                       nxpath::from_string("/:NXentry"));
+                       
+        BOOST_CHECK_EQUAL(nxpath::from_string("/:NXentry@NX_class") , 
+                       nxpath::from_string("/:NXentry@NX_class"));
+                       
+        BOOST_CHECK_EQUAL(nxpath::from_string(":NXinstrument/:NXdetector/data"),
+                       nxpath::from_string(":NXinstrument/:NXdetector/data"));
+            
+        BOOST_CHECK_EQUAL(nxpath::from_string(":NXdetector/data@units"),
+                       nxpath::from_string(":NXdetector/data@units"));
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_inequality)
+    {
+
+        BOOST_CHECK_NE(nxpath::from_string("test.nxs://") , 
+                       nxpath::from_string("test2.nxs://"));
+                       
+        BOOST_CHECK_NE(nxpath::from_string("/:NXentry"),
+                       nxpath::from_string(":NXentry"));
+                           
+                       
+        BOOST_CHECK_NE(nxpath::from_string(":NXinstrument/:NXdetector/data"),
+                       nxpath::from_string(":NXinstrument/:NXdetector/data@units"));
+            
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
