@@ -21,28 +21,25 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
+#include <pni/core/types.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/io/format.hpp>
-#include "bool_vector_formatter_test.hpp"
+
+using namespace pni::core;
 using namespace pni::io;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(bool_vector_formatter_test);
+BOOST_AUTO_TEST_SUITE(bool_vector_formatter_test)
 
-//-----------------------------------------------------------------------------
-void bool_vector_formatter_test::setUp() 
-{ 
-    input = input_type{true,false,false,true};
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_format)
+    {
+        typedef bool_t                     element_type;
+        typedef std::vector<element_type>  input_type; 
+        input_type     input ={true,false,false,true} ;
+      
+        BOOST_CHECK_EQUAL(format(input),"true false false true");
+    }
 
-//-----------------------------------------------------------------------------
-void bool_vector_formatter_test::tearDown() {}
-
-//-----------------------------------------------------------------------------
-void bool_vector_formatter_test::test_format()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-  
-    CPPUNIT_ASSERT(format(input)=="true false false true");
-}
+BOOST_AUTO_TEST_SUITE_END()
 
 

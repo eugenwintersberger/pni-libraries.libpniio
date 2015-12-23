@@ -21,50 +21,55 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
+#include <pni/io/formatters/formatter.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/io/container_io_config.hpp>
-#include "mdarray_formatter_test.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(mdarray_formatter_test);
+using namespace pni::core;
+using namespace pni::io;
 
-//-----------------------------------------------------------------------------
-void mdarray_formatter_test::setUp() 
-{ 
-    input = input_type::create(shape_t{4},
-                               input_type::storage_type{1,2,3,4});    
-}
-
-//-----------------------------------------------------------------------------
-void mdarray_formatter_test::tearDown() {}
-
-//-----------------------------------------------------------------------------
-void mdarray_formatter_test::test_default()
+struct mdarray_formatter_test_fixture
 {
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-        
-    CPPUNIT_ASSERT(format(input)=="1 2 3 4");
-}
+    typedef dynamic_array<int16>  input_type; 
+    typedef formatter<input_type>      formatter_type;        
+    formatter_type format;
+    input_type     input;
 
-//-----------------------------------------------------------------------------
-void mdarray_formatter_test::test_costum_sep()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    formatter_type f(container_io_config(';'));    
-    CPPUNIT_ASSERT(f(input)=="1;2;3;4");
-}
+    mdarray_formatter_test_fixture():
+        input(input_type::create(shape_t{4},
+                                 input_type::storage_type{1,2,3,4}))
+    {}
+};
 
-//-----------------------------------------------------------------------------
-void mdarray_formatter_test::test_costum_start_stop()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    formatter_type f(container_io_config('(',')'));  
-    CPPUNIT_ASSERT(f(input)=="(1 2 3 4)");
-}
 
-//-----------------------------------------------------------------------------
-void mdarray_formatter_test::test_full_costum()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    formatter_type f(container_io_config('[',']',';'));
-    CPPUNIT_ASSERT(f(input)=="[1;2;3;4]");
-}
+BOOST_FIXTURE_TEST_SUITE(mdarray_formatter_test,mdarray_formatter_test_fixture)
+
+    BOOST_AUTO_TEST_CASE(test_default)
+    {
+        BOOST_CHECK_EQUAL(format(input),"1 2 3 4");
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_costum_sep)
+    {
+        formatter_type f(container_io_config(';'));    
+        BOOST_CHECK_EQUAL(f(input),"1;2;3;4");
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_costum_start_stop)
+    {
+        formatter_type f(container_io_config('(',')'));  
+        BOOST_CHECK_EQUAL(f(input),"(1 2 3 4)");
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_full_costum)
+    {
+        formatter_type f(container_io_config('[',']',';'));
+        BOOST_CHECK_EQUAL(f(input),"[1;2;3;4]");
+    }
+
+BOOST_AUTO_TEST_SUITE_END()

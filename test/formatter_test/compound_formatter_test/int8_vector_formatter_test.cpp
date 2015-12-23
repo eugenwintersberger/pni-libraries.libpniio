@@ -21,54 +21,55 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
 #include <pni/io/container_io_config.hpp>
 #include <pni/io/format.hpp>
-#include "int8_vector_formatter_test.hpp"
+
+using namespace pni::core;
+using namespace pni::io;
 
 
-CPPUNIT_TEST_SUITE_REGISTRATION(int8_vector_formatter_test);
+struct int8_vector_formatter_fixture
+{   
+    typedef int8                       element_type;
+    typedef std::vector<element_type>  input_type; 
 
-//-----------------------------------------------------------------------------
-void int8_vector_formatter_test::setUp() 
-{ 
-    input = input_type{1,2,3,4};
-}
+    input_type     input;
 
-//-----------------------------------------------------------------------------
-void int8_vector_formatter_test::tearDown() {}
+    int8_vector_formatter_fixture():
+        input(input_type{1,2,3,4})
+    {}
+};
 
-//-----------------------------------------------------------------------------
-void int8_vector_formatter_test::test_default()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-      
-    CPPUNIT_ASSERT(format(input)=="1 2 3 4");
-}
+BOOST_FIXTURE_TEST_SUITE(int8_vector_formatter_test,int8_vector_formatter_fixture)
 
-//-----------------------------------------------------------------------------
-void int8_vector_formatter_test::test_costum_sep()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-  
-    container_io_config config(';');    
-    CPPUNIT_ASSERT(format(input,config)=="1;2;3;4");
-}
 
-//-----------------------------------------------------------------------------
-void int8_vector_formatter_test::test_costum_start_stop()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-  
-    container_io_config config('(',')');  
-    CPPUNIT_ASSERT(format(input,config)=="(1 2 3 4)");
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_default)
+    {
+        BOOST_CHECK_EQUAL(format(input),"1 2 3 4");
+    }
 
-//-----------------------------------------------------------------------------
-void int8_vector_formatter_test::test_full_costum()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    container_io_config config('[',']',';');
-    CPPUNIT_ASSERT(format(input,config)=="[1;2;3;4]");
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_costum_sep)
+    {
+        container_io_config config(';');    
+        BOOST_CHECK_EQUAL(format(input,config),"1;2;3;4");
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_costum_start_stop)
+    {
+        container_io_config config('(',')');  
+        BOOST_CHECK_EQUAL(format(input,config),"(1 2 3 4)");
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_full_costum)
+    {
+        container_io_config config('[',']',';');
+        BOOST_CHECK_EQUAL(format(input,config),"[1;2;3;4]");
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
