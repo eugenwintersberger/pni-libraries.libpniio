@@ -21,53 +21,44 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "test_object_element.hpp"
-#include "../EqualityCheck.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nxpath.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(test_object_element);
+using namespace pni::core;
+using namespace pni::io::nx;
 
 
-//----------------------------------------------------------------------------
-void test_object_element::setUp() { }
+BOOST_AUTO_TEST_SUITE(test_object_element)
 
-//----------------------------------------------------------------------------
-void test_object_element::tearDown() {}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_full)
+    {
+        nxpath::element_type e = object_element("detector","NXdetector");
+        BOOST_CHECK_EQUAL(e.first,"detector");
+        BOOST_CHECK_EQUAL(e.second,"NXdetector");
+    }
 
-//----------------------------------------------------------------------------
-void test_object_element::test_full()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    nxpath::element_type e = object_element("detector","NXdetector");
-    CPPUNIT_ASSERT(e.first == "detector");
-    CPPUNIT_ASSERT(e.second == "NXdetector");
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_name_only)
+    {
+        nxpath::element_type e = object_element("detector","");
+        BOOST_CHECK_EQUAL(e.first,"detector");
+        BOOST_CHECK(e.second.empty());
+    }
 
-//----------------------------------------------------------------------------
-void test_object_element::test_name_only()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_type_only)
+    {
+        nxpath::element_type e = object_element("","NXdetector");
+        BOOST_CHECK(e.first.empty());
+        BOOST_CHECK_EQUAL(e.second,"NXdetector");
+    }
 
-    nxpath::element_type e = object_element("detector","");
-    CPPUNIT_ASSERT(e.first=="detector");
-    CPPUNIT_ASSERT(e.second.empty());
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_error)
+    {
+        BOOST_CHECK_THROW(object_element("",""),value_error);
+    }
 
-//----------------------------------------------------------------------------
-void test_object_element::test_type_only()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    nxpath::element_type e = object_element("","NXdetector");
-    CPPUNIT_ASSERT(e.first.empty());
-    CPPUNIT_ASSERT(e.second == "NXdetector");
-}
-
-//----------------------------------------------------------------------------
-void test_object_element::test_error()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT_THROW(object_element("",""),value_error);
-
-}
+BOOST_AUTO_TEST_SUITE_END()

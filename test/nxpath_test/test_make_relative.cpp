@@ -21,54 +21,42 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/core/types.hpp>
 #include <pni/io/nx/nxpath/nxpath.hpp>
 #include <pni/io/nx/nxpath/make_relative.hpp>
-#include "test_make_relative.hpp"
-#include "../EqualityCheck.hpp"
-
-CPPUNIT_TEST_SUITE_REGISTRATION(test_make_relative);
 
 using namespace pni::core;
 using namespace pni::io::nx;
 
-//----------------------------------------------------------------------------
-void test_make_relative::setUp() { }
+BOOST_AUTO_TEST_SUITE(test_make_relative)
 
-//----------------------------------------------------------------------------
-void test_make_relative::tearDown() {}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_1)
+    {
+        string p1 = "/:NXentry";
+        string p2 = "/:NXentry/instrument:NXinstrument";
 
-//----------------------------------------------------------------------------
-void test_make_relative::test_1()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    string p1 = "/:NXentry";
-    string p2 = "/:NXentry/instrument:NXinstrument";
+        string p2r = nxpath::to_string(make_relative(p1,p2));
+        BOOST_CHECK_EQUAL(p2r,"instrument:NXinstrument");
+    }   
 
-    string p2r = nxpath::to_string(make_relative(p1,p2));
-    std::cout<<p2r<<std::endl;
-    CPPUNIT_ASSERT(p2r=="instrument:NXinstrument");
-}   
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_2)
+    {
+        string parent = "/:NXentry";
+        string orig = "/";
 
-//----------------------------------------------------------------------------
-void test_make_relative::test_2()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    string parent = "/:NXentry";
-    string orig = "/";
+        BOOST_CHECK_THROW(make_relative(parent,orig),value_error);
+    }
 
-    CPPUNIT_ASSERT_THROW(make_relative(parent,orig),value_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_3)
+    {
+        string parent = "/:NXentry";
+        string orig   = "/:NXentry";
 
-//----------------------------------------------------------------------------
-void test_make_relative::test_3()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    string parent = "/:NXentry";
-    string orig   = "/:NXentry";
+        BOOST_CHECK_EQUAL(nxpath::to_string(make_relative(parent,orig)),".");
+    }
 
-    CPPUNIT_ASSERT(nxpath::to_string(make_relative(parent,orig))==".");
-}
+BOOST_AUTO_TEST_SUITE_END()

@@ -21,47 +21,47 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "test_split_path.hpp"
-#include "../EqualityCheck.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nxpath.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(test_split_path);
+using namespace pni::core;
+using namespace pni::io::nx;
 
-
-//----------------------------------------------------------------------------
-void test_split_path::setUp() 
-{ 
-    p = nxpath::from_string("test.nxs://:NXentry/:NXinstrument/detector@NX_class");
-}
-
-//----------------------------------------------------------------------------
-void test_split_path::tearDown() {}
-
-//----------------------------------------------------------------------------
-void test_split_path::test_standard()
+struct test_split_path_fixture
 {
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-  
-    CPPUNIT_ASSERT_NO_THROW(split_path(p,3,p1,p2)); 
-    CPPUNIT_ASSERT(nxpath::to_string(p1)=="test.nxs://:NXentry/:NXinstrument");
-    CPPUNIT_ASSERT(nxpath::to_string(p2)=="detector@NX_class");
-}
+    nxpath p,p1,p2;
 
-//----------------------------------------------------------------------------
-void test_split_path::test_at_root()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-  
-    CPPUNIT_ASSERT_NO_THROW(split_path(p,0,p1,p2)); 
-    std::cout<<nxpath::to_string(p1)<<std::endl;
-    std::cout<<nxpath::to_string(p2)<<std::endl;
-    CPPUNIT_ASSERT(nxpath::to_string(p1)=="test.nxs");
-    CPPUNIT_ASSERT(nxpath::to_string(p2)=="/:NXentry/:NXinstrument/detector@NX_class");
-}
+    test_split_path_fixture():
+        p(nxpath::from_string("test.nxs://:NXentry/:NXinstrument/detector@NX_class")),
+        p1(),
+        p2()
+    {}
+};
 
-//----------------------------------------------------------------------------
-void test_split_path::test_index_error()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-  
-    CPPUNIT_ASSERT_THROW(split_path(p,10,p1,p2),index_error); 
-}
+
+BOOST_FIXTURE_TEST_SUITE(test_split_path,test_split_path_fixture)
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_standard)
+    {
+        BOOST_CHECK_NO_THROW(split_path(p,3,p1,p2)); 
+        BOOST_CHECK_EQUAL(nxpath::to_string(p1),"test.nxs://:NXentry/:NXinstrument");
+        BOOST_CHECK_EQUAL(nxpath::to_string(p2),"detector@NX_class");
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_at_root)
+    {
+        BOOST_CHECK_NO_THROW(split_path(p,0,p1,p2)); 
+        BOOST_CHECK_EQUAL(nxpath::to_string(p1),"test.nxs");
+        BOOST_CHECK_EQUAL(nxpath::to_string(p2),"/:NXentry/:NXinstrument/detector@NX_class");
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_index_error)
+    {
+        BOOST_CHECK_THROW(split_path(p,10,p1,p2),index_error); 
+    }
+
+BOOST_AUTO_TEST_SUITE_END()

@@ -21,36 +21,31 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "test_has_file_section.hpp"
-#include "../EqualityCheck.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nxpath.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(test_has_file_section);
+using namespace pni::core;
+using namespace pni::io::nx;
 
+BOOST_AUTO_TEST_SUITE(test_has_file_section)
 
-//----------------------------------------------------------------------------
-void test_has_file_section::setUp() { }
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_yes)
+    {
+        BOOST_CHECK(has_file_section(nxpath::from_string("test.nxs://")));
+        BOOST_CHECK(has_file_section(nxpath::from_string("test.nxs://:NXentry/")));
+    }
 
-//----------------------------------------------------------------------------
-void test_has_file_section::tearDown() {}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_no)
+    {
+        BOOST_CHECK(!has_file_section(nxpath::from_string("../")));
+        BOOST_CHECK(!has_file_section(nxpath::from_string("./")));
+        BOOST_CHECK(!has_file_section(nxpath::from_string(":NXinstrument")));
+        BOOST_CHECK(!has_file_section(nxpath::from_string("instrument")));
+        BOOST_CHECK(!has_file_section(nxpath::from_string("instrument:NXinstrument")));
+    }
 
-//----------------------------------------------------------------------------
-void test_has_file_section::test_yes()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    CPPUNIT_ASSERT(has_file_section(nxpath::from_string("test.nxs://")));
-    CPPUNIT_ASSERT(has_file_section(nxpath::from_string("test.nxs://:NXentry/")));
-}
-
-//----------------------------------------------------------------------------
-void test_has_file_section::test_no()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    CPPUNIT_ASSERT(!has_file_section(nxpath::from_string("../")));
-    CPPUNIT_ASSERT(!has_file_section(nxpath::from_string("./")));
-    CPPUNIT_ASSERT(!has_file_section(nxpath::from_string(":NXinstrument")));
-    CPPUNIT_ASSERT(!has_file_section(nxpath::from_string("instrument")));
-    CPPUNIT_ASSERT(!has_file_section(nxpath::from_string("instrument:NXinstrument")));
-}
+BOOST_AUTO_TEST_SUITE_END()
 

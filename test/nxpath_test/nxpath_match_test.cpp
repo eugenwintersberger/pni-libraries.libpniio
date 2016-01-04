@@ -21,37 +21,32 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "nxpath_match_test.hpp"
-#include "../EqualityCheck.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nxpath.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxpath_match_test);
+using namespace pni::core;
+using namespace pni::io::nx;
 
+BOOST_AUTO_TEST_SUITE(nxpath_match_test)
 
-//----------------------------------------------------------------------------
-void nxpath_match_test::setUp() { }
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_1)
+    {
+        nxpath p1 = nxpath::from_string(":NXentry/:NXinstrument/:NXdetector");
+        nxpath p2 = nxpath::from_string("entry:NXentry/instrument:NXinstrument/detector:NXdetector");
+        BOOST_CHECK(match(p1,p2));
 
-//----------------------------------------------------------------------------
-void nxpath_match_test::tearDown() {}
+        p2 = nxpath::from_string("scan_1:NXentry/instrument/detector:NXdetector");
+        BOOST_CHECK(!match(p1,p2));
+    }
 
-//----------------------------------------------------------------------------
-void nxpath_match_test::test_1()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-  
-    p1 = nxpath::from_string(":NXentry/:NXinstrument/:NXdetector");
-    p2 = nxpath::from_string("entry:NXentry/instrument:NXinstrument/detector:NXdetector");
-    CPPUNIT_ASSERT(match(p1,p2));
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_2)
+    {
+        nxpath p1 = nxpath::from_string("entry/:NXinstrument/detector_1");
+        nxpath p2 = nxpath::from_string("entry/beamline:NXinstrument/detector_1");
+        BOOST_CHECK(match(p1,p2));
+    }
 
-    p2 = nxpath::from_string("scan_1:NXentry/instrument/detector:NXdetector");
-    CPPUNIT_ASSERT(!match(p1,p2));
-}
-
-//----------------------------------------------------------------------------
-void nxpath_match_test::test_2()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    p1 = nxpath::from_string("entry/:NXinstrument/detector_1");
-    p2 = nxpath::from_string("entry/beamline:NXinstrument/detector_1");
-    CPPUNIT_ASSERT(match(p1,p2));
-}
+BOOST_AUTO_TEST_SUITE_END()

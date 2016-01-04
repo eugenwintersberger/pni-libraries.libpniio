@@ -21,100 +21,85 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "test_join.hpp"
-#include "../EqualityCheck.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nxpath.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(test_join);
+using namespace pni::core;
+using namespace pni::io::nx;
 
 
-//----------------------------------------------------------------------------
-void test_join::setUp() { }
+BOOST_AUTO_TEST_SUITE(test_join)
 
-//----------------------------------------------------------------------------
-void test_join::tearDown() {}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_both_empty)
+    {
+        BOOST_CHECK(is_empty(join(nxpath(),nxpath())));
+    }
 
-//----------------------------------------------------------------------------
-void test_join::test_both_empty()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_a_empty)
+    {
+        string b_str = "/entry:NXentry/:NXinstrument";
+        nxpath j;
 
-    CPPUNIT_ASSERT(is_empty(join(nxpath(),nxpath())));
-}
+        BOOST_CHECK_NO_THROW(j = join(nxpath(),nxpath::from_string(b_str)));
+        BOOST_CHECK_EQUAL(nxpath::to_string(j),b_str);
+    }
 
-//----------------------------------------------------------------------------
-void test_join::test_a_empty()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    string b_str = "/entry:NXentry/:NXinstrument";
-    nxpath j;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_b_empty)
+    {
+        string a_str = "filename.nxs://scan_1/:NXinstrument";
+        nxpath j;
+        BOOST_CHECK_NO_THROW(j = join(nxpath::from_string(a_str),nxpath()));
+        BOOST_CHECK_EQUAL(nxpath::to_string(j),a_str);
+    }
 
-    CPPUNIT_ASSERT_NO_THROW(j = join(nxpath(),nxpath::from_string(b_str)));
-    CPPUNIT_ASSERT(nxpath::to_string(j)==b_str);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_a_attribute)
+    {
+        nxpath b = nxpath::from_string(":NXinstrument/:NXdetector");
+        nxpath a = nxpath::from_string("data@units");
+        BOOST_CHECK_THROW(join(a,b),value_error);
+    }
 
-//----------------------------------------------------------------------------
-void test_join::test_b_empty()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    string a_str = "filename.nxs://scan_1/:NXinstrument";
-    nxpath j;
-    CPPUNIT_ASSERT_NO_THROW(j = join(nxpath::from_string(a_str),nxpath()));
-    CPPUNIT_ASSERT(nxpath::to_string(j)==a_str);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_b_absolute)
+    {
+        nxpath a = nxpath::from_string("filename.nxs://:NXentry");
+        nxpath b = nxpath::from_string("/entry/instrument");
+        BOOST_CHECK_THROW(join(a,b),value_error);
+    }
 
-//----------------------------------------------------------------------------
-void test_join::test_a_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_b_filename)
+    {
+        nxpath a = nxpath::from_string("filename.nxs://:NXentry");
+        nxpath b = nxpath::from_string("filename.nxs://entry/instrument");
+        BOOST_CHECK_THROW(join(a,b),value_error);
+    }
 
-    nxpath b = nxpath::from_string(":NXinstrument/:NXdetector");
-    nxpath a = nxpath::from_string("data@units");
-    CPPUNIT_ASSERT_THROW(join(a,b),value_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_join_simple)
+    {
+        nxpath a = nxpath::from_string("filename.nxs://:NXentry");
+        nxpath b = nxpath::from_string("instrument/:NXdetector");
+        nxpath j;
+        string expect = "filename.nxs://:NXentry/instrument/:NXdetector";
+        BOOST_CHECK_NO_THROW(j = join(a,b));
+        BOOST_CHECK_EQUAL(nxpath::to_string(j),expect);
+    }
 
-//----------------------------------------------------------------------------
-void test_join::test_b_absolute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_join_with_attribute)
+    {
+        nxpath a = nxpath::from_string("filename.nxs://:NXentry");
+        nxpath b = nxpath::from_string("instrument/:NXdetector/data@units");
+        nxpath j;
+        string expect = "filename.nxs://:NXentry/instrument/:NXdetector/data@units";
+        BOOST_CHECK_NO_THROW(j = join(a,b));
+        BOOST_CHECK_EQUAL(nxpath::to_string(j),expect);
+    }
 
-    nxpath a = nxpath::from_string("filename.nxs://:NXentry");
-    nxpath b = nxpath::from_string("/entry/instrument");
-    CPPUNIT_ASSERT_THROW(join(a,b),value_error);
-}
-
-//----------------------------------------------------------------------------
-void test_join::test_b_filename()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    nxpath a = nxpath::from_string("filename.nxs://:NXentry");
-    nxpath b = nxpath::from_string("filename.nxs://entry/instrument");
-    CPPUNIT_ASSERT_THROW(join(a,b),value_error);
-}
-
-//----------------------------------------------------------------------------
-void test_join::test_join_simple()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    nxpath a = nxpath::from_string("filename.nxs://:NXentry");
-    nxpath b = nxpath::from_string("instrument/:NXdetector");
-    nxpath j;
-    string expect = "filename.nxs://:NXentry/instrument/:NXdetector";
-    CPPUNIT_ASSERT_NO_THROW(j = join(a,b));
-    CPPUNIT_ASSERT(nxpath::to_string(j)==expect);
-
-}
-
-//----------------------------------------------------------------------------
-void test_join::test_join_with_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    nxpath a = nxpath::from_string("filename.nxs://:NXentry");
-    nxpath b = nxpath::from_string("instrument/:NXdetector/data@units");
-    nxpath j;
-    string expect = "filename.nxs://:NXentry/instrument/:NXdetector/data@units";
-    CPPUNIT_ASSERT_NO_THROW(j = join(a,b));
-    CPPUNIT_ASSERT(nxpath::to_string(j)==expect);
-
-}
+BOOST_AUTO_TEST_SUITE_END()

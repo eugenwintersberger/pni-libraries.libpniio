@@ -21,37 +21,32 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "test_is_absolute.hpp"
-#include "../EqualityCheck.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nxpath.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(test_is_absolute);
+using namespace pni::core;
+using namespace pni::io::nx;
 
+BOOST_AUTO_TEST_SUITE(test_is_absolute)
 
-//----------------------------------------------------------------------------
-void test_is_absolute::setUp() { }
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_yes)
+    {
+        BOOST_CHECK(is_absolute(nxpath::from_string("test.nxs://")));
+        BOOST_CHECK(is_absolute(nxpath::from_string("/:NXentry/")));
+        BOOST_CHECK(is_absolute(nxpath::from_string("/")));
+    }
 
-//----------------------------------------------------------------------------
-void test_is_absolute::tearDown() {}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_no)
+    {
+        BOOST_CHECK(!is_absolute(nxpath::from_string("../")));
+        BOOST_CHECK(!is_absolute(nxpath::from_string("./")));
+        BOOST_CHECK(!is_absolute(nxpath::from_string(":NXinstrument")));
+        BOOST_CHECK(!is_absolute(nxpath::from_string("instrument")));
+        BOOST_CHECK(!is_absolute(nxpath::from_string("instrument:NXinstrument")));
+    }
 
-//----------------------------------------------------------------------------
-void test_is_absolute::test_yes()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    CPPUNIT_ASSERT(is_absolute(nxpath::from_string("test.nxs://")));
-    CPPUNIT_ASSERT(is_absolute(nxpath::from_string("/:NXentry/")));
-    CPPUNIT_ASSERT(is_absolute(nxpath::from_string("/")));
-}
-
-//----------------------------------------------------------------------------
-void test_is_absolute::test_no()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    CPPUNIT_ASSERT(!is_absolute(nxpath::from_string("../")));
-    CPPUNIT_ASSERT(!is_absolute(nxpath::from_string("./")));
-    CPPUNIT_ASSERT(!is_absolute(nxpath::from_string(":NXinstrument")));
-    CPPUNIT_ASSERT(!is_absolute(nxpath::from_string("instrument")));
-    CPPUNIT_ASSERT(!is_absolute(nxpath::from_string("instrument:NXinstrument")));
-}
+BOOST_AUTO_TEST_SUITE_END()
 

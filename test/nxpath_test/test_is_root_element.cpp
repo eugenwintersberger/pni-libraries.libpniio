@@ -21,56 +21,46 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "test_is_root_element.hpp"
-#include "../EqualityCheck.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nxpath.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(test_is_root_element);
+using namespace pni::core;
+using namespace pni::io::nx;
 
 
-//----------------------------------------------------------------------------
-void test_is_root_element::setUp() { }
+BOOST_AUTO_TEST_SUITE(test_is_root_element)
 
-//----------------------------------------------------------------------------
-void test_is_root_element::tearDown() {}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_full)
+    {
+        BOOST_CHECK(is_root_element(object_element("/","NXroot")));
+    }
 
-//----------------------------------------------------------------------------
-void test_is_root_element::test_full()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    CPPUNIT_ASSERT(is_root_element(object_element("/","NXroot")));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_only_name)
+    {
+        BOOST_CHECK(!is_root_element(object_element("/","")));
+    }
 
-//----------------------------------------------------------------------------
-void test_is_root_element::test_only_name()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_only_type)
+    {
+        BOOST_CHECK(!is_root_element(object_element("","NXroot")));
+    }
 
-    CPPUNIT_ASSERT(!is_root_element(object_element("/","")));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_not_root)
+    {
+        BOOST_CHECK(!is_root_element(object_element("detector","NXdetector")));
 
-//----------------------------------------------------------------------------
-void test_is_root_element::test_only_type()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    }
 
-    CPPUNIT_ASSERT(!is_root_element(object_element("","NXroot")));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_error)
+    {
+        BOOST_CHECK_THROW(is_root_element(nxpath::element_type{"",""}),
+                          value_error);
+    }
 
-//----------------------------------------------------------------------------
-void test_is_root_element::test_not_root()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT(!is_root_element(object_element("detector","NXdetector")));
-
-}
-
-//----------------------------------------------------------------------------
-void test_is_root_element::test_error()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    CPPUNIT_ASSERT_THROW(is_root_element(nxpath::element_type{"",""}),
-                         value_error);
-}
+BOOST_AUTO_TEST_SUITE_END()

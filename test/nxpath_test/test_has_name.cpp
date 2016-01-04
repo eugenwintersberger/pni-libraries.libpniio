@@ -21,30 +21,26 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "test_has_name.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nxpath.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(test_has_name);
+using namespace pni::core;
+using namespace pni::io::nx;
 
+BOOST_AUTO_TEST_SUITE(test_has_name)
 
-//----------------------------------------------------------------------------
-void test_has_name::setUp() { }
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_yes)
+    {
+        BOOST_CHECK(has_name(object_element("detector","")));
+    }
 
-//----------------------------------------------------------------------------
-void test_has_name::tearDown() {}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_no)
+    {
+        BOOST_CHECK(!has_name(object_element("","NXroot")));
+    }
 
-//----------------------------------------------------------------------------
-void test_has_name::test_yes()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    CPPUNIT_ASSERT(has_name(object_element("detector","")));
-}
-
-//----------------------------------------------------------------------------
-void test_has_name::test_no()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    CPPUNIT_ASSERT(!has_name(object_element("","NXroot")));
-}
+BOOST_AUTO_TEST_SUITE_END()
 

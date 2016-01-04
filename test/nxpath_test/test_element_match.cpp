@@ -21,62 +21,56 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "test_element_match.hpp"
-#include "../EqualityCheck.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nxpath.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(test_element_match);
-
-
-//----------------------------------------------------------------------------
-void test_element_match::setUp() { }
-
-//----------------------------------------------------------------------------
-void test_element_match::tearDown() {}
-
-//----------------------------------------------------------------------------
-void test_element_match::test_rule_1()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    CPPUNIT_ASSERT(match(element_type("entry","NXentry"),
-                   element_type("entry","NXentry")));
-
-    CPPUNIT_ASSERT(!match(element_type("scan_1","NXentry"),
-                   element_type("entry","NXentry")));
+using namespace pni::core;
+using namespace pni::io::nx;
     
-    CPPUNIT_ASSERT(!match(element_type("entry","NXentry"),
-                   element_type("entry","NXinstrument")));
-    
-}
+typedef nxpath::element_type element_type;
 
-//----------------------------------------------------------------------------
-void test_element_match::test_rule_2()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+BOOST_AUTO_TEST_SUITE(test_element_match)
 
-    CPPUNIT_ASSERT(match(element_type("entry","NXentry"),
-                   element_type("","NXentry")));
-    CPPUNIT_ASSERT(match(element_type("","NXentry"),
-                   element_type("entry","NXentry")));
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_rule_1)
+    {
+        BOOST_CHECK(match(element_type("entry","NXentry"),
+                          element_type("entry","NXentry")));
 
-    CPPUNIT_ASSERT(!match(element_type("","NXinstrument"),
-                   element_type("control","NXmonitor")));
-    CPPUNIT_ASSERT(!match(element_type("detector","NXdetector"),
-                   element_type("","NXmonitor")));
-}
+        BOOST_CHECK(!match(element_type("scan_1","NXentry"),
+                           element_type("entry","NXentry")));
+        
+        BOOST_CHECK(!match(element_type("entry","NXentry"),
+                           element_type("entry","NXinstrument")));
+    }
 
-//----------------------------------------------------------------------------
-void test_element_match::test_rule_3()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_rule_2)
+    {
+        BOOST_CHECK(match(element_type("entry","NXentry"),
+                          element_type("","NXentry")));
+        BOOST_CHECK(match(element_type("","NXentry"),
+                          element_type("entry","NXentry")));
 
-    CPPUNIT_ASSERT(match(element_type("entry",""),
-                         element_type("entry","")));
-    CPPUNIT_ASSERT(match(element_type("","NXentry"),
-                         element_type("","NXentry")));
+        BOOST_CHECK(!match(element_type("","NXinstrument"),
+                           element_type("control","NXmonitor")));
+        BOOST_CHECK(!match(element_type("detector","NXdetector"),
+                           element_type("","NXmonitor")));
+    }
 
-    CPPUNIT_ASSERT(!match(element_type("entry",""),
-                          element_type("scan","")));
-    CPPUNIT_ASSERT(!match(element_type("","NXentry"),
-                          element_type("","NXinstrument")));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_rule_3)
+    {
+        BOOST_CHECK(match(element_type("entry",""),
+                          element_type("entry","")));
+        BOOST_CHECK(match(element_type("","NXentry"),
+                          element_type("","NXentry")));
+
+        BOOST_CHECK(!match(element_type("entry",""),
+                           element_type("scan","")));
+        BOOST_CHECK(!match(element_type("","NXentry"),
+                           element_type("","NXinstrument")));
+    }
+
+BOOST_AUTO_TEST_SUITE_END()

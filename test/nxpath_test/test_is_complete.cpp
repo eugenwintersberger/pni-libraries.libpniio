@@ -21,40 +21,33 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "test_is_complete.hpp"
-#include "../EqualityCheck.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nxpath.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(test_is_complete);
+using namespace pni::core;
+using namespace pni::io::nx;
 
+BOOST_AUTO_TEST_SUITE(test_is_complete)
 
-//----------------------------------------------------------------------------
-void test_is_complete::setUp() { }
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_yes)
+    {
+        BOOST_CHECK(is_complete(object_element("/","NXroot")));
+    }
 
-//----------------------------------------------------------------------------
-void test_is_complete::tearDown() {}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_no)
+    {
+        BOOST_CHECK(!is_complete(object_element("/","")));
+        BOOST_CHECK(!is_complete(object_element("","NXroot")));
+    }
 
-//----------------------------------------------------------------------------
-void test_is_complete::test_yes()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    CPPUNIT_ASSERT(is_complete(object_element("/","NXroot")));
-}
+    //------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_error)
+    {
+        BOOST_CHECK_THROW(is_complete(nxpath::element_type{"",""}),
+                          value_error);
+    }
 
-//----------------------------------------------------------------------------
-void test_is_complete::test_no()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    CPPUNIT_ASSERT(!is_complete(object_element("/","")));
-    CPPUNIT_ASSERT(!is_complete(object_element("","NXroot")));
-}
-
-//----------------------------------------------------------------------------
-void test_is_complete::test_error()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    CPPUNIT_ASSERT_THROW(is_complete(nxpath::element_type{"",""}),
-                         value_error);
-}
+BOOST_AUTO_TEST_SUITE_END()
