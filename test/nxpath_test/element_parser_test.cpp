@@ -21,108 +21,130 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <boost/test/unit_test.hpp>
 #include <boost/exception/diagnostic_information.hpp>
 #include <boost/spirit/home/qi/parse.hpp>
-#include "element_parser_test.hpp"
-#include "../EqualityCheck.hpp"
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nxpath/parser.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(element_parser_test);
-
+using namespace pni::core;
+using namespace pni::io::nx;
+using namespace pni::io::nx::parsers;
 using namespace boost::spirit;
 
-//-----------------------------------------------------------------------------
-void element_parser_test::setUp() { }
+typedef string::const_iterator iterator_type;
+typedef element_parser<iterator_type> element_parser_type;
+typedef boost::spirit::qi::expectation_failure<iterator_type> 
+        expectation_error_type;
 
-//-----------------------------------------------------------------------------
-void element_parser_test::tearDown() {}
-
-
-//----------------------------------------------------------------------------
-void element_parser_test::test_current()
+struct element_parser_test_fixture
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    set_input(".");
+    element_parser_type parser;
 
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
-    
-    CPPUNIT_ASSERT(output.first == ".");
-    CPPUNIT_ASSERT(output.second.empty());
-}
+    iterator_type start_iter,stop_iter;
+    string input;
+    nxpath::element_type output;
 
-//----------------------------------------------------------------------------
-void element_parser_test::test_parent()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    set_input("..");
+    element_parser_test_fixture():
+        parser(),
+        start_iter(),
+        stop_iter(),
+        input(),
+        output()
+    {}
+};
 
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
-    
-    CPPUNIT_ASSERT(output.first == "..");
-    CPPUNIT_ASSERT(output.second.empty());
-}
+BOOST_FIXTURE_TEST_SUITE(element_parser_test,element_parser_test_fixture)
 
-//----------------------------------------------------------------------------
-void element_parser_test::test_full()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    set_input("name:class");
 
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
-    
-    CPPUNIT_ASSERT(output.first == "name");
-    CPPUNIT_ASSERT(output.second == "class");
-}
+    void set_input(const string &value,iterator_type &start_iter,
+                                       iterator_type &stop_iter)
+    {
+        start_iter = value.begin();
+        stop_iter  = value.end();
+    }
 
-//----------------------------------------------------------------------------
-void element_parser_test::test_name()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    set_input("name");
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_current)
+    {
+        input = ".";
+        set_input(input,start_iter,stop_iter);
 
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
-    
-    CPPUNIT_ASSERT(output.first == "name");
-    CPPUNIT_ASSERT(output.second.empty());
-}
+        BOOST_CHECK(qi::parse(start_iter,stop_iter,parser,output));
+        BOOST_CHECK_EQUAL(output.first,".");
+        BOOST_CHECK(output.second.empty());
+    }
 
-//----------------------------------------------------------------------------
-void element_parser_test::test_class()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    set_input(":class");
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_parent)
+    {
+        input = "..";
+        set_input(input,start_iter,stop_iter);
 
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
-    
-    CPPUNIT_ASSERT(output.first.empty());
-    CPPUNIT_ASSERT(output.second == "class");
-}
+        BOOST_CHECK(qi::parse(start_iter,stop_iter,parser,output));
+        
+        BOOST_CHECK_EQUAL(output.first,"..");
+        BOOST_CHECK(output.second.empty());
+    }
 
-//----------------------------------------------------------------------------
-void element_parser_test::test_errors()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    //not allowede
-    set_input("/");
-    CPPUNIT_ASSERT(!qi::parse(start_iter,stop_iter,parser,output));
-    
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_full)
+    {
+        input =  "name:class";
+        set_input(input,start_iter,stop_iter);
 
-    set_input(":.class");
-    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
-                         expectation_error_type);
-   
-    
-    set_input(":");
-    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
-                         expectation_error_type);
+        BOOST_CHECK(qi::parse(start_iter,stop_iter,parser,output));
+        
+        BOOST_CHECK_EQUAL(output.first,"name");
+        BOOST_CHECK_EQUAL(output.second,"class");
+    }
 
-    set_input(": bla");
-    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
-                         expectation_error_type);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_name)
+    {
+        input =  "name";
+        set_input(input,start_iter,stop_iter);
 
-}
+        BOOST_CHECK(qi::parse(start_iter,stop_iter,parser,output));
+        
+        BOOST_CHECK_EQUAL(output.first,"name");
+        BOOST_CHECK(output.second.empty());
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_class)
+    {
+        input =  ":class";
+        set_input(input,start_iter,stop_iter);
+
+        BOOST_CHECK(qi::parse(start_iter,stop_iter,parser,output));
+        
+        BOOST_CHECK(output.first.empty());
+        BOOST_CHECK_EQUAL(output.second,"class");
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_errors)
+    {
+        //not allowede
+        input = "/";
+        set_input(input,start_iter,stop_iter);
+        BOOST_CHECK(!qi::parse(start_iter,stop_iter,parser,output));
+        
+        input = ":.class";
+        set_input(input,start_iter,stop_iter);
+        BOOST_CHECK_THROW(qi::parse(start_iter,stop_iter,parser,output),
+                          expectation_error_type);
+       
+        input =  ":";
+        set_input(input,start_iter,stop_iter);
+        BOOST_CHECK_THROW(qi::parse(start_iter,stop_iter,parser,output),
+                          expectation_error_type);
+
+        input = ": bla";
+        set_input(input,start_iter,stop_iter);
+        BOOST_CHECK_THROW(qi::parse(start_iter,stop_iter,parser,output),
+                             expectation_error_type);
+    }
+
+BOOST_AUTO_TEST_SUITE_END()

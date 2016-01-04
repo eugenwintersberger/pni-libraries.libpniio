@@ -21,89 +21,114 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/exception/diagnostic_information.hpp>
+#include <boost/test/unit_test.hpp>
 #include <boost/spirit/home/qi/parse.hpp>
-#include "nxpath_parser_test.hpp"
-#include "../EqualityCheck.hpp"
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
+#include <pni/io/nx/nxpath/parser.hpp>
 #include <pni/io/nx/nxpath/utils.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxpath_parser_test);
-
 using namespace boost::spirit;
-
-//-----------------------------------------------------------------------------
-void nxpath_parser_test::setUp() 
-{ 
-    output = nxpath();
-}
-
-//-----------------------------------------------------------------------------
-void nxpath_parser_test::tearDown() {}
-
-
-//-----------------------------------------------------------------------------
-void nxpath_parser_test::test_element_path_only()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-
-    set_input("/entry/:NXinstrument/detector:NXdetector");
-
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
-    CPPUNIT_ASSERT(output.filename().empty());
-    CPPUNIT_ASSERT(output.attribute().empty());
-    CPPUNIT_ASSERT(is_absolute(output));
-    CPPUNIT_ASSERT(output.size()==4);
-
-    set_input("entry/:NXinstrument/detector:NXdetector");
+using namespace pni::core;
+using namespace pni::io::nx;
+using namespace pni::io::nx::parsers;
     
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
-    CPPUNIT_ASSERT(output.filename().empty());
-    CPPUNIT_ASSERT(output.attribute().empty());
-    CPPUNIT_ASSERT(!is_absolute(output));
-    CPPUNIT_ASSERT(output.size()==3);
-}
+typedef string::const_iterator iterator_type;
+typedef nxpath_parser<iterator_type> nxpath_parser_type;
+typedef boost::spirit::qi::expectation_failure<iterator_type> 
+        expectation_error_type;
 
-//----------------------------------------------------------------------------
-void nxpath_parser_test::test_attribute()
+struct nxpath_parser_test_fixture
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    nxpath_parser_type parser;
 
-    set_input("/:NXentry@datx");
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
-    CPPUNIT_ASSERT(output.front().first == "/");
-    CPPUNIT_ASSERT(output.front().second == "NXroot");
-    CPPUNIT_ASSERT(output.attribute() == "datx");
-    CPPUNIT_ASSERT(output.size() == 2);
+    iterator_type start_iter,stop_iter;
+    string input;
+    nxpath output;
+
+    nxpath_parser_test_fixture():
+        start_iter(),
+        stop_iter(),
+        input(),
+        output()
+    {}
+};
+
+BOOST_FIXTURE_TEST_SUITE(nxpath_parser_test,nxpath_parser_test_fixture)
+
+    void set_input(const string &value,iterator_type &start_iter,
+                                       iterator_type &stop_iter)
+    {
+        start_iter = value.begin();
+        stop_iter  = value.end();
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_element_path_only)
+    {
+        input = "/entry/:NXinstrument/detector:NXdetector";
+        set_input(input,start_iter,stop_iter);
+
+        BOOST_CHECK(qi::parse(start_iter,stop_iter,parser,output));
+        BOOST_CHECK(output.filename().empty());
+        BOOST_CHECK(output.attribute().empty());
+        BOOST_CHECK(is_absolute(output));
+        BOOST_CHECK_EQUAL(output.size(),4);
+
+        input = "entry/:NXinstrument/detector:NXdetector";
+        set_input(input,start_iter,stop_iter);
+        
+        BOOST_CHECK(qi::parse(start_iter,stop_iter,parser,output));
+        BOOST_CHECK(output.filename().empty());
+        BOOST_CHECK(output.attribute().empty());
+        BOOST_CHECK(!is_absolute(output));
+        BOOST_CHECK_EQUAL(output.size(),3);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        input = "/:NXentry@datx";
+        set_input(input,start_iter,stop_iter);
+        BOOST_CHECK(qi::parse(start_iter,stop_iter,parser,output));
+        BOOST_CHECK_EQUAL(output.front().first,"/");
+        BOOST_CHECK_EQUAL(output.front().second ,"NXroot");
+        BOOST_CHECK_EQUAL(output.attribute(),"datx");
+        BOOST_CHECK_EQUAL(output.size(),2);
 
 
-    output = nxpath();
-    set_input("/@name");
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
-    CPPUNIT_ASSERT(output.filename().empty());
-    CPPUNIT_ASSERT(output.size()==1);
-    CPPUNIT_ASSERT(output.attribute() == "name");
+        output = nxpath();
+        input = "/@name";
+        set_input(input,start_iter,stop_iter);
+        BOOST_CHECK(qi::parse(start_iter,stop_iter,parser,output));
+        BOOST_CHECK(output.filename().empty());
+        BOOST_CHECK_EQUAL(output.size(),1);
+        BOOST_CHECK_EQUAL(output.attribute(),"name");
 
-}
+    }
 
-//-----------------------------------------------------------------------------
-void nxpath_parser_test::test_errors()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    set_input("/:NXentry:/:NXinstrument");
-    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_errors)
+    {
+        input = "/:NXentry:/:NXinstrument";
+        set_input(input,start_iter,stop_iter);
+        BOOST_CHECK_THROW(qi::parse(start_iter,stop_iter,parser,output),
+                         expectation_error_type);
+                             
+        input = ".../:NXinstrument";
+        set_input(input,start_iter,stop_iter);
+        BOOST_CHECK_THROW(qi::parse(start_iter,stop_iter,parser,output),
                           expectation_error_type);
-                          
-    set_input(".../:NXinstrument");
-    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
-                         expectation_error_type);
-                         
-    set_input("/:NXinstrument/$hello");
-    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
-                         expectation_error_type);
-                         
-    set_input("/:NXinstrument/ llo/instrument");
-    CPPUNIT_ASSERT_THROW(qi::parse(start_iter,stop_iter,parser,output),
-                         expectation_error_type);
-}
+                            
+        input = "/:NXinstrument/$hello";
+        set_input(input,start_iter,stop_iter);
+        BOOST_CHECK_THROW(qi::parse(start_iter,stop_iter,parser,output),
+                          expectation_error_type);
+                            
+        input = "/:NXinstrument/ llo/instrument";
+        set_input(input,start_iter,stop_iter);
+        BOOST_CHECK_THROW(qi::parse(start_iter,stop_iter,parser,output),
+                          expectation_error_type);
+    }
+
+BOOST_AUTO_TEST_SUITE_END()

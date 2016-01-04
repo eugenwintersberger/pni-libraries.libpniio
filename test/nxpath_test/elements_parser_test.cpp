@@ -21,98 +21,124 @@
 //      Author: Eugen Wintersberger
 //
 
+#include <boost/test/unit_test.hpp>
 #include <boost/exception/diagnostic_information.hpp>
 #include <boost/spirit/home/qi/parse.hpp>
-#include "elements_parser_test.hpp"
-#include "../EqualityCheck.hpp"
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nxpath/parser.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(elements_parser_test);
-
+using namespace pni::core;
+using namespace pni::io::nx;
+using namespace pni::io::nx::parsers;
 using namespace boost::spirit;
 
-//-----------------------------------------------------------------------------
-void elements_parser_test::setUp() 
-{ 
-    output.clear(); //need to clear the list before each run
-}
+typedef string::const_iterator iterator_type;
+typedef elements_parser<iterator_type> elements_parser_type;
+typedef boost::spirit::qi::expectation_failure<iterator_type> 
+        expectation_error_type;
 
-//-----------------------------------------------------------------------------
-void elements_parser_test::tearDown() {}
-
-
-
-//----------------------------------------------------------------------------
-void elements_parser_test::test_relative()
+struct elements_parser_test_fixture
 {
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    elements_parser_type parser;
+    iterator_type start_iter,stop_iter;
+    string input;
+    nxpath::elements_type output;
+    nxpath::element_type element;
 
-    set_input(":NXentry/:NXinstrument/lambda:NXdetector/data");
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
-  
-    CPPUNIT_ASSERT(output.size() == 4);
-     
-    element = output.front(); output.pop_front();
-    CPPUNIT_ASSERT((element.first.empty()) && (element.second=="NXentry"));
-    
-    element = output.front(); output.pop_front();
-    CPPUNIT_ASSERT(element.first.empty());
-    CPPUNIT_ASSERT(element.second=="NXinstrument");
-    
-    element = output.front(); output.pop_front();
-    CPPUNIT_ASSERT((element.first == "lambda") && 
-                   (element.second=="NXdetector"));
+    elements_parser_test_fixture():
+        parser(),
+        start_iter(),
+        stop_iter(),
+        input(),
+        output(),
+        element()
+    {}
 
-    element = output.front(); output.pop_front();
-    CPPUNIT_ASSERT((element.first == "data") && 
-                   (element.second.empty()));
-
-    //here we should have consumed all the components from the path
-    CPPUNIT_ASSERT(output.size() == 0);
-}
-
-//----------------------------------------------------------------------------
-void elements_parser_test::test_relative_current()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    set_input("./././lambda:NXdetector/data");
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
-
-    CPPUNIT_ASSERT(output.size() == 5);
-
-    for(size_t i=0;i<3;++i)
+    ~elements_parser_test_fixture()
     {
-        element = output.front(); output.pop_front();
-        CPPUNIT_ASSERT((element.first == ".") && (element.second.empty()));
+        output.clear();
+    }
+};
+
+BOOST_FIXTURE_TEST_SUITE(elements_parser_test,elements_parser_test_fixture)
+
+    void set_input(const string &value,iterator_type &start_iter,
+                                       iterator_type &stop_iter)
+    {
+        start_iter = value.begin();
+        stop_iter  = value.end();
     }
 
-    element = output.front();
-    CPPUNIT_ASSERT((element.first == "lambda") && 
-                   (element.second == "NXdetector"));
-
-}
-
-//----------------------------------------------------------------------------
-void elements_parser_test::test_relative_parent()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    set_input("../../../data:NXdata/");
-    CPPUNIT_ASSERT(qi::parse(start_iter,stop_iter,parser,output));
-
-    CPPUNIT_ASSERT(output.size() == 4);
-
-    for(size_t i=0;i<3;++i)
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_relative)
     {
+        input = ":NXentry/:NXinstrument/lambda:NXdetector/data";
+        set_input(input,start_iter,stop_iter);
+        BOOST_CHECK(qi::parse(start_iter,stop_iter,parser,output));
+      
+        BOOST_CHECK_EQUAL(output.size(),4);
+         
         element = output.front(); output.pop_front();
-        CPPUNIT_ASSERT((element.first == "..") && (element.second.empty()));
+        BOOST_CHECK(element.first.empty());
+        BOOST_CHECK_EQUAL(element.second,"NXentry");
+        
+        element = output.front(); output.pop_front();
+        BOOST_CHECK(element.first.empty());
+        BOOST_CHECK_EQUAL(element.second,"NXinstrument");
+        
+        element = output.front(); output.pop_front();
+        BOOST_CHECK_EQUAL(element.first, "lambda");
+        BOOST_CHECK_EQUAL(element.second,"NXdetector");
+
+        element = output.front(); output.pop_front();
+        BOOST_CHECK_EQUAL(element.first,"data");
+        BOOST_CHECK(element.second.empty());
+
+        //here we should have consumed all the components from the path
+        BOOST_CHECK_EQUAL(output.size(),0);
     }
 
-    element = output.front();
-    CPPUNIT_ASSERT((element.first == "data") && 
-                   (element.second == "NXdata"));
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_relative_current)
+    {
+        input = "./././lambda:NXdetector/data";
+        set_input(input,start_iter,stop_iter);
+        BOOST_CHECK(qi::parse(start_iter,stop_iter,parser,output));
 
+        BOOST_CHECK_EQUAL(output.size(),5);
 
-}
+        for(size_t i=0;i<3;++i)
+        {
+            element = output.front(); output.pop_front();
+            BOOST_CHECK_EQUAL(element.first, ".");
+            BOOST_CHECK(element.second.empty());
+        }
 
+        element = output.front();
+        BOOST_CHECK_EQUAL(element.first,"lambda");
+        BOOST_CHECK_EQUAL(element.second,"NXdetector");
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_relative_parent)
+    {
+        input = "../../../data:NXdata/";
+        set_input(input,start_iter,stop_iter);
+        BOOST_CHECK(qi::parse(start_iter,stop_iter,parser,output));
+
+        BOOST_CHECK_EQUAL(output.size(),4);
+
+        for(size_t i=0;i<3;++i)
+        {
+            element = output.front(); output.pop_front();
+            BOOST_CHECK_EQUAL(element.first,"..");
+            BOOST_CHECK(element.second.empty());
+        }
+
+        element = output.front();
+        BOOST_CHECK_EQUAL(element.first,"data");
+        BOOST_CHECK_EQUAL(element.second,"NXdata");
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
 
