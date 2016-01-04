@@ -21,26 +21,20 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 ///
 
-#include <boost/current_function.hpp>
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/io/cbf/cbf_reader.hpp>
-#include "cbf_reader_test.hpp"
 
+using namespace pni::core;
+using namespace pni::io;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(cbf_reader_test);
+BOOST_AUTO_TEST_SUITE(cbf_reader_test)
 
-//-----------------------------------------------------------------------------
-void cbf_reader_test::setUp() { }
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_read_header)
+    {
+        BOOST_CHECK_THROW(cbf_reader("ii8.tiff"),file_error);
 
-//-----------------------------------------------------------------------------
-void cbf_reader_test::tearDown() { }
+    }
 
-//-----------------------------------------------------------------------------
-void cbf_reader_test::test_read_header()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    CPPUNIT_ASSERT_THROW(cbf_reader("reader_test.cpp"),file_error);
-
-}
+BOOST_AUTO_TEST_SUITE_END()
 
