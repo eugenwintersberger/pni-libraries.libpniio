@@ -22,13 +22,23 @@ target_link_libraries(nxfile_tests pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_test("Nexus_Layer_1:nxfile" nxfile_tests)
 add_dependencies(check nxfile_tests)
 
-#
-#set(NXGROUPSRC nxgroup_tests.cpp
-#               nxgroup_creation_test.cpp
-#               nxgroup_access_test.cpp
-#               nxgroup_misc_test.cpp
-#              )
-#
+
+#------------------------------------------------------------------------------
+# test nxgroup related operations
+#------------------------------------------------------------------------------
+set(NXGROUPSRC  nxgroup_creation_test.cpp
+                nxgroup_access_test.cpp
+                nxgroup_misc_test.cpp
+              )
+
+set_source_files_properties(nxgroup_creation_test.cpp PROPERTIES 
+                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; \
+                            BOOST_TEST_MODULE=testing nxgroup operations")
+add_executable(nxgroup_tests EXCLUDE_FROM_ALL ${NXGROUPSRC})
+target_link_libraries(nxgroup_tests pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+add_test("Nexus_Layer_1:nxgroup" nxgroup_tests)
+add_dependencies(check nxgroup_tests)
+
 #set(NXFIELDSRC nxfield_tests.cpp
 #               nxfield_creation_test.cpp
 #               nxfield_io_test.cpp
@@ -52,19 +62,16 @@ add_dependencies(check nxfile_tests)
 #   )
 #
 #add_executable(nexus_lowlevel_test EXCLUDE_FROM_ALL ${SOURCES} $<TARGET_OBJECTS:test_common>)
-#add_executable(nxgroup_tests EXCLUDE_FROM_ALL ${NXGROUPSRC} $<TARGET_OBJECTS:test_common>)
 #add_executable(nxfield_tests EXCLUDE_FROM_ALL ${NXFIELDSRC} $<TARGET_OBJECTS:test_common>)
 #add_executable(nxattribute_tests EXCLUDE_FROM_ALL ${NXATTRSRC} $<TARGET_OBJECTS:test_common>)
 #add_executable(nxlink_tests EXCLUDE_FROM_ALL ${NXLINKSRC} $<TARGET_OBJECTS:test_common>)
 #
 #target_link_libraries(nexus_lowlevel_test pniio ${CPPUNIT_LIBRARIES})
-#target_link_libraries(nxgroup_tests pniio ${CPPUNIT_LIBRARIES})
 #target_link_libraries(nxfield_tests pniio ${CPPUNIT_LIBRARIES})
 #target_link_libraries(nxattribute_tests pniio ${CPPUNIT_LIBRARIES})
 #target_link_libraries(nxlink_tests pniio ${CPPUNIT_LIBRARIES})
 #
 #add_test("Nexus_Layer_1:low-level-test" nexus_lowlevel_test)
-#add_test("Nexus_Layer_1:nxgroup" nxgroup_tests)
 #add_test("Nexus_Layer_1:nxfield" nxfield_tests)
 #add_test("Nexus_Layer_1:nxattribute" nxattribute_tests)
 #add_test("Nexus_Layer_1:nxlink" nxlink_tests)

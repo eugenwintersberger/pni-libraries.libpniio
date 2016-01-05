@@ -23,89 +23,86 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/nxobject_type.hpp>
 #include <pni/io/nx/algorithms.hpp>
 #include <pni/io/exceptions.hpp>
 
-#include "nxgroup_creation_test.hpp"
-
+using namespace pni::core;
+using namespace pni::io::nx;
 using pni::io::invalid_object_error;
 using pni::io::object_error;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxgroup_creation_test);
-
-//------------------------------------------------------------------------------
-void nxgroup_creation_test::setUp()
+struct nxgroup_creation_test_fixture
 {
-	_fname = "nxgroup_creation_test.nxs";
-    _f = h5::nxfile::create_file(_fname,true);
-    _root = _f.root();
-}
+	string fname;
+    h5::nxfile f;
+    h5::nxgroup root;
+    
+    nxgroup_creation_test_fixture():
+        fname("nxgroup_creation_test.nxs"),
+        f(h5::nxfile::create_file(fname,true)),
+        root(f.root())
+    {}
 
-//------------------------------------------------------------------------------
-void nxgroup_creation_test::tearDown()
-{
-    _root.close();
-	_f.close();
-}
+    ~nxgroup_creation_test_fixture()
+    {
+        root.close();
+        f.close();
+    }
+};
+BOOST_FIXTURE_TEST_SUITE(nxgroup_creation_test,nxgroup_creation_test_fixture)
 
-//------------------------------------------------------------------------------
-void nxgroup_creation_test::test_simple()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    h5::nxgroup g;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_simple)
+    {
+        h5::nxgroup g;
 
-    CPPUNIT_ASSERT_NO_THROW( g = _root.create_group("test"));
-    CPPUNIT_ASSERT(g.is_valid());
-    CPPUNIT_ASSERT(g.name() == "test");
+        BOOST_CHECK_NO_THROW( g = root.create_group("test"));
+        BOOST_CHECK(g.is_valid());
+        BOOST_CHECK_EQUAL(g.name(),"test");
 
-    //throw an exception if the group already exists
-    CPPUNIT_ASSERT_THROW(_root.create_group("test"),object_error);
+        //throw an exception if the group already exists
+        BOOST_CHECK_THROW(root.create_group("test"),object_error);
+        BOOST_CHECK_THROW(root.create_group("test2/data"),object_error);
 
-    CPPUNIT_ASSERT_THROW(_root.create_group("test2/data"),object_error);
+    }
 
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_with_class)
+    {
+        h5::nxgroup g;
+        BOOST_CHECK_NO_THROW(g = root.create_group("test","NXentry"));
+        BOOST_CHECK(g.is_valid());
+        BOOST_CHECK_EQUAL(g.name(),"test");
+        BOOST_CHECK_EQUAL(get_class(g),"NXentry");
+       
+        BOOST_CHECK_THROW(root.create_group("test","NXinstrument"),object_error);
+        BOOST_CHECK_THROW(root.create_group("test2/data","NXdata"),object_error);
+    }
 
-//------------------------------------------------------------------------------
-void nxgroup_creation_test::test_with_class()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_copy_construction)
+    {
+        h5::nxgroup g;
+        g = root.create_group("test");
+        h5::nxgroup g2 = g;
+        BOOST_CHECK(g.is_valid());
+        BOOST_CHECK(g2.is_valid());
 
-    h5::nxgroup g;
-    CPPUNIT_ASSERT_NO_THROW( g = _root.create_group("test","NXentry"));
-    CPPUNIT_ASSERT(g.is_valid());
-    CPPUNIT_ASSERT(g.name()=="test");
-    CPPUNIT_ASSERT(get_class(g)=="NXentry");
-   
-    CPPUNIT_ASSERT_THROW(_root.create_group("test","NXinstrument"),object_error);
-    CPPUNIT_ASSERT_THROW(_root.create_group("test2/data","NXdata"),object_error);
-}
+    }
 
-//------------------------------------------------------------------------------
-void nxgroup_creation_test::test_copy_construction()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_move_construction)
+    {
+        h5::nxgroup g;
+        g = root.create_group("test");
+        h5::nxgroup g2 = std::move(g);
+        BOOST_CHECK(!g.is_valid());
+        BOOST_CHECK(g2.is_valid());
+    }
 
-    h5::nxgroup g;
-    g = _root.create_group("test");
-    h5::nxgroup g2 = g;
-    CPPUNIT_ASSERT(g.is_valid());
-    CPPUNIT_ASSERT(g2.is_valid());
-
-}
-
-//------------------------------------------------------------------------------
-void nxgroup_creation_test::test_move_construction()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    h5::nxgroup g;
-    g = _root.create_group("test");
-    h5::nxgroup g2 = std::move(g);
-    CPPUNIT_ASSERT(!g.is_valid());
-    CPPUNIT_ASSERT(g2.is_valid());
-}
+BOOST_AUTO_TEST_SUITE_END()
 
 

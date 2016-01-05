@@ -23,73 +23,73 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
-#include "nxgroup_misc_test.hpp"
-
-#include<cppunit/extensions/HelperMacros.h>
-
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/nxobject_type.hpp>
 #include <pni/io/nx/algorithms.hpp>
 #include <pni/io/exceptions.hpp>
 
+using namespace pni::core;
+using namespace pni::io::nx;
+
 using pni::io::invalid_object_error;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxgroup_misc_test);
-
-//------------------------------------------------------------------------------
-void nxgroup_misc_test::setUp()
+struct nxgroup_misc_test_fixture
 {
-	_fname = "nxgroup_misc_test.nxs";
-    _f = h5::nxfile::create_file(_fname,true);
-    _root = _f.root();
-    _child = _root.create_group("entry","NXentry");
-    _child2 = _child.create_group("instrument","NXinstrument");
-}
+	string fname;
+    h5::nxfile f;
+    h5::nxgroup root;
+    h5::nxgroup child;
+    h5::nxgroup child2;
 
-//------------------------------------------------------------------------------
-void nxgroup_misc_test::tearDown()
-{
-    _child.close();
-    _child2.close();
-    _root.close();
-	_f.close();
-}
+    nxgroup_misc_test_fixture():
+	    fname("nxgroupmisctest.nxs"),
+        f(h5::nxfile::create_file(fname,true)),
+        root(f.root()),
+        child(root.create_group("entry","NXentry")),
+        child2(child.create_group("instrument","NXinstrument"))
+    {}
 
-//------------------------------------------------------------------------------
-void nxgroup_misc_test::test_size()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    ~nxgroup_misc_test_fixture()
+    {
+        child.close();
+        child2.close();
+        root.close();
+        f.close();
+    }
+};
 
-    CPPUNIT_ASSERT(_root.size()==1);
-    CPPUNIT_ASSERT(_child.size()==1);
-    CPPUNIT_ASSERT(_child2.size()==0);
-}
+BOOST_FIXTURE_TEST_SUITE(nxgroup_misc_test,nxgroup_misc_test_fixture)
 
-//------------------------------------------------------------------------------
-void nxgroup_misc_test::test_name()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_size)
+    {
+        BOOST_CHECK_EQUAL(root.size(),1);
+        BOOST_CHECK_EQUAL(child.size(),1);
+        BOOST_CHECK_EQUAL(child2.size(),0);
+    }
 
-    CPPUNIT_ASSERT(_root.name()=="/");
-    CPPUNIT_ASSERT(_child.name()=="entry");
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_name)
+    {
+        BOOST_CHECK_EQUAL(root.name(),"/");
+        BOOST_CHECK_EQUAL(child.name(),"entry");
+    }
 
-//------------------------------------------------------------------------------
-void nxgroup_misc_test::test_filename()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_filename)
+    {
+        BOOST_CHECK_EQUAL(root.filename(),fname);
+        BOOST_CHECK_EQUAL(child.filename(),fname);
+    }
 
-    CPPUNIT_ASSERT(_root.filename() == _filename);
-    CPPUNIT_ASSERT(_child.filename() == _filename);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_parent)
+    {
+        BOOST_CHECK_EQUAL(h5::nxgroup(root.parent()).name(),"/");
+        BOOST_CHECK_EQUAL(h5::nxgroup(child.parent()).name(),"/");
+        BOOST_CHECK_EQUAL(h5::nxgroup(child2.parent()).name(),"entry");
+    }
 
-//------------------------------------------------------------------------------
-void nxgroup_misc_test::test_parent()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    CPPUNIT_ASSERT(h5::nxgroup(_root.parent()).name()=="/");
-    CPPUNIT_ASSERT(h5::nxgroup(_child.parent()).name()=="/");
-    CPPUNIT_ASSERT(h5::nxgroup(_child2.parent()).name()=="entry");
-}
+BOOST_AUTO_TEST_SUITE_END()

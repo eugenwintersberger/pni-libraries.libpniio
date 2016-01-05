@@ -23,81 +23,76 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
-#include "nxgroup_access_test.hpp"
-
-#include<cppunit/extensions/HelperMacros.h>
-
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/nxobject_type.hpp>
 #include <pni/io/nx/algorithms.hpp>
 #include <pni/io/exceptions.hpp>
 
+using namespace pni::core;
+using namespace pni::io::nx;
 using pni::io::invalid_object_error;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxgroup_access_test);
-
-//------------------------------------------------------------------------------
-void nxgroup_access_test::setUp()
+struct nxgroup_access_test_fixture
 {
-	_fname = "nxgroup_access_test.nxs";
-    _f = h5::nxfile::create_file(_fname,true);
-    _root = _f.root();
-    _child = _root.create_group("entry","NXentry");
-}
-
-//------------------------------------------------------------------------------
-void nxgroup_access_test::tearDown()
-{
-    _child.close();
-    _root.close();
-	_f.close();
-}
-
-//------------------------------------------------------------------------------
-void nxgroup_access_test::test_operator_index()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    CPPUNIT_ASSERT(_root.size()==1);
-
-    h5::nxgroup g = _root[0];
-    CPPUNIT_ASSERT(g.name()=="entry");
+	string fname;
+    h5::nxfile f;
+    h5::nxgroup root;
+    h5::nxgroup child;
     
-    CPPUNIT_ASSERT_THROW(_root[1],index_error);
-}
+    nxgroup_access_test_fixture():
+	    fname("nxgroup_access_test.nxs"),
+        f(h5::nxfile::create_file(fname,true)),
+        root(f.root()),
+        child(root.create_group("entry","NXentry"))
+    {}
 
-//------------------------------------------------------------------------------
-void nxgroup_access_test::test_operator_name()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    ~nxgroup_access_test_fixture()
+    {
+        child.close();
+        root.close();
+        f.close();
+    }
 
-    CPPUNIT_ASSERT(_root.size()==1);
+};
 
-    h5::nxgroup g = _root["entry"];
-    CPPUNIT_ASSERT(g.name()=="entry");
-    
-    CPPUNIT_ASSERT_THROW(_root["nothing"],key_error);
-}
+BOOST_FIXTURE_TEST_SUITE(nxgroup_access_test,nxgroup_access_test_fixture)
 
-//------------------------------------------------------------------------------
-void nxgroup_access_test::test_at_index()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_operator_index)
+    {
+        BOOST_CHECK_EQUAL(root.size(),1);
 
-    h5::nxgroup g = _root.at(0);
-    CPPUNIT_ASSERT(g.name()=="entry");
-    
-    CPPUNIT_ASSERT_THROW(_root.at(1),index_error);
-}
+        h5::nxgroup g = root[0];
+        BOOST_CHECK_EQUAL(g.name(),"entry");
+        BOOST_CHECK_THROW(root[1],index_error);
+    }
 
-//------------------------------------------------------------------------------
-void nxgroup_access_test::test_at_name()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_operator_name)
+    {
+        BOOST_CHECK_EQUAL(root.size(),1);
 
-    h5::nxgroup g = _root.at("entry");
-    CPPUNIT_ASSERT(g.name()=="entry");
-    
-    CPPUNIT_ASSERT_THROW(_root.at("nothing"),key_error);
-}
+        h5::nxgroup g = root["entry"];
+        BOOST_CHECK_EQUAL(g.name(),"entry");
+        BOOST_CHECK_THROW(root["nothing"],key_error);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_at_index)
+    {
+        h5::nxgroup g = root.at(0);
+        BOOST_CHECK_EQUAL(g.name(),"entry");
+        BOOST_CHECK_THROW(root.at(1),index_error);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_at_name)
+    {
+        h5::nxgroup g = root.at("entry");
+        BOOST_CHECK_EQUAL(g.name(),"entry");
+        
+        BOOST_CHECK_THROW(root.at("nothing"),key_error);
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
