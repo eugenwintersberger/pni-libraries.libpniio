@@ -19,62 +19,62 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 
-//implementation of the arrayshape test
-
-#include "nxfile_open_single_file_test.hpp"
+#include <boost/test/unit_test.hpp>
 #include <pni/io/exceptions.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
+using namespace pni::core;
+using namespace pni::io::nx;
 using pni::io::object_error;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfile_open_single_file_test);
-
-//------------------------------------------------------------------------------
-void nxfile_open_single_file_test::setUp() 
-{ 
-    h5::nxfile::create_file(filename,true);
-}
-
-//------------------------------------------------------------------------------
-void nxfile_open_single_file_test::tearDown() { }
-
-//------------------------------------------------------------------------------
-void nxfile_open_single_file_test::test_rw()
+struct nxfile_open_single_file_test_fixture
 {
-	std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    string filename;
 
-    h5::nxfile f;
-    CPPUNIT_ASSERT_NO_THROW(f = h5::nxfile::open_file(filename,false));
+    nxfile_open_single_file_test_fixture():
+        filename("nxfile_open_test.nxs")
+    {
+        h5::nxfile::create_file(filename,true); 
+    }
+};
 
-    CPPUNIT_ASSERT_NO_THROW(f.root().create_group("hello"));
+BOOST_FIXTURE_TEST_SUITE(nxfile_open_single_file_test,
+                         nxfile_open_single_file_test_fixture)
 
-    //
-    //This should throw - however, according to the HDF5 manual the library
-    //manages this situation in some cases, in particular on UNIX file systems
-    //
-    CPPUNIT_ASSERT_NO_THROW(h5::nxfile::open_file(filename));
-    CPPUNIT_ASSERT_NO_THROW(h5::nxfile::open_file(filename,false));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_rw)
+    {
+        h5::nxfile f;
+        BOOST_CHECK_NO_THROW(f = h5::nxfile::open_file(filename,false));
+        BOOST_CHECK_NO_THROW(f.root().create_group("hello"));
 
-//------------------------------------------------------------------------------
-void nxfile_open_single_file_test::test_ro()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    h5::nxfile f;
-    CPPUNIT_ASSERT_NO_THROW(f=h5::nxfile::open_file(filename));
+        //
+        //This should throw - however, according to the HDF5 manual the library
+        //manages this situation in some cases, in particular on UNIX file systems
+        //
+        BOOST_CHECK_NO_THROW(h5::nxfile::open_file(filename));
+        BOOST_CHECK_NO_THROW(h5::nxfile::open_file(filename,false));
+    }
 
-    h5::nxfile f2;
-    CPPUNIT_ASSERT_NO_THROW(f2=h5::nxfile::open_file(filename));
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_ro)
+    {
+        h5::nxfile f;
+        BOOST_CHECK_NO_THROW(f=h5::nxfile::open_file(filename));
 
-    //should throw as the files are opened in read only mode
-    CPPUNIT_ASSERT_THROW(f.root().create_group("test"),object_error);
-}
+        h5::nxfile f2;
+        BOOST_CHECK_NO_THROW(f2=h5::nxfile::open_file(filename));
 
-//----------------------------------------------------------------------------
-void nxfile_open_single_file_test::test_error()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT_THROW(h5::nxfile::open_file("test.nxs"),object_error);
-}
+        //should throw as the files are opened in read only mode
+        BOOST_CHECK_THROW(f.root().create_group("test"),object_error);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_error)
+    {
+        BOOST_CHECK_THROW(h5::nxfile::open_file("test.nxs"),object_error);
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
 
