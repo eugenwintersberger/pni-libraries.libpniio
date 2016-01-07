@@ -20,147 +20,141 @@
 //  Created on: Jan 29, 2015
 //      Author: Eugen Wintersberger
 //
-
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
+#include <pni/io/parsers.hpp>
 #include <pni/io/exceptions.hpp>
-#include "complex64_parser_test.hpp"
+#include <pni/core/types.hpp>
+#include "parser_test_fixture.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(complex64_parser_test);
+using namespace pni::core;
+using namespace pni::io;
 
 #define NUM_RES 1.e-8
 
-//-----------------------------------------------------------------------------
-void complex64_parser_test::setUp() { }
+struct complex64_parser_test_fixture : parser_test_fixture<complex64>
+{};
 
-//-----------------------------------------------------------------------------
-void complex64_parser_test::tearDown() {}
+BOOST_FIXTURE_TEST_SUITE(complex64_parser_test,complex64_parser_test_fixture)
 
-//-----------------------------------------------------------------------------
-void complex64_parser_test::test_regular_value_for_j()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    result_type result = p("1.0+j2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+1.0),result.real(),NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+2.0),result.imag(),NUM_RES);
+    typedef float64 base_type;
 
-    result = p("-1.0+j2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+2.0),result.imag(),NUM_RES);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_regular_value_for_j)
+    {
+        result_type result = p("1.0+j2.0");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+1.0),result.real(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+2.0),result.imag(),NUM_RES);
 
-    result = p("1.0-j2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+1.0),result.real(),NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-2.0),result.imag(),NUM_RES);
-    
-    result = p("-1.0-j2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-2.0),result.imag(),NUM_RES);
-}
+        result = p("-1.0+j2.0");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+2.0),result.imag(),NUM_RES);
 
-//-----------------------------------------------------------------------------
-void complex64_parser_test::test_regular_value_for_i()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    result_type result = p("1.0+i2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+1.0),result.real(),NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+2.0),result.imag(),NUM_RES);
+        result = p("1.0-j2.0");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+1.0),result.real(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-2.0),result.imag(),NUM_RES);
+        
+        result = p("-1.0-j2.0");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-2.0),result.imag(),NUM_RES);
+    }
 
-    result = p("-1.0+i2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+2.0),result.imag(),NUM_RES);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_regular_value_for_i)
+    {
+        result_type result = p("1.0+i2.0");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+1.0),result.real(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+2.0),result.imag(),NUM_RES);
 
-    result = p("1.0-i2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+1.0),result.real(),NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-2.0),result.imag(),NUM_RES);
-    
-    result = p("-1.0-i2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-2.0),result.imag(),NUM_RES);
-}
+        result = p("-1.0+i2.0");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+2.0),result.imag(),NUM_RES);
 
-//-----------------------------------------------------------------------------
-void complex64_parser_test::test_regular_value_for_I()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    result_type result = p("1.0+I2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+1.0),result.real(),NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+2.0),result.imag(),NUM_RES);
+        result = p("1.0-i2.0");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+1.0),result.real(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-2.0),result.imag(),NUM_RES);
+        
+        result = p("-1.0-i2.0");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-2.0),result.imag(),NUM_RES);
+    }
 
-    result = p("-1.0+I2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+2.0),result.imag(),NUM_RES);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_regular_value_for_I)
+    {
+        result_type result = p("1.0+I2.0");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+1.0),result.real(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+2.0),result.imag(),NUM_RES);
 
-    result = p("1.0-I2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(+1.0),result.real(),NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-2.0),result.imag(),NUM_RES);
-    
-    result = p("-1.0-I2.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-2.0),result.imag(),NUM_RES);
-}
-//-----------------------------------------------------------------------------
-void complex64_parser_test::test_invalid_input()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    CPPUNIT_ASSERT_THROW(p("1.+A5."),parser_error);
-    CPPUNIT_ASSERT_THROW(p("1.e+2-Ie"),parser_error);
-    CPPUNIT_ASSERT_THROW(p("1.e+3-I1e+x"),parser_error);
-    CPPUNIT_ASSERT_THROW(p("1.+j-1"),parser_error);
-    CPPUNIT_ASSERT_THROW(p("1.+j+1"),parser_error);
-    CPPUNIT_ASSERT_THROW(p("1.j2"),parser_error);
-}
+        result = p("-1.0+I2.0");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+2.0),result.imag(),NUM_RES);
 
-//----------------------------------------------------------------------------
-void complex64_parser_test::test_complex_zero()
-{
-    result_type result = p("0.+i0.");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.imag(),NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.real(),NUM_RES);
-    
-    result = p("0.+I0.");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.imag(),NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.real(),NUM_RES);
-    
-    result = p("0.+j0.");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.imag(),NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.real(),NUM_RES);
-}
+        result = p("1.0-I2.0");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+1.0),result.real(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-2.0),result.imag(),NUM_RES);
+        
+        result = p("-1.0-I2.0");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-2.0),result.imag(),NUM_RES);
+    }
 
-//----------------------------------------------------------------------------
-void complex64_parser_test::test_real_only()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    result_type result = p("1.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(1.0),result.real(),NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.imag(),NUM_RES);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_invalid_input)
+    {
+        BOOST_CHECK_THROW(p("1.+A5."),parser_error);
+        BOOST_CHECK_THROW(p("1.e+2-Ie"),parser_error);
+        BOOST_CHECK_THROW(p("1.e+3-I1e+x"),parser_error);
+        BOOST_CHECK_THROW(p("1.+j-1"),parser_error);
+        BOOST_CHECK_THROW(p("1.+j+1"),parser_error);
+        BOOST_CHECK_THROW(p("1.j2"),parser_error);
+    }
 
-    result = p("-1.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1.0),result.real(),NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.imag(), NUM_RES);
-    
-    result = p("+1.0");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(1.0),result.real(),NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.imag(),NUM_RES);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_complex_zero)
+    {
+        result_type result = p("0.+i0.");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.real(),NUM_RES);
+        
+        result = p("0.+I0.");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.real(),NUM_RES);
+        
+        result = p("0.+j0.");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.real(),NUM_RES);
+    }
 
-//----------------------------------------------------------------------------
-void complex64_parser_test::test_imag_only()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    result_type result = p("-i1e+6");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.real(),  NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(-1e+6),result.imag(),NUM_RES);
-    
-    result = p("+i1e+6");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.real(), NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(1e+6),result.imag(),NUM_RES);
-    
-    result = p("i2e+6");
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(0.0),result.real(), NUM_RES);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(base_type(2e+6),result.imag(),NUM_RES);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_real_only)
+    {
+        result_type result = p("1.0");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(1.0),result.real(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.imag(),NUM_RES);
+
+        result = p("-1.0");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.imag(), NUM_RES);
+        
+        result = p("+1.0");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(1.0),result.real(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.imag(),NUM_RES);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_imag_only)
+    {
+        result_type result = p("-i1e+6");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.real(),  NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-1e+6),result.imag(),NUM_RES);
+        
+        result = p("+i1e+6");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.real(), NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(1e+6),result.imag(),NUM_RES);
+        
+        result = p("i2e+6");
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.real(), NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(2e+6),result.imag(),NUM_RES);
+    }
+
+BOOST_AUTO_TEST_SUITE_END()

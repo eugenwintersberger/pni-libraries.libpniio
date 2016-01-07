@@ -20,67 +20,70 @@
 //  Created on: Jan 29, 2015
 //      Author: Eugen Wintersberger
 //
+#include <boost/test/unit_test.hpp>
+#include <pni/io/parsers.hpp>
+#include <pni/io/exceptions.hpp>
+#include <pni/core/types.hpp>
+#include "parser_test_fixture.hpp"
 
-#include <boost/current_function.hpp>
-#include "value_parser_test.hpp"
+using namespace pni::core;
+using namespace pni::io;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(value_parser_test);
+struct value_parser_test_fixture : parser_test_fixture<value>
+{};
 
-//-----------------------------------------------------------------------------
-void value_parser_test::setUp() { }
-
-//-----------------------------------------------------------------------------
-void value_parser_test::tearDown() {}
-
-//-----------------------------------------------------------------------------
-void value_parser_test::test_int_value()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+BOOST_FIXTURE_TEST_SUITE(value_parser_test,value_parser_test_fixture)
     
-    result_type v = p("1234");
-    CPPUNIT_ASSERT(v.type_id() == type_id_t::INT64);
-}
+    typedef value result_type;
 
-//-----------------------------------------------------------------------------
-void value_parser_test::test_float_value()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    result_type v = p("1.234e+3");
-    CPPUNIT_ASSERT(v.type_id()==type_id_t::FLOAT64);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(1.234e+3,v.as<float64>(),1.e-8);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_int_value)
+    {
+        result_type v = p("1234");
+        type_id_t tid = type_id_t::INT64;
+        BOOST_CHECK_EQUAL(v.type_id(),tid);
+    }
 
-    v = p("1.2");
-    CPPUNIT_ASSERT(v.type_id()==type_id_t::FLOAT64);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(1.2,v.as<float64>(),1.e-8);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_float_value)
+    {
+        result_type v = p("1.234e+3");
+        type_id_t tid = type_id_t::FLOAT64;
+        BOOST_CHECK_EQUAL(v.type_id(),tid);
+        BOOST_CHECK_CLOSE_FRACTION(1.234e+3,v.as<float64>(),1.e-8);
 
-//-----------------------------------------------------------------------------
-void value_parser_test::test_complex_value()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        v = p("1.2");
+        BOOST_CHECK_EQUAL(v.type_id(),tid);
+        BOOST_CHECK_CLOSE_FRACTION(1.2,v.as<float64>(),1.e-8);
+    }
 
-    result_type v = p("1.3+I3.4");
-    CPPUNIT_ASSERT(v.type_id() == type_id_t::COMPLEX64);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(1.3,v.as<complex64>().real(),1.e-8);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(3.4,v.as<complex64>().imag(),1.e-8);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_complex_value)
+    {
+        result_type v = p("1.3+I3.4");
+        type_id_t tid = type_id_t::COMPLEX64;
+        BOOST_CHECK_EQUAL(v.type_id(),tid);
+        BOOST_CHECK_CLOSE_FRACTION(1.3,v.as<complex64>().real(),1.e-8);
+        BOOST_CHECK_CLOSE_FRACTION(3.4,v.as<complex64>().imag(),1.e-8);
 
-    v = p("-j3.9");
-    CPPUNIT_ASSERT(v.type_id() == type_id_t::COMPLEX64);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(0.0,v.as<complex64>().real(),1.e-8);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(-3.9,v.as<complex64>().imag(),1.e-8);
-    
-    v = p("j3.9");
-    CPPUNIT_ASSERT(v.type_id() == type_id_t::COMPLEX64);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(0.0,v.as<complex64>().real(),1.e-8);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(3.9,v.as<complex64>().imag(),1.e-8);
+        v = p("-j3.9");
+        BOOST_CHECK_EQUAL(v.type_id(),tid);
+        BOOST_CHECK_CLOSE_FRACTION(0.0,v.as<complex64>().real(),1.e-8);
+        BOOST_CHECK_CLOSE_FRACTION(-3.9,v.as<complex64>().imag(),1.e-8);
+        
+        v = p("j3.9");
+        BOOST_CHECK_EQUAL(v.type_id(),tid);
+        BOOST_CHECK_CLOSE_FRACTION(0.0,v.as<complex64>().real(),1.e-8);
+        BOOST_CHECK_CLOSE_FRACTION(3.9,v.as<complex64>().imag(),1.e-8);
 
-    v = p("1+i4");
-    CPPUNIT_ASSERT(v.type_id() == type_id_t::COMPLEX64);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(1.0,v.as<complex64>().real(),1.e-8);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(4.0,v.as<complex64>().imag(),1.e-8);
+        v = p("1+i4");
+        BOOST_CHECK_EQUAL(v.type_id(),tid);
+        BOOST_CHECK_CLOSE_FRACTION(1.0,v.as<complex64>().real(),1.e-8);
+        BOOST_CHECK_CLOSE_FRACTION(4.0,v.as<complex64>().imag(),1.e-8);
 
-}
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
 
 
 

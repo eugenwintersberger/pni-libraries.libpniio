@@ -21,36 +21,33 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
-#include "uint16_parser_test.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/io/parsers.hpp>
+#include <pni/core/types.hpp>
+#include "parser_test_fixture.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(uint16_parser_test);
+using namespace pni::core;
+using namespace pni::io;
 
-//-----------------------------------------------------------------------------
-void uint16_parser_test::setUp() 
-{
-}
+struct uint16_parser_test_fixture : parser_test_fixture<uint16>
+{};
 
-//-----------------------------------------------------------------------------
-void uint16_parser_test::tearDown() {}
+BOOST_FIXTURE_TEST_SUITE(uint16_parser_test,uint16_parser_test_fixture)
 
-//-----------------------------------------------------------------------------
-void uint16_parser_test::test_regular_value()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
- 
-    CPPUNIT_ASSERT(p("12")==12);
-    CPPUNIT_ASSERT(p("0") == 0);
-    CPPUNIT_ASSERT(p("04")==4);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_regular_value)
+    {
+        BOOST_CHECK_EQUAL(p("12"),12);
+        BOOST_CHECK_EQUAL(p("0") , 0);
+        BOOST_CHECK_EQUAL(p("04"),4);
+    }
 
-//-----------------------------------------------------------------------------
-void uint16_parser_test::test_invalid_input()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-  
-    CPPUNIT_ASSERT_THROW(p("x10"),parser_error);
-    CPPUNIT_ASSERT_THROW(p("0z10"),parser_error);
-    CPPUNIT_ASSERT_THROW(p("10l"),parser_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_invalid_input)
+    {
+        BOOST_CHECK_THROW(p("x10"),parser_error);
+        BOOST_CHECK_THROW(p("0z10"),parser_error);
+        BOOST_CHECK_THROW(p("10l"),parser_error);
+    }
 
+BOOST_AUTO_TEST_SUITE_END()

@@ -20,40 +20,38 @@
 //  Created on: Jan 27, 2015
 //      Author: Eugen Wintersberger
 //
-
+#include <boost/test/unit_test.hpp>
+#include <pni/io/parsers.hpp>
 #include <pni/io/exceptions.hpp>
-#include <boost/current_function.hpp>
-#include "float32_parser_test.hpp"
+#include <pni/core/types.hpp>
+#include "parser_test_fixture.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(float32_parser_test);
+using namespace pni::core;
+using namespace pni::io;
 
-//-----------------------------------------------------------------------------
-void float32_parser_test::setUp() { }
+struct float32_parser_test_fixture : parser_test_fixture<float32>
+{};
 
-//-----------------------------------------------------------------------------
-void float32_parser_test::tearDown() {}
+BOOST_FIXTURE_TEST_SUITE(float32_parser_test,float32_parser_test_fixture)
 
-//-----------------------------------------------------------------------------
-void float32_parser_test::test_regular_value()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(12,p("12"),1.e-8);
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(-1.234e+4,p("-1.234e+4"),1.e-8);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_regular_value)
+    {
+        BOOST_CHECK_CLOSE_FRACTION(12,p("12"),1.e-8);
+        BOOST_CHECK_CLOSE_FRACTION(-1.234e+4,p("-1.234e+4"),1.e-8);
+    }
 
-//-----------------------------------------------------------------------------
-void float32_parser_test::test_invalid_input()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT_THROW(p("1.ab"),parser_error);
-    CPPUNIT_ASSERT_THROW(p(" 1."),parser_error);
-    CPPUNIT_ASSERT_THROW(p("1. "),parser_error);
-    CPPUNIT_ASSERT_THROW(p("x1."),parser_error);
-    CPPUNIT_ASSERT_THROW(p("-1x."),parser_error);
-    CPPUNIT_ASSERT_THROW(p("1.ex"),parser_error);
-    CPPUNIT_ASSERT_THROW(p("1.e-1x"),parser_error);
-    
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_invalid_input)
+    {
+        BOOST_CHECK_THROW(p("1.ab"),parser_error);
+        BOOST_CHECK_THROW(p(" 1."),parser_error);
+        BOOST_CHECK_THROW(p("1. "),parser_error);
+        BOOST_CHECK_THROW(p("x1."),parser_error);
+        BOOST_CHECK_THROW(p("-1x."),parser_error);
+        BOOST_CHECK_THROW(p("1.ex"),parser_error);
+        BOOST_CHECK_THROW(p("1.e-1x"),parser_error);
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
 

@@ -20,39 +20,39 @@
 //  Created on: Jan 28, 2015
 //      Author: Eugen Wintersberger
 //
+#include <boost/test/unit_test.hpp>
+#include <pni/io/parsers.hpp>
+#include <pni/io/exceptions.hpp>
+#include <pni/core/types.hpp>
+#include "parser_test_fixture.hpp"
 
-#include <boost/current_function.hpp>
-#include "bool_parser_test.hpp"
+using namespace pni::core;
+using namespace pni::io;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(bool_parser_test);
+struct bool_parser_test_fixture : parser_test_fixture<bool_t>
+{};
 
-//-----------------------------------------------------------------------------
-void bool_parser_test::setUp() { }
+BOOST_FIXTURE_TEST_SUITE(bool_parser_test,bool_parser_test_fixture)
 
-//-----------------------------------------------------------------------------
-void bool_parser_test::tearDown() {}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_regular_value)
+    {
+        BOOST_CHECK(p("true"));
+        BOOST_CHECK(!p("false"));
+    }
 
-//-----------------------------------------------------------------------------
-void bool_parser_test::test_regular_value()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT(p("true"));
-    CPPUNIT_ASSERT(!p("false"));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_invalid_input)
+    {
+        BOOST_CHECK_THROW(p("abc"),parser_error);
+        BOOST_CHECK_THROW(p("True"),parser_error);
+        BOOST_CHECK_THROW(p("False"),parser_error);
+        BOOST_CHECK_THROW(p("Xtrue"),parser_error);
+        BOOST_CHECK_THROW(p("1"),parser_error);
+        BOOST_CHECK_THROW(p("0"),parser_error);
+    }
 
-//----------------------------------------------------------------------------
-void bool_parser_test::test_invalid_input()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT_THROW(p("abc"),parser_error);
-    CPPUNIT_ASSERT_THROW(p("True"),parser_error);
-    CPPUNIT_ASSERT_THROW(p("False"),parser_error);
-    CPPUNIT_ASSERT_THROW(p("Xtrue"),parser_error);
-    CPPUNIT_ASSERT_THROW(p("1"),parser_error);
-    CPPUNIT_ASSERT_THROW(p("0"),parser_error);
-}
+BOOST_AUTO_TEST_SUITE_END()
 
 
 

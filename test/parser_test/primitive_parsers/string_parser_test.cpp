@@ -20,29 +20,29 @@
 //  Created on: Jan 22, 2015
 //      Author: Eugen Wintersberger
 //
+#include <boost/test/unit_test.hpp>
+#include <pni/io/parsers.hpp>
+#include <pni/io/exceptions.hpp>
+#include <pni/core/types.hpp>
+#include "parser_test_fixture.hpp"
 
-#include <boost/current_function.hpp>
-#include "string_parser_test.hpp"
+using namespace pni::core;
+using namespace pni::io;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(string_parser_test);
+struct string_parser_test_fixture : parser_test_fixture<string>
+{};
 
-//-----------------------------------------------------------------------------
-void string_parser_test::setUp() 
-{
-}
+BOOST_FIXTURE_TEST_SUITE(string_parser_test,string_parser_test_fixture)
 
-//-----------------------------------------------------------------------------
-void string_parser_test::tearDown() {}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_regular_value)
+    {
+        BOOST_CHECK_EQUAL(p("hello world") , "hello world");
+        BOOST_CHECK_EQUAL(p(" this is a text") , " this is a text");
+        BOOST_CHECK_EQUAL(p("this is more text  ") , "this is more text  ");
+    }
 
-//-----------------------------------------------------------------------------
-void string_parser_test::test_regular_value()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT(p("hello world") == "hello world");
-    CPPUNIT_ASSERT(p(" this is a text") == " this is a text");
-    CPPUNIT_ASSERT(p("this is more text  ") == "this is more text  ");
-}
+BOOST_AUTO_TEST_SUITE_END()
 
 
 

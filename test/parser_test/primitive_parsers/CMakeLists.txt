@@ -1,5 +1,4 @@
-set(SOURCES primitive_parsers_test.cpp
-            uint8_parser_test.cpp
+set(SOURCES uint8_parser_test.cpp
             uint16_parser_test.cpp
             uint32_parser_test.cpp
             uint64_parser_test.cpp
@@ -18,7 +17,12 @@ set(SOURCES primitive_parsers_test.cpp
             value_parser_test.cpp
            )
 
-add_executable(primitive_parsers_test EXCLUDE_FROM_ALL ${SOURCES} $<TARGET_OBJECTS:test_common>)
-target_link_libraries(primitive_parsers_test pniio ${CPPUNIT_LIBRARIES})
+
+set_source_files_properties(uint8_parser_test.cpp PROPERTIES 
+                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; \
+                            BOOST_TEST_MODULE=testing primitive parsers")
+add_executable(primitive_parsers_test EXCLUDE_FROM_ALL ${SOURCES} )
+target_link_libraries(primitive_parsers_test pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_test("parsers:primitive_parsers" primitive_parsers_test)
+add_dependencies(check primitive_parsers_test)
 

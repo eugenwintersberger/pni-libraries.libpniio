@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2015 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2016 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,37 +17,17 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 //************************************************************************
 //
-//  Created on: Jan 21, 2015
+//  Created on: Jan 7, 2016
 //      Author: Eugen Wintersberger
 //
-
 #pragma once
 
 #include <pni/io/parsers.hpp>
-#include <pni/core/types.hpp>
 
-#include<cppunit/TestFixture.h>
-#include<cppunit/extensions/HelperMacros.h>
-
-using namespace pni::core;
-using namespace pni::io;
-
-class uint8_parser_test:public CppUnit::TestFixture 
+template<typename T>
+struct parser_test_fixture
 {
-	CPPUNIT_TEST_SUITE(uint8_parser_test);
-    CPPUNIT_TEST(test_regular_value);
-    CPPUNIT_TEST(test_invalid_input);
-	CPPUNIT_TEST_SUITE_END();
-
-    typedef uint8                  result_type; 
-    typedef parser<result_type> parser_type;
+    typedef T result_type;
+    typedef pni::io::parser<result_type> parser_type;
     parser_type p;
-
-public:
-	void setUp();
-	void tearDown();
-    void test_regular_value();
-    void test_invalid_input();
 };
-
-
