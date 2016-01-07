@@ -20,82 +20,84 @@
 //  Created on: Feb 4, 2015
 //      Author: Eugen Wintersberger
 //
-
-#include <boost/current_function.hpp>
-#include "float32_vector_parser_test.hpp"
+#include <boost/test/unit_test.hpp>
+#include <vector>
+#include <pni/core/types.hpp>
 #include <pni/io/container_io_config.hpp>
+#include "../primitive_parsers/parser_test_fixture.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(float32_vector_parser_test);
+using namespace pni::core;
+using namespace pni::io;
 
-
-//-----------------------------------------------------------------------------
-void float32_vector_parser_test::setUp() 
-{ 
-    ref=result_type{1.2,3e+3,-3.4,4.429,-5.34e-3};
-}
-
-//-----------------------------------------------------------------------------
-void float32_vector_parser_test::tearDown() {}
-
-//-----------------------------------------------------------------------------
-void float32_vector_parser_test::test_default()
+struct float32_vector_parser_test_fixture : parser_test_fixture<std::vector<float32>>
 {
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    static const result_type ref;
+};
 
-    parser_type p;
-    result_type result = p("1.2 3e+3 -3.4 4.429 -5.34e-3");
+const float32_vector_parser_test_fixture::result_type 
+      float32_vector_parser_test_fixture::ref = {1.2,3e+3,-3.4,4.429,-5.34e-3};
 
-    CPPUNIT_ASSERT(result.size()==5);
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
 
-    result = p("  1.2  3e+3    -3.4  4.429   -5.34e-3   ");
-    CPPUNIT_ASSERT(result.size()==5);
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
-}
+BOOST_FIXTURE_TEST_SUITE(float32_vector_parser_test,float32_vector_parser_test_fixture)
 
-//-----------------------------------------------------------------------------
-void float32_vector_parser_test::test_start_stop()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_default)
+    {
+        auto result = p("1.2 3e+3 -3.4 4.429 -5.34e-3");
 
-    parser_type p(container_io_config('(',')'));
-    result_type result = p("( 1.2 3.e3 -3.4 4.429  -5.34e-3   )");
-    CPPUNIT_ASSERT(result.size()==5);
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
+        BOOST_CHECK_EQUAL(result.size(),5);
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
 
-    result = p("(1.2 3e+3 -3.4 4.429 -5.34e-3)");
-    CPPUNIT_ASSERT(result.size()==5);
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
-}
+        result = p("  1.2  3e+3    -3.4  4.429   -5.34e-3   ");
+        BOOST_CHECK_EQUAL(result.size(),5);
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
 
-//-----------------------------------------------------------------------------
-void float32_vector_parser_test::test_delimiter()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_start_stop)
+    {
+        p = parser_type(container_io_config('(',')'));
+        auto result = p("( 1.2 3.e3 -3.4 4.429  -5.34e-3   )");
+        BOOST_CHECK_EQUAL(result.size(),5);
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
 
-    parser_type p(container_io_config(';'));
-    result_type result = p("1.2;3e3;-3.4;4.429;-5.34e-3");
-    CPPUNIT_ASSERT(result.size()==5);
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
-    
-    result = p("  1.2; 3e+3 ;-3.4   ;  4.429; -5.34e-3  ");
-    CPPUNIT_ASSERT(result.size()==5);
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
-}
+        result = p("(1.2 3e+3 -3.4 4.429 -5.34e-3)");
+        BOOST_CHECK_EQUAL(result.size(),5);
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
 
-//-----------------------------------------------------------------------------
-void float32_vector_parser_test::test_full()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    parser_type p(container_io_config('[',']',','));
-    result_type result = p("[1.2,3.e+3,-3.4,4.429,-5.34e-3]");
-    CPPUNIT_ASSERT(result.size() == 5);
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_delimiter)
+    {
+        p = parser_type(container_io_config(';'));
+        auto result = p("1.2;3e3;-3.4;4.429;-5.34e-3");
+        BOOST_CHECK_EQUAL(result.size(),5);
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+        
+        result = p("  1.2; 3e+3 ;-3.4   ;  4.429; -5.34e-3  ");
+        BOOST_CHECK_EQUAL(result.size(),5);
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
 
-    result = p("[  1.2, 3e+3,  -3.4  , 4.429,  -5.34e-3  ]");
-    CPPUNIT_ASSERT(result.size() == 5);
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_full)
+    {
+        p = parser_type(container_io_config('[',']',','));
+        auto result = p("[1.2,3.e+3,-3.4,4.429,-5.34e-3]");
+        BOOST_CHECK_EQUAL(result.size(),5);
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
 
-}
+        result = p("[  1.2, 3e+3,  -3.4  , 4.429,  -5.34e-3  ]");
+        BOOST_CHECK_EQUAL(result.size(),5);
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
 
+BOOST_AUTO_TEST_SUITE_END()

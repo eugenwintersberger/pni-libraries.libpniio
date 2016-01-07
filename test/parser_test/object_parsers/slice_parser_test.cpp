@@ -21,64 +21,58 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
-#include "slice_parser_test.hpp"
+#include <boost/test/unit_test.hpp>
+#include "../primitive_parsers/parser_test_fixture.hpp"
+#include <pni/core/types.hpp>
+#include <pni/core/arrays/slice.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(slice_parser_test);
+using namespace pni::core;
+using namespace pni::io;
 
-//-----------------------------------------------------------------------------
-void slice_parser_test::setUp() 
+struct slice_parser_test_fixture : parser_test_fixture<slice>
 {
-}
+};
 
-//-----------------------------------------------------------------------------
-void slice_parser_test::tearDown() {}
+BOOST_FIXTURE_TEST_SUITE(slice_parser_test,slice_parser_test_fixture)
 
-//-----------------------------------------------------------------------------
-void slice_parser_test::test_full_parser()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_full_parser)
+    {
+        string s1 = "1:10";
+        string s2 = "10:100:2";
+        string s3 = "5";
 
-    string s1 = "1:10";
-    string s2 = "10:100:2";
-    string s3 = "5";
-    slice s = p(s1);
+        slice s = p(s1);
+        BOOST_CHECK_EQUAL(s.first() , 1);
+        BOOST_CHECK_EQUAL(s.last()  , 10);
+        BOOST_CHECK_EQUAL(s.stride() , 1);
 
-    CPPUNIT_ASSERT(s.first() == 1);
-    CPPUNIT_ASSERT(s.last()  == 10);
-    CPPUNIT_ASSERT(s.stride() == 1);
+        s = p(s2);
+        BOOST_CHECK_EQUAL(s.first() , 10);
+        BOOST_CHECK_EQUAL(s.last()  , 100);
+        BOOST_CHECK_EQUAL(s.stride() , 2);
+        
+        s = p(s3);
+        BOOST_CHECK_EQUAL(s.first() , 5);
+        BOOST_CHECK_EQUAL(s.last()  , 6);
+        BOOST_CHECK_EQUAL(s.stride() , 1);
+    }
 
-    s = p(s2);
-    
-    CPPUNIT_ASSERT(s.first() == 10);
-    CPPUNIT_ASSERT(s.last()  == 100);
-    CPPUNIT_ASSERT(s.stride() == 2);
-    
-    s = p(s3);
-    
-    CPPUNIT_ASSERT(s.first() == 5);
-    CPPUNIT_ASSERT(s.last()  == 6);
-    CPPUNIT_ASSERT(s.stride() == 1);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_half_parser)
+    {
+        string s1 = ":100";
+        string s2 = ":200:3";
+        
+        slice s = p(s1);
+        BOOST_CHECK_EQUAL(s.first() , 0);
+        BOOST_CHECK_EQUAL(s.last()  , 100);
+        BOOST_CHECK_EQUAL(s.stride() , 1);
 
-}
+        s = p(s2);
+        BOOST_CHECK_EQUAL(s.first() , 0);
+        BOOST_CHECK_EQUAL(s.last()  , 200);
+        BOOST_CHECK_EQUAL(s.stride() , 3);
+    }
 
-//-----------------------------------------------------------------------------
-void slice_parser_test::test_half_parser()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    string s1 = ":100";
-    string s2 = ":200:3";
-    
-    slice s = p(s1);
-
-    CPPUNIT_ASSERT(s.first() == 0);
-    CPPUNIT_ASSERT(s.last()  == 100);
-    CPPUNIT_ASSERT(s.stride() == 1);
-
-    s = p(s2);
-    
-    CPPUNIT_ASSERT(s.first() == 0);
-    CPPUNIT_ASSERT(s.last()  == 200);
-    CPPUNIT_ASSERT(s.stride() == 3);
-}
+BOOST_AUTO_TEST_SUITE_END()

@@ -21,45 +21,41 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
-#include "vector_parser_test.hpp"
+#include <boost/test/unit_test.hpp>
+#include "../primitive_parsers/parser_test_fixture.hpp"
+#include <pni/io/parsers.hpp>
+#include <pni/core/types.hpp>
 #include <pni/io/container_io_config.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(vector_parser_test);
+using namespace pni::core;
+using namespace pni::io;
 
+struct vector_parser_test_fixture : parser_test_fixture<std::vector<uint8>>
+{};
 
-//-----------------------------------------------------------------------------
-void vector_parser_test::setUp() { }
+BOOST_FIXTURE_TEST_SUITE(vector_parser_test,vector_parser_test_fixture)
 
-//-----------------------------------------------------------------------------
-void vector_parser_test::tearDown() {}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_default)
+    {
+        auto result = p("1 2 3 4 5");
 
-//-----------------------------------------------------------------------------
-void vector_parser_test::test_default()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        BOOST_CHECK_EQUAL(result.size(),5);
+    }
 
-    parser_type p;
-    result_type result = p("1 2 3 4 5");
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_simple)
+    {
+        p = parser_type(container_io_config('[',']',','));
+        auto result = p("[1,2,3,4,5]");
+        BOOST_CHECK_EQUAL(result.size(),5);
+    }
 
-    CPPUNIT_ASSERT(result.size()==5);
-}
+    //--------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_overflow)
+    {
+        p=parser_type(container_io_config('[',']',','));
+        BOOST_CHECK_THROW(p("[10,-20,10]"),parser_error);
+    }
 
-//-----------------------------------------------------------------------------
-void vector_parser_test::test_simple()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    parser_type p(container_io_config('[',']',','));
-    result_type result = p("[1,2,3,4,5]");
-    CPPUNIT_ASSERT(result.size() == 5);
-}
-
-//-----------------------------------------------------------------------------
-void vector_parser_test::test_overflow()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    parser_type p(container_io_config('[',']',','));
-    CPPUNIT_ASSERT_THROW(p("[10,-20,10]"),parser_error);
-}
+BOOST_AUTO_TEST_SUITE_END()

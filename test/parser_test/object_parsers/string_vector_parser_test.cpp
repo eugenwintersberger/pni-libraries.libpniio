@@ -20,66 +20,68 @@
 //  Created on: Feb 2, 2015
 //      Author: Eugen Wintersberger
 //
-
-#include <boost/current_function.hpp>
-#include "string_vector_parser_test.hpp"
+#include <boost/test/unit_test.hpp>
+#include <vector>
+#include <pni/core/types.hpp>
 #include <pni/io/container_io_config.hpp>
+#include "../primitive_parsers/parser_test_fixture.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(string_vector_parser_test);
+using namespace pni::core;
+using namespace pni::io;
 
-
-//-----------------------------------------------------------------------------
-void string_vector_parser_test::setUp() { }
-
-//-----------------------------------------------------------------------------
-void string_vector_parser_test::tearDown() {}
-
-//-----------------------------------------------------------------------------
-void string_vector_parser_test::test_default()
+struct string_vector_parser_test_fixture : parser_test_fixture<std::vector<string>>
 {
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    result_type ref;
+};
 
-    parser_type p;
-    result_type result = p("hello   this bla test  word");
-    CPPUNIT_ASSERT(result.size()==5);
-}
 
-//-----------------------------------------------------------------------------
-void string_vector_parser_test::test_start_stop()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+BOOST_FIXTURE_TEST_SUITE(string_vector_parser_test,string_vector_parser_test_fixture)
 
-    parser_type p(container_io_config('(',')'));
-    result_type result = p("(true false    false true true)");
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_default)
+    {
+        auto result = p("hello   this bla test  word");
+        BOOST_CHECK_EQUAL(result.size(),5);
+        ref = {"hello","this","bla","test","word"};
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
 
-    CPPUNIT_ASSERT(result.size()==5);
-    result_type ref{"true","false","false","true","true"};
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_start_stop)
+    {
+        p = parser_type(container_io_config('(',')'));
+        auto result = p("(true false    false true true)");
 
-//-----------------------------------------------------------------------------
-void string_vector_parser_test::test_delimiter()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        BOOST_CHECK_EQUAL(result.size(),5);
+        ref = {"true","false","false","true","true"};
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
 
-    parser_type p(container_io_config(';'));
-    result_type result = p(" true;false ;true; true ; false   ");
-    CPPUNIT_ASSERT(result.size()==5);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_delimiter)
+    {
+        p = parser_type(container_io_config(';'));
+        auto result = p(" true;false ;true; true ; false   ");
+        BOOST_CHECK_EQUAL(result.size(),5);
 
-    result_type ref{"true","false","true","true","false"};
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
-}
+        ref = {"true","false","true","true","false"};
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
 
-//-----------------------------------------------------------------------------
-void string_vector_parser_test::test_full()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    parser_type p(container_io_config('[',']',','));
-    result_type result = p("[ hello world , this  ,is some, stupid  ,  text!  ]");
-    CPPUNIT_ASSERT(result.size() == 5);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_full)
+    {
+        p = parser_type(container_io_config('[',']',','));
+        auto result = p("[ hello world , this  ,is some, stupid  ,  text!  ]");
+        BOOST_CHECK_EQUAL(result.size(),5);
 
-    result_type ref{"hello world","this","is some","stupid","text!"};
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
-}
+        ref = {"hello world","this","is some","stupid","text!"};
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
 

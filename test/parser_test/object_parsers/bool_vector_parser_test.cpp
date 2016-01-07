@@ -20,59 +20,66 @@
 //  Created on: Feb 2, 2015
 //      Author: Eugen Wintersberger
 //
-
-#include <boost/current_function.hpp>
-#include "bool_vector_parser_test.hpp"
+#include <boost/test/unit_test.hpp>
+#include <vector>
+#include <pni/core/types.hpp>
 #include <pni/io/container_io_config.hpp>
+#include "../primitive_parsers/parser_test_fixture.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(bool_vector_parser_test);
+using namespace pni::core;
+using namespace pni::io;
 
-
-//-----------------------------------------------------------------------------
-void bool_vector_parser_test::setUp() { }
-
-//-----------------------------------------------------------------------------
-void bool_vector_parser_test::tearDown() {}
-
-//-----------------------------------------------------------------------------
-void bool_vector_parser_test::test_default()
+struct bool_vector_parser_test_fixture : parser_test_fixture<std::vector<bool_t>>
 {
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    result_type ref;
+};
 
-    parser_type p;
-    result_type result = p("true false  true    false  false");
+BOOST_FIXTURE_TEST_SUITE(bool_vector_parser_test,bool_vector_parser_test_fixture)
 
-    CPPUNIT_ASSERT(result.size()==5);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_default)
+    {
+        auto result = p("true false  true    false  false");
 
-//-----------------------------------------------------------------------------
-void bool_vector_parser_test::test_start_stop()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        BOOST_CHECK_EQUAL(result.size(),5);
+        ref = {true,false,true,false,false};
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
 
-    parser_type p(container_io_config('(',')'));
-    result_type result = p("( true false false true  true   )");
-    CPPUNIT_ASSERT(result.size()==5);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_start_stop)
+    {
+        p = parser_type(container_io_config('(',')'));
+        auto result = p("( true false false true  true   )");
+        BOOST_CHECK_EQUAL(result.size(),5);
 
-//-----------------------------------------------------------------------------
-void bool_vector_parser_test::test_delimiter()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        ref = {true,false,false,true,true};
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
 
-    parser_type p(container_io_config(';'));
-    result_type result = p("true;false ;true; true ; false");
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_delimiter)
+    {
+        p = parser_type(container_io_config(';'));
+        auto result = p("true;false ;true; true ; false");
 
-    CPPUNIT_ASSERT(result.size()==5);
-}
+        BOOST_CHECK_EQUAL(result.size(),5);
+        ref = {true,false,true,true,false};
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
 
-//-----------------------------------------------------------------------------
-void bool_vector_parser_test::test_full()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    parser_type p(container_io_config('[',']',','));
-    result_type result = p("[true,false ,false, true  ,  true]");
-    CPPUNIT_ASSERT(result.size() == 5);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_full)
+    {
+        p = parser_type(container_io_config('[',']',','));
+        auto result = p("[true,false ,false, true  ,  true]");
+        BOOST_CHECK_EQUAL(result.size(),5);
+        ref = {true,false,false,true,true};
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
 
+BOOST_AUTO_TEST_SUITE_END()

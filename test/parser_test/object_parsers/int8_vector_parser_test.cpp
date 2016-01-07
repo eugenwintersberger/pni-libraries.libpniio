@@ -21,81 +21,84 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/current_function.hpp>
-#include "int8_vector_parser_test.hpp"
+#include <boost/test/unit_test.hpp>
+#include <vector>
+#include <pni/core/types.hpp>
 #include <pni/io/container_io_config.hpp>
+#include "../primitive_parsers/parser_test_fixture.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(int8_vector_parser_test);
+using namespace pni::core;
+using namespace pni::io;
 
-
-//-----------------------------------------------------------------------------
-void int8_vector_parser_test::setUp() 
-{ 
-    ref=result_type{1,2,-3,4,-5};
-}
-
-//-----------------------------------------------------------------------------
-void int8_vector_parser_test::tearDown() {}
-
-//-----------------------------------------------------------------------------
-void int8_vector_parser_test::test_default()
+struct int8_vector_parser_test_fixture : parser_test_fixture<std::vector<int8>>
 {
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    static const result_type ref;
+};
 
-    parser_type p;
-    result_type result = p("1 2 -3 4 -5");
+const int8_vector_parser_test_fixture::result_type 
+      int8_vector_parser_test_fixture::ref = {1,2,-3,4,-5};
 
-    CPPUNIT_ASSERT(result.size()==5);
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
+BOOST_FIXTURE_TEST_SUITE(int8_vector_parser_test,int8_vector_parser_test_fixture)
 
-    result = p("  1  2    -3  4   -5   ");
-    CPPUNIT_ASSERT(result.size()==5);
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_default)
+    {
+        auto result = p("1 2 -3 4 -5");
 
-//-----------------------------------------------------------------------------
-void int8_vector_parser_test::test_start_stop()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        BOOST_CHECK_EQUAL(result.size(),5);
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
 
-    parser_type p(container_io_config('(',')'));
-    result_type result = p("( 1 2 -3 4  -5   )");
-    CPPUNIT_ASSERT(result.size()==5);
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
+        result = p("  1  2    -3  4   -5   ");
+        BOOST_CHECK_EQUAL(result.size(),5);
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
 
-    result = p("(1 2 -3 4 -5)");
-    CPPUNIT_ASSERT(result.size()==5);
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_start_stop)
+    {
+        p = parser_type(container_io_config('(',')'));
+        auto result = p("( 1 2 -3 4  -5   )");
+        BOOST_CHECK_EQUAL(result.size(),5);
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
 
-//-----------------------------------------------------------------------------
-void int8_vector_parser_test::test_delimiter()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        result = p("(1 2 -3 4 -5)");
+        BOOST_CHECK_EQUAL(result.size(),5);
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
 
-    parser_type p(container_io_config(';'));
-    result_type result = p("1;2;-3;4;-5");
-    CPPUNIT_ASSERT(result.size()==5);
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
-    
-    result = p("  1; 2 ;-3   ;  4; -5  ");
-    CPPUNIT_ASSERT(result.size()==5);
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_delimiter)
+    {
+        p = parser_type(container_io_config(';'));
+        auto result = p("1;2;-3;4;-5");
+        BOOST_CHECK_EQUAL(result.size(),5);
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+        
+        result = p("  1; 2 ;-3   ;  4; -5  ");
+        BOOST_CHECK_EQUAL(result.size(),5);
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
 
-//-----------------------------------------------------------------------------
-void int8_vector_parser_test::test_full()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    parser_type p(container_io_config('[',']',','));
-    result_type result = p("[1,2,-3,4,-5]");
-    CPPUNIT_ASSERT(result.size() == 5);
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_full)
+    {
+        p = parser_type(container_io_config('[',']',','));
+        auto result = p("[1,2,-3,4,-5]");
+        BOOST_CHECK_EQUAL(result.size(),5);
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
 
-    result = p("[  1, 2,  -3  , 4,  -5  ]");
-    CPPUNIT_ASSERT(result.size() == 5);
-    CPPUNIT_ASSERT(std::equal(result.begin(),result.end(),ref.begin()));
+        result = p("[  1, 2,  -3  , 4,  -5  ]");
+        BOOST_CHECK_EQUAL(result.size(),5);
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
 
-}
+BOOST_AUTO_TEST_SUITE_END()
 
