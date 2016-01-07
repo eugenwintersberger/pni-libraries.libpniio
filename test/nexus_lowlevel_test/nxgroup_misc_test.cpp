@@ -29,24 +29,20 @@
 #include <pni/io/nx/nxobject_type.hpp>
 #include <pni/io/nx/algorithms.hpp>
 #include <pni/io/exceptions.hpp>
+#include "base_fixture.hpp"
 
 using namespace pni::core;
 using namespace pni::io::nx;
 
 using pni::io::invalid_object_error;
 
-struct nxgroup_misc_test_fixture
+struct nxgroup_misc_test_fixture : base_fixture
 {
-	string fname;
-    h5::nxfile f;
-    h5::nxgroup root;
     h5::nxgroup child;
     h5::nxgroup child2;
 
     nxgroup_misc_test_fixture():
-	    fname("nxgroupmisctest.nxs"),
-        f(h5::nxfile::create_file(fname,true)),
-        root(f.root()),
+	    base_fixture("nxgroupmisctest.nxs"),
         child(root.create_group("entry","NXentry")),
         child2(child.create_group("instrument","NXinstrument"))
     {}
@@ -55,8 +51,6 @@ struct nxgroup_misc_test_fixture
     {
         child.close();
         child2.close();
-        root.close();
-        f.close();
     }
 };
 
@@ -80,8 +74,8 @@ BOOST_FIXTURE_TEST_SUITE(nxgroup_misc_test,nxgroup_misc_test_fixture)
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_filename)
     {
-        BOOST_CHECK_EQUAL(root.filename(),fname);
-        BOOST_CHECK_EQUAL(child.filename(),fname);
+        BOOST_CHECK_EQUAL(root.filename(),filename);
+        BOOST_CHECK_EQUAL(child.filename(),filename);
     }
 
     //-------------------------------------------------------------------------

@@ -19,27 +19,111 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 
-//implementation of the arrayshape test
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
+#include <pni/io/exceptions.hpp>
+#include "test_types.hpp"
+#include "base_fixture.hpp"
 
-#include "nxfield_creation_test.hpp"
+using namespace pni::core;
+using namespace pni::io::nx;
+using pni::io::object_error;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<uint8>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<int8>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<uint16>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<int16>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<uint32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<int32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<uint64>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<int64>);
+struct nxfield_creation_test_fixture : base_fixture
+{
+    nxfield_creation_test_fixture():
+        base_fixture("nxfield_creation_test.nxs")
+    {}
+};
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<float32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<float64>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<float128>);
+BOOST_FIXTURE_TEST_SUITE(nxfield_creation_test,nxfield_creation_test_fixture)
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<complex32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<complex64>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<complex128>);
+    //------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_scalar,T,field_test_types)
+    {
+        h5::nxfield field;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<binary>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<bool_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<string>);
+        BOOST_CHECK_NO_THROW(field = root.create_field<T>("test"));
+        BOOST_CHECK_EQUAL(field.size(),1);
+        BOOST_CHECK_EQUAL(field.rank(),1);
+
+        shape_t rs{1};
+        auto s = field.shape<shape_t>();
+        BOOST_CHECK_EQUAL_COLLECTIONS(s.begin(),s.end(),rs.begin(),rs.end());
+
+        //should throw - the field already exists
+        BOOST_CHECK_THROW(root.create_field<T>("test"),object_error);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_multidim_default_chunk,T,field_test_types)
+    {
+        h5::nxfield field;
+        
+        shape_t s{3,4};
+        BOOST_CHECK_NO_THROW(field = root.create_field<T>("test",s));
+        BOOST_CHECK_EQUAL(field.size(),12);
+        BOOST_CHECK_EQUAL(field.rank(),2);
+
+        auto rs = field.shape<shape_t>();
+        BOOST_CHECK_EQUAL_COLLECTIONS(rs.begin(),rs.end(),s.begin(),s.end());
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_multidim_custom_chunk,T,field_test_types)
+    {
+        h5::nxfield field;
+        shape_t s{3,4},c{1,4};
+
+        BOOST_CHECK_NO_THROW(field = root.create_field<T>("test",s,c));
+        BOOST_CHECK_EQUAL(field.size(),12);
+        BOOST_CHECK_EQUAL(field.rank(),2);
+
+        auto rs = field.shape<shape_t>();
+        BOOST_CHECK_EQUAL_COLLECTIONS(rs.begin(),rs.end(),s.begin(),s.end());
+
+        //check error cases
+        BOOST_CHECK_THROW(root.create_field<T>("error1",s,shape_t{4}),
+                          size_mismatch_error);
+        BOOST_CHECK_THROW(root.create_field<T>("test",s,c),object_error);
+
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_multidim_default_chunk_filter,T,field_test_types)
+    {
+        h5::nxdeflate_filter filter(9,true);
+        h5::nxfield field;
+        shape_t s{3,4};
+
+        BOOST_CHECK_NO_THROW(field = root.create_field<T>("test",s,filter));
+        BOOST_CHECK_EQUAL(field.size(),12);
+        BOOST_CHECK_EQUAL(field.rank(),2);
+
+        auto rs = field.shape<shape_t>();
+        BOOST_CHECK_EQUAL_COLLECTIONS(rs.begin(),rs.end(),s.begin(),s.end());
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_multidim_custom_chunk_filter,T,field_test_types)
+    {
+        h5::nxdeflate_filter filter(9,true);
+        h5::nxfield field;
+        shape_t s{3,4},c{1,4};
+
+        BOOST_CHECK_NO_THROW(field = root.create_field<T>("test",s,c,filter));
+        BOOST_CHECK_EQUAL(field.size(),12);
+        BOOST_CHECK_EQUAL(field.rank(),2);
+
+        auto rs = field.shape<shape_t>();
+        BOOST_CHECK_EQUAL_COLLECTIONS(rs.begin(),rs.end(),s.begin(),s.end());
+
+        //check error cases
+        BOOST_CHECK_THROW(root.create_field<T>("error1",s,shape_t{4},filter),
+                             size_mismatch_error);
+        BOOST_CHECK_THROW(root.create_field<T>("test",s,c,filter),object_error);
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
+

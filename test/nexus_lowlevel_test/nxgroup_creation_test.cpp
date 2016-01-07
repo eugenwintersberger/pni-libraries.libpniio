@@ -28,30 +28,20 @@
 #include <pni/io/nx/nxobject_type.hpp>
 #include <pni/io/nx/algorithms.hpp>
 #include <pni/io/exceptions.hpp>
+#include "base_fixture.hpp"
 
 using namespace pni::core;
 using namespace pni::io::nx;
 using pni::io::invalid_object_error;
 using pni::io::object_error;
 
-struct nxgroup_creation_test_fixture
+struct nxgroup_creation_test_fixture : base_fixture
 {
-	string fname;
-    h5::nxfile f;
-    h5::nxgroup root;
-    
     nxgroup_creation_test_fixture():
-        fname("nxgroup_creation_test.nxs"),
-        f(h5::nxfile::create_file(fname,true)),
-        root(f.root())
+        base_fixture("nxgroup_creation_test.nxs")
     {}
-
-    ~nxgroup_creation_test_fixture()
-    {
-        root.close();
-        f.close();
-    }
 };
+
 BOOST_FIXTURE_TEST_SUITE(nxgroup_creation_test,nxgroup_creation_test_fixture)
 
     //-------------------------------------------------------------------------

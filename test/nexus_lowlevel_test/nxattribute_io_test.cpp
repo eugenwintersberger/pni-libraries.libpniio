@@ -23,27 +23,148 @@
 
 #include<cppunit/extensions/HelperMacros.h>
 
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
 #include <pni/io/nx/nx.hpp>
-#include "nxattribute_io_test.hpp"
+#include "../uniform_distribution.hpp"
+#include "test_types.hpp"
+#include "nxattribute_test_fixture.hpp"
+#include "value_ref_test_tools.hpp"
+
+using namespace pni::core;
+using namespace pni::io::nx;
+
+struct nxattribute_io_test_fixture : nxattribute_test_fixture
+{
+    nxattribute_io_test_fixture():
+        nxattribute_test_fixture("nxattribute_io_test.nxs")
+    {}
+};
+
+BOOST_FIXTURE_TEST_SUITE(nxattribute_io_test,nxattribute_io_test_fixture)
+
+    //------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_mdarray,T,attribute_test_types)
+    {
+        auto attr = group.attributes.create<T>("a1",default_shape);
+        auto write_data = create_random_array<T>(default_shape);
+        auto read_data  = create_array<T>(default_shape);
+
+        //write data
+        BOOST_CHECK_NO_THROW(attr.write(write_data));
+        //read data
+        BOOST_CHECK_NO_THROW(attr.read(read_data));
+        BOOST_CHECK_EQUAL_COLLECTIONS(read_data.begin(),read_data.end(),
+                                      write_data.begin(),write_data.end());
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_mdarray_error,T,attribute_test_types)
+    {
+        auto attr = group.attributes.create<T>("a1",default_shape);
+
+        T scalar_value;
+        BOOST_CHECK_THROW(attr.write(scalar_value),size_mismatch_error);
+        BOOST_CHECK_THROW(attr.read(scalar_value),size_mismatch_error);
+
+        auto wrong_size = create_array<T>(shape_t{10});
+        BOOST_CHECK_THROW(attr.write(wrong_size),size_mismatch_error);
+        BOOST_CHECK_THROW(attr.read(wrong_size),size_mismatch_error);
+
+        wrong_size = create_array<T>(shape_t{10,100});
+        BOOST_CHECK_THROW(attr.write(wrong_size),size_mismatch_error);
+        BOOST_CHECK_THROW(attr.read(wrong_size),size_mismatch_error);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_array,T,attribute_test_types)
+    {
+        auto attr = group.attributes.create<T>("a1",default_shape);
+        array write_data(create_random_array<T>(default_shape));
+        array read_data(create_array<T>(default_shape));
+
+        //write data
+        BOOST_CHECK_NO_THROW(attr.write(write_data));
+        //read data
+        BOOST_CHECK_NO_THROW(attr.read(read_data));
+
+        //compare data
+        BOOST_CHECK_EQUAL_COLLECTIONS(read_data.begin(),read_data.end(),
+                                      write_data.begin(),write_data.end());
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_array_error,T,attribute_test_types)
+    {
+        auto attr = group.attributes.create<T>("a1",default_shape);
+
+        array a(create_array<T>(shape_t{4}));
+        BOOST_CHECK_THROW(attr.write(a),size_mismatch_error);
+
+        a = array(create_array<T>(shape_t{10,20}));
+        BOOST_CHECK_THROW(attr.write(a),size_mismatch_error);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_pointer,T,attribute_test_types)
+    {
+        auto attr = group.attributes.create<T>("a1",default_shape);
+
+        auto write_data = create_random_buffer<T>(default_size);
+        auto read_data  = create_buffer<T>(default_size);
+
+        //write data
+        BOOST_CHECK_NO_THROW(attr.write(write_data.size(),write_data.data()));
+        //read data
+        BOOST_CHECK_NO_THROW(attr.read(read_data.size(),read_data.data()));
+
+        //compare data
+        BOOST_CHECK_EQUAL_COLLECTIONS(read_data.begin(),read_data.end(),
+                                      write_data.begin(),write_data.end());
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_pointer_error,T,attribute_test_types)
+    {
+        auto attr = group.attributes.create<T>("a1",default_shape);
+
+        auto data = create_random_buffer<T>(default_size);
+        
+        BOOST_CHECK_THROW(attr.write(default_size+3,data.data()),
+                          size_mismatch_error);
+        BOOST_CHECK_THROW(attr.write(default_size-1,data.data()),
+                          size_mismatch_error);
+
+        BOOST_CHECK_THROW(attr.read(default_size+3,data.data()),
+                          size_mismatch_error);
+        BOOST_CHECK_THROW(attr.read(default_size-1,data.data()),
+                          size_mismatch_error);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_scalar,T,attribute_test_types)
+    {
+        auto attr = group.attributes.create<T>("a1");;
+       
+        auto write_data = create_random_scalar<T>();
+        T read_data;
+
+        BOOST_CHECK_NO_THROW(attr.write(write_data));
+        BOOST_CHECK_NO_THROW(attr.read(read_data));
+
+        BOOST_CHECK_EQUAL(read_data,write_data);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_scalar_error,T,attribute_test_types)
+    {
+        auto attr = group.attributes.create<T>("a1",default_shape);
+        
+        T data;
+        BOOST_CHECK_THROW(attr.read(data),size_mismatch_error);
+        BOOST_CHECK_THROW(attr.write(data),size_mismatch_error);
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
 
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_io_test<uint8>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_io_test<int8>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_io_test<uint16>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_io_test<int16>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_io_test<uint32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_io_test<int32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_io_test<uint64>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_io_test<int64>);
-
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_io_test<float32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_io_test<float64>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_io_test<float128>);
-
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_io_test<complex32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_io_test<complex64>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_io_test<complex128>);
-
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_io_test<binary>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_io_test<bool_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_io_test<string>);

@@ -1,7 +1,5 @@
 //
-// Declaration of Nexus object template.
-//
-// (c) Copyright 2015 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2016 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -18,41 +16,18 @@
 // You should have received a copy of the GNU General Public License
 // along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
-
-//testing class for ArrayShape objects
-
 #pragma once
 
-#include<cppunit/TestFixture.h>
-#include<cppunit/extensions/HelperMacros.h>
-
 #include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
-
 #include <pni/io/nx/nx.hpp>
+#include <vector>
 
-using namespace pni::core;
-using namespace pni::io::nx;
-
-class nxattribute_manage_test: public CppUnit::TestFixture 
+struct base_fixture
 {
-	CPPUNIT_TEST_SUITE(nxattribute_manage_test);
-    CPPUNIT_TEST(test_exists);
-    CPPUNIT_TEST(test_remove);
-	CPPUNIT_TEST_SUITE_END();
-    h5::nxfile f;
-    h5::nxgroup root;
-    static const string filename;
+    pni::core::string filename;
+    pni::io::nx::h5::nxfile file;
+    pni::io::nx::h5::nxgroup root;
 
-public:
-	void setUp();
-	void tearDown();
-
-	//testing basic file functionality
-    void test_exists();
-    void test_remove();
-
+    base_fixture(const pni::core::string &fname);
+    virtual ~base_fixture(); 
 };
-
-const string nxattribute_manage_test::filename="nxattribute_manage_test.nxs";
-

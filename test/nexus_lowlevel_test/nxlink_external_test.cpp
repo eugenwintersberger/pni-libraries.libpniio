@@ -21,105 +21,122 @@
 //      Author: Eugen Wintersberger
 //
 
-#include<cppunit/extensions/HelperMacros.h>
-#include <boost/current_function.hpp>
-#include "nxlink_external_test.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/nxlink.hpp>
+#include <pni/io/nx/xml.hpp>
 #include <pni/io/nx/algorithms.hpp>
+#include "base_fixture.hpp"
+
+using namespace pni::core;
+using namespace pni::io::nx;
+
+const string target_file_struct = 
+"<group name=\"entry\" type=\"NXentry\">"
+"  <group name=\"instrument\" type=\"NXinstrument\">"
+"     <group name=\"detector\" type=\"NXdetector\">"
+"         <field name=\"data\" type=\"uint16\" units=\"au\"/>"
+"     </group>"
+"  </group>"
+"</group>";
+
+const string link_file_struct =
+"<group name=\"entry\" type=\"NXentry\">"
+"<group name=\"data\" type=\"NXdata\"/>"
+"</group>";
 
 
-
-CPPUNIT_TEST_SUITE_REGISTRATION(nxlink_external_test);
-
-//------------------------------------------------------------------------------
-void nxlink_external_test::setUp()
+struct nxlink_external_test_fixture : base_fixture
 {
-    link_file = h5::nxfile::create_file(link_file_name,true);
-    location  = h5::nxgroup(link_file.root()).create_group("links");
+    static const string link_file_name;
+    static const string target_file_name;
 
-    //create structure in the target file
-    target_file = h5::nxfile::create_file(target_file_name,true);
-    root_group = target_file.root();
-    root_group.create_group("entry","NXentry");
-    root_group.create_group("/entry/detector","NXdetector");
-    h5::nxfield field = root_group.create_field<uint16>("/entry/detector/data");
-    field.attributes.create<string>("units").write("au");
-    field.close();
-    root_group.close();
-    target_file.close();
-}
+    h5::nxgroup location;
 
-//------------------------------------------------------------------------------
-void nxlink_external_test::tearDown()
-{
-    location.close();
-	link_file.close();
-}
+    nxlink_external_test_fixture():
+        base_fixture(link_file_name)
+    {
+        xml::node n = xml::create_from_string(link_file_struct);
+        xml::xml_to_nexus(n,root);
+        location = get_object(root,"/:NXentry/:NXdata");
 
-//----------------------------------------------------------------------------
-void nxlink_external_test::test_field_by_string()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        n = xml::create_from_string(target_file_struct);
+        h5::nxfile target= h5::nxfile::create_file(target_file_name,true);
+        h5::nxgroup r = target.root();
+        xml::xml_to_nexus(n,r);
+    }
 
-    CPPUNIT_ASSERT_NO_THROW(link(target_file_name+"://entry/detector/data",
-                            location,"link_field"));
+    ~nxlink_external_test_fixture()
+    {
+        location.close();
+    }
+};
 
-    h5::nxfield field = get_object(location,"link_field");
-    CPPUNIT_ASSERT(get_unit(field)=="au");
-    CPPUNIT_ASSERT(is_external_link(location,"link_field"));
-}
+const string nxlink_external_test_fixture::link_file_name = 
+"nxlink_external_test.link.nxs";
+const string nxlink_external_test_fixture::target_file_name = 
+"nxlink_external_test.target.nxs";
 
-//----------------------------------------------------------------------------
-void nxlink_external_test::test_field_by_path()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    nxpath target = nxpath::from_string(target_file_name+
-                     "://entry:NXentry/detector:NXdetector/data");
-    CPPUNIT_ASSERT_NO_THROW(link(target,location,"link_field"));
 
-    h5::nxfield field = location["link_field"];
-    CPPUNIT_ASSERT(get_unit(field)=="au");
-    CPPUNIT_ASSERT(is_external_link(location,"link_field"));
-}
+BOOST_FIXTURE_TEST_SUITE(nxlink_external_test,nxlink_external_test_fixture)
 
-//----------------------------------------------------------------------------
-void nxlink_external_test::test_group_by_string()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field_by_string)
+    {
+        BOOST_CHECK_NO_THROW(link(target_file_name+"://entry/instrument/detector/data",
+                                location,"link_field"));
 
-    CPPUNIT_ASSERT_NO_THROW(link(target_file_name+"://entry/detector",
-                                 location,"link_group"));
-    h5::nxgroup g = location["link_group"];
-    CPPUNIT_ASSERT(get_class(g)=="NXdetector");
-    CPPUNIT_ASSERT(is_external_link(location,"link_group"));
-}
+        h5::nxfield field = get_object(location,"link_field");
+        BOOST_CHECK_EQUAL(get_unit(field),"au");
+        BOOST_CHECK(is_external_link(location,"link_field"));
+    }
 
-//----------------------------------------------------------------------------
-void nxlink_external_test::test_group_by_path()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field_by_path)
+    {
+        nxpath target = nxpath::from_string(target_file_name+
+                         "://entry:NXentry/instrument/detector:NXdetector/data");
+        BOOST_CHECK_NO_THROW(link(target,location,"link_field"));
 
-    nxpath p = nxpath::from_string(target_file_name+
-               "://entry:NXentry/detector:NXdetector");
-    CPPUNIT_ASSERT_NO_THROW(link(p,location,"link_group"));
-    h5::nxgroup g = location["link_group"];
-    CPPUNIT_ASSERT(get_class(g)=="NXdetector");
-    CPPUNIT_ASSERT(is_external_link(location,"link_group"));
-}
+        h5::nxfield field = location["link_field"];
+        BOOST_CHECK_EQUAL(get_unit(field),"au");
+        BOOST_CHECK(is_external_link(location,"link_field"));
+    }
 
-//----------------------------------------------------------------------------
-void nxlink_external_test::test_error()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT_THROW(link(target_file_name+"://:NXentry/detector/data",location,"link"),
-                         value_error);
-    CPPUNIT_ASSERT_THROW(link(nxpath::from_string(target_file_name+"://:NXentry/detector/data"),
-                         location,"link"),value_error);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group_by_string)
+    {
+        BOOST_CHECK_NO_THROW(link(target_file_name+"://entry/instrument/detector",
+                                     location,"link_group"));
+        h5::nxgroup g = location["link_group"];
+        BOOST_CHECK_EQUAL(get_class(g),"NXdetector");
+        BOOST_CHECK(is_external_link(location,"link_group"));
+    }
 
-    CPPUNIT_ASSERT_THROW(link(target_file_name+"://entry/../detector/data",location,"link"),
-                         value_error);
-    CPPUNIT_ASSERT_THROW(link(target_file_name+"://../entry/../detector/data",location,"link"),
-                         value_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group_by_path)
+    {
+        nxpath p = nxpath::from_string(target_file_name+
+                   "://entry:NXentry/instrument/detector:NXdetector");
+        BOOST_CHECK_NO_THROW(link(p,location,"link_group"));
+        h5::nxgroup g = location["link_group"];
+        BOOST_CHECK_EQUAL(get_class(g),"NXdetector");
+        BOOST_CHECK(is_external_link(location,"link_group"));
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_error)
+    {
+        BOOST_CHECK_THROW(link(target_file_name+"://:NXentry/instrument/detector/data",location,"link"),
+                             value_error);
+        BOOST_CHECK_THROW(link(nxpath::from_string(target_file_name+"://:NXentry/instrument/detector/data"),
+                             location,"link"),value_error);
+
+        BOOST_CHECK_THROW(link(target_file_name+"://entry/../instrument/detector/data",location,"link"),
+                             value_error);
+        BOOST_CHECK_THROW(link(target_file_name+"://../entry/../detector/data",location,"link"),
+                             value_error);
+    }
+
+BOOST_AUTO_TEST_SUITE_END()

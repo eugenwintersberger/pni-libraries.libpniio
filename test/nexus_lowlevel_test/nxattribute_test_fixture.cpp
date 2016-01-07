@@ -1,7 +1,5 @@
 //
-// Declaration of Nexus object template.
-//
-// (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2016 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,35 +15,19 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
-// ==========================================================================
-//
-//  Created on: Sept 10, 2014
-//      Author: Eugen Wintersberger
-//
+// ===========================================================================
 
-#pragma once
-
-#include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/flat_group.hpp>
-
-#include<cppunit/TestFixture.h>
-#include<cppunit/extensions/HelperMacros.h>
-
+#include "nxattribute_test_fixture.hpp"
 
 using namespace pni::core;
 using namespace pni::io::nx;
 
-class flat_group_test: public CppUnit::TestFixture  
+void nxattribute_test_fixture::get_parent(h5::nxgroup &parent)
 {
-	CPPUNIT_TEST_SUITE(flat_group_test);
-	CPPUNIT_TEST(test_creation);
-	CPPUNIT_TEST_SUITE_END();
-private:
-    h5::nxfile _f;
+    parent = group;
+}
 
-public:
-	void setUp();
-	void tearDown();
-	void test_creation();
-};
-
+void nxattribute_test_fixture::get_parent(h5::nxfield &parent)
+{
+    parent = field;
+}

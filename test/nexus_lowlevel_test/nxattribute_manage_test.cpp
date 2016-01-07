@@ -1,6 +1,4 @@
 //
-// Declaration of Nexus object template.
-//
 // (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
@@ -19,46 +17,44 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 
-//implementation of the arrayshape test
-
-#include<cppunit/extensions/HelperMacros.h>
-
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/nx.hpp>
-#include "nxattribute_manage_test.hpp"
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
+#include "test_types.hpp"
+#include "nxattribute_test_fixture.hpp"
 
-//------------------------------------------------------------------------------
-void nxattribute_manage_test::setUp() 
-{ 
-    f = h5::nxfile::create_file(filename,true);
-    root = f.root();
-}
+using namespace pni::core;
+using namespace pni::io::nx;
 
-//----------------------------------------------------------------------------
-void nxattribute_manage_test::tearDown() 
-{   
-    root.close();
-    f.close();
-}
-
-//----------------------------------------------------------------------------
-void nxattribute_manage_test::test_exists()
+struct nxattribute_manage_test_fixture : nxattribute_test_fixture
 {
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT(!root.attributes.exists("bla"));
-    CPPUNIT_ASSERT_NO_THROW(root.attributes.create<string>("bla"));
-    CPPUNIT_ASSERT(root.attributes.exists("bla"));
-}
+    nxattribute_manage_test_fixture():
+        nxattribute_test_fixture("nxattribute_manage_test.nxs")
+    {}
+};
 
-//----------------------------------------------------------------------------
-void nxattribute_manage_test::test_remove()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT_NO_THROW(root.attributes.create<string>("bla"));
-    CPPUNIT_ASSERT(root.attributes.exists("bla"));
-    CPPUNIT_ASSERT_NO_THROW(root.attributes.remove("bla"));
-    CPPUNIT_ASSERT(!root.attributes.exists("bla"));
-    CPPUNIT_ASSERT_THROW(root.attributes.remove("bla"),key_error);
+BOOST_FIXTURE_TEST_SUITE(nxattribute_manage_test,nxattribute_manage_test_fixture)
 
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_exists)
+    {
+        BOOST_CHECK(!group.attributes.exists("bla"));
+        BOOST_CHECK_NO_THROW(group.attributes.create<string>("bla"));
+        BOOST_CHECK(group.attributes.exists("bla"));
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_remove)
+    {
+        BOOST_CHECK_NO_THROW(group.attributes.create<string>("bla"));
+        BOOST_CHECK(group.attributes.exists("bla"));
+        BOOST_CHECK_NO_THROW(group.attributes.remove("bla"));
+        BOOST_CHECK(!group.attributes.exists("bla"));
+        BOOST_CHECK_THROW(root.attributes.remove("bla"),key_error);
+
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
+
+

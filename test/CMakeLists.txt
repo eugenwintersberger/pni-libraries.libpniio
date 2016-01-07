@@ -18,7 +18,7 @@ add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
 
 add_subdirectory(xml_test)
 add_subdirectory(hdf5_imp_test)
-#add_subdirectory(nexus_lowlevel_test)
+add_subdirectory(nexus_lowlevel_test)
 #add_subdirectory(parser_test)
 #add_subdirectory(algorithm_test)
 add_subdirectory(reader_test)

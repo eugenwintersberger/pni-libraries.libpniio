@@ -21,28 +21,85 @@
 
 //implementation of the arrayshape test
 
-#include<cppunit/extensions/HelperMacros.h>
-
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/core/arrays.hpp>
 #include <pni/io/nx/nx.hpp>
-#include "nxfield_creation_test.hpp"
+#include "test_types.hpp"
+#include "nxfield_test_fixture.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<uint8>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<int8>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<uint16>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<int16>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<uint32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<int32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<uint64>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<int64>);
+using namespace pni::core;
+using namespace pni::io::nx;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<float32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<float64>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<float128>);
+struct nxfield_inquiry_test_fixture : nxfield_test_fixture
+{
+    static const string fieldname;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<complex32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<complex64>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<complex128>);
+    nxfield_inquiry_test_fixture():
+        nxfield_test_fixture("nxfield_inquiry_test.nxs")
+    {}
+};
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<binary>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<bool_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxfield_creation_test<string>);
+const string nxfield_inquiry_test_fixture::fieldname = "data";
+
+BOOST_FIXTURE_TEST_SUITE(nxfield_inquiry_test,nxfield_inquiry_test_fixture)
+    
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_name,T,field_test_types)
+    {
+        h5::nxfield field = create_field<T>(fieldname,default_shape);
+        BOOST_CHECK_EQUAL(field.name(),fieldname);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_filename,T,field_test_types)
+    {
+        h5::nxfield field = create_field<T>(fieldname,default_shape);
+        BOOST_CHECK_EQUAL(field.filename(),filename);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_is_valid,T,field_test_types)
+    {
+        h5::nxfield f2; 
+        BOOST_CHECK(!f2.is_valid());
+
+        h5::nxfield field = create_field<T>(fieldname,default_shape);
+        BOOST_CHECK(field.is_valid());
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_size,T,field_test_types)
+    {
+        h5::nxfield field = create_field<T>(fieldname,default_shape);
+        BOOST_CHECK_EQUAL(field.size(),default_size);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_rank,T,field_test_types)
+    {
+        h5::nxfield field = create_field<T>(fieldname,default_shape);
+        BOOST_CHECK_EQUAL(field.rank(),2);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_shape,T,field_test_types)
+    {
+        h5::nxfield field = create_field<T>(fieldname,default_shape);
+        auto rs = field.shape<shape_t>();
+        BOOST_CHECK_EQUAL_COLLECTIONS(rs.begin(),rs.end(),
+                                      default_shape.begin(),default_shape.end());
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_type_id,T,field_test_types)
+    {
+        h5::nxfield field = create_field<T>(fieldname,default_shape);
+        type_id_t tid = type_id_map<T>::type_id;
+        BOOST_CHECK_EQUAL(field.type_id(),tid);
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+

@@ -21,175 +21,167 @@
 //      Author: Eugen Wintersberger
 //
 
-#include<cppunit/extensions/HelperMacros.h>
-#include <boost/current_function.hpp>
-#include "nxlink_internal_test.hpp"
+#include <boost/test/unit_test.hpp>
+#include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/nxlink.hpp>
 #include <pni/io/nx/algorithms.hpp>
+#include <pni/io/nx/xml.hpp>
+
+#include "base_fixture.hpp"
+
+using namespace pni::core;
+using namespace pni::io::nx;
+
+static const string file_structure = 
+"<group name=\"entry\" type=\"NXentry\">"
+"  <group name=\"instrument\" type=\"NXinstrument\">"
+"     <group name=\"detector\" type=\"NXdetector\">"
+"         <field name=\"data\" type=\"uint16\" units=\"au\"/>"
+"     </group>"
+"  </group>"
+"</group>"
+"<group name=\"links\"/>" ;
 
 
-
-CPPUNIT_TEST_SUITE_REGISTRATION(nxlink_internal_test);
-
-//------------------------------------------------------------------------------
-void nxlink_internal_test::setUp()
+struct nxlink_internal_test_fixture : base_fixture
 {
-    target_file = h5::nxfile::create_file("nxlink_internal_test.nxs",true);
-    h5::nxgroup root_group = target_file.root();
-    location = root_group.create_group("links");
+    h5::nxgroup location;
+    nxlink_internal_test_fixture():
+        base_fixture("nxlink_internal_test.nxs")
+    {
+        xml::node n = xml::create_from_string(file_structure);
+        xml::xml_to_nexus(n,root); 
+        location = get_object(root,"/links");
+    }
 
-    root_group.create_group("entry","NXentry");
-    target_group = root_group.create_group("/entry/detector","NXdetector");
-    target_field = root_group.create_field<uint16>("/entry/detector/data");
-    target_field.attributes.create<string>("units").write("au");
-}
+};
 
-//------------------------------------------------------------------------------
-void nxlink_internal_test::tearDown()
-{
-    target_field.close();
-    target_group.close();
-    root_group.close();
-    location.close();
-	target_file.close();
-}
 
-//----------------------------------------------------------------------------
-void nxlink_internal_test::test_is_hard_link()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+BOOST_FIXTURE_TEST_SUITE(nxlink_internal_test,nxlink_internal_test_fixture)
 
-    CPPUNIT_ASSERT(is_hard_link(h5::nxgroup(target_file.root()),"entry"));
-    CPPUNIT_ASSERT(is_hard_link(target_group,"data"));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_is_hard_link)
+    {
+        BOOST_CHECK(is_hard_link(root,"entry"));
+        h5::nxgroup g = get_object(root,"/entry/instrument/detector");
+        BOOST_CHECK(is_hard_link(g,"data"));
+    }
 
-//------------------------------------------------------------------------------
-void nxlink_internal_test::test_field_by_instance()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field_by_instance)
+    {
+        h5::nxfield target= get_object(root,"/entry/instrument/detector/data");
 
-    CPPUNIT_ASSERT_NO_THROW(link(target_field,location,"link_field"));
-    h5::nxfield field = location["link_field"];
-    CPPUNIT_ASSERT(get_unit(field)=="au");
-    CPPUNIT_ASSERT(is_soft_link(location,"link_field"));
-}
+        BOOST_CHECK_NO_THROW(link(target,location,"link_field"));
 
-//----------------------------------------------------------------------------
-void nxlink_internal_test::test_field_by_string_absolute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        h5::nxfield field = location["link_field"];
+        BOOST_CHECK_EQUAL(get_unit(field),"au");
+        BOOST_CHECK(is_soft_link(location,"link_field"));
+    }
 
-    CPPUNIT_ASSERT_NO_THROW(link("/entry/detector/data",location,"link_field"));
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field_by_string_absolute)
+    {
+        BOOST_CHECK_NO_THROW(link("/entry/instrument/detector/data",
+                                  location,"link_field"));
 
-    h5::nxfield field = location["link_field"];
-    CPPUNIT_ASSERT(get_unit(field)=="au");
-    CPPUNIT_ASSERT(is_soft_link(location,"link_field"));
+        h5::nxfield field = location["link_field"];
+        BOOST_CHECK_EQUAL(get_unit(field),"au");
+        BOOST_CHECK(is_soft_link(location,"link_field"));
 
-}
+    }
 
-//----------------------------------------------------------------------------
-void nxlink_internal_test::test_field_by_string_relative()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field_by_string_relative)
+    {
+        BOOST_CHECK_NO_THROW(link("../entry/instrument/detector/data",
+                                  location,"link_field"));
 
-    CPPUNIT_ASSERT_NO_THROW(link("../entry/detector/data",location,"link_field"));
+        h5::nxfield field = location["link_field"];
+        BOOST_CHECK_EQUAL(get_unit(field),"au");
+        BOOST_CHECK(is_soft_link(location,"link_field"));
+    }
 
-    h5::nxfield field = location["link_field"];
-    CPPUNIT_ASSERT(get_unit(field)=="au");
-    CPPUNIT_ASSERT(is_soft_link(location,"link_field"));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field_by_path_relative)
+    {
+        nxpath target = nxpath::from_string("../entry/instrument/detector/data");
+        BOOST_CHECK_NO_THROW(link(target,location,"link_field"));
 
-//----------------------------------------------------------------------------
-void nxlink_internal_test::test_field_by_path_relative()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        h5::nxfield field = location["link_field"];
+        BOOST_CHECK_EQUAL(get_unit(field),"au");
+        BOOST_CHECK(is_soft_link(location,"link_field"));
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field_by_path_absolute)
+    {
+        nxpath target = nxpath::from_string("/entry/instrument/detector/data");
+        BOOST_CHECK_NO_THROW(link(target,location,"link_field"));
+
+        h5::nxfield field = location["link_field"];
+        BOOST_CHECK_EQUAL(get_unit(field),"au");
+        BOOST_CHECK(is_soft_link(location,"link_field"));
+    }
     
-    nxpath target = nxpath::from_string("../entry:NXentry/detector:NXdetector/data");
-    CPPUNIT_ASSERT_NO_THROW(link(target,location,"link_field"));
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group_by_instance)
+    {
+        h5::nxgroup target = get_object(root,"/:NXentry/:NXinstrument/:NXdetector");
+        BOOST_CHECK_NO_THROW(link(target,location,"link_group"));
+        h5::nxgroup g = location["link_group"];
+        BOOST_CHECK_EQUAL(get_class(g),"NXdetector");
+        BOOST_CHECK(is_soft_link(location,"link_group"));
+    }
 
-    h5::nxfield field = location["link_field"];
-    CPPUNIT_ASSERT(get_unit(field)=="au");
-    CPPUNIT_ASSERT(is_soft_link(location,"link_field"));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group_by_string_relative)
+    {
+        BOOST_CHECK_NO_THROW(link("../entry/instrument/detector",location,"link_group"));
+        h5::nxgroup g = location["link_group"];
+        BOOST_CHECK_EQUAL(get_class(g),"NXdetector");
+        BOOST_CHECK(is_soft_link(location,"link_group"));
+    }
 
-//----------------------------------------------------------------------------
-void nxlink_internal_test::test_field_by_path_absolute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group_by_string_absolute)
+    {
+        BOOST_CHECK_NO_THROW(link("/entry/instrument/detector",location,"link_group"));
+        h5::nxgroup g = location["link_group"];
+        BOOST_CHECK_EQUAL(get_class(g),"NXdetector");
+        BOOST_CHECK(is_soft_link(location,"link_group"));
+    }
 
-    nxpath target = nxpath::from_string("/entry:NXentry/detector:NXdetector/data");
-    CPPUNIT_ASSERT_NO_THROW(link(target,location,"link_field"));
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group_by_path_relative)
+    {
+        nxpath p = nxpath::from_string("../entry/instrument/detector:NXdetector");
+        BOOST_CHECK_NO_THROW(link(p,location,"link_group"));
+        h5::nxgroup g = location["link_group"];
+        BOOST_CHECK_EQUAL(get_class(g),"NXdetector");
+        BOOST_CHECK(is_soft_link(location,"link_group"));
+    }
 
-    h5::nxfield field = location["link_field"];
-    CPPUNIT_ASSERT(get_unit(field)=="au");
-    CPPUNIT_ASSERT(is_soft_link(location,"link_field"));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group_by_path_absolute)
+    {
+        nxpath p = nxpath::from_string("/entry/instrument/detector:NXdetector");
+        BOOST_CHECK_NO_THROW(link(p,location,"link_group"));
+        h5::nxgroup g = location["link_group"];
+        BOOST_CHECK_EQUAL(get_class(g),"NXdetector");
+        BOOST_CHECK(is_soft_link(location,"link_group"));
+    }
 
-//------------------------------------------------------------------------------
-void nxlink_internal_test::test_group_by_instance()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT_NO_THROW(link(target_group,location,"link_group"));
-    h5::nxgroup g = location["link_group"];
-    CPPUNIT_ASSERT(get_class(g)=="NXdetector");
-    CPPUNIT_ASSERT(is_soft_link(location,"link_group"));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_error)
+    {
+        BOOST_CHECK_THROW(link("/:NXentry/instrument/detector/data",location,"link"),
+                             value_error);
+        BOOST_CHECK_THROW(link(nxpath::from_string("/:NXentry/instrument/detector/data"),
+                             location,"link"),value_error);
 
-//----------------------------------------------------------------------------
-void nxlink_internal_test::test_group_by_string_relative()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        BOOST_CHECK_THROW(link("/entry/../detector/data",location,"link"),
+                             value_error);
+    }
 
-    CPPUNIT_ASSERT_NO_THROW(link("../entry/detector",location,"link_group"));
-    h5::nxgroup g = location["link_group"];
-    CPPUNIT_ASSERT(get_class(g)=="NXdetector");
-    CPPUNIT_ASSERT(is_soft_link(location,"link_group"));
-}
-
-//----------------------------------------------------------------------------
-void nxlink_internal_test::test_group_by_string_absolute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    CPPUNIT_ASSERT_NO_THROW(link("/entry/detector",location,"link_group"));
-    h5::nxgroup g = location["link_group"];
-    CPPUNIT_ASSERT(get_class(g)=="NXdetector");
-    CPPUNIT_ASSERT(is_soft_link(location,"link_group"));
-}
-//----------------------------------------------------------------------------
-void nxlink_internal_test::test_group_by_path_relative()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    nxpath p = nxpath::from_string("../entry:NXentry/detector:NXdetector");
-    CPPUNIT_ASSERT_NO_THROW(link(p,location,"link_group"));
-    h5::nxgroup g = location["link_group"];
-    CPPUNIT_ASSERT(get_class(g)=="NXdetector");
-    CPPUNIT_ASSERT(is_soft_link(location,"link_group"));
-}
-
-//----------------------------------------------------------------------------
-void nxlink_internal_test::test_group_by_path_absolute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    nxpath p = nxpath::from_string("/entry:NXentry/detector:NXdetector");
-    CPPUNIT_ASSERT_NO_THROW(link(p,location,"link_group"));
-    h5::nxgroup g = location["link_group"];
-    CPPUNIT_ASSERT(get_class(g)=="NXdetector");
-    CPPUNIT_ASSERT(is_soft_link(location,"link_group"));
-}
-
-//----------------------------------------------------------------------------
-void nxlink_internal_test::test_error()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT_THROW(link("/:NXentry/detector/data",location,"link"),
-                         value_error);
-    CPPUNIT_ASSERT_THROW(link(nxpath::from_string("/:NXentry/detector/data"),
-                         location,"link"),value_error);
-
-    CPPUNIT_ASSERT_THROW(link("/entry/../detector/data",location,"link"),
-                         value_error);
-}
+BOOST_AUTO_TEST_SUITE_END()

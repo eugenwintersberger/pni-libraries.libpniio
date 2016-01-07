@@ -21,28 +21,144 @@
 
 //implementation of the arrayshape test
 
-#include<cppunit/extensions/HelperMacros.h>
-
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/exceptions.hpp>
 #include <pni/io/nx/nx.hpp>
-#include "nxattribute_creation_test.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_creation_test<uint8>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_creation_test<int8>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_creation_test<uint16>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_creation_test<int16>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_creation_test<uint32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_creation_test<int32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_creation_test<uint64>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_creation_test<int64>);
+#include "test_types.hpp"
+#include "nxattribute_test_fixture.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_creation_test<float32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_creation_test<float64>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_creation_test<float128>);
+using namespace pni::core;
+using namespace pni::io::nx;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_creation_test<complex32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_creation_test<complex64>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_creation_test<complex128>);
+struct nxattribute_creation_test_fixture : nxattribute_test_fixture
+{
+    nxattribute_creation_test_fixture():
+        nxattribute_test_fixture("nxattribute_creation_test.nxs")
+    {}
+};
 
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_creation_test<binary>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_creation_test<bool_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(nxattribute_creation_test<string>);
+BOOST_FIXTURE_TEST_SUITE(nxattribute_creation_test,nxattribute_creation_test_fixture)
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_scalar_no_overwrite,T,parent_attr_types)
+    {
+        typedef typename boost::mpl::front<T>::type parent_type;
+        typedef typename boost::mpl::back<T>::type attribute_type;
+        
+        parent_type parent; 
+        get_parent(parent);
+
+        h5::nxattribute attr;
+        BOOST_CHECK_NO_THROW(attr = parent.attributes.template create<attribute_type>("test"));
+        BOOST_CHECK(attr.is_valid());
+        BOOST_CHECK_EQUAL(attr.size(),1);
+        type_id_t tid = type_id_map<attribute_type>::type_id;
+        BOOST_CHECK_EQUAL(attr.type_id(),tid);
+
+        //try to create a new attribute of same name should throw
+        BOOST_CHECK_THROW(parent.attributes.template create<attribute_type>("test"),
+                          pni::io::object_error);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_scalar_with_overwrite,T,parent_attr_types)
+    {
+        typedef typename boost::mpl::front<T>::type parent_type;
+        typedef typename boost::mpl::back<T>::type attribute_type;
+
+        parent_type parent; 
+        get_parent(parent);
+
+        h5::nxattribute attr;
+        BOOST_CHECK_NO_THROW(attr = parent.attributes.template create<attribute_type>("test"));
+        BOOST_CHECK(attr.is_valid());
+        BOOST_CHECK_EQUAL(attr.size() , 1);
+        BOOST_CHECK_EQUAL(attr.rank() , 1);
+        type_id_t tid = type_id_map<attribute_type>::type_id;
+        BOOST_CHECK_EQUAL(attr.type_id() , tid);
+
+        //try to create a new attribute of same name should throw
+        BOOST_CHECK_NO_THROW(parent.attributes.template create<string>("test",true));
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_multidim_no_overwrite,T,parent_attr_types)
+    {
+        typedef typename boost::mpl::front<T>::type parent_type;
+        typedef typename boost::mpl::back<T>::type attribute_type;
+        
+        parent_type parent; 
+        get_parent(parent);
+
+        h5::nxattribute attr;
+        BOOST_CHECK_NO_THROW(attr = parent.attributes.template create<attribute_type>("test",default_shape));
+        BOOST_CHECK(attr.is_valid());
+        BOOST_CHECK_EQUAL(attr.size() , default_size);
+        type_id_t tid = type_id_map<attribute_type>::type_id;
+        BOOST_CHECK_EQUAL(attr.type_id() , tid);
+
+        auto a_shape = attr.template shape<shape_t>();
+        BOOST_CHECK_EQUAL_COLLECTIONS(a_shape.begin(),a_shape.end(),
+                                      default_shape.begin(),default_shape.end());
+
+        //try to create a new attribute of same name should throw
+        BOOST_CHECK_THROW(parent.attributes.template create<attribute_type>("test",default_shape),
+                          pni::io::object_error);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_multidim_with_overwrite,T,parent_attr_types)
+    {
+        typedef typename boost::mpl::front<T>::type parent_type;
+        typedef typename boost::mpl::back<T>::type attribute_type;
+        
+        parent_type parent; 
+        get_parent(parent);
+
+        h5::nxattribute attr;
+        BOOST_CHECK_NO_THROW(attr = parent.attributes.template
+                                    create<attribute_type>("test",default_shape));
+        BOOST_CHECK(attr.is_valid());
+        BOOST_CHECK_EQUAL(attr.size(),default_size);
+        type_id_t tid = type_id_map<attribute_type>::type_id;
+        BOOST_CHECK_EQUAL(attr.type_id(),tid );
+
+        auto a_shape = attr.template shape<shape_t>();
+        BOOST_CHECK_EQUAL_COLLECTIONS(a_shape.begin(),a_shape.end(),
+                                      default_shape.begin(),default_shape.end());
+
+        //try to create a new attribute of same name should throw
+        BOOST_CHECK_NO_THROW(parent.attributes.template
+                create<string>("test",default_shape,true));
+    }
+
+
+    //----------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_copy_construction,T,attribute_test_types)
+    {
+        auto attr1 = field.attributes.create<T>("test");
+
+        //copy construction
+        h5::nxattribute attr = attr1;
+        BOOST_CHECK(attr.is_valid());
+        BOOST_CHECK(attr1.is_valid());
+        BOOST_CHECK_EQUAL(attr.name(),attr1.name());
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_move_construction,T,attribute_test_types)
+    {
+        auto attr1 = field.attributes.create<T>("test");
+
+        //copy construction
+        h5::nxattribute attr = std::move(attr1);
+        BOOST_CHECK(attr.is_valid());
+        BOOST_CHECK(!attr1.is_valid());
+        BOOST_CHECK_EQUAL(attr.name(),"test");
+    }
+
+
+BOOST_AUTO_TEST_SUITE_END()
+
