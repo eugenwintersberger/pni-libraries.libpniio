@@ -21,114 +21,103 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/get_parent.hpp>
 #include <pni/io/nx/algorithms/is_valid.hpp>
 #include <pni/io/nx/algorithms/get_name.hpp>
 #include <pni/io/nx/algorithms/is_group.hpp>
 #include <pni/io/nx/algorithms/as_group.hpp>
-#include <boost/current_function.hpp>
-#include <cppunit/extensions/HelperMacros.h>
-
-#include "get_parent_test.hpp"
-
+#include <pni/io/nx/algorithms/get_object.hpp>
 #include <pni/io/exceptions.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
+
+#include "../algorithm_test_fixture.hpp"
+
+using namespace pni::io::nx;
+using namespace pni::core;
 using pni::io::invalid_object_error;
 
-
-CPPUNIT_TEST_SUITE_REGISTRATION(get_parent_test);
-
-//-----------------------------------------------------------------------------
-void get_parent_test::setUp()
+struct get_parent_test_suite : algorithm_test_fixture
 {
-    file = h5::nxfile::create_file("get_parent_test.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    group.create_group("instrument","NXinstrument");
-    field = root.create_field<uint32>("data");
-}
+    static const string data_path;
+    static const string inst_path;
+    static const string attr_path;
 
-//-----------------------------------------------------------------------------
-void get_parent_test::tearDown() 
-{ 
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
+    get_parent_test_suite():
+        algorithm_test_fixture("get_parent_test.nx")
+    {
+        root.create_group("entry","NXentry").
+             create_group("instrument","NXinstrument").
+             create_group("detector","NXdetector");
+
+        h5::nxgroup g = get_object(root,":NXentry/:NXinstrument/:NXdetector");
+        g.create_field<int32>("data",shape_t{0,1024,1024});
+    }
+};
+
+const string get_parent_test_suite::data_path = 
+":NXentry/:NXinstrument/:NXdetector/data";
+
+const string get_parent_test_suite::inst_path = 
+":NXentry/:NXinstrument";
+
+const string get_parent_test_suite::attr_path = 
+":NXentry/:NXinstrument@NX_class";
 
 
-//-----------------------------------------------------------------------------
-void get_parent_test::test_nxobject_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+BOOST_FIXTURE_TEST_SUITE(get_parent_test,get_parent_test_suite)
 
-    h5::nxobject object ;
-    CPPUNIT_ASSERT_THROW(get_parent(object),invalid_object_error);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_nxobject_group)
+    {
+        h5::nxobject instrument ;
+        BOOST_CHECK_THROW(get_parent(instrument),invalid_object_error);
 
-        
-    object= group["instrument"];
-    CPPUNIT_ASSERT(is_valid(get_parent(object)));
-    CPPUNIT_ASSERT(get_name(get_parent(object)) == "group");
-    CPPUNIT_ASSERT(get_name(get_parent(h5::nxobject(group))) == "/");
-    
-    CPPUNIT_ASSERT(get_name(get_parent(get_parent(h5::nxobject(group))))=="/");
-}
+        instrument= get_object(root,inst_path);
+        BOOST_CHECK(is_valid(get_parent(instrument)));
+        BOOST_CHECK_EQUAL(get_name(get_parent(instrument)),"entry");
+        BOOST_CHECK_EQUAL(get_name(get_parent(get_parent(instrument))),"/");
+    }
 
-//-----------------------------------------------------------------------------
-void get_parent_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        h5::nxgroup instrument = get_object(root,inst_path);
+        BOOST_CHECK(is_valid(get_parent(instrument)));
+        BOOST_CHECK_EQUAL(get_name(get_parent(instrument)),"entry");
+        BOOST_CHECK_EQUAL(get_name(get_parent(get_parent(instrument))),"/");
+    }
 
-    h5::nxgroup object = group["instrument"];
-    CPPUNIT_ASSERT(is_valid(get_parent(object)));
-    CPPUNIT_ASSERT(get_name(get_parent(object)) == "group");
-    CPPUNIT_ASSERT(get_name(get_parent(group)) == "/");
-    
-    CPPUNIT_ASSERT(get_name(get_parent(get_parent(group)))=="/");
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_nxobject_field)
+    {
+        h5::nxobject data = get_object(root,data_path);
+        BOOST_CHECK_EQUAL(get_name(get_parent(data)),"detector");
+    }
 
-//-----------------------------------------------------------------------------
-void get_parent_test::test_nxobject_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    h5::nxobject object = field;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+        h5::nxfield data = get_object(root,data_path);
+        BOOST_CHECK_EQUAL(get_name(get_parent(data)),"detector");
+    }
 
-    CPPUNIT_ASSERT(get_name(get_parent(object)) == "/");
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_nxobject_attribute)
+    {
+        h5::nxobject attr = get_object(root,attr_path);
 
-}
+        BOOST_CHECK(is_group(get_parent(attr)));
+        BOOST_CHECK(is_valid(get_parent(attr)));
+        BOOST_CHECK_EQUAL(get_name(get_parent(attr)),"instrument");
+    }
 
-//----------------------------------------------------------------------------
-void get_parent_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        h5::nxattribute attr = get_object(root,attr_path);
+        BOOST_CHECK_EQUAL(get_name(get_parent(attr)), "instrument");
+    }
 
-    CPPUNIT_ASSERT(get_name(get_parent(field))=="/");
-}
-
-//-----------------------------------------------------------------------------
-void get_parent_test::test_nxobject_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5::nxobject a(group.attributes["NX_class"]);
-
-    auto p = get_parent(a);
-    CPPUNIT_ASSERT(is_group(p));
-    CPPUNIT_ASSERT(is_valid(p));
-    CPPUNIT_ASSERT(get_name(p)=="group");
-}
-
-//----------------------------------------------------------------------------
-void get_parent_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    h5::nxattribute a = group.attributes["NX_class"];
-
-    h5::nxgroup p = get_parent(a);
-
-    CPPUNIT_ASSERT(p.name() == "group");
-
-    p = get_parent(root);
-    CPPUNIT_ASSERT(p.name() == "/");
-}
+BOOST_AUTO_TEST_SUITE_END()

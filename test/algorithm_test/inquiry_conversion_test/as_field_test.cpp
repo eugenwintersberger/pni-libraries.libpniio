@@ -24,15 +24,15 @@
 #include <boost/test/unit_test.hpp>
 #include <pni/core/error.hpp>
 #include <pni/io/nx/algorithms/as_field.hpp>
-#include "inquiry_test_fixture.hpp"
+#include "../algorithm_test_fixture.hpp"
 
 using namespace pni::core;
 using namespace pni::io::nx;
 
-struct as_field_test_fixture : inquiry_test_fixture
+struct as_field_test_fixture : algorithm_test_fixture
 {
     as_field_test_fixture():
-        inquiry_test_fixture("as_field_test.nx")
+        algorithm_test_fixture("as_field_test.nx")
     {}
 };
 
@@ -41,7 +41,7 @@ BOOST_FIXTURE_TEST_SUITE(as_field_test,as_field_test_fixture)
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_group)
     {
-        BOOST_CHECK_THROW(as_field(group),type_error);
+        BOOST_CHECK_THROW(as_field(o_group),type_error);
     }
 
     //-------------------------------------------------------------------------
@@ -50,7 +50,7 @@ BOOST_FIXTURE_TEST_SUITE(as_field_test,as_field_test_fixture)
 
         h5::nxfield f;
         //should work as the stored object is an nxfield instance
-        BOOST_CHECK_NO_THROW(f=as_field(field));
+        BOOST_CHECK_NO_THROW(f=as_field(o_field));
         BOOST_CHECK(f.is_valid());
         BOOST_CHECK_EQUAL(f.name(),"data");
     }
@@ -58,7 +58,7 @@ BOOST_FIXTURE_TEST_SUITE(as_field_test,as_field_test_fixture)
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_attribute)
     {
-        BOOST_CHECK_THROW(as_field(attribute),type_error);
+        BOOST_CHECK_THROW(as_field(o_attribute),type_error);
     }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -26,15 +26,15 @@
 #include <pni/core/types.hpp>
 #include <pni/io/nx/nx.hpp>
 
-#include "inquiry_test_fixture.hpp"
+#include "../algorithm_test_fixture.hpp"
 
 using namespace pni::core;
 using namespace pni::io::nx;
 
-struct is_field_test_fixture : inquiry_test_fixture
+struct is_field_test_fixture : algorithm_test_fixture
 {
     is_field_test_fixture():
-        inquiry_test_fixture("is_field_test.nxs")
+        algorithm_test_fixture("is_field_test.nxs")
     {}
 };
 
@@ -43,19 +43,19 @@ BOOST_FIXTURE_TEST_SUITE(is_field_test,is_field_test_fixture)
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_group)
     {
-        BOOST_CHECK(!is_field(group));
+        BOOST_CHECK(!is_field(o_group));
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_field)
     {
-        BOOST_CHECK(is_field(field)); 
+        BOOST_CHECK(is_field(o_field)); 
     }
 
     //------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_attribute)
     {
-        BOOST_CHECK(!is_field(attribute));
+        BOOST_CHECK(!is_field(o_attribute));
     }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -23,15 +23,15 @@
 
 #include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/as_group.hpp>
-#include "inquiry_test_fixture.hpp"
+#include "../algorithm_test_fixture.hpp"
 
 using namespace pni::core;
 using namespace pni::io::nx;
 
-struct as_group_test_fixture : inquiry_test_fixture
+struct as_group_test_fixture : algorithm_test_fixture
 {
     as_group_test_fixture():
-        inquiry_test_fixture("as_group_test.nx")
+        algorithm_test_fixture("as_group_test.nx")
     {}
 };
 
@@ -43,7 +43,7 @@ BOOST_FIXTURE_TEST_SUITE(as_group_test,as_group_test_fixture)
     {
         h5::nxgroup g;
         //must work - the stored object is an instance of nxgroup
-        BOOST_CHECK_NO_THROW(g = as_group(group));
+        BOOST_CHECK_NO_THROW(g = as_group(o_group));
         BOOST_CHECK(g.is_valid());
         BOOST_CHECK_EQUAL(g.name(),"/");
         string c;
@@ -54,13 +54,13 @@ BOOST_FIXTURE_TEST_SUITE(as_group_test,as_group_test_fixture)
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_field)
     {
-        BOOST_CHECK_THROW(as_group(field),type_error);
+        BOOST_CHECK_THROW(as_group(o_field),type_error);
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_attribute)
     {
-        BOOST_CHECK_THROW(as_group(attribute),type_error);
+        BOOST_CHECK_THROW(as_group(o_attribute),type_error);
     }
 
 BOOST_AUTO_TEST_SUITE_END()

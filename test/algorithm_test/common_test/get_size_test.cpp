@@ -20,82 +20,58 @@
 //  Created on: Jul 5, 2013
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/get_size.hpp>
-#include <boost/current_function.hpp>
-#include <cppunit/extensions/HelperMacros.h>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
-#include "get_size_test.hpp"
+#include "../algorithm_test_fixture.hpp"
 
-
-CPPUNIT_TEST_SUITE_REGISTRATION(get_size_test);
+using namespace pni::core;
+using namespace pni::io::nx;
 using pni::io::invalid_object_error;
 
-//-----------------------------------------------------------------------------
-void get_size_test::setUp()
+struct get_size_test_fixture : algorithm_test_fixture
 {
-    field_shape = shape_t{1,10,10};
-    attr_shape  = shape_t{4,4};
+    get_size_test_fixture():
+        algorithm_test_fixture("get_size_test.nx")
+    {
+        root.create_group("scan_1","NXentry");
+        root.create_group("scan_2","NXentry");
+    }
+};
 
-    file = h5::nxfile::create_file("is_valid.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    group.create_group("instrument","NXinstrument");
-    field = root.create_field<uint32>("data",field_shape);
-    attribute = field.attributes.create<float32>("temp",attr_shape);
-}
+BOOST_FIXTURE_TEST_SUITE(get_size_test,get_size_test_fixture)
 
-//-----------------------------------------------------------------------------
-void get_size_test::tearDown() 
-{ 
-    attribute.close();
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        BOOST_CHECK_EQUAL(get_size(group),3);
+        BOOST_CHECK_EQUAL(get_size(o_group),3);
+        BOOST_CHECK_THROW(get_size(h5::nxgroup()),invalid_object_error);
+        BOOST_CHECK_THROW(get_size(h5::nxobject(h5::nxgroup())),
+                          invalid_object_error);
+    }
 
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+        BOOST_CHECK_EQUAL(get_size(field),1);
+        BOOST_CHECK_EQUAL(get_size(o_field),1);
+        BOOST_CHECK_THROW(get_size(h5::nxfield()),invalid_object_error);
+        BOOST_CHECK_THROW(get_size(h5::nxobject(h5::nxfield())),
+                             invalid_object_error);
 
-//-----------------------------------------------------------------------------
-void get_size_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-        
-    object_type object = root;
-    CPPUNIT_ASSERT(get_size(object)==2);
-    CPPUNIT_ASSERT(get_size(root) == 2);
-    CPPUNIT_ASSERT_THROW(get_size(h5::nxgroup()),invalid_object_error);
-    CPPUNIT_ASSERT_THROW(get_size(h5::nxobject(h5::nxgroup())),
-                         invalid_object_error);
+    }
 
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        BOOST_CHECK_EQUAL(get_size(attribute),1);
+        BOOST_CHECK_EQUAL(get_size(attribute),1);
+        BOOST_CHECK_THROW(get_size(h5::nxattribute()),invalid_object_error);
+        BOOST_CHECK_THROW(get_size(h5::nxobject(h5::nxattribute())),
+                             invalid_object_error);
+    }
 
-//-----------------------------------------------------------------------------
-void get_size_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    object_type object = field;
-
-    CPPUNIT_ASSERT(get_size(object) == 100);
-    CPPUNIT_ASSERT(get_size(field) == 100);
-    CPPUNIT_ASSERT_THROW(get_size(h5::nxfield()),invalid_object_error);
-    CPPUNIT_ASSERT_THROW(get_size(h5::nxobject(h5::nxfield())),
-                         invalid_object_error);
-
-}
-
-//-----------------------------------------------------------------------------
-void get_size_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    shape_t shape;
-    object_type object = attribute;
-    CPPUNIT_ASSERT(get_size(object) == 16);
-    CPPUNIT_ASSERT(get_size(attribute) == 16);
-    CPPUNIT_ASSERT_THROW(get_size(h5::nxattribute()),invalid_object_error);
-    CPPUNIT_ASSERT_THROW(get_size(h5::nxobject(h5::nxattribute())),
-                         invalid_object_error);
-    
-}
-
+BOOST_AUTO_TEST_SUITE_END()

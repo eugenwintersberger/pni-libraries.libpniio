@@ -20,23 +20,28 @@
 //  Created on: Jan 7, 2015
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-#pragma once
 
-#include <pni/io/nx/algorithms/close.hpp>
-#include <pni/core/types.hpp>
-#include <pni/io/nx/nx.hpp>
+#include "algorithm_test_fixture.hpp"
 
-#include "../../base_fixture.hpp"
+using namespace pni::core;
+using namespace pni::io::nx;
 
-struct inquiry_test_fixture : base_fixture
+algorithm_test_fixture::algorithm_test_fixture(const string &filename):
+    base_fixture(filename),
+    group(root),
+    attribute(root.attributes["NX_class"]),
+    field(root.create_field<uint32>("data")),
+    o_group(group),
+    o_attribute(attribute),
+    o_field(field)
+{}
+
+algorithm_test_fixture::~algorithm_test_fixture()
 {
-    pni::io::nx::h5::nxobject group;
-    pni::io::nx::h5::nxobject attribute;
-    pni::io::nx::h5::nxobject field;
-
-    inquiry_test_fixture(const pni::core::string &filename);
-
-    virtual ~inquiry_test_fixture();
-};
-
-
+    close(group);
+    close(attribute);
+    close(field);
+    close(o_group);
+    close(o_attribute);
+    close(o_field);
+}

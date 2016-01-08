@@ -20,108 +20,82 @@
 //  Created on: Jun 28, 2013
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/is_valid.hpp>
-#include <boost/current_function.hpp>
-#include <cppunit/extensions/HelperMacros.h>
+#include <pni/io/nx/nx.hpp>
+#include <pni/core/types.hpp>
 
-#include "is_valid_test.hpp"
+#include "../algorithm_test_fixture.hpp"
 
+using namespace pni::core;
+using namespace pni::io::nx;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(is_valid_test);
-
-//-----------------------------------------------------------------------------
-void is_valid_test::setUp()
+struct is_valid_test_fixture : algorithm_test_fixture
 {
-    file = h5::nxfile::create_file("is_valid_test.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    field = root.create_field<uint32>("data");
-    attribute = group.attributes["NX_class"];
-}
+    is_valid_test_fixture():
+        algorithm_test_fixture("is_valid_test.nx")
+    {}
+};
 
-//-----------------------------------------------------------------------------
-void is_valid_test::tearDown() 
-{ 
-    attribute.close();
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
+BOOST_FIXTURE_TEST_SUITE(is_valid_test,is_valid_test_fixture)
 
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        BOOST_CHECK(is_valid(group));
+        group.close();
+        BOOST_CHECK(!is_valid(group));
+    }
 
-//----------------------------------------------------------------------------
-void is_valid_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT(is_valid(group));
-    group.close();
-    CPPUNIT_ASSERT(!is_valid(group));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+        BOOST_CHECK(is_valid(field));
+        field.close();
+        BOOST_CHECK(!is_valid(field));
+    }
 
-//----------------------------------------------------------------------------
-void is_valid_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT(is_valid(field));
-    field.close();
-    CPPUNIT_ASSERT(!is_valid(field));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        BOOST_CHECK(is_valid(attribute));
+        attribute.close();
+        BOOST_CHECK(!is_valid(attribute));
+    }
 
-//----------------------------------------------------------------------------
-void is_valid_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT(is_valid(attribute));
-    attribute.close();
-    CPPUNIT_ASSERT(!is_valid(attribute));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_file)
+    {
+        BOOST_CHECK(is_valid(file));
+        file.close();
+        BOOST_CHECK(!is_valid(file));
+    }
 
-//----------------------------------------------------------------------------
-void is_valid_test::test_file()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT(is_valid(file));
-    file.close();
-    CPPUNIT_ASSERT(!is_valid(file));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_nxobject_group)
+    {
+        h5::nxobject o;
+        BOOST_CHECK(!is_valid(o));
+        o = group;
+        BOOST_CHECK(is_valid(o));
+    }
 
-//-----------------------------------------------------------------------------
-void is_valid_test::test_nxobject_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    object_type object;
-    CPPUNIT_ASSERT(!is_valid(object));
-    object = group;
-    CPPUNIT_ASSERT(is_valid(object));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_nxobject_field)
+    {
+        h5::nxobject o;
+        BOOST_CHECK(!is_valid(o));
+        o = field;
+        BOOST_CHECK(is_valid(o)); 
+    }
 
-//-----------------------------------------------------------------------------
-void is_valid_test::test_nxobject_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_nxobject_attribute)
+    {
+        h5::nxobject o;
+        BOOST_CHECK(!is_valid(o));
+        o = attribute;
+        BOOST_CHECK(is_valid(o));
+    }
 
-    object_type object;
-    CPPUNIT_ASSERT(!is_valid(object));
-    object = field;
-    CPPUNIT_ASSERT(is_valid(object)); 
-}
-
-//-----------------------------------------------------------------------------
-void is_valid_test::test_nxobject_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    object_type object;
-    CPPUNIT_ASSERT(!is_valid(object));
-    object = attribute;
-    CPPUNIT_ASSERT(is_valid(object));
-   
-}
-
+BOOST_AUTO_TEST_SUITE_END()

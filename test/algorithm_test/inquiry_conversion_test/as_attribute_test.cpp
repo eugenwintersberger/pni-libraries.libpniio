@@ -24,15 +24,15 @@
 #include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/as_attribute.hpp>
 
-#include "inquiry_test_fixture.hpp"
+#include "../algorithm_test_fixture.hpp"
 
 using namespace pni::core;
 using namespace pni::io::nx;
 
-struct as_attribute_test_fixture : inquiry_test_fixture
+struct as_attribute_test_fixture : algorithm_test_fixture
 {
     as_attribute_test_fixture():
-        inquiry_test_fixture("as_attribute_test.nx")
+        algorithm_test_fixture("as_attribute_test.nx")
     {}
 };
 
@@ -42,13 +42,13 @@ BOOST_FIXTURE_TEST_SUITE(as_attribute_test,as_attribute_test_fixture)
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_group)
     {
-        BOOST_CHECK_THROW(as_attribute(group),type_error);
+        BOOST_CHECK_THROW(as_attribute(o_group),type_error);
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_field)
     {
-        BOOST_CHECK_THROW(as_attribute(field),type_error);
+        BOOST_CHECK_THROW(as_attribute(o_field),type_error);
     }
 
     //-------------------------------------------------------------------------
@@ -56,7 +56,7 @@ BOOST_FIXTURE_TEST_SUITE(as_attribute_test,as_attribute_test_fixture)
     {
         //this shoud work as we are trying to retrieve a real attribute
         h5::nxattribute a;
-        BOOST_CHECK_NO_THROW(a = as_attribute(attribute));
+        BOOST_CHECK_NO_THROW(a = as_attribute(o_attribute));
         BOOST_CHECK(a.is_valid());
         BOOST_CHECK_EQUAL(a.name(),"NX_class");
     }

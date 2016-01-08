@@ -26,12 +26,12 @@
 #include <pni/core/types.hpp>
 #include <pni/io/nx/nx.hpp>
 
-#include "inquiry_test_fixture.hpp"
+#include "../algorithm_test_fixture.hpp"
 
-struct is_group_test_fixture : inquiry_test_fixture
+struct is_group_test_fixture : algorithm_test_fixture
 {
     is_group_test_fixture():
-        inquiry_test_fixture("is_group_test.nx")
+        algorithm_test_fixture("is_group_test.nx")
     {}
 };
 
@@ -40,19 +40,19 @@ BOOST_FIXTURE_TEST_SUITE(is_group_test,is_group_test_fixture)
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_group)
     {
-        BOOST_CHECK(is_group(group));
+        BOOST_CHECK(is_group(o_group));
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_field)
     {
-        BOOST_CHECK(!is_group(field)); 
+        BOOST_CHECK(!is_group(o_field)); 
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_attribute)
     {
-        BOOST_CHECK(!is_group(attribute));
+        BOOST_CHECK(!is_group(o_attribute));
     }
 
 BOOST_AUTO_TEST_SUITE_END()

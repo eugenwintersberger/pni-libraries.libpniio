@@ -21,96 +21,74 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/close.hpp>
 #include <pni/io/nx/algorithms/is_valid.hpp>
-#include <cppunit/extensions/HelperMacros.h>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
-#include "close_test.hpp"
+#include "../algorithm_test_fixture.hpp"
 
+using namespace pni::core;
+using namespace pni::io::nx;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(close_test);
-
-//-----------------------------------------------------------------------------
-void close_test::setUp()
+struct close_test_fixture : algorithm_test_fixture
 {
-    file = h5::nxfile::create_file("close_test.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    field = root.create_field<uint32>("data");
-    attribute = group.attributes["NX_class"];
-}
+    close_test_fixture():
+        algorithm_test_fixture("close_test.nx")
+    {}
+};
 
-//-----------------------------------------------------------------------------
-void close_test::tearDown() 
-{ 
-    attribute.close();
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
 
-void close_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT(is_valid(group));
-    close(group);
-    CPPUNIT_ASSERT(!is_valid(group));
-}
+BOOST_FIXTURE_TEST_SUITE(close_test,close_test_fixture)
 
-//-----------------------------------------------------------------------------
-void close_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
 
-    CPPUNIT_ASSERT(is_valid(field));
-    close(field);
-    CPPUNIT_ASSERT(!is_valid(field));
-}
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        BOOST_CHECK(is_valid(group));
+        close(group);
+        BOOST_CHECK(!is_valid(group));
+    }
 
-//----------------------------------------------------------------------------
-void close_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+        BOOST_CHECK(is_valid(field));
+        close(field);
+        BOOST_CHECK(!is_valid(field));
+    }
 
-    CPPUNIT_ASSERT(is_valid(attribute));
-    close(attribute);
-    CPPUNIT_ASSERT(!is_valid(attribute));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        BOOST_CHECK(is_valid(attribute));
+        close(attribute);
+        BOOST_CHECK(!is_valid(attribute));
+    }
 
-//-----------------------------------------------------------------------------
-void close_test::test_visitor_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5::nxobject object = group;
-    CPPUNIT_ASSERT(is_valid(object));
-    close(object);
-    CPPUNIT_ASSERT(!is_valid(object));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_visitor_group)
+    {
+        BOOST_CHECK(is_valid(o_group));
+        close(o_group);
+        BOOST_CHECK(!is_valid(o_group));
+    }
 
-//-----------------------------------------------------------------------------
-void close_test::test_visitor_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_visitor_field)
+    {
+        BOOST_CHECK(is_valid(o_field));
+        close(o_field);
+        BOOST_CHECK(!is_valid(o_field)); 
+    }
 
-    h5::nxobject object = field;
-    CPPUNIT_ASSERT(is_valid(object));
-    close(object);
-    CPPUNIT_ASSERT(!is_valid(object)); 
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_visitor_attribute)
+    {
+        BOOST_CHECK(is_valid(o_attribute));
+        close(o_attribute);
+        BOOST_CHECK(!is_valid(o_attribute));
+    }
 
-//-----------------------------------------------------------------------------
-void close_test::test_visitor_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    h5::nxobject object = attribute;
-    CPPUNIT_ASSERT(is_valid(object));
-    close(object);
-    CPPUNIT_ASSERT(!is_valid(object));
-   
-}
+BOOST_AUTO_TEST_SUITE_END()
 

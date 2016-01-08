@@ -21,99 +21,77 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include <boost/current_function.hpp>
-#include <cppunit/extensions/HelperMacros.h>
+#include <boost/test/unit_test.hpp>
 #include <pni/io/exceptions.hpp>
 #include <pni/io/nx/algorithms/get_filename.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
-#include "get_filename_test.hpp"
+#include "../algorithm_test_fixture.hpp"
 
+using namespace pni::core;
+using namespace pni::io::nx;
 using pni::io::invalid_object_error;
 using pni::io::io_error;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(get_filename_test);
-
-//-----------------------------------------------------------------------------
-void get_filename_test::setUp()
+struct get_filename_test_fixture : algorithm_test_fixture
 {
-    file = h5::nxfile::create_file(filename,true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    field = root.create_field<uint32>("data");
-    attribute = group.attributes["NX_class"];
-}
+    static const string filename;
+    get_filename_test_fixture():
+        algorithm_test_fixture("get_filename_test.nx")
+    {}
+};
 
-//-----------------------------------------------------------------------------
-void get_filename_test::tearDown() 
-{ 
-    attribute.close();
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
+const string get_filename_test_fixture::filename = "get_filename_test.nx";
 
+BOOST_FIXTURE_TEST_SUITE(get_filename_test,get_filename_test_fixture)
 
-//----------------------------------------------------------------------------
-void get_filename_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        BOOST_CHECK_EQUAL(get_filename(root)  , filename);
+        BOOST_CHECK_EQUAL(get_filename(group) , filename);
+        BOOST_CHECK_THROW(get_filename(h5::nxgroup()),invalid_object_error);
+    }
 
-    CPPUNIT_ASSERT(get_filename(root)  == filename);
-    CPPUNIT_ASSERT(get_filename(group) == filename);
-    CPPUNIT_ASSERT_THROW(get_filename(h5::nxgroup()),invalid_object_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+        BOOST_CHECK_EQUAL(get_filename(field), filename);
+        BOOST_CHECK_THROW(get_filename(h5::nxfield()),invalid_object_error);
+    }
 
-//----------------------------------------------------------------------------
-void get_filename_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT(get_filename(field)== filename);
-    CPPUNIT_ASSERT_THROW(get_filename(h5::nxfield()),invalid_object_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        BOOST_CHECK_EQUAL(get_filename(attribute) , filename);
+        BOOST_CHECK_THROW(get_filename(h5::nxattribute()),invalid_object_error);
+    }
 
-//----------------------------------------------------------------------------
-void get_filename_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    CPPUNIT_ASSERT(get_filename(attribute) == filename);
-    CPPUNIT_ASSERT_THROW(get_filename(h5::nxattribute()),invalid_object_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_nxobject_group)
+    {
+        BOOST_CHECK_EQUAL(get_filename(o_group),filename);
+        BOOST_CHECK_THROW(get_filename(h5::nxobject(h5::nxgroup())),
+                             invalid_object_error);
+    }
 
-//-----------------------------------------------------------------------------
-void get_filename_test::test_nxobject_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5::nxobject object = group;
-    CPPUNIT_ASSERT(get_filename(object) == filename);
-    CPPUNIT_ASSERT_THROW(get_filename(h5::nxobject(h5::nxgroup())),
-                         invalid_object_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_nxobject_field)
+    {
+        BOOST_CHECK_EQUAL(get_filename(o_field),filename);
+        BOOST_CHECK_THROW(get_filename(h5::nxobject(h5::nxfield())),
+                             invalid_object_error);
+    }
 
-//-----------------------------------------------------------------------------
-void get_filename_test::test_nxobject_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5::nxobject object = field;
-    CPPUNIT_ASSERT(get_filename(object)==filename);
-    CPPUNIT_ASSERT_THROW(get_filename(h5::nxobject(h5::nxfield())),
-                         invalid_object_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_nxobject_attribute)
+    {
+        BOOST_CHECK_EQUAL(get_filename(o_attribute) , filename);
+        BOOST_CHECK_THROW(get_filename(h5::nxobject(h5::nxattribute())),
+                             invalid_object_error);
+    }
 
-//-----------------------------------------------------------------------------
-void get_filename_test::test_nxobject_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5::nxobject object = attribute;
-    CPPUNIT_ASSERT(get_filename(object) == filename);
-    CPPUNIT_ASSERT_THROW(get_filename(h5::nxobject(h5::nxattribute())),
-                         invalid_object_error);
-   
-}
+BOOST_AUTO_TEST_SUITE_END()
 
 
