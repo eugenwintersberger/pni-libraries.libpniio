@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2012 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2015 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,25 +17,25 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Created on: Sep 13, 2012
-//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//  Created on: Jan 7, 2015
+//      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include "EqualityCheck.hpp"
+#include "inquiry_test_fixture.hpp"
 
-//-----------------------------------------------------------------------------
-void check_equality(const string &a,const string &b)
-{
-    CPPUNIT_ASSERT(a == b);
-}
+using namespace pni::core;
+using namespace pni::io::nx;
 
-//-----------------------------------------------------------------------------
-void check_equality(const bool &a,const bool &b)
-{
-    CPPUNIT_ASSERT(a == b);
-}
+inquiry_test_fixture::inquiry_test_fixture(const string &filename):
+    base_fixture(filename),
+    group(root),
+    attribute(root.attributes["NX_class"]),
+    field(root.create_field<uint32>("data"))
+{}
 
-void check_equality(const binary &a,const binary &b)
+inquiry_test_fixture::~inquiry_test_fixture()
 {
-    CPPUNIT_ASSERT(a == b);
+    close(group);
+    close(attribute);
+    close(field);
 }

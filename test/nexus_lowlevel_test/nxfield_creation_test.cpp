@@ -24,7 +24,7 @@
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/exceptions.hpp>
 #include "test_types.hpp"
-#include "base_fixture.hpp"
+#include "../base_fixture.hpp"
 
 using namespace pni::core;
 using namespace pni::io::nx;

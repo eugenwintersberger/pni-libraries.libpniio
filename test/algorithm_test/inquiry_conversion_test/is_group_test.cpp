@@ -21,61 +21,39 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/is_group.hpp>
-#include "is_group_test.hpp"
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
+#include "inquiry_test_fixture.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(is_group_test);
-
-//-----------------------------------------------------------------------------
-void is_group_test::setUp()
+struct is_group_test_fixture : inquiry_test_fixture
 {
-    file = h5::nxfile::create_file("is_group_test.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    field = root.create_field<uint32>("data");
-    attribute = group.attributes["NX_class"];
-}
+    is_group_test_fixture():
+        inquiry_test_fixture("is_group_test.nx")
+    {}
+};
 
-//-----------------------------------------------------------------------------
-void is_group_test::tearDown() 
-{ 
-    attribute.close();
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
+BOOST_FIXTURE_TEST_SUITE(is_group_test,is_group_test_fixture)
 
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        BOOST_CHECK(is_group(group));
+    }
 
-//-----------------------------------------------------------------------------
-void is_group_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5::nxobject object = group;
-    //returns true - for obvious reasons
-    CPPUNIT_ASSERT(is_group(object));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+        BOOST_CHECK(!is_group(field)); 
+    }
 
-//-----------------------------------------------------------------------------
-void is_group_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        BOOST_CHECK(!is_group(attribute));
+    }
 
-    h5::nxobject object = field;
-    //returns false as the stored object is an instance of nxfield
-    CPPUNIT_ASSERT(!is_group(object)); 
-}
-
-//-----------------------------------------------------------------------------
-void is_group_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    h5::nxobject object = attribute;
-    //returns false as the stored object is an instance of nxattribute
-    CPPUNIT_ASSERT(!is_group(object));
-}
+BOOST_AUTO_TEST_SUITE_END()
 

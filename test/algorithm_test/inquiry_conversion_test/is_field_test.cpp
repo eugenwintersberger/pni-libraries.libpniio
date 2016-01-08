@@ -21,62 +21,42 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/is_field.hpp>
-#include "is_field_test.hpp"
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
+#include "inquiry_test_fixture.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(is_field_test);
+using namespace pni::core;
+using namespace pni::io::nx;
 
-//-----------------------------------------------------------------------------
-void is_field_test::setUp()
+struct is_field_test_fixture : inquiry_test_fixture
 {
-    file = h5::nxfile::create_file("is_field_test.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    field = root.create_field<uint32>("data");
-    attribute = group.attributes["NX_class"];
-}
+    is_field_test_fixture():
+        inquiry_test_fixture("is_field_test.nxs")
+    {}
+};
 
-//-----------------------------------------------------------------------------
-void is_field_test::tearDown() 
-{ 
-    attribute.close();
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
+BOOST_FIXTURE_TEST_SUITE(is_field_test,is_field_test_fixture)
 
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        BOOST_CHECK(!is_field(group));
+    }
 
-//-----------------------------------------------------------------------------
-void is_field_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5::nxobject object = group;
-    //returns false as the stored object is an instance of nxgroup
-    CPPUNIT_ASSERT(!is_field(object));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+        BOOST_CHECK(is_field(field)); 
+    }
 
-//-----------------------------------------------------------------------------
-void is_field_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        BOOST_CHECK(!is_field(attribute));
+    }
 
-    h5::nxobject object = field;
-    //returns true as the stored object is an instance of nxfield
-    CPPUNIT_ASSERT(is_field(object)); 
-}
-
-//-----------------------------------------------------------------------------
-void is_field_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    h5::nxobject object = attribute;
-    //returns false as the stored object is an instance of nxattribute
-    CPPUNIT_ASSERT(!is_field(object));
-   
-}
+BOOST_AUTO_TEST_SUITE_END()
 

@@ -21,68 +21,44 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/as_attribute.hpp>
-#include "as_attribute_test.hpp"
 
+#include "inquiry_test_fixture.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(as_attribute_test);
+using namespace pni::core;
+using namespace pni::io::nx;
 
-//-----------------------------------------------------------------------------
-void as_attribute_test::setUp()
+struct as_attribute_test_fixture : inquiry_test_fixture
 {
-    field_shape = shape_t{0,10,10};
-    attr_shape  = shape_t{4,4};
-
-    file = h5::nxfile::create_file("as_attribute_test.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    group.create_group("instrument","NXinstrument");
-    field = root.create_field<uint32>("data",field_shape);
-    field.attributes.create<float32>("temp",attr_shape);
-}
-
-//-----------------------------------------------------------------------------
-void as_attribute_test::tearDown() 
-{ 
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
+    as_attribute_test_fixture():
+        inquiry_test_fixture("as_attribute_test.nx")
+    {}
+};
 
 
-//-----------------------------------------------------------------------------
-void as_attribute_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-        
-    h5::nxobject object = root;
-    //must throw as the stored object is an nxgroup instance
-    CPPUNIT_ASSERT_THROW(as_attribute(object),type_error);
-}
+BOOST_FIXTURE_TEST_SUITE(as_attribute_test,as_attribute_test_fixture)
 
-//-----------------------------------------------------------------------------
-void as_attribute_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    h5::nxobject object = field;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        BOOST_CHECK_THROW(as_attribute(group),type_error);
+    }
 
-    //must throw as the stored object is an nxfield instance
-    CPPUNIT_ASSERT_THROW(as_attribute(object),type_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+        BOOST_CHECK_THROW(as_attribute(field),type_error);
+    }
 
-//-----------------------------------------------------------------------------
-void as_attribute_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        //this shoud work as we are trying to retrieve a real attribute
+        h5::nxattribute a;
+        BOOST_CHECK_NO_THROW(a = as_attribute(attribute));
+        BOOST_CHECK(a.is_valid());
+        BOOST_CHECK_EQUAL(a.name(),"NX_class");
+    }
 
-    h5::nxobject object = field.attributes["temp"];
-    h5::nxattribute a;
-    //this shoud work as we are trying to retrieve a real attribute
-    CPPUNIT_ASSERT_NO_THROW(a = as_attribute(object));
-    CPPUNIT_ASSERT(a.is_valid());
-    CPPUNIT_ASSERT(a.name() == "temp");
-    
-}
-
+BOOST_AUTO_TEST_SUITE_END()

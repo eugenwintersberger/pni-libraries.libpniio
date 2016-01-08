@@ -21,9 +21,8 @@
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 #include <pni/io/nx/nx.hpp>
-#include "base_fixture.hpp"
 #include "../uniform_distribution.hpp"
-#include "base_fixture.hpp"
+#include "../base_fixture.hpp"
 
 struct nxfield_test_fixture : base_fixture
 {

@@ -21,68 +21,46 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/as_group.hpp>
-#include "as_group_test.hpp"
+#include "inquiry_test_fixture.hpp"
 
+using namespace pni::core;
+using namespace pni::io::nx;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(as_group_test);
-
-//-----------------------------------------------------------------------------
-void as_group_test::setUp()
+struct as_group_test_fixture : inquiry_test_fixture
 {
-    field_shape = shape_t{0,10,10};
-    attr_shape  = shape_t{4,4};
+    as_group_test_fixture():
+        inquiry_test_fixture("as_group_test.nx")
+    {}
+};
 
-    file = h5::nxfile::create_file("is_valid.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    group.create_group("instrument","NXinstrument");
-    field = root.create_field<uint32>("data",field_shape);
-    field.attributes.create<float32>("temp",attr_shape);
-}
-
-//-----------------------------------------------------------------------------
-void as_group_test::tearDown() 
-{ 
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
+BOOST_FIXTURE_TEST_SUITE(as_group_test,as_group_test_fixture)
 
 
-//-----------------------------------------------------------------------------
-void as_group_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-        
-    h5::nxobject object = root;
-    h5::nxgroup g;
-    //must work - the stored object is an instance of nxgroup
-    CPPUNIT_ASSERT_NO_THROW(g = as_group(object));
-    CPPUNIT_ASSERT(g.is_valid());
-    CPPUNIT_ASSERT(g.name() == "/");
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        h5::nxgroup g;
+        //must work - the stored object is an instance of nxgroup
+        BOOST_CHECK_NO_THROW(g = as_group(group));
+        BOOST_CHECK(g.is_valid());
+        BOOST_CHECK_EQUAL(g.name(),"/");
+        string c;
+        g.attributes["NX_class"].read(c);
+        BOOST_CHECK_EQUAL(c,"NXroot");
+    }
 
-//-----------------------------------------------------------------------------
-void as_group_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    h5::nxobject object = field;
-    
-    //must throw as the stored object is an instance of nxfield
-    CPPUNIT_ASSERT_THROW(as_group(object),type_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+        BOOST_CHECK_THROW(as_group(field),type_error);
+    }
 
-//-----------------------------------------------------------------------------
-void as_group_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        BOOST_CHECK_THROW(as_group(attribute),type_error);
+    }
 
-    h5::nxobject object = field.attributes["temp"];
-    //must throw as the stored object is an instance of nxattribute
-    CPPUNIT_ASSERT_THROW(as_group(object),type_error);
-    
-}
-
+BOOST_AUTO_TEST_SUITE_END()

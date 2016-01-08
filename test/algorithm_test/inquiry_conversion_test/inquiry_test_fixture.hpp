@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2012 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2015 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,24 +17,26 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Created on: Sep 13, 2012
-//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-///
+//  Created on: Jan 7, 2015
+//      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
 #pragma once
 
-//header file for the BOOST_CURRENT_FUNCTION macro
-#include<boost/current_function.hpp>
+#include <pni/io/nx/algorithms/close.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
-//header files for CPPUNIT tests
-#include<cppunit/TestFixture.h>
-#include<cppunit/extensions/HelperMacros.h>
+#include "../../base_fixture.hpp"
 
-//headers from pniutils
-#include<pni/core/types.hpp>
+struct inquiry_test_fixture : base_fixture
+{
+    pni::io::nx::h5::nxobject group;
+    pni::io::nx::h5::nxobject attribute;
+    pni::io::nx::h5::nxobject field;
 
-//local template for equality checks
-#include "EqualityCheck.hpp"
+    inquiry_test_fixture(const pni::core::string &filename);
 
-//common macros
-#define PRINT_TEST_FUNCTION_SIG std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
+    virtual ~inquiry_test_fixture();
+};
+
 

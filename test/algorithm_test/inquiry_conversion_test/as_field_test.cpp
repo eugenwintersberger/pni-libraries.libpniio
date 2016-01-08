@@ -21,68 +21,44 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
+#include <pni/core/error.hpp>
 #include <pni/io/nx/algorithms/as_field.hpp>
-#include "as_field_test.hpp"
+#include "inquiry_test_fixture.hpp"
 
+using namespace pni::core;
+using namespace pni::io::nx;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(as_field_test);
-
-//-----------------------------------------------------------------------------
-void as_field_test::setUp()
+struct as_field_test_fixture : inquiry_test_fixture
 {
-    field_shape = shape_t{0,10,10};
-    attr_shape  = shape_t{4,4};
+    as_field_test_fixture():
+        inquiry_test_fixture("as_field_test.nx")
+    {}
+};
 
-    file = h5::nxfile::create_file("is_valid.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    group.create_group("instrument","NXinstrument");
-    field = root.create_field<uint32>("data",field_shape);
-    field.attributes.create<float32>("temp",attr_shape);
-}
+BOOST_FIXTURE_TEST_SUITE(as_field_test,as_field_test_fixture)
 
-//-----------------------------------------------------------------------------
-void as_field_test::tearDown() 
-{ 
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        BOOST_CHECK_THROW(as_field(group),type_error);
+    }
 
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
 
-//-----------------------------------------------------------------------------
-void as_field_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-        
-    h5::nxobject object = root;
-    //must throw as the object stored is an nxgroup instance
-    CPPUNIT_ASSERT_THROW(as_field(object),type_error);
-}
+        h5::nxfield f;
+        //should work as the stored object is an nxfield instance
+        BOOST_CHECK_NO_THROW(f=as_field(field));
+        BOOST_CHECK(f.is_valid());
+        BOOST_CHECK_EQUAL(f.name(),"data");
+    }
 
-//-----------------------------------------------------------------------------
-void as_field_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    h5::nxobject object = field;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        BOOST_CHECK_THROW(as_field(attribute),type_error);
+    }
 
-    h5::nxfield f;
-    //should work as the stored object is an nxfield instance
-    CPPUNIT_ASSERT_NO_THROW(f=as_field(object));
-    CPPUNIT_ASSERT(f.is_valid());
-    CPPUNIT_ASSERT(f.name() == "data");
-}
-
-//-----------------------------------------------------------------------------
-void as_field_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    h5::nxobject object = field.attributes["temp"];
-    //must throw as the stored object is an nxattribute instance
-    CPPUNIT_ASSERT_THROW(as_field(object),type_error);
-    
-}
-
+BOOST_AUTO_TEST_SUITE_END()

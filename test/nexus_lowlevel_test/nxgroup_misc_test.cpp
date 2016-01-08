@@ -29,7 +29,7 @@
 #include <pni/io/nx/nxobject_type.hpp>
 #include <pni/io/nx/algorithms.hpp>
 #include <pni/io/exceptions.hpp>
-#include "base_fixture.hpp"
+#include "../base_fixture.hpp"
 
 using namespace pni::core;
 using namespace pni::io::nx;
