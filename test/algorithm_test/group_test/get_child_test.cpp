@@ -20,167 +20,133 @@
 //  Created on: Jun 28, 2013
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/get_child.hpp>
-#include <cppunit/extensions/HelperMacros.h>
+#include <pni/io/nx/algorithms/get_object.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
-#include "get_child_test.hpp"
+#include "../algorithm_test_fixture.hpp"
 
+using namespace pni::core;
+using namespace pni::io::nx;
 using pni::io::invalid_object_error;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(get_child_test);
-
-//-----------------------------------------------------------------------------
-void get_child_test::setUp()
+struct get_child_test_fixture : algorithm_test_fixture
 {
-    file = h5::nxfile::create_file("groups.nx",true);
-    root = file.root();
-    group = root.create_group("scan_1","NXentry");
-    group.create_group("beamline","NXinstrument");
-    group.create_field<string>("date");
-    group.create_field<string>("experiment_id");
-    group.create_group("data","NXdata");
-    group.create_group("control","NXmonitor");
-    field = root.create_field<uint32>("data");
-    attribute = group.attributes["NX_class"];
-}
+    get_child_test_fixture():
+        algorithm_test_fixture("get_child_test.nx")
+    {
+        h5::nxgroup group = root.create_group("scan_1","NXentry");
+        group.create_group("beamline","NXinstrument");
+        group.create_field<string>("date");
+        group.create_field<string>("experiment_id");
+        group.create_group("data","NXdata");
+        group.create_group("control","NXmonitor");
+    }
+};
 
-//-----------------------------------------------------------------------------
-void get_child_test::test_single_child()
-{
-    std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    auto c = get_child(root,"scan_1");
-    CPPUNIT_ASSERT(is_group(c));
-    CPPUNIT_ASSERT(get_name(c)=="scan_1");
-    CPPUNIT_ASSERT(get_class(c)=="NXentry");
-}
+BOOST_FIXTURE_TEST_SUITE(get_child_test,get_child_test_fixture)
 
-//-----------------------------------------------------------------------------
-void get_child_test::test_group_by_index()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-   
-    h5::nxobject object;
-    CPPUNIT_ASSERT_NO_THROW(object=get_child(group,0));
-    CPPUNIT_ASSERT(get_name(object)=="beamline");
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group_by_index)
+    {
+        h5::nxgroup parent = get_object(root,":NXentry");
+        h5::nxobject child;
+        BOOST_CHECK_NO_THROW(child=get_child(parent,0));
+        BOOST_CHECK_EQUAL(get_name(child),"beamline");
 
-    CPPUNIT_ASSERT_NO_THROW(object=get_child(group,1));
-    CPPUNIT_ASSERT(get_name(object)=="control");
-    
-    CPPUNIT_ASSERT_THROW(get_child(group,100),index_error);
-    CPPUNIT_ASSERT_THROW(get_child(h5::nxgroup(),1),invalid_object_error);
-}
+        BOOST_CHECK_NO_THROW(child=get_child(parent,1));
+        BOOST_CHECK_EQUAL(get_name(child),"control");
+        
+        BOOST_CHECK_THROW(get_child(parent,100),index_error);
+        BOOST_CHECK_THROW(get_child(h5::nxgroup(),1),invalid_object_error);
+    }
 
-//-----------------------------------------------------------------------------
-void get_child_test::test_group_object_by_index()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5::nxobject g = group;
-    h5::nxobject object;
-    
-    CPPUNIT_ASSERT_NO_THROW(object=get_child(g,0));
-    CPPUNIT_ASSERT(get_name(object)=="beamline");
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group_object_by_index)
+    {
+        auto parent = get_object(root,":NXentry");
+        h5::nxobject child;
+        BOOST_CHECK_NO_THROW(child=get_child(parent,0));
+        BOOST_CHECK_EQUAL(get_name(child),"beamline");
 
-    CPPUNIT_ASSERT_NO_THROW(object=get_child(g,1));
-    CPPUNIT_ASSERT(get_name(object)=="control");
-    
-    CPPUNIT_ASSERT_THROW(get_child(g,100),index_error);
-    CPPUNIT_ASSERT_THROW(get_child(h5::nxobject(h5::nxgroup()),1),
-                         invalid_object_error);
-}
+        BOOST_CHECK_NO_THROW(child=get_child(parent,1));
+        BOOST_CHECK_EQUAL(get_name(child),"control");
+        
+        BOOST_CHECK_THROW(get_child(parent,100),index_error);
+        BOOST_CHECK_THROW(get_child(h5::nxgroup(),1),invalid_object_error);
+    }
 
-//-----------------------------------------------------------------------------
-void get_child_test::tearDown() 
-{ 
-    attribute.close();
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
 
-//-----------------------------------------------------------------------------
-void get_child_test::test_group_by_name()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5::nxobject o = get_child(group,"control","");
-    CPPUNIT_ASSERT(get_name(o)=="control");
-    CPPUNIT_ASSERT(is_class(o,"NXmonitor"));
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group_by_name)
+    {
+        auto parent = get_object(root,":NXentry");
+        auto child  = get_child(parent,"control","");
+        BOOST_CHECK_EQUAL(get_name(child),"control");
+        BOOST_CHECK(is_class(child,"NXmonitor"));
 
-    CPPUNIT_ASSERT_THROW(get_child(group,"bla",""), key_error);
-}
+        BOOST_CHECK_THROW(get_child(parent,"bla",""), key_error);
+    }
 
-//----------------------------------------------------------------------------
-void get_child_test::test_group_by_class()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group_by_class)
+    {
+        auto parent = get_object(root,":NXentry");
+        auto child  = get_child(parent,"","NXinstrument");
+        BOOST_CHECK_EQUAL(get_name(child),"beamline");
+        BOOST_CHECK(is_class(child,"NXinstrument"));
 
-    h5::nxobject o = get_child(group,"","NXinstrument");
-    CPPUNIT_ASSERT(get_name(o)=="beamline");
-    CPPUNIT_ASSERT(is_class(o,"NXinstrument"));
+        BOOST_CHECK_THROW(get_child(parent,"","NXfoo"),key_error);
+    }
 
-    CPPUNIT_ASSERT_THROW(get_child(group,"","NXfoo"),key_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group_by_name_class)
+    {
+        auto child = get_child(root,"scan_1","NXentry");
+        BOOST_CHECK_EQUAL(get_name(child),"scan_1");
+        BOOST_CHECK(is_class(child,"NXentry"));
 
-//----------------------------------------------------------------------------
-void get_child_test::test_group_by_name_class()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        BOOST_CHECK_THROW(get_child(root,"scan_1","NXfoo"),key_error);
+        BOOST_CHECK_THROW(get_child(root,"foo","NXentry"),key_error);
+        BOOST_CHECK_THROW(get_child(root,"foo","NXfoo"),key_error);
+    }
 
-    h5::nxobject o = get_child(root,"scan_1","NXentry");
-    CPPUNIT_ASSERT(get_name(o)=="scan_1");
-    CPPUNIT_ASSERT(is_class(o,"NXentry"));
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field_by_name)
+    {
+        auto parent = get_object(root,":NXentry");
+        auto child  = get_child(parent,"date","");
+        BOOST_CHECK(is_field(child));
+        BOOST_CHECK_EQUAL(get_name(child),"date");
+    }
 
-    CPPUNIT_ASSERT_THROW(get_child(root,"scan_1","NXfoo"),key_error);
-    CPPUNIT_ASSERT_THROW(get_child(root,"foo","NXentry"),key_error);
-    CPPUNIT_ASSERT_THROW(get_child(root,"foo","NXfoo"),key_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group_object)
+    {
+        h5::nxobject parent = root;
+        BOOST_CHECK(is_valid(get_child(parent,"scan_1","")));
+        BOOST_CHECK(is_valid(get_child(parent,"","NXentry")));
+        BOOST_CHECK(is_valid(get_child(parent,"scan_1","NXentry")));
+        BOOST_CHECK_THROW(get_child(parent,"log",""),key_error);
+        BOOST_CHECK_THROW(get_child(parent,"","NXlog"),key_error);
+        BOOST_CHECK_THROW(get_child(parent,"log","NXlog"),key_error);
+    }
 
-//-----------------------------------------------------------------------------
-void get_child_test::test_field_by_name()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field_object)
+    {
+        BOOST_CHECK_THROW(get_child(o_field,"",""),type_error); 
+        BOOST_CHECK_THROW(get_child(o_field,1),type_error);
+    }
 
-    h5::nxobject o = get_child(group,"date","");
-    CPPUNIT_ASSERT(is_field(o));
-    CPPUNIT_ASSERT(get_name(o)=="date");
-}
+    //-----------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute_object)
+    {
+        BOOST_CHECK_THROW(get_child(o_attribute,"",""),type_error);
+        BOOST_CHECK_THROW(get_child(o_attribute,1),type_error);
+    }
 
-//-----------------------------------------------------------------------------
-void get_child_test::test_group_object()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5::nxobject object = root;
-    CPPUNIT_ASSERT(is_valid(get_child(object,"scan_1","")));
-    CPPUNIT_ASSERT(is_valid(get_child(object,"","NXentry")));
-    CPPUNIT_ASSERT(is_valid(get_child(object,"scan_1","NXentry")));
-    CPPUNIT_ASSERT_THROW(get_child(object,"log",""),key_error);
-    CPPUNIT_ASSERT_THROW(get_child(object,"","NXlog"),key_error);
-    CPPUNIT_ASSERT_THROW(get_child(object,"log","NXlog"),key_error);
-}
-
-//-----------------------------------------------------------------------------
-void get_child_test::test_field_object()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    h5::nxobject object = field;
-    CPPUNIT_ASSERT_THROW(get_child(object,"",""),type_error); 
-    CPPUNIT_ASSERT_THROW(get_child(object,1),type_error);
-}
-
-//-----------------------------------------------------------------------------
-void get_child_test::test_attribute_object()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    h5::nxobject object = attribute;
-    CPPUNIT_ASSERT_THROW(get_child(object,"",""),type_error);
-    CPPUNIT_ASSERT_THROW(get_child(object,1),type_error);
-}
+BOOST_AUTO_TEST_SUITE_END()
 

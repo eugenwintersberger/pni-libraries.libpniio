@@ -21,74 +21,61 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/get_type.hpp>
-#include "get_type_test.hpp"
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/nxobject_traits.hpp>
 
+#include "io_test_fixture.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(get_type_test);
+using namespace pni::core;
+using namespace pni::io::nx;
 using pni::io::invalid_object_error;
 
-//-----------------------------------------------------------------------------
-void get_type_test::setUp()
+struct get_type_test_fixture : io_test_fixture
 {
-    field_shape = shape_t{0,10,10};
-    attr_shape  = shape_t{4,4};
-
-    file = h5::nxfile::create_file("is_valid.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    group.create_group("instrument","NXinstrument");
-    field = root.create_field<uint32>("data",field_shape);
-    field.attributes.create<float32>("temp",attr_shape);
-}
-
-//-----------------------------------------------------------------------------
-void get_type_test::tearDown() 
-{ 
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
+    get_type_test_fixture():
+        io_test_fixture("get_type_test.nx")
+    {}
+};
 
 
-//-----------------------------------------------------------------------------
-void get_type_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+BOOST_FIXTURE_TEST_SUITE(get_type_test,get_type_test_fixture)
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        BOOST_CHECK_THROW(get_type(o_group),type_error);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+
+        BOOST_CHECK_EQUAL(get_type(o_mdim_field),type_id_t::FLOAT64);
+        BOOST_CHECK_EQUAL(get_type(mdim_field),type_id_t::FLOAT64);
         
-    object_type object = root;
-    CPPUNIT_ASSERT_THROW(get_type(object),type_error);
-}
+        BOOST_CHECK_EQUAL(get_type(o_scalar_field),type_id_t::FLOAT32);
+        BOOST_CHECK_EQUAL(get_type(scalar_field),type_id_t::FLOAT32);
 
-//-----------------------------------------------------------------------------
-void get_type_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    h5::nxobject object = field;
+        BOOST_CHECK_THROW(get_type(h5::nxfield()),invalid_object_error);
+        BOOST_CHECK_THROW(get_type(h5::nxobject(h5::nxfield())),
+                                   invalid_object_error);
+    }
 
-    CPPUNIT_ASSERT(get_type(object) == type_id_t::UINT32);
-    CPPUNIT_ASSERT(get_type(field)  == type_id_t::UINT32);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        BOOST_CHECK_EQUAL(get_type(o_mdim_attribute),type_id_t::UINT16);
+        BOOST_CHECK_EQUAL(get_type(mdim_attribute),type_id_t::UINT16);
+        
+        BOOST_CHECK_EQUAL(get_type(o_scalar_attribute),type_id_t::STRING);
+        BOOST_CHECK_EQUAL(get_type(scalar_attribute),type_id_t::STRING);
 
-    CPPUNIT_ASSERT_THROW(get_type(h5::nxfield()),invalid_object_error);
-    CPPUNIT_ASSERT_THROW(get_type(h5::nxobject(h5::nxfield())),
-                         invalid_object_error);
-}
+        BOOST_CHECK_THROW(get_type(h5::nxattribute()),invalid_object_error);
+        BOOST_CHECK_THROW(get_type(h5::nxobject(h5::nxattribute())),
+                             invalid_object_error);
+    }
 
-//-----------------------------------------------------------------------------
-void get_type_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    shape_t shape;
-    object_type object = field.attributes["temp"];
-    CPPUNIT_ASSERT(get_type(object) == type_id_t::FLOAT32);
-    CPPUNIT_ASSERT(get_type(field.attributes["temp"])==type_id_t::FLOAT32);
-
-    CPPUNIT_ASSERT_THROW(get_type(h5::nxattribute()),invalid_object_error);
-    CPPUNIT_ASSERT_THROW(get_type(h5::nxobject(h5::nxattribute())),
-                         invalid_object_error);
-    
-}
-
+BOOST_AUTO_TEST_SUITE_END()

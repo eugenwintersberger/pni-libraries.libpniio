@@ -26,6 +26,7 @@
 #include <pni/core/error.hpp>
 #include "../nximp_code.hpp"
 #include "../nxobject.hpp"
+#include "../nxobject_traits.hpp"
 
 namespace pni{
 namespace io{
@@ -54,6 +55,15 @@ namespace nx{
             >
     pni::core::string get_class(const OTYPE<IMPID> &group)
     {
+        typedef nxobject_trait<IMPID> trait_type;
+        typedef typename trait_type::field_type field_type;
+        typedef typename trait_type::attribute_type attribute_type;
+        typedef OTYPE<IMPID> arg_type;
+
+        static_assert(!(std::is_same<arg_type,field_type>::value || 
+                      std::is_same<arg_type,attribute_type>::value),
+                      "get_class CAN ONLY BE USED WITH GROUP TYPES");
+
         pni::core::string group_class;
         if(group.attributes.exists("NX_class"))
             group.attributes["NX_class"].read(group_class);

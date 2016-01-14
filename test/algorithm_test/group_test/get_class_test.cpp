@@ -20,76 +20,65 @@
 //  Created on: Jun 28, 2013
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/create_group.hpp>
+#include <pni/io/nx/algorithms/get_object.hpp>
 #include <pni/io/nx/algorithms/get_class.hpp>
-#include <boost/current_function.hpp>
-#include <cppunit/extensions/HelperMacros.h>
 #include <pni/io/exceptions.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
-#include "get_class_test.hpp"
+#include "../algorithm_test_fixture.hpp"
 
+using namespace pni::core;
+using namespace pni::io::nx;
 using pni::io::invalid_object_error;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(get_class_test);
-
-//-----------------------------------------------------------------------------
-void get_class_test::setUp()
+struct get_class_test_fixture : algorithm_test_fixture
 {
-    file = h5::nxfile::create_file("is_valid.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    field = root.create_field<uint32>("data");
-}
+    get_class_test_fixture():
+        algorithm_test_fixture("get_class_test.nx")
+    {
+        root.create_group("entry","NXentry"); 
+        root.create_group("log");
+    }
+};
 
-//-----------------------------------------------------------------------------
-void get_class_test::tearDown() 
-{ 
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
+BOOST_FIXTURE_TEST_SUITE(get_class_test,get_class_test_fixture)
 
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        auto g = get_object(root,":NXentry");
+        auto go = get_object(root,":NXentry");
 
-//-----------------------------------------------------------------------------
-void get_class_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    object_type object = group;
-    CPPUNIT_ASSERT(get_class(object)=="NXentry");
-    CPPUNIT_ASSERT(get_class(group) =="NXentry");
-    CPPUNIT_ASSERT_THROW(get_class(object_type(h5::nxgroup())),
-                         invalid_object_error);
-    CPPUNIT_ASSERT_THROW(get_class(h5::nxgroup()),invalid_object_error);
-}
+        BOOST_CHECK_EQUAL(get_class(g),"NXentry");
+        BOOST_CHECK_EQUAL(get_class(go),"NXentry");
+        BOOST_CHECK_THROW(get_class(h5::nxobject(h5::nxgroup())),
+                          invalid_object_error);
+        BOOST_CHECK_THROW(get_class(h5::nxgroup()),invalid_object_error);
+    }
 
-//-----------------------------------------------------------------------------
-void get_class_test::test_not_exists()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_not_exists)
+    {
+        auto g = get_object(root,"log");
+        BOOST_CHECK_EQUAL(get_class(g),"");
+    }
 
-    auto o = create_group(object_type(group),"log");
-    CPPUNIT_ASSERT(get_class(o)=="");
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+        BOOST_CHECK_THROW(get_class(o_field),type_error);
+        //BOOST_CHECK_THROW(get_class(field),type_error); - static assert
+    }
 
-//-----------------------------------------------------------------------------
-void get_class_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        BOOST_CHECK_THROW(get_class(o_attribute),type_error);
+        //BOOST_CHECK_THROW(get_class(attribute),type_error); - static assert
+    }
 
-    object_type object = field;
-    CPPUNIT_ASSERT_THROW(get_class(object),type_error);
-}
-
-//-----------------------------------------------------------------------------
-void get_class_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    object_type object = group.attributes["NX_class"];
-    CPPUNIT_ASSERT_THROW(get_class(object),type_error);
-   
-}
+BOOST_AUTO_TEST_SUITE_END()
 

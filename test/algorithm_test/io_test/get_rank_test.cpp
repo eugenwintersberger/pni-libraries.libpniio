@@ -21,72 +21,54 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/get_rank.hpp>
-#include "get_rank_test.hpp"
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
+#include "io_test_fixture.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(get_rank_test);
+using namespace pni::core;
+using namespace pni::io::nx;
 using pni::io::invalid_object_error;
 
-//-----------------------------------------------------------------------------
-void get_rank_test::setUp()
+struct get_rank_test_fixture : io_test_fixture
 {
-    field_shape = shape_t{0,10,10};
-    attr_shape  = shape_t{4,4};
-
-    file = h5::nxfile::create_file("is_valid.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    group.create_group("instrument","NXinstrument");
-    field = root.create_field<uint32>("data",field_shape);
-    field.attributes.create<float32>("temp",attr_shape);
-}
-
-//-----------------------------------------------------------------------------
-void get_rank_test::tearDown() 
-{ 
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
+    get_rank_test_fixture():
+        io_test_fixture("get_rank_test.nx")
+    {};
+};
 
 
-//-----------------------------------------------------------------------------
-void get_rank_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-        
-    h5::nxobject object = root;
-    CPPUNIT_ASSERT_THROW(get_rank(object),type_error);
+BOOST_FIXTURE_TEST_SUITE(get_rank_test,get_rank_test_fixture)
 
-}
 
-//-----------------------------------------------------------------------------
-void get_rank_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    h5::nxobject object = field;
-    CPPUNIT_ASSERT(get_rank(object)==3);
-    CPPUNIT_ASSERT(get_rank(field) ==3);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        BOOST_CHECK_THROW(get_rank(o_group),type_error);
+    }
 
-    CPPUNIT_ASSERT_THROW(get_rank(h5::nxfield()),invalid_object_error);
-    CPPUNIT_ASSERT_THROW(get_rank(h5::nxobject(h5::nxfield())),
-                         invalid_object_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+        BOOST_CHECK_EQUAL(get_rank(o_mdim_field),2);
+        BOOST_CHECK_EQUAL(get_rank(mdim_field),2);
 
-//-----------------------------------------------------------------------------
-void get_rank_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        BOOST_CHECK_THROW(get_rank(h5::nxfield()),invalid_object_error);
+        BOOST_CHECK_THROW(get_rank(h5::nxobject(h5::nxfield())),
+                             invalid_object_error);
+    }
 
-    h5::nxobject object = field.attributes["temp"];
-    CPPUNIT_ASSERT(get_rank(object)==2);
-    CPPUNIT_ASSERT(get_rank(field.attributes["temp"])==2);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        BOOST_CHECK_EQUAL(get_rank(mdim_attribute),2);
+        BOOST_CHECK_EQUAL(get_rank(o_mdim_attribute),2);
 
-    CPPUNIT_ASSERT_THROW(get_rank(h5::nxattribute()),invalid_object_error);
-    CPPUNIT_ASSERT_THROW(get_rank(h5::nxobject(h5::nxattribute())),
-                         invalid_object_error);
-}
+        BOOST_CHECK_THROW(get_rank(h5::nxattribute()),invalid_object_error);
+        BOOST_CHECK_THROW(get_rank(h5::nxobject(h5::nxattribute())),
+                             invalid_object_error);
+    }
 
+BOOST_AUTO_TEST_SUITE_END()

@@ -21,77 +21,59 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/get_attribute.hpp>
 #include <pni/io/nx/algorithms/is_valid.hpp>
 #include <pni/io/nx/algorithms/get_name.hpp>
-#include <boost/current_function.hpp>
-#include <cppunit/extensions/HelperMacros.h>
+#include <pni/io/nx/algorithms/set_unit.hpp>
 #include <pni/io/exceptions.hpp>
-
 #include <pni/io/nx/algorithms.hpp>
+#include <vector>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
-#include "get_attributes_test.hpp"
+#include "../algorithm_test_fixture.hpp"
 
+using namespace pni::core;
+using namespace pni::io::nx;
 using pni::io::object_error;
 using pni::io::invalid_object_error;
 
 
-CPPUNIT_TEST_SUITE_REGISTRATION(get_attributes_test);
-
-//-----------------------------------------------------------------------------
-void get_attributes_test::setUp()
+struct get_attributes_test_fixture : algorithm_test_fixture
 {
-    file = h5::nxfile::create_file("get_attributes_test.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    group.create_group("instrument","NXinstrument");
-    field = root.create_field<uint32>("data");
-    field.attributes.create<string>("units").write("mm");
-}
-
-//-----------------------------------------------------------------------------
-void get_attributes_test::tearDown() 
-{ 
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
-
-
-//-----------------------------------------------------------------------------
-void get_attributes_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-        
-    object_type object = group;
-    auto a = get_attributes<container_type>(object);
-    CPPUNIT_ASSERT(a.size()==1);
-    CPPUNIT_ASSERT(get_name(a.front())=="NX_class");
-
-    a = get_attributes<container_type>(file.root());
-    CPPUNIT_ASSERT(a.size()==6);
-}
-
-//-----------------------------------------------------------------------------
-void get_attributes_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    object_type object = field;
     
-    auto a = get_attributes<container_type>(object);
-    CPPUNIT_ASSERT(a.size()==1);
-    CPPUNIT_ASSERT(get_name(a.front())=="units");
-}
-
-//-----------------------------------------------------------------------------
-void get_attributes_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-  
-    auto a = object_type(group.attributes["NX_class"]);
-    CPPUNIT_ASSERT_THROW(get_attributes<container_type>(a),type_error);
-}
+    get_attributes_test_fixture():
+        algorithm_test_fixture("get_attributes_test.nx")
+    {
+        set_unit(o_field,"mm");
+    };
+};
 
 
+BOOST_FIXTURE_TEST_SUITE(get_attributes_test,get_attributes_test_fixture)
+
+    typedef std::vector<h5::nxobject> container_type;
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        auto a = get_attributes<container_type>(o_group);
+        BOOST_CHECK_EQUAL(a.size(),6);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+        auto a = get_attributes<container_type>(o_field);
+        BOOST_CHECK_EQUAL(a.size(),1);
+        BOOST_CHECK_EQUAL(get_name(a.front()),"units");
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        BOOST_CHECK_THROW(get_attributes<container_type>(o_attribute),type_error);
+    }
+
+BOOST_AUTO_TEST_SUITE_END()

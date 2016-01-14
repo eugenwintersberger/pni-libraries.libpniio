@@ -14,27 +14,20 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 #pragma once
 
 #include <pni/core/types.hpp>
-#include <pni/io/nx/nx.hpp>
-#include <vector>
 
-//!
-//! \brief base fixture 
-//! 
-//! This is the base fixture used for most of the tests. It creates a new 
-//! file and provides the filename, the file object, and the root group
-//! object as public members. 
-//! 
-struct base_fixture
+struct multidim_policy
 {
-    pni::core::string filename;    //!< name of the file created
-    pni::io::nx::h5::nxfile file;  //!< file instancen
-    pni::io::nx::h5::nxgroup root; //!< root group instance
+    static const pni::core::shape_t shape;
+    static const size_t total_size; 
 
-    base_fixture(const pni::core::string &fname);
-    virtual ~base_fixture(); 
+    virtual ~multidim_policy() {}
+
 };
+
+const pni::core::shape_t multidim_policy::shape = {3,4};
+const size_t multidim_policy::total_size = 12;

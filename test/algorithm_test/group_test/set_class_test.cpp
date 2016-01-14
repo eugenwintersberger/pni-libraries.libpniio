@@ -21,78 +21,64 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/set_class.hpp>
 #include <pni/io/nx/algorithms/is_group.hpp>
-#include <boost/current_function.hpp>
-#include <cppunit/extensions/HelperMacros.h>
 #include <pni/io/exceptions.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
+#include "../algorithm_test_fixture.hpp"
+
+using namespace pni::core;
+using namespace pni::io::nx;
 using pni::io::invalid_object_error;
 
-#include "set_class_test.hpp"
-
-
-CPPUNIT_TEST_SUITE_REGISTRATION(set_class_test);
-
-//-----------------------------------------------------------------------------
-void set_class_test::setUp()
+struct set_class_test_fixture : algorithm_test_fixture
 {
-    file = h5::nxfile::create_file("is_valid.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    field = root.create_field<uint32>("data");
-}
-
-//-----------------------------------------------------------------------------
-void set_class_test::tearDown() 
-{ 
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
+    set_class_test_fixture():
+        algorithm_test_fixture("set_class_test.nx")
+    {
+        group = group.create_group("entry");
+        o_group = group;
+    }
+};
 
 
-//-----------------------------------------------------------------------------
-void set_class_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    string buffer;
+BOOST_FIXTURE_TEST_SUITE(set_class_test,set_class_test_fixture)
 
-    //test on the plain nxgroup object
-    CPPUNIT_ASSERT_NO_THROW(set_class(group,"NXentry"));
-    group.attributes["NX_class"].read(buffer);
-    CPPUNIT_ASSERT(buffer == "NXentry");
-   
-    //test on the object
-    h5::nxobject object = group;
-    CPPUNIT_ASSERT_NO_THROW(set_class(object,"NXlog"));
-    group.attributes["NX_class"].read(buffer);
-    CPPUNIT_ASSERT(buffer == "NXlog");
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        string buffer;
 
-    //test some exceptions
-    CPPUNIT_ASSERT_THROW(set_class(h5::nxgroup(),"NXdetector"),
-                         invalid_object_error);
-    CPPUNIT_ASSERT_THROW(set_class(h5::nxobject(h5::nxgroup()),"NXinstrument"),
-                         invalid_object_error);
-}
+        //test on the plain nxgroup object
+        BOOST_CHECK_NO_THROW(set_class(group,"NXentry"));
+        group.attributes["NX_class"].read(buffer);
+        BOOST_CHECK_EQUAL(buffer,"NXentry");
+       
+        //test on the object
+        BOOST_CHECK_NO_THROW(set_class(o_group,"NXlog"));
+        group.attributes["NX_class"].read(buffer);
+        BOOST_CHECK_EQUAL(buffer,"NXlog");
 
-//-----------------------------------------------------------------------------
-void set_class_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        //test some exceptions
+        BOOST_CHECK_THROW(set_class(h5::nxgroup(),"NXdetector"),
+                             invalid_object_error);
+        BOOST_CHECK_THROW(set_class(h5::nxobject(h5::nxgroup()),"NXinstrument"),
+                             invalid_object_error);
+    }
 
-    h5::nxobject object = field;
-    CPPUNIT_ASSERT_THROW(set_class(object,"NXentry"),type_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+        BOOST_CHECK_THROW(set_class(o_field,"NXentry"),type_error);
+    }
 
-//-----------------------------------------------------------------------------
-void set_class_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        BOOST_CHECK_THROW(set_class(o_attribute,"NXentry"),type_error);
+    }
 
-    h5::nxobject object = group.attributes["NX_class"];
-    CPPUNIT_ASSERT_THROW(set_class(object,"NXentry"),type_error);
-   
-}
-
+BOOST_AUTO_TEST_SUITE_END()

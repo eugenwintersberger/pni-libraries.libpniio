@@ -21,115 +21,96 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/get_object.hpp>
-#include <boost/current_function.hpp>
-#include <cppunit/extensions/HelperMacros.h>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
-#include "get_object_test.hpp"
+#include "../algorithm_test_fixture.hpp"
 
+using namespace pni::core;
+using namespace pni::io::nx;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(get_object_test);
-
-//-----------------------------------------------------------------------------
-void get_object_test::setUp()
+struct get_object_test_fixture : algorithm_test_fixture
 {
-    file = h5::nxfile::create_file("get_object_test.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    h5::nxgroup tg = group.create_group("instrument","NXinstrument");
-    tg.create_group("with.dot");
-    tg.create_group("without_dot");
-    tg.create_group("detector","NXdetector");
-    tg.create_field<uint32>("data",shape_t{0,1024,1024});
-    tg.create_group("source","NXsource");
-    field = root.create_field<uint32>("data");
-}
-
-//-----------------------------------------------------------------------------
-void get_object_test::tearDown() 
-{ 
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
-
-
-//-----------------------------------------------------------------------------
-void get_object_test::test_absolute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    h5::nxobject root_group = root;
-    nxpath p = nxpath::from_string("/group/instrument/detector");
+    get_object_test_fixture():
+        algorithm_test_fixture("get_object_test.nx")
+    {
+        h5::nxgroup g = group.create_group("group","NXentry");
+        g = g.create_group("instrument","NXinstrument");
+        g.create_group("source","NXsource");
+        g.create_group("with.dot");
+        g.create_group("without_dot");
 
-    auto o= get_object(root_group,p);
-    CPPUNIT_ASSERT(is_valid(get_object(root_group,p)));
-    CPPUNIT_ASSERT(is_group(get_object(root_group,p)));
-    CPPUNIT_ASSERT(get_name(get_object(root_group,p))=="detector");
+        g = g.create_group("detector","NXdetector");
+        g.create_field<uint32>("data",shape_t{0,1024,1024});
+    }
+};
 
+BOOST_FIXTURE_TEST_SUITE(get_object_test,get_object_test_fixture)
 
-    CPPUNIT_ASSERT(is_valid(get_object(root_group,p)));
-    CPPUNIT_ASSERT(is_group(get_object(root_group,p)));
-    CPPUNIT_ASSERT(get_name(get_object(root_group,p))=="detector");
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_absolute)
+    {
+        h5::nxobject root_group = group;
+        nxpath p = nxpath::from_string("/group/instrument/detector");
 
-    p = nxpath::from_string("/:NXentry/instrument/:NXdetector");
-    CPPUNIT_ASSERT(is_valid(get_object(root_group,p)));
-    CPPUNIT_ASSERT(is_group(get_object(root_group,p)));
-    CPPUNIT_ASSERT(get_name(get_object(root_group,p))=="detector");
+        auto o= get_object(root_group,p);
+        BOOST_CHECK(is_valid(o));
+        BOOST_CHECK(is_group(o));
+        BOOST_CHECK_EQUAL(get_name(o),"detector");
 
-    p = nxpath::from_string("/:NXentry/instrument/:NXdetector@NX_class");
-    CPPUNIT_ASSERT(get_name(get_object(root_group,p))=="NX_class");
-    p = nxpath::from_string("/@NX_class");
-    CPPUNIT_ASSERT(get_name(get_object(root_group,p))=="NX_class");
-}
+        p = nxpath::from_string("/:NXentry/instrument/:NXdetector");
+        BOOST_CHECK(is_valid(get_object(root_group,p)));
+        BOOST_CHECK(is_group(get_object(root_group,p)));
+        BOOST_CHECK_EQUAL(get_name(get_object(root_group,p)),"detector");
 
-//-----------------------------------------------------------------------------
-void get_object_test::test_relative_only()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    auto o = get_object(group,"../");
-    CPPUNIT_ASSERT(is_valid(o));
-    CPPUNIT_ASSERT(get_name(o)=="/");
-    CPPUNIT_ASSERT(get_class(o)=="NXroot");
+        p = nxpath::from_string("/:NXentry/instrument/:NXdetector@NX_class");
+        BOOST_CHECK_EQUAL(get_name(get_object(root_group,p)),"NX_class");
+        p = nxpath::from_string("/@NX_class");
+        BOOST_CHECK_EQUAL(get_name(get_object(root_group,p)),"NX_class");
+    }
 
-    o = get_object(root,"/:NXentry/:NXinstrument/:NXdetector");
-    o = get_object(o,"../../");
-    CPPUNIT_ASSERT(get_name(o)=="group");
-    CPPUNIT_ASSERT(get_class(o)=="NXentry");
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_relative_only)
+    {
+        auto o = get_object(group,"../");
+        BOOST_CHECK(is_valid(o));
+        BOOST_CHECK_EQUAL(get_name(o),"/");
+        BOOST_CHECK_EQUAL(get_class(o),"NXroot");
 
-}
+        o = get_object(root,"/:NXentry/:NXinstrument/:NXdetector");
+        o = get_object(o,"../../");
+        BOOST_CHECK_EQUAL(get_name(o),"group");
+        BOOST_CHECK_EQUAL(get_class(o),"NXentry");
 
-//-----------------------------------------------------------------------------
-void get_object_test::test_relative()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    }
 
-    h5::nxobject root_group = root;
-    nxpath p = nxpath::from_string("../instrument/detector");
-    CPPUNIT_ASSERT(!is_absolute(p));
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_relative)
+    {
+        nxpath p = nxpath::from_string("../instrument/detector");
 
-    h5::nxobject ig = get_object(root_group,nxpath::from_string("group/instrument"));
-    CPPUNIT_ASSERT(get_name(ig) == "instrument");
-    h5::nxobject d  = get_object(ig,p);
-    CPPUNIT_ASSERT(get_name(d) == "detector");
+        h5::nxobject ig = get_object(group,nxpath::from_string("group/instrument"));
+        BOOST_CHECK_EQUAL(get_name(ig),"instrument");
+        h5::nxobject d  = get_object(ig,p);
+        BOOST_CHECK_EQUAL(get_name(d),"detector");
 
-}
+    }
 
-//----------------------------------------------------------------------------
-void get_object_test::test_errors()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    nxpath p = nxpath::from_string(":NXinstrument/:NXdetector/data");
-    CPPUNIT_ASSERT_THROW(get_object(group,p),key_error);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_errors)
+    {
+        nxpath p = nxpath::from_string(":NXinstrument/:NXdetector/data");
+        BOOST_CHECK_THROW(get_object(group,p),key_error);
 
-    p = nxpath::from_string(":NXinstrument@hello");
-    CPPUNIT_ASSERT_THROW(get_object(group,p),key_error);
+        p = nxpath::from_string(":NXinstrument@hello");
+        BOOST_CHECK_THROW(get_object(group,p),key_error);
 
-    CPPUNIT_ASSERT_THROW(get_object(root,":NXentry/:NXinstrument/with.dot"),
-            pni::io::parser_error);
-    CPPUNIT_ASSERT_NO_THROW(get_object(root,":NXentry/:NXinstrument/without_dot"));
-}
+        BOOST_CHECK_THROW(get_object(root,":NXentry/:NXinstrument/with.dot"),
+                pni::io::parser_error);
+        BOOST_CHECK_NO_THROW(get_object(group,":NXentry/:NXinstrument/without_dot"));
+    }
 
+BOOST_AUTO_TEST_SUITE_END()

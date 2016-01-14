@@ -20,91 +20,79 @@
 //  Created on: Jul 3, 2013
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/get_shape.hpp>
-#include "get_shape_test.hpp"
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
+#include "io_test_fixture.hpp"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(get_shape_test);
+using namespace pni::core;
+using namespace pni::io::nx;
 
-//-----------------------------------------------------------------------------
-void get_shape_test::setUp()
+struct get_shape_test_fixture : io_test_fixture
 {
-    field_shape = shape_t{0,10,10};
-    attr_shape  = shape_t{4,4};
+    get_shape_test_fixture():
+        io_test_fixture("get_shape_test.nx")
+    {}
+};
 
-    file = h5::nxfile::create_file("get_shape_test.nxs",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    group.create_group("instrument","NXinstrument");
-}
+BOOST_FIXTURE_TEST_SUITE(get_shape_test,get_shape_test_fixture)
 
-//-----------------------------------------------------------------------------
-void get_shape_test::tearDown() 
-{ 
-    group.close();
-    root.close();
-    file.close();
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        BOOST_CHECK_THROW(get_shape<shape_t>(o_group),type_error);
+    }
 
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_mdim_field)
+    {
+        auto so = get_shape<shape_t>(o_mdim_field);
+        auto s  = get_shape<shape_t>(mdim_field);
 
-//-----------------------------------------------------------------------------
-void get_shape_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-        
-    h5::nxobject object = root;
-    CPPUNIT_ASSERT_THROW(get_shape<shape_t>(object),type_error);
-}
+        BOOST_CHECK_EQUAL_COLLECTIONS(shape.begin(),shape.end(),
+                                      so.begin(),so.end());
+        BOOST_CHECK_EQUAL_COLLECTIONS(shape.begin(),shape.end(),
+                                      s.begin(),s.end());
+    }
 
-//-----------------------------------------------------------------------------
-void get_shape_test::test_mdim_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    h5::nxfield field = group.create_field<float32>("tmp",field_shape);
-    h5::nxobject obj = field;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_scalar_field)
+    {
+        shape_t s_ref{1};
 
-    check_shape(field_shape,get_shape<shape_t>(field));
-    check_shape(field_shape,get_shape<shape_t>(obj));
-}
+        auto so = get_shape<shape_t>(o_scalar_field);
+        auto s  = get_shape<shape_t>(scalar_field);
+        BOOST_CHECK_EQUAL_COLLECTIONS(s_ref.begin(),s_ref.end(),
+                                      so.begin(),so.end());
+        BOOST_CHECK_EQUAL_COLLECTIONS(s_ref.begin(),s_ref.end(),
+                                      s.begin(),s.end());
+    }
 
-//-----------------------------------------------------------------------------
-void get_shape_test::test_scalar_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_mdim_attribute)
+    {
+        auto so = get_shape<shape_t>(o_mdim_attribute);
+        auto s  = get_shape<shape_t>(mdim_attribute);
 
-    h5::nxfield field = group.create_field<float32>("tmp");
-    h5::nxobject obj = field;
+        BOOST_CHECK_EQUAL_COLLECTIONS(shape.begin(),shape.end(),
+                                      so.begin(),so.end());
+        BOOST_CHECK_EQUAL_COLLECTIONS(shape.begin(),shape.end(),
+                                      s.begin(),s.end());
+    }
 
-    check_shape(shape_t{1},get_shape<shape_t>(field));
-    check_shape(shape_t{1},get_shape<shape_t>(obj));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_scalar_attribute)
+    {
+        shape_t s_ref;
 
-//-----------------------------------------------------------------------------
-void get_shape_test::test_mdim_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        auto so = get_shape<shape_t>(o_scalar_attribute);
+        auto s  = get_shape<shape_t>(scalar_attribute);
+        BOOST_CHECK_EQUAL_COLLECTIONS(s_ref.begin(),s_ref.end(),
+                                      so.begin(),so.end());
+        BOOST_CHECK_EQUAL_COLLECTIONS(s_ref.begin(),s_ref.end(),
+                                      s.begin(),s.end());
+    }
 
-    h5::nxattribute attr = group.attributes.create<float32>("strian",
-                           attr_shape);
-    h5::nxobject object = attr;
-    
-    check_shape(attr_shape,get_shape<shape_t>(attr));
-    check_shape(attr_shape,get_shape<shape_t>(object));
-}
-
-//-----------------------------------------------------------------------------
-void get_shape_test::test_scalar_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    h5::nxattribute attr = group.attributes.create<float32>("strian");
-    h5::nxobject object = attr;
-    
-    check_shape(shape_t{},get_shape<shape_t>(attr));
-    check_shape(shape_t{},get_shape<shape_t>(object));
-}
-
-
+BOOST_AUTO_TEST_SUITE_END()

@@ -1,3 +1,7 @@
+set(ALGORITHM_COMMON_SRC algorithm_test_fixture.cpp)
+
+add_library(algorithm_common OBJECT ${ALGORITHM_COMMON_SRC})
+
 
 add_subdirectory(inquiry_conversion_test)
 add_subdirectory(common_test)

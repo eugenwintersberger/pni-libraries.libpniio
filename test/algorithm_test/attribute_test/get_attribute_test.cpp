@@ -21,87 +21,66 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include <boost/current_function.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/get_attribute.hpp>
 #include <pni/io/nx/algorithms/is_valid.hpp>
 #include <pni/io/nx/algorithms/get_name.hpp>
-#include <boost/current_function.hpp>
-#include <cppunit/extensions/HelperMacros.h>
+#include <pni/io/nx/algorithms/set_unit.hpp>
 #include <pni/io/exceptions.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
-#include "get_attribute_test.hpp"
+#include "../algorithm_test_fixture.hpp"
 
+using namespace pni::core;
+using namespace pni::io::nx;
 using pni::io::object_error;
 using pni::io::invalid_object_error;
 
-
-CPPUNIT_TEST_SUITE_REGISTRATION(get_attribute_test);
-
-//-----------------------------------------------------------------------------
-void get_attribute_test::setUp()
+struct get_attribute_test_fixture : algorithm_test_fixture
 {
-    file = h5::nxfile::create_file("is_valid.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    group.create_group("instrument","NXinstrument");
-    field = root.create_field<uint32>("data");
-    field.attributes.create<string>("units").write("mm");
-}
-
-//-----------------------------------------------------------------------------
-void get_attribute_test::tearDown() 
-{ 
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
-
-
-//-----------------------------------------------------------------------------
-void get_attribute_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-        
-    object_type object = group;
-    CPPUNIT_ASSERT(is_valid(get_attribute(object,"NX_class")));
-    CPPUNIT_ASSERT(get_name(get_attribute(object,"NX_class")) == "NX_class");
-
-}
-
-//-----------------------------------------------------------------------------
-void get_attribute_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    object_type object = field;
-
-    CPPUNIT_ASSERT(get_name(get_attribute(object,"units")) == "units");
-
-}
-
-//-----------------------------------------------------------------------------
-void get_attribute_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
     
-    CPPUNIT_ASSERT_THROW(get_attribute(object_type(group.attributes["NX_class"]),"bla"),
-                         type_error);
-}
+    get_attribute_test_fixture():
+        algorithm_test_fixture("get_attribute_test.nx")
+    {
+        set_unit(field,"mm");
+        group = group.create_group("entry","NXentry");
+        o_group = group;
+    }
+};
 
-void get_attribute_test::test_errors()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+BOOST_FIXTURE_TEST_SUITE(get_attribute_test,get_attribute_test_fixture)
 
-    h5::nxfield f;
-    h5::nxgroup g;
-    h5::nxobject o = f;
-    CPPUNIT_ASSERT_THROW(get_attribute(f,"test"),invalid_object_error);
-    CPPUNIT_ASSERT_THROW(get_attribute(g,"test"),invalid_object_error);
-    CPPUNIT_ASSERT_THROW(get_attribute(o,"test"),invalid_object_error);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        BOOST_CHECK(is_valid(get_attribute(o_group,"NX_class")));
+        BOOST_CHECK_EQUAL(get_name(get_attribute(o_group,"NX_class")),"NX_class");
+    }
 
-    CPPUNIT_ASSERT_THROW(get_attribute(group,"hello"),key_error);
-    o = group;
-    CPPUNIT_ASSERT_THROW(get_attribute(o,"hello"),key_error);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+        BOOST_CHECK_EQUAL(get_name(get_attribute(o_field,"units")),"units");
+    }
 
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        BOOST_CHECK_THROW(get_attribute(o_attribute,"bla"),type_error);
+    }
 
+    BOOST_AUTO_TEST_CASE(test_errors)
+    {
+        h5::nxfield f;
+        h5::nxgroup g;
+        h5::nxobject o = f;
+        BOOST_CHECK_THROW(get_attribute(f,"test"),invalid_object_error);
+        BOOST_CHECK_THROW(get_attribute(g,"test"),invalid_object_error);
+        BOOST_CHECK_THROW(get_attribute(o,"test"),invalid_object_error);
+
+        BOOST_CHECK_THROW(get_attribute(group,"hello"),key_error);
+        BOOST_CHECK_THROW(get_attribute(o_group,"hello"),key_error);
+    }
+
+BOOST_AUTO_TEST_SUITE_END()

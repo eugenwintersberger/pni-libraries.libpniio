@@ -20,120 +20,90 @@
 //  Created on: Jul 3, 2013
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/create_group.hpp>
 #include <pni/io/nx/algorithms/is_valid.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
-#include <boost/current_function.hpp>
-#include <cppunit/extensions/HelperMacros.h>
+#include "../algorithm_test_fixture.hpp"
 
-#include "create_group_test.hpp"
+using namespace pni::core;
+using namespace pni::io::nx;
 
-
-CPPUNIT_TEST_SUITE_REGISTRATION(create_group_test);
-
-//-----------------------------------------------------------------------------
-void create_group_test::setUp()
+struct create_group_test_fixture : algorithm_test_fixture
 {
-    field_shape = shape_t{0,10,10};
-    attr_shape  = shape_t{4,4};
+    create_group_test_fixture():
+        algorithm_test_fixture("create_group_test.nx")
+    {}
+};
 
-    file = h5::nxfile::create_file("is_valid.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    group.create_group("instrument","NXinstrument");
-    field = root.create_field<uint32>("data",field_shape);
-    field.attributes.create<float32>("temp",attr_shape);
-}
+BOOST_FIXTURE_TEST_SUITE(create_group_test,create_group_test_fixture)
 
-//-----------------------------------------------------------------------------
-void create_group_test::tearDown() 
-{ 
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group_name_only)
+    {
+        h5::nxobject ng;
+        BOOST_CHECK_NO_THROW(ng = create_group(o_group,"scan_1"));
+        BOOST_CHECK(is_valid(ng));
+        BOOST_CHECK(is_group(ng));
+        BOOST_CHECK_EQUAL(get_name(ng),"scan_1");
+        BOOST_CHECK_EQUAL(get_class(ng),"");
+    }
 
-//-----------------------------------------------------------------------------
-void create_group_test::test_group_name_only()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group_name_and_class)
+    {
+        h5::nxobject ng;
+        BOOST_CHECK_NO_THROW(ng = create_group(o_group,"scan_1:NXentry"));
+        BOOST_CHECK(is_valid(ng));
+        BOOST_CHECK(is_group(ng));
+        BOOST_CHECK_EQUAL(get_name(ng),"scan_1");
+        BOOST_CHECK_EQUAL(get_class(ng),"NXentry");
+    }
 
-    auto gi = get_child(h5::nxobject(group),"instrument","");
-    h5::nxobject ng;
-    CPPUNIT_ASSERT_NO_THROW(ng = create_group(gi,"detector"));
-    CPPUNIT_ASSERT(is_valid(ng));
-    CPPUNIT_ASSERT(get_name(ng)=="detector");
-    CPPUNIT_ASSERT(get_class(ng)=="");
-    CPPUNIT_ASSERT(is_group(ng));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group_from_path)
+    {
+        h5::nxobject ng;
+        BOOST_CHECK_NO_THROW(ng = create_group(o_group,
+                                nxpath::from_string("scan_2:NXentry")));
+        BOOST_CHECK(is_valid(ng));
+        BOOST_CHECK(is_group(ng));
+        BOOST_CHECK_EQUAL(get_name(ng), "scan_2");
+        BOOST_CHECK(pni::io::nx::is_class(ng,"NXentry"));
 
-//-----------------------------------------------------------------------------
-void create_group_test::test_group_name_and_class()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+        BOOST_CHECK_NO_THROW(ng = create_group(ng, 
+                             nxpath::from_string("../scan_3:NXentry")));
+        BOOST_CHECK(is_valid(ng));
+        BOOST_CHECK(is_group(ng));
+        BOOST_CHECK(pni::io::nx::is_class(ng,"NXentry"));
+        BOOST_CHECK_EQUAL(get_name(ng),"scan_3");
+    }
 
-    auto gi = get_child(h5::nxobject(group),"instrument","");
-    h5::nxobject ng;
-    CPPUNIT_ASSERT_NO_THROW(ng = create_group(gi,"detector:NXdetector"));
-    CPPUNIT_ASSERT(is_valid(ng));
-    CPPUNIT_ASSERT(get_name(ng)=="detector");
-    CPPUNIT_ASSERT(get_class(ng)=="NXdetector");
-    CPPUNIT_ASSERT(is_group(ng));
-}
-
-//-----------------------------------------------------------------------------
-void create_group_test::test_group_from_path()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    auto gi = get_child(h5::nxobject(group),"instrument","");
-    h5::nxobject ng;
-    CPPUNIT_ASSERT_NO_THROW(ng = create_group(gi,
-                            nxpath::from_string("log:NXlog")));
-    CPPUNIT_ASSERT(is_valid(ng));
-    CPPUNIT_ASSERT(is_group(ng));
-    CPPUNIT_ASSERT(get_name(ng) == "log");
-    CPPUNIT_ASSERT(pni::io::nx::is_class(ng,"NXlog"));
-    CPPUNIT_ASSERT_NO_THROW(ng = create_group(gi, 
-                   nxpath::from_string("../../entry2:NXentry")));
-    CPPUNIT_ASSERT(is_valid(ng));
-    CPPUNIT_ASSERT(is_group(ng));
-    CPPUNIT_ASSERT(get_name(ng) == "entry2");
-    CPPUNIT_ASSERT(pni::io::nx::is_class(ng,"NXentry"));
-}
-
-//-----------------------------------------------------------------------------
-void create_group_test::test_errors()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    
-    auto gi = get_child(h5::nxobject(group),"instrument","");
-    CPPUNIT_ASSERT_THROW(create_group(gi,":NXdetector"),value_error);
-    CPPUNIT_ASSERT_THROW(create_group(gi,":NXdetector/collection:NXcollection"),
-                         key_error);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_errors)
+    {
+        BOOST_CHECK_THROW(create_group(o_group,":NXentry"),value_error);
+        BOOST_CHECK_THROW(create_group(o_group,":NXentry/collection:NXcollection"),
+                             key_error);
 
 
-}
+    }
 
-//-----------------------------------------------------------------------------
-void create_group_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    h5::nxobject object = field;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+        BOOST_CHECK_THROW(create_group(o_field,"g1:NXlog"),type_error);
+        BOOST_CHECK_THROW(create_group(o_field,"g2:NXlog"),type_error);
+    }
 
-    CPPUNIT_ASSERT_THROW(create_group(object,"g1:NXlog"),type_error);
-    CPPUNIT_ASSERT_THROW(create_group(object,"g2:NXlog"),type_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        BOOST_CHECK_THROW(create_group(o_attribute,"g1:NXlog"),type_error);
+        BOOST_CHECK_THROW(create_group(o_attribute,"g2:NXlog"),type_error);
+    }
 
-//-----------------------------------------------------------------------------
-void create_group_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    h5::nxobject object = field.attributes["temp"];
-    CPPUNIT_ASSERT_THROW(create_group(object,"g1:NXlog"),type_error);
-    CPPUNIT_ASSERT_THROW(create_group(object,"g2:NXlog"),type_error);
-}
+BOOST_AUTO_TEST_SUITE_END()
 

@@ -21,74 +21,50 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/grow.hpp>
 #include <pni/io/nx/algorithms/get_shape.hpp>
-#include <boost/current_function.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
-#include "grow_test.hpp"
+#include "io_test_fixture.hpp"
 
+using namespace pni::core;
+using namespace pni::io::nx;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(grow_test);
-
-//-----------------------------------------------------------------------------
-void grow_test::setUp()
+struct grow_test_fixture : io_test_fixture
 {
-    field_shape = shape_t{1,10,10};
-    attr_shape  = shape_t{4,4};
+    grow_test_fixture():
+        io_test_fixture("grow_test.nx")
+    {}
+};
 
-    file = h5::nxfile::create_file("grow_test.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    group.create_group("instrument","NXinstrument");
-    field = root.create_field<uint32>("data",field_shape);
-    attribute = field.attributes.create<float32>("temp",attr_shape);
-}
+BOOST_FIXTURE_TEST_SUITE(grow_test,grow_test_fixture)
 
-//-----------------------------------------------------------------------------
-void grow_test::tearDown() 
-{ 
-    attribute.close();
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        BOOST_CHECK_THROW(grow(o_group),type_error);
+    }
 
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+        auto s = get_shape<shape_t>(o_mdim_field);
+        BOOST_CHECK_EQUAL(s[0],3);
+        BOOST_CHECK_NO_THROW(grow(o_mdim_field));
+        s = get_shape<shape_t>(o_mdim_field);
+        BOOST_CHECK_EQUAL(s[0],4);
+        BOOST_CHECK_NO_THROW(grow(o_mdim_field,1,10));
+        s = get_shape<shape_t>(o_mdim_field);
+        BOOST_CHECK_EQUAL(s[1],14);
+    }
 
-//-----------------------------------------------------------------------------
-void grow_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-        
-    h5::nxobject object = root;
-    CPPUNIT_ASSERT_THROW(grow(object),type_error);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        BOOST_CHECK_THROW(grow(o_mdim_attribute),type_error);
+        BOOST_CHECK_THROW(grow(o_scalar_attribute),type_error);
+    }
 
-}
-
-//-----------------------------------------------------------------------------
-void grow_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-    h5::nxobject object = field;
-
-    auto s = get_shape<shape_t>(object);
-    CPPUNIT_ASSERT(s[0] == 1);
-    CPPUNIT_ASSERT_NO_THROW(grow(object));
-    s = get_shape<shape_t>(object);
-    CPPUNIT_ASSERT(s[0] == 2);
-    CPPUNIT_ASSERT_NO_THROW(grow(object,1,10));
-    s = get_shape<shape_t>(object);
-    CPPUNIT_ASSERT(s[1] ==20);
-
-}
-
-//-----------------------------------------------------------------------------
-void grow_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    h5::nxobject object = attribute;
-    CPPUNIT_ASSERT_THROW(grow(object),type_error);
-    
-}
-
+BOOST_AUTO_TEST_SUITE_END()

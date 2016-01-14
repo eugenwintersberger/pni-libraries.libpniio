@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2016 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,38 +17,27 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: May 29, 2014
+//  Created on: Jan 14, 2016
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 #pragma once
-#include <cppunit/TestFixture.h>
-#include <cppunit/extensions/HelperMacros.h>
 
-#include <pni/core/types.hpp>
-#include <pni/io/nx/nx.hpp>
+#include "../algorithm_test_fixture.hpp"
 
-using namespace pni::core;
-using namespace pni::io::nx;
-
-class is_class_test : public CppUnit::TestFixture
+struct io_test_fixture : algorithm_test_fixture
 {
-        CPPUNIT_TEST_SUITE(is_class_test);
-        CPPUNIT_TEST(test_field);
-        CPPUNIT_TEST(test_group);
-        CPPUNIT_TEST(test_attribute);
-        CPPUNIT_TEST_SUITE_END();
+    pni::io::nx::h5::nxobject o_scalar_attribute;
+    pni::io::nx::h5::nxobject o_mdim_attribute;
+    pni::io::nx::h5::nxobject o_scalar_field;
+    pni::io::nx::h5::nxobject o_mdim_field;
+    pni::io::nx::h5::nxattribute scalar_attribute;
+    pni::io::nx::h5::nxattribute mdim_attribute;
+    pni::io::nx::h5::nxfield scalar_field;
+    pni::io::nx::h5::nxfield mdim_field;
 
-        h5::nxfile file;
-        h5::nxfield field;
-        h5::nxgroup group,root;
-        
-    public:
-        void setUp();
-        void tearDown();
-        
-        void test_field();
-        void test_group();
-        void test_attribute();
+    static const pni::core::shape_t shape; 
 
+    
+    io_test_fixture(const pni::core::string &fname);
+    virtual ~io_test_fixture();
 };
-

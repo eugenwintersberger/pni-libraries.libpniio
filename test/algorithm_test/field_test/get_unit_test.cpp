@@ -20,74 +20,51 @@
 //  Created on: Jun 28, 2013
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/get_unit.hpp>
-#include <boost/current_function.hpp>
-#include <cppunit/extensions/HelperMacros.h>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
-#include "get_unit_test.hpp"
+#include "../algorithm_test_fixture.hpp"
 
-
-CPPUNIT_TEST_SUITE_REGISTRATION(get_unit_test);
+using namespace pni::core;
+using namespace pni::io::nx;
 using pni::io::invalid_object_error;
 
-//-----------------------------------------------------------------------------
-void get_unit_test::setUp()
+struct get_unit_test_fixture : algorithm_test_fixture
 {
-    file = h5::nxfile::create_file("get_unit_test.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    field = root.create_field<uint32>("data");
-    field.attributes.create<string>("units").write("m");
-}
-
-//-----------------------------------------------------------------------------
-void get_unit_test::tearDown() 
-{ 
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
+    get_unit_test_fixture():
+        algorithm_test_fixture("get_unit_test.nx")
+    {
+        h5::nxattribute a = field.attributes.create<string>("units");
+        a.write("nm");
+    }
+};
 
 
-//-----------------------------------------------------------------------------
-void get_unit_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-        
-    object_type object = group;
-    CPPUNIT_ASSERT_THROW(get_unit(object),type_error);
-}
+BOOST_FIXTURE_TEST_SUITE(get_unit_test,get_unit_test_fixture)
 
-//-----------------------------------------------------------------------------
-void get_unit_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        BOOST_CHECK_THROW(get_unit(o_group),type_error);
+    }
 
-    object_type object = field;
-#ifdef CLANG_CXX
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-comparison"
-#endif
-    CPPUNIT_ASSERT_NO_THROW(get_unit(object)=="m");
-    CPPUNIT_ASSERT_NO_THROW(get_unit(field)=="m");
-#ifdef CLANG_CXX
-#pragma GCC diagnostic pop
-#endif
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+        BOOST_CHECK_EQUAL(get_unit(field),"nm");
+        BOOST_CHECK_EQUAL(get_unit(o_field),"nm");
 
-    CPPUNIT_ASSERT_THROW(get_unit(h5::nxfield()),invalid_object_error);
-    CPPUNIT_ASSERT_THROW(get_unit(h5::nxobject(h5::nxfield())),
-                         invalid_object_error);
-}
+        BOOST_CHECK_THROW(get_unit(h5::nxfield()),invalid_object_error);
+        BOOST_CHECK_THROW(get_unit(h5::nxobject(h5::nxfield())),
+                             invalid_object_error);
+    }
 
-//-----------------------------------------------------------------------------
-void get_unit_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        BOOST_CHECK_THROW(get_unit(o_attribute),type_error);
+    }
 
-    object_type object = group.attributes["NX_class"];
-    CPPUNIT_ASSERT_THROW(get_unit(object),type_error);
-   
-}
-
+BOOST_AUTO_TEST_SUITE_END()

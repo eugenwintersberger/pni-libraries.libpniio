@@ -20,28 +20,168 @@
 //  Created on: Sep 16, 2014
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
+#include <boost/test/unit_test.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/algorithms/read.hpp>
+#include <pni/io/nx/algorithms/write.hpp>
+#include <pni/io/nx/nxobject_traits.hpp>
 
-#include "read_write_test.hpp"
+#include "../../base_fixture.hpp"
+#include "../../multidim_policy.hpp"
+#include "../../data_policy.hpp"
+#include "../../nexus_lowlevel_test/test_types.hpp"
+
+using namespace pni::core;
+using namespace pni::io::nx;
 
 
-CPPUNIT_TEST_SUITE_REGISTRATION(read_write_test<uint8>);
-CPPUNIT_TEST_SUITE_REGISTRATION(read_write_test<int8>);
-CPPUNIT_TEST_SUITE_REGISTRATION(read_write_test<uint16>);
-CPPUNIT_TEST_SUITE_REGISTRATION(read_write_test<int16>);
-CPPUNIT_TEST_SUITE_REGISTRATION(read_write_test<uint32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(read_write_test<int32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(read_write_test<uint64>);
-CPPUNIT_TEST_SUITE_REGISTRATION(read_write_test<int64>);
+struct read_write_test_fixture : base_fixture,
+                                 multidim_policy,
+                                 data_policy
+                                
+{
+    read_write_test_fixture():
+        base_fixture("read_write_test.nx"),
+        multidim_policy(),
+        data_policy()
+    {}
+};
 
-CPPUNIT_TEST_SUITE_REGISTRATION(read_write_test<float32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(read_write_test<float64>);
-CPPUNIT_TEST_SUITE_REGISTRATION(read_write_test<float128>);
+BOOST_FIXTURE_TEST_SUITE(read_write_test,read_write_test_fixture)
 
-CPPUNIT_TEST_SUITE_REGISTRATION(read_write_test<complex32>);
-CPPUNIT_TEST_SUITE_REGISTRATION(read_write_test<complex64>);
-CPPUNIT_TEST_SUITE_REGISTRATION(read_write_test<complex128>);
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_group,T,attribute_test_types)
+    {
+        typedef dynamic_array<T> array_type; 
+        array_type a;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(read_write_test<bool_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(read_write_test<string>);
+        BOOST_CHECK_THROW(read(h5::nxobject(root),a),type_error);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_field_full,T,field_test_types)
+    {
+        auto write_buffer = create_random_array<T>(shape);
+        auto read_buffer = create_array<T>(shape);
+        h5::nxfield field = root.create_field<T>("data",shape);
+       
+        BOOST_CHECK_NO_THROW(write(field,write_buffer));
+        BOOST_CHECK_NO_THROW(read(field,read_buffer));
+
+        BOOST_CHECK_EQUAL_COLLECTIONS(write_buffer.begin(),write_buffer.end(),
+                                      read_buffer.begin(),read_buffer.end());
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_field_object_full,T,field_test_types)
+    {
+        auto write_buffer = create_random_array<T>(shape);
+        auto read_buffer = create_array<T>(shape);
+        h5::nxobject field = root.create_field<T>("data",shape);
+        
+        BOOST_CHECK_NO_THROW(write(field,write_buffer));
+        BOOST_CHECK_NO_THROW(read(field,read_buffer));
+
+        BOOST_CHECK_EQUAL_COLLECTIONS(write_buffer.begin(),write_buffer.end(),
+                                      read_buffer.begin(),read_buffer.end());
+       
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_field_partial,T,field_test_types)
+    {
+        h5::nxfield field = root.create_field<T>("data",shape);
+        auto read_buffer = create_array<T>(shape_t{4});
+
+        for(size_t i=0;i<3;++i)
+        {
+            auto write_buffer = create_random_array<T>(shape_t{4});
+            BOOST_CHECK_NO_THROW(write(field,write_buffer,i,slice(0,4)));
+            BOOST_CHECK_NO_THROW(read(field,read_buffer,i,slice(0,4)));
+
+            BOOST_CHECK_EQUAL_COLLECTIONS(write_buffer.begin(),write_buffer.end(),
+                                          read_buffer.begin(),read_buffer.end());
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_field_object_partial,T,field_test_types)
+    {
+        h5::nxobject field = root.create_field<T>("data",shape);
+        auto read_buffer = create_array<T>(shape_t{4});
+
+        for(size_t i=0;i<3;++i)
+        {
+            auto write_buffer = create_random_array<T>(shape_t{4});
+            BOOST_CHECK_NO_THROW(write(field,write_buffer,i,slice(0,4)));
+            BOOST_CHECK_NO_THROW(read(field,read_buffer,i,slice(0,4)));
+
+            BOOST_CHECK_EQUAL_COLLECTIONS(write_buffer.begin(),write_buffer.end(),
+                                          read_buffer.begin(),read_buffer.end());
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_attribute_full,T,attribute_test_types)
+    {
+        auto write_buffer = create_random_array<T>(shape);
+        auto read_buffer = create_array<T>(shape);
+        h5::nxattribute attribute = root.attributes.create<T>("data",shape);
+       
+        BOOST_CHECK_NO_THROW(write(attribute,write_buffer));
+        BOOST_CHECK_NO_THROW(read(attribute,read_buffer));
+
+        BOOST_CHECK_EQUAL_COLLECTIONS(write_buffer.begin(),write_buffer.end(),
+                                      read_buffer.begin(),read_buffer.end());
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_attribute_object_full,T,attribute_test_types)
+    {
+        auto write_buffer = create_random_array<T>(shape);
+        auto read_buffer = create_array<T>(shape);
+        h5::nxobject attribute = root.attributes.create<T>("data",shape);
+        
+        BOOST_CHECK_NO_THROW(write(attribute,write_buffer));
+        BOOST_CHECK_NO_THROW(read(attribute,read_buffer));
+
+        BOOST_CHECK_EQUAL_COLLECTIONS(write_buffer.begin(),write_buffer.end(),
+                                      read_buffer.begin(),read_buffer.end());
+    }
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_attribute_partial,T,attribute_test_types)
+    {
+        h5::nxattribute attribute = root.attributes.create<T>("data",shape);
+        auto read_buffer = create_array<T>(shape_t{4});
+
+        for(size_t i=0;i<3;++i)
+        {
+            auto write_buffer = create_random_array<T>(shape_t{4});
+            BOOST_CHECK_NO_THROW(write(attribute,write_buffer,i,slice(0,4)));
+            BOOST_CHECK_NO_THROW(read(attribute,read_buffer,i,slice(0,4)));
+
+            BOOST_CHECK_EQUAL_COLLECTIONS(write_buffer.begin(),write_buffer.end(),
+                                          read_buffer.begin(),read_buffer.end());
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_attribute_object_partial,T,attribute_test_types)
+    {
+        h5::nxobject attribute = root.attributes.create<T>("data",shape);
+        auto read_buffer = create_array<T>(shape_t{4});
+
+        for(size_t i=0;i<3;++i)
+        {
+            auto write_buffer = create_random_array<T>(shape_t{4});
+            BOOST_CHECK_NO_THROW(write(attribute,write_buffer,i,slice(0,4)));
+            BOOST_CHECK_NO_THROW(read(attribute,read_buffer,i,slice(0,4)));
+
+            BOOST_CHECK_EQUAL_COLLECTIONS(write_buffer.begin(),write_buffer.end(),
+                                          read_buffer.begin(),read_buffer.end());
+        }
+    }
+BOOST_AUTO_TEST_SUITE_END()
 
 

@@ -21,59 +21,48 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
+#include <boost/test/unit_test.hpp>
 #include <pni/io/nx/algorithms/is_class.hpp>
-#include <boost/current_function.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nx/nx.hpp>
 
-#include "is_class_test.hpp"
+#include "../algorithm_test_fixture.hpp"
 
+using namespace pni::core;
+using namespace pni::io::nx;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(is_class_test);
-
-//-----------------------------------------------------------------------------
-void is_class_test::setUp()
+struct is_class_test_fixture : algorithm_test_fixture
 {
-    file = h5::nxfile::create_file("is_valid.nx",true);
-    root = file.root();
-    group = root.create_group("group","NXentry");
-    field = root.create_field<uint32>("data");
-}
-
-//-----------------------------------------------------------------------------
-void is_class_test::tearDown() 
-{ 
-    field.close();
-    group.close();
-    root.close();
-    file.close();
-}
+    is_class_test_fixture():
+        algorithm_test_fixture("is_valid_test.nx")
+    {
+        group = group.create_group("entry","NXentry");
+        o_group = group;
+    }
+};
 
 
-//-----------------------------------------------------------------------------
-void is_class_test::test_group()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+BOOST_FIXTURE_TEST_SUITE(is_class_test,is_class_test_fixture)
 
-    CPPUNIT_ASSERT(pni::io::nx::is_class(group,"NXentry"));
-    h5::nxobject object = group;
-    CPPUNIT_ASSERT(pni::io::nx::is_class(object,"NXentry"));
-    CPPUNIT_ASSERT(!pni::io::nx::is_class(object,"NXlog"));
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_group)
+    {
+        BOOST_CHECK(pni::io::nx::is_class(group,"NXentry"));
+        BOOST_CHECK(pni::io::nx::is_class(o_group,"NXentry"));
+        BOOST_CHECK(!pni::io::nx::is_class(o_group,"NXlog"));
+    }
 
-//-----------------------------------------------------------------------------
-void is_class_test::test_field()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_field)
+    {
+        BOOST_CHECK_THROW(pni::io::nx::is_class(o_field,"NXentry"),type_error);
+    }
 
-    h5::nxobject object = field;
-    CPPUNIT_ASSERT_THROW(pni::io::nx::is_class(object,"NXentry"),type_error);
-}
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_attribute)
+    {
+        BOOST_CHECK_THROW(is_class(o_attribute,"NXentry"),type_error);
+    }
 
-//-----------------------------------------------------------------------------
-void is_class_test::test_attribute()
-{
-    std::cerr<<BOOST_CURRENT_FUNCTION<<std::endl;
-
-    h5::nxobject object = group.attributes["NX_class"];
-    CPPUNIT_ASSERT_THROW(is_class(object,"NXentry"),type_error);
-}
+BOOST_AUTO_TEST_SUITE_END()
 
