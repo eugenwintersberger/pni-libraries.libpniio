@@ -6,7 +6,8 @@ foreach(XMLFILE ${XMLFILES})
     configure_file(${XMLFILE} ${XMLFILE} COPYONLY)
 endforeach()
 
-add_executable(group_test EXCLUDE_FROM_ALL ${SOURCES})
+add_executable(group_test EXCLUDE_FROM_ALL ${SOURCES}
+               $<TARGET_OBJECTS:test_common>)
 target_link_libraries(group_test pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_test(NAME "XML::group_tests"
          COMMAND group_test)

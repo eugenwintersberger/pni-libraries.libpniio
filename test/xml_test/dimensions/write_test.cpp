@@ -24,18 +24,11 @@
 #include <boost/test/unit_test.hpp>
 #include <pni/io/nx/xml/dimensions.hpp>
 #include <boost/property_tree/xml_parser.hpp>
+#include "../xml_test_common.hpp"
 
 using namespace pni::core;
 using namespace pni::io::nx;
 
-namespace std {
-    
-    ostream &operator<<(ostream &stream,const xml::node &n)
-    {
-        write_xml(stream,n);
-        return stream;
-    }
-}
 
 BOOST_AUTO_TEST_SUITE(write_fixture)
 

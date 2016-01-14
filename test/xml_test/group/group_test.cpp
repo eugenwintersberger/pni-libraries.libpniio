@@ -33,25 +33,16 @@
 #include <pni/io/nx/algorithms/get_name.hpp>
 #include <pni/io/nx/algorithms/get_class.hpp>
 #include <boost/property_tree/xml_parser.hpp>
+#include "../../base_fixture.hpp"
 
 using namespace pni::core;
 using namespace pni::io::nx;
 
-struct group_test_fixture
+struct group_test_fixture :  base_fixture
 {
-    h5::nxfile file;
-    h5::nxobject root_group; 
-
     group_test_fixture():
-        file(h5::nxfile::create_file("xml_group_test.nxs",true)),
-        root_group(file.root())
+        base_fixture("xml_group_test.nxs")
     {}
-
-    ~group_test_fixture()
-    {
-        close(root_group);
-        close(file);
-    }
 };
 
 BOOST_FIXTURE_TEST_SUITE(group_test,group_test_fixture)
@@ -60,8 +51,8 @@ BOOST_FIXTURE_TEST_SUITE(group_test,group_test_fixture)
     //-------------------------------------------------------------------------
     xml::node get_xml_group(const string &fname)
     {
-        xml::node root = xml::create_from_file(fname);
-        return root.get_child("group");
+        xml::node root_node = xml::create_from_file(fname);
+        return root_node.get_child("group");
     }
 
     //-------------------------------------------------------------------------
@@ -69,7 +60,7 @@ BOOST_FIXTURE_TEST_SUITE(group_test,group_test_fixture)
     {
         xml::node child = get_xml_group("group1.xml");
 
-        h5::nxobject g = xml::group::object_from_xml(root_group,child);
+        h5::nxobject g = xml::group::object_from_xml(h5::nxobject(root),child);
         BOOST_CHECK(is_valid(g));
         BOOST_CHECK_EQUAL(get_name(g),"hello");
         BOOST_CHECK_EQUAL(get_class(g),"NXentry");
@@ -81,7 +72,7 @@ BOOST_FIXTURE_TEST_SUITE(group_test,group_test_fixture)
     {
         xml::node child = get_xml_group("group2.xml");
 
-        h5::nxobject g = xml::group::object_from_xml(root_group,child);
+        h5::nxobject g = xml::group::object_from_xml(h5::nxobject(root),child);
         BOOST_CHECK(is_valid(g));
         BOOST_CHECK_EQUAL(get_name(g),"hello");
     }
@@ -92,22 +83,22 @@ BOOST_FIXTURE_TEST_SUITE(group_test,group_test_fixture)
         xml::node child = get_xml_group("group3.xml");
 
         h5::nxobject g;
-        BOOST_CHECK_THROW(g = xml::group::object_from_xml(root_group,child),
+        BOOST_CHECK_THROW(g = xml::group::object_from_xml(h5::nxobject(root),child),
                           pni::core::value_error);
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_write_1)
     {
-        h5::nxobject g = create_group(root_group,"hello");
+        h5::nxobject g = create_group(h5::nxobject(root),"hello");
 
-        xml::node root;
+        xml::node root_node;
         xml::node gnode = xml::group::object_to_xml(g);
-        root.add_child("group",gnode);
-        write_xml("test.xml",root);
+        root_node.add_child("group",gnode);
+        write_xml("test.xml",root_node);
 
         xml::node readback = xml::create_from_file("test.xml");
-        BOOST_CHECK(readback == root);
+        BOOST_CHECK(readback == root_node);
     }
 
 BOOST_AUTO_TEST_SUITE_END()

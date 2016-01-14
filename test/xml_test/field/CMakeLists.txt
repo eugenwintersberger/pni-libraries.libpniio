@@ -148,7 +148,9 @@ add_library(field_test_common OBJECT EXCLUDE_FROM_ALL field_utils.cpp)
 
 include_directories(${CMAKE_SOURCE_DIR}/test ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(field_test EXCLUDE_FROM_ALL ${CPPFILES}
-                            $<TARGET_OBJECTS:field_test_common>)
+                          $<TARGET_OBJECTS:test_common>
+                          $<TARGET_OBJECTS:xml_test_common>
+                          $<TARGET_OBJECTS:field_test_common>)
 
 target_link_libraries(field_test pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_test(NAME "XML::field_tests"

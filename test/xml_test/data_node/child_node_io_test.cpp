@@ -20,12 +20,11 @@
 //  Created on: Apr 15, 2015
 //      Author: Eugen Wintersberger
 //
-#define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE Test IO node
-
 #include <boost/test/unit_test.hpp>
 #include <pni/io/nx/xml/data_node.hpp>
 #include <pni/core/types.hpp>
+
+#include "data_node_fixture.hpp"
 
 using namespace pni::core;
 using namespace pni::io::nx;
@@ -42,14 +41,10 @@ static const string array_xml = "<group1> 12 23 34.2  34 23 </group1>"
                                 "       12 23 34.2  34 23  "
                                 "</group2>";
 
-struct child_node_fixture
+struct child_node_fixture : data_node_fixture
 {
-    xml::node scalar;
-    xml::node array;
-
     child_node_fixture():
-        scalar(xml::create_from_string(scalar_xml)),
-        array(xml::create_from_string(array_xml))
+        data_node_fixture(scalar_xml,array_xml)
     {}
 };
 

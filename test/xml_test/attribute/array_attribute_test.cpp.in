@@ -9,32 +9,21 @@
 #include <pni/io/nx/algorithms/create_attribute.hpp>
 #include <complex>
 #include "attr_utils.hpp"
+#include "../../base_fixture.hpp"
+#include "../xml_base_fixture.hpp"
 
 using namespace pni::core;
 using namespace pni::io::nx; 
 
-struct array_attr_@TYPE@_fixture
+struct array_attr_@TYPE@_fixture : base_fixture,xml_base_fixture
 {
-    xml::node root;
-    xml::node child;
-
-    h5::nxfile file; 
-    h5::nxobject group;
-
     array_attr_@TYPE@_fixture():
-        root(),
-        child(),
-        file(h5::nxfile::create_file("array_attribute_test_@TYPE@.nxs",true)),
-        group(create_group(h5::nxobject(file.root()),"detector:NXdetector"))
+        base_fixture("array_attribute_test_@TYPE@.nxs"),
+        xml_base_fixture()
     {}
-
-    ~array_attr_@TYPE@_fixture()
-    {
-        file.close();
-        close(group);
-    }
-
 };
+
+static const string xml_@TYPE@_file="array_attribute_test_@TYPE@.xml";
 
 BOOST_FIXTURE_TEST_SUITE(array_attribute_test_@TYPE@,array_attr_@TYPE@_fixture)
 
@@ -42,16 +31,16 @@ BOOST_FIXTURE_TEST_SUITE(array_attribute_test_@TYPE@,array_attr_@TYPE@_fixture)
     BOOST_AUTO_TEST_CASE(test_inquery)
     {
         typedef std::vector<@TYPE@> array_type;
-        BOOST_CHECK_NO_THROW(root = xml::create_from_file("array_attribute_test_@TYPE@.xml"));
-        BOOST_CHECK_NO_THROW(child = root.get_child("group.attribute"));
+        BOOST_CHECK_NO_THROW(root_node = xml::create_from_file(xml_@TYPE@_file));
+        BOOST_CHECK_NO_THROW(child_node = root_node.get_child("group.attribute"));
         
-        BOOST_CHECK_EQUAL(xml_test::attr::size(child),3);
-        BOOST_CHECK_EQUAL(xml_test::attr::rank(child),1);
-        BOOST_CHECK_EQUAL(xml_test::attr::type_id(child),type_id_t::@TYPEID@);
+        BOOST_CHECK_EQUAL(xml_test::attr::size(child_node),3);
+        BOOST_CHECK_EQUAL(xml_test::attr::rank(child_node),1);
+        BOOST_CHECK_EQUAL(xml_test::attr::type_id(child_node),type_id_t::@TYPEID@);
        
         array_type r{@CPP_DATA@};
         array_type data;
-        xml_test::attr::data_from_xml(child,data);
+        xml_test::attr::data_from_xml(child_node,data);
 
         for(auto r_iter = r.begin(),d_iter = data.begin(); 
             d_iter != data.end();
@@ -64,11 +53,11 @@ BOOST_FIXTURE_TEST_SUITE(array_attribute_test_@TYPE@,array_attr_@TYPE@_fixture)
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_create_object)
     {
-        BOOST_CHECK_NO_THROW(root = xml::create_from_file("array_attribute_test_@TYPE@.xml"));
-        BOOST_CHECK_NO_THROW(child = root.get_child("group.attribute"));
+        BOOST_CHECK_NO_THROW(root_node = xml::create_from_file(xml_@TYPE@_file));
+        BOOST_CHECK_NO_THROW(child_node = root_node.get_child("group.attribute"));
 
         //attach the attribute to the group
-        h5::nxattribute attr = xml_test::attr::object_from_xml(group,child);
+        h5::nxattribute attr = xml_test::attr::object_from_xml(h5::nxobject(root),child_node);
 
         BOOST_CHECK_EQUAL(attr.size(),3);
         BOOST_CHECK_EQUAL(attr.rank(),1);
@@ -81,20 +70,18 @@ BOOST_FIXTURE_TEST_SUITE(array_attribute_test_@TYPE@,array_attr_@TYPE@_fixture)
         using namespace pni::io::nx::xml;
         typedef std::vector<@TYPE@> array_type;
        
-        h5::nxobject attr = create_attribute<@TYPE@>(group,
-                            "attr_data",shape_t{{3}});
+        h5::nxobject attr = root.attributes.create<@TYPE@>("attr_data",shape_t{{3}});
         array_type r{@CPP_DATA@};
         BOOST_CHECK_NO_THROW(write(attr,r));
 
-        root = xml::node();
-        root.add_child("group",xml::group::object_to_xml(group));
+        root_node.add_child("group",xml::group::object_to_xml(h5::nxobject(root)));
         xml::node attr_node = xml_test::attr::object_to_xml(attr);
         xml_test::attr::data_to_xml(r,attr_node);
-        child = root.add_child("group.attribute",attr_node);
+        child_node = root_node.add_child("group.attribute",attr_node);
 
-        BOOST_CHECK_EQUAL(xml_test::attr::size(child),3);
-        BOOST_CHECK_EQUAL(xml_test::attr::rank(child),1);
-        BOOST_CHECK_EQUAL(xml_test::attr::type_id(child),type_id_t::@TYPEID@);
+        BOOST_CHECK_EQUAL(xml_test::attr::size(child_node),3);
+        BOOST_CHECK_EQUAL(xml_test::attr::rank(child_node),1);
+        BOOST_CHECK_EQUAL(xml_test::attr::type_id(child_node),type_id_t::@TYPEID@);
 
     }
 

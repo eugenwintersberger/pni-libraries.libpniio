@@ -20,39 +20,26 @@
 //  Created on: Dec 2, 2014
 //      Author: Eugen Wintersberger
 //
-#define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE testing XML dimensions tag 
-
 #include <boost/test/unit_test.hpp>
 #include <pni/io/nx/xml/dimensions.hpp>
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
 #include <pni/io/exceptions.hpp>
-#include <boost/current_function.hpp>
+
+#include "dimensions_fixture.hpp"
 
 using namespace pni::io::nx;
 using namespace pni::core;
 
-struct read_fixture
-{
-    xml::node root;
-    xml::node child;
-
-    read_fixture(const string &fname):
-        root(xml::create_from_file(fname)),
-        child(root.get_child("dimensions"))
-    {}
-};
-
-BOOST_AUTO_TEST_SUITE(read_test)
+BOOST_FIXTURE_TEST_SUITE(read_test,dimensions_fixture)
 
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_read_1)
     {
-        read_fixture f("dim1.xml");
+        read_file("dim1.xml");
         
-        auto shape = xml::dimensions::object_from_xml<shape_t>(f.child);
+        auto shape = xml::dimensions::object_from_xml<shape_t>(child_node);
         BOOST_CHECK_EQUAL(shape.size(),2);
         BOOST_CHECK_EQUAL(shape.front(),55);
         BOOST_CHECK_EQUAL(shape.back(),100);
@@ -61,44 +48,44 @@ BOOST_AUTO_TEST_SUITE(read_test)
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_read_2)
     {
-        read_fixture f("dim2.xml");
+        read_file("dim2.xml");
 
-        BOOST_CHECK_THROW(xml::dimensions::object_from_xml<shape_t>(f.child),
+        BOOST_CHECK_THROW(xml::dimensions::object_from_xml<shape_t>(child_node),
                           shape_mismatch_error);
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_read_3)
     {
-        read_fixture f("dim3.xml");
+        read_file("dim3.xml");
 
-        BOOST_CHECK_THROW(xml::dimensions::object_from_xml<shape_t>(f.child),
+        BOOST_CHECK_THROW(xml::dimensions::object_from_xml<shape_t>(child_node),
                           key_error);
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_read_4)
     {
-        read_fixture f("dim4.xml");
+        read_file("dim4.xml");
 
-        BOOST_CHECK_THROW(xml::dimensions::object_from_xml<shape_t>(f.child),
+        BOOST_CHECK_THROW(xml::dimensions::object_from_xml<shape_t>(child_node),
                           key_error);
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_read_5)
     {
-        read_fixture f("dim5.xml");
+        read_file("dim5.xml");
 
-        BOOST_CHECK_THROW(xml::dimensions::object_from_xml<shape_t>(f.child),
+        BOOST_CHECK_THROW(xml::dimensions::object_from_xml<shape_t>(child_node),
                           key_error);
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_read_6)
     {
-        read_fixture f("dim6.xml");
-        auto s = xml::dimensions::object_from_xml<shape_t>(f.child);
+        read_file("dim6.xml");
+        auto s = xml::dimensions::object_from_xml<shape_t>(child_node);
         BOOST_CHECK_EQUAL(s.size(),0);
     }
 

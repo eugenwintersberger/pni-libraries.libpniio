@@ -25,44 +25,34 @@
 #include <boost/current_function.hpp>
 #include <pni/core/types.hpp>
 #include <pni/io/nx/xml/dimensions.hpp>
+#include "dimensions_fixture.hpp"
 
 using namespace pni::core;
 using namespace pni::io::nx;
 
-struct inquery_fixture 
-{
-    xml::node root;
-    xml::node child;
 
-    inquery_fixture(const string &fname):
-        root(xml::create_from_file(fname)),
-        child(root.get_child("dimensions"))
-    {}
-};
-
-
-BOOST_AUTO_TEST_SUITE(inquery_test)
+BOOST_FIXTURE_TEST_SUITE(inquery_test,dimensions_fixture)
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_rank)
     {
-        inquery_fixture f("dim1.xml");
+        read_file("dim1.xml");
 
-        BOOST_CHECK_EQUAL(xml::dimensions::rank(f.child),2);
+        BOOST_CHECK_EQUAL(xml::dimensions::rank(child_node),2);
 
-        f = inquery_fixture("dim6.xml");
-        BOOST_CHECK_EQUAL(xml::dimensions::rank(f.child),0);
+        read_file("dim6.xml");
+        BOOST_CHECK_EQUAL(xml::dimensions::rank(child_node),0);
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_size)
     {
-        inquery_fixture f("dim1.xml");
+        read_file("dim1.xml");
 
-        BOOST_CHECK_EQUAL(xml::dimensions::size(f.child),100*55);
+        BOOST_CHECK_EQUAL(xml::dimensions::size(child_node),100*55);
 
-        f = inquery_fixture("dim6.xml");
-        BOOST_CHECK_EQUAL(xml::dimensions::size(f.child),1);
+        read_file("dim6.xml");
+        BOOST_CHECK_EQUAL(xml::dimensions::size(child_node),1);
 
     }
 

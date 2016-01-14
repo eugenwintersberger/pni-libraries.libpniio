@@ -153,7 +153,9 @@ add_library(attr_test_common OBJECT EXCLUDE_FROM_ALL attr_utils.cpp)
 #-----------------------------------------------------------------------------
 include_directories(${CMAKE_SOURCE_DIR}/test ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(attribute_tests EXCLUDE_FROM_ALL ${CPPFILES} 
-               $<TARGET_OBJECTS:attr_test_common>)
+               $<TARGET_OBJECTS:attr_test_common>
+               $<TARGET_OBJECTS:xml_test_common>
+               $<TARGET_OBJECTS:test_common>)
 target_link_libraries(attribute_tests pniio
                ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_test(NAME "XML::attribute_tests"
