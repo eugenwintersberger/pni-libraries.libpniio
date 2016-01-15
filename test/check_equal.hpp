@@ -20,15 +20,38 @@
 //  Created on: Jan 15, 2016
 //      Author: Eugen Wintersberger
 //
+#pragma once
 
 #include <boost/test/unit_test.hpp>
-#include "../../base_fixture.hpp"
+#include <pni/core/types.hpp>
 
-struct field_test_fixture : base_fixture
+template<typename T>
+using is_float = pni::core::is_float_type<T>;
+
+//-----------------------------------------------------------------------------
+template<
+         typename T,
+         typename std::enable_if<!is_float<T>::value>::type* = nullptr
+        > 
+void check_equal(const T &a,const T &b)
 {
-    field_test_fixture():
-        base_fixture("field_test.nx")
-    {}
-};
+    BOOST_CHECK_EQUAL(a,b); 
+}
 
-BOOST_GLOBAL_FIXTURE(field_test_fixture)
+//-----------------------------------------------------------------------------
+template<
+         typename T,
+         typename std::enable_if<is_float<T>::value>::type* = nullptr
+        > 
+void check_equal(const T &a,const T &b)
+{
+    BOOST_CHECK_CLOSE_FRACTION(a,b,1.e-8); 
+}
+
+//-----------------------------------------------------------------------------
+template<typename T> 
+void check_equal(const std::complex<T> &a,const std::complex<T> &b)
+{
+    BOOST_CHECK_CLOSE_FRACTION(a.real(),b.real(),1.e-8);
+    BOOST_CHECK_CLOSE_FRACTION(a.imag(),b.imag(),1.e-8);
+}
