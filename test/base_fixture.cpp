@@ -23,12 +23,22 @@
 using namespace pni::core;
 using namespace pni::io::nx;
 
-base_fixture::base_fixture(const string &fname):
+//-----------------------------------------------------------------------------
+base_fixture::base_fixture(const string &fname,bool open_existing):
     filename(fname),
-    file(h5::nxfile::create_file(filename,true)),
-    root(file.root())
-{}
+    file(),
+    root()
+{
+    if(open_existing)
+        file = h5::nxfile::open_file(filename,false);
+    else
+        file = h5::nxfile::create_file(filename,true);
 
+    root = file.root();
+
+}
+
+//-----------------------------------------------------------------------------
 base_fixture::~base_fixture()
 {
     root.close();

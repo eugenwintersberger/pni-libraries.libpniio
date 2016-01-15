@@ -114,6 +114,25 @@ namespace xml{
     //-------------------------------------------------------------------------
     //!
     //! \ingroup xml_classes
+    //! \brief get name of a node
+    //!
+    //! Return the name of a node as determined by the content of its 
+    //! name attribute. This is a convenience function. 
+    //! If the node does not have a name attribute an empty string is 
+    //! returned.
+    //!
+    //! \param n node with name attribute
+    //! \return content of the name attribute of a tag
+    //!
+    pni::core::string get_name(const node &n);
+
+
+    //-------------------------------------------------------------------------
+    node get_child_by_name(const node &parent,const pni::core::string &name);
+
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup xml_classes
     //! \brief XML stream output
     //! 
     //! Write property tree structure as XML to an output stream.

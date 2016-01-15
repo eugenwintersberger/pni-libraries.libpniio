@@ -13,4 +13,16 @@
         </dimensions>
         <strategy compression="true" rate="3" shuffle="true"/>
     </field>
+    <field name="data_chunk" type="@TYPE@">
+        <dimensions rank="2">
+            <dim index="2" value="2048"/>
+            <dim index="1" value="1"/>
+        </dimensions>
+        <chunk rank="2">
+            <dim index="1" value="1"/>
+            <dim index="2" value="2048"/>
+        </chunk>
+        <strategy compression="true" rate="3" shuffle="true"/>
+    </field>
+
 </group>

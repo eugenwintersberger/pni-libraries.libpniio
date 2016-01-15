@@ -61,6 +61,16 @@ namespace xml{
         return long_name;
     }
 
+    //-------------------------------------------------------------------------
+    shape_t field::chunk(const node &field_node)
+    {
+        auto chunk = field_node.get_child_optional("chunk");
+        if(chunk)
+            return dimensions::object_from_xml(*chunk);
+        else
+            return shape_t();
+    }
+
 
 //end of namespace
 }

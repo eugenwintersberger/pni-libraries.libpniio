@@ -78,6 +78,19 @@ namespace xml{
 
         //--------------------------------------------------------------------
         //!
+        //! \brief get chunk shape
+        //! 
+        //! Retrieve the chunk shape from the field tag. If the field has 
+        //! no chunk tag an empty shape_t instance will be returned. 
+        //! 
+        //! \throws parser_error in case of an error
+        //! \pararm field_node the XML node with the field specification
+        //! \return an instance of shape_t with the chunk shape
+        //! 
+        static pni::core::shape_t chunk(const node &field_node);
+
+        //--------------------------------------------------------------------
+        //!
         //! \brief create field from XML
         //! 
         //! Creates a new field object below parent according to the 
@@ -89,6 +102,8 @@ namespace xml{
         //! \throws type_error if the data type is not supported
         //! \throws io_error if metadata cannot be written 
         //! \throws object_error in case of any other error
+        //! \throws shape_mismatch_error if chunk and dimensions tag rank do
+        //!                              not match
         //!
         //! \tparam GTYPE group type
         //! \param parent the parent group for the new field
@@ -109,9 +124,26 @@ namespace xml{
 
             typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
             //determine basic field parameters
-            string field_name   = name(field_node);
-            shape_t field_shape = shape(field_node);
-            type_id_t tid       = type_id(field_node);                                
+            string    field_name  = name(field_node);
+            shape_t   field_shape = shape(field_node);
+            type_id_t tid         = type_id(field_node);               
+            shape_t   chunk_shape = chunk(field_node);
+
+            if(chunk_shape.empty())
+            {
+                chunk_shape = field_shape;
+                chunk_shape[0] = 1;
+
+                //if we have only a scalar field we set the chunk size to 1K
+                if(field_shape.size()==1)
+                    chunk_shape[0] = 1024;
+            }
+            else
+            {
+                if(chunk_shape.size() != field_shape.size())
+                    throw shape_mismatch_error(EXCEPTION_RECORD,
+                            "Rank of chunk and dimensions tag do not match!");
+            }
             
             //if the field tag contains a strategy tag we have to check
             //for possible compression attributes
@@ -144,10 +176,10 @@ namespace xml{
                 typedef typename trait_type::deflate_type deflate_type;
                 
                 deflate_type comp(compression_rate,use_shuffle);
-                f = create_field(parent,tid,field_name,field_shape,comp);
+                f = create_field(parent,tid,field_name,field_shape,chunk_shape,comp);
             }
             else
-                f = create_field(parent,tid,field_name,field_shape);
+                f = create_field(parent,tid,field_name,field_shape,chunk_shape);
                                   
             //add long name if requested by XML
             if(has_attribute(field_node,"long_name"))

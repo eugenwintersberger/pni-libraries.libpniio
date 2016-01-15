@@ -147,7 +147,7 @@ set_directory_properties(PROPPERTIES
 add_library(field_test_common OBJECT EXCLUDE_FROM_ALL field_utils.cpp)
 
 include_directories(${CMAKE_SOURCE_DIR}/test ${CMAKE_CURRENT_SOURCE_DIR})
-add_executable(field_test EXCLUDE_FROM_ALL ${CPPFILES}
+add_executable(field_test EXCLUDE_FROM_ALL ${CPPFILES} field_test.cpp
                           $<TARGET_OBJECTS:test_common>
                           $<TARGET_OBJECTS:xml_test_common>
                           $<TARGET_OBJECTS:field_test_common>)

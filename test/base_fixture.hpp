@@ -35,6 +35,13 @@ struct base_fixture
     pni::io::nx::h5::nxfile file;  //!< file instancen
     pni::io::nx::h5::nxgroup root; //!< root group instance
 
-    base_fixture(const pni::core::string &fname);
+    //!
+    //! \brief constructor
+    //!
+    //! \param fname name of the file to create or open
+    //! \param open_existing decide whether to create a new file or open
+    //!                      an existing one
+    //! 
+    base_fixture(const pni::core::string &fname,bool open_existing=false);
     virtual ~base_fixture(); 
 };

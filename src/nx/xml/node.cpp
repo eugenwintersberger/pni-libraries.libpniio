@@ -27,6 +27,7 @@
 
 #include <pni/io/exceptions.hpp>
 #include <pni/io/nx/xml/node.hpp>
+#include <pni/io/nx/xml/data_node.hpp>
 
 namespace pni{
 namespace io{
@@ -131,6 +132,25 @@ namespace xml{
 
         boost::property_tree::write_xml(o,n,settings);
         return o;
+    }
+
+    //-------------------------------------------------------------------------
+    string get_name(const node &n)
+    {
+        if(has_attribute(n,"name"))
+            return data_node::read(get_attribute(n,"name"));
+        else
+            return string();
+    }
+
+    //-------------------------------------------------------------------------
+    node get_child_by_name(const node &parent,const string &name)
+    {
+        typedef std::pair<string,node> value_type;
+        for(auto child: parent)
+            if(get_name(child.second)==name) return child.second;
+
+        return node();
     }
 
 
