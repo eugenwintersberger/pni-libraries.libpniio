@@ -3,40 +3,10 @@ include(CheckCXXSourceCompiles)
 include(FindBoost)
 include(FindPkgConfig)
 
-if(NOT PKG_CONFIG_FOUND)
-    message("Could not find pkg-config ... try without it!")
-endif()
-
-if("${CMAKE_FAMILY_VERSION}" STREQUAL "2.6" OR "${CMAKE_VERSION}" STREQUAL "2.8.4")
-    #first we have to find the c-library
-    if(HDF5_C_LIBRARY_DIRS)
-        #user provided HDF5_C_LIBRARY_DIRS
-        find_library(HDF5_FOUND hdf5 "${HDF5_C_LIBRARY_DIRS}")
-    else()
-        #without use provided HDF5_C_LIBARY_DIRS
-        find_library(HDF5_FOUND hdf5)
-    endif()
-
-    message(${HDF5_FOUND}) 
-    get_filename_component(HDF5_C_LIBRARY_DIRS ${HDF5_FOUND} PATH)
-    string(REGEX REPLACE "lib(64)*" "include" HDF5_INCLUDE_DIRS "${HDF5_C_LIBRARY_DIRS}")
-    message(${HDF5_C_LIBRARY_DIRS})
-    message(${HDF5_INCLUDE_DIRS})
-
-    #now we have to look for the header file
-    find_file(HEADER "hdf5.h" ${HDF5_INCLUDE_DIRS} "${HDF5_INCLUDE_DIRS}/hdf5")
-    get_filename_component(HDF5_INCLUDE_DIRS ${HEADER} PATH)
-    message(${HDF5_INCLUDE_DIRS})
-    include_directories(${HDF5_INCLUDE_DIRS}) 
-else()
-    include(FindHDF5)
-endif()
-
-if(NOT HDF5_FOUND)
-    #could not find HDF5 - stop configuration step
-    message("HDF5 not found:")
-    message(FATAL "Please set HDF5_C_INCLUDE_DIRS and HDF5_LIBRARY_DIRS manually!")
-endif()
+include("configure/FindPniCore.cmake")
+include("configure/ConfigureHDF5.cmake")
+include("configure/ConfigureZLib.cmake")
+include("configure/ConfigureSZLib.cmake")
 
 #=================================================================================
 if(NOT CMAKE_BUILD_TYPE)
@@ -45,7 +15,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 #setup for GNU CXX compiler
-if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+if(CMAKE_CXX_COMPILER_ID MATCHES GNU)
     message("found GNU compiler ...")
     add_definitions(-g -Wall -Wextra -pedantic)
     if(CMAKE_BUILD_TYPE MATCHES RELEASE)
@@ -59,10 +29,10 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     
     add_definitions(-std=c++11)
     add_definitions(-DGNU_CXX)
-endif()
+    add_definitions(-DGNU)
 
-if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    message("found clang compiler...")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES Clang)
+    message(STATUS "Found Clang C++ compiler ...")
 
     add_definitions(-Wextra -pedantic -Wall)
     if(CMAKE_BUILD_TYPE MATCHES RELEASE)
@@ -76,6 +46,11 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     #for this version the compiler has to support c++11 flag
     add_definitions(-std=c++11)
     add_definitions(-DCLANG_CXX)
+    add_definitions(-DCLANG)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
+    message(STATUS "Found Microsoft C++ compiler ...")
+    add_definitions(-DMSVC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
 endif()
 
 #=================configure installation parameters============================
@@ -84,25 +59,26 @@ include(configure/InstallConfig.cmake)
 #===================================check the size of data types===============
 include(configure/CheckTypeSize.cmake)
 
-#=================try to figure out some compiler capabilities=================
-#include(configure/CheckCompilerCaps.cmake)
 
 #==========================check for libraries=====================================
-#the only thing we have to do here is to check for pnicore
-pkg_search_module(PNICORE_PKG REQUIRED pnicore)
 
-set(Boost_USE_STATIC_LIBS OFF)
-set(Boost_USE_MULTITHREADED OFF)
-set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.41 COMPONENTS program_options system regex 
-                                   unit_test_framework)
+if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
+    set(Boost_USE_STATIC_LIBS ON)
+    set(Boost_USE_STATIC_RUNTIME OFF)
+else()
+    set(Boost_USE_STATIC_LIBS OFF)
+    set(Boost_USE_STATIC_RUNTIME OFF)
+endif()
+set(Boost_USE_MULTITHREADED ON)
+find_package(Boost 1.41 COMPONENTS program_options system 
+                                   regex 
+                                   date_time
+                                   unit_test_framework filesystem)
 
 if(NOT Boost_FOUND)
     message(FATAL_ERROR "Could not find Boost libraries!")
-endif()
-
-if(PKG_CONFIG_FOUND)
-    pkg_search_module(CPPUNIT REQUIRED cppunit)
+else()
+    include_directories(${Boost_INCLUDE_DIRS})
 endif()
 
 

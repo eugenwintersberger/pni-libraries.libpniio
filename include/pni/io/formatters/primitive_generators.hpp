@@ -24,7 +24,13 @@
 #pragma once
 
 #include <pni/core/types.hpp>
+#ifdef _MSC_VER
+#pragma warning(disable:4348)
+#endif
 #include <boost/spirit/include/karma.hpp>
+#ifdef _MSC_VER
+#pragma warning(default:4348)
+#endif
 #include <boost/mpl/map.hpp>
 
 #include "float_policy.hpp"

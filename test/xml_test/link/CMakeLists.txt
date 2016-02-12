@@ -5,7 +5,7 @@ set(SOURCES internal_link_test.cpp
 set(XMLFILES internal_link_test.xml external_link_test.xml)
 
 foreach(XMLFILE ${XMLFILES})
-    configure_file(${XMLFILE} ${XMLFILE} COPY_ONLY)
+    configure_file(${XMLFILE} ${XMLFILE} COPYONLY)
 endforeach()
 
 add_executable(link_test EXCLUDE_FROM_ALL ${SOURCES})

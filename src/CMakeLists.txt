@@ -15,14 +15,14 @@ include_directories(${PNICORE_PKG_INCLUDE_DIRS} ${HDF5_INCLUDE_DIRS})
 message("${HDF5_INCLUDE_DIRS}")
 
 #first we need to build the C-filter code
-add_definitions(-fPIC)
 add_subdirectory(cbf)
 add_subdirectory(fio)
 add_subdirectory(nx)
 add_subdirectory(tiff)
 add_subdirectory(formatters)
 
-add_library(pniio SHARED ${SOURCES} $<TARGET_OBJECTS:cbf_objects>
+add_library(pniio SHARED ${SOURCES} 
+    $<TARGET_OBJECTS:cbf_objects>
     $<TARGET_OBJECTS:fio_objects>
     $<TARGET_OBJECTS:nx_objects>
     $<TARGET_OBJECTS:h5_objects>
@@ -35,11 +35,21 @@ add_library(pniio SHARED ${SOURCES} $<TARGET_OBJECTS:cbf_objects>
 add_dependencies(pniio config.hpp)
 set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"
                                        SOVERSION "${SO_VERSION}")
-target_link_libraries(pniio hdf5 z boost_date_time 
-                      boost_filesystem ${PNICORE_PKG_LIBRARIES})
+target_link_libraries(pniio ${HDF5_LIBRARIES} 
+                      ${Boost_FILESYSTEM_LIBRARY}
+                      ${Boost_REGEX_LIBRARY}
+                      ${Boost_DATE_TIME_LIBRARY}
+                      ${PNICORE_PKG_LIBRARIES}
+                      ${ZLIB_LIBRARIES}
+                      ${SZLIB_LIBRARIES}
+                      )
 
 #install code
-install(TARGETS pniio LIBRARY DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}")
+install(TARGETS pniio 
+        LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        RUNTIME DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        )
 
 #have to create the pkg-config file
 if("${CMAKE_FAMILY_VERSION}" EQUAL "2.6")

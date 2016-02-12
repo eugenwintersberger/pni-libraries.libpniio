@@ -47,7 +47,7 @@ foreach(index RANGE ${TYPERANGE})
     
     if(TYPE STREQUAL float128)
         message(STATUS "setup for float128 comparison")
-        set(EQUALITY_CHECK "BOOST_CHECK_CLOSE(@TYPE@(data),expected,1.e-14);")
+        set(EQUALITY_CHECK "BOOST_CHECK_CLOSE(float128(data),expected,1.e-14);")
     elseif(TYPE STREQUAL complex128)
         message(STATUS "setup for complex128 comnparison")
         set(EQUALITY_CHECK "BOOST_CHECK_CLOSE(std::real(data),std::real(expected),1.e-14);\n\
@@ -123,7 +123,7 @@ foreach(index RANGE ${TYPERANGE})
     
     if(TYPE STREQUAL float128)
         message(STATUS "setup for float128 comparison")
-        set(EQUALITY_CHECK "BOOST_CHECK_CLOSE(@TYPE@(*d_iter),*r_iter,1.e-14);")
+        set(EQUALITY_CHECK "BOOST_CHECK_CLOSE(float128(*d_iter),*r_iter,1.e-14);")
     elseif(TYPE STREQUAL complex128)
         message(STATUS "setup for complex128 comnparison")
         set(EQUALITY_CHECK "BOOST_CHECK_CLOSE(std::real(*d_iter),std::real(*r_iter),1.e-14);\n\

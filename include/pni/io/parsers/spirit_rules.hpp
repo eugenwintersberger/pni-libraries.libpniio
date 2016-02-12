@@ -25,9 +25,16 @@
 
 #include <pni/core/types.hpp>
 #include <boost/mpl/map.hpp>
+#ifdef _MSC_VER
+#pragma warning(disable:4348)
+#endif
 #include <boost/spirit/include/qi_real.hpp>
 #include <boost/spirit/include/qi_uint.hpp>
 #include <boost/spirit/include/qi_int.hpp>
+#ifdef _MSC_VER
+#pragma warning(default:4348)
+#endif
+
 
 namespace pni{
 namespace io{

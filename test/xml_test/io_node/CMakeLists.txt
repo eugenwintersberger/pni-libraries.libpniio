@@ -5,7 +5,7 @@ set(SOURCES inquery_test.cpp
 set(XMLFILES object1.xml object2.xml object3.xml)
 
 foreach(XMLFILE ${XMLFILES})
-    configure_file(${XMLFILE} ${XMLFILE} COPY_ONLY)
+    configure_file(${XMLFILE} ${XMLFILE} COPYONLY)
 endforeach()
 
 add_executable(io_node_test EXCLUDE_FROM_ALL ${SOURCES})

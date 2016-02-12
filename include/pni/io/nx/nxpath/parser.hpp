@@ -24,9 +24,15 @@
 #include "nxpath.hpp"
 #include "insert.hpp"
 
+#ifdef _MSC_VER
+#pragma warning(disable:4348)
+#endif
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
 #include <boost/fusion/include/std_pair.hpp>
+#ifdef _MSC_VER
+#pragma warning(default:4348)
+#endif
 #include <utility>
 
 

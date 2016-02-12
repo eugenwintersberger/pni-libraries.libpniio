@@ -27,8 +27,14 @@
 #include <pni/core/types.hpp>
 #include <pni/core/arrays/slice.hpp>
 
+#ifdef _MSC_VER
+#pragma warning(disable:4348)
+#endif
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
+#ifdef _MSC_VER
+#pragma warning(default:4348)
+#endif
 
 namespace pni{
 namespace io{

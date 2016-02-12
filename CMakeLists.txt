@@ -9,6 +9,17 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE RELEASE)
 endif()
 
+set(BOOST_INCLUDEDIR CACHE PATH "Path to the boost header files")
+set(BOOST_LIBRARYDIR CACHE PATH "Path to the boost library files")
+set(HDF5_C_LIBRARY_DIRS CACHE PATH "Path to the HDF5 library files")
+set(HDF5_INCLUDE_DIRS CACHE PATH "Path to the HDF5 header files")
+set(PNICORE_INCLUDEDIR CACHE PATH "Path to the pnicore header files")
+set(PNICORE_LIBRARYDIR CACHE PATH "Path to the pnicore library files")
+set(ZLIB_LIBRARYDIR CACHE PATH "Path to the ZLib library files")
+set(ZLIB_INCLUDEDIR CACHE PATH "Path to the ZLib header files")
+set(SZLIB_LIBRARYDIR CACHE PATH "Path to the SZLib library files")
+set(SZLIB_INCLUDEDIR CACHE PATH "Path to the SZLib header files")
+
 #===========================provide some user options==========================
 option(BOOST_PREFIX "installation prefix of the local BOOST installation" "/usr")
 

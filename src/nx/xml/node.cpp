@@ -45,18 +45,18 @@ namespace xml{
         {
             read_xml(stream,t);
         }
-        catch(ptree_bad_data &error)
+        catch(ptree_bad_data &)
         {
             throw pni::io::parser_error(EXCEPTION_RECORD,
                     "A parser error occured due to invalid input data!");
         }
-        catch(ptree_bad_path &error)
+        catch(ptree_bad_path &)
         {
             throw pni::io::parser_error(EXCEPTION_RECORD,
                     "A parser error occured as the requested object could not"
                     " be resolved!");
         }
-        catch(ptree_error &error)
+        catch(ptree_error &)
         {
             throw pni::io::parser_error(EXCEPTION_RECORD,
                     "A general parser error has occured!");
@@ -106,7 +106,7 @@ namespace xml{
         {
             return parent.get_child(attribute_path(name));
         }
-        catch(ptree_bad_path &error)
+        catch(ptree_bad_path &)
         {
             throw key_error(EXCEPTION_RECORD, "Attribute not found!");
         }
@@ -122,13 +122,13 @@ namespace xml{
     {
         auto attr = parent.get_child_optional(attribute_path(name));
 
-        return attr;
+        return bool(attr);
     }
 
     //------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const node &n)
     {
-        boost::property_tree::xml_writer_settings<char> settings('\t',1);
+        boost::property_tree::xml_writer_settings<pni::core::string> settings('\t',1);
 
         boost::property_tree::write_xml(o,n,settings);
         return o;

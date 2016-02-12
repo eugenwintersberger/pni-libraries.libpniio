@@ -27,7 +27,13 @@
 // the spirit_rules.hpp header file pulls everything in we need 
 #include "spirit_rules.hpp"
 #include <boost/mpl/at.hpp>
+#ifdef _MSC_VER
+#pragma warning(disable:4348)
+#endif
 #include <boost/spirit/include/qi.hpp>
+#ifdef _MSC_VER
+#pragma warning(default:4348)
+#endif
 #include <boost/spirit/include/phoenix.hpp>
 
 

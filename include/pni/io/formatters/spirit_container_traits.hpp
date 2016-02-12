@@ -26,7 +26,13 @@
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 #include <pni/core/type_erasures.hpp>
+#ifdef _MSC_VER
+#pragma warning(disable:4348)
+#endif
 #include <boost/spirit/include/karma.hpp>
+#ifdef _MSC_VER
+#pragma warning(default:4348)
+#endif
 
 
 namespace boost{
