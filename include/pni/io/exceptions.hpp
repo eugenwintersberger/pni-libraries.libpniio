@@ -26,6 +26,8 @@
 #include <iostream>
 #include <pni/core/error.hpp>
 
+#include "windows.hpp"
+
 namespace pni{
 namespace io{   
 
@@ -36,7 +38,7 @@ namespace io{
     //! This exception is thrown in all situations where IO operations fail.
     //! This includes reading and writing of payload- or meta-data.
     //!
-    class io_error:public pni::core::exception
+    class PNIIO_EXPORT io_error:public pni::core::exception
     {
         public:
             //-----------------------------------------------------------------
@@ -65,7 +67,7 @@ namespace io{
     //!
     //! Exception is thrown when link operations fails.
     //!
-    class link_error:public pni::core::exception
+    class PNIIO_EXPORT link_error:public pni::core::exception
     {
         public:
             //-----------------------------------------------------------------
@@ -96,7 +98,7 @@ namespace io{
     //! expected to be thrown by all functions and methods that are somehow 
     //! related to parsing strings.
     //!
-    class parser_error:public pni::core::exception
+    class PNIIO_EXPORT parser_error:public pni::core::exception
     {
         public:
             //-----------------------------------------------------------------
@@ -127,7 +129,7 @@ namespace io{
     //! An object uses this exception in cases where the user makes a request 
     //! on a feature not availabel as the object is in an invalid state.
     //!
-    class invalid_object_error:public pni::core::exception
+    class PNIIO_EXPORT invalid_object_error:public pni::core::exception
     {
         public:
             //-----------------------------------------------------------------
@@ -157,7 +159,7 @@ namespace io{
     //! Used for general errors on IO objects. This includes the failure 
     //! to create or close an object. 
     //!
-    class object_error:public pni::core::exception
+    class PNIIO_EXPORT object_error:public pni::core::exception
     {
         public:
             //-----------------------------------------------------------------

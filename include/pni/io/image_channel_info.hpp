@@ -25,6 +25,7 @@
 #pragma once
 
 #include <pni/core/types.hpp>
+#include "windows.hpp"
 
 namespace pni{
 namespace io{
@@ -36,7 +37,7 @@ namespace io{
     //! image_channle_info holds information specific to a particular image 
     //! channel. 
     //!
-    class image_channel_info
+    class PNIIO_EXPORT image_channel_info
     {
         private:
             pni::core::type_id_t _tid;  //!< ID of the datatype used for this channel

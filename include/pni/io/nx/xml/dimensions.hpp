@@ -23,6 +23,7 @@
 #pragma once
 
 #include "node.hpp"
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -54,8 +55,8 @@ namespace xml{
     //! \return true if index of lhs is small than that of rhs, 
     //! false otherwise
     //! 
-    bool operator<(const index_value_type &lhs,
-                   const index_value_type &rhs);
+    PNIIO_EXPORT bool operator<(const index_value_type &lhs,
+                                const index_value_type &rhs);
 
     //------------------------------------------------------------------------
     //!
@@ -65,7 +66,7 @@ namespace xml{
     //! This structure provides two static methods to read and write the 
     //! dimensions of a field or attribute to an XML tag. 
     //!
-    class dimensions
+    class PNIIO_EXPORT dimensions
     {
 
         private:

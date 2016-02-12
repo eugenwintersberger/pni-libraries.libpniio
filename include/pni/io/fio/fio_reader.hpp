@@ -31,6 +31,7 @@
 
 #include <pni/core/arrays.hpp>
 #include "../spreadsheet_reader.hpp"
+#include "../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -43,13 +44,19 @@ namespace io{
     stored in columns. Thus such files correspond to the family of spreadsheet
     style files. 
     */
-    class fio_reader:public spreadsheet_reader
+    class PNIIO_EXPORT fio_reader:public spreadsheet_reader
     {
         private:
+#ifdef _MSC_VER
+#pragma warning(disable:4251)
+#endif
             //! parameter stream positions
             std::map<pni::core::string,std::streampos> _param_map;
             //! offset where real data starts
             std::streampos _data_offset; 
+#ifdef _MSC_VER
+#pragma warning(default:4251)
+#endif
 
             //====================private member methods=======================
             /*! 

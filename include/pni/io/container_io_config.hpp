@@ -23,6 +23,8 @@
 //
 #pragma once
 
+#include "windows.hpp"
+
 namespace pni{
 namespace io{
     
@@ -63,7 +65,7 @@ namespace io{
     //! config_1.stop_symbol();
     //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //!
-    class container_io_config
+    class PNIIO_EXPORT container_io_config
     {
         private:
             //! start symbol

@@ -28,6 +28,7 @@
 #include "data_node.hpp"
 #include "../../parsers.hpp"
 #include "../../formatters.hpp"
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -40,7 +41,7 @@ namespace xml{
     //!
     //! This class provides functions common for field and attribute nodes. 
     //!
-    struct io_node
+    struct PNIIO_EXPORT io_node
     {
         //--------------------------------------------------------------------
         //!

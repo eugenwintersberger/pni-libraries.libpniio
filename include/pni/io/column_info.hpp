@@ -27,6 +27,7 @@
 
 #include <pni/core/types.hpp>
 #include <vector>
+#include "windows.hpp"
 
 namespace pni{
 namespace io{
@@ -40,12 +41,18 @@ namespace io{
     //! column, its TypeID and the shape of each cell. The latter parameter 
     //! allows even the storage of multidimensional data in such a structure.
     //!
-    class column_info
+    class PNIIO_EXPORT column_info
     {
         private:
+#ifdef _MSC_VER
+#pragma warning(disable:4251)
+#endif
             pni::core::string _name; //!< name of the columne
             pni::core::type_id_t _tid;  //!< type ID of column type
             std::vector<size_t>  _shape; //!< shape of column data
+#ifdef _MSC_VER
+#pragma warning(default:4251)
+#endif
         public:
             //====================constructors and destructor===================
             //! default constructor
@@ -117,7 +124,7 @@ namespace io{
 
     };
 
-    std::ostream &operator<<(std::ostream &o,const column_info &ci);
+    PNIIO_EXPORT std::ostream &operator<<(std::ostream &o,const column_info &ci);
 
 
 //end of namespace

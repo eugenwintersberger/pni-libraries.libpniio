@@ -11,6 +11,7 @@ set(HEADER_FILES column_info.hpp
                  formatters.hpp
                  container_io_config.hpp
                  format.hpp
+                 windows.hpp
                  )
 
 install(FILES ${HEADER_FILES} 

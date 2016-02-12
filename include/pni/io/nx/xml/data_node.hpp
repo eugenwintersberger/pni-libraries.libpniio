@@ -23,6 +23,7 @@
 
 #include <pni/core/types.hpp>
 #include "node.hpp"
+#include "../../windows.hpp"
 
 
 namespace pni{
@@ -36,7 +37,7 @@ namespace xml{
     //! 
     //! This child class of object_data manages data IO for XML nodes.
     //! 
-    class data_node
+    class PNIIO_EXPORT data_node
     {
         public:
 

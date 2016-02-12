@@ -29,6 +29,7 @@
 #include <pni/core/error.hpp>
 #include "data_reader.hpp"
 #include "column_info.hpp"
+#include "windows.hpp"
 
 namespace pni{
 namespace io{
@@ -41,14 +42,19 @@ namespace io{
     //! like data files. Most of the ASCII formats written following this 
     //! storage convention. 
     //!
-    class spreadsheet_reader:public data_reader
+    class PNIIO_EXPORT spreadsheet_reader:public data_reader
     {
         private:
-            std::vector<column_info> _columns_info; //!< column information
+#ifdef _MSC_VER
+#pragma warning(disable:4251)
+#endif
+			std::vector<column_info> _columns_info; //!< colu			on
             size_t _nrec;    //!< number of records in the sheet
-
+#ifdef _MSC_VER
+#pragma warning(default:4251)
+#endif
         protected:
-            //============constructors and destructor==========================
+            //============constr			estructor=====			=========
             //! default constructor
             spreadsheet_reader();
 

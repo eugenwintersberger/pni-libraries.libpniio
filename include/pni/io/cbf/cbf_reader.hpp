@@ -37,6 +37,7 @@
 #include "../image_reader.hpp"
 #include "dectris_reader.hpp"
 #include "types.hpp"
+#include "../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -64,9 +65,12 @@ namespace io{
     //! header object can be consideres as a factory for the binary
     //! readers and the array objects holding the data.
     //!
-    class cbf_reader: public image_reader 
+    class PNIIO_EXPORT cbf_reader: public image_reader 
     {
         private:
+#ifdef _MSC_VER
+#pragma warning(disable:4251)
+#endif
             //! string holding the detector vendor ID
             cbf::vendor_id _detector_vendor;  
             //! info structure for data
@@ -75,7 +79,9 @@ namespace io{
             std::streampos _data_offset;         
             //! compression type
             cbf::compression_id _compression_type; 
-
+#ifdef _MSC_VER
+#pragma warning(default:4251)
+#endif
             //-----------------------------------------------------------------
             //! 
             //! \brief parse the file

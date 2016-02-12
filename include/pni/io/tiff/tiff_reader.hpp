@@ -32,6 +32,7 @@
 #include "ifd.hpp"
 #include "ifd_entry.hpp"
 #include "strip_reader.hpp"
+#include "../windows.hpp"
 
 
 namespace pni{
@@ -46,12 +47,17 @@ namespace io{
     //! supported.  The copy constructor and the copy assignment operator 
     //! are deleted to prevent copy construction of this object. 
     //!
-    class tiff_reader:public image_reader 
+    class PNIIO_EXPORT tiff_reader:public image_reader 
     {
         private:
             bool _little_endian;  //!< true if data is stored as little endian
+#ifdef _MSC_VER
+#pragma warning(disable:4251)
+#endif
             std::vector<tiff::ifd> _ifds; //!< IFD list
-          
+#ifdef _MSC_VER
+#pragma warning(default:4251)
+#endif
             //=====================private methods=============================
             //!
             //! \brief check binary encoding

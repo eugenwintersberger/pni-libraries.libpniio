@@ -24,6 +24,7 @@
 #include "../algorithms/as_group.hpp"
 #include "data_node.hpp"
 #include "../nxlink.hpp"
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -39,7 +40,7 @@ namespace xml{
     //! object as this is beyond the scope of libpniio's XML stack.
     //! 
    
-    class link
+    class PNIIO_EXPORT link
     {
         private:
             //!

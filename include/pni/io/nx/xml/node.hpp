@@ -23,6 +23,7 @@
 
 #include <pni/core/types.hpp>
 #include <boost/property_tree/ptree.hpp>
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -50,7 +51,7 @@ namespace xml{
     //! \param s string from which to read the data
     //! \return node instance
     //!
-    node create_from_string(const pni::core::string &s);
+    PNIIO_EXPORT node create_from_string(const pni::core::string &s);
 
     //-------------------------------------------------------------------------
     //!
@@ -65,7 +66,7 @@ namespace xml{
     //! \param s name of the file
     //! \return node instance
     //!
-    node create_from_file(const pni::core::string &s);
+    PNIIO_EXPORT node create_from_file(const pni::core::string &s);
 
     //------------------------------------------------------------------------
     //!
@@ -78,7 +79,7 @@ namespace xml{
     //! \param name the name of the attribute
     //! \return a valid property tree attribute path
     //! 
-    pni::core::string attribute_path(const pni::core::string &name);
+    PNIIO_EXPORT pni::core::string attribute_path(const pni::core::string &name);
 
 
     //------------------------------------------------------------------------
@@ -95,7 +96,7 @@ namespace xml{
     //! \param name the name of the attribute
     //! \return node representing the attribute
     //! 
-    node get_attribute(const node &parent,const pni::core::string &name);
+    PNIIO_EXPORT node get_attribute(const node &parent,const pni::core::string &name);
 
     //-------------------------------------------------------------------------
     //!
@@ -109,7 +110,7 @@ namespace xml{
     //! \param name the attributes name
     //! \return true if the attribute exists, false otherwise
     //!
-    bool has_attribute(const node &parent,const pni::core::string &name);
+    PNIIO_EXPORT bool has_attribute(const node &parent,const pni::core::string &name);
 
     //-------------------------------------------------------------------------
     //!
@@ -124,11 +125,11 @@ namespace xml{
     //! \param n node with name attribute
     //! \return content of the name attribute of a tag
     //!
-    pni::core::string get_name(const node &n);
+    PNIIO_EXPORT pni::core::string get_name(const node &n);
 
 
     //-------------------------------------------------------------------------
-    node get_child_by_name(const node &parent,const pni::core::string &name);
+    PNIIO_EXPORT node get_child_by_name(const node &parent,const pni::core::string &name);
 
     //-------------------------------------------------------------------------
     //!
@@ -140,7 +141,7 @@ namespace xml{
     //! \param n node to write to the output stream
     //! \return modified output stream
     //!
-    std::ostream &operator<<(std::ostream &o,const node &n);
+    PNIIO_EXPORT std::ostream &operator<<(std::ostream &o,const node &n);
 
 
 //end of namespace

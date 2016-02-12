@@ -30,6 +30,7 @@
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
 #include "image_channel_info.hpp"
+#include "windows.hpp"
 
 namespace pni{
 namespace io{
@@ -40,7 +41,7 @@ namespace io{
     //! 
     //! ImageInfo holds basic information about a particular image. 
     //!
-    class image_info
+    class PNIIO_EXPORT image_info
     {
         private:
             //! number of pixels in x-direction
@@ -48,7 +49,13 @@ namespace io{
             //! number of pixels in y-direction
             size_t _ny;             
             //! channel information
+#ifdef _MSC_VER
+#pragma warning(disable:4251)
+#endif
             std::vector<image_channel_info> _channel_info; 
+#ifdef _MSC_VER
+#pragma warning(default:4251)
+#endif
         public:
             //-----------------------------------------------------------------
             //! default constructor
@@ -180,7 +187,7 @@ namespace io{
     //! \param i reference to an instance of ImageInfo
     //! \return reference to the output stream
     //!
-    std::ostream &operator<<(std::ostream &o,const image_info &i);
+    PNIIO_EXPORT std::ostream &operator<<(std::ostream &o,const image_info &i);
 
 
 

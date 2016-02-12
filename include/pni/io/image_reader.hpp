@@ -32,6 +32,7 @@
 #include <pni/core/types.hpp>
 #include "data_reader.hpp"
 #include "image_info.hpp"
+#include "windows.hpp"
 
 namespace pni{
 namespace io{
@@ -50,7 +51,7 @@ namespace io{
     //! assignment operators are thus protected making them only available 
     //! to derived classes.
     //!
-    class image_reader:public data_reader
+    class PNIIO_EXPORT image_reader:public data_reader
     {
         protected:
             //===================constructors and destructor===================

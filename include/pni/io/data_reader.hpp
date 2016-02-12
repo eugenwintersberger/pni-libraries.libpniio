@@ -27,6 +27,7 @@
 #include <iostream>
 #include <fstream>
 #include <pni/core/types.hpp>
+#include "windows.hpp"
 
 
 namespace pni{
@@ -42,9 +43,12 @@ namespace io{
     //! concrete reader classes.  Thus all constructors are protected making 
     //! them available only for derived classes.
     //!
-    class data_reader
+    class PNIIO_EXPORT data_reader
     {
         private:
+#ifdef _MSC_VER
+#pragma warning(disable:4251)
+#endif
             //! name of the file 
             pni::core::string _fname;           
             //! flag determining how files will be opened
@@ -71,6 +75,9 @@ namespace io{
             //!
             std::unique_ptr<std::ifstream> 
                 _open_stream(const pni::core::string &fname) const;
+#ifdef _MSC_VER
+#pragma warning(default:4251)
+#endif
         protected:
             //!
             //! \brief get stream

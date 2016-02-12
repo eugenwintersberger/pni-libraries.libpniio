@@ -39,6 +39,7 @@
 #include "node.hpp"
 #include "dimensions.hpp"
 #include "io_node.hpp"
+#include "../../windows.hpp"
 
 
 
@@ -50,7 +51,7 @@ namespace xml{
     //!
     //! \ingroup xml_classes
     //! \brief read and write field data
-    struct field : public io_node
+    struct PNIIO_EXPORT field : public io_node
     {
 
         //--------------------------------------------------------------------
