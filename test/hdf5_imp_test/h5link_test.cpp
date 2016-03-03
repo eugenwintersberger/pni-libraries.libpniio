@@ -116,4 +116,17 @@ BOOST_FIXTURE_TEST_SUITE(h5link_test,h5link_test_fixture)
         
     }
 
+    //------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_link_name)
+    {
+        h5::group_imp root(file1.root());
+        h5::group_imp(root,"a");
+        h5::group_imp(root,"b");
+        h5::group_imp(root,"c");
+
+        BOOST_CHECK_EQUAL(h5::h5link::link_name(root,0),"a");
+        BOOST_CHECK_EQUAL(h5::h5link::link_name(root,1),"b");
+        BOOST_CHECK_EQUAL(h5::h5link::link_name(root,2),"c");
+    }
+
 BOOST_AUTO_TEST_SUITE_END()

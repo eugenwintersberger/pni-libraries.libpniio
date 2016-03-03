@@ -22,6 +22,7 @@
 //
 
 
+#include <sstream>
 #include <pni/io/nx/h5/h5link.hpp>
 #include <pni/io/nx/h5/group_imp.hpp>
 #include <pni/io/nx/nxpath/utils.hpp>
@@ -70,10 +71,9 @@ namespace h5{
                                       const string &name)
     {
         using namespace pni::core; 
-        
-        if(!loc.is_valid())
-            throw pni::io::invalid_object_error(EXCEPTION_RECORD,
-                    "Cannot create a link below an invalid group object!");
+       
+        check_if_valid(loc,EXCEPTION_RECORD,"Parent group invalid - "
+                                            "link creation failed!");
 
         if(path.filename().empty())
             throw value_error(EXCEPTION_RECORD,
@@ -100,9 +100,8 @@ namespace h5{
                                       const string &name)
     {
         using namespace pni::core;
-        if(!loc.is_valid())
-            throw pni::io::invalid_object_error(EXCEPTION_RECORD,
-                    "Cannot create a link below an invalid group object!");
+        check_if_valid(loc,EXCEPTION_RECORD,"Parent group invalid -  "
+                                            "link creation failed!");
 
         if(!target.filename().empty())
             throw value_error(EXCEPTION_RECORD,
@@ -119,25 +118,147 @@ namespace h5{
                     get_h5_error_string());
     }
 
+    //-------------------------------------------------------------------------
+    void h5link::check_if_valid(const group_imp &loc,
+                                const exception_record &record,
+                                const string &message)
+    {
+        if(!loc.is_valid())
+            throw pni::io::invalid_object_error(record,message);
+    }
+
+    //-------------------------------------------------------------------------
+    void h5link::check_if_exists(const group_imp &loc,const string &lname,
+                                 const exception_record &record,
+                                 const string &message)
+    {
+        string exc_message = "Group ["+get_path(loc.object())
+                             +"] does not have a child ["+lname+ "]";
+        if(message.empty())
+            exc_message += "!";
+        else
+            exc_message += ":"+message;
+
+        if(!loc.has_child(lname)) throw key_error(record,exc_message);
+    }
     
     //-------------------------------------------------------------------------
-    pni::io::nx::nxlink_type h5link::link_type(const group_imp &loc,
-                                               const string &name)
+    void h5link::check_if_exists(const group_imp &loc,size_t index,
+                                 const exception_record &record,
+                                 const string &message)
     {
+        std::stringstream ss;
+        ss<<"Group ["<<get_path(loc.object())<<"] has "<<loc.size()
+          <<"children, index was "<<index;
+        
+        string exc_message = ss.str();
+        if(message.empty())
+            exc_message += "!";
+        else
+            exc_message += ": "+message;
+
+        if(index>=loc.size())
+            throw index_error(record,exc_message);
+        
+    }
+
+    //-------------------------------------------------------------------------
+    H5L_info_t h5link::get_link_info(const group_imp &loc,const string &lname)
+    {
+        check_if_valid(loc,EXCEPTION_RECORD,"Invalid parent group - "
+                                            "cannot retrieve link info!");
+        check_if_exists(loc,lname,EXCEPTION_RECORD,"cannot retrieve link info");
+
         H5L_info_t info;
 
-        if(!loc.has_child(name))
-            throw key_error(EXCEPTION_RECORD,
-                    "Group ["+get_path(loc.object())
-                    +"] does not have a child ["+name+ "]!");
-
-        if(H5Lget_info(loc.object().id(),name.c_str(),&info,H5P_DEFAULT)<0)
+        if(H5Lget_info(loc.object().id(),lname.c_str(),&info,H5P_DEFAULT)<0)
         {
             throw pni::io::link_error(EXCEPTION_RECORD,
-                    "Error obtaining link type for child ["+name+"] of group"+
+                    "Error obtaining link type for child ["+lname+"] of group"+
                     "["+get_path(loc.object())+"]!");
         }
 
+        return info;
+    }
+
+    //------------------------------------------------------------------------
+    H5L_info_t h5link::get_link_info(const group_imp &loc,size_t index)
+    {
+        check_if_valid(loc,EXCEPTION_RECORD,"Invalid parent group - "
+                                            "cannot retrieve link info!");
+        check_if_exists(loc,index,EXCEPTION_RECORD,
+                        "cannot retrieve link info");
+
+        H5L_info_t info;
+
+        if(H5Lget_info_by_idx(loc.object().id(),".",
+                              H5_INDEX_NAME,H5_ITER_NATIVE,
+                              index,&info,H5P_DEFAULT)<0)
+        {
+            std::stringstream ss;
+            ss<<"Error obtaining link type for child ["<<index
+              <<"] of group ["<<get_path(loc.object())<<"]!";
+            throw pni::io::link_error(EXCEPTION_RECORD,ss.str());
+                    
+        }
+        
+        return info;
+
+    }
+
+    //------------------------------------------------------------------------
+    auto h5link::link_name(const group_imp &loc,size_t index)
+        -> string
+    {
+        ssize_t size = H5Lget_name_by_idx(loc.object().id(),
+                                          ".",
+                                          H5_INDEX_NAME,
+                                          H5_ITER_NATIVE,
+                                          index,
+                                          NULL,
+                                          0,
+                                          H5P_DEFAULT);
+
+        if(size<0)
+        {
+            std::stringstream ss;
+            ss<<"Cannot obtain the size of the link with index "<<index
+              <<" of group ["<<get_path(loc.object())<<"]!";
+            throw pni::io::link_error(EXCEPTION_RECORD,ss.str());
+        }
+
+        string name(size,' ');
+        size = H5Lget_name_by_idx(loc.object().id(),".",H5_INDEX_NAME,
+                                  H5_ITER_NATIVE,index,
+                                  const_cast<char*>(name.data()),
+                                  name.size()+1,H5P_DEFAULT);
+        if(size<0)
+        {
+            std::stringstream ss;
+            ss<<"Cannot obtain the name of the link with index "<<index
+              <<" of group ["<<get_path(loc.object())<<"]!";
+            throw pni::io::link_error(EXCEPTION_RECORD,ss.str());
+        }
+        
+        return name;
+                     
+    }
+
+    //------------------------------------------------------------------------
+    h5link::link_value h5link::get_link_value(const group_imp &loc,
+                                              const string &lname)
+    {
+        
+    }
+             
+
+    
+    //-------------------------------------------------------------------------
+    auto h5link::link_type(const group_imp &loc,const string &name)
+        -> pni::io::nx::nxlink_type
+    {
+        H5L_info_t info = get_link_info(loc,name);
+        
         if(info.type == H5L_TYPE_EXTERNAL)
             return pni::io::nx::nxlink_type::EXTERNAL;
         else if(info.type == H5L_TYPE_HARD)
@@ -148,6 +269,47 @@ namespace h5{
             throw pni::core::type_error(EXCEPTION_RECORD,
                     "Link is of unknown type!");
     }
+
+    //------------------------------------------------------------------------
+    auto h5link::get_soft_link_status(const group_imp &loc,
+                                      const string &lname)
+        -> pni::io::nx::nxlink_status
+    {
+    
+
+        return pni::io::nx::nxlink_status::VALID;
+    }
+
+    //------------------------------------------------------------------------
+    auto h5link::get_external_link_status(const group_imp &loc,
+                                          const string &lname)
+        -> pni::io::nx::nxlink_status
+    {
+        
+        return pni::io::nx::nxlink_status::VALID;
+    }
+
+
+    //------------------------------------------------------------------------
+    auto h5link::link_status(const group_imp &loc,const string &lname)
+        -> pni::io::nx::nxlink_status
+    {
+        using namespace pni::io::nx;
+
+        switch(link_type(loc,lname))
+        {
+            case nxlink_type::HARD: 
+                return nxlink_status::VALID;
+            case nxlink_type::SOFT: 
+                return get_soft_link_status(loc,lname);
+            case nxlink_type::EXTERNAL:
+                return get_external_link_status(loc,lname);
+            default:
+                return nxlink_status::INVALID;
+
+        }
+    }
+
 
 //end of namespace
 }

@@ -113,7 +113,7 @@ BOOST_FIXTURE_TEST_SUITE(group_imp_test,group_imp_test_fixture)
 
         h5::group_imp det;
         BOOST_CHECK_EQUAL(root_group.size(),1);
-        det = h5::group_imp(root_group.at(0));
+        //det = h5::group_imp(root_group.at(0));
         BOOST_CHECK_NO_THROW(det = h5::group_imp(root_group.at(0)));
         BOOST_CHECK_EQUAL(det.name(),"test");
 

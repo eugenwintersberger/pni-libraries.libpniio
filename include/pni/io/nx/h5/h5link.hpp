@@ -49,6 +49,12 @@ namespace h5{
     class h5link
     {
         private:
+            struct link_value
+            {
+                pni::core::string filename;
+                pni::core::string object_path;
+            };
+
             //!
             //! \brief convert a Nexus path to an HDF5 path
             //!
@@ -65,8 +71,128 @@ namespace h5{
             //!
             static pni::core::string _nx2hdf5path(const nxpath &p);
 
+            //----------------------------------------------------------------
+            //!
+            //! \brief check if parent is valid
+            //! 
+            //! Static member function checking if the parent object is valid. 
+            //! Otherwise pni::io::invalid_object_error will be thrown. 
+            //!
+            //! \throws invalid_object_error if loc is not valid
+            //! 
+            //! \param loc reference to the parent object
+            //! \param record exception record at the location where the test
+            //!               should be performed
+            //! \param message error message
+            //!
+            static void check_if_valid(const group_imp &loc,
+                                       const pni::core::exception_record &record,
+                                       const pni::core::string &message);
 
+            //----------------------------------------------------------------
+            //!
+            //! \brief check if link exists
+            //!
+            //! Checks if a link of name lname exists below group loc. This 
+            //! function assumes that loc is a valid HDF5 group. In case of 
+            //! doubts check_if_valid should be called before.
+            //!
+            //! \throws key_error if link does not exist
+            //!
+            //! \param loc the parent group for the link
+            //! \param lname the name of the link
+            //! \param record the exception record at the position of the check
+            //! \param message a custom error message that will be added to 
+            //!                the default message
+            //!
+            static void check_if_exists(const group_imp &loc,
+                                        const pni::core::string &lname,
+                                        const pni::core::exception_record
+                                        &record,
+                                        const pni::core::string &message="");
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief check if link exists
+            //!
+            //! Checks if a link with a particular index exists. This function 
+            //! does nothing else than checking if index does not exceed the 
+            //! total number of links below the parent group. The function 
+            //! asssumes that loc is a valid HDF5 group. In case of doubts 
+            //! call check_if_valid before. 
+            //!
+            //! \throws index_error if index exceeds the total number of links
+            //! 
+            //! \param loc parent HDF5 group
+            //! \param index the index of the link
+            //! \param record exception record of the check
+            //! \param message optional message which will be added to the 
+            //!                default error message
+            //! 
+            static void check_if_exists(const group_imp &loc,size_t index,
+                                        const pni::core::exception_record
+                                        &record,
+                                        const pni::core::string &message="");
+                                    
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief get link info by name
+            //!
+            //! Returns the info structure for a link of anme name. 
+            //! 
+            //! \throws invalid_object_error if loc is not a valid group
+            //! \throws key_error if a link fo name name does not exist
+            //! \throws object_error in case of any other error
+            //! 
+            //! \param loc parent group of the link
+            //! \param name the name of the link
+            //! 
+            //! \return HDF5 link info structure
+            //! 
+            static H5L_info_t get_link_info(const group_imp &loc,
+                                            const pni::core::string &name);
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief get link info by index
+            //!
+            //! Returns the info structure for the link determined by index.
+            //! 
+            //! \throws invalid_object_error if loc is not a valid group
+            //! \throws index_error if index exceeds the total number of links
+            //!                     below the parent group
+            //! \throws object_error in case of any other error
+            //! 
+            //! \param loc parent group of the link
+            //! \param index link index
+            //! 
+            //! \return HDF5 link info structure
+            //! 
+            static H5L_info_t get_link_info(const group_imp &loc,
+                                            size_t index);
+
+            static auto get_link_value(const group_imp &loc,const
+                                       pni::core::string &lname)
+                -> link_value;
+
+            static auto et_link_value(const group_imp &loc,size_t index)
+                -> link_value;
+
+            static auto get_soft_link_status(const group_imp &loc,
+                                             const pni::core::string &lname)
+                -> pni::io::nx::nxlink_status;
+
+            static auto get_external_link_status(const group_imp &loc,
+                                                 const pni::core::string &lname)
+                -> pni::io::nx::nxlink_status;
+
+
+                                            
         public:
+
+            static auto link_name(const group_imp &loc,size_t index)
+                -> pni::core::string;
 
             //! 
             //! \brief create an external link
@@ -131,8 +257,17 @@ namespace h5{
             //! \param name the name of the child 
             //! \return link type
             //!
-            static pni::io::nx::nxlink_type link_type(const group_imp &loc, 
-                                                      const pni::core::string &name);
+            static auto link_type(const group_imp &loc, 
+                                  const pni::core::string &name)
+                -> pni::io::nx::nxlink_type;
+
+            static auto link_status(const group_imp &loc,
+                                    const pni::core::string &lname)
+                -> pni::io::nx::nxlink_status;
+
+            static auto link_status(const group_imp &loc,size_t index)
+                -> pni::io::nx::nxlink_status;
+                       
     };
 //end of namespace
 }
