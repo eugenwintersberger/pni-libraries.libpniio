@@ -280,16 +280,14 @@ namespace h5{
 
     //------------------------------------------------------------------------
     auto h5link::get_link_value(const group_imp &loc,const string &lname)
-        -> h5link::link_value
+        -> string
     {
-        link_value value;
 
         H5L_info_t info = get_link_info(loc,lname);
-        value.object_path = string(info.u.val_size-1,' ');
-        value.filename = loc.filename();
+        string value(info.u.val_size-1,' ');
 
         if(H5Lget_val(loc.object().id(),lname.c_str(),
-                      reinterpret_cast<void*>(const_cast<char*>(value.object_path.data())),
+                      reinterpret_cast<void*>(const_cast<char*>(value.data())),
                       info.u.val_size,
                       H5P_DEFAULT)<0)
         {
@@ -306,9 +304,9 @@ namespace h5{
                                       const pni::core::string &lname)
         -> pni::io::nx::nxpath
     {
-        link_value value = get_link_value(loc,lname);
+        string value = get_link_value(loc,lname);
 
-        nxpath target = nxpath::from_string(loc.filename()+":/"+value.object_path);
+        nxpath target = nxpath::from_string(loc.filename()+":/"+value);
 
         return target;
     }
@@ -319,20 +317,18 @@ namespace h5{
         -> pni::io::nx::nxpath
 
     {
-        link_value value = get_link_value(loc,lname);
-        auto first_iter = std::find(value.object_path.begin(),
-                                    value.object_path.end(),'\0');
+        string value = get_link_value(loc,lname);
+        auto first_iter = std::find(value.begin(),value.end(),'\0');
         std::advance(first_iter,1);
-        auto last_iter = std::find(first_iter,
-                                   value.object_path.end(),'\0');
+        auto last_iter = std::find(first_iter,value.end(),'\0');
                        
 
-        value.filename = string(first_iter,last_iter);
+        string filename(first_iter,last_iter);
         std::advance(last_iter,1);
-        value.object_path = string(last_iter,value.object_path.end());
+        string object_path(last_iter,value.end());
                                
 
-        return nxpath::from_string(value.filename+":/"+value.object_path);
+        return nxpath::from_string(filename+":/"+object_path);
     }
     
     //-------------------------------------------------------------------------

@@ -49,12 +49,6 @@ namespace h5{
     class h5link
     {
         private:
-            struct link_value
-            {
-                pni::core::string filename;
-                pni::core::string object_path;
-            };
-
             //!
             //! \brief convert a Nexus path to an HDF5 path
             //!
@@ -172,18 +166,61 @@ namespace h5{
             static H5L_info_t get_link_info(const group_imp &loc,
                                             size_t index);
 
+            //----------------------------------------------------------------
+            //!
+            //! \brief return the link value
+            //!
+            //! Return the link value. In HDF5 the link value is the target
+            //! to which a link referes to.
+            //!
+            //! \throw invalid_object_error if loc is not a valid group
+            //! \throw key_error if a linke lname does not exist
+            //! \throw link_error in case that the value cannot be retrieved
+            //! \throw object_error in case of any other error
+            //! 
+            //! \return link value as string
+            //!
             static auto get_link_value(const group_imp &loc,const
                                        pni::core::string &lname)
-                -> link_value;
+                -> pni::core::string;
 
-            static auto get_link_value(const group_imp &loc,size_t index)
-                -> link_value;
-
-
+    
+            //----------------------------------------------------------------
+            //!
+            //! \brief return external target
+            //! 
+            //! Return the target of an external link as an instance of nxpath.
+            //! 
+            //! \throw invalid_object_error if loc is not a valid group
+            //! \throw key_error if a linke lname does not exist
+            //! \throw link_error in case that the value cannot be retrieved
+            //! \throw object_error in case of any other error
+            //! 
+            //! \param loc parent group
+            //! \param lname name of the link
+            //! 
+            //! \return link target as nxpath
+            //!
             static auto get_external_link_target(const group_imp &loc,
                                                  const pni::core::string &lname)
                 -> pni::io::nx::nxpath;
 
+            //----------------------------------------------------------------
+            //!
+            //! \brief return internal target
+            //! 
+            //! Return the target of an internal link as an instance of nxpath.
+            //! 
+            //! \throw invalid_object_error if loc is not a valid group
+            //! \throw key_error if a linke lname does not exist
+            //! \throw link_error in case that the value cannot be retrieved
+            //! \throw object_error in case of any other error
+            //! 
+            //! \param loc parent group
+            //! \param lname name of the link
+            //! 
+            //! \return link target as nxpath
+            //!
             static auto get_soft_link_target(const group_imp &loc,
                                              const pni::core::string &lname)
                 -> pni::io::nx::nxpath;
@@ -208,10 +245,40 @@ namespace h5{
                 -> pni::core::string;
 
             //----------------------------------------------------------------
+            //!
+            //! \brief get link target
+            //!
+            //! Return the target for the link with index index in group loc.
+            //! 
+            //! \throw invalid_object_error if loc is not a valid group
+            //! \throw index_error if index exceeds the total number of links
+            //! \throw link_error in case that the value cannot be retrieved
+            //! \throw object_error in case of any other error
+            //! 
+            //! \param loc parent group of the link
+            //! \param index link index
+            //!
+            //! \return link target as nxpath instance
+            //!
             static auto link_target(const group_imp &loc,size_t index)
                 -> pni::io::nx::nxpath;
 
             //----------------------------------------------------------------
+            //!
+            //! \brief get link target
+            //!
+            //! Return the target for the link lname in group loc.
+            //! 
+            //! \throw invalid_object_error if loc is not a valid group
+            //! \throw key_error if a linke lname does not exist
+            //! \throw link_error in case that the value cannot be retrieved
+            //! \throw object_error in case of any other error
+            //! 
+            //! \param loc parent group of the link
+            //! \param lname the name of the link
+            //!
+            //! \return link target as nxpath instance
+            //!
             static auto link_target(const group_imp &loc,
                                     const pni::core::string &name)
                 -> pni::io::nx::nxpath;

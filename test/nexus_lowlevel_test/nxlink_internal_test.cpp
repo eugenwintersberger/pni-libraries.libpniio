@@ -77,6 +77,13 @@ BOOST_FIXTURE_TEST_SUITE(nxlink_internal_test,nxlink_internal_test_fixture)
         h5::nxfield field = location["link_field"];
         BOOST_CHECK_EQUAL(get_unit(field),"au");
         BOOST_CHECK(is_soft_link(location,"link_field"));
+        nxpath t;
+        BOOST_CHECK_NO_THROW(t = link_target(location,"link_field"));
+        BOOST_CHECK_EQUAL(nxpath::to_string(t),
+                          "nxlink_internal_test.nxs://entry/instrument/detector/data");
+        BOOST_CHECK_NO_THROW(t = link_target(location,0));
+        BOOST_CHECK_EQUAL(nxpath::to_string(t),
+                          "nxlink_internal_test.nxs://entry/instrument/detector/data");
     }
 
     //-------------------------------------------------------------------------
