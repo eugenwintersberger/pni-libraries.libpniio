@@ -69,6 +69,10 @@ BOOST_FIXTURE_TEST_SUITE(h5link_test,h5link_test_fixture)
         h5::group_imp lg(root_group.at("link_1"));
         //this should be now a soft link
         BOOST_CHECK(h5::h5link::link_type(root_group,"link_1")==nxlink_type::SOFT);
+        
+        BOOST_CHECK_NO_THROW(target =
+                h5::h5link::link_target(root_group,"link_1"));
+        BOOST_CHECK_EQUAL(nxpath::to_string(target),"h5link_test1.h5://test");
 
         //check for exceptions
         target = nxpath::from_string("test.nx://test/data");
@@ -94,6 +98,9 @@ BOOST_FIXTURE_TEST_SUITE(h5link_test,h5link_test_fixture)
         BOOST_CHECK(h5::h5link::link_type(root_group,"external") 
                 == nxlink_type::EXTERNAL);
         BOOST_CHECK(root_group.has_child("external"));
+        BOOST_CHECK_NO_THROW(target = h5::h5link::link_target(root_group,"external"));
+        BOOST_CHECK_EQUAL(nxpath::to_string(target),
+                          "h5link_test1.h5://test");
 
         //echeck exceptions
         target = nxpath::from_string("/test/data");

@@ -176,24 +176,47 @@ namespace h5{
                                        pni::core::string &lname)
                 -> link_value;
 
-            static auto et_link_value(const group_imp &loc,size_t index)
+            static auto get_link_value(const group_imp &loc,size_t index)
                 -> link_value;
 
-            static auto get_soft_link_status(const group_imp &loc,
-                                             const pni::core::string &lname)
-                -> pni::io::nx::nxlink_status;
 
-            static auto get_external_link_status(const group_imp &loc,
+            static auto get_external_link_target(const group_imp &loc,
                                                  const pni::core::string &lname)
-                -> pni::io::nx::nxlink_status;
+                -> pni::io::nx::nxpath;
 
-
+            static auto get_soft_link_target(const group_imp &loc,
+                                             const pni::core::string &lname)
+                -> pni::io::nx::nxpath;
                                             
         public:
-
+            
+            //!
+            //! \brief get link name
+            //!
+            //! Return the name of the link with index index.
+            //!
+            //! \throws invalid_object_error if loc is not a valid group
+            //! \throws index_error if index exceeds the total number of links
+            //!                     below loc
+            //! \throws object_error in case of any other error
+            //!
+            //! \param loc the parent group object
+            //! \param index the index of the link
+            //! \return the name of link index
+            //!
             static auto link_name(const group_imp &loc,size_t index)
                 -> pni::core::string;
 
+            //----------------------------------------------------------------
+            static auto link_target(const group_imp &loc,size_t index)
+                -> pni::io::nx::nxpath;
+
+            //----------------------------------------------------------------
+            static auto link_target(const group_imp &loc,
+                                    const pni::core::string &name)
+                -> pni::io::nx::nxpath;
+
+            //----------------------------------------------------------------
             //! 
             //! \brief create an external link
             //!
@@ -261,13 +284,6 @@ namespace h5{
                                   const pni::core::string &name)
                 -> pni::io::nx::nxlink_type;
 
-            static auto link_status(const group_imp &loc,
-                                    const pni::core::string &lname)
-                -> pni::io::nx::nxlink_status;
-
-            static auto link_status(const group_imp &loc,size_t index)
-                -> pni::io::nx::nxlink_status;
-                       
     };
 //end of namespace
 }
