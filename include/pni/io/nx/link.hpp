@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2016 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -17,31 +17,40 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Created on: Jun 28, 2013
+// Created on: Mar 04, 2016
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 #pragma once
 
-#include <boost/variant.hpp>
-#include "link.hpp"
+#include <pni/core/types.hpp>
+#include "nxpath.hpp"
+#include "nxlink_type.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
-    
-    //!
-    //! \ingroup nexus_lowlevel
-    //!
-    //! nxobject is an alias to a boost::variant template which can hold an 
-    //! instance of a group, a field, or an attribute. It can be thus 
-    //! used as a general container for all kind of Nexus objects.
-    //!
-    template<
-             typename GTYPE,
-             typename FTYPE,
-             typename ATYPE
-            >
-    using nxobject = boost::variant<GTYPE,FTYPE,ATYPE,link>;
+
+    class link
+    {
+        private:
+            pni::core::string _name;
+            nxpath _target;
+            nxlink_status _status;
+            nxlink_type _type;
+        public:
+            link();
+            link(const pni::core::string &name,
+                 const nxpath &target,
+                 nxlink_status status, nxlink_type type);
+
+
+            pni::core::string name() const noexcept;
+            nxpath target() const noexcept ;
+            nxlink_status status() const noexcept ;
+            nxlink_type type() const noexcept ;
+
+    };
+
 
 //end of namespace
 }
