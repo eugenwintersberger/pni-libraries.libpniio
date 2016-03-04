@@ -90,6 +90,8 @@ BOOST_FIXTURE_TEST_SUITE(nxlink_external_test,nxlink_external_test_fixture)
         h5::nxfield field = get_object(location,"link_field");
         BOOST_CHECK_EQUAL(get_unit(field),"au");
         BOOST_CHECK(is_external_link(location,"link_field"));
+        BOOST_CHECK_EQUAL(link_status(location,"link_field"),
+                          nxlink_status::VALID);
         nxpath t;
         BOOST_CHECK_NO_THROW(t = link_target(location,"link_field"));
         BOOST_CHECK_EQUAL(nxpath::to_string(t),
@@ -109,6 +111,8 @@ BOOST_FIXTURE_TEST_SUITE(nxlink_external_test,nxlink_external_test_fixture)
         h5::nxfield field = location["link_field"];
         BOOST_CHECK_EQUAL(get_unit(field),"au");
         BOOST_CHECK(is_external_link(location,"link_field"));
+        BOOST_CHECK_EQUAL(link_status(location,"link_field"),
+                          nxlink_status::VALID);
     }
 
     //-------------------------------------------------------------------------
@@ -119,6 +123,8 @@ BOOST_FIXTURE_TEST_SUITE(nxlink_external_test,nxlink_external_test_fixture)
         h5::nxgroup g = location["link_group"];
         BOOST_CHECK_EQUAL(get_class(g),"NXdetector");
         BOOST_CHECK(is_external_link(location,"link_group"));
+        BOOST_CHECK_EQUAL(link_status(location,"link_group"),
+                          nxlink_status::VALID);
     }
 
     //-------------------------------------------------------------------------
@@ -130,6 +136,8 @@ BOOST_FIXTURE_TEST_SUITE(nxlink_external_test,nxlink_external_test_fixture)
         h5::nxgroup g = location["link_group"];
         BOOST_CHECK_EQUAL(get_class(g),"NXdetector");
         BOOST_CHECK(is_external_link(location,"link_group"));
+        BOOST_CHECK_EQUAL(link_status(location,"link_group"),
+                          nxlink_status::VALID); 
     }
 
     //-------------------------------------------------------------------------
@@ -144,6 +152,26 @@ BOOST_FIXTURE_TEST_SUITE(nxlink_external_test,nxlink_external_test_fixture)
                              value_error);
         BOOST_CHECK_THROW(link(target_file_name+"://../entry/../detector/data",location,"link"),
                              value_error);
+    }
+
+    //------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_invalid_links)
+    {
+        nxpath p = nxpath::from_string("blabla.nxs"
+                "://entry:NXentry/instrument/detector:NXdetector");
+        BOOST_CHECK_NO_THROW(link(p,location,"link_group"));
+        BOOST_CHECK(is_external_link(location,"link_group"));
+        BOOST_CHECK_EQUAL(link_status(location,"link_group"),
+                          nxlink_status::INVALID); 
+
+
+        p = nxpath::from_string(target_file_name+
+                   "://entry:NXentry/data:NXdata");
+        BOOST_CHECK_NO_THROW(link(p,location,"link_group2"));
+        BOOST_CHECK(is_external_link(location,"link_group2"));
+        BOOST_CHECK_EQUAL(link_status(location,"link_group2"),
+                          nxlink_status::INVALID); 
+        
     }
 
 BOOST_AUTO_TEST_SUITE_END()

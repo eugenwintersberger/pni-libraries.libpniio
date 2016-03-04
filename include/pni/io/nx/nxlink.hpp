@@ -23,6 +23,7 @@
 
 #pragma once
 
+#include <boost/filesystem.hpp>
 #include "nxobject_traits.hpp"
 #include "nxpath/nxpath.hpp"
 #include "nxpath/utils.hpp"
@@ -400,6 +401,57 @@ namespace nx{
     bool is_hard_link(const GTYPE &parent,const pni::core::string &name)
     {
         return link_type(parent,name) == nxlink_type::HARD;
+    }
+
+    //------------------------------------------------------------------------
+    template<
+             template<nximp_code> class GTYPE,
+             nximp_code IMPID
+            >
+    auto link_status(const GTYPE<IMPID> parent,
+                     const pni::core::string &lname)
+        -> nxlink_status
+    {
+        using namespace boost::filesystem;
+        using file_type = typename nxobject_trait<IMPID>::file_type;
+
+        auto target = link_target(parent,lname);
+
+        switch(link_type(parent,lname))
+        {
+            case nxlink_type::HARD: 
+                return nxlink_status::VALID;
+            case nxlink_type::SOFT:
+                try
+                {
+                    auto object = get_object(parent,target);
+                    return nxlink_status::VALID;
+                }
+                catch(...)
+                {
+                    return nxlink_status::INVALID;
+                }
+                break;
+            case nxlink_type::EXTERNAL:
+                //check if the file exists
+                if(!exists(path(target.filename())))
+                    return nxlink_status::INVALID;
+                
+                try
+                {
+                    //check if the referenced object exists
+                    auto f = file_type::open_file(target.filename());
+                    auto o = get_object(f.root(),target);
+                    return nxlink_status::VALID;
+                }
+                catch(...)
+                {
+                    return nxlink_status::INVALID;
+                }
+                break;
+            default:
+                return nxlink_status::INVALID;
+        }
     }
 
 //end of namespace

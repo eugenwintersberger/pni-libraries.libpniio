@@ -65,6 +65,7 @@ BOOST_FIXTURE_TEST_SUITE(nxlink_internal_test,nxlink_internal_test_fixture)
         BOOST_CHECK(is_hard_link(root,"entry"));
         h5::nxgroup g = get_object(root,"/entry/instrument/detector");
         BOOST_CHECK(is_hard_link(g,"data"));
+        BOOST_CHECK_EQUAL(link_status(g,"data"),nxlink_status::VALID);
     }
 
     //-------------------------------------------------------------------------
@@ -77,6 +78,7 @@ BOOST_FIXTURE_TEST_SUITE(nxlink_internal_test,nxlink_internal_test_fixture)
         h5::nxfield field = location["link_field"];
         BOOST_CHECK_EQUAL(get_unit(field),"au");
         BOOST_CHECK(is_soft_link(location,"link_field"));
+        BOOST_CHECK_EQUAL(link_status(location,"link_field"),nxlink_status::VALID);
         nxpath t;
         BOOST_CHECK_NO_THROW(t = link_target(location,"link_field"));
         BOOST_CHECK_EQUAL(nxpath::to_string(t),
@@ -95,6 +97,7 @@ BOOST_FIXTURE_TEST_SUITE(nxlink_internal_test,nxlink_internal_test_fixture)
         h5::nxfield field = location["link_field"];
         BOOST_CHECK_EQUAL(get_unit(field),"au");
         BOOST_CHECK(is_soft_link(location,"link_field"));
+        BOOST_CHECK_EQUAL(link_status(location,"link_field"),nxlink_status::VALID);
 
     }
 
@@ -107,6 +110,8 @@ BOOST_FIXTURE_TEST_SUITE(nxlink_internal_test,nxlink_internal_test_fixture)
         h5::nxfield field = location["link_field"];
         BOOST_CHECK_EQUAL(get_unit(field),"au");
         BOOST_CHECK(is_soft_link(location,"link_field"));
+        BOOST_CHECK_EQUAL(link_status(location,"link_field"),
+                          nxlink_status::VALID);
     }
 
     //-------------------------------------------------------------------------
@@ -118,6 +123,8 @@ BOOST_FIXTURE_TEST_SUITE(nxlink_internal_test,nxlink_internal_test_fixture)
         h5::nxfield field = location["link_field"];
         BOOST_CHECK_EQUAL(get_unit(field),"au");
         BOOST_CHECK(is_soft_link(location,"link_field"));
+        BOOST_CHECK_EQUAL(link_status(location,"link_field"),
+                          nxlink_status::VALID);
     }
 
     //-------------------------------------------------------------------------
@@ -129,6 +136,8 @@ BOOST_FIXTURE_TEST_SUITE(nxlink_internal_test,nxlink_internal_test_fixture)
         h5::nxfield field = location["link_field"];
         BOOST_CHECK_EQUAL(get_unit(field),"au");
         BOOST_CHECK(is_soft_link(location,"link_field"));
+        BOOST_CHECK_EQUAL(link_status(location,"link_field"),
+                          nxlink_status::VALID);
     }
     
     //-------------------------------------------------------------------------
@@ -139,6 +148,8 @@ BOOST_FIXTURE_TEST_SUITE(nxlink_internal_test,nxlink_internal_test_fixture)
         h5::nxgroup g = location["link_group"];
         BOOST_CHECK_EQUAL(get_class(g),"NXdetector");
         BOOST_CHECK(is_soft_link(location,"link_group"));
+        BOOST_CHECK_EQUAL(link_status(location,"link_group"),
+                          nxlink_status::VALID);
     }
 
     //-------------------------------------------------------------------------
@@ -148,6 +159,8 @@ BOOST_FIXTURE_TEST_SUITE(nxlink_internal_test,nxlink_internal_test_fixture)
         h5::nxgroup g = location["link_group"];
         BOOST_CHECK_EQUAL(get_class(g),"NXdetector");
         BOOST_CHECK(is_soft_link(location,"link_group"));
+        BOOST_CHECK_EQUAL(link_status(location,"link_group"),
+                          nxlink_status::VALID);
     }
 
     //-------------------------------------------------------------------------
@@ -157,6 +170,8 @@ BOOST_FIXTURE_TEST_SUITE(nxlink_internal_test,nxlink_internal_test_fixture)
         h5::nxgroup g = location["link_group"];
         BOOST_CHECK_EQUAL(get_class(g),"NXdetector");
         BOOST_CHECK(is_soft_link(location,"link_group"));
+        BOOST_CHECK_EQUAL(link_status(location,"link_group"),
+                          nxlink_status::VALID);
     }
 
     //-------------------------------------------------------------------------
@@ -167,6 +182,8 @@ BOOST_FIXTURE_TEST_SUITE(nxlink_internal_test,nxlink_internal_test_fixture)
         h5::nxgroup g = location["link_group"];
         BOOST_CHECK_EQUAL(get_class(g),"NXdetector");
         BOOST_CHECK(is_soft_link(location,"link_group"));
+        BOOST_CHECK_EQUAL(link_status(location,"link_group"),
+                          nxlink_status::VALID);
     }
 
     //-------------------------------------------------------------------------
@@ -177,6 +194,8 @@ BOOST_FIXTURE_TEST_SUITE(nxlink_internal_test,nxlink_internal_test_fixture)
         h5::nxgroup g = location["link_group"];
         BOOST_CHECK_EQUAL(get_class(g),"NXdetector");
         BOOST_CHECK(is_soft_link(location,"link_group"));
+        BOOST_CHECK_EQUAL(link_status(location,"link_group"),
+                          nxlink_status::VALID);
     }
 
     //-------------------------------------------------------------------------
@@ -189,6 +208,15 @@ BOOST_FIXTURE_TEST_SUITE(nxlink_internal_test,nxlink_internal_test_fixture)
 
         BOOST_CHECK_THROW(link("/entry/../detector/data",location,"link"),
                              value_error);
+    }
+
+    //------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_invalid_links)
+    {
+        auto target = nxpath::from_string("/entry/data/data");
+        BOOST_CHECK_NO_THROW(link(target,location,"nxdata_link"));
+        BOOST_CHECK_EQUAL(link_status(location,"nxdata_link"),
+                          nxlink_status::INVALID);
     }
 
 BOOST_AUTO_TEST_SUITE_END()
