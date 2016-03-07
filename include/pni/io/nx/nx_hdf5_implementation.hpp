@@ -44,13 +44,13 @@ namespace nx{
 namespace h5{
     //========need to define the implementation types==========================
 
-    typedef pni::io::nx::nxfile<nximp_code::HDF5>                 nxfile;
-    typedef pni::io::nx::nxgroup<nximp_code::HDF5>               nxgroup;
-    typedef pni::io::nx::nxfield<nximp_code::HDF5>             nxfield;
-    typedef pni::io::nx::nxfilter<nximp_map<nximp_code::HDF5>::filter_imp>             nxfilter;
-    typedef pni::io::nx::nxdeflate_filter<nximp_map<nximp_code::HDF5>::deflate_imp> nxdeflate_filter;
-    typedef pni::io::nx::nxattribute<nximp_code::HDF5>  nxattribute;
-    typedef pni::io::nx::nxobject<nxgroup,nxfield,nxattribute> nxobject;
+    using nxfile   = pni::io::nx::nxfile<nximp_code::HDF5>;
+    using nxgroup  = pni::io::nx::nxgroup<nximp_code::HDF5>;
+    using nxfield  = pni::io::nx::nxfield<nximp_code::HDF5>;
+    using nxfilter = pni::io::nx::nxfilter<nximp_map<nximp_code::HDF5>::filter_imp>;
+    using nxdeflate_filter = pni::io::nx::nxdeflate_filter<nximp_map<nximp_code::HDF5>::deflate_imp>;
+    using nxattribute =  pni::io::nx::nxattribute<nximp_code::HDF5>;
+    using nxobject    = pni::io::nx::nxobject<nxgroup,nxfield,nxattribute>;
 //end of namespace
 }
 }
@@ -67,21 +67,21 @@ namespace nx{
     template<> struct nxobject_trait<nximp_code::HDF5>
     {
         //! file type for the HDF5 implementation
-        typedef h5::nxfile           file_type;  
+        using file_type  = h5::nxfile;
         //! group type for the HDF5 implementation
-        typedef h5::nxgroup          group_type;
+        using group_type  = h5::nxgroup;
         //! field type for the HDF5 implementation 
-        typedef h5::nxfield          field_type;
+        using field_type = h5::nxfield;
         //! attribute type for the HDF5 implementation
-        typedef h5::nxattribute      attribute_type;
+        using attribute_type =  h5::nxattribute;
         //! link type for the HDF5 implementation
-        typedef h5::h5link           link_type;
+        using link_type =  h5::h5link;
         //! filter type for the HDF5 implementation
-        typedef h5::nxfilter         filter_type;
+        using filter_type  =  h5::nxfilter;
         //! deflate filter type for the HDF5 implementation
-        typedef h5::nxdeflate_filter deflate_type;
+        using deflate_type  =  h5::nxdeflate_filter;
         //! object type for the HDF5 implementation
-        typedef h5::nxobject         object_type;
+        using object_type  =  h5::nxobject;
     };
 
     NXIMPCODEMAPDECL(h5::nxfile,nximp_code::HDF5);

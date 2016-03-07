@@ -24,6 +24,8 @@
 //
 #pragma once
 
+#include "nxobject_traits.hpp"
+#include "nxobject.hpp"
 #include "nxfile.hpp"
 #include "nxgroup.hpp"
 #include "nxfield.hpp"
@@ -31,8 +33,6 @@
 #include "nxattribute.hpp"
 #include "nximp_code.hpp"
 #include "nximp_code_map.hpp"
-#include "nxobject_traits.hpp"
-#include "nxobject.hpp"
 
 
 #include "nx_hdf5_implementation.hpp"

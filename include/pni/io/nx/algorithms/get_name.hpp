@@ -60,6 +60,8 @@ namespace nx{
         return o.name();
     }
 
+    pni::core::string get_name(const nxlink &l);
+
 
     //------------------------------------------------------------------------
     //!
@@ -146,6 +148,20 @@ namespace nx{
             result_type operator()(const attribute_type &a) const
             {
                 return get_name(a);
+            }
+            
+            //-----------------------------------------------------------------
+            //!
+            //! \brief process nxlink instances
+            //!
+            //! Retrieve the name of an nxlink instance.
+            //!
+            //! \param a attribute instance
+            //! \return name of the attribute
+            //!
+            result_type operator()(const nxlink &a) const
+            {
+                return a.name();
             }
     };
 

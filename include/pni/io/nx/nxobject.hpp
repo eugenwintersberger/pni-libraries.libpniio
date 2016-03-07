@@ -41,7 +41,7 @@ namespace nx{
              typename FTYPE,
              typename ATYPE
             >
-    using nxobject = boost::variant<GTYPE,FTYPE,ATYPE,link>;
+    using nxobject = boost::variant<GTYPE,FTYPE,ATYPE,pni::io::nx::nxlink>;
 
 //end of namespace
 }

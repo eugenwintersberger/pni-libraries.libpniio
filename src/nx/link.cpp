@@ -26,42 +26,48 @@ namespace nx{
 
     using namespace pni::core;
    
-    link::link():
-        _name{},
-        _target{},
+    nxlink::nxlink():
+        _link_path{},
+        _target_path{},
         _status{nxlink_status::INVALID},
         _type{nxlink_type::HARD}
     {}
 
     //------------------------------------------------------------------------
-    link::link(const string &name,const nxpath &target,
+    nxlink::nxlink(const nxpath &link_path,const nxpath &target_path,
                nxlink_status status,nxlink_type type):
-        _name{name},
-        _target{target},
+        _link_path{link_path},
+        _target_path{target_path},
         _status{status},
         _type{type}
     {}
 
     //------------------------------------------------------------------------
-    string link::name() const noexcept 
+    string nxlink::name() const noexcept 
     {
-        return _name;
+        return _target_path.front().first;
     }
 
     //------------------------------------------------------------------------
-    nxpath link::target() const noexcept 
+    const nxpath &nxlink::link_path() const noexcept
     {
-        return _target;
+        return _target_path;
     }
 
     //------------------------------------------------------------------------
-    nxlink_status link::status() const noexcept
+    const nxpath &nxlink::target_path() const noexcept 
+    {
+        return _target_path;
+    }
+
+    //------------------------------------------------------------------------
+    nxlink_status nxlink::status() const noexcept
     {
         return _status;
     }
 
     //------------------------------------------------------------------------
-    nxlink_type link::type() const noexcept
+    nxlink_type nxlink::type() const noexcept
     {
         return _type;
     }

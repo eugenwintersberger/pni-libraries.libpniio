@@ -110,6 +110,26 @@ namespace nx{
                         "but of nxattribute!");
                 return field_type();
             }
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief process link instances
+            //!
+            //! Throws type_error exception as there is no conversion from 
+            //! a link to nxfield.
+            //!
+            //! \throws type_error
+            //!
+            //! \return invalid field instance
+            //!
+            result_type operator()(const nxlink &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "Object is not an instance of nxfield but of "
+                        "link!");
+                return result_type();
+            }
     };
 
     //!

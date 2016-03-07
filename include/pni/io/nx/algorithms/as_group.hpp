@@ -110,6 +110,26 @@ namespace nx{
                         "but of nxattribute!");
                 return result_type();
             }
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief process link instances
+            //!
+            //! Throw a type_error exception as there is no conversion from 
+            //! link to nxgroup.
+            //!
+            //! \throws type_error
+            //! 
+            //! \return invalid instance of nxgroup
+            //!
+            result_type operator()(const nxlink &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "Object is not an instance of nxgroup but of "
+                        "link!");
+                return result_type();
+            }
     };
 
     //!

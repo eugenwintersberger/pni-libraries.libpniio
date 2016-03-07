@@ -158,6 +158,26 @@ namespace nx{
                         "Cannot create a group below an attribute!");
                 return result_type();
             }
+            
+            //-----------------------------------------------------------------
+            //!
+            //! \brief process link instances
+            //!
+            //! Throw type_error as one cannot create a group on an instance 
+            //! of link.
+            //!
+            //! \throws type_error 
+            //!
+            //! \return an invalid instance of nxgroup
+            //!
+            result_type operator()(const nxlink &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "Cannot create a group below a link!");
+                return result_type();
+            }
+
     };
 
     //-------------------------------------------------------------------------

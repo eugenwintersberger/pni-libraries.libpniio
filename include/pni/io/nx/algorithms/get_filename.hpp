@@ -60,6 +60,18 @@ namespace nx{
         return o.filename();
     }
 
+    //------------------------------------------------------------------------
+    //!
+    //! \ingroup algorithm_code
+    //! \brief get filename from link
+    //!
+    //! Returns the filename for a link. 
+    //!
+    //! \param l instance of nxlink
+    //! \return filename for the link as string
+    //!
+    pni::core::string get_filename(const nxlink &l);
+
 
     //------------------------------------------------------------------------
     //!
@@ -149,6 +161,11 @@ namespace nx{
             result_type operator()(const attribute_type &a) const
             {
                 return get_filename(a);
+            }
+
+            result_type operator()(const nxlink &l) const
+            {
+                return l.link_path().filename();
             }
     };
 

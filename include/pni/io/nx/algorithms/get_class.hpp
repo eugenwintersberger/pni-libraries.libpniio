@@ -162,6 +162,24 @@ namespace nx{
                         "Attributes do not have a class!");
                 return result_type();
             }
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief process links
+            //!
+            //! Links do not have a class, thow type_error is thrown.
+            //!
+            //! \throw type_error
+            //!
+            //! \return default constructed string
+            //!
+            result_type operator()(const nxlink &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "Links do not have a type!");
+                return result_type();
+            }
     };
 
     //!

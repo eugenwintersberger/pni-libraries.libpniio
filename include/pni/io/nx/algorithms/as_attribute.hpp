@@ -111,6 +111,27 @@ namespace nx{
             {
                 return a;
             }
+            
+            //----------------------------------------------------------------
+            //!
+            //! \brief process link instances
+            //!
+            //! Throw type_error exception as there is no conversion from a 
+            //! link to an attribute. 
+            //!
+            //! \throws type_error 
+            //!
+            //! \return invalid instance of nxattribute
+            //!
+            result_type operator()(const nxlink &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "Object is a link and not an instance of "
+                        "nxattribute!");
+
+                return result_type();
+            }
     };
 
     //!

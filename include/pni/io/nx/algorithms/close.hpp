@@ -46,6 +46,17 @@ namespace nx{
         o.close();
     }
 
+    //!
+    //! \ingroup algorithm_code
+    //! \brief close link
+    //!
+    //! Overload of the close() template for instances of nxfield. As the
+    //! function is just a stub (we do not have to close links explicitely),
+    //! it does not throw anything.
+    //!
+    //! 
+    void close(nxlink &l);
+
     //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_internal_code
@@ -126,6 +137,17 @@ namespace nx{
             void operator()(attribute_type &a) const
             {
                 close(a);
+            }
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief process a link instance
+            //!
+            //! There is nothing we have to do here.
+            //!
+            void operator()(const nxlink &) const
+            {
+                
             }
     };
 

@@ -137,7 +137,7 @@ namespace nx{
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
-                        "Cannot create a group below a field!");
+                        "Cannot create a field below a field!");
                 return result_type();
             }
 
@@ -158,7 +158,26 @@ namespace nx{
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
-                        "Cannot create a group below an attribute!");
+                        "Cannot create a field below an attribute!");
+                return result_type();
+            }
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief process link instances
+            //!
+            //! Throw type_error as one cannot create a field on a link
+            //! instance.
+            //!
+            //! \throws type_error
+            //!
+            //! \return invalid instance of nxfield
+            //!
+            result_type operator()(const nxlink &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "Cannot create a field below a link instance!");
                 return result_type();
             }
     };

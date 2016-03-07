@@ -143,6 +143,25 @@ namespace nx{
                         "Cannot create an attribute at an attribute!");
                 return result_type();
             }
+
+            //-----------------------------------------------------------------
+            //!
+            //! \brief process link instances
+            //!
+            //! Throw type_error exception as one cannot attach an attribute
+            //! to a link.
+            //!
+            //! \throws type_error
+            //!
+            //! \return invalid instance of nxattribute
+            //!
+            result_type operator()(const nxlink &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "Cannot create an attribute on a link!");
+                return result_type();
+            }
     };
 
     //-------------------------------------------------------------------------

@@ -163,6 +163,25 @@ namespace nx{
                         "Attributes cannot have attributes by themself!");
                 return result_type();
             }
+
+            //-----------------------------------------------------------------
+            //!
+            //! \brief process link instances
+            //!
+            //! Links do not have attributes, thus a type_error exception 
+            //! will be thrown. 
+            //!
+            //! \throws type_error
+            //!
+            //! \return default (invalid) instance of nxattribute
+            //!
+            result_type operator()(const nxlink &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "Instances of link do not have attribtues!");
+                return result_type();
+            }
     };
 
     //!

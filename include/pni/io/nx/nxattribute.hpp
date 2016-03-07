@@ -240,7 +240,7 @@ namespace nx{
                 {
                     typedef typename ATYPE::value_type value_type;
                     typedef pni::core::dynamic_array<value_type> array_type;
-                    auto buffer =  array_type::create(v.shape<pni::core::shape_t>());
+                    auto buffer =  array_type::create(v.template shape<pni::core::shape_t>());
                     std::copy(v.begin(),v.end(),buffer.begin());
                     write(buffer);
                 }
@@ -412,7 +412,7 @@ namespace nx{
                 {
                     typedef typename ATYPE::value_type value_type;
                     typedef pni::core::dynamic_array<value_type> buffer_type;
-                    auto buffer = buffer_type::create(v.shape<pni::core::shape_t>());
+                    auto buffer = buffer_type::create(v.template shape<pni::core::shape_t>());
                     _read_array(buffer);
                     std::copy(buffer.begin(),buffer.end(),v.begin());
                 }
