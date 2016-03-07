@@ -106,6 +106,8 @@ namespace nx{
             using field_type = typename nxobject_trait<IMPID>::field_type; 
             //! attribute type
             using attribute_type = typename nxobject_trait<IMPID>::attribute_type;
+            //! link type
+            using link_type = typename nxobject_trait<IMPID>::link_type;
 
         private:
             //! field implementation type
@@ -575,6 +577,13 @@ namespace nx{
                     throw value_error(EXCEPTION_RECORD,
                             "Invalid character in object name!");
 
+                //need to check the status of the link for the requested 
+                //object - if the link is invalid we return a link
+                //object.
+                if(link_status(*this,n)==nxlink_status::INVALID)
+                    return link_type(*this,n);
+
+
                 object_imp_type object =  _imp.at(n);
 
                 if(object.nxobject_type() == nxobject_type::NXFIELD)
@@ -658,17 +667,7 @@ namespace nx{
             typename nxobject_trait<IMPID>::object_type 
             at(size_t i) const
             {
-                using namespace pni::core;
-                
-                object_imp_type obj_imp(_imp.at(i));
-
-                if(obj_imp.nxobject_type() == nxobject_type::NXFIELD)
-                    return field_type(field_imp_type(std::move(obj_imp)));
-                else if(obj_imp.nxobject_type() == nxobject_type::NXGROUP)
-                    return group_type(imp_type(std::move(obj_imp)));
-                else 
-                    throw type_error(EXCEPTION_RECORD,
-                                     "Unkown NEXUS object type!");
+                return this->at(link_name(*this,i));
             }
 
             //-----------------------------------------------------------------
