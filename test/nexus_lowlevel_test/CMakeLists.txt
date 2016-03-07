@@ -83,10 +83,12 @@ add_test("Nexus_Layer_1:nxattribute" nxattribute_tests)
 add_dependencies(check nxattribute_tests)
 
 #------------------------------------------------------------------------------
-# test nxattribute related operations
+# test link related operations
 #------------------------------------------------------------------------------
 set(NXLINKSRC  nxlink_internal_test.cpp
                nxlink_external_test.cpp
+               get_links_test.cpp
+               get_links_recursive_test.cpp
    )
 
 set_source_files_properties(nxlink_internal_test.cpp PROPERTIES 
