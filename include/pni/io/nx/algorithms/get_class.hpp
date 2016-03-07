@@ -71,6 +71,8 @@ namespace nx{
         return group_class;
     }
 
+
+
     //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_internal_code
@@ -81,23 +83,27 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class get_class_visitor : public boost::static_visitor<pni::core::string>
     {
         public:
             //! result type
-            typedef pni::core::string result_type;
+            using result_type = pni::core::string;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type = ATYPE;
+            //! NeXus link type
+            using link_type = LTYPE;
 
             //!
             //! \brief process groups 
@@ -173,7 +179,7 @@ namespace nx{
             //!
             //! \return default constructed string
             //!
-            result_type operator()(const nxlink &) const
+            result_type operator()(const link_type &) const
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
@@ -197,6 +203,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     //! \param o group as instance of nxobject
     //! \return Nexus class as a tring
@@ -204,11 +211,12 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    pni::core::string get_class(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    pni::core::string get_class(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o)
     {
-        typedef get_class_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        using visitor_type = get_class_visitor<GTYPE,FTYPE,ATYPE,LTYPE>;
         return boost::apply_visitor(visitor_type(),o);
     }
 

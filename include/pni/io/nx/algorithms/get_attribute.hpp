@@ -58,6 +58,13 @@ namespace nx{
     typename nxobject_trait<IMPID>::object_type
     get_attribute(const PTYPE<IMPID> &parent,const pni::core::string &name)
     {
+        using field_type = typename nxobject_trait<IMPID>::field_type;
+        using group_type = typename nxobject_trait<IMPID>::group_type;
+
+        static_assert(std::is_same<field_type,PTYPE<IMPID>>::value || 
+                      std::is_same<group_type,PTYPE<IMPID>>::value,
+                      "Parent must be a field or a group!");
+
         return parent.attributes[name];
     }
 
@@ -73,27 +80,31 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class get_attribute_visitor : public boost::static_visitor<
-                                  nxobject<GTYPE,FTYPE,ATYPE>
+                                  nxobject<GTYPE,FTYPE,ATYPE,LTYPE>
                                   >
     {
         private:
             pni::core::string _attribute; //!< name of the attribute to retrieve
         public:
             //! result type
-            typedef ATYPE result_type;
+            using result_type = ATYPE;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type =  ATYPE;
+            //! Nexus link type
+            using link_type = LTYPE;
       
             //-----------------------------------------------------------------
             //!
@@ -175,7 +186,7 @@ namespace nx{
             //!
             //! \return default (invalid) instance of nxattribute
             //!
-            result_type operator()(const nxlink &) const
+            result_type operator()(const link_type &) const
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
@@ -199,6 +210,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //! 
     //! \param parent reference to the parent object
     //! \param name the attributes name
@@ -207,13 +219,14 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    nxobject<GTYPE,FTYPE,ATYPE>
-    get_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
+    nxobject<GTYPE,FTYPE,ATYPE,LTYPE>
+    get_attribute(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &parent,
                   const pni::core::string &name)
     {
-        typedef get_attribute_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        using visitor_type = get_attribute_visitor<GTYPE,FTYPE,ATYPE,LTYPE>;
         return boost::apply_visitor(visitor_type(name),parent);
     }
 

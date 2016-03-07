@@ -29,6 +29,7 @@
 #include "nxpath/utils.hpp"
 #include "nxlink_type.hpp"
 #include "algorithms/get_path.hpp"
+#include "algorithms/get_object.hpp"
 
 
 namespace pni{
@@ -90,7 +91,7 @@ namespace nx{
     {
 
         //determine the utility class perfroming linking
-        using link_type = typename nxobject_trait<IMPID>::link_type;
+        using link_type = typename nxobject_trait<IMPID>::link_imp_type;
 
 
         if(has_file_section(target))
@@ -232,7 +233,7 @@ namespace nx{
     auto link_type(const GTYPE<IMPID> &parent,const pni::core::string &name)
         -> nxlink_type 
     {
-        using link_type =  typename nxobject_trait<IMPID>::link_type;
+        using link_type =  typename nxobject_trait<IMPID>::link_imp_type;
 
         return link_type::link_type(parent.imp(),name);
     }
@@ -263,7 +264,7 @@ namespace nx{
     auto link_name(const GTYPE<IMPID> &parent,size_t index)
         -> pni::core::string
     {
-        using link_type = typename nxobject_trait<IMPID>::link_type;
+        using link_type = typename nxobject_trait<IMPID>::link_imp_type;
 
         return link_type::link_name(parent.imp(),index);
     }
@@ -293,7 +294,7 @@ namespace nx{
             >
     auto link_target(const GTYPE<IMPID> &parent,size_t index) -> nxpath
     {
-        using link_type = typename nxobject_trait<IMPID>::link_type;
+        using link_type = typename nxobject_trait<IMPID>::link_imp_type;
 
         return link_type::link_target(parent.imp(),index);
     }
@@ -323,7 +324,7 @@ namespace nx{
     auto link_target(const GTYPE<IMPID> &parent,const pni::core::string &lname)
         -> nxpath
     {
-        using link_type = typename nxobject_trait<IMPID>::link_type;
+        using link_type = typename nxobject_trait<IMPID>::link_imp_type;
 
         return link_type::link_target(parent.imp(),lname);
     }

@@ -175,6 +175,7 @@ namespace xml{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     //! \param t ptree instance with the XML data
     //! \param parent instance of nxobject
@@ -185,9 +186,10 @@ namespace xml{
              typename GTYPE,
              typename FTYPE,
              typename ATYPE,
+             typename LTYPE,
              typename PTYPE
             >
-    void xml_to_nexus(const node &t,const nxobject<GTYPE,FTYPE,ATYPE> &parent,
+    void xml_to_nexus(const node &t,const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &parent,
                       PTYPE write_data)
     {
         //typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
@@ -243,6 +245,7 @@ namespace xml{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     //! \param t ptree instance with the XML data
     //! \param parent instance of nxobject  
@@ -250,9 +253,10 @@ namespace xml{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE             
+             typename ATYPE,
+             typename LTYPE
             >
-    void xml_to_nexus(const node &t,const nxobject<GTYPE,FTYPE,ATYPE> &parent)
+    void xml_to_nexus(const node &t,const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &parent)
     {
        xml_to_nexus(t,parent,write_no_data());
     }

@@ -25,30 +25,78 @@
 #include <pni/core/types.hpp>
 #include "nxpath/nxpath.hpp"
 #include "nxlink_type.hpp"
+#include "nxlink.hpp"
+#include "nxobject_traits.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
-
-    class nxlink
+    
+    template<nximp_code IMPID> class nxlink
     {
-        private:
-            nxpath _link_path;
-            nxpath _target_path;
-            nxlink_status _status;
-            nxlink_type _type;
         public:
-            nxlink();
-            nxlink(const nxpath &link_path,
-                 const nxpath &target_path,
-                 nxlink_status status, nxlink_type type);
+            using parent_type = typename nxobject_trait<IMPID>::group_type;
+            using object_type = typename nxobject_trait<IMPID>::object_type;
+            using link_type = nxlink<IMPID>;
+        private:
+            parent_type _parent;
+            pni::core::string  _name;
+        public:
+            nxlink():
+                _parent{},
+                _name{}
+            {}
+
+            nxlink(const parent_type &parent,
+                   const pni::core::string &name):
+                _parent(parent),
+                _name(name)
+            {}
+
+            nxlink(const parent_type &parent,size_t index):
+                _parent(parent),
+                _name(link_name(parent,index))
+            {}
+                   
+    
+            pni::core::string filename() const noexcept
+            {
+                return _parent.filename();
+            }
+
+            pni::core::string name() const noexcept
+            {
+                return _name;
+            }
+
+            object_type parent() const noexcept
+            {
+                return _parent;
+            }
 
 
-            pni::core::string name() const noexcept;
-            const nxpath& link_path() const noexcept;
-            const nxpath& target_path() const noexcept ;
-            nxlink_status status() const noexcept ;
-            nxlink_type type() const noexcept ;
+            const nxpath& target_path() const
+            {
+                return link_target(_parent,_name);
+            }
+
+            nxlink_status status() const
+            {
+                return link_status(_parent,_name);
+            }
+
+            nxlink_type type() const 
+            {
+                return link_type(_parent,_name);
+            }
+
+            bool is_valid() const
+            {
+                if(status() == nxlink_status::VALID)
+                    return true;
+                else
+                    return false;
+            }
 
     };
 

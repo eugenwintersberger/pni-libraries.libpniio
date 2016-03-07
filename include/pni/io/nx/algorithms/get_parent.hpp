@@ -66,25 +66,29 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class get_parent_visitor : public boost::static_visitor<
-                               nxobject<GTYPE,FTYPE,ATYPE>
+                               nxobject<GTYPE,FTYPE,ATYPE,LTYPE>
                                >
     {
         public:
             //! result type
-            typedef nxobject<GTYPE,FTYPE,ATYPE> result_type;
+            using result_type = nxobject<GTYPE,FTYPE,ATYPE,LTYPE>;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type =  FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type = ATYPE;
+            //! link type
+            using link_type = LTYPE;
 
             //-----------------------------------------------------------------
             //!
@@ -139,6 +143,11 @@ namespace nx{
             {
                 return get_parent(a);
             }
+
+            result_type operator()(const link_type &l) const
+            {
+                return get_parent(l);
+            }
     };
 
     //-------------------------------------------------------------------------
@@ -156,6 +165,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     //! \param o instance of nxobject
     //! \return parent object as instance of nxobject
@@ -163,12 +173,13 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    nxobject<GTYPE,FTYPE,ATYPE> 
-    get_parent(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    nxobject<GTYPE,FTYPE,ATYPE,LTYPE> 
+    get_parent(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o)
     {
-        typedef get_parent_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        using visitor_type = get_parent_visitor<GTYPE,FTYPE,ATYPE,LTYPE>;
         return boost::apply_visitor(visitor_type(),o);
     }
 

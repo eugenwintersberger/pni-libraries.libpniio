@@ -29,6 +29,7 @@
 #include "nxfile.hpp"
 #include "nxgroup.hpp"
 #include "nxfield.hpp"
+#include "link.hpp"
 #include "nxdeflate_filter.hpp"
 #include "nxattribute.hpp"
 #include "nximp_code.hpp"
@@ -50,7 +51,8 @@ namespace h5{
     using nxfilter = pni::io::nx::nxfilter<nximp_map<nximp_code::HDF5>::filter_imp>;
     using nxdeflate_filter = pni::io::nx::nxdeflate_filter<nximp_map<nximp_code::HDF5>::deflate_imp>;
     using nxattribute =  pni::io::nx::nxattribute<nximp_code::HDF5>;
-    using nxobject    = pni::io::nx::nxobject<nxgroup,nxfield,nxattribute>;
+    using nxlink = pni::io::nx::nxlink<nximp_code::HDF5>;
+    using nxobject    = pni::io::nx::nxobject<nxgroup,nxfield,nxattribute,nxlink>;
 //end of namespace
 }
 }
@@ -75,19 +77,22 @@ namespace nx{
         //! attribute type for the HDF5 implementation
         using attribute_type =  h5::nxattribute;
         //! link type for the HDF5 implementation
-        using link_type =  h5::h5link;
+        using link_imp_type =  h5::h5link;
         //! filter type for the HDF5 implementation
         using filter_type  =  h5::nxfilter;
         //! deflate filter type for the HDF5 implementation
         using deflate_type  =  h5::nxdeflate_filter;
         //! object type for the HDF5 implementation
         using object_type  =  h5::nxobject;
+
+        using link_type = h5::nxlink;
     };
 
     NXIMPCODEMAPDECL(h5::nxfile,nximp_code::HDF5);
     NXIMPCODEMAPDECL(h5::nxgroup,nximp_code::HDF5);
     NXIMPCODEMAPDECL(h5::nxfield,nximp_code::HDF5);
     NXIMPCODEMAPDECL(h5::nxattribute,nximp_code::HDF5);
+    NXIMPCODEMAPDECL(h5::nxlink,nximp_code::HDF5);
 
 
 

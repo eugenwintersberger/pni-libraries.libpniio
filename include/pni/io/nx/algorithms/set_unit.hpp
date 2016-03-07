@@ -70,11 +70,13 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class set_unit_visitor : public boost::static_visitor<void>
     {
@@ -82,13 +84,15 @@ namespace nx{
             pni::core::string _unit; //!< unit string
         public:
             //! result type
-            typedef void result_type;
+            using result_type = void;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type = ATYPE;
+            //! NeXus link type
+            using link_type = LTYPE;
        
             //-----------------------------------------------------------------
             //!
@@ -148,6 +152,19 @@ namespace nx{
                 throw type_error(EXCEPTION_RECORD,
                         "Attributes do not have units!");
             }
+            
+            //-----------------------------------------------------------------
+            //!
+            //! \brief process links
+            //!
+            //! \throws type_error cannot attach a unit to a link
+            //!
+            result_type operator()(const link_type &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "Links do not have units!");
+            }
     };
 
     //------------------------------------------------------------------------
@@ -166,6 +183,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     //! \param o instance of the parent object
     //! \param s content of the unit string
@@ -173,12 +191,13 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    void set_unit(const nxobject<GTYPE,FTYPE,ATYPE> &o,
+    void set_unit(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o,
                   const pni::core::string &s)
     {
-        typedef set_unit_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        using visitor_type = set_unit_visitor<GTYPE,FTYPE,ATYPE,LTYPE>;
 
         return boost::apply_visitor(visitor_type(s),o);
     }

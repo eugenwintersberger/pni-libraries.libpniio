@@ -88,24 +88,28 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     template<
              typename CTYPE,
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class get_attributes_visitor : public boost::static_visitor<CTYPE>
     {
         public:
             //! result type
-            typedef CTYPE result_type;
+            using result_type = CTYPE;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type = ATYPE;
+            //! NeXus link type
+            using link_type = LTYPE;
       
             //---------------------------------------------------------------------
             //!
@@ -170,7 +174,7 @@ namespace nx{
             //! \return default constructed (invalid) instance of the attribute
             //!         container
             //!
-            result_type operator()(const nxlink &) const
+            result_type operator()(const link_type &) const
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
@@ -193,6 +197,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //! 
     //! \param parent reference to the parent object
     //! \return attribute as an object_types variant
@@ -201,11 +206,12 @@ namespace nx{
              typename CTYPE,
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    CTYPE get_attributes(const nxobject<GTYPE,FTYPE,ATYPE> &parent)
+    CTYPE get_attributes(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &parent)
     {
-        typedef get_attributes_visitor<CTYPE,GTYPE,FTYPE,ATYPE> visitor_type;
+        using visitor_type = get_attributes_visitor<CTYPE,GTYPE,FTYPE,ATYPE,LTYPE>;
         return boost::apply_visitor(visitor_type(),parent);
     }
 

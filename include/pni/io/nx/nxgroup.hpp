@@ -92,27 +92,26 @@ namespace nx{
         public:
             //===================public types==================================
             //! group implementation type
-            typedef typename nximp_map<IMPID>::group_imp imp_type;
+            using imp_type  = typename nximp_map<IMPID>::group_imp;
             //! type implementation
-            typedef typename nximp_map<IMPID>::type_imp  type_type;
+            using type_type = typename nximp_map<IMPID>::type_imp;
             //! the group type
-            typedef nxgroup<IMPID> group_type;
+            using group_type = nxgroup<IMPID>;
 
             //! nxobject as container value_type
-            typedef typename nxobject_trait<IMPID>::object_type value_type;
+            using value_type = typename nxobject_trait<IMPID>::object_type;
             //! iterator type
-            typedef pni::core::container_iterator<const group_type> iterator;
+            using iterator = pni::core::container_iterator<const group_type>;
             //! field type
-            typedef typename nxobject_trait<IMPID>::field_type field_type; 
+            using field_type = typename nxobject_trait<IMPID>::field_type; 
             //! attribute type
-            typedef typename nxobject_trait<IMPID>::attribute_type
-                attribute_type;
+            using attribute_type = typename nxobject_trait<IMPID>::attribute_type;
 
         private:
             //! field implementation type
-            typedef typename nximp_map<IMPID>::field_imp field_imp_type;
+            using field_imp_type = typename nximp_map<IMPID>::field_imp;
             //! object implementation type
-            typedef typename nximp_map<IMPID>::object_imp object_imp_type;
+            using object_imp_type = typename nximp_map<IMPID>::object_imp;
             //! 
             //! \brief the implementation instance of nxgroup
             //!

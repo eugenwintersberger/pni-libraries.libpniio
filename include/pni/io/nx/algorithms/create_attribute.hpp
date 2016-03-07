@@ -40,6 +40,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE fieldtype
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //! \tparam T data type of the attribute
     //! \tparam STYPE container type for the shape
     //!
@@ -49,11 +50,12 @@ namespace nx{
              typename GTYPE,
              typename FTYPE,
              typename ATYPE,
+             typename LTYPE,
              typename T,
              typename STYPE
             > 
     class create_attribute_visitor : public boost::static_visitor<
-                                     nxobject<GTYPE,FTYPE,ATYPE>  
+                                     nxobject<GTYPE,FTYPE,ATYPE,LTYPE>  
                                      >
     {
         private:
@@ -62,13 +64,15 @@ namespace nx{
             bool  _overwrite;         //!< overwrite flag for the attribute
         public:
             //! result type
-            typedef nxobject<GTYPE,FTYPE,ATYPE> result_type;
+            using result_type = nxobject<GTYPE,FTYPE,ATYPE,LTYPE>;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type =  FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type = ATYPE;
+            //! link type
+            using link_type = LTYPE;
 
             //-----------------------------------------------------------------
             //!
@@ -155,7 +159,7 @@ namespace nx{
             //!
             //! \return invalid instance of nxattribute
             //!
-            result_type operator()(const nxlink &) const
+            result_type operator()(const link_type &) const
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
@@ -190,6 +194,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //! \tparam STYPE shape container type
     //! 
     //! \param parent instance of parent object
@@ -203,15 +208,16 @@ namespace nx{
              typename GTYPE,
              typename FTYPE,
              typename ATYPE,
+             typename LTYPE,
              typename STYPE
             > 
-    nxobject<GTYPE,FTYPE,ATYPE> 
-    create_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
+    nxobject<GTYPE,FTYPE,ATYPE,LTYPE> 
+    create_attribute(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &parent,
                      const pni::core::string &name,
                      const STYPE &shape,
                      bool overwrite=false)
     {
-        typedef create_attribute_visitor<GTYPE,FTYPE,ATYPE,T,STYPE> visitor_t;
+        typedef create_attribute_visitor<GTYPE,FTYPE,ATYPE,LTYPE,T,STYPE> visitor_t;
         return boost::apply_visitor(visitor_t(name,shape,overwrite),parent);
     }
     
@@ -241,6 +247,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //! 
     //! \param parent instance of the parent
     //! \param name name of the new attribute
@@ -251,10 +258,11 @@ namespace nx{
              typename T,
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    nxobject<GTYPE,FTYPE,ATYPE> 
-    create_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
+    nxobject<GTYPE,FTYPE,ATYPE,LTYPE> 
+    create_attribute(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &parent,
                      const pni::core::string &name,
                      bool overwrite=false)
     {
@@ -291,6 +299,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //! \tparam STYPE shape container type
     //! 
     //! \param o instance of VTYPE with the parent group
@@ -303,10 +312,11 @@ namespace nx{
              typename GTYPE,
              typename FTYPE,
              typename ATYPE,
+             typename LTYPE,
              typename ...ARGTS
             >
-    nxobject<GTYPE,FTYPE,ATYPE>
-    create_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &o,
+    nxobject<GTYPE,FTYPE,ATYPE,LTYPE>
+    create_attribute(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o,
                      pni::core::type_id_t tid,
                      ARGTS ...args)
     {

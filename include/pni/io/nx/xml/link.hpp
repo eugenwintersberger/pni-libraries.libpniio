@@ -85,6 +85,7 @@ namespace xml{
             //! \tparam GTYPE group type
             //! \tparam FTYPE field type
             //! \tparam ATYPE attribute type
+            //! \tparam LTYPE link type
             //!
             //! \param parent the parent below which the link should be 
             //!               established
@@ -94,9 +95,10 @@ namespace xml{
             template<
                      typename GTYPE,
                      typename FTYPE,
-                     typename ATYPE
+                     typename ATYPE,
+                     typename LTYPE
                     >
-            static void object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
+            static void object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &parent,
                                         const node &link_node);
                       
     };
@@ -105,9 +107,10 @@ namespace xml{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             >
-    void link::object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
+    void link::object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &parent,
                                const node &link_node)
     {
         //will throw key error if name attribute does not exist

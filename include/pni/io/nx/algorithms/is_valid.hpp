@@ -35,10 +35,12 @@ namespace nx{
     //! 
     //! Check if the passed object is valid and return true if this is the 
     //! case. This template code takes instances 
+    //!
     //! \li nxattribute
     //! \li nxfield
     //! \li nxgroup
     //! \li nxfile
+    //! \li nxlink
     //!
     //! as input arguments.
     //! 
@@ -63,24 +65,29 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
+    //!
     //! \sa is_valid
     //!
     template<
              typename GTYPE,
              typename FTYPE, 
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class is_valid_visitor : public boost::static_visitor<bool>
     {
         public:
             //! result type (bool)
-            typedef bool result_type;
+            using result_type = bool;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type = ATYPE;
+            //! NeXus link type
+            using link_type = LTYPE;
           
             //-----------------------------------------------------------------
             //!
@@ -132,6 +139,20 @@ namespace nx{
             {
                 return is_valid(a);
             }
+            
+            //-----------------------------------------------------------------
+            //!
+            //! \brief process nxlink instances
+            //!
+            //! \throws object_error if validity check fails
+            //!
+            //! \param a attribute instance
+            //! \return true if valid, false otherwise
+            //!
+            result_type operator()(const link_type &l) const 
+            {
+                return is_valid(l);
+            }
     };
 
     //------------------------------------------------------------------------
@@ -157,17 +178,20 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
-    //! \param o reference to nxobject<GTYPE,FTYPE,ATYPE>
+    //! \tparam LTYPE link type
+    //! 
+    //! \param o reference to nxobject<GTYPE,FTYPE,ATYPE,LTYPE>
     //! \return true if valid, false otherwise
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    bool is_valid(const nxobject<GTYPE,FTYPE,ATYPE> &o) noexcept
+    bool is_valid(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o) noexcept
     {
-        typedef is_valid_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        using visitor_type = is_valid_visitor<GTYPE,FTYPE,ATYPE,LTYPE>;
         return boost::apply_visitor(visitor_type(),o);
     }
 

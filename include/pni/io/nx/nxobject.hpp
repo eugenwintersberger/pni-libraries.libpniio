@@ -23,7 +23,6 @@
 #pragma once
 
 #include <boost/variant.hpp>
-#include "link.hpp"
 
 namespace pni{
 namespace io{
@@ -39,9 +38,10 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             >
-    using nxobject = boost::variant<GTYPE,FTYPE,ATYPE,pni::io::nx::nxlink>;
+    using nxobject = boost::variant<GTYPE,FTYPE,ATYPE,LTYPE>;
 
 //end of namespace
 }
