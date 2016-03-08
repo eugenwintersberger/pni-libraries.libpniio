@@ -453,6 +453,8 @@ namespace nx{
             default:
                 return nxlink_status::INVALID;
         }
+
+        return nxlink_status::INVALID;
     }
 
 //end of namespace

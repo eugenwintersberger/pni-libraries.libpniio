@@ -69,8 +69,12 @@ BOOST_FIXTURE_TEST_SUITE(array_attribute_test_@TYPE@,array_attr_@TYPE@_fixture)
     {
         using namespace pni::io::nx::xml;
         typedef std::vector<@TYPE@> array_type;
-       
+
+#ifdef __clang__
+        h5::nxobject attr = root.attributes.create<@TYPE@>("attr_data",shape_t{3});
+#else
         h5::nxobject attr = root.attributes.create<@TYPE@>("attr_data",shape_t{{3}});
+#endif
         array_type r{@CPP_DATA@};
         BOOST_CHECK_NO_THROW(write(attr,r));
 

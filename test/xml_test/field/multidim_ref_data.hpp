@@ -31,7 +31,7 @@ template<typename T> struct mdim_ref_data
 };
 
 #define GENERATE_MDIM_REFERENCE_DATA(type,...)\
-    template<> struct mdim_ref_data<type>\ 
+    template<> struct mdim_ref_data<type>\
     {\
         static const std::vector<type> data;\
     };\

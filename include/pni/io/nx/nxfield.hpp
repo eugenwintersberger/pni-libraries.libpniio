@@ -689,8 +689,13 @@ namespace nx{
                     throw size_mismatch_error(EXCEPTION_RECORD,
                             "Field size does not match memory size!");
 
+#ifdef __clang__ 
+                _imp.write(type_id_map<T>::type_id,index_vector_type{n},
+                           static_cast<const void*>(value));
+#else
                 _imp.write(type_id_map<T>::type_id,index_vector_type{{n}},
                            static_cast<const void*>(value));
+#endif
             }
             
             //-----------------------------------------------------------------

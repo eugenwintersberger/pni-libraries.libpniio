@@ -50,8 +50,17 @@ namespace test_tools {
                                     stream<<"UNKOWN";
         }
     }
+}
+}
 
+#ifdef __clang__
+namespace pni{
+namespace core{
+#else
+namespace boost {
+namespace test_tools {
 namespace tt_detail{
+#endif
     bool operator==(pni::core::value_ref const& a,pni::core::value_ref const& b)
     {
         if((a.type_id()==type_id_t::STRING) && 
@@ -103,9 +112,14 @@ namespace tt_detail{
     {
         return !(a==b);
     }
+#ifdef __clang__
+}
+}
+#else
 }
 }
 }
+#endif
 
 namespace std{
 
