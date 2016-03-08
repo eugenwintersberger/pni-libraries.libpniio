@@ -43,7 +43,7 @@ namespace nx{
     //! \tparam OTYPE object type
     //! \param o instance of the object to close
     //!
-    template<nximp_code IMPID> void close(nxlink<IMPID> &l)
+    template<nximp_code IMPID> void close(nxlink<IMPID> &)
     {}
     template<typename OTYPE> void close(OTYPE &o)
     {

@@ -27,6 +27,7 @@
 #include "nxlink_type.hpp"
 #include "nxlink.hpp"
 #include "nxobject_traits.hpp"
+#include "../exceptions.hpp"
 
 namespace pni{
 namespace io{
@@ -178,6 +179,26 @@ namespace nx{
                     return true;
                 else
                     return false;
+            }
+
+            //-----------------------------------------------------------------
+            //!
+            //! \brief resolve the link
+            //!
+            //! Resolve the link and return the object referenced by it. 
+            //! If the link is invalid a link_error exception will be thrown.
+            //!
+            //! \throw link_error if link cannot be resolved
+            //! 
+            //! \return instance of nxobject
+            //!
+            object_type resolve() const 
+            {
+                if(!is_valid())
+                    throw pni::io::link_error(EXCEPTION_RECORD,
+                            "Cannot resolve link!");
+
+                return _parent.at(_name);
             }
 
     };

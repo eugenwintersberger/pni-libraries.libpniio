@@ -137,9 +137,15 @@ namespace io{
         {
             using boost::spirit::karma::_1;
             using boost::spirit::karma::_val;
-
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunsequenced"
+#endif
             complex_rule = float_rule[_1 = real(_val)]<<
                            imag_rule[_1 = imag(_val)];
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
         }
         
     };
