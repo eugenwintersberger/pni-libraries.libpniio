@@ -150,7 +150,7 @@ namespace nx{
             //!
             nxlink_status status() const
             {
-                return link_status(_parent,_name);
+                return pni::io::nx::link_status(_parent,_name);
             }
 
             //-----------------------------------------------------------------
@@ -161,7 +161,7 @@ namespace nx{
             //!
             nxlink_type type() const 
             {
-                return link_type(_parent,_name);
+                return pni::io::nx::link_type(_parent,_name);
             }
 
             //-----------------------------------------------------------------

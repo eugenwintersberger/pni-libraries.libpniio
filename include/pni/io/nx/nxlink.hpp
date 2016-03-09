@@ -268,37 +268,6 @@ namespace nx{
 
         return link_type::link_name(parent.imp(),index);
     }
-
-    //-------------------------------------------------------------------------
-    //!
-    //! \brief get link target
-    //!
-    //! Return the target of a link determined by index below group parent.
-    //!
-    //! \throws invalid_object_error if parent is not a valid group
-    //! \throws index_error if index exceeds the total number of links below
-    //!                     parent
-    //! \throws link_error if the information cannot be retrieved
-    //! \throws object_error in case of any other error
-    //! 
-    //! \tparam GTYPE group type template
-    //! \tparam IMPID implemenation ID template parameter
-    //! \param parent reference to the parent group
-    //! \param index the numeric index of the link 
-    //!
-    //! \return target of the link as nxpath instance
-    //!
-    template<
-             template<nximp_code> class GTYPE,
-             nximp_code IMPID
-            >
-    auto link_target(const GTYPE<IMPID> &parent,size_t index) -> nxpath
-    {
-        using link_type = typename nxobject_trait<IMPID>::link_imp_type;
-
-        return link_type::link_target(parent.imp(),index);
-    }
-
     //-------------------------------------------------------------------------
     //!
     //! \brief get link target
@@ -328,6 +297,35 @@ namespace nx{
 
         return link_type::link_target(parent.imp(),lname);
     }
+
+    //-------------------------------------------------------------------------
+    //!
+    //! \brief get link target
+    //!
+    //! Return the target of a link determined by index below group parent.
+    //!
+    //! \throws invalid_object_error if parent is not a valid group
+    //! \throws index_error if index exceeds the total number of links below
+    //!                     parent
+    //! \throws link_error if the information cannot be retrieved
+    //! \throws object_error in case of any other error
+    //! 
+    //! \tparam GTYPE group type template
+    //! \tparam IMPID implemenation ID template parameter
+    //! \param parent reference to the parent group
+    //! \param index the numeric index of the link 
+    //!
+    //! \return target of the link as nxpath instance
+    //!
+    template<
+             template<nximp_code> class GTYPE,
+             nximp_code IMPID
+            >
+    auto link_target(const GTYPE<IMPID> &parent,size_t index) -> nxpath
+    {
+        return link_target(parent,link_name(parent,index));
+    }
+
 
     //-------------------------------------------------------------------------
     //!

@@ -267,8 +267,8 @@ namespace h5{
 
         switch(link_type(loc,lname))
         {
-            case nxlink_type::HARD: 
-                return nxpath::from_string(get_path(loc.at(lname)));
+            case nxlink_type::HARD:
+                return nxpath::from_string(loc.filename()+":/"+get_path(loc.at(lname)));
             case nxlink_type::SOFT:
                 return get_soft_link_target(loc,lname);
             case nxlink_type::EXTERNAL:
