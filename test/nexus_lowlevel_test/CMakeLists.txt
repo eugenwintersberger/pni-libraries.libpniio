@@ -89,6 +89,7 @@ set(NXLINKSRC  nxlink_internal_test.cpp
                nxlink_external_test.cpp
                get_links_test.cpp
                get_links_recursive_test.cpp
+               link_test.cpp
    )
 
 set_source_files_properties(nxlink_internal_test.cpp PROPERTIES 
