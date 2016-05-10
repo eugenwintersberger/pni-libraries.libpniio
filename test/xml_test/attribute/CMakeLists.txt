@@ -50,7 +50,7 @@ foreach(index RANGE ${TYPERANGE})
         set(EQUALITY_CHECK "BOOST_CHECK_CLOSE(@TYPE@(data),expected,1.e-14);")
     elseif(TYPE STREQUAL complex128)
         message(STATUS "setup for complex128 comnparison")
-        set(EQUALITY_CHECK "BOOST_CHECK_CLOSE(std::real(data),std::real(expected),1.e-14);\n\
+        set(EQUALITY_CHECK "BOOST_CHECK_CLOSE(std::real(data),std::real(expected),1.e-14);\n
                             BOOST_CHECK_CLOSE(std::imag(data),std::imag(expected),1.e-14);")
     else()
         set(EQUALITY_CHECK "BOOST_CHECK_EQUAL(data,expected);")
@@ -126,7 +126,7 @@ foreach(index RANGE ${TYPERANGE})
         set(EQUALITY_CHECK "BOOST_CHECK_CLOSE(@TYPE@(*d_iter),*r_iter,1.e-14);")
     elseif(TYPE STREQUAL complex128)
         message(STATUS "setup for complex128 comnparison")
-        set(EQUALITY_CHECK "BOOST_CHECK_CLOSE(std::real(*d_iter),std::real(*r_iter),1.e-14);\n\
+        set(EQUALITY_CHECK "BOOST_CHECK_CLOSE(std::real(*d_iter),std::real(*r_iter),1.e-14);\n
                             BOOST_CHECK_CLOSE(std::imag(*d_iter),std::imag(*r_iter),1.e-14);")
     else()
         set(EQUALITY_CHECK "BOOST_CHECK_EQUAL(*d_iter,*r_iter);")
