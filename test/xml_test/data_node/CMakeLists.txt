@@ -4,7 +4,7 @@ set(SOURCES child_node_io_test.cpp
     )
 
 set_source_files_properties(child_node_io_test.cpp PROPERTIES 
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; \
+                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; 
                             BOOST_TEST_MODULE=testing data_node operations")
 add_executable(data_node_test EXCLUDE_FROM_ALL ${SOURCES})
 target_link_libraries(data_node_test pniio 

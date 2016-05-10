@@ -19,7 +19,7 @@ set(SOURCES uint8_parser_test.cpp
 
 
 set_source_files_properties(uint8_parser_test.cpp PROPERTIES 
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; \
+                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; 
                             BOOST_TEST_MODULE=testing primitive parsers")
 add_executable(primitive_parsers_test EXCLUDE_FROM_ALL ${SOURCES} )
 target_link_libraries(primitive_parsers_test pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})

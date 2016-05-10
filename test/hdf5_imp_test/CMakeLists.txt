@@ -14,7 +14,7 @@ set(SOURCES h5_imp_test_utils.cpp
 
 
 set_source_files_properties(h5link_test.cpp PROPERTIES 
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; \
+                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; 
                             BOOST_TEST_MODULE=testing HDF5 implementation")
 
 add_executable(hdf5_imp_test EXCLUDE_FROM_ALL ${SOURCES} )

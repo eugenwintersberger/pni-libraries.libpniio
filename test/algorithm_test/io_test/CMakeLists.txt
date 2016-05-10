@@ -8,7 +8,7 @@ set(SOURCES io_test_fixture.cpp
 
 
 set_source_files_properties(get_rank_test.cpp PROPERTIES 
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; \
+                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; 
                             BOOST_TEST_MODULE=testing group algorithms")
 add_executable(algo_io_tests EXCLUDE_FROM_ALL ${SOURCES} 
                $<TARGET_OBJECTS:test_common>

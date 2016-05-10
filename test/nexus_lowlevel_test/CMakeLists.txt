@@ -14,7 +14,7 @@ set(NXFILESRC nxfile_creation_test.cpp
 
 
 set_source_files_properties(nxfile_creation_test.cpp PROPERTIES 
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; \
+                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; 
                             BOOST_TEST_MODULE=testing nxfile operations")
 add_executable(nxfile_tests EXCLUDE_FROM_ALL ${NXFILESRC})
 target_link_libraries(nxfile_tests pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
@@ -32,7 +32,7 @@ set(NXGROUPSRC  nxgroup_creation_test.cpp
               )
 
 set_source_files_properties(nxgroup_creation_test.cpp PROPERTIES 
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; \
+                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; 
                             BOOST_TEST_MODULE=testing nxgroup operations")
 add_executable(nxgroup_tests EXCLUDE_FROM_ALL ${NXGROUPSRC} 
                $<TARGET_OBJECTS:level_1_common>
@@ -52,7 +52,7 @@ set(NXFIELDSRC  nxfield_creation_test.cpp
     )
 
 set_source_files_properties(nxfield_creation_test.cpp PROPERTIES 
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; \
+                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK;
                             BOOST_TEST_MODULE=testing nxfield operations")
 add_executable(nxfield_tests EXCLUDE_FROM_ALL ${NXFIELDSRC} 
                $<TARGET_OBJECTS:level_1_common>
@@ -73,7 +73,7 @@ set(NXATTRSRC  nxattribute_creation_test.cpp
    )
 
 set_source_files_properties(nxattribute_creation_test.cpp PROPERTIES 
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; \
+                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; 
                             BOOST_TEST_MODULE=testing nxattribute operations")
 add_executable(nxattribute_tests EXCLUDE_FROM_ALL ${NXATTRSRC} 
                 $<TARGET_OBJECTS:level_1_common>
@@ -92,7 +92,7 @@ set(NXLINKSRC  nxlink_internal_test.cpp
    )
 
 set_source_files_properties(nxlink_internal_test.cpp PROPERTIES 
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; \
+                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; 
                             BOOST_TEST_MODULE=testing nxattribute operations")
 add_executable(nxlink_tests EXCLUDE_FROM_ALL ${NXLINKSRC}
                $<TARGET_OBJECTS:level_1_common>

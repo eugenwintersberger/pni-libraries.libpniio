@@ -10,7 +10,7 @@ set(SOURCES close_test.cpp
 
 
 set_source_files_properties(close_test.cpp PROPERTIES 
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; \
+                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; 
                             BOOST_TEST_MODULE=testing common algorithms")
 add_executable(common_test EXCLUDE_FROM_ALL ${SOURCES} 
                $<TARGET_OBJECTS:test_common>

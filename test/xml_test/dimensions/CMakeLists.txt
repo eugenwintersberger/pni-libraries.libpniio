@@ -17,7 +17,7 @@ foreach(XMLFILE ${XMLFILES})
 endforeach()
 
 set_source_files_properties(read_test.cpp PROPERTIES 
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; \
+                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK;
                             BOOST_TEST_MODULE=testing xml dimensions operations")
 add_executable(dimensions_test EXCLUDE_FROM_ALL ${SOURCES}
     $<TARGET_OBJECTS:xml_test_common>)
