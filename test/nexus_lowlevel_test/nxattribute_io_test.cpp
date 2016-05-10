@@ -21,8 +21,6 @@
 
 //implementation of the arrayshape test
 
-#include<cppunit/extensions/HelperMacros.h>
-
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 #include <pni/io/nx/nx.hpp>

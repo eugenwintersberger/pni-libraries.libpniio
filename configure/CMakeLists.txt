@@ -101,8 +101,5 @@ if(NOT Boost_FOUND)
     message(FATAL_ERROR "Could not find Boost libraries!")
 endif()
 
-if(PKG_CONFIG_FOUND)
-    pkg_search_module(CPPUNIT REQUIRED cppunit)
-endif()
 
 
