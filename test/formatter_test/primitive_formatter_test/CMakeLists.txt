@@ -19,8 +19,8 @@ set(SOURCES
 
 
 set_source_files_properties(bool_formatter_test.cpp PROPERTIES 
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; 
-                            BOOST_TEST_MODULE=Testing primitive formatters")
+                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; \
+                                                 BOOST_TEST_MODULE=Testing primitive formatters")
 add_executable(primitive_formatter_test EXCLUDE_FROM_ALL ${SOURCES})
 target_link_libraries(primitive_formatter_test pniio 
                       ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
