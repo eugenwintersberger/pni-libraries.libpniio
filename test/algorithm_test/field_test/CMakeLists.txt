@@ -4,8 +4,7 @@ set(SOURCES get_unit_test.cpp
 
 
 set_source_files_properties(get_unit_test.cpp PROPERTIES 
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; 
-                            BOOST_TEST_MODULE=testing field algorithms")
+                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE=testing field algorithms")
 add_executable(algo_field_test EXCLUDE_FROM_ALL ${SOURCES} 
                $<TARGET_OBJECTS:test_common>
                $<TARGET_OBJECTS:algorithm_common>)

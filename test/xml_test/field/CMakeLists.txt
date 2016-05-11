@@ -80,8 +80,7 @@ add_library(field_test_common OBJECT EXCLUDE_FROM_ALL field_utils.cpp)
 
 include_directories(${CMAKE_SOURCE_DIR}/test ${CMAKE_CURRENT_SOURCE_DIR})
 set_source_files_properties(field_test.cpp PROPERTIES 
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; 
-                            BOOST_TEST_MODULE=testing XML field operations")
+                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE=testing XML field operations")
 add_executable(field_test EXCLUDE_FROM_ALL field_test.cpp
                           multidim_field_test.cpp
                           scalar_field_test.cpp
