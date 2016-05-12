@@ -9,8 +9,7 @@ foreach(F ${DATAFILES})
 endforeach()
 
 set_source_files_properties(tiff_reader_test.cpp PROPERTIES 
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; \
-                            BOOST_TEST_MODULE=Testing data readers")
+                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE=Testing data readers")
 add_executable(reader_test EXCLUDE_FROM_ALL ${SOURCES})
 target_link_libraries(reader_test pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
