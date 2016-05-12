@@ -94,11 +94,16 @@ pkg_search_module(PNICORE_PKG REQUIRED pnicore)
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED OFF)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.41 COMPONENTS program_options system regex 
+find_package(Boost 1.41 COMPONENTS program_options 
+                                   system 
+                                   regex 
                                    unit_test_framework)
 
 if(NOT Boost_FOUND)
     message(FATAL_ERROR "Could not find Boost libraries!")
+else()
+    message(STATUS "Found Boost version: ${Boost_VERSION}")
+    add_definitions(-DBOOST_VERSION=${Boost_VERSION})
 endif()
 
 

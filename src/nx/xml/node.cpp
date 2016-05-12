@@ -128,7 +128,11 @@ namespace xml{
     //------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const node &n)
     {
+#if BOOST_VERSION > 105500
         using key_type = typename node::key_type;
+#else
+        using key_type = typename node::key_type::value_type;
+#endif
         boost::property_tree::xml_writer_settings<key_type> settings('\t',1);
 
         boost::property_tree::write_xml(o,n,settings);
