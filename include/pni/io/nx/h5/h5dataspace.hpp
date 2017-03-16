@@ -24,6 +24,7 @@
 
 #include "object_imp.hpp"
 #include "type_imp.hpp"
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -65,7 +66,7 @@ namespace h5 {
     //! A dataspace representing a scalar value has a rank of  0 and a 
     //! size of 1. 
     //!
-    class h5dataspace
+    class PNIIO_EXPORT h5dataspace
     {
         public:
             //! value type for buffers
@@ -76,9 +77,15 @@ namespace h5 {
             //! The HDF5 object representing the dataspace
             object_imp _object;
             //! number of elements 
+#ifdef _MSC_VER
+#pragma warning(disable:4251)
+#endif
             type_imp::index_vector_type _dims;    
             //! maximum number of elements dimensions
             type_imp::index_vector_type _maxdims; 
+#ifdef _MSC_VER
+#pragma warning(default:4251)
+#endif
 
             //-----------------------------------------------------------------
             //! 
@@ -284,7 +291,8 @@ namespace h5 {
         //! \param s HDF5 dataspace
         //! \return modified output stream
         //!
-        std::ostream &operator<<(std::ostream &o,const h5dataspace &s);
+        PNIIO_EXPORT std::ostream &operator<<(std::ostream &o,
+			                                  const h5dataspace &s);
 
 //end of namespace
 }

@@ -28,6 +28,7 @@ extern "C"{
 }
 
 #include "object_imp.hpp"
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -46,7 +47,7 @@ namespace h5{
     //! of a filesystem on a UNIX system. File objects are created by using 
     //! static methods for creating and opening files on the filesystem.
     //!
-    class file_imp
+    class PNIIO_EXPORT file_imp
     {
         private:
             //! the HDF5 object
@@ -165,8 +166,6 @@ namespace h5{
             //! \return root group instance
             //!
             group_imp root() const;
-
-
     };
 
 

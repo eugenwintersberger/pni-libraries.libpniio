@@ -32,6 +32,7 @@ extern "C"{
 
 #include "../nxlink_type.hpp"
 #include "../nxpath/nxpath.hpp"
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io {
@@ -46,7 +47,7 @@ namespace h5{
     //! This class holds only static methods which can be used to create 
     //! internal and external links. 
     //!
-    class h5link
+    class PNIIO_EXPORT h5link
     {
         private:
             //!

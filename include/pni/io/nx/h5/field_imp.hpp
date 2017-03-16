@@ -32,6 +32,7 @@
 #include "h5filter.hpp"
 #include "attribute_imp.hpp"
 #include "selection.hpp"
+#include "../../windows.hpp"
 
 
 namespace pni{
@@ -48,7 +49,7 @@ namespace h5{
     //! 
     //! Datasets are the essential data holding objects in HDF5.
     //!
-    class field_imp
+    class PNIIO_EXPORT field_imp
     {
         private:
             //! object guard

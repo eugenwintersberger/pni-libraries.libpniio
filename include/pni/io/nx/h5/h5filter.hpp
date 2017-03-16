@@ -27,6 +27,7 @@ extern "C"{
 }
 
 #include "object_imp.hpp"
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -45,7 +46,7 @@ namespace h5{
     //! constructor the setup() method is called which applies the filter 
     //! to the dataset.
     //!
-    class h5filter
+    class PNIIO_EXPORT h5filter
     {
         public:
             //===================public member functions=======================

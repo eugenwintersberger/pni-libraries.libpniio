@@ -25,6 +25,7 @@
 
 #include <pni/core/types.hpp>
 #include "object_imp.hpp"
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -40,7 +41,7 @@ namespace h5{
     //! is to ensure that during object construction only h5object instances 
     //! will succeed which indeed represent a data type.
     //!
-    class h5datatype
+    class PNIIO_EXPORT h5datatype
     {
         private:
             //! HDF5 object representing the data type
@@ -83,7 +84,7 @@ namespace h5{
     //! \param b rhs value of the operator
     //! \return true if types are equal
     //!
-    bool operator==(const h5datatype &a,const h5datatype &b);
+    PNIIO_EXPORT bool operator==(const h5datatype &a,const h5datatype &b);
         
     //------------------------------------------------------------------------
     //! 
@@ -96,7 +97,7 @@ namespace h5{
     //! \param b rhs value of the operator
     //! \return true if not equal
     //!
-    bool operator!=(const h5datatype &a,const h5datatype &b);
+    PNIIO_EXPORT bool operator!=(const h5datatype &a,const h5datatype &b);
 
     //------------------------------------------------------------------------
     //!
@@ -112,7 +113,7 @@ namespace h5{
     //! \param o instance of an HDF5 datat type
     //! \return type_id_t value for the data type
     //!
-    pni::core::type_id_t type_id(const h5datatype &o);
+    PNIIO_EXPORT pni::core::type_id_t type_id(const h5datatype &o);
 
     //------------------------------------------------------------------------
     //!
@@ -124,7 +125,7 @@ namespace h5{
     //! \param id type id for which to requeste an HDF5 datatype
     //! \return reference to a predefined data type
     //!
-    const h5datatype &get_type(pni::core::type_id_t id);
+    PNIIO_EXPORT const h5datatype &get_type(pni::core::type_id_t id);
 
     //------------------------------------------------------------------------
     //!
@@ -136,7 +137,7 @@ namespace h5{
     //! \param id type id
     //! \return h5datatype instance
     //!
-    h5datatype make_type(pni::core::type_id_t id);
+    PNIIO_EXPORT h5datatype make_type(pni::core::type_id_t id);
 
     
 

@@ -24,6 +24,7 @@
 #pragma once
 
 #include "../nxobject_type.hpp"
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -75,7 +76,7 @@ namespace h5{
     //! \param o reference to h5object
     //! \return HDF5 object type
     //! 
-    h5object_type get_hdf5_type(const object_imp &o);
+    PNIIO_EXPORT h5object_type get_hdf5_type(const object_imp &o);
 
     //------------------------------------------------------------------------
     //! 
@@ -97,7 +98,7 @@ namespace h5{
     //! \param o reference to h5object instance
     //! \return Nexus type
     //!
-    pni::io::nx::nxobject_type get_nexus_type(const object_imp &o);
+    PNIIO_EXPORT pni::io::nx::nxobject_type get_nexus_type(const object_imp &o);
 
 
 //end of namespace

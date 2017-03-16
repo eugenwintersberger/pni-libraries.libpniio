@@ -25,6 +25,7 @@
 #include <vector>
 
 #include <pni/core/types.hpp>
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -51,7 +52,8 @@ namespace h5{
     //! \param name the name of the attribute to look for
     //! \return true if exists, false otherwise
     //!
-    bool has_attribute(const object_imp &parent,const pni::core::string &name);
+    PNIIO_EXPORT bool has_attribute(const object_imp &parent,
+		                            const pni::core::string &name);
             
     //------------------------------------------------------------------------
     //! 
@@ -67,7 +69,8 @@ namespace h5{
     //! \param parent reference to the parent object
     //! \param name the name of the attribute to delete
     //!
-    void delete_attribute(const object_imp &parent,const pni::core::string &name);
+    PNIIO_EXPORT void delete_attribute(const object_imp &parent,
+		                               const pni::core::string &name);
 
     //-------------------------------------------------------------------------
     //!
@@ -86,11 +89,11 @@ namespace h5{
     //! \param overwrite if true overwrite an existing attribute
     //! \return the attribute as h5object
     //!
-    object_imp create_attribute(const object_imp &parent,
-                                const pni::core::string &name,
-                                const h5datatype &type,
-                                const h5dataspace &space,
-                                bool overwrite);
+    PNIIO_EXPORT object_imp create_attribute(const object_imp &parent,
+                                             const pni::core::string &name,
+                                             const h5datatype &type,
+                                             const h5dataspace &space,
+                                             bool overwrite);
                      
     //------------------------------------------------------------------------
     //!
@@ -109,7 +112,8 @@ namespace h5{
     //! \param n name of the attribute
     //! \return attribute object
     //!
-    object_imp get_attribute_by_name(const object_imp &parent,const pni::core::string &n);
+    PNIIO_EXPORT object_imp get_attribute_by_name(const object_imp &parent,
+		                                          const pni::core::string &n);
 
 
     //-----------------------------------------------------------------
@@ -125,7 +129,7 @@ namespace h5{
     //! \param parent the parent object with attributes
     //! \return number of attributes
     //!
-    size_t get_number_of_attributes(const object_imp &parent) ;
+    PNIIO_EXPORT size_t get_number_of_attributes(const object_imp &parent) ;
 
     //------------------------------------------------------------------------
     //!
@@ -144,7 +148,8 @@ namespace h5{
     //! \param i index of the attribute
     //! \returns instance of H5Attribute
     //!
-    object_imp get_attribute_by_index(const object_imp &parent,size_t i);
+    PNIIO_EXPORT object_imp get_attribute_by_index(const object_imp &parent,
+		                                           size_t i);
 
 
 //end of namespace

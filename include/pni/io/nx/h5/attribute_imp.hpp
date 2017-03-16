@@ -32,6 +32,7 @@
 #include "h5datatype.hpp"
 #include "selection.hpp"
 #include "selection_guard.hpp"
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -42,7 +43,7 @@ namespace h5{
     //! \ingroup nxh5_classes
     //! \brief attribute implementation
     //! 
-    class attribute_imp
+    class PNIIO_EXPORT attribute_imp
     {
         private:
             //! handler to the undlying attribute object

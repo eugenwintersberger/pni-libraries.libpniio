@@ -23,7 +23,7 @@
 #pragma once
 
 #include "type_imp.hpp"
-
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -34,16 +34,21 @@ namespace h5{
     //! \ingroup nxh5_classes
     //! \brief describe a selection in an HDF5 file
     //!
-    class selection
+    class PNIIO_EXPORT selection
     {
         private:
+#ifdef _MSC_VER
+#pragma warning(disable:4251)
+#endif
             //! buffer for offset values
             type_imp::index_vector_type _offset;
             //! buffer for stride values
             type_imp::index_vector_type _stride;
             //! buffer for count values
             type_imp::index_vector_type _count;
-
+#ifdef _MSC_VER
+#pragma warning(default:4251)
+#endif
         public:
             //----------------------------------------------------------------
             //                Constructors
@@ -216,7 +221,7 @@ namespace h5{
     //!
     //! \param s selection instance
     //! \return effective rank
-    size_t effective_rank(const selection &s) noexcept;
+    PNIIO_EXPORT size_t effective_rank(const selection &s) noexcept;
 
     //------------------------------------------------------------------------
     //! 
@@ -229,7 +234,7 @@ namespace h5{
     //! \param s selection instance
     //! \return vector with effective shape
     //!
-    type_imp::index_vector_type effective_shape(const selection &s);
+    PNIIO_EXPORT type_imp::index_vector_type effective_shape(const selection &s);
 
     //------------------------------------------------------------------------
     //!
@@ -241,7 +246,7 @@ namespace h5{
     //! \param s selection instance
     //! \return number of selected elements
     //! 
-    size_t size(const selection &s) noexcept;
+    PNIIO_EXPORT size_t size(const selection &s) noexcept;
 
     //------------------------------------------------------------------------
     //!
@@ -252,7 +257,7 @@ namespace h5{
     //! \param s reference to the slice vector
     //! \return selection instance
     //!
-    selection create_selection(const type_imp::selection_vector_type &s);
+    PNIIO_EXPORT selection create_selection(const type_imp::selection_vector_type &s);
 
     //------------------------------------------------------------------------
     //!
@@ -264,7 +269,7 @@ namespace h5{
     //! \param s reference to the selection object
     //! \return slice vector
     //! 
-    type_imp::selection_vector_type create_slice_vector(const selection &s);
+    PNIIO_EXPORT type_imp::selection_vector_type create_slice_vector(const selection &s);
 
 
 

@@ -25,6 +25,7 @@
 #include <ctime>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <pni/core/types.hpp>
+#include "../windows.hpp"
 
 namespace pni {
 namespace io {
@@ -42,7 +43,7 @@ namespace nx {
     //! the program is running on or can be configured manually if this setup 
     //! is not correct. 
     //!
-    class nxdate_time 
+    class PNIIO_EXPORT nxdate_time 
     {
         private:
             //! get date time from ptime 

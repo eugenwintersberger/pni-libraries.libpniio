@@ -26,6 +26,7 @@ extern "C" {
 }
 
 #include <pni/core/types.hpp>
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -53,7 +54,7 @@ namespace h5{
     //! \param object HDF5 object
     //! \return string with the file name
     //!
-    pni::core::string get_filename(const object_imp &object);
+    PNIIO_EXPORT pni::core::string get_filename(const object_imp &object);
     
     //-------------------------------------------------------------------------
     //!
@@ -73,7 +74,7 @@ namespace h5{
     //! \param object reference to the object from which to retrieve the path
     //! \return path as string
     //!
-    pni::core::string get_path(const object_imp &object);
+    PNIIO_EXPORT pni::core::string get_path(const object_imp &object);
 
     //------------------------------------------------------------------------
     //! 
@@ -94,7 +95,7 @@ namespace h5{
     //! \param obj reference to the object from which to retrieve the name
     //! \return name of the object
     //!
-    pni::core::string get_name(const object_imp &obj);
+    PNIIO_EXPORT pni::core::string get_name(const object_imp &obj);
 
     //------------------------------------------------------------------------
     //! 
@@ -114,7 +115,7 @@ namespace h5{
     //! \param object the HDF5 object from which to retrieve the parent path
     //! \return path to the parent
     //! 
-    pni::core::string get_parent_path(const object_imp &object);
+    PNIIO_EXPORT pni::core::string get_parent_path(const object_imp &object);
         
     //------------------------------------------------------------------------
     //!
@@ -134,7 +135,7 @@ namespace h5{
     //! \param obj reference to the object from which to retrieve the parent
     //! \return object instance of the parent
     //!
-    object_imp get_parent(const object_imp &obj);
+    PNIIO_EXPORT object_imp get_parent(const object_imp &obj);
 
 
 //end of namespace

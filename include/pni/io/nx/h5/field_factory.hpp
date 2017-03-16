@@ -30,6 +30,7 @@ extern "C"{
 #include <pni/core/types.hpp>
 #include <vector>
 #include "type_imp.hpp"
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -62,7 +63,7 @@ namespace h5{
     //! is created
     //! \li each nexus field is extensible along its first dimension
     //! 
-    class field_factory
+    class PNIIO_EXPORT field_factory
     {
         private:
 

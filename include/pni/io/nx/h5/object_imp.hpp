@@ -31,6 +31,7 @@ extern "C"{
 #include "../../exceptions.hpp"
 #include "h5object_types.hpp"
 #include "../nxobject_type.hpp"
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -56,7 +57,7 @@ namespace h5{
     //! The descructor calls the close() method and thus ensures that an an 
     //! object represented by hid_t is closed when it looses scope.
     //!
-    class object_imp
+    class PNIIO_EXPORT object_imp
     {
         private:
             hid_t _id; //!< ID of the object
@@ -265,7 +266,7 @@ namespace h5{
     //! \param b rhs value of the operator
     //! \return true if equal, false otherwise
     //!
-    bool operator==(const object_imp &a,const object_imp &b);
+    PNIIO_EXPORT bool operator==(const object_imp &a,const object_imp &b);
 
     //-------------------------------------------------------------------------
     //! 
@@ -281,7 +282,7 @@ namespace h5{
     //! \param b rhs value of the operator
     //! \return true if not equal, false otherwise
     //!
-    bool operator!=(const object_imp &a,const object_imp &b);
+    PNIIO_EXPORT bool operator!=(const object_imp &a,const object_imp &b);
 
 
 //end of namespace

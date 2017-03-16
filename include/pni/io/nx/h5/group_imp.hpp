@@ -29,6 +29,7 @@
 #include "hdf5_utilities.hpp"
 #include "attribute_utils.hpp"
 #include "attribute_imp.hpp"
+#include "../../windows.hpp"
 
 
 namespace pni{
@@ -44,7 +45,7 @@ namespace h5{
     //! world.  They can be identified by a path within the file and 
     //! attributes can be attached to them. 
     //!
-    class group_imp
+    class PNIIO_EXPORT group_imp
     {
         private:
             //! the HDF5 object representing the group
@@ -365,8 +366,6 @@ namespace h5{
             //! \param name the name of the attribute to delete
             //! 
             void del_attr(const pni::core::string &name) const;
-
-
     };
 
 
