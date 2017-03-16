@@ -63,22 +63,24 @@ include(configure/CheckTypeSize.cmake)
 #==========================check for libraries=====================================
 
 if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
-    set(Boost_USE_STATIC_LIBS ON)
+    set(Boost_USE_STATIC_LIBS OFF)
     set(Boost_USE_STATIC_RUNTIME OFF)
 else()
     set(Boost_USE_STATIC_LIBS OFF)
     set(Boost_USE_STATIC_RUNTIME OFF)
 endif()
 set(Boost_USE_MULTITHREADED ON)
-find_package(Boost 1.41 COMPONENTS program_options system 
+find_package(Boost 1.41 COMPONENTS system 
                                    regex 
                                    date_time
-                                   unit_test_framework filesystem)
+                                   unit_test_framework 
+                                   filesystem)
 
 if(NOT Boost_FOUND)
     message(FATAL_ERROR "Could not find Boost libraries!")
 else()
     include_directories(${Boost_INCLUDE_DIRS})
+    link_directories(${Boost_LIBRARY_DIRS})
 endif()
 
 
