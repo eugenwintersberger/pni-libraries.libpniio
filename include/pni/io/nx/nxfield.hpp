@@ -589,7 +589,7 @@ namespace nx{
                 {
                     typedef typename ATYPE::value_type value_type;
                     typedef dynamic_array<value_type> buffer_type;
-                    auto buffer = buffer_type::create(v.shape<pni::core::shape_t>());
+                    auto buffer = buffer_type::create(v.template shape<pni::core::shape_t>());
                     _read_array(buffer);
                     std::copy(buffer.begin(),buffer.end(),v.begin());
                 }
@@ -689,8 +689,13 @@ namespace nx{
                     throw size_mismatch_error(EXCEPTION_RECORD,
                             "Field size does not match memory size!");
 
+#ifdef __clang__ 
+                _imp.write(type_id_map<T>::type_id,index_vector_type{n},
+                           static_cast<const void*>(value));
+#else
                 _imp.write(type_id_map<T>::type_id,index_vector_type{{n}},
                            static_cast<const void*>(value));
+#endif
             }
             
             //-----------------------------------------------------------------
@@ -780,7 +785,7 @@ namespace nx{
                 {
                     typedef typename ATYPE::value_type value_type;
                     typedef dynamic_array<value_type> array_type;
-                    auto buffer =  array_type::create(v.shape<pni::core::shape_t>());
+                    auto buffer =  array_type::create(v.template shape<pni::core::shape_t>());
                     std::copy(v.begin(),v.end(),buffer.begin());
                     write(buffer);
                 }

@@ -29,6 +29,7 @@
 #include <pni/io/nx/algorithms.hpp>
 #include <pni/io/exceptions.hpp>
 #include "../base_fixture.hpp"
+#include <pni/io/nx/nxlink.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx;
@@ -41,7 +42,12 @@ struct nxgroup_access_test_fixture : base_fixture
     nxgroup_access_test_fixture():
 	    base_fixture("nxgroup_access_test.nxs"),
         child(root.create_group("entry","NXentry"))
-    {}
+    {
+        child.create_group("instrument","NXinstrument");
+        child.create_group("data","NXdata");
+        link("/entry/data/data",child,"data_link");
+        
+    }
 
     ~nxgroup_access_test_fixture()
     {
@@ -87,6 +93,16 @@ BOOST_FIXTURE_TEST_SUITE(nxgroup_access_test,nxgroup_access_test_fixture)
         BOOST_CHECK_EQUAL(g.name(),"entry");
         
         BOOST_CHECK_THROW(root.at("nothing"),key_error);
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_link)
+    {
+        auto l = child["data_link"];
+        BOOST_CHECK(is_link(l));
+        h5::nxlink li = as_link(l);
+        BOOST_CHECK_EQUAL(li.name(),"data_link");
+        BOOST_CHECK_EQUAL(li.status(),nxlink_status::INVALID);
     }
 
 BOOST_AUTO_TEST_SUITE_END()

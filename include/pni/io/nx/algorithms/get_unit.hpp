@@ -69,24 +69,31 @@ namespace nx{
     //! \brief get unit visitor
     //!
     //! Retrieves the unit string of a field stored in the variant type.
-    //! \tparam VTYPE variant type
+    //!
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class get_unit_visitor : public boost::static_visitor<pni::core::string>
     {
         public:
             //! result type
-            typedef pni::core::string result_type;
+            using result_type = pni::core::string;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type = ATYPE;
+            //! Nexus link type
+            using link_type = LTYPE;
     
             //-----------------------------------------------------------------
             //!
@@ -148,6 +155,23 @@ namespace nx{
                         "Cannot retrieve a unit from an attribute type!");
                 return result_type();
             }
+            
+            //-----------------------------------------------------------------
+            //!
+            //! \brief process links
+            //!
+            //! Link do not posses units - an exception will be thrown.
+            //!
+            //! \throw type_error 
+            //!
+            //!
+            result_type operator()(const link_type &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "Cannot retrieve a unit from a link type!");
+                return result_type();
+            }
     };
 
     //------------------------------------------------------------------------
@@ -171,18 +195,19 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
-    //! \param o instance of VTYPE
     //! \return unit string
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    pni::core::string get_unit(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    pni::core::string get_unit(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o)
     {
-        typedef get_unit_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        using visitor_type = get_unit_visitor<GTYPE,FTYPE,ATYPE,LTYPE>;
         return boost::apply_visitor(visitor_type(),o);
     }
 

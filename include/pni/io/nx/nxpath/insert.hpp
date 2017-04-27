@@ -22,7 +22,12 @@
 //
 #pragma once
 
-#include <boost/spirit/include/phoenix_function.hpp>
+#if BOOST_VERSION > 105500
+#include <boost/spirit/include/phoenix_function.hpp>   
+#else
+#include <boost/spirit/include/phoenix.hpp>   
+#endif
+
 
 namespace pni{
 namespace io{

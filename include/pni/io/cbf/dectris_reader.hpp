@@ -92,7 +92,7 @@ namespace cbf{
              typename CTYPE
             >
     void dectris_reader::read_data_byte_offset(std::ifstream &is,
-                                 const pni::io::image_info &info, CTYPE &data)
+                                 const pni::io::image_info &, CTYPE &data)
     {
         using namespace pni::core;
         //unsigned long i;

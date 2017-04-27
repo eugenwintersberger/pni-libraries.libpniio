@@ -111,6 +111,11 @@ namespace nx{
     auto get_child(const OTYPE<IMPID> &parent,size_t index)
     ->decltype(get_parent(parent))
     {
+        using group_type = typename nxobject_trait<IMPID>::group_type;
+
+        static_assert(std::is_same<group_type,OTYPE<IMPID>>::value,
+                      "Parent type must be an instance of nxgroup!");
+
         return parent.at(index);
     }
 
@@ -132,6 +137,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //! 
     //! \param parent instance of nxobject with the parent group
     //! \param index the numerical index of the requested child
@@ -141,9 +147,10 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE 
             >
-    auto get_child(const nxobject<GTYPE,FTYPE,ATYPE> &parent,size_t index)
+    auto get_child(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &parent,size_t index)
     ->decltype(get_parent(parent))
     {
         using namespace pni::core;

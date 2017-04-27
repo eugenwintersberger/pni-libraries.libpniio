@@ -38,23 +38,27 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class is_attribute_visitor : public boost::static_visitor<bool>
     {
         public:
             //! result type (bool)
-            typedef bool result_type;
+            using result_type = bool;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type = ATYPE;
+            //! NeXus link type
+            using link_type = LTYPE;
           
             //-----------------------------------------------------------------
             //!
@@ -91,6 +95,16 @@ namespace nx{
             { 
                 return true; 
             }
+
+            //-----------------------------------------------------------------
+            //!
+            //! \brief process link instances
+            //!
+            result_type operator()(const link_type &) const noexcept
+            { 
+                return false; 
+            }
+
     };
 
     //------------------------------------------------------------------------
@@ -107,17 +121,20 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
+    //!
     //! \param o reference to an instance of nxobject<GTYPE,FTYPE,ATYPE>
     //! \return true if o is an attribute, false otherwise
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    bool is_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &o) noexcept
+    bool is_attribute(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o) noexcept
     {
-        typedef is_attribute_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        using visitor_type = is_attribute_visitor<GTYPE,FTYPE,ATYPE,LTYPE>;
         return boost::apply_visitor(visitor_type(),o);
     }
 

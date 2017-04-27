@@ -33,16 +33,32 @@ namespace test_tools {
         void operator()(std::ostream &stream,const pni::core::value_ref &v);
     };
 
+}
+}
+
+#ifdef __clang__
+namespace pni{
+namespace core{
+#else
+namespace boost { 
+namespace test_tools {
 namespace tt_detail{
+#endif
 
     bool operator==(pni::core::value_ref const& a,
                     pni::core::value_ref const& b);
 
     bool operator!=(pni::core::value_ref const& a,
                     pni::core::value_ref const& b);
+
+#ifdef __clang__
+}
+}
+#else
 }
 }
 }
+#endif
 
 namespace std{
 

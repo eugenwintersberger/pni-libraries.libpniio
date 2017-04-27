@@ -70,23 +70,27 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class get_rank_visitor : public boost::static_visitor<size_t>
     {
         public:
             //! result type
-            typedef size_t result_type;
+            using result_type = size_t;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type; 
+            using attribute_type = ATYPE;
+            //! NeXus link type
+            using link_type = LTYPE;
 
             //-----------------------------------------------------------------
             //!
@@ -102,7 +106,7 @@ namespace nx{
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
-                        "A group does not have a shape!");
+                        "Groups do not have a shape!");
                 return size_t(0);
             }
 
@@ -139,6 +143,21 @@ namespace nx{
             {
                 return a.rank();
             }
+            
+            //-----------------------------------------------------------------
+            //!
+            //! \brief process nxlink instances
+            //! 
+            //! Throws type_error exception - a link does not have a rank.
+            //!
+            //! \throws type_error
+            //!
+            result_type operator()(const link_type &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,"Links do not have a rank!");
+                return size_t(0);
+            }
     };
 
     //------------------------------------------------------------------------
@@ -163,6 +182,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     //! \param o object instance
     //! \return number of dimensions
@@ -170,11 +190,12 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    size_t get_rank(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    size_t get_rank(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o)
     {
-        typedef get_rank_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        using visitor_type = get_rank_visitor<GTYPE,FTYPE,ATYPE,LTYPE>;
         return boost::apply_visitor(visitor_type(),o);
     }
 

@@ -1,6 +1,7 @@
 set(HEADER_FILES as_attribute.hpp 
                  as_field.hpp 
                  as_group.hpp 
+                 as_link.hpp
                  close.hpp 
                  create_attribute.hpp 
                  create_field.hpp 
@@ -27,6 +28,7 @@ set(HEADER_FILES as_attribute.hpp
                  is_field.hpp 
                  is_group.hpp 
                  is_valid.hpp 
+                 is_link.hpp
                  read.hpp 
                  set_class.hpp 
                  set_unit.hpp 

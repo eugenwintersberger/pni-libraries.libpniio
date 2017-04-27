@@ -30,7 +30,7 @@ template<typename T> struct scalar_ref_data
 };
 
 #define GENERATE_SCALAR_REFERENCE_DATA(type,...)\
-    template<> struct scalar_ref_data<type>\ 
+    template<> struct scalar_ref_data<type>\
     {\
         static const type data;\
     };\
@@ -47,8 +47,14 @@ GENERATE_SCALAR_REFERENCE_DATA(pni::core::int64,-4013945);
 GENERATE_SCALAR_REFERENCE_DATA(pni::core::float32,2.3455);
 GENERATE_SCALAR_REFERENCE_DATA(pni::core::float64,-1.233e+4);
 GENERATE_SCALAR_REFERENCE_DATA(pni::core::float128,123.24354e-4);
+#ifdef __clang__
+GENERATE_SCALAR_REFERENCE_DATA(pni::core::complex32,34.,123.e-3);
+GENERATE_SCALAR_REFERENCE_DATA(pni::core::complex64,-23.,-8.203);
+GENERATE_SCALAR_REFERENCE_DATA(pni::core::complex128,123,340);
+#else
 GENERATE_SCALAR_REFERENCE_DATA(pni::core::complex32,{34.,123.e-3});
 GENERATE_SCALAR_REFERENCE_DATA(pni::core::complex64,{-23.,-8.203});
 GENERATE_SCALAR_REFERENCE_DATA(pni::core::complex128,{123,340});
+#endif
 GENERATE_SCALAR_REFERENCE_DATA(pni::core::string,"hello word a stupid text");
 GENERATE_SCALAR_REFERENCE_DATA(pni::core::bool_t,true);

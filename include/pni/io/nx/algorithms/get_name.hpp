@@ -39,6 +39,7 @@ namespace nx{
     //! \li nxgroup
     //! \li nxfile
     //! \li nxattribute
+    //! \li nxlink
     //! 
     //! \throws io_error in case of problems
     //! \throws invalid_object_erro in case of an invalid object
@@ -60,7 +61,6 @@ namespace nx{
         return o.name();
     }
 
-
     //------------------------------------------------------------------------
     //!
     //! \ingroup algorithm_internal_code
@@ -72,24 +72,28 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //! \sa get_name
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class get_name_visitor : public boost::static_visitor<pni::core::string>
     {
         public:
             //! result type
-            typedef pni::core::string result_type;
+            using result_type = pni::core::string;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type; 
+            using attribute_type = ATYPE; 
+            //! NeXus link type
+            using link_type = LTYPE;
 
             //-----------------------------------------------------------------
             //!
@@ -147,6 +151,20 @@ namespace nx{
             {
                 return get_name(a);
             }
+            
+            //-----------------------------------------------------------------
+            //!
+            //! \brief process nxlink instances
+            //!
+            //! Retrieve the name of an nxlink instance.
+            //!
+            //! \param a attribute instance
+            //! \return name of the attribute
+            //!
+            result_type operator()(const link_type &a) const
+            {
+                return a.name();
+            }
     };
 
     //!
@@ -164,6 +182,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     //! \param o instance of nxobject
     //! \return name of the object
@@ -171,11 +190,12 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    pni::core::string get_name(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    pni::core::string get_name(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o)
     {
-        typedef get_name_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        using visitor_type = get_name_visitor<GTYPE,FTYPE,ATYPE,LTYPE>;
         return boost::apply_visitor(visitor_type(),o);
     }
 

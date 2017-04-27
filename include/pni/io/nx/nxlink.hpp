@@ -23,11 +23,13 @@
 
 #pragma once
 
+#include <boost/filesystem.hpp>
 #include "nxobject_traits.hpp"
 #include "nxpath/nxpath.hpp"
 #include "nxpath/utils.hpp"
 #include "nxlink_type.hpp"
 #include "algorithms/get_path.hpp"
+#include "algorithms/get_object.hpp"
 
 
 namespace pni{
@@ -89,7 +91,7 @@ namespace nx{
     {
 
         //determine the utility class perfroming linking
-        typedef typename nxobject_trait<IMPID>::link_type link_type;
+        using link_type = typename nxobject_trait<IMPID>::link_imp_type;
 
 
         if(has_file_section(target))
@@ -228,13 +230,102 @@ namespace nx{
              template<nximp_code> class GTYPE,
              nximp_code IMPID
             >
-    nxlink_type link_type(const GTYPE<IMPID> &parent,
-                          const pni::core::string &name)
+    auto link_type(const GTYPE<IMPID> &parent,const pni::core::string &name)
+        -> nxlink_type 
     {
-        typedef typename nxobject_trait<IMPID>::link_type link_type;
+        using link_type =  typename nxobject_trait<IMPID>::link_imp_type;
 
         return link_type::link_type(parent.imp(),name);
     }
+
+    //-------------------------------------------------------------------------
+    //!
+    //! \brief get link name 
+    //!
+    //! Return the name of a link below parent. The link is determined by its
+    //! index.
+    //! 
+    //! \throws invalid_object_error if parent is not a valid group
+    //! \throws index_error if index exceeds the total number of links below
+    //!                     parent
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam GTYPE group type template
+    //! \tparam IMPID iplementation ID template parameter
+    //! \param parent reference to the parent group
+    //! \param index the index of the link 
+    //! 
+    //! \return name of the link as string
+    //!
+    template<
+             template<nximp_code> class GTYPE,
+             nximp_code IMPID
+            >
+    auto link_name(const GTYPE<IMPID> &parent,size_t index)
+        -> pni::core::string
+    {
+        using link_type = typename nxobject_trait<IMPID>::link_imp_type;
+
+        return link_type::link_name(parent.imp(),index);
+    }
+    //-------------------------------------------------------------------------
+    //!
+    //! \brief get link target
+    //!
+    //! Return the target of link lname below parent as instance of nxpath.
+    //! 
+    //! \throws invalid_object_error if parent is not a valid group
+    //! \throws key_error if parent has not link lname
+    //! \throws link_error if the information cannot be retrieved
+    //! \throws object_error in case of any other error
+    //!
+    //! \tparam GTYPE group type template
+    //! \tparam IMPID implemenation ID template parameter
+    //! \param parent reference to the parent group
+    //! \param lname name of the link
+    //!
+    //! \return target of the link as nxpath instance
+    //!
+    template<
+             template<nximp_code> class GTYPE,
+             nximp_code IMPID
+            >
+    auto link_target(const GTYPE<IMPID> &parent,const pni::core::string &lname)
+        -> nxpath
+    {
+        using link_type = typename nxobject_trait<IMPID>::link_imp_type;
+
+        return link_type::link_target(parent.imp(),lname);
+    }
+
+    //-------------------------------------------------------------------------
+    //!
+    //! \brief get link target
+    //!
+    //! Return the target of a link determined by index below group parent.
+    //!
+    //! \throws invalid_object_error if parent is not a valid group
+    //! \throws index_error if index exceeds the total number of links below
+    //!                     parent
+    //! \throws link_error if the information cannot be retrieved
+    //! \throws object_error in case of any other error
+    //! 
+    //! \tparam GTYPE group type template
+    //! \tparam IMPID implemenation ID template parameter
+    //! \param parent reference to the parent group
+    //! \param index the numeric index of the link 
+    //!
+    //! \return target of the link as nxpath instance
+    //!
+    template<
+             template<nximp_code> class GTYPE,
+             nximp_code IMPID
+            >
+    auto link_target(const GTYPE<IMPID> &parent,size_t index) -> nxpath
+    {
+        return link_target(parent,link_name(parent,index));
+    }
+
 
     //-------------------------------------------------------------------------
     //!
@@ -309,6 +400,59 @@ namespace nx{
     bool is_hard_link(const GTYPE &parent,const pni::core::string &name)
     {
         return link_type(parent,name) == nxlink_type::HARD;
+    }
+
+    //------------------------------------------------------------------------
+    template<
+             template<nximp_code> class GTYPE,
+             nximp_code IMPID
+            >
+    auto link_status(const GTYPE<IMPID> parent,
+                     const pni::core::string &lname)
+        -> nxlink_status
+    {
+        using namespace boost::filesystem;
+        using file_type = typename nxobject_trait<IMPID>::file_type;
+
+        auto target = link_target(parent,lname);
+
+        switch(link_type(parent,lname))
+        {
+            case nxlink_type::HARD: 
+                return nxlink_status::VALID;
+            case nxlink_type::SOFT:
+                try
+                {
+                    auto object = get_object(parent,target);
+                    return nxlink_status::VALID;
+                }
+                catch(...)
+                {
+                    return nxlink_status::INVALID;
+                }
+                break;
+            case nxlink_type::EXTERNAL:
+                //check if the file exists
+                if(!exists(path(target.filename())))
+                    return nxlink_status::INVALID;
+                
+                try
+                {
+                    //check if the referenced object exists
+                    auto f = file_type::open_file(target.filename());
+                    auto o = get_object(f.root(),target);
+                    return nxlink_status::VALID;
+                }
+                catch(...)
+                {
+                    return nxlink_status::INVALID;
+                }
+                break;
+            default:
+                return nxlink_status::INVALID;
+        }
+
+        return nxlink_status::INVALID;
     }
 
 //end of namespace

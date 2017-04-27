@@ -136,7 +136,8 @@ namespace nx{
              typename ATYPE,
              typename GTYPE,
              typename FTYPE,
-             typename ATTYPE
+             typename ATTYPE,
+             typename LTYPE
             > 
     class read_visitor : public boost::static_visitor<void>
     {
@@ -150,13 +151,15 @@ namespace nx{
             selection_t _selection;
         public:
             //! result type
-            typedef void result_type;
+            using result_type = void;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATTYPE attribute_type;
+            using attribute_type = ATTYPE;
+            //! NeXus link type
+            using link_type = LTYPE;
 
             //-----------------------------------------------------------------
             //!
@@ -241,6 +244,22 @@ namespace nx{
                 else
                     a.read(_data);
             }
+            
+            //-----------------------------------------------------------------
+            //!
+            //! \brief process link instances
+            //!
+            //! Cannot read data from a link - thus an exception is thrown.
+            //! \throws type_error - in all cases 
+            //! \param g group instance
+            //! \return nothing
+            //!
+            result_type operator()(const link_type &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "Cannot read data from a link!");
+            }
     };
 
     //------------------------------------------------------------------------
@@ -268,6 +287,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATTYPE attribute type
+    //! \tparam LTYPE link type
     //! \tparam ITPYES index types
     //!
     //! \param o instance of VTYPE
@@ -279,11 +299,12 @@ namespace nx{
              typename GTYPE,
              typename FTYPE,
              typename ATTYPE,
+             typename LTYPE,
              typename ...ITYPES 
             > 
-    void read(const nxobject<GTYPE,FTYPE,ATTYPE> &o,ATYPE &a,ITYPES ...indices)
+    void read(const nxobject<GTYPE,FTYPE,ATTYPE,LTYPE> &o,ATYPE &a,ITYPES ...indices)
     {
-        typedef read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE> visitor_t;
+        using visitor_t = read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE,LTYPE>;
         std::vector<pni::core::slice> sel{pni::core::slice(indices)...};
         visitor_t visitor(a,sel);
         return boost::apply_visitor(visitor,o);
@@ -294,11 +315,12 @@ namespace nx{
              typename GTYPE,
              typename FTYPE,
              typename ATTYPE,
+             typename LTYPE,
              typename ...ITYPES 
             > 
-    void read(nxobject<GTYPE,FTYPE,ATTYPE> &&o,ATYPE &a,ITYPES ...indices)
+    void read(nxobject<GTYPE,FTYPE,ATTYPE,LTYPE> &&o,ATYPE &a,ITYPES ...indices)
     {
-        typedef read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE> visitor_t;
+        using visitor_t = read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE,LTYPE>;
         std::vector<pni::core::slice> sel{pni::core::slice(indices)...};
         visitor_t visitor(a,sel);
         return boost::apply_visitor(visitor,o);
@@ -329,6 +351,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATTYPE attribute type
+    //! \tparam LTYPE link type
     //! \tparam ITPYES index types
     //!
     //! \param o instance of VTYPE
@@ -340,12 +363,13 @@ namespace nx{
              typename ATYPE,
              typename GTYPE,
              typename FTYPE,
-             typename ATTYPE
+             typename ATTYPE,
+             typename LTYPE
             >
-    void read(const nxobject<GTYPE,FTYPE,ATTYPE> &o,ATYPE &a,
+    void read(const nxobject<GTYPE,FTYPE,ATTYPE,LTYPE> &o,ATYPE &a,
               const std::vector<pni::core::slice> &sel)
     {
-        typedef read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE> visitor_t;
+        using visitor_t = read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE,LTYPE>;
         visitor_t visitor(a,sel);
         return boost::apply_visitor(visitor,o);
     }
@@ -355,12 +379,13 @@ namespace nx{
              typename ATYPE,
              typename GTYPE,
              typename FTYPE,
-             typename ATTYPE
+             typename ATTYPE,
+             typename LTYPE
             >
-    void read(nxobject<GTYPE,FTYPE,ATTYPE> &&o,ATYPE &a,
+    void read(nxobject<GTYPE,FTYPE,ATTYPE,LTYPE> &&o,ATYPE &a,
                        const std::vector<pni::core::slice> &sel)
     {
-        typedef read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE> visitor_t;
+        using visitor_t = read_visitor<ATYPE,GTYPE,FTYPE,ATTYPE,LTYPE>;
         visitor_t visitor(a,sel);
         return boost::apply_visitor(visitor,o);
     }

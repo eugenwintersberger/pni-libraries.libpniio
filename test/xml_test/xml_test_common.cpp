@@ -37,7 +37,7 @@ namespace std{
 }
 
 
-bool compare_trees(const xml::node &a,const xml::node &b)
+bool compare_trees(const xml::node &,const xml::node &)
 {
 
     return true;

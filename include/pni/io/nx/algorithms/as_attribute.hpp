@@ -43,19 +43,23 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class as_attribute_visitor : public boost::static_visitor<ATYPE>
     {
         public:
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type =  GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type = ATYPE;
+            //! Nexus link type
+            using link_type = LTYPE;
+
             //! result type
-            typedef attribute_type result_type;
+            using result_type = attribute_type;
 
             //-----------------------------------------------------------------
             //!
@@ -111,6 +115,27 @@ namespace nx{
             {
                 return a;
             }
+            
+            //----------------------------------------------------------------
+            //!
+            //! \brief process link instances
+            //!
+            //! Throw type_error exception as there is no conversion from a 
+            //! link to an attribute. 
+            //!
+            //! \throws type_error 
+            //!
+            //! \return invalid instance of nxattribute
+            //!
+            result_type operator()(const link_type &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "Object is a link and not an instance of "
+                        "nxattribute!");
+
+                return result_type();
+            }
     };
 
     //!
@@ -139,11 +164,12 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    ATYPE as_attribute(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    ATYPE as_attribute(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o)
     {
-        typedef as_attribute_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        using visitor_type = as_attribute_visitor<GTYPE,FTYPE,ATYPE,LTYPE>;
         return boost::apply_visitor(visitor_type(),o);
     }
 

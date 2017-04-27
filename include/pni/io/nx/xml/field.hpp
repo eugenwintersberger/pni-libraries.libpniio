@@ -115,15 +115,16 @@ namespace xml{
         template<
                  typename GTYPE,
                  typename FTYPE,
-                 typename ATYPE
+                 typename ATYPE,
+                 typename LTYPE
                 >
-        static nxobject<GTYPE,FTYPE,ATYPE> 
-        object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
+        static nxobject<GTYPE,FTYPE,ATYPE,LTYPE> 
+        object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &parent,
                         const node &field_node)                                            
         {
             using namespace pni::core;
 
-            typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
+            typedef nxobject<GTYPE,FTYPE,ATYPE,LTYPE> object_type;
             //determine basic field parameters
             string    field_name  = name(field_node);
             shape_t   field_shape = shape(field_node);
@@ -216,9 +217,10 @@ namespace xml{
         template<
                  typename GTYPE,
                  typename FTYPE,
-                 typename ATYPE
+                 typename ATYPE,
+                 typename LTYPE
                 >
-        static node object_to_xml(const nxobject<GTYPE,FTYPE,ATYPE> &f)
+        static node object_to_xml(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &f)
         {
             using namespace pni::core;
 

@@ -25,7 +25,6 @@
 #include <vector>
 #include <pni/core/types.hpp>
 #include <pni/io/tiff/tiff_reader.hpp>
-#include <cppunit/extensions/HelperMacros.h>
 
 using namespace pni::core;
 using namespace pni::io;

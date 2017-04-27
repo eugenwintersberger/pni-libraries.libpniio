@@ -22,6 +22,8 @@
 #pragma once
 
 #include "../nxobject.hpp"
+#include "../nximp_code.hpp"
+#include "../link.hpp"
 
 namespace pni{
 namespace io{
@@ -41,10 +43,14 @@ namespace nx{
     //! \tparam OTYPE object type
     //! \param o instance of the object to close
     //!
+    template<nximp_code IMPID> void close(nxlink<IMPID> &)
+    {}
     template<typename OTYPE> void close(OTYPE &o)
     {
         o.close();
     }
+
+
 
     //------------------------------------------------------------------------
     //!
@@ -56,23 +62,27 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class close_visitor : public boost::static_visitor<void>
     {
         public:
             //! result type (bool)
-            typedef void result_type;   
+            using result_type = void;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type = ATYPE;
+            //! link type
+            using link_type = LTYPE;
            
             //-----------------------------------------------------------------
             //!
@@ -127,6 +137,17 @@ namespace nx{
             {
                 close(a);
             }
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief process a link instance
+            //!
+            //! There is nothing we have to do here.
+            //!
+            void operator()(const link_type &) const
+            {
+                
+            }
     };
 
     //------------------------------------------------------------------------
@@ -144,16 +165,18 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
-    //! \param o instance of nxobject<GTYPE,FTYPE,ATYPE>
+    //! \tparam LTYPE link  type
+    //! \param o instance of nxobject<GTYPE,FTYPE,ATYPE,LTYPE>
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    void close(nxobject<GTYPE,FTYPE,ATYPE> &o)
+    void close(nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o)
     {
-        typedef close_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        using visitor_type = close_visitor<GTYPE,FTYPE,ATYPE,LTYPE>;
         return boost::apply_visitor(visitor_type(),o);
     }
 

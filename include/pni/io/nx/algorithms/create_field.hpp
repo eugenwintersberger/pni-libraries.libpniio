@@ -43,7 +43,10 @@ namespace nx{
     //! type.  If the stored object is not a group an exception will be 
     //! thrown. 
     //! 
-    //! \tparam VTYPE variant type
+    //! \tparam GTYPE group type
+    //! \tparam FTYPE field type
+    //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //! \tparam T data type of the field
     //! \tparam STYPE container type for the shape
     //! \tparam CSTYPE container type for the chunk shape
@@ -54,25 +57,28 @@ namespace nx{
              typename GTYPE,
              typename FTYPE,
              typename ATYPE,
+             typename LTYPE,
              typename T,
              typename STYPE,
              typename FILTERT
             > 
     class create_field_visitor : public boost::static_visitor<
-                                 nxobject<GTYPE,FTYPE,ATYPE> 
+                                 nxobject<GTYPE,FTYPE,ATYPE,LTYPE> 
                                  >
     {
         public:
             //! result type
-            typedef nxobject<GTYPE,FTYPE,ATYPE> result_type;
+            using result_type = nxobject<GTYPE,FTYPE,ATYPE,LTYPE>;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type = ATYPE;
+            //! link type
+            using link_type = LTYPE;
             //! define the filter type
-            typedef FILTERT filter_type;
+            using filter_type = FILTERT;
         private:
             pni::core::string _name;   //!< the name of the field
             STYPE  _shape;             //!< shape of field
@@ -137,7 +143,7 @@ namespace nx{
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
-                        "Cannot create a group below a field!");
+                        "Cannot create a field below a field!");
                 return result_type();
             }
 
@@ -158,7 +164,26 @@ namespace nx{
             {
                 using namespace pni::core;
                 throw type_error(EXCEPTION_RECORD,
-                        "Cannot create a group below an attribute!");
+                        "Cannot create a field below an attribute!");
+                return result_type();
+            }
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief process link instances
+            //!
+            //! Throw type_error as one cannot create a field on a link
+            //! instance.
+            //!
+            //! \throws type_error
+            //!
+            //! \return invalid instance of nxfield
+            //!
+            result_type operator()(const link_type &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "Cannot create a field below a link instance!");
                 return result_type();
             }
     };
@@ -198,16 +223,18 @@ namespace nx{
              typename GTYPE,
              typename FTYPE,
              typename ATYPE,
+             typename LTYPE,
              typename STYPE,
              typename FILTERT,
              typename PATHT
             >
-    nxobject<GTYPE,FTYPE,ATYPE>
-    create_field(const nxobject<GTYPE,FTYPE,ATYPE> &location,const PATHT &path,
+    nxobject<GTYPE,FTYPE,ATYPE,LTYPE>
+    create_field(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &location,
+                 const PATHT &path,
                  const STYPE &shape,const STYPE &chunk,
                  const FILTERT &filter)
     {
-        typedef create_field_visitor<GTYPE,FTYPE,ATYPE,T,STYPE,FILTERT> visitor_type;
+        using visitor_type = create_field_visitor<GTYPE,FTYPE,ATYPE,LTYPE,T,STYPE,FILTERT>;
 
         nxpath fpath = get_path(path);
 
@@ -215,7 +242,7 @@ namespace nx{
         nxpath parent_path(fpath);
         parent_path.pop_back();
 
-        nxobject<GTYPE,FTYPE,ATYPE> parent = get_object(location,parent_path);
+        nxobject<GTYPE,FTYPE,ATYPE,LTYPE> parent = get_object(location,parent_path);
         return boost::apply_visitor(visitor_type(field_name,shape,chunk,filter),parent);
 
     }
@@ -252,17 +279,18 @@ namespace nx{
              typename GTYPE,
              typename FTYPE,
              typename ATYPE,
+             typename LTYPE,
              typename STYPE,
              typename PATHT
             > 
-    nxobject<GTYPE,FTYPE,ATYPE> 
-    create_field(const nxobject<GTYPE,FTYPE,ATYPE> &parent,const PATHT &path,
+    nxobject<GTYPE,FTYPE,ATYPE,LTYPE> 
+    create_field(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &parent,const PATHT &path,
                  const STYPE &shape,const STYPE &chunk)
     {
         //create the default filter
-        typename nxobject_trait<nximp_code_map<ATYPE>::icode>::filter_type filter;
+        using filter_type = typename nxobject_trait<nximp_code_map<ATYPE>::icode>::filter_type;
         
-        return create_field<T>(parent,path,shape,chunk,filter);
+        return create_field<T>(parent,path,shape,chunk,filter_type());
     }
     
     //------------------------------------------------------------------------
@@ -300,12 +328,13 @@ namespace nx{
              typename GTYPE,
              typename FTYPE,
              typename ATYPE,
+             typename LTYPE,
              typename STYPE,
              typename PATHT,
              typename FILTERIMP
             > 
-    nxobject<GTYPE,FTYPE,ATYPE> 
-    create_field(const nxobject<GTYPE,FTYPE,ATYPE> &parent,const PATHT &path,
+    nxobject<GTYPE,FTYPE,ATYPE,LTYPE> 
+    create_field(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &parent,const PATHT &path,
                  const STYPE &shape,const nxfilter<FILTERIMP> &filter)
     {
         //create the default filter
@@ -344,11 +373,12 @@ namespace nx{
              typename GTYPE,
              typename FTYPE,
              typename ATYPE,
+             typename LTYPE,
              typename PATHT,
              typename STYPE = pni::core::shape_t
             > 
-    nxobject<GTYPE,FTYPE,ATYPE> 
-    create_field(const nxobject<GTYPE,FTYPE,ATYPE> &parent,const PATHT &path,
+    nxobject<GTYPE,FTYPE,ATYPE,LTYPE> 
+    create_field(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &parent,const PATHT &path,
                  const STYPE &shape = {1})
     {
         STYPE chunk(shape);
@@ -386,10 +416,11 @@ namespace nx{
              typename GTYPE,
              typename FTYPE,
              typename ATYPE,
+             typename LTYPE,
              typename ...ARGTS
             >
-    nxobject<GTYPE,FTYPE,ATYPE>
-    create_field(const nxobject<GTYPE,FTYPE,ATYPE> &o,
+    nxobject<GTYPE,FTYPE,ATYPE,LTYPE>
+    create_field(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o,
                  pni::core::type_id_t tid,ARGTS...args)
     {
         using namespace pni::core;

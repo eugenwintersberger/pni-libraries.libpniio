@@ -248,7 +248,7 @@ namespace nx{
              template<nximp_code> class GTYPE,
              nximp_code IMPID
             >
-    flat_group<GTYPE<IMPID>> make_flat(const GTYPE<IMPID> group)
+    flat_group<GTYPE<IMPID>> make_flat(const GTYPE<IMPID> &group)
     {
         return flat_group<GTYPE<IMPID>>(group);
     }
@@ -267,6 +267,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute_type
+    //! \tparam LTYPE link type
     //!
     //! \param object instance of nxobject with the parent group
     //! \return instance of flat_group
@@ -274,10 +275,11 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             >
 
-    flat_group<GTYPE> make_flat(const nxobject<GTYPE,FTYPE,ATYPE> object)
+    flat_group<GTYPE> make_flat(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &object)
     {
         return flat_group<GTYPE>(as_group(object));
     }
