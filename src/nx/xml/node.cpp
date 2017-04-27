@@ -151,7 +151,6 @@ namespace xml{
     //-------------------------------------------------------------------------
     node get_child_by_name(const node &parent,const string &name)
     {
-        typedef std::pair<string,node> value_type;
         for(auto child: parent)
             if(get_name(child.second)==name) return child.second;
 
