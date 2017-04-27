@@ -8,3 +8,4 @@ set(SOURCES data_node.cpp
             )
 
 add_library(xml_objects OBJECT ${SOURCES})
+set_property(TARGET xml_objects PROPERTY POSITION_INDEPENDENT_CODE ON)

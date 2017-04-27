@@ -6,3 +6,4 @@ set(SOURCES exceptions.cpp
             tiff_reader.cpp)
 
 add_library(tiff_objects OBJECT ${SOURCES})
+set_property(TARGET tiff_objects PROPERTY POSITION_INDEPENDENT_CODE ON)

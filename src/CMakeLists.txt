@@ -8,12 +8,7 @@ set(SOURCES column_info.cpp
              exceptions.cpp
              container_io_config.cpp
              strutils.cpp)
-
-
-link_directories(${PNICORE_PKG_LIBRARY_DIRS} ${HDF5_LIBRARY_DIRS})
 include_directories(${PNICORE_PKG_INCLUDE_DIRS} ${HDF5_INCLUDE_DIRS})
-message("${HDF5_INCLUDE_DIRS}")
-
 #first we need to build the C-filter code
 add_subdirectory(cbf)
 add_subdirectory(fio)
@@ -21,21 +16,25 @@ add_subdirectory(nx)
 add_subdirectory(tiff)
 add_subdirectory(formatters)
 
+
 add_library(pniio SHARED ${SOURCES} 
-    $<TARGET_OBJECTS:cbf_objects>
-    $<TARGET_OBJECTS:fio_objects>
-    $<TARGET_OBJECTS:nx_objects>
-    $<TARGET_OBJECTS:h5_objects>
-    $<TARGET_OBJECTS:xml_objects>
-    $<TARGET_OBJECTS:tiff_objects>
-    $<TARGET_OBJECTS:nx_path>
-    $<TARGET_OBJECTS:algorithms>
-    $<TARGET_OBJECTS:formatter_objects>
-    )
-add_dependencies(pniio config.hpp)
+                         $<TARGET_OBJECTS:cbf_objects>
+                         $<TARGET_OBJECTS:fio_objects>
+                         $<TARGET_OBJECTS:nx_objects>
+                         $<TARGET_OBJECTS:h5_objects>
+                         $<TARGET_OBJECTS:xml_objects>
+                         $<TARGET_OBJECTS:tiff_objects>
+                         $<TARGET_OBJECTS:nx_path>
+                         $<TARGET_OBJECTS:algorithms>
+                         $<TARGET_OBJECTS:formatter_objects>
+)
+#add_dependencies(pniio config.hpp)
 set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"
                                        SOVERSION "${SO_VERSION}")
-target_link_libraries(pniio ${HDF5_LIBRARIES} 
+                                       
+target_link_libraries(pniio 
+                      INTERFACE
+                      ${HDF5_LIBRARIES} 
                       ${Boost_FILESYSTEM_LIBRARY}
                       ${Boost_REGEX_LIBRARY}
                       ${Boost_DATE_TIME_LIBRARY}
@@ -43,6 +42,7 @@ target_link_libraries(pniio ${HDF5_LIBRARIES}
                       ${ZLIB_LIBRARIES}
                       ${SZLIB_LIBRARIES}
                       )
+    
 
 #install code
 install(TARGETS pniio 
