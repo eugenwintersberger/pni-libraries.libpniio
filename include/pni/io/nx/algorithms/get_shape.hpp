@@ -87,6 +87,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     //! \sa get_shape
     //!
@@ -94,19 +95,22 @@ namespace nx{
              typename CTYPE,
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class get_shape_visitor : public boost::static_visitor<CTYPE>
     {
         public:
             //! result type
-            typedef CTYPE result_type;
+            using result_type = CTYPE;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type = ATYPE;
+            //! Nexus link type
+            using link_type = LTYPE;
 
             //-----------------------------------------------------------------
             //!
@@ -158,6 +162,22 @@ namespace nx{
             {
                 return a.template shape<CTYPE>();
             }
+            
+            //-----------------------------------------------------------------
+            //!
+            //! \brief process nxlink instances
+            //!
+            //! Throw an exception as a link does not have a shape.
+            //!
+            //! \throws type_error 
+            //!
+            result_type operator()(const link_type &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "A link does not have a shape!");
+                return CTYPE();
+            }
     };
 
     //!
@@ -182,6 +202,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     //! \param o instance of VTYPE
     //! \return an instance of CTYPE with the elements for each dimension
@@ -190,11 +211,12 @@ namespace nx{
              typename CTYPE,
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    CTYPE get_shape(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    CTYPE get_shape(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o)
     {
-        typedef get_shape_visitor<CTYPE,GTYPE,FTYPE,ATYPE> visitor_type;
+        using visitor_type = get_shape_visitor<CTYPE,GTYPE,FTYPE,ATYPE,LTYPE>;
 
         return boost::apply_visitor(visitor_type(),o);
     }

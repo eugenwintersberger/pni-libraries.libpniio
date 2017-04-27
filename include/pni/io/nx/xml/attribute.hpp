@@ -68,10 +68,11 @@ namespace xml{
         template<
                  typename GTYPE,
                  typename FTYPE,
-                 typename ATYPE
+                 typename ATYPE,
+                 typename LTYPE
                 >
-        static nxobject<GTYPE,FTYPE,ATYPE>
-        object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
+        static nxobject<GTYPE,FTYPE,ATYPE,LTYPE>
+        object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &parent,
                         const node &attr_node)
         {
             //create the attribute object
@@ -94,9 +95,10 @@ namespace xml{
         template<
                  typename GTYPE,
                  typename FTYPE,
-                 typename ATYPE
+                 typename ATYPE,
+                 typename LTYPE
                 >
-        static node object_to_xml(const nxobject<GTYPE,FTYPE,ATYPE> &attr)
+        static node object_to_xml(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &attr)
         {
             node attr_node;
 

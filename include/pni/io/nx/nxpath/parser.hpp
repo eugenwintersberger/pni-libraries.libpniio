@@ -244,9 +244,9 @@ namespace parsers{
 
             root_rule = lit("/")[_val = construct<nxpath::element_type>("/","NXroot")];
             root_rule.name("root_rule");
-#ifdef CLANG_CXX
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunsequenced"
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunsequenced"
 #endif
             nxpath_rule = eps[
                               //we start with an empty elements list
@@ -269,8 +269,8 @@ namespace parsers{
                               (lit("@")>id_[_b=_1])
                            ) [_val = construct<nxpath>(boost::phoenix::ref(_filename),_a,_b)] 
                           >eoi; //finally EOI is the terminal for the string
-#ifdef CLANG_CXX
-#pragma GCC diagnostic pop
+#ifdef __clang__
+#pragma clang diagnostic pop
 #endif
         }
 

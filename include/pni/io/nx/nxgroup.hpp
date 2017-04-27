@@ -92,27 +92,28 @@ namespace nx{
         public:
             //===================public types==================================
             //! group implementation type
-            typedef typename nximp_map<IMPID>::group_imp imp_type;
+            using imp_type  = typename nximp_map<IMPID>::group_imp;
             //! type implementation
-            typedef typename nximp_map<IMPID>::type_imp  type_type;
+            using type_type = typename nximp_map<IMPID>::type_imp;
             //! the group type
-            typedef nxgroup<IMPID> group_type;
+            using group_type = nxgroup<IMPID>;
 
             //! nxobject as container value_type
-            typedef typename nxobject_trait<IMPID>::object_type value_type;
+            using value_type = typename nxobject_trait<IMPID>::object_type;
             //! iterator type
-            typedef pni::core::container_iterator<const group_type> iterator;
+            using iterator = pni::core::container_iterator<const group_type>;
             //! field type
-            typedef typename nxobject_trait<IMPID>::field_type field_type; 
+            using field_type = typename nxobject_trait<IMPID>::field_type; 
             //! attribute type
-            typedef typename nxobject_trait<IMPID>::attribute_type
-                attribute_type;
+            using attribute_type = typename nxobject_trait<IMPID>::attribute_type;
+            //! link type
+            using link_type = typename nxobject_trait<IMPID>::link_type;
 
         private:
             //! field implementation type
-            typedef typename nximp_map<IMPID>::field_imp field_imp_type;
+            using field_imp_type = typename nximp_map<IMPID>::field_imp;
             //! object implementation type
-            typedef typename nximp_map<IMPID>::object_imp object_imp_type;
+            using object_imp_type = typename nximp_map<IMPID>::object_imp;
             //! 
             //! \brief the implementation instance of nxgroup
             //!
@@ -576,6 +577,13 @@ namespace nx{
                     throw value_error(EXCEPTION_RECORD,
                             "Invalid character in object name!");
 
+                //need to check the status of the link for the requested 
+                //object - if the link is invalid we return a link
+                //object.
+                if(link_status(*this,n)==nxlink_status::INVALID)
+                    return link_type(*this,n);
+
+
                 object_imp_type object =  _imp.at(n);
 
                 if(object.nxobject_type() == nxobject_type::NXFIELD)
@@ -659,17 +667,7 @@ namespace nx{
             typename nxobject_trait<IMPID>::object_type 
             at(size_t i) const
             {
-                using namespace pni::core;
-                
-                object_imp_type obj_imp(_imp.at(i));
-
-                if(obj_imp.nxobject_type() == nxobject_type::NXFIELD)
-                    return field_type(field_imp_type(std::move(obj_imp)));
-                else if(obj_imp.nxobject_type() == nxobject_type::NXGROUP)
-                    return group_type(imp_type(std::move(obj_imp)));
-                else 
-                    throw type_error(EXCEPTION_RECORD,
-                                     "Unkown NEXUS object type!");
+                return this->at(link_name(*this,i));
             }
 
             //-----------------------------------------------------------------

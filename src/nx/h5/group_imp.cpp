@@ -61,6 +61,8 @@ namespace h5{
             throw invalid_object_error(EXCEPTION_RECORD,
                     "Fail to create group - parent object is not valid!");
 
+        object_imp plist(H5Pcreate(H5P_GROUP_CREATE));
+
         _object = object_imp(H5Gcreate2(parent.object().id(),
                                         name.c_str(),
                                         H5P_DEFAULT,

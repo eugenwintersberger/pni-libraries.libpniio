@@ -58,7 +58,7 @@ namespace nx{
             >
     pni::core::string get_path(const OTYPE<IMPID> &o)
     {
-        typedef typename nxobject_trait<IMPID>::object_type object_type;
+        using object_type = typename nxobject_trait<IMPID>::object_type;
 
         return get_path(object_type(o));
     }
@@ -74,12 +74,14 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //! \sa get_path
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class get_path_visitor : public boost::static_visitor<pni::core::string>
     {
@@ -106,13 +108,15 @@ namespace nx{
             }
         public:
             //! result type
-            typedef pni::core::string result_type;
+            using result_type = pni::core::string;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type = ATYPE;
+            //! NeXus link type
+            using link_type = LTYPE;
 
             //-----------------------------------------------------------------
             //!
@@ -133,7 +137,7 @@ namespace nx{
             //!
             result_type operator()(const group_type &g) const
             {
-                typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
+                typedef nxobject<GTYPE,FTYPE,ATYPE,LTYPE> object_type;
 
                 //determine the name and the type of the group
                 pni::core::string group_name = g.name();
@@ -195,6 +199,11 @@ namespace nx{
             {
                 return get_path(a.parent())+"@"+a.name();
             }
+
+            result_type operator()(const link_type &l) const
+            {
+                return get_path(l.parent())+"/"+l.name();
+            }
     };
 
     //!
@@ -216,17 +225,19 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //! \param o instance of nxobject
     //! \return path as string
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    pni::core::string get_path(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    pni::core::string get_path(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o)
     {
-        pni::core::string path =  boost::apply_visitor(get_path_visitor<GTYPE,FTYPE,ATYPE>(),o);
+        pni::core::string path = boost::apply_visitor(get_path_visitor<GTYPE,FTYPE,ATYPE,LTYPE>(),o);
 
         //repair two leading // which can happen in some cases
         if((path.size()>=2) && 

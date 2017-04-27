@@ -47,10 +47,11 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class create_group_visitor : public boost::static_visitor<
-                                    nxobject<GTYPE,FTYPE,ATYPE>  
+                                    nxobject<GTYPE,FTYPE,ATYPE,LTYPE>  
                                  >
     {
         private:
@@ -60,13 +61,15 @@ namespace nx{
             pni::core::string _class; 
         public:
             //! result type
-            typedef nxobject<GTYPE,FTYPE,ATYPE> result_type;
+            using result_type = nxobject<GTYPE,FTYPE,ATYPE,LTYPE>;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type = ATYPE;
+            //! link type
+            using link_type = LTYPE;
 
             //!
             //! \brief constructor
@@ -158,6 +161,26 @@ namespace nx{
                         "Cannot create a group below an attribute!");
                 return result_type();
             }
+            
+            //-----------------------------------------------------------------
+            //!
+            //! \brief process link instances
+            //!
+            //! Throw type_error as one cannot create a group on an instance 
+            //! of link.
+            //!
+            //! \throws type_error 
+            //!
+            //! \return an invalid instance of nxgroup
+            //!
+            result_type operator()(const link_type &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "Cannot create a group below a link!");
+                return result_type();
+            }
+
     };
 
     //-------------------------------------------------------------------------
@@ -185,6 +208,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //! \tparam PATHT path type
     //!
     //! \param o reference to the parent 
@@ -195,13 +219,14 @@ namespace nx{
              typename GTYPE,
              typename FTYPE,
              typename ATYPE,
+             typename LTYPE,
              typename PATHT
             > 
-    nxobject<GTYPE,FTYPE,ATYPE>
-    create_group(const nxobject<GTYPE,FTYPE,ATYPE> &o,const PATHT &path)
+    nxobject<GTYPE,FTYPE,ATYPE,LTYPE>
+    create_group(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o,const PATHT &path)
     {
-        typedef create_group_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
-        typedef nxobject<GTYPE,FTYPE,ATYPE> object_type;
+        using visitor_type = create_group_visitor<GTYPE,FTYPE,ATYPE,LTYPE>;
+        using object_type = nxobject<GTYPE,FTYPE,ATYPE,LTYPE>;
 
         nxpath parent_path(get_path(path));
         nxpath::element_type e = parent_path.back();

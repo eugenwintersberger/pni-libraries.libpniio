@@ -80,11 +80,12 @@ find_package(Boost 1.41 COMPONENTS system
                                    unit_test_framework 
                                    filesystem)
 
+
 if(NOT Boost_FOUND)
     message(FATAL_ERROR "Could not find Boost libraries!")
 else()
-    include_directories(${Boost_INCLUDE_DIRS})
-    link_directories(${Boost_LIBRARY_DIRS})
+    message(STATUS "Found Boost version: ${Boost_VERSION}")
+    add_definitions(-DBOOST_VERSION=${Boost_VERSION})
 endif()
 
 

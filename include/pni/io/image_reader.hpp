@@ -119,7 +119,7 @@ namespace io{
             //! \param c (default = 0) image channel to read
             //! \return instance of ArrayType holding the channel data
             //!
-            template<typename ATYPE> ATYPE image(size_t,size_t c) 
+            template<typename ATYPE> ATYPE image(size_t,size_t) 
             {
                 using namespace pni::core;
                 throw not_implemented_error(EXCEPTION_RECORD,
@@ -145,7 +145,7 @@ namespace io{
             //! \param c (default = 0) index of the channel from which to read data.
             //!
             template<typename ATYPE> 
-                void image(ATYPE &,size_t,size_t c) 
+                void image(ATYPE &,size_t,size_t) 
             {
                 using namespace pni::core;
                 throw not_implemented_error(EXCEPTION_RECORD,

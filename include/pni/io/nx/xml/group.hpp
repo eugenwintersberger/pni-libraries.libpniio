@@ -61,6 +61,7 @@ namespace xml{
         //! \tparam GTYPE group type
         //! \tparam FTYPE field type
         //! \tparam ATYPE attribute type
+        //! \tparam LTYPE link type
         //! \param parent the parent group of the new group
         //! \param group_node the node storing the group data
         //! \return group instance
@@ -68,10 +69,11 @@ namespace xml{
         template<
                  typename GTYPE,
                  typename FTYPE,
-                 typename ATYPE
+                 typename ATYPE,
+                 typename LTYPE
                 >
-        static nxobject<GTYPE,FTYPE,ATYPE>
-        object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE> &parent,
+        static nxobject<GTYPE,FTYPE,ATYPE,LTYPE>
+        object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &parent,
                         const node &group_node)
         {
             using namespace pni::core; 
@@ -126,9 +128,10 @@ namespace xml{
         template<
                  typename GTYPE,
                  typename FTYPE,
-                 typename ATYPE
+                 typename ATYPE,
+                 typename LTYPE
                 >
-        static node object_to_xml(const nxobject<GTYPE,FTYPE,ATYPE> &group)
+        static node object_to_xml(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &group)
         {
             node group_node;
 

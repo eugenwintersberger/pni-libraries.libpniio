@@ -43,19 +43,22 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE 
             > 
     class as_field_visitor : public boost::static_visitor<FTYPE>
     {
         public:
             //! field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type = ATYPE;
+            //! link type
+            using link_type = LTYPE;
             //! result type of the visitor
-            typedef field_type result_type;
+            using result_type = field_type;
 
             //-----------------------------------------------------------------
             //!
@@ -110,6 +113,26 @@ namespace nx{
                         "but of nxattribute!");
                 return field_type();
             }
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief process link instances
+            //!
+            //! Throws type_error exception as there is no conversion from 
+            //! a link to nxfield.
+            //!
+            //! \throws type_error
+            //!
+            //! \return invalid field instance
+            //!
+            result_type operator()(const link_type &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "Object is not an instance of nxfield but of "
+                        "link!");
+                return result_type();
+            }
     };
 
     //!
@@ -137,11 +160,12 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    FTYPE as_field(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    FTYPE as_field(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o)
     {
-        typedef as_field_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        using visitor_type = as_field_visitor<GTYPE,FTYPE,ATYPE,LTYPE>;
         return boost::apply_visitor(visitor_type(),o);
     }
 

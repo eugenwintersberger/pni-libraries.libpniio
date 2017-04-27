@@ -43,19 +43,22 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class as_group_visitor : public boost::static_visitor<GTYPE>
     {
         public:
             //! Nexus group type
-            typedef GTYPE     group_type;
+            using group_type =  GTYPE;
             //! Nexus field type
-            typedef FTYPE     field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type = ATYPE;
+            //! link type
+            using link_type = LTYPE;
             //! result type
-            typedef group_type result_type;
+            using result_type = group_type;
 
             //-----------------------------------------------------------------
             //!
@@ -110,6 +113,26 @@ namespace nx{
                         "but of nxattribute!");
                 return result_type();
             }
+
+            //----------------------------------------------------------------
+            //!
+            //! \brief process link instances
+            //!
+            //! Throw a type_error exception as there is no conversion from 
+            //! link to nxgroup.
+            //!
+            //! \throws type_error
+            //! 
+            //! \return invalid instance of nxgroup
+            //!
+            result_type operator()(const link_type &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "Object is not an instance of nxgroup but of "
+                        "link!");
+                return result_type();
+            }
     };
 
     //!
@@ -138,11 +161,12 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    GTYPE as_group(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    GTYPE as_group(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o)
     {
-        typedef as_group_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        using visitor_type = as_group_visitor<GTYPE,FTYPE,ATYPE,LTYPE>;
         return boost::apply_visitor(visitor_type(),o);
     }
 

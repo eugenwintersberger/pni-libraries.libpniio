@@ -38,6 +38,7 @@ namespace nx{
     //! \li nxgroup
     //! \li nxfield
     //! \li nxattribute
+    //! \li links 
     //! 
     //! \throws invalid_object_error in case of an invalid object
     //! \throws io_error if filename cannot be retrieved
@@ -71,24 +72,28 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //! \sa get_filename
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class get_filename_visitor : public boost::static_visitor<pni::core::string>
     {
         public:
             //! result type
-            typedef pni::core::string result_type;
+            using result_type = pni::core::string;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type; 
+            using attribute_type = ATYPE;
+            //! Nexus link type
+            using link_type = LTYPE;
 
             //-----------------------------------------------------------------
             //!
@@ -150,6 +155,11 @@ namespace nx{
             {
                 return get_filename(a);
             }
+
+            result_type operator()(const link_type &l) const
+            {
+                return get_filename(l);
+            }
     };
 
     //!
@@ -167,6 +177,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     //! \param o instance of nxobject
     //! \return name of the object
@@ -174,11 +185,12 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    pni::core::string get_filename(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    pni::core::string get_filename(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o)
     {
-        typedef get_filename_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        using visitor_type = get_filename_visitor<GTYPE,FTYPE,ATYPE,LTYPE>;
         return boost::apply_visitor(visitor_type(),o);
     }
 

@@ -39,6 +39,17 @@ namespace nx{
         }                
         
     }
+
+    std::ostream &operator<<(std::ostream &stream,const nxlink_status &stat)
+    {
+        switch(stat)
+        {
+            case nxlink_status::VALID: return stream<<"VALID";
+            case nxlink_status::INVALID: return stream<<"INVALID";
+            default:
+                                         return stream;
+        }
+    }
  
 // end of namespace
 }

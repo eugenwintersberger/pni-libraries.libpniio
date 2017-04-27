@@ -5,4 +5,5 @@ set(SOURCES nxpath.cpp
             )
 
 add_library(nx_path OBJECT ${SOURCES})
+set_property(TARGET nx_path PROPERTY POSITION_INDEPENDENT_CODE ON)
 

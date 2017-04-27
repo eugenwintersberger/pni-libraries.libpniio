@@ -46,15 +46,17 @@ namespace xml{
         //! \tparam GTYPE group type
         //! \tparam FTYPE field type
         //! \tparam ATYPE attribute type
+        //! \tparam LTYPE link type
         //! 
         //! \param o instance of nxobject
         //! \return always false
         template<
                  typename GTYPE,
                  typename FTYPE,
-                 typename ATYPE
+                 typename ATYPE,
+                 typename LTYPE
                 >
-        bool operator()(const nxobject<GTYPE,FTYPE,ATYPE> &)
+        bool operator()(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &)
         {
             return false;
         }

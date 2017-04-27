@@ -76,25 +76,29 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     //! \sa get_type
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class get_type_visitor : public boost::static_visitor<pni::core::type_id_t>
     {
         public:
             //! result type
-            typedef pni::core::type_id_t result_type;
+            using result_type = pni::core::type_id_t;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type = ATYPE;
+            //! NeXus link type
+            using link_type = LTYPE;
 
             //-----------------------------------------------------------------
             //!
@@ -148,6 +152,22 @@ namespace nx{
             {
                 return a.type_id();
             }
+            
+            //-----------------------------------------------------------------
+            //!
+            //! \brief process nxlink instances
+            //!
+            //! Throw an exception as a link does not have a type.
+            //!
+            //! \throws type_error groups do not have type
+            //!
+            result_type operator()(const link_type &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "A link does not have a type!");
+                return type_id_t::NONE;
+            }
     };
 
     //------------------------------------------------------------------------
@@ -171,6 +191,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute_type
+    //! \tparam LTYPE link type
     //!
     //! \param o object wrapped into nxobject
     //! \return value of type_id_t
@@ -178,11 +199,12 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    pni::core::type_id_t get_type(const nxobject<GTYPE,FTYPE,ATYPE> &o)
+    pni::core::type_id_t get_type(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o)
     {
-        typedef get_type_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        using visitor_type = get_type_visitor<GTYPE,FTYPE,ATYPE,LTYPE>;
         return boost::apply_visitor(visitor_type(),o);
     }
 

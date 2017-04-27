@@ -38,9 +38,10 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             >
-    using nxobject = boost::variant<GTYPE,FTYPE,ATYPE>;
+    using nxobject = boost::variant<GTYPE,FTYPE,ATYPE,LTYPE>;
 
 //end of namespace
 }

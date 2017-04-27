@@ -57,6 +57,11 @@ namespace nx{
             >
     bool is_class(const OTYPE<IMPID> &object,const pni::core::string &type)
     {
+        using group_type = typename nxobject_trait<IMPID>::group_type;
+
+        static_assert(std::is_same<group_type,OTYPE<IMPID>>::value,
+                      "The object must be a group type!");
+
         return get_class(object)==type;
     }
 
@@ -69,11 +74,13 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
     class is_class_visitor : public boost::static_visitor<bool>
     {
@@ -81,13 +88,15 @@ namespace nx{
             pni::core::string _class; //!< class type
         public:
             //! result type
-            typedef bool result_type;
+            using result_type = bool;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef ATYPE attribute_type;
+            using attribute_type = ATYPE;
+            //! NeXus link type
+            using link_type = LTYPE;
 
             //-----------------------------------------------------------------
             //!
@@ -146,6 +155,22 @@ namespace nx{
                         "Attributes do not have a class!");
                 return false;
             }
+            
+            //----------------------------------------------------------------
+            //!
+            //! \brief process links
+            //!
+            //! \throws type_error attributes have no class
+            //! \param a attribute instance
+            //! \return can be ignored
+            //!
+            result_type operator()(const link_type &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "Links do not have a class!");
+                return false;
+            }
     };
 
     //!
@@ -164,6 +189,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam ATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     //! \param o instance of nxobject
     //! \param c Nexus class to check for
@@ -172,12 +198,13 @@ namespace nx{
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    bool is_class(const nxobject<GTYPE,FTYPE,ATYPE> &o,
+    bool is_class(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &o,
                   const pni::core::string &c)
     {
-        typedef is_class_visitor<GTYPE,FTYPE,ATYPE> visitor_type;
+        using visitor_type = is_class_visitor<GTYPE,FTYPE,ATYPE,LTYPE>;
         return boost::apply_visitor(visitor_type(c),o);
     }
 

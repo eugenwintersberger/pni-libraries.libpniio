@@ -61,9 +61,10 @@ BOOST_FIXTURE_TEST_SUITE(multidim_field_test,multidim_field_fixture)
        
         array_type data;
         xml_test::field_test::data_from_xml(child_node,data);
-    
-        for(auto r_iter = ref_data::data.begin(), d_iter = data.begin();
-            d_iter != data.end(); ++d_iter, ++r_iter)
+
+        auto r_iter = ref_data::data.begin();
+        auto d_iter = data.begin();
+        for(;d_iter != data.end(); ++d_iter, ++r_iter)
             check_equal(*d_iter,*r_iter);
     }
 

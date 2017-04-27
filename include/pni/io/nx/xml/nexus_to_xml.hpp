@@ -180,6 +180,7 @@ namespace xml{
     //! \tparam GTYPE Nexus group type
     //! \tparam FTYPE Nexus field type
     //! \tparam ATYPE Nexus attribute type
+    //! \tparam LTYPE link type
     //! \tparam PTYPE write predicate type
     //! \param p parent object 
     //! \param n XML node
@@ -189,9 +190,10 @@ namespace xml{
              typename GTYPE,
              typename FTYPE,
              typename ATYPE,
+             typename LTYPE,
              typename PTYPE
             > 
-    void nexus_to_xml(nxobject<GTYPE,FTYPE,ATYPE> &p,node &n,
+    void nexus_to_xml(nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &p,node &n,
                       PTYPE write_predicate)
     {
         node child;
@@ -264,15 +266,17 @@ namespace xml{
     //! \tparam GTYPE Nexus group type
     //! \tparam FTYPE Nexus field type
     //! \tparam ATYPE Nexus attribute type    
+    //! \tparam LTYPE link type
     //! \param p parent object 
     //! \param n XML node
     //!
     template<
              typename GTYPE,
              typename FTYPE,
-             typename ATYPE
+             typename ATYPE,
+             typename LTYPE
             > 
-    void nexus_to_xml(nxobject<GTYPE,FTYPE,ATYPE> &p,node &n)
+    void nexus_to_xml(nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &p,node &n)
     {
         nexus_to_xml(p,n,write_no_data());
     }

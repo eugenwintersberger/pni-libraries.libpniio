@@ -66,6 +66,18 @@ namespace nx{
     //! \param ltype reference to a link type
     //! \return output stream
     std::ostream &operator<<(std::ostream &stream,const nxlink_type &ltype);
+
+    //!
+    //! \ingroup nexus_lowlevel
+    //! \brief Nexus link status
+    //!
+    //! Enumeration type describing the status of a link. 
+    //! 
+    enum class nxlink_status { VALID, //!< the link is resolvable 
+                               INVALID //!< cannot be resolved
+                             };
+
+    std::ostream &operator<<(std::ostream &stream,const nxlink_status &stat);
 //end of namespace
 }
 }

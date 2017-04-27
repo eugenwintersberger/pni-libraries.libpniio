@@ -126,6 +126,7 @@ namespace nx{
     //! \tparam GTYPE group type
     //! \tparam FTYPE field type
     //! \tparam AATYPE attribute type
+    //! \tparam LTYPE link type
     //!
     //! \sa write
     //!
@@ -133,7 +134,8 @@ namespace nx{
              typename ATYPE,
              typename GTYPE,
              typename FTYPE,
-             typename AATYPE
+             typename AATYPE,
+             typename LTYPE
             > 
     class write_visitor : public boost::static_visitor<void>
     {
@@ -147,13 +149,15 @@ namespace nx{
             selection_t _selection;
         public:
             //! result type
-            typedef void result_type;
+            using result_type = void;
             //! Nexus group type
-            typedef GTYPE group_type;
+            using group_type = GTYPE;
             //! Nexus field type
-            typedef FTYPE field_type;
+            using field_type = FTYPE;
             //! Nexus attribute type
-            typedef AATYPE attribute_type;
+            using attribute_type = AATYPE;
+            //! Nexus link type
+            using link_type = LTYPE;
 
             //-----------------------------------------------------------------
             //!
@@ -240,6 +244,20 @@ namespace nx{
                 else
                     a.write(_data);
             }
+            
+            //-----------------------------------------------------------------
+            //!
+            //! \brief process link instances
+            //!
+            //! Cannot write data to a link - thus an exception is thrown.
+            //! \throws type_error 
+            //!
+            result_type operator()(const link_type &) const
+            {
+                using namespace pni::core;
+                throw type_error(EXCEPTION_RECORD,
+                        "Cannot write data to a link object!");
+            }
     };
 
     //------------------------------------------------------------------------
@@ -275,12 +293,13 @@ namespace nx{
              typename GTYPE,
              typename FTYPE,
              typename AATYPE,
+             typename LTYPE,
              typename ...ITYPES 
             > 
-    void write(nxobject<GTYPE,FTYPE,AATYPE> &&o,const ATYPE &a,
+    void write(nxobject<GTYPE,FTYPE,AATYPE,LTYPE> &&o,const ATYPE &a,
                ITYPES ...indices)
     {
-        typedef write_visitor<ATYPE,GTYPE,FTYPE,AATYPE> visitor_type;
+        using visitor_type = write_visitor<ATYPE,GTYPE,FTYPE,AATYPE,LTYPE>;
         std::vector<pni::core::slice> sel{pni::core::slice(indices)...};
         return boost::apply_visitor(visitor_type(a,sel),o);
     }
@@ -291,11 +310,13 @@ namespace nx{
              typename GTYPE,
              typename FTYPE,
              typename AATYPE,
+             typename LTYPE,
              typename ...ITYPES
             >
-    void write(const nxobject<GTYPE,FTYPE,AATYPE> &o,const ATYPE &a,ITYPES ...indices)
+    void write(const nxobject<GTYPE,FTYPE,AATYPE,LTYPE> &o,const ATYPE &a,
+               ITYPES ...indices)
     {
-        typedef write_visitor<ATYPE,GTYPE,FTYPE,AATYPE> visitor_type;
+        using visitor_type = write_visitor<ATYPE,GTYPE,FTYPE,AATYPE,LTYPE>;
         std::vector<pni::core::slice> sel{pni::core::slice(indices)...};
 
         return boost::apply_visitor(visitor_type(a,sel),o);
@@ -306,12 +327,13 @@ namespace nx{
              typename ATYPE,
              typename GTYPE,
              typename FTYPE,
-             typename AATYPE
+             typename AATYPE,
+             typename LTYPE
             >
-    void write(const nxobject<GTYPE,FTYPE,AATYPE> &o,const ATYPE &a,
+    void write(const nxobject<GTYPE,FTYPE,AATYPE,LTYPE> &o,const ATYPE &a,
                const std::vector<pni::core::slice> &sel)
     {
-        typedef write_visitor<ATYPE,GTYPE,FTYPE,AATYPE> visitor_type;
+        using visitor_type =  write_visitor<ATYPE,GTYPE,FTYPE,AATYPE,LTYPE>;
 
         return boost::apply_visitor(visitor_type(a,sel),o);
     }

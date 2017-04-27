@@ -122,13 +122,18 @@ namespace xml{
     {
         auto attr = parent.get_child_optional(attribute_path(name));
 
-        return bool(attr);
+        return attr.is_initialized();
     }
 
     //------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const node &n)
-    {
-        boost::property_tree::xml_writer_settings<pni::core::string> settings('\t',1);
+    {        
+#if BOOST_VERSION > 105500
+        using key_type = typename node::key_type;
+#else
+        using key_type = typename node::key_type::value_type;
+#endif
+        boost::property_tree::xml_writer_settings<key_type> settings('\t',1);
 
         boost::property_tree::write_xml(o,n,settings);
         return o;
@@ -146,7 +151,6 @@ namespace xml{
     //-------------------------------------------------------------------------
     node get_child_by_name(const node &parent,const string &name)
     {
-        typedef std::pair<string,node> value_type;
         for(auto child: parent)
             if(get_name(child.second)==name) return child.second;
 
