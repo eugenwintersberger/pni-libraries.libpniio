@@ -1,4 +1,7 @@
+
 if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
+    find_package(HDF5 NAMES hdf5 COMPONENTS C)
+    message(STATUS "HDF5 header files: ${HDF5_INCLUDE_DIRS}")
     set(HDF5_FOUND TRUE)
     #first we have to find the c-library
     if(HDF5_C_LIBRARY_DIRS)

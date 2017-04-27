@@ -23,6 +23,7 @@
 #pragma once
 
 #include <sstream>
+#include <random>
 #include <pni/core/types.hpp>
 
 using namespace pni::core;
@@ -44,7 +45,7 @@ template<typename T> struct uniform_distribution_map<T,false>
 
 //----------------------------------------------------------------------------
 template<typename T>
-using uniform_dist_map = uniform_distribution_map<T,type_info<T>::is_integer>;
+using uniform_dist_map = uniform_distribution_map<T,pni::core::type_info<T>::is_integer>;
 
 //----------------------------------------------------------------------------
 template<typename T> class uniform_distribution

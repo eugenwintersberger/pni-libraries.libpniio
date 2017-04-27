@@ -63,6 +63,10 @@ include(configure/CheckTypeSize.cmake)
 #==========================check for libraries=====================================
 
 if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
+set(Boost_DIR 
+endif()
+
+if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
     set(Boost_USE_STATIC_LIBS OFF)
     set(Boost_USE_STATIC_RUNTIME OFF)
 else()

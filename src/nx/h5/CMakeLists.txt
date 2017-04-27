@@ -24,5 +24,5 @@ set(SOURCES
             )
 
 
-add_library(h5_objects OBJECT ${SOURCES})
+        add_library(h5_objects OBJECT ${SOURCES} ${HDF5_LIBRARIES})
 
