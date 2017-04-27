@@ -22,3 +22,6 @@ build
 .cccc
 /doc/ug/latexmkrc~
 /doc/ug/libpniio_ug.bib~
+.cproject
+.project
+.settings/
