@@ -23,6 +23,9 @@ using namespace pni::core;
 
 namespace boost {
 namespace test_tools {
+#if BOOST_VERSION > 105500
+namespace tt_detail {
+#endif
 
     void print_log_value<value_ref>::operator()(std::ostream &stream,const value_ref &v)
     {
@@ -50,6 +53,10 @@ namespace test_tools {
                                     stream<<"UNKOWN";
         }
     }
+
+#if BOOST_VERSION > 105500
+}
+#endif
 }
 }
 

@@ -24,15 +24,25 @@
 #include <pni/core/type_erasures.hpp>
 #include <iostream>
 
+#if BOOST_VERSION > 105500
+#include <boost/test/tools/detail/print_helper.hpp>
+#endif
+
 
 namespace boost {
 namespace test_tools {
+#if BOOST_VERSION > 105500
+namespace tt_detail { 
+#endif
 
     template<> struct print_log_value<pni::core::value_ref>
     {
         void operator()(std::ostream &stream,const pni::core::value_ref &v);
     };
 
+#if BOOST_VERSION > 105500
+}
+#endif
 }
 }
 
