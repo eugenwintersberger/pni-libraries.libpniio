@@ -107,7 +107,7 @@ template<> class uniform_distribution<bool_t>
 
         bool_t operator()()
         {
-            return _distribution(_engine);
+            return _distribution(_engine)!=0;
         }
 };
 
