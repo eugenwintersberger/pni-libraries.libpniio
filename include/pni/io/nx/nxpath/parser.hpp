@@ -242,7 +242,7 @@ namespace parsers{
            // using boost::phoenix::merge;
             using boost::phoenix::ref;
 
-            root_rule = lit("/")[_val = construct<nxpath::element_type>("/","NXroot")];
+            root_rule = lit("/")[_val = construct<nxpath::element_type>(pni::core::string("/"),pni::core::string("NXroot"))];
             root_rule.name("root_rule");
 #ifdef __clang__
 #pragma clang diagnostic push
@@ -257,7 +257,7 @@ namespace parsers{
                               //only a single root element
                               _val = construct<nxpath>(boost::phoenix::ref(_filename),_a,_b),
                               //this is where we add the root element
-                              push_back(_val,construct<nxpath::element_type>("/","NXroot")) 
+                              push_back(_val,construct<nxpath::element_type>(pni::core::string("/"),pni::core::string("NXroot"))) 
                               ]
                           >>
                           (   //parse the root element
