@@ -57,8 +57,8 @@ template<typename T> class uniform_distribution
     public:
         uniform_distribution():
             _engine(),
-            _distribution(0.2*type_info<T>::min(),
-                          0.2*type_info<T>::max())
+            _distribution(0.2*pni::core::type_info<T>::min(),
+                          0.2*pni::core::type_info<T>::max())
         { 
             _engine.seed(std::random_device()()); 
         }
