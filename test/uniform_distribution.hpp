@@ -116,7 +116,7 @@ template<> class uniform_distribution<binary>
 {
     private:
         std::mt19937_64 _engine;
-        std::uniform_int_distribution<uint8> _distribution;
+        std::uniform_int_distribution<uint16> _distribution;
     public:
         uniform_distribution():
             _engine(),
