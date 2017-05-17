@@ -25,7 +25,7 @@ set(SOURCES
 
 
 add_library(h5_objects OBJECT ${SOURCES})
-target_include_directories(h5_objects PRIVATE ${HDF5_INCLUDE_DIRS})
+target_include_directories(h5_objects PRIVATE ${hdf5_INCLUDE_DIRS})
 set_property(TARGET h5_objects PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 

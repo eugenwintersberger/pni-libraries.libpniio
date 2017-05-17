@@ -1,12 +1,9 @@
 include(CheckCXXCompilerFlag)
 include(CheckCXXSourceCompiles)
-include(FindBoost)
 include(FindPkgConfig)
 
 include("configure/FindPniCore.cmake")
 include("configure/ConfigureHDF5.cmake")
-include("configure/ConfigureZLib.cmake")
-include("configure/ConfigureSZLib.cmake")
 
 #=================================================================================
 if(NOT CMAKE_BUILD_TYPE)
@@ -63,7 +60,7 @@ include(configure/CheckTypeSize.cmake)
 #==========================check for libraries=====================================
 
 if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
-set(Boost_DIR 
+
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
@@ -87,5 +84,3 @@ else()
     message(STATUS "Found Boost version: ${Boost_VERSION}")
     add_definitions(-DBOOST_VERSION=${Boost_VERSION})
 endif()
-
-

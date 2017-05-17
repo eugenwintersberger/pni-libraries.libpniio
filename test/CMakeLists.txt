@@ -2,7 +2,7 @@
 #need to define the version of the library
 
 link_directories(${PNICORE_PKG_LIBRARY_DIRS} ${HDF5_LIBRARY_DIRS})
-include_directories(${PNICORE_PKG_INCLUDE_DIRS} ${HDF5_INCLUDE_DIRS})
+include_directories(${pnicore_INCLUDE_DIRS} ${hdf5_INCLUDE_DIRS})
 link_directories("${CMAKE_CURRENT_BINARY_DIR}/../src")
 include_directories(${PNICORE_PKG_INCLUDE_DIRS})
 

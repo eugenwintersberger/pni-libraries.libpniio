@@ -1,4 +1,3 @@
-
 #gather all source files for the library
 set(SOURCES column_info.cpp
              data_reader.cpp
@@ -8,7 +7,7 @@ set(SOURCES column_info.cpp
              exceptions.cpp
              container_io_config.cpp
              strutils.cpp)
-include_directories(${PNICORE_PKG_INCLUDE_DIRS} ${HDF5_INCLUDE_DIRS})
+include_directories(${pnicore_INCLUDE_DIRS} ${hdf5_INCLUDE_DIRS})
 #first we need to build the C-filter code
 add_subdirectory(cbf)
 add_subdirectory(fio)
@@ -33,12 +32,11 @@ set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"
                                        SOVERSION "${SO_VERSION}")
                                        
 target_link_libraries(pniio 
-                      INTERFACE
-                      ${HDF5_LIBRARIES} 
+                      PUBLIC pnicore_shared 
+                      ${hdf5_LIBRARIES}
                       ${Boost_FILESYSTEM_LIBRARY}
                       ${Boost_REGEX_LIBRARY}
-                      ${Boost_DATE_TIME_LIBRARY}
-                      ${PNICORE_PKG_LIBRARIES}
+                      ${Boost_DATE_TIME_LIBRARY}                      
                       ${ZLIB_LIBRARIES}
                       ${SZLIB_LIBRARIES}
                       )

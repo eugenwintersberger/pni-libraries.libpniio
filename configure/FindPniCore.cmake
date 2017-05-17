@@ -1,36 +1,26 @@
 
-if(NOT PKG_CONFIG_FOUND)
-    message(STATUS "Could not find pkg-config ... try without it!")
-    
-    if(PNICORE_LIBRARYDIR)
-        message(STATUS "Looking for pnicore in: ${PNICORE_LIBRARYDIR}")
-        find_library(PNICORE_PKG_LIBRARIES pnicore "${PNICORE_LIBRARYDIR}")
-    else()
-        find_library(PNICORE_PKG_LIBRARIES pnicore)
-    endif()
-    
-    if(PNICORE_PKG_LIBRARIES-NOTFOUND)
-        message(FATAL "Could not find pnicore libraries")
-    else()
-        message(STATUS "Found: ${PNICORE_PKG_LIBRARIES}")
-    endif()
+#in this case we assume that the user has a particular source or 
+#global installation in mind - this selection is independent of the 
+#platform and compiler we are on 
+if(pnicore_DIR)
+    message(STATUS "Looking for a user defined pnicore cmake package")
+    #we are definitely looking for a config file package here
+    find_package(pnicore CONFIG REQUIRED)
 
-    if(PNICORE_INCLUDEDIR)
-        message(STATUS "Looking for pnicore headers in: ${PNICORE_INCLUDEDIR}")
-        find_file(PNICORE_HEADERS "types.hpp" "${PNICORE_INCLUDEDIR}/pni/core")
-    else()
-        find_file(PNICORE_HEADERS "types.hpp")
-    endif()
-
-    if(PNICORE_HEADERS-NOTFOUND)
-        message(FATAL "Could not find pnicore header files")
-    else()
-        message(STATUS "Found: ${PNICORE_HEADERS}")
-    endif()
-
-    include_directories(${PNICORE_INCLUDEDIR})
+    set(pnicore_LIBRARIES pnicore_shared)
+    get_target_property(pnicore_INCLUDE_DIRS pnicore_shared INTERFACE_INCLUDE_DIRECTORIES)
 
 else()
-    #the only thing we have to do here is to check for pnicore
-    pkg_search_module(PNICORE_PKG REQUIRED pnicore)
+    #here should go the pkg-config configuration
+    if(PKG_CONFIG_FOUND)
+        message(STATUS "User pkg-config to search for pnicore")
+    else()
+        message(FATAL_ERROR "Could not find pkg-config - currently required to configure pnicore!")
+    endif()
 endif()
+
+message(STATUS "Found pnicore headers in: ${pnicore_INCLUDE_DIRS}")
+message(STATUS "pnicore libraries: ${pnicore_LIBRARIES}")
+
+
+
