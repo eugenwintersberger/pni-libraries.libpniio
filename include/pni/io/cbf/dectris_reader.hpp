@@ -30,6 +30,7 @@
 
 #include "../image_info.hpp"
 #include "types.hpp"
+#include "../windows.hpp"
 
 
 namespace pni{
@@ -43,7 +44,7 @@ namespace cbf{
     //! This type provides static method to read data from CBF files written 
     //! by detectors from DECTRIS. 
     //1
-    class dectris_reader
+    class PNIIO_EXPORT dectris_reader
     {
         public:
             //! 

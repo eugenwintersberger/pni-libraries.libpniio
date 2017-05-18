@@ -24,6 +24,7 @@
 #pragma once
 
 #include <iostream>
+#include "../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -65,7 +66,7 @@ namespace nx{
     //! \param stream output stream
     //! \param ltype reference to a link type
     //! \return output stream
-    std::ostream &operator<<(std::ostream &stream,const nxlink_type &ltype);
+	PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,const nxlink_type &ltype);
 
     //!
     //! \ingroup nexus_lowlevel
@@ -77,7 +78,7 @@ namespace nx{
                                INVALID //!< cannot be resolved
                              };
 
-    std::ostream &operator<<(std::ostream &stream,const nxlink_status &stat);
+	PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,const nxlink_status &stat);
 //end of namespace
 }
 }
