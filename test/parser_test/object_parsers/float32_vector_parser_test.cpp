@@ -35,7 +35,8 @@ struct float32_vector_parser_test_fixture : parser_test_fixture<std::vector<floa
 };
 
 const float32_vector_parser_test_fixture::result_type 
-      float32_vector_parser_test_fixture::ref = {1.2,3e+3,-3.4,4.429,-5.34e-3};
+      float32_vector_parser_test_fixture::ref = {1.2f,3e+3f,-3.4f,4.429f,
+                                                 -5.34e-3f};
 
 
 BOOST_FIXTURE_TEST_SUITE(float32_vector_parser_test,float32_vector_parser_test_fixture)

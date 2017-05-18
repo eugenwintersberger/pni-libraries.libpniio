@@ -2,6 +2,7 @@ set(COMMON_SRC nxfield_test_fixture.cpp
                nxattribute_test_fixture.cpp
                value_ref_test_tools.cpp)
 add_library(level_1_common OBJECT ${COMMON_SRC})
+target_compile_definitions(level_1_common PUBLIC BOOST_ALL_DYN_LINK)
 
 #------------------------------------------------------------------------------
 # test nxfile related operations
