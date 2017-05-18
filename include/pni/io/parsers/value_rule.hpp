@@ -27,6 +27,7 @@
 #include <pni/core/types.hpp>
 #include <pni/core/type_erasures.hpp>
 #include <boost/variant.hpp>
+#include <type_traits>
 #ifdef _MSC_VER
 #pragma warning(disable:4348)
 #endif
@@ -76,6 +77,10 @@ namespace io{
     template<typename ITERT>
     struct value_rule : boost::spirit::qi::grammar<ITERT,pni::core::value()>
     {
+
+        class integer_type_tag {};
+        class float_type_tag {};
+        class complex_type_tag {};
         //--------------------------------------------------------------------
         // definition of internal classes used by the value_rule
         //--------------------------------------------------------------------
@@ -96,8 +101,10 @@ namespace io{
             public:
                 //!
                 //! \brief int64 value construction
-                //! 
-                pni::core::value operator()(const pni::core::int64 &v) const
+                //!
+                template<typename T>
+                auto operator()(const T &v) const 
+                -> std::enable_if_t<std::is_same<T,pni::core::int64>::value,result_type>
                 {
                     return pni::core::value(v);
                 }
@@ -105,7 +112,9 @@ namespace io{
                 //!
                 //! \brief complex64 value construction
                 //! 
-                pni::core::value operator()(const pni::core::complex64 &v) const
+                template<typename T>
+                auto operator()(const T &v) const
+                -> std::enable_if_t<std::is_same<T,pni::core::complex64>::value,result_type>
                 {
                     return pni::core::value(v);
                 }
@@ -113,11 +122,16 @@ namespace io{
                 //!
                 //! \brief float64 value construction
                 //! 
-                pni::core::value operator()(const pni::core::float64 &v) const
+                template<typename T>
+                auto operator()(const T &v) const
+                -> std::enable_if_t<std::is_same<T,pni::core::float64>::value,result_type>
                 {
                     return pni::core::value(v);
                 }
         };
+
+
+
 
         //--------------------------------------------------------------------
         //!
@@ -148,7 +162,22 @@ namespace io{
             template<typename Arg> 
             pni::core::value operator()(Arg const &n) const
             {
+#ifdef _MSC_VER
+                if(const pni::core::float64* ptr = boost::get<pni::core::float64>(&n))
+                {
+                    return pni::core::value(*ptr);
+                }
+                else if(const pni::core::int64 *ptr = boost::get<pni::core::int64>(&n))
+                {
+                    return pni::core::value(*ptr);
+                }
+                else if(const pni::core::complex64* ptr = boost::get<pni::core::complex64>(&n))
+                {
+                    return pni::core::value(*ptr);
+                }
+#else
                 return boost::apply_visitor(value_constructor_visitor(),n);
+#endif
             }
 
         };

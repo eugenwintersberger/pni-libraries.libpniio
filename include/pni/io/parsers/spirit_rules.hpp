@@ -84,11 +84,17 @@ namespace io{
                          pni::core::int32, 
                          PARSER_TYPE(boost::spirit::qi::int_)   
                         >,
-
+#ifdef _MSC_VER
+        boost::mpl::pair<
+                         pni::core::int64, 
+                         PARSER_TYPE(boost::spirit::long_long)      
+                        >,
+#else
         boost::mpl::pair<
                          pni::core::int64, 
                          PARSER_TYPE(boost::spirit::long_)      
                         >,
+#endif
 
         boost::mpl::pair<
                          core::float32, 
