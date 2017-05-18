@@ -77,6 +77,7 @@ endforeach()
 # finally build the test target
 #-----------------------------------------------------------------------------
 add_library(field_test_common OBJECT EXCLUDE_FROM_ALL field_utils.cpp)
+target_compile_definitions(field_test_common PUBLIC BOOST_ALL_DYN_LINK)
 
 include_directories(${CMAKE_SOURCE_DIR}/test ${CMAKE_CURRENT_SOURCE_DIR})
 set_source_files_properties(field_test.cpp PROPERTIES 
