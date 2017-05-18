@@ -25,6 +25,7 @@
 #include <utility>
 #include <pni/core/types.hpp>
 #include <list>
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -57,7 +58,7 @@ namespace nx{
     //! object. However, a path with a filename part is always absolute (for
     //! obvious reasons).
     //!
-    class nxpath
+    class PNIIO_EXPORT nxpath
     {
         public: 
             //! object element (groupname:class)
@@ -70,12 +71,18 @@ namespace nx{
             typedef elements_type::const_iterator const_iterator;
 
         private:
+#ifdef _MSC_VER
+#pragma warning(disable: 4251)
+#endif
             //! name of the file
             pni::core::string _file_name;
             //! name of an attribute
             pni::core::string _attribute_name;
             //! list of groups
             elements_type _elements;
+#ifdef _MSC_VER
+#pragma warning(default: 4251)
+#endif
 
         public:
             //===============constructors and destructor=======================

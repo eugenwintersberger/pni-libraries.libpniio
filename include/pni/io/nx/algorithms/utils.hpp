@@ -23,6 +23,7 @@
 #pragma once
 
 #include <pni/core/types.hpp>
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -41,7 +42,7 @@ namespace nx{
     //! \param p reference to a path
     //! \return copy of the input path
     //!
-    nxpath get_path(const nxpath &p) noexcept;
+    PNIIO_EXPORT nxpath get_path(const nxpath &p) noexcept;
 
     //------------------------------------------------------------------------
     //!
@@ -55,7 +56,7 @@ namespace nx{
     //! \param p string representation of a path
     //! \return path object generated from the input string
     //!
-    nxpath get_path(const pni::core::string &p);
+    PNIIO_EXPORT nxpath get_path(const pni::core::string &p);
 
     //------------------------------------------------------------------------
     //!
@@ -71,7 +72,7 @@ namespace nx{
     //!
     //! \return path referening to the attribute
     //!
-    nxpath get_attribute_path(const pni::core::string &p);
+    PNIIO_EXPORT nxpath get_attribute_path(const pni::core::string &p);
 
     //------------------------------------------------------------------------
     //!
@@ -84,7 +85,7 @@ namespace nx{
     //! 
     //! \return unchanged input path
     //!
-    nxpath get_attribute_path(const nxpath &p) noexcept;
+    PNIIO_EXPORT nxpath get_attribute_path(const nxpath &p) noexcept;
 
 
 //end of namespace

@@ -23,6 +23,7 @@
 #pragma once
 #include "nxpath.hpp"
 #include "insert.hpp"
+#include "../../windows.hpp"
 
 #ifdef _MSC_VER
 #pragma warning(disable:4348)
@@ -291,7 +292,7 @@ namespace parsers{
     //! \param input string from which to construct the path
     //! \return nxpath instance
     //!
-    nxpath parse_path(const pni::core::string &input);
+    PNIIO_EXPORT nxpath parse_path(const pni::core::string &input);
 
 //end of parser namespace
 }

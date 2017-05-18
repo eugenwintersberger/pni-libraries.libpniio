@@ -47,7 +47,7 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES Clang)
 elseif(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
     message(STATUS "Found Microsoft C++ compiler ...")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
-    add_definitions(-DDLL_BUILD)
+    add_definitions(-D_SCL_SECURE_NO_WARNINGS)
 endif()
 
 #=================configure installation parameters============================

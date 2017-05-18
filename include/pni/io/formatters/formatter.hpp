@@ -29,10 +29,12 @@
 #include <pni/core/type_erasures.hpp>
 #ifdef _MSC_VER
 #pragma warning(disable:4348)
+#pragma warning(disable:4996)
 #endif
 #include <boost/spirit/include/karma.hpp>
 #ifdef _MSC_VER
 #pragma warning(default:4348)
+#pragma warning(default:4996)
 #endif
 
 #include "../container_io_config.hpp"
@@ -186,7 +188,14 @@ namespace io{
                 }
                 else
                 {
+#ifdef _MSC_VER
+#pragma warning(disable:4996)
+#endif
                     karma::generate(inserter,cont_rule,v);   
+#ifdef _MSC_VER
+#pragma warning(default:4996)
+#endif
+
                 }                    
                
                 return buffer;
@@ -260,7 +269,13 @@ namespace io{
                 //have not figured this out yet. However, we should use it 
                 //with care!
                 container_type c(v.size());
+#ifdef _MSC_VER
+#pragma warning(disable:4996)
+#endif
                 std::copy(v.begin(),v.end(),c.begin());
+#ifdef _MSC_VER
+#pragma warning(default:4996)
+#endif
                 return f(c);
             }
             

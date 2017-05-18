@@ -10,12 +10,9 @@ add_executable(algo_attribute_test EXCLUDE_FROM_ALL ${SOURCES}
                $<TARGET_OBJECTS:test_common>
                $<TARGET_OBJECTS:algorithm_common>)
 
-if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
-    target_link_libraries(algo_attribute_test pniio)
-else()
-    target_link_libraries(algo_attribute_test pniio 
-                         ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
-endif()
+target_link_libraries(algo_attribute_test pniio 
+                      ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+    
 
 add_test("algorithms:attribute_test" algo_attribute_test)
 add_dependencies(check algo_attribute_test)

@@ -8,6 +8,7 @@ set(SOURCES column_info.cpp
              container_io_config.cpp
              strutils.cpp)
 include_directories(${pnicore_INCLUDE_DIRS} ${hdf5_INCLUDE_DIRS})
+add_definitions(-DDLL_BUILD)
 #first we need to build the C-filter code
 add_subdirectory(cbf)
 add_subdirectory(fio)
@@ -30,7 +31,7 @@ add_library(pniio SHARED ${SOURCES}
 #add_dependencies(pniio config.hpp)
 set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"
                                        SOVERSION "${SO_VERSION}")
-                                       
+                                    
 target_link_libraries(pniio 
                       PUBLIC pnicore_shared 
                       ${hdf5_LIBRARIES}
@@ -40,7 +41,7 @@ target_link_libraries(pniio
                       ${ZLIB_LIBRARIES}
                       ${SZLIB_LIBRARIES}
                       )
-    
+target_compile_definitions(pniio PUBLIC BOOST_ALL_DYN_LINK)
 
 #install code
 install(TARGETS pniio 
