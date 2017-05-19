@@ -145,14 +145,14 @@ set_directory_properties(PROPPERTIES
 #-----------------------------------------------------------------------------
 # build common code for attributes
 #-----------------------------------------------------------------------------
-add_library(attr_test_common OBJECT EXCLUDE_FROM_ALL attr_utils.cpp)
+add_library(attr_test_common OBJECT attr_utils.cpp)
 
 
 #-----------------------------------------------------------------------------
 # finally build the test target
 #-----------------------------------------------------------------------------
 include_directories(${CMAKE_SOURCE_DIR}/test ${CMAKE_CURRENT_SOURCE_DIR})
-add_executable(attribute_tests EXCLUDE_FROM_ALL ${CPPFILES} 
+add_executable(attribute_tests ${CPPFILES} 
                $<TARGET_OBJECTS:attr_test_common>
                $<TARGET_OBJECTS:xml_test_common>
                $<TARGET_OBJECTS:test_common>)
@@ -161,4 +161,9 @@ target_link_libraries(attribute_tests pniio
 add_test(NAME "XML::attribute_tests"
          COMMAND attribute_tests)
 
-add_dependencies(check attribute_tests)
+if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
+    set_property(TEST "XML::attribute_tests" APPEND PROPERTY
+        ENVIRONMENT "PATH=${PATH_STRING}")
+endif()
+
+

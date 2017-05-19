@@ -12,7 +12,13 @@ foreach(XMLFILE ${XMLFILES})
     configure_file(${XMLFILE} ${XMLFILE} COPYONLY)
 endforeach()
 
-add_executable(node_test EXCLUDE_FROM_ALL ${SOURCES})
+add_executable(node_test ${SOURCES})
 target_link_libraries(node_test pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
-add_test(NAME "XML::node" COMMAND node_test)
-add_dependencies(check node_test)
+add_test(NAME "XML::node" 
+         COMMAND node_test 
+         WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/test/xml_test/node")
+
+if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
+    set_property(TEST "XML::node" APPEND PROPERTY
+        ENVIRONMENT "PATH=${PATH_STRING}")
+endif()
