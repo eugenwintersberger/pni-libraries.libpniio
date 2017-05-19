@@ -14,6 +14,13 @@ target_link_libraries(algo_attribute_test pniio
                       ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
     
 
-add_test("algorithms:attribute_test" algo_attribute_test)
+add_test(NAME "algorithms:attribute_test" 
+         COMMAND algo_attribute_test)
+if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
+    set_property(TEST "algorithms:attribute_test" APPEND PROPERTY
+        ENVIRONMENT "PATH=${PATH_STRING}")
+endif()
+
 add_dependencies(check algo_attribute_test)
+
 

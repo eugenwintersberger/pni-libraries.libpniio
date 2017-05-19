@@ -71,6 +71,7 @@ BOOST_FIXTURE_TEST_SUITE(is_valid_test,is_valid_test_fixture)
         BOOST_CHECK(!is_valid(file));
     }
 
+#ifndef _MSC_VER
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_nxobject_group)
     {
@@ -97,5 +98,6 @@ BOOST_FIXTURE_TEST_SUITE(is_valid_test,is_valid_test_fixture)
         o = attribute;
         BOOST_CHECK(is_valid(o));
     }
+#endif
 
 BOOST_AUTO_TEST_SUITE_END()

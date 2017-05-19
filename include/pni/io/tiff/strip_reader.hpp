@@ -33,6 +33,8 @@
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 
+#include "../windows.hpp"
+
 
 namespace pni {
 namespace io {
@@ -40,13 +42,19 @@ namespace tiff {
 
     //! \ingroup image_io_tiff
     //! \brief reader for strip data in a TIFF file
-    class strip_reader 
+    class PNIIO_EXPORT strip_reader 
     {
         private:
+#ifdef _MSC_VER
+#pragma warning(disable:4251)
+#endif
             std::vector<size_t> _offsets;   //!< array with the file offsets of the strips
             std::vector<size_t> _byte_cnts; //!< array with byte counts for each strip
             std::vector<size_t> _bits_per_channel; //!< number of bits per channel
             std::vector<pni::core::type_id_t> _channel_types; //!< type ids of channel data
+#ifdef _MSC_VER
+#pragma warning(default:4251)
+#endif
 
             //-----------------------------------------------------------------
             //!
