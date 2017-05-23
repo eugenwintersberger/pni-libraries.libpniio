@@ -47,8 +47,7 @@ BOOST_AUTO_TEST_SUITE(creation_test)
         BOOST_CHECK_EQUAL(n.size(),1);
 
         //has to fail because file does not exist
-        BOOST_CHECK_THROW(xml::create_from_file("bla.xml"),
-                           file_error);
+        BOOST_CHECK_THROW(xml::create_from_file("bla.xml"), pni::core::file_error);
 
         //not a well formed XML file
         BOOST_CHECK_THROW(xml::create_from_file("node_from_bad_file.xml"),
@@ -66,7 +65,7 @@ BOOST_AUTO_TEST_SUITE(creation_test)
         BOOST_CHECK_EQUAL(n.size(),1);
 
         BOOST_CHECK_THROW(xml::create_from_string(node_from_bad_str),
-                           pni::io::parser_error);
+                          pni::io::parser_error);
     }
 
 

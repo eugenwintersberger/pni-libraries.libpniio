@@ -103,7 +103,7 @@ namespace io{
                     }
 
                 }
-                catch(const expectation_error &error)
+                catch(const expectation_error &)
                 {
                     throw parser_error(EXCEPTION_RECORD,
                             "Syntax error!");

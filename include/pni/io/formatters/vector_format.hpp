@@ -27,15 +27,16 @@
 #include <pni/core/type_erasures.hpp>
 #include <vector>
 #include "../container_io_config.hpp"
+#include "../windows.hpp"
 
 
 namespace pni{
 namespace io{
 
 #define DECLARE_VECTOR_FORMAT(type)\
-    pni::core::string format(const std::vector<type> &v,\
-                             const container_io_config &config = \
-                             container_io_config())
+    pni::core::string PNIIO_EXPORT format(const std::vector<type> &v,\
+                                          const container_io_config &config = \
+                                          container_io_config())
 
 
     DECLARE_VECTOR_FORMAT(pni::core::uint8);

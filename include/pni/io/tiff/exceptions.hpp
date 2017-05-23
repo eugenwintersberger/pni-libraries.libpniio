@@ -25,6 +25,7 @@
 #pragma once
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
+#include "../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -37,7 +38,7 @@ namespace tiff{
     //! This exception is thrown in cases where errors occur during reading 
     //! TIFF files.
     //!
-    class tiff_read_error:public pni::core::exception
+    class PNIIO_EXPORT tiff_read_error:public pni::core::exception
     {
         public:
             //! default constructor

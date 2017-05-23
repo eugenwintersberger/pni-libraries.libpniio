@@ -18,8 +18,8 @@ set(DATA_STRS 1 -4 200 -234 4000 23456 4013945 -4013945
               true)
 
 set(DATA_CPPS 1 -4 200 -234 4000 23456 4013945 -4013945 
-              2.3455 -1.233e+4  123.24354e-4 
-              "34.,123.e-3" "-23.,-8.203" "123,340"
+              2.3455f -1.233e+4  123.24354e-4 
+              "34.f,123.e-3f" "-23.,-8.203" "123,340"
               "\"hello word a stupid text\""
               true)
 
@@ -94,10 +94,10 @@ set(ARR_DATA_STRS "1 2 3" "-4 3 -10" "200 300 400" "-234 500 -34"
 set(ARR_DATA_CPPS "1, 2, 3" "-4, 3, -10" "200, 300, 400" "-234, 500, -34"
                   "4000, 2000, 345" "23456, -3453, 40392" "4013945,39458,14056"
                   "-4013945, 304213, -405982"
-                  "2.3455, -34.e+2, -42.e-5"
+                  "2.3455f, -34.e+2f, -42.e-5f"
                   "-1.233e+4, 239e-3, 30495.e-8"
                   "123.24354e-4, 40394.e-4, 1.23e+5"
-                  "{34.,123.e-3},{34.e-2,98.3},{453.98,-743.29}"
+                  "{34.f,123.e-3f},{34.e-2f,98.3f},{453.98f,-743.29f}"
                   "{-23.,-8.203},{893e+4,-23.12},{9.e-8,732e+3}"
                   "{123,340},{0.,-34.9},{345.2,0.}"
                   "true,true,false")
@@ -145,20 +145,26 @@ set_directory_properties(PROPPERTIES
 #-----------------------------------------------------------------------------
 # build common code for attributes
 #-----------------------------------------------------------------------------
-add_library(attr_test_common OBJECT EXCLUDE_FROM_ALL attr_utils.cpp)
+add_library(attr_test_common OBJECT attr_utils.cpp)
 
 
 #-----------------------------------------------------------------------------
 # finally build the test target
 #-----------------------------------------------------------------------------
 include_directories(${CMAKE_SOURCE_DIR}/test ${CMAKE_CURRENT_SOURCE_DIR})
-add_executable(attribute_tests EXCLUDE_FROM_ALL ${CPPFILES} 
+add_executable(attribute_tests ${CPPFILES} 
                $<TARGET_OBJECTS:attr_test_common>
                $<TARGET_OBJECTS:xml_test_common>
                $<TARGET_OBJECTS:test_common>)
 target_link_libraries(attribute_tests pniio
                ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_test(NAME "XML::attribute_tests"
-         COMMAND attribute_tests)
+         COMMAND attribute_tests
+         WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/xml_test/attribute)
 
-add_dependencies(check attribute_tests)
+if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
+    set_property(TEST "XML::attribute_tests" APPEND PROPERTY
+        ENVIRONMENT "PATH=${PATH_STRING}")
+endif()
+
+

@@ -24,6 +24,7 @@
 
 #include <pni/core/types.hpp>
 #include "h5filter.hpp"
+#include "../../windows.hpp"
 
 
 namespace pni {
@@ -40,7 +41,7 @@ namespace h5 {
     //! can take a value from 0 to 9. In addition a shuffle filter can be used 
     //! in advance in order to achieve better compression ratios.
     //!
-    class h5deflate_filter:public h5filter 
+    class PNIIO_EXPORT h5deflate_filter:public h5filter 
     {
         private:
             pni::core::uint32 _comp_rate;   //!< compression rate

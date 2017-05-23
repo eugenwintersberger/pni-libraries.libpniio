@@ -1,12 +1,9 @@
 include(CheckCXXCompilerFlag)
 include(CheckCXXSourceCompiles)
-include(FindBoost)
 include(FindPkgConfig)
 
 include("configure/FindPniCore.cmake")
 include("configure/ConfigureHDF5.cmake")
-include("configure/ConfigureZLib.cmake")
-include("configure/ConfigureSZLib.cmake")
 
 #=================================================================================
 if(NOT CMAKE_BUILD_TYPE)
@@ -50,7 +47,7 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES Clang)
 elseif(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
     message(STATUS "Found Microsoft C++ compiler ...")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
-    add_definitions(-DDLL_BUILD)
+    add_definitions(-D_SCL_SECURE_NO_WARNINGS)
 endif()
 
 #=================configure installation parameters============================
@@ -61,6 +58,10 @@ include(configure/CheckTypeSize.cmake)
 
 
 #==========================check for libraries=====================================
+
+if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
+
+endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
     set(Boost_USE_STATIC_LIBS OFF)
@@ -83,5 +84,3 @@ else()
     message(STATUS "Found Boost version: ${Boost_VERSION}")
     add_definitions(-DBOOST_VERSION=${Boost_VERSION})
 endif()
-
-

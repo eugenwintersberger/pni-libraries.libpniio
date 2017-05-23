@@ -16,10 +16,14 @@ foreach(XMLFILE ${XMLFILES})
 endforeach()
 
 
-add_executable(nexus_to_xml_test EXCLUDE_FROM_ALL ${SOURCES} 
+add_executable(nexus_to_xml_test ${SOURCES} 
                $<TARGET_OBJECTS:xml_test_common>)
 target_link_libraries(nexus_to_xml_test pniio
                                         ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
 add_test("XML::nexus_to_xml_test" nexus_to_xml_test)
-add_dependencies(check nexus_to_xml_test)
+
+if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
+    set_property(TEST "XML::nexus_to_xml_test" APPEND PROPERTY
+        ENVIRONMENT "PATH=${PATH_STRING}")
+endif()

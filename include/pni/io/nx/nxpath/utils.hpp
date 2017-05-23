@@ -25,6 +25,7 @@
 #include <iostream>
 #include <pni/core/types.hpp>
 #include "nxpath.hpp"
+#include "../../windows.hpp"
 
 
 namespace pni{
@@ -43,7 +44,8 @@ namespace nx{
     //! \param b path as string
     //! \return true if the paths are matching, false otherwise
     //!
-    bool match(const pni::core::string &a,const pni::core::string &b);
+    PNIIO_EXPORT bool match(const pni::core::string &a,
+                            const pni::core::string &b);
 
     //-------------------------------------------------------------------------
     //! 
@@ -57,7 +59,8 @@ namespace nx{
     //! \param b reference to second path
     //! \return true if paths are matching, false otherwise
     //! 
-    bool match(const nxpath &a,const nxpath &b);
+    PNIIO_EXPORT bool match(const nxpath &a,
+                            const nxpath &b);
 
     //-------------------------------------------------------------------------
     //! 
@@ -71,7 +74,8 @@ namespace nx{
     //! \param b reference to second path element
     //! \return true if the elements are matching, false otherwise
     //! 
-    bool match(const nxpath::element_type &a,const nxpath::element_type &b);
+    PNIIO_EXPORT bool match(const nxpath::element_type &a,
+                            const nxpath::element_type &b);
 
 
     //------------------------------------------------------------------------
@@ -87,8 +91,9 @@ namespace nx{
     //! \param name the name of the object
     //! \param type the type of the object
     //! \return instance of object element
-    nxpath::element_type object_element(const pni::core::string &name,
-                                        const pni::core::string &type);
+    PNIIO_EXPORT nxpath::element_type 
+        object_element(const pni::core::string &name,
+                       const pni::core::string &type);
 
     //------------------------------------------------------------------------
     //!
@@ -121,7 +126,7 @@ namespace nx{
     //! \param p1 first part of the path
     //! \param p2 second part of the path
     //!
-    void split_path(const nxpath &p,size_t s,nxpath &p1,nxpath &p2);
+    PNIIO_EXPORT void split_path(const nxpath &p,size_t s,nxpath &p1,nxpath &p2);
 
     //--------------------------------------------------------------------------
     //!
@@ -137,7 +142,7 @@ namespace nx{
     //! \param gp path with groups
     //! \param op path with final object
     //!
-    void split_last(const nxpath &p,nxpath &gp,nxpath &op);
+    PNIIO_EXPORT void split_last(const nxpath &p,nxpath &gp,nxpath &op);
 
     //--------------------------------------------------------------------------
     //!
@@ -148,7 +153,7 @@ namespace nx{
     //!
     //! \param p reference to an instance of nxpath
     //! \return true if path has a file section, false otherwise
-    bool has_file_section(const nxpath &p);
+    PNIIO_EXPORT bool has_file_section(const nxpath &p);
 
     //------------------------------------------------------------------------
     //!
@@ -159,7 +164,7 @@ namespace nx{
     //! 
     //! \param p reference to an instance of nxpath
     //! \return true if the path has an attribute section, false otherweise.
-    bool has_attribute_section(const nxpath &p);
+    PNIIO_EXPORT bool has_attribute_section(const nxpath &p);
     
     //------------------------------------------------------------------------
     //!
@@ -174,7 +179,7 @@ namespace nx{
     //! \param e element instance
     //! \return true if root element, false otherwise
     //!
-    bool is_root_element(const nxpath::element_type &e);
+    PNIIO_EXPORT bool is_root_element(const nxpath::element_type &e);
 
     //--------------------------------------------------------------------------
     //!
@@ -183,7 +188,7 @@ namespace nx{
     //! \param p path instance
     //! \return true if path is absolute, false otherwise
     //!
-    bool is_absolute(const nxpath &p);
+    PNIIO_EXPORT bool is_absolute(const nxpath &p);
 
     //--------------------------------------------------------------------------
     //!
@@ -196,7 +201,7 @@ namespace nx{
     //! \param e reference to the element
     //! \return true if e has a name, false otherwise
     //!
-    bool has_name(const nxpath::element_type &e);
+    PNIIO_EXPORT bool has_name(const nxpath::element_type &e);
 
     //--------------------------------------------------------------------------
     //!
@@ -208,7 +213,7 @@ namespace nx{
     //! \param e reference to the element
     //! \return true if e has a class, false otherwise
     //!
-    bool has_class(const nxpath::element_type &e);
+    PNIIO_EXPORT bool has_class(const nxpath::element_type &e);
 
     //--------------------------------------------------------------------------
     //!
@@ -226,7 +231,7 @@ namespace nx{
     //! \param e reference to the path element
     //! \return true if element is complete, false otherwise
     //!
-    bool is_complete(const nxpath::element_type &e);
+    PNIIO_EXPORT bool is_complete(const nxpath::element_type &e);
 
     //--------------------------------------------------------------------------
     //!
@@ -242,7 +247,7 @@ namespace nx{
     //! constructed path is empty.
     //! \param p path to check
     //! \return true if the path is empty
-    bool is_empty(const nxpath &p);
+    PNIIO_EXPORT bool is_empty(const nxpath &p);
 
     //--------------------------------------------------------------------------
     //!
@@ -262,7 +267,7 @@ namespace nx{
     //! \param a first path 
     //! \param b second path
     //! \return joined path 
-    nxpath join(const nxpath &a,const nxpath &b);
+    PNIIO_EXPORT nxpath join(const nxpath &a,const nxpath &b);
 
     //--------------------------------------------------------------------------
     //!
@@ -282,7 +287,7 @@ namespace nx{
     //! \param p reference to the path
     //! \return reference to the advanced original stream
     //!
-    std::istream &operator>>(std::istream &i,nxpath &p);
+    PNIIO_EXPORT std::istream &operator>>(std::istream &i,nxpath &p);
 
     //--------------------------------------------------------------------------
     //!
@@ -297,8 +302,8 @@ namespace nx{
     //! \param b reference to the element on the right handside of the operator
     //! \return true if the elements are equal
     //! 
-    bool operator==(const nxpath::element_type &a,
-                    const nxpath::element_type &b);
+    PNIIO_EXPORT bool operator==(const nxpath::element_type &a,
+                                 const nxpath::element_type &b);
 
     //--------------------------------------------------------------------------
     //!
@@ -311,8 +316,8 @@ namespace nx{
     //! \param b reference to the element on the right handside of the operator
     //! \return true if the elements are no equal
     //! 
-    bool operator!=(const nxpath::element_type &a,
-                    const nxpath::element_type &b);
+    PNIIO_EXPORT bool operator!=(const nxpath::element_type &a,
+                                 const nxpath::element_type &b);
 
     //--------------------------------------------------------------------------
     //!
@@ -327,7 +332,7 @@ namespace nx{
     //! \param rhs reference to the path on the right handside
     //! \return true if equal, false otherwise
     //!
-    bool operator==(const nxpath &lhs,const nxpath &rhs);
+    PNIIO_EXPORT bool operator==(const nxpath &lhs,const nxpath &rhs);
 
     //--------------------------------------------------------------------------
     //!
@@ -340,7 +345,7 @@ namespace nx{
     //! \param rhs reference to the path on the right handside
     //! \return true if not equal, false otherwise
     //!
-    bool operator!=(const nxpath &lhs,const nxpath &rhs);
+    PNIIO_EXPORT bool operator!=(const nxpath &lhs,const nxpath &rhs);
     
     //------------------------------------------------------------------------
     //!
@@ -354,8 +359,8 @@ namespace nx{
     //! \param e object element
     //! \return reference to the modified stream
     //!
-    std::ostream &operator<<(std::ostream &stream,
-                             const nxpath::element_type &e);
+    PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,
+                                          const nxpath::element_type &e);
 
     //--------------------------------------------------------------------------
     //!
@@ -382,7 +387,7 @@ namespace nx{
     //! \param p reference to the path
     //! \return reference to the output operator
     //!
-    std::ostream &operator<<(std::ostream &stream,const nxpath &p);
+    PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,const nxpath &p);
 
 //end of namespace
 }

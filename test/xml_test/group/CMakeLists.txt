@@ -6,9 +6,13 @@ foreach(XMLFILE ${XMLFILES})
     configure_file(${XMLFILE} ${XMLFILE} COPYONLY)
 endforeach()
 
-add_executable(group_test EXCLUDE_FROM_ALL ${SOURCES}
+add_executable(group_test ${SOURCES}
                $<TARGET_OBJECTS:test_common>)
 target_link_libraries(group_test pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_test(NAME "XML::group_tests"
          COMMAND group_test)
-add_dependencies(check group_test)
+
+if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)     
+    set_property(TEST "XML::group_tests" APPEND PROPERTY
+        ENVIRONMENT "PATH=${PATH_STRING}")
+endif()

@@ -76,12 +76,13 @@ endforeach()
 #-----------------------------------------------------------------------------
 # finally build the test target
 #-----------------------------------------------------------------------------
-add_library(field_test_common OBJECT EXCLUDE_FROM_ALL field_utils.cpp)
+add_library(field_test_common OBJECT field_utils.cpp)
+target_compile_definitions(field_test_common PUBLIC BOOST_ALL_DYN_LINK)
 
 include_directories(${CMAKE_SOURCE_DIR}/test ${CMAKE_CURRENT_SOURCE_DIR})
 set_source_files_properties(field_test.cpp PROPERTIES 
                             COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE=testing XML field operations")
-add_executable(field_test EXCLUDE_FROM_ALL field_test.cpp
+add_executable(field_test field_test.cpp
                           multidim_field_test.cpp
                           scalar_field_test.cpp
                           $<TARGET_OBJECTS:test_common>
@@ -92,6 +93,8 @@ target_link_libraries(field_test pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_test(NAME "XML::field_tests"
          COMMAND field_test)
 
-add_dependencies(check field_test)
-
+if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
+    set_property(TEST "XML::field_tests" APPEND PROPERTY
+        ENVIRONMENT "PATH=${PATH_STRING}")
+endif()
 

@@ -25,6 +25,7 @@
 #include <iostream>
 #include <pni/core/types.hpp>
 #include "nxpath.hpp"
+#include "../../windows.hpp"
 
 namespace pni{
 namespace io{
@@ -62,14 +63,17 @@ namespace nx{
     //! std::vector<h5::nxobject> detectors; 
     //! 
     //! 
-    nxpath make_relative(const nxpath &parent_path,const nxpath &orig_path);
-    nxpath make_relative(const pni::core::string &parent_path,
-                         const pni::core::string &orig_path);
+    PNIIO_EXPORT nxpath make_relative(const nxpath &parent_path,
+                                      const nxpath &orig_path);
 
-    nxpath make_relative(const nxpath &parent_path,
-                         const pni::core::string &orig_path);
-    nxpath make_relative(const pni::core::string &parent_path,
-                         const nxpath &orig_path);
+    PNIIO_EXPORT nxpath make_relative(const pni::core::string &parent_path,
+                                      const pni::core::string &orig_path);
+
+    PNIIO_EXPORT nxpath make_relative(const nxpath &parent_path,
+                                      const pni::core::string &orig_path);
+    
+    PNIIO_EXPORT nxpath make_relative(const pni::core::string &parent_path,
+                                      const nxpath &orig_path);
 
 }
 }

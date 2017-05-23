@@ -23,6 +23,7 @@
 #pragma once
 
 #include <sstream>
+#include <random>
 #include <pni/core/types.hpp>
 #include <random>
 
@@ -45,7 +46,7 @@ template<typename T> struct uniform_distribution_map<T,false>
 
 //----------------------------------------------------------------------------
 template<typename T>
-using uniform_dist_map = uniform_distribution_map<T,type_info<T>::is_integer>;
+using uniform_dist_map = uniform_distribution_map<T,pni::core::type_info<T>::is_integer>;
 
 //----------------------------------------------------------------------------
 template<typename T> class uniform_distribution
@@ -56,8 +57,8 @@ template<typename T> class uniform_distribution
     public:
         uniform_distribution():
             _engine(),
-            _distribution(0.2*type_info<T>::min(),
-                          0.2*type_info<T>::max())
+            _distribution(0.2*pni::core::type_info<T>::min(),
+                          0.2*pni::core::type_info<T>::max())
         { 
             _engine.seed(std::random_device()()); 
         }
@@ -77,8 +78,8 @@ template<typename T> class uniform_distribution<std::complex<T> >
     public:
         uniform_distribution():
             _engine(),
-            _distribution(0.2*type_info<float32>::min(),
-                          0.2*type_info<float32>::max())
+            _distribution(0.2*pni::core::type_info<float32>::min(),
+                          0.2*pni::core::type_info<float32>::max())
         {
             _engine.seed(std::random_device()()); 
         }
@@ -106,16 +107,59 @@ template<> class uniform_distribution<bool_t>
 
         bool_t operator()()
         {
-            return _distribution(_engine);
+            return _distribution(_engine)!=0;
         }
 };
+
+#ifdef _MSC_VER
+//----------------------------------------------------------------------------
+template<> class uniform_distribution<pni::core::uint8>
+{
+    private:
+        std::mt19937_64 _engine;
+        std::uniform_int_distribution<pni::core::uint16> _distribution;
+    public:
+        uniform_distribution():
+            _engine(),
+            _distribution(0,255)
+        {
+            _engine.seed(std::random_device()()); 
+        }
+
+        pni::core::uint8 operator()()
+        {
+            return _distribution(_engine)!=0;
+        }
+};
+
+template<> class uniform_distribution<pni::core::int8>
+{
+    private:
+        std::mt19937_64 _engine;
+        std::uniform_int_distribution<pni::core::int16> _distribution;
+    public:
+        uniform_distribution():
+            _engine(),
+            _distribution(-127,128)
+        {
+            _engine.seed(std::random_device()()); 
+        }
+
+        pni::core::int8 operator()()
+        {
+            return _distribution(_engine)!=0;
+        }
+};
+
+#endif
+
 
 //----------------------------------------------------------------------------
 template<> class uniform_distribution<binary>
 {
     private:
         std::mt19937_64 _engine;
-        std::uniform_int_distribution<uint8> _distribution;
+        std::uniform_int_distribution<uint16> _distribution;
     public:
         uniform_distribution():
             _engine(),

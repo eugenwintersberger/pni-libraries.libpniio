@@ -30,6 +30,7 @@
 #include "nxlink_type.hpp"
 #include "algorithms/get_path.hpp"
 #include "algorithms/get_object.hpp"
+#include "../windows.hpp"
 
 
 namespace pni{
@@ -40,7 +41,7 @@ namespace nx{
     //
     // This function throws value_error when the target path contains
     // intermediate ..!
-    void __check_target_path(const nxpath &target);
+    PNIIO_EXPORT void __check_target_path(const nxpath &target);
    
     //------------------------------------------------------------------------
     //!
@@ -433,7 +434,7 @@ namespace nx{
                 break;
             case nxlink_type::EXTERNAL:
                 //check if the file exists
-                if(!exists(path(target.filename())))
+                if(!exists(boost::filesystem::path(target.filename())))
                     return nxlink_status::INVALID;
                 
                 try
