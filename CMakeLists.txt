@@ -1,5 +1,7 @@
-cmake_minimum_required(VERSION 2.6)
-project(libpniio)
+cmake_minimum_required(VERSION 3.0.0)
+project(pniio
+        LANGUAGES CXX
+        VERSION 1.1.0)
 include(CTest)
 
 set(CMAKE_FAMILY_VERSION "${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}")
@@ -27,11 +29,8 @@ option(BOOST_PREFIX "installation prefix of the local BOOST installation" "/usr"
 include(configure/CMakeLists.txt)
 
 #need to define the version of the library
-set(MAJOR_VERSION "1")
-set(MINOR_VERSION "1")
-set(PATCH_VERSION "0")
-set(LIBRARY_VERSION "${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}")
-set(SO_VERSION ${LIBRARY_VERSION})
+set(LIBRARY_VERSION ${PROJECT_VERSION})
+set(SO_VERSION ${PROJECT_VERSION})
 
 include_directories("./include")
 
