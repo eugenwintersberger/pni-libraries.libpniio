@@ -6,7 +6,7 @@ set(SOURCES create_attribute_test.cpp
 
 set_source_files_properties(create_attribute_test.cpp PROPERTIES 
                             COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE=testing attribute algorithms")
-add_executable(algo_attribute_test EXCLUDE_FROM_ALL ${SOURCES} 
+add_executable(algo_attribute_test ${SOURCES} 
                $<TARGET_OBJECTS:test_common>
                $<TARGET_OBJECTS:algorithm_common>)
 
@@ -21,6 +21,5 @@ if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
         ENVIRONMENT "PATH=${PATH_STRING}")
 endif()
 
-add_dependencies(check algo_attribute_test)
 
 

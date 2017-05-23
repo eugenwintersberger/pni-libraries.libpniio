@@ -159,7 +159,8 @@ add_executable(attribute_tests ${CPPFILES}
 target_link_libraries(attribute_tests pniio
                ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_test(NAME "XML::attribute_tests"
-         COMMAND attribute_tests)
+         COMMAND attribute_tests
+         WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/xml_test/attribute)
 
 if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
     set_property(TEST "XML::attribute_tests" APPEND PROPERTY
