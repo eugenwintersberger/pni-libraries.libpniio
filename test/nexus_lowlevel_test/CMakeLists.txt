@@ -21,7 +21,7 @@ target_link_libraries(nxfile_tests pniio Boost::unit_test_framework)
 add_test("Nexus_Layer_1:nxfile" nxfile_tests)
 
 if(CMAKE_SYSTEM_NAME MATCHES Windows)
-  set_property(TEST "NXexus_Layer_1:nxfile" APPEND PROPERTY
+  set_property(TEST "Nexus_Layer_1:nxfile" APPEND PROPERTY
   ENVIRONMENT "PATH=${PATH_STRING}")
 endif()
 

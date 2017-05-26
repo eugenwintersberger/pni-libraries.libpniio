@@ -16,6 +16,6 @@ COMMAND object_parsers_test
 WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/parser_test/object_parsers)
 
 if(CMAKE_SYSTEM_NAME MATCHES Windows)
-  set_property(TEST "parser:object_parsers" APPEND PROPERTY
+  set_property(TEST "parsers:object_parsers" APPEND PROPERTY
   ENVIRONMENT "PATH=${PATH_STRING}")
 endif()
