@@ -8,11 +8,15 @@ foreach(F ${DATAFILES})
     configure_file(${F} ${F} COPYONLY)
 endforeach()
 
-set_source_files_properties(tiff_reader_test.cpp PROPERTIES 
+set_source_files_properties(tiff_reader_test.cpp PROPERTIES
                             COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE=Testing data readers")
-add_executable(reader_test EXCLUDE_FROM_ALL ${SOURCES})
-target_link_libraries(reader_test pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+add_executable(reader_test  ${SOURCES})
+target_link_libraries(reader_test pniio Boost::unit_test_framework)
 
 
 add_test(NAME "reader-test" COMMAND reader_test)
-add_dependencies(check reader_test)
+
+if(CMAKE_SYSTEM_NAME MATCHES Windows)
+  set_property(TEST "reader-test" APPEND PROPERTY
+  ENVIRONMENT "PATH=${PATH_STRING}")
+endif()
