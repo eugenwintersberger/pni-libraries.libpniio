@@ -3,22 +3,28 @@ if(hdf5_DIR)
     #look for a cmake package specified by the user or provided via the global
     #package registry
 
+    message(STATUS "Try to find HDF5 cmake package ...")
+
     find_package(hdf5 CONFIG REQUIRED)
 
     set(hdf5_LIBRARIES hdf5::hdf5-shared)
     get_target_property(hdf5_INCLUDE_DIRS hdf5::hdf5-shared INTERFACE_INCLUDE_DIRECTORIES)
+    get_target_property(hdf5_LIBRARY_DIRS hdf5::hdf5-shared LOCATION)
+    get_filename_component(hdf5_LIBRARY_DIRS ${hdf5_LIBRARY_DIRS} DIRECTORY)
+
+    link_directories(${hdf5_LIBRARY_DIRS})
+    add_definitions(-DH5_BUILT_AS_DYNAMIC_LIB)
 else()
-    message(FATAL_ERROR "HDF5 search without cmake not implemented yet")
+    message(STATUS "Try to configure HDF5 manually via tools ...")
+    find_package(HDF5 REQUIRED C)
+
+    message(STATUS "HDF5 header files: ${HDF5_INCLUDE_DIRS}")
+    message(STATUS "HDF5 libraries: ${HDF5_LIBRARIES}")
+
 endif()
-add_definitions(-DH5_BUILT_AS_DYNAMIC_LIB)
-message(STATUS "Found HDF5 headers in: ${hdf5_INCLUDE_DIRS}")
-message(STATUS "Found HDF5 libraries: ${hdf5_LIBRARIES}")
-get_target_property(FILE_NAME hdf5::hdf5-shared LOCATION)
-get_filename_component(FILE_NAME ${FILE_NAME} DIRECTORY)
-link_directories(${FILE_NAME})
-message(STATUS "Found HDF5 library file: ${FILE_NAME}")
-get_target_property(FILE_NAME hdf5::hdf5-shared INTERFACE_LINK_LIBRARIES)
-message(STATUS "Found HDF5 link libraries: ${FILE_NAME}")
+
+# add HDF5 include directories - we need them everywhere in the code
+include_directories(${HDF5_INCLUDE_DIRS} ${hdf5_INCLUDE_DIRS})
 
 #if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
 #    find_package(HDF5 NAMES hdf5 COMPONENTS C)
@@ -33,7 +39,7 @@ message(STATUS "Found HDF5 link libraries: ${FILE_NAME}")
 #        #without use provided HDF5_C_LIBARY_DIRS
 #        find_library(HDF5_LIBRARIES libhdf5)
 #    endif()
-#   
+#
 #    message(STATUS "Found: ${HDF5_LIBRARIES}")
 #    if(HDF5_LIBRARIES-NOTFOUND)
 #        set(HDF5_FOUND FALSE)
@@ -52,7 +58,7 @@ message(STATUS "Found HDF5 link libraries: ${FILE_NAME}")
 #    endif()
 #
 #    get_filename_component(HDF5_INCLUDE_DIRS ${HDF5_HEADERS} PATH)
-#    include_directories(${HDF5_INCLUDE_DIRS}) 
+#    include_directories(${HDF5_INCLUDE_DIRS})
 #else()
 #    include(FindHDF5)
 #endif()

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(pniio
-        LANGUAGES CXX
+        LANGUAGES CXX C
         VERSION 1.1.0)
 include(CTest)
 
@@ -40,4 +40,3 @@ add_subdirectory("include")
 add_subdirectory("src")
 #add_subdirectory("doc")
 add_subdirectory("test")
-

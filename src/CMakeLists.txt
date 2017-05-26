@@ -7,7 +7,7 @@ set(SOURCES column_info.cpp
              exceptions.cpp
              container_io_config.cpp
              strutils.cpp)
-include_directories(${pnicore_INCLUDE_DIRS} ${hdf5_INCLUDE_DIRS})
+include_directories(${pnicore_INCLUDE_DIRS} ${hdf5_INCLUDE_DIRS} ${HDF5_INCLUDE_DIRS})
 add_definitions(-DDLL_BUILD)
 #first we need to build the C-filter code
 add_subdirectory(cbf)
@@ -17,7 +17,7 @@ add_subdirectory(tiff)
 add_subdirectory(formatters)
 
 
-add_library(pniio SHARED ${SOURCES} 
+add_library(pniio SHARED ${SOURCES}
                          $<TARGET_OBJECTS:cbf_objects>
                          $<TARGET_OBJECTS:fio_objects>
                          $<TARGET_OBJECTS:nx_objects>
@@ -31,20 +31,19 @@ add_library(pniio SHARED ${SOURCES}
 #add_dependencies(pniio config.hpp)
 set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"
                                        SOVERSION "${SO_VERSION}")
-                                    
-target_link_libraries(pniio 
-                      PUBLIC pnicore_shared 
+
+target_link_libraries(pniio
+                      PUBLIC pnicore_shared
                       ${hdf5_LIBRARIES}
+                      ${HDF5_LIBRARIES}
                       ${Boost_FILESYSTEM_LIBRARY}
                       ${Boost_REGEX_LIBRARY}
                       ${Boost_DATE_TIME_LIBRARY}                      
-                      ${ZLIB_LIBRARIES}
-                      ${SZLIB_LIBRARIES}
                       )
 target_compile_definitions(pniio PUBLIC BOOST_ALL_DYN_LINK)
 
 #install code
-install(TARGETS pniio 
+install(TARGETS pniio
         LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         RUNTIME DESTINATION "${CMAKE_INSTALL_LIBDIR}"
@@ -57,7 +56,5 @@ else()
     CONFIGURE_FILE(pniio.pc.cmake pniio.pc @ONLY)
 endif()
 
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pniio.pc" 
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pniio.pc"
         DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}/pkgconfig")
-
-
