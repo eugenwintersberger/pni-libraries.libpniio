@@ -1,4 +1,27 @@
 
+
+if(PNIIO_CONAN_HDF5)
+
+    find_program(CONAN conan)
+    if(CONAN MATCHES "CONAN-NONFOUND")
+        message(FATAL_ERROR "Could not find conan executable to install dependencies")
+    endif()
+
+    if(NOT EXISTS ${PROJECT_BINARY_DIR}/conan.cmake)
+        message(STATUS "Downloading conan.cmake file from github")
+        file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/master/conan.cmake"
+             ${PROJECT_BINARY_DIR}/conan.cmake)
+    endif()
+
+    include(${PROJECT_BINARY_DIR}/conan.cmake)
+
+    conan_cmake_run(REQUIRES "hdf5/1.10.1@wintersb/stable"
+                    BASIC_SETUP
+                    BUILD missing)
+
+endif()
+
+
 if(hdf5_DIR)
     #look for a cmake package specified by the user or provided via the global
     #package registry
@@ -25,47 +48,3 @@ endif()
 
 # add HDF5 include directories - we need them everywhere in the code
 include_directories(${HDF5_INCLUDE_DIRS} ${hdf5_INCLUDE_DIRS})
-
-#if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
-#    find_package(HDF5 NAMES hdf5 COMPONENTS C)
-#    message(STATUS "HDF5 header files: ${HDF5_INCLUDE_DIRS}")
-#    set(HDF5_FOUND TRUE)
-#    #first we have to find the c-library
-#    if(HDF5_C_LIBRARY_DIRS)
-#        #user provided HDF5_C_LIBRARY_DIRS
-#        message(STATUS "Try to find HDF5 library in: ${HDF5_C_LIBRARY_DIRS}")
-#        find_library(HDF5_LIBRARIES libhdf5 "${HDF5_C_LIBRARY_DIRS}")
-#    else()
-#        #without use provided HDF5_C_LIBARY_DIRS
-#        find_library(HDF5_LIBRARIES libhdf5)
-#    endif()
-#
-#    message(STATUS "Found: ${HDF5_LIBRARIES}")
-#    if(HDF5_LIBRARIES-NOTFOUND)
-#        set(HDF5_FOUND FALSE)
-#    endif()
-#
-#    #generate the include path from the path of the library
-#    get_filename_component(HDF5_C_LIBRARY_DIRS ${HDF5_LIBRARIES} PATH)
-#    string(REGEX REPLACE "lib(64)*" "include" HDF5_INCLUDE_DIRS "${HDF5_C_LIBRARY_DIRS}")
-#    message(STATUS "Found HDF5 library  in: ${HDF5_C_LIBRARY_DIRS}")
-#    message(STATUS "Found HDF5 headers in: ${HDF5_INCLUDE_DIRS}")
-#
-#    #now we have to look for the header file
-#    find_file(HDF5_HEADERS "hdf5.h" ${HDF5_INCLUDE_DIRS} "${HDF5_INCLUDE_DIRS}/hdf5")
-#    if(HDF5_HEADERS-NOTFOUND)
-#        set(HDF5_FOUND FALSE)
-#    endif()
-#
-#    get_filename_component(HDF5_INCLUDE_DIRS ${HDF5_HEADERS} PATH)
-#    include_directories(${HDF5_INCLUDE_DIRS})
-#else()
-#    include(FindHDF5)
-#endif()
-#
-#message(STATUS "${HDF5_FOUND}")
-#if(NOT HDF5_FOUND)
-#    #could not find HDF5 - stop configuration step
-#    message("HDF5 not found:")
-#    message(FATAL "Please set HDF5_C_INCLUDE_DIRS and HDF5_LIBRARY_DIRS manually!")
-#endif()

@@ -8,19 +8,30 @@ set(CMAKE_FAMILY_VERSION "${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}")
 
 if(NOT CMAKE_BUILD_TYPE)
     message("No build type specified - default is RELEASE")
-    set(CMAKE_BUILD_TYPE RELEASE)
+    set(CMAKE_BUILD_TYPE Release)
 endif()
 
-set(BOOST_INCLUDEDIR CACHE PATH "Path to the boost header files")
-set(BOOST_LIBRARYDIR CACHE PATH "Path to the boost library files")
-set(HDF5_C_LIBRARY_DIRS CACHE PATH "Path to the HDF5 library files")
-set(HDF5_INCLUDE_DIRS CACHE PATH "Path to the HDF5 header files")
-set(PNICORE_INCLUDEDIR CACHE PATH "Path to the pnicore header files")
-set(PNICORE_LIBRARYDIR CACHE PATH "Path to the pnicore library files")
-set(ZLIB_LIBRARYDIR CACHE PATH "Path to the ZLib library files")
-set(ZLIB_INCLUDEDIR CACHE PATH "Path to the ZLib header files")
-set(SZLIB_LIBRARYDIR CACHE PATH "Path to the SZLib library files")
-set(SZLIB_INCLUDEDIR CACHE PATH "Path to the SZLib header files")
+# on Windows we first try to fetch Boost from conan - on all other systems
+# try to get the system installation
+if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
+  set(PNIIO_CONAN_BOOST ON CACHE BOOL "User the Boost libraries from Conan")
+else()
+  set(PNIIO_CONAN_BOOST OFF CACHE BOOL "User the Boost libraries from Conan")
+endif()
+
+# on Windows we first try to fetch Boost from conan - on all other systems
+# try to get the system installation
+if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
+  set(PNIIO_CONAN_HDF5 ON CACHE BOOL "User the Boost libraries from Conan")
+else()
+  set(PNIIO_CONAN_HDF5 OFF CACHE BOOL "User the Boost libraries from Conan")
+endif()
+
+if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
+  set(PNIIO_CONAN_PNICORE ON CACHE BOOL "Using conan pnicore installation")
+else()
+  set(PNIIO_CONAN_PNICORE OFF CACHE BOOL "Using conan pnicore installation")
+endif()
 
 #===========================provide some user options==========================
 option(BOOST_PREFIX "installation prefix of the local BOOST installation" "/usr")

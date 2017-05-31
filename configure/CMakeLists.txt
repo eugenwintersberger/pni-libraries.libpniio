@@ -4,6 +4,7 @@ include(FindPkgConfig)
 
 include("configure/FindPniCore.cmake")
 include("configure/ConfigureHDF5.cmake")
+include("configure/BoostConfig.cmake")
 
 #=================================================================================
 if(NOT CMAKE_BUILD_TYPE)
@@ -17,13 +18,13 @@ if(CMAKE_CXX_COMPILER_ID MATCHES GNU)
     add_definitions(-g -Wall -Wextra -pedantic)
     if(CMAKE_BUILD_TYPE MATCHES RELEASE)
         message("setup for release build ...")
-        add_definitions(-O3) 
+        add_definitions(-O3)
     elseif(CMAKE_BUILD_TYPE MATCHES DEBUG)
         message("setup for debug build ...")
         add_definitions(-O0)
         add_definitions(-DDEBUG)
     endif()
-    
+
     add_definitions(-std=c++11)
     add_definitions(-DGNU_CXX)
     add_definitions(-DGNU)
@@ -55,32 +56,3 @@ include(configure/InstallConfig.cmake)
 
 #===================================check the size of data types===============
 include(configure/CheckTypeSize.cmake)
-
-
-#==========================check for libraries=====================================
-
-if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
-
-endif()
-
-if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
-    set(Boost_USE_STATIC_LIBS OFF)
-    set(Boost_USE_STATIC_RUNTIME OFF)
-else()
-    set(Boost_USE_STATIC_LIBS OFF)
-    set(Boost_USE_STATIC_RUNTIME OFF)
-endif()
-set(Boost_USE_MULTITHREADED ON)
-find_package(Boost 1.41 COMPONENTS system 
-                                   regex 
-                                   date_time
-                                   unit_test_framework 
-                                   filesystem)
-
-
-if(NOT Boost_FOUND)
-    message(FATAL_ERROR "Could not find Boost libraries!")
-else()
-    message(STATUS "Found Boost version: ${Boost_VERSION}")
-    add_definitions(-DBOOST_VERSION=${Boost_VERSION})
-endif()
