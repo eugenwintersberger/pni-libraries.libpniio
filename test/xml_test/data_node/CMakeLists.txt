@@ -3,13 +3,14 @@ set(SOURCES child_node_io_test.cpp
             attribute_node_io_test.cpp
     )
 
-set_source_files_properties(child_node_io_test.cpp PROPERTIES 
+set_source_files_properties(child_node_io_test.cpp PROPERTIES
                             COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE=testing data_node operations")
 add_executable(data_node_test ${SOURCES})
-target_link_libraries(data_node_test pniio 
-                                     ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+target_link_libraries(data_node_test pniio Boost::unit_test_framework)
 
-add_test("XML::data_node_tests" data_node_test)
+add_test(NAME "XML::data_node_tests"
+COMMAND data_node_test
+WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/xml_test/data_node)
 
 if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
     set_property(TEST "XML::data_node_tests" APPEND PROPERTY

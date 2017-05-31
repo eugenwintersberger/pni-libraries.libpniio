@@ -1,9 +1,9 @@
-set(SOURCES simple_structure_test.cpp   
-            simple_structure_with_data_test.cpp  
-            detector_with_transformation_test.cpp       
+set(SOURCES simple_structure_test.cpp
+            simple_structure_with_data_test.cpp
+            detector_with_transformation_test.cpp
     )
-    
-set(XMLFILES simple_structure.nxs      
+
+set(XMLFILES simple_structure.nxs
              simple_structure.xml
              simple_structure_with_data.nxs
              simple_structure_with_data.xml
@@ -16,12 +16,13 @@ foreach(XMLFILE ${XMLFILES})
 endforeach()
 
 
-add_executable(nexus_to_xml_test ${SOURCES} 
+add_executable(nexus_to_xml_test ${SOURCES}
                $<TARGET_OBJECTS:xml_test_common>)
-target_link_libraries(nexus_to_xml_test pniio
-                                        ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+target_link_libraries(nexus_to_xml_test pniio Boost::unit_test_framework)
 
-add_test("XML::nexus_to_xml_test" nexus_to_xml_test)
+add_test(NAME "XML::nexus_to_xml_test"
+COMMAND nexus_to_xml_test
+WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/xml_test/nexus_to_xml)
 
 if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
     set_property(TEST "XML::nexus_to_xml_test" APPEND PROPERTY

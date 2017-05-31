@@ -9,14 +9,16 @@ set(SOURCES close_test.cpp
            )
 
 
-set_source_files_properties(close_test.cpp PROPERTIES 
+set_source_files_properties(close_test.cpp PROPERTIES
                             COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE=testing common algorithms")
-add_executable(common_test ${SOURCES} 
+add_executable(common_test ${SOURCES}
                $<TARGET_OBJECTS:test_common>
                $<TARGET_OBJECTS:algorithm_common>
                )
-target_link_libraries(common_test pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
-add_test("algorithms:common" common_test)
+target_link_libraries(common_test pniio Boost::unit_test_framework)
+add_test(NAME "algorithms:common"
+COMMAND common_test
+WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/algorithm_test/common_test)
 
 if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
     set_property(TEST "algorithms:common" APPEND PROPERTY

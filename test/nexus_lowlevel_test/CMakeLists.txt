@@ -18,12 +18,20 @@ set_source_files_properties(nxfile_creation_test.cpp PROPERTIES
                             COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE=testing nxfile operations")
 add_executable(nxfile_tests ${NXFILESRC})
 target_link_libraries(nxfile_tests pniio Boost::unit_test_framework)
-add_test("Nexus_Layer_1:nxfile" nxfile_tests)
+add_test(NAME "Nexus_Layer_1:nxfile"
+COMMAND nxfile_tests
+WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
 
 if(CMAKE_SYSTEM_NAME MATCHES Windows)
   set_property(TEST "Nexus_Layer_1:nxfile" APPEND PROPERTY
   ENVIRONMENT "PATH=${PATH_STRING}")
 endif()
+
+add_custom_target(cleanup_artifacts
+COMMAND ${CMAKE_COMMAND} -E remove *.nxs
+WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
+
+set_tests_properties("Nexus_Layer_1:nxfile" PROPERTIES DEPENDS cleanup_artifacts)
 
 
 #------------------------------------------------------------------------------
@@ -41,7 +49,9 @@ add_executable(nxgroup_tests ${NXGROUPSRC}
                $<TARGET_OBJECTS:level_1_common>
                $<TARGET_OBJECTS:test_common>)
 target_link_libraries(nxgroup_tests pniio Boost::unit_test_framework)
-add_test("Nexus_Layer_1:nxgroup" nxgroup_tests)
+add_test(NAME "Nexus_Layer_1:nxgroup"
+COMMAND nxgroup_tests
+WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
 
 if(CMAKE_SYSTEM_NAME MATCHES Windows)
   set_property(TEST "Nexus_Layer_1:nxgroup" APPEND PROPERTY
@@ -64,7 +74,9 @@ add_executable(nxfield_tests ${NXFIELDSRC}
                $<TARGET_OBJECTS:level_1_common>
                $<TARGET_OBJECTS:test_common>)
 target_link_libraries(nxfield_tests pniio Boost::unit_test_framework)
-add_test("Nexus_Layer_1:nxfield" nxfield_tests)
+add_test(NAME "Nexus_Layer_1:nxfield"
+COMMAND nxfield_tests
+WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
 
 if(CMAKE_SYSTEM_NAME MATCHES Windows)
   set_property(TEST "Nexus_Layer_1:nxfield" APPEND PROPERTY
@@ -88,7 +100,9 @@ add_executable(nxattribute_tests ${NXATTRSRC}
                 $<TARGET_OBJECTS:level_1_common>
                 $<TARGET_OBJECTS:test_common>)
 target_link_libraries(nxattribute_tests pniio Boost::unit_test_framework)
-add_test("Nexus_Layer_1:nxattribute" nxattribute_tests)
+add_test(NAME "Nexus_Layer_1:nxattribute"
+COMMAND nxattribute_tests
+WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
 
 if(CMAKE_SYSTEM_NAME MATCHES Windows)
   set_property(TEST "Nexus_Layer_1:nxattribute" APPEND PROPERTY
@@ -112,7 +126,9 @@ add_executable(nxlink_tests ${NXLINKSRC}
                $<TARGET_OBJECTS:level_1_common>
                $<TARGET_OBJECTS:test_common>)
 target_link_libraries(nxlink_tests pniio Boost::unit_test_framework)
-add_test("Nexus_Layer_1:nxlink" nxlink_tests)
+add_test(NAME "Nexus_Layer_1:nxlink"
+COMMAND nxlink_tests
+WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
 
 if(CMAKE_SYSTEM_NAME MATCHES Windows)
   set_property(TEST "Nexus_Layer_1:nxlink" APPEND PROPERTY

@@ -39,8 +39,8 @@ BOOST_AUTO_TEST_SUITE(file_imp_test)
 
 
         //should raise an exception because the file is not an HDF5 file
-        BOOST_CHECK_THROW(h5::file_imp::open("hdf5_imp_test",false),file_error);
-        BOOST_CHECK_THROW(h5::file_imp::open("hdf5_imp_test",true),file_error);
+        BOOST_CHECK_THROW(h5::file_imp::open("cmake_install.cmake",false),file_error);
+        BOOST_CHECK_THROW(h5::file_imp::open("cmake_install.cmake",true),file_error);
         //should throw an exception because the file does not exist.
         BOOST_CHECK_THROW(h5::file_imp::open("blablabla.h5",false),object_error);
         BOOST_CHECK_THROW(h5::file_imp::open("blablabla.h5",true),object_error);
