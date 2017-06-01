@@ -28,7 +28,7 @@ namespace io{
 namespace nx{
 namespace xml{
 
-    
+
     pni::core::array make_array(const node &data)
     {
         using namespace pni::core;
@@ -72,7 +72,7 @@ namespace xml{
                 throw type_error(EXCEPTION_RECORD,
                         "Unsupported data type in XML!");
         }
-        
+
     }
 
 //end of namespace
@@ -80,4 +80,3 @@ namespace xml{
 }
 }
 }
-

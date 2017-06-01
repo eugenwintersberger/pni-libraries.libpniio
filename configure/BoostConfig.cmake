@@ -18,8 +18,9 @@ if(PNIIO_CONAN_BOOST)
 
     include(${PROJECT_BINARY_DIR}/conan.cmake)
 
-    conan_cmake_run(REQUIRES "Boost/1.64.0@wintersb/stable"
+    conan_cmake_run(REQUIRES "Boost/1.62.0@lasote/stable"
                     BASIC_SETUP
+                    OPTIONS "Boost:shared=True"
                     BUILD missing)
 
 endif()

@@ -15,8 +15,8 @@ if(PNIIO_CONAN_PNICORE)
     include(${PROJECT_BINARY_DIR}/conan.cmake)
 
     set(BUILD_OPTS)
-    if(PNIIO_CONAN_BOOST)
-      list(APPEND BUILD_OPTS "pnicore:with_conan_boost=True")
+    if(NOT PNIIO_CONAN_BOOST)
+      list(APPEND BUILD_OPTS "pnicore:with_system_boost=True")
     endif()
 
     conan_cmake_run(REQUIRES "pnicore/1.1.0@wintersb/devel"
