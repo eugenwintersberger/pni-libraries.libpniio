@@ -42,7 +42,7 @@ if(hdf5_DIR)
     add_definitions(-DH5_BUILT_AS_DYNAMIC_LIB)
 else()
     message(STATUS "Try to configure HDF5 manually via tools ...")
-    find_package(HDF5 REQUIRED C)
+    find_package(HDF5 REQUIRED)
 
     get_filename_component(HDF5_LIBRARY_DIRS ${HDF5_C_LIBRARIES} DIRECTORY)
 

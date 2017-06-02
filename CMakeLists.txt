@@ -7,8 +7,7 @@ include(CTest)
 set(CMAKE_FAMILY_VERSION "${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}")
 
 if(NOT CMAKE_BUILD_TYPE)
-    message("No build type specified - default is RELEASE")
-    set(CMAKE_BUILD_TYPE Release)
+    message(FATAL_ERROR "No CMAKE_BUILD_TYPE set - you have to provide one!")
 endif()
 
 # on Windows we first try to fetch Boost from conan - on all other systems

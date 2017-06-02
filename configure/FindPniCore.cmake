@@ -22,6 +22,7 @@ if(PNIIO_CONAN_PNICORE)
     conan_cmake_run(REQUIRES "pnicore/1.1.0@wintersb/devel"
                     BASIC_SETUP
                     OPTIONS ${BUILD_OPTS}
+                    IMPORTS "bin, *.dll -> bin"
                     BUILD missing)
 
 endif()
