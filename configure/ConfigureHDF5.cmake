@@ -17,7 +17,9 @@ if(PNIIO_CONAN_HDF5)
 
     conan_cmake_run(REQUIRES "hdf5/1.10.1@wintersb/stable"
                     BASIC_SETUP
+                    IMPORTS "bin, *.dll -> bin"
                     BUILD missing)
+
 
 endif()
 
@@ -34,6 +36,7 @@ if(hdf5_DIR)
     get_target_property(hdf5_INCLUDE_DIRS hdf5::hdf5-shared INTERFACE_INCLUDE_DIRECTORIES)
     get_target_property(hdf5_LIBRARY_DIRS hdf5::hdf5-shared LOCATION)
     get_filename_component(hdf5_LIBRARY_DIRS ${hdf5_LIBRARY_DIRS} DIRECTORY)
+    set(HDF5_LIBRARY_DIRS ${hdf5_LIBRARY_DIRS})
 
     link_directories(${hdf5_LIBRARY_DIRS})
     add_definitions(-DH5_BUILT_AS_DYNAMIC_LIB)
@@ -41,10 +44,16 @@ else()
     message(STATUS "Try to configure HDF5 manually via tools ...")
     find_package(HDF5 REQUIRED C)
 
+    get_filename_component(HDF5_LIBRARY_DIRS ${HDF5_C_LIBRARIES} DIRECTORY)
+
     message(STATUS "HDF5 header files: ${HDF5_INCLUDE_DIRS}")
     message(STATUS "HDF5 libraries: ${HDF5_LIBRARIES}")
+    message(STATUS "HDF5 library directory: ${HDF5_LIBRARY_DIRS}")
+    link_directories(${HDF5_LIBRARY_DIRS})
+    add_definitions(-DH5_BUILT_AS_DYNAMIC_LIB)
 
 endif()
+
 
 # add HDF5 include directories - we need them everywhere in the code
 include_directories(${HDF5_INCLUDE_DIRS} ${hdf5_INCLUDE_DIRS})

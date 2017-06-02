@@ -21,6 +21,7 @@ if(PNIIO_CONAN_BOOST)
     conan_cmake_run(REQUIRES "Boost/1.62.0@lasote/stable"
                     BASIC_SETUP
                     OPTIONS "Boost:shared=True"
+                    IMPORTS "bin, *.dll -> bin"
                     BUILD missing)
 
 endif()

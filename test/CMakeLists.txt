@@ -22,7 +22,11 @@ endmacro()
 # appropriate libraries
 #
 if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
-    set(PATH_STRING "$ENV{PATH};$<TARGET_FILE_DIR:pniio>;${Boost_LIBRARY_DIRS};$<TARGET_FILE_DIR:pnicore_shared>;")
+    get_filename_component(Boost_ROOT_PATH ${Boost_LIBRARY_DIRS} DIRECTORY)
+    get_filename_component(HDF5_ROOT_PATH ${HDF5_LIBRARY_DIRS} DIRECTORY)
+
+    set(PATH_STRING
+        "$ENV{PATH};$<TARGET_FILE_DIR:pniio>;${HDF5_ROOT_PATH}/bin;${Boost_ROOT_PATH}/bin;${Boost_ROOT_PATH}/lib;$<TARGET_FILE_DIR:pnicore_shared>;${ZLIB_ROOT_PATH}/../bin")
     string(REPLACE ";" "\\;" PATH_STRING "${PATH_STRING}")
 endif()
 
