@@ -25,9 +25,13 @@
 #include <pni/core/types.hpp>
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/exceptions.hpp>
+#include <boost/filesystem.hpp>
+#include <boost/format.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx;
+
+namespace fs = boost::filesystem;
 
 struct nxfile_creation_test_fixture
 {
@@ -46,6 +50,7 @@ BOOST_FIXTURE_TEST_SUITE(nxfile_creation_test,nxfile_creation_test_fixture)
         BOOST_CHECK(!f.is_valid());
 
         string fname = "nxfile_creation_test_test_simple.nxs";
+        fs::remove(fname);
         //initially create the file
         BOOST_CHECK_NO_THROW(f = h5::nxfile::create_file(fname));
         BOOST_CHECK(f.is_valid());
@@ -63,6 +68,7 @@ BOOST_FIXTURE_TEST_SUITE(nxfile_creation_test,nxfile_creation_test_fixture)
     {
         string fname = "nxfile_creation_test_test_with_overwrite.nxs";
         //initially create the file
+        fs::remove(fname);
         BOOST_CHECK_NO_THROW(f = h5::nxfile::create_file(fname));
         BOOST_CHECK(f.is_valid());
         BOOST_CHECK(!f.is_readonly());
@@ -79,7 +85,15 @@ BOOST_FIXTURE_TEST_SUITE(nxfile_creation_test,nxfile_creation_test_fixture)
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_with_split)
     {
+
         string fname = "nxfile_create_test_test_with_split.%05i.nxs";
+        for(size_t i=0;i<10;i++)
+        {
+            boost::format fmt(fname.c_str());
+            fmt%i;
+            fs::remove(fmt.str());
+        }
+
         BOOST_CHECK_NO_THROW(f= h5::nxfile::create_files(fname,2));
         h5::nxgroup root = f.root();
 
@@ -98,6 +112,13 @@ BOOST_FIXTURE_TEST_SUITE(nxfile_creation_test,nxfile_creation_test_fixture)
     BOOST_AUTO_TEST_CASE(test_with_overwrite_with_split)
     {
         string fname = "nxfile_create_test_test_with_overwrite_with_split.%05i.nxs";
+
+        for(size_t i=0;i<10;i++)
+        {
+            boost::format fmt(fname.c_str());
+            fmt%i;
+            fs::remove(fmt.str());
+        }
 
         //wrap this stuff into a block so that all destructors are called at the 
         //end before we try to recreate the file
