@@ -14,15 +14,9 @@ include(CTest)
 set(LIBRARY_VERSION ${PROJECT_VERSION})
 set(SO_VERSION ${PROJECT_VERSION})
 
-# =============================================================================
-# on the Linux platform we have to set the build type during configuration
-# whereas on Windows and OSX this is done during the build
-# =============================================================================
-if(CMAKE_HOST_SYSTEM_NAME MATCHES Linux)
-    if(NOT CMAKE_BUILD_TYPE)
-        message("No build type specified - default is RELEASE")
-        set(CMAKE_BUILD_TYPE Release STRING CACHE "Build type for which to configure")
-    endif()
+
+if(NOT CMAKE_BUILD_TYPE)
+    message(FATAL_ERROR "No CMAKE_BUILD_TYPE set - you have to provide one!")
 endif()
 
 # =============================================================================

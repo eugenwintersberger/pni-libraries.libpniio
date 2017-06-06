@@ -20,6 +20,9 @@ if(PNIIO_CONAN_HDF5)
                     IMPORTS "bin, *.dll -> bin"
                     BUILD missing)
 
+    #using here the native HDF5 package is most probably the best solution
+    message(STATUS "HDF5 conan found: ${CONAN_HDF5_ROOT}")
+    set(hdf5_DIR ${CONAN_HDF5_ROOT}/cmake)
 
 endif()
 
@@ -42,7 +45,7 @@ if(hdf5_DIR)
     add_definitions(-DH5_BUILT_AS_DYNAMIC_LIB)
 else()
     message(STATUS "Try to configure HDF5 manually via tools ...")
-    find_package(HDF5 REQUIRED C)
+    find_package(HDF5 REQUIRED)
 
     get_filename_component(HDF5_LIBRARY_DIRS ${HDF5_C_LIBRARIES} DIRECTORY)
 

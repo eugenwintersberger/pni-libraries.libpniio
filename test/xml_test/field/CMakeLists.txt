@@ -1,15 +1,32 @@
 #-----------------------------------------------------------------------------
 # data types and test data for scalar attributes 
 #-----------------------------------------------------------------------------
-set(TYPES uint8 int8 uint16 int16 uint32 int32 uint64 int64
-          float32 float64 float128 complex32 complex64 complex128 string
-          bool_t)
+if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
+    set(TYPES uint8 int8 uint16 int16 uint32 int32 uint64 int64
+              float32 float64 
+              complex32 complex64 
+              string 
+              bool_t)
 
-set(DATA_STRS 1 -4 200 -234 4000 23456 4013945 -4013945 
-              2.3455 -1.233e+4  123.24354e-4 
-              "34.+j123.e-3" "-23.-I8.203" "123+I340"
-              "hello word a stupid text"
-              true)
+    set(DATA_STRS 1 -4 200 -234 4000 23456 4013945 -4013945 
+                  2.3455 -1.233e+4  
+                  "34.+j123.e-3" "-23.-I8.203" 
+                  "hello word a stupid text"
+                  true)
+
+else()
+    set(TYPES uint8 int8 uint16 int16 uint32 int32 uint64 int64
+              float32 float64 float128 
+              complex32 complex64 complex128 
+              string 
+              bool_t)
+
+    set(DATA_STRS 1 -4 200 -234 4000 23456 4013945 -4013945 
+                  2.3455 -1.233e+4  123.24354e-4 
+                  "34.+j123.e-3" "-23.-I8.203" "123+I340"
+                  "hello word a stupid text"
+                  true)
+endif()
 
 #------------------------------------------------------------------------------
 # generating test code for scalar attribute data
@@ -36,11 +53,29 @@ endforeach()
 #-----------------------------------------------------------------------------
 # data types and test data for array fields
 #-----------------------------------------------------------------------------
-set(ARR_TYPES uint8 int8 uint16 int16 uint32 int32 uint64 int64
-          float32 float64 float128 complex32 complex64 complex128 
+
+if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
+    set(ARR_TYPES uint8 int8 uint16 int16 uint32 int32 uint64 int64
+          float32 float64 
+          complex32 complex64 
           bool_t)
 
-set(ARR_DATA_STRS "1 2 3" "-4 3 -10" "200 300 400" "-234 500 -34"
+    set(ARR_DATA_STRS "1 2 3" "-4 3 -10" "200 300 400" "-234 500 -34"
+                  "4000 2000 345" "23456 -3453 40392" "4013945 39458 14056"
+                  "-4013945 304213 -405982"
+                  "2.3455 -34.e+2 -42.e-5"
+                  "-1.233e+4 239e-3 30495.e-8"
+                  "34.+j123.e-3 34.e-2+I98.3 453.98-i743.29"
+                  "-23.-I8.203 893e+4-j23.12 9.e-8+I732e+3"
+                  "true true false")
+
+else()
+    set(ARR_TYPES uint8 int8 uint16 int16 uint32 int32 uint64 int64
+          float32 float64 float128 
+          complex32 complex64 complex128 
+          bool_t)
+
+    set(ARR_DATA_STRS "1 2 3" "-4 3 -10" "200 300 400" "-234 500 -34"
                   "4000 2000 345" "23456 -3453 40392" "4013945 39458 14056"
                   "-4013945 304213 -405982"
                   "2.3455 -34.e+2 -42.e-5"
@@ -50,6 +85,7 @@ set(ARR_DATA_STRS "1 2 3" "-4 3 -10" "200 300 400" "-234 500 -34"
                   "-23.-I8.203 893e+4-j23.12 9.e-8+I732e+3"
                   "123+I340 -I34.9 345.2"
                   "true true false")
+endif()
 
 #------------------------------------------------------------------------------
 # generating test code for array field data

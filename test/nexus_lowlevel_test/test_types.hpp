@@ -37,10 +37,14 @@ typedef boost::mpl::list<pni::core::uint8,
                          pni::core::int64,
                          pni::core::float32,
                          pni::core::float64,
+#ifndef _MSC_VER
                          pni::core::float128,
+#endif
                          pni::core::complex32,
                          pni::core::complex64,
+#ifndef _MSC_VER
                          pni::core::complex128,
+#endif
                          pni::core::binary,
                          pni::core::bool_t,
                          pni::core::string> field_test_types;
@@ -58,10 +62,14 @@ typedef boost::mpl::list<
         boost::mpl::vector<pni::io::nx::h5::nxgroup,pni::core::int64>,
         boost::mpl::vector<pni::io::nx::h5::nxgroup,pni::core::float32>,
         boost::mpl::vector<pni::io::nx::h5::nxgroup,pni::core::float64>,
+#ifndef _MSC_VER
         boost::mpl::vector<pni::io::nx::h5::nxgroup,pni::core::float128>,
+#endif
         boost::mpl::vector<pni::io::nx::h5::nxgroup,pni::core::complex32>,
         boost::mpl::vector<pni::io::nx::h5::nxgroup,pni::core::complex64>,
+#ifndef _MSC_VER
         boost::mpl::vector<pni::io::nx::h5::nxgroup,pni::core::complex128>,
+#endif
         boost::mpl::vector<pni::io::nx::h5::nxgroup,pni::core::binary>,
         boost::mpl::vector<pni::io::nx::h5::nxgroup,pni::core::string>,
         boost::mpl::vector<pni::io::nx::h5::nxgroup,pni::core::bool_t>
@@ -78,10 +86,14 @@ typedef boost::mpl::list<
         boost::mpl::vector<pni::io::nx::h5::nxfield,pni::core::int64>,
         boost::mpl::vector<pni::io::nx::h5::nxfield,pni::core::float32>,
         boost::mpl::vector<pni::io::nx::h5::nxfield,pni::core::float64>,
+#ifndef _MSC_VER
         boost::mpl::vector<pni::io::nx::h5::nxfield,pni::core::float128>,
+#endif
         boost::mpl::vector<pni::io::nx::h5::nxfield,pni::core::complex32>,
         boost::mpl::vector<pni::io::nx::h5::nxfield,pni::core::complex64>,
+#ifndef _MSC_VER
         boost::mpl::vector<pni::io::nx::h5::nxfield,pni::core::complex128>,
+#endif
         boost::mpl::vector<pni::io::nx::h5::nxfield,pni::core::binary>,
         boost::mpl::vector<pni::io::nx::h5::nxfield,pni::core::string>,
         boost::mpl::vector<pni::io::nx::h5::nxfield,pni::core::bool_t>
