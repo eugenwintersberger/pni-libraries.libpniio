@@ -1,28 +1,37 @@
 
 #-----------------------------------------------------------------------------
-# data types and test data for scalar attributes 
+# build common code for attributes
+#-----------------------------------------------------------------------------
+add_library(attr_test_common OBJECT attr_utils.cpp)
+target_include_directories(attr_test_common PRIVATE
+${PROJECT_BINARY_DIR}/test/xml_test/attribute)
+
+set(CLEANFILES)
+
+#-----------------------------------------------------------------------------
+# data types and test data for scalar attributes
 #-----------------------------------------------------------------------------
 if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
     set(TYPES uint8 int8 uint16 int16 uint32 int32 uint64 int64
-              float32 float64 
-              complex32 complex64 
+              float32 float64
+              complex32 complex64
               string
               bool_t)
 
-    set(TYPEIDS UINT8 INT8 UINT16 INT16 UINT32 INT32 UINT64 INT64 
-               FLOAT32 FLOAT64 
-               COMPLEX32 COMPLEX64 
+    set(TYPEIDS UINT8 INT8 UINT16 INT16 UINT32 INT32 UINT64 INT64
+               FLOAT32 FLOAT64
+               COMPLEX32 COMPLEX64
                STRING BOOL)
 
-    set(DATA_STRS 1 -4 200 -234 4000 23456 4013945 -4013945 
-                  2.3455 -1.233e+4  
-                  "34.+j123.e-3" "-23.-I8.203" 
+    set(DATA_STRS 1 -4 200 -234 4000 23456 4013945 -4013945
+                  2.3455 -1.233e+4
+                  "34.+j123.e-3" "-23.-I8.203"
                   "hello word a stupid text"
                   true)
 
-    set(DATA_CPPS 1 -4 200 -234 4000 23456 4013945 -4013945 
-                  2.3455f -1.233e+4  
-                  "34.f,123.e-3f" "-23.,-8.203" 
+    set(DATA_CPPS 1 -4 200 -234 4000 23456 4013945 -4013945
+                  2.3455f -1.233e+4
+                  "34.f,123.e-3f" "-23.,-8.203"
                   "\"hello word a stupid text\""
                   true)
 
@@ -31,19 +40,19 @@ else()
               float32 float64 float128 complex32 complex64 complex128 string
               bool_t)
 
-    set(TYPEIDS UINT8 INT8 UINT16 INT16 UINT32 INT32 UINT64 INT64 
+    set(TYPEIDS UINT8 INT8 UINT16 INT16 UINT32 INT32 UINT64 INT64
                FLOAT32 FLOAT64 FLOAT128
                COMPLEX32 COMPLEX64 COMPLEX128
                STRING BOOL)
 
-    set(DATA_STRS 1 -4 200 -234 4000 23456 4013945 -4013945 
-                  2.3455 -1.233e+4  123.24354e-4 
+    set(DATA_STRS 1 -4 200 -234 4000 23456 4013945 -4013945
+                  2.3455 -1.233e+4  123.24354e-4
                   "34.+j123.e-3" "-23.-I8.203" "123+I340"
                   "hello word a stupid text"
                   true)
 
-    set(DATA_CPPS 1 -4 200 -234 4000 23456 4013945 -4013945 
-                  2.3455f -1.233e+4  123.24354e-4 
+    set(DATA_CPPS 1 -4 200 -234 4000 23456 4013945 -4013945
+                  2.3455f -1.233e+4  123.24354e-4
                   "34.f,123.e-3f" "-23.,-8.203" "123,340"
                   "\"hello word a stupid text\""
                   true)
@@ -55,22 +64,22 @@ endif()
 
 list(LENGTH TYPES NTYPES)
 math(EXPR TYPERANGE "${NTYPES}-1")
-set(CPPFILES)
-set(XMLFILES)
-set(NXSFILES)
+
+set(GEN_SRC_PATH ${PROJECT_BINARY_DIR}/test/xml_test/attribute)
 
 foreach(index RANGE ${TYPERANGE})
-    list(GET TYPES ${index} TYPE)
-    list(GET TYPEIDS ${index} TYPEID)
+    list(GET TYPES     ${index} TYPE)
+    list(GET TYPEIDS   ${index} TYPEID)
     list(GET DATA_STRS ${index} DATA_STR)
     list(GET DATA_CPPS ${index} CPP_DATA)
 
     message(STATUS "generate scalar attribute test for type ${TYPE} ...")
+    set(CPPFILE scalar_attribute_test_${TYPE}.cpp)
     set(XMLFILE scalar_attribute_test_${TYPE}.xml)
-    list(APPEND XMLFILES ${XMLFILE})
-    list(APPEND NXSFILES "scalar_attribute_test_${TYPE}.nxs")
+    set(NXSFILE scalar_attribute_test_${TYPE}.nxs )
+    set(TARGET_NAME scalar_attribute_test_${TYPE})
     configure_file(scalar_attribute_test.xml.in ${XMLFILE} @ONLY)
-    
+
     if(TYPE STREQUAL float128)
         message(STATUS "setup for float128 comparison")
         set(EQUALITY_CHECK "BOOST_CHECK_CLOSE(float128(data),expected,1.e-14);")
@@ -82,18 +91,28 @@ foreach(index RANGE ${TYPERANGE})
         set(EQUALITY_CHECK "BOOST_CHECK_EQUAL(data,expected);")
     endif()
 
-    set(CPPFILE scalar_attribute_test_${TYPE}.cpp)
-    list(APPEND CPPFILES ${CPPFILE})
+    #configure the source file and set the target source
     configure_file(scalar_attribute_test.cpp.in ${CPPFILE} @ONLY)
+    set(TARGET_SRC ${GEN_SRC_PATH}/${CPPFILE})
 
+    add_executable(${TARGET_NAME} ${TARGET_SRC}
+                                  $<TARGET_OBJECTS:attr_test_common>
+                                  $<TARGET_OBJECTS:xml_test_common>
+                                  $<TARGET_OBJECTS:test_common>
+    )
+    target_compile_definitions(${TARGET_NAME} PRIVATE
+    "BOOST_TEST_DYN_LINK;BOOST_TEST_MODULE=testing scalar XML attributes of type ${TYPE}")
+    target_link_libraries(${TARGET_NAME} PRIVATE pniio Boost::unit_test_framework
+    )
+    target_include_directories(${TARGET_NAME} PRIVATE
+    ${PROJECT_SOURCE_DIR}/test/xml_test/attribute)
 
-    if(index EQUAL 0)
+    add_test(NAME "XML:attribute:${TYPE}:scalar"
+             COMMAND ${TARGET_NAME}
+             WORKING_DIRECTORY ${GEN_SRC_PATH}
+            )
 
-        message(STATUS "Set flags for main file...")
-        set_source_files_properties(${CPPFILE} PROPERTIES
-            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK;BOOST_TEST_MODULE=testing xml attributes")
-    endif()
-                 
+    list(APPEND CLEANFILES "${CPPFILE} ${NXSFILE} ${XMLFILE}")
 endforeach()
 
 #-----------------------------------------------------------------------------
@@ -101,12 +120,12 @@ endforeach()
 #-----------------------------------------------------------------------------
 if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
     set(ARR_TYPES uint8 int8 uint16 int16 uint32 int32 uint64 int64
-              float32 float64 
-              complex32 complex64 
+              float32 float64
+              complex32 complex64
               bool_t)
 
-    set(ARR_TYPEIDS UINT8 INT8 UINT16 INT16 UINT32 INT32 UINT64 INT64 
-               FLOAT32 FLOAT64 
+    set(ARR_TYPEIDS UINT8 INT8 UINT16 INT16 UINT32 INT32 UINT64 INT64
+               FLOAT32 FLOAT64
                COMPLEX32 COMPLEX64  BOOL)
 
     set(ARR_DATA_STRS "1 2 3" "-4 3 -10" "200 300 400" "-234 500 -34"
@@ -127,10 +146,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
                       "true,true,false")
 else()
     set(ARR_TYPES uint8 int8 uint16 int16 uint32 int32 uint64 int64
-              float32 float64 float128 complex32 complex64 complex128 
+              float32 float64 float128 complex32 complex64 complex128
               bool_t)
 
-    set(ARR_TYPEIDS UINT8 INT8 UINT16 INT16 UINT32 INT32 UINT64 INT64 
+    set(ARR_TYPEIDS UINT8 INT8 UINT16 INT16 UINT32 INT32 UINT64 INT64
                FLOAT32 FLOAT64 FLOAT128
                COMPLEX32 COMPLEX64 COMPLEX128 BOOL)
 
@@ -170,11 +189,12 @@ foreach(index RANGE ${TYPERANGE})
     list(GET ARR_DATA_CPPS ${index} CPP_DATA)
 
     message(STATUS "generate array attribute test for type ${TYPE} ...")
+    set(CPPFILE array_attribute_test_${TYPE}.cpp)
     set(XMLFILE array_attribute_test_${TYPE}.xml)
-    list(APPEND XMLFILES ${XMLFILE})
-    list(APPEND NXSFILES "array_attribute_test_${TYPE}.nxs")
+    set(NXSFILE array_attribute_test_${TYPE}.nxs )
+    set(TARGET_NAME array_attribute_test_${TYPE})
     configure_file(array_attribute_test.xml.in ${XMLFILE} @ONLY)
-    
+
     if(TYPE STREQUAL float128)
         message(STATUS "setup for float128 comparison")
         set(EQUALITY_CHECK "BOOST_CHECK_CLOSE(float128(*d_iter),*r_iter,1.e-14);")
@@ -186,39 +206,29 @@ foreach(index RANGE ${TYPERANGE})
         set(EQUALITY_CHECK "BOOST_CHECK_EQUAL(*d_iter,*r_iter);")
     endif()
 
-    set(CPPFILE array_attribute_test_${TYPE}.cpp)
-    list(APPEND CPPFILES ${CPPFILE})
+    #configure the source file and set the target source
     configure_file(array_attribute_test.cpp.in ${CPPFILE} @ONLY)
-                 
+    set(TARGET_SRC ${GEN_SRC_PATH}/${CPPFILE})
+
+    add_executable(${TARGET_NAME} ${TARGET_SRC}
+                                  $<TARGET_OBJECTS:attr_test_common>
+                                  $<TARGET_OBJECTS:xml_test_common>
+                                  $<TARGET_OBJECTS:test_common>
+    )
+    target_compile_definitions(${TARGET_NAME} PRIVATE
+    "BOOST_TEST_DYN_LINK;BOOST_TEST_MODULE=testing array XML attributes of type ${TYPE}")
+    target_link_libraries(${TARGET_NAME} PRIVATE pniio Boost::unit_test_framework
+    )
+    target_include_directories(${TARGET_NAME} PRIVATE
+    ${PROJECT_SOURCE_DIR}/test/xml_test/attribute
+    )
+
+    add_test(NAME "XML:attribute:${TYPE}:array"
+             COMMAND ${TARGET_NAME}
+             WORKING_DIRECTORY ${GEN_SRC_PATH}
+            )
+
 endforeach()
 
-set_directory_properties(PROPPERTIES 
-                         ADDITIONAL_MAKE_CLEAN_FILES "${CPPFILES} ${XMLFILES} ${NXSFILES}")
-           
-
-#-----------------------------------------------------------------------------
-# build common code for attributes
-#-----------------------------------------------------------------------------
-add_library(attr_test_common OBJECT attr_utils.cpp)
-
-
-#-----------------------------------------------------------------------------
-# finally build the test target
-#-----------------------------------------------------------------------------
-include_directories(${CMAKE_SOURCE_DIR}/test ${CMAKE_CURRENT_SOURCE_DIR})
-add_executable(attribute_tests ${CPPFILES} 
-               $<TARGET_OBJECTS:attr_test_common>
-               $<TARGET_OBJECTS:xml_test_common>
-               $<TARGET_OBJECTS:test_common>)
-target_link_libraries(attribute_tests pniio
-               ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
-add_test(NAME "XML::attribute_tests"
-         COMMAND attribute_tests
-         WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/xml_test/attribute)
-
-if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
-    set_property(TEST "XML::attribute_tests" APPEND PROPERTY
-        ENVIRONMENT "PATH=${PATH_STRING}")
-endif()
-
-
+set_directory_properties(PROPPERTIES
+ADDITIONAL_MAKE_CLEAN_FILES "${CLEANFILES}}")

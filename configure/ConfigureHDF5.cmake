@@ -22,7 +22,13 @@ if(PNIIO_CONAN_HDF5)
 
     #using here the native HDF5 package is most probably the best solution
     message(STATUS "HDF5 conan found: ${CONAN_HDF5_ROOT}")
-    set(hdf5_DIR ${CONAN_HDF5_ROOT}/cmake)
+    if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
+        #package files installation directory on Windows
+        set(hdf5_DIR ${CONAN_HDF5_ROOT}/cmake)
+    else()
+        #package file installation directory on Unix systems
+        set(hdf5_DIR ${CONAN_HDF5_ROOT}/share/cmake)
+    endif()
 
 endif()
 
@@ -45,7 +51,7 @@ if(hdf5_DIR)
     add_definitions(-DH5_BUILT_AS_DYNAMIC_LIB)
 else()
     message(STATUS "Try to configure HDF5 manually via tools ...")
-    find_package(HDF5 REQUIRED)
+    find_package(HDF5 REQUIRED C)
 
     get_filename_component(HDF5_LIBRARY_DIRS ${HDF5_C_LIBRARIES} DIRECTORY)
 
