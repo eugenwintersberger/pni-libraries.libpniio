@@ -35,10 +35,14 @@ typedef boost::mpl::list<pni::core::uint8,
                          pni::core::int64,
                          pni::core::float32,
                          pni::core::float64,
+#ifndef _MSC_VER
                          pni::core::float128,
+#endif
                          pni::core::complex32,
                          pni::core::complex64,
+#ifndef _MSC_VER
                          pni::core::complex128,
+#endif
                          pni::core::bool_t> mdim_test_types;
 
 typedef boost::mpl::list<pni::core::uint8,
@@ -51,9 +55,13 @@ typedef boost::mpl::list<pni::core::uint8,
                          pni::core::int64,
                          pni::core::float32,
                          pni::core::float64,
+#ifndef _MSC_VER
                          pni::core::float128,
+#endif
                          pni::core::complex32,
                          pni::core::complex64,
+#ifndef _MSC_VER
                          pni::core::complex128,
+#endif
                          pni::core::string,
                          pni::core::bool_t> scalar_test_types;

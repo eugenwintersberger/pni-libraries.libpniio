@@ -20,6 +20,9 @@ if(PNIIO_CONAN_HDF5)
                     IMPORTS "bin, *.dll -> bin"
                     BUILD missing)
 
+    #using here the native HDF5 package is most probably the best solution
+    message(STATUS "HDF5 conan found: ${CONAN_HDF5_ROOT}")
+    set(hdf5_DIR ${CONAN_HDF5_ROOT}/cmake)
 
 endif()
 

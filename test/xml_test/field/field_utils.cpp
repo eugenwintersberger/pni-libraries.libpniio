@@ -62,11 +62,15 @@ namespace field_test{
 
     DEF_DATA_FROM_XML(pni::core::float32)
     DEF_DATA_FROM_XML(pni::core::float64)
+#ifndef _MSC_VER
     DEF_DATA_FROM_XML(pni::core::float128)
+#endif
     
     DEF_DATA_FROM_XML(pni::core::complex32)
     DEF_DATA_FROM_XML(pni::core::complex64)
+#ifndef _MSC_VER
     DEF_DATA_FROM_XML(pni::core::complex128)
+#endif
 
     DEF_DATA_FROM_XML(pni::core::string)
     DEF_DATA_FROM_XML(pni::core::bool_t)
@@ -82,11 +86,15 @@ namespace field_test{
 
     DEF_DATA_FROM_XML(float32_vector)
     DEF_DATA_FROM_XML(float64_vector)
+#ifndef _MSC_VER
     DEF_DATA_FROM_XML(float128_vector)
+#endif
     
     DEF_DATA_FROM_XML(complex32_vector)
     DEF_DATA_FROM_XML(complex64_vector)
+#ifndef _MSC_VER
     DEF_DATA_FROM_XML(complex128_vector)
+#endif
 
     DEF_DATA_FROM_XML(string_vector)
     DEF_DATA_FROM_XML(bool_t_vector)
@@ -109,11 +117,15 @@ namespace field_test{
 
     DEF_DATA_TO_XML(pni::core::float32)
     DEF_DATA_TO_XML(pni::core::float64)
+#ifndef _MSC_VER
     DEF_DATA_TO_XML(pni::core::float128)
+#endif
     
     DEF_DATA_TO_XML(pni::core::complex32)
     DEF_DATA_TO_XML(pni::core::complex64)
+#ifndef _MSC_VER
     DEF_DATA_TO_XML(pni::core::complex128)
+#endif
 
     DEF_DATA_TO_XML(pni::core::string)
     DEF_DATA_TO_XML(pni::core::bool_t)
@@ -129,11 +141,15 @@ namespace field_test{
 
     DEF_DATA_TO_XML(float32_vector)
     DEF_DATA_TO_XML(float64_vector)
+#ifndef _MSC_VER
     DEF_DATA_TO_XML(float128_vector)
+#endif
     
     DEF_DATA_TO_XML(complex32_vector)
     DEF_DATA_TO_XML(complex64_vector)
+#ifndef _MSC_VER
     DEF_DATA_TO_XML(complex128_vector)
+#endif
 
     DEF_DATA_TO_XML(string_vector)
     DEF_DATA_TO_XML(bool_t_vector)
