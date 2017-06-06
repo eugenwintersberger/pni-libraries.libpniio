@@ -44,13 +44,17 @@ BOOST_AUTO_TEST_SUITE(h5datatype_test)
         BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::INT64)),type_id_t::INT64);
         BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::FLOAT32)),type_id_t::FLOAT32);
         BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::FLOAT64)),type_id_t::FLOAT64);
+#ifndef _MSC_VER
         BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::FLOAT128)),type_id_t::FLOAT128);
+#endif
         BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::COMPLEX32)),
                        type_id_t::COMPLEX32);
         BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::COMPLEX64)),
                        type_id_t::COMPLEX64);
+#ifndef _MSC_VER
         BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::COMPLEX128)),
                        type_id_t::COMPLEX128);
+#endif
 
         BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::BOOL)) , type_id_t::BOOL);
         BOOST_CHECK_EQUAL(type_id(get_type(type_id_t::STRING)) , type_id_t::STRING);
