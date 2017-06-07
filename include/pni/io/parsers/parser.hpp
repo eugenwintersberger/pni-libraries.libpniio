@@ -102,27 +102,18 @@ namespace io{
     class parser<pni::core::bool_t>
     {
     private:
-        static const std::vector<pni::core::string> _true_values;
-        static const std::vector<pni::core::string> _false_values;
+        boost::regex _true_regex;
+        boost::regex _false_regex;
     public:
-
         using result_type = bool;
 
-        result_type operator()(const pni::core::string &data) const
-        {
-            using namespace pni::core;
+        explicit parser();
 
-            if((data == "true") || (data == "True") || (data=="1"))
-                return true;
-            else if((data == "false") || (data == "False") || (data == "1"))
-                return false;
-            else
-            {
-                std::stringstream ss;
-                ss<<"Input ["<<data<<"] cannot be converted to a boolean value!";
-                throw parser_error(EXCEPTION_RECORD,ss.str());
-            }
-        }
+        explicit parser(const pni::core::string &true_regex,
+                        const pni::core::string &false_regex);
+
+        result_type operator()(const pni::core::string &input) const;
+
     };
 
 

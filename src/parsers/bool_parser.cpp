@@ -27,6 +27,34 @@
 namespace pni{
 namespace io {
 
+    parser<pni::core::bool_t>::parser():
+        _true_regex("^T(rue|RUE)|true|1$"),
+        _false_regex("^F(alse|ALSE)|false|0$")
+    {}
+
+
+    parser<pni::core::bool_t>::parser(const pni::core::string &true_regex,
+                                      const pni::core::string &false_regex):
+        _true_regex(true_regex),
+        _false_regex(false_regex)
+    {}
+
+    parser<pni::core::bool_t>::result_type
+    parser<pni::core::bool_t>::operator()(const pni::core::string &input) const
+    {
+        using namespace pni::core;
+
+        if(boost::regex_match(input,_true_regex))
+            return true;
+        else if(boost::regex_match(input,_false_regex))
+            return false;
+        else
+        {
+            std::stringstream ss;
+            ss<<"Input ["<<input<<"] cannot be converted to a boolean value!";
+            throw parser_error(EXCEPTION_RECORD,ss.str());
+        }
+    }
 
 }
 }
