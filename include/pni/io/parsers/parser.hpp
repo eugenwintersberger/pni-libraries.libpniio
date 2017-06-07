@@ -25,10 +25,10 @@
 #pragma once
 
 #include<pni/core/types.hpp>
-#include <boost/spirit/include/qi.hpp>
+#include <pni/core/type_erasures/value.hpp>
+#include <pni/core/arrays/slice.hpp>
 
 #include "../exceptions.hpp"
-#include "get_rule_type.hpp"
 #include "conversion_trait.hpp"
 #include "../container_io_config.hpp"
 #include <boost/lexical_cast.hpp>
@@ -63,6 +63,10 @@ namespace io{
             >
     class parser
     {
+    private:
+        using conversion_t = conversion_trait<T>;
+        using read_type = typename conversion_t::read_type;
+        using type_info_t = pni::core::type_info<T>;
     public:
         using result_type = T;
         //!
@@ -81,9 +85,18 @@ namespace io{
 
             result_type value;
 
+            if((!type_info_t::is_signed) && (data[0] == '-'))
+            {
+                std::stringstream ss;
+                ss<<"Cannot store a signed value ["<<data<<"] an instance of "
+                  <<type_id(value);
+                throw parser_error(EXCEPTION_RECORD,ss.str());
+            }
+
             try
             {
-                value = boost::lexical_cast<result_type>(data);
+                value = conversion_t::convert(
+                        boost::lexical_cast<read_type>(data));
 
             }
             catch(const boost::bad_lexical_cast &)
@@ -93,8 +106,71 @@ namespace io{
                 ss<<type_id(value);
                 throw parser_error(EXCEPTION_RECORD,ss.str());
             }
+            catch(const pni::core::range_error &error)
+            {
+                std::stringstream ss;
+                ss<<"A range error occured with: "<<error.description()<<std::endl;
+                ss<<"Could not convert input ["<<data<<"] to a value fo type ";
+                ss<<type_id(result_type());
+                throw parser_error(EXCEPTION_RECORD,ss.str());
+            }
+            catch(...)
+            {
+                std::stringstream ss;
+                ss<<"Unknown error when trying to convert ["<<data<<"] to ";
+                ss<<type_id(result_type());
+                throw parser_error(EXCEPTION_RECORD,ss.str());
+            }
 
             return value;
+        }
+    };
+
+    template<typename T>
+    class parser<std::complex<T>>
+    {
+    private:
+        using base_type = T;
+        parser<base_type> _base_parser;
+    public:
+        using result_type = std::complex<T>;
+
+        result_type operator()(const pni::core::string &input) const
+        {
+            using namespace pni::core;
+
+            boost::regex cmplx_regex(
+                "^(?<REALPART>[+-]?\\d+\\.(\\d+)?([Ee][+-]?\\d+)?)?((?<IMAGSIGN>[+-]?[ijI])(?<IMAGPART>[+-]?\\d+\\.(\\d+)?([Ee][+-]?\\d+)?)?)?$"
+            );
+
+            result_type value;
+            boost::smatch results;
+            if(boost::regex_match(input,results,cmplx_regex))
+            {
+                base_type real_part  = 0.0,
+                          imag_part  = 0.0,
+                          image_sign = 1.0;
+                string part = results.str("REALPART");
+                if(!part.empty()) real_part = _base_parser(part);
+
+                part = results.str("IMAGSIGN");
+                if(!part.empty())
+                {
+                    if(part[0]=='-') image_sign = -1.0;
+                }
+
+                part = results.str("IMAGPART");
+                if(!part.empty()) imag_part = _base_parser(part);
+
+                return result_type(real_part,image_sign*imag_part);
+
+            }
+            else
+            {
+                std::stringstream ss;
+                ss<<"Cannot convert ["<<input<<"] to "<<type_id(value)<<"!";
+                throw parser_error(EXCEPTION_RECORD,ss.str());
+            }
         }
     };
 
