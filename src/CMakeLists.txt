@@ -15,6 +15,7 @@ add_subdirectory(fio)
 add_subdirectory(nx)
 add_subdirectory(tiff)
 add_subdirectory(formatters)
+add_subdirectory(parsers)
 
 
 add_library(pniio SHARED ${SOURCES}
@@ -27,6 +28,7 @@ add_library(pniio SHARED ${SOURCES}
                          $<TARGET_OBJECTS:nx_path>
                          $<TARGET_OBJECTS:algorithms>
                          $<TARGET_OBJECTS:formatter_objects>
+                         $<TARGET_OBJECTS:parser_objects>
 )
 #add_dependencies(pniio config.hpp)
 set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"
@@ -36,9 +38,9 @@ target_link_libraries(pniio
                       PUBLIC pnicore_shared
                       ${hdf5_LIBRARIES}
                       ${HDF5_LIBRARIES}
-                      ${Boost_FILESYSTEM_LIBRARY}
-                      ${Boost_REGEX_LIBRARY}
-                      ${Boost_DATE_TIME_LIBRARY}                      
+                      Boost::filesystem
+                      Boost::regex
+                      Boost::date_time
                       )
 target_compile_definitions(pniio PUBLIC BOOST_ALL_DYN_LINK)
 

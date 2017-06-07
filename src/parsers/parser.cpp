@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2015 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2017 DESY
 //
 // This file is part of libpniio.
 //
@@ -17,25 +17,20 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Created on: Jan 21, 2015
+// Created on: Jun 7, 2017
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 //
-#pragma once
 
+#include <pni/io/parsers/parser.hpp>
 
-//----------------------------------------------------------------------------
-// header files providing the rules for parsing objects
-//----------------------------------------------------------------------------
-#include "parsers/spirit_rules.hpp"
-#include "parsers/complex_rule.hpp"
-#include "parsers/delimiter_rule.hpp"
-#include "parsers/get_rule_type.hpp"
-#include "parsers/sequence_rule.hpp"
-#include "parsers/value_rule.hpp"
-#include "parsers/slice_rule.hpp"
+namespace pni{
+namespace io {
 
-//----------------------------------------------------------------------------
-// header files providing parser classes
-//----------------------------------------------------------------------------
-#include "parsers/parser.hpp"
+    const std::vector<pni::core::string>
+    parser<pni::core::bool_t>::_true_values = {"True","true","TRUE","1"};
+
+    const std::vector<pni::core::string>
+    parser<pni::core::bool_t>::_false_values = {"False","false","FALSE","0"};
+}
+}

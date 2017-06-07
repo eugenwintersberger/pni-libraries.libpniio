@@ -30,3 +30,4 @@ build
 /.cproject
 /.project
 >>>>>>> refs/heads/master
+*.gch

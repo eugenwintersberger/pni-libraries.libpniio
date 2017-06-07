@@ -30,6 +30,10 @@
 #include "../exceptions.hpp"
 #include "get_rule_type.hpp"
 #include "conversion_trait.hpp"
+#include "../container_io_config.hpp"
+#include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/regex.hpp>
 
 namespace pni{
 namespace io{
@@ -39,86 +43,179 @@ namespace io{
     //! \ingroup parser_classes
     //! \brief parser for primitive types
     //!
-    //! This version of the parser structure provides a default parsing 
-    //! implementation for primitive types. The aim of this class is 
-    //! to hide all the complexity of the boost::spirit::qi parsers. 
-    //! In addition it catches all spirit exceptions and wraps them 
-    //! into a parser_error exception. 
-    //! 
+    //! This version of the parser structure provides a default parsing
+    //! implementation for primitive types. The aim of this class is
+    //! to hide all the complexity of the boost::spirit::qi parsers.
+    //! In addition it catches all spirit exceptions and wraps them
+    //! into a parser_error exception.
+    //!
     //! Use this parser to parse a single primitive value from a string.
-    //! The input data must be trimmed - so no leading or trailing 
-    //! blanks are allowed. The string is supposed to end with the last 
+    //! The input data must be trimmed - so no leading or trailing
+    //! blanks are allowed. The string is supposed to end with the last
     //! character assembling the value to parse.
     //!
-    //! By default the output iterator is a const string iterator. 
-    //! 
+    //! By default the output iterator is a const string iterator.
+    //!
     //! \tparam T     primitive data type
-    //! \tparam ITERT iterator type
     //!
     template<
-             typename T,
-             typename ITERT = pni::core::string::const_iterator
+             typename T
             >
-    class parser 
+    class parser
+    {
+    public:
+        using result_type = T;
+        //!
+        //! \brief parser primitive type
+        //!
+        //! Parses the input string and returns an instance of a primitive type.
+        //! In case of errors parser_error is thrown.
+        //!
+        //! \throws parser_error in case of any problems
+        //! \param data the string with input data
+        //! \return instance of the primitive type
+        //!
+        result_type operator()(const pni::core::string &data) const
+        {
+            using namespace pni::core;
+
+            result_type value;
+
+            try
+            {
+                value = boost::lexical_cast<result_type>(data);
+
+            }
+            catch(const boost::bad_lexical_cast &)
+            {
+                std::stringstream ss;
+                ss<<"Could not convert ["<<data<<"] to a value of type ";
+                ss<<type_id(value);
+                throw parser_error(EXCEPTION_RECORD,ss.str());
+            }
+
+            return value;
+        }
+    };
+
+    template<>
+    class parser<pni::core::bool_t>
+    {
+    private:
+        static const std::vector<pni::core::string> _true_values;
+        static const std::vector<pni::core::string> _false_values;
+    public:
+
+        using result_type = bool;
+
+        result_type operator()(const pni::core::string &data) const
+        {
+            using namespace pni::core;
+
+            if((data == "true") || (data == "True") || (data=="1"))
+                return true;
+            else if((data == "false") || (data == "False") || (data == "1"))
+                return false;
+            else
+            {
+                std::stringstream ss;
+                ss<<"Input ["<<data<<"] cannot be converted to a boolean value!";
+                throw parser_error(EXCEPTION_RECORD,ss.str());
+            }
+        }
+    };
+
+
+    template<>
+    class parser<pni::core::slice>
+    {
+    private:
+        //!
+        //! regular expression for slices
+        //!
+        boost::regex _regexpr;
+    public:
+        using result_type = pni::core::slice;
+
+        explicit parser();
+
+        result_type operator()(const pni::core::string &input) const;
+    };
+
+    //!
+    //! \ingroup parser_classes
+    //! \brief parser for general values
+    //!
+    //! This is a specialization of the parser class for the value type erasure.
+    //! The parser tries to identify the value provided by the data string
+    //! and converts it to the appropriate type which will then be wrapped
+    //! in an instance of pni::core::value.
+    //!
+    //! The class currently supports the following types
+    //! * 64Bit integer
+    //! * 64Bit floating point
+    //! * 64Bit complex floats
+    //! * and strings
+    //!
+    template<>
+    class parser<pni::core::value>
+    {
+    private:
+        parser<pni::core::int64>   _int_parser;
+        parser<pni::core::float64> _float_parser;
+    public:
+        using result_type = pni::core::value;
+
+        result_type operator()(const pni::core::string &data) const
+        {
+            using namespace pni::core;
+            boost::regex int_re("^\\d+$");
+
+            if(boost::regex_match(data,int_re))
+                return result_type(_int_parser(data));
+            else
+            {
+                std::stringstream ss;
+                ss<<"Input ["<<data<<"]cannot be converted to pni::core::value!";
+                throw parser_error(EXCEPTION_RECORD,ss.str());
+            }
+
+            return result_type();
+        }
+
+    };
+
+    template<>
+    class parser<pni::core::string>
     {
         public:
-            //! iterator type
-            typedef ITERT iterator_type;
-            //! result type of the parsing process
-            typedef T     result_type;
-            //! parser exception type
-            typedef boost::spirit::qi::expectation_failure<iterator_type> expectation_error;
-        private:
-            //! conversion trait type
-            typedef conversion_trait<result_type>   trait_type;
-            //! type used for reading the data
-            typedef typename trait_type::read_type  read_type;
-            //! rule which will be used to read the data
-            typename get_rule_type<iterator_type,read_type>::type _rule;
+            using result_type = pni::core::string;
 
-        public:
-            //!
-            //! \brief parser primitive type
-            //! 
-            //! Parses the input string and returns an instance of a primitive type.
-            //! In case of errors parser_error is thrown. 
-            //!
-            //! \throws parser_error in case of any problems
-            //! \param data the string with input data
-            //! \return instance of the primitive type
-            //!
             result_type operator()(const pni::core::string &data) const
             {
-                using namespace boost::spirit;
-                using namespace pni::core;
+                return data;
+            }
+    };
 
-                read_type   buffer;
-                
-                try
-                {
-                    if(!qi::parse(data.begin(),data.end(),_rule>qi::eoi,buffer))
-                    {
-                        throw parser_error(EXCEPTION_RECORD,
-                                "Failure parsing primitive type!");
-                    }
+    template<
+             typename T
+            >
+    class parser<std::vector<T>>
+    {
+        private:
+            container_io_config _config;
+        public:
+            using value_type  = T;
+            using result_type = std::vector<value_type>;
 
-                }
-                catch(const expectation_error &)
-                {
-                    throw parser_error(EXCEPTION_RECORD,
-                            "Syntax error!");
-                }
+            parser(const container_io_config &config=container_io_config()):
+                _config(config)
+            {}
 
-                try
-                {
-                    return trait_type::convert(std::move(buffer));
-                }
-                catch(...)
-                {
-                    throw parser_error(EXCEPTION_RECORD,
-                            "Failure during type conversion!");
-                }
+            result_type operator()(const pni::core::string &) const
+            {
 
+                return result_type();
             }
     };
 
