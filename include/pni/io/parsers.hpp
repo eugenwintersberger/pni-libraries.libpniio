@@ -23,19 +23,13 @@
 //
 #pragma once
 
-
-//----------------------------------------------------------------------------
-// header files providing the rules for parsing objects
-//----------------------------------------------------------------------------
-#include "parsers/spirit_rules.hpp"
-#include "parsers/complex_rule.hpp"
-#include "parsers/delimiter_rule.hpp"
-#include "parsers/get_rule_type.hpp"
-#include "parsers/sequence_rule.hpp"
-#include "parsers/value_rule.hpp"
-#include "parsers/slice_rule.hpp"
-
 //----------------------------------------------------------------------------
 // header files providing parser classes
 //----------------------------------------------------------------------------
+#include "parsers/vector_parser.hpp"
+#include "parsers/complex_parser.hpp"
 #include "parsers/parser.hpp"
+#include "parsers/string_parser.hpp"
+#include "parsers/value_parser.hpp"
+#include "parsers/slice_parser.hpp"
+#include "parsers/bool_parser.hpp"

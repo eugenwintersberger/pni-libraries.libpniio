@@ -22,7 +22,7 @@
 //
 //
 
-#include <pni/io/parsers/parser.hpp>
+#include <pni/io/parsers/bool_parser.hpp>
 
 namespace pni{
 namespace io {

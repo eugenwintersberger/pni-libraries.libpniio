@@ -20,16 +20,30 @@
 // Created on: Jun 8, 2017
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
+#pragma once
 
-#include <pni/io/parsers/string_parser.hpp>
+#include "parser.hpp"
 
 namespace pni{
 namespace io{
 
-    parser<pni::core::string>::result_type
-    parser<pni::core::string>::operator()(const pni::core::string &input) const
+    template<>
+    class parser<pni::core::bool_t>
     {
-        return input;
-    }
+    private:
+        boost::regex _true_regex;
+        boost::regex _false_regex;
+    public:
+        using result_type = bool;
+
+        explicit parser();
+
+        explicit parser(const pni::core::string &true_regex,
+                        const pni::core::string &false_regex);
+
+        result_type operator()(const pni::core::string &input) const;
+
+    };
+
 }
 }

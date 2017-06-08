@@ -21,7 +21,7 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 //
-#include <pni/io/parsers/parser.hpp>
+#include <pni/io/parsers/slice_parser.hpp>
 
 namespace pni {
 namespace io {

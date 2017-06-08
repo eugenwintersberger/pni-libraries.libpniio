@@ -20,16 +20,28 @@
 // Created on: Jun 8, 2017
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
+#pragma once
 
-#include <pni/io/parsers/string_parser.hpp>
+#include "parser.hpp"
 
 namespace pni{
 namespace io{
 
-    parser<pni::core::string>::result_type
-    parser<pni::core::string>::operator()(const pni::core::string &input) const
+    //!
+    //! \ingroup parser_classes
+    //! \brief parsing strings
+    //!
+    //! This specialization of the parser template parses strings form user
+    //! input. Virtually this class does nothing it just passes the string
+    //! provided by the user right through.
+    //! 
+    template<>
+    class parser<pni::core::string>
     {
-        return input;
-    }
+        public:
+            using result_type = pni::core::string;
+
+            result_type operator()(const pni::core::string &data) const;
+    };
 }
 }

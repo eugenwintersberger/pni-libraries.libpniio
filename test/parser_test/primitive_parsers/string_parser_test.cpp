@@ -21,7 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 #include <boost/test/unit_test.hpp>
-#include <pni/io/parsers.hpp>
+#include <pni/io/parsers/string_parser.hpp>
 #include <pni/io/exceptions.hpp>
 #include <pni/core/types.hpp>
 #include "parser_test_fixture.hpp"
@@ -43,7 +43,3 @@ BOOST_FIXTURE_TEST_SUITE(string_parser_test,string_parser_test_fixture)
     }
 
 BOOST_AUTO_TEST_SUITE_END()
-
-
-
-

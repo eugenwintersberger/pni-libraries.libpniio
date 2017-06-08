@@ -21,7 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 #include <boost/test/unit_test.hpp>
-#include <pni/io/parsers.hpp>
+#include <pni/io/parsers/bool_parser.hpp>
 #include <pni/io/exceptions.hpp>
 #include <pni/core/types.hpp>
 #include "parser_test_fixture.hpp"
