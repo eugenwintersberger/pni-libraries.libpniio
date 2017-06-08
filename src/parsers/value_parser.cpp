@@ -17,7 +17,7 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Created on: Jun 7, 2017
+// Created on: Jun 8, 2017
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 //
@@ -25,7 +25,25 @@
 #include <pni/io/parsers/parser.hpp>
 
 namespace pni{
-namespace io {
+namespace io{
 
+    parser<pni::core::value>::result_type
+    parser<pni::core::value>::operator()(const pni::core::string &input) const
+    {
+        using namespace pni::core;
+
+        if(boost::regex_match(input,default_int_regexp))
+            return result_type(_int_parser(input));
+        else if(boost::regex_match(input,default_float_regexp))
+            return result_type(_float_parser(input));
+        else if(boost::regex_match(input,default_complex_regexp))
+            return result_type(_complex_parser(input));
+        else
+        {
+            std::stringstream ss;
+            ss<<"Input ["<<input<<"]cannot be converted to pni::core::value!";
+            throw parser_error(EXCEPTION_RECORD,ss.str());
+        }
+    }
 }
 }

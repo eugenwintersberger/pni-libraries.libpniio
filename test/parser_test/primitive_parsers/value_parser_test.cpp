@@ -33,7 +33,7 @@ struct value_parser_test_fixture : parser_test_fixture<value>
 {};
 
 BOOST_FIXTURE_TEST_SUITE(value_parser_test,value_parser_test_fixture)
-    
+
     typedef value result_type;
 
     //-------------------------------------------------------------------------
@@ -70,13 +70,13 @@ BOOST_FIXTURE_TEST_SUITE(value_parser_test,value_parser_test_fixture)
         BOOST_CHECK_EQUAL(v.type_id(),tid);
         BOOST_CHECK_CLOSE_FRACTION(0.0,v.as<complex64>().real(),1.e-8);
         BOOST_CHECK_CLOSE_FRACTION(-3.9,v.as<complex64>().imag(),1.e-8);
-        
+
         v = p("j3.9");
         BOOST_CHECK_EQUAL(v.type_id(),tid);
         BOOST_CHECK_CLOSE_FRACTION(0.0,v.as<complex64>().real(),1.e-8);
         BOOST_CHECK_CLOSE_FRACTION(3.9,v.as<complex64>().imag(),1.e-8);
 
-        v = p("1+i4");
+        v = p("1.+i4.");
         BOOST_CHECK_EQUAL(v.type_id(),tid);
         BOOST_CHECK_CLOSE_FRACTION(1.0,v.as<complex64>().real(),1.e-8);
         BOOST_CHECK_CLOSE_FRACTION(4.0,v.as<complex64>().imag(),1.e-8);
@@ -84,10 +84,3 @@ BOOST_FIXTURE_TEST_SUITE(value_parser_test,value_parser_test_fixture)
     }
 
 BOOST_AUTO_TEST_SUITE_END()
-
-
-
-
-
-
-

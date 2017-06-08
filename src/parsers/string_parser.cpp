@@ -17,15 +17,19 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Created on: Jun 7, 2017
+// Created on: Jun 8, 2017
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-//
 //
 
 #include <pni/io/parsers/parser.hpp>
 
 namespace pni{
-namespace io {
+namespace io{
 
+    parser<pni::core::string>::result_type
+    parser<pni::core::string>::operator()(const pni::core::string &input) const
+    {
+        return input;
+    }
 }
 }

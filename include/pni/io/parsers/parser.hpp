@@ -38,6 +38,11 @@
 namespace pni{
 namespace io{
 
+    static const boost::regex default_int_regexp("^[+-]?\\d+$") ;
+    static const boost::regex default_float_regexp("^[+-]?\\d+\\.(\\d+)?([Ee][+-]?\\d+)?$");
+    static const boost::regex default_complex_regexp("^(?<REALPART>[+-]?\\d+\\.(\\d+)?([Ee][+-]?\\d+)?)?((?<IMAGSIGN>[+-]?[ijI])(?<IMAGPART>[+-]?\\d+\\.(\\d+)?([Ee][+-]?\\d+)?)?)?$");
+
+
     //------------------------------------------------------------------------
     //!
     //! \ingroup parser_classes
@@ -139,9 +144,7 @@ namespace io{
         {
             using namespace pni::core;
 
-            boost::regex cmplx_regex(
-                "^(?<REALPART>[+-]?\\d+\\.(\\d+)?([Ee][+-]?\\d+)?)?((?<IMAGSIGN>[+-]?[ijI])(?<IMAGPART>[+-]?\\d+\\.(\\d+)?([Ee][+-]?\\d+)?)?)?$"
-            );
+            boost::regex cmplx_regex(default_complex_regexp);
 
             result_type value;
             boost::smatch results;
@@ -228,28 +231,24 @@ namespace io{
     class parser<pni::core::value>
     {
     private:
-        parser<pni::core::int64>   _int_parser;
-        parser<pni::core::float64> _float_parser;
+        //!
+        //! parser for integer values
+        //!
+        parser<pni::core::int64>     _int_parser;
+
+        //!
+        //! parser for float values (doubles)
+        //!
+        parser<pni::core::float64>   _float_parser;
+
+        //!
+        //! parser for complex values
+        //!
+        parser<pni::core::complex64> _complex_parser;
     public:
         using result_type = pni::core::value;
 
-        result_type operator()(const pni::core::string &data) const
-        {
-            using namespace pni::core;
-            boost::regex int_re("^\\d+$");
-
-            if(boost::regex_match(data,int_re))
-                return result_type(_int_parser(data));
-            else
-            {
-                std::stringstream ss;
-                ss<<"Input ["<<data<<"]cannot be converted to pni::core::value!";
-                throw parser_error(EXCEPTION_RECORD,ss.str());
-            }
-
-            return result_type();
-        }
-
+        result_type operator()(const pni::core::string &data) const;
     };
 
     template<>
@@ -258,10 +257,7 @@ namespace io{
         public:
             using result_type = pni::core::string;
 
-            result_type operator()(const pni::core::string &data) const
-            {
-                return data;
-            }
+            result_type operator()(const pni::core::string &data) const;
     };
 
     template<

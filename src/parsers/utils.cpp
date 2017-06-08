@@ -23,6 +23,7 @@
 //
 
 #include <pni/io/parsers/utils.hpp>
+#include <pni/io/parsers/parser.hpp>
 #include <boost/regex.hpp>
 
 namespace pni{
@@ -30,17 +31,17 @@ namespace io {
 
     bool is_integer(const pni::core::string &input)
     {
-        boost::regex expr("^[+-]?\\d+$");
+        //boost::regex expr(default_int_regexp);
 
-        return boost::regex_match(input,expr);
+        return boost::regex_match(input,default_int_regexp);
     }
 
     //=========================================================================
     bool is_float(const pni::core::string &input)
     {
-        boost::regex expr("^[+-]?\\d+\\.(\\d+)?([Ee][+-]?\\d+)?$");
+        //boost::regex expr(default_float_regexp);
 
-        return boost::regex_match(input,expr);
+        return boost::regex_match(input,default_float_regexp);
     }
 
     //=========================================================================
