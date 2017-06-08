@@ -28,12 +28,17 @@
 #include<pni/core/types.hpp>
 #include<pni/core/error.hpp>
 #include<vector>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/trim.hpp>
+#include <algorithm>
+#include <iterator>
 
 #include "../exceptions.hpp"
-#include "conversion_trait.hpp"
-#include "delimiter_rule.hpp"
+#include "slice_parser.hpp"
+#include "bool_parser.hpp"
+#include "value_parser.hpp"
+#include "complex_parser.hpp"
 #include "parser.hpp"
-#include "get_sequence_rule.hpp"
 #include "../container_io_config.hpp"
 
 
@@ -44,14 +49,14 @@ namespace io{
     //!
     //! \ingroup parser_internal_classes
     //! \brief container parser
-    //! 
+    //!
     //! This parser reads a linear container of data from a string. The data
-    //! type of the container is assumed to be homogeneous. This means that 
+    //! type of the container is assumed to be homogeneous. This means that
     //! all elements must match with the parser selected for the element
     //! type.
-    //! 
-    //! In their string representation container data is assumed to be embraced 
-    //! between a start and a stop token. The elements are assumed to be 
+    //!
+    //! In their string representation container data is assumed to be embraced
+    //! between a start and a stop token. The elements are assumed to be
     //! separated by a delimiter token.
     //!
     //! The container can be any STL compliant container type.
@@ -60,112 +65,73 @@ namespace io{
     //! \tparam CTYPE container type
     //!
     template<
-             typename T,
-             typename ITERT
+             typename T
             >
-    class parser<std::vector<T>,ITERT>
+    class parser<std::vector<T>>
     {
-        public:
-            //! result type for the parser
-            typedef std::vector<T>  result_type;
-            //! input iterator type
-            typedef ITERT           iterator_type;
-            //! parser exception type
-            typedef boost::spirit::qi::expectation_failure<iterator_type> 
-                    expectation_error;
-        private:
-            //! conversion trait used during parsing
-            typedef conversion_trait<T> trait_type;
-            //! data type to read 
-            typedef typename trait_type::read_type read_type;
-            //! buffer type used for reading
-            typedef std::vector<read_type> buffer_type;
-            //! rule type
-            typedef typename get_sequence_rule<ITERT,buffer_type>::type 
-                             rule_type;
-            typedef std::unique_ptr<rule_type> rule_ptr;
-            //! rule type to parse the sequence
-            rule_ptr sequence_;
+    public:
+        using value_type = T;
+    private:
+        parser<value_type>  _value_parser;
+        container_io_config _config;
 
-            static rule_ptr get_rule_from_config(const container_io_config &c) 
+    public:
+        using result_type = std::vector<value_type>;
+
+        parser(const container_io_config &config=container_io_config()):
+            _config(config)
+        {}
+
+        result_type operator()(const pni::core::string &input) const
+        {
+            using namespace pni::core;
+            auto first = input.begin();
+            auto last  = input.end();
+            //need to find the start and stop
+            if(_config.start_symbol())
             {
-                if(c.separator() && c.start_symbol() && c.stop_symbol())
-                    return rule_ptr(new rule_type(c.start_symbol(),
-                                                  c.stop_symbol(),
-                                                  c.separator()));
-                else if(c.start_symbol() && c.stop_symbol() && !c.separator())
-                    return rule_ptr(new rule_type(c.start_symbol(),
-                                                  c.stop_symbol()));
-                else if(c.separator() && !c.start_symbol() && !c.stop_symbol())
-                    return rule_ptr(new rule_type(c.separator()));
-                else 
-                    return rule_ptr(new rule_type());
+                first = std::find(first,last,_config.start_symbol());
+                if(first==last)
+                {
+                    std::stringstream ss;
+                    ss<<"Input: "<<input<<" - has no start symbol!";
+                    throw parser_error(EXCEPTION_RECORD,ss.str());
+                }
+                std::advance(first,1);
             }
 
-        public:
-            //-----------------------------------------------------------------
-            //!
-            //! \brief default constructor
-            //! 
-            parser(const container_io_config &config = 
-                         container_io_config()) 
-                : sequence_(get_rule_from_config(config))
-            {}
-
-            //-----------------------------------------------------------------
-            //!
-            //! \brief parse a string
-            //!
-            //! Parses a string and stores the result in a vector. 
-            //!
-            //! \throws parser_error in case of errors
-            //! \throws range_error in the case of an error during conversion
-            //! 
-            //! \param s string to parse
-            //! \return instance of std::vector with the parsed data
-            //!
-            result_type  operator()(const core::string &s) const
+            if(_config.stop_symbol())
             {
-                using namespace pni::core;
-                using namespace boost::spirit;
-                
-                buffer_type container;
-
-                try
+                last = std::find(first,last,_config.stop_symbol());
+                if(last==input.end())
                 {
-                    if(!qi::parse(s.begin(),s.end(),(*sequence_)>qi::eoi,container))
-                    {
-                        throw parser_error(EXCEPTION_RECORD,
-                                "Error parsing sequence!");
-                    }
-                }
-                catch(...)
-                {
-                    throw parser_error(EXCEPTION_RECORD,
-                            "Cannot parse array data from string: "
-                            "\""+s+"\"!");
-                }
-
-                //perform the conversion to the requested type - maybe not the
-                //best solution - but should be sufficient for now.
-                //Remove this code when we found a better way to handle (u)int8 
-                //values.
-                try
-                {
-                    result_type result;
-                    for(auto e: container)
-                        result.push_back(trait_type::convert(e));
-
-                    return result;
-                    
-                }
-                catch(...)
-                {
-                    throw parser_error(EXCEPTION_RECORD,
-                            "Error during type conversion!");
+                    std::stringstream ss;
+                    ss<<"Input: "<<input<<" - has no stop symbol!";
+                    throw parser_error(EXCEPTION_RECORD,ss.str());
                 }
             }
+
+            string buffer(first,last);
+            std::vector<string> elements;
+            string sep(1,_config.separator());
+            boost::split(elements,buffer, boost::is_any_of(sep),
+                         boost::token_compress_on);
+            std::transform(elements.begin(),elements.end(),elements.begin(),
+                           [](string &value) { boost::trim(value); return value; });
+            auto new_end = std::remove_if(elements.begin(),elements.end(),
+                           [](const string &value) { return value.empty(); });
+
+            result_type result;
+            std::transform(elements.begin(),new_end,
+                           std::back_inserter(result),
+                           _value_parser);
+
+            return result;
+        }
     };
+
+
+
 
 
 //end of namespace

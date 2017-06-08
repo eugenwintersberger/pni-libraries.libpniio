@@ -34,7 +34,7 @@ struct float32_vector_parser_test_fixture : parser_test_fixture<std::vector<floa
     static const result_type ref;
 };
 
-const float32_vector_parser_test_fixture::result_type 
+const float32_vector_parser_test_fixture::result_type
       float32_vector_parser_test_fixture::ref = {1.2f,3e+3f,-3.4f,4.429f,
                                                  -5.34e-3f};
 
@@ -44,13 +44,13 @@ BOOST_FIXTURE_TEST_SUITE(float32_vector_parser_test,float32_vector_parser_test_f
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_default)
     {
-        auto result = p("1.2 3e+3 -3.4 4.429 -5.34e-3");
+        auto result = p("1.2 3.e+3 -3.4 4.429 -5.34e-3");
 
         BOOST_CHECK_EQUAL(result.size(),5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
 
-        result = p("  1.2  3e+3    -3.4  4.429   -5.34e-3   ");
+        result = p("  1.2  3.e+3    -3.4  4.429   -5.34e-3   ");
         BOOST_CHECK_EQUAL(result.size(),5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
@@ -75,12 +75,12 @@ BOOST_FIXTURE_TEST_SUITE(float32_vector_parser_test,float32_vector_parser_test_f
     BOOST_AUTO_TEST_CASE(test_delimiter)
     {
         p = parser_type(container_io_config(';'));
-        auto result = p("1.2;3e3;-3.4;4.429;-5.34e-3");
+        auto result = p("1.2;3.e3;-3.4;4.429;-5.34e-3");
         BOOST_CHECK_EQUAL(result.size(),5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
-        
-        result = p("  1.2; 3e+3 ;-3.4   ;  4.429; -5.34e-3  ");
+
+        result = p("  1.2; 3.e+3 ;-3.4   ;  4.429; -5.34e-3  ");
         BOOST_CHECK_EQUAL(result.size(),5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
@@ -95,7 +95,7 @@ BOOST_FIXTURE_TEST_SUITE(float32_vector_parser_test,float32_vector_parser_test_f
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
 
-        result = p("[  1.2, 3e+3,  -3.4  , 4.429,  -5.34e-3  ]");
+        result = p("[  1.2, 3.e+3,  -3.4  , 4.429,  -5.34e-3  ]");
         BOOST_CHECK_EQUAL(result.size(),5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
