@@ -87,7 +87,7 @@ namespace io{
         return output;
     }
 
-    pni::core::string format(const pni::core::array &v,
+    pni::core::string PNIIO_EXPORT format(const pni::core::array &v,
                              const container_io_config &config=container_io_config());
 
 }

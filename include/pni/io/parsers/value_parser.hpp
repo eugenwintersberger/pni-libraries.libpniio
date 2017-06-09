@@ -44,7 +44,7 @@ namespace io{
     //! * and strings
     //!
     template<>
-    class parser<pni::core::value>
+    class PNIIO_EXPORT parser<pni::core::value>
     {
     private:
         //!

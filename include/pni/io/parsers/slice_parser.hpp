@@ -28,7 +28,7 @@ namespace pni{
 namespace io{
 
     template<>
-    class parser<pni::core::slice>
+    class PNIIO_EXPORT parser<pni::core::slice>
     {
     private:
         //!

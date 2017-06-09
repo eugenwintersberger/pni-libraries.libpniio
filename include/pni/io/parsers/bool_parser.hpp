@@ -28,7 +28,7 @@ namespace pni{
 namespace io{
 
     template<>
-    class parser<pni::core::bool_t>
+    class PNIIO_EXPORT parser<pni::core::bool_t>
     {
     private:
         boost::regex _true_regex;

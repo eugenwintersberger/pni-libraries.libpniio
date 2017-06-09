@@ -36,7 +36,7 @@ namespace io{
     //! provided by the user right through.
     //! 
     template<>
-    class parser<pni::core::string>
+    class PNIIO_EXPORT parser<pni::core::string>
     {
         public:
             using result_type = pni::core::string;

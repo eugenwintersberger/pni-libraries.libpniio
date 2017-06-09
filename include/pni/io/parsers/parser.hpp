@@ -34,6 +34,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/regex.hpp>
+#include "../windows.hpp"
 
 namespace pni{
 namespace io{
