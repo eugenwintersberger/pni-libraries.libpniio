@@ -33,22 +33,22 @@
 namespace pni{
 namespace io{
 namespace nx{
-namespace xml{    
+namespace xml{
 
     //!
     //! \ingroup xml_classes
     //! \brief general IO objects
     //!
-    //! This class provides functions common for field and attribute nodes. 
+    //! This class provides functions common for field and attribute nodes.
     //!
     struct PNIIO_EXPORT io_node
     {
         //--------------------------------------------------------------------
         //!
         //! \brief return object size
-        //! 
-        //! Returns the number of elements a field or attribute can store. 
-        //! If the node contains a dimensions tag the number of elements is 
+        //!
+        //! Returns the number of elements a field or attribute can store.
+        //! If the node contains a dimensions tag the number of elements is
         //! computed from the shape described by the dimensions tag. If no
         //! dimensions tag is provided the node is assumed to describe a scalar
         //! object with a size of 1.
@@ -56,68 +56,68 @@ namespace xml{
         //! \throws parser_error in case of an error
         //! \param io_node XML node with IO object metadata
         //! \return number of elements stored in the object
-        //! 
+        //!
         static size_t size(const node &io_node);
 
         //--------------------------------------------------------------------
         //!
         //! \brief return object rank
-        //! 
-        //! This function returns the number of dimensions an IO object has. 
-        //! For nodes with an dimensions child this number is provided by the 
+        //!
+        //! This function returns the number of dimensions an IO object has.
+        //! For nodes with an dimensions child this number is provided by the
         //! rank attribute of the dimensions tag. For scalar objects the rank
         //! is 0.
         //!
         //! \throws parser_error in case of an error
         //! \param io_node XML node with IO object metadata
         //! \return number of dimensions
-        //! 
+        //!
         static size_t rank(const node &io_node);
 
         //--------------------------------------------------------------------
         //!
         //! \brief return object name
         //!
-        //! Returns the name of the object which is determined by the name 
+        //! Returns the name of the object which is determined by the name
         //! attribute of the node.
-        //! 
+        //!
         //! \throws parser_error in case of an error
         //! \param io_node XML node with object metadata
         //! \return name of the object
-        //! 
+        //!
         static pni::core::string name(const node &io_node);
-        
+
         //--------------------------------------------------------------------
         //!
         //! \brief return object shape
-        //! 
+        //!
         //! \throws parser_error in case of an error
         //! \param io_node XML node with object metadata
         //! \return shape information
-        //! 
+        //!
         static pni::core::shape_t shape(const node &io_node);
-        
+
         //--------------------------------------------------------------------
         //!
         //! \brief get type id
-        //! 
+        //!
         //! Retrieves the type id of the field described by the XML node.
-        //! 
+        //!
         //! \throws parser_error if attribute cannot be read
-        //! \throws type_error if type cannot be translated 
-        //! 
+        //! \throws type_error if type cannot be translated
+        //!
         //! \param io_node the node with field information
         //! \return type id of the field
         //!
         static pni::core::type_id_t type_id(const node &io_node);
-        
+
         //--------------------------------------------------------------------
         //!
         //! \brief get data from XML
-        //! 
-        //! Reads the data stored with the XML field node. It is important 
-        //! to understand that an XML node itself can only store simple 
-        //! one dimensional containers. It does not provide enough 
+        //!
+        //! Reads the data stored with the XML field node. It is important
+        //! to understand that an XML node itself can only store simple
+        //! one dimensional containers. It does not provide enough
         //! information to construct a multidimensional array.
         //!
         //! \throws type_error if the fields data type is not supported
@@ -125,7 +125,7 @@ namespace xml{
         //!
         //! \param io_node the XML node with the data
         //! \return instance of array with the data
-        //! 
+        //!
         template<typename T>
         static T data_from_xml(const node &io_node)
         {
@@ -137,9 +137,9 @@ namespace xml{
         //--------------------------------------------------------------------
         //!
         //! \brief write data to XML
-        //! 
-        //! Write data from value to the XML io_node. 
-        //! 
+        //!
+        //! Write data from value to the XML io_node.
+        //!
         //! \tparam T type to write
         //! \param io_node the XML node to which to write the data
         //! \param value instance of T from which to read data
@@ -147,9 +147,7 @@ namespace xml{
         template<typename T>
         static void data_to_xml(node &io_node,const T &value)
         {
-            typedef formatter<T> formatter_type; 
-            formatter_type f;
-            io_node.put_value(f(value));
+            io_node.put_value(format(value));
         }
 
     };
@@ -159,4 +157,3 @@ namespace xml{
 }
 }
 }
-

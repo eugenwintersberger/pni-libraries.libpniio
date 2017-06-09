@@ -23,7 +23,7 @@
 
 #include <pni/core/types.hpp>
 #include <boost/test/unit_test.hpp>
-#include <pni/io/format.hpp>
+#include <pni/io/formatters.hpp>
 
 using namespace pni::core;
 using namespace pni::io;
@@ -34,12 +34,10 @@ BOOST_AUTO_TEST_SUITE(bool_vector_formatter_test)
     BOOST_AUTO_TEST_CASE(test_format)
     {
         typedef bool_t                     element_type;
-        typedef std::vector<element_type>  input_type; 
+        typedef std::vector<element_type>  input_type;
         input_type     input ={true,false,false,true} ;
-      
+
         BOOST_CHECK_EQUAL(format(input),"true false false true");
     }
 
 BOOST_AUTO_TEST_SUITE_END()
-
-

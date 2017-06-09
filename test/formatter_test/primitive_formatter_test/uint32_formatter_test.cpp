@@ -32,13 +32,11 @@ BOOST_AUTO_TEST_SUITE(uint32_formatter_test)
 
     BOOST_AUTO_TEST_CASE(test)
     {
-        typedef uint32 input_type; 
+        typedef uint32 input_type;
         BOOST_CHECK_EQUAL(format(input_type(12)),"12");
         BOOST_CHECK_EQUAL(format(input_type(0)),"0");
         BOOST_CHECK_EQUAL(format(input_type(4294967295)),"4294967295");
-        
+
     }
 
 BOOST_AUTO_TEST_SUITE_END()
-
-

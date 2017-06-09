@@ -23,7 +23,7 @@
 //
 
 #include <pni/io/formatters/scalar_format.hpp>
-#include <pni/io/formatters/formatter.hpp>
+#include <boost/format.hpp>
 
 namespace pni{
 namespace io{
@@ -32,49 +32,203 @@ namespace io{
 #define SCALAR_FORMAT_FUNCTION(type) \
     string format(type v)\
     {\
-        formatter<type> f; \
-        return f(v); \
+        return ""; \
     }
 
-    //-------------------------------------------------------------------------
-    SCALAR_FORMAT_FUNCTION(uint8)
-    SCALAR_FORMAT_FUNCTION(int8)
-    SCALAR_FORMAT_FUNCTION(uint16) 
-    SCALAR_FORMAT_FUNCTION(int16)
-    SCALAR_FORMAT_FUNCTION(uint32)
-    SCALAR_FORMAT_FUNCTION(int32)
-    SCALAR_FORMAT_FUNCTION(uint64)
-    SCALAR_FORMAT_FUNCTION(int64)
+    //=========================================================================
+    string format(const uint8 &v)
+    {
+        boost::format fmt("%|+|");
+        fmt % uint16(v);
 
-    SCALAR_FORMAT_FUNCTION(float32)
-    SCALAR_FORMAT_FUNCTION(float64) 
-    SCALAR_FORMAT_FUNCTION(float128)
-    
-    SCALAR_FORMAT_FUNCTION(complex32)
-    SCALAR_FORMAT_FUNCTION(complex64)
-    SCALAR_FORMAT_FUNCTION(complex128)
+        return fmt.str();
+    }
 
-    SCALAR_FORMAT_FUNCTION(bool_t)
+    //=========================================================================
+    string format(const int8 &v)
+    {
+        boost::format fmt("%|+|");
+        fmt % int16(v);
+        return fmt.str();
+    }
+
+    //=========================================================================
+    string format(const uint16 &v)
+    {
+        boost::format fmt("%|+|");
+        fmt % v;
+        return fmt.str();
+    }
+
+    //=========================================================================
+    string format(const int16 &v)
+    {
+        boost::format fmt("%|+|");
+        fmt %v;
+        return fmt.str();
+    }
+
+    //=========================================================================
+    string format(const uint32 &v)
+    {
+        boost::format fmt("%|+|");
+        fmt %v;
+        return fmt.str();
+    }
+
+    //=========================================================================
+    string format(const int32 &v)
+    {
+        boost::format fmt("%|+|");
+        fmt %v;
+        return fmt.str();
+    }
+
+    string format(const uint64 &v)
+    {
+        boost::format fmt("%|+|");
+        fmt %v;
+        return fmt.str();
+    }
+
+    string format(const int64 &v)
+    {
+        boost::format fmt("%|+|");
+        fmt %v;
+        return fmt.str();
+    }
+
+    string format(const float32 &v)
+    {
+        boost::format fmt("%|+e|");
+        fmt %v;
+        return fmt.str();
+    }
+    string format(const float64 &v)
+    {
+        boost::format fmt("%|+e|");
+        fmt %v;
+        return fmt.str();
+    }
+
+    string format(const float128 &v)
+    {
+        boost::format fmt("%|+e|");
+        fmt %v;
+        return fmt.str();
+    }
+
+    string format(const complex32 &v)
+    {
+        boost::format fmt_p("%|+e|+I%|e|");
+        boost::format fmt_m("%|+e|-I%|e|");
+
+        if(v.imag()<0)
+        {
+            fmt_m %v.real() %(-1.*v.imag());
+            return fmt_m.str();
+        }
+        else
+        {
+            fmt_p %v.real() %v.imag();
+            return fmt_p.str();
+        }
+
+    }
+    string format(const complex64 &v)
+    {
+        boost::format fmt_p("%|+e|+I%|e|");
+        boost::format fmt_m("%|+e|-I%|e|");
+
+        if(v.imag()<0)
+        {
+            fmt_m %v.real() %(-1.*v.imag());
+            return fmt_m.str();
+        }
+        else
+        {
+            fmt_p %v.real() %v.imag();
+            return fmt_p.str();
+        }
+    }
+
+    string format(const complex128 &v)
+    {
+        boost::format fmt_p("%|+e|+I%|e|");
+        boost::format fmt_m("%|+e|-I%|e|");
+
+        if(v.imag()<0)
+        {
+            fmt_m %v.real() %(-1.*v.imag());
+            return fmt_m.str();
+        }
+        else
+        {
+            fmt_p %v.real() %v.imag();
+            return fmt_p.str();
+        }
+    }
+
+    string format(const bool_t &v)
+    {
+        if(v)
+            return "true";
+        else
+            return "false";
+    }
 
     //-------------------------------------------------------------------------
     string format(const string &s)
     {
-        formatter<string> f;
-        return f(s);
+        return s;
     }
 
     //-------------------------------------------------------------------------
     string format(const value &v)
     {
-        formatter<value> f;
-        return f(v);
+        switch(v.type_id())
+        {
+            case type_id_t::UINT8:
+                return format(v.as<uint8>());
+            case type_id_t::INT8:
+                return format(v.as<int8>());
+            case type_id_t::INT16:
+                return format(v.as<int16>());
+            case type_id_t::UINT16:
+                return format(v.as<uint16>());
+            case type_id_t::UINT32:
+                return format(v.as<uint32>());
+            case type_id_t::INT32:
+                return format(v.as<int32>());
+            case type_id_t::UINT64:
+                return format(v.as<uint64>());
+            case type_id_t::INT64:
+                return format(v.as<int64>());
+            case type_id_t::FLOAT32:
+                return format(v.as<float32>());
+            case type_id_t::FLOAT64:
+                return format(v.as<float64>());
+            case type_id_t::FLOAT128:
+                return format(v.as<float128>());
+            case type_id_t::COMPLEX32:
+                return format(v.as<complex32>());
+            case type_id_t::COMPLEX64:
+                return format(v.as<complex64>());
+            case type_id_t::COMPLEX128:
+                return format(v.as<complex128>());
+            case type_id_t::BOOL:
+                return format(v.as<bool_t>());
+            case type_id_t::STRING:
+                return format(v.as<string>());
+            default:
+                return "";
+        }
     }
 
     //-------------------------------------------------------------------------
     string format(const value_ref &v)
     {
-        formatter<value_ref> f;
-        return f(v);
+        return "";
     }
 
 //end of namespace
