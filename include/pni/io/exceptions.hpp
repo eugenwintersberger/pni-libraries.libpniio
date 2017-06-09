@@ -56,8 +56,8 @@ namespace io{
            
             //-----------------------------------------------------------------
             //! output operator
-            friend std::ostream &operator<<(std::ostream &o,
-                                            const io_error &e);
+            friend PNIIO_EXPORT std::ostream &operator<<(std::ostream &o,
+                                                         const io_error &e);
     };
 
 
@@ -85,8 +85,8 @@ namespace io{
            
             //-----------------------------------------------------------------
             //! output operator
-            friend std::ostream &operator<<(std::ostream &o,
-                                            const link_error &e);
+            friend PNIIO_EXPORT std::ostream &operator<<(std::ostream &o,
+                                                         const link_error &e);
     };
 
     //-------------------------------------------------------------------------
@@ -116,8 +116,8 @@ namespace io{
            
             //-----------------------------------------------------------------
             //! output operator
-            friend std::ostream &operator<<(std::ostream &o,
-                                            const parser_error &e);
+            friend PNIIO_EXPORT std::ostream &operator<<(std::ostream &o,
+                                                         const parser_error &e);
     };
 
     //-------------------------------------------------------------------------
@@ -147,8 +147,8 @@ namespace io{
            
             //-----------------------------------------------------------------
             //! output operator
-            friend std::ostream &operator<<(std::ostream &o,
-                                            const invalid_object_error &e);
+            friend PNIIO_EXPORT std::ostream &operator<<(std::ostream &o,
+                                                         const invalid_object_error &e);
     };
 
     //-------------------------------------------------------------------------
@@ -177,8 +177,8 @@ namespace io{
            
             //-----------------------------------------------------------------
             //! output operator
-            friend std::ostream &operator<<(std::ostream &o,
-                                            const object_error &e);
+            friend PNIIO_EXPORT std::ostream &operator<<(std::ostream &o,
+                                                         const object_error &e);
     };
 
 

@@ -44,6 +44,9 @@ if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
         ENVIRONMENT "PATH=${PATH_STRING}")
 endif()
 
+add_executable(parser_complex_test parser_complex_test.cpp)
+target_link_libraries(parser_complex_test pniio)
+
 
 add_subdirectory(xml_test)
 add_subdirectory(hdf5_imp_test)
