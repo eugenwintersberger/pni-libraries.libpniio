@@ -32,13 +32,11 @@ BOOST_AUTO_TEST_SUITE(float32_formatter_test)
 
     BOOST_AUTO_TEST_CASE(test)
     {
-        typedef float32 input_type; 
+        typedef float32 input_type;
         string result = format(input_type(1.2));
-        BOOST_CHECK_EQUAL(result,"1.2e00");
+        BOOST_CHECK_EQUAL(result,"+1.200000e+00");
         result = format(input_type(-4.234569e-4));
         BOOST_CHECK_EQUAL(result,"-4.234569e-04");
     }
 
 BOOST_AUTO_TEST_SUITE_END()
-
-

@@ -31,25 +31,47 @@
 namespace pni{
 namespace io{
 
+    //!
+    //! \ingroup formatter_classes
+    //! \brief describe numeric output format
+    //!
+    //! This class contains a set of parameters independent of the underlying
+    //! output mechanism. It an be used to configure whatever method for
+    //! writing numbers is used to so that the desired result can be achieved.
+    //! qppq
 
-    pni::core::string PNIIO_EXPORT format(pni::core::uint8 v);
-    pni::core::string PNIIO_EXPORT format(pni::core::int8 v);
-    pni::core::string PNIIO_EXPORT format(pni::core::uint16 v);
-    pni::core::string PNIIO_EXPORT format(pni::core::int16 v);
-    pni::core::string PNIIO_EXPORT format(pni::core::uint32 v);
-    pni::core::string PNIIO_EXPORT format(pni::core::int32 v);
-    pni::core::string PNIIO_EXPORT format(pni::core::uint64 v);
-    pni::core::string PNIIO_EXPORT format(pni::core::int64 v);
+    class format_config
+    {
+    private:
+        bool   _always_sign;    //!< always show the sign
+        size_t _minimum_width;  //!< the minimum widht (length) of the field
+        size_t _precission;     //!< the numeric precision
 
-    pni::core::string PNIIO_EXPORT format(pni::core::float32 v);
-    pni::core::string PNIIO_EXPORT format(pni::core::float64 v);
-    pni::core::string PNIIO_EXPORT format(pni::core::float128 v);
-    
-    pni::core::string PNIIO_EXPORT format(pni::core::complex32 v);
-    pni::core::string PNIIO_EXPORT format(pni::core::complex64 v);
-    pni::core::string PNIIO_EXPORT format(pni::core::complex128 v);
+    public:
+    };
 
-    pni::core::string PNIIO_EXPORT format(pni::core::bool_t v);
+    template<typename T> struct format_str {};
+
+
+
+    pni::core::string PNIIO_EXPORT format(const pni::core::uint8 &v);
+    pni::core::string PNIIO_EXPORT format(const pni::core::int8 &v);
+    pni::core::string PNIIO_EXPORT format(const pni::core::uint16 &v);
+    pni::core::string PNIIO_EXPORT format(const pni::core::int16 &v);
+    pni::core::string PNIIO_EXPORT format(const pni::core::uint32 &v);
+    pni::core::string PNIIO_EXPORT format(const pni::core::int32 &v);
+    pni::core::string PNIIO_EXPORT format(const pni::core::uint64 &v);
+    pni::core::string PNIIO_EXPORT format(const pni::core::int64 &v);
+
+    pni::core::string PNIIO_EXPORT format(const pni::core::float32 &v);
+    pni::core::string PNIIO_EXPORT format(const pni::core::float64 &v);
+    pni::core::string PNIIO_EXPORT format(const pni::core::float128 &v);
+
+    pni::core::string PNIIO_EXPORT format(const pni::core::complex32 &v);
+    pni::core::string PNIIO_EXPORT format(const pni::core::complex64 &v);
+    pni::core::string PNIIO_EXPORT format(const pni::core::complex128 &v);
+
+    pni::core::string PNIIO_EXPORT format(const pni::core::bool_t &v);
     pni::core::string PNIIO_EXPORT format(const pni::core::string &s);
 
     pni::core::string PNIIO_EXPORT format(const pni::core::value &v);
@@ -57,4 +79,3 @@ namespace io{
 
 }
 }
-

@@ -32,26 +32,24 @@ BOOST_AUTO_TEST_SUITE(complex32_formatter_test)
 
     BOOST_AUTO_TEST_CASE(test)
     {
-        typedef complex32 input_type; 
+        typedef complex32 input_type;
         string result = format(input_type(1.256987f,3.452907f));
-        BOOST_CHECK_EQUAL(result,"1.256987e00+I3.452907e00");
-        
+        BOOST_CHECK_EQUAL(result,"+1.256987e+00+I3.452907e+00");
+
         result = format(input_type(1.256987f,-3.452907f));
-        BOOST_CHECK_EQUAL(result,"1.256987e00-I3.452907e00");
+        BOOST_CHECK_EQUAL(result,"+1.256987e+00-I3.452907e+00");
 
         result = format(input_type(-1.256987f,-3.452907f));
-        BOOST_CHECK_EQUAL(result,"-1.256987e00-I3.452907e00");
-        
+        BOOST_CHECK_EQUAL(result,"-1.256987e+00-I3.452907e+00");
+
         result = format(input_type(-1.256987f,3.452907f));
-        BOOST_CHECK_EQUAL(result,"-1.256987e00+I3.452907e00");
+        BOOST_CHECK_EQUAL(result,"-1.256987e+00+I3.452907e+00");
 
         result = format(input_type(0,3.45f));
-        BOOST_CHECK_EQUAL(result,"0.0e00+I3.45e00");
-        
+        BOOST_CHECK_EQUAL(result,"+0.000000e+00+I3.450000e+00");
+
         result = format(input_type(0,-3.45f));
-        BOOST_CHECK_EQUAL(result,"0.0e00-I3.45e00");
+        BOOST_CHECK_EQUAL(result,"+0.000000e+00-I3.450000e+00");
     }
 
 BOOST_AUTO_TEST_SUITE_END()
-
-
