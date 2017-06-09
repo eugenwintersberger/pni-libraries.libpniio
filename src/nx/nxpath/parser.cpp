@@ -24,61 +24,112 @@
 #include <pni/io/nx/nxpath/parser.hpp>
 #include <pni/io/exceptions.hpp>
 #include <boost/algorithm/string/predicate.hpp>
+#include <boost/regex.hpp>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/trim.hpp>
+#include <algorithm>
 
 namespace pni{
 namespace io{
 namespace nx{
 namespace parsers{
 
-    using namespace boost::spirit;
-    using namespace boost::phoenix;
+    namespace algo = boost::algorithm;
 
-    namespace algo = boost::algorithm; 
+    static const pni::core::string file_sep="://";
+
+    nxpath::element_type get_element(const pni::core::string &estr)
+    {
+        using namespace pni::core;
+        boost::regex expr("^(?<GNAME>[A-Za-z0-9_-]+)?(:(?<GTYPE>[A-Za-z0-0_-]+))?$");
+
+        if(estr=="." || estr == "..")
+            return {estr,string()};
+
+        boost::smatch result;
+        if(boost::regex_match(estr,result,expr))
+        {
+            string group_name = result.str("GNAME"),
+                   group_type = result.str("GTYPE");
+
+            if(group_name.empty() && group_type.empty())
+            {
+                throw parser_error(EXCEPTION_RECORD,"Missing path element!");
+            }
+
+            return {group_name,group_type};
+
+        }
+        else
+        {
+            std::stringstream ss;
+            ss<<"The element ["<<estr<<"] is not a valid NeXus path element!";
+            throw parser_error(EXCEPTION_RECORD,ss.str());
+        }
+    }
 
     nxpath parse_path(const pni::core::string &input)
     {
         using namespace pni::core;
-        typedef string::iterator iterator_type;
-        typedef nxpath_parser<iterator_type> parser_type;
 
-        string file_part,parser_input;
+        string file_part,attribute_part;
 
-        string::size_type n = input.find("://");
-        if(n == string::npos)
+        // -------------------------------------------------------------------
+        // check for an attribute section
+        // -------------------------------------------------------------------
+        auto attr_sign = std::find(input.begin(),input.end(),'@');
+
+        if(attr_sign!=input.end())
         {
-            //if we do not have :// in the path we can assume that the path is
-            //an object path
-            parser_input = input;
-            file_part = "";
-        }
-        else 
-        {
-            file_part = input.substr(0,n);
-            parser_input = input.substr(n+3);
-
-            //if we have a file section we eventually add a leading / to the
-            //object path in order to make it absolute - a path with a file
-            //section must be absolute.
-            if(parser_input[0]!='/') 
-                parser_input = "/"+parser_input;
+            attribute_part = string(++attr_sign,input.end());
+            attr_sign--;
         }
 
-        //generate parser
-        nxpath path;
-        try
+        // -------------------------------------------------------------------
+        // check for file section
+        // -------------------------------------------------------------------
+        auto file_end = std::search(input.begin(),input.end(),
+                                    file_sep.begin(),file_sep.end());
+        if(file_end!=input.end())
         {
-            parser_type parser(file_part); 
-            qi::parse(parser_input.begin(),parser_input.end(),parser,path);
+            file_part = string(input.begin(),file_end);
+            std::advance(file_end,2);
         }
-        catch(...)
+        else
+            file_end = input.begin(); //need to reset the iterator here
+
+
+        // --------------------------------------------------------------------
+        // manage elements
+        // --------------------------------------------------------------------
+        nxpath::elements_type elements;
+
+        if(*file_end=='/') //check for the root group
         {
-            throw pni::io::parser_error(EXCEPTION_RECORD,
-                    "Error parsing string ["+input+"] to nxpath!\n"
-                    "File section was:   ["+file_part+"]\n"
-                    "Object section was: ["+parser_input+"]");
+            elements.push_back({"/","NXroot"});
+            std::advance(file_end,1);
         }
 
-        return path;
+        string elements_part(file_end,attr_sign);
+
+        if(!elements_part.empty())
+        {
+            std::vector<string> element_strings;
+            boost::split(element_strings,elements_part,
+                         boost::is_any_of("/"),boost::token_compress_on);
+            auto new_end = std::remove_if(element_strings.begin(),
+                                          element_strings.end(),
+                                          [](const string &value)
+                                          {
+                                              return value.empty();
+                                          }
+                                         );
+            std::transform(element_strings.begin(),new_end,
+                           std::back_inserter(elements),
+                           get_element);
+        }
+
+        return nxpath(file_part,elements,attribute_part);
     }
 
 //end of namespace
@@ -86,4 +137,3 @@ namespace parsers{
 }
 }
 }
-

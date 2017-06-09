@@ -22,63 +22,34 @@
 //
 
 #include <boost/test/unit_test.hpp>
-#include <boost/spirit/home/qi/parse.hpp>
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 #include <pni/io/nx/nxpath/parser.hpp>
 #include <pni/io/nx/nxpath/utils.hpp>
+#include <pni/io/exceptions.hpp>
 
-using namespace boost::spirit;
 using namespace pni::core;
 using namespace pni::io::nx;
-using namespace pni::io::nx::parsers;
-    
-typedef string::const_iterator iterator_type;
-typedef nxpath_parser<iterator_type> nxpath_parser_type;
-typedef boost::spirit::qi::expectation_failure<iterator_type> 
-        expectation_error_type;
 
-struct nxpath_parser_test_fixture
-{
-    nxpath_parser_type parser;
 
-    iterator_type start_iter,stop_iter;
-    string input;
-    nxpath output;
 
-    nxpath_parser_test_fixture():
-        start_iter(),
-        stop_iter(),
-        input(),
-        output()
-    {}
-};
-
-BOOST_FIXTURE_TEST_SUITE(nxpath_parser_test,nxpath_parser_test_fixture)
-
-    void set_input(const string &value,iterator_type &start_iter,
-                                       iterator_type &stop_iter)
-    {
-        start_iter = value.begin();
-        stop_iter  = value.end();
-    }
+BOOST_AUTO_TEST_SUITE(nxpath_parser_test)
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_element_path_only)
     {
-        input = "/entry/:NXinstrument/detector:NXdetector";
-        set_input(input,start_iter,stop_iter);
+        string input = "/entry/:NXinstrument/detector:NXdetector";
+        nxpath output;
+        BOOST_CHECK_NO_THROW(output = parsers::parse_path(input));
 
-        BOOST_CHECK(qi::parse(start_iter,stop_iter,parser,output));
         BOOST_CHECK(output.filename().empty());
         BOOST_CHECK(output.attribute().empty());
         BOOST_CHECK(is_absolute(output));
         BOOST_CHECK_EQUAL(output.size(),4);
 
         input = "entry/:NXinstrument/detector:NXdetector";
-        set_input(input,start_iter,stop_iter);
-        
-        BOOST_CHECK(qi::parse(start_iter,stop_iter,parser,output));
+        BOOST_CHECK_NO_THROW(output = parsers::parse_path(input));
+
         BOOST_CHECK(output.filename().empty());
         BOOST_CHECK(output.attribute().empty());
         BOOST_CHECK(!is_absolute(output));
@@ -88,19 +59,17 @@ BOOST_FIXTURE_TEST_SUITE(nxpath_parser_test,nxpath_parser_test_fixture)
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_attribute)
     {
-        input = "/:NXentry@datx";
-        set_input(input,start_iter,stop_iter);
-        BOOST_CHECK(qi::parse(start_iter,stop_iter,parser,output));
+        string input = "/:NXentry@datx";
+        nxpath output;
+
+        BOOST_CHECK_NO_THROW(output = parsers::parse_path(input));
         BOOST_CHECK_EQUAL(output.front().first,"/");
         BOOST_CHECK_EQUAL(output.front().second ,"NXroot");
         BOOST_CHECK_EQUAL(output.attribute(),"datx");
         BOOST_CHECK_EQUAL(output.size(),2);
 
-
-        output = nxpath();
         input = "/@name";
-        set_input(input,start_iter,stop_iter);
-        BOOST_CHECK(qi::parse(start_iter,stop_iter,parser,output));
+        BOOST_CHECK_NO_THROW(output = parsers::parse_path(input));
         BOOST_CHECK(output.filename().empty());
         BOOST_CHECK_EQUAL(output.size(),1);
         BOOST_CHECK_EQUAL(output.attribute(),"name");
@@ -110,25 +79,18 @@ BOOST_FIXTURE_TEST_SUITE(nxpath_parser_test,nxpath_parser_test_fixture)
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_errors)
     {
-        input = "/:NXentry:/:NXinstrument";
-        set_input(input,start_iter,stop_iter);
-        BOOST_CHECK_THROW(qi::parse(start_iter,stop_iter,parser,output),
-                         expectation_error_type);
-                             
+        string input = "/:NXentry:/:NXinstrument";
+
+        BOOST_CHECK_THROW(parsers::parse_path(input),pni::io::parser_error);
+
         input = ".../:NXinstrument";
-        set_input(input,start_iter,stop_iter);
-        BOOST_CHECK_THROW(qi::parse(start_iter,stop_iter,parser,output),
-                          expectation_error_type);
-                            
+        BOOST_CHECK_THROW(parsers::parse_path(input),pni::io::parser_error);
+
         input = "/:NXinstrument/$hello";
-        set_input(input,start_iter,stop_iter);
-        BOOST_CHECK_THROW(qi::parse(start_iter,stop_iter,parser,output),
-                          expectation_error_type);
-                            
+        BOOST_CHECK_THROW(parsers::parse_path(input),pni::io::parser_error);
+
         input = "/:NXinstrument/ llo/instrument";
-        set_input(input,start_iter,stop_iter);
-        BOOST_CHECK_THROW(qi::parse(start_iter,stop_iter,parser,output),
-                          expectation_error_type);
+        BOOST_CHECK_THROW(parsers::parse_path(input),pni::io::parser_error);
     }
 
 BOOST_AUTO_TEST_SUITE_END()

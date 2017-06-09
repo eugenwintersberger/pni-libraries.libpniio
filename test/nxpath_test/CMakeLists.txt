@@ -20,10 +20,7 @@ if(CMAKE_SYSTEM_NAME MATCHES Windows)
   ENVIRONMENT "PATH=${PATH_STRING}")
 endif()
 
-set(PARSERSRC  nxpath_parser_test.cpp
-               element_parser_test.cpp
-               elements_parser_test.cpp
-               dot_parser_test.cpp
+set(PARSERSRC  nxpath_parser_test.cpp             
            )
 
 set_source_files_properties(nxpath_parser_test.cpp PROPERTIES
