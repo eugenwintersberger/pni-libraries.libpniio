@@ -23,5 +23,5 @@
 //
 #pragma once
 
-#include "formatters/formatter.hpp"
-
+#include "formatters/scalar_format.hpp"
+#include "formatters/vector_format.hpp"

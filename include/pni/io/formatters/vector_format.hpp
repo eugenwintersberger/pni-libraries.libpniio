@@ -28,37 +28,67 @@
 #include <vector>
 #include "../container_io_config.hpp"
 #include "../windows.hpp"
+#include "scalar_format.hpp"
 
 
 namespace pni{
 namespace io{
 
-#define DECLARE_VECTOR_FORMAT(type)\
-    pni::core::string PNIIO_EXPORT format(const std::vector<type> &v,\
-                                          const container_io_config &config = \
-                                          container_io_config())
+    template<typename T>
+    pni::core::string format(const std::vector<T> &v,
+                             const container_io_config &config=container_io_config())
+    {
+        using namespace pni::core;
 
+        string output;
+        if(config.start_symbol())
+            output+=string(1,config.start_symbol());
 
-    DECLARE_VECTOR_FORMAT(pni::core::uint8);
-    DECLARE_VECTOR_FORMAT(pni::core::int8);
-    DECLARE_VECTOR_FORMAT(pni::core::uint16);
-    DECLARE_VECTOR_FORMAT(pni::core::int16);
-    DECLARE_VECTOR_FORMAT(pni::core::uint32);
-    DECLARE_VECTOR_FORMAT(pni::core::int32);
-    DECLARE_VECTOR_FORMAT(pni::core::uint64);
-    DECLARE_VECTOR_FORMAT(pni::core::int64);
+        for(const auto &value: v)
+            output+=format(value)+string(1,config.separator());
 
-    DECLARE_VECTOR_FORMAT(pni::core::float32);
-    DECLARE_VECTOR_FORMAT(pni::core::float64);
-    DECLARE_VECTOR_FORMAT(pni::core::float128);
-    
-    DECLARE_VECTOR_FORMAT(pni::core::complex32);
-    DECLARE_VECTOR_FORMAT(pni::core::complex64);
-    DECLARE_VECTOR_FORMAT(pni::core::complex128);
+        if(config.stop_symbol())
+            output[output.size()-1]=config.stop_symbol();
+        else
+            output = string(output.begin(),--output.end());
 
-    DECLARE_VECTOR_FORMAT(pni::core::bool_t);
+        return output;
 
-    DECLARE_VECTOR_FORMAT(pni::core::value);
+    }
+
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup formatter_internal_classes
+    //! \brief formatter for mdarray instances
+    //!
+    //! Specialization of the formatter template for instances of the mdarray
+    //! template.
+    //!
+    //! \tparam OTYPES template parameters for mdarray
+    //!
+    template<typename ...OTYPES>
+    pni::core::string format(const pni::core::mdarray<OTYPES...> &v,
+                             const container_io_config &config=container_io_config())
+    {
+        using namespace pni::core;
+
+        string output;
+        if(config.start_symbol())
+            output+=string(1,config.start_symbol());
+
+        for(const auto &value: v)
+            output+=format(value)+string(1,config.separator());
+
+        if(config.stop_symbol())
+            output[output.size()-1]=config.stop_symbol();
+        else
+            output = string(output.begin(),--output.end());
+
+        return output;
+    }
+
+    pni::core::string format(const pni::core::array &v,
+                             const container_io_config &config=container_io_config());
 
 }
 }

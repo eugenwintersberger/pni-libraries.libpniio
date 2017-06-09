@@ -23,41 +23,30 @@
 //
 
 #include <pni/io/formatters/vector_format.hpp>
-#include <pni/io/formatters/formatter.hpp>
 
 namespace pni{
 namespace io{
 
     using namespace pni::core;
 
-#define DEFINE_VECTOR_FORMAT(type)\
-    string format(const std::vector<type> &v,\
-                  const container_io_config &config) \
-    {\
-        formatter<std::vector<type>> f(config); \
-        return f(v);  \
+    pni::core::string format(const pni::core::array &v,
+                             const container_io_config &config)
+    {
+        using namespace pni::core;
+
+        string output;
+        if(config.start_symbol())
+            output+=string(1,config.start_symbol());
+
+        for(const auto &value: v)
+            output+=format(value)+string(1,config.separator());
+
+        if(config.stop_symbol())
+            output[output.size()-1]=config.stop_symbol();
+        else
+            output = string(output.begin(),--output.end());
+
+        return output;
     }
-
-    DEFINE_VECTOR_FORMAT(pni::core::uint8)
-    DEFINE_VECTOR_FORMAT(pni::core::int8)
-    DEFINE_VECTOR_FORMAT(pni::core::uint16)
-    DEFINE_VECTOR_FORMAT(pni::core::int16)
-    DEFINE_VECTOR_FORMAT(pni::core::uint32)
-    DEFINE_VECTOR_FORMAT(pni::core::int32)
-    DEFINE_VECTOR_FORMAT(pni::core::uint64)
-    DEFINE_VECTOR_FORMAT(pni::core::int64)
-
-    DEFINE_VECTOR_FORMAT(pni::core::float32)
-    DEFINE_VECTOR_FORMAT(pni::core::float64)
-    DEFINE_VECTOR_FORMAT(pni::core::float128)
-    
-    DEFINE_VECTOR_FORMAT(pni::core::complex32)
-    DEFINE_VECTOR_FORMAT(pni::core::complex64)
-    DEFINE_VECTOR_FORMAT(pni::core::complex128)
-
-    DEFINE_VECTOR_FORMAT(pni::core::bool_t)
-
-    DEFINE_VECTOR_FORMAT(pni::core::value)
-
 }
 }

@@ -21,20 +21,17 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <pni/io/formatters/formatter.hpp>
+#include <pni/io/formatters.hpp>
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 #include <boost/test/unit_test.hpp>
-#include <pni/io/container_io_config.hpp>
 
 using namespace pni::core;
 using namespace pni::io;
 
 struct mdarray_formatter_test_fixture
 {
-    typedef dynamic_array<int16>  input_type; 
-    typedef formatter<input_type>      formatter_type;        
-    formatter_type format;
+    typedef dynamic_array<int16>  input_type;
     input_type     input;
 
     mdarray_formatter_test_fixture():
@@ -48,28 +45,26 @@ BOOST_FIXTURE_TEST_SUITE(mdarray_formatter_test,mdarray_formatter_test_fixture)
 
     BOOST_AUTO_TEST_CASE(test_default)
     {
-        BOOST_CHECK_EQUAL(format(input),"1 2 3 4");
+        BOOST_CHECK_EQUAL(format(input),"+1 +2 +3 +4");
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_costum_sep)
     {
-        formatter_type f(container_io_config(';'));    
-        BOOST_CHECK_EQUAL(f(input),"1;2;3;4");
+        BOOST_CHECK_EQUAL(format(input,container_io_config(';')),"+1;+2;+3;+4");
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_costum_start_stop)
     {
-        formatter_type f(container_io_config('(',')'));  
-        BOOST_CHECK_EQUAL(f(input),"(1 2 3 4)");
+        BOOST_CHECK_EQUAL(format(input,container_io_config('(',')')),"(+1 +2 +3 +4)");
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_full_costum)
     {
-        formatter_type f(container_io_config('[',']',';'));
-        BOOST_CHECK_EQUAL(f(input),"[1;2;3;4]");
+
+        BOOST_CHECK_EQUAL(format(input,container_io_config('[',']',';')),"[+1;+2;+3;+4]");
     }
 
 BOOST_AUTO_TEST_SUITE_END()
