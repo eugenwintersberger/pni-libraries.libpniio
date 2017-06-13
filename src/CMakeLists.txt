@@ -48,7 +48,7 @@ target_compile_definitions(pniio PUBLIC BOOST_ALL_DYN_LINK)
 install(TARGETS pniio
         LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-        RUNTIME DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
         )
 
 #have to create the pkg-config file

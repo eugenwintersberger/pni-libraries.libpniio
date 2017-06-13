@@ -1,19 +1,6 @@
 
 
-if(PNIIO_CONAN_HDF5)
-
-    find_program(CONAN conan)
-    if(CONAN MATCHES "CONAN-NONFOUND")
-        message(FATAL_ERROR "Could not find conan executable to install dependencies")
-    endif()
-
-    if(NOT EXISTS ${PROJECT_BINARY_DIR}/conan.cmake)
-        message(STATUS "Downloading conan.cmake file from github")
-        file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/master/conan.cmake"
-             ${PROJECT_BINARY_DIR}/conan.cmake)
-    endif()
-
-    include(${PROJECT_BINARY_DIR}/conan.cmake)
+if(CONAN_HDF5)
 
     conan_cmake_run(REQUIRES "hdf5/1.10.1@wintersb/stable"
                     BASIC_SETUP
@@ -53,7 +40,16 @@ else()
     message(STATUS "Try to configure HDF5 manually via tools ...")
     find_package(HDF5 REQUIRED C)
 
-    get_filename_component(HDF5_LIBRARY_DIRS ${HDF5_C_LIBRARIES} DIRECTORY)
+    #we usually get a list of libraries we have to link
+    foreach(LIB ${HDF5_LIBRARIES})
+
+        string(REGEX MATCH "hdf5" MATCH_RESULT "${LIB}")
+
+        if(MATCH_RESULT)
+            get_filename_component(HDF5_LIBRARY_DIRS ${LIB} DIRECTORY)
+        endif()
+
+    endforeach()
 
     message(STATUS "HDF5 header files: ${HDF5_INCLUDE_DIRS}")
     message(STATUS "HDF5 libraries: ${HDF5_LIBRARIES}")

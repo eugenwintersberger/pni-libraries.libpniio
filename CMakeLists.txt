@@ -15,33 +15,45 @@ set(LIBRARY_VERSION ${PROJECT_VERSION})
 set(SO_VERSION ${PROJECT_VERSION})
 
 
-if(NOT CMAKE_BUILD_TYPE)
-    message(FATAL_ERROR "No CMAKE_BUILD_TYPE set - you have to provide one!")
-endif()
+#
+# defining some default parameters
+#
+include(cmake/common/EnsureBuildType.cmake)
+include(cmake/common/InstallConfig.cmake)
+include(cmake/common/ConanSetup.cmake)
+include(cmake/common/OutputDirConfig.cmake)
+include(cmake/common/PackageConfig.cmake)
+include(cmake/common/WindowsUtils.cmake)
 
 # =============================================================================
 # determine from which source to get dependencies
 # =============================================================================
 
-if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
-  #on windows we use conan by default
-  set(PNIIO_CONAN_BOOST ON CACHE BOOL "User the Boost libraries from Conan")
-else()
-  set(PNIIO_CONAN_BOOST OFF CACHE BOOL "User the Boost libraries from Conan")
+if(NOT CONAN_BOOST)
+    if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
+      #on windows we use conan by default
+      set(CONAN_BOOST ON CACHE BOOL "User the Boost libraries from Conan")
+    else()
+      set(CONAN_BOOST OFF CACHE BOOL "User the Boost libraries from Conan")
+    endif()
 endif()
 
-if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
-    #on Windows we use conan by default
-  set(PNIIO_CONAN_HDF5 ON CACHE BOOL "User the Boost libraries from Conan")
-else()
-  set(PNIIO_CONAN_HDF5 OFF CACHE BOOL "User the Boost libraries from Conan")
+if(NOT CONAN_HDF5)
+    if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
+        #on Windows we use conan by default
+      set(CONAN_HDF5 ON CACHE BOOL "User the Boost libraries from Conan")
+    else()
+      set(CONAN_HDF5 OFF CACHE BOOL "User the Boost libraries from Conan")
+    endif()
 endif()
 
-if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
-    #on Windows we use conan by default
-  set(PNIIO_CONAN_PNICORE ON CACHE BOOL "Using conan pnicore installation")
-else()
-  set(PNIIO_CONAN_PNICORE OFF CACHE BOOL "Using conan pnicore installation")
+if(NOT CONAN_PNICORE)
+    if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
+        #on Windows we use conan by default
+      set(CONAN_PNICORE ON CACHE BOOL "Using conan pnicore installation")
+    else()
+      set(CONAN_PNICORE OFF CACHE BOOL "Using conan pnicore installation")
+    endif()
 endif()
 
 # =============================================================================

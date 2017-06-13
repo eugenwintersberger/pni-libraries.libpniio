@@ -1,21 +1,9 @@
 
-if(PNIIO_CONAN_PNICORE)
+if(CONAN_PNICORE)
 
-    find_program(CONAN conan)
-    if(CONAN MATCHES "CONAN-NONFOUND")
-        message(FATAL_ERROR "Could not find conan executable to install dependencies")
-    endif()
-
-    if(NOT EXISTS ${PROJECT_BINARY_DIR}/conan.cmake)
-        message(STATUS "Downloading conan.cmake file from github")
-        file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/master/conan.cmake"
-             ${PROJECT_BINARY_DIR}/conan.cmake)
-    endif()
-
-    include(${PROJECT_BINARY_DIR}/conan.cmake)
 
     set(BUILD_OPTS)
-    if(NOT PNIIO_CONAN_BOOST)
+    if(NOT CONAN_BOOST)
       list(APPEND BUILD_OPTS "pnicore:with_system_boost=True")
     endif()
 

@@ -51,8 +51,5 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
     add_definitions(-D_SCL_SECURE_NO_WARNINGS)
 endif()
 
-#=================configure installation parameters============================
-include(configure/InstallConfig.cmake)
-
 #===================================check the size of data types===============
 include(configure/CheckTypeSize.cmake)
