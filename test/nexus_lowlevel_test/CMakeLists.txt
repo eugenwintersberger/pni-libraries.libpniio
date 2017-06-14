@@ -14,18 +14,12 @@ set(NXFILESRC nxfile_creation_test.cpp
     )
 
 
-set_source_files_properties(nxfile_creation_test.cpp PROPERTIES
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE=testing nxfile operations")
+set_boost_test_definitions(NXFILESRC "testing nxfile operations")
 add_executable(nxfile_tests ${NXFILESRC})
 target_link_libraries(nxfile_tests pniio Boost::unit_test_framework)
-add_test(NAME "Nexus_Layer_1:nxfile"
-COMMAND nxfile_tests
-WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
-
-if(CMAKE_SYSTEM_NAME MATCHES Windows)
-  set_property(TEST "Nexus_Layer_1:nxfile" APPEND PROPERTY
-  ENVIRONMENT "PATH=${PATH_STRING}")
-endif()
+add_boost_logging_test("Nexus_Layer_1:nxfile"
+                       nxfile_tests
+                       ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
 
 add_custom_target(cleanup_artifacts
 COMMAND ${CMAKE_COMMAND} -E remove *.nxs
@@ -43,20 +37,15 @@ set(NXGROUPSRC  nxgroup_creation_test.cpp
                 nxgroup_recursive_test.cpp
               )
 
-set_source_files_properties(nxgroup_creation_test.cpp PROPERTIES
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE=testing nxgroup operations")
+set_boost_test_definitions(NXGROUPSRC "testing nxgroup operations")
 add_executable(nxgroup_tests ${NXGROUPSRC}
                $<TARGET_OBJECTS:level_1_common>
                $<TARGET_OBJECTS:test_common>)
 target_link_libraries(nxgroup_tests pniio Boost::unit_test_framework)
-add_test(NAME "Nexus_Layer_1:nxgroup"
-COMMAND nxgroup_tests
-WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
+add_boost_logging_test("Nexus_Layer_1:nxgroup"
+                        nxgroup_tests
+                        ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
 
-if(CMAKE_SYSTEM_NAME MATCHES Windows)
-  set_property(TEST "Nexus_Layer_1:nxgroup" APPEND PROPERTY
-  ENVIRONMENT "PATH=${PATH_STRING}")
-endif()
 
 #------------------------------------------------------------------------------
 # test nxfield related operations
@@ -68,20 +57,14 @@ set(NXFIELDSRC  nxfield_creation_test.cpp
                 nxfield_inquiry_test.cpp
     )
 
-set_source_files_properties(nxfield_creation_test.cpp PROPERTIES
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE=testing nxfield operations")
+set_boost_test_definitions(NXFIELDSRC "testing nxfield operations")
 add_executable(nxfield_tests ${NXFIELDSRC}
                $<TARGET_OBJECTS:level_1_common>
                $<TARGET_OBJECTS:test_common>)
 target_link_libraries(nxfield_tests pniio Boost::unit_test_framework)
-add_test(NAME "Nexus_Layer_1:nxfield"
-COMMAND nxfield_tests
-WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
-
-if(CMAKE_SYSTEM_NAME MATCHES Windows)
-  set_property(TEST "Nexus_Layer_1:nxfield" APPEND PROPERTY
-  ENVIRONMENT "PATH=${PATH_STRING}")
-endif()
+add_boost_logging_test("Nexus_Layer_1:nxfield"
+                       nxfield_tests
+                       ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
 
 #------------------------------------------------------------------------------
 # test nxattribute related operations
@@ -94,21 +77,13 @@ set(NXATTRSRC  nxattribute_creation_test.cpp
                nxattribute_manage_test.cpp
    )
 
-set_source_files_properties(nxattribute_creation_test.cpp PROPERTIES
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE=testing nxattribute operations")
+set_boost_test_definitions(NXATTRSRC "testing nxattribute operations")
 add_executable(nxattribute_tests ${NXATTRSRC}
                 $<TARGET_OBJECTS:level_1_common>
                 $<TARGET_OBJECTS:test_common>)
 target_link_libraries(nxattribute_tests pniio Boost::unit_test_framework)
-add_test(NAME "Nexus_Layer_1:nxattribute"
-COMMAND nxattribute_tests
-WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
-
-if(CMAKE_SYSTEM_NAME MATCHES Windows)
-  set_property(TEST "Nexus_Layer_1:nxattribute" APPEND PROPERTY
-  ENVIRONMENT "PATH=${PATH_STRING}")
-endif()
-
+add_boost_logging_test("Nexus_Layer_1:nxattribute" nxattribute_tests
+                       ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
 
 #------------------------------------------------------------------------------
 # test link related operations
@@ -120,20 +95,13 @@ set(NXLINKSRC  nxlink_internal_test.cpp
                link_test.cpp
    )
 
-set_source_files_properties(nxlink_internal_test.cpp PROPERTIES
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE=testing nxattribute operations")
+set_boost_test_definitions(NXLINKSRC "testing nxattribute operations")
 add_executable(nxlink_tests ${NXLINKSRC}
                $<TARGET_OBJECTS:level_1_common>
                $<TARGET_OBJECTS:test_common>)
 target_link_libraries(nxlink_tests pniio Boost::unit_test_framework)
-add_test(NAME "Nexus_Layer_1:nxlink"
-COMMAND nxlink_tests
-WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
-
-if(CMAKE_SYSTEM_NAME MATCHES Windows)
-  set_property(TEST "Nexus_Layer_1:nxlink" APPEND PROPERTY
-  ENVIRONMENT "PATH=${PATH_STRING}")
-endif()
+add_boost_logging_test("Nexus_Layer_1:nxlink" nxlink_tests
+                        ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
 
 #-------------------------------------------------------------------------------
 # we have to add the list of produced files to the cleanup target

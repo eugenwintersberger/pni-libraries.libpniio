@@ -8,11 +8,6 @@ endforeach()
 
 add_executable(group_test ${SOURCES}
                $<TARGET_OBJECTS:test_common>)
-target_link_libraries(group_test pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
-add_test(NAME "XML::group_tests"
-         COMMAND group_test)
-
-if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)     
-    set_property(TEST "XML::group_tests" APPEND PROPERTY
-        ENVIRONMENT "PATH=${PATH_STRING}")
-endif()
+target_link_libraries(group_test pniio Boost::unit_test_framework)
+add_boost_logging_test("XML::group_tests" group_test
+${PROJECT_BINARY_DIR}/test/xml_test/group)

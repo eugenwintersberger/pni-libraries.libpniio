@@ -69,7 +69,7 @@ BOOST_FIXTURE_TEST_SUITE(h5link_test,h5link_test_fixture)
         h5::group_imp lg(root_group.at("link_1"));
         //this should be now a soft link
         BOOST_CHECK(h5::h5link::link_type(root_group,"link_1")==nxlink_type::SOFT);
-        
+
         BOOST_CHECK_NO_THROW(target =
                 h5::h5link::link_target(root_group,"link_1"));
         BOOST_CHECK_EQUAL(nxpath::to_string(target),"h5link_test1.h5://test");
@@ -95,7 +95,7 @@ BOOST_FIXTURE_TEST_SUITE(h5link_test,h5link_test_fixture)
         nxpath target = nxpath::from_string("h5link_test1.h5://test");
         //create a link to the group data in the first file
         BOOST_CHECK_NO_THROW(h5::h5link::create_external_link(target,root_group,"external"));
-        BOOST_CHECK(h5::h5link::link_type(root_group,"external") 
+        BOOST_CHECK(h5::h5link::link_type(root_group,"external")
                 == nxlink_type::EXTERNAL);
         BOOST_CHECK(root_group.has_child("external"));
         BOOST_CHECK_NO_THROW(target = h5::h5link::link_target(root_group,"external"));
@@ -117,10 +117,10 @@ BOOST_FIXTURE_TEST_SUITE(h5link_test,h5link_test_fixture)
     BOOST_AUTO_TEST_CASE(test_link_type)
     {
         h5::group_imp root_group = file1.root();
-        
+
         //exception if child does not exist
         BOOST_CHECK_THROW(h5::h5link::link_type(root_group,"test"),key_error);
-        
+
     }
 
     //------------------------------------------------------------------------

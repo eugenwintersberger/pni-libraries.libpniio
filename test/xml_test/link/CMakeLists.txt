@@ -9,11 +9,6 @@ foreach(XMLFILE ${XMLFILES})
 endforeach()
 
 add_executable(link_test ${SOURCES})
-target_link_libraries(link_test pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
-add_test(NAME "XML::link_tests"
-         COMMAND link_test)
-
-if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
-    set_property(TEST "XML::link_tests" APPEND PROPERTY
-        ENVIRONMENT "PATH=${PATH_NAME}")
-endif()
+target_link_libraries(link_test pniio Boost::unit_test_framework)
+add_boost_logging_test("XML::link_tests" link_test
+${PROJECT_BINARY_DIR}/test/xml_test/link)

@@ -126,11 +126,5 @@ add_executable(field_test field_test.cpp
                           $<TARGET_OBJECTS:field_test_common>)
 
 target_link_libraries(field_test pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
-add_test(NAME "XML::field_tests"
-         COMMAND field_test
-     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/xml_test/field)
-
-if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
-    set_property(TEST "XML::field_tests" APPEND PROPERTY
-        ENVIRONMENT "PATH=${PATH_STRING}")
-endif()
+add_boost_logging_test("XML::field_tests" field_test
+                        ${PROJECT_BINARY_DIR}/test/xml_test/field)

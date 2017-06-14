@@ -1,5 +1,5 @@
-set(SOURCES h5_imp_test_utils.cpp
-            h5link_test.cpp
+set(SOURCES h5link_test.cpp
+            h5_imp_test_utils.cpp
             h5datatype_test.cpp
             h5dataspace_test.cpp
             object_imp_test.cpp
@@ -12,11 +12,9 @@ set(SOURCES h5_imp_test_utils.cpp
             attribute_utils_test.cpp
            )
 
-
-set_source_files_properties(h5link_test.cpp PROPERTIES
-                            COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE=testing HDF5 implementation")
+set_boost_test_definitions(SOURCES "testing HDF5 implementation")
 add_executable(hdf5_imp_test ${SOURCES} )
 target_link_libraries(hdf5_imp_test pniio Boost::unit_test_framework)
-add_test(NAME "HDF5:implementation-test"
-         COMMAND hdf5_imp_test
-       WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/hdf5_imp_test)
+add_boost_logging_test("HDF5:implementation-test"
+                       hdf5_imp_test
+                       ${PROJECT_BINARY_DIR}/test/hdf5_imp_test)

@@ -20,11 +20,5 @@ add_executable(nexus_to_xml_test ${SOURCES}
                $<TARGET_OBJECTS:xml_test_common>)
 target_link_libraries(nexus_to_xml_test pniio Boost::unit_test_framework)
 
-add_test(NAME "XML::nexus_to_xml_test"
-COMMAND nexus_to_xml_test
-WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/xml_test/nexus_to_xml)
-
-if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
-    set_property(TEST "XML::nexus_to_xml_test" APPEND PROPERTY
-        ENVIRONMENT "PATH=${PATH_STRING}")
-endif()
+add_boost_logging_test("XML::nexus_to_xml_test" nexus_to_xml_test
+                        ${PROJECT_BINARY_DIR}/test/xml_test/nexus_to_xml)

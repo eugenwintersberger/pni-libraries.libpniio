@@ -107,10 +107,8 @@ foreach(index RANGE ${TYPERANGE})
     target_include_directories(${TARGET_NAME} PRIVATE
     ${PROJECT_SOURCE_DIR}/test/xml_test/attribute)
 
-    add_test(NAME "XML:attribute:${TYPE}:scalar"
-             COMMAND ${TARGET_NAME}
-             WORKING_DIRECTORY ${GEN_SRC_PATH}
-            )
+    add_boost_logging_test("XML:attribute:${TYPE}:scalar" ${TARGET_NAME}
+                            ${GEN_SRC_PATH} )
 
     list(APPEND CLEANFILES "${CPPFILE} ${NXSFILE} ${XMLFILE}")
 endforeach()
@@ -223,10 +221,8 @@ foreach(index RANGE ${TYPERANGE})
     ${PROJECT_SOURCE_DIR}/test/xml_test/attribute
     )
 
-    add_test(NAME "XML:attribute:${TYPE}:array"
-             COMMAND ${TARGET_NAME}
-             WORKING_DIRECTORY ${GEN_SRC_PATH}
-            )
+    add_boost_logging_test("XML:attribute:${TYPE}:array" ${TARGET_NAME}
+                            ${GEN_SRC_PATH} )
 
 endforeach()
 

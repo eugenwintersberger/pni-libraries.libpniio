@@ -15,8 +15,3 @@ target_link_libraries(reader_test pniio Boost::unit_test_framework)
 
 
 add_test(NAME "reader-test" COMMAND reader_test)
-
-if(CMAKE_SYSTEM_NAME MATCHES Windows)
-  set_property(TEST "reader-test" APPEND PROPERTY
-  ENVIRONMENT "PATH=${PATH_STRING}")
-endif()
