@@ -30,6 +30,12 @@ add_library(pniio SHARED ${SOURCES}
                          $<TARGET_OBJECTS:formatter_objects>
                          $<TARGET_OBJECTS:parser_objects>
 )
+
+target_include_directories(pniio
+PRIVATE ${PROJECT_SOURCE_DIR}/include
+INTERFACE
+$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 #add_dependencies(pniio config.hpp)
 set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"
                                        SOVERSION "${SO_VERSION}")
@@ -46,10 +52,16 @@ target_compile_definitions(pniio PUBLIC BOOST_ALL_DYN_LINK)
 
 #install code
 install(TARGETS pniio
+        EXPORT pniio_targets
         LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+        COMPONENT libraries
         )
+
+install(EXPORT pniio_targets
+DESTINATION ${CMAKE_INSTALL_PACKAGEDIR}
+COMPONENT development)
 
 #have to create the pkg-config file
 if("${CMAKE_FAMILY_VERSION}" EQUAL "2.6")

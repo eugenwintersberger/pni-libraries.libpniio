@@ -22,12 +22,10 @@ build
 .cccc
 /doc/ug/latexmkrc~
 /doc/ug/libpniio_ug.bib~
-<<<<<<< HEAD
 .cproject
 .project
 .settings/
-=======
 /.cproject
 /.project
->>>>>>> refs/heads/master
 *.gch
+install
