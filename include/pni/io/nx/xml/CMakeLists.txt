@@ -13,4 +13,4 @@ set(HEADER_FILES nexus_to_xml.hpp
                  )
 
 install(FILES ${HEADER_FILES} 
-    DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/pni/io/nx/xml)
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io/nx/xml)

@@ -10,4 +10,4 @@ set(HEADER_FILES conversion_trait.hpp
                  )
 
 install(FILES ${HEADER_FILES}
-    DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/pni/io/parsers)
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io/parsers)

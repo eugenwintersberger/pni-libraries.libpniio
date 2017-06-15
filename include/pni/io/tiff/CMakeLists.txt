@@ -8,4 +8,4 @@ set(HEADER_FILES exceptions.hpp
                  tiff_reader.hpp)
 
 install(FILES ${HEADER_FILES} 
-        DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/pni/io/tiff)
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io/tiff)

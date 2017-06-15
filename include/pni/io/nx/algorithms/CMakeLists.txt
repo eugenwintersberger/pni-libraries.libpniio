@@ -39,4 +39,4 @@ set(HEADER_FILES as_attribute.hpp
                  )
 
 install(FILES ${HEADER_FILES} 
-    DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/pni/io/nx/algorithms)
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io/nx/algorithms)

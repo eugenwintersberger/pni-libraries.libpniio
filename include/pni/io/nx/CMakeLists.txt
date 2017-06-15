@@ -25,7 +25,7 @@ set(HEADER_FILES nxattribute.hpp
 
 
 install(FILES ${HEADER_FILES} 
-        DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/pni/io/nx)
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io/nx)
 
 
 add_subdirectory("h5")

@@ -14,7 +14,7 @@ set(HEADER_FILES column_info.hpp
                  )
 
 install(FILES ${HEADER_FILES}
-        DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/pni/io)
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io)
 
 
 add_subdirectory("cbf")
