@@ -7,12 +7,23 @@ if((NOT TARGET pnicore_shared))
     #
 endif()
 
-if((NOT TARGET Boost::filesystem) OR (NOT TARGET Boost::regex) or (NOT TARGET Boost::date_time))
+set(BOOST_REQUIRED_COMPONENTS)
 
-	find_package(Boost 1.41 REQUIRED COMPONENTS filesystem regex date_time)
-	if(NOT Boost_FOUND)
-		message(FATAL_ERROR "Could not find boost libraries - you may have to set the BOOST_ROOT variable!")
-	endif()
+if(NOT TARGET Boost::filesystem)
+    list(APPEND BOOST_REQUIRED_COMPONENTS "Boost::filesystem")
+endif()
+
+if(NOT TARGET Boost::regex)
+    list(APPEND BOOST_REQUIRED_COMPONENTS "Boost::regex")
+endif()
+
+if(NOT TARGET Boost::date_time)
+    list(APPEND BOOST_REQUIRED_COMPONENTS "Boost::date_time")
+endif()
+
+find_package(Boost 1.41 REQUIRED COMPONENTS ${BOOST_REQUIRED_COMPONENTS})
+if(NOT Boost_FOUND)
+	message(FATAL_ERROR "Could not find boost libraries - you may have to set the BOOST_ROOT variable!")
 endif()
 
 link_directories(${Boost_LIBRARY_DIRS})
