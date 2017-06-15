@@ -34,9 +34,9 @@ BOOST_AUTO_TEST_SUITE(float32_formatter_test)
     {
         typedef float32 input_type;
         string result = format(input_type(1.2));
-        BOOST_CHECK_EQUAL(result,"+1.200000e+00");
+        BOOST_CHECK_EQUAL(result,"+1.200000048e+00");
         result = format(input_type(-4.234569e-4));
-        BOOST_CHECK_EQUAL(result,"-4.234569e-04");
+        BOOST_CHECK_EQUAL(result,"-4.234568914e-04");
     }
 
 BOOST_AUTO_TEST_SUITE_END()
