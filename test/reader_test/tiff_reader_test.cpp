@@ -88,6 +88,19 @@ BOOST_AUTO_TEST_SUITE(tiff_reader_test)
     }
 
     //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_read_data_ui32)
+    {
+        std::vector<uint32> data{100,200,300,400,
+                                200,400,600,800};
+
+        tiff_reader reader("ui32.tiff");
+        auto image = reader.image<std::vector<int32>>(0);
+
+        BOOST_CHECK_EQUAL(image.size(),data.size());
+        BOOST_CHECK_EQUAL_COLLECTIONS(image.begin(),image.end(),
+                                      data.begin(),data.end());
+    }
+    //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_read_data_float64)
     {
         std::vector<float64> data{-100,200,-300,400,

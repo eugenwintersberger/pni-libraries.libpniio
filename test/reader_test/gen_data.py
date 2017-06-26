@@ -1,6 +1,7 @@
 #!/bin/env python
 
 from PIL import Image
+import tifffile
 import numpy 
 
 
@@ -15,3 +16,4 @@ Image.fromarray(dui8).save('iui8.tiff','TIFF')
 Image.fromarray(di8).save('ii8.tiff','TIFF')
 
 Image.fromarray(di32).save('ii32.tiff','TIFF')
+tifffile.imsave('ui32.tiff',dui32)
