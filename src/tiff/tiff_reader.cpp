@@ -23,6 +23,7 @@
 //
 
 #include <numeric>
+#include <sstream>
 
 #include <pni/core/error.hpp>
 #include <pni/core/types.hpp>
