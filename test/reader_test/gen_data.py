@@ -13,7 +13,7 @@ dui32 = numpy.array([[100,200,300,400],[200,400,600,800]],dtype="uint32")
 
 #----------------------write the image data--------------------------------
 Image.fromarray(dui8).save('iui8.tiff','TIFF')
-Image.fromarray(di8).save('ii8.tiff','TIFF')
+tifffile.imsave('ii8.tiff',di8)
 
 Image.fromarray(di32).save('ii32.tiff','TIFF')
 tifffile.imsave('ui32.tiff',dui32)
