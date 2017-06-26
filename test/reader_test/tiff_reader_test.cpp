@@ -25,6 +25,7 @@
 #include <vector>
 #include <pni/core/types.hpp>
 #include <pni/io/tiff/tiff_reader.hpp>
+#include <pni/io/image_info.hpp>
 
 using namespace pni::core;
 using namespace pni::io;
@@ -94,7 +95,10 @@ BOOST_AUTO_TEST_SUITE(tiff_reader_test)
                                 200,400,600,800};
 
         tiff_reader reader("ui32.tiff");
-        auto image = reader.image<std::vector<int32>>(0);
+        BOOST_CHECK_EQUAL(reader.nimages(),1);
+        image_info info = reader.info(0);
+        BOOST_CHECK_EQUAL(info.bit_per_pixel(),32);
+        auto image = reader.image<std::vector<uint32>>(0);
 
         BOOST_CHECK_EQUAL(image.size(),data.size());
         BOOST_CHECK_EQUAL_COLLECTIONS(image.begin(),image.end(),
