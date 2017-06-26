@@ -29,6 +29,8 @@
 #include <pni/core/types.hpp>
 #include <pni/io/tiff/tiff_reader.hpp>
 
+using namespace pni::core;
+
 namespace pni{
 namespace io{
 

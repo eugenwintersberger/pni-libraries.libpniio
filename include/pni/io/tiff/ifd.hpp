@@ -138,7 +138,7 @@ namespace tiff{
             //! \param n a string with the name of the entry
             //! \return smart pointer to an IFDAbstractEntry
             //!
-            ifd_entry operator[](const string &n) const;
+            ifd_entry operator[](const pni::core::string &n) const;
 
             //-----------------------------------------------------------------
             //!

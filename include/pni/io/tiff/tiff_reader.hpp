@@ -100,7 +100,7 @@ namespace io{
             //! \param stream input stream from which to read data
             //! \return IFD offset
             //!
-            static int32 _read_ifd_offset(std::ifstream &stream);
+            static pni::core::uint32 _read_ifd_offset(std::ifstream &stream);
 
             //-----------------------------------------------------------------
             //!
@@ -159,7 +159,7 @@ namespace io{
             //! \param sf sample format
             //! \return TypeID of the corresponding type
             //!
-            static type_id_t _get_type_id(size_t bps,size_t sf);
+            static pni::core::type_id_t _get_type_id(size_t bps,size_t sf);
            
             //-----------------------------------------------------------------
             //!

@@ -25,6 +25,8 @@
 #include <pni/io/tiff/ifd.hpp>
 #include <pni/io/tiff/ifd_entry.hpp>
 
+using namespace pni::core;
+
 
 namespace pni{
 namespace io{

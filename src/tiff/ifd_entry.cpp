@@ -28,6 +28,8 @@
 #include <pni/io/tiff/ifd_entry.hpp>
 #include <pni/io/tiff/standard.hpp>
 
+using namespace pni::core;
+
 
 namespace pni{
 namespace io{

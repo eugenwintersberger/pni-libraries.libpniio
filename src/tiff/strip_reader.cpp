@@ -25,6 +25,8 @@
 #include <pni/core/error.hpp>
 #include <pni/io/tiff/strip_reader.hpp>
 
+using namespace pni::core;
+
 namespace pni {
 namespace io {
 namespace tiff {

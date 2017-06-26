@@ -33,8 +33,6 @@
 #include "rational.hpp"
 #include "ifd_entry_reader.hpp"
 
-using namespace pni::core;
-
 namespace pni{
 namespace io{
 namespace tiff{
@@ -72,7 +70,7 @@ namespace tiff{
     class ifd_entry
     {
         private:
-            uint16 _tag;            //!< ID of the entry
+            pni::core::uint16 _tag;            //!< ID of the entry
             ifd_entry_type_id _tid;   //!< type id of the entry
             size_t _size;          //!< number of elements of the entry
             std::streampos _data;  //!< marks data position
@@ -104,7 +102,8 @@ namespace tiff{
             //! \param r vector where to store data
             //! \param stream input stream from which to read
             //!
-            void _read_entry_data(std::vector<string> &r,std::ifstream &stream);
+            void _read_entry_data(std::vector<pni::core::string> &r,
+                                  std::ifstream &stream);
             
         public:
             //=============constructors and destructor=========================
@@ -130,7 +129,7 @@ namespace tiff{
             //! \param size number of elements stored in this entry
             //! \param data starting position of data in the stream
             //!
-            ifd_entry(uint16 tag,ifd_entry_type_id tid,size_t size,
+            ifd_entry(pni::core::uint16 tag,ifd_entry_type_id tid,size_t size,
                       std::streampos data);
 
             //-----------------------------------------------------------------
@@ -172,7 +171,7 @@ namespace tiff{
             //! Returns the name of the entry as a string.
             //! \return name as string
             //!
-            string name() const;
+            pni::core::string name() const;
 
             //-----------------------------------------------------------------
             //!
@@ -181,7 +180,7 @@ namespace tiff{
             //! Returns the TypeID of the entries type. 
             //! \return type ID of entry
             //!
-            type_id_t type_id() const;
+            pni::core::type_id_t type_id() const;
 
             //-----------------------------------------------------------------
             //!
@@ -209,6 +208,8 @@ namespace tiff{
     //==============implementation of public template methods===================
     template<typename T> std::vector<T> ifd_entry::value(std::ifstream &stream)
     {
+        using namespace pni::core;
+
         //create a vector of appropriate length
         std::vector<T> result(this->size());
         //save the original stream position
@@ -247,6 +248,8 @@ namespace tiff{
     template<typename T> void ifd_entry:: 
         _read_entry_data(std::vector<T> &r,std::ifstream &stream)
     {
+        using namespace pni::core;
+
         if(this->_tid == ifd_entry_type_id::BYTE) 
             ifd_entry_reader<T,uint8>::read(r,stream);
         else if(this->_tid == ifd_entry_type_id::SHORT)
