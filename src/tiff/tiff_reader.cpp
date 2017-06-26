@@ -211,7 +211,7 @@ namespace io{
                              error_stream<<"Invalid signed integer type - ";
                              error_stream<<"Bits per sample = "<<bps<<" ";
                              error_stream<<"Sign flag = "<<sf;
-                        throw type_error(EXCEPTION_RECORD,error_sream.str());
+                        throw type_error(EXCEPTION_RECORD,error_stream.str());
                 }
                 break;
             case 3: 
