@@ -310,8 +310,8 @@ namespace io{
           
             //-----------------------------------------------------------------
             //! output operator of an TIFFReader object
-            friend std::ostream &operator<<(std::ostream &o,
-                                            const tiff_reader &r);
+            friend PNIIO_EXPORT std::ostream &operator<<(std::ostream &o,
+                                                         const tiff_reader &r);
 
     };
 

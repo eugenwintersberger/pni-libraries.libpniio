@@ -27,10 +27,6 @@
 #include<fstream>
 #include<vector>
 
-#ifdef NOFOREACH
-#include <boost/foreach.hpp>
-#endif
-
 #include <pni/core/types.hpp>
 
 

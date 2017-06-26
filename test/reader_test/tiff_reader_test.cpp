@@ -125,8 +125,8 @@ BOOST_AUTO_TEST_SUITE(tiff_reader_test)
         std::vector<uint32> data{0,1,2,3,4,5,6,7};
 
         tiff_reader reader("idl_file.tif");
-
-        image_info info = reader.info(0);
+        image_info info;
+        BOOST_CHECK_NO_THROW(info = reader.info(0));
         BOOST_CHECK_EQUAL(info.nx(),4);
         BOOST_CHECK_EQUAL(info.ny(),2);
         BOOST_CHECK_EQUAL(info.bit_per_pixel(),32);

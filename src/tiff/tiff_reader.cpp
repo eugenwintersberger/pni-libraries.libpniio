@@ -29,10 +29,6 @@
 #include <pni/core/types.hpp>
 #include <pni/io/tiff/tiff_reader.hpp>
 
-#ifdef NOFOREACH
-#include <boost/foreach.hpp>
-#endif
-
 namespace pni{
 namespace io{
 
@@ -79,10 +75,10 @@ namespace io{
     
     //--------------------------------------------------------------------------
     //implementation of read IFD offset
-    pni::core::int32 tiff_reader::_read_ifd_offset(std::ifstream &stream)
+    pni::core::uint32 tiff_reader::_read_ifd_offset(std::ifstream &stream)
     {
         //no we need to read the IFD entries read the first IFD offset
-        pni::core::int32 offset = 0;
+        pni::core::uint32 offset = 0;
         stream.read((char*)(&offset),4);
         return offset;
     }
@@ -114,7 +110,7 @@ namespace io{
         //set the stream to the position of the first IFD offse
         stream.seekg(4,std::ios::beg);
         //no we need to read the IFD entries read the first IFD offset
-        int32 ifd_offset = _read_ifd_offset(stream);
+        uint32 ifd_offset = _read_ifd_offset(stream);
         if(ifd_offset == 0)
             throw file_error(EXCEPTION_RECORD,"File "+filename()+" does not "
                     "contain an IDF entry!");
@@ -128,12 +124,11 @@ namespace io{
             //constructor returns the stream at the position where the offset of
             //the next IFD is stored.
             tiff::ifd ifd(_read_ifd_size(stream));
-#ifdef NOFOREACH
-            BOOST_FOREACH(tiff::ifd_entry &entry,ifd)
-#else
+
             for(tiff::ifd_entry &entry: ifd) 
-#endif
+            {
                 entry = std::move(tiff::ifd_entry::create_from_stream(stream));
+            }
             
             //store the IFD
             _ifds.push_back(ifd);
@@ -341,12 +336,8 @@ namespace io{
     {
         o<<"TIFFReader for file: "<<r.filename()<<std::endl;
         o<<"File contains: "<<r.nimages()<<" images"<<std::endl; 
-#ifdef NOFOREACH
-        BOOST_FOREACH(auto ifd,r._ifds)
-#else
-        for(auto ifd: r._ifds)
-#endif
-            o<<ifd;
+
+        for(auto ifd: r._ifds) o<<ifd;
         
         return o;
     }

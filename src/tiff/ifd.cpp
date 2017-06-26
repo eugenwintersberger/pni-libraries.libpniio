@@ -25,9 +25,6 @@
 #include <pni/io/tiff/ifd.hpp>
 #include <pni/io/tiff/ifd_entry.hpp>
 
-#ifdef NOFOREACH
-#include <boost/foreach.hpp>
-#endif
 
 namespace pni{
 namespace io{
@@ -93,12 +90,10 @@ namespace tiff{
     ifd_entry ifd::operator[](const string &n) const
     {
         using namespace pni::core;
-#ifdef NOFOREACH
-        BOOST_FOREACH(auto entry,*this)
-#else
         for(auto entry: *this)
-#endif
+        {
             if(entry.name() == n) return entry;
+        }
 
         throw key_error(EXCEPTION_RECORD,"IFD entry key ["+n+"] not found in IFD!");
     }
@@ -107,12 +102,10 @@ namespace tiff{
     std::ostream &operator<<(std::ostream &o,const ifd &image_dir)
     {
         o<<"IFD content ("<<image_dir.size()<<" entries):"<<std::endl;
-#ifdef NOFOREACH
-        BOOST_FOREACH(auto entry,image_dir)
-#else
         for(auto entry: image_dir)
-#endif
+        {
             o<<entry<<std::endl;
+        }
 
         return o;
     }
