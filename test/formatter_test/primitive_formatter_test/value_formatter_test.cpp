@@ -95,30 +95,30 @@ BOOST_AUTO_TEST_SUITE(value_formatter_test)
     BOOST_AUTO_TEST_CASE(test_float32)
     {
         typedef float32 itype;
-        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+4))),"+1.230000e+04");
-        BOOST_CHECK_EQUAL(format(input_type(itype(-1.23e-4))),"-1.230000e-04");
+        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+4))),"+1.230000000e+04");
+        BOOST_CHECK_EQUAL(format(input_type(itype(-1.23e-4))),"-1.230000053e-04");
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_float64)
     {
         typedef float64 itype;
-        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+4))),"+1.230000e+04");
-        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+123))),"+1.230000e+123");
+        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+4))),"+1.23000000000000000e+04");
+        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+123))),"+1.23000000000000006e+123");
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_float128)
     {
         typedef float128 itype;
-        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+4))),"+1.230000e+04");
+        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+4))),"+1.23000000000000000e+04");
     }
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_complex32)
     {
         typedef complex32 itype;
-        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+4,4.2))),"+1.230000e+04+I4.200000e+00");
-        BOOST_CHECK_EQUAL(format(input_type(itype(-1.23e-4))),"-1.230000e-04+I0.000000e+00");
+        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+4,4.2))),"+1.230000000e+04+I4.199999809e+00");
+        BOOST_CHECK_EQUAL(format(input_type(itype(-1.23e-4))),"-1.230000053e-04+I0.000000000e+00");
     }
 
     //-------------------------------------------------------------------------
@@ -126,15 +126,15 @@ BOOST_AUTO_TEST_SUITE(value_formatter_test)
     {
         typedef complex64 itype;
 
-        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+4,-4.2e+3))),"+1.230000e+04-I4.200000e+03");
-        BOOST_CHECK_EQUAL(format(input_type(itype(0.0,-1.23e+123))),"+0.000000e+00-I1.230000e+123");
+        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+4,-4.2e+3))),"+1.23000000000000000e+04-I4.20000000000000000e+03");
+        BOOST_CHECK_EQUAL(format(input_type(itype(0.0,-1.23e+123))),"+0.00000000000000000e+00-I1.23000000000000006e+123");
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_complex128)
     {
         typedef complex128 itype;
-        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+4,-4.2e+3))),"+1.230000e+04-I4.200000e+03");
+        BOOST_CHECK_EQUAL(format(input_type(itype(1.23e+4,-4.2e+3))),"+1.23000000000000000e+04-I4.20000000000000000e+03");
     }
 
     //-------------------------------------------------------------------------

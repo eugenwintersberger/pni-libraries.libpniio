@@ -20,45 +20,26 @@ if(CONAN_HDF5)
 endif()
 
 
-if(hdf5_DIR)
-    #look for a cmake package specified by the user or provided via the global
-    #package registry
+message(STATUS "Try to configure HDF5 manually via tools ...")
+find_package(HDF5 REQUIRED C)
 
-    message(STATUS "Try to find HDF5 cmake package ...")
+#we usually get a list of libraries we have to link
+foreach(LIB ${HDF5_LIBRARIES})
 
-    find_package(hdf5 CONFIG REQUIRED)
+    string(REGEX MATCH "hdf5" MATCH_RESULT "${LIB}")
 
-    set(hdf5_LIBRARIES hdf5::hdf5-shared)
-    get_target_property(hdf5_INCLUDE_DIRS hdf5::hdf5-shared INTERFACE_INCLUDE_DIRECTORIES)
-    get_target_property(hdf5_LIBRARY_DIRS hdf5::hdf5-shared LOCATION)
-    get_filename_component(hdf5_LIBRARY_DIRS ${hdf5_LIBRARY_DIRS} DIRECTORY)
-    set(HDF5_LIBRARY_DIRS ${hdf5_LIBRARY_DIRS})
+    if(MATCH_RESULT)
+        get_filename_component(HDF5_LIBRARY_DIRS ${LIB} DIRECTORY)
+    endif()
 
-    link_directories(${hdf5_LIBRARY_DIRS})
-    add_definitions(-DH5_BUILT_AS_DYNAMIC_LIB)
-else()
-    message(STATUS "Try to configure HDF5 manually via tools ...")
-    find_package(HDF5 REQUIRED C)
+endforeach()
 
-    #we usually get a list of libraries we have to link
-    foreach(LIB ${HDF5_LIBRARIES})
-
-        string(REGEX MATCH "hdf5" MATCH_RESULT "${LIB}")
-
-        if(MATCH_RESULT)
-            get_filename_component(HDF5_LIBRARY_DIRS ${LIB} DIRECTORY)
-        endif()
-
-    endforeach()
-
-    message(STATUS "HDF5 header files: ${HDF5_INCLUDE_DIRS}")
-    message(STATUS "HDF5 libraries: ${HDF5_LIBRARIES}")
-    message(STATUS "HDF5 library directory: ${HDF5_LIBRARY_DIRS}")
-    link_directories(${HDF5_LIBRARY_DIRS})
-    add_definitions(-DH5_BUILT_AS_DYNAMIC_LIB)
-
-endif()
+message(STATUS "HDF5 header files: ${HDF5_INCLUDE_DIRS}")
+message(STATUS "HDF5 libraries: ${HDF5_LIBRARIES}")
+message(STATUS "HDF5 library directory: ${HDF5_LIBRARY_DIRS}")
+link_directories(${HDF5_LIBRARY_DIRS})
+add_definitions(-DH5_BUILT_AS_DYNAMIC_LIB)
 
 
 # add HDF5 include directories - we need them everywhere in the code
-include_directories(${HDF5_INCLUDE_DIRS} ${hdf5_INCLUDE_DIRS})
+include_directories(${HDF5_INCLUDE_DIRS})

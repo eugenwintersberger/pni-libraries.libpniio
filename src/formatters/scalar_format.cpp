@@ -100,28 +100,28 @@ namespace io{
 
     string format(const float32 &v)
     {
-        boost::format fmt("%|+e|");
+        boost::format fmt("%|+.9e|");
         fmt %v;
         return fmt.str();
     }
     string format(const float64 &v)
     {
-        boost::format fmt("%|+e|");
+        boost::format fmt("%|+.17e|");
         fmt %v;
         return fmt.str();
     }
 
     string format(const float128 &v)
     {
-        boost::format fmt("%|+e|");
+        boost::format fmt("%|+.17e|");
         fmt %v;
         return fmt.str();
     }
 
     string format(const complex32 &v)
     {
-        boost::format fmt_p("%|+e|+I%|e|");
-        boost::format fmt_m("%|+e|-I%|e|");
+        boost::format fmt_p("%|+.9e|+I%|.9e|");
+        boost::format fmt_m("%|+.9e|-I%|.9e|");
 
         if(v.imag()<0)
         {
@@ -137,8 +137,8 @@ namespace io{
     }
     string format(const complex64 &v)
     {
-        boost::format fmt_p("%|+e|+I%|e|");
-        boost::format fmt_m("%|+e|-I%|e|");
+        boost::format fmt_p("%|+.17e|+I%|.17e|");
+        boost::format fmt_m("%|+.17e|-I%|.17e|");
 
         if(v.imag()<0)
         {
@@ -154,8 +154,8 @@ namespace io{
 
     string format(const complex128 &v)
     {
-        boost::format fmt_p("%|+e|+I%|e|");
-        boost::format fmt_m("%|+e|-I%|e|");
+        boost::format fmt_p("%|+.17e|+I%|.17e|");
+        boost::format fmt_m("%|+.17e|-I%|.17e|");
 
         if(v.imag()<0)
         {

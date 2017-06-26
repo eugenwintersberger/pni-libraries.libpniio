@@ -19,5 +19,5 @@ endforeach()
 add_executable(xml_to_nexus_test ${SOURCES})
 target_link_libraries(xml_to_nexus_test pniio Boost::unit_test_framework)
 
-add_boost_logging_test("XML::xml_to_nexus_tests"xml_to_nexus_test
+add_boost_logging_test("XML::xml_to_nexus_tests" xml_to_nexus_test
  ${PROJECT_BINARY_DIR}/test/xml_test/xml_to_nexus)
