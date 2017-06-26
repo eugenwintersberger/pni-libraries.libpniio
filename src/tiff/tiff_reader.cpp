@@ -181,6 +181,7 @@ namespace io{
     type_id_t tiff_reader::_get_type_id(size_t bps,size_t sf) 
     {
         using namespace pni::core;
+        std::stringstream error_stream;
         switch(sf)
         {
             case 1:
@@ -192,8 +193,10 @@ namespace io{
                     case 32: return type_id_t::UINT32;
                     case 64: return type_id_t::UINT64;
                     default:
-                         throw type_error(EXCEPTION_RECORD,
-                               "Invalid unsiged integer type!");
+                            error_stream<<"Invalid unsigned integer type - ";
+                            error_stream<<"Bits per sample = "<<bps<<" ";
+                            error_stream<<"Sign flag = "<<sf;
+                         throw type_error(EXCEPTION_RECORD,error_stream.str());
                 }
                 break;
             case 2:
@@ -205,8 +208,10 @@ namespace io{
                     case 32: return type_id_t::INT32;
                     case 64: return type_id_t::INT64;
                     default:
-                        throw type_error(EXCEPTION_RECORD,
-                              "Invalid siged integer type!");
+                             error_stream<<"Invalid signed integer type - ";
+                             error_stream<<"Bits per sample = "<<bps<<" ";
+                             error_stream<<"Sign flag = "<<sf;
+                        throw type_error(EXCEPTION_RECORD,error_sream.str());
                 }
                 break;
             case 3: 
@@ -216,8 +221,10 @@ namespace io{
                     case 32: return type_id_t::FLOAT32;
                     case 64: return type_id_t::FLOAT64;
                     default:
-                        throw type_error(EXCEPTION_RECORD,
-                              "Invalid floating point type!");
+                             error_stream<<"Invalid floating point type - ";
+                             error_stream<<"Bits per sample = "<<bps<<" ";
+                             error_stream<<"Sign flag = "<<sf;
+                        throw type_error(EXCEPTION_RECORD,error_stream.str());
                 }
                 break;
 
