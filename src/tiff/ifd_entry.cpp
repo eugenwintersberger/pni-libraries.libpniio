@@ -162,13 +162,13 @@ namespace tiff{
     ifd_entry ifd_entry::create_from_stream(std::ifstream &stream)
     {
         pni::core::uint16 tag = 0;
-        stream.read((char *)(&tag),2);
+        stream.read(reinterpret_cast<char*>(&tag),2);
         
         pni::core::uint16 tid = 0;
-        stream.read((char *)(&tid),2);
+        stream.read(reinterpret_cast<char*>(&tid),2);
 
         pni::core::uint32 count = 0;
-        stream.read((char *)(&count),4);
+        stream.read(reinterpret_cast<char*>(&count),4);
 
         ifd_entry e(tag,type_tag_to_entry_type_id[tid],count,stream.tellg());
         //add additional for byte 

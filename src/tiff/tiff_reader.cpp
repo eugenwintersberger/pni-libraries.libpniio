@@ -66,7 +66,7 @@ namespace io{
 
         //read the magic number
         uint16 magic;
-        stream.read((char *)(&magic),2);
+        stream.read(reinterpret_cast<char*>(&magic),2);
             
         //reset stream position
         stream.seekg(orig_pos,std::ios::beg);
@@ -81,7 +81,7 @@ namespace io{
     {
         //no we need to read the IFD entries read the first IFD offset
         pni::core::uint32 offset = 0;
-        stream.read((char*)(&offset),4);
+        stream.read(reinterpret_cast<char*>(&offset),4);
         return offset;
     }
     
@@ -89,7 +89,7 @@ namespace io{
     size_t tiff_reader::_read_ifd_size(std::ifstream &stream)
     {
         size_t size = 0;
-        stream.read((char *)(&size),2);
+        stream.read(reinterpret_cast<char*>(&size),2);
         return size;
     }
 
