@@ -38,12 +38,14 @@ namespace io{
     //================implementation of constructors and destructor========
     //implementation of the default constructor
     cbf_reader::cbf_reader():image_reader()
-    { }
+    { 
+        _set_binary(); 
+    }
 
     //---------------------------------------------------------------------
     //implementation of the standard constructor
     cbf_reader::cbf_reader(const pni::core::string &fname):
-        image_reader(fname)
+        image_reader(fname,true)
     {
         //here the file is immediately opened  - we have to parse the 
         //header to obtain information about the data
