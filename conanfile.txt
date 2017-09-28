@@ -1,0 +1,15 @@
+[requires]
+Boost/1.62.0@lasote/stable
+hdf5/1.10.1@eugenwintersberger/testing
+pnicore/1.1.0@eugenwintersberger/testing
+
+[generators]
+cmake
+
+[options]
+Boost:shared=True
+pnicore:with_system_boost=False
+
+
+[imports]
+bin, *.dll -> ./bin

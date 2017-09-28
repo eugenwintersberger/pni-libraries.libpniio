@@ -20,7 +20,6 @@ set(SO_VERSION ${PROJECT_VERSION})
 #
 include(cmake/common/EnsureBuildType.cmake)
 include(cmake/common/InstallConfig.cmake)
-include(cmake/common/ConanSetup.cmake)
 include(cmake/common/OutputDirConfig.cmake)
 include(cmake/common/PackageConfig.cmake)
 include(cmake/common/WindowsUtils.cmake)
@@ -28,33 +27,16 @@ include(cmake/common/WindowsUtils.cmake)
 # =============================================================================
 # determine from which source to get dependencies
 # =============================================================================
+set(WITH_CONAN OFF CACHE BOOL "Satisfy dependencies with conan")
 
-if(NOT CONAN_BOOST)
-    if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
-      #on windows we use conan by default
-      set(CONAN_BOOST ON CACHE BOOL "User the Boost libraries from Conan")
-    else()
-      set(CONAN_BOOST OFF CACHE BOOL "User the Boost libraries from Conan")
-    endif()
+if(WITH_CONAN)
+	include(cmake/common/ConanSetup.cmake)
+	
+	conan_cmake_run(CONANFILE conanfile.txt
+		            BASIC_SETUP
+		            BUILD missing)	
 endif()
 
-if(NOT CONAN_HDF5)
-    if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
-        #on Windows we use conan by default
-      set(CONAN_HDF5 ON CACHE BOOL "User the Boost libraries from Conan")
-    else()
-      set(CONAN_HDF5 OFF CACHE BOOL "User the Boost libraries from Conan")
-    endif()
-endif()
-
-if(NOT CONAN_PNICORE)
-    if(CMAKE_HOST_SYSTEM_NAME MATCHES Windows)
-        #on Windows we use conan by default
-      set(CONAN_PNICORE ON CACHE BOOL "Using conan pnicore installation")
-    else()
-      set(CONAN_PNICORE OFF CACHE BOOL "Using conan pnicore installation")
-    endif()
-endif()
 
 # =============================================================================
 # import configuration

@@ -4,16 +4,6 @@
 
 include(${PROJECT_SOURCE_DIR}/cmake/common/BoostLibrarySetup.cmake)
 
-if(CONAN_BOOST)
-
-    conan_cmake_run(REQUIRES "Boost/1.62.0@lasote/stable"
-                    BASIC_SETUP
-                    OPTIONS "Boost:shared=True"
-                    IMPORTS "bin, *.dll -> bin"
-                    BUILD missing)
-
-endif()
-
 
 find_package(Boost 1.40 COMPONENTS system
                                    regex
