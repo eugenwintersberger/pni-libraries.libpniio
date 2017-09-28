@@ -7,7 +7,9 @@ set(DATAFILES ii8.tiff
               iui8.tiff 
               ui32.tiff 
               idl_file.tif
-              LAOS3_05461.cbf)
+              LAOS3_05461.cbf
+              scan_mca_00001.fio
+              tstfile_00012.fio)
 
 foreach(F ${DATAFILES})
     configure_file(${F} ${F} COPYONLY)
@@ -26,3 +28,12 @@ target_link_libraries(idl_tif_reader_test pniio Boost::unit_test_framework)
 add_test(NAME "IDL-tif-read"
          COMMAND idl_tif_reader_test
          WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/reader_test)
+        
+set_source_files_properties(fio_reader_test.cpp PROPERTIES
+	                        COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE=Testing the FIO reader")
+add_executable(fio_reader_test fio_reader_test.cpp)
+target_link_libraries(fio_reader_test pniio Boost::unit_test_framework)
+add_test(NAME "pni::io::fio_reader"
+	     COMMAND fio_reader_test
+	     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/reader_test)
+	         
