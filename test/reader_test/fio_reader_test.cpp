@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_SUITE(test_fio_reader)
 BOOST_AUTO_TEST_CASE(test_single_column_file)
 {
 	pni::io::fio_reader reader("scan_mca_00001.fio");
-	BOOST_CHECK_EQUAL(reader.nparameters(),102);
+	BOOST_CHECK_EQUAL(reader.nparameters(),101);
 	BOOST_CHECK_EQUAL(reader.ncolumns(),1);
 }
 

@@ -25,6 +25,10 @@
 #include <sstream>
 #include <string>
 #include <pni/io/fio/fio_reader.hpp>
+#include <boost/regex.hpp>
+
+static const boost::regex parameter_section_re("^[[:space:]]*%p[[:space:]]*");
+static const boost::regex data_section_re("^[[:space:]]*%d[[:space:]]*");
 
 namespace pni{
 namespace io{
@@ -32,27 +36,20 @@ namespace io{
     //======================private member functions===========================
     void fio_reader::_parse_file(std::ifstream &stream)
     {
-        pni::core::string::value_type buffer; 
+        pni::core::string line_buffer;
+        boost::smatch match;
         while(!stream.eof())
         {
             //read a character
-            stream>>buffer;
-            if(buffer == '%')
+            std::getline(stream,line_buffer);
+            if(boost::regex_match(line_buffer,match,parameter_section_re))
             {
-                //each section in the file starts with a % sign - now we need to
-                //figure out which section we are
-                stream>>buffer;
-                switch(buffer){
-                    case 'p':
-                        //parameters section
-                        _parse_parameters(stream); break;
-                    case 'd':
-                        //data section
-                        _parse_data(stream); 
-                        return; 
-                        break;
-                }
-
+            	_parse_parameters(stream);
+            }
+            else if(boost::regex_match(line_buffer,match,data_section_re))
+            {
+            	_parse_data(stream);
+            	return;
             }
         }
 
