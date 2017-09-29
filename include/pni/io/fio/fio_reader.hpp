@@ -26,8 +26,10 @@
 #include <iostream>
 #include <sstream>
 #include <map>
+#include <vector>
 #include <boost/regex.hpp>
 #include <boost/current_function.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include <pni/core/arrays.hpp>
 #include "../spreadsheet_reader.hpp"
@@ -50,10 +52,16 @@ namespace io{
 #ifdef _MSC_VER
 #pragma warning(disable:4251)
 #endif
+    	    using parameter_map_type = std::map<pni::core::string,pni::core::string>;
+    	    using column_map_type = std::map<pni::core::string,std::vector<pni::core::string>>;
             //! parameter stream positions
-            std::map<pni::core::string,std::streampos> _param_map;
+            std::map<pni::core::string,pni::core::string> _param_map;
             //! offset where real data starts
             std::streampos _data_offset; 
+            //! offset where the parameter section starts
+            std::streampos _param_offset;
+            //! column data
+            std::map<pni::core::string,std::vector<pni::core::string>> _columns;
 #ifdef _MSC_VER
 #pragma warning(default:4251)
 #endif
@@ -99,16 +107,6 @@ namespace io{
             \return TypeID 
             */
             static pni::core::type_id_t _typestr2id(const pni::core::string &tstr);
-
-            //-----------------------------------------------------------------
-            /*! 
-            \brief get ColumnInfo from line
-
-            Method retrievs column information from a line. 
-            \param line string object holding the lines content
-            \return instance of ColumnInfo
-            */
-            static column_info _read_column_info(const pni::core::string &line);
           
             //------------------------------------------------------------------
             /*! 
@@ -168,7 +166,7 @@ namespace io{
             fio_reader(const fio_reader &r) = delete;
 
             //! move constructor
-            fio_reader(fio_reader &&r);
+            fio_reader(fio_reader &&r) = default;
 
             //! standard constructor
             fio_reader(const pni::core::string &n);
@@ -181,7 +179,7 @@ namespace io{
             fio_reader &operator=(const fio_reader &r) = delete;
 
             //! move assignemnt operator
-            fio_reader &operator=(fio_reader &&r);
+            fio_reader &operator=(fio_reader &&r) = default;
 
             //=================public member methods===========================
             /*! 
@@ -257,21 +255,7 @@ namespace io{
     template<typename T> 
     T fio_reader::parameter(const pni::core::string &name) const
     {
-        std::ifstream &stream = this->_get_stream();
-        std::streampos opos = stream.tellg(); //backup old stream position
-    
-        //obtain stream offset
-        stream.seekg(this->_param_map.find(name)->second,std::ios::beg);
-
-        //read data
-        T value;
-
-        this->_get_parameter_data(stream,value);
-
-        //reset stream position
-        stream.seekg(opos,std::ios::beg);
-    
-        return value;
+        return boost::lexical_cast<T>(_param_map.at(name));
     }
 
     //-------------------------------------------------------------------------
