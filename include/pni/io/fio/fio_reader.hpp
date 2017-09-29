@@ -53,7 +53,8 @@ namespace io{
 #pragma warning(disable:4251)
 #endif
     	    using parameter_map_type = std::map<pni::core::string,pni::core::string>;
-    	    using column_map_type = std::map<pni::core::string,std::vector<pni::core::string>>;
+    	    using column_type = std::vector<pni::core::string>;
+    	    using column_map_type = std::map<pni::core::string,column_type>;
             //! parameter stream positions
             std::map<pni::core::string,pni::core::string> _param_map;
             //! offset where real data starts

@@ -33,6 +33,7 @@ static const boost::regex data_section_re("^[[:space:]]*%d[[:space:]]*");
 static const boost::regex key_value_re("^\\s*(?<KEY>[^=]+)\\s*=\\s*(?<VALUE>[^=]+)\\s*");
 static const boost::regex col_descriptor_re("^\\s*Col\\s+(?<INDEX>\\d+)\\s+(?<NAME>\\w+)\\s+(?<TYPE>\\w+)\\s*");
 static const boost::regex data_record_re("^(?:\\s+[+-\\.0-9eE]+)+\\s*");
+static const boost::regex data_cell_re("[+-\\.0-9eE]+");
 //boost::regex dcol("[+-]?\\d+\\.?\\d*e?[+-]?\\d*");
 
 namespace pni{
@@ -104,17 +105,31 @@ namespace io{
     }
 
     //-------------------------------------------------------------------------
+     std::vector<pni::core::string> fio_reader::_read_data_line(const pni::core::string &line)
+     {
+         boost::regex dcol("[+-]?\\d+\\.?\\d*e?[+-]?\\d*");
+         std::vector<pni::core::string> record;
+
+         boost::match_results<pni::core::string::const_iterator> imatch;
+         pni::core::string::const_iterator start = line.begin();
+         pni::core::string::const_iterator end   = line.end();
+         while(boost::regex_search(start,end,imatch,dcol,boost::match_default))
+         {
+             record.push_back(imatch.str());
+             start = imatch[0].second;
+         }
+
+         return record;
+     }
+
+    //-------------------------------------------------------------------------
     void fio_reader::_parse_data(std::ifstream &stream)
     {
-        //boost::regex dcol("[+-]?\\d*.?\\d*[e]?[+-]?\\d*");
-        //boost::regex is_dcol("^\\s+[+-]?\\d+\\.?\\d*e?[+-]?\\d*.*");
         boost::smatch match;
-
-        pni::core::string linebuffer;
-        std::streampos data_offset_tmp = 0;
         size_t nr = 0; //number of records
 
         pni::core::string line_buffer;
+        std::map<int,pni::core::string> index_name_map;
 
         while(!stream.eof())
         {
@@ -128,11 +143,22 @@ namespace io{
             	boost::trim(ctype);
 
             	_append_column(column_info(cname,_typestr2id(ctype),std::vector<size_t>()));
+            	index_name_map.insert({boost::lexical_cast<int>(match.str("INDEX"))-1,cname});
+            	_columns.insert({cname,column_type{}});
             }
             else if(boost::regex_match(line_buffer,match,data_record_re))
             {
-//                if(!_data_offset) _data_offset = data_offset_tmp;
-//                         _read_data_line(linebuffer);
+            	size_t column_index = 0;
+            	pni::core::string::const_iterator start = line_buffer.begin(),
+            			                          end   = line_buffer.end();
+            	boost::match_results<pni::core::string::const_iterator> result;
+
+            	while(boost::regex_search(start,end,result,data_cell_re,boost::match_default))
+            	{
+            		pni::core::string r = result.str();
+            		_columns.at(index_name_map.at(column_index)).push_back(r);
+            		column_index++;
+            	}
             	nr++;
             }
         }
@@ -169,26 +195,6 @@ namespace io{
             return pni::core::type_id_t::FLOAT64;
         else
             return pni::core::type_id_t::NONE;
-    }
-
-
-
-    //-------------------------------------------------------------------------
-    std::vector<pni::core::string> fio_reader::_read_data_line(const pni::core::string &line)
-    {
-        boost::regex dcol("[+-]?\\d+\\.?\\d*e?[+-]?\\d*");
-        std::vector<pni::core::string> record;
-
-        boost::match_results<pni::core::string::const_iterator> imatch;
-        pni::core::string::const_iterator start = line.begin();
-        pni::core::string::const_iterator end   = line.end();
-        while(boost::regex_search(start,end,imatch,dcol,boost::match_default))
-        {
-            record.push_back(imatch.str());
-            start = imatch[0].second;
-        }
-
-        return record;
     }
 
     //=======================constructors and destructor======================= 
