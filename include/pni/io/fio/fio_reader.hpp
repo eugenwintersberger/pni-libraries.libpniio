@@ -264,25 +264,19 @@ namespace io{
         void fio_reader::column(const pni::core::string &n,CTYPE &c) const
     {
         using namespace pni::core;
-        size_t cindex = 0; //column index
+        using value_type = typename CTYPE::value_type;
 
         try
         {
-            cindex = this->column_index(n);
+            const column_type &column  = _columns.at(n);
+
+            size_t index=0;
+            for(auto value: column)
+            	c[index++] = boost::lexical_cast<value_type>(value);
         }
         catch(key_error &error)
         {
             //append a new issuer to the exception
-            error.append(EXCEPTION_RECORD);
-            throw error;
-        }
-
-        try
-        {
-            this->_read_column(cindex,c);
-        }
-        catch(file_error &error)
-        {
             error.append(EXCEPTION_RECORD);
             throw error;
         }
@@ -303,50 +297,6 @@ namespace io{
         return data;
     }
 
-    //-------------------------------------------------------------------------
-    template<typename CTYPE> 
-    void fio_reader::_read_column(size_t index,CTYPE &c) const
-    {
-        using namespace pni::core;
-        std::ifstream &stream = this->_get_stream();
-        std::streampos orig_pos = stream.tellg();
-        //move stream to data section
-        stream.seekg(_data_offset,std::ios::beg);
-
-        pni::core::string linebuffer;
-#ifdef NOFOREACH
-        for(auto iter = c.begin();iter!=c.end();++iter)
-        {
-            typename CTYPE::value_type &v = *iter;
-#else
-        for(typename CTYPE::value_type &v: c)
-        {
-#endif
-            //read a single data line
-            try
-            {
-                std::getline(stream,linebuffer);
-            }
-            catch(...)
-            {
-                //set file stream back to its original position
-                stream.seekg(orig_pos,std::ios::beg); 
-                //throw FileError if reading data form the file failed
-                throw file_error(EXCEPTION_RECORD,"Error reading data from file!"); 
-            }
-            //split data line
-            std::vector<pni::core::string> string_data = this->_read_data_line(linebuffer);
-            //set requested element to the string buffer
-            std::stringstream ss(string_data[index]);
-
-            //write element to the container
-            ss>>v;
-        }
-        
-
-        //reset the stream 
-        stream.seekg(orig_pos,std::ios::beg);
-    }
 
 //end of namespace
 }
