@@ -148,16 +148,13 @@ namespace io{
             }
             else if(boost::regex_match(line_buffer,match,data_record_re))
             {
-            	size_t column_index = 0;
-            	pni::core::string::const_iterator start = line_buffer.begin(),
-            			                          end   = line_buffer.end();
-            	boost::match_results<pni::core::string::const_iterator> result;
+            	size_t column_index=0;
+            	boost::sregex_iterator iter(line_buffer.begin(),line_buffer.end(),data_cell_re);
+            	boost::sregex_iterator iter_end;
 
-            	while(boost::regex_search(start,end,result,data_cell_re,boost::match_default))
+            	for(;iter!=iter_end;++iter,++column_index)
             	{
-            		pni::core::string r = result.str();
-            		_columns.at(index_name_map.at(column_index)).push_back(r);
-            		column_index++;
+            		_columns.at(index_name_map.at(column_index)).push_back(iter->str());
             	}
             	nr++;
             }
