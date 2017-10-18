@@ -26,8 +26,10 @@
 #include <iostream>
 #include <sstream>
 #include <map>
+#include <vector>
 #include <boost/regex.hpp>
 #include <boost/current_function.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include <pni/core/arrays.hpp>
 #include "../spreadsheet_reader.hpp"
@@ -50,10 +52,17 @@ namespace io{
 #ifdef _MSC_VER
 #pragma warning(disable:4251)
 #endif
+    	    using parameter_map_type = std::map<pni::core::string,pni::core::string>;
+    	    using column_type = std::vector<pni::core::string>;
+    	    using column_map_type = std::map<pni::core::string,column_type>;
             //! parameter stream positions
-            std::map<pni::core::string,std::streampos> _param_map;
+            std::map<pni::core::string,pni::core::string> _param_map;
             //! offset where real data starts
             std::streampos _data_offset; 
+            //! offset where the parameter section starts
+            std::streampos _param_offset;
+            //! column data
+            std::map<pni::core::string,std::vector<pni::core::string>> _columns;
 #ifdef _MSC_VER
 #pragma warning(default:4251)
 #endif
@@ -99,16 +108,6 @@ namespace io{
             \return TypeID 
             */
             static pni::core::type_id_t _typestr2id(const pni::core::string &tstr);
-
-            //-----------------------------------------------------------------
-            /*! 
-            \brief get ColumnInfo from line
-
-            Method retrievs column information from a line. 
-            \param line string object holding the lines content
-            \return instance of ColumnInfo
-            */
-            static column_info _read_column_info(const pni::core::string &line);
           
             //------------------------------------------------------------------
             /*! 
@@ -168,7 +167,7 @@ namespace io{
             fio_reader(const fio_reader &r) = delete;
 
             //! move constructor
-            fio_reader(fio_reader &&r);
+            fio_reader(fio_reader &&r) = default;
 
             //! standard constructor
             fio_reader(const pni::core::string &n);
@@ -181,7 +180,7 @@ namespace io{
             fio_reader &operator=(const fio_reader &r) = delete;
 
             //! move assignemnt operator
-            fio_reader &operator=(fio_reader &&r);
+            fio_reader &operator=(fio_reader &&r) = default;
 
             //=================public member methods===========================
             /*! 
@@ -257,21 +256,7 @@ namespace io{
     template<typename T> 
     T fio_reader::parameter(const pni::core::string &name) const
     {
-        std::ifstream &stream = this->_get_stream();
-        std::streampos opos = stream.tellg(); //backup old stream position
-    
-        //obtain stream offset
-        stream.seekg(this->_param_map.find(name)->second,std::ios::beg);
-
-        //read data
-        T value;
-
-        this->_get_parameter_data(stream,value);
-
-        //reset stream position
-        stream.seekg(opos,std::ios::beg);
-    
-        return value;
+        return boost::lexical_cast<T>(_param_map.at(name));
     }
 
     //-------------------------------------------------------------------------
@@ -279,25 +264,19 @@ namespace io{
         void fio_reader::column(const pni::core::string &n,CTYPE &c) const
     {
         using namespace pni::core;
-        size_t cindex = 0; //column index
+        using value_type = typename CTYPE::value_type;
 
         try
         {
-            cindex = this->column_index(n);
+            const column_type &column  = _columns.at(n);
+
+            size_t index=0;
+            for(auto value: column)
+            	c[index++] = boost::lexical_cast<value_type>(value);
         }
         catch(key_error &error)
         {
             //append a new issuer to the exception
-            error.append(EXCEPTION_RECORD);
-            throw error;
-        }
-
-        try
-        {
-            this->_read_column(cindex,c);
-        }
-        catch(file_error &error)
-        {
             error.append(EXCEPTION_RECORD);
             throw error;
         }
@@ -318,50 +297,6 @@ namespace io{
         return data;
     }
 
-    //-------------------------------------------------------------------------
-    template<typename CTYPE> 
-    void fio_reader::_read_column(size_t index,CTYPE &c) const
-    {
-        using namespace pni::core;
-        std::ifstream &stream = this->_get_stream();
-        std::streampos orig_pos = stream.tellg();
-        //move stream to data section
-        stream.seekg(_data_offset,std::ios::beg);
-
-        pni::core::string linebuffer;
-#ifdef NOFOREACH
-        for(auto iter = c.begin();iter!=c.end();++iter)
-        {
-            typename CTYPE::value_type &v = *iter;
-#else
-        for(typename CTYPE::value_type &v: c)
-        {
-#endif
-            //read a single data line
-            try
-            {
-                std::getline(stream,linebuffer);
-            }
-            catch(...)
-            {
-                //set file stream back to its original position
-                stream.seekg(orig_pos,std::ios::beg); 
-                //throw FileError if reading data form the file failed
-                throw file_error(EXCEPTION_RECORD,"Error reading data from file!"); 
-            }
-            //split data line
-            std::vector<pni::core::string> string_data = this->_read_data_line(linebuffer);
-            //set requested element to the string buffer
-            std::stringstream ss(string_data[index]);
-
-            //write element to the container
-            ss>>v;
-        }
-        
-
-        //reset the stream 
-        stream.seekg(orig_pos,std::ios::beg);
-    }
 
 //end of namespace
 }
