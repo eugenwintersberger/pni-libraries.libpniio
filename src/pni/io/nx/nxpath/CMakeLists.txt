@@ -1,12 +1,12 @@
-set(HEADER_FILES  nxpath.hpp 
-                  parser.hpp 
-                  utils.hpp 
-                  make_relative.hpp)
+set(HEADER_FILES  ${CMAKE_CURRENT_SOURCE_DIR}/nxpath.hpp 
+                  ${CMAKE_CURRENT_SOURCE_DIR}/parser.hpp 
+                  ${CMAKE_CURRENT_SOURCE_DIR}/utils.hpp 
+                  ${CMAKE_CURRENT_SOURCE_DIR}/make_relative.hpp)
                  
-set(SOURCE_FILES nxpath.cpp
-                 utils.cpp
-                 parser.cpp
-                 make_relative.cpp)
+set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/nxpath.cpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/utils.cpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/parser.cpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/make_relative.cpp)
                 
 install(FILES ${HEADER_FILES} 
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io/nx/nxpath)

@@ -1,18 +1,18 @@
-set(HEADER_FILES exceptions.hpp 
-                 ifd_entry.hpp 
-                 ifd_entry_reader.hpp 
-                 ifd.hpp
-                 rational.hpp 
-                 standard.hpp 
-                 strip_reader.hpp 
-                 tiff_reader.hpp)
+set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/exceptions.hpp 
+                 ${CMAKE_CURRENT_SOURCE_DIR}/ifd_entry.hpp 
+                 ${CMAKE_CURRENT_SOURCE_DIR}/ifd_entry_reader.hpp 
+                 ${CMAKE_CURRENT_SOURCE_DIR}/ifd.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/rational.hpp 
+                 ${CMAKE_CURRENT_SOURCE_DIR}/standard.hpp 
+                 ${CMAKE_CURRENT_SOURCE_DIR}/strip_reader.hpp 
+                 ${CMAKE_CURRENT_SOURCE_DIR}/tiff_reader.hpp)
                 
-set(SOURCE_FILES exceptions.cpp
-                 ifd.cpp
-                 ifd_entry.cpp
-                 ifd_entry_reader.cpp
-                 strip_reader.cpp
-                 tiff_reader.cpp)
+set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/exceptions.cpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/ifd.cpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/ifd_entry.cpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/ifd_entry_reader.cpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/strip_reader.cpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/tiff_reader.cpp)
 
 install(FILES ${HEADER_FILES} 
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io/tiff)

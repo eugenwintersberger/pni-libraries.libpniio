@@ -1,26 +1,26 @@
-set(HEADER_FILES column_info.hpp
-                 data_reader.hpp
-                 deprecation_warning.hpp
-                 image_channel_info.hpp
-                 image_info.hpp
-                 image_reader.hpp
-                 spreadsheet_reader.hpp
-                 strutils.hpp
-                 exceptions.hpp
-                 parsers.hpp
-                 formatters.hpp
-                 container_io_config.hpp
-                 windows.hpp
+set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/column_info.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/data_reader.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/deprecation_warning.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/image_channel_info.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/image_info.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/image_reader.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/spreadsheet_reader.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/strutils.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/exceptions.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/parsers.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/formatters.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/container_io_config.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/windows.hpp
                  )
 
-set(SOURCES_FILES column_info.cpp
-                  data_reader.cpp
-                  image_info.cpp
-                  image_reader.cpp
-                  spreadsheet_reader.cpp
-                  exceptions.cpp
-                  container_io_config.cpp
-                  strutils.cpp)
+set(SOURCES_FILES ${CMAKE_CURRENT_SOURCE_DIR}/column_info.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/data_reader.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/image_info.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/image_reader.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/spreadsheet_reader.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/exceptions.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/container_io_config.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/strutils.cpp)
                  
 set(PNIIO_HEADER_FILES ${PNIIO_HEADER_FILES})
 set(PNIIO_SOURCE_FILES ${PNIIO_SOURCE_FILES})

@@ -1,5 +1,5 @@
-set(HEADER_FILES fio_reader.hpp)
-set(SOURCE_FILES fio_reader.cpp)
+set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/fio_reader.hpp)
+set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/fio_reader.cpp)
 
 install(FILES ${HEADER_FILES} 
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io/fio)
