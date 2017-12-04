@@ -1,7 +1,8 @@
-set(HEADER_FILES                              
-                 scalar_format.hpp
-                 vector_format.hpp
-                 )
+set(HEADER_FILES scalar_format.hpp vector_format.hpp)
+set(SOURCE_FILES scalar_format.cpp vector_format.cpp)
 
 install(FILES ${HEADER_FILES}
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io/formatters)
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io/formatters)
+
+set(PNIIO_HEADER_FILES ${PNIIO_HEADER_FILES} ${HEADER_FILES} PARENT_SCOPE)
+set(PNIIO_SOURCE_FILES ${PNIIO_SOURCE_FILES} ${SOURCE_FILES} PARENT_SCOPE)
