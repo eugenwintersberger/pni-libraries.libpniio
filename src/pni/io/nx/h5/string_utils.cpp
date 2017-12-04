@@ -21,7 +21,7 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include "../../pni/io/nx/h5/string_utils.hpp"
+#include <pni/io/nx/h5/string_utils.hpp>
 
 #include <pni/core/error.hpp>
 

@@ -13,17 +13,17 @@ set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/column_info.hpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/windows.hpp
                  )
 
-set(SOURCES_FILES ${CMAKE_CURRENT_SOURCE_DIR}/column_info.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/data_reader.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/image_info.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/image_reader.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/spreadsheet_reader.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/exceptions.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/container_io_config.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/strutils.cpp)
+set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/column_info.cpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/data_reader.cpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/image_info.cpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/image_reader.cpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/spreadsheet_reader.cpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/exceptions.cpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/container_io_config.cpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/strutils.cpp)
                  
-set(PNIIO_HEADER_FILES ${PNIIO_HEADER_FILES})
-set(PNIIO_SOURCE_FILES ${PNIIO_SOURCE_FILES})
+set(PNIIO_HEADER_FILES )
+set(PNIIO_SOURCE_FILES )
                  
 install(FILES ${HEADER_FILES}
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io)
@@ -35,6 +35,9 @@ add_subdirectory("nx")
 add_subdirectory("parsers")
 add_subdirectory("formatters")
 add_subdirectory("tiff")
+
+set(PNIIO_HEADER_FILES ${PNIIO_HEADER_FILES} ${HEADER_FILES})
+set(PNIIO_SOURCE_FILES ${PNIIO_SOURCE_FILES} ${SOURCE_FILES})
 
 add_library(pniio SHARED ${PNIIO_SOURCE_FILES} ${PNIIO_HEADER_FILES})
 

@@ -21,14 +21,14 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include "../../pni/io/nx/h5/string_formatter_factory.hpp"
+#include <pni/io/nx/h5/string_formatter_factory.hpp>
 
 #include <pni/core/error.hpp>
 #include "string_utils.hpp"
 
-#include "../../pni/io/nx/h5/charpad_formatter.hpp"
-#include "../../pni/io/nx/h5/nullterm_formatter.hpp"
-#include "../../pni/io/nx/h5/string_utils.hpp"
+#include <pni/io/nx/h5/charpad_formatter.hpp>
+#include <pni/io/nx/h5/nullterm_formatter.hpp>
+#include <pni/io/nx/h5/string_utils.hpp>
 
 namespace pni{
 namespace io{

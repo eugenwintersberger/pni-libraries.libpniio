@@ -21,7 +21,7 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include "../../pni/io/nx/h5/nullterm_formatter.hpp"
+#include <pni/io/nx/h5/nullterm_formatter.hpp>
 
 namespace pni{
 namespace io{

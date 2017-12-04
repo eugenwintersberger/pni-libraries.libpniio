@@ -23,7 +23,7 @@
 #pragma once
 
 #include <pni/io/nx/h5/h5datatype.hpp>
-#include "../../pni/io/nx/h5/string_formatter.hpp"
+#include <pni/io/nx/h5/string_formatter.hpp>
 
 namespace pni{
 namespace io{
