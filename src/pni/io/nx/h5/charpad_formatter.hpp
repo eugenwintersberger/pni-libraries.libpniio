@@ -22,26 +22,23 @@
 //
 #pragma once
 
-#include "string_formatter.hpp"
-#include <pni/io/nx/h5/h5datatype.hpp>
+#include "../../pni/io/nx/h5/string_formatter.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
-   
-    //!
-    //! \ingroup hdf5_internal_classes
-    //! \brief abstract string reader class
-    //!
-    //! This abstract class provides an interface for a string reader. 
-    class string_formatter_factory
-    {
-        public:
-           static formatter_ptr create(const h5datatype &type);
-    };    
-
     
+    class charpad_formatter : public string_formatter
+    {
+        private:
+            char _pad;
+        public:
+            charpad_formatter(char c);
+            
+            virtual pni::core::string operator()(const pni::core::string &input) const;
+    };
+
 }
 }
 }

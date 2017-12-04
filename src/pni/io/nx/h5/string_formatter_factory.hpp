@@ -20,25 +20,27 @@
 // Created on: May 11, 2015
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
+#pragma once
 
-#include "charpad_formatter.hpp"
+#include <pni/io/nx/h5/h5datatype.hpp>
+#include "../../pni/io/nx/h5/string_formatter.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
 namespace h5{
-    
-    using namespace pni::core;
-    
-    charpad_formatter::charpad_formatter(char c):
-        _pad(c)
-    {}
-    
-    //-------------------------------------------------------------------------
-    string charpad_formatter::operator()(const string &input) const
+   
+    //!
+    //! \ingroup hdf5_internal_classes
+    //! \brief abstract string reader class
+    //!
+    //! This abstract class provides an interface for a string reader. 
+    class string_formatter_factory
     {
-       return string(input,0,input.find_last_not_of(_pad));
-    }
+        public:
+           static formatter_ptr create(const h5datatype &type);
+    };    
+
     
 }
 }

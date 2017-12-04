@@ -25,7 +25,7 @@
 #include <pni/core/types.hpp>
 #include <vector>
 #include <pni/io/nx/h5/h5datatype.hpp>
-#include "string_formatter.hpp"
+#include "../../pni/io/nx/h5/string_formatter.hpp"
 
 namespace pni{
 namespace io{

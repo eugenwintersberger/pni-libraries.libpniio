@@ -21,20 +21,25 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include "nullterm_formatter.hpp"
+#include "../../pni/io/nx/h5/charpad_formatter.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
-namespace h5{    
+namespace h5{
     
     using namespace pni::core;
     
-    string nullterm_formatter::operator()(const string &input) const
+    charpad_formatter::charpad_formatter(char c):
+        _pad(c)
+    {}
+    
+    //-------------------------------------------------------------------------
+    string charpad_formatter::operator()(const string &input) const
     {
-        return string(input,0,input.find_last_not_of('\0')+1);        
+       return string(input,0,input.find_last_not_of(_pad));
     }
-
+    
 }
 }
 }

@@ -25,7 +25,7 @@
 #include <pni/io/nx/h5/h5_error_stack.hpp>
 #include <vector>
 
-#include "string_utils.hpp"
+#include "../../pni/io/nx/h5/string_utils.hpp"
 
 
 namespace pni{

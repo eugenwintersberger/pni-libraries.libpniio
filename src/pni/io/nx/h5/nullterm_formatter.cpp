@@ -20,24 +20,20 @@
 // Created on: May 11, 2015
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-#pragma once
 
-#include "string_formatter.hpp"
+#include "../../pni/io/nx/h5/nullterm_formatter.hpp"
 
 namespace pni{
 namespace io{
 namespace nx{
-namespace h5{
+namespace h5{    
     
-    class charpad_formatter : public string_formatter
+    using namespace pni::core;
+    
+    string nullterm_formatter::operator()(const string &input) const
     {
-        private:
-            char _pad;
-        public:
-            charpad_formatter(char c);
-            
-            virtual pni::core::string operator()(const pni::core::string &input) const;
-    };
+        return string(input,0,input.find_last_not_of('\0')+1);        
+    }
 
 }
 }

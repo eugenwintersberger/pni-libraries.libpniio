@@ -25,8 +25,8 @@
 #include <pni/io/exceptions.hpp>
 #include <pni/io/nx/h5/hdf5_utilities.hpp>
 #include <pni/io/nx/h5/h5_error_stack.hpp>
-#include "string_utils.hpp"
-#include "string_formatter_factory.hpp"
+#include "../../pni/io/nx/h5/string_formatter_factory.hpp"
+#include "../../pni/io/nx/h5/string_utils.hpp"
 
 
 namespace pni{
