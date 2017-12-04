@@ -23,8 +23,8 @@
 #pragma once
 
 #include <pni/core/utilities.hpp>
-#include "nxattribute.hpp"
-#include "../exceptions.hpp"
+#include <pni/io/nx/nxattribute.hpp>
+#include <pni/io/exceptions.hpp>
 
 namespace pni{
 namespace io{

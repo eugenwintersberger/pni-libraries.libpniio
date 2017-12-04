@@ -24,20 +24,20 @@
 #include <sstream>
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
-#include "../algorithms/write.hpp"
-#include "../algorithms/get_type.hpp"
-#include "../nxobject.hpp"
-#include "../nxobject_traits.hpp"
-#include "../../exceptions.hpp"
-#include "../../parsers.hpp"
+#include <pni/io/nx/algorithms/write.hpp>
+#include <pni/io/nx/algorithms/get_type.hpp>
+#include <pni/io/nx/nxobject.hpp>
+#include <pni/io/nx/nxobject_traits.hpp>
+#include <pni/io/exceptions.hpp>
+#include <pni/io/parsers.hpp>
 
-#include "node.hpp"
-#include "data_node.hpp"
-#include "group.hpp"
-#include "attribute.hpp"
-#include "field.hpp"
-#include "default.hpp"
-#include "link.hpp"
+#include <pni/io/nx/xml/node.hpp>
+#include <pni/io/nx/xml/data_node.hpp>
+#include <pni/io/nx/xml/group.hpp>
+#include <pni/io/nx/xml/attribute.hpp>
+#include <pni/io/nx/xml/field.hpp>
+#include <pni/io/nx/xml/default.hpp>
+#include <pni/io/nx/xml/link.hpp>
 
 
 namespace pni{

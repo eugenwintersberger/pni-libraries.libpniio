@@ -24,12 +24,12 @@
 
 #include <pni/core/types.hpp>
 
-#include "object_imp.hpp"
-#include "type_imp.hpp"
-#include "hdf5_utilities.hpp"
-#include "attribute_utils.hpp"
-#include "attribute_imp.hpp"
-#include "../../windows.hpp"
+#include <pni/io/nx/h5/object_imp.hpp>
+#include <pni/io/nx/h5/type_imp.hpp>
+#include <pni/io/nx/h5/hdf5_utilities.hpp>
+#include <pni/io/nx/h5/attribute_utils.hpp>
+#include <pni/io/nx/h5/attribute_imp.hpp>
+#include <pni/io/windows.hpp>
 
 
 namespace pni{

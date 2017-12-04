@@ -24,11 +24,11 @@
 
 #include <pni/core/types.hpp>
 
-#include "node.hpp"
-#include "data_node.hpp"
-#include "../../parsers.hpp"
-#include "../../formatters.hpp"
-#include "../../windows.hpp"
+#include <pni/io/nx/xml/node.hpp>
+#include <pni/io/nx/xml/data_node.hpp>
+#include <pni/io/parsers.hpp>
+#include <pni/io/formatters.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni{
 namespace io{

@@ -21,14 +21,14 @@
 //
 #pragma once
 
-#include "node.hpp"
-#include "../algorithms.hpp"
-#include "../nxobject.hpp"
-#include "field.hpp"
-#include "group.hpp"
-#include "attribute.hpp"
-#include "dimensions.hpp"
-#include "default.hpp"
+#include <pni/io/nx/xml/node.hpp>
+#include <pni/io/nx/algorithms.hpp>
+#include <pni/io/nx/nxobject.hpp>
+#include <pni/io/nx/xml/field.hpp>
+#include <pni/io/nx/xml/group.hpp>
+#include <pni/io/nx/xml/attribute.hpp>
+#include <pni/io/nx/xml/dimensions.hpp>
+#include <pni/io/nx/xml/default.hpp>
 
 namespace pni{
 namespace io{

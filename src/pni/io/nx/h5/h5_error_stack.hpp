@@ -32,7 +32,7 @@ extern "C"{
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
 
-#include "h5_error.hpp"
+#include <pni/io/nx/h5/h5_error.hpp>
 
 namespace pni {
 namespace io {

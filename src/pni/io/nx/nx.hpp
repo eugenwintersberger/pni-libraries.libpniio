@@ -24,17 +24,17 @@
 //
 #pragma once
 
-#include "nxobject_traits.hpp"
-#include "nxobject.hpp"
-#include "nxfile.hpp"
-#include "nxgroup.hpp"
-#include "nxfield.hpp"
-#include "nxdeflate_filter.hpp"
-#include "nxattribute.hpp"
-#include "nximp_code.hpp"
-#include "nximp_code_map.hpp"
+#include <pni/io/nx/nxobject_traits.hpp>
+#include <pni/io/nx/nxobject.hpp>
+#include <pni/io/nx/nxfile.hpp>
+#include <pni/io/nx/nxgroup.hpp>
+#include <pni/io/nx/nxfield.hpp>
+#include <pni/io/nx/nxdeflate_filter.hpp>
+#include <pni/io/nx/nxattribute.hpp>
+#include <pni/io/nx/nximp_code.hpp>
+#include <pni/io/nx/nximp_code_map.hpp>
 
 
-#include "nx_hdf5_implementation.hpp"
+#include <pni/io/nx/nx_hdf5_implementation.hpp>
 
 

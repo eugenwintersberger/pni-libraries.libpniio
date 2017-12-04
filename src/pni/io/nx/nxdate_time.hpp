@@ -25,7 +25,7 @@
 #include <ctime>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <pni/core/types.hpp>
-#include "../windows.hpp"
+#include <pni/io/windows.hpp>
 
 namespace pni {
 namespace io {

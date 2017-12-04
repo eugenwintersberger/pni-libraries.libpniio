@@ -26,8 +26,8 @@
 #include <pni/core/error.hpp>
 #include <pni/core/type_erasures.hpp>
 
-#include "node.hpp"
-#include "io_node.hpp"
+#include <pni/io/nx/xml/node.hpp>
+#include <pni/io/nx/xml/io_node.hpp>
 
 namespace pni{
 namespace io{

@@ -22,7 +22,7 @@
 //
 #pragma once
 
-#include "nxfilter.hpp"
+#include <pni/io/nx/nxfilter.hpp>
 
 namespace pni{
 namespace io {

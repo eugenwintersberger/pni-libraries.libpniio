@@ -22,7 +22,7 @@
 //
 #pragma once
 
-#include "../nxobject.hpp"
+#include <pni/io/nx/nxobject.hpp>
 
 namespace pni{
 namespace io{

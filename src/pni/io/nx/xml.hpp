@@ -21,11 +21,11 @@
 //
 #pragma once
 
-#include "xml/node.hpp"
-#include "xml/data_node.hpp"
-#include "xml/dimensions.hpp"
-#include "xml/attribute.hpp"
-#include "xml/group.hpp"
-#include "xml/field.hpp"
-#include "xml/nexus_to_xml.hpp"
-#include "xml/xml_to_nexus.hpp"
+#include <pni/io/nx/xml/node.hpp>
+#include <pni/io/nx/xml/data_node.hpp>
+#include <pni/io/nx/xml/dimensions.hpp>
+#include <pni/io/nx/xml/attribute.hpp>
+#include <pni/io/nx/xml/group.hpp>
+#include <pni/io/nx/xml/field.hpp>
+#include <pni/io/nx/xml/nexus_to_xml.hpp>
+#include <pni/io/nx/xml/xml_to_nexus.hpp>

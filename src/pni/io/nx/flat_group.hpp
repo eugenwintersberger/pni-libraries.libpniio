@@ -23,10 +23,10 @@
 #pragma once
 
 #include <vector>
-#include "algorithms/is_valid.hpp"
-#include "algorithms/is_group.hpp"
-#include "algorithms/as_group.hpp"
-#include "nxobject_traits.hpp"
+#include <pni/io/nx/algorithms/is_valid.hpp>
+#include <pni/io/nx/algorithms/is_group.hpp>
+#include <pni/io/nx/algorithms/as_group.hpp>
+#include <pni/io/nx/nxobject_traits.hpp>
 
 namespace pni{
 namespace io{

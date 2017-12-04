@@ -22,9 +22,9 @@
 //
 #pragma once
 
-#include "object_imp.hpp"
-#include "type_imp.hpp"
-#include "../../windows.hpp"
+#include <pni/io/nx/h5/object_imp.hpp>
+#include <pni/io/nx/h5/type_imp.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni{
 namespace io{

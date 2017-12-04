@@ -26,10 +26,10 @@
 #include <pni/core/types.hpp>
 #include <pni/core/utilities.hpp>
 
-#include "nximp_map.hpp"
-#include "nxobject_traits.hpp"
-#include "nxgroup.hpp"
-#include "nxdate_time.hpp"
+#include <pni/io/nx/nximp_map.hpp>
+#include <pni/io/nx/nxobject_traits.hpp>
+#include <pni/io/nx/nxgroup.hpp>
+#include <pni/io/nx/nxdate_time.hpp>
 
 
 namespace pni{

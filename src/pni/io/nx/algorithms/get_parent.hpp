@@ -21,8 +21,8 @@
 //
 #pragma once
 
-#include "../nxobject.hpp"
-#include "../nxobject_traits.hpp"
+#include <pni/io/nx/nxobject.hpp>
+#include <pni/io/nx/nxobject_traits.hpp>
 
 namespace pni{
 namespace io{

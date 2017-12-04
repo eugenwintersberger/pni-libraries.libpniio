@@ -22,7 +22,7 @@
 //
 #pragma once
 
-#include "parser.hpp"
+#include <pni/io/parsers/parser.hpp>
 
 namespace pni{
 namespace io{

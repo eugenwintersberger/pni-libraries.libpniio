@@ -23,8 +23,8 @@
 
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
-#include "../nxobject_traits.hpp"
-#include "is_group.hpp"
+#include <pni/io/nx/nxobject_traits.hpp>
+#include <pni/io/nx/algorithms/is_group.hpp>
 
 namespace pni{
 namespace io{

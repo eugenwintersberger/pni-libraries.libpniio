@@ -22,9 +22,9 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include "../nxobject.hpp"
-#include "get_object.hpp"
-#include "utils.hpp"
+#include <pni/io/nx/nxobject.hpp>
+#include <pni/io/nx/algorithms/get_object.hpp>
+#include <pni/io/nx/algorithms/utils.hpp>
 
 namespace pni{
 namespace io{

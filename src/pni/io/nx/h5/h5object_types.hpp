@@ -23,8 +23,8 @@
 
 #pragma once
 
-#include "../nxobject_type.hpp"
-#include "../../windows.hpp"
+#include <pni/io/nx/nxobject_type.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni{
 namespace io{

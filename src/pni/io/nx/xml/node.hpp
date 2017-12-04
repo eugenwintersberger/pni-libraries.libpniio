@@ -23,7 +23,7 @@
 
 #include <pni/core/types.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include "../../windows.hpp"
+#include <pni/io/windows.hpp>
 
 namespace pni{
 namespace io{

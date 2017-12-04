@@ -21,9 +21,9 @@
 //
 #pragma once
 
-#include "../nxobject.hpp"
-#include "../nximp_code.hpp"
-#include "../link.hpp"
+#include <pni/io/nx/nxobject.hpp>
+#include <pni/io/nx/nximp_code.hpp>
+#include <pni/io/nx/link.hpp>
 
 namespace pni{
 namespace io{

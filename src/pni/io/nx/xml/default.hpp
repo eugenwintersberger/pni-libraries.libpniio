@@ -21,7 +21,7 @@
 //
 #pragma once
 
-#include "../nxobject.hpp"
+#include <pni/io/nx/nxobject.hpp>
 #include <boost/mpl/map.hpp>
 #include <map>
 

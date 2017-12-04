@@ -25,15 +25,15 @@
 
 #include <pni/core/types.hpp>
 
-#include "../algorithms/create_attribute.hpp"
-#include "../algorithms/get_type.hpp"
-#include "../algorithms/get_name.hpp"
-#include "../algorithms/get_shape.hpp"
-#include "../algorithms/get_size.hpp"
-#include "../nxobject.hpp"
-#include "node.hpp"
-#include "dimensions.hpp"
-#include "io_node.hpp"
+#include <pni/io/nx/algorithms/create_attribute.hpp>
+#include <pni/io/nx/algorithms/get_type.hpp>
+#include <pni/io/nx/algorithms/get_name.hpp>
+#include <pni/io/nx/algorithms/get_shape.hpp>
+#include <pni/io/nx/algorithms/get_size.hpp>
+#include <pni/io/nx/nxobject.hpp>
+#include <pni/io/nx/xml/node.hpp>
+#include <pni/io/nx/xml/dimensions.hpp>
+#include <pni/io/nx/xml/io_node.hpp>
 
 
 namespace pni{

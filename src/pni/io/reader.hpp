@@ -23,6 +23,6 @@
 //
 #pragma once
 
-#include "cbf/cbf_reader.hpp"
-#include "fio/fio_reader.hpp"
-#include "tiff/tiff_reader.hpp"
+#include <pni/io/cbf/cbf_reader.hpp>
+#include <pni/io/fio/fio_reader.hpp>
+#include <pni/io/tiff/tiff_reader.hpp>

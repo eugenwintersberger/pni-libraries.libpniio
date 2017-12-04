@@ -23,12 +23,12 @@
 
 #include <pni/core/types.hpp>
 
-#include "../nxpath/nxpath.hpp"
-#include "get_parent.hpp"
-#include "get_root.hpp"
-#include "get_attribute.hpp"
-#include "get_child.hpp"
-#include "utils.hpp"
+#include <pni/io/nx/nxpath/nxpath.hpp>
+#include <pni/io/nx/algorithms/get_parent.hpp>
+#include <pni/io/nx/algorithms/get_root.hpp>
+#include <pni/io/nx/algorithms/get_attribute.hpp>
+#include <pni/io/nx/algorithms/get_child.hpp>
+#include <pni/io/nx/algorithms/utils.hpp>
 
 namespace pni{
 namespace io{

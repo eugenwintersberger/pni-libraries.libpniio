@@ -25,8 +25,8 @@
 #include <boost/variant.hpp>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/int.hpp>
-#include "nximp_code.hpp"
-#include "nximp_code_map.hpp"
+#include <pni/io/nx/nximp_code.hpp>
+#include <pni/io/nx/nximp_code_map.hpp>
 
 namespace pni{
 namespace io{

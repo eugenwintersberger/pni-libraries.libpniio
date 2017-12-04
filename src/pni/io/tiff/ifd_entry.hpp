@@ -30,8 +30,8 @@
 
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
-#include "rational.hpp"
-#include "ifd_entry_reader.hpp"
+#include <pni/io/tiff/rational.hpp>
+#include <pni/io/tiff/ifd_entry_reader.hpp>
 
 namespace pni{
 namespace io{

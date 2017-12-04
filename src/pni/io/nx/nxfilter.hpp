@@ -26,7 +26,7 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include "nximp_map.hpp"
+#include <pni/io/nx/nximp_map.hpp>
 
 
 namespace pni{

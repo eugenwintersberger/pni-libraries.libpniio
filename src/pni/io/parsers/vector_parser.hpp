@@ -25,21 +25,21 @@
 
 #include <sstream>
 
-#include<pni/core/types.hpp>
-#include<pni/core/error.hpp>
-#include<vector>
+#include <pni/core/types.hpp>
+#include <pni/core/error.hpp>
+#include <vector>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/trim.hpp>
 #include <algorithm>
 #include <iterator>
 
-#include "../exceptions.hpp"
-#include "slice_parser.hpp"
-#include "bool_parser.hpp"
-#include "value_parser.hpp"
-#include "complex_parser.hpp"
-#include "parser.hpp"
-#include "../container_io_config.hpp"
+#include <pni/io/exceptions.hpp>
+#include <pni/io/parsers/slice_parser.hpp>
+#include <pni/io/parsers/bool_parser.hpp>
+#include <pni/io/parsers/value_parser.hpp>
+#include <pni/io/parsers/complex_parser.hpp>
+#include <pni/io/parsers/parser.hpp>
+#include <pni/io/container_io_config.hpp>
 
 
 namespace pni{

@@ -24,8 +24,8 @@
 
 #include <iostream>
 #include <pni/core/types.hpp>
-#include "nxpath.hpp"
-#include "../../windows.hpp"
+#include <pni/io/nx/nxpath/nxpath.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni{
 namespace io{

@@ -23,12 +23,12 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include "../nxobject.hpp"
-#include "../nxobject_traits.hpp"
-#include "../nximp_code_map.hpp"
-#include "../nxfilter.hpp"
-#include "get_object.hpp"
-#include "utils.hpp"
+#include <pni/io/nx/nxobject.hpp>
+#include <pni/io/nx/nxobject_traits.hpp>
+#include <pni/io/nx/nximp_code_map.hpp>
+#include <pni/io/nx/nxfilter.hpp>
+#include <pni/io/nx/algorithms/get_object.hpp>
+#include <pni/io/nx/algorithms/utils.hpp>
 
 namespace pni{
 namespace io{

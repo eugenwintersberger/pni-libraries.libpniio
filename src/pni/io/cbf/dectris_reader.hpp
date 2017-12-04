@@ -28,9 +28,9 @@
 #include<fstream>
 #include<vector>
 
-#include "../image_info.hpp"
-#include "types.hpp"
-#include "../windows.hpp"
+#include <pni/io/image_info.hpp>
+#include <pni/io/cbf/types.hpp>
+#include <pni/io/windows.hpp>
 
 
 namespace pni{

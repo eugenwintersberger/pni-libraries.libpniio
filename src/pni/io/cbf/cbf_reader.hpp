@@ -34,10 +34,10 @@
 
 #include <pni/core/types.hpp>
 
-#include "../image_reader.hpp"
-#include "dectris_reader.hpp"
-#include "types.hpp"
-#include "../windows.hpp"
+#include <pni/io/image_reader.hpp>
+#include <pni/io/cbf/dectris_reader.hpp>
+#include <pni/io/cbf/types.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni{
 namespace io{

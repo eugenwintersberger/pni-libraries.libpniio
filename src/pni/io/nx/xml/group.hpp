@@ -24,14 +24,14 @@
 
 #include <pni/core/types.hpp>
 
-#include "../nxobject.hpp"
-#include "../algorithms/create_field.hpp"
-#include "../algorithms/create_group.hpp"
-#include "../algorithms/get_name.hpp"
-#include "../algorithms/get_class.hpp"
-#include "../algorithms/set_class.hpp"
-#include "node.hpp"
-#include "data_node.hpp"
+#include <pni/io/nx/nxobject.hpp>
+#include <pni/io/nx/algorithms/create_field.hpp>
+#include <pni/io/nx/algorithms/create_group.hpp>
+#include <pni/io/nx/algorithms/get_name.hpp>
+#include <pni/io/nx/algorithms/get_class.hpp>
+#include <pni/io/nx/algorithms/set_class.hpp>
+#include <pni/io/nx/xml/node.hpp>
+#include <pni/io/nx/xml/data_node.hpp>
 
 
 namespace pni{

@@ -24,17 +24,17 @@
 
 #pragma once
 
-#include<pni/core/types.hpp>
+#include <pni/core/types.hpp>
 #include <pni/core/type_erasures/value.hpp>
 #include <pni/core/arrays/slice.hpp>
 
-#include "../exceptions.hpp"
-#include "conversion_trait.hpp"
-#include "../container_io_config.hpp"
+#include <pni/io/exceptions.hpp>
+#include <pni/io/parsers/conversion_trait.hpp>
+#include <pni/io/container_io_config.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/regex.hpp>
-#include "../windows.hpp"
+#include <pni/io/windows.hpp>
 
 namespace pni{
 namespace io{

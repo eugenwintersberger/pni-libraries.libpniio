@@ -23,11 +23,11 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include "nxpath/nxpath.hpp"
-#include "nxlink_type.hpp"
-#include "nxlink.hpp"
-#include "nxobject_traits.hpp"
-#include "../exceptions.hpp"
+#include <pni/io/nx/nxpath/nxpath.hpp>
+#include <pni/io/nx/nxlink_type.hpp>
+#include <pni/io/nx/nxlink.hpp>
+#include <pni/io/nx/nxobject_traits.hpp>
+#include <pni/io/exceptions.hpp>
 
 namespace pni{
 namespace io{

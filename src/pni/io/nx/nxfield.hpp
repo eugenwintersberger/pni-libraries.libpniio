@@ -35,9 +35,9 @@
 #include <pni/core/type_erasures/array.hpp>
 #include <pni/core/error.hpp>
 
-#include "nxattribute_manager.hpp"
-#include "nxobject_traits.hpp"
-#include "algorithms/as_field.hpp"
+#include <pni/io/nx/nxattribute_manager.hpp>
+#include <pni/io/nx/nxobject_traits.hpp>
+#include <pni/io/nx/algorithms/as_field.hpp>
 
 
 namespace pni{

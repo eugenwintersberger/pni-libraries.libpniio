@@ -26,10 +26,10 @@
 //----------------------------------------------------------------------------
 // header files providing parser classes
 //----------------------------------------------------------------------------
-#include "parsers/vector_parser.hpp"
-#include "parsers/complex_parser.hpp"
-#include "parsers/parser.hpp"
-#include "parsers/string_parser.hpp"
-#include "parsers/value_parser.hpp"
-#include "parsers/slice_parser.hpp"
-#include "parsers/bool_parser.hpp"
+#include <pni/io/parsers/vector_parser.hpp>
+#include <pni/io/parsers/complex_parser.hpp>
+#include <pni/io/parsers/parser.hpp>
+#include <pni/io/parsers/string_parser.hpp>
+#include <pni/io/parsers/value_parser.hpp>
+#include <pni/io/parsers/slice_parser.hpp>
+#include <pni/io/parsers/bool_parser.hpp>

@@ -27,13 +27,13 @@
 #include <fstream>
 #include <vector>
 
-#include "ifd.hpp"
-#include "../image_info.hpp"
+#include <pni/io/tiff/ifd.hpp>
+#include <pni/io/image_info.hpp>
 
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 
-#include "../windows.hpp"
+#include <pni/io/windows.hpp>
 
 
 namespace pni {

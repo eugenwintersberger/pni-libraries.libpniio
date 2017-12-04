@@ -28,10 +28,10 @@ extern "C"{
 }
 
 #include <pni/core/types.hpp>
-#include "../../exceptions.hpp"
-#include "h5object_types.hpp"
-#include "../nxobject_type.hpp"
-#include "../../windows.hpp"
+#include <pni/io/exceptions.hpp>
+#include <pni/io/nx/h5/h5object_types.hpp>
+#include <pni/io/nx/nxobject_type.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni{
 namespace io{

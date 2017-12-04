@@ -22,8 +22,8 @@
 //
 #pragma once
 
-#include "node.hpp"
-#include "../../windows.hpp"
+#include <pni/io/nx/xml/node.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni{
 namespace io{

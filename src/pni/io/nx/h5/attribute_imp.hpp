@@ -26,13 +26,13 @@
 
 #include <pni/core/types.hpp>
 
-#include "object_imp.hpp"
-#include "type_imp.hpp"
-#include "h5dataspace.hpp"
-#include "h5datatype.hpp"
-#include "selection.hpp"
-#include "selection_guard.hpp"
-#include "../../windows.hpp"
+#include <pni/io/nx/h5/object_imp.hpp>
+#include <pni/io/nx/h5/type_imp.hpp>
+#include <pni/io/nx/h5/h5dataspace.hpp>
+#include <pni/io/nx/h5/h5datatype.hpp>
+#include <pni/io/nx/h5/selection.hpp>
+#include <pni/io/nx/h5/selection_guard.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni{
 namespace io{

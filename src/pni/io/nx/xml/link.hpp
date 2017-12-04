@@ -21,10 +21,10 @@
 //
 #pragma once
 
-#include "../algorithms/as_group.hpp"
-#include "data_node.hpp"
-#include "../nxlink.hpp"
-#include "../../windows.hpp"
+#include <pni/io/nx/algorithms/as_group.hpp>
+#include <pni/io/nx/xml/data_node.hpp>
+#include <pni/io/nx/nxlink.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni{
 namespace io{

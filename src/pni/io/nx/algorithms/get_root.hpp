@@ -22,7 +22,7 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include "get_parent.hpp"
+#include <pni/io/nx/algorithms/get_parent.hpp>
 
 namespace pni{
 namespace io{

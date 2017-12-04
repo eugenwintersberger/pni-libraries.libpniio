@@ -30,9 +30,9 @@
 #include <vector>
 
 #include <pni/core/types.hpp>
-#include "data_reader.hpp"
-#include "image_info.hpp"
-#include "windows.hpp"
+#include <pni/io/data_reader.hpp>
+#include <pni/io/image_info.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni{
 namespace io{

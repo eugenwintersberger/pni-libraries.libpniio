@@ -26,20 +26,20 @@
 #include <pni/core/types.hpp>
 #include <pni/core/type_erasures.hpp>
 
-#include "../algorithms/create_field.hpp"
-#include "../algorithms/create_attribute.hpp"
-#include "../algorithms/write.hpp"
-#include "../algorithms/get_name.hpp"
-#include "../algorithms/get_unit.hpp"
-#include "../algorithms/as_field.hpp"
-#include "../algorithms/as_group.hpp"
-#include "../algorithms/get_size.hpp"
-#include "../algorithms/get_shape.hpp"
-#include "../nxobject.hpp"
-#include "node.hpp"
-#include "dimensions.hpp"
-#include "io_node.hpp"
-#include "../../windows.hpp"
+#include <pni/io/nx/algorithms/create_field.hpp>
+#include <pni/io/nx/algorithms/create_attribute.hpp>
+#include <pni/io/nx/algorithms/write.hpp>
+#include <pni/io/nx/algorithms/get_name.hpp>
+#include <pni/io/nx/algorithms/get_unit.hpp>
+#include <pni/io/nx/algorithms/as_field.hpp>
+#include <pni/io/nx/algorithms/as_group.hpp>
+#include <pni/io/nx/algorithms/get_size.hpp>
+#include <pni/io/nx/algorithms/get_shape.hpp>
+#include <pni/io/nx/nxobject.hpp>
+#include <pni/io/nx/xml/node.hpp>
+#include <pni/io/nx/xml/dimensions.hpp>
+#include <pni/io/nx/xml/io_node.hpp>
+#include <pni/io/windows.hpp>
 
 
 

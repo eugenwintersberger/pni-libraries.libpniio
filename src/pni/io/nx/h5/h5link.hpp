@@ -30,9 +30,9 @@ extern "C"{
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
 
-#include "../nxlink_type.hpp"
-#include "../nxpath/nxpath.hpp"
-#include "../../windows.hpp"
+#include <pni/io/nx/nxlink_type.hpp>
+#include <pni/io/nx/nxpath/nxpath.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni{
 namespace io {

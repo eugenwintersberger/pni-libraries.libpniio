@@ -29,8 +29,8 @@
 
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
-#include "image_channel_info.hpp"
-#include "windows.hpp"
+#include <pni/io/image_channel_info.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni{
 namespace io{

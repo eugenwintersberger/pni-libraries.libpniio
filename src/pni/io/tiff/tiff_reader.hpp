@@ -27,12 +27,12 @@
 #include<vector>
 #include<boost/current_function.hpp>
 
-#include "../image_reader.hpp"
-#include "../image_info.hpp"
-#include "ifd.hpp"
-#include "ifd_entry.hpp"
-#include "strip_reader.hpp"
-#include "../windows.hpp"
+#include <pni/io/image_reader.hpp>
+#include <pni/io/image_info.hpp>
+#include <pni/io/tiff/ifd.hpp>
+#include <pni/io/tiff/ifd_entry.hpp>
+#include <pni/io/tiff/strip_reader.hpp>
+#include <pni/io/windows.hpp>
 
 
 namespace pni{

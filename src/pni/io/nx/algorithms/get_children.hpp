@@ -21,9 +21,9 @@
 //
 #pragma once
 
-#include "../nxobject_traits.hpp"
-#include "object_predicates.hpp"
-#include "iterators.hpp"
+#include <pni/io/nx/nxobject_traits.hpp>
+#include <pni/io/nx/algorithms/object_predicates.hpp>
+#include <pni/io/nx/algorithms/iterators.hpp>
 
 namespace pni{
 namespace io{

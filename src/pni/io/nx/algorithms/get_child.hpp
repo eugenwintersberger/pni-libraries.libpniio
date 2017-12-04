@@ -21,13 +21,13 @@
 //
 #pragma once
 
-#include "../nximp_code.hpp"
-#include "../nxobject.hpp"
-#include "object_predicates.hpp"
-#include "iterators.hpp"
-#include "is_group.hpp"
-#include "get_parent.hpp"
-#include "is_valid.hpp"
+#include <pni/io/nx/nximp_code.hpp>
+#include <pni/io/nx/nxobject.hpp>
+#include <pni/io/nx/algorithms/object_predicates.hpp>
+#include <pni/io/nx/algorithms/iterators.hpp>
+#include <pni/io/nx/algorithms/is_group.hpp>
+#include <pni/io/nx/algorithms/get_parent.hpp>
+#include <pni/io/nx/algorithms/is_valid.hpp>
 
 namespace pni{
 namespace io{

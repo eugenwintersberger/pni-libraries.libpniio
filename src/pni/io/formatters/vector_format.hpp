@@ -26,9 +26,9 @@
 #include <pni/core/types.hpp>
 #include <pni/core/type_erasures.hpp>
 #include <vector>
-#include "../container_io_config.hpp"
-#include "../windows.hpp"
-#include "scalar_format.hpp"
+#include <pni/io/container_io_config.hpp>
+#include <pni/io/windows.hpp>
+#include <pni/io/formatters/scalar_format.hpp>
 
 
 namespace pni{

@@ -25,14 +25,14 @@
 #include <pni/core/types.hpp>
 
 
-#include "object_imp.hpp"
-#include "type_imp.hpp"
-#include "h5dataspace.hpp"
-#include "h5datatype.hpp"
-#include "h5filter.hpp"
-#include "attribute_imp.hpp"
-#include "selection.hpp"
-#include "../../windows.hpp"
+#include <pni/io/nx/h5/object_imp.hpp>
+#include <pni/io/nx/h5/type_imp.hpp>
+#include <pni/io/nx/h5/h5dataspace.hpp>
+#include <pni/io/nx/h5/h5datatype.hpp>
+#include <pni/io/nx/h5/h5filter.hpp>
+#include <pni/io/nx/h5/attribute_imp.hpp>
+#include <pni/io/nx/h5/selection.hpp>
+#include <pni/io/windows.hpp>
 
 
 namespace pni{

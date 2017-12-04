@@ -22,6 +22,6 @@
 //
 #pragma once
 
-#include "nxpath/nxpath.hpp"
-#include "nxpath/utils.hpp"
-#include "nxpath/make_relative.hpp"
+#include <pni/io/nx/nxpath/nxpath.hpp>
+#include <pni/io/nx/nxpath/utils.hpp>
+#include <pni/io/nx/nxpath/make_relative.hpp>

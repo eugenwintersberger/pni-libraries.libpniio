@@ -21,12 +21,12 @@
 //
 #pragma once
 
-#include "../nxobject.hpp"
-#include "iterators.hpp"
-#include "is_field.hpp"
-#include "get_name.hpp"
-#include "is_class.hpp"
-#include "as_group.hpp"
+#include <pni/io/nx/nxobject.hpp>
+#include <pni/io/nx/algorithms/iterators.hpp>
+#include <pni/io/nx/algorithms/is_field.hpp>
+#include <pni/io/nx/algorithms/get_name.hpp>
+#include <pni/io/nx/algorithms/is_class.hpp>
+#include <pni/io/nx/algorithms/as_group.hpp>
 
 namespace pni{
 namespace io{

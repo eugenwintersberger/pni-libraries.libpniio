@@ -26,13 +26,13 @@
 #include <pni/core/types.hpp>
 #include <pni/core/utilities.hpp>
 
-#include "nxattribute_manager.hpp"
-#include "nximp_map.hpp"
-#include "nxobject_traits.hpp"
-#include "nxfilter.hpp"
-#include "../exceptions.hpp"
-#include "nxlink.hpp"
-#include "algorithms/as_group.hpp"
+#include <pni/io/nx/nxattribute_manager.hpp>
+#include <pni/io/nx/nximp_map.hpp>
+#include <pni/io/nx/nxobject_traits.hpp>
+#include <pni/io/nx/nxfilter.hpp>
+#include <pni/io/exceptions.hpp>
+#include <pni/io/nx/nxlink.hpp>
+#include <pni/io/nx/algorithms/as_group.hpp>
 
 
 namespace pni{

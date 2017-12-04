@@ -32,11 +32,11 @@
 #include <pni/core/arrays/slice.hpp>
 #include <pni/core/type_erasures/array.hpp>
 
-#include "nximp_map.hpp"
-#include "nxobject_traits.hpp"
-#include "nxobject_type.hpp"
-#include "algorithms/as_attribute.hpp"
-#include "../exceptions.hpp"
+#include <pni/io/nx/nximp_map.hpp>
+#include <pni/io/nx/nxobject_traits.hpp>
+#include <pni/io/nx/nxobject_type.hpp>
+#include <pni/io/nx/algorithms/as_attribute.hpp>
+#include <pni/io/exceptions.hpp>
 
 
 namespace pni{

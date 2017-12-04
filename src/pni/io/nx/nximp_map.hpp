@@ -25,16 +25,16 @@
 
 #pragma once
 
-#include "nximp_code.hpp"
+#include <pni/io/nx/nximp_code.hpp>
 
-#include "h5/object_imp.hpp"
-#include "h5/type_imp.hpp"
-#include "h5/file_imp.hpp"
-#include "h5/group_imp.hpp"
-#include "h5/field_imp.hpp"
-#include "h5/h5filter.hpp"
-#include "h5/attribute_imp.hpp"
-#include "h5/h5deflate_filter.hpp"
+#include <pni/io/nx/h5/object_imp.hpp>
+#include <pni/io/nx/h5/type_imp.hpp>
+#include <pni/io/nx/h5/file_imp.hpp>
+#include <pni/io/nx/h5/group_imp.hpp>
+#include <pni/io/nx/h5/field_imp.hpp>
+#include <pni/io/nx/h5/h5filter.hpp>
+#include <pni/io/nx/h5/attribute_imp.hpp>
+#include <pni/io/nx/h5/h5deflate_filter.hpp>
 
 namespace pni{
 namespace io{

@@ -21,8 +21,8 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 #pragma once
-#include "nxpath.hpp"
-#include "../../windows.hpp"
+#include <pni/io/nx/nxpath/nxpath.hpp>
+#include <pni/io/windows.hpp>
 #include <utility>
 
 

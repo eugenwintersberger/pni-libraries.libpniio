@@ -24,13 +24,13 @@
 #pragma once
 
 #include <boost/filesystem.hpp>
-#include "nxobject_traits.hpp"
-#include "nxpath/nxpath.hpp"
-#include "nxpath/utils.hpp"
-#include "nxlink_type.hpp"
-#include "algorithms/get_path.hpp"
-#include "algorithms/get_object.hpp"
-#include "../windows.hpp"
+#include <pni/io/nx/nxobject_traits.hpp>
+#include <pni/io/nx/nxpath/nxpath.hpp>
+#include <pni/io/nx/nxpath/utils.hpp>
+#include <pni/io/nx/nxlink_type.hpp>
+#include <pni/io/nx/algorithms/get_path.hpp>
+#include <pni/io/nx/algorithms/get_object.hpp>
+#include <pni/io/windows.hpp>
 
 
 namespace pni{

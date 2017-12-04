@@ -23,5 +23,5 @@
 //
 #pragma once
 
-#include "formatters/scalar_format.hpp"
-#include "formatters/vector_format.hpp"
+#include <pni/io/formatters/scalar_format.hpp>
+#include <pni/io/formatters/vector_format.hpp>

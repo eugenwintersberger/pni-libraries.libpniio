@@ -23,8 +23,8 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include "h5filter.hpp"
-#include "../../windows.hpp"
+#include <pni/io/nx/h5/h5filter.hpp>
+#include <pni/io/windows.hpp>
 
 
 namespace pni {

@@ -27,9 +27,9 @@
 #include <boost/current_function.hpp>
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
-#include "data_reader.hpp"
-#include "column_info.hpp"
-#include "windows.hpp"
+#include <pni/io/data_reader.hpp>
+#include <pni/io/column_info.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni{
 namespace io{

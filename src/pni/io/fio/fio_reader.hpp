@@ -32,8 +32,8 @@
 #include <boost/lexical_cast.hpp>
 
 #include <pni/core/arrays.hpp>
-#include "../spreadsheet_reader.hpp"
-#include "../windows.hpp"
+#include <pni/io/spreadsheet_reader.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni{
 namespace io{
