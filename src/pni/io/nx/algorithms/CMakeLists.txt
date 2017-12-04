@@ -37,6 +37,10 @@ set(HEADER_FILES as_attribute.hpp
                  get_children.hpp
                  get_attributes.hpp
                  )
+set(SOURCE_FILES utils.cpp)
 
 install(FILES ${HEADER_FILES} 
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io/nx/algorithms)
+   
+set(PNIIO_HEADER_FILES ${PNIIO_HEADER_FILES} ${HEADER_FILES} PARENT_SCOPE)
+set(PNIIO_SOURCE_FILES ${PNIIO_SOURCE_FILES} ${SOURCE_FILES} PARENT_SCOPE)
