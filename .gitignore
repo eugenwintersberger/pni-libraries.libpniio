@@ -25,3 +25,5 @@ build
 *.gch
 install
 /.cproject
+/.project
+/.settings/
