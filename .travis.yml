@@ -15,7 +15,7 @@ before_script:
     
     
 script:
-    - docker exec -it build bash -c "cd build && cmake -DWITH_CONAN=ON -G Ninja -DCMAKE_BUILD_TYPE=Release .."
+    - docker exec -it build bash -c "cd build && cmake -G Ninja -DWITH_CONAN=ON -DCMAKE_BUILD_TYPE=Release .."
     - docker exec -it build bash -c "cd build && cmake --build . --target all --config Release"
     - docker exec -it build bash -c "cd build && cmake --build . --target test --config Release"
     
