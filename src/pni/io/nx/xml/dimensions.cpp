@@ -24,6 +24,7 @@
 #include <pni/io/nx/xml/data_node.hpp>
 #include <pni/io/nx/xml/dimensions.hpp>
 #include <pni/io/parsers.hpp>
+#include <numeric>
 
 namespace pni{
 namespace io{
