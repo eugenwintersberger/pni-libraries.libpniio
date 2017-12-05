@@ -66,11 +66,7 @@ install(FILES ${PROJECT_BINARY_DIR}/${PACKAGE_CONFIG_FILE_NAME}
 
 
 
-include_directories("./include")
-
 #need this to get the generated header files into the build.
-include_directories("${PROJECT_BINARY_DIR}/include")
-add_subdirectory("include")
 add_subdirectory("src")
 #add_subdirectory("doc")
 add_subdirectory("test")

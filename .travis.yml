@@ -1,0 +1,24 @@
+language: cpp
+sudo: required
+dist: trusty
+
+
+services:
+    - docker
+    
+before_script:
+    - docker run --name build -i -d -v"$PWD:/src" eugenwintersberger/debian_9:latest
+    - docker exec -it build ls
+    - docker exec -it build bash -c "git submodule init"
+    - docker exec -it build bash -c "git submodule update --remote"
+    - docker exec -it build bash -c "mkdir build"
+    
+    
+script:
+    - docker exec -it build bash -c "cd build && cmake -G Ninja -DWITH_CONAN=ON -DCMAKE_BUILD_TYPE=Release .."
+    - docker exec -it build bash -c "cd build && cmake --build . --target all --config Release"
+    - docker exec -it build bash -c "cd build && cmake --build . --target test --config Release"
+    
+after_script:
+    - docker container stop build
+    

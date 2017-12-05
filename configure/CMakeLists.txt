@@ -53,3 +53,5 @@ endif()
 
 #===================================check the size of data types===============
 include(configure/CheckTypeSize.cmake)
+
+find_package(h5cpp REQUIRED)
