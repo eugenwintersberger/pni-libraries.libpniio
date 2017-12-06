@@ -23,30 +23,29 @@
 #pragma once
 
 #include <pni/io/nx/nx.hpp>
+#include <pni/io/nx/xml/node.hpp>
 #include <pni/core/types.hpp>
-#include <pni/io/nx/xml/group.hpp>
 #include <vector>
 
-typedef std::vector<pni::core::uint8> uint8_vector; 
-typedef std::vector<pni::core::int8> int8_vector; 
-typedef std::vector<pni::core::uint16> uint16_vector; 
-typedef std::vector<pni::core::int16> int16_vector; 
-typedef std::vector<pni::core::uint32> uint32_vector; 
-typedef std::vector<pni::core::int32> int32_vector; 
-typedef std::vector<pni::core::uint64> uint64_vector; 
-typedef std::vector<pni::core::int64> int64_vector; 
+using uint8_vector  = std::vector<pni::core::uint8>;
+using int8_vector   = std::vector<pni::core::int8>;
+using uint16_vector = std::vector<pni::core::uint16>;
+using int16_vector  = std::vector<pni::core::int16>;
+using uint32_vector = std::vector<pni::core::uint32>;
+using int32_vector  = std::vector<pni::core::int32>;
+using uint64_vector = std::vector<pni::core::uint64>;
+using int64_vector  = std::vector<pni::core::int64>;
 
-typedef std::vector<pni::core::float32> float32_vector;
-typedef std::vector<pni::core::float64> float64_vector;
-typedef std::vector<pni::core::float128> float128_vector;
+using float32_vector  = std::vector<pni::core::float32>;
+using float64_vector  = std::vector<pni::core::float64>;
+using float128_vector = std::vector<pni::core::float128>;
 
-typedef std::vector<pni::core::complex32> complex32_vector;
-typedef std::vector<pni::core::complex64> complex64_vector;
-typedef std::vector<pni::core::complex128> complex128_vector;
+using complex32_vector   = std::vector<pni::core::complex32>;
+using complex64_vector   = std::vector<pni::core::complex64>;
+using complex128_vector = std::vector<pni::core::complex128>;
 
-typedef std::vector<pni::core::string> string_vector;
-typedef std::vector<pni::core::bool_t> bool_t_vector;
-
+using string_vector = std::vector<pni::core::string>;
+using bool_t_vector = std::vector<pni::core::bool_t>;
 
 namespace xml_test{
 namespace field_test{

@@ -21,8 +21,9 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <pni/io/nx/xml/field.hpp>
 #include "field_utils.hpp"
+#include <pni/io/nx/xml/field.hpp>
+
 
 
 namespace xml_test{

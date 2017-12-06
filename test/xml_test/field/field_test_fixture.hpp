@@ -26,6 +26,7 @@
 #include <pni/io/nx/nx.hpp>
 #include "../xml_base_fixture.hpp"
 #include "../../base_fixture.hpp"
+#include <pni/io/nx/algorithms/close.hpp>
 
 
 struct field_test_fixture : base_fixture,xml_base_fixture
