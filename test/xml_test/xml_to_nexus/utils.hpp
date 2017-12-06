@@ -19,17 +19,17 @@
 // ===========================================================================
 #pragma once
 
-#include <boost/test/unit_test.hpp>
 #include <pni/core/types.hpp>
-#include <pni/io/nx/algorithms/close.hpp>
-#include <pni/io/nx/algorithms/get_size.hpp>
-#include <pni/io/nx/algorithms/get_type.hpp>
-#include <pni/io/nx/algorithms/get_object.hpp>
-#include <pni/io/nx/algorithms/get_name.hpp>
+
+#include <pni/io/nx/algorithms/read.hpp>
 #include <pni/io/nx/algorithms/is_field.hpp>
+#include <pni/io/nx/algorithms/get_name.hpp>
+#include <pni/io/nx/algorithms/get_type.hpp>
+#include <pni/io/nx/algorithms/get_size.hpp>
+#include <pni/io/nx/algorithms/get_unit.hpp>
+#include <pni/io/nx/algorithms/get_shape.hpp>
 #include <pni/io/nx/algorithms/is_group.hpp>
 #include <pni/io/nx/algorithms/get_class.hpp>
-#include <pni/io/nx/algorithms/read.hpp>
 
 template<
          typename TT,
