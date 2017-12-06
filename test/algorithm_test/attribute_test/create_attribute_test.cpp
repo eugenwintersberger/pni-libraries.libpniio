@@ -22,9 +22,11 @@
 //
 
 #include <boost/test/unit_test.hpp>
-#include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
-#include <pni/io/nx/nx.hpp>
+
+#include "../algorithm_test_fixture.hpp"
+#include "../../nexus_lowlevel_test/test_types.hpp"
+
+//#include <pni/core/arrays.hpp>
 #include <pni/io/exceptions.hpp>
 #include <pni/io/nx/algorithms/create_attribute.hpp>
 #include <pni/io/nx/algorithms/is_attribute.hpp>
@@ -35,8 +37,7 @@
 #include <pni/io/nx/algorithms/is_valid.hpp>
 #include <pni/io/nx/algorithms/get_name.hpp>
 
-#include "../algorithm_test_fixture.hpp"
-#include "../../nexus_lowlevel_test/test_types.hpp"
+
 
 using namespace pni::core;
 using namespace pni::io::nx;
