@@ -1,0 +1,16 @@
+set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/file.hpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/version.hpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/date_time.hpp
+	)
+
+set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/file.cpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/date_time.cpp
+	)
+
+	
+install(FILES ${HEADER_FILES}
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io/nexus)
+       
+set(PNIIO_HEADER_FILES ${PNIIO_HEADER_FILES} ${HEADER_FILES} PARENT_SCOPE)
+set(PNIIO_SOURCE_FILES ${PNIIO_SOURCE_FILES} ${SOURCE_FILES} PARENT_SCOPE)

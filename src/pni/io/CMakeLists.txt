@@ -35,6 +35,7 @@ add_subdirectory("nx")
 add_subdirectory("parsers")
 add_subdirectory("formatters")
 add_subdirectory("tiff")
+add_subdirectory("nexus")
 
 set(PNIIO_HEADER_FILES ${PNIIO_HEADER_FILES} ${HEADER_FILES})
 set(PNIIO_SOURCE_FILES ${PNIIO_SOURCE_FILES} ${SOURCE_FILES})
