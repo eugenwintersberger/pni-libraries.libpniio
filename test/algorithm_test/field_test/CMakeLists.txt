@@ -4,7 +4,7 @@ set(SOURCES get_unit_test.cpp
 
 
 set_boost_test_definitions(SOURCES "testing field algorithms")
-add_executable(algo_field_test ${SOURCES}
+add_executable(algo_field_test EXCLUDE_FROM_ALL ${SOURCES}
                $<TARGET_OBJECTS:test_common>
                $<TARGET_OBJECTS:algorithm_common>)
 target_link_libraries(algo_field_test pniio Boost::unit_test_framework)

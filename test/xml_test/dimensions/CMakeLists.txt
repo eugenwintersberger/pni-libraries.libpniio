@@ -17,7 +17,7 @@ foreach(XMLFILE ${XMLFILES})
 endforeach()
 
 set_boost_test_definitions(SOURCES "testing xml dimensions operations")
-add_executable(dimensions_test ${SOURCES} $<TARGET_OBJECTS:xml_test_common>)
+add_executable(dimensions_test EXCLUDE_FROM_ALL ${SOURCES} $<TARGET_OBJECTS:xml_test_common>)
 target_link_libraries(dimensions_test pniio Boost::unit_test_framework)
 add_boost_logging_test("XML::dimensions" dimensions_test
 ${PROJECT_BINARY_DIR}/test/xml_test/dimensions)

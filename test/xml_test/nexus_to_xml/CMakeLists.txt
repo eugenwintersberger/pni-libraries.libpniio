@@ -16,7 +16,7 @@ foreach(XMLFILE ${XMLFILES})
 endforeach()
 
 
-add_executable(nexus_to_xml_test ${SOURCES}
+add_executable(nexus_to_xml_test EXCLUDE_FROM_ALL ${SOURCES}
                $<TARGET_OBJECTS:xml_test_common>)
 target_link_libraries(nexus_to_xml_test pniio Boost::unit_test_framework)
 

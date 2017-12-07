@@ -7,7 +7,7 @@ set(SOURCES get_rank_test.cpp
            )
 
 set_boost_test_definitions(SOURCES "testing group algorithms")
-add_executable(algo_io_tests ${SOURCES}
+add_executable(algo_io_tests EXCLUDE_FROM_ALL ${SOURCES}
                $<TARGET_OBJECTS:test_common>
                $<TARGET_OBJECTS:algorithm_common>)
 target_link_libraries(algo_io_tests pniio Boost::unit_test_framework)

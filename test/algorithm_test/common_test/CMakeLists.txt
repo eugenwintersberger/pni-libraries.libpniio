@@ -11,7 +11,7 @@ set(SOURCES close_test.cpp
 
 set_boost_test_definitions(SOURCES "testing common algorithms")
 
-add_executable(common_test ${SOURCES}
+add_executable(common_test EXCLUDE_FROM_ALL ${SOURCES}
                $<TARGET_OBJECTS:test_common>
                $<TARGET_OBJECTS:algorithm_common>
                )

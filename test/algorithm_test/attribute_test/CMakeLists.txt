@@ -6,7 +6,7 @@ set(SOURCES create_attribute_test.cpp
 
 set_boost_test_definitions(SOURCES "testing attribute algorithms")
 
-add_executable(algo_attribute_test ${SOURCES}
+add_executable(algo_attribute_test EXCLUDE_FROM_ALL ${SOURCES}
                $<TARGET_OBJECTS:test_common>
                $<TARGET_OBJECTS:algorithm_common>)
 
