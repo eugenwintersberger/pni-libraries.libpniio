@@ -17,15 +17,15 @@ set(NXFILESRC nxfile_creation_test.cpp
 set_boost_test_definitions(NXFILESRC "testing nxfile operations")
 add_executable(nxfile_tests EXCLUDE_FROM_ALL ${NXFILESRC})
 target_link_libraries(nxfile_tests pniio Boost::unit_test_framework)
-add_boost_logging_test("Nexus_Layer_1:nxfile"
-                       nxfile_tests
-                       ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
+#add_boost_logging_test("Nexus_Layer_1:nxfile"
+#                       nxfile_tests
+#                       ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
 
 add_custom_target(cleanup_artifacts
 COMMAND ${CMAKE_COMMAND} -E remove *.nxs
 WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
 
-set_tests_properties("Nexus_Layer_1:nxfile" PROPERTIES DEPENDS cleanup_artifacts)
+#set_tests_properties("Nexus_Layer_1:nxfile" PROPERTIES DEPENDS cleanup_artifacts)
 
 
 #------------------------------------------------------------------------------
@@ -42,9 +42,9 @@ add_executable(nxgroup_tests EXCLUDE_FROM_ALL ${NXGROUPSRC}
                $<TARGET_OBJECTS:level_1_common>
                $<TARGET_OBJECTS:test_common>)
 target_link_libraries(nxgroup_tests pniio Boost::unit_test_framework)
-add_boost_logging_test("Nexus_Layer_1:nxgroup"
-                        nxgroup_tests
-                        ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
+#add_boost_logging_test("Nexus_Layer_1:nxgroup"
+#                        nxgroup_tests
+ #                       ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
 
 
 #------------------------------------------------------------------------------
@@ -62,9 +62,9 @@ add_executable(nxfield_tests EXCLUDE_FROM_ALL ${NXFIELDSRC}
                $<TARGET_OBJECTS:level_1_common>
                $<TARGET_OBJECTS:test_common>)
 target_link_libraries(nxfield_tests pniio Boost::unit_test_framework)
-add_boost_logging_test("Nexus_Layer_1:nxfield"
-                       nxfield_tests
-                       ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
+#add_boost_logging_test("Nexus_Layer_1:nxfield"
+#                       nxfield_tests
+#                       ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
 
 #------------------------------------------------------------------------------
 # test nxattribute related operations
@@ -82,8 +82,8 @@ add_executable(nxattribute_tests EXCLUDE_FROM_ALL ${NXATTRSRC}
                 $<TARGET_OBJECTS:level_1_common>
                 $<TARGET_OBJECTS:test_common>)
 target_link_libraries(nxattribute_tests pniio Boost::unit_test_framework)
-add_boost_logging_test("Nexus_Layer_1:nxattribute" nxattribute_tests
-                       ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
+#add_boost_logging_test("Nexus_Layer_1:nxattribute" nxattribute_tests
+#                       ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
 
 #------------------------------------------------------------------------------
 # test link related operations
@@ -100,8 +100,8 @@ add_executable(nxlink_tests EXCLUDE_FROM_ALL ${NXLINKSRC}
                $<TARGET_OBJECTS:level_1_common>
                $<TARGET_OBJECTS:test_common>)
 target_link_libraries(nxlink_tests pniio Boost::unit_test_framework)
-add_boost_logging_test("Nexus_Layer_1:nxlink" nxlink_tests
-                        ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
+#add_boost_logging_test("Nexus_Layer_1:nxlink" nxlink_tests
+#                        ${PROJECT_BINARY_DIR}/test/nexus_lowlevel_test)
 
 #-------------------------------------------------------------------------------
 # we have to add the list of produced files to the cleanup target

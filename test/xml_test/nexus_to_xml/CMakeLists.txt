@@ -20,5 +20,5 @@ add_executable(nexus_to_xml_test EXCLUDE_FROM_ALL ${SOURCES}
                $<TARGET_OBJECTS:xml_test_common>)
 target_link_libraries(nexus_to_xml_test pniio Boost::unit_test_framework)
 
-add_boost_logging_test("XML::nexus_to_xml_test" nexus_to_xml_test
-                        ${PROJECT_BINARY_DIR}/test/xml_test/nexus_to_xml)
+#add_boost_logging_test("XML::nexus_to_xml_test" nexus_to_xml_test
+#                        ${PROJECT_BINARY_DIR}/test/xml_test/nexus_to_xml)

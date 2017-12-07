@@ -126,5 +126,5 @@ add_executable(field_test EXCLUDE_FROM_ALL field_test.cpp
                           $<TARGET_OBJECTS:field_test_common>)
 
 target_link_libraries(field_test pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
-add_boost_logging_test("XML::field_tests" field_test
-                        ${PROJECT_BINARY_DIR}/test/xml_test/field)
+#add_boost_logging_test("XML::field_tests" field_test
+#                        ${PROJECT_BINARY_DIR}/test/xml_test/field)

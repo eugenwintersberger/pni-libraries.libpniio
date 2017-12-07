@@ -15,6 +15,6 @@ set(SOURCES h5link_test.cpp
 set_boost_test_definitions(SOURCES "testing HDF5 implementation")
 add_executable(hdf5_imp_test EXCLUDE_FROM_ALL ${SOURCES} )
 target_link_libraries(hdf5_imp_test pniio Boost::unit_test_framework)
-add_boost_logging_test("HDF5:implementation-test"
-                       hdf5_imp_test
-                       ${PROJECT_BINARY_DIR}/test/hdf5_imp_test)
+#add_boost_logging_test("HDF5:implementation-test"
+#                       hdf5_imp_test
+#                       ${PROJECT_BINARY_DIR}/test/hdf5_imp_test)

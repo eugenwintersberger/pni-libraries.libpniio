@@ -12,9 +12,9 @@ add_library(test_common EXCLUDE_FROM_ALL OBJECT ${COMMON_SRC})
 
 
 add_executable(environment_test EXCLUDE_FROM_ALL environment_test.cpp)
-add_test(NAME "Environment:test"
-         COMMAND environment_test
-         WOWRKING_DIRECTORY ${PROJECT_BINARY_DIR}/test)
+#add_test(NAME "Environment:test"
+#         COMMAND environment_test
+#         WOWRKING_DIRECTORY ${PROJECT_BINARY_DIR}/test)
 
 
 

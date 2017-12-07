@@ -10,5 +10,5 @@ endforeach()
 
 add_executable(link_test EXCLUDE_FROM_ALL ${SOURCES})
 target_link_libraries(link_test pniio Boost::unit_test_framework)
-add_boost_logging_test("XML::link_tests" link_test
-${PROJECT_BINARY_DIR}/test/xml_test/link)
+#add_boost_logging_test("XML::link_tests" link_test
+#${PROJECT_BINARY_DIR}/test/xml_test/link)

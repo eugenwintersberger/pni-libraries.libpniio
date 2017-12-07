@@ -12,6 +12,6 @@ add_executable(algo_attribute_test EXCLUDE_FROM_ALL ${SOURCES}
 
 target_link_libraries(algo_attribute_test pniio Boost::unit_test_framework)
 
-add_boost_logging_test("algorithms:attribute_test"
-                       algo_attribute_test
-                       ${PROJECT_BINARY_DIR}/test/algorithm_test/attribute_test)
+#add_boost_logging_test("algorithms:attribute_test"
+#                       algo_attribute_test
+#                       ${PROJECT_BINARY_DIR}/test/algorithm_test/attribute_test)

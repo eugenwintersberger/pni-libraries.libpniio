@@ -9,6 +9,6 @@ add_executable(algo_field_test EXCLUDE_FROM_ALL ${SOURCES}
                $<TARGET_OBJECTS:algorithm_common>)
 target_link_libraries(algo_field_test pniio Boost::unit_test_framework)
 
-add_boost_logging_test("algorithms:field_tests"
-                       algo_field_test
-                   ${PROJECT_BINARY_DIR}/test/algorithm_test/field_test)
+#add_boost_logging_test("algorithms:field_tests"
+#                       algo_field_test
+#                   ${PROJECT_BINARY_DIR}/test/algorithm_test/field_test)
