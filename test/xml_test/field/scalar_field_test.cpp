@@ -23,18 +23,15 @@
 
 #include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
-#include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/xml/node.hpp>
-#include <pni/core/types.hpp>
-#include <pni/io/nx/algorithms/create_group.hpp>
-#include <pni/io/nx/algorithms/close.hpp>
-#include <pni/io/nx/algorithms/write.hpp>
-#include <pni/io/nx/algorithms/create_attribute.hpp>
+
 #include "field_utils.hpp"
 #include "field_test_fixture.hpp"
 #include "test_types.hpp"
 #include "scalar_ref_data.hpp"
 #include "../../check_equal.hpp"
+
+#include <pni/io/nx/xml/node.hpp>
+#include <pni/io/nx/algorithms/write.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx; 

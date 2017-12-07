@@ -25,15 +25,14 @@
 #define BOOST_TEST_MODULE Test XML group creation 
 
 #include <boost/test/unit_test.hpp>
-#include <pni/io/nx/nx.hpp>
+#include "../../base_fixture.hpp"
 #include <pni/io/nx/xml/group.hpp>
-#include <pni/core/types.hpp>
 #include <pni/io/nx/algorithms/close.hpp>
 #include <pni/io/nx/algorithms/is_valid.hpp>
 #include <pni/io/nx/algorithms/get_name.hpp>
 #include <pni/io/nx/algorithms/get_class.hpp>
 #include <boost/property_tree/xml_parser.hpp>
-#include "../../base_fixture.hpp"
+
 
 using namespace pni::core;
 using namespace pni::io::nx;

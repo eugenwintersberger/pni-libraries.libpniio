@@ -21,11 +21,8 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 #include <boost/test/unit_test.hpp>
-#include <pni/core/types.hpp>
-#include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/algorithms/read.hpp>
 #include <pni/io/nx/algorithms/write.hpp>
-#include <pni/io/nx/nxobject_traits.hpp>
 
 #include "../../base_fixture.hpp"
 #include "../../multidim_policy.hpp"

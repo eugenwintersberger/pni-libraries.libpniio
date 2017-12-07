@@ -23,12 +23,12 @@
 
 #include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
+
+#include "utils.hpp"
 #include <pni/io/nx/nx.hpp>
 #include <pni/io/nx/xml/xml_to_nexus.hpp>
-#include <pni/io/nx/algorithms/close.hpp>
 #include <pni/io/nx/algorithms/get_object.hpp>
-#include <pni/core/types.hpp>
-#include "utils.hpp"
+
 
 using namespace pni::core;
 using namespace pni::io::nx;

@@ -22,17 +22,17 @@
 //
 
 #include <boost/test/unit_test.hpp>
-#include <pni/io/nx/algorithms/get_attribute.hpp>
+#include "../algorithm_test_fixture.hpp"
+
+#include <pni/io/nx/algorithms/get_attributes.hpp>
 #include <pni/io/nx/algorithms/is_valid.hpp>
 #include <pni/io/nx/algorithms/get_name.hpp>
 #include <pni/io/nx/algorithms/set_unit.hpp>
 #include <pni/io/exceptions.hpp>
-#include <pni/io/nx/algorithms.hpp>
 #include <vector>
-#include <pni/core/types.hpp>
-#include <pni/io/nx/nx.hpp>
 
-#include "../algorithm_test_fixture.hpp"
+
+
 
 using namespace pni::core;
 using namespace pni::io::nx;
