@@ -1,11 +1,13 @@
 set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/file.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/version.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/date_time.hpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/base_class.hpp
 	)
 
 set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/file.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/date_time.cpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/base_class.cpp
 	)
 
 	
