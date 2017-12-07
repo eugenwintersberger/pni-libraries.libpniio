@@ -2,7 +2,7 @@
 #-----------------------------------------------------------------------------
 # build common code for attributes
 #-----------------------------------------------------------------------------
-add_library(attr_test_common OBJECT attr_utils.cpp)
+add_library(attr_test_common EXCLUDE_FROM_ALL OBJECT attr_utils.cpp)
 target_include_directories(attr_test_common PRIVATE
 ${PROJECT_BINARY_DIR}/test/xml_test/attribute)
 
@@ -95,7 +95,7 @@ foreach(index RANGE ${TYPERANGE})
     configure_file(scalar_attribute_test.cpp.in ${CPPFILE} @ONLY)
     set(TARGET_SRC ${GEN_SRC_PATH}/${CPPFILE})
 
-    add_executable(${TARGET_NAME} ${TARGET_SRC}
+    add_executable(${TARGET_NAME} EXCLUDE_FROM_ALL ${TARGET_SRC}
                                   $<TARGET_OBJECTS:attr_test_common>
                                   $<TARGET_OBJECTS:xml_test_common>
                                   $<TARGET_OBJECTS:test_common>
@@ -107,8 +107,8 @@ foreach(index RANGE ${TYPERANGE})
     target_include_directories(${TARGET_NAME} PRIVATE
     ${PROJECT_SOURCE_DIR}/test/xml_test/attribute)
 
-    add_boost_logging_test("XML:attribute:${TYPE}:scalar" ${TARGET_NAME}
-                            ${GEN_SRC_PATH} )
+    #add_boost_logging_test("XML:attribute:${TYPE}:scalar" ${TARGET_NAME}
+    #                        ${GEN_SRC_PATH} )
 
     list(APPEND CLEANFILES "${CPPFILE} ${NXSFILE} ${XMLFILE}")
 endforeach()
@@ -208,7 +208,7 @@ foreach(index RANGE ${TYPERANGE})
     configure_file(array_attribute_test.cpp.in ${CPPFILE} @ONLY)
     set(TARGET_SRC ${GEN_SRC_PATH}/${CPPFILE})
 
-    add_executable(${TARGET_NAME} ${TARGET_SRC}
+    add_executable(${TARGET_NAME} EXCLUDE_FROM_ALL ${TARGET_SRC}
                                   $<TARGET_OBJECTS:attr_test_common>
                                   $<TARGET_OBJECTS:xml_test_common>
                                   $<TARGET_OBJECTS:test_common>
@@ -221,8 +221,8 @@ foreach(index RANGE ${TYPERANGE})
     ${PROJECT_SOURCE_DIR}/test/xml_test/attribute
     )
 
-    add_boost_logging_test("XML:attribute:${TYPE}:array" ${TARGET_NAME}
-                            ${GEN_SRC_PATH} )
+    #add_boost_logging_test("XML:attribute:${TYPE}:array" ${TARGET_NAME}
+    #                        ${GEN_SRC_PATH} )
 
 endforeach()
 
