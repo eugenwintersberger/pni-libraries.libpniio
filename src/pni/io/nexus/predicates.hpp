@@ -23,6 +23,7 @@
 #pragma once
 
 #include <h5cpp/hdf5.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni {
 namespace io {
@@ -33,7 +34,7 @@ namespace nexus {
 //!
 //! This is the base class for all predicates related to HDF5 Node instances.
 //!
-class NodePredicate
+class PNIIO_EXPORT NodePredicate
 {
   public:
     //!
@@ -74,7 +75,7 @@ class NodePredicate
 //!              IsBaseClass("NXdetector"));
 //! \endcode
 //!
-class IsBaseClass : public NodePredicate
+class PNIIO_EXPORT IsBaseClass : public NodePredicate
 {
   private:
     std::string class_name_;
@@ -127,7 +128,7 @@ class IsBaseClass : public NodePredicate
 //!
 //! Child class of IsBaseClass that matches an NXtransformation.
 //!
-class IsTransformation : public IsBaseClass
+class PNIIO_EXPORT IsTransformation : public IsBaseClass
 {
   public:
     IsTransformation();
@@ -140,7 +141,7 @@ class IsTransformation : public IsBaseClass
 //!
 //! Child class of IsBaseClass that matches an NXentry
 //!
-class IsEntry : public IsBaseClass
+class PNIIO_EXPORT IsEntry : public IsBaseClass
 {
   public:
     IsEntry();
@@ -152,7 +153,7 @@ class IsEntry : public IsBaseClass
 //!
 //! Child class of IsBaseClass that matches NXsubentry
 //!
-class IsSubentry : public IsBaseClass
+class PNIIO_EXPORT IsSubentry : public IsBaseClass
 {
   public:
     IsSubentry();
@@ -164,7 +165,7 @@ class IsSubentry : public IsBaseClass
 //!
 //! Child class of IsBaseClass that matches NXdetector
 //!
-class IsDetector : public IsBaseClass
+class PNIIO_EXPORT IsDetector : public IsBaseClass
 {
   public:
     IsDetector();
@@ -176,7 +177,7 @@ class IsDetector : public IsBaseClass
 //!
 //! Child class of IsBaseClass that matches NXinstrument
 //!
-class IsInstrument : public IsBaseClass
+class PNIIO_EXPORT IsInstrument : public IsBaseClass
 {
   public:
     IsInstrument();
@@ -188,7 +189,7 @@ class IsInstrument : public IsBaseClass
 //!
 //! Child class of IsBaseClass that matches NXsample
 //!
-class IsSample : public IsBaseClass
+class PNIIO_EXPORT IsSample : public IsBaseClass
 {
   public:
     IsSample();
@@ -200,7 +201,7 @@ class IsSample : public IsBaseClass
 //!
 //! Child class of IsBaseClass that matches NXdata
 //!
-class IsData : public IsBaseClass
+class PNIIO_EXPORT IsData : public IsBaseClass
 {
   public:
     IsData();

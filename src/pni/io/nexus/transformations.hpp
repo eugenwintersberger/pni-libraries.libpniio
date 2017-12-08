@@ -22,25 +22,12 @@
 //
 #pragma once
 
-#include <pni/io/nexus/predicates.hpp>
-#include <pni/io/nexus/containers.hpp>
-#include <pni/io/windows.hpp>
+#include <cstdint>
+#include <iostream>
 
 namespace pni {
 namespace io {
 namespace nexus {
-
-//!
-//! @brief search for nodes satisfying a predicate
-//!
-//! @param base reference to the group where to start the search
-//! @param predicate the predicate to select a node
-//! @param recursive if true perform a recursive search
-//! @return an instance of NodeList with all nodes satisfying the predicate
-//!
-PNIIO_EXPORT NodeList search(const hdf5::node::Group &base,
-                             const NodePredicate &predicate,
-                             bool recursive=false);
 
 
 } // namespace nexus

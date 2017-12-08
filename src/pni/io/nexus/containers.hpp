@@ -25,6 +25,7 @@
 #include <h5cpp/hdf5.hpp>
 #include <vector>
 #include <list>
+#include <pni/io/windows.hpp>
 
 namespace pni {
 namespace io {
@@ -35,7 +36,7 @@ namespace nexus {
 //!
 //! A specialization of std::list storing instances of hdf5::node::Node;
 //!
-class NodeList : public std::vector<hdf5::node::Node>
+class PNIIO_EXPORT NodeList : public std::vector<hdf5::node::Node>
 {
   public:
     using std::vector<hdf5::node::Node>::vector;
@@ -46,7 +47,7 @@ class NodeList : public std::vector<hdf5::node::Node>
 //!
 //! A specialization of std::list storing instances of hdf5::node::Group.
 //!
-class GroupList : public std::vector<hdf5::node::Group>
+class PNIIO_EXPORT GroupList : public std::vector<hdf5::node::Group>
 {
   public:
     using std::vector<hdf5::node::Group>::vector;
@@ -72,7 +73,7 @@ class GroupList : public std::vector<hdf5::node::Group>
 //!
 //! A specialization of std::list storing instances of hdf5::node::Dataset;
 //!
-class DatasetList : public std::vector<hdf5::node::Dataset>
+class PNIIO_EXPORT DatasetList : public std::vector<hdf5::node::Dataset>
 {
   public:
     using std::vector<hdf5::node::Dataset>::vector;

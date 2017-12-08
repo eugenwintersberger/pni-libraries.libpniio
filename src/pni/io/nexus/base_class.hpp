@@ -23,6 +23,7 @@
 #pragma once
 
 #include <h5cpp/hdf5.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni {
 namespace io {
@@ -38,7 +39,7 @@ namespace nexus {
 //! This is a very thing utility class which provides the full interface of a
 //! HDF5 group. But requires a value for NX_class to be set.
 //!
-class BaseClass : public hdf5::node::Group
+class PNIIO_EXPORT BaseClass : public hdf5::node::Group
 {
   public:
     BaseClass() = default;
