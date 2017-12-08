@@ -13,6 +13,8 @@ set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/file.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/date_time.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/base_class.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/predicates.cpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/algorithms.cpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/containers.cpp
 	)
 
 	

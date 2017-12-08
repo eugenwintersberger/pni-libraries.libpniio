@@ -31,36 +31,51 @@ namespace io {
 namespace nexus {
 
 //!
-//! @brief list of HDF5 groups
-//!
-//! A specialization of std::list storing instances of hdf5::node::Group.
-//!
-class GroupList : public std::list<hdf5::node::Group>
-{
-  public:
-    using std::list<hdf5::node::Group>::list;
-};
-
-//!
 //! @brief list of HDF5 nodes
 //!
 //! A specialization of std::list storing instances of hdf5::node::Node;
 //!
-class NodeList : public std::list<hdf5::node::Node>
+class NodeList : public std::vector<hdf5::node::Node>
 {
   public:
-    using std::list<hdf5::node::Node>::list;
+    using std::vector<hdf5::node::Node>::vector;
 };
+
+//!
+//! @brief list of HDF5 groups
+//!
+//! A specialization of std::list storing instances of hdf5::node::Group.
+//!
+class GroupList : public std::vector<hdf5::node::Group>
+{
+  public:
+    using std::vector<hdf5::node::Group>::vector;
+
+    //!
+    //! @brief conversion constructor
+    //!
+    //! This constructor is deliberately not marked as explicit. It
+    //! is used to convert a list of nodes to a list of groups.
+    //! This will only work if all nodes are indeed groups. Otherwise
+    //! an exception is thrown.
+    //!
+    //! @throws std::runtime_error in case of a failure
+    //! @param nodes reference to the original node list
+    //!
+    GroupList(const NodeList &nodes);
+};
+
+
 
 //!
 //! @brief list of datasets
 //!
 //! A specialization of std::list storing instances of hdf5::node::Dataset;
 //!
-class DatasetList : public std::list<hdf5::node::Dataset>
+class DatasetList : public std::vector<hdf5::node::Dataset>
 {
   public:
-    using std::list<hdf5::node::Dataset>::list;
+    using std::vector<hdf5::node::Dataset>::vector;
 };
 
 

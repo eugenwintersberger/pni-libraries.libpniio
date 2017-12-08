@@ -1,5 +1,6 @@
 add_subdirectory(version)
 add_subdirectory(file)
+add_subdirectory(algorithms)
 
 set(SOURCES base_class_test.cpp)
 
