@@ -6,6 +6,7 @@ set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/file.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/transformations.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/containers.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/algorithms.hpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/object_builder.hpp
 	)
 
 set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/file.cpp
@@ -15,9 +16,10 @@ set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/file.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/predicates.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/algorithms.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/containers.cpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/object_builder.cpp
 	)
 
-	
+add_subdirectory(xml)	
 install(FILES ${HEADER_FILES}
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io/nexus)
        

@@ -1,0 +1,165 @@
+//
+// (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+// This file is part of libpniio.
+//
+// libpniio is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// libpniio is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// ===========================================================================
+// Created on: Jul 11, 2013
+//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//
+
+#include <sstream>
+#include <fstream>
+#include <locale>
+#include <boost/property_tree/xml_parser.hpp>
+
+#include <pni/io/exceptions.hpp>
+#include <pni/io/nexus/xml/node.hpp>
+#include <pni/io/nexus/xml/data_node.hpp>
+
+namespace pni{
+namespace io{
+namespace nexus{
+namespace xml{
+
+using namespace pni::core;
+using namespace boost::property_tree;
+
+Node create_from_string(const std::string &s)
+{
+  std::stringstream stream(s.c_str());
+  Node t;
+  try
+  {
+    read_xml(stream,t);
+  }
+  catch(ptree_bad_data &)
+  {
+    throw pni::io::parser_error(EXCEPTION_RECORD,
+                                "A parser error occured due to invalid input data!");
+  }
+  catch(ptree_bad_path &)
+  {
+    throw pni::io::parser_error(EXCEPTION_RECORD,
+                                "A parser error occured as the requested object could not"
+                                " be resolved!");
+  }
+  catch(ptree_error &)
+  {
+    throw pni::io::parser_error(EXCEPTION_RECORD,
+                                "A general parser error has occured!");
+  }
+  catch(...)
+  {
+    //whatever exception is thrown here is related to parsing
+    throw pni::io::parser_error(EXCEPTION_RECORD,
+                                "A unkown fatal error parsing XML string has occured!");
+  }
+
+  return t;
+}
+
+//-------------------------------------------------------------------------
+Node create_from_file(const std::string &s)
+{
+  std::ifstream stream(s.c_str());
+  if(!stream.is_open())
+    throw file_error(EXCEPTION_RECORD,
+                     "Error opening "+s+" for reading!");
+
+  Node t;
+  try
+  {
+    read_xml(stream,t);
+  }
+  catch(...)
+  {
+    throw pni::io::parser_error(EXCEPTION_RECORD,
+                                "Error parsing XML file "+s+"!");
+  }
+
+  return t;
+}
+
+//------------------------------------------------------------------------
+std::string attribute_path(const std::string &name)
+{
+  return "<xmlattr>."+name;
+}
+
+//------------------------------------------------------------------------
+Node get_attribute(const Node &parent,const std::string &name)
+{
+  try
+  {
+    return parent.get_child(attribute_path(name));
+  }
+  catch(ptree_bad_path &)
+  {
+    throw key_error(EXCEPTION_RECORD, "Attribute not found!");
+  }
+  catch(...)
+  {
+    throw parser_error(EXCEPTION_RECORD,
+                       "Unkown error when retrieving attribute!");
+  }
+}
+
+//------------------------------------------------------------------------
+bool has_attribute(const Node &parent,const std::string &name)
+{
+  auto attr = parent.get_child_optional(attribute_path(name));
+
+  return attr.is_initialized();
+}
+
+//------------------------------------------------------------------------
+std::ostream &operator<<(std::ostream &o,const Node &n)
+{
+#if BOOST_VERSION > 105500
+  using key_type = typename Node::key_type;
+#else
+  using key_type = typename Node::key_type::value_type;
+#endif
+  boost::property_tree::xml_writer_settings<key_type> settings('\t',1);
+
+  boost::property_tree::write_xml(o,n,settings);
+  return o;
+}
+
+//-------------------------------------------------------------------------
+std::string get_name(const Node &n)
+{
+  if(has_attribute(n,"name"))
+    return DataNode::read(get_attribute(n,"name"));
+  else
+    return string();
+}
+
+//-------------------------------------------------------------------------
+Node get_child_by_name(const Node &parent,const std::string &name)
+{
+  for(auto child: parent)
+    if(get_name(child.second)==name) return child.second;
+
+  return Node();
+}
+
+
+//end of namespace
+} // namespace xml
+} // namespace nexus
+} // namespace io
+} // namespace pni
