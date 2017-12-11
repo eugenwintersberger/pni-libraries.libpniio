@@ -7,6 +7,8 @@ set(SOURCES xml_test.cpp
 	        xml_test_common.cpp
 	        dimensions_fixture.cpp
 	        node_test.cpp
+	        data_node_fixture.cpp
+	        data_node_test.cpp
 	        )
 	      
 	      
