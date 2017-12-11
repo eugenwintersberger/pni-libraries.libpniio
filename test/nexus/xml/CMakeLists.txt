@@ -9,6 +9,7 @@ set(SOURCES xml_test.cpp
 	        node_test.cpp
 	        data_node_fixture.cpp
 	        data_node_test.cpp
+	        io_node_test.cpp
 	        )
 	      
 	      
@@ -27,3 +28,4 @@ add_boost_logging_test("nexus::xml" nexus_xml_test
 	                  
 add_subdirectory(dimensions)
 add_subdirectory(node)
+add_subdirectory(io_node)
