@@ -6,6 +6,7 @@ set(SOURCES xml_test.cpp
 	        xml_base_fixture.cpp
 	        xml_test_common.cpp
 	        dimensions_fixture.cpp
+	        node_test.cpp
 	        )
 	      
 	      
@@ -23,3 +24,4 @@ add_boost_logging_test("nexus::xml" nexus_xml_test
 	                   ${CMAKE_CURRENT_BINARY_DIR})
 	                  
 add_subdirectory(dimensions)
+add_subdirectory(node)
