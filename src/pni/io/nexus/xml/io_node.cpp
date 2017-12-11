@@ -58,9 +58,9 @@ std::string IONode::name(const Node &io_node)
 }
 
 //------------------------------------------------------------------------
-pni::core::shape_t IONode::shape(const Node &io_node)
+hdf5::Dimensions IONode::shape(const Node &io_node)
 {
-  pni::core::shape_t shape{1};
+  hdf5::Dimensions shape{1};
   auto dims = io_node.get_child_optional("dimensions");
   if(dims)
     shape = Dimensions::object_from_xml(*dims);

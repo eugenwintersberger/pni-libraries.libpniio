@@ -26,6 +26,7 @@
 
 #include <pni/io/nexus/xml/node.hpp>
 #include <pni/io/nexus/xml/data_node.hpp>
+#include <h5cpp/hdf5.hpp>
 #include <pni/io/parsers.hpp>
 #include <pni/io/formatters.hpp>
 #include <pni/io/windows.hpp>
@@ -95,7 +96,7 @@ struct PNIIO_EXPORT IONode
     //! @param io_node XML node with object metadata
     //! @return shape information
     //!
-    static pni::core::shape_t shape(const Node &io_node);
+    static hdf5::Dimensions shape(const Node &io_node);
 
     //--------------------------------------------------------------------
     //!

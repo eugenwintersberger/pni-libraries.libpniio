@@ -23,6 +23,7 @@
 #pragma once
 
 #include <pni/io/nexus/xml/node.hpp>
+#include <h5cpp/hdf5.hpp>
 #include <pni/io/windows.hpp>
 
 namespace pni{
@@ -137,27 +138,7 @@ class PNIIO_EXPORT Dimensions
     //! @throws parser_error if a tag cannot be read
     //! @param dims node with dimension information
     //! @return instance of shape_t
-    static pni::core::shape_t object_from_xml(const Node &dims);
-
-    //-----------------------------------------------------------------
-    //!
-    //! @brief return shape
-    //!
-    //! Return the number of elements along each dimension. The
-    //! container type used is determined at compile time from the
-    //! template parameter.
-    //!
-    //! @throws parser_error  in case of parsing errors
-    //! @tparam DTYPE container type
-    //! @param dims a dim node
-    //! @return instance of DTYPE with the shape information
-    //!
-    template<typename DTYPE>
-    static DTYPE object_from_xml(const Node &dims)
-    {
-      pni::core::shape_t s = object_from_xml(dims);
-      return DTYPE(s.begin(),s.end());
-    }
+    static hdf5::Dimensions object_from_xml(const Node &dims);
 
     //-----------------------------------------------------------------
     //!
@@ -169,25 +150,7 @@ class PNIIO_EXPORT Dimensions
     //! @param s reference to the shape container
     //! @return XML node with dimension information
     //!
-    static Node object_to_xml(const pni::core::shape_t &s);
-
-    //-----------------------------------------------------------------
-    //!
-    //! @brief create dimension node
-    //!
-    //! Create a dimension node from shape information stored in a
-    //! container.
-    //!
-    //! @tparam DTYPE container type
-    //! @param dim container instance with shape information
-    //! @return node instance with shape information
-    //!
-    template<typename DTYPE>
-    static Node object_to_xml(const DTYPE &dim)
-    {
-      pni::core::shape_t s(dim.begin(),dim.end());
-      return object_to_xml(s);
-    }
+    static Node object_to_xml(const hdf5::Dimensions &s);
 
 };
 

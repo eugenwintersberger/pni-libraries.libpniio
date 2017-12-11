@@ -18,35 +18,32 @@
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-// Created on: Dec 8, 2017
+// Created on: Dec 11, 2017
 //
-#include <pni/io/nexus/xml/builder_factory.hpp>
-#include <pni/io/nexus/xml/group_builder.hpp>
-#include <pni/io/nexus/xml/field_builder.hpp>
+#pragma once
+
+#include <h5cpp/hdf5.hpp>
+#include <pni/core/types.hpp>
 
 namespace pni {
 namespace io {
 namespace nexus {
-namespace xml {
 
-ObjectBuilder::UniquePointer BuilderFactory::create(const Node::value_type &element)
+
+//!
+//! @brief creates HDF5 datatypes from type_id_t values
+//!
+//! This service class provides a static method constructing HDF5 datatypes
+//! from type_id_t enumerations.
+//!
+class DatatypeFactory
 {
-  if(element.first == "field")
-    return ObjectBuilder::UniquePointer(new FieldBuilder(element.second));
-  else if(element.first == "group")
-    return ObjectBuilder::UniquePointer(new GroupBuilder(element.second));
-  else if(element.first == "attribute")
-    return nullptr;
-  else if(element.first == "link")
-    return nullptr;
-  else
-  {
-    return nullptr;
-  }
-}
+  public:
+
+    static hdf5::datatype::Datatype create(pni::core::type_id_t tid);
+};
 
 
-} // namespace xml
 } // namespace nexus
 } // namespace io
 } // namespace pni

@@ -10,6 +10,8 @@ set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/object_builder.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/io_node.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/data_node.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/dimensions.cpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/field_builder.cpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/field_node.cpp
        )
 
 install(FILES ${HEADER_FILES} 

@@ -1,5 +1,11 @@
 set(SOURCES xml_test.cpp
 	        group_builder_test.cpp
+	        dimensions_inquery_test.cpp
+	        dimensions_read_test.cpp
+	        dimensions_write_test.cpp
+	        xml_base_fixture.cpp
+	        xml_test_common.cpp
+	        dimensions_fixture.cpp
 	        )
 	      
 	      
@@ -15,3 +21,5 @@ target_link_libraries(nexus_xml_test pniio Boost::unit_test_framework)
 add_dependencies(check nexus_xml_test)
 add_boost_logging_test("nexus::xml" nexus_xml_test
 	                   ${CMAKE_CURRENT_BINARY_DIR})
+	                  
+add_subdirectory(dimensions)

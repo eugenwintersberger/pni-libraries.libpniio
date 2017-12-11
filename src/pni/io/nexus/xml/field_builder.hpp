@@ -20,30 +20,31 @@
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 // Created on: Dec 8, 2017
 //
-#include <pni/io/nexus/xml/builder_factory.hpp>
-#include <pni/io/nexus/xml/group_builder.hpp>
-#include <pni/io/nexus/xml/field_builder.hpp>
+#pragma once
+
+#include <pni/io/nexus/xml/object_builder.hpp>
 
 namespace pni {
 namespace io {
 namespace nexus {
 namespace xml {
 
-ObjectBuilder::UniquePointer BuilderFactory::create(const Node::value_type &element)
+class FieldBuilder : public ObjectBuilder
 {
-  if(element.first == "field")
-    return ObjectBuilder::UniquePointer(new FieldBuilder(element.second));
-  else if(element.first == "group")
-    return ObjectBuilder::UniquePointer(new GroupBuilder(element.second));
-  else if(element.first == "attribute")
-    return nullptr;
-  else if(element.first == "link")
-    return nullptr;
-  else
-  {
-    return nullptr;
-  }
-}
+  private:
+    hdf5::Dimensions dataset_shape() const;
+    hdf5::Dimensions chunk_shape() const;
+    hdf5::dataspace::Simple construct_dataspace() const;
+    hdf5::datatype::Datatype construct_datatype() const;
+    hdf5::property::DatasetCreationList construct_dcpl() const;
+
+  public:
+    FieldBuilder() = default;
+    FieldBuilder(const Node &xml_node);
+    FieldBuilder(const FieldBuilder &)=default;
+
+    virtual void build(const hdf5::node::Node &parent) const;
+};
 
 
 } // namespace xml

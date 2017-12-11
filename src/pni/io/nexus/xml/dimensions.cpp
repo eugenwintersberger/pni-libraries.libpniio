@@ -70,7 +70,7 @@ size_t Dimensions::rank(const Node &dim)
 //-----------------------------------------------------------------------
 size_t Dimensions::size(const Node &dim)
 {
-  pni::core::shape_t shape = object_from_xml(dim);
+  hdf5::Dimensions shape = object_from_xml(dim);
 
   return std::accumulate(shape.begin(),shape.end(),size_t(1),
                          std::multiplies<size_t>());
@@ -78,7 +78,7 @@ size_t Dimensions::size(const Node &dim)
 }
 
 //-----------------------------------------------------------------------
-pni::core::shape_t Dimensions::object_from_xml(const Node &dims)
+hdf5::Dimensions Dimensions::object_from_xml(const Node &dims)
 {
   using namespace pni::core;
   IndexValueVector buffer;
@@ -95,7 +95,7 @@ pni::core::shape_t Dimensions::object_from_xml(const Node &dims)
 
   std::sort(buffer.begin(),buffer.end());
 
-  shape_t result;
+  hdf5::Dimensions result;
   auto iter = buffer.begin();
   std::generate_n(std::back_inserter(result),buffer.size(),
                   [&iter](){ return (iter++)->second; });
@@ -103,7 +103,7 @@ pni::core::shape_t Dimensions::object_from_xml(const Node &dims)
 }
 
 //-----------------------------------------------------------------------
-Node Dimensions::object_to_xml(const pni::core::shape_t &shape)
+Node Dimensions::object_to_xml(const hdf5::Dimensions &shape)
 {
   Node dim;
 
