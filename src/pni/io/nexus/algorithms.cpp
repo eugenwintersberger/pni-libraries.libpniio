@@ -25,12 +25,6 @@
 #include <algorithm>
 #include <functional>
 
-namespace {
-
-
-
-}
-
 
 
 namespace pni {
@@ -65,6 +59,70 @@ NodeList search(const hdf5::node::Group &base,
                    NodeIterator::end(base),
                    predicate);
   }
+}
+
+pni::core::type_id_t get_type_id(const hdf5::datatype::Datatype &datatype)
+{
+  using hdf5::datatype::create;
+  using namespace pni::core;
+  if(datatype == create<uint8>())
+    return type_id_t::UINT8;
+  else if(datatype==create<int8>())
+    return type_id_t::INT8;
+  else if(datatype==create<uint16>())
+    return type_id_t::UINT16;
+  else if(datatype==create<int16>())
+    return type_id_t::INT16;
+  else if(datatype==create<uint32>())
+    return type_id_t::UINT32;
+  else if(datatype==create<int32>())
+    return type_id_t::INT32;
+  else if(datatype==create<uint64>())
+    return type_id_t::UINT64;
+  else if(datatype==create<int64>())
+    return type_id_t::INT64;
+  else if(datatype==create<float32>())
+    return type_id_t::FLOAT32;
+  else if(datatype==create<float64>())
+    return type_id_t::FLOAT64;
+  else if(datatype==create<float128>())
+    return type_id_t::FLOAT128;
+  else if(datatype==create<std::string>())
+    return type_id_t::STRING;
+  else
+    return type_id_t::NONE;
+}
+
+pni::core::type_id_t get_type_id(const hdf5::node::Dataset &dataset)
+{
+  return get_type_id(dataset.datatype());
+}
+
+pni::core::type_id_t get_type_id(const hdf5::attribute::Attribute &attribute)
+{
+  return get_type_id(attribute.datatype());
+}
+
+hdf5::Dimensions get_dimensions(const hdf5::dataspace::Dataspace &dataspace)
+{
+  if(dataspace.type()==hdf5::dataspace::Type::SIMPLE)
+  {
+    return hdf5::Dimensions{1};
+  }
+  else
+  {
+    return hdf5::dataspace::Simple(dataspace).current_dimensions();
+  }
+}
+
+hdf5::Dimensions get_dimensions(const hdf5::attribute::Attribute &attribute)
+{
+  return get_dimensions(attribute.dataspace());
+}
+
+hdf5::Dimensions get_dimensions(const hdf5::node::Dataset &dataset)
+{
+  return get_dimensions(dataset.dataspace());
 }
 
 

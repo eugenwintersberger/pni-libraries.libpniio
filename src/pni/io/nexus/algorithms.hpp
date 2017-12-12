@@ -24,6 +24,7 @@
 
 #include <pni/io/nexus/predicates.hpp>
 #include <pni/io/nexus/containers.hpp>
+#include <pni/core/types.hpp>
 #include <pni/io/windows.hpp>
 
 namespace pni {
@@ -41,6 +42,52 @@ namespace nexus {
 PNIIO_EXPORT NodeList search(const hdf5::node::Group &base,
                              const NodePredicate &predicate,
                              bool recursive=false);
+
+//!
+//! @brief return the type_id of a dataset
+//!
+//! If the underlying data type is unkonwn NONE is returned.
+//!
+//! @throws std::runtime_error in case of a failure
+//! @param dataset reference to the dataset
+//! @return type_id_t enumeration
+//!
+PNIIO_EXPORT pni::core::type_id_t get_type_id(const hdf5::node::Dataset &dataset);
+
+//!
+//! @brief return the type_id of an attribute
+//!
+//! If the underlying data type is unkonwn NONE is returned.
+//!
+//! @throws std::runtime_error in case of a failure
+//! @param attribute reference to the attribute
+//! @return type_id_t enumeration
+//!
+PNIIO_EXPORT pni::core::type_id_t get_type_id(const hdf5::attribute::Attribute &attribute);
+
+//!
+//! @brief get the current dimensions of an attribute
+//!
+//! If the attribute is scalar {1} is returned. Otherwise the current dimensions of
+//! the attribute are returned.
+//!
+//! @throws std::runtime_error in case of a failure
+//! @param attribute reference to the attribute
+//! @return instance of hdf5::Dimensions with the current dimensions
+//!
+PNIIO_EXPORT hdf5::Dimensions get_dimensions(const hdf5::attribute::Attribute &attribute);
+
+//!
+//! @brief get the current dimensions of a dataset
+//!
+//! If the dataset is scalar {1} is returned. Otherwise the current dimensions of
+//! the dataset are returned.
+//!
+//! @throws std::runtime_error in case of a failure
+//! @param dataset reference to the dataset
+//! @return instance of hdf5::Dimensions with the current dimensions
+//!
+PNIIO_EXPORT hdf5::Dimensions get_dimensions(const hdf5::node::Dataset &dataset);
 
 
 } // namespace nexus
