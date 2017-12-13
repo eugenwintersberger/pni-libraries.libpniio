@@ -2,7 +2,7 @@
 
     <group name="scalar_fields">
     	<field type="uint8" name="uint8_field"></field>
-    	<field type="uint16" name="uint16_field"></field>
+    	<field type="uint16" name="uint16_field">23</field>
     	<field type="uint32" name="uint32_field"></field>
     	<field type="uint64" name="uint64_field"></field>
     	<field type="int8" name="int8_field"></field>
@@ -12,7 +12,7 @@
     	<field type="float32" name="float32_field"></field>
     	<field type="float64" name="float64_field"></field>
     	<field type="float128" name="float128_field"></field>
-    	<field type="string" name="string_field"></field>
+    	<field type="string" name="string_field">hello</field>
     </group>
     
     <group name="multidim_field">
@@ -24,6 +24,15 @@
     		</dimensions>
     	</field>
     
+        <field type="float32" name="matrix">
+        	<dimensions rank="2">
+        		<dim value="2" index="0"/>
+        		<dim value="2" index="1"/>
+        	</dimensions>
+        	1 2 3 4
+        </field>    
     </group>
+    
+    
     
 </group>

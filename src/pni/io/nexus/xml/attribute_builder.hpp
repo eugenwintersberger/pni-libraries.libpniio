@@ -21,3 +21,34 @@
 // Created on: Dec 8, 2017
 //
 #pragma once
+
+#include <pni/io/nexus/xml/node.hpp>
+#include <pni/io/nexus/xml/object_builder.hpp>
+#include <pni/io/nexus/xml/dataspace_builder.hpp>
+#include <pni/io/nexus/xml/datatype_builder.hpp>
+#include <pni/io/nexus/xml/data_writer.hpp>
+
+namespace pni {
+namespace io {
+namespace nexus {
+namespace xml {
+
+class AttributeBuilder : public ObjectBuilder
+{
+  private:
+    Node node_;
+    DatatypeBuilder datatype_builder_;
+    DataspaceBuilder dataspace_builder_;
+    DataWriter writer_;
+  public:
+    AttributeBuilder() = default;
+    AttributeBuilder(const AttributeBuilder &) = default;
+    AttributeBuilder(const Node &node);
+
+    virtual void build(const hdf5::node::Node &parent) const;
+};
+
+} // namespace xml
+} // namespace nexus
+} // namespace io
+} // namespace pni
