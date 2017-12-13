@@ -34,22 +34,7 @@ namespace nexus {
 namespace xml {
 
 
-hdf5::Dimensions FieldBuilder::chunk_shape() const
-{
-  hdf5::Dimensions chunk_shape = FieldNode::chunk(node());
 
-  if(chunk_shape.empty())
-  {
-    chunk_shape = dataspace_builder_.build().current_dimensions();
-    chunk_shape[0] = 1;
-
-    // in the case of a 1D dataset
-    if(chunk_shape.size() == 1)
-      chunk_shape[0] = 1024*1024;
-  }
-
-  return chunk_shape;
-}
 
 
 hdf5::dataspace::Simple FieldBuilder::construct_dataspace() const
@@ -62,59 +47,12 @@ hdf5::dataspace::Simple FieldBuilder::construct_dataspace() const
   return space;
 }
 
-hdf5::property::DatasetCreationList FieldBuilder::construct_dcpl() const
-{
-  using namespace pni::core;
-  using namespace hdf5::property;
-
-  DatasetCreationList dcpl;
-
-  //setting up the chunking
-  dcpl.layout(DatasetLayout::CHUNKED);
-  dcpl.chunk(chunk_shape());
-
-  //setting up filters i required
-  auto strategy = node().get_child_optional("strategy");
-  if(strategy)
-  {
-    Node node = strategy.get();
-    bool use_compression = false;
-    bool use_shuffle     = false;
-    long compression_rate = 0;
-
-    if(node.has_attribute("compression"))
-      use_compression = FieldNode::data_from_xml<bool_t>(
-          node.attribute("compression"));
-
-    if(node.has_attribute("shuffle"))
-      use_shuffle = FieldNode::data_from_xml<bool_t>(
-          node.attribute("shuffle"));
-
-    if(node.has_attribute("rate"))
-      compression_rate = FieldNode::data_from_xml<size_t>(
-          node.attribute("rate"));
-
-    if(use_compression)
-    {
-      if(use_shuffle)
-      {
-        hdf5::filter::Shuffle shuffle;
-        shuffle(dcpl);
-      }
-
-      hdf5::filter::Deflate deflate(compression_rate);
-      deflate(dcpl);
-    }
-  }
-
-  return dcpl;
-}
-
 
 FieldBuilder::FieldBuilder(const Node &xml_node):
     ObjectBuilder(xml_node),
     dataspace_builder_(xml_node),
-    datatype_builder_(xml_node)
+    datatype_builder_(xml_node),
+    dcpl_builder_(xml_node)
 {}
 
 template<typename T>
@@ -132,7 +70,7 @@ void FieldBuilder::build(const hdf5::node::Node &parent) const
   std::string    field_name  = node().name();
 
   property::LinkCreationList lcpl;
-  hdf5::property::DatasetCreationList dcpl = construct_dcpl();
+  hdf5::property::DatasetCreationList dcpl = dcpl_builder_.build();
   hdf5::dataspace::Simple dataspace = construct_dataspace();
   hdf5::datatype::Datatype datatype = datatype_builder_.build();
 

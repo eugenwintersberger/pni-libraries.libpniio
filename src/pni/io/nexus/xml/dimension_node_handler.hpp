@@ -20,39 +20,32 @@
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 // Created on: Dec 13, 2017
 //
+#pragma once
 
-#include <pni/io/nexus/xml/dataspace_builder.hpp>
-#include <pni/io/nexus/xml/dimension_node_handler.hpp>
-
+#include <h5cpp/hdf5.hpp>
+#include <pni/io/parsers.hpp>
+#include <pni/io/nexus/xml/node.hpp>
 
 namespace pni {
 namespace io {
 namespace nexus {
 namespace xml {
 
-DataspaceBuilder::DataspaceBuilder(const Node &node):
-    node_(node)
-{}
+using ParserType = pni::io::parser<hdf5::Dimensions::value_type>;
 
-hdf5::dataspace::Simple DataspaceBuilder::build() const
+using IndexValue = std::pair<hdf5::Dimensions::value_type,
+                             hdf5::Dimensions::value_type>;
+using IndexValueVector = std::vector<IndexValue>;
+
+bool operator<(const IndexValue &lhs,const IndexValue &rhs);
+
+class DimensionNodeHandler
 {
-  using hdf5::dataspace::Simple;
-
-  Simple space({1},{1});
-
-  auto has_dimension_node = node_.get_child_optional("dimensions");
-  if(has_dimension_node)
-  {
-    Node dimension_node = has_dimension_node.get();
-    hdf5::Dimensions current_dimensions = DimensionNodeHandler::dimensions(dimension_node);
-
-    space = Simple(current_dimensions,current_dimensions);
-  }
-
-  return space;
-
-
-}
+  private:
+    static IndexValue index_value_from_node(const Node &node);
+  public:
+    static hdf5::Dimensions dimensions(const Node &node);
+};
 
 
 } // namespace xml

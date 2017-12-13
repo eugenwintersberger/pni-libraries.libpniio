@@ -20,39 +20,32 @@
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 // Created on: Dec 13, 2017
 //
+#pragma once
 
+#include <pni/io/nexus/xml/node.hpp>
 #include <pni/io/nexus/xml/dataspace_builder.hpp>
-#include <pni/io/nexus/xml/dimension_node_handler.hpp>
-
+#include <h5cpp/hdf5.hpp>
 
 namespace pni {
 namespace io {
 namespace nexus {
 namespace xml {
 
-DataspaceBuilder::DataspaceBuilder(const Node &node):
-    node_(node)
-{}
-
-hdf5::dataspace::Simple DataspaceBuilder::build() const
+class DatasetCreationListBuilder
 {
-  using hdf5::dataspace::Simple;
+  private:
+    Node node_;
+    DataspaceBuilder dataspace_builder_;
 
-  Simple space({1},{1});
+    void set_compression(hdf5::property::DatasetCreationList &dcpl) const;
+    void set_chunking(hdf5::property::DatasetCreationList &dcpl) const;
+  public:
+    DatasetCreationListBuilder() = default;
+    DatasetCreationListBuilder(const DatasetCreationListBuilder &) = default;
+    DatasetCreationListBuilder(const Node &node);
 
-  auto has_dimension_node = node_.get_child_optional("dimensions");
-  if(has_dimension_node)
-  {
-    Node dimension_node = has_dimension_node.get();
-    hdf5::Dimensions current_dimensions = DimensionNodeHandler::dimensions(dimension_node);
-
-    space = Simple(current_dimensions,current_dimensions);
-  }
-
-  return space;
-
-
-}
+    hdf5::property::DatasetCreationList build() const;
+};
 
 
 } // namespace xml

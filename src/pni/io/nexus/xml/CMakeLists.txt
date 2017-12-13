@@ -3,6 +3,8 @@ set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/object_builder.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/builder_factory.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/datatype_builder.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/dataspace_builder.hpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/dimension_node_handler.hpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/dataset_creation_list_builder.hpp
                 )
                 
 set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/object_builder.cpp 
@@ -16,6 +18,8 @@ set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/object_builder.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/field_node.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/datatype_builder.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/dataspace_builder.cpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/dimension_node_handler.cpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/dataset_creation_list_builder.cpp
        )
 
 install(FILES ${HEADER_FILES} 
