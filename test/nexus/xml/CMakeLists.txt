@@ -10,6 +10,7 @@ set(SOURCES xml_test.cpp
 	        data_node_test.cpp
 	        io_node_test.cpp
 	        field_builder_test.cpp
+	        datatype_builder_test.cpp
 	        )
 	      
 	      
