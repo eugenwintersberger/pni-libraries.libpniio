@@ -2,6 +2,7 @@ set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/object_builder.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/group_builder.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/builder_factory.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/datatype_builder.hpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/dataspace_builder.hpp
                 )
                 
 set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/object_builder.cpp 
@@ -14,6 +15,7 @@ set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/object_builder.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/field_builder.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/field_node.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/datatype_builder.cpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/dataspace_builder.cpp
        )
 
 install(FILES ${HEADER_FILES} 

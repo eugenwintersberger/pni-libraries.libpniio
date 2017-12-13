@@ -11,6 +11,7 @@ set(SOURCES xml_test.cpp
 	        io_node_test.cpp
 	        field_builder_test.cpp
 	        datatype_builder_test.cpp
+	        dataspace_builder_test.cpp
 	        )
 	      
 	      
