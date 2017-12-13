@@ -23,6 +23,8 @@
 #pragma once
 
 #include <pni/io/nexus/xml/object_builder.hpp>
+#include <pni/io/nexus/xml/dataspace_builder.hpp>
+#include <pni/io/nexus/xml/datatype_builder.hpp>
 
 namespace pni {
 namespace io {
@@ -32,11 +34,14 @@ namespace xml {
 class FieldBuilder : public ObjectBuilder
 {
   private:
-    hdf5::Dimensions dataset_shape() const;
     hdf5::Dimensions chunk_shape() const;
     hdf5::dataspace::Simple construct_dataspace() const;
-    hdf5::datatype::Datatype construct_datatype() const;
     hdf5::property::DatasetCreationList construct_dcpl() const;
+
+    DataspaceBuilder dataspace_builder_;
+    DatatypeBuilder  datatype_builder_;
+
+
 
   public:
     FieldBuilder() = default;

@@ -23,10 +23,8 @@
 
 #include <h5cpp/hdf5.hpp>
 #include <pni/io/nexus/xml/field_builder.hpp>
-#include <pni/io/nexus/xml/dimensions.hpp>
 #include <pni/io/nexus/xml/field_node.hpp>
 #include <pni/io/nexus/xml/node.hpp>
-#include <pni/io/nexus/datatype_factory.hpp>
 #include <pni/core/arrays.hpp>
 #include <pni/core/types.hpp>
 
@@ -35,10 +33,6 @@ namespace io {
 namespace nexus {
 namespace xml {
 
-hdf5::Dimensions FieldBuilder::dataset_shape() const
-{
-  return FieldNode::shape(node());
-}
 
 hdf5::Dimensions FieldBuilder::chunk_shape() const
 {
@@ -46,12 +40,12 @@ hdf5::Dimensions FieldBuilder::chunk_shape() const
 
   if(chunk_shape.empty())
   {
-    chunk_shape = dataset_shape();
+    chunk_shape = dataspace_builder_.build().current_dimensions();
     chunk_shape[0] = 1;
 
     // in the case of a 1D dataset
     if(chunk_shape.size() == 1)
-      chunk_shape[0] == 1024*1024;
+      chunk_shape[0] = 1024*1024;
   }
 
   return chunk_shape;
@@ -60,17 +54,12 @@ hdf5::Dimensions FieldBuilder::chunk_shape() const
 
 hdf5::dataspace::Simple FieldBuilder::construct_dataspace() const
 {
-  using namespace pni::core;
-  using namespace hdf5::dataspace;
-
-  hdf5::Dimensions shape = dataset_shape();
-  if(shape.empty())
-    return Simple({1},{H5S_UNLIMITED});
-  else
-  {
-    hdf5::Dimensions max_shape(shape.size(),H5S_UNLIMITED);
-    return Simple(shape,max_shape);
-  }
+  hdf5::dataspace::Simple space = dataspace_builder_.build();
+  hdf5::Dimensions current_dimensions = space.current_dimensions();
+  hdf5::Dimensions max_dimensions(current_dimensions);
+  max_dimensions.front() = H5S_UNLIMITED;
+  space.dimensions(current_dimensions,max_dimensions);
+  return space;
 }
 
 hdf5::property::DatasetCreationList FieldBuilder::construct_dcpl() const
@@ -121,14 +110,11 @@ hdf5::property::DatasetCreationList FieldBuilder::construct_dcpl() const
   return dcpl;
 }
 
-hdf5::datatype::Datatype FieldBuilder::construct_datatype() const
-{
-  return DatatypeFactory::create(FieldNode::type_id(node()));
-}
-
 
 FieldBuilder::FieldBuilder(const Node &xml_node):
-    ObjectBuilder(xml_node)
+    ObjectBuilder(xml_node),
+    dataspace_builder_(xml_node),
+    datatype_builder_(xml_node)
 {}
 
 template<typename T>
@@ -143,25 +129,25 @@ void FieldBuilder::build(const hdf5::node::Node &parent) const
   using namespace hdf5;
   using namespace pni::core;
   //construct the field object
-  std::string    field_name  = FieldNode::name(node());
+  std::string    field_name  = node().name();
 
   property::LinkCreationList lcpl;
   hdf5::property::DatasetCreationList dcpl = construct_dcpl();
-  hdf5::dataspace::Simple dataspace =construct_dataspace();
-  hdf5::datatype::Datatype datatype = construct_datatype();
+  hdf5::dataspace::Simple dataspace = construct_dataspace();
+  hdf5::datatype::Datatype datatype = datatype_builder_.build();
 
   hdf5::node::Dataset dataset(parent,field_name,datatype,dataspace,lcpl,dcpl);
 
-  std::string    long_name   = FieldNode::long_name(node());
-  if(!long_name.empty())
+  if(node().has_attribute("long_name"))
   {
-    dataset.attributes.create<std::string>("long_name").write(long_name);
+    dataset.attributes.create<std::string>("long_name")
+        .write(node().attribute("long_name").str_data());
   }
 
-  std::string    units       = FieldNode::unit(node());
-  if(!units.empty())
+  if(node().has_attribute("units"))
   {
-    dataset.attributes.create<std::string>("units").write(units);
+    dataset.attributes.create<std::string>("units").
+        write(node().attribute("units").str_data());
   }
 
   //need to handle data if available
