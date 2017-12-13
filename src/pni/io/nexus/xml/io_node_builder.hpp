@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2016 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2017 DESY
 //
 // This file is part of libpniio.
 //
@@ -17,22 +17,26 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Jan 14, 2016
-//      Author: Eugen Wintersberger
+// Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+// Created on: Dec 13, 2017
 //
+#pragma once
 
-#include "data_node_fixture.hpp"
+#include <pni/io/nexus/xml/object_builder.hpp>
 
-using namespace pni::core;
-using namespace pni::io::nexus;
+namespace pni {
+namespace io {
+namespace nexus {
+namespace xml {
 
-//----------------------------------------------------------------------------
-DataNodeFixture::DataNodeFixture(const std::string &scalar_data,
-                                 const std::string &array_data):
-    scalar(xml::Node::from_string(scalar_data)),
-    array(xml::Node::from_string(array_data))
-{}
 
-//----------------------------------------------------------------------------
-DataNodeFixture::~DataNodeFixture()
-{ }
+class IONodeBuilder : public ObjectBuilder
+{
+  public:
+
+};
+
+} // namespace xml
+} // namespace nexus
+} // namespace io
+} // namespace pni

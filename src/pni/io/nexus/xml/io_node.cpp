@@ -53,8 +53,7 @@ size_t IONode::rank(const Node &io_node)
 //------------------------------------------------------------------------
 std::string IONode::name(const Node &io_node)
 {
-  Node name_attribute = get_attribute(io_node,"name");
-  return DataNode::read(name_attribute);
+  return io_node.name();
 }
 
 //------------------------------------------------------------------------
@@ -71,8 +70,7 @@ hdf5::Dimensions IONode::shape(const Node &io_node)
 //------------------------------------------------------------------------
 pni::core::type_id_t IONode::type_id(const Node &io_node)
 {
-  Node type_attribute = get_attribute(io_node,"type");
-  pni::core::string type_code = DataNode::read(type_attribute);
+  pni::core::string type_code = io_node.attribute("type").str_data();
 
   //need to handle the special case of a boolean type
   if(type_code == "bool_t") type_code = "bool";

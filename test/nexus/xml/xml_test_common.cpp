@@ -25,15 +25,15 @@
 
 using namespace pni::io::nexus;
 using namespace pni::core;
-using namespace boost::property_tree;
 
 namespace std{
     
-    ostream &operator<<(ostream &stream,const xml::Node &n)
-    {
-        write_xml(stream,n);
-        return stream;
-    }
+//    ostream &operator<<(ostream &stream,const xml::Node &n)
+//    {
+//        using boost::property_tree::ptree;
+//        boost::property_tree::write_xml(stream,dynamic_cast<const ptree&>(n));
+//        return stream;
+//    }
 }
 
 

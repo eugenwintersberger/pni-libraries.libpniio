@@ -39,12 +39,11 @@ using namespace pni::core;
 //------------------------------------------------------------------------
 std::string FieldNode::unit(const Node &field_node)
 {
-  string unit;
+  std::string unit;
 
-  if(has_attribute(field_node,"units"))
+  if(field_node.has_attribute("units"))
   {
-    Node attr_node = get_attribute(field_node,"units");
-    unit = DataNode::read(attr_node);
+    unit = field_node.attribute("units").str_data();
   }
 
   return unit;
@@ -55,10 +54,9 @@ std::string FieldNode::long_name(const Node &field_node)
 {
   string long_name;
 
-  if(has_attribute(field_node,"long_name"))
+  if(field_node.has_attribute("long_name"))
   {
-    Node attr_node = get_attribute(field_node,"long_name");
-    long_name = DataNode::read(attr_node);
+    long_name = field_node.attribute("long_name").str_data();
   }
 
   return long_name;

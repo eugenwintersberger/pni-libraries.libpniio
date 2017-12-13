@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE(linear_groups)
       "<group name=\"entry_2\" type=\"NXentry\"/>"
       "<group name=\"log\"/>";
 
-  BOOST_CHECK_NO_THROW(xml_node = nexus::xml::create_from_string(xml_input));
+  BOOST_CHECK_NO_THROW(xml_node = nexus::xml::Node::from_string(xml_input));
   BOOST_CHECK_NO_THROW(builder = nexus::xml::ObjectBuilder(xml_node));
   BOOST_CHECK_NO_THROW(builder.build(root_group));
 
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(linear_groups)
 
 BOOST_AUTO_TEST_CASE(recursive_groups)
 {
-  BOOST_CHECK_NO_THROW(xml_node = nexus::xml::create_from_file("group_builder.xml"));
+  BOOST_CHECK_NO_THROW(xml_node = nexus::xml::Node::from_file("group_builder.xml"));
   BOOST_CHECK_NO_THROW(builder = nexus::xml::ObjectBuilder(xml_node));
   BOOST_CHECK_NO_THROW(builder.build(root_group));
 

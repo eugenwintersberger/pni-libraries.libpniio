@@ -14,25 +14,32 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninx.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
-//
-//  Created on: Jan 14, 2016
-//      Author: Eugen Wintersberger
-//
 
-#include "data_node_fixture.hpp"
 
-using namespace pni::core;
-using namespace pni::io::nexus;
+#include "base_fixture.hpp"
 
-//----------------------------------------------------------------------------
-DataNodeFixture::DataNodeFixture(const std::string &scalar_data,
-                                 const std::string &array_data):
-    scalar(xml::Node::from_string(scalar_data)),
-    array(xml::Node::from_string(array_data))
-{}
 
-//----------------------------------------------------------------------------
-DataNodeFixture::~DataNodeFixture()
-{ }
+//-----------------------------------------------------------------------------
+BaseFixture::BaseFixture(const boost::filesystem::path &fname,bool open_existing):
+    filename(fname),
+    file(),
+    root()
+{
+    if(open_existing)
+        file = hdf5::file::open(filename,hdf5::file::AccessFlags::READWRITE);
+    else
+        file = hdf5::file::create(filename,hdf5::file::AccessFlags::TRUNCATE);
+
+    root = file.root();
+
+}
+
+//-----------------------------------------------------------------------------
+BaseFixture::~BaseFixture()
+{
+    root.close();
+    file.close();
+
+}

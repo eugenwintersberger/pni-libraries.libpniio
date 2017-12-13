@@ -46,7 +46,7 @@ struct FieldBuilderFixture
                                 hdf5::file::AccessFlags::TRUNCATE);
       root_group = file.root();
 
-      nexus::xml::Node n = nexus::xml::create_from_file("field/input.xml");
+      nexus::xml::Node n = nexus::xml::Node::from_file("field/input.xml");
       nexus::xml::ObjectBuilder builder(n);
       builder.build(root_group);
 

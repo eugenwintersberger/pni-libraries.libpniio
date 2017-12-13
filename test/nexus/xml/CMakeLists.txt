@@ -2,7 +2,6 @@ set(SOURCES xml_test.cpp
 	        group_builder_test.cpp
 	        dimensions_inquery_test.cpp
 	        dimensions_read_test.cpp
-	        dimensions_write_test.cpp
 	        xml_base_fixture.cpp
 	        xml_test_common.cpp
 	        dimensions_fixture.cpp

@@ -124,23 +124,23 @@ BOOST_AUTO_TEST_CASE(test_read_scalar)
   using namespace pni::io::nexus;
   xml::Node root = scalar.get_child("group");
   xml::Node attr;
-  BOOST_CHECK_NO_THROW(attr = xml::get_attribute(root,"attr1"));
-  BOOST_CHECK_EQUAL(xml::DataNode::read(attr),"12");
+  BOOST_CHECK_NO_THROW(attr = root.attribute("attr1"));
+  BOOST_CHECK_EQUAL(attr.str_data(),"12");
 
-  BOOST_CHECK_NO_THROW(attr = xml::get_attribute(root,"attr2"));
-  BOOST_CHECK_EQUAL(xml::DataNode::read(attr),"-12");
+  BOOST_CHECK_NO_THROW(attr = root.attribute("attr2"));
+  BOOST_CHECK_EQUAL(attr.str_data(),"-12");
 
-  BOOST_CHECK_NO_THROW(attr = xml::get_attribute(root,"attr3"));
-  BOOST_CHECK_EQUAL(xml::DataNode::read(attr),"bla");
+  BOOST_CHECK_NO_THROW(attr = root.attribute("attr3"));
+  BOOST_CHECK_EQUAL(attr.str_data(),"bla");
 
-  BOOST_CHECK_NO_THROW(attr = xml::get_attribute(root,"attr4"));
-  BOOST_CHECK_EQUAL(xml::DataNode::read(attr),"12.3");
+  BOOST_CHECK_NO_THROW(attr = root.attribute("attr4"));
+  BOOST_CHECK_EQUAL(attr.str_data(),"12.3");
 
-  BOOST_CHECK_NO_THROW(attr = xml::get_attribute(root,"attr5"));
-  BOOST_CHECK_EQUAL(xml::DataNode::read(attr),"100000");
+  BOOST_CHECK_NO_THROW(attr = root.attribute("attr5"));
+  BOOST_CHECK_EQUAL(attr.str_data(),"100000");
 
-  BOOST_CHECK_NO_THROW(attr = xml::get_attribute(root,"attr6"));
-  BOOST_CHECK_EQUAL(xml::DataNode::read(attr),"-1000000");
+  BOOST_CHECK_NO_THROW(attr = root.attribute("attr6"));
+  BOOST_CHECK_EQUAL(attr.str_data(),"-1000000");
 }
 
 //-------------------------------------------------------------------------
@@ -149,11 +149,11 @@ BOOST_AUTO_TEST_CASE(test_read_array)
   using namespace pni::io::nexus;
   xml::Node root = array.get_child("group");
   xml::Node attr;
-  BOOST_CHECK_NO_THROW(attr = xml::get_attribute(root,"attr1"));
-  BOOST_CHECK_EQUAL(xml::DataNode::read(attr),"12 23 34.2  34 23");
+  BOOST_CHECK_NO_THROW(attr = root.attribute("attr1"));
+  BOOST_CHECK_EQUAL(attr.str_data(),"12 23 34.2  34 23");
 
-  BOOST_CHECK_NO_THROW(attr = xml::get_attribute(root,"attr2"));
-  BOOST_CHECK_EQUAL(xml::DataNode::read(attr),"12 23 34.2  34 23");
+  BOOST_CHECK_NO_THROW(attr = root.attribute("attr2"));
+  BOOST_CHECK_EQUAL(attr.str_data(),"12 23 34.2  34 23");
 }
 
 

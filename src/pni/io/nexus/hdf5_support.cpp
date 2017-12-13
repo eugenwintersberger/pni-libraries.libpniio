@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2016 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
+// (c) Copyright 2017 DESY
 //
 // This file is part of libpniio.
 //
@@ -17,22 +17,20 @@
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-//  Created on: Jan 14, 2016
-//      Author: Eugen Wintersberger
+// Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+// Created on: Dec 12, 2017
 //
 
-#include "data_node_fixture.hpp"
+#include <pni/io/nexus/hdf5_support.hpp>
+#include <pni/io/nexus/datatype_factory.hpp>
 
-using namespace pni::core;
-using namespace pni::io::nexus;
+namespace hdf5 {
+namespace datatype {
 
-//----------------------------------------------------------------------------
-DataNodeFixture::DataNodeFixture(const std::string &scalar_data,
-                                 const std::string &array_data):
-    scalar(xml::Node::from_string(scalar_data)),
-    array(xml::Node::from_string(array_data))
-{}
+Datatype create(const pni::core::array &a)
+{
+  return pni::io::nexus::DatatypeFactory::create(a.type_id());
+}
 
-//----------------------------------------------------------------------------
-DataNodeFixture::~DataNodeFixture()
-{ }
+} // namespace datatype
+} // namespace hdf5

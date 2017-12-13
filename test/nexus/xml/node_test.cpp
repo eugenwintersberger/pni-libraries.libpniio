@@ -39,7 +39,7 @@ struct InqueryFixture
     xml::Node group;
 
     InqueryFixture():
-        group(xml::create_from_file("node/inquery.xml").get_child("group"))
+        group(xml::Node::from_file("node/inquery.xml").get_child("group"))
     {}
 
 };
@@ -52,15 +52,15 @@ BOOST_AUTO_TEST_SUITE(CreationTest)
 //-------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(test_from_file)
 {
-  xml::Node n = xml::create_from_file("node/node_from_str.xml");
+  xml::Node n = xml::Node::from_file("node/node_from_str.xml");
   BOOST_CHECK(!n.empty());
   BOOST_CHECK_EQUAL(n.size(),1);
 
   //has to fail because file does not exist
-  BOOST_CHECK_THROW(xml::create_from_file("bla.xml"), pni::core::file_error);
+  BOOST_CHECK_THROW(xml::Node::from_file("bla.xml"), pni::core::file_error);
 
   //not a well formed XML file
-  BOOST_CHECK_THROW(xml::create_from_file("node/node_from_bad_file.xml"),
+  BOOST_CHECK_THROW(xml::Node::from_file("node/node_from_bad_file.xml"),
                     pni::io::parser_error);
 
 
@@ -69,12 +69,12 @@ BOOST_AUTO_TEST_CASE(test_from_file)
 //-------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(test_from_string)
 {
-  xml::Node n = xml::create_from_string(node_from_string_str);
+  xml::Node n = xml::Node::from_string(node_from_string_str);
 
   BOOST_CHECK(!n.empty());
   BOOST_CHECK_EQUAL(n.size(),1);
 
-  BOOST_CHECK_THROW(xml::create_from_string(node_from_bad_str),
+  BOOST_CHECK_THROW(xml::Node::from_string(node_from_bad_str),
                     pni::io::parser_error);
 }
 
@@ -89,18 +89,18 @@ BOOST_FIXTURE_TEST_SUITE(InqueryTest,InqueryFixture)
 BOOST_AUTO_TEST_CASE(test_get_attribute)
 {
 
-  BOOST_CHECK_NO_THROW(xml::get_attribute(group,"name"));
+  BOOST_CHECK_NO_THROW(group.attribute("name"));
 
   //not a well formed XML file
-  BOOST_CHECK_THROW(xml::get_attribute(group,"type"), key_error);
+  BOOST_CHECK_THROW(group.attribute("type"), key_error);
 }
 
 //-------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(test_has_attribute)
 {
 
-  BOOST_CHECK(xml::has_attribute(group,"name"));
-  BOOST_CHECK(!xml::has_attribute(group,"type"));
+  BOOST_CHECK(group.has_attribute("name"));
+  BOOST_CHECK(!group.has_attribute("type"));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -34,7 +34,7 @@ namespace xml{
 
 std::string DataNode::read(const Node &n)
 {
-  std::string data = n.data();
+  std::string data = n.str_data();
   boost::algorithm::trim(data);
 
   //we do not care about line breaks - the data of a node is considered

@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_SUITE(InqueryTests)
 //-------------------------------------------------------------------------
 xml::Node get_object(const std::string &f,const std::string &n)
 {
-  xml::Node root  = xml::create_from_file(f);
+  xml::Node root  = xml::Node::from_file(f);
   return root.get_child(n);
 }
 
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE(test_name)
   BOOST_CHECK_EQUAL(xml::IONode::name(n),"hello");
 
   n = get_object("io_node/object1.xml","object2");
-  BOOST_CHECK_THROW(xml::IONode::name(n),pni::core::key_error);
+  BOOST_CHECK(xml::IONode::name(n).empty());
 }
 
 //-------------------------------------------------------------------------
@@ -93,7 +93,7 @@ BOOST_AUTO_TEST_SUITE(DataFromXMLTest)
 //-------------------------------------------------------------------------
 xml::Node get_object(const std::string &f,const std::string &n)
 {
-  xml::Node root  = xml::create_from_file(f);
+  xml::Node root  = xml::Node::from_file(f);
   return root.get_child(n);
 }
 

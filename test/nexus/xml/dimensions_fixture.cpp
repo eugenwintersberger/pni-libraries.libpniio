@@ -34,7 +34,7 @@ DimensionsFixture::~DimensionsFixture()
 //----------------------------------------------------------------------------
 void DimensionsFixture::read_file(const boost::filesystem::path &filename)
 {
-    root_node = xml::create_from_file(filename.string());
+    root_node = xml::Node::from_file(filename);
     child_node = root_node.get_child("dimensions");
 }
 

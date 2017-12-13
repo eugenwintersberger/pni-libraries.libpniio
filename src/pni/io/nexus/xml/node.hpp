@@ -23,7 +23,9 @@
 
 #include <pni/core/types.hpp>
 #include <boost/property_tree/ptree.hpp>
+#include <boost/filesystem.hpp>
 #include <pni/io/windows.hpp>
+#include <pni/io/parsers.hpp>
 
 namespace pni{
 namespace io{
@@ -37,99 +39,106 @@ namespace xml{
 //! This alias creates the new type name node which can be used within
 //! the xml namespace instead of boost::property_tree::ptree;
 //!
-using Node = boost::property_tree::ptree;
+class PNIIO_EXPORT Node : public boost::property_tree::ptree
+{
+  private:
 
+    //!
+    //! @brief create an attribute path
+    //!
+    //! This function is intended for internal use only. It creates a valid
+    //! attribute path from an attribute name.
+    //!
+    //! @param name the name of the attribute
+    //! @return a valid property tree attribute path
+    //!
+    static std::string attribute_path(const std::string &attribute_name);
+  public:
+    using boost::property_tree::ptree::ptree;
 
-//-------------------------------------------------------------------------
-//!
-//! @ingroup nexus_xml_classes
-//! @brief  create xml node from string
-//!
-//! Parses a string provided by the user and returns an XML node from it.
-//!
-//! \throws parser_error in case of parsing problems
-//! \param s string from which to read the data
-//! \return node instance
-//!
-PNIIO_EXPORT Node create_from_string(const std::string &s);
+    Node(const boost::property_tree::ptree &ptree);
+    Node();
 
-//-------------------------------------------------------------------------
-//!
-//! @ingroup nexus_xml_classes
-//! @brief create xml node from file
-//!
-//! Reads XML data from a file and returns an XML node refering to the
-//! root element of the XML tree.
-//!
-//! @throws pni::io::parser_error in case of parsing issues
-//! @throws file_error in case of problems opening the file
-//! @param s name of the file
-//! @return node instance
-//!
-PNIIO_EXPORT Node create_from_file(const std::string &s);
+    //-------------------------------------------------------------------------
+    //!
+    //! @brief  create xml node from string
+    //!
+    //! Parses a string provided by the user and returns an XML node from it.
+    //!
+    //! \throws parser_error in case of parsing problems
+    //! \param s string from which to read the data
+    //! \return node instance
+    //!
+    static Node from_string(const std::string &s);
 
-//------------------------------------------------------------------------
-//!
-//! @ingroup nexus_xml_classes
-//! @brief create an attribute path
-//!
-//! This function is intended for internal use only. It creates a valid
-//! attribute path from an attribute name.
-//!
-//! @param name the name of the attribute
-//! @return a valid property tree attribute path
-//!
-PNIIO_EXPORT std::string attribute_path(const std::string &name);
+    //!
+    //! @brief create xml node from file
+    //!
+    //! Reads XML data from a file and returns an XML node refering to the
+    //! root element of the XML tree.
+    //!
+    //! @throws pni::io::parser_error in case of parsing issues
+    //! @throws file_error in case of problems opening the file
+    //! @param path the path to the file from which to read data
+    //! @return node instance
+    //!
+    static Node from_file(const boost::filesystem::path &path);
 
+    //!
+    //! @brief get attribute node
+    //!
+    //! Returns an attribute node from its parent node.
+    //!
+    //! @throws key_error if the attribute does not exist
+    //! @throws parser_error in case of any other error
+    //!
+    //! @param parent the node from which to retrieve the attribute
+    //! @param name the name of the attribute
+    //! @param node representing the attribute
+    //!
+    Node attribute(const std::string &name) const;
 
-//------------------------------------------------------------------------
-//!
-//! @ingroup nexus_xml_classes
-//! @brief get attribute node
-//!
-//! Returns an attribute node from its parent node.
-//!
-//! @throws key_error if the attribute does not exist
-//! @throws parser_error in case of any other error
-//!
-//! @param parent the node from which to retrieve the attribute
-//! @param name the name of the attribute
-//! @param node representing the attribute
-//!
-PNIIO_EXPORT Node get_attribute(const Node &parent,const std::string &name);
+    //-------------------------------------------------------------------------
+    //!
+    //! @ingroup nexus_xml_classes
+    //! @brief check for attribute existence
+    //!
+    //! Returns true if the node parent has a an attribute name attached to it.
+    //! Otherwise false is returned.
+    //!
+    //! @param parent reference to the parent node
+    //! @param name the attributes name
+    //! @return true if the attribute exists, false otherwise
+    //!
+    bool has_attribute(const std::string &name) const;
 
-//-------------------------------------------------------------------------
-//!
-//! @ingroup nexus_xml_classes
-//! @brief check for attribute existence
-//!
-//! Returns true if the node parent has a an attribute name attached to it.
-//! Otherwise false is returned.
-//!
-//! @param parent reference to the parent node
-//! @param name the attributes name
-//! @return true if the attribute exists, false otherwise
-//!
-PNIIO_EXPORT bool has_attribute(const Node &parent,const std::string &name);
+    //!
+    //! @brief get name of a node
+    //!
+    //! Return the name of a node as determined by the content of its
+    //! name attribute. This is a convenience function.
+    //! If the node does not have a name attribute an empty string is
+    //! returned.
+    //!
+    //! @param n node with name attribute
+    //! @return content of the name attribute of a tag
+    //!
+    std::string name() const;
 
-//-------------------------------------------------------------------------
-//!
-//! @ingroup nexus_xml_classes
-//! @brief get name of a node
-//!
-//! Return the name of a node as determined by the content of its
-//! name attribute. This is a convenience function.
-//! If the node does not have a name attribute an empty string is
-//! returned.
-//!
-//! @param n node with name attribute
-//! @return content of the name attribute of a tag
-//!
-PNIIO_EXPORT std::string get_name(const Node &n);
+    std::string str_data() const;
 
+    void data(const std::string &cdata);
 
-//-------------------------------------------------------------------------
-PNIIO_EXPORT Node get_child_by_name(const Node &parent,const std::string &name);
+    //Node get_child_by_name(const std::string &name) const;
+
+    template<typename T> T data() const
+    {
+      pni::io::parser<T> p;
+
+      return p(str_data());
+    }
+
+};
 
 //-------------------------------------------------------------------------
 //!

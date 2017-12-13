@@ -25,8 +25,11 @@
 #include <pni/io/nexus/algorithms.hpp>
 #include <pni/io/nexus/base_class.hpp>
 #include <pni/io/nexus/containers.hpp>
+#include <pni/io/nexus/datatype_factory.hpp>
 #include <pni/io/nexus/date_time.hpp>
 #include <pni/io/nexus/file.hpp>
+#include <pni/io/nexus/hdf5_support.hpp>
+#include <pni/io/nexus/object_builder.hpp>
 #include <pni/io/nexus/predicates.hpp>
 #include <pni/io/nexus/transformations.hpp>
 #include <pni/io/nexus/version.hpp>

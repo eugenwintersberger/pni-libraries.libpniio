@@ -24,7 +24,7 @@
 
 namespace std{
 
-    ostream &operator<<(ostream &stream,const pni::io::nexus::xml::Node &n);
+//    ostream &operator<<(ostream &stream,const pni::io::nexus::xml::Node &n);
     
 }
 

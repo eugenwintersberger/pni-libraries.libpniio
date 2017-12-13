@@ -24,6 +24,8 @@
 #include <fstream>
 #include <locale>
 #include <boost/property_tree/xml_parser.hpp>
+#include <boost/algorithm/string.hpp>
+#include <algorithm>
 
 #include <pni/io/exceptions.hpp>
 #include <pni/io/nexus/xml/node.hpp>
@@ -35,28 +37,37 @@ namespace nexus{
 namespace xml{
 
 using namespace pni::core;
-using namespace boost::property_tree;
 
-Node create_from_string(const std::string &s)
+Node::Node(const boost::property_tree::ptree &ptree):
+    boost::property_tree::ptree(ptree)
+{}
+
+Node::Node():
+    boost::property_tree::ptree()
+{}
+
+Node Node::from_string(const std::string &s)
 {
   std::stringstream stream(s.c_str());
   Node t;
   try
   {
-    read_xml(stream,t);
+    boost::property_tree::ptree tree;
+    boost::property_tree::read_xml(stream,tree);
+    t = tree;
   }
-  catch(ptree_bad_data &)
+  catch(boost::property_tree::ptree_bad_data &)
   {
     throw pni::io::parser_error(EXCEPTION_RECORD,
                                 "A parser error occured due to invalid input data!");
   }
-  catch(ptree_bad_path &)
+  catch(boost::property_tree::ptree_bad_path &)
   {
     throw pni::io::parser_error(EXCEPTION_RECORD,
                                 "A parser error occured as the requested object could not"
                                 " be resolved!");
   }
-  catch(ptree_error &)
+  catch(boost::property_tree::ptree_error &)
   {
     throw pni::io::parser_error(EXCEPTION_RECORD,
                                 "A general parser error has occured!");
@@ -72,41 +83,48 @@ Node create_from_string(const std::string &s)
 }
 
 //-------------------------------------------------------------------------
-Node create_from_file(const std::string &s)
+Node Node::from_file(const boost::filesystem::path &path)
 {
-  std::ifstream stream(s.c_str());
+  std::ifstream stream(path.string());
   if(!stream.is_open())
-    throw file_error(EXCEPTION_RECORD,
-                     "Error opening "+s+" for reading!");
+  {
+    std::stringstream ss;
+    ss<<"Error opening "<<path<<" for reading!";
+    throw file_error(EXCEPTION_RECORD,ss.str());
+  }
+
 
   Node t;
   try
   {
-    read_xml(stream,t);
+    boost::property_tree::ptree tree;
+    boost::property_tree::read_xml(stream,tree);
+    t = tree;
   }
   catch(...)
   {
-    throw pni::io::parser_error(EXCEPTION_RECORD,
-                                "Error parsing XML file "+s+"!");
+    std::stringstream ss;
+    ss<<"Error parsing XML file "<<path<<"!";
+    throw pni::io::parser_error(EXCEPTION_RECORD,ss.str());
   }
 
   return t;
 }
 
 //------------------------------------------------------------------------
-std::string attribute_path(const std::string &name)
+std::string Node::attribute_path(const std::string &attribute_name)
 {
-  return "<xmlattr>."+name;
+  return "<xmlattr>."+attribute_name;
 }
 
 //------------------------------------------------------------------------
-Node get_attribute(const Node &parent,const std::string &name)
+Node Node::attribute(const std::string &name) const
 {
   try
   {
-    return parent.get_child(attribute_path(name));
+    return this->get_child(attribute_path(name));
   }
-  catch(ptree_bad_path &)
+  catch(boost::property_tree::ptree_bad_path &)
   {
     throw key_error(EXCEPTION_RECORD, "Attribute not found!");
   }
@@ -118,9 +136,9 @@ Node get_attribute(const Node &parent,const std::string &name)
 }
 
 //------------------------------------------------------------------------
-bool has_attribute(const Node &parent,const std::string &name)
+bool Node::has_attribute(const std::string &name) const
 {
-  auto attr = parent.get_child_optional(attribute_path(name));
+  auto attr = this->get_child_optional(attribute_path(name));
 
   return attr.is_initialized();
 }
@@ -135,26 +153,47 @@ std::ostream &operator<<(std::ostream &o,const Node &n)
 #endif
   boost::property_tree::xml_writer_settings<key_type> settings('\t',1);
 
-  boost::property_tree::write_xml(o,n,settings);
+  using boost::property_tree::ptree;
+  boost::property_tree::write_xml(o,dynamic_cast<const ptree&>(n),settings);
   return o;
 }
 
 //-------------------------------------------------------------------------
-std::string get_name(const Node &n)
+std::string Node::name() const
 {
-  if(has_attribute(n,"name"))
-    return DataNode::read(get_attribute(n,"name"));
+  if(has_attribute("name"))
+    return attribute("name").str_data();
   else
     return string();
 }
 
-//-------------------------------------------------------------------------
-Node get_child_by_name(const Node &parent,const std::string &name)
-{
-  for(auto child: parent)
-    if(get_name(child.second)==name) return child.second;
+////-------------------------------------------------------------------------
+//Node Node::get_child_by_name(const std::string &name) const
+//{
+//  auto result = std::find(begin(),end(),[&name](const Node &node) { node.name() == name; });
+//  if()
+//  for(auto child: parent)
+//    if(get_name(child.second)==name) return child.second;
+//
+//  return Node();
+//}
 
-  return Node();
+std::string Node::str_data() const
+{
+  std::string data = boost::property_tree::ptree::data();
+  boost::algorithm::trim(data);
+
+  //we do not care about line breaks - the data of a node is considered
+  //a linear stream of elements.
+  std::replace(data.begin(),data.end(),'\n',' ');
+
+  return data;
+}
+
+//-------------------------------------------------------------------------
+void Node::data(const std::string &cdata)
+{
+  put_value(cdata);
 }
 
 

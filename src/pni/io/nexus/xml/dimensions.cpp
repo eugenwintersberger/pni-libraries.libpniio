@@ -53,8 +53,8 @@ Node Dimensions::index_value_to_node(size_t index,size_t value)
 IndexValue Dimensions::index_value_from_node(const Node &dim_node)
 {
   Size_tParser p;
-  Node index_attribute = get_attribute(dim_node,"index");
-  Node value_attribute = get_attribute(dim_node,"value");
+  Node index_attribute = dim_node.attribute("index");
+  Node value_attribute = dim_node.attribute("value");
 
   return {p(DataNode::read(index_attribute)),
     p(DataNode::read(value_attribute))};
@@ -63,8 +63,8 @@ IndexValue Dimensions::index_value_from_node(const Node &dim_node)
 //-----------------------------------------------------------------------
 size_t Dimensions::rank(const Node &dim)
 {
-  Node type_attribute = get_attribute(dim,"rank");
-  return Size_tParser()(DataNode::read(type_attribute));
+  Node type_attribute = dim.attribute("rank");
+  return Size_tParser()(type_attribute.str_data());
 }
 
 //-----------------------------------------------------------------------
@@ -102,22 +102,6 @@ hdf5::Dimensions Dimensions::object_from_xml(const Node &dims)
   return result;
 }
 
-//-----------------------------------------------------------------------
-Node Dimensions::object_to_xml(const hdf5::Dimensions &shape)
-{
-  Node dim;
-
-  dim.put("<xmlattr>.rank",shape.size());
-
-  size_t index = 1;
-  for(auto s: shape)
-  {
-    auto iv = make_pair("dim",index_value_to_node(index++,s));
-    dim.push_back(iv);
-  }
-
-  return dim;
-}
 
 //end of namespace
 } // namespace xml

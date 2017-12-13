@@ -41,14 +41,13 @@ hdf5::node::Group group_from_node(const hdf5::node::Group &parent,
     //typedef GTYPE group_type;
     //typedef typename GTYPE::value_type object_type;
 
-    //check if the group tag provides a name attribute
-    if(!has_attribute(group_node,"name"))
-        throw value_error(EXCEPTION_RECORD,
-                "XML group does not provide a name!");
-
     //fetch the name for the group
-    Node name_attr = get_attribute(group_node,"name");
-    std::string name = DataNode::read(name_attr);
+    std::string name = group_node.name();
+    if(name.empty())
+    {
+      throw value_error(EXCEPTION_RECORD,
+              "XML group does not provide a name!");
+    }
 
     if(name == "/"  && parent.link().path().is_root())
         return parent;
@@ -58,10 +57,9 @@ hdf5::node::Group group_from_node(const hdf5::node::Group &parent,
 
     //if the tag has a type attribute add its value as an NX_class
     //attribute
-    if(has_attribute(group_node,"type"))
+    if(group_node.has_attribute("type"))
     {
-        Node class_attr = get_attribute(group_node,"type");
-        string gclass   = DataNode::read(class_attr);
+        string gclass   = group_node.attribute("type").str_data();
 
         group.attributes.create("NX_class",hdf5::datatype::create<std::string>(),
                                            hdf5::dataspace::Scalar()).write(gclass);
