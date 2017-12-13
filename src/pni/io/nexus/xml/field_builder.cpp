@@ -34,9 +34,6 @@ namespace nexus {
 namespace xml {
 
 
-
-
-
 hdf5::dataspace::Simple FieldBuilder::construct_dataspace() const
 {
   hdf5::dataspace::Simple space = dataspace_builder_.build();
@@ -52,7 +49,8 @@ FieldBuilder::FieldBuilder(const Node &xml_node):
     ObjectBuilder(xml_node),
     dataspace_builder_(xml_node),
     datatype_builder_(xml_node),
-    dcpl_builder_(xml_node)
+    dcpl_builder_(xml_node),
+    writer_(xml_node)
 {}
 
 template<typename T>
@@ -89,55 +87,8 @@ void FieldBuilder::build(const hdf5::node::Node &parent) const
   }
 
   //need to handle data if available
-  std::string data = DataNode::read(node());
-  if(!data.empty())
-  {
-    switch(IONode::type_id(node()))
-    {
-      case type_id_t::UINT8:
-        dataset.write(node().data<std::vector<uint8>>());
-        break;
-      case type_id_t::INT8:
-        dataset.write(node().data<std::vector<int8>>());
-        break;
-      case type_id_t::UINT16:
-        dataset.write(node().data<std::vector<uint16>>());
-        break;
-      case type_id_t::INT16:
-        dataset.write(node().data<std::vector<int16>>());
-        break;
-      case type_id_t::UINT32:
-        dataset.write(node().data<std::vector<uint32>>());
-        break;
-      case type_id_t::INT32:
-        dataset.write(node().data<std::vector<int32>>());
-        break;
-      case type_id_t::UINT64:
-        dataset.write(node().data<std::vector<uint64>>());
-        break;
-      case type_id_t::INT64:
-        dataset.write(node().data<std::vector<int64>>());
-        break;
-      case type_id_t::FLOAT32:
-        dataset.write(node().data<std::vector<float32>>());
-        break;
-      case type_id_t::FLOAT64:
-        dataset.write(node().data<std::vector<float64>>());
-        break;
-      case type_id_t::FLOAT128:
-        dataset.write(node().data<std::vector<float128>>());
-        break;
-      case type_id_t::STRING:
-        dataset.write(node().data<std::vector<std::string>>());
-        break;
-      default:
-      {
-        std::stringstream ss;
-        ss<<"Unsupported datat type: "<<IONode::type_id(node());
-        throw std::runtime_error(ss.str());
-      }
-    }
-  }
+  writer_.write(dataset);
+
 
   //process remaining optional attributes
   ObjectBuilder builder(node());

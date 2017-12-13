@@ -18,37 +18,31 @@
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-// Created on: Dec 8, 2017
+// Created on: Dec 13, 2017
 //
 #pragma once
 
-#include <pni/io/nexus/xml/object_builder.hpp>
-#include <pni/io/nexus/xml/dataspace_builder.hpp>
-#include <pni/io/nexus/xml/datatype_builder.hpp>
-#include <pni/io/nexus/xml/dataset_creation_list_builder.hpp>
-#include <pni/io/nexus/xml/data_writer.hpp>
+#include <pni/core/arrays.hpp>
+#include <pni/core/types.hpp>
+#include <pni/io/nexus/xml/node.hpp>
+#include <h5cpp/hdf5.hpp>
 
 namespace pni {
 namespace io {
 namespace nexus {
 namespace xml {
 
-class FieldBuilder : public ObjectBuilder
+class DataWriter
 {
   private:
-    hdf5::dataspace::Simple construct_dataspace() const;
-
-    DataspaceBuilder dataspace_builder_;
-    DatatypeBuilder  datatype_builder_;
-    DatasetCreationListBuilder dcpl_builder_;
-    DataWriter writer_;
-
+    Node node_;
   public:
-    FieldBuilder() = default;
-    FieldBuilder(const Node &xml_node);
-    FieldBuilder(const FieldBuilder &)=default;
+    DataWriter() = default;
+    DataWriter(const DataWriter &)=default;
+    DataWriter(const Node &node);
 
-    virtual void build(const hdf5::node::Node &parent) const;
+    void write(const hdf5::node::Dataset &dataset) const ;
+    void write(const hdf5::attribute::Attribute &attribute) const;
 };
 
 
