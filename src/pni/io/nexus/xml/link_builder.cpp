@@ -18,34 +18,29 @@
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-// Created on: Dec 8, 2017
+// Created on: Dec 13, 2017
 //
-#pragma once
 
-#include <pni/io/nexus/xml/node.hpp>
-#include <pni/io/nexus/xml/object_builder.hpp>
-#include <pni/io/nexus/xml/dataspace_builder.hpp>
-#include <pni/io/nexus/xml/datatype_builder.hpp>
-#include <pni/io/nexus/xml/data_writer.hpp>
+#include <pni/io/nexus/xml/link_builder.hpp>
 
 namespace pni {
 namespace io {
 namespace nexus {
 namespace xml {
 
-class AttributeBuilder : public ObjectBuilder
-{
-  private:
-    DatatypeBuilder datatype_builder_;
-    DataspaceBuilder dataspace_builder_;
-    DataWriter writer_;
-  public:
-    AttributeBuilder() = default;
-    AttributeBuilder(const AttributeBuilder &) = default;
-    AttributeBuilder(const Node &node);
+LinkBuilder::LinkBuilder(const Node &node):
+    ObjectBuilder(node)
+{}
 
-    virtual void build(const hdf5::node::Node &parent) const;
-};
+void LinkBuilder::build(const hdf5::node::Node &parent) const
+{
+  std::string link_name = node().name();
+  std::string link_target = node().attribute("target").str_data();
+
+  throw std::runtime_error("LINKS NOT CURRENTLY NOT IMPLEMENTED!");
+
+}
+
 
 } // namespace xml
 } // namespace nexus

@@ -21,3 +21,27 @@
 // Created on: Dec 8, 2017
 //
 #pragma once
+
+#include <pni/io/nexus/xml/node.hpp>
+#include <pni/io/nexus/xml/object_builder.hpp>
+#include <h5cpp/hdf5.hpp>
+
+namespace pni {
+namespace io {
+namespace nexus {
+namespace xml {
+
+class LinkBuilder : public ObjectBuilder
+{
+  public:
+    LinkBuilder() = default;
+    LinkBuilder(const LinkBuilder &) = default;
+    LinkBuilder(const Node &node);
+
+    virtual void build(const hdf5::node::Node &parent) const;
+};
+
+} // namespace xml
+} // namespace nexus
+} // namespace io
+} // namespace pni
