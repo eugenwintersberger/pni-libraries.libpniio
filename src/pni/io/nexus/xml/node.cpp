@@ -29,7 +29,6 @@
 
 #include <pni/io/exceptions.hpp>
 #include <pni/io/nexus/xml/node.hpp>
-#include <pni/io/nexus/xml/data_node.hpp>
 
 namespace pni{
 namespace io{

@@ -13,12 +13,8 @@ set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/object_builder.hpp
 set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/object_builder.cpp 
 	             ${CMAKE_CURRENT_SOURCE_DIR}/group_builder.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/builder_factory.cpp
-	             ${CMAKE_CURRENT_SOURCE_DIR}/node.cpp
-	             ${CMAKE_CURRENT_SOURCE_DIR}/io_node.cpp
-	             ${CMAKE_CURRENT_SOURCE_DIR}/data_node.cpp
-	             ${CMAKE_CURRENT_SOURCE_DIR}/dimensions.cpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/node.cpp	             	             	           
 	             ${CMAKE_CURRENT_SOURCE_DIR}/field_builder.cpp
-	             ${CMAKE_CURRENT_SOURCE_DIR}/field_node.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/datatype_builder.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/dataspace_builder.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/dimension_node_handler.cpp

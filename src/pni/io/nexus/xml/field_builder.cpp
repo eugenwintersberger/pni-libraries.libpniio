@@ -23,7 +23,6 @@
 
 #include <h5cpp/hdf5.hpp>
 #include <pni/io/nexus/xml/field_builder.hpp>
-#include <pni/io/nexus/xml/field_node.hpp>
 #include <pni/io/nexus/xml/node.hpp>
 #include <pni/core/arrays.hpp>
 #include <pni/core/types.hpp>
