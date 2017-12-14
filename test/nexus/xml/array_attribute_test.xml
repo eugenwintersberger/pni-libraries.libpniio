@@ -1,4 +1,4 @@
-<group name="test" type="NXdetector">
+<group name="/" type="NXroot">
     <attribute name="uint8_attribute" type="uint8">
         <dimensions rank="1">
             <dim index="1" value="3"/>

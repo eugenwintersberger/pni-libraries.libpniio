@@ -13,12 +13,14 @@ set(SOURCES xml_test.cpp
 	        datatype_builder_test.cpp
 	        dataspace_builder_test.cpp
 	        scalar_attribute_builder_test.cpp
+	        array_attribute_builder_test.cpp
 	        builder_fixture.cpp
 	        )
 	      
 	      
 set(DATAFILES group_builder.xml
-              scalar_attribute_test.xml)
+              scalar_attribute_test.xml
+              array_attribute_test.xml)
 
 foreach(F ${DATAFILES})
 	configure_file(${F} ${F} COPYONLY)
