@@ -11,7 +11,6 @@ set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/column_info.hpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/formatters.hpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/container_io_config.hpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/windows.hpp
-                 ${CMAKE_CURRENT_SOURCE_DIR}/nexus.hpp
                  )
 
 set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/column_info.cpp

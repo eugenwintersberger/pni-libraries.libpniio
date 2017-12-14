@@ -1,6 +1,6 @@
 set(XMLFILES igor.xml)
 
-add_library(xml_test_common EXCLUDE_FROM_ALL OBJECT xml_test_common.cpp
+add_library(xml_test_common OBJECT xml_test_common.cpp
                                    xml_base_fixture.cpp)
 
 

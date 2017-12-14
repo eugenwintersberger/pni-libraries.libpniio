@@ -25,7 +25,6 @@
 #include <string>
 #include <iostream>
 #include <boost/regex.hpp>
-#include <pni/io/windows.hpp>
 
 namespace pni {
 namespace io {
@@ -36,7 +35,7 @@ namespace nexus {
 //!
 //! Describes a version number.
 //!
-class PNIIO_EXPORT Version
+class Version
 {
   public:
     //!
@@ -124,7 +123,7 @@ class PNIIO_EXPORT Version
 //! @return modified version of std::ostream
 //! @sa Version::to_string
 //!
-PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,const Version &version);
+std::ostream &operator<<(std::ostream &stream,const Version &version);
 
 //!
 //! @brief input stream operator
@@ -137,7 +136,7 @@ PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,const Version &versio
 //! @return modified input stream
 //! @sa Version::from_string
 //!
-PNIIO_EXPORT std::istream &operator>>(std::istream &stream,Version &version);
+std::istream &operator>>(std::istream &stream,Version &version);
 
 //!
 //! @brief checks two version for equality
@@ -148,7 +147,7 @@ PNIIO_EXPORT std::istream &operator>>(std::istream &stream,Version &version);
 //! @param rhs reference to the right hand side version
 //! @return true if versions are equal, false otherwise
 //!
-PNIIO_EXPORT bool operator==(const Version &lhs,const Version &rhs);
+bool operator==(const Version &lhs,const Version &rhs);
 
 //!
 //! @brief checks if two versions are not equal
@@ -157,7 +156,7 @@ PNIIO_EXPORT bool operator==(const Version &lhs,const Version &rhs);
 //! @param rhs reference to the right hand side version
 //! @return true if versions are not equal, false otherwise
 //!
-PNIIO_EXPORT bool operator!=(const Version &lhs,const Version &rhs);
+bool operator!=(const Version &lhs,const Version &rhs);
 
 //!
 //! @brief checks if the left version is smaller or equal to the right
@@ -165,7 +164,7 @@ PNIIO_EXPORT bool operator!=(const Version &lhs,const Version &rhs);
 //! @param lhs reference to the left hand side version
 //! @param rhs reference to the right hand side version
 //!
-PNIIO_EXPORT bool operator<=(const Version &lhs,const Version &rhs);
+bool operator<=(const Version &lhs,const Version &rhs);
 
 //!
 //! @brief checks if the left version is strictly small than the right
@@ -173,14 +172,14 @@ PNIIO_EXPORT bool operator<=(const Version &lhs,const Version &rhs);
 //! @param lhs reference to the left hand side version
 //! @param rhs reference to the right hand side version
 //!
-PNIIO_EXPORT bool operator<(const Version &lhs,const Version &rhs);
+bool operator<(const Version &lhs,const Version &rhs);
 
 //!
 //! @brief checks if the left version is bigger or equal than the right
 //! @param lhs reference to the left hand side version
 //! @param rhs reference to the right hand side version
 //!
-PNIIO_EXPORT bool operator>=(const Version &lhs,const Version &rhs);
+bool operator>=(const Version &lhs,const Version &rhs);
 
 //!
 //! @brief checks if the left version is strictly bigger than the right
@@ -188,7 +187,7 @@ PNIIO_EXPORT bool operator>=(const Version &lhs,const Version &rhs);
 //! @param lhs reference to the left hand side version
 //! @param rhs reference to the right hand side version
 //!
-PNIIO_EXPORT bool operator>(const Version &lhs,const Version &rhs);
+bool operator>(const Version &lhs,const Version &rhs);
 
 
 

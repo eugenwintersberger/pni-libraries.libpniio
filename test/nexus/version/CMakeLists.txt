@@ -5,8 +5,7 @@ set(SOURCES version_test.cpp
 
 set_boost_test_definitions(SOURCES "testing Version class")
 
-add_executable(nexus_version_test EXCLUDE_FROM_ALL ${SOURCES})
-add_dependencies(check nexus_version_test)
+add_executable(nexus_version_test ${SOURCES})
 target_link_libraries(nexus_version_test pniio Boost::unit_test_framework)
 
 add_boost_logging_test("nexus::version_test" nexus_version_test

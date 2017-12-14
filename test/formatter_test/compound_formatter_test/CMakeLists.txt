@@ -6,8 +6,7 @@ set(SOURCES
            )
 
 set_boost_test_definitions(SOURCES "Testing compound formatters")
-add_executable(compound_formatter_test EXCLUDE_FROM_ALL ${SOURCES} )
-add_dependencies(check compound_formatter_test)
+add_executable(compound_formatter_test ${SOURCES} )
 target_link_libraries(compound_formatter_test pniio Boost::unit_test_framework)
 add_boost_logging_test("formatters:compound_formatters"
                        compound_formatter_test

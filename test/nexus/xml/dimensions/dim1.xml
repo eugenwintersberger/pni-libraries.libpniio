@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--- this should work -->
-<dimensions rank="2">
-    <dim index="1" value="55" />
-    <dim index="2" value="100" />
-</dimensions>
-
-
-

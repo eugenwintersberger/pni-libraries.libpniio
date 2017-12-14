@@ -8,8 +8,7 @@ set(SOURCES
            )
 
 set_boost_test_definitions(SOURCES "Testing general nxpath functions")
-add_executable(nxpath_tests EXCLUDE_FROM_ALL ${SOURCES})
-add_dependencies(check nxpath_tests)
+add_executable(nxpath_tests ${SOURCES})
 target_link_libraries(nxpath_tests pniio Boost::unit_test_framework)
 add_boost_logging_test("nxpath:general_tests" nxpath_tests
                        ${PROJECT_BINARY_DIR}/test/nxpath_test)
@@ -19,8 +18,7 @@ add_boost_logging_test("nxpath:general_tests" nxpath_tests
 set(PARSERSRC  nxpath_parser_test.cpp )
 
 set_boost_test_definitions(PARSERSRC "Testing the path parser")
-add_executable(nxpath_parser_tests EXCLUDE_FROM_ALL ${PARSERSRC})
-add_dependencies(check nxpath_parser_tests)
+add_executable(nxpath_parser_tests ${PARSERSRC})
 target_link_libraries(nxpath_parser_tests pniio Boost::unit_test_framework)
 add_boost_logging_test("nxpath:parser_tests" nxpath_parser_tests
                        ${PROJECT_BINARY_DIR}/test/nxpath_test)
@@ -43,8 +41,7 @@ set(UTILSRC test_object_element.cpp
            )
 
 set_boost_test_definitions(UTILSRC "Testing nxpath utilities")
-add_executable(nxpath_utils_test EXCLUDE_FROM_ALL ${UTILSRC})
-add_dependencies(check nxpath_utils_test)
+add_executable(nxpath_utils_test ${UTILSRC})
 target_link_libraries(nxpath_utils_test pniio Boost::unit_test_framework)
 add_boost_logging_test("nxpath:utilities" nxpath_utils_test
                        ${PROJECT_BINARY_DIR}/test/nxpath_test)

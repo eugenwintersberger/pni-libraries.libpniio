@@ -1,9 +1,8 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(pniio
         LANGUAGES CXX C
-        VERSION 1.2.0)
+        VERSION 1.1.0)
 include(CTest)
-add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
 
 # =============================================================================
 # set library package and SOName. As this is partly a header only library the
