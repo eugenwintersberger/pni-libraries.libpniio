@@ -20,16 +20,34 @@
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 // Created on: Dec 8, 2017
 //
-#pragma once
+#include <pni/io/nexus/xml/builder_factory.hpp>
+#include <pni/io/nexus/xml/group_builder.hpp>
+#include <pni/io/nexus/xml/field_builder.hpp>
+#include <pni/io/nexus/xml/attribute_builder.hpp>
 
-#include <pni/io/nexus/algorithms.hpp>
-#include <pni/io/nexus/base_class.hpp>
-#include <pni/io/nexus/containers.hpp>
-#include <pni/io/nexus/datatype_factory.hpp>
-#include <pni/io/nexus/date_time.hpp>
-#include <pni/io/nexus/file.hpp>
-#include <pni/io/nexus/hdf5_support.hpp>
-#include <pni/io/nexus/object_builder.hpp>
-#include <pni/io/nexus/predicates.hpp>
-#include <pni/io/nexus/transformations.hpp>
-#include <pni/io/nexus/version.hpp>
+namespace pni {
+namespace io {
+namespace nexus {
+namespace xml {
+
+ObjectBuilder::UniquePointer BuilderFactory::create(const Node::value_type &element)
+{
+  if(element.first == "field")
+    return ObjectBuilder::UniquePointer(new FieldBuilder(element.second));
+  else if(element.first == "group")
+    return ObjectBuilder::UniquePointer(new GroupBuilder(element.second));
+  else if(element.first == "attribute")
+    return ObjectBuilder::UniquePointer(new AttributeBuilder(element.second));
+  else if(element.first == "link")
+    return nullptr;
+  else
+  {
+    return nullptr;
+  }
+}
+
+
+} // namespace xml
+} // namespace nexus
+} // namespace io
+} // namespace pni

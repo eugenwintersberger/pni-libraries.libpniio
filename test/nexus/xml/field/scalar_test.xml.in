@@ -1,0 +1,5 @@
+<group name="test" type="NXdetector">
+    <field name="data" type="@TYPE@">
+        @DATA_STR@
+    </field>
+</group>

@@ -18,18 +18,37 @@
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-// Created on: Dec 8, 2017
+// Created on: Dec 13, 2017
 //
-#pragma once
 
-#include <pni/io/nexus/algorithms.hpp>
-#include <pni/io/nexus/base_class.hpp>
-#include <pni/io/nexus/containers.hpp>
-#include <pni/io/nexus/datatype_factory.hpp>
-#include <pni/io/nexus/date_time.hpp>
-#include <pni/io/nexus/file.hpp>
-#include <pni/io/nexus/hdf5_support.hpp>
-#include <pni/io/nexus/object_builder.hpp>
-#include <pni/io/nexus/predicates.hpp>
-#include <pni/io/nexus/transformations.hpp>
-#include <pni/io/nexus/version.hpp>
+#include <pni/io/nexus/xml/attribute_builder.hpp>
+
+namespace pni {
+namespace io {
+namespace nexus {
+namespace xml {
+
+AttributeBuilder::AttributeBuilder(const Node &node):
+    ObjectBuilder(node),
+    datatype_builder_(node),
+    dataspace_builder_(node),
+    writer_(node)
+{}
+
+void AttributeBuilder::build(const hdf5::node::Node &parent) const
+{
+  std::string attribute_name = node().name();
+
+  hdf5::datatype::Datatype type = datatype_builder_.build();
+  hdf5::dataspace::Simple space = dataspace_builder_.build();
+
+  hdf5::attribute::Attribute attribute = parent.attributes.create(attribute_name,type,space);
+
+  writer_.write(attribute);
+
+}
+
+} // namespace xml
+} // namespace nexus
+} // namespace io
+} // namespace pni

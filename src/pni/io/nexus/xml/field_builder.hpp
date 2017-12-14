@@ -22,14 +22,37 @@
 //
 #pragma once
 
-#include <pni/io/nexus/algorithms.hpp>
-#include <pni/io/nexus/base_class.hpp>
-#include <pni/io/nexus/containers.hpp>
-#include <pni/io/nexus/datatype_factory.hpp>
-#include <pni/io/nexus/date_time.hpp>
-#include <pni/io/nexus/file.hpp>
-#include <pni/io/nexus/hdf5_support.hpp>
-#include <pni/io/nexus/object_builder.hpp>
-#include <pni/io/nexus/predicates.hpp>
-#include <pni/io/nexus/transformations.hpp>
-#include <pni/io/nexus/version.hpp>
+#include <pni/io/nexus/xml/object_builder.hpp>
+#include <pni/io/nexus/xml/dataspace_builder.hpp>
+#include <pni/io/nexus/xml/datatype_builder.hpp>
+#include <pni/io/nexus/xml/dataset_creation_list_builder.hpp>
+#include <pni/io/nexus/xml/data_writer.hpp>
+
+namespace pni {
+namespace io {
+namespace nexus {
+namespace xml {
+
+class FieldBuilder : public ObjectBuilder
+{
+  private:
+    hdf5::dataspace::Simple construct_dataspace() const;
+
+    DataspaceBuilder dataspace_builder_;
+    DatatypeBuilder  datatype_builder_;
+    DatasetCreationListBuilder dcpl_builder_;
+    DataWriter writer_;
+
+  public:
+    FieldBuilder() = default;
+    FieldBuilder(const Node &xml_node);
+    FieldBuilder(const FieldBuilder &)=default;
+
+    virtual void build(const hdf5::node::Node &parent) const;
+};
+
+
+} // namespace xml
+} // namespace nexus
+} // namespace io
+} // namespace pni

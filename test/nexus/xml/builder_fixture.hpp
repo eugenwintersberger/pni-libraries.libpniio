@@ -18,18 +18,24 @@
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-// Created on: Dec 8, 2017
+// Created on: Dec 14, 2017
 //
 #pragma once
 
+#include <h5cpp/hdf5.hpp>
+#include <pni/io/nexus/xml/field_builder.hpp>
+#include <pni/io/nexus/xml/node.hpp>
+#include <pni/io/nexus/xml/object_builder.hpp>
 #include <pni/io/nexus/algorithms.hpp>
-#include <pni/io/nexus/base_class.hpp>
-#include <pni/io/nexus/containers.hpp>
-#include <pni/io/nexus/datatype_factory.hpp>
-#include <pni/io/nexus/date_time.hpp>
-#include <pni/io/nexus/file.hpp>
-#include <pni/io/nexus/hdf5_support.hpp>
-#include <pni/io/nexus/object_builder.hpp>
-#include <pni/io/nexus/predicates.hpp>
-#include <pni/io/nexus/transformations.hpp>
-#include <pni/io/nexus/version.hpp>
+#include <boost/filesystem.hpp>
+
+struct BuilderFixture
+{
+    hdf5::file::File file;
+    hdf5::node::Group root_group;
+
+    BuilderFixture(const boost::filesystem::path &nexus_file,
+                   const boost::filesystem::path &xml_file);
+
+    virtual ~BuilderFixture();
+};

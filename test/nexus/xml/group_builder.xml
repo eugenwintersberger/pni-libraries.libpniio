@@ -1,0 +1,6 @@
+<group name="/" type="NXroot">
+	
+	
+	
+	<group name="entry_1" type="NXentry"><group name="instrument" type="NXinstrument"></group><group name="data" type="NXdata"></group><group name="sample" type="NXsample"></group></group>
+	<group name="entry_2" type="NXentry"></group></group>

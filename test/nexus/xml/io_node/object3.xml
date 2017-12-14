@@ -1,0 +1,21 @@
+<field1 name="hello" type="float32"> 1.23 </field1>
+<field2 name="hello2" type="uint32">
+    <dimensions rank="2">
+        <dim index="1" value="3"/>
+        <dim index="2" value="2"/>
+    </dimensions>
+    1 2 3 4 5 6
+</field2>
+<field3 name="hello3" type="string">
+This is a stupid text
+</field3>
+<field4 name="hello45" type="bool">
+    true
+</field4>
+<field5 name="hello5" type="bool">
+    false
+</field5>
+<field6 name="hello" type="bool">
+    bla
+</field6>
+<field7 name="hello" type="bool"/>

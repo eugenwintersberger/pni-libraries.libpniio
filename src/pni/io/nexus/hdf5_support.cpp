@@ -18,18 +18,19 @@
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-// Created on: Dec 8, 2017
+// Created on: Dec 12, 2017
 //
-#pragma once
 
-#include <pni/io/nexus/algorithms.hpp>
-#include <pni/io/nexus/base_class.hpp>
-#include <pni/io/nexus/containers.hpp>
-#include <pni/io/nexus/datatype_factory.hpp>
-#include <pni/io/nexus/date_time.hpp>
-#include <pni/io/nexus/file.hpp>
 #include <pni/io/nexus/hdf5_support.hpp>
-#include <pni/io/nexus/object_builder.hpp>
-#include <pni/io/nexus/predicates.hpp>
-#include <pni/io/nexus/transformations.hpp>
-#include <pni/io/nexus/version.hpp>
+#include <pni/io/nexus/datatype_factory.hpp>
+
+namespace hdf5 {
+namespace datatype {
+
+Datatype create(const pni::core::array &a)
+{
+  return pni::io::nexus::DatatypeFactory::create(a.type_id());
+}
+
+} // namespace datatype
+} // namespace hdf5

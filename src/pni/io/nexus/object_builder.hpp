@@ -22,14 +22,27 @@
 //
 #pragma once
 
-#include <pni/io/nexus/algorithms.hpp>
-#include <pni/io/nexus/base_class.hpp>
-#include <pni/io/nexus/containers.hpp>
-#include <pni/io/nexus/datatype_factory.hpp>
-#include <pni/io/nexus/date_time.hpp>
-#include <pni/io/nexus/file.hpp>
-#include <pni/io/nexus/hdf5_support.hpp>
-#include <pni/io/nexus/object_builder.hpp>
-#include <pni/io/nexus/predicates.hpp>
-#include <pni/io/nexus/transformations.hpp>
-#include <pni/io/nexus/version.hpp>
+#include <h5cpp/hdf5.hpp>
+
+
+namespace pni {
+namespace io {
+namespace nexus {
+
+//!
+//! @brief a simple object builder interface
+//!
+//! This is the basic interface for every Nexus object builder
+//!
+class ObjectBuilder
+{
+  public:
+    virtual ~ObjectBuilder();
+
+    virtual void build(const hdf5::node::Node &parent) const = 0;
+};
+
+
+} // namespace nexus
+} // namespace io
+} // namespace pni

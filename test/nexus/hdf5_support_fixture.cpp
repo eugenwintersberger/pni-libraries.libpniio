@@ -18,18 +18,13 @@
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-// Created on: Dec 8, 2017
+// Created on: Dec 12, 2017
 //
-#pragma once
 
-#include <pni/io/nexus/algorithms.hpp>
-#include <pni/io/nexus/base_class.hpp>
-#include <pni/io/nexus/containers.hpp>
-#include <pni/io/nexus/datatype_factory.hpp>
-#include <pni/io/nexus/date_time.hpp>
-#include <pni/io/nexus/file.hpp>
-#include <pni/io/nexus/hdf5_support.hpp>
-#include <pni/io/nexus/object_builder.hpp>
-#include <pni/io/nexus/predicates.hpp>
-#include <pni/io/nexus/transformations.hpp>
-#include <pni/io/nexus/version.hpp>
+#include "hdf5_support_fixture.hpp"
+
+HDF5SupportFixture::HDF5SupportFixture()
+{
+  file = hdf5::file::create("HDF5SupportTest.nxs",hdf5::file::AccessFlags::TRUNCATE);
+  root_group = file.root();
+}

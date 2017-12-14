@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2017 DESY
+// (c) Copyright 2016 DESY,Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 // This file is part of libpniio.
 //
@@ -15,21 +15,18 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+//
 // ===========================================================================
-//
-// Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-// Created on: Dec 8, 2017
-//
 #pragma once
 
-#include <pni/io/nexus/algorithms.hpp>
-#include <pni/io/nexus/base_class.hpp>
-#include <pni/io/nexus/containers.hpp>
-#include <pni/io/nexus/datatype_factory.hpp>
-#include <pni/io/nexus/date_time.hpp>
-#include <pni/io/nexus/file.hpp>
-#include <pni/io/nexus/hdf5_support.hpp>
-#include <pni/io/nexus/object_builder.hpp>
-#include <pni/io/nexus/predicates.hpp>
-#include <pni/io/nexus/transformations.hpp>
-#include <pni/io/nexus/version.hpp>
+#include <pni/io/nexus/xml/node.hpp>
+
+struct XMLBaseFixture
+{
+    pni::io::nexus::xml::Node root_node;
+    pni::io::nexus::xml::Node child_node;
+
+
+    XMLBaseFixture();
+    virtual ~XMLBaseFixture();
+};

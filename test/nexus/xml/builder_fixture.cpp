@@ -18,18 +18,26 @@
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-// Created on: Dec 8, 2017
+// Created on: Dec 14, 2017
 //
-#pragma once
 
-#include <pni/io/nexus/algorithms.hpp>
-#include <pni/io/nexus/base_class.hpp>
-#include <pni/io/nexus/containers.hpp>
-#include <pni/io/nexus/datatype_factory.hpp>
-#include <pni/io/nexus/date_time.hpp>
-#include <pni/io/nexus/file.hpp>
-#include <pni/io/nexus/hdf5_support.hpp>
-#include <pni/io/nexus/object_builder.hpp>
-#include <pni/io/nexus/predicates.hpp>
-#include <pni/io/nexus/transformations.hpp>
-#include <pni/io/nexus/version.hpp>
+#include "builder_fixture.hpp"
+
+BuilderFixture::BuilderFixture(const boost::filesystem::path &nexus_file,
+                               const boost::filesystem::path &xml_file)
+{
+  using namespace pni::io;
+  using pni::core::type_id_t;
+  file = hdf5::file::create(nexus_file,
+                            hdf5::file::AccessFlags::TRUNCATE);
+  root_group = file.root();
+
+  nexus::xml::Node n = nexus::xml::Node::from_file(xml_file);
+  nexus::xml::ObjectBuilder builder(n);
+  builder.build(root_group);
+
+
+}
+
+BuilderFixture::~BuilderFixture()
+{}

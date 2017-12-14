@@ -18,18 +18,31 @@
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-// Created on: Dec 8, 2017
+// Created on: Dec 13, 2017
 //
-#pragma once
 
-#include <pni/io/nexus/algorithms.hpp>
-#include <pni/io/nexus/base_class.hpp>
-#include <pni/io/nexus/containers.hpp>
-#include <pni/io/nexus/datatype_factory.hpp>
-#include <pni/io/nexus/date_time.hpp>
-#include <pni/io/nexus/file.hpp>
-#include <pni/io/nexus/hdf5_support.hpp>
-#include <pni/io/nexus/object_builder.hpp>
-#include <pni/io/nexus/predicates.hpp>
-#include <pni/io/nexus/transformations.hpp>
-#include <pni/io/nexus/version.hpp>
+#include <pni/io/nexus/xml/link_builder.hpp>
+
+namespace pni {
+namespace io {
+namespace nexus {
+namespace xml {
+
+LinkBuilder::LinkBuilder(const Node &node):
+    ObjectBuilder(node)
+{}
+
+void LinkBuilder::build(const hdf5::node::Node &parent) const
+{
+  std::string link_name = node().name();
+  std::string link_target = node().attribute("target").str_data();
+
+  throw std::runtime_error("LINKS NOT CURRENTLY NOT IMPLEMENTED!");
+
+}
+
+
+} // namespace xml
+} // namespace nexus
+} // namespace io
+} // namespace pni

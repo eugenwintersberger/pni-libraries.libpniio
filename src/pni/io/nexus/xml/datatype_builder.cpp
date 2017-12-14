@@ -18,18 +18,41 @@
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-// Created on: Dec 8, 2017
+// Created on: Dec 13, 2017
 //
-#pragma once
 
-#include <pni/io/nexus/algorithms.hpp>
-#include <pni/io/nexus/base_class.hpp>
-#include <pni/io/nexus/containers.hpp>
+#include <pni/io/nexus/xml/datatype_builder.hpp>
 #include <pni/io/nexus/datatype_factory.hpp>
-#include <pni/io/nexus/date_time.hpp>
-#include <pni/io/nexus/file.hpp>
-#include <pni/io/nexus/hdf5_support.hpp>
-#include <pni/io/nexus/object_builder.hpp>
-#include <pni/io/nexus/predicates.hpp>
-#include <pni/io/nexus/transformations.hpp>
-#include <pni/io/nexus/version.hpp>
+#include <stdexcept>
+
+namespace pni {
+namespace io {
+namespace nexus {
+namespace xml {
+
+DatatypeBuilder::DatatypeBuilder(const Node &node) noexcept:
+    node_(node)
+{
+}
+
+hdf5::datatype::Datatype DatatypeBuilder::build() const
+{
+  if(!node_.has_attribute("type"))
+  {
+    throw std::runtime_error("Node has no type attribute!");
+  }
+
+  std::string type_code = node_.attribute("type").str_data();
+
+  //need to handle the special case of a boolean type
+  if(type_code == "bool_t") type_code = "bool";
+
+  return DatatypeFactory::create(pni::core::type_id_from_str(type_code));
+}
+
+
+
+} // namespace xml
+} // namespace nexus
+} // namespace io
+} // namespace pni

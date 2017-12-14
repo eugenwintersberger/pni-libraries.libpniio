@@ -18,18 +18,37 @@
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-// Created on: Dec 8, 2017
+// Created on: Dec 13, 2017
 //
 #pragma once
 
-#include <pni/io/nexus/algorithms.hpp>
-#include <pni/io/nexus/base_class.hpp>
-#include <pni/io/nexus/containers.hpp>
-#include <pni/io/nexus/datatype_factory.hpp>
-#include <pni/io/nexus/date_time.hpp>
-#include <pni/io/nexus/file.hpp>
-#include <pni/io/nexus/hdf5_support.hpp>
-#include <pni/io/nexus/object_builder.hpp>
-#include <pni/io/nexus/predicates.hpp>
-#include <pni/io/nexus/transformations.hpp>
-#include <pni/io/nexus/version.hpp>
+#include <h5cpp/hdf5.hpp>
+#include <pni/io/parsers.hpp>
+#include <pni/io/nexus/xml/node.hpp>
+
+namespace pni {
+namespace io {
+namespace nexus {
+namespace xml {
+
+using ParserType = pni::io::parser<hdf5::Dimensions::value_type>;
+
+using IndexValue = std::pair<hdf5::Dimensions::value_type,
+                             hdf5::Dimensions::value_type>;
+using IndexValueVector = std::vector<IndexValue>;
+
+bool operator<(const IndexValue &lhs,const IndexValue &rhs);
+
+class DimensionNodeHandler
+{
+  private:
+    static IndexValue index_value_from_node(const Node &node);
+  public:
+    static hdf5::Dimensions dimensions(const Node &node);
+};
+
+
+} // namespace xml
+} // namespace nexus
+} // namespace io
+} // namespace pni
