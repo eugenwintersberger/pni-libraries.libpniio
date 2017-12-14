@@ -47,14 +47,11 @@
         <packagedElement xmi:type="uml:Class" xmi:id="_Of92MN_ZEeeBFORcFA8r9A" name="LinkBuilder">
           <generalization xmi:type="uml:Generalization" xmi:id="_pVixgN_ZEeeBFORcFA8r9A" general="_K3JVYN_ZEeeBFORcFA8r9A"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Class" xmi:id="_ROn00N_ZEeeBFORcFA8r9A" name="IOObjectBuilder">
-          <generalization xmi:type="uml:Generalization" xmi:id="_px26EN_ZEeeBFORcFA8r9A" general="_K3JVYN_ZEeeBFORcFA8r9A"/>
-        </packagedElement>
         <packagedElement xmi:type="uml:Class" xmi:id="_S76dEN_ZEeeBFORcFA8r9A" name="AttributeBuilder">
-          <generalization xmi:type="uml:Generalization" xmi:id="_r7uwoN_ZEeeBFORcFA8r9A" general="_ROn00N_ZEeeBFORcFA8r9A"/>
+          <generalization xmi:type="uml:Generalization" xmi:id="_iYVswOCzEee4_JIojtOCYQ" general="_K3JVYN_ZEeeBFORcFA8r9A"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Class" xmi:id="_UZHa4N_ZEeeBFORcFA8r9A" name="FieldBuilder">
-          <generalization xmi:type="uml:Generalization" xmi:id="_riGIoN_ZEeeBFORcFA8r9A" general="_ROn00N_ZEeeBFORcFA8r9A"/>
+          <generalization xmi:type="uml:Generalization" xmi:id="_h7jqIOCzEee4_JIojtOCYQ" general="_K3JVYN_ZEeeBFORcFA8r9A"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Association" xmi:id="_ayAPkN_ZEeeBFORcFA8r9A" memberEnd="_ayHkUN_ZEeeBFORcFA8r9A _ayKnoN_ZEeeBFORcFA8r9A">
           <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ayD58N_ZEeeBFORcFA8r9A" source="org.eclipse.papyrus">

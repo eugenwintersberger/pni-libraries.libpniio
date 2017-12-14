@@ -1,0 +1,21 @@
+<group name="test" type="NXdetector">
+    <attribute name="uint8_attribute" type="uint8">
+        <dimensions rank="1">
+            <dim index="1" value="3"/>
+        </dimensions>
+        1 2 3 
+    </attribute>
+	<attribute name="int8_attribute" type="int8">
+		<dimensions rank="1">
+			<dim index="1" value="3" />
+		</dimensions>
+		-1 -2 -3
+	</attribute>
+
+	<attribute name="float32_attribute" type="float32">
+		<dimensions rank="1">
+			<dim index="1" value="3" />
+		</dimensions>
+		-1.2 -2.4 3.8
+	</attribute>
+</group>
