@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--- this should not work 
+    should lead to a shape_mismatch_error
+-->
+<dimensions rank="2">
+    <dim index="1" value="3" />
+</dimensions>

@@ -1,0 +1,13 @@
+<group name="/" type="NXroot">
+    <attribute name="uint8_attribute" type="uint8">
+        12
+    </attribute>
+
+	<attribute name="int32_attribute" type="int32">
+		-12
+	</attribute>
+	
+	<attribute name="string_attribute" type="string">
+		hello
+	</attribute>
+</group>

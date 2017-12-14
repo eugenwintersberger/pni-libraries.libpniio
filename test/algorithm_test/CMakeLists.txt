@@ -1,6 +1,6 @@
 set(ALGORITHM_COMMON_SRC algorithm_test_fixture.cpp)
 
-add_library(algorithm_common OBJECT ${ALGORITHM_COMMON_SRC})
+add_library(algorithm_common EXCLUDE_FROM_ALL OBJECT ${ALGORITHM_COMMON_SRC})
 
 
 add_subdirectory(inquiry_conversion_test)

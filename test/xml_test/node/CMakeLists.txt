@@ -12,7 +12,7 @@ foreach(XMLFILE ${XMLFILES})
     configure_file(${XMLFILE} ${XMLFILE} COPYONLY)
 endforeach()
 
-add_executable(node_test ${SOURCES})
+add_executable(node_test EXCLUDE_FROM_ALL ${SOURCES})
 target_link_libraries(node_test pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
-add_boost_logging_test("XML::node" node_test
-         ${PROJECT_BINARY_DIR}/test/xml_test/node)
+#add_boost_logging_test("XML::node" node_test
+#         ${PROJECT_BINARY_DIR}/test/xml_test/node)

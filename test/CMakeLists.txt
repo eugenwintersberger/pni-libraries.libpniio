@@ -6,21 +6,19 @@ include(${PROJECT_SOURCE_DIR}/cmake/common/BoostTestConfig.cmake)
 link_directories(${PNICORE_PKG_LIBRARY_DIRS} ${HDF5_LIBRARY_DIRS})
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
-add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
-
 set(COMMON_SRC base_fixture.cpp)
-add_library(test_common OBJECT ${COMMON_SRC})
+add_library(test_common EXCLUDE_FROM_ALL OBJECT ${COMMON_SRC})
 
 
 
-add_executable(environment_test environment_test.cpp)
-add_test(NAME "Environment:test"
-         COMMAND environment_test
-         WOWRKING_DIRECTORY ${PROJECT_BINARY_DIR}/test)
+add_executable(environment_test EXCLUDE_FROM_ALL environment_test.cpp)
+#add_test(NAME "Environment:test"
+#         COMMAND environment_test
+#         WOWRKING_DIRECTORY ${PROJECT_BINARY_DIR}/test)
 
 
 
-add_executable(parser_complex_test parser_complex_test.cpp)
+add_executable(parser_complex_test EXCLUDE_FROM_ALL parser_complex_test.cpp)
 target_link_libraries(parser_complex_test pniio)
 
 
