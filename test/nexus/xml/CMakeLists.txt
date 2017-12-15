@@ -9,6 +9,7 @@ set(SOURCES xml_test.cpp
 	        scalar_attribute_builder_test.cpp
 	        array_attribute_builder_test.cpp
 	        builder_fixture.cpp
+	        create_test.cpp
 	        )
 	      
 	      
@@ -31,3 +32,4 @@ add_subdirectory(dimensions)
 add_subdirectory(node)
 add_subdirectory(io_node)
 add_subdirectory(field)
+add_subdirectory(create)

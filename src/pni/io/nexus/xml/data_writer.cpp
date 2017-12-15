@@ -36,6 +36,12 @@ void write_data(const std::string &data,const OBJ &object)
 }
 
 template<typename OBJ>
+void write_string_data(const std::string &data,const OBJ &object)
+{
+  object.write(data);
+}
+
+template<typename OBJ>
 void write_data(const Node &node,const OBJ &object)
 {
   using namespace pni::core;
@@ -57,7 +63,7 @@ void write_data(const Node &node,const OBJ &object)
     case type_id_t::FLOAT32: write_data<float32>(data,object); break;
     case type_id_t::FLOAT64: write_data<float64>(data,object); break;
     case type_id_t::FLOAT128: write_data<float128>(data,object); break;
-    case type_id_t::STRING:   write_data<std::string>(data,object); break;
+    case type_id_t::STRING:   write_string_data(data,object); break;
     default:
     {
       std::stringstream ss;
