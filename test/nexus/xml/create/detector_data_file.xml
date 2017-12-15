@@ -1,0 +1,17 @@
+<group name="scan_1" type="NXentry">
+    <group name="instrument" type="NXinstrument">
+        
+        <group name="detector" type="NXdetector">
+            <field name="data" type="uint16">
+                <dimensions rank="3">
+                    <dim index="1" value="0"/>
+                    <dim index="2" value="1024"/>
+                    <dim index="3" value="512"/>
+                </dimensions>
+            </field>
+            
+        </group>
+        
+    </group>
+
+</group>

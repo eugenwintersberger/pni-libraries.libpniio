@@ -8,6 +8,7 @@ set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/object_builder.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/data_writer.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/attribute_builder.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/link_builder.hpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/create.hpp
                 )
                 
 set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/object_builder.cpp 
@@ -22,6 +23,7 @@ set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/object_builder.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/data_writer.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/attribute_builder.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/link_builder.cpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/create.cpp
        )
 
 install(FILES ${HEADER_FILES} 
