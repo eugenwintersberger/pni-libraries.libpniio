@@ -24,6 +24,7 @@ set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/file.cpp
 	)
 
 add_subdirectory(xml)	
+add_subdirectory(path)
 install(FILES ${HEADER_FILES}
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io/nexus)
        
