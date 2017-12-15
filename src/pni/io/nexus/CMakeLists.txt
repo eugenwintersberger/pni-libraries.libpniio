@@ -9,6 +9,7 @@ set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/file.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/object_builder.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/datatype_factory.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/hdf5_support.hpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/path.hpp
 	)
 
 set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/file.cpp

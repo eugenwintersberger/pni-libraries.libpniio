@@ -340,7 +340,7 @@ std::ostream &operator<<(std::ostream &stream,const Path &p)
   //write the file name
   if(!p.filename().empty())
   {
-    stream<<p.filename();
+    stream<<p.filename().string();
 
     //if the object section has some content we have to add the
     //leading :/ to the output stream, denoting the end of the
