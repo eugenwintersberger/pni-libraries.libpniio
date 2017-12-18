@@ -376,6 +376,14 @@ PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,const Path &p);
 //!
 PNIIO_EXPORT bool is_unique(const Path &path);
 
+//!
+//! @brief get the NeXus path for an HDF5 node
+//!
+//! @param node reference to the HDF5 node
+//!
+//! @pre the node must be a valid HDF5 object
+PNIIO_EXPORT Path get_path(const hdf5::node::Node &node);
+
 //end of namespace
 } // namespace nexus
 } // namespace io

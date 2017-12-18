@@ -1,0 +1,26 @@
+<group name="scan_1" type="NXentry">
+    
+    <field name="title" type="str"/>
+    <field name="experiment_identifier" type="str"/>
+    <field name="experiment_description" type="str"/>
+    
+    <group name="instrument" type="NXinstrument">
+        <group name="storage_ring" type="NXsource">
+            <field name="distance" type="float64" units="m"/>
+            <field name="name" type="str"/>
+            <field name="type" type="str"/>
+            <field name="sigma_x" type="float64" units="um"/>
+            <field name="sigma_y" type="float64" units="um"/>
+        </group>
+        
+    </group>
+    
+    <group name="sample" type="NXsample">
+    
+    </group>
+    
+    <group name="data" type="NXdata">
+    
+    </group>
+
+</group>

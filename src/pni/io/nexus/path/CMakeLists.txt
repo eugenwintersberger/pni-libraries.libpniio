@@ -10,6 +10,7 @@ set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/path.cpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/parser.cpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/make_relative.cpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/path_object.cpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/get_path.cpp
                 )
                 
 install(FILES ${HEADER_FILES} 
