@@ -24,6 +24,7 @@
 #include <pni/io/nexus/path/utils.hpp>
 #include <pni/io/nexus/path/parser.hpp>
 #include <pni/core/error.hpp>
+#include <algorithm>
 
 
 namespace pni{
@@ -362,6 +363,12 @@ std::ostream &operator<<(std::ostream &stream,const Path &p)
 
   return stream;
 
+}
+
+bool is_unique(const Path &path)
+{
+  return std::all_of(path.begin(),path.end(),
+                     [](const Path::Element &element) { return !element.first.empty() ;});
 }
 
 } // namespace nexus
