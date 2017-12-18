@@ -1,12 +1,16 @@
 set(HEADER_FILES  ${CMAKE_CURRENT_SOURCE_DIR}/path.hpp 
                   ${CMAKE_CURRENT_SOURCE_DIR}/parser.hpp 
                   ${CMAKE_CURRENT_SOURCE_DIR}/utils.hpp 
-                  ${CMAKE_CURRENT_SOURCE_DIR}/make_relative.hpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/make_relative.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/path_object.hpp
+                 )
                  
 set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/path.cpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/utils.cpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/parser.cpp
-                 ${CMAKE_CURRENT_SOURCE_DIR}/make_relative.cpp)
+                 ${CMAKE_CURRENT_SOURCE_DIR}/make_relative.cpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/path_object.cpp
+                )
                 
 install(FILES ${HEADER_FILES} 
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io/nx/nxpath)

@@ -25,3 +25,4 @@
 #include <pni/io/nexus/path/path.hpp>
 #include <pni/io/nexus/path/utils.hpp>
 #include <pni/io/nexus/path/make_relative.hpp>
+#include <pni/io/nexus/path/path_object.hpp>
