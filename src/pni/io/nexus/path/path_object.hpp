@@ -86,17 +86,7 @@ class PNIIO_EXPORT PathObject
     //!
     //! @param dataset reference to the original dataset
     //!
-    PathObject(const hdf5::node::Dataset &dataset);
-
-    //!
-    //! @brief constructor
-    //!
-    //! Build a PathObject from a group. After construction
-    //! type() will return Type::GROUP.
-    //!
-    //! @param group reference to the original group
-    //!
-    PathObject(const hdf5::node::Group &group);
+    PathObject(const hdf5::node::Node &dataset);
 
     //!
     //! @brief copy constructor

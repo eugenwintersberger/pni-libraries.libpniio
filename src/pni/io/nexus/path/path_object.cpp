@@ -41,19 +41,26 @@ PathObject::PathObject(const hdf5::attribute::Attribute &attribute):
     dataset_()
 {}
 
-PathObject::PathObject(const hdf5::node::Group &group):
-    type_(Type::GROUP),
-    attribute_(),
-    group_(group),
-    dataset_()
-{}
-
-PathObject::PathObject(const hdf5::node::Dataset &dataset):
-    type_(Type::DATASET),
+PathObject::PathObject(const hdf5::node::Node &node):
+    type_(Type::NONE),
     attribute_(),
     group_(),
-    dataset_(dataset)
-{}
+    dataset_()
+{
+  switch(node.type())
+  {
+    case hdf5::node::Type::DATASET:
+      dataset_ = node;
+      type_ = Type::DATASET;
+      break;
+    case hdf5::node::Type::GROUP:
+      group_ = node;
+      type_ = Type::GROUP;
+      break;
+    default:
+      throw std::runtime_error("Unknown datatype!");
+  }
+}
 
 PathObject::Type PathObject::type() const noexcept
 {

@@ -25,6 +25,7 @@
 #include <iostream>
 #include <pni/core/types.hpp>
 #include <pni/io/nexus/path/path.hpp>
+#include <pni/io/nexus/path/path_object.hpp>
 #include <pni/io/windows.hpp>
 
 
@@ -383,6 +384,10 @@ PNIIO_EXPORT bool is_unique(const Path &path);
 //!
 //! @pre the node must be a valid HDF5 object
 PNIIO_EXPORT Path get_path(const hdf5::node::Node &node);
+
+
+PNIIO_EXPORT PathObjectList get_objects(const hdf5::node::Group &base,
+                                        const Path &path);
 
 //end of namespace
 } // namespace nexus
