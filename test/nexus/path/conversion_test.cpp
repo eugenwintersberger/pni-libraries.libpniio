@@ -56,6 +56,32 @@ BOOST_AUTO_TEST_CASE(from_hdf5_to_nexus_3)
   BOOST_CHECK_EQUAL(nxp.size(),1);
 }
 
+//=============================================================================
+
+BOOST_AUTO_TEST_CASE(from_nexus_to_hdf5_1)
+{
+  nexus::Path nxp = nexus::Path::from_string("/entry:NXentry/instrument:NXinstrument");
+  hdf5::Path h5p = nxp;
+  BOOST_CHECK_EQUAL(h5p,"/entry/instrument");
+  BOOST_CHECK_EQUAL(h5p.size(),2);
+  BOOST_CHECK(h5p.absolute());
+}
+
+BOOST_AUTO_TEST_CASE(from_nexus_to_hdf5_2)
+{
+  nexus::Path nxp = nexus::Path::from_string("entry:NXentry/instrument:NXinstrument/detector:NXdetector");
+  hdf5::Path h5p = nxp;
+  BOOST_CHECK_EQUAL(h5p,"entry/instrument/detector");
+  BOOST_CHECK_EQUAL(h5p.size(),3);
+  BOOST_CHECK(!h5p.absolute());
+}
+
+BOOST_AUTO_TEST_CASE(from_nexus_to_hdf5_3)
+{
+  nexus::Path nxp = nexus::Path::from_string("entry:NXentry/:NXinstrument/detector:NXdetector");
+  BOOST_CHECK_THROW((hdf5::Path(nxp)),std::runtime_error);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE_END()

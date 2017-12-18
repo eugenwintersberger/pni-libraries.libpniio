@@ -141,6 +141,21 @@ class PNIIO_EXPORT Path
     //!
     static std::string to_string(const Path &p);
 
+    //!
+    //! @brief conversion to an HDF5 path
+    //!
+    //! This conversion is only possible if the NeXus path is unique.
+    //! Otherwise an exception will be thrown.
+    //!
+    //! As an HDF5 path does not contain any information about the file
+    //! or an attribute this conversion basically copies the names
+    //! of all object links to the HDF5 path.
+    //!
+    //! @throws std::runtime_error in case of a failure
+    //! @return new instance of hdf5::Path
+    //!
+    operator hdf5::Path();
+
     //===============public member methods=============================
     //!
     //! \brief true if has filename
