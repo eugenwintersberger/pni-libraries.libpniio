@@ -9,6 +9,7 @@ set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/file.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/object_builder.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/datatype_factory.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/hdf5_support.hpp
+	             ${CMAKE_CURRENT_SOURCE_DIR}/path.hpp
 	)
 
 set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/file.cpp
@@ -24,6 +25,7 @@ set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/file.cpp
 	)
 
 add_subdirectory(xml)	
+add_subdirectory(path)
 install(FILES ${HEADER_FILES}
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io/nexus)
        

@@ -2,6 +2,7 @@ add_subdirectory(version)
 add_subdirectory(file)
 add_subdirectory(algorithms)
 add_subdirectory(xml)
+add_subdirectory(path)
 
 set(SOURCES base_class_test.cpp)
 
