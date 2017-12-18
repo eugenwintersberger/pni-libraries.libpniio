@@ -364,6 +364,18 @@ PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,
 //!
 PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,const Path &p);
 
+//!
+//! @brief return true if a NeXus path is unique
+//!
+//! A NeXus path is considered unique if all elements in its object section
+//! have an object name. In this case the path can be unamiguously mapped
+//! to an HDF5 path.
+//!
+//! @param path reference to the NeXus path
+//! @return true if path is unique, false otherwise.
+//!
+PNIIO_EXPORT bool is_unique(const Path &path);
+
 //end of namespace
 } // namespace nexus
 } // namespace io

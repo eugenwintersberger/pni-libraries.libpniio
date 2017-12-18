@@ -54,6 +54,12 @@ BOOST_AUTO_TEST_CASE(test_abs_no_file)
   BOOST_CHECK(is_absolute(p));
   BOOST_CHECK_EQUAL(p.front().first,"/");
   BOOST_CHECK_EQUAL(p.front().second,"NXroot");
+
+  p = Path::from_string("/:NXroot");
+  BOOST_CHECK_EQUAL(p.size(),1);
+  BOOST_CHECK(is_absolute(p));
+  BOOST_CHECK_EQUAL(p.front().first,"/");
+  BOOST_CHECK_EQUAL(p.front().second,"NXroot");
 }
 
 //-------------------------------------------------------------------------

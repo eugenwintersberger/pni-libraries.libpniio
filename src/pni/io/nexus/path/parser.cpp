@@ -114,9 +114,12 @@ Path parse_path(const std::string &input)
 
   if(!elements_part.empty())
   {
+    //split all element entries in the path by /
     std::vector<string> element_strings;
     boost::split(element_strings,elements_part,
                  boost::is_any_of("/"),boost::token_compress_on);
+
+    //there can be some empty values which we should remove from the list
     auto new_end = std::remove_if(element_strings.begin(),
                                   element_strings.end(),
                                   [](const string &value)
@@ -127,6 +130,20 @@ Path parse_path(const std::string &input)
     std::transform(element_strings.begin(),new_end,
                    std::back_inserter(elements),
                    get_element);
+  }
+
+  //remove possible duplicate root entries
+  if(elements.size()>1)
+  {
+    auto iter = elements.begin();
+    if(iter->first=="/" && iter->second=="NXroot")
+    {
+      std::advance(iter,1);
+      if(iter->second=="NXroot")
+      {
+        elements.erase(iter);
+      }
+    }
   }
 
   return Path(file_part,elements,attribute_part);
