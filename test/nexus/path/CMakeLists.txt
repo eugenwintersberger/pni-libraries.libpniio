@@ -22,12 +22,20 @@ set(SOURCES path_test.cpp
 	        path_object_test.cpp
 	        is_unique_test.cpp
 	        conversion_test.cpp
+	        get_path_test.cpp
            )
+          
+set(XML_FILES detector_with_transformation.xml
+	          simple_structure.xml)
+	        
+foreach(XML_FILE ${XML_FILES})
+	configure_file(${XML_FILE} ${XML_FILE} COPYONLY)
+endforeach()
 
 set_boost_test_definitions(SOURCES "Testing nexus::Path")
 add_executable(nexus_path_tests EXCLUDE_FROM_ALL ${SOURCES})
 add_dependencies(check nexus_path_tests)
 target_link_libraries(nexus_path_tests pniio Boost::unit_test_framework)
 add_boost_logging_test("nexus::path" nexus_path_tests
-                       ${PROJECT_BINARY_DIR}/test/nxpath_test)
+                       ${PROJECT_BINARY_DIR}/test/nexus/path)
 
