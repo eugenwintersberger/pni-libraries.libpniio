@@ -19,6 +19,7 @@ set(SOURCES path_test.cpp
 	        split_path_test.cpp
 	        object_element_test.cpp
 	        parser_test.cpp
+	        path_object_test.cpp
            )
 
 set_boost_test_definitions(SOURCES "Testing nexus::Path")

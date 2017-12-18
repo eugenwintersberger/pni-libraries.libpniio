@@ -23,6 +23,7 @@
 #pragma once
 
 #include <cstdint>
+#include <iostream>
 #include <h5cpp/hdf5.hpp>
 #include <pni/io/windows.hpp>
 #include <vector>
@@ -44,7 +45,17 @@ class PNIIO_EXPORT PathObject
 
     };
 
+    //!
+    //! @brief default constructor
+    //!
+    //! We need default construction for container types. When a
+    //! PathObject is default constructed its type is Type::NONE.
+    //! In this case no conversion to any other object could be
+    //! achieved.
+    //!
     PathObject();
+
+
     PathObject(const hdf5::attribute::Attribute &attribute);
     PathObject(const hdf5::node::Dataset &dataset);
     PathObject(const hdf5::node::Group &group);
@@ -83,6 +94,8 @@ class PathObjectList : public std::list<PathObject>
   public:
     using std::list<PathObject>::list;
 };
+
+std::ostream &operator<<(std::ostream &stream,const PathObject::Type &type);
 
 PNIIO_EXPORT bool is_dataset(const PathObject &object) noexcept;
 PNIIO_EXPORT bool is_attribute(const PathObject &object) noexcept;

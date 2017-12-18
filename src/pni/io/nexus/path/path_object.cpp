@@ -60,6 +60,19 @@ PathObject::Type PathObject::type() const noexcept
   return type_;
 }
 
+std::ostream &operator<<(std::ostream &stream,const PathObject::Type &type)
+{
+  switch(type)
+  {
+    case PathObject::Type::NONE: return stream<<"NONE";
+    case PathObject::Type::ATTRIBUTE: return stream<<"ATTRIBUTE";
+    case PathObject::Type::DATASET: return stream<<"DATASET";
+    case PathObject::Type::GROUP: return stream<<"GROUP";
+    default:
+      return stream;
+  }
+}
+
 
 bool is_dataset(const PathObject &object) noexcept
 {
