@@ -385,6 +385,8 @@ PNIIO_EXPORT bool is_unique(const Path &path);
 //! @pre the node must be a valid HDF5 object
 PNIIO_EXPORT Path get_path(const hdf5::node::Node &node);
 
+PNIIO_EXPORT Path get_path(const hdf5::attribute::Attribute &attribute);
+
 
 PNIIO_EXPORT PathObjectList get_objects(const hdf5::node::Group &base,
                                         const Path &path);
