@@ -39,6 +39,15 @@ Path::Path():
             _elements()
 {}
 
+Path::Path(const hdf5::Path &path):
+    _file_name(),
+    _attribute_name(),
+    _elements()
+{
+  //we simply use the string conversion here
+  *this = Path::from_string(static_cast<std::string>(path));
+}
+
 //-------------------------------------------------------------------------
 Path::Path(const boost::filesystem::path &file,
            const Path::ElementList &objects,
