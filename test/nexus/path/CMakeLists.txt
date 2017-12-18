@@ -21,6 +21,7 @@ set(SOURCES path_test.cpp
 	        parser_test.cpp
 	        path_object_test.cpp
 	        is_unique_test.cpp
+	        conversion_test.cpp
            )
 
 set_boost_test_definitions(SOURCES "Testing nexus::Path")

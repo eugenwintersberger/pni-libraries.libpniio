@@ -39,6 +39,45 @@ Path::Path():
             _elements()
 {}
 
+Path::Path(const hdf5::Path &path):
+    _file_name(),
+    _attribute_name(),
+    _elements()
+{
+  //we simply use the string conversion here
+  *this = Path::from_string(static_cast<std::string>(path));
+}
+
+Path::operator hdf5::Path()
+{
+  if(is_unique(*this))
+  {
+    //get all object names from the NeXus path
+    std::list<std::string> object_names;
+    std::transform(begin(),end(),std::back_inserter(object_names),
+                   [](const Element &element) { return element.first; });
+
+    //construct the HDF5 path from the object names
+    auto iter_start = object_names.cbegin();
+    bool is_absolute = false;
+    if(*iter_start == "/")
+    {
+      is_absolute = true;
+      std::advance(iter_start,1);
+    }
+    hdf5::Path h5path(iter_start,object_names.cend());
+    h5path.absolute(is_absolute);
+    return h5path;
+
+  }
+  else
+  {
+    std::stringstream ss;
+    ss<<"Cannot convert the NeXus path ["<<*this<<"] to an HDF5 path as it is not unique!";
+    throw std::runtime_error(ss.str());
+  }
+}
+
 //-------------------------------------------------------------------------
 Path::Path(const boost::filesystem::path &file,
            const Path::ElementList &objects,

@@ -27,6 +27,7 @@
 #include <list>
 #include <pni/io/windows.hpp>
 #include <boost/filesystem.hpp>
+#include <h5cpp/hdf5.hpp>
 
 namespace pni{
 namespace io{
@@ -103,6 +104,18 @@ class PNIIO_EXPORT Path
          const ElementList &groups,
          const pni::core::string &attr);
 
+    //!
+    //! @brief constructor
+    //!
+    //! Construct a NeXus path from an HDF5 path. This constructor is
+    //! deliberately non-explicit. As an HDF5 path does not contain
+    //! any file or attribute information only the element section
+    //! of the path will be set.
+    //!
+    //! @param path reference to the original HDF5 path
+    //!
+    Path(const hdf5::Path &path);
+
     //-----------------------------------------------------------------
     //!
     //! \brief create path from string
@@ -127,6 +140,21 @@ class PNIIO_EXPORT Path
     //! \return string representation of the path
     //!
     static std::string to_string(const Path &p);
+
+    //!
+    //! @brief conversion to an HDF5 path
+    //!
+    //! This conversion is only possible if the NeXus path is unique.
+    //! Otherwise an exception will be thrown.
+    //!
+    //! As an HDF5 path does not contain any information about the file
+    //! or an attribute this conversion basically copies the names
+    //! of all object links to the HDF5 path.
+    //!
+    //! @throws std::runtime_error in case of a failure
+    //! @return new instance of hdf5::Path
+    //!
+    operator hdf5::Path();
 
     //===============public member methods=============================
     //!

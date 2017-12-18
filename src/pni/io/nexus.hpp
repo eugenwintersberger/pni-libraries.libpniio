@@ -33,3 +33,4 @@
 #include <pni/io/nexus/predicates.hpp>
 #include <pni/io/nexus/transformations.hpp>
 #include <pni/io/nexus/version.hpp>
+#include <pni/io/nexus/path.hpp>
