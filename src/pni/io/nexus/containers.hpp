@@ -42,9 +42,6 @@ class PNIIO_EXPORT NodeList : public std::vector<hdf5::node::Node>
 {
   public:
     using std::vector<hdf5::node::Node>::vector;
-    NodeList();
-
-    NodeList(const PathObjectList &list);
 };
 
 //!
@@ -70,7 +67,13 @@ class PNIIO_EXPORT GroupList : public std::vector<hdf5::node::Group>
     //!
     GroupList(const NodeList &nodes);
 
-    GroupList(const PathObjectList &list);
+
+    //!
+    //! @brief default constructor
+    //!
+    //! Use the compiler provided default implementation.
+    //!
+    GroupList() = default;
 };
 
 
@@ -78,14 +81,12 @@ class PNIIO_EXPORT GroupList : public std::vector<hdf5::node::Group>
 //!
 //! @brief list of datasets
 //!
-//! A specialization of std::list storing instances of hdf5::node::Dataset;
+//! A specialization of std::vector storing instances of hdf5::node::Dataset;
 //!
 class PNIIO_EXPORT DatasetList : public std::vector<hdf5::node::Dataset>
 {
   public:
     using std::vector<hdf5::node::Dataset>::vector;
-
-    DatasetList(const PathObjectList &list);
 };
 
 
@@ -93,8 +94,6 @@ class PNIIO_EXPORT AttributeList : public std::vector<hdf5::attribute::Attribute
 {
   public:
     using std::vector<hdf5::attribute::Attribute>::vector;
-
-    AttributeList(const PathObjectList &list);
 };
 
 } // namespace nexus

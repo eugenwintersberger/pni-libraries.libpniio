@@ -122,6 +122,37 @@ PathObject::operator hdf5::node::Node() const
   }
 }
 
+
+
+PathObjectList::operator NodeList() const
+{
+  NodeList list;
+  std::copy(begin(),end(),std::back_inserter(list));
+  return list;
+}
+
+
+PathObjectList::operator AttributeList() const
+{
+  AttributeList list;
+  std::copy(begin(),end(),std::back_inserter(list));
+  return list;
+}
+
+PathObjectList::operator GroupList() const
+{
+  GroupList list;
+  std::copy(begin(),end(),std::back_inserter(list));
+  return list;
+}
+
+PathObjectList::operator DatasetList() const
+{
+  DatasetList list;
+  std::copy(begin(),end(),std::back_inserter(list));
+  return list;
+}
+
 std::ostream &operator<<(std::ostream &stream,const PathObject::Type &type)
 {
   switch(type)
@@ -134,6 +165,8 @@ std::ostream &operator<<(std::ostream &stream,const PathObject::Type &type)
       return stream;
   }
 }
+
+
 
 
 bool is_dataset(const PathObject &object) noexcept

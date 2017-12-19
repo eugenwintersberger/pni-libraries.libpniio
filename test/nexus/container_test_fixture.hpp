@@ -18,23 +18,16 @@
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-// Created on: Dec 8, 2017
+// Created on: Dec 19, 2017
 //
+#pragma once
+#include <h5cpp/hdf5.hpp>
 
-#include <pni/io/nexus/containers.hpp>
-#include <algorithm>
-#include <pni/io/nexus/path/path_object.hpp>
 
-namespace pni {
-namespace io {
-namespace nexus {
-
-GroupList::GroupList(const NodeList &nodes)
+struct ContainerTestFixture
 {
-  std::copy(nodes.begin(),nodes.end(),std::back_inserter(*this));
-}
+    hdf5::file::File file;
+    hdf5::node::Group root_group;
 
-
-} // namespace nexus
-} // namespace io
-} // namespace pni
+    ContainerTestFixture();
+};

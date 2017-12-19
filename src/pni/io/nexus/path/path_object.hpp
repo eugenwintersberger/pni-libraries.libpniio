@@ -27,6 +27,7 @@
 #include <h5cpp/hdf5.hpp>
 #include <pni/io/windows.hpp>
 #include <vector>
+#include <pni/io/nexus/containers.hpp>
 
 namespace pni {
 namespace io {
@@ -164,6 +165,39 @@ class PathObjectList : public std::list<PathObject>
 {
   public:
     using std::list<PathObject>::list;
+
+    //!
+    //! @brief implicit conversion to a NodeList
+    //!
+    //! @throws std::runtime_error in case of a failure
+    //! @pre all instances in the PathObjectList must store instances
+    //!      of datasets or groups.
+    //!
+    operator NodeList() const;
+
+    //!
+    //! @brief implicit conversion to an AttributeList
+    //!
+    //! @throws std::runtime_error in case of a failure
+    //! @pre all instances in the PathObjectList must store attributes
+    //!
+    operator AttributeList() const;
+
+    //!
+    //! @brief implicit conversion to a GroupList
+    //!
+    //! @throws std::runtime_error in case of a failure
+    //! @pre all instances in the PathObjectList must store groups
+    //!
+    operator GroupList() const;
+
+    //!
+    //! @brief implicit conversion to a DatasetList
+    //!
+    //! @throws std::runtime_error in case of a failure
+    //! @pre all instances in the PathObjetList must store datasets
+    //!
+    operator DatasetList() const;
 };
 
 std::ostream &operator<<(std::ostream &stream,const PathObject::Type &type);
