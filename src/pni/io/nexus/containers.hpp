@@ -42,6 +42,9 @@ class PNIIO_EXPORT NodeList : public std::vector<hdf5::node::Node>
 {
   public:
     using std::vector<hdf5::node::Node>::vector;
+    NodeList();
+
+    NodeList(const PathObjectList &list);
 };
 
 //!
@@ -85,6 +88,14 @@ class PNIIO_EXPORT DatasetList : public std::vector<hdf5::node::Dataset>
     DatasetList(const PathObjectList &list);
 };
 
+
+class PNIIO_EXPORT AttributeList : public std::vector<hdf5::attribute::Attribute>
+{
+  public:
+    using std::vector<hdf5::attribute::Attribute>::vector;
+
+    AttributeList(const PathObjectList &list);
+};
 
 } // namespace nexus
 } // namespace io

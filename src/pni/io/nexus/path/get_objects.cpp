@@ -22,6 +22,7 @@
 //
 #include <pni/io/nexus/path/utils.hpp>
 #include <pni/io/nexus/path/make_relative.hpp>
+#include <pni/io/nexus/containers.hpp>
 #include <algorithm>
 
 namespace pni {
@@ -69,17 +70,33 @@ PathObjectList get_objects(const hdf5::node::Group &base,const Path &path)
 {
   PathObjectList list;
 
-  auto iter_begin = hdf5::node::RecursiveNodeIterator::begin(base);
-  auto iter_end = hdf5::node::RecursiveNodeIterator::end(base);
+  if(path.has_attribute())
+  {
+    //if we are looking for attributes we first have to identify the parent
+    //objects.
+    Path parent_path(path);
+    parent_path.attribute(std::string());
+    NodeList parent_list = get_objects(base,parent_path);
 
-  if(is_absolute(path))
-    std::copy_if(iter_begin,iter_end,
-                 std::back_inserter(list),
-                 AbsolutePathMatcher(path));
+    //once we have identified the parents we can select those who have
+    //an attribute of appropriate name
+    for(auto node: parent_list)
+    {
+      if(node.attributes.exists(path.attribute()))
+        list.push_back(node.attributes[path.attribute()]);
+    }
+
+  }
   else
-    std::copy_if(iter_begin,iter_end,
-                 std::back_inserter(list),
-                 RelativePathMatcher(path,get_path(base)));
+  {
+    auto iter_begin = hdf5::node::RecursiveNodeIterator::begin(base);
+    auto iter_end = hdf5::node::RecursiveNodeIterator::end(base);
+
+    if(is_absolute(path))
+      std::copy_if(iter_begin,iter_end,std::back_inserter(list),AbsolutePathMatcher(path));
+    else
+      std::copy_if(iter_begin,iter_end,std::back_inserter(list),RelativePathMatcher(path,get_path(base)));
+  }
 
   return list;
 }

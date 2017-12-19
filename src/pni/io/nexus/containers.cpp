@@ -29,6 +29,14 @@ namespace pni {
 namespace io {
 namespace nexus {
 
+NodeList::NodeList():std::vector<hdf5::node::Node>()
+{}
+
+NodeList::NodeList(const PathObjectList &list)
+{
+  std::copy(list.begin(),list.end(),std::back_inserter(*this));
+}
+
 GroupList::GroupList(const NodeList &nodes)
 {
   std::copy(nodes.begin(),nodes.end(),std::back_inserter(*this));
@@ -40,6 +48,11 @@ GroupList::GroupList(const PathObjectList &list)
 }
 
 DatasetList::DatasetList(const PathObjectList &list)
+{
+  std::copy(list.begin(),list.end(),std::back_inserter(*this));
+}
+
+AttributeList::AttributeList(const PathObjectList &list)
 {
   std::copy(list.begin(),list.end(),std::back_inserter(*this));
 }

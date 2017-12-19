@@ -91,6 +91,28 @@ BOOST_AUTO_TEST_CASE(search_detectors_relative)
 
 }
 
+BOOST_AUTO_TEST_CASE(search_detector_attributes_absolute)
+{
+  base = multi_detector.root();
+  nexus::AttributeList result = nexus::get_objects(base,nexus::Path("/scan_1:NXentry/:NXinstrument/:NXdetector/data@units"));
+  BOOST_CHECK_EQUAL(result.size(),3);
+  BOOST_CHECK_EQUAL(result[0].parent_link().path().parent().name(),"detector_1");
+  BOOST_CHECK_EQUAL(result[1].parent_link().path().parent().name(),"detector_2");
+  BOOST_CHECK_EQUAL(result[2].parent_link().path().parent().name(),"detector_3");
+
+}
+
+BOOST_AUTO_TEST_CASE(search_detector_attributes_relative)
+{
+  base = multi_detector.root().nodes["scan_1"];
+  nexus::AttributeList result = nexus::get_objects(base,nexus::Path(":NXinstrument/:NXdetector/data@units"));
+  BOOST_CHECK_EQUAL(result.size(),3);
+  BOOST_CHECK_EQUAL(result[0].parent_link().path().parent().name(),"detector_1");
+  BOOST_CHECK_EQUAL(result[1].parent_link().path().parent().name(),"detector_2");
+  BOOST_CHECK_EQUAL(result[2].parent_link().path().parent().name(),"detector_3");
+
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

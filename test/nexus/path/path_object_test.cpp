@@ -71,6 +71,8 @@ BOOST_AUTO_TEST_CASE(group_construction)
 
   hdf5::node::Group g = object;
   BOOST_CHECK_EQUAL(g.link().path(),"/");
+
+  BOOST_CHECK_THROW(attribute = object,std::runtime_error);
 }
 
 BOOST_AUTO_TEST_CASE(dataset_construction)

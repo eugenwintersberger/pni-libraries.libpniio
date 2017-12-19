@@ -388,6 +388,10 @@ PNIIO_EXPORT Path get_path(const hdf5::node::Node &node);
 PNIIO_EXPORT Path get_path(const hdf5::attribute::Attribute &attribute);
 
 
+//!
+//! @brief search for objects
+//!
+//!
 PNIIO_EXPORT PathObjectList get_objects(const hdf5::node::Group &base,
                                         const Path &path);
 
