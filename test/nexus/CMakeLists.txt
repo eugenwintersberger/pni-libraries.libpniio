@@ -31,4 +31,18 @@ add_executable(nexus_hdf5_support_test EXCLUDE_FROM_ALL ${HDF5TEST_SOURCES})
 target_link_libraries(nexus_hdf5_support_test pniio Boost::unit_test_framework)
 add_dependencies(check nexus_hdf5_support_test)
 add_boost_logging_test("nexus::hdf5_support" nexus_hdf5_support_test
-	                   ${CMAKE_CURRENT_BINARY_DIR})	              
+	                   ${CMAKE_CURRENT_BINARY_DIR})	 
+	                  
+set(CONTAINER_TEST_SOURCES node_list_test.cpp
+                           dataset_list_test.cpp
+                           group_list_test.cpp
+                           attribute_list_test.cpp
+                           container_test_fixture.cpp)
+configure_file(container_test.xml container_test.xml COPYONLY)
+set_boost_test_definitions(CONTAINER_TEST_SOURCES "Testing NeXus containers")
+add_executable(nexus_container_test EXCLUDE_FROM_ALL ${CONTAINER_TEST_SOURCES})
+target_link_libraries(nexus_container_test pniio Boost::unit_test_framework)
+add_dependencies(check nexus_container_test)
+add_boost_logging_test("nexus::containers" nexus_container_test
+	                   ${CMAKE_CURRENT_BINARY_DIR}) 
+             

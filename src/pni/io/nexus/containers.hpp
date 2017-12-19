@@ -31,6 +31,8 @@ namespace pni {
 namespace io {
 namespace nexus {
 
+class PathObjectList;
+
 //!
 //! @brief list of HDF5 nodes
 //!
@@ -64,6 +66,14 @@ class PNIIO_EXPORT GroupList : public std::vector<hdf5::node::Group>
     //! @param nodes reference to the original node list
     //!
     GroupList(const NodeList &nodes);
+
+
+    //!
+    //! @brief default constructor
+    //!
+    //! Use the compiler provided default implementation.
+    //!
+    GroupList() = default;
 };
 
 
@@ -71,7 +81,7 @@ class PNIIO_EXPORT GroupList : public std::vector<hdf5::node::Group>
 //!
 //! @brief list of datasets
 //!
-//! A specialization of std::list storing instances of hdf5::node::Dataset;
+//! A specialization of std::vector storing instances of hdf5::node::Dataset;
 //!
 class PNIIO_EXPORT DatasetList : public std::vector<hdf5::node::Dataset>
 {
@@ -79,6 +89,12 @@ class PNIIO_EXPORT DatasetList : public std::vector<hdf5::node::Dataset>
     using std::vector<hdf5::node::Dataset>::vector;
 };
 
+
+class PNIIO_EXPORT AttributeList : public std::vector<hdf5::attribute::Attribute>
+{
+  public:
+    using std::vector<hdf5::attribute::Attribute>::vector;
+};
 
 } // namespace nexus
 } // namespace io

@@ -27,6 +27,7 @@
 #include <h5cpp/hdf5.hpp>
 #include <pni/io/windows.hpp>
 #include <vector>
+#include <pni/io/nexus/containers.hpp>
 
 namespace pni {
 namespace io {
@@ -86,17 +87,7 @@ class PNIIO_EXPORT PathObject
     //!
     //! @param dataset reference to the original dataset
     //!
-    PathObject(const hdf5::node::Dataset &dataset);
-
-    //!
-    //! @brief constructor
-    //!
-    //! Build a PathObject from a group. After construction
-    //! type() will return Type::GROUP.
-    //!
-    //! @param group reference to the original group
-    //!
-    PathObject(const hdf5::node::Group &group);
+    PathObject(const hdf5::node::Node &dataset);
 
     //!
     //! @brief copy constructor
@@ -114,37 +105,53 @@ class PNIIO_EXPORT PathObject
     Type type() const noexcept;
 
     //!
-    //! @brief implicit conversion to an attribute
+    //! @brief provides implicit conversion to an attribute
     //!
-    operator hdf5::attribute::Attribute() const noexcept
-    {
-      return attribute_;
-    }
+    //! Returns the stored object as an HDF5 attribute. If the stored
+    //! instance is not an HDF5 attribute an exception will be thrown.
+    //!
+    //! @throws std::runtime_error in case of a failure
+    //! @pre the object stored in the PathObject instance
+    //!      is an instance of hdf5::attribute::Attribute
+    //!
+    operator hdf5::attribute::Attribute() const;
 
     //!
     //! @brief implicit conversion to a group
     //!
-    operator hdf5::node::Group() const noexcept
-    {
-      return group_;
-    }
+    //! @throws std::runtime_error in case of a failure
+    //! @pre the object stored in the PathObject instance is
+    //!      an instance of hdf5::node::Group
+    //!
+    operator hdf5::node::Group() const;
 
     //!
     //! @brief implicit conversion to a dataset
     //!
-    operator hdf5::node::Dataset() const noexcept
-    {
-      return dataset_;
-    }
+    //! @throws std::runtime_error in case of a failure
+    //! @pre the object stored in PathObject instance is
+    //!      an instance of hdf5::node::Dataset.
+    //!
+    operator hdf5::node::Dataset() const;
+
+    //!
+    //! @brief implicit conversion to a general HDF5 node type
+    //!
+    //! Provides implicit conversion to an HDF5 node instance. If the
+    //! object stored is neither a group or a dataset an exception
+    //! will be thrown.
+    //!
+    //! @throws std::runtime_error in case of a failure
+    //! @pre the object stored in the PathObject instance is
+    //!      an instance of hdf5::node::Dataset of hdf5::node::Group.
+    //!
+    operator hdf5::node::Node() const;
 
   private:
     Type type_;
     hdf5::attribute::Attribute attribute_;
     hdf5::node::Group group_;
     hdf5::node::Dataset dataset_;
-
-
-
 };
 
 //!
@@ -158,6 +165,39 @@ class PathObjectList : public std::list<PathObject>
 {
   public:
     using std::list<PathObject>::list;
+
+    //!
+    //! @brief implicit conversion to a NodeList
+    //!
+    //! @throws std::runtime_error in case of a failure
+    //! @pre all instances in the PathObjectList must store instances
+    //!      of datasets or groups.
+    //!
+    operator NodeList() const;
+
+    //!
+    //! @brief implicit conversion to an AttributeList
+    //!
+    //! @throws std::runtime_error in case of a failure
+    //! @pre all instances in the PathObjectList must store attributes
+    //!
+    operator AttributeList() const;
+
+    //!
+    //! @brief implicit conversion to a GroupList
+    //!
+    //! @throws std::runtime_error in case of a failure
+    //! @pre all instances in the PathObjectList must store groups
+    //!
+    operator GroupList() const;
+
+    //!
+    //! @brief implicit conversion to a DatasetList
+    //!
+    //! @throws std::runtime_error in case of a failure
+    //! @pre all instances in the PathObjetList must store datasets
+    //!
+    operator DatasetList() const;
 };
 
 std::ostream &operator<<(std::ostream &stream,const PathObject::Type &type);

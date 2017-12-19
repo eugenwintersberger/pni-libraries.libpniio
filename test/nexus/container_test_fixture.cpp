@@ -18,23 +18,17 @@
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-// Created on: Dec 8, 2017
+// Created on: Dec 19, 2017
 //
 
-#include <pni/io/nexus/containers.hpp>
-#include <algorithm>
-#include <pni/io/nexus/path/path_object.hpp>
+#include "container_test_fixture.hpp"
+#include <pni/io/nexus.hpp>
 
-namespace pni {
-namespace io {
-namespace nexus {
+using namespace pni::io;
 
-GroupList::GroupList(const NodeList &nodes)
+ContainerTestFixture::ContainerTestFixture()
 {
-  std::copy(nodes.begin(),nodes.end(),std::back_inserter(*this));
+  file = nexus::create("ContainerTest.nxs",hdf5::file::AccessFlags::TRUNCATE);
+  root_group = file.root();
+  nexus::xml::create_from_file(root_group,"container_test.xml");
 }
-
-
-} // namespace nexus
-} // namespace io
-} // namespace pni

@@ -57,7 +57,12 @@ BOOST_AUTO_TEST_CASE(test_file1)
 
 BOOST_AUTO_TEST_CASE(test_file2)
 {
-
+  hdf5::node::Dataset d = hdf5::node::get_node(file2.root(),"/scan_1/instrument/detector/transformation/gamma");
+  hdf5::attribute::Attribute attr = d.attributes["depends_on"];
+  nexus::Path nxp = nexus::get_path(attr);
+  BOOST_CHECK_EQUAL(nexus::Path::to_string(nxp),
+                    "/scan_1:NXentry/instrument:NXinstrument/detector:NXdetector/transformation:NXtransformations/gamma@depends_on"
+                    );
 }
 
 BOOST_AUTO_TEST_SUITE_END()

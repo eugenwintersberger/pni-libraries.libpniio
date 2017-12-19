@@ -18,23 +18,31 @@
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-// Created on: Dec 8, 2017
+// Created on: Dec 19, 2017
 //
+#include <boost/test/unit_test.hpp>
+#include <pni/io/nexus.hpp>
+#include "container_test_fixture.hpp"
 
-#include <pni/io/nexus/containers.hpp>
-#include <algorithm>
-#include <pni/io/nexus/path/path_object.hpp>
+using namespace pni::io;
 
-namespace pni {
-namespace io {
-namespace nexus {
 
-GroupList::GroupList(const NodeList &nodes)
+
+BOOST_AUTO_TEST_SUITE(ContainerTest)
+BOOST_FIXTURE_TEST_SUITE(NodeListTest,ContainerTestFixture)
+
+BOOST_AUTO_TEST_CASE(default_construction)
 {
-  std::copy(nodes.begin(),nodes.end(),std::back_inserter(*this));
+  nexus::NodeList list;
+  BOOST_CHECK_EQUAL(list.size(),0);
 }
 
+BOOST_AUTO_TEST_CASE(mixed_nodes)
+{
+  hdf5::node::Group base = root_group.nodes["scan_1"];
+  nexus::NodeList list(base.nodes.begin(),base.nodes.end());
+  BOOST_CHECK_EQUAL(list.size(),5);
+}
 
-} // namespace nexus
-} // namespace io
-} // namespace pni
+BOOST_AUTO_TEST_SUITE_END()
+BOOST_AUTO_TEST_SUITE_END()

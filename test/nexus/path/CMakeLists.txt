@@ -23,10 +23,14 @@ set(SOURCES path_test.cpp
 	        is_unique_test.cpp
 	        conversion_test.cpp
 	        get_path_test.cpp
+	        get_objects.cpp
            )
           
 set(XML_FILES detector_with_transformation.xml
-	          simple_structure.xml)
+	          simple_structure.xml
+	          multi_entry.xml
+	          multi_detector.xml
+	         )
 	        
 foreach(XML_FILE ${XML_FILES})
 	configure_file(${XML_FILE} ${XML_FILE} COPYONLY)

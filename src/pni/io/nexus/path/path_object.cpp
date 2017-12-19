@@ -21,6 +21,7 @@
 // Created on: Dec 18, 2017
 //
 
+#include <sstream>
 #include <pni/io/nexus/path/path_object.hpp>
 
 namespace pni {
@@ -41,23 +42,115 @@ PathObject::PathObject(const hdf5::attribute::Attribute &attribute):
     dataset_()
 {}
 
-PathObject::PathObject(const hdf5::node::Group &group):
-    type_(Type::GROUP),
-    attribute_(),
-    group_(group),
-    dataset_()
-{}
-
-PathObject::PathObject(const hdf5::node::Dataset &dataset):
-    type_(Type::DATASET),
+PathObject::PathObject(const hdf5::node::Node &node):
+    type_(Type::NONE),
     attribute_(),
     group_(),
-    dataset_(dataset)
-{}
+    dataset_()
+{
+  switch(node.type())
+  {
+    case hdf5::node::Type::DATASET:
+      dataset_ = node;
+      type_ = Type::DATASET;
+      break;
+    case hdf5::node::Type::GROUP:
+      group_ = node;
+      type_ = Type::GROUP;
+      break;
+    default:
+      std::stringstream ss;
+      ss<<"HDF5 node ["<<node.link().path()<<"] is neither a dataset nor a group"
+        <<" and thus cannot be converted to an instance of PathObject!";
+      throw std::runtime_error(ss.str());
+  }
+}
 
 PathObject::Type PathObject::type() const noexcept
 {
   return type_;
+}
+
+PathObject::operator hdf5::attribute::Attribute() const
+{
+  if(type() != Type::ATTRIBUTE)
+  {
+    std::stringstream ss;
+    ss<<"PathObject stores an instance of "<<type()<<" and cannot be "
+      <<"converted to an attribute!";
+    throw std::runtime_error(ss.str());
+  }
+  return attribute_;
+}
+
+PathObject::operator hdf5::node::Group() const
+{
+  if(type() != Type::GROUP)
+  {
+    std::stringstream ss;
+    ss<<"PathObject stores an instance of "<<type()<<" and cannot be "
+      <<"converted to a group!";
+    throw std::runtime_error(ss.str());
+  }
+  return group_;
+}
+
+PathObject::operator hdf5::node::Dataset() const
+{
+  if(type() != Type::DATASET)
+  {
+    std::stringstream ss;
+    ss<<"PathObject stores an instance of "<<type()<<" and cannot be "
+      <<"converted to a dataset!";
+    throw std::runtime_error(ss.str());
+  }
+  return dataset_;
+}
+
+PathObject::operator hdf5::node::Node() const
+{
+  if(type()==Type::DATASET)
+    return dataset_;
+  else if(type() == Type::GROUP)
+    return group_;
+  else
+  {
+    std::stringstream ss;
+    ss<<"PathObject stores an instance of "<<type()<<" and cannot be "
+        <<"converted to a dataset!";
+    throw std::runtime_error(ss.str());
+  }
+}
+
+
+
+PathObjectList::operator NodeList() const
+{
+  NodeList list;
+  std::copy(begin(),end(),std::back_inserter(list));
+  return list;
+}
+
+
+PathObjectList::operator AttributeList() const
+{
+  AttributeList list;
+  std::copy(begin(),end(),std::back_inserter(list));
+  return list;
+}
+
+PathObjectList::operator GroupList() const
+{
+  GroupList list;
+  std::copy(begin(),end(),std::back_inserter(list));
+  return list;
+}
+
+PathObjectList::operator DatasetList() const
+{
+  DatasetList list;
+  std::copy(begin(),end(),std::back_inserter(list));
+  return list;
 }
 
 std::ostream &operator<<(std::ostream &stream,const PathObject::Type &type)
@@ -72,6 +165,8 @@ std::ostream &operator<<(std::ostream &stream,const PathObject::Type &type)
       return stream;
   }
 }
+
+
 
 
 bool is_dataset(const PathObject &object) noexcept

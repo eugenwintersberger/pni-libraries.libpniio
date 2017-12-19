@@ -94,6 +94,13 @@ Path get_path(const hdf5::node::Node &node)
   return get_path(node.link());
 }
 
+Path get_path(const hdf5::attribute::Attribute &attribute)
+{
+  Path parent_path = get_path(attribute.parent_link());
+  parent_path.attribute(attribute.name());
+  return parent_path;
+}
+
 } // namespace nexus
 } // namespace io
 } // namespace pni
