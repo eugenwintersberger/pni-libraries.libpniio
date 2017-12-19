@@ -1,0 +1,20 @@
+<group name="/" type="NXroot">
+<group name="scan_1" type="NXentry">
+	<group name="instrument" type="NXinstrument">
+		
+	</group>
+</group>
+
+<group name="scan_2" type="NXentry">
+	<group name="instrument" type="NXinstrument">
+		
+	</group>
+</group>
+
+<group name="scan_3" type="NXentry">
+	<group name="instrument" type="NXinstrument">
+		
+	</group>
+</group>
+
+</group>

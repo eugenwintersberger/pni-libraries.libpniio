@@ -23,6 +23,7 @@
 
 #include <pni/io/nexus/containers.hpp>
 #include <algorithm>
+#include <pni/io/nexus/path/path_object.hpp>
 
 namespace pni {
 namespace io {
@@ -33,6 +34,15 @@ GroupList::GroupList(const NodeList &nodes)
   std::copy(nodes.begin(),nodes.end(),std::back_inserter(*this));
 }
 
+GroupList::GroupList(const PathObjectList &list)
+{
+  std::copy(list.begin(),list.end(),std::back_inserter(*this));
+}
+
+DatasetList::DatasetList(const PathObjectList &list)
+{
+  std::copy(list.begin(),list.end(),std::back_inserter(*this));
+}
 
 } // namespace nexus
 } // namespace io

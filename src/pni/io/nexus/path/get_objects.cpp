@@ -21,11 +21,49 @@
 // Created on: Dec 18, 2017
 //
 #include <pni/io/nexus/path/utils.hpp>
+#include <pni/io/nexus/path/make_relative.hpp>
 #include <algorithm>
 
 namespace pni {
 namespace io {
 namespace nexus {
+
+class AbsolutePathMatcher
+{
+  public:
+    AbsolutePathMatcher(const Path &path):
+      path_(path)
+    {}
+
+    bool operator()(const hdf5::node::Node &node) const
+    {
+      Path node_path = get_path(node);
+      bool result = match(node_path,path_);
+      return result;
+    }
+
+  private:
+    Path path_;
+};
+
+class RelativePathMatcher
+{
+  public:
+    RelativePathMatcher(const Path &path,const Path &base_path):
+      path_(path),
+      base_path_(base_path)
+    {}
+
+    bool operator()(const hdf5::node::Node &node) const
+    {
+      Path node_path = make_relative(base_path_,get_path(node));
+      return match(node_path,path_);
+    }
+
+  private:
+    Path path_;
+    Path base_path_;
+};
 
 PathObjectList get_objects(const hdf5::node::Group &base,const Path &path)
 {
@@ -34,11 +72,14 @@ PathObjectList get_objects(const hdf5::node::Group &base,const Path &path)
   auto iter_begin = hdf5::node::RecursiveNodeIterator::begin(base);
   auto iter_end = hdf5::node::RecursiveNodeIterator::end(base);
 
-  std::copy_if(iter_begin,iter_end,std::back_inserter(list),
-               [&path](const hdf5::node::Node &node)
-               {
-                return match(get_path(node),path);
-               });
+  if(is_absolute(path))
+    std::copy_if(iter_begin,iter_end,
+                 std::back_inserter(list),
+                 AbsolutePathMatcher(path));
+  else
+    std::copy_if(iter_begin,iter_end,
+                 std::back_inserter(list),
+                 RelativePathMatcher(path,get_path(base)));
 
   return list;
 }

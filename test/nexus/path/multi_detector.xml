@@ -1,0 +1,18 @@
+<group name="scan_1" type="NXentry">
+	<group name="instrument" type="NXinstrument">
+		<group name="detector_1" type="NXdetector">
+			<field name="data" type="uint16" units="cps">
+			</field>
+		</group>
+		
+		<group name="detector_2" type="NXdetector">
+			<field name="data" type="uint16" units="cps">
+			</field>
+		</group>
+		
+		<group name="detector_3" type="NXdetector">
+			<field name="data" type="uint16" units="cps">
+			</field>
+		</group>
+	</group>
+</group>
