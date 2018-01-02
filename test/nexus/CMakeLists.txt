@@ -13,6 +13,16 @@ add_dependencies(check nexus_base_class_test)
 
 add_boost_logging_test("nexus::base_class" nexus_base_class_test
 	                   ${CMAKE_CURRENT_BINARY_DIR})
+	               
+set(SOURCES field_test.cpp)
+
+set_boost_test_definitions(SOURCES "Testing fields")
+add_executable(nexus_field_test EXCLUDE_FROM_ALL ${SOURCES})
+target_link_libraries(nexus_field_test pniio Boost::unit_test_framework)
+add_dependencies(check nexus_field_test)
+
+add_boost_logging_test("nexus::field" nexus_field_test
+                       ${CMAKE_CURRENT_BINARY_DIR})
 	                  
 	                  
 set(PREDICATE_SOURCES predicate_test.cpp)

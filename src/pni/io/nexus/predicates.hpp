@@ -24,6 +24,7 @@
 
 #include <h5cpp/hdf5.hpp>
 #include <pni/io/windows.hpp>
+#include <boost/regex.hpp>
 
 namespace pni {
 namespace io {
@@ -206,6 +207,24 @@ class PNIIO_EXPORT IsData : public IsBaseClass
   public:
     IsData();
     IsData(const IsData &) = default;
+};
+
+//!
+//! @brief predicate checking a NeXus name
+//!
+//! This predicate is checking a string if it is a valid NeXus name.
+//! The regular expression used for this check is given
+//! <a href="http://download.nexusformat.org/doc/html/datarules.html?highlight=valid%20name">
+//! here</a>.
+//!
+class IsValidNeXusName
+{
+  private:
+    boost::regex name_regex_;
+  public:
+    IsValidNeXusName();
+
+    bool operator()(const std::string &name) const;
 };
 
 

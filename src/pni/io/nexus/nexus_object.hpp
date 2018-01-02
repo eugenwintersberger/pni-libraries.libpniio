@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2017 DESY
+// (c) Copyright 2018 DESY
 //
 // This file is part of libpniio.
 //
@@ -18,22 +18,29 @@
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-// Created on: Dec 8, 2017
+// Created on: Jan 2, 2018
 //
 #pragma once
 
-#include <pni/io/nexus/algorithms.hpp>
-#include <pni/io/nexus/base_class.hpp>
-#include <pni/io/nexus/containers.hpp>
-#include <pni/io/nexus/datatype_factory.hpp>
-#include <pni/io/nexus/date_time.hpp>
-#include <pni/io/nexus/file.hpp>
-#include <pni/io/nexus/hdf5_support.hpp>
-#include <pni/io/nexus/object_builder.hpp>
-#include <pni/io/nexus/predicates.hpp>
-#include <pni/io/nexus/transformations.hpp>
-#include <pni/io/nexus/version.hpp>
-#include <pni/io/nexus/path.hpp>
-#include <pni/io/nexus/xml/create.hpp>
-#include <pni/io/nexus/nexus_object.hpp>
-#include <pni/io/nexus/field.hpp>
+#include <string>
+#include <h5cpp/hdf5.hpp>
+
+namespace pni {
+namespace io {
+namespace nexus {
+
+//!
+//! @brief base class for NeXus objects
+//!
+//! This class does nothing but checking whether
+class NeXusObject
+{
+  public:
+    NeXusObject() = default;
+    NeXusObject(const hdf5::Path &path);
+    NeXusObject(const NeXusObject &) = default;
+};
+
+} // namespace nexus
+} // namespace io
+} // namespace pni

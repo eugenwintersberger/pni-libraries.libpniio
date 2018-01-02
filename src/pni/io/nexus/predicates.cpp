@@ -22,6 +22,7 @@
 //
 
 #include <pni/io/nexus/predicates.hpp>
+#include <boost/regex.hpp>
 
 namespace pni {
 namespace io {
@@ -82,6 +83,16 @@ IsSample::IsSample():
 IsData::IsData():
     IsBaseClass("NXdata")
 {}
+
+
+IsValidNeXusName::IsValidNeXusName():
+    name_regex_("[a-z_][a-z\\d_]*")
+{}
+
+bool IsValidNeXusName::operator()(const std::string &name) const
+{
+  return boost::regex_match(name,name_regex_);
+}
 
 
 
