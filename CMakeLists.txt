@@ -3,7 +3,7 @@ project(pniio
         LANGUAGES CXX C
         VERSION 1.2.0)
 include(CTest)
-add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND})
+
 
 # =============================================================================
 # set library package and SOName. As this is partly a header only library the
@@ -24,6 +24,19 @@ include(cmake/common/InstallConfig.cmake)
 include(cmake/common/OutputDirConfig.cmake)
 include(cmake/common/PackageConfig.cmake)
 include(cmake/common/WindowsUtils.cmake)
+include(cmake/common/DoxygenUtils.cmake)
+include(cmake/common/SphinxUtils.cmake)
+
+
+#
+# add check target to build and run the tests
+#
+add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} -C ${CMAKE_BUILD_TYPE})
+
+#
+# add a custom target to build the HTML documentation
+#
+add_custom_target(html)
 
 # =============================================================================
 # determine from which source to get dependencies
@@ -69,5 +82,5 @@ install(FILES ${PROJECT_BINARY_DIR}/${PACKAGE_CONFIG_FILE_NAME}
 
 #need this to get the generated header files into the build.
 add_subdirectory("src")
-#add_subdirectory("doc")
+add_subdirectory("doc")
 add_subdirectory("test")
