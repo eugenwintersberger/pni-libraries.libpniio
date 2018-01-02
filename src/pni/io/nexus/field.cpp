@@ -49,7 +49,7 @@ ChunkedField::ChunkedField(const hdf5::node::Node &node):
     NeXusObject(),
     hdf5::node::ChunkedDataset()
 {
-  *this = hdf5::node::Dataset(node);
+  Dataset::operator=(node);
 }
 
 hdf5::Dimensions ChunkedField::default_chunk_shape(const hdf5::dataspace::Simple &space)
@@ -80,11 +80,13 @@ ChunkedField::ChunkedField(const hdf5::node::Group &parent,
                                hdf5::node::ChunkedDataset()
 {
   if(chunk_shape.empty())
-    *this = hdf5::node::ChunkedDataset(parent,path,type,space,
+    ChunkedDataset::operator=(hdf5::node::ChunkedDataset(parent,path,type,space,
                                        default_chunk_shape(space),
-                                       lcpl,dcpl,acpl);
+                                       lcpl,dcpl,acpl));
   else
-    *this = hdf5::node::ChunkedDataset(parent,path,type,space,chunk_shape,lcpl,dcpl,acpl);
+    ChunkedDataset::operator=(hdf5::node::ChunkedDataset(parent,path,type,
+                                                         space,chunk_shape,
+                                                         lcpl,dcpl,acpl));
 
 }
 
