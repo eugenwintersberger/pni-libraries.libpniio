@@ -126,4 +126,25 @@ BOOST_AUTO_TEST_CASE(IsData)
 
 BOOST_AUTO_TEST_SUITE_END()
 
+BOOST_AUTO_TEST_SUITE(NeXusNameConventionCheck)
+
+BOOST_AUTO_TEST_CASE(test_valid_names)
+{
+  nexus::IsValidNeXusName check;
+  BOOST_CHECK(check("temperature"));
+  BOOST_CHECK(check("log"));
+  BOOST_CHECK(check("sample_temperature"));
+}
+
+BOOST_AUTO_TEST_CASE(test_invalid_names)
+{
+  nexus::IsValidNeXusName check;
+  BOOST_CHECK(!check("sample temperature"));
+  BOOST_CHECK(!check("Sample"));
+  BOOST_CHECK(!check(" Hello"));
+  BOOST_CHECK(!check("sample$temperature"));
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
 BOOST_AUTO_TEST_SUITE_END()
