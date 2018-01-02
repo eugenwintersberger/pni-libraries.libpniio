@@ -1,6 +1,9 @@
-%%% a general introduction to libpniio
+====================================
+A general introduction to *libpniio*
+====================================
 
-\libpniio\ is the IO library within the PNI library stack. More precisely it is
+
+*libpniio* is the IO library within the PNI library stack. More precisely it is
 responsible for file IO. Although several legacy formats are supported the
 library mainly deals with Nexus files providing functions and objects to deal
 with these kind of files. 
