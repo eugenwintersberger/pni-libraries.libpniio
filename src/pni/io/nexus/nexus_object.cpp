@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2017 DESY
+// (c) Copyright 2018 DESY
 //
 // This file is part of libpniio.
 //
@@ -18,48 +18,30 @@
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-// Created on: Dec 7, 2017
+// Created on: Jan 2, 2018
 //
-#include <pni/io/nexus/base_class.hpp>
+
+#include <pni/io/nexus/nexus_object.hpp>
 #include <pni/io/nexus/predicates.hpp>
+#include <stdexcept>
+#include <sstream>
 
 namespace pni {
 namespace io {
 namespace nexus {
 
-BaseClass::BaseClass(const hdf5::node::Group &parent,
-           const hdf5::Path &path,
-           const std::string &class_name,
-           const hdf5::property::LinkCreationList &lcpl,
-           const hdf5::property::GroupCreationList &gcpl,
-           const hdf5::property::GroupAccessList &gapl):
-    NeXusObject(path),
-    Group(parent,path,lcpl,gcpl,gapl)
+NeXusObject::NeXusObject(const hdf5::Path &path)
 {
+  IsValidNeXusName name_check;
 
-  auto type = hdf5::datatype::create<std::string>();
-  hdf5::dataspace::Scalar space;
-  attributes.create("NX_class",type,space).write(class_name);
-}
-
-BaseClass::BaseClass(const hdf5::node::Node &node):
-    NeXusObject(),
-    Group(node)
-{
-  if(!attributes.exists("NX_class"))
+  if(!name_check(path.name()))
   {
     std::stringstream ss;
-    ss<<"Node "<<link().path()<<" is not a base class!";
+    ss<<"Failure to create a NeXus base class!";
+    ss<<"The path ["<<path<<"] does not comply with the NeXus name rules!";
     throw std::runtime_error(ss.str());
   }
 }
-
- std::string BaseClass::get_class() const
- {
-   std::string value;
-   attributes["NX_class"].read(value);
-   return value;
- }
 
 } // namespace nexus
 } // namespace io

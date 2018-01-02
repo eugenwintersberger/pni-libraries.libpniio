@@ -56,6 +56,12 @@ BOOST_AUTO_TEST_CASE(using_constructor)
   BOOST_CHECK_EQUAL(c.get_class(),"NXentry");
 }
 
+BOOST_AUTO_TEST_CASE(invalid_name)
+{
+  BOOST_CHECK_THROW((nexus::BaseClass(root_group,"Entry","NXentry")),std::runtime_error);
+  BOOST_CHECK(!root_group.nodes.exists("Entry"));
+}
+
 BOOST_AUTO_TEST_CASE(construct_from_group_or_node)
 {
   hdf5::node::Node n = nexus::BaseClass(root_group,"entry","NXentry");
