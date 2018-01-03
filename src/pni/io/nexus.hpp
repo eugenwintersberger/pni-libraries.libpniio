@@ -36,4 +36,4 @@
 #include <pni/io/nexus/path.hpp>
 #include <pni/io/nexus/xml/create.hpp>
 #include <pni/io/nexus/nexus_object.hpp>
-#include <pni/io/nexus/field.hpp>
+#include <pni/io/nexus/field_factory.hpp>
