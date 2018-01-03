@@ -154,15 +154,15 @@ bool is_nexus_file(const filesystem::path &path)
   return base_class == "NXroot";
 }
 
-file::File open(const filesystem::path &path,
+file::File open_file(const filesystem::path &path,
                       file::AccessFlags flags,
                       const property::FileAccessList &fapl)
 {
-  return open(path,static_cast<file::AccessFlagsBase>(flags),fapl);
+  return open_file(path,static_cast<file::AccessFlagsBase>(flags),fapl);
 }
 
 
-file::File open(const filesystem::path &path,
+file::File open_file(const filesystem::path &path,
                 file::AccessFlagsBase flags,
                 const property::FileAccessList &fapl)
 {

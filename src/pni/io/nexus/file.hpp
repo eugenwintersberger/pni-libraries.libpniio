@@ -96,12 +96,12 @@ hdf5::file::File create_file(const boost::filesystem::path &path,
 //! @return instance of hdf5::file::File
 //!
 PNIIO_EXPORT
-hdf5::file::File open(const boost::filesystem::path &path,
+hdf5::file::File open_file(const boost::filesystem::path &path,
                       hdf5::file::AccessFlags flags = hdf5::file::AccessFlags::READONLY,
                       const hdf5::property::FileAccessList &fapl = hdf5::property::FileAccessList());
 
 PNIIO_EXPORT
-hdf5::file::File open(const boost::filesystem::path &path,
+hdf5::file::File open_file(const boost::filesystem::path &path,
                       hdf5::file::AccessFlagsBase flags,
                       const hdf5::property::FileAccessList &fapl = hdf5::property::FileAccessList());
 
