@@ -28,7 +28,7 @@ using namespace pni::io;
 
 ContainerTestFixture::ContainerTestFixture()
 {
-  file = nexus::create("ContainerTest.nxs",hdf5::file::AccessFlags::TRUNCATE);
+  file = nexus::create_file("ContainerTest.nxs",hdf5::file::AccessFlags::TRUNCATE);
   root_group = file.root();
   nexus::xml::create_from_file(root_group,"container_test.xml");
 }

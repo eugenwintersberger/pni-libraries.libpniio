@@ -33,7 +33,7 @@ struct SearchTestFixture
     node::Group entry;
     SearchTestFixture()
     {
-      nexus_file = nexus::create("SearchTest.nxs",file::AccessFlags::TRUNCATE);
+      nexus_file = nexus::create_file("SearchTest.nxs",file::AccessFlags::TRUNCATE);
       root_group = nexus_file.root();
 
       entry = nexus::BaseClass(root_group,"entry_01","NXentry");

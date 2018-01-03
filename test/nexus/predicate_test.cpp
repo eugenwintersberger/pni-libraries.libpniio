@@ -36,7 +36,7 @@ struct PredicateTestFixture
 
     PredicateTestFixture()
     {
-      nexus_file = nexus::create("PredicateTest.nxs",
+      nexus_file = nexus::create_file("PredicateTest.nxs",
                                  file::AccessFlags::TRUNCATE);
       root_group = nexus_file.root();
       dataset = node::Dataset(root_group,"data",

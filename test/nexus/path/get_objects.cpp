@@ -34,11 +34,11 @@ struct GetObjectFixture
 
     GetObjectFixture()
     {
-      multi_entry = nexus::create("multi_entry.nxs",hdf5::file::AccessFlags::TRUNCATE);
+      multi_entry = nexus::create_file("multi_entry.nxs",hdf5::file::AccessFlags::TRUNCATE);
       base = multi_entry.root();
       nexus::xml::create_from_file(base,"multi_entry.xml");
 
-      multi_detector = nexus::create("multi_detector.nxs",hdf5::file::AccessFlags::TRUNCATE);
+      multi_detector = nexus::create_file("multi_detector.nxs",hdf5::file::AccessFlags::TRUNCATE);
       nexus::xml::create_from_file(multi_detector.root(),"multi_detector.xml");
     }
 };

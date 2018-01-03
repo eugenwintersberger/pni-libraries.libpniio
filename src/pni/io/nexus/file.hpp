@@ -69,16 +69,16 @@ PNIIO_EXPORT bool is_nexus_file(const boost::filesystem::path &path);
 //! @return instance of hdf5::file::File
 //!
 PNIIO_EXPORT
-hdf5::file::File create(const boost::filesystem::path &path,
-                        hdf5::file::AccessFlags flags = hdf5::file::AccessFlags::EXCLUSIVE,
-                        const hdf5::property::FileCreationList &fcpl = hdf5::property::FileCreationList(),
-                        const hdf5::property::FileAccessList &fapl = hdf5::property::FileAccessList());
+hdf5::file::File create_file(const boost::filesystem::path &path,
+                             hdf5::file::AccessFlags flags = hdf5::file::AccessFlags::EXCLUSIVE,
+                             const hdf5::property::FileCreationList &fcpl = hdf5::property::FileCreationList(),
+                             const hdf5::property::FileAccessList &fapl = hdf5::property::FileAccessList());
 
 PNIIO_EXPORT
-hdf5::file::File create(const boost::filesystem::path &path,
-                        hdf5::file::AccessFlagsBase flags,
-                        const hdf5::property::FileCreationList &fcpl = hdf5::property::FileCreationList(),
-                        const hdf5::property::FileAccessList &fapl = hdf5::property::FileAccessList());
+hdf5::file::File create_file(const boost::filesystem::path &path,
+                             hdf5::file::AccessFlagsBase flags,
+                             const hdf5::property::FileCreationList &fcpl = hdf5::property::FileCreationList(),
+                             const hdf5::property::FileAccessList &fapl = hdf5::property::FileAccessList());
 
 //!
 //! @brief open an existing NeXus file

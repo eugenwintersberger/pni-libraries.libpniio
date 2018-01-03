@@ -1,20 +1,24 @@
-%%%describing the basic usage
+==========================
+Basic usage of NeXus files
+==========================
 
 This chapter deals with the basic interface provided by the layer 1 types
-implemented in \libpniio. All types concerning Nexus reside in one of the
-namespaces embedded in {\tt pni::io::nx}. The namespaces below this one 
-indicate either a particular storage backend (currently only HDF5 is
-implemented).
+implemented in *libpniio*. All types concerning Nexus reside in the
+``pni::io::nexus`` namespace. 
 
 To use the Nexus part of the library just add 
-\begin{cppcode}
-#include <pni/io/nx/nx.hpp>
-\end{cppcode}
+
+.. code-block:: cpp
+
+   #include <pni/io/nexus.hpp>
+
 to your source file. 
 
-%%%===========================================================================
-\section{Working with files}
-\input{tex/nexus_files.tex}
+.. toctree:: 
+   :maxdepth: 1
+   
+   nexus_files
+
 
 
 %%%===========================================================================

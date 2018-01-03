@@ -1,33 +1,50 @@
+==================
+Working with files
+==================
 
-\subsection{Creating single files}
-The simplest approach towards handling \nexus-files is to create a single file 
+Creating single files
+=====================
+
+In order to create a file *libpniio* provides some simple wrappers around 
+the :cpp:func:`hdf5::file::create` functions provided by *h5cpp*. These wrappers
+basically add all the attributes to the root group of an HDF5 file required 
+by the NeXus standard. 
+
+The simplest approach towards handling NeXus-files is to create a single file 
 to store data. This can be achieved with the \cpp{create\_file} static member 
 function of \cpp{nxfile}.
-\begin{cppcode}
-#include <pni/io/nx/nx.hpp>
 
-using namespace pni::io::nx;
+.. code-block:: cpp
 
-int main(int argc,char **argv)
-{
-    h5::nxfile file = h5::nxfile::create_file("test.nxs");
-    //... code omitted ...
-    file.close();
+   #include <pni/io/nexus.hpp>
+   #include <h5cpp/hdf5.hpp>
+   
+   using namespace pni::io;
+   
+   int main(int argc,char **argv)
+   {
+       hdf5::file::File file = nexus::create_file("test.nxs");
+       //... code omitted ...
+       file.close();
+   
+       return 0;
+   }
 
-    return 0;
-}
-\end{cppcode}
 The code should be rather self explaining.  If the file already exists a
-\cpp{object\_error} exception is thrown. 
+:cpp:class:`std::runtime_error` exception is thrown. 
 In order to overwrite an existing file one can use
-\begin{cppcode}
-h5::nxfile file = h5::nxfile::create_file("test.nxs",true);
-\end{cppcode}
+
+.. code-block:: cpp
+
+   h5::file::File file = nexus::create_file("test.nxs",hdf5::file::AccessFlags::TRUNCATE);
+
 where the second argument to \cpp{create\_file} enables overwriting an existing
 file of same name. This option should be used with case as all data stored in 
 the original file will be lost forever. 
 
-\subsection{Create distributed files}
+Create distributed files
+========================
+
 In cases where a single data file would grow rather large (more than $40$ GByte
 for instance) creating a single large file is not a good solution. One problem
 is the transfer of the file via the network. It would require a quite
@@ -54,7 +71,7 @@ would yield the following files
 test.0001.nxs
 test.0002.nxs
 test.0003.nxs
-...
+.............
 \end{minted}
 As for the simple \cpp{create\_file}, \cpp{create\_files} will throw an
 \cpp{object\_error} exception if a file already exists. In order to overwrite an
@@ -67,8 +84,9 @@ but just truncated (their size becomes $0$). So do not wonder that you still
 find all the member files of a set even after overwriting it. Their size will be
 set to zero.
 
-%%%===========================================================================
-\subsection{Opening and closing files}
+
+Opening and closing files
+=========================
 
 If a file already exist the {\tt open\_file} static member function of the
 \nxfile\ should be used.  Its signature is rather simple 
@@ -101,8 +119,9 @@ h5::nxfile f = ...;
 f.close();
 \end{cppcode}
 
-%%%===========================================================================
-\subsection{Other file related functions}
+
+Other file related functions
+============================
 
 Like virtually all level $1$ objects in \libpniio\ \nxfile\ posses an
 \cpp{is\_valid} inquiry method. It can be used to check whether or not an

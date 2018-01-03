@@ -58,14 +58,14 @@ namespace io {
 namespace nexus {
 
 
-file::File create(const filesystem::path &path,file::AccessFlags flags,
+file::File create_file(const filesystem::path &path,file::AccessFlags flags,
                         const property::FileCreationList &fcpl,
                         const property::FileAccessList &fapl)
 {
-  return create(path,static_cast<file::AccessFlagsBase>(flags),fcpl,fapl);
+  return create_file(path,static_cast<file::AccessFlagsBase>(flags),fcpl,fapl);
 }
 
-file::File create(const filesystem::path &path,
+file::File create_file(const filesystem::path &path,
                         file::AccessFlagsBase flags,
                         const property::FileCreationList &fcpl,
                         const property::FileAccessList &fapl)

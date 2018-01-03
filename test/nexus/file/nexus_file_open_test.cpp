@@ -30,7 +30,7 @@ struct OpenTestsFixture
 {
     OpenTestsFixture()
     {
-       nexus::create("open_test.nxs",hdf5::file::AccessFlags::TRUNCATE);
+       nexus::create_file("open_test.nxs",hdf5::file::AccessFlags::TRUNCATE);
     }
 };
 
