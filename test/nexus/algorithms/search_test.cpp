@@ -36,14 +36,14 @@ struct SearchTestFixture
       nexus_file = nexus::create_file("SearchTest.nxs",file::AccessFlags::TRUNCATE);
       root_group = nexus_file.root();
 
-      entry = nexus::BaseClass(root_group,"entry_01","NXentry");
+      entry = nexus::BaseClassFactory::create(root_group,"entry_01","NXentry");
 
-      nexus::BaseClass instrument(entry,"instrument","NXinstrument");
-      nexus::BaseClass(instrument,"detector_1","NXdetector");
-      nexus::BaseClass(instrument,"detector_2","NXdetector");
+      node::Group instrument = nexus::BaseClassFactory::create(entry,"instrument","NXinstrument");
+      nexus::BaseClassFactory::create(instrument,"detector_1","NXdetector");
+      nexus::BaseClassFactory::create(instrument,"detector_2","NXdetector");
 
-      nexus::BaseClass(root_group,"entry_02","NXentry");
-      nexus::BaseClass(root_group,"entry_03","NXentry");
+      nexus::BaseClassFactory::create(root_group,"entry_02","NXentry");
+      nexus::BaseClassFactory::create(root_group,"entry_03","NXentry");
     }
 };
 

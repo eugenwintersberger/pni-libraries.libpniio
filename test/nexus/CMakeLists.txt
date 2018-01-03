@@ -4,14 +4,14 @@ add_subdirectory(algorithms)
 add_subdirectory(xml)
 add_subdirectory(path)
 
-set(SOURCES base_class_test.cpp)
+set(SOURCES base_class_factory_test.cpp)
 
-set_boost_test_definitions(SOURCES "Testing BaseClass functionality")
-add_executable(nexus_base_class_test EXCLUDE_FROM_ALL ${SOURCES})
-target_link_libraries(nexus_base_class_test pniio Boost::unit_test_framework)
-add_dependencies(check nexus_base_class_test)
+set_boost_test_definitions(SOURCES "Testing BaseClassFactory functionality")
+add_executable(nexus_base_class_factory_test EXCLUDE_FROM_ALL ${SOURCES})
+target_link_libraries(nexus_base_class_factory_test pniio Boost::unit_test_framework)
+add_dependencies(check nexus_base_class_factory_test)
 
-add_boost_logging_test("nexus::base_class" nexus_base_class_test
+add_boost_logging_test("nexus::base_class_factory" nexus_base_class_factory_test
 	                   ${CMAKE_CURRENT_BINARY_DIR})
 	               
 set(SOURCES field_test.cpp)

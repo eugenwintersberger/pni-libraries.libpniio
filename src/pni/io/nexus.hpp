@@ -23,7 +23,7 @@
 #pragma once
 
 #include <pni/io/nexus/algorithms.hpp>
-#include <pni/io/nexus/base_class.hpp>
+#include <pni/io/nexus/base_class_factory.hpp>
 #include <pni/io/nexus/containers.hpp>
 #include <pni/io/nexus/datatype_factory.hpp>
 #include <pni/io/nexus/date_time.hpp>
