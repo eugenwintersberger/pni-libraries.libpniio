@@ -115,50 +115,20 @@ data manipulations. To open a file for reading and writing use
    hdf5::file::File f = nexus::open_file("test.nxs",hdf5::file::AccessFlags::READWRITE);
 
 The object returned by :cpp:func:`nexus::open_file` is again an instance 
-of :cpp:func:`hdf5::file::File`.
+of :cpp:func:`hdf5::file::File`. The :cpp:func:`nexus::open_file` does 
+not check whether or not is a valid NeXus file. In order to perform that 
+check use the :cpp:func:`is_nexus_file`
 
+.. code-block:: cpp
 
-Other file related functions
-============================
+   boost::filesystem::path file_path = ...;
+   
+   if(!nexus::is_nexus_file(file_path))
+   {
+      std::cerr<<"File "<<file_path<<" is not a valid NeXus file!"<<std::endl;
+      return 1;
+   }
+   
+   hdf5::file::File file = nexus::open_file(file_path);
 
-Like virtually all level $1$ objects in \libpniio\ \nxfile\ posses an
-\cpp{is\_valid} inquiry method. It can be used to check whether or not an
-objects is a valid instance or not. This is necessary as a default constructed
-file is not a valid instance. 
-\begin{cppcode}
-h5::nxfile f = ...;
-...code omitted ...
-if(!f.is_valid())
-    std::cerr<<"Something went wrong!"<<std::endl;
-\end{cppcode}
-You can also check whether a file is read-only or not by means of the 
-\cpp{is\_readonly} member function 
-\begin{cppcode}
-h5::nxfile f = ...;
-...code omitted ...
-if(f.is_readonly())
-    std::cerr<<"File is in read-only mode!"<<std::endl;
-\end{cppcode}
-As one can see from the API documentation, the interface of \nxfile\ is rather
-simple. In order to do anything useful (like creating groups and fields) one 
-has to obtain the root group of the file. This can be done with the 
-\cpp{root} member function
-\begin{cppcode}
-h5::nxfile f = ...;
-h5::nxgroup root = f.root();
-\end{cppcode}
-Finally there is an important member function named \cpp{flush}. Whenever
-possible use this function to explicitly hand over data from the underlying
-storage library to the operating system for writing.
-\begin{cppcode}
-h5::nxfile f =....;
-
-while(measurement_running())
-{
-    //record data
-
-    //flush the file
-    f.flush();
-}
-\end{cppcode}
 
