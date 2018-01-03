@@ -3,7 +3,8 @@ set(RST_SOURCES index.rst
                 installation.rst
                 usage.rst
                 legacy.rst
-                nexus_introduction.rst)
+                nexus_introduction.rst
+                nexus_path.rst)
 
 foreach(RST_SOURCE ${RST_SOURCES})
     configure_file(${RST_SOURCE} ${RST_SOURCE} COPYONLY)

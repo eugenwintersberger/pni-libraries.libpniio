@@ -10,3 +10,4 @@ Users guide
    usage
    legacy
    nexus_introduction
+   nexus_path
