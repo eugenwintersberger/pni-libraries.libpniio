@@ -1,57 +1,60 @@
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
-#include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/algorithms.hpp>
-#include <pni/io/nx/nxpath.hpp>
+#include <pni/io/nexus.hpp>
+#include <h5cpp/hdf5.hpp>
+#include <algorithm>
+#include <boost/filesystem.hpp>
+
 
 using namespace pni::core;
-using namespace pni::io::nx;
+using namespace pni::io;
 
 
-void write_data(string fname,size_t np,size_t nx,size_t ny)
+void write_data(const boost::filesystem::path &file_path,size_t np,size_t nx,size_t ny)
 {
     auto frame = dynamic_array<uint32>::create(shape_t{nx,ny});
 
-    h5::nxfile file = h5::nxfile::create_file(fname,true);
+    hdf5::file::File file = nexus::create_file(file_path,hdf5::file::AccessFlags::TRUNCATE);
 
-    h5::nxgroup g = file.root().create_group("scan","NXentry");
-    g = g.create_group("instrument","NXinstrument");
-    g = g.create_group("detector","NXdetector");
+    hdf5::node::Group group = nexus::BaseClassFactory::create(file.root(),"scan","NXentry");
+    group = nexus::BaseClassFactory::create(group,"instrument","NXinstrument");
+    group = nexus::BaseClassFactory::create(group,"detector","NXdetector");
 
-    h5::nxdeflate_filter filter(8,true);
-    h5::nxfield data = g.create_field<uint32>("data",shape_t{0,nx,ny},
-                                          shape_t{1,nx,ny},filter);
+    hdf5::filter::Deflate deflate(8);
+    hdf5::filter::Shuffle shuffle;
+    hdf5::dataspace::Simple space{{0,nx,ny},{hdf5::dataspace::Simple::UNLIMITED,nx,ny}};
+    hdf5::Dimensions chunk_dims{1,nx,ny};
+    auto type = hdf5::datatype::create<int>();
+    hdf5::property::LinkCreationList lcpl;
+    hdf5::property::DatasetCreationList dcpl;
+    shuffle(dcpl);
+    deflate(dcpl);
 
+    hdf5::node::Dataset field = nexus::FieldFactory::create(group,"data",type,space,chunk_dims,lcpl,dcpl);
+
+    hdf5::dataspace::Hyperslab selection{{0,0,0},{1,nx,ny}};
     for(size_t i=0;i<np;i++)
     {
         //read data
         std::fill(frame.begin(),frame.end(),i);
         //extend field
-        data.grow(0);
-        data(i,slice(0,nx),slice(0,ny)).write(frame);
+        field.extent(0,1);
+        selection.offset(0,i);
+        field.write(frame,selection);
     }
-
-    //close everything
-    g.close();
-    data.close();
-    file.close();
 }
 
 //----------------------------------------------------------------------------
-void read_data(const nxpath &path)
+void read_data(const nexus::Path &path)
 {
     typedef dynamic_array<float64> array_type;
 
-    h5::nxfile file = h5::nxfile::open_file(path.filename(),false);
-    h5::nxfield field = get_object(file.root(),path);
+    hdf5::file::File file = nexus::open_file(path.filename());
+    nexus::DatasetList fields = nexus::get_objects(file.root(),path);
     
-    auto data = array_type::create(field.shape<shape_t>());
+    auto data = array_type::create(hdf5::dataspace::Simple(fields[0].dataspace()).current_dimensions());
     
-    field.read(data);
-
-    //close everything
-    field.close();
-    file.close();
+    fields[0].read(data);
 }
 
 //----------------------------------------------------------------------------
@@ -65,7 +68,7 @@ int main(int argc,char **argv)
     std::cout<<"reading data ..."<<std::endl;
     string target_path = "simple_io.nxs://:NXentry/:NXinstrument/"
                          ":NXdetector/data";
-    read_data(nxpath::from_string(target_path));
+    read_data(nexus::Path::from_string(target_path));
     std::cout<<"program finished ..."<<std::endl;
 
     return 0;
