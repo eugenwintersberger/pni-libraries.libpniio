@@ -31,3 +31,4 @@ of facilities has agreed upon `NeXus`_ file format.
    nexus_files
    nexus_groups
    nexus_retrieval
+   nexus_xml

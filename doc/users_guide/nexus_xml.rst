@@ -1,58 +1,80 @@
-%%%documentation concerning the XML functions
+===========
+XML support
+===========
 
-As \nexus\ organizes data objects in a tree like manner, XML is the obvious 
-ASCII representation for a \nexus\ file.
-\libpniio\ thus provides a small but powerful set of functions to read and 
-write \nexus\ data objects from and to XML files. The framework is based on the 
-\cpp{boost::property\_tree} library. Clearly, the XML functionality provided 
-by \libpniio\ does in no case replace a full XML parser. For instance, there 
-are no functions provided to manipulate the the XML content returned from 
-any of the functions. However, as the \cpp{node} type used to represent XML 
-data is an alias for the \cpp{boost::property\_tree} node type, one can use
-functions from \cpp{boost::property\_tree} to do some additional work with the
-XML results.
-\libpniio\ provides two interfaces\
-\begin{itemize}
-\item a high level interface which consists of basically two functions. The 
-high level interface is described in section~\ref{sec:xml:highlevel}
-\item And a low level interface -- these are the classes and functions used to
-build the high level interface (described in section~\ref{sec:xml:lowlevel}).
-\end{itemize}
-Aside from this there are some simple functions which are common to both
-interfaces and described in section~\ref{sec:xml:basic}.
+NeXus files can grow quite complex it would be rather tedious to express
+the structure of such a file entirely in code. 
+*libpniio* provides a way to create NeXus structures from XML. Like HDF5, 
+XML structures data in a tree like hierarchy, making it the perfekt ASCII 
+representation for a NeXus file. 
 
-%%%---------------------------------------------------------------------------
-\subsection{Basic XML handling}\label{sec:xml:basic}
+Generating objects
+==================
 
-All XML related functions and classes resided within a separate namespace 
-\cpp{pni::io::nx::xml}. An XML document is represented by an instance of 
-type \cpp{node}. \cpp{node} is an alias for \cpp{boost::property\_tree::ptree}. 
-Thus it can be used along with all functions an methods provided by the 
-\cpp{ptree} type provided by \cpp{boost::property\_tree}. Aside from the 
-functionality from \cpp{boost::property\_tree} \libpniio\ provides some 
-\nexus\ related convenience functions. 
+The XML content can come from two sources 
 
-An instance of \cpp{node} can be created either from a string
-\begin{cppcode}
-    xml::node n = xml::create_from_string(xmldata);
-\end{cppcode}
-where \cpp{xmldata} is a string with the XML content, 
-or from a file
-\begin{cppcode}
-    xml::node n = xml::create_from_file(fname);
-\end{cppcode}
-where \cpp{fname} is a string with the name of the file. Both functions 
-return the root node of the XML document. See the \cpp{property\_tree}
-documentation in the \cpp{BOOST} distribution for more information what one can
-do with such an object. For the rest of this chapter no additional knowledge
-about \cpp{BOOST}s \cpp{property\_tree} library is required.
-To write the content of a node to a stream one can use the default 
-output stream operator
-\begin{cppcode}
-    xml::node n = ....;
-    std::cout<<n<<std::endl;
-\end{cppcode}
+* a file 
+* or from a string. 
 
+Using the XML interface is rather simple. Consider that we have the structure
+of the file expressed as XML and stored in a file :file:`file_structure.xml`
+using this is simply  
+
+.. code-block:: cpp
+
+   hdf5::node::Group root_group = file.root(); 
+   
+   nexus::xml::create_from_file(root_group,"file_structure.xml");
+   
+Alternatively you could use XML content from a string 
+
+.. code-block:: cpp
+
+   hdf5::node::Group instrument = hdf5::node::get_node(root_group,"/entry/instrument");
+   
+   std::string detector_struct = create_detector_structure();
+   nexus::xml::create_from_string(instrument,detector_struct); 
+
+As can be seen from this example the XML data must not contain the entire 
+file structure. Instead it would be possible to provide separate XML files 
+with different components of the file. 
+Consider here for instance the following files 
+
++-------------------------+-----------------------------+
+| file                    | content description         |
++=========================+=============================+
+| :file:`basic_file.xml`  | the basic file structure    |
++-------------------------+-----------------------------+
+| :file:`detector_1d.xml` | structure for a 1d detector |
++-------------------------+-----------------------------+
+| :file:`detector_2d.xml` | structure for a 2d detector |
++-------------------------+-----------------------------+
+   
+Code which usese this setup could look like this 
+
+.. code-block:: cpp
+
+   hdf5::file::File file = ... ;
+   hdf5::node::Group root_group = file.root(); 
+   
+   nexus::xml::create_from_file(root_group,"basic_file.xml");
+   hdf5::node::Group instrument = hdf5::node::get_node(root_group,"/entry/instrument");
+   
+   switch(detector_setup)
+   {
+      case DetectorType::LINEAR:
+         nexus::xml::create_from_file(instrument,"detector_1d.xml");
+         break;
+      case DetectorType::AREA:
+         nexus::xml::create_from_file(instrument,"detector_2d.xml");
+   }
+   
+
+
+It should be mentioned that currently *libpniio* does not use a validating 
+parser which makes error detection rather difficult. 
+
+%
 
 %%%============================================================================
 \subsection{High level XML interface}\label{sec:xml:highlevel}
@@ -65,29 +87,7 @@ The high-level XML interface basically consists of two function templates
 Additionally there are some convenience functions available. All of this will 
 be described in more detail in this section.
 
-%%%---------------------------------------------------------------------------
-\subsubsection{\nexus\ objects from XML}\label{sec:xml::nxtoxml}
-
-Creating \nexus\ objects from XML might be the most common operation performed 
-by this part of the library. The next example illustrates the most common 
-use case 
-\begin{cppcode}
-#include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/xml.hpp>
-
-using namespace pni::io::nx;
-
-int main(int argc,char **argv)
-{
-    xml::node n = ....;
-    h5::nxfile f = ....;
-    h5::nxgroup root = f.root();
-    
-    xml::xml_to_nexus(n,root);
-
-    return 0;
-}
-\end{cppcode}
+\
 Here, the structure of a \nexus\ tree is described by XML and then converted 
 to \nexus\ by means of the \cpp{xml\_to\_nexus} function. The first argument 
 of this function is the XML node while the second is the parent object 
