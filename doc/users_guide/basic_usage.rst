@@ -18,11 +18,12 @@ to your source file.
    :maxdepth: 1
    
    nexus_files
+   nexus_groups
 
 
 
 %%%===========================================================================
-\section{Working with groups}
+
 \input{tex/nexus_groups.tex}
 
 

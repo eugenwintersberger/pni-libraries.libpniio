@@ -32,6 +32,7 @@ endif()
 add_subdirectory(_static)
 add_subdirectory(_templates)
 add_subdirectory(users_guide)
+add_subdirectory(examples)
 
 add_custom_target(sphinx_build
                   COMMAND sphinx-build -bhtml . build/html
