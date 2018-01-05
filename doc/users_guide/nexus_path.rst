@@ -1,173 +1,157 @@
-======================================================
-Addressing NeXus objects :cpp:class:`pni::nexus::Path`
-======================================================
+===========================================
+NeXus path's: :cpp:class:`pni::nexus::Path`
+===========================================
 
-Objects within a NeXus-file can be referenced by a path. Though being very
-similar to a Unix file system path, a NeXus-path provides much more
-flexibility. It reflects one of the key features of NeXus: types. 
-A NeXus-path can reference an object not only via its name (as HDF5 does) but
-also by its type. Hence, under certain conditions, it is possible to construct
-a path which is independent of the names chosen within a file.
+Until now we discussed only the basic properties of a NeXus path. 
+As these paths are rather powerful tools this chapter is entirely dedicated 
+to such paths.   
 
-Introduction
-============
-%%----------------------------------------------------------------------------
-\begin{figure}[tb]
-\centering
-\begin{tikzpicture}
-[cnode/.style = {rounded corners,draw=black,
-                 minimum height = 0.75cm,
-                 minimum width  = 1cm,
-                 node distance = 0.5cm}]
-\node (filenode) [cnode] {\texttt{filepath}};
-\node (filesep)  [cnode,right = of filenode] {\texttt{://}};
-\node (objnode)  [cnode,right = of filesep] {\texttt{name:class/:class/name}};
-\node (attrsep)  [cnode,right = of objnode]  {\texttt{@}};
-\node (attrnode) [cnode,right = of attrsep]  {\texttt{attribute name}};
+The structure of a Nexus path
+=============================
 
-\draw (filenode)--(filesep)--(objnode)--(attrsep)--(attrnode);
+In comparison to a plain HDF5 path the NeXus path as provided by *libpniio* 
+has to additional features
 
-\draw[dashed] ($(filenode.west)+(-2mm,2mm)$) --
-              node[below right=0.25cm and 0.75cm]{\fsection} 
-              +(0,-1.5cm);
-\draw[dashed] ($(filesep.east)+(2mm,2mm)$)  --
-              node[below right=0.25cm and 1.5cm]{\osection}
-              +(0,-1.5cm);
-\draw[dashed] ($(attrsep.west)+(-2mm,2mm)$) --
-              node[below right=0.25cm and 0.8cm]{\asection}
-              +(0,-1.5cm);
-\draw[dashed] ($(attrnode.east)+(2mm,2mm)$)  -- +(0,-1.5cm);
+* it includes the name of the file and thus could be used by command line 
+  programs to entirely determine the location of an object
+* it is able to address attributes (:cpp:class:`hdf5::Path` can only address
+  node objects within a file). 
+  
+To describe the anatomy of a NeXus path in *libpniio* we consider the following
+example 
 
-\end{tikzpicture}
-\caption{\small\label{fig:path:structure}
-The basic structure of a \nexus\ path as used by \libpniio. The \fsection\
-stores the Unix path to the data file. The \osection\ the
-path to the field or group within the file and the \asection\
-holds the name of an attribute attached to the object referenced by the
-previous path.
-}
-\end{figure}
-%%----------------------------------------------------------------------------
-\begin{figure}[tb]
-\centering
-\begin{minipage}[c]{0.6\linewidth}
-\begin{tikzpicture}
-[cnode/.style = {rounded corners,draw=black,
-                 minimum height = 0.75cm,
-                 minimum width  = 1cm,
-                 node distance = 0.5cm}]
-\node (name) [cnode,minimum width=3cm] {\texttt{name}};
-\node (sep)  [cnode,right = of name] {\texttt{:}};
-\node (class) [cnode,right = of sep,minimum width=3cm] {\texttt{class}};
-\draw (name) -- (sep) -- (class);
+   ``/home/user/data/experiment.nxs://run_001:NXentry/:NXinstrument/:NXdetector/data@units``
 
-\draw[dashed] ($(name.east)+(2mm,2mm)$) -- 
-              node[below right= 0.25cm and 1.4cm]{\csection}
-              node[below left =0.25cm and 0.5cm]{\nsection}
-              +(0,-1.5cm);
+where we can identify all three sections comprising a *libpniio* NeXus path
 
-\end{tikzpicture}
-\end{minipage}
-\hfill
-\begin{minipage}[c]{0.39\linewidth}
-\caption{\small\label{fig:path:object} 
-Structure of the elements in the \emph{object section} of a \nexus-path.
-}
-\end{minipage}
-\end{figure}
+* *file section* - ``/home/user/data/experiment.nxs:/``
+* *node section* - ``/run_001:NXentry/:NXinstrument/:NXdetector/data``
+* *attribute section* - ``units``
 
-The structure of a NeXus-path
------------------------------
+In more detail these three sections describe 
 
-Figure~\ref{fig:path:structure} shows the principal structure of a \nexus-path
-as used by \libpniio. Such a path comprises three major sections
++---------------------+-----------------------------------------------------+
+| Section             | Description                                         |
++=====================+=====================================================+
+| *file section*      | which references the NeXus-file on the file system. |
+|                     | It must thus be a valid file system path on the     |
+|                     | operating system platform in use.                   |
++---------------------+-----------------------------------------------------+
+| *node section*      | describing the location of an node within the file  |
++---------------------+-----------------------------------------------------+
+| *attribute section* | referencing an attribute attached to the object     |
+|                     | pointed to by the residual path. The attribute is   |
+|                     | identified by its name.                             |
++---------------------+-----------------------------------------------------+
 
-+---------------------+------------------------------------------------------+
-| Section             | Description                                          |
-+=====================+======================================================+
-| *file section*      | which references the NeXus-file on the file system.  |
-|                     | It must thus be a valid file system path on the      |
-|                     | operating system platform in use.                    |
-+---------------------+------------------------------------------------------+
-| *object section*    | describing the location of an object within the file |
-+---------------------+------------------------------------------------------+
-| *attribute section* | referencing an attribute attached to the object      |
-|                     | pointed to by the residual path. The attribute is    |
-|                     | identified by its name.                              |
-+---------------------+------------------------------------------------------+
+The *file-* and the *node-section* are separated by ``:/`` and the *node-* and 
+the *attribute-section* are separated by a ``@`` symbol.
+Each element in the *node-section* of the path consists of two path 
 
-As shown in Fig.~\ref{fig:path:structure} the file and the object sections are 
-separated by \fsep\ while the object and attribute sections use \asep\ as a
-delimiter. Both, the file and the attribute section, are optional.
- The individual elements in the object section are separated by a
-single \osep. Every element in the \osection\ is composed of two parts
-(see Fig.~\ref{fig:path:object}): the \nsection\ and the \csection 
-separated by a \csep. Whether or not the \nsection\ and/or the \csection\ must
-be present in order to reference an element depends on the circumstances. 
-There are three possible situations
-\begin{inlinetab}{m{0.15\linewidth}m{0.75\linewidth}}
-\emph{name:class} & this is a full identifier for a group. It determines its
-name as well as its type. As fields have no type they cannot be referenced by
-such an expression. \\
-\emph{name} & if only the name is given the referenced object can be either a
-group or a field. However, in the case of a field, this must be the last element
-in the object path (as fields cannot have additional children). \\
-\emph{:class} & if only the class is given the referenced object must be a
-group. Denote the leading colon in this expression. It is necessary to
-distinguish such an expression from a mere name.
-\end{inlinetab}
+* the nodes link name 
+* and an optional base class type 
 
-Some general path properties
-----------------------------
+separated by a semicolon. The base class type part only makes sense if a 
+group should be referenced as individual fields (or datasets in HDF5 
+terminology) are not associated with a base class type. 
+There are three permitted forms how a node element could look like 
 
-A path is considered as *absolute* if its *object section* starts at the root
++----------------+------------------------------------------------------+-+
+| node element   | description                                          | |
++================+======================================================+=+
+| ``name:class`` | this would be the full description of a base class   | |
+|                | including the name of the link to the group as well  | |
+|                | as the base class type it belongs to.                | |
++----------------+------------------------------------------------------+-+
+| ``name``       | only the name of the link. Something like this could | |
+|                | be used for both: groups and fields.                 | |
++----------------+------------------------------------------------------+-+
+| ``:class``     | references a group by the base class type it belongs | |
+|                | to.                                                  | |
++----------------+------------------------------------------------------+-+
+
+A path is considered as *absolute* if its *node section* starts at the root
 group of the file. This is always  the case if 
 
-* the *file section* of the path is not empty
+* the *file section* of the path is not empty (if we give a file the 
+  *node section* has to start at the root node and thus must be absolute)
 * or, if no *file section* is given, the *object section* starts with a 
-  leading `/`.
+  leading ``/``.
 
 The latter condition is equivalent to the convention used for Unix file system
 paths while the former requires some explanation. 
-If the *file section* is not empty the *object section* has to be considered 
-absolute otherwise we would not know where to start searching for objects. 
-If no *file section* is provided the path can also refer to an object relative 
-to a particular parent object.
 
-Equality of two NeXus-paths
----------------------------
 
-Two NeXus-paths are considered to be equal if all of their elements are equal.
+Equality and matching of paths
+==============================
 
-Matching paths
---------------
+Equality
+--------
 
-Two paths are considered as *matching* if one can deduce from their
-structure that they reference the same object within a NeXus-file. 
-It is important to realize that this question must be answered independent of a 
-particular file. Only the path object itself is of relevance. This leads two some
-surprising effects. Consider the following three paths
+The equality of two NeXus paths is rather trivial: two paths can be considered 
+equal if all of their elements are equal. 
+
+
+Matching
+--------
+
+Two paths are considered as *matching* if they are not equal but capable of 
+referencing the same object within a single file.  
+To illustrate this situation consider the following three paths 
 
 #. *a = /entry/instrument/detector/data*
 #. *b = /entry:NXentry/instrument:NXinstrument/detector:NXdetector/data*
 #. *c = /:NXentry/:NXinstrument/:NXdetector/data*
 
+each being perfectly well defined NeXus paths referencing the data field in 
+a detector group. 
 It is obvious for path :cpp:var:`a` and :cpp:var:`b` that they reference the 
 same object. The same is true for the paths :cpp:var:`b` and :cpp:var:`c`. 
 Surprisingly, :cpp:var:`a` and :cpp:var:`c` do not match. As :cpp:var:`a` does 
 not provide any type information for each of its nodes we cannot be sure that 
-it references the same object as :cpp:var:`c`. 
-Thus, *matching* is not the same as equality. If a *match* would be the
-same as equality we would get
+it references the same object as :cpp:var:`c`. Being more specific: none of 
+the groups in :cpp:var:`a` has to be a NeXus group at all. 
+We get the rough idea that the property of two path of *matching* each other 
+has something to do with the number of elements they have common.
 
-.. math::
+In order to derive a reasonable set of rules determining whether or not two 
+paths are matching we start with deriving rules to deciding under which 
+conditions the *node*-elements of the *node section* of a path are matching. 
 
-    a = b \land b=c\mbox{ but } a\not= c
+The first rule covers the trivial case of equality 
+ 
+.. note::
 
-which, from a mathematical point of view, makes no sense.
-and reason about which of those paths are matching (according to the above 
-definition). Before diving deeper in the matching paths problem lets first
-discuss what is it good for. 
+    Two node elements *a* and *b* are considered as *matching* if they are 
+    equal in the above case: *a=b*. 
+
+For instance, let *a=entry:NXentry* and *b=entry:NXentry* it is obvious that 
+they are referencing the same node as they are equal in the above sense.
+
+Furthermore, we can propose a second rule
+
+.. note::
+
+    Two node elements *a* and *b* can be considered *matching* if their class 
+    component is equal and only one of them has the name attribute set. 
+
+This would be the case if *a=:NXentry* and *b=entry:NXentry*. This is somehow 
+logical if we consider that *a* is just a more general version of *b*. However, 
+it is crucial that only one of them has a non empty name attribute. Otherwise 
+this rule would violate rule one.
+
+Finally we can assert a third rule 
+
+.. note:: 
+
+    Two node elements *a* and *b* are considered as *matching* if have both 
+    have either their name *or* their class component set and those are equal.
+
+For names :math:`a` and :math:`b` would be equal for instance of 
+:math:`a(\mathrm{entry},)` and :math:`b=(\mathrm{entry},)`. The same is true 
+for the class attribute. :math:`a` and :math:`b` are equal if 
+:math:`a=(,\mathrm{NXentry})` and :math:`b=(,\mathrm{NXentry})`.
+
 
 Applications for path matching
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -211,64 +195,6 @@ Another situation would be that we would like to know how many entries
                                    [&pref](const h5::nxobject &o) 
                                    {return match(get_path(o),pref);});
 
-
-All three paths could be used to address the 
-data field in the detector group of the file. However, it would be difficult to 
-prove only from the paths themselves that this is the case. While :math:`a=b` 
-and :math:`b=c` is relatively simple, what about :math:`a=c`? While 
-:math:`a` does not provide any type information, :math:`c` has all the 
-names removes (except for the name of the field). The only thing :math:`a` 
-and :math:`c` have in common is the name of the field they refer to.
-
-An easier approach might be to ask for the equality of two elements, 
-:math:`a` and :math:`b`, of the *object section* of a path. The obvious 
-case for equality is if
- 
-.. note::
-
-    :math:`a` and :math:`b` are considered to be equal if their name and 
-    class strings are equal. 
-
-For instance, let :math:`a=(\mathrm{entry},\mathrm{NXentry})` and
-:math:`b=(\mathrm{entry},\mathrm{NXentry})`. According to the previous rule 
-:math:`a=b`.
-
-Furthermore, we can propose a second rule
-
-.. note::
-
-    :math:`a` and :math:`b` can be considered equal if their class component 
-    is equal and only one of them has the name attribute set. 
-
-This would be the case if :math:`a=(,\mathrm{NXentry})` and
-:math:`b=(\mathrm{entry},\mathrm{NXentry})`. This is somehow logical if we 
-consider that :math:`a` is just a more general version of :math:`b`. However, 
-it is crucial that only one of them has a non empty name attribute. Otherwise 
-this rule would violate rule one.
-
-The third rule states
-
-.. note:: 
-
-    If :math:`a` and :math:`b` have both either their name *or* their class 
-    attribute set and those are equal.
-
-For names :math:`a` and :math:`b` would be equal for instance of 
-:math:`a(\mathrm{entry},)` and :math:`b=(\mathrm{entry},)`. The same is true 
-for the class attribute. :math:`a` and :math:`b` are equal if 
-:math:`a=(,\mathrm{NXentry})` and :math:`b=(,\mathrm{NXentry})`.
-
-In all other cases :math:`a` and :math:`b` would be not equal. For instance 
-:math:`a\not=b` if :math:`a=(\mathrm{entry},)` and 
-:math:`b=(,\mathrm{NXentry})`. It is also clear that for fields (which have 
-only a name) the name must be equivalent to be considered as equal. 
-
-This rules also solve the above problem. Indeed :math:`a=b` and :math:`b=c` but
- :math:`a\not=c`. 
-This may sounds awkward from a mathematical point of view. But it has several
-advantages as will be shown later.
-The comparison operators for :cpp:type:`pni::io::nexus::Path::Element` are 
-implemented following the above rules.
 
 
 Examples

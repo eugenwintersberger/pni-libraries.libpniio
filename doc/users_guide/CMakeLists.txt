@@ -3,11 +3,15 @@ set(RST_SOURCES index.rst
                 installation.rst
                 usage.rst
                 legacy.rst
+                
+                nexus.rst
                 nexus_introduction.rst
                 nexus_path.rst
                 basic_usage.rst
                 nexus_files.rst
-                nexus_groups.rst)
+                nexus_groups.rst
+                nexus_retrieval.rst
+                nexus_search.rst)
 
 foreach(RST_SOURCE ${RST_SOURCES})
     configure_file(${RST_SOURCE} ${RST_SOURCE} COPYONLY)

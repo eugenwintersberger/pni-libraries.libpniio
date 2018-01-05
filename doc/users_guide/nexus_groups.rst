@@ -1,26 +1,24 @@
-===================
-Working with groups
-===================
+================
+Creating objects
+================
 
-.. attention::
+*libpniio* provides some convenience approaches for creating objects. 
+This incudes
 
-   Read the section on groups of *h5cpp* in order to learn how to access 
-   and iterate over the children of HDF5 groups. 
+* group (base class) creation
+* field (dataset) creation. 
 
-NeXus groups (*NXgroup*) are directly mapped onto HDF5 groups. So we can 
-use all the algorithms available from *h5cpp* to work with groups. 
-However, *libpniio* provides some utility classes which are related to 
-the NeXus standard which would make working with groups in a NeXus context 
-easier. 
+*libpniio* provides no special means to handle attributes, instead use 
+the facilities provided by *h5cpp*.
 
 Creating base classes
 =====================
 
 The basic elements of a NeXus tree are base classes. Technically, a base
 class is an HDF5 groups with a ``NX_class`` attribute attached to it 
- determining the particular base class the group represents. So creating 
- a base class group with *h5cpp* a three step process would have to be 
- taken
+determining the particular base class the group represents. So creating 
+a base class group with *h5cpp* a three step process would have to be 
+taken
  
 1. check if the new name for the group complies to the NeXus naming rules
 2. create the new group
@@ -33,7 +31,15 @@ carries out all these tasks
 
 .. code-block:: cpp
 
-   hdf5::node::Group entry = nexus::BaseClassFactory::create(root_group,"run_001","NXentry"); 
+   using hdf5::node::Group;
+   Group entry      = nexus::BaseClassFactory::create(root_group,"run_001","NXentry"); 
+   Group instrument = nexus::BaseClassFactory::create(entry,"instrument","NXinstrument");
+   Group detector   = nexus::BaseClassFactory::create(instrument,"detector","NXdetector");
+   Group sample     = nexus::BaseClassFactory::create(entry,"sample","NXsample");
+   
+The second argument of the :cpp:func:`create` function is an HDF5 path 
+(:cpp:class:`hdf5::Path`). You could use, in special cases a NeXus path 
+as it will be shown later, but there are limitations (as will be shown later). 
                                                              
 Creating fields
 ===============
@@ -63,6 +69,10 @@ be chosen.
    hdf5::Dimensions chunk_shape{1,1024,2048};
    
    hdf5::node::Dataset frames = nexus::FieldFactory::create(root_group,"frames",type,space,chunk_shape);
+   
+The major additional task the :cpp:func:`create` function of 
+:cpp:class:`nexus::FieldFactory` does is to check whether the new name of the 
+field complies to the NeXus naming rules. 
 
 Searching for groups
 ====================
@@ -106,33 +116,4 @@ For some of the most common base classes there are specialized versions of
 
 
 
-%%%===========================================================================
-\subsection{Other group related member functions}
-
-Like files, groups posses an \cpp{is\_valid()} method which allows checking the 
-state of a group. Similar to files, default constructed instances of \nxgroup\
-are not valid. 
-\begin{cppcode}
-h5::nxgroup entry; 
-
-if(!entry.is_valid()) std::cerr<<"The entry group is not valid!"<<std::endl;
-\end{cppcode}
-The getter methods \cpp{name()} and \cpp{filename()} return the name of the
-group and the name of the file the group is stored in respectively.
-Finally the \cpp{parent()} function returns the parent group of the a group.
-In order to use the \cpp{parent()} member function a bit more extra care is 
-used. When using the method in a simple way like 
-\begin{cppcode}
-h5::nxgroup p = other_group.parent();
-\end{cppcode}
-everything will be fine. However, when we want to use the return value of 
-\cpp{parent()} as a temporary we have to do an explicit conversion to 
-\cpp{nxgroup} like this
-\begin{cppcode}
-std::cout<<h5::nxgroup(entry_group.parent())<<std::endl;
-\end{cppcode}
-The reason for this is that \cpp{parent()} does not really return an 
-instance of \cpp{nxgroup} but rather of \cpp{nxobject}. 
-But \nxobject\ can be converted to \nxgroup\ safely. The reason 
-for this behavior will be explained in detail in Section~\ref{section:nxobject}.
 

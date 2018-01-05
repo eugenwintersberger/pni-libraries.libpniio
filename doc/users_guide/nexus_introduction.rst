@@ -1,5 +1,9 @@
+=============================
 A basic introduction to Nexus
 =============================
+
+Motivation
+==========
 
 Today, data recorded during synchrotron experiments is typically stored in
 individual binary image files and/or as flat ASCII files. A typical directory 
@@ -55,7 +59,19 @@ clear once and for all
 
    **Every NeXus file written by libpniio is also a valid HDF5 file!**
 
+To access NeXus files *libpniio* uses the *h5cpp* C++ wrapper to HDF5. 
+Actually most of the work with NeXus files can be done directly with 
+*h5cpp*, *libpniio* only adds additional functionality specific to the 
+NeXus file standard.
 
+.. attention::
+
+   Before you continue reading this documentation you should have a firm 
+   idea about *h5cpp*'s concepts and API. So if you never used *h5cpp* before
+   you better go away for a while here and read the `h5cpp documentation`_. 
+
+
+.. _h5cpp documentation: https://ess-dmsc.github.io/h5cpp/index.html
 
 The Nexus layer model
 =====================

@@ -9,6 +9,4 @@ Users guide
    installation
    usage
    legacy
-   nexus_introduction
-   nexus_path
-   basic_usage
+   nexus
