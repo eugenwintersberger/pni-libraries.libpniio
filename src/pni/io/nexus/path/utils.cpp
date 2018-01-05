@@ -177,91 +177,21 @@ std::istream &operator>>(std::istream &i,Path &p)
   p = Path::from_string(buffer);
   return i;
 }
-
-//========================================================================
-// Utility functions for the implementation of the element equality check
-//
-bool rule_1(const Path::Element &a,const Path::Element &b)
-{
-  if(is_complete(a) && is_complete(b))
-    return (a.first==b.first) && (a.second == b.second);
-  else
-    return false;
-}
-
-//------------------------------------------------------------------------
-bool rule_2_applies(const Path::Element &a,const Path::Element &b)
-{
-  if(!a.second.empty() && !b.second.empty())
-  {
-    if(a.first.empty() && !b.first.empty())
-      return true;
-    else if(!a.first.empty() && b.first.empty())
-      return true;
-    else
-      return false;
-  }
-
-  return false;
-}
-
-//------------------------------------------------------------------------
-inline bool both_no_name(const Path::Element &a,const Path::Element &b)
-{
-  return a.first.empty() && b.first.empty();
-}
-
-//------------------------------------------------------------------------
-inline bool both_no_class(const Path::Element &a,const Path::Element &b)
-{
-  return a.second.empty() && b.second.empty();
-}
-
-//------------------------------------------------------------------------
-inline bool both_have_name(const Path::Element &a,const Path::Element &b)
-{
-  return !a.first.empty() && !b.first.empty();
-}
-
-//------------------------------------------------------------------------
-inline bool both_have_class(const Path::Element &a,const Path::Element &b)
-{
-  return !a.second.empty() && !b.second.empty();
-}
-
-//------------------------------------------------------------------------
-bool rule_3_applies(const Path::Element &a,const Path::Element &b)
-{
-  if(both_no_name(a,b) && both_have_class(a,b))
-    return true;
-  else if(both_have_name(a,b) && both_no_class(a,b))
-    return true;
-  else
-    return false;
-}
-
-//------------------------------------------------------------------------
-bool rule_3(const Path::Element &a,const Path::Element &b)
-{
-  if(both_no_name(a,b))
-    return a.second == b.second;
-  else if(both_no_class(a,b))
-    return a.first == b.first;
-  else
-    return false;
-}
     
 //-------------------------------------------------------------------------
 bool match(const Path::Element &a,const Path::Element &b)
 {
-  //if both are complete paths we have to check the equality of
-  //each of their elements
-  if(rule_1(a,b)) return true;
+  //applies rule 1 in the documentation
+  if(a==b)
+    return true;
 
-  if(rule_2_applies(a,b))
-    return a.second == b.second;
-
-  if(rule_3_applies(a,b)) return rule_3(a,b);
+  //applies two rules in the documentation
+  if( (a.first.empty() && !b.first.empty()) ||
+      (!a.first.empty() && b.first.empty()) )
+  {
+    if(a.second == b.second)
+      return true;
+  }
 
   return false;
 }
