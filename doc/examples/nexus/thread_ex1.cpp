@@ -12,39 +12,19 @@
 #include <h5cpp/hdf5.hpp>
 #include <boost/filesystem.hpp>
 
+#include "ioqueue.hpp"
+
 using namespace pni::core;
 using namespace pni::io;
 
-class IOQueue
-{
-  private:
-    std::mutex              _mutex;
-    std::queue<string>      _queue;
-    std::condition_variable _data_ready;
-  public:
-    void push(const string &value)
-    {
-      std::lock_guard<std::mutex> guard(_mutex);
-      _queue.push(value);
-      _data_ready.notify_one();
-    }
 
-    //--------------------------------------------------------------------
-    void blocking_pop(string &value)
-    {
-      std::unique_lock<std::mutex> lock(_mutex);
-      _data_ready.wait(lock,[this]{ return !_queue.empty(); });
-      value = _queue.front();
-      _queue.pop();
-    }
-};
-
+using StringIOQueue = IOQueue<std::string>;
 
 class Writer
 {
   private:
     boost::filesystem::path _filename;
-    IOQueue                &_queue;
+    StringIOQueue          &_queue;
     hdf5::file::File        _file;
     hdf5::node::Dataset     _data;
     hdf5::node::Dataset     _time;
@@ -57,7 +37,7 @@ class Writer
     //method creating the initial structure of the log
     void _init_log();
   public:
-    Writer(const boost::filesystem::path &fname,IOQueue &q):
+    Writer(const boost::filesystem::path &fname,StringIOQueue &q):
       _filename(fname),
       _queue(q),
       _file(),
@@ -147,9 +127,9 @@ class CliReader
 {
     private:
         string _prompt;
-        IOQueue &_queue;
+        StringIOQueue &_queue;
     public:
-        CliReader(const string &prompt,IOQueue &q):
+        CliReader(const string &prompt,StringIOQueue &q):
             _prompt(prompt),
             _queue(q)
         { }
@@ -168,9 +148,9 @@ class CliReader
 };
 
 
-int main(int argc,char **argv)
+int main(int ,char **)
 {
-    IOQueue q;
+    StringIOQueue q;
     Writer write("userlog.nx",q);
     CliReader cli("Nexus log $>",q);
     std::thread wthread(write);
