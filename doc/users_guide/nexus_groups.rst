@@ -74,44 +74,8 @@ The major additional task the :cpp:func:`create` function of
 :cpp:class:`nexus::FieldFactory` does is to check whether the new name of the 
 field complies to the NeXus naming rules. 
 
-Searching for groups
-====================
 
-One of the major tasks when working with NeXus files is to search for 
-particular base classes. Some tasks falling into this cathegory would be 
 
-* search for all detectors used during an experiment
-* search for all monochromators that where used during an experiment 
-
-For that purpose *libpniio* provides a search function :cpp:func:`search` 
-which makes this job particularly easier. 
-
-The fundamental predicate type to look for base classes is 
-:cpp:class:`nexus::IsBaseClass`.
-
-Special base class predicates
------------------------------
-
-For some of the most common base classes there are specialized versions of 
-:cpp:class:`nexus::IsBaseClass`. 
-
-+-------------------------------+---------------------------------------+
-| predicate                     | description                           |
-+===============================+=======================================+
-| :cpp:class:`IsTransformation` | returns *true* for *NXtransformation* |
-+-------------------------------+---------------------------------------+
-| :cpp:class:`IsEntry`          | returns *true* for *NXentry*          |
-+-------------------------------+---------------------------------------+
-| :cpp:class:`IsSubentry`       | returns *true* for *NXsubentry*       |
-+-------------------------------+---------------------------------------+
-| :cpp:class:`IsDetector`       | returns *true* for *NXdetector*       |
-+-------------------------------+---------------------------------------+
-| :cpp:class:`IsInstrument`     | returns *true* for *NXinstrument*     |
-+-------------------------------+---------------------------------------+
-| :cpp:class:`IsSample`         | returns *true* for *NXsample*         |
-+-------------------------------+---------------------------------------+
-| :cpp:class:`IsData`           | returns *true* for *NXdata*           |
-+-------------------------------+---------------------------------------+
 
 
 

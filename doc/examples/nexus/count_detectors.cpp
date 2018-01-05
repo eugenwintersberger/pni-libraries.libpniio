@@ -27,10 +27,13 @@ int main(int,char **)
   //get all entries from the file
   nexus::GroupList entries = nexus::get_objects(root_group,nexus::Path::from_string(":NXentry"));
 
-  auto cnt = std::count_if(hdf5::node::RecursiveNodeIterator::begin(entries[0]),
-                           hdf5::node::RecursiveNodeIterator::end(entries[0]),
-                           nexus::IsDetector());
+  for(auto entry: entries)
+  {
+    std::cout<<"Predicate search: "<<nexus::search(entry,nexus::IsDetector(),true).size()<<std::endl;
 
-  std::cout<<cnt<<std::endl;
+    nexus::GroupList detectors = nexus::get_objects(entry,nexus::Path::from_string(":NXinstrument/:NXdetector"));
+    std::cout<<"Path search: "<<detectors.size()<<std::endl;
+  }
+
   return 0;
 }

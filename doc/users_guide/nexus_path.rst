@@ -140,119 +140,17 @@ logical if we consider that *a* is just a more general version of *b*. However,
 it is crucial that only one of them has a non empty name attribute. Otherwise 
 this rule would violate rule one.
 
-Finally we can assert a third rule 
+Now as we have derived two rules for matching node elements we can generalize 
+a single rule for paths 
 
-.. note:: 
+.. note::
 
-    Two node elements *a* and *b* are considered as *matching* if have both 
-    have either their name *or* their class component set and those are equal.
-
-For names :math:`a` and :math:`b` would be equal for instance of 
-:math:`a(\mathrm{entry},)` and :math:`b=(\mathrm{entry},)`. The same is true 
-for the class attribute. :math:`a` and :math:`b` are equal if 
-:math:`a=(,\mathrm{NXentry})` and :math:`b=(,\mathrm{NXentry})`.
-
-
-Applications for path matching
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Consider a file which stores several instances of *NXdetector* within its 
-*NXinstrument* group and that this file has also several entries (in other
-words, several measurements are stored in a single file). 
-Furthermore we assume that we would have a
-hypothetical function \cpp{match(const \nxpath\ \&a,const \nxpath\ \&b)} which 
-returns true if the two paths :cpp:var:`a` and :cpp:var:`b` match and false 
-otherwise. 
-Consider the case where we would like to obtain the detector groups for all
-entries in the file. This could easily be done with the following piece of code
-
-.. code-block:: cpp
-
-   typedef std::vector<h5::nxobject> detectors_type;
-   typedef std::back_inserter<detectors_type> detector_inserter; 
+   Two paths *a* and *b* are considered matching if 
    
-   detectors_type detectors;
-   detector_inserter inserter(detectors);
-   
-   nxpath pref = nxpath::from_string("/:NXentry/:NXinstrument/:NXdetector");
-   h5::nxfile f = .....;
-   
-   auto flat_root = make_flat(f.root());
-   
-   std::copy_if(flat_root.begin(),flat_root.end(),inserter,
-                [&pref](const h5::nxobject &o) { return match(pref,get_path(o);});
+   * they are of equal size
+   * all of their node elements match
+   * and, if available, they reference the same attribute.
 
-
-Another situation would be that we would like to know how many entries
-(measurements) are stored in a particular file. 
-
-.. code-block:: cpp
-
-   nxpath pref = nxpath::from_string("/:NXentry");
-   h5::nxfile  f = ....;
-   h5::nxgroup root = f.root();
-   size_t nentries = std::count_if(root.begin(),root.end(),
-                                   [&pref](const h5::nxobject &o) 
-                                   {return match(get_path(o),pref);});
-
-
-
-Examples
---------
-
-Let's have a look on some examples. The following path addresses the data field 
-in the detector group of a file
-
-   ``/data/run/detector.nxs://entry/instrument/detector/data``
-
-Here, the individual groups are referenced by their name in the object section 
-of the path. Indeed, this path can be written in a more general way with 
-
-   ``/data/run/detector.nxs://:NXentry/:NXinstrument/:NXdetector/data``
-
-where the parent groups of the `data` field are referenced implicitly via
-their type.  This requires that only one instance of a particular type
-(``:NXentry``, ``:NXinstrument``, etc.)  exists in its parent group. In the
-case that we have two detectors and each of them is stored as an instance of
-``NXdetector`` below the ``NXinstrument`` group, the name of the detector
-must be provided explicitly 
-
-   ``/data/run/detector.nxs://:NXentry/:NXinstrument/det1:NXdetector/data``
-
-The last group reference ``det1:NXdetector`` is the most precise 
-description of a group instance. Not only does it determined the name 
-of the group but also its type.  This example already shows one of the 
-powers of NeXus. As long as only one instance of a particular type exists
-within a group it can be identified by its type rather than by its name. 
-In many situations it is thus possible to generate paths which are virtually
-independent of all object names (in fact only the fields must be named as they
-have no type).
-
-All path examples until now represented an absolute path (a path with a leading
-*file section*). In many situations no file must be specified. A typical application
-for paths without *file section* would be program where an object should be
-referenced by a path relative to a given parent object. 
-The path in the next example references the data field of the detector 
-relative to the top level instance of ``NXentry``
-
-   ``:NXinstrument/detector/data`` 
-
-In order to make a path without a *file section* *absolute*, it must 
-start with a leading ``/`` as in the next example
-
-   `/:NXentry/:NXinstrument/pilatus/data`
-
-
-In order to reference the root group of a file one can either use 
-
-   ``/``
-
-a single *object section* or, in case of a file section
-
-   ``/data/run/detector.nxs://``
-
-where the trailing ``/`` denotes the root group. In case of an absolute path
-the root group is always included in the path object (as will be shown later). 
 
 The :cpp:class:`pni::io::nexus::Path` type
 ==========================================
@@ -379,7 +277,40 @@ Like other STL containers :cpp:class:`nexus::Path` also provides the
    
    std::cout<<p<<std::endl; // output: :NXinstrument
 
+:cpp:class:`pni::io::nexus::Path` and :cpp:class:`hdf5::Path`
+-------------------------------------------------------------
 
+In many cases we may want to construct an HDF5 path from a NeXus path an 
+vica verse. Now, converting from an HDF5 path to a NeXus path is always 
+easy as an HDF5 path is also a valid NeXus path (despite the fact that an 
+HDF5 path cannot address attributes and contains no file information). 
+For this purpose :cpp:class:`pni::io::nexus::Path` has an implicit 
+conversion constructor for an HDF5 path.
+
+.. code-block:: cpp
+
+   hdf5::Path hdf5_path = ...;
+   pni::io::nexus::Path nexus_path = hdf5_path; 
+   
+The other direction is also possible but only under certain conditions. 
+Unlike a NeXus path an HDF5 path contains only of link names. So conversion from 
+a NeXus path to an HDF5 path is only possible under the following 
+restrictions 
+
+* the NeXus path has all the link names set in its *node section* 
+* the NeXus path does not reference an attribute (an HDF5 path cannot do that)
+* the NeXus path has an empty *file section* - we cannot reference a file 
+  with an HDF5 path. 
+  
+:cpp:class:`pni::io::nexus::Path` has an implicit conversion operator to 
+an :cpp:class:`hdf5::Path`. Thus we could use for instance a NeXus path 
+in situations where an HDF5 path is expected 
+
+.. code-block:: cpp
+
+   nexus::Path path=nexus::Path::from_string("/entry:NXentry/instrument/detector:NXdetector");
+   
+   hdf5::node::Group detector = hdf5::node::get_node(root_group,path);
 
 
 Utility functions

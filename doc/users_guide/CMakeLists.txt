@@ -7,7 +7,6 @@ set(RST_SOURCES index.rst
                 nexus.rst
                 nexus_introduction.rst
                 nexus_path.rst
-                basic_usage.rst
                 nexus_files.rst
                 nexus_groups.rst
                 nexus_retrieval.rst
