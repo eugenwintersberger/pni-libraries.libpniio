@@ -56,19 +56,22 @@ namespace io{
             std::getline(stream,line_buffer);
             if(boost::regex_match(line_buffer,match,parameter_section_re))
             {
-            	_param_offset = stream.tellg();
+				_parse_parameters(stream);
+            	//_param_offset = stream.tellg();
             }
             else if(boost::regex_match(line_buffer,match,data_section_re))
             {
-            	_data_offset = stream.tellg();
+				_parse_data(stream);
+            	//_data_offset = stream.tellg();
             	break; //terminate the loop - the data section is the last one
             }
         }
 
-        stream.seekg(_param_offset,std::ios::beg);
-        _parse_parameters(stream);
-        stream.seekg(_data_offset,std::ios::beg);
-        _parse_data(stream);
+
+        //stream.seekg(_param_offset-std::streampos(8),std::ios::beg);
+        //_parse_parameters(stream);
+        //stream.seekg(_data_offset,std::ios::beg);
+        //_parse_data(stream);
 
         //reset EOF bit
         stream.clear();
