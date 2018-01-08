@@ -122,6 +122,7 @@ PathObject::operator hdf5::node::Node() const
   }
 }
 
+#ifdef _MSC_VER
 bool operator==(const PathObject &a,const PathObject &b)
 {
     using hdf5::node::Dataset;
@@ -152,6 +153,7 @@ bool operator<(const PathObject &a,const PathObject &b)
 
     return true;
 }
+#endif
 
 
 

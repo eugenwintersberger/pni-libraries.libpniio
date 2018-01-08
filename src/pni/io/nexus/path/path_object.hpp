@@ -154,8 +154,10 @@ class PNIIO_EXPORT PathObject
     hdf5::node::Dataset dataset_;
 };
 
+#ifdef _MSC_VER
 PNIIO_EXPORT bool operator==(const PathObject &a,const PathObject &b);
 PNIIO_EXPORT bool operator<(const PathObject &a,const PathObject &b);
+#endif
 
 //!
 //! @brief container for PathObject
