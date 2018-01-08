@@ -59,12 +59,7 @@ WARN_NO_PARAMDOC       = YES
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/../include mainpage.dox \
-                         algorithm_code.dox ascii_io.dox general_io.dox \
-                         h5_implementation_classes.dox \ 
-                         image_io.dox nexus_io.dox \
-                         nexus_utilities.dox nxpath_code.dox xml_code.dox \
-                         @CMAKE_CURRENT_SOURCE_DIR@/../src 
+INPUT                  = @PROJECT_SOURCE_DIR@/src
 RECURSIVE              = YES
 EXCLUDE_SYMLINKS       = NO
 EXAMPLE_PATH           = examples
@@ -197,3 +192,30 @@ DOT_FONTPATH           =
 DOT_GRAPH_MAX_NODES    = 50
 USE_MATHJAX = NO
 WARN_FORMAT            = '$file:$line: $text'
+
+#---------------------------------------------------------------------------
+# Configuration options related to the XML output
+#---------------------------------------------------------------------------
+
+# If the GENERATE_XML tag is set to YES doxygen will generate an XML file that
+# captures the structure of the code including all documentation.
+# The default value is: NO.
+
+GENERATE_XML           = YES
+
+# The XML_OUTPUT tag is used to specify where the XML pages will be put. If a
+# relative path is entered the value of OUTPUT_DIRECTORY will be put in front of
+# it.
+# The default directory is: xml.
+# This tag requires that the tag GENERATE_XML is set to YES.
+
+XML_OUTPUT             = xml
+
+# If the XML_PROGRAMLISTING tag is set to YES doxygen will dump the program
+# listings (including syntax highlighting and cross-referencing information) to
+# the XML output. Note that enabling this will significantly increase the size
+# of the XML output.
+# The default value is: YES.
+# This tag requires that the tag GENERATE_XML is set to YES.
+
+XML_PROGRAMLISTING     = YES

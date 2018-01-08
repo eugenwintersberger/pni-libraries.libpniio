@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 2
    
    users_guide/index.rst
+   api/index.rst
 
 
 

@@ -33,7 +33,11 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
+    'breathe'
 ]
+
+breathe_projects = {"pniio":"@CMAKE_CURRENT_BINARY_DIR@/api/xml"}
+breathe_default_project = "pniio"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
