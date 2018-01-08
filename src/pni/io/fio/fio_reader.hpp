@@ -57,10 +57,6 @@ namespace io{
     	    using column_map_type = std::map<pni::core::string,column_type>;
             //! parameter stream positions
             std::map<pni::core::string,pni::core::string> _param_map;
-            //! offset where real data starts
-            std::streampos _data_offset; 
-            //! offset where the parameter section starts
-            std::streampos _param_offset;
             //! column data
             std::map<pni::core::string,std::vector<pni::core::string>> _columns;
 #ifdef _MSC_VER
