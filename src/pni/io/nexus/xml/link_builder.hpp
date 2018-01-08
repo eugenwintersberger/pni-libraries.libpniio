@@ -31,7 +31,7 @@ namespace io {
 namespace nexus {
 namespace xml {
 
-class LinkBuilder : public ObjectBuilder
+class PNIIO_EXPORT LinkBuilder : public ObjectBuilder
 {
   public:
     LinkBuilder() = default;

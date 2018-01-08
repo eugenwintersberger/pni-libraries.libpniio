@@ -78,6 +78,7 @@ target_link_libraries(pniio
                       Boost::date_time
                       )
 target_compile_definitions(pniio PUBLIC BOOST_ALL_DYN_LINK)
+target_compile_definitions(pniio PRIVATE DLL_BUILD) 
 
 # ============================================================================
 # install the library binaries and targets 

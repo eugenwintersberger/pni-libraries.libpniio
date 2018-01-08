@@ -154,6 +154,9 @@ class PNIIO_EXPORT PathObject
     hdf5::node::Dataset dataset_;
 };
 
+PNIIO_EXPORT bool operator==(const PathObject &a,const PathObject &b);
+PNIIO_EXPORT bool operator<(const PathObject &a,const PathObject &b);
+
 //!
 //! @brief container for PathObject
 //!
@@ -161,7 +164,7 @@ class PNIIO_EXPORT PathObject
 //! Can be used along with STL algorithms to filter particular
 //! types.
 //!
-class PathObjectList : public std::list<PathObject>
+class PNIIO_EXPORT PathObjectList : public std::list<PathObject>
 {
   public:
     using std::list<PathObject>::list;
@@ -200,7 +203,7 @@ class PathObjectList : public std::list<PathObject>
     operator DatasetList() const;
 };
 
-std::ostream &operator<<(std::ostream &stream,const PathObject::Type &type);
+PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,const PathObject::Type &type);
 
 //!
 //! @brief return true if object stores a dataset

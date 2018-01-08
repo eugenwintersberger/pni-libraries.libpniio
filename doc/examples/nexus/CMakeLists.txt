@@ -24,8 +24,10 @@ target_link_libraries(gather_detectors pniio)
 add_executable(simple_io simple_io.cpp)
 target_link_libraries(simple_io pniio)
 
+if(CMAKE_CXX_COMPILER_ID MATCHES GNU)
 add_executable(thread1 thread_ex1.cpp thread_writer.cpp thread_clireader.cpp)
 target_link_libraries(thread1 pniio pthread)
+endif()
 
 install(FILES ${SOURCES} 
     DESTINATION "${CMAKE_INSTALL_FULL_DOCDIR}${LIBRARY_VERSION}-doc/examples/nexus")

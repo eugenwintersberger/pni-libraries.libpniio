@@ -122,6 +122,37 @@ PathObject::operator hdf5::node::Node() const
   }
 }
 
+bool operator==(const PathObject &a,const PathObject &b)
+{
+    using hdf5::node::Dataset;
+    using hdf5::node::Group;
+    using hdf5::attribute::Attribute;
+
+    if(a.type()!=b.type())
+        return false;
+
+    switch(a.type())
+    {
+        case PathObject::Type::DATASET:
+            return static_cast<Dataset>(a)==static_cast<Dataset>(b);
+        case PathObject::Type::GROUP:
+            return static_cast<Group>(a)==static_cast<Group>(b);
+        case PathObject::Type::ATTRIBUTE:
+            return static_cast<Attribute>(a)==static_cast<Attribute>(b);
+        case PathObject::Type::NONE:
+            return true;
+    }
+}
+
+bool operator<(const PathObject &a,const PathObject &b)
+{
+    using hdf5::node::Dataset;
+    using hdf5::node::Group;
+    using hdf5::attribute::Attribute;
+
+    return true;
+}
+
 
 
 PathObjectList::operator NodeList() const

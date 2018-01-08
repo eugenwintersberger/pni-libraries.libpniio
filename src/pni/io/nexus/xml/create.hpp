@@ -24,6 +24,7 @@
 
 #include <boost/filesystem.hpp>
 #include <h5cpp/hdf5.hpp>
+#include <pni/io/windows.hpp>
 
 
 namespace pni {
@@ -40,7 +41,7 @@ namespace xml {
 //! @param parent reference to the parent object
 //! @param xml_file reference to the path of the XML file
 //!
-void create_from_file(const hdf5::node::Node &parent,const boost::filesystem::path &xml_file);
+PNIIO_EXPORT void create_from_file(const hdf5::node::Node &parent,const boost::filesystem::path &xml_file);
 
 
 //!
@@ -52,7 +53,7 @@ void create_from_file(const hdf5::node::Node &parent,const boost::filesystem::pa
 //! @param parent reference to the parent object
 //! @param xml_data reference to the data string
 //!
-void create_from_string(const hdf5::node::Node &parent,const std::string &xml_data);
+PNIIO_EXPORT void create_from_string(const hdf5::node::Node &parent,const std::string &xml_data);
 
 
 } // namespace xml

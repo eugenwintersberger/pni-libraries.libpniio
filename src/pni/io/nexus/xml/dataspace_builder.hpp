@@ -24,13 +24,14 @@
 
 #include <pni/io/nexus/xml/node.hpp>
 #include <h5cpp/hdf5.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni {
 namespace io {
 namespace nexus {
 namespace xml {
 
-class DataspaceBuilder
+class PNIIO_EXPORT DataspaceBuilder
 {
   private:
     Node node_;

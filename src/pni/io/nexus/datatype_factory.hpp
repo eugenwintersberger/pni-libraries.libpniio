@@ -24,6 +24,7 @@
 
 #include <h5cpp/hdf5.hpp>
 #include <pni/core/types.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni {
 namespace io {
@@ -36,7 +37,7 @@ namespace nexus {
 //! This service class provides a static method constructing HDF5 datatypes
 //! from type_id_t enumerations.
 //!
-class DatatypeFactory
+class PNIIO_EXPORT DatatypeFactory
 {
   public:
 
