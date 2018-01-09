@@ -27,7 +27,9 @@ set(RST_FILES index.rst
               nexus_algorithm.rst
               nexus_path.rst
               nexus_utils.rst
-              nexus_factories.rst)
+              nexus_factories.rst
+              ascii.rst
+              ascii_parsers.rst)
 
 foreach(RST_FILE ${RST_FILES})
     configure_file(${RST_FILE} ${RST_FILE} COPYONLY)

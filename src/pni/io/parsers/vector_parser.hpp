@@ -47,8 +47,7 @@ namespace io{
 
     //------------------------------------------------------------------------
     //!
-    //! \ingroup parser_internal_classes
-    //! \brief container parser
+    //! @brief std::vector parser
     //!
     //! This parser reads a linear container of data from a string. The data
     //! type of the container is assumed to be homogeneous. This means that
@@ -61,8 +60,7 @@ namespace io{
     //!
     //! The container can be any STL compliant container type.
     //!
-    //! \tparam ITERT input iterator type
-    //! \tparam CTYPE container type
+    //! @tparam T the value type of the vector
     //!
     template<
              typename T
@@ -78,6 +76,14 @@ namespace io{
     public:
         using result_type = std::vector<value_type>;
 
+        //!
+        //! @brief constructor
+        //!
+        //! With this constructor a container IO configuration can be
+        //! passed which determines the value seperator, start and stop symbols.
+        //!
+        //! @param config reference to the IO configuration
+        //!
         parser(const container_io_config &config=container_io_config()):
             _config(config)
         {}

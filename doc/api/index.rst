@@ -7,4 +7,5 @@ API documentation
    :maxdepth: 1
    
    exceptions.rst
+   ascii.rst
    nexus.rst

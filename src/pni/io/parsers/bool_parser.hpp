@@ -27,23 +27,53 @@
 namespace pni{
 namespace io{
 
-    template<>
-    class PNIIO_EXPORT parser<pni::core::bool_t>
-    {
-    private:
-        boost::regex _true_regex;
-        boost::regex _false_regex;
-    public:
-        using result_type = bool;
+//!
+//! @brief parser specialization for bool values
+//!
+//! This specialization of the parser template reads boolean values from a
+//! string. The parser uses regular expressions to distinguish between
+//! strings representing *true* and *false*.
+//!
+//! When instantiated using the default constructor
+//!
+//! * `TRUE`, `true` and `True` are interpreted as *true*
+//! * and `FALSE`, `false` and `False` as *false*.
+//!
+template<>
+class PNIIO_EXPORT parser<pni::core::bool_t>
+{
+  private:
+    boost::regex _true_regex;
+    boost::regex _false_regex;
+  public:
+    using result_type = bool;
 
-        explicit parser();
+    //!
+    //! @brief default constructor
+    //!
+    //! With the default constructor the following regular expressions are
+    //! used to distinguish between true and false
+    //!
+    //! * for *true* - `^T(rue|RUE)|true|1$`
+    //! * for *false* - `^F(alse|ALSE)|false|0$`
+    //!
+    explicit parser();
 
-        explicit parser(const pni::core::string &true_regex,
-                        const pni::core::string &false_regex);
+    //!
+    //! @brief constructor
+    //!
+    //! With this constructor the regular expressions used for *true* and
+    //! *false* values can be customized.
+    //!
+    //! @param true_regex regular expression evaluating to true
+    //! @param false_regex regular expression evaluating to false
+    //!
+    explicit parser(const pni::core::string &true_regex,
+                    const pni::core::string &false_regex);
 
-        result_type operator()(const pni::core::string &input) const;
+    result_type operator()(const pni::core::string &input) const;
 
-    };
+};
 
 }
 }

@@ -11,7 +11,9 @@ set(RST_SOURCES index.rst
                 nexus_groups.rst
                 nexus_retrieval.rst
                 nexus_search.rst
-                nexus_xml.rst)
+                nexus_xml.rst
+                ascii_lowlevel.rst
+                ascii.rst)
 
 foreach(RST_SOURCE ${RST_SOURCES})
     configure_file(${RST_SOURCE} ${RST_SOURCE} COPYONLY)
