@@ -34,6 +34,11 @@ GroupList::GroupList(const NodeList &nodes)
   std::copy(nodes.begin(),nodes.end(),std::back_inserter(*this));
 }
 
+DatasetList::DatasetList(const NodeList &nodes)
+{
+  std::copy(nodes.begin(),nodes.end(),std::back_inserter(*this));
+}
+
 
 } // namespace nexus
 } // namespace io

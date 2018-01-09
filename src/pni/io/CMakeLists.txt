@@ -54,7 +54,7 @@ set(PNIIO_SOURCE_FILES ${PNIIO_SOURCE_FILES} ${SOURCE_FILES})
 # ============================================================================
 # adding header files to the doxygen build dependencies
 # ============================================================================
-add_doxygen_source_deps(${HEADER_FILES})
+add_doxygen_source_deps(${PNIIO_HEADER_FILES})
 
 # ============================================================================
 # building the library

@@ -9,7 +9,9 @@ set(SOURCES count_detectors.cpp
             thread_ex1.cpp
             thread_ex1.hpp
             thread_writer.hpp
-            thread_writer.cpp         
+            thread_writer.cpp 
+            find_datasets.cpp
+            find_datasets.xml        
             )
 
 add_executable(count_detectors count_detectors.cpp)
@@ -28,6 +30,9 @@ if(CMAKE_CXX_COMPILER_ID MATCHES GNU)
 add_executable(thread1 thread_ex1.cpp thread_writer.cpp thread_clireader.cpp)
 target_link_libraries(thread1 pniio pthread)
 endif()
+
+add_executable(find_datasets find_datasets.cpp)
+target_link_libraries(find_datasets pniio)
 
 install(FILES ${SOURCES} 
     DESTINATION "${CMAKE_INSTALL_FULL_DOCDIR}${LIBRARY_VERSION}-doc/examples/nexus")

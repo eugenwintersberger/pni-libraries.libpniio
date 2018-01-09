@@ -87,6 +87,26 @@ class PNIIO_EXPORT DatasetList : public std::vector<hdf5::node::Dataset>
 {
   public:
     using std::vector<hdf5::node::Dataset>::vector;
+
+    //!
+    //! @brief default constructor
+    //!
+    //! Use the compiler provided default implementation here
+    //!
+    DatasetList() = default;
+
+    //!
+    //! @brief implicit conversion constructor
+    //!
+    //! This constructor is deliberately not marked as explicit. It
+    //! is used to convert a list of nodes to a list of groups.
+    //! This will only work if all nodes are indeed groups. Otherwise
+    //! an exception is thrown.
+    //!
+    //! @throws std::runtime_error in case of a failure
+    //! @param nodes reference to the original node list
+    //!
+    DatasetList(const NodeList &nodes);
 };
 
 

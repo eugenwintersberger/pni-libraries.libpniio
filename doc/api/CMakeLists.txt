@@ -8,9 +8,8 @@ set_source_files_properties(Doxyfile mainpage.dox
 add_custom_command(OUTPUT doxygen.stamp
                    COMMAND ${DOXYGEN_EXECUTABLE} Doxyfile
                    COMMAND echo "timestamp" > doxygen.stamp
-                   SOURCE ${CMAKE_DOXYGEN_BUILD_DEPENDENCIES}
-                   DEPENDS Doxyfile mainpage.dox)
-add_custom_target(api_doc SOURCES doxygen.stamp )
+                   DEPENDS Doxyfile mainpage.dox ${CMAKE_DOXYGEN_BUILD_DEPENDENCIES})
+add_custom_target(api_doc DEPENDS doxygen.stamp )
 
 
 install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/html"
@@ -20,7 +19,11 @@ install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/html"
     )
 
 set(RST_FILES index.rst
-              exceptions.rst)
+              exceptions.rst
+              nexus.rst
+              nexus_file.rst
+              nexus_xml.rst
+              nexus_algorithm.rst)
 
 foreach(RST_FILE ${RST_FILES})
     configure_file(${RST_FILE} ${RST_FILE} COPYONLY)

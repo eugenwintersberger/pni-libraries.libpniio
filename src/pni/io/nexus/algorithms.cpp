@@ -105,7 +105,7 @@ pni::core::type_id_t get_type_id(const hdf5::attribute::Attribute &attribute)
 
 hdf5::Dimensions get_dimensions(const hdf5::dataspace::Dataspace &dataspace)
 {
-  if(dataspace.type()==hdf5::dataspace::Type::SIMPLE)
+  if(dataspace.type()==hdf5::dataspace::Type::SCALAR)
   {
     return hdf5::Dimensions{1};
   }
