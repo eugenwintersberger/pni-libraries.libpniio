@@ -34,18 +34,18 @@ BOOST_AUTO_TEST_SUITE(MakeRelativeTest)
 //-------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(test_1)
 {
-  string p1 = "/:NXentry";
-  string p2 = "/:NXentry/instrument:NXinstrument";
+  Path p1 = Path::from_string("/:NXentry");
+  Path p2 = Path::from_string("/:NXentry/instrument:NXinstrument");
 
-  string p2r = Path::to_string(make_relative(p1,p2));
-  BOOST_CHECK_EQUAL(p2r,"instrument:NXinstrument");
+  Path p2r = make_relative(p1,p2);
+  BOOST_CHECK_EQUAL(p2r,Path::from_string("instrument:NXinstrument"));
 }
 
 //-------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(test_2)
 {
-  string parent = "/:NXentry";
-  string orig = "/";
+  Path parent = Path::from_string("/:NXentry");
+  Path orig = Path::from_string("/");
 
   BOOST_CHECK_THROW(make_relative(parent,orig),value_error);
 }
@@ -53,8 +53,8 @@ BOOST_AUTO_TEST_CASE(test_2)
 //-------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(test_3)
 {
-  string parent = "/:NXentry";
-  string orig   = "/:NXentry";
+  Path parent = Path::from_string("/:NXentry");
+  Path orig   = Path::from_string("/:NXentry");
 
   BOOST_CHECK_EQUAL(Path::to_string(make_relative(parent,orig)),".");
 }

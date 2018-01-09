@@ -66,8 +66,9 @@ EXAMPLE_PATH           = examples
 EXAMPLE_PATTERNS       =
 EXAMPLE_RECURSIVE      = NO
 IMAGE_PATH             = @CMAKE_CURRENT_SOURCE_DIR@/images
-INPUT_FILTER           =
-FILTER_PATTERNS        =
+INPUT_FILTER           = 
+FILE_PATTERNS          = *.hpp
+FILTER_PATTERNS        = 
 FILTER_SOURCE_FILES    = NO
 
 #---------------------------------------------------------------------------
@@ -117,7 +118,7 @@ MACRO_EXPANSION        = NO
 EXPAND_ONLY_PREDEF     = NO
 SEARCH_INCLUDES        = YES
 INCLUDE_PATH           =
-INCLUDE_FILE_PATTERNS  =
+INCLUDE_FILE_PATTERNS  = 
 PREDEFINED             =
 EXPAND_AS_DEFINED      =
 SKIP_FUNCTION_MACROS   = YES

@@ -6,9 +6,10 @@ set_source_files_properties(Doxyfile mainpage.dox
 
 #run doxygen
 add_custom_command(OUTPUT doxygen.stamp
-                   COMMAND ${DOXYGEN_EXECUTABLE} Doxyfile
+                   COMMAND ${DOXYGEN_EXECUTABLE} Doxyfile > doxygen.log
                    COMMAND echo "timestamp" > doxygen.stamp
-                   DEPENDS Doxyfile mainpage.dox ${CMAKE_DOXYGEN_BUILD_DEPENDENCIES})
+                   DEPENDS Doxyfile mainpage.dox ${CMAKE_DOXYGEN_BUILD_DEPENDENCIES}
+                   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 add_custom_target(api_doc DEPENDS doxygen.stamp )
 
 
@@ -23,7 +24,9 @@ set(RST_FILES index.rst
               nexus.rst
               nexus_file.rst
               nexus_xml.rst
-              nexus_algorithm.rst)
+              nexus_algorithm.rst
+              nexus_path.rst
+              nexus_utils.rst)
 
 foreach(RST_FILE ${RST_FILES})
     configure_file(${RST_FILE} ${RST_FILE} COPYONLY)

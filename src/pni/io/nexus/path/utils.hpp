@@ -86,9 +86,9 @@ PNIIO_EXPORT bool match(const Path::Element &a,
 //! @param name the name of the object
 //! @param type the type of the object
 //! @return instance of object element
-PNIIO_EXPORT Path::Element
-object_element(const std::string &name,
-               const std::string &type);
+//!
+PNIIO_EXPORT Path::Element object_element(const std::string &name,
+                                          const std::string &type);
 
 //------------------------------------------------------------------------
 //!
@@ -100,11 +100,11 @@ object_element(const std::string &name,
 //!
 //! The best is to have a look at the following example
 //!
-//! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//! string srep = "file.nx:///entry:NXentry/instrument:NXinstrument/data";
-//! nxpath path = nxpath::from_string(srep);
-//! nxpath p1,p2;
-//! split_path(path,1,p1,p2);
+//! @code
+//! std:::string srep = "file.nx:///entry:NXentry/instrument:NXinstrument/data";
+//! nexus::Path path = nexus::Path::from_string(srep);
+//! nexus::Path p1,p2;
+//! nexus::split_path(path,1,p1,p2);
 //!
 //! std::cout<<p1<<std::endl;
 //! std::cout<<p2<<std::endl;
@@ -112,7 +112,7 @@ object_element(const std::string &name,
 //! // output
 //! // file.nx:///entry:NXentry
 //! // instrument:NXinstrument/data
-//! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//! @endcode
 //!
 //! @throws pni::core::index_error if s exceeds input path size
 //! @param p original path
@@ -233,6 +233,7 @@ PNIIO_EXPORT bool is_complete(const Path::Element &e);
 //! constructed path is empty.
 //! @param p path to check
 //! @return true if the path is empty
+//!
 PNIIO_EXPORT bool is_empty(const Path &p);
 
 //--------------------------------------------------------------------------
@@ -252,6 +253,7 @@ PNIIO_EXPORT bool is_empty(const Path &p);
 //! @param a first path
 //! @param b second path
 //! @return joined path
+//!
 PNIIO_EXPORT Path join(const Path &a,const Path &b);
 
 //--------------------------------------------------------------------------
@@ -262,10 +264,10 @@ PNIIO_EXPORT Path join(const Path &a,const Path &b);
 //! Constructing a nexus path from a stream. Analogously to the output
 //! operator this is used to read a path from a stream-able source.
 //!
-//! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//! Path p;
+//! @code
+//! nexus::Path p;
 //! std::cin>>p;
-//! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//! @endcode
 //!
 //! @param i reference to the input stream
 //! @param p reference to the path
@@ -293,9 +295,9 @@ PNIIO_EXPORT bool operator==(const Path::Element &a,const Path::Element &b);
 //! @relates Path
 //!
 //!
-//! \param a reference to the element on the left hand-side of the operator
-//! \param b reference to the element on the right hand-side of the operator
-//! \return true if the elements are no equal
+//! @param a reference to the element on the left hand-side of the operator
+//! @param b reference to the element on the right hand-side of the operator
+//! @return true if the elements are no equal
 //!
 PNIIO_EXPORT bool operator!=(const Path::Element &a,const Path::Element &b);
 
@@ -328,7 +330,7 @@ PNIIO_EXPORT bool operator!=(const Path &lhs,const Path &rhs);
 //------------------------------------------------------------------------
 //!
 //! @brief output operator for single elements
-//! @relates Path
+//! @relates Path::Element
 //!
 //! Write a single object element to an output stream.
 //!
@@ -347,17 +349,17 @@ PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,
 //! Prints a NeXus path to an output stream. One can either use this to
 //! write a Nexus path to standard out
 //!
-//! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//! nxpath p = ....;
+//! @code
+//! nexus::Path p = ....;
 //! std::cout<<p<<std::endl;
-//! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//! @endcode
 //!
 //! or to a string using the stringstream operator
 //!
-//! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+//! @code
 //! std::stringstream ss;
 //! ss<<p;
-//! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//! @endcode
 //!
 //! @param stream reference to the output stream
 //! @param p reference to the path
@@ -383,14 +385,35 @@ PNIIO_EXPORT bool is_unique(const Path &path);
 //! @param node reference to the HDF5 node
 //!
 //! @pre the node must be a valid HDF5 object
+//!
 PNIIO_EXPORT Path get_path(const hdf5::node::Node &node);
 
+//!
+//! @brief get the NeXus path for an HDF5 attribute
+//!
+//! @param attribute reference to the attribute for which to obtain the path
+//!
+//! @pre the attribute must be a valid HDF5 object
+//!
 PNIIO_EXPORT Path get_path(const hdf5::attribute::Attribute &attribute);
 
 
 //!
 //! @brief search for objects
 //!
+//! Searches recursively below `base` and return a list of path objects which
+//! match `path`.
+//! The function distinguishes two situations
+//!
+//! * if `path` is a relative path the paths of all child objects of
+//!   `base` are taken relative to `base`
+//! * if `path` is an absolute path the full path of each child must match.
+//!
+//! @throws std::runtime_error in case of a failure
+//! @param base the base group from which to start the search
+//! @param path the path which to match
+//!
+//! @return a list of path objects
 //!
 PNIIO_EXPORT PathObjectList get_objects(const hdf5::node::Group &base,
                                         const Path &path);

@@ -37,14 +37,14 @@ namespace nexus{
 //! Take a given path and make it relative with respect to a particular
 //! other path (typically the path of a parent object).
 //!
-//! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//! nxpath entry = nxpath::from_string("/:NXentry");
-//! nxpath det   = nxpath::from_string("/:NXentry/:NXinstrument/:NXdetector");
+//! @code
+//! nexus::Path entry = nexus::Path::from_string("/:NXentry");
+//! nexus::Path det   = nexus::Path::from_string("/:NXentry/:NXinstrument/:NXdetector");
 //!
-//! nxpath det_rel = make_relative(entry,det);
+//! nexus::Path det_rel = nexus::make_relative(entry,det);
 //! std::cout<<det_rel<<std::endl;
 //! // output: :NXinstrument/:NXdetector
-//! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//! @endcode
 //!
 //! For this procedure to work both paths must be absolute as we need a
 //! common starting point (which would be the root group). In the case that
@@ -55,23 +55,15 @@ namespace nexus{
 //! * if boths paths have a file section it must be equal
 //! * if
 //!
-//! A typical application would be to find all instances of `NXdetector`
-//! in a given instrument group.
-//! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+//! @param parent_path reference to the path to which we want to create a
+//!                    relative one
+//! @param orig_path reference to the original path
 //!
-//! std::vector<h5::nxobject> detectors;
+//! @return new instance of `Path` relative to `parent_path`
 //!
 //!
 PNIIO_EXPORT Path make_relative(const Path &parent_path,const Path &orig_path);
 
-PNIIO_EXPORT Path make_relative(const std::string &parent_path,
-                                  const std::string &orig_path);
-
-PNIIO_EXPORT Path make_relative(const Path &parent_path,
-                                  const std::string &orig_path);
-
-PNIIO_EXPORT Path make_relative(const std::string &parent_path,
-                                  const Path &orig_path);
 
 } // namespace nexus
 } // namespace io
