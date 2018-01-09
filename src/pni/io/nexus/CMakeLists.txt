@@ -3,7 +3,6 @@ set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/file.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/date_time.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/base_class_factory.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/predicates.hpp
-	             ${CMAKE_CURRENT_SOURCE_DIR}/transformations.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/containers.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/algorithms.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/object_builder.hpp
