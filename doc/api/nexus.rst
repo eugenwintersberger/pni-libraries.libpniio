@@ -9,6 +9,7 @@ functions and classes.
    :maxdepth: 1
    
    nexus_file.rst
+   nexus_factories.rst
    nexus_path.rst
    nexus_algorithm.rst
    nexus_xml.rst
