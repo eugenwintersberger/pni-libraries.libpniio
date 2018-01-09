@@ -10,7 +10,6 @@ set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/file.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/datatype_factory.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/hdf5_support.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/path.hpp
-	             ${CMAKE_CURRENT_SOURCE_DIR}/nexus_object.hpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/field_factory.hpp
 	)
 
@@ -24,7 +23,6 @@ set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/file.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/object_builder.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/datatype_factory.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/hdf5_support.cpp
-	             ${CMAKE_CURRENT_SOURCE_DIR}/nexus_object.cpp
 	             ${CMAKE_CURRENT_SOURCE_DIR}/field_factory.cpp
 	)
 
