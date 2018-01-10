@@ -59,6 +59,10 @@ add_doxygen_source_deps(${PNIIO_HEADER_FILES})
 # ============================================================================
 # building the library
 # ============================================================================ 
+foreach(SRC ${PNIIO_SOURCE_FILES})
+    message(INFO ${SRC})
+endforeach()
+
 add_library(pniio SHARED ${PNIIO_SOURCE_FILES} ${PNIIO_HEADER_FILES})
 
 target_include_directories(pniio

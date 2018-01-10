@@ -35,78 +35,100 @@
 namespace pni{
 namespace io{
 
-    //================implementation of constructors and destructor========
-    //implementation of the default constructor
-    cbf_reader::cbf_reader():image_reader()
-    { 
-        _set_binary(); 
+//================implementation of constructors and destructor========
+//implementation of the default constructor
+cbf_reader::cbf_reader():image_reader()
+{
+  _set_binary();
+}
+
+//---------------------------------------------------------------------
+//implementation of the standard constructor
+cbf_reader::cbf_reader(const pni::core::string &fname):
+            image_reader(fname,true)
+{
+  //here the file is immediately opened  - we have to parse the
+  //header to obtain information about the data
+  _parse_file();
+
+}
+
+//----------------------------------------------------------------
+void cbf_reader::close()
+{
+  //close the stream
+  data_reader::close();
+  //reset data offset
+  _data_offset = 0;
+  //clear the _image_info vector
+  _image_info.clear();
+}
+
+//-----------------------------------------------------------------
+void cbf_reader::open()
+{
+  close();
+  data_reader::open();
+  _parse_file();
+}
+
+//-----------------------------------------------------------------
+size_t cbf_reader::nimages() const
+{
+  return _image_info.size();
+}
+
+//-----------------------------------------------------------------
+image_info cbf_reader::info(size_t i) const
+{
+  return _image_info[i];
+}
+
+//---------------------------------------------------------------------
+//implementation of the destructor
+cbf_reader::~cbf_reader()
+{ }
+
+//===============implemenetation of private methods====================
+void cbf_reader::_parse_file()
+{
+  using namespace pni::core;
+  char linebuffer[1024];
+  std::ifstream &_istream = _get_stream();
+
+  boost::regex header_convention("^_array_data.header_convention.*");
+  boost::regex regex_sls("SLS");
+  boost::regex regex_dectris("DECTRIS");
+  boost::regex regex_pilatus("PILATUS");
+  boost::regex quoted_text("\".*\"");
+  boost::cmatch match;
+
+  while(!_istream.eof())
+  {
+    _istream.getline(linebuffer,1024);
+    if(boost::regex_match(linebuffer,match,header_convention)){
+      //extract the convention string from the header
+      //convention
+      boost::regex_search(linebuffer,match,quoted_text);
+      if(boost::regex_search(match.str(0),regex_sls)||
+          boost::regex_search(match.str(0),regex_dectris) ||
+          boost::regex_search(match.str(0),regex_pilatus))
+      {
+        _data_offset = cbf::dectris_reader::read_header(_istream,
+                                                        _image_info,_compression_type);
+        _detector_vendor = cbf::vendor_id::DECTRIS;
+        return;
+      }else{
+        //should raise an exception here
+        throw file_error(EXCEPTION_RECORD,"Unknown CBF style!");
+      }
     }
+  }
 
-    //---------------------------------------------------------------------
-    //implementation of the standard constructor
-    cbf_reader::cbf_reader(const pni::core::string &fname):
-        image_reader(fname,true)
-    {
-        //here the file is immediately opened  - we have to parse the 
-        //header to obtain information about the data
-        _parse_file();
-    
-    }
-
-    //---------------------------------------------------------------------
-    //implementation of the destructor
-    cbf_reader::~cbf_reader()
-    { }
-
-    //================implementation of assignment operators===============
-    cbf_reader &cbf_reader::operator=(cbf_reader &&r)
-    {
-        if(this == &r) return *this;
-
-        image_reader::operator=(std::move(r));
-        return *this;
-    }
-
-    //===============implemenetation of private methods====================
-    void cbf_reader::_parse_file()
-    {
-        using namespace pni::core;
-        char linebuffer[1024];
-        std::ifstream &_istream = _get_stream();
-
-        boost::regex header_convention("^_array_data.header_convention.*");
-        boost::regex regex_sls("SLS");
-        boost::regex regex_dectris("DECTRIS");
-        boost::regex regex_pilatus("PILATUS");
-        boost::regex quoted_text("\".*\"");
-        boost::cmatch match;
-
-        while(!_istream.eof())
-        {
-            _istream.getline(linebuffer,1024);    
-            if(boost::regex_match(linebuffer,match,header_convention)){
-                //extract the convention string from the header
-                //convention
-                boost::regex_search(linebuffer,match,quoted_text);
-                if(boost::regex_search(match.str(0),regex_sls)||
-                   boost::regex_search(match.str(0),regex_dectris) ||
-                   boost::regex_search(match.str(0),regex_pilatus))
-                {
-                    _data_offset = cbf::dectris_reader::read_header(_istream,
-                            _image_info,_compression_type);
-                    _detector_vendor = cbf::vendor_id::DECTRIS;
-                    return;
-                }else{
-                    //should raise an exception here
-                    throw file_error(EXCEPTION_RECORD,"Unknown CBF style!");
-                }
-            }
-        }
-
-        if(_istream.eof())
-            throw file_error(EXCEPTION_RECORD,
-                    "File is most probably not a CBF file");
-    }
+  if(_istream.eof())
+    throw file_error(EXCEPTION_RECORD,
+                     "File is most probably not a CBF file");
+}
 
 
 //end of namespace

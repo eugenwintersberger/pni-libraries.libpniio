@@ -30,7 +30,8 @@ set(RST_FILES index.rst
               nexus_factories.rst
               ascii.rst
               ascii_parsers.rst
-              ascii_spreadsheet.rst)
+              ascii_spreadsheet.rst
+              image.rst)
 
 foreach(RST_FILE ${RST_FILES})
     configure_file(${RST_FILE} ${RST_FILE} COPYONLY)

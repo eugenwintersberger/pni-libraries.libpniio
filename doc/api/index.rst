@@ -8,4 +8,5 @@ API documentation
    
    exceptions.rst
    ascii.rst
+   image.rst
    nexus.rst

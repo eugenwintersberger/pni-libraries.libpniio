@@ -9,22 +9,11 @@ The term legacy data refers to all non-Nexus file formats.
   characters
 * and binary data where the raw binary information is stored in a file.
 
+For details about these different file format types see the following sections.
+
 .. toctree::
    :maxdepth: 1
    
    ascii
-
-ASCII data
-==========
-
-
-
-
-
-Binary data
-===========
-
-.. todo::
-
-   Add section about binary data formats
+   image
 
