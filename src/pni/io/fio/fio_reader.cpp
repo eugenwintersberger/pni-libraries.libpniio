@@ -30,11 +30,10 @@
 
 static const boost::regex parameter_section_re("^[[:space:]]*%p[[:space:]]*");
 static const boost::regex data_section_re("^[[:space:]]*%d[[:space:]]*");
-static const boost::regex key_value_re("^\\s*(?<KEY>[^=]+)\\s*=\\s*(?<VALUE>[^=]+)\\s*");
+static const boost::regex key_value_re("^\\s*(?<KEY>[^=]+)\\s*=\\s*(?<VALUE>.+)\\s*");
 static const boost::regex col_descriptor_re("^\\s*Col\\s+(?<INDEX>\\d+)\\s+(?<NAME>\\w+)\\s+(?<TYPE>\\w+)\\s*");
 static const boost::regex data_record_re("^(?:\\s+[+-\\.0-9eE]+)+\\s*");
 static const boost::regex data_cell_re("[+-\\.0-9eE]+");
-//boost::regex dcol("[+-]?\\d+\\.?\\d*e?[+-]?\\d*");
 
 namespace pni{
 namespace io{

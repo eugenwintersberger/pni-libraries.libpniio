@@ -13,7 +13,8 @@ set(RST_SOURCES index.rst
                 nexus_search.rst
                 nexus_xml.rst
                 ascii_lowlevel.rst
-                ascii.rst)
+                ascii.rst
+                ascii_spreadsheet.rst)
 
 foreach(RST_SOURCE ${RST_SOURCES})
     configure_file(${RST_SOURCE} ${RST_SOURCE} COPYONLY)

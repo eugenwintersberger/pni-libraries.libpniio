@@ -10,6 +10,7 @@ add_subdirectory(_templates)
 add_subdirectory(users_guide)
 add_subdirectory(api)
 add_subdirectory(examples)
+add_subdirectory(images)
 
 add_custom_target(sphinx_build
                   COMMAND sphinx-build -bhtml . build/html

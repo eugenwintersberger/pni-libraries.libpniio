@@ -14,4 +14,5 @@ are
    :maxdepth: 1
    
    ascii_lowlevel
+   ascii_spreadsheet
    

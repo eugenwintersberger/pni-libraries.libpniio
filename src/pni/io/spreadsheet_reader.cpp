@@ -27,82 +27,111 @@
 namespace pni{
 namespace io{
 
-    //============constructors and destructor==================================
-    //default constructor implementation
-    spreadsheet_reader::spreadsheet_reader():data_reader(){}
+//========implementation of private member functions===========================
+void spreadsheet_reader::_append_column(const column_info &i)
+{
+  _columns_info.push_back(i);
+}
 
-    //-------------------------------------------------------------------------
-    //move constructor implementation
-    spreadsheet_reader::spreadsheet_reader(spreadsheet_reader &&o):
-        data_reader(std::move(o)),
-        _columns_info(std::move(o._columns_info)),
-        _nrec(o._nrec)
-    {
-        o._nrec = 0; 
-    }
+column_info spreadsheet_reader::_get_column(size_t i) const
+{
+  return _columns_info.at(i);
+}
 
-    //-------------------------------------------------------------------------
-    //standard constructor implementation
-    spreadsheet_reader::spreadsheet_reader(const pni::core::string &n):
-        data_reader(n)
-    {}
+column_info spreadsheet_reader::_get_column(const pni::core::string &n) const
+{
+  using namespace pni::core;
+  size_t i=0;
+  for(auto c: _columns_info)
+  {
+    if(c.name() == n)
+      return _get_column(i);
 
-    //-------------------------------------------------------------------------
-    //destructor implementation
-    spreadsheet_reader::~spreadsheet_reader()
-    {}
+    //increment column counter
+    i++;
+  }
 
-    //=====================assignment operators================================
-    //move assignment operator implementation
-    spreadsheet_reader &spreadsheet_reader::operator=(spreadsheet_reader &&r)
-    {
-        if(this == &r) return *this;
+  throw key_error(EXCEPTION_RECORD,"Column ["+n+"] not found!");
 
-        data_reader::operator=(std::move(r));
-        _columns_info = std::move(r._columns_info);
-        _nrec = r._nrec;
-        r._nrec = 0;
-        return *this;
-    }
+  return column_info(); //just to get rid of compiler warning
+}
 
-    //=====================public methods implementation=======================
-    bool spreadsheet_reader::has_column(const pni::core::string &name) const
-    {
+//============constructors and destructor==================================
+//default constructor implementation
+spreadsheet_reader::spreadsheet_reader():data_reader(){}
+
+//-------------------------------------------------------------------------
+//move constructor implementation
+spreadsheet_reader::spreadsheet_reader(spreadsheet_reader &&o):
+            data_reader(std::move(o)),
+            _columns_info(std::move(o._columns_info)),
+            _nrec(o._nrec)
+{
+  o._nrec = 0;
+}
+
+//-------------------------------------------------------------------------
+//standard constructor implementation
+spreadsheet_reader::spreadsheet_reader(const pni::core::string &n):
+            data_reader(n)
+{}
+
+//-------------------------------------------------------------------------
+//destructor implementation
+spreadsheet_reader::~spreadsheet_reader()
+{}
+
+//=====================assignment operators================================
+//move assignment operator implementation
+spreadsheet_reader &spreadsheet_reader::operator=(spreadsheet_reader &&r)
+{
+  if(this == &r) return *this;
+
+  data_reader::operator=(std::move(r));
+  _columns_info = std::move(r._columns_info);
+  _nrec = r._nrec;
+  r._nrec = 0;
+  return *this;
+}
+
+//=====================public methods implementation=======================
+bool spreadsheet_reader::has_column(const pni::core::string &name) const
+{
 #ifdef NOFOREACH
-        for(auto iter = this->begin();iter!=this->end();++iter)
-        {
-            auto ci = *iter;
+  for(auto iter = this->begin();iter!=this->end();++iter)
+  {
+    auto ci = *iter;
 #else
-        for(auto ci: *this)
-        {
+    for(auto ci: *this)
+    {
 #endif
-            if(ci.name() == name) return true;
-        }
-
-        return false;
+      if(ci.name() == name) return true;
     }
 
-    //-------------------------------------------------------------------------
-    size_t spreadsheet_reader::column_index(const pni::core::string &name) const
-    {
-        using namespace pni::core;
-        size_t index = 0;
+    return false;
+  }
+
+  //-------------------------------------------------------------------------
+  size_t spreadsheet_reader::column_index(const pni::core::string &name) const
+  {
+    using namespace pni::core;
+    size_t index = 0;
 #ifdef NOFOREACH
-        for(auto iter = this->begin();iter!=this->end();++iter)
-        {
-            auto ci = *iter;
+    for(auto iter = this->begin();iter!=this->end();++iter)
+    {
+      auto ci = *iter;
 #else
-        for(auto ci: *this)
-        {
+      for(auto ci: *this)
+      {
 #endif
-            if(ci.name() == name) return index++;
-        }
+        if(ci.name() == name) return index++;
+      }
 
-        //throw exception if the column name does not exist
-        exception_record r(__FILE__,__LINE__,BOOST_CURRENT_FUNCTION);
-        throw key_error(r,"Column with name ["+name+"] does not exist!");
+      //throw exception if the column name does not exist
+      exception_record r(__FILE__,__LINE__,BOOST_CURRENT_FUNCTION);
+      throw key_error(r,"Column with name ["+name+"] does not exist!");
 
-        return 0; //make the compiler happy - a value is returned.
+      return 0; //make the compiler happy - a value is returned.
     }
 
 //end of namespace

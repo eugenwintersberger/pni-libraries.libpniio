@@ -68,5 +68,27 @@
       <packagedElement xmi:type="uml:Class" xmi:id="_rUzegPB3Eeecx7pP8LhLBA" name="BaseClassFactory"/>
       <packagedElement xmi:type="uml:Class" xmi:id="_tMQvYPB3Eeecx7pP8LhLBA" name="FieldFactory"/>
     </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_7YeHQPXZEeetvsjojp6yvg" name="data_reader"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_9AJ2wPXZEeetvsjojp6yvg" name="spreadsheet_reader">
+      <generalization xmi:type="uml:Generalization" xmi:id="_eGIZIPXaEeetvsjojp6yvg" general="_7YeHQPXZEeetvsjojp6yvg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_-y604PXZEeetvsjojp6yvg" name="image_reader">
+      <generalization xmi:type="uml:Generalization" xmi:id="_egRXcPXaEeetvsjojp6yvg" general="_7YeHQPXZEeetvsjojp6yvg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_ENgOQPXaEeetvsjojp6yvg" name="image_info"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_F01_gPXaEeetvsjojp6yvg" name="image_channel_info"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_He9_APXaEeetvsjojp6yvg" name="column_info"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_PHczUPXaEeetvsjojp6yvg" name="fio_reader">
+      <generalization xmi:type="uml:Generalization" xmi:id="_hLfnkPXaEeetvsjojp6yvg" general="_9AJ2wPXZEeetvsjojp6yvg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_RwCmMPXaEeetvsjojp6yvg" name="cbf_reader">
+      <generalization xmi:type="uml:Generalization" xmi:id="_iIFysPXaEeetvsjojp6yvg" general="_-y604PXZEeetvsjojp6yvg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_S2Ck8PXaEeetvsjojp6yvg" name="tiff_reader">
+      <generalization xmi:type="uml:Generalization" xmi:id="_ifbUoPXaEeetvsjojp6yvg" general="_-y604PXZEeetvsjojp6yvg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_2McR0PXaEeetvsjojp6yvg" client="_-y604PXZEeetvsjojp6yvg" supplier="_ENgOQPXaEeetvsjojp6yvg"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_3TrmsPXaEeetvsjojp6yvg" client="_-y604PXZEeetvsjojp6yvg" supplier="_F01_gPXaEeetvsjojp6yvg"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_9yaksPXaEeetvsjojp6yvg" client="_9AJ2wPXZEeetvsjojp6yvg" supplier="_He9_APXaEeetvsjojp6yvg"/>
   </packagedElement>
 </uml:Model>
