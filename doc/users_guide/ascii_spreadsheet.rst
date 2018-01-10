@@ -19,6 +19,29 @@ is this the typical way how data is accessed in the field of synchrotron
 research, it has also the advantage that the data type is constant within 
 every column and  thus standard containers can be used. 
 
+The :cpp:class:`spreadsheet_reader` base class does not support any IO operations
+but provides a rather abstract container interface allowing to iterate over 
+each column. However, instead of the concrete column we can access only 
+instances of :cpp:class:`column_info` from this interface which. 
+
+:cpp:class:`column_info` provides basic information about each column in the 
+spreadsheet, namely 
+
+* the **name** of the column
+* the **type id** of the cells elementary data type
+* the **shape** which is the dimensionality of each cell. 
+
+
+.. code-block:: cpp
+
+   void print_column_info(std::ostream &stream,const spreadsheet_reader &reader)
+   {
+      for(auto info: reader)
+         stream<<info.name()<<" has type "<<info.type_id()<< " and shape "<<info.shape()<<std::endl;
+   }
+   
+For more details see the :ref:`ascii-spreadsheet-api`.
+
 FIO file support
 ================
 
@@ -114,6 +137,9 @@ store the column data
    
 the column itself is determined by its name which is passed as the sole 
 argument to :cpp:func:`column`.
+
+For a full reference of the :cpp:class:`pni::io::fio_reader` see the 
+:ref:`ascii-spreadsheet-api`.
 
 
 
