@@ -1,17 +1,10 @@
 #include <pni/core/types.hpp>
-#include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/algorithms/is_class.hpp>
-#include <pni/io/nx/algorithms/get_object.hpp>
-#include <pni/io/nx/algorithms/get_name.hpp>
-#include <pni/io/nx/xml.hpp>
-#include <vector>
-#include <iterator>
-#include <algorithm>
-#include <iostream>
+#include <pni/io/nexus.hpp>
+#include <h5cpp/hdf5.hpp>
 
 
 using namespace pni::core;
-using namespace pni::io::nx;
+using namespace pni::io;
 
 static const string file_struct = 
 "<group name=\"/\" type=\"NXroot\">"
@@ -33,24 +26,17 @@ static const string file_struct =
 
 int main(int,char **)
 {
-    //create the file structure
-    h5::nxfile f = h5::nxfile::create_file("gather_detectors.nxs",true);
-    auto root = f.root();
-    xml::xml_to_nexus(xml::create_from_string(file_struct),root);
+  //create the file structure
+  hdf5::file::File file = nexus::create_file("gather_detectors.nxs",hdf5::file::AccessFlags::TRUNCATE);
+  hdf5::node::Group root_group = file.root();
+  nexus::xml::create_from_string(root_group,file_struct);
 
-    //gather all the detectors
-    std::vector<h5::nxgroup> detectors;
+  hdf5::node::Group entry = root_group.nodes["entry"];
+  nexus::GroupList detectors = nexus::search(entry,nexus::IsDetector(),true);
 
-    h5::nxgroup instrument = get_object(root,"/:NXentry/:NXinstrument");
-    
-    std::copy_if(instrument.begin(),instrument.end(),
-                 std::back_inserter(detectors),
-                 [](const h5::nxobject &o)
-                 { return is_class(o,"NXdetector"); });
+  std::cout<<"Found "<<detectors.size()<<" detectors"<<std::endl;
+  for(auto d: detectors)
+    std::cout<<d.link().path().name()<<std::endl;
 
-    std::cout<<"Found "<<detectors.size()<<" detectors"<<std::endl;
-    for(auto d: detectors)
-        std::cout<<get_name(d)<<std::endl;
-
-    return 0;
+  return 0;
 }

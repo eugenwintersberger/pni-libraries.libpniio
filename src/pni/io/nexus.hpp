@@ -23,7 +23,7 @@
 #pragma once
 
 #include <pni/io/nexus/algorithms.hpp>
-#include <pni/io/nexus/base_class.hpp>
+#include <pni/io/nexus/base_class_factory.hpp>
 #include <pni/io/nexus/containers.hpp>
 #include <pni/io/nexus/datatype_factory.hpp>
 #include <pni/io/nexus/date_time.hpp>
@@ -31,9 +31,7 @@
 #include <pni/io/nexus/hdf5_support.hpp>
 #include <pni/io/nexus/object_builder.hpp>
 #include <pni/io/nexus/predicates.hpp>
-#include <pni/io/nexus/transformations.hpp>
 #include <pni/io/nexus/version.hpp>
 #include <pni/io/nexus/path.hpp>
 #include <pni/io/nexus/xml/create.hpp>
-#include <pni/io/nexus/nexus_object.hpp>
-#include <pni/io/nexus/field.hpp>
+#include <pni/io/nexus/field_factory.hpp>

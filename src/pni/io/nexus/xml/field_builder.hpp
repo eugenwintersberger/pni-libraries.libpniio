@@ -33,7 +33,7 @@ namespace io {
 namespace nexus {
 namespace xml {
 
-class FieldBuilder : public ObjectBuilder
+class PNIIO_EXPORT FieldBuilder : public ObjectBuilder
 {
   private:
     hdf5::dataspace::Simple construct_dataspace() const;

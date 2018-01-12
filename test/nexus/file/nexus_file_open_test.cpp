@@ -30,7 +30,7 @@ struct OpenTestsFixture
 {
     OpenTestsFixture()
     {
-       nexus::create("open_test.nxs",hdf5::file::AccessFlags::TRUNCATE);
+       nexus::create_file("open_test.nxs",hdf5::file::AccessFlags::TRUNCATE);
     }
 };
 
@@ -41,7 +41,7 @@ BOOST_FIXTURE_TEST_SUITE(OpenTests,OpenTestsFixture)
 BOOST_AUTO_TEST_CASE(test_open)
 {
   hdf5::file::File nx_file;
-  BOOST_CHECK_NO_THROW(nx_file = nexus::open("open_test.nxs"));
+  BOOST_CHECK_NO_THROW(nx_file = nexus::open_file("open_test.nxs"));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -1,11 +1,9 @@
 #include <pni/core/types.hpp>
-#include <pni/io/nx/nx.hpp>
-#include <pni/io/nx/flat_group.hpp>
-#include <pni/io/nx/xml.hpp>
-#include <pni/io/nx/nxpath.hpp>
+#include <pni/io/nexus.hpp>
+#include <h5cpp/hdf5.hpp>
 
 using namespace pni::core;
-using namespace pni::io::nx;
+using namespace pni::io;
 
 static const string file_struct = 
 "<group name=\"/\" type=\"NXroot\">"
@@ -21,22 +19,21 @@ static const string file_struct =
 
 int main(int,char **)
 {
-    h5::nxfile f = h5::nxfile::create_file("count_detectors.nxs",true);
-    auto root = f.root();
+  hdf5::file::File file = nexus::create_file("count_detectors.nxs",
+                                             hdf5::file::AccessFlags::TRUNCATE);
+  hdf5::node::Group root_group = file.root();
+  nexus::xml::create_from_string(root_group,file_struct);
 
-    xml::xml_to_nexus(xml::create_from_string(file_struct),root);
-    auto entry = get_object(root,"/:NXentry");
-    auto all = make_flat(entry);
+  //get all entries from the file
+  nexus::GroupList entries = nexus::get_objects(root_group,nexus::Path::from_string(":NXentry"));
 
-    auto cnt = std::count_if(all.begin(),all.end(),
-                             [&entry](const h5::nxobject &o)
-                             {
-                                return
-                                match(nxpath::to_string(make_relative("/:NXentry/",get_path(o))),":NXinstrument/:NXdetector");
-                                });
+  for(auto entry: entries)
+  {
+    std::cout<<"Predicate search: "<<nexus::search(entry,nexus::IsDetector(),true).size()<<std::endl;
 
-    std::cout<<cnt<<std::endl;
+    nexus::GroupList detectors = nexus::get_objects(entry,nexus::Path::from_string(":NXinstrument/:NXdetector"));
+    std::cout<<"Path search: "<<detectors.size()<<std::endl;
+  }
 
-    f.close();
-    return 0;
+  return 0;
 }

@@ -24,6 +24,7 @@
 
 #include <pni/io/nexus/xml/node.hpp>
 #include <h5cpp/hdf5.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni {
 namespace io {
@@ -36,7 +37,7 @@ namespace xml {
 //! This class provides a function to construct an HDF5 datatype from the
 //! `type` attribute of an XML node.
 //!
-class DatatypeBuilder
+class PNIIO_EXPORT DatatypeBuilder
 {
   private:
     Node node_;

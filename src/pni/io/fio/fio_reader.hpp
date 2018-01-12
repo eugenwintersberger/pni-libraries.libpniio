@@ -57,10 +57,6 @@ namespace io{
     	    using column_map_type = std::map<pni::core::string,column_type>;
             //! parameter stream positions
             std::map<pni::core::string,pni::core::string> _param_map;
-            //! offset where real data starts
-            std::streampos _data_offset; 
-            //! offset where the parameter section starts
-            std::streampos _param_offset;
             //! column data
             std::map<pni::core::string,std::vector<pni::core::string>> _columns;
 #ifdef _MSC_VER
@@ -199,7 +195,7 @@ namespace io{
             the file.
             \return parameter names
             */
-            std::vector<pni::core::string> parameter_names() const;
+            std::vector<std::string> parameter_names() const;
 
             //-----------------------------------------------------------------
             /*! 
@@ -211,7 +207,7 @@ namespace io{
             \return parameter value as type T
             */
             template<typename T> 
-            T parameter(const pni::core::string &name) const;
+            T parameter(const std::string &name) const;
            
             //-----------------------------------------------------------------
             /*! 
@@ -225,7 +221,7 @@ namespace io{
             \return instance of ATYPE holding the data.
             */
             template<typename CTYPE> 
-            CTYPE column(const pni::core::string &n) const;
+            CTYPE column(const std::string &n) const;
 
             //-----------------------------------------------------------------
             /*! 
@@ -241,7 +237,7 @@ namespace io{
             \param c instance of CTYPE that will in the end contain the data
             */
             template<typename CTYPE> 
-                void column(const pni::core::string &n,CTYPE &c) const;
+                void column(const std::string &n,CTYPE &c) const;
 
     };
     
@@ -254,14 +250,14 @@ namespace io{
 
     //======================template implementation============================
     template<typename T> 
-    T fio_reader::parameter(const pni::core::string &name) const
+    T fio_reader::parameter(const std::string &name) const
     {
         return boost::lexical_cast<T>(_param_map.at(name));
     }
 
     //-------------------------------------------------------------------------
     template<typename CTYPE> 
-        void fio_reader::column(const pni::core::string &n,CTYPE &c) const
+        void fio_reader::column(const std::string &n,CTYPE &c) const
     {
         using namespace pni::core;
         using value_type = typename CTYPE::value_type;
@@ -285,7 +281,7 @@ namespace io{
 
     //-------------------------------------------------------------------------
     template<typename CTYPE> 
-    CTYPE fio_reader::column(const pni::core::string &n) const
+    CTYPE fio_reader::column(const std::string &n) const
     {
         //create the container 
         //allocate a new array

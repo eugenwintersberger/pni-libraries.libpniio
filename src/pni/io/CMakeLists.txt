@@ -23,9 +23,15 @@ set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/column_info.cpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/container_io_config.cpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/strutils.cpp)
                  
+# ============================================================================
+# setting up the global lists for source and header files
+# ============================================================================                
 set(PNIIO_HEADER_FILES )
 set(PNIIO_SOURCE_FILES )
                  
+# ============================================================================
+# install header files
+# ============================================================================                
 install(FILES ${HEADER_FILES}
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/io)
 
@@ -38,8 +44,24 @@ add_subdirectory("formatters")
 add_subdirectory("tiff")
 add_subdirectory("nexus")
 
+# ============================================================================
+# assemble list of header and source files used in the build 
+# ============================================================================
+
 set(PNIIO_HEADER_FILES ${PNIIO_HEADER_FILES} ${HEADER_FILES})
 set(PNIIO_SOURCE_FILES ${PNIIO_SOURCE_FILES} ${SOURCE_FILES})
+
+# ============================================================================
+# adding header files to the doxygen build dependencies
+# ============================================================================
+add_doxygen_source_deps(${PNIIO_HEADER_FILES})
+
+# ============================================================================
+# building the library
+# ============================================================================ 
+foreach(SRC ${PNIIO_SOURCE_FILES})
+    message(INFO ${SRC})
+endforeach()
 
 add_library(pniio SHARED ${PNIIO_SOURCE_FILES} ${PNIIO_HEADER_FILES})
 
@@ -60,8 +82,15 @@ target_link_libraries(pniio
                       Boost::date_time
                       )
 target_compile_definitions(pniio PUBLIC BOOST_ALL_DYN_LINK)
+target_compile_definitions(pniio PRIVATE DLL_BUILD) 
 
-#install code
+# ============================================================================
+# install the library binaries and targets 
+# ============================================================================
+
+#
+# export the targets which are latter used by the CMAKE package
+# 
 install(TARGETS pniio
         EXPORT pniio_targets
         LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
@@ -70,6 +99,9 @@ install(TARGETS pniio
         COMPONENT libraries
         )
 
+#
+# install the binaries
+#
 install(EXPORT pniio_targets
-DESTINATION ${CMAKE_INSTALL_PACKAGEDIR}
-COMPONENT development)
+        DESTINATION ${CMAKE_INSTALL_PACKAGEDIR}
+        COMPONENT development)

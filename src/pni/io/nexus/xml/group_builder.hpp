@@ -29,7 +29,7 @@ namespace io {
 namespace nexus {
 namespace xml {
 
-class GroupBuilder : public ObjectBuilder
+class PNIIO_EXPORT GroupBuilder : public ObjectBuilder
 {
   public:
     GroupBuilder() = default;

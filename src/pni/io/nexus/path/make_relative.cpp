@@ -57,28 +57,6 @@ Path make_relative(const Path &parent_path,const Path &orig_path)
   return new_path;
 }
 
-//--------------------------------------------------------------------------
-Path make_relative(const std::string &parent_path,
-                   const std::string &orig_string)
-{
-  return make_relative(Path::from_string(parent_path),
-                       Path::from_string(orig_string));
-}
-
-//--------------------------------------------------------------------------
-Path make_relative(const Path &parent_path,
-                   const std::string &orig_path)
-{
-  return make_relative(parent_path,Path::from_string(orig_path));
-}
-
-//--------------------------------------------------------------------------
-Path make_relative(const std::string &parent_path,
-                     const Path &orig_path)
-{
-  return make_relative(Path::from_string(parent_path),orig_path);
-}
-
 
 } // namespace nexus
 } // namespace io

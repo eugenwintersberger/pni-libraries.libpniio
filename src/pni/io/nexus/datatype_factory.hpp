@@ -24,6 +24,7 @@
 
 #include <h5cpp/hdf5.hpp>
 #include <pni/core/types.hpp>
+#include <pni/io/windows.hpp>
 
 namespace pni {
 namespace io {
@@ -36,10 +37,19 @@ namespace nexus {
 //! This service class provides a static method constructing HDF5 datatypes
 //! from type_id_t enumerations.
 //!
-class DatatypeFactory
+class PNIIO_EXPORT DatatypeFactory
 {
   public:
 
+    //!
+    //! @brief create HDF5 datatype from type ID
+    //!
+    //! Create a new HDF5 datatype from a given type ID.
+    //!
+    //! @throws std::runtime_error in case of a failure
+    //! @param tid type ID for which to create a new datatype
+    //! @return new instance of an HDF5 datatype
+    //!
     static hdf5::datatype::Datatype create(pni::core::type_id_t tid);
 };
 

@@ -22,7 +22,7 @@
 //
 #include <boost/test/unit_test.hpp>
 #include <pni/io/nexus/predicates.hpp>
-#include <pni/io/nexus/base_class.hpp>
+#include <pni/io/nexus/base_class_factory.hpp>
 #include <pni/io/nexus/file.hpp>
 
 using namespace pni::io;
@@ -36,7 +36,7 @@ struct PredicateTestFixture
 
     PredicateTestFixture()
     {
-      nexus_file = nexus::create("PredicateTest.nxs",
+      nexus_file = nexus::create_file("PredicateTest.nxs",
                                  file::AccessFlags::TRUNCATE);
       root_group = nexus_file.root();
       dataset = node::Dataset(root_group,"data",
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_SUITE(IsBaseClassTest)
 BOOST_AUTO_TEST_CASE(success)
 {
   BOOST_CHECK(nexus::IsBaseClass()(root_group));
-  nexus::BaseClass entry(root_group,"entry","NXentry");
+  node::Group entry = nexus::BaseClassFactory::create(root_group,"entry","NXentry");
   BOOST_CHECK(nexus::IsBaseClass("NXentry")(entry));
 }
 
@@ -77,49 +77,49 @@ BOOST_AUTO_TEST_SUITE(BaseClassPredicateTests)
 
 BOOST_AUTO_TEST_CASE(IsTransformation)
 {
-  nexus::BaseClass t(root_group,"transformations","NXtransformations");
+  node::Group t = nexus::BaseClassFactory::create(root_group,"transformations","NXtransformations");
   BOOST_CHECK(nexus::IsTransformation()(t));
   BOOST_CHECK(!nexus::IsTransformation()(root_group));
 }
 
 BOOST_AUTO_TEST_CASE(IsEntry)
 {
-  nexus::BaseClass entry(root_group,"entry","NXentry");
+  node::Group entry = nexus::BaseClassFactory::create(root_group,"entry","NXentry");
   BOOST_CHECK(nexus::IsEntry()(entry));
   BOOST_CHECK(!nexus::IsEntry()(root_group));
 }
 
 BOOST_AUTO_TEST_CASE(IsSubentry)
 {
-  nexus::BaseClass subentry(root_group,"subentry","NXsubentry");
+  node::Group subentry = nexus::BaseClassFactory::create(root_group,"subentry","NXsubentry");
   BOOST_CHECK(nexus::IsSubentry()(subentry));
   BOOST_CHECK(!nexus::IsSubentry()(root_group));
 }
 
 BOOST_AUTO_TEST_CASE(IsDetector)
 {
-  nexus::BaseClass detector(root_group,"detector","NXdetector");
+  node::Group detector = nexus::BaseClassFactory::create(root_group,"detector","NXdetector");
   BOOST_CHECK(nexus::IsDetector()(detector));
   BOOST_CHECK(!nexus::IsDetector()(root_group));
 }
 
 BOOST_AUTO_TEST_CASE(IsInstrument)
 {
-  nexus::BaseClass instrument(root_group,"instrument","NXinstrument");
+  node::Group instrument = nexus::BaseClassFactory::create(root_group,"instrument","NXinstrument");
   BOOST_CHECK(nexus::IsInstrument()(instrument));
   BOOST_CHECK(!nexus::IsInstrument()(root_group));
 }
 
 BOOST_AUTO_TEST_CASE(IsSample)
 {
-  nexus::BaseClass sample(root_group,"sample","NXsample");
+  node::Group sample = nexus::BaseClassFactory::create(root_group,"sample","NXsample");
   BOOST_CHECK(nexus::IsSample()(sample));
   BOOST_CHECK(!nexus::IsSample()(root_group));
 }
 
 BOOST_AUTO_TEST_CASE(IsData)
 {
-  nexus::BaseClass data(root_group,"plot","NXdata");
+  node::Group data = nexus::BaseClassFactory::create(root_group,"plot","NXdata");
   BOOST_CHECK(nexus::IsData()(data));
   BOOST_CHECK(!nexus::IsData()(root_group));
 }

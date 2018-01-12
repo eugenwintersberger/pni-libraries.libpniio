@@ -217,7 +217,7 @@ class PNIIO_EXPORT IsData : public IsBaseClass
 //! <a href="http://download.nexusformat.org/doc/html/datarules.html?highlight=valid%20name">
 //! here</a>.
 //!
-class IsValidNeXusName
+class PNIIO_EXPORT IsValidNeXusName
 {
   private:
     boost::regex name_regex_;

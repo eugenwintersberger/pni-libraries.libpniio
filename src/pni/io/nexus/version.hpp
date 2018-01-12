@@ -32,7 +32,7 @@ namespace io {
 namespace nexus {
 
 //!
-//! \brief a 3 number version class
+//! @brief a 3 number version class
 //!
 //! Describes a version number.
 //!
@@ -41,6 +41,7 @@ class PNIIO_EXPORT Version
   public:
     //!
     //! @brief the number type used to represent version numbers
+    //!
     using NumberType = unsigned long;
   private:
     NumberType major_;
@@ -51,7 +52,7 @@ class PNIIO_EXPORT Version
                                            const std::string &part_name);
   public:
     //!
-    //! \brief default constructor
+    //! @brief default constructor
     //!
     //! Set all three version numbers to 0
     //!
@@ -91,9 +92,9 @@ class PNIIO_EXPORT Version
     //!
     //! @brief read version from a string
     //!
-    //! The string must be formated as <MAJOR>.<MINOR>.<PATCH>. Otherwise
+    //! The string must be formated as *MAJOR.MINOR.PATCH*. Otherwise
     //! a runtime exception will be thrown. Incomplete version numbers are
-    //! permited starting from <MAJOR> downards. Non-existing elements of
+    //! permitted starting from *MAJOR* downwards. Non-existing elements of
     //! the version are assumed to be 0.
     //!
     //! @throws std::runtime_error in the case of a malformed input string
@@ -106,7 +107,7 @@ class PNIIO_EXPORT Version
     //!
     //! @brief convert a Version to a string
     //!
-    //! The result is a string with the format <MAJOR>.<MINOR>.<PATCH>.
+    //! The result is a string with the format *MAJOR.MINOR.PATCH*.
     //! @param version reference to a instance of Version
     //! @return a new instance of std::string
     //!
@@ -115,6 +116,7 @@ class PNIIO_EXPORT Version
 
 //!
 //! @brief output stream operator
+//! @relates Version
 //!
 //! Writes an instance of Version to a std::ostream. The output format is the
 //! same as for Version::to_string.
@@ -128,6 +130,7 @@ PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,const Version &versio
 
 //!
 //! @brief input stream operator
+//! @relates Version
 //!
 //! Read an instance of Version from a stream. The input format expected
 //! is the same as for Version::from_string.
@@ -141,6 +144,7 @@ PNIIO_EXPORT std::istream &operator>>(std::istream &stream,Version &version);
 
 //!
 //! @brief checks two version for equality
+//! @relates Version
 //!
 //! Two version are considered equal if all of their parts are equal.
 //!
@@ -152,6 +156,7 @@ PNIIO_EXPORT bool operator==(const Version &lhs,const Version &rhs);
 
 //!
 //! @brief checks if two versions are not equal
+//! @relates Version
 //!
 //! @param lhs reference to the left hand side version
 //! @param rhs reference to the right hand side version
@@ -169,6 +174,7 @@ PNIIO_EXPORT bool operator<=(const Version &lhs,const Version &rhs);
 
 //!
 //! @brief checks if the left version is strictly small than the right
+//! @relates Version
 //!
 //! @param lhs reference to the left hand side version
 //! @param rhs reference to the right hand side version
@@ -177,6 +183,8 @@ PNIIO_EXPORT bool operator<(const Version &lhs,const Version &rhs);
 
 //!
 //! @brief checks if the left version is bigger or equal than the right
+//! @relates Version
+//!
 //! @param lhs reference to the left hand side version
 //! @param rhs reference to the right hand side version
 //!
@@ -184,6 +192,7 @@ PNIIO_EXPORT bool operator>=(const Version &lhs,const Version &rhs);
 
 //!
 //! @brief checks if the left version is strictly bigger than the right
+//! @relates Version
 //!
 //! @param lhs reference to the left hand side version
 //! @param rhs reference to the right hand side version

@@ -9,7 +9,7 @@
       <packagedElement xmi:type="uml:Class" xmi:id="_XVdXkN_WEeee1df4XdPQKQ" name="GroupList"/>
       <packagedElement xmi:type="uml:Class" xmi:id="_Yl2BYN_WEeee1df4XdPQKQ" name="DatasetList"/>
       <packagedElement xmi:type="uml:Class" xmi:id="_bY27kN_WEeee1df4XdPQKQ" name="BaseClass"/>
-      <packagedElement xmi:type="uml:Class" xmi:id="_hYRgUN_WEeee1df4XdPQKQ" name="NodePredicate">
+      <packagedElement xmi:type="uml:Class" xmi:id="_hYRgUN_WEeee1df4XdPQKQ" name="NodePredicate" isAbstract="true">
         <ownedOperation xmi:type="uml:Operation" xmi:id="_1n73kN_WEeee1df4XdPQKQ" name="operator()" visibility="public" isAbstract="true">
           <ownedParameter xmi:type="uml:Parameter" xmi:id="_87pVwN_WEeee1df4XdPQKQ" name="node"/>
         </ownedOperation>
@@ -18,25 +18,25 @@
         <generalization xmi:type="uml:Generalization" xmi:id="_pkjIwN_XEeeBFORcFA8r9A" general="_hYRgUN_WEeee1df4XdPQKQ"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_nBaTEN_WEeee1df4XdPQKQ" name="IsTransformation">
-        <generalization xmi:type="uml:Generalization" xmi:id="_qE-VQN_XEeeBFORcFA8r9A" general="_hYRgUN_WEeee1df4XdPQKQ"/>
+        <generalization xmi:type="uml:Generalization" xmi:id="_MzPrkPB1Eeecx7pP8LhLBA" general="_mBpfMN_WEeee1df4XdPQKQ"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_o2-GgN_WEeee1df4XdPQKQ" name="IsEntry">
-        <generalization xmi:type="uml:Generalization" xmi:id="_49wR8N_YEeeBFORcFA8r9A" general="_hYRgUN_WEeee1df4XdPQKQ"/>
+        <generalization xmi:type="uml:Generalization" xmi:id="_OETDwPB1Eeecx7pP8LhLBA" general="_mBpfMN_WEeee1df4XdPQKQ"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_q5zg8N_WEeee1df4XdPQKQ" name="IsSubentry">
-        <generalization xmi:type="uml:Generalization" xmi:id="_5b-fAN_YEeeBFORcFA8r9A" general="_hYRgUN_WEeee1df4XdPQKQ"/>
+        <generalization xmi:type="uml:Generalization" xmi:id="_OzWiIPB1Eeecx7pP8LhLBA" general="_mBpfMN_WEeee1df4XdPQKQ"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_sGnSUN_WEeee1df4XdPQKQ" name="IsDetector">
-        <generalization xmi:type="uml:Generalization" xmi:id="_oM7OgN_XEeeBFORcFA8r9A" general="_hYRgUN_WEeee1df4XdPQKQ"/>
+        <generalization xmi:type="uml:Generalization" xmi:id="_MHmtkPB1Eeecx7pP8LhLBA" general="_mBpfMN_WEeee1df4XdPQKQ"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_uvxF4N_WEeee1df4XdPQKQ" name="IsInstrument">
-        <generalization xmi:type="uml:Generalization" xmi:id="_6Odr4N_YEeeBFORcFA8r9A" general="_hYRgUN_WEeee1df4XdPQKQ"/>
+        <generalization xmi:type="uml:Generalization" xmi:id="_P-NLsPB1Eeecx7pP8LhLBA" general="_mBpfMN_WEeee1df4XdPQKQ"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_vobzQN_WEeee1df4XdPQKQ" name="IsSample">
-        <generalization xmi:type="uml:Generalization" xmi:id="_6ti0kN_YEeeBFORcFA8r9A" general="_hYRgUN_WEeee1df4XdPQKQ"/>
+        <generalization xmi:type="uml:Generalization" xmi:id="_QfnPoPB1Eeecx7pP8LhLBA" general="_mBpfMN_WEeee1df4XdPQKQ"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_w40dEN_WEeee1df4XdPQKQ" name="IsData">
-        <generalization xmi:type="uml:Generalization" xmi:id="_50EO4N_YEeeBFORcFA8r9A" general="_hYRgUN_WEeee1df4XdPQKQ"/>
+        <generalization xmi:type="uml:Generalization" xmi:id="_Pa8GkPB1Eeecx7pP8LhLBA" general="_mBpfMN_WEeee1df4XdPQKQ"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Package" xmi:id="_B1STUN_ZEeeBFORcFA8r9A" name="xml">
         <packagedElement xmi:type="uml:Class" xmi:id="_JvZqMN_ZEeeBFORcFA8r9A" name="Node"/>
@@ -64,6 +64,31 @@
           </ownedEnd>
         </packagedElement>
       </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_ZjhgIPB1Eeecx7pP8LhLBA" name="IsValidNeXusName"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_rUzegPB3Eeecx7pP8LhLBA" name="BaseClassFactory"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_tMQvYPB3Eeecx7pP8LhLBA" name="FieldFactory"/>
     </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_7YeHQPXZEeetvsjojp6yvg" name="data_reader"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_9AJ2wPXZEeetvsjojp6yvg" name="spreadsheet_reader">
+      <generalization xmi:type="uml:Generalization" xmi:id="_eGIZIPXaEeetvsjojp6yvg" general="_7YeHQPXZEeetvsjojp6yvg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_-y604PXZEeetvsjojp6yvg" name="image_reader">
+      <generalization xmi:type="uml:Generalization" xmi:id="_egRXcPXaEeetvsjojp6yvg" general="_7YeHQPXZEeetvsjojp6yvg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_ENgOQPXaEeetvsjojp6yvg" name="image_info"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_F01_gPXaEeetvsjojp6yvg" name="image_channel_info"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_He9_APXaEeetvsjojp6yvg" name="column_info"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_PHczUPXaEeetvsjojp6yvg" name="fio_reader">
+      <generalization xmi:type="uml:Generalization" xmi:id="_hLfnkPXaEeetvsjojp6yvg" general="_9AJ2wPXZEeetvsjojp6yvg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_RwCmMPXaEeetvsjojp6yvg" name="cbf_reader">
+      <generalization xmi:type="uml:Generalization" xmi:id="_iIFysPXaEeetvsjojp6yvg" general="_-y604PXZEeetvsjojp6yvg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_S2Ck8PXaEeetvsjojp6yvg" name="tiff_reader">
+      <generalization xmi:type="uml:Generalization" xmi:id="_ifbUoPXaEeetvsjojp6yvg" general="_-y604PXZEeetvsjojp6yvg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_2McR0PXaEeetvsjojp6yvg" client="_-y604PXZEeetvsjojp6yvg" supplier="_ENgOQPXaEeetvsjojp6yvg"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_3TrmsPXaEeetvsjojp6yvg" client="_-y604PXZEeetvsjojp6yvg" supplier="_F01_gPXaEeetvsjojp6yvg"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="_9yaksPXaEeetvsjojp6yvg" client="_9AJ2wPXZEeetvsjojp6yvg" supplier="_He9_APXaEeetvsjojp6yvg"/>
   </packagedElement>
 </uml:Model>

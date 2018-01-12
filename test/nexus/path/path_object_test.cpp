@@ -36,7 +36,7 @@ struct PathObjectFixture
 
     PathObjectFixture()
     {
-      file = nexus::create("PathObjectTest.nxs",hdf5::file::AccessFlags::TRUNCATE);
+      file = nexus::create_file("PathObjectTest.nxs",hdf5::file::AccessFlags::TRUNCATE);
       group = file.root();
       dataset = hdf5::node::Dataset(group,"data",hdf5::datatype::create<int>(),
                                                  hdf5::dataspace::Scalar());
