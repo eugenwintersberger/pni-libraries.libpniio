@@ -45,6 +45,7 @@ set(WITH_CONAN OFF CACHE BOOL "Satisfy dependencies with conan")
 
 if(WITH_CONAN)
 	include(cmake/common/ConanSetup.cmake)
+	include(${CMAKE_CURRENT_SOURCE_DIR}/conan.cmake)
 	
 	conan_cmake_run(CONANFILE conanfile.txt
 		            BASIC_SETUP
