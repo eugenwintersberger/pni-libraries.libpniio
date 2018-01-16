@@ -74,7 +74,7 @@ $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"
                                        SOVERSION "${SO_VERSION}")
 
-target_link_libraries(pniio
+target_link_libraries(pniio                      
                       PUBLIC pnicore_shared h5cpp_shared
                       ${HDF5_LIBRARIES}
                       Boost::filesystem
