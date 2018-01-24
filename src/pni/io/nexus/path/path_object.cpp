@@ -123,6 +123,18 @@ PathObject::operator hdf5::node::Node() const
 }
 
 #ifdef _MSC_VER
+
+bool attributes_are_equal(const hdf5::attribute::Attribute &a,
+                          const hdf5::attribute::Attribute &b)
+{
+
+    //
+    // for attributes we have to check if they are attached to the 
+    // same parent node and if they have equal names.
+    //
+    return (*a.parent_link() == *b.parent_link()) && 
+           (a.name() == b.name());
+}
 bool operator==(const PathObject &a,const PathObject &b)
 {
     using hdf5::node::Dataset;
@@ -139,7 +151,8 @@ bool operator==(const PathObject &a,const PathObject &b)
         case PathObject::Type::GROUP:
             return static_cast<Group>(a)==static_cast<Group>(b);
         case PathObject::Type::ATTRIBUTE:
-            return static_cast<Attribute>(a)==static_cast<Attribute>(b);
+            return attributes_are_equal(static_cast<Attribute>(a),
+                                        static_cast<Attribute>(b));
         case PathObject::Type::NONE:
             return true;
     }
