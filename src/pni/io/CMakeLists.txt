@@ -75,7 +75,7 @@ set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"
                                        SOVERSION "${SO_VERSION}")
 
 target_link_libraries(pniio                      
-                      PUBLIC pnicore_shared h5cpp_shared
+                      PUBLIC pnicore_shared h5cpp
                       ${HDF5_LIBRARIES}
                       Boost::filesystem
                       Boost::regex
