@@ -22,6 +22,7 @@
 //
 
 #include <pni/io/nexus/xml/link_builder.hpp>
+#include <pni/io/nexus/path/path.hpp>
 
 namespace pni {
 namespace io {
@@ -34,10 +35,25 @@ LinkBuilder::LinkBuilder(const Node &node):
 
 void LinkBuilder::build(const hdf5::node::Node &parent) const
 {
-  std::string link_name = node().name();
-  std::string link_target = node().attribute("target").str_data();
+  hdf5::node::Group link_parent(parent);
+  std::string link_name = node().attribute("name").str_data();
+  pni::io::nexus::Path link_target(pni::io::nexus::Path::from_string(node().attribute("target").str_data()));
 
-  throw std::runtime_error("LINKS NOT CURRENTLY NOT IMPLEMENTED!");
+  if(link_target.has_filename())
+  {
+    //create an external link
+    boost::filesystem::path file_path = link_target.filename();
+    hdf5::Path target_path(link_target);
+
+    hdf5::node::link(file_path,target_path,link_parent,link_name);
+
+  }
+  else
+  {
+    //create a soft link
+    hdf5::Path target_path(link_target);
+    hdf5::node::link(target_path,link_parent,link_name);
+  }
 
 }
 
