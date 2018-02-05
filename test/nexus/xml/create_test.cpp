@@ -73,4 +73,18 @@ BOOST_AUTO_TEST_CASE(from_detector_with_transformation)
   BOOST_CHECK_NO_THROW(xml::create_from_file(root_group,file));
 }
 
+BOOST_AUTO_TEST_CASE(detector_master_data_file)
+{
+  boost::filesystem::path xml_master_file = "create/detector_master_file.xml";
+  boost::filesystem::path xml_data_file = "create/detector_data_file.xml";
+
+  hdf5::file::File master_file = hdf5::file::create("detector_master_file.nxs",
+                                                    hdf5::file::AccessFlags::TRUNCATE);
+  hdf5::file::File data_file = hdf5::file::create("detector_data_file.nxs",
+                                                  hdf5::file::AccessFlags::TRUNCATE);
+  BOOST_CHECK_NO_THROW(xml::create_from_file(data_file.root(),xml_data_file));
+  BOOST_CHECK_NO_THROW(xml::create_from_file(master_file.root(),xml_master_file));
+
+}
+
 BOOST_AUTO_TEST_SUITE_END()

@@ -1,4 +1,7 @@
 <group name="scan_1" type="NXentry">
+    <group name="data" type="NXdata">
+        <link name="gamma" target="/scan_1/instrument/detector/transformation/gamma"/>
+    </group>
     <group name="instrument" type="NXinstrument">
         
         <group name="detector" type="NXdetector">
