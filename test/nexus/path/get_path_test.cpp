@@ -65,5 +65,12 @@ BOOST_AUTO_TEST_CASE(test_file2)
                     );
 }
 
+BOOST_AUTO_TEST_CASE(test_entry_only)
+{
+  hdf5::node::Group entry = hdf5::node::get_node(file1.root(),"scan_1");
+  nexus::Path nxp = nexus::get_path(entry);
+  BOOST_CHECK_EQUAL(nexus::Path::to_string(nxp),"/scan_1:NXentry");
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
