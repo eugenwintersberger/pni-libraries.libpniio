@@ -1,8 +1,0 @@
-<!--- this should work -->
-<dimensions rank="2">
-    <dim value="100" />
-    <dim index="1" value="55" />
-</dimensions>
-
-
-
