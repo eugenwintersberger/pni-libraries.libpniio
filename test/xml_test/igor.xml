@@ -1,9 +1,0 @@
-<group name="detector" type="NXdetector">
-    <field name="data" type="int32">
-        <dimensions rank="3">
-            <dim index="1" value="0"/><!--number of frames-->
-            <dim index="2" value="1024" />
-            <dim index="3" value="2048" />
-        </dimensions>
-    </field>
-</group>

@@ -22,13 +22,8 @@ add_executable(parser_complex_test EXCLUDE_FROM_ALL parser_complex_test.cpp)
 target_link_libraries(parser_complex_test pniio)
 
 
-add_subdirectory(xml_test)
-add_subdirectory(hdf5_imp_test)
-add_subdirectory(nexus_lowlevel_test)
 add_subdirectory(parser_test)
-add_subdirectory(algorithm_test)
 add_subdirectory(reader_test)
-add_subdirectory(nxpath_test)
 add_subdirectory(formatter_test)
 add_subdirectory(logs)
 add_subdirectory(nexus)
