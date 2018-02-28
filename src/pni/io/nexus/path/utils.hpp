@@ -397,6 +397,18 @@ PNIIO_EXPORT Path get_path(const hdf5::node::Node &node);
 //!
 PNIIO_EXPORT Path get_path(const hdf5::attribute::Attribute &attribute);
 
+//!
+//! @brief get NeXus path for an HDF5 link
+//!
+//! As a link is just a name its last element will never have the base_class
+//! attribute set even if the link references a group. This ensures that
+//! this function also works with unresolvable links.
+//!
+//! @param link reference to an HDF5 link
+//! @pre the parent of the link must be valid
+//! @return instance of a NeXus path
+PNIIO_EXPORT Path get_path(const hdf5::node::Link &link);
+
 
 //!
 //! @brief search for objects

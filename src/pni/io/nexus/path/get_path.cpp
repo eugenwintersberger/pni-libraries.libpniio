@@ -72,31 +72,45 @@ Path::Element get_element(const hdf5::node::Node &node)
 
 Path get_path(const hdf5::node::Link &link)
 {
-  hdf5::node::Node current_node = link.file().root();
-  hdf5::Path link_path = link.path();
 
-  Path::ElementList elements{get_element(current_node)};
+  //
+  // for a link we can assume that its parent object exists (which must be a
+  // group).
+  //
+  hdf5::node::Group link_parent = link.parent();
+  Path path = get_path(link_parent);
 
-  for(auto path_element: link_path)
-  {
-    if(current_node.type()==hdf5::node::Type::GROUP)
-      current_node = hdf5::node::Group(current_node).nodes[path_element];
+  //
+  // a link is just a name and thus we cannot make any statement about the
+  // particular type of the object referenced by the link. We thus only
+  // set the name field of the path element.
+  //
+  path.push_back({link.path().name(),std::string()});
 
-    elements.push_back(get_element(current_node));
-  }
-
-  return Path(link.file().path(),elements,std::string());
-
+  return path;
 }
 
 Path get_path(const hdf5::node::Node &node)
 {
-  return get_path(node.link());
+  Path path;
+  path.filename(node.link().file().path()); //set the path to the file
+
+  hdf5::node::Node current_node = node.link().file().root();
+  path.push_back(get_element(current_node));
+
+  for(auto node_name: node.link().path())
+  {
+    if(current_node.type() == hdf5::node::Type::GROUP)
+      current_node = hdf5::node::Group(current_node).nodes[node_name];
+
+    path.push_back(get_element(current_node));
+  }
+  return path;
 }
 
 Path get_path(const hdf5::attribute::Attribute &attribute)
 {
-  Path parent_path = get_path(attribute.parent_link());
+  Path parent_path = get_path(*attribute.parent_link());
   parent_path.attribute(attribute.name());
   return parent_path;
 }

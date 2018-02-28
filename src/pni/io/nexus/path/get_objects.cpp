@@ -36,10 +36,15 @@ class AbsolutePathMatcher
       path_(path)
     {}
 
-    bool operator()(const hdf5::node::Node &node) const
+    bool operator()(const hdf5::node::Link &link) const
     {
-      Path node_path = get_path(node);
-      bool result = match(node_path,path_);
+      Path path;
+      if(!link.is_resolvable())
+        path = get_path(link);
+      else
+        path = get_path(*link);
+
+      bool result = match(path,path_);
       return result;
     }
 
@@ -55,10 +60,16 @@ class RelativePathMatcher
       base_path_(base_path)
     {}
 
-    bool operator()(const hdf5::node::Node &node) const
+    bool operator()(const hdf5::node::Link &link) const
     {
-      Path node_path = make_relative(base_path_,get_path(node));
-      return match(node_path,path_);
+      Path path;
+      if(!link.is_resolvable())
+        path = get_path(link);
+      else
+        path = get_path(*link);
+
+      path = make_relative(base_path_,path);
+      return match(path,path_);
     }
 
   private:
@@ -89,8 +100,8 @@ PathObjectList get_objects(const hdf5::node::Group &base,const Path &path)
   }
   else
   {
-    auto iter_begin = hdf5::node::RecursiveNodeIterator::begin(base);
-    auto iter_end = hdf5::node::RecursiveNodeIterator::end(base);
+    auto iter_begin = hdf5::node::RecursiveLinkIterator::begin(base);
+    auto iter_end = hdf5::node::RecursiveLinkIterator::end(base);
 
     if(is_absolute(path))
       std::copy_if(iter_begin,iter_end,std::back_inserter(list),AbsolutePathMatcher(path));

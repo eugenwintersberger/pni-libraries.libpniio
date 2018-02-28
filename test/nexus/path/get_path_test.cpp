@@ -72,5 +72,6 @@ BOOST_AUTO_TEST_CASE(test_entry_only)
   BOOST_CHECK_EQUAL(nexus::Path::to_string(nxp),"GetPathFixture1.nxs://scan_1:NXentry");
 }
 
+
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
