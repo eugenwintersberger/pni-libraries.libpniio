@@ -421,6 +421,12 @@ PNIIO_EXPORT Path get_path(const hdf5::node::Link &link);
 //!   `base` are taken relative to `base`
 //! * if `path` is an absolute path the full path of each child must match.
 //!
+//! There are some important notes when it comes to dealing with links.
+//! Under the hood get_objects iterates over links rather than nodes. This
+//! allows the function to handle unresolvable links. If a particular link is
+//! resolvable it will be converted into the appropriate node type. In the
+//! case of an unresolvable link the link itself will be stored.
+//!
 //! @throws std::runtime_error in case of a failure
 //! @param base the base group from which to start the search
 //! @param path the path which to match

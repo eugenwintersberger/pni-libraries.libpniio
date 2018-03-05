@@ -58,6 +58,21 @@ BOOST_AUTO_TEST_CASE(search_for_entries)
   BOOST_CHECK_EQUAL(entries[2].link().path().name(),"scan_3");
 }
 
+BOOST_AUTO_TEST_CASE(get_unresolvable_link)
+{
+  base = multi_entry.root();
+  nexus::PathObjectList result = nexus::get_objects(base,nexus::Path("/:NXentry/:NXdata/data"));
+  BOOST_CHECK_EQUAL(result.size(),1);
+  nexus::PathObject object = result.front();
+  BOOST_CHECK(nexus::is_link(object));
+
+  hdf5::node::Link link = static_cast<hdf5::node::Link>(object);
+  BOOST_CHECK(!link.is_resolvable());
+  BOOST_CHECK_EQUAL(link.type(),hdf5::node::LinkType::EXTERNAL);
+
+
+}
+
 BOOST_AUTO_TEST_CASE(search_detectors)
 {
   base = multi_detector.root();
