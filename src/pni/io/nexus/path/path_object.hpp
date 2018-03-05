@@ -55,7 +55,8 @@ class PNIIO_EXPORT PathObject
        NONE = 1,
        ATTRIBUTE = 2,
        GROUP = 3,
-       DATASET = 4
+       DATASET = 4,
+       LINK = 5
 
     };
 
@@ -88,6 +89,13 @@ class PNIIO_EXPORT PathObject
     //! @param dataset reference to the original dataset
     //!
     PathObject(const hdf5::node::Node &dataset);
+
+    //!
+    //! @brief constructor
+    //!
+    //! Build a PathObject from a link.
+    //!
+    PathObject(const hdf5::node::Link &link);
 
     //!
     //! @brief copy constructor
@@ -147,11 +155,14 @@ class PNIIO_EXPORT PathObject
     //!
     operator hdf5::node::Node() const;
 
+    explicit operator hdf5::node::Link() const;
+
   private:
     Type type_;
     hdf5::attribute::Attribute attribute_;
     hdf5::node::Group group_;
     hdf5::node::Dataset dataset_;
+    hdf5::node::Link link_;
 };
 
 #ifdef _MSC_VER

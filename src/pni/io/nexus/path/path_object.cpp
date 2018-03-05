@@ -42,6 +42,34 @@ PathObject::PathObject(const hdf5::attribute::Attribute &attribute):
     dataset_()
 {}
 
+PathObject::PathObject(const hdf5::node::Link &link):
+    type_(Type::NONE),
+    attribute_(),
+    group_(),
+    dataset_(),
+    link_()
+{
+  if(!link.is_resolvable())
+  {
+    type_ = Type::LINK;
+    link_ = link;
+  }
+  else
+  {
+    hdf5::node::Node node = *link;
+    if(node.type() == hdf5::node::Type::GROUP)
+    {
+      group_ = node;
+      type_ = Type::GROUP;
+    }
+    else if(node.type() == hdf5::node::Type::DATASET)
+    {
+      type_ = Type::DATASET;
+      dataset_ = node;
+    }
+  }
+}
+
 PathObject::PathObject(const hdf5::node::Node &node):
     type_(Type::NONE),
     attribute_(),
@@ -120,6 +148,18 @@ PathObject::operator hdf5::node::Node() const
         <<"converted to a dataset!";
     throw std::runtime_error(ss.str());
   }
+}
+
+PathObject::operator hdf5::node::Link() const
+{
+  if(type() != Type::LINK)
+  {
+    std::stringstream ss;
+    ss<<"PathObject stores an instance of "<<type()<<" and cannot be "
+      <<"converted to a link!";
+    throw std::runtime_error(ss.str());
+  }
+  return link_;
 }
 
 #ifdef _MSC_VER
