@@ -87,7 +87,7 @@ pni::core::type_id_t get_type_id(const hdf5::datatype::Datatype &datatype)
     return type_id_t::FLOAT64;
   else if(datatype==create<float128>())
     return type_id_t::FLOAT128;
-  else if(datatype==create<std::string>())
+  else if(datatype.get_class() == hdf5::datatype::Class::STRING)
     return type_id_t::STRING;
   else
     return type_id_t::NONE;

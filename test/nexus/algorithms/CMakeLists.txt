@@ -1,4 +1,5 @@
-set(SOURCES search_test.cpp)
+set(SOURCES search_test.cpp
+            get_type_id_test.cpp)
 
 set_boost_test_definitions(SOURCES "Testing NeXus algorithms")
 add_executable(nexus_algorithm_test EXCLUDE_FROM_ALL ${SOURCES})
