@@ -98,9 +98,18 @@ PathObjectList get_objects(const hdf5::node::Group &base,const Path &path)
   {
     //if we are looking for attributes we first have to identify the parent
     //objects.
-    Path parent_path(path);
-    parent_path.attribute(std::string());
-    NodeList parent_list = get_objects(base,parent_path);
+    NodeList parent_list;
+
+    if(path.size()==0)
+    {
+      parent_list.push_back(base);
+    }
+    else
+    {
+      Path parent_path(path);
+      parent_path.attribute(std::string());
+      parent_list = get_objects(base,parent_path);
+    }
 
     //once we have identified the parents we can select those who have
     //an attribute of appropriate name
