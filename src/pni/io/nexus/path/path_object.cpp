@@ -270,7 +270,10 @@ bool is_group(const PathObject &object) noexcept
   return object.type() == PathObject::Type::GROUP;
 }
 
-
+bool is_link(const PathObject &object) noexcept
+{
+  return object.type() == PathObject::Type::LINK;
+}
 
 } // namespace nexus
 } // namespace io

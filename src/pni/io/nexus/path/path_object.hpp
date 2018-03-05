@@ -233,6 +233,10 @@ PNIIO_EXPORT bool is_attribute(const PathObject &object) noexcept;
 //!
 PNIIO_EXPORT bool is_group(const PathObject &object) noexcept;
 
+//!
+//! @brief return true if object stored is a link
+//!
+PNIIO_EXPORT bool is_link(const PathObject &object) noexcept;
 
 
 } // namespace nexus

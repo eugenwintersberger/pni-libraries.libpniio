@@ -3,6 +3,11 @@
 	<group name="instrument" type="NXinstrument">
 		
 	</group>
+	
+	<group name="data" type="NXdata">
+	   <link name="data" target="detector.nxs://entry/instrument/detector/data"/>
+	   <link name="energy" target="/scan_1/instrument/monochromator/energy"/>
+	</group>
 </group>
 
 <group name="scan_2" type="NXentry">

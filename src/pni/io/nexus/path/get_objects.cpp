@@ -29,6 +29,19 @@ namespace pni {
 namespace io {
 namespace nexus {
 
+bool is_resolvable(const hdf5::node::Link &link)
+{
+  try
+  {
+    *link;
+    return true;
+  }
+  catch(...)
+  {
+    return false;
+  }
+}
+
 class AbsolutePathMatcher
 {
   public:
@@ -39,7 +52,7 @@ class AbsolutePathMatcher
     bool operator()(const hdf5::node::Link &link) const
     {
       Path path;
-      if(!link.is_resolvable())
+      if(!is_resolvable(link))
         path = get_path(link);
       else
         path = get_path(*link);
@@ -63,7 +76,7 @@ class RelativePathMatcher
     bool operator()(const hdf5::node::Link &link) const
     {
       Path path;
-      if(!link.is_resolvable())
+      if(!is_resolvable(link))
         path = get_path(link);
       else
         path = get_path(*link);
