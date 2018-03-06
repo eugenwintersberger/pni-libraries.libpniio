@@ -26,33 +26,73 @@
 #include <pni/io/nexus/path/make_relative.hpp>
 #include <pni/core/error.hpp>
 
+namespace {
+
+  void verify_input_paths(const pni::io::nexus::Path &parent_path,
+                          const pni::io::nexus::Path &orig_path)
+  {
+    std::stringstream error_message;
+
+    if(!is_absolute(parent_path))
+    {
+      error_message<<"Error in pni::io::nexus::make_relative: ";
+      error_message<<"parent_path ["<<parent_path<<"] is not absolute";
+      throw std::runtime_error(error_message.str());
+    }
+
+    if(!is_absolute(orig_path))
+    {
+      error_message<<"Error in pni::io::nexus::make_relative: ";
+      error_message<<"orig_path ["<<orig_path<<"] must be absolute";
+      throw std::runtime_error(error_message.str());
+    }
+
+    if(parent_path.size()>orig_path.size())
+    {
+      error_message<<"Error in pni::io::nexus::make_relative: ";
+      error_message<<"parent_path ["<<parent_path
+                   <<"] is longer than orig_path ["<<orig_path<<"]!";
+      throw std::runtime_error(error_message.str());
+    }
+  }
+
+}
 
 namespace pni{
 namespace io{
 namespace nexus{
 
+
+
 Path make_relative(const Path &parent_path,const Path &orig_path)
 {
   using namespace pni::core;
 
-  if(!is_absolute(parent_path) || !(is_absolute(orig_path)))
-    throw value_error(EXCEPTION_RECORD,
-                      "Paths must be absolute!");
+  //
+  // check if the paths satisfy the requirements
+  //
+  verify_input_paths(parent_path,orig_path);
 
-  if(parent_path.size()>orig_path.size())
-    throw value_error(EXCEPTION_RECORD,
-                      "The original path must be longer than the parent path!");
-
-
+  Path new_path;
   if(parent_path.size()==orig_path.size())
-    return Path::from_string(".");
+  {
+    // if boths paths have the same length we denote a dot here
+    new_path = Path();
+  }
+  else
+  {
+    new_path = Path(orig_path);
+    new_path.filename(""); //reset the file name part
+    for(size_t element_index = 0;
+        element_index < parent_path.size();
+        element_index++)
+      new_path.pop_front();
+  }
 
-  Path new_path(orig_path);
-  new_path.filename(""); //reset the file name part
-  for(size_t element_index = 0;
-      element_index < parent_path.size();
-      element_index++)
-    new_path.pop_front();
+  //
+  // copy attribute section
+  //
+  new_path.attribute(orig_path.attribute());
 
   return new_path;
 }

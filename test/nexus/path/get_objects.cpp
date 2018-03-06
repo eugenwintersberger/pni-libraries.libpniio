@@ -133,7 +133,13 @@ BOOST_AUTO_TEST_CASE(search_single_attribute)
   base = multi_detector.root();
   nexus::AttributeList result = nexus::get_objects(base,nexus::Path("@NX_class"));
   BOOST_CHECK_EQUAL(result.size(),1);
+}
 
+BOOST_AUTO_TEST_CASE(search_single_attribute_with_dot)
+{
+  base = multi_detector.root();
+  nexus::AttributeList result = nexus::get_objects(base,nexus::Path(".@NX_class"));
+  BOOST_CHECK_EQUAL(result.size(),1);
 }
 
 

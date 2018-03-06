@@ -195,6 +195,7 @@ bool match(const Path::Element &a,const Path::Element &b)
 
   return false;
 }
+
     
 //-------------------------------------------------------------------------
 bool match(const Path &a,const Path &b)
@@ -207,6 +208,7 @@ bool match(const Path &a,const Path &b)
       liter!=a.end();
       ++liter,++riter)
   {
+
     if(!match(*liter,*riter)) return false;
   }
 

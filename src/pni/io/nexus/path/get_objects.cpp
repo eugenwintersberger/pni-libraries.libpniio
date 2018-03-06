@@ -118,7 +118,6 @@ PathObjectList get_objects(const hdf5::node::Group &base,const Path &path)
       if(node.attributes.exists(path.attribute()))
         list.push_back(node.attributes[path.attribute()]);
     }
-
   }
   else
   {
@@ -128,7 +127,9 @@ PathObjectList get_objects(const hdf5::node::Group &base,const Path &path)
     if(is_absolute(path))
       std::copy_if(iter_begin,iter_end,std::back_inserter(list),AbsolutePathMatcher(path));
     else
+    {
       std::copy_if(iter_begin,iter_end,std::back_inserter(list),RelativePathMatcher(path,get_path(base)));
+    }
   }
 
   return list;

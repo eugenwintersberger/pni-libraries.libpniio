@@ -45,7 +45,17 @@ Path::Path(const hdf5::Path &path):
     _elements()
 {
   //we simply use the string conversion here
+  //remove potential . from the list
   *this = Path::from_string(static_cast<std::string>(path));
+
+  if(size()!=0)
+  {
+    auto new_pos = std::remove_if(_elements.begin(),_elements.end(),
+                                  [](const Element &element)
+                                  { return element.first == "."; });
+    if(new_pos!=_elements.end())
+      _elements.erase(new_pos);
+  }
 }
 
 Path::operator hdf5::Path()
@@ -146,12 +156,18 @@ void Path::push_back(const Element &o)
     throw value_error(EXCEPTION_RECORD,
                       "Cannot push back a root group to a non-empty path!");
 
+  if(o.first==".")
+    return;
+
   _elements.push_back(o);
 }
 
 //-------------------------------------------------------------------------
 void Path::push_front(const Element &o)
 {
+  if(o.first==".")
+    return;
+
   _elements.push_front(o);
 }
     

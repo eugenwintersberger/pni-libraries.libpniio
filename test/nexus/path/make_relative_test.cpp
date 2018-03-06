@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_CASE(test_2)
   Path parent = Path::from_string("/:NXentry");
   Path orig = Path::from_string("/");
 
-  BOOST_CHECK_THROW(make_relative(parent,orig),value_error);
+  BOOST_CHECK_THROW(make_relative(parent,orig),std::runtime_error);
 }
 
 //-------------------------------------------------------------------------
@@ -56,7 +56,16 @@ BOOST_AUTO_TEST_CASE(test_3)
   Path parent = Path::from_string("/:NXentry");
   Path orig   = Path::from_string("/:NXentry");
 
-  BOOST_CHECK_EQUAL(Path::to_string(make_relative(parent,orig)),".");
+  BOOST_CHECK_EQUAL(Path::to_string(make_relative(parent,orig)),"");
+}
+
+BOOST_AUTO_TEST_CASE(test_4)
+{
+  Path parent = Path::from_string("/");
+  Path orig = Path::from_string("/@NX_class");
+
+  BOOST_CHECK_EQUAL(Path::to_string(make_relative(parent,orig)),"@NX_class");
+
 }
 
 BOOST_AUTO_TEST_SUITE_END()
