@@ -50,7 +50,7 @@ Consider here for instance the following files
 | :file:`detector_2d.xml` | structure for a 2d detector |
 +-------------------------+-----------------------------+
    
-Code which usese this setup could look like this 
+Code which uses this setup could look like this
 
 .. code-block:: cpp
 
