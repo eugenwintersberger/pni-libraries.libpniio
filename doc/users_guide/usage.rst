@@ -2,6 +2,8 @@
 Using the library
 =================
 
+.. _nexus_quickstart:
+
 This chapter describes how you can use *libpniio* from within your own 
 C++ project. As already mentioned in the installation chapter, *libpniio* uses
 :program:`cmake` as its build tool. In addition it also exports a *cmake-package* 
