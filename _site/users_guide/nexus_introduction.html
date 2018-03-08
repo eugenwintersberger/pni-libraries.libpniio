@@ -1,0 +1,297 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>A basic introduction to Nexus &#8212; pniio 1.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="pniio 1.2.0 documentation" href="../index.html" />
+    <link rel="up" title="NeXus support" href="nexus.html" />
+    <link rel="next" title="Working with files" href="nexus_files.html" />
+    <link rel="prev" title="NeXus support" href="nexus.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="nexus_files.html" title="Working with files"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nexus.html" title="NeXus support"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" accesskey="U">NeXus support</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">A basic introduction to Nexus</a><ul>
+<li><a class="reference internal" href="#motivation">Motivation</a></li>
+<li><a class="reference internal" href="#the-nexus-layer-model">The Nexus layer model</a><ul>
+<li><a class="reference internal" href="#layer-1-objects">Layer 1 objects</a></li>
+<li><a class="reference internal" href="#layer-2-objects">Layer 2 objects</a></li>
+<li><a class="reference internal" href="#layer-3-objects">Layer 3 objects</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nexus.html"
+                        title="previous chapter">NeXus support</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nexus_files.html"
+                        title="next chapter">Working with files</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/users_guide/nexus_introduction.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="a-basic-introduction-to-nexus">
+<h1>A basic introduction to Nexus<a class="headerlink" href="#a-basic-introduction-to-nexus" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
+<p>Today, data recorded during synchrotron experiments is typically stored in
+individual binary image files and/or as flat ASCII files. A typical directory
+structure for an individual run could look like this</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>~/run_001/ user@localhost:$&gt; ls
+
+run_001.dat
+detector/image_0001.tif
+detector/image_0002.tif
+...
+...
+...
+detector/image_0100.tif
+</pre></div>
+</div>
+<p>The ASCII file <code class="file docutils literal"><span class="pre">run_001.dat</span></code> stores scalar data while the detector data is
+stored in a separate directory as image files (here TIFF).
+Such an approach leads to technical and organizational problems</p>
+<ul class="simple">
+<li>when the number of image files grows large the performance of most file
+systems degenerate</li>
+<li>to access data in an individual image file a new file handler has to be
+created</li>
+<li>image and scalar data is stored in different files which increases the
+managements efforts to keep related information together.</li>
+</ul>
+<p>NeXus is a binary file format which attempts to solve all of these problems.
+NeXus can keep scalar and multidimensional data within a single file and allows
+to organize the data within the file in a tree like manager. Additional
+attributes can be attached to each object in a file, storing metadata which
+might be required for later analysis. It must be noted that NeXus is not a
+physical file format itself. It is rather a set of rules how data must be
+organized within a particular format in order to become a valid Nexus file.
+Currently the following physical file formats are supported by the original
+Nexus API</p>
+<ul class="simple">
+<li><em>XML</em> &#8211; only used for file structure validation</li>
+<li><em>HDF4</em> &#8211; for historical reasons, should not be used for new data</li>
+<li><em>HDF5</em> &#8211; the current standard storage backend for Nexus files.</li>
+</ul>
+<p>One of the aims of <em>libpniio</em> is to provide an abstraction layer between the
+user and the storage backend. As <em>libpniio</em> currently supports only HDF5 this is
+rather artificial. However, <em>libpniio</em> provides the architecture to include
+other file formats to be used with NeXus too.
+There has been a lot of confusion what physical file format NeXus files are.
+Many users think that NeXus has its own physical file format. This is in fact
+not true. Just to avoid any further confusion for the reader let me make this
+clear once and for all</p>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last"><strong>Every NeXus file written by libpniio is also a valid HDF5 file!</strong></p>
+</div>
+<p>To access NeXus files <em>libpniio</em> uses the <em>h5cpp</em> C++ wrapper to HDF5.
+Actually most of the work with NeXus files can be done directly with
+<em>h5cpp</em>, <em>libpniio</em> only adds additional functionality specific to the
+NeXus file standard.</p>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">Before you continue reading this documentation you should have a firm
+idea about <em>h5cpp</em>&#8216;s concepts and API. So if you never used <em>h5cpp</em> before
+you better go away for a while here and read the <a class="reference external" href="https://ess-dmsc.github.io/h5cpp/index.html">h5cpp documentation</a>.</p>
+</div>
+</div>
+<div class="section" id="the-nexus-layer-model">
+<h2>The Nexus layer model<a class="headerlink" href="#the-nexus-layer-model" title="Permalink to this headline">¶</a></h2>
+<p>As already mentioned in the previous section, NeXus can be considered as a set
+of rules describing the logical organization of data within a file.
+NeXus, for this purpose, utilizes types defined in three different layers.</p>
+<div class="figure align-center">
+<img alt="../_images/layers.svg" src="../_images/layers.svg" /></div>
+<p>Each group of types defined in a layer is used for a particular purpose. Layer 1
+provides the basic brick-stones from which the NeXus standard is build of.
+Layer 2 provides collections of Layer 1 instances representing concrete beamline
+components as well as abstract concepts. Layer 3 finally can be used to define
+file formats for particular experimental techniques.</p>
+<div class="section" id="layer-1-objects">
+<h3>Layer 1 objects<a class="headerlink" href="#layer-1-objects" title="Permalink to this headline">¶</a></h3>
+<p>The first layer in the NeXus layer model provides the fundamental types used
+to define the organizational structure of data in a file.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="78%" />
+<col width="1%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">object</th>
+<th class="head">description</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>NXgroup</em></td>
+<td>is a container which can hold instances of fields and
+other groups.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><em>NXfield</em></td>
+<td>stores numerical and other data.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><em>NXattribute</em></td>
+<td>instances of NXgroup and NXfield can be enhanced with
+attributes which can store additional metadata about an
+object.</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>Attributes behave a little like fields as will be shown later. These three types
+form the basement for all other objects in the above layers.
+It should be mentioned that attributes are heavily used by the NIAC to add
+metadata to a group or field. It is thus not wise to make too extensive use of
+attributes as a Nexus user as it my cause name clashes with future attributes
+defined by the NIAC.</p>
+<p>The focus of <em>libpniio</em> is this first layer of the NeXus hierarchy. <em>libpniio</em>
+uses HDF5 to store NeXus files. In particular the C++ wrapper <em>h5cpp</em> is
+used. There is a simple mapping between these basic Layer 1 types and native
+HDF5 types</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="73%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">NeXus type</th>
+<th class="head">HDF5 type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>NXgroup</em></td>
+<td><code class="xref cpp cpp-class docutils literal"><span class="pre">hdf5::node::Group</span></code></td>
+</tr>
+<tr class="row-odd"><td><em>NXfield</em></td>
+<td><code class="xref cpp cpp-class docutils literal"><span class="pre">hdf5::node::Dataset</span></code></td>
+</tr>
+<tr class="row-even"><td><em>NXattribute</em></td>
+<td><code class="xref cpp cpp-class docutils literal"><span class="pre">hdf5::attribute::Attribute</span></code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="layer-2-objects">
+<h3>Layer 2 objects<a class="headerlink" href="#layer-2-objects" title="Permalink to this headline">¶</a></h3>
+<p>Objects from the second layer are composites of the types provided by the first
+layer. They describe logical or physical entities at a beamline.
+These range from the very concrete objects like undulators or detectors to
+abstract concepts like <em>entries</em> and <em>subentries</em>.
+The available objects from Layer 2 are defined in the Nexus Base class
+catalog.</p>
+</div>
+<div class="section" id="layer-3-objects">
+<h3>Layer 3 objects<a class="headerlink" href="#layer-3-objects" title="Permalink to this headline">¶</a></h3>
+<p>The third layer finally provides concepts to standardize the structure of a
+Nexus data tree for particular scientific applications and methods.
+These so called <em>Application Definitions</em> are defined by the NIAC in
+collaboration with the scientific community.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="nexus_files.html" title="Working with files"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="nexus.html" title="NeXus support"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" >NeXus support</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Eugen Wintersberger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.9.
+    </div>
+  </body>
+</html>

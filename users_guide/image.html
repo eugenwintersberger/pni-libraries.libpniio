@@ -1,0 +1,187 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Reading binary image data &#8212; pniio 1.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="pniio 1.2.0 documentation" href="../index.html" />
+    <link rel="up" title="Legacy formats" href="legacy.html" />
+    <link rel="next" title="NeXus support" href="nexus.html" />
+    <link rel="prev" title="Spreadsheet like ASCII files" href="ascii_spreadsheet.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="nexus.html" title="NeXus support"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ascii_spreadsheet.html" title="Spreadsheet like ASCII files"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="legacy.html" accesskey="U">Legacy formats</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Reading binary image data</a><ul>
+<li><a class="reference internal" href="#the-image-model">The image model</a></li>
+<li><a class="reference internal" href="#image-reader">Image reader</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ascii_spreadsheet.html"
+                        title="previous chapter">Spreadsheet like ASCII files</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nexus.html"
+                        title="next chapter">NeXus support</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/users_guide/image.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="reading-binary-image-data">
+<h1>Reading binary image data<a class="headerlink" href="#reading-binary-image-data" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="the-image-model">
+<h2>The image model<a class="headerlink" href="#the-image-model" title="Permalink to this headline">¶</a></h2>
+<p>The image model used by <em>libpniio</em> is rather simple. We assume that an image
+is a regular 2 dimensional array with <em>nx</em> elements along the first dimension
+and <em>ny</em> elements along the second dimension.
+In general the x-direction is the slow direction and the y-direction the
+fast one. This means typically that <em>nx</em> is typically associated with the
+number of rows or strips of an image and <em>ny</em> with the number of pixels
+per strip or row.</p>
+<p>The elements on the images grid are pixels. Every pixel is again
+subdivided in a set of <em>channels</em>. For instance an RGB image would have a
+<em>red-</em>, <em>green-</em> and <em>blue-channel</em>. Additionally a file can store
+multiple images (for instance TIFF). The interface takes care about this.</p>
+<p>The base class for all image readers is <code class="xref cpp cpp-class docutils literal"><span class="pre">image_reader</span></code>. In addition
+there are two additional classes providing basic image meta-data</p>
+<ul class="simple">
+<li><code class="xref cpp cpp-class docutils literal"><span class="pre">image_info</span></code> - with general information about an image (number of
+pixels along each dimension, total number of bits per pixel)</li>
+<li>and <code class="xref cpp cpp-class docutils literal"><span class="pre">image_channel_info</span></code> - providing information about the
+individual channels stored in each image.</li>
+</ul>
+</div>
+<div class="section" id="image-reader">
+<h2>Image reader<a class="headerlink" href="#image-reader" title="Permalink to this headline">¶</a></h2>
+<p>Currently there are two classes implementing the <code class="xref cpp cpp-class docutils literal"><span class="pre">image_reader</span></code>
+interface:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/image.html#_CPPv2N3pni2io11tiff_readerE" title="pni::io::tiff_reader"><code class="xref cpp cpp-class docutils literal"><span class="pre">pni::io::tiff_reader</span></code></a> for reading TIFF files</li>
+<li>and <a class="reference internal" href="../api/image.html#_CPPv2N3pni2io10cbf_readerE" title="pni::io::cbf_reader"><code class="xref cpp cpp-class docutils literal"><span class="pre">pni::io::cbf_reader</span></code></a> to read CBF files.</li>
+</ul>
+<p>As both have a similar interface only the CBF reader will be discussed
+here.</p>
+<p>In order to use the CBF reader you have to include
+<code class="file docutils literal"><span class="pre">pni/io/cbf/cbf_reader.hpp</span></code> in your source file (for the TIFF reader
+use <code class="file docutils literal"><span class="pre">pni/io/tiff/tiff_reader.hpp</span></code>).</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;pni/io/cbf/cbf_reader.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/io/image_info.hpp&gt;</span><span class="cp"></span>
+
+<span class="n">pni</span><span class="o">::</span><span class="n">io</span><span class="o">::</span><span class="n">cbf_reader</span> <span class="n">reader</span><span class="p">(</span><span class="s">&quot;image_00001.cbf&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>We can check whether there are several images in the file and have a
+look on their basic structure with</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">index</span><span class="o">&lt;</span><span class="n">reader</span><span class="p">.</span><span class="n">nimages</span><span class="p">();</span><span class="n">index</span><span class="o">++</span><span class="p">)</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">reader</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>To read data we could use</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">Frame</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">pni</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">float32</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="c1">//read the first channel from the first image in the file</span>
+<span class="k">auto</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">reader</span><span class="p">.</span><span class="n">image</span><span class="o">&lt;</span><span class="n">Frame</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="nexus.html" title="NeXus support"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ascii_spreadsheet.html" title="Spreadsheet like ASCII files"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="legacy.html" >Legacy formats</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Eugen Wintersberger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.9.
+    </div>
+  </body>
+</html>

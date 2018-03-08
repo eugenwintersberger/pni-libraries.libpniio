@@ -1,0 +1,202 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using the library &#8212; pniio 1.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="pniio 1.2.0 documentation" href="../index.html" />
+    <link rel="up" title="Users guide" href="index.html" />
+    <link rel="next" title="Legacy formats" href="legacy.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="legacy.html" title="Legacy formats"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Users guide</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Using the library</a><ul>
+<li><a class="reference internal" href="#building-with-cmake">Building with <strong class="program">CMake</strong></a></li>
+<li><a class="reference internal" href="#build-from-the-command-line">Build from the command line</a></li>
+<li><a class="reference internal" href="#build-with-a-makefile">Build with a Makefile</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="legacy.html"
+                        title="next chapter">Legacy formats</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/users_guide/usage.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="using-the-library">
+<h1>Using the library<a class="headerlink" href="#using-the-library" title="Permalink to this headline">¶</a></h1>
+<p>This chapter describes how you can use <em>libpniio</em> from within your own
+C++ project. As already mentioned in the installation chapter, <em>libpniio</em> uses
+<strong class="program">cmake</strong> as its build tool. In addition it also exports a <em>cmake-package</em>
+providing access to all the installation details.</p>
+<p>For all the following examples we use the following minimal C++ program as
+an example</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;h5cpp/hdf5.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/io/nexus.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="o">::</span><span class="n">io</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+   <span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="s">&quot;hello.nxs&quot;</span><span class="p">,</span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">AccessFlags</span><span class="o">::</span><span class="n">TRUNCATE</span><span class="p">);</span>
+
+   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>which we assume is the content of a file named <code class="file docutils literal"><span class="pre">hello.cpp</span></code>.</p>
+<div class="section" id="building-with-cmake">
+<h2>Building with <strong class="program">CMake</strong><a class="headerlink" href="#building-with-cmake" title="Permalink to this headline">¶</a></h2>
+<p>This is most probably the easierst case. As <em>libpniio</em> also installs a
+<em>cmake-package</em> which provides an imported target using the library is
+fairly easy. For the code example above a sufficient <code class="file docutils literal"><span class="pre">CMakeLists.txt</span></code>
+file would look like this</p>
+<div class="highlight-cmake"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span> <span class="s">3.5.0</span><span class="p">)</span>
+<span class="nb">project</span><span class="p">(</span><span class="s">hello</span> <span class="s">LANGUAGES</span> <span class="s">C</span> <span class="s">CXX</span> <span class="s">VERSION</span> <span class="s">0.0.1</span><span class="p">)</span>
+
+<span class="nb">find_package</span><span class="p">(</span><span class="s">pniio</span> <span class="s">REQUIRED</span><span class="p">)</span>
+
+<span class="nb">add_executable</span><span class="p">(</span><span class="s">hello</span> <span class="s">hello.cpp</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">hello</span> <span class="s">pniio</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><cite>pniio</cite> in the <cite>target_link_library</cite> command is an imported target which
+contains all the information required to build and link with <em>libpniio</em>.
+This includes</p>
+<ul class="simple">
+<li>the location of the library as well as all its dependencies</li>
+<li>the location of the header files.</li>
+</ul>
+</div>
+<div class="section" id="build-from-the-command-line">
+<h2>Build from the command line<a class="headerlink" href="#build-from-the-command-line" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">Need to finish this section</p>
+</div>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$&gt; g++ -std<span class="o">=</span>c++11 -otest test.cpp <span class="k">$(</span>pkg-config --cflags --libs pniio<span class="k">)</span>
+</pre></div>
+</div>
+<p>There are two important remarks we have to make here. The first is the
+<cite>-std=c++11</cite> option. This tells the compiler to use the new C++11
+standard which is absolutely mandatory if you want to use <em>libpniio</em>.
+the {tt pkg-config} command at the end of the command line includes all the
+necessary compiler and linker flags to build and link the code.</p>
+</div>
+<div class="section" id="build-with-a-makefile">
+<h2>Build with a Makefile<a class="headerlink" href="#build-with-a-makefile" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last">Need to finish this section</p>
+</div>
+<p>{tt pkg-config} can be used in a Makefile by putting the following at the top
+of your Makefile</p>
+<div class="highlight-make"><div class="highlight"><pre><span></span><span class="nv">CPPFLAGS</span><span class="o">=</span>-O2 -g -std<span class="o">=</span>c++11 <span class="k">$(</span>shell pkg-config --cflags pniio<span class="k">)</span>
+<span class="nv">LDFLAGS</span><span class="o">=</span><span class="k">$(</span>shell pkg-config --libs pniio<span class="k">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="legacy.html" title="Legacy formats"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Eugen Wintersberger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.9.
+    </div>
+  </body>
+</html>

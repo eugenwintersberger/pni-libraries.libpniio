@@ -1,0 +1,214 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>XML support &#8212; pniio 1.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="pniio 1.2.0 documentation" href="../index.html" />
+    <link rel="up" title="NeXus support" href="nexus.html" />
+    <link rel="next" title="API documentation" href="../api/index.html" />
+    <link rel="prev" title="Searching for objects" href="nexus_search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../api/index.html" title="API documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nexus_search.html" title="Searching for objects"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" accesskey="U">NeXus support</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">XML support</a><ul>
+<li><a class="reference internal" href="#generating-objects">Generating objects</a></li>
+<li><a class="reference internal" href="#nexus-xml-tags">NeXus XML tags</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nexus_search.html"
+                        title="previous chapter">Searching for objects</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../api/index.html"
+                        title="next chapter">API documentation</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/users_guide/nexus_xml.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="xml-support">
+<h1>XML support<a class="headerlink" href="#xml-support" title="Permalink to this headline">¶</a></h1>
+<p>NeXus files can grow quite complex it would be rather tedious to express
+the structure of such a file entirely in code.
+<em>libpniio</em> provides a way to create NeXus structures from XML. Like HDF5,
+XML structures data in a tree like hierarchy, making it the perfekt ASCII
+representation for a NeXus file.</p>
+<div class="section" id="generating-objects">
+<h2>Generating objects<a class="headerlink" href="#generating-objects" title="Permalink to this headline">¶</a></h2>
+<p>The XML content can come from two sources</p>
+<ul class="simple">
+<li>a file</li>
+<li>or from a string.</li>
+</ul>
+<p>Using the XML interface is rather simple. Consider that we have the structure
+of the file expressed as XML and stored in a file <code class="file docutils literal"><span class="pre">file_structure.xml</span></code>
+using this is simply</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">Group</span> <span class="n">root_group</span> <span class="o">=</span> <span class="n">file</span><span class="p">.</span><span class="n">root</span><span class="p">();</span>
+
+<span class="n">nexus</span><span class="o">::</span><span class="n">xml</span><span class="o">::</span><span class="n">create_from_file</span><span class="p">(</span><span class="n">root_group</span><span class="p">,</span><span class="s">&quot;file_structure.xml&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Alternatively you could use XML content from a string</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">Group</span> <span class="n">instrument</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">get_node</span><span class="p">(</span><span class="n">root_group</span><span class="p">,</span><span class="s">&quot;/entry/instrument&quot;</span><span class="p">);</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">detector_struct</span> <span class="o">=</span> <span class="n">create_detector_structure</span><span class="p">();</span>
+<span class="n">nexus</span><span class="o">::</span><span class="n">xml</span><span class="o">::</span><span class="n">create_from_string</span><span class="p">(</span><span class="n">instrument</span><span class="p">,</span><span class="n">detector_struct</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>As can be seen from this example the XML data must not contain the entire
+file structure. Instead it would be possible to provide separate XML files
+with different components of the file.
+Consider here for instance the following files</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="46%" />
+<col width="54%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">file</th>
+<th class="head">content description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="file docutils literal"><span class="pre">basic_file.xml</span></code></td>
+<td>the basic file structure</td>
+</tr>
+<tr class="row-odd"><td><code class="file docutils literal"><span class="pre">detector_1d.xml</span></code></td>
+<td>structure for a 1d detector</td>
+</tr>
+<tr class="row-even"><td><code class="file docutils literal"><span class="pre">detector_2d.xml</span></code></td>
+<td>structure for a 2d detector</td>
+</tr>
+</tbody>
+</table>
+<p>Code which usese this setup could look like this</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="p">...</span> <span class="p">;</span>
+<span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">Group</span> <span class="n">root_group</span> <span class="o">=</span> <span class="n">file</span><span class="p">.</span><span class="n">root</span><span class="p">();</span>
+
+<span class="n">nexus</span><span class="o">::</span><span class="n">xml</span><span class="o">::</span><span class="n">create_from_file</span><span class="p">(</span><span class="n">root_group</span><span class="p">,</span><span class="s">&quot;basic_file.xml&quot;</span><span class="p">);</span>
+<span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">Group</span> <span class="n">instrument</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">get_node</span><span class="p">(</span><span class="n">root_group</span><span class="p">,</span><span class="s">&quot;/entry/instrument&quot;</span><span class="p">);</span>
+
+<span class="k">switch</span><span class="p">(</span><span class="n">detector_setup</span><span class="p">)</span>
+<span class="p">{</span>
+   <span class="k">case</span> <span class="n">DetectorType</span><span class="o">::</span><span class="nl">LINEAR</span><span class="p">:</span>
+      <span class="n">nexus</span><span class="o">::</span><span class="n">xml</span><span class="o">::</span><span class="n">create_from_file</span><span class="p">(</span><span class="n">instrument</span><span class="p">,</span><span class="s">&quot;detector_1d.xml&quot;</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+   <span class="k">case</span> <span class="n">DetectorType</span><span class="o">::</span><span class="nl">AREA</span><span class="p">:</span>
+      <span class="n">nexus</span><span class="o">::</span><span class="n">xml</span><span class="o">::</span><span class="n">create_from_file</span><span class="p">(</span><span class="n">instrument</span><span class="p">,</span><span class="s">&quot;detector_2d.xml&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>It should be mentioned that currently <em>libpniio</em> does not use a validating
+parser which makes error detection rather difficult.</p>
+</div>
+<div class="section" id="nexus-xml-tags">
+<h2>NeXus XML tags<a class="headerlink" href="#nexus-xml-tags" title="Permalink to this headline">¶</a></h2>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">Currently the entire content is described in the NeXus serialization
+documentation. Either need a link here or we have to provide a
+copy in this documentation.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../api/index.html" title="API documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="nexus_search.html" title="Searching for objects"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" >NeXus support</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Eugen Wintersberger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.9.
+    </div>
+  </body>
+</html>
