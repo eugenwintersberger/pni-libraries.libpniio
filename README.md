@@ -94,4 +94,4 @@ add_executable(hello hello.cpp)
 target_link_libraries(hello pniio)
 ```
 
-
+More information can be found at [online documentation](https://pni-libraries.github.io/libpniio/index.html).
