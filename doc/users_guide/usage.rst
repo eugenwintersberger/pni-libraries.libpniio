@@ -2,6 +2,8 @@
 Using the library
 =================
 
+.. _nexus_quickstart:
+
 This chapter describes how you can use *libpniio* from within your own 
 C++ project. As already mentioned in the installation chapter, *libpniio* uses
 :program:`cmake` as its build tool. In addition it also exports a *cmake-package* 
@@ -66,7 +68,7 @@ Build from the command line
 There are two important remarks we have to make here. The first is the 
 `-std=c++11` option. This tells the compiler to use the new C++11
 standard which is absolutely mandatory if you want to use *libpniio*. 
-the {\tt pkg-config} command at the end of the command line includes all the
+the `pkg-config` command at the end of the command line includes all the
 necessary compiler and linker flags to build and link the code.
 
 Build with a Makefile
@@ -76,7 +78,7 @@ Build with a Makefile
 
    Need to finish this section
 
-{\tt pkg-config} can be used in a Makefile by putting the following at the top
+`pkg-config` can be used in a Makefile by putting the following at the top
 of your Makefile
 
 .. code-block:: make
