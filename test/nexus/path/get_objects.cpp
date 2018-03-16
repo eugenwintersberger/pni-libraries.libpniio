@@ -117,6 +117,14 @@ BOOST_AUTO_TEST_CASE(search_detector_attributes_absolute)
 
 }
 
+BOOST_AUTO_TEST_CASE(search_single_detector_by_name)
+{
+  base = multi_detector.root();
+  nexus::DatasetList result = nexus::get_objects(base,nexus::Path("/scan_1:NXentry/:NXinstrument/detector_1:NXdetector/data"));
+  BOOST_CHECK_EQUAL(result.size(),1);
+  BOOST_CHECK_EQUAL(result[0].link().path().parent().name(),"detector_1");
+}
+
 BOOST_AUTO_TEST_CASE(search_detector_attributes_relative)
 {
   base = multi_detector.root().nodes["scan_1"];
