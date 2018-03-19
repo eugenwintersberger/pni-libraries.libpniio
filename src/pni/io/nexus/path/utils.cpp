@@ -181,17 +181,42 @@ std::istream &operator>>(std::istream &i,Path &p)
 //-------------------------------------------------------------------------
 bool match(const Path::Element &a,const Path::Element &b)
 {
-  //applies rule 1 in the documentation
-  if(a==b)
-    return true;
+  //if both elements are complete they must be equal
+  if(is_complete(a) && is_complete(b))
+    return a==b;
 
-  //applies two rules in the documentation
-  if( (a.first.empty() && !b.first.empty()) ||
-      (!a.first.empty() && b.first.empty()) )
+  // both have their name element set - but ony one the class
+  if(has_name(a) && has_name(b))
   {
-    if(a.second == b.second)
-      return true;
+    //if both have their names set we can exclude here the case that also
+    // both have their class set (in this case they would be complete an
+    // already handled by the above case. So we only have to check
+    // the names:
+    return a.first == b.first;
   }
+
+  // both have their class set - but only on the name
+  if(has_class(a) && has_class(b))
+  {
+    //similar to above in this case we only have to check for class
+    //equality
+    return a.second == b.second;
+  }
+
+  //
+  // if only one of the two elements has its name set we have to check the
+  // the class
+  //
+//  if( (a.first.empty() && !b.first.empty()) ||
+//      (!a.first.empty() && b.first.empty()) )
+//  {
+//    if(a.second == b.second)
+//      return true;
+//  }
+//  else
+//  {
+//    return a.first == b.first && a.second == b.second;
+//  }
 
   return false;
 }

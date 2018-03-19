@@ -33,7 +33,7 @@ BOOST_AUTO_TEST_SUITE(ElementMatchTest)
 using Element = Path::Element;
 
 //-------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE(test_rule_1)
+BOOST_AUTO_TEST_CASE(test_rule_complete_elements)
 {
   BOOST_CHECK(match(Element("entry","NXentry"),
                     Element("entry","NXentry")));
@@ -46,31 +46,29 @@ BOOST_AUTO_TEST_CASE(test_rule_1)
 }
 
 //-------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE(test_rule_2)
+BOOST_AUTO_TEST_CASE(test_rule_class_set_on_both)
 {
-  BOOST_CHECK(match(Element("entry","NXentry"),
-                    Element("","NXentry")));
-  BOOST_CHECK(match(Element("","NXentry"),
-                    Element("entry","NXentry")));
+  BOOST_CHECK(match(Element("entry","NXentry"),Element("","NXentry")));
+  BOOST_CHECK(match(Element("","NXentry"),Element("entry","NXentry")));
 
-  BOOST_CHECK(!match(Element("","NXinstrument"),
-                     Element("control","NXmonitor")));
-  BOOST_CHECK(!match(Element("detector","NXdetector"),
-                     Element("","NXmonitor")));
+  BOOST_CHECK(!match(Element("","NXinstrument"),Element("control","NXmonitor")));
+  BOOST_CHECK(!match(Element("detector","NXdetector"),Element("","NXmonitor")));
+}
+
+BOOST_AUTO_TEST_CASE(test_rul_name_set_on_both)
+{
+  BOOST_CHECK(match(Element("entry","NXentry"),Element("entry","")));
+  BOOST_CHECK(match(Element("instrument","NXinstrument"),Element("instrument","")));
 }
 
 //-------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE(test_rule_3)
+BOOST_AUTO_TEST_CASE(test_rule_only_names_or_classes)
 {
-  BOOST_CHECK(match(Element("entry",""),
-                    Element("entry","")));
-  BOOST_CHECK(match(Element("","NXentry"),
-                    Element("","NXentry")));
+  BOOST_CHECK(match(Element("entry",""),Element("entry","")));
+  BOOST_CHECK(match(Element("","NXentry"),Element("","NXentry")));
 
-  BOOST_CHECK(!match(Element("entry",""),
-                     Element("scan","")));
-  BOOST_CHECK(!match(Element("","NXentry"),
-                     Element("","NXinstrument")));
+  BOOST_CHECK(!match(Element("entry",""),Element("scan","")));
+  BOOST_CHECK(!match(Element("","NXentry"),Element("","NXinstrument")));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

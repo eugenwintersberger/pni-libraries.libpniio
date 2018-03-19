@@ -69,8 +69,6 @@ BOOST_AUTO_TEST_CASE(get_unresolvable_link)
   hdf5::node::Link link = static_cast<hdf5::node::Link>(object);
   BOOST_CHECK(!link.is_resolvable());
   BOOST_CHECK_EQUAL(link.type(),hdf5::node::LinkType::EXTERNAL);
-
-
 }
 
 BOOST_AUTO_TEST_CASE(search_detectors)
@@ -81,7 +79,13 @@ BOOST_AUTO_TEST_CASE(search_detectors)
   BOOST_CHECK_EQUAL(result[0].link().path().parent().name(),"detector_1");
   BOOST_CHECK_EQUAL(result[1].link().path().parent().name(),"detector_2");
   BOOST_CHECK_EQUAL(result[2].link().path().parent().name(),"detector_3");
+}
 
+BOOST_AUTO_TEST_CASE(seach_detector_by_name)
+{
+  base = multi_detector.root();
+  nexus::DatasetList result = nexus::get_objects(base,nexus::Path("/scan_1/instrument/detector_1/data"));
+  BOOST_CHECK_EQUAL(result.size(),1);
 }
 
 BOOST_AUTO_TEST_CASE(search_entries_relative)
