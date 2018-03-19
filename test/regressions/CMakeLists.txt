@@ -10,4 +10,12 @@ add_boost_logging_test("regressions::issue_32"
                        regression_issue_32
                        ${CMAKE_CURRENT_BINARY_DIR})
                        
-add_dependencies(check regression_issue_32)
+set(ISSUE33_SRC issue_33.cpp)
+set_boost_test_definitions(ISSUE33_SRC "Regression test for issue 33")
+add_executable(regression_issue_33 EXCLUDE_FROM_ALL ${ISSUE33_SRC})
+target_link_libraries(regression_issue_33 pniio Boost::unit_test_framework)
+add_boost_logging_test("regressions::issue_33" 
+                       regression_issue_33
+                       ${CMAKE_CURRENT_BINARY_DIR})                       
+                       
+add_dependencies(check regression_issue_32 regression_issue_33)
