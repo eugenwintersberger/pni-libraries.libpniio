@@ -42,6 +42,14 @@ BOOST_AUTO_TEST_CASE(test_1)
   BOOST_CHECK(!match(p1,p2));
 }
 
+//------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE(test_11)
+{
+  Path p1 = Path::from_string("entry:NXentry/instrument:NXinstrument/detector:NXdetector/data");
+  Path p2 = Path::from_string("entry/instrument/detector/data");
+  BOOST_CHECK(match(p1,p2));
+}
+
 //-------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(test_2)
 {
