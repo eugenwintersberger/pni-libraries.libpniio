@@ -45,7 +45,9 @@ Path::Element get_group_element(const hdf5::node::Group &group)
   std::string group_class;
   if(group.attributes.exists("NX_class"))
   {
-    group.attributes["NX_class"].read(group_class);
+    hdf5::attribute::Attribute nx_class = group.attributes["NX_class"];
+    hdf5::datatype::String file_type = nx_class.datatype();
+    nx_class.read(group_class,file_type);
   }
 
   return {group_name,group_class};
