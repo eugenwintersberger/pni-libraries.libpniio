@@ -14,7 +14,6 @@
 *.deb
 *.pyc
 *.changes
-*.h5
 .sconf_temp
 build.log
 config.log
