@@ -1,5 +1,5 @@
 //
-// (c) Copyright 2017 DESY
+// (c) Copyright 2018 DESY
 //
 // This file is part of libpniio.
 //
@@ -18,40 +18,10 @@
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
-// Created on: Dec 8, 2017
+// Created on: Mar 20, 2018
 //
 #pragma once
 
-#include <pni/io/nexus/object_builder.hpp>
-#include <pni/io/nexus/xml/node.hpp>
-#include <pni/io/windows.hpp>
-#include <pni/io/nexus/xml/visibility.hpp>
-#include <memory>
 
-namespace pni {
-namespace io {
-namespace nexus {
-namespace xml {
-
-class PNIIO_EXPORT ObjectBuilder : public pni::io::nexus::ObjectBuilder
-{
-  private:
-    Node xml_node_;
-  public:
-    using UniquePointer = std::unique_ptr<ObjectBuilder>;
-    ObjectBuilder() = default;
-    ObjectBuilder(const Node &xml_node);
-    ObjectBuilder(const ObjectBuilder &) = default;
-    virtual ~ObjectBuilder();
-
-    const Node &node() const noexcept;
-
-    virtual void build(const hdf5::node::Node &parent) const;
-
-};
-
-
-} // namespace xml
-} // namespace nexus
-} // namespace io
-} // namespace pni
+//#define HIDE_SYMBOL __attribute__ ((visibility("hidden")))
+#define HIDE_SYMBOL
