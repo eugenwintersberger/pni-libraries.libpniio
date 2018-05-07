@@ -40,16 +40,13 @@ void DatasetCreationListBuilder::set_chunking(hdf5::property::DatasetCreationLis
 
   //set the default chunk layout
   hdf5::Dimensions chunk = dataspace_builder_.build().current_dimensions();
-  if(chunk.size()==1)
-    chunk.front() = 1024*1024;
-  else
-    chunk.front() = 1;
+  chunk.front() = 1;
 
   auto has_chunk_node = node_.get_child_optional("chunk");
   if(has_chunk_node)
   {
     Node chunk_node = has_chunk_node.get();
-    hdf5::Dimensions chunk = DimensionNodeHandler::dimensions(chunk_node);
+    chunk = DimensionNodeHandler::dimensions(chunk_node);
   }
 
   dcpl.chunk(chunk);
