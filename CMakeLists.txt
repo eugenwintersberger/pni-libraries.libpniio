@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(pniio
         LANGUAGES CXX C
-        VERSION 1.2.2)
+        VERSION 1.2.3)
 include(CTest)
 
 
