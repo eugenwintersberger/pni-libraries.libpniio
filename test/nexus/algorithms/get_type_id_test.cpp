@@ -148,7 +148,7 @@ BOOST_AUTO_TEST_CASE(test_float64)
   BOOST_CHECK_EQUAL(nexus::get_type_id(dataset),pni::core::type_id_t::FLOAT64);
 }
 
-#if !defined(_MSC_VER) && !defined(__arm__)
+#if defined(__GNUG__)  && !defined(__arm__)
 BOOST_AUTO_TEST_CASE(test_float128)
 {
   dtype = hdf5::datatype::create<pni::core::float128>();
