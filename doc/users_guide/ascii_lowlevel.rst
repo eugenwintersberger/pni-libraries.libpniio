@@ -177,7 +177,7 @@ container data is written to disk.
 Taking the record example from the above parser section we could do 
 something like this 
 
-.. code-block::
+.. code-block:: cpp
 
    //using a ; as a separator between record elements 
    pni::io::container_io_config config(';'); 
