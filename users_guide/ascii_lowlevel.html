@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The low-level ASCII interface &#8212; pniio 1.2.4 documentation</title>
+    <title>The low-level ASCII interface &#8212; pniio 1.2.5 documentation</title>
     
     <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.2.4',
+        VERSION:     '1.2.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="pniio 1.2.4 documentation" href="../index.html" />
+    <link rel="top" title="pniio 1.2.5 documentation" href="../index.html" />
     <link rel="up" title="Reading ASCII data" href="ascii.html" />
     <link rel="next" title="Spreadsheet like ASCII files" href="ascii_spreadsheet.html" />
     <link rel="prev" title="Reading ASCII data" href="ascii.html" />
@@ -50,7 +50,7 @@
         <li class="right" >
           <a href="ascii.html" title="Reading ASCII data"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.4 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.5 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="legacy.html" >Legacy formats</a> &#187;</li>
           <li class="nav-item nav-item-3"><a href="ascii.html" accesskey="U">Reading ASCII data</a> &#187;</li> 
@@ -252,6 +252,13 @@ takes an optional second argument which is a reference to
 container data is written to disk.
 Taking the record example from the above parser section we could do
 something like this</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">//using a ; as a separator between record elements</span>
+<span class="n">pni</span><span class="o">::</span><span class="n">io</span><span class="o">::</span><span class="n">container_io_config</span> <span class="n">config</span><span class="p">(</span><span class="sc">&#39;;&#39;</span><span class="p">);</span>
+
+<span class="n">Record</span> <span class="n">record</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">pni</span><span class="o">::</span><span class="n">io</span><span class="o">::</span><span class="n">format</span><span class="p">(</span><span class="n">record</span><span class="p">,</span><span class="n">config</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -273,7 +280,7 @@ something like this</p>
         <li class="right" >
           <a href="ascii.html" title="Reading ASCII data"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.4 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.5 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="legacy.html" >Legacy formats</a> &#187;</li>
           <li class="nav-item nav-item-3"><a href="ascii.html" >Reading ASCII data</a> &#187;</li> 
