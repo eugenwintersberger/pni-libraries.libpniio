@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE(test_b_empty)
 {
   string a_str = "filename.nxs://scan_1/:NXinstrument";
   Path j;
-  BOOST_CHECK_NO_THROW(j = join(Path::from_string(a_str) == Path()));
+  BOOST_CHECK_NO_THROW(j = join(Path::from_string(a_str), Path()));
   BOOST_TEST(Path::to_string(j) == a_str);
 }
 

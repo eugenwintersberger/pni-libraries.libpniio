@@ -20,9 +20,6 @@
 //  Created on: Jun 26, 2017
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 ///
-#define BOOST_CHECK_EQUAL_DYN_LINK
-#define BOOST_CHECK_EQUAL_MODULE Testing TIF reader with IDL generated files
-
 #include <boost/test/unit_test.hpp>
 #include <vector>
 #include <pni/core/types.hpp>
@@ -36,19 +33,19 @@ BOOST_AUTO_TEST_SUITE(tiff_reader_test)
 
     BOOST_AUTO_TEST_CASE(test_read)
     {
-        std::vector<uint32> data{0,1,2,3,4,5,6,7};
-
-        tiff_reader reader("idl_file.tif");
-        image_info info;
-        BOOST_CHECK_NO_THROW(info = reader.info(0));
-        BOOST_TEST(info.nx() == 4);
-        BOOST_TEST(info.ny() == 2);
-        BOOST_TEST(info.bit_per_pixel() == 32);
-        
-        auto image = reader.image<std::vector<uint32>>(0);
-        BOOST_TEST(image.size() == data.size());
-        BOOST_CHECK_EQUAL_COLLECTIONS(image.begin(),image.end(),
-                                     data.begin(),data.end());
+      std::vector<uint32> data{0,1,2,3,4,5,6,7};
+      
+      tiff_reader reader("idl_file.tif");
+      image_info info;
+      BOOST_CHECK_NO_THROW(info = reader.info(0));
+      BOOST_TEST(info.nx() == 4);
+      BOOST_TEST(info.ny() == 2);
+      BOOST_TEST(info.bit_per_pixel() == 32);
+      
+      auto image = reader.image<std::vector<uint32>>(0);
+      BOOST_TEST(image.size() == data.size());
+      BOOST_CHECK_EQUAL_COLLECTIONS(image.begin(),image.end(),
+				    data.begin(),data.end());
     }
 
 BOOST_AUTO_TEST_SUITE_END()
