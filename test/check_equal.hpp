@@ -35,7 +35,7 @@ template<
         > 
 void check_equal(const T &a,const T &b)
 {
-    BOOST_CHECK_EQUAL(a,b); 
+    BOOST_TEST(a == b);
 }
 
 //-----------------------------------------------------------------------------

@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_CASE(test_uint8_attribute)
   BOOST_CHECK(attribute.datatype()==hdf5::datatype::create<uint8>());
   uint8 data;
   attribute.read(data);
-  BOOST_CHECK_EQUAL(data,12);
+  BOOST_TEST(data == 12);
 
 }
 
@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE(test_int32_attribute)
   BOOST_CHECK(attribute.datatype()==hdf5::datatype::create<int32>());
   int32 data;
   attribute.read(data);
-  BOOST_CHECK_EQUAL(data,-12);
+  BOOST_TEST(data == -12);
 }
 
 BOOST_AUTO_TEST_CASE(test_string_attribute)
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(test_string_attribute)
   BOOST_CHECK(attribute.datatype()==hdf5::datatype::create<std::string>());
   std::string data;
   attribute.read(data);
-  BOOST_CHECK_EQUAL(data,"hello");
+  BOOST_TEST(data == "hello");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

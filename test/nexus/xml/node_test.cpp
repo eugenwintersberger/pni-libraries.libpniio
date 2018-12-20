@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_CASE(test_from_file)
 {
   xml::Node n = xml::Node::from_file("node/node_from_str.xml");
   BOOST_CHECK(!n.empty());
-  BOOST_CHECK_EQUAL(n.size(),1);
+  BOOST_TEST(n.size() == 1);
 
   //has to fail because file does not exist
   BOOST_CHECK_THROW(xml::Node::from_file("bla.xml"), pni::core::file_error);
@@ -72,7 +72,7 @@ BOOST_AUTO_TEST_CASE(test_from_string)
   xml::Node n = xml::Node::from_string(node_from_string_str);
 
   BOOST_CHECK(!n.empty());
-  BOOST_CHECK_EQUAL(n.size(),1);
+  BOOST_TEST(n.size() == 1);
 
   BOOST_CHECK_THROW(xml::Node::from_string(node_from_bad_str),
                     pni::io::parser_error);

@@ -35,15 +35,15 @@ BOOST_AUTO_TEST_SUITE(ObjectElementTest)
 BOOST_AUTO_TEST_CASE(test_full)
 {
   Path::Element e = object_element("detector","NXdetector");
-  BOOST_CHECK_EQUAL(e.first,"detector");
-  BOOST_CHECK_EQUAL(e.second,"NXdetector");
+  BOOST_TEST(e.first == "detector");
+  BOOST_TEST(e.second == "NXdetector");
 }
 
 //-------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(test_name_only)
 {
   Path::Element e = object_element("detector","");
-  BOOST_CHECK_EQUAL(e.first,"detector");
+  BOOST_TEST(e.first == "detector");
   BOOST_CHECK(e.second.empty());
 }
 
@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE(test_type_only)
 {
   Path::Element e = object_element("","NXdetector");
   BOOST_CHECK(e.first.empty());
-  BOOST_CHECK_EQUAL(e.second,"NXdetector");
+  BOOST_TEST(e.second == "NXdetector");
 }
 
 //-------------------------------------------------------------------------

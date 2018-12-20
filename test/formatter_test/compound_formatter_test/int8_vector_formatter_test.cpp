@@ -47,28 +47,28 @@ BOOST_FIXTURE_TEST_SUITE(int8_vector_formatter_test,int8_vector_formatter_fixtur
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_default)
     {
-        BOOST_CHECK_EQUAL(format(input),"+1 +2 +3 +4");
+        BOOST_TEST(format(input) == "+1 +2 +3 +4");
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_costum_sep)
     {
         container_io_config config(';');
-        BOOST_CHECK_EQUAL(format(input,config),"+1;+2;+3;+4");
+        BOOST_TEST(format(input,config) == "+1;+2;+3;+4");
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_costum_start_stop)
     {
         container_io_config config('(',')');
-        BOOST_CHECK_EQUAL(format(input,config),"(+1 +2 +3 +4)");
+        BOOST_TEST(format(input,config) == "(+1 +2 +3 +4)");
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_full_costum)
     {
         container_io_config config('[',']',';');
-        BOOST_CHECK_EQUAL(format(input,config),"[+1;+2;+3;+4]");
+        BOOST_TEST(format(input,config) == "[+1;+2;+3;+4]");
     }
 
 BOOST_AUTO_TEST_SUITE_END()

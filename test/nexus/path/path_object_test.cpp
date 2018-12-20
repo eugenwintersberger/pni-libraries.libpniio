@@ -50,27 +50,27 @@ BOOST_FIXTURE_TEST_SUITE(PathObjectTest,PathObjectFixture)
 BOOST_AUTO_TEST_CASE(default_construction)
 {
   nexus::PathObject object;
-  BOOST_CHECK_EQUAL(object.type(),nexus::PathObject::Type::NONE);
+  BOOST_TEST(object.type() == nexus::PathObject::Type::NONE);
 }
 
 BOOST_AUTO_TEST_CASE(attribute_construction)
 {
   nexus::PathObject object = group.attributes["NX_class"];
-  BOOST_CHECK_EQUAL(object.type(),nexus::PathObject::Type::ATTRIBUTE);
+  BOOST_TEST(object.type() == nexus::PathObject::Type::ATTRIBUTE);
   BOOST_CHECK(nexus::is_attribute(object));
 
   hdf5::attribute::Attribute attr = object;
-  BOOST_CHECK_EQUAL(attr.name(),"NX_class");
+  BOOST_TEST(attr.name() == "NX_class");
 }
 
 BOOST_AUTO_TEST_CASE(group_construction)
 {
   nexus::PathObject object = group;
-  BOOST_CHECK_EQUAL(object.type(),nexus::PathObject::Type::GROUP);
+  BOOST_TEST(object.type() == nexus::PathObject::Type::GROUP);
   BOOST_CHECK(nexus::is_group(object));
 
   hdf5::node::Group g = object;
-  BOOST_CHECK_EQUAL(g.link().path(),"/");
+  BOOST_TEST(g.link().path() == "/");
 
   BOOST_CHECK_THROW(attribute = object,std::runtime_error);
 }
@@ -78,11 +78,11 @@ BOOST_AUTO_TEST_CASE(group_construction)
 BOOST_AUTO_TEST_CASE(dataset_construction)
 {
   nexus::PathObject object = dataset;
-  BOOST_CHECK_EQUAL(object.type(),nexus::PathObject::Type::DATASET);
+  BOOST_TEST(object.type() == nexus::PathObject::Type::DATASET);
   BOOST_CHECK(nexus::is_dataset(object));
 
   hdf5::node::Dataset d = object;
-  BOOST_CHECK_EQUAL(d.link().path(),"/data");
+  BOOST_TEST(d.link().path() == "/data");
 }
 
 

@@ -75,9 +75,9 @@ BOOST_AUTO_TEST_CASE(chunked_field_construction)
   BOOST_CHECK(field.is_valid());
   BOOST_CHECK(root_group.nodes.exists("data"));
   hdf5::Dimensions chunk_dimensions = field.creation_list().chunk();
-  BOOST_CHECK_EQUAL(chunk_dimensions[0],1);
-  BOOST_CHECK_EQUAL(chunk_dimensions[1],1024);
-  BOOST_CHECK_EQUAL(chunk_dimensions[2],1024);
+  BOOST_TEST(chunk_dimensions[0] == 1);
+  BOOST_TEST(chunk_dimensions[1] == 1024);
+  BOOST_TEST(chunk_dimensions[2] == 1024);
 }
 
 BOOST_AUTO_TEST_CASE(chunked_field_invalid_name)

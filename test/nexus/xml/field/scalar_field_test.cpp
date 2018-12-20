@@ -53,9 +53,9 @@ BOOST_FIXTURE_TEST_SUITE(scalar_field_test,scalar_field_fixture)
         BOOST_CHECK_NO_THROW(root_node = xml::create_from_file(xml_file_name<T>()));
         BOOST_CHECK_NO_THROW(child_node = xml::get_child_by_name(root_node.get_child("group"),"data"));
 
-        BOOST_CHECK_EQUAL(xml_test::field_test::size(child_node),1);
-        BOOST_CHECK_EQUAL(xml_test::field_test::rank(child_node),0);
-        BOOST_CHECK_EQUAL(xml_test::field_test::type_id(child_node),get_type_id<T>());
+        BOOST_TEST(xml_test::field_test::size(child_node) == 1);
+        BOOST_TEST(xml_test::field_test::rank(child_node) == 0);
+        BOOST_TEST(xml_test::field_test::type_id(child_node) == get_type_id<T>());
       
         T data;
         xml_test::field_test::data_from_xml(child_node,data);
@@ -73,9 +73,9 @@ BOOST_FIXTURE_TEST_SUITE(scalar_field_test,scalar_field_fixture)
         //attach the attribute to the group
         h5::nxfield field = xml_test::field_test::object_from_xml(nx_parent,child_node);
 
-        BOOST_CHECK_EQUAL(field.size(),1);
-        BOOST_CHECK_EQUAL(field.rank(),1);
-        BOOST_CHECK_EQUAL(field.type_id(),get_type_id<T>());
+        BOOST_TEST(field.size() == 1);
+        BOOST_TEST(field.rank() == 1);
+        BOOST_TEST(field.type_id() == get_type_id<T>());
     }
 
     //-------------------------------------------------------------------------
@@ -88,9 +88,9 @@ BOOST_FIXTURE_TEST_SUITE(scalar_field_test,scalar_field_fixture)
         xml::node field_node = xml_test::field_test::object_to_xml(field);
         xml_test::field_test::data_to_xml(scalar_ref_data<T>::data,field_node);
 
-        BOOST_CHECK_EQUAL(xml_test::field_test::size(field_node),1);
-        BOOST_CHECK_EQUAL(xml_test::field_test::rank(field_node),0);
-        BOOST_CHECK_EQUAL(xml_test::field_test::type_id(field_node),get_type_id<T>());
+        BOOST_TEST(xml_test::field_test::size(field_node) == 1);
+        BOOST_TEST(xml_test::field_test::rank(field_node) == 0);
+        BOOST_TEST(xml_test::field_test::type_id(field_node) == get_type_id<T>());
     }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -52,11 +52,11 @@ BOOST_AUTO_TEST_CASE(test_creation)
   //check the content of some of the attributes
   std::string attribute_content;
   BOOST_CHECK_NO_THROW(root_group.attributes["NX_class"].read(attribute_content));
-  BOOST_CHECK_EQUAL(attribute_content,"NXroot");
+  BOOST_TEST(attribute_content == "NXroot");
   BOOST_CHECK_NO_THROW(root_group.attributes["NeXus_version"].read(attribute_content));
-  BOOST_CHECK_EQUAL(attribute_content,"4.3.0");
+  BOOST_TEST(attribute_content == "4.3.0");
   BOOST_CHECK_NO_THROW(root_group.attributes["file_name"].read(attribute_content));
-  BOOST_CHECK_EQUAL(attribute_content,"test_creation.nxs");
+  BOOST_TEST(attribute_content == "test_creation.nxs");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

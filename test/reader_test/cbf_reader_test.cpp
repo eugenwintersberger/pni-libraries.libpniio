@@ -42,17 +42,17 @@ BOOST_AUTO_TEST_SUITE(cbf_reader_test)
     {
         cbf_reader reader("LAOS3_05461.cbf");
         
-        BOOST_CHECK_EQUAL(reader.nimages(),1);
+        BOOST_TEST(reader.nimages() == 1);
 
         image_info info = reader.info(0);
-        BOOST_CHECK_EQUAL(info.ny(),487);
-        BOOST_CHECK_EQUAL(info.nx(),195);
-        BOOST_CHECK_EQUAL(info.bit_per_pixel(),32);
-        BOOST_CHECK_EQUAL(info.nchannels(),1);
+        BOOST_TEST(info.ny() == 487);
+        BOOST_TEST(info.nx() == 195);
+        BOOST_TEST(info.bit_per_pixel() == 32);
+        BOOST_TEST(info.nchannels() == 1);
 
         image_channel_info cinfo = info.get_channel(0);
-        BOOST_CHECK_EQUAL(cinfo.bits(),32);
-        BOOST_CHECK_EQUAL(cinfo.type_id(),type_id_t::INT32);
+        BOOST_TEST(cinfo.bits() == 32);
+        BOOST_TEST(cinfo.type_id() == type_id_t::INT32);
 
     }
 

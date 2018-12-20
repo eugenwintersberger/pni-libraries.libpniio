@@ -60,10 +60,10 @@ BOOST_AUTO_TEST_CASE(linear_groups)
   BOOST_CHECK_NO_THROW(builder = nexus::xml::ObjectBuilder(xml_node));
   BOOST_CHECK_NO_THROW(builder.build(root_group));
 
-  BOOST_CHECK_EQUAL(root_group.nodes.size(),3);
-  BOOST_CHECK_EQUAL(root_group.nodes[0].link().path().name(),"entry_1");
-  BOOST_CHECK_EQUAL(root_group.nodes[1].link().path().name(),"entry_2");
-  BOOST_CHECK_EQUAL(root_group.nodes[2].link().path().name(),"log");
+  BOOST_TEST(root_group.nodes.size() == 3);
+  BOOST_TEST(root_group.nodes[0].link().path().name() == "entry_1");
+  BOOST_TEST(root_group.nodes[1].link().path().name() == "entry_2");
+  BOOST_TEST(root_group.nodes[2].link().path().name() == "log");
 }
 
 BOOST_AUTO_TEST_CASE(recursive_groups)
@@ -72,10 +72,10 @@ BOOST_AUTO_TEST_CASE(recursive_groups)
   BOOST_CHECK_NO_THROW(builder = nexus::xml::ObjectBuilder(xml_node));
   BOOST_CHECK_NO_THROW(builder.build(root_group));
 
-  BOOST_CHECK_EQUAL(root_group.nodes.size(),2);
+  BOOST_TEST(root_group.nodes.size() == 2);
   node::Group entry = root_group.nodes["entry_1"];
   BOOST_CHECK(nexus::IsEntry()(entry));
-  BOOST_CHECK_EQUAL(entry.nodes.size(),3);
+  BOOST_TEST(entry.nodes.size() == 3);
   BOOST_CHECK(entry.nodes.exists("instrument"));
   BOOST_CHECK(entry.nodes.exists("data"));
   BOOST_CHECK(entry.nodes.exists("sample"));

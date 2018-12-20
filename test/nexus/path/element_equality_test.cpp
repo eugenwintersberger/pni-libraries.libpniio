@@ -43,14 +43,14 @@ using Element = Path::Element;
 
 BOOST_AUTO_TEST_CASE(test_equality)
 {
-  BOOST_CHECK_EQUAL(Element("entry","NXentry") ,
-                    Element("entry","NXentry"));
+  BOOST_TEST(Element("entry","NXentry") ==
+	     Element("entry","NXentry"));
 
-  BOOST_CHECK_EQUAL(Element("","NXentry") ,
-                    Element("","NXentry"));
+  BOOST_TEST(Element("","NXentry") ==
+	     Element("","NXentry"));
 
-  BOOST_CHECK_EQUAL(Element("entry","") ,
-                    Element("entry",""));
+  BOOST_TEST(Element("entry","") ==
+	     Element("entry",""));
 }
 
 //-------------------------------------------------------------------------

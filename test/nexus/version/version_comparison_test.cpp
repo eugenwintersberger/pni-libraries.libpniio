@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_SUITE(Comparison)
 
 BOOST_AUTO_TEST_CASE(test_equality)
 {
-  BOOST_CHECK_EQUAL(nexus::Version(10,23,3),nexus::Version(10,23,3));
+  BOOST_TEST(nexus::Version(10,23,3) == nexus::Version(10,23,3));
 }
 
 BOOST_AUTO_TEST_CASE(test_inequality)

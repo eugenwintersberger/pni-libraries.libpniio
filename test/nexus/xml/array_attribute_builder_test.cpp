@@ -51,8 +51,8 @@ BOOST_AUTO_TEST_CASE(test_uint8_attribute)
   BOOST_CHECK(attribute.datatype()==hdf5::datatype::create<uint8>());
   auto data = array_type::create(dataspace.current_dimensions());
   attribute.read(data);
-  BOOST_CHECK_EQUAL(data.size(),3);
-  BOOST_CHECK_EQUAL(data.rank(),1);
+  BOOST_TEST(data.size() == 3);
+  BOOST_TEST(data.rank() == 1);
   auto ref_data = array_type::create({3},{1,2,3});
   BOOST_CHECK_EQUAL_COLLECTIONS(data.begin(),data.end(),
                                 ref_data.begin(),ref_data.end());
@@ -70,7 +70,7 @@ BOOST_AUTO_TEST_CASE(test_int8_attribute)
   auto ref_data = array_type::create({3},{-1,-2,-3});
   auto data = array_type::create(dataspace.current_dimensions());
   attribute.read(data);
-  BOOST_CHECK_EQUAL(data.size(),3);
+  BOOST_TEST(data.size() == 3);
   BOOST_CHECK_EQUAL_COLLECTIONS(data.begin(),data.end(),
                                 ref_data.begin(),ref_data.end());
 

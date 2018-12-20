@@ -33,9 +33,9 @@ BOOST_AUTO_TEST_SUITE(uint16_formatter_test)
     BOOST_AUTO_TEST_CASE(test)
     {
         typedef uint16 input_type;
-        BOOST_CHECK_EQUAL(format(input_type(12)),"12");
-        BOOST_CHECK_EQUAL(format(input_type(0)),"0");
-        BOOST_CHECK_EQUAL(format(input_type(65535)),"65535");
+        BOOST_TEST(format(input_type(12)) == "12");
+        BOOST_TEST(format(input_type(0)) == "0");
+        BOOST_TEST(format(input_type(65535)) == "65535");
     }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -33,11 +33,11 @@ BOOST_AUTO_TEST_SUITE(int8_formatter_test)
     BOOST_AUTO_TEST_CASE(test)
     {
         typedef int8 input_type;
-        BOOST_CHECK_EQUAL(format(input_type(12)),"+12");
-        BOOST_CHECK_EQUAL(format(input_type(-100)),"-100");
-        BOOST_CHECK_EQUAL(format(input_type(0)),"+0");
-        BOOST_CHECK_EQUAL(format(input_type(127)),"+127");
-        BOOST_CHECK_EQUAL(format(input_type(-128)),"-128");
+        BOOST_TEST(format(input_type(12)) == "+12");
+        BOOST_TEST(format(input_type(-100)) == "-100");
+        BOOST_TEST(format(input_type(0)) == "+0");
+        BOOST_TEST(format(input_type(127)) == "+127");
+        BOOST_TEST(format(input_type(-128)) == "-128");
     }
 
 BOOST_AUTO_TEST_SUITE_END()

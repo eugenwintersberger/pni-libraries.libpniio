@@ -40,7 +40,7 @@ BOOST_FIXTURE_TEST_SUITE(vector_parser_test,vector_parser_test_fixture)
     {
         auto result = p("1 2 3 4 5");
 
-        BOOST_CHECK_EQUAL(result.size(),5);
+        BOOST_TEST(result.size() == 5);
     }
 
     //-------------------------------------------------------------------------
@@ -48,7 +48,7 @@ BOOST_FIXTURE_TEST_SUITE(vector_parser_test,vector_parser_test_fixture)
     {
         p = parser_type(container_io_config('[',']',','));
         auto result = p("[1,2,3,4,5]");
-        BOOST_CHECK_EQUAL(result.size(),5);
+        BOOST_TEST(result.size() == 5);
     }
 
     //--------------------------------------------------------------------------
