@@ -22,23 +22,44 @@
 //
 
 #include <boost/test/unit_test.hpp>
+#include <boost/test/test_tools.hpp>
 #include <pni/io/nexus/path.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nexus;
 
-namespace std{
-    
-    ostream &operator<<(ostream &stream,const Path::Element &e)
-    {
-        stream<<e.first<<":"<<e.second;
-        return stream;
-    }
+#if BOOST_VERSION >= 105900
+#define BOOST_NS_TT_DETAIL_BEGIN namespace tt_detail {
+#define BOOST_NS_TT_DETAIL_END }
+#else
+#define BOOST_NS_TT_DETAIL_BEGIN
+#define BOOST_NS_TT_DETAIL_END
+#endif
+
+std::ostream &operator<<(std::ostream &stream, const Path::Element &e)
+{
+  stream << e.first << ":" << e.second;
+  return stream;
 }
+
+namespace boost { namespace test_tools { BOOST_NS_TT_DETAIL_BEGIN
+    template<>
+    struct print_log_value<Path::Element > {
+      void operator()(std::ostream& os, Path::Element const& ts)
+      {
+	::operator<<(os, ts);
+      }
+    };
+  }
+} BOOST_NS_TT_DETAIL_END
+
+
+#undef BOOST_NS_TT_DETAIL_BEGIN
+#undef BOOST_NS_TT_DETAIL_END
 
 BOOST_AUTO_TEST_SUITE(PathTest)
 BOOST_AUTO_TEST_SUITE(ElementEqualityTest)
-    
+
 using Element = Path::Element;
 
 BOOST_AUTO_TEST_CASE(test_equality)
@@ -56,28 +77,27 @@ BOOST_AUTO_TEST_CASE(test_equality)
 //-------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(test_inequality)
 {
-  BOOST_CHECK_NE(Element("entry","NXentry") ,
-                 Element("scan_1","NXentry"));
-  BOOST_CHECK_NE(Element("entry","NXinstrument") ,
-                 Element("entry","NXentry"));
+  BOOST_TEST(Element("entry","NXentry") !=
+	     Element("scan_1","NXentry"));
+  BOOST_TEST(Element("entry","NXinstrument") !=
+	     Element("entry","NXentry"));
 
-  BOOST_CHECK_NE(Element("","NXentry"),
-                 Element("entry","NXentry"));
-  BOOST_CHECK_NE(Element("entry","NXentry"),
-                 Element("entry",""));
+  BOOST_TEST(Element("","NXentry") !=
+	     Element("entry","NXentry"));
+  BOOST_TEST(Element("entry","NXentry") !=
+	     Element("entry",""));
 
-  BOOST_CHECK_NE(Element("entry","NXentry") ,
-                 Element("","NXentry"));
-  BOOST_CHECK_NE(Element("","NXentry") ,
-                 Element("entry","NXentry"));
+  BOOST_TEST(Element("entry","NXentry") !=
+	     Element("","NXentry"));
+  BOOST_TEST(Element("","NXentry") !=
+	     Element("entry","NXentry"));
 
-  BOOST_CHECK_NE(Element("","NXentry") ,
-                 Element("","NXinstrument"));
-  BOOST_CHECK_NE(Element("entry","") ,
-                 Element("scan1",""));
+  BOOST_TEST(Element("","NXentry") !=
+	     Element("","NXinstrument"));
+  BOOST_TEST(Element("entry","") !=
+	     Element("scan1",""));
 
 }
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
-
