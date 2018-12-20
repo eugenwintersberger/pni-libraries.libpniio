@@ -18,7 +18,8 @@
 // ===========================================================================
 //
 //  Created on: Apr 29, 2015
-//      Author: Eugen Wintersberger
+//      Authors: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//               Jan Kotanski <jan.kotanski@desy.de>
 //
 
 #include <pni/io/formatters.hpp>

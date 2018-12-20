@@ -18,14 +18,15 @@
 // ===========================================================================
 //
 //  Created on: Feb 11, 2015
-//      Author: Eugen Wintersberger
+//      Authors: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//               Jan Kotanski <jan.kotanski@desy.de>
 //
 
 #include <boost/test/unit_test.hpp>
 #include <pni/core/types.hpp>
 #include <pni/io/formatters/scalar_format.hpp>
 
-using namespace pni::core;
+using namespace pni::core; 
 using namespace pni::io;
 
 BOOST_AUTO_TEST_SUITE(complex32_formatter_test)
