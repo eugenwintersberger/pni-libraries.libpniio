@@ -52,18 +52,18 @@ BOOST_FIXTURE_TEST_SUITE(SearchTest,SearchTestFixture)
 BOOST_AUTO_TEST_CASE(test_get_entries)
 {
   nexus::GroupList entries = nexus::search(root_group,nexus::IsEntry());
-  BOOST_CHECK_EQUAL(entries.size(),3);
-  BOOST_CHECK_EQUAL(entries[0].link().path().name(),"entry_01");
-  BOOST_CHECK_EQUAL(entries[1].link().path().name(),"entry_02");
-  BOOST_CHECK_EQUAL(entries[2].link().path().name(),"entry_03");
+  BOOST_TEST(entries.size() == 3);
+  BOOST_TEST(entries[0].link().path().name() == "entry_01");
+  BOOST_TEST(entries[1].link().path().name() == "entry_02");
+  BOOST_TEST(entries[2].link().path().name() == "entry_03");
 }
 
 BOOST_AUTO_TEST_CASE(test_get_detectors_recursive)
 {
   nexus::GroupList detectors = nexus::search(entry,nexus::IsDetector(),true);
-  BOOST_CHECK_EQUAL(detectors.size(),2);
-  BOOST_CHECK_EQUAL(detectors[0].link().path().name(),"detector_1");
-  BOOST_CHECK_EQUAL(detectors[1].link().path().name(),"detector_2");
+  BOOST_TEST(detectors.size() == 2);
+  BOOST_TEST(detectors[0].link().path().name() == "detector_1");
+  BOOST_TEST(detectors[1].link().path().name() == "detector_2");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

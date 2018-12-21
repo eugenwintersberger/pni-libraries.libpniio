@@ -47,12 +47,12 @@ BOOST_AUTO_TEST_CASE(from_simple_structure)
   boost::filesystem::path file = "create/simple_structure.xml";
   BOOST_CHECK_NO_THROW(xml::create_from_file(root_group,file));
 
-  BOOST_CHECK_EQUAL(get_node(root_group,"/scan_1").type(),Type::GROUP);
-  BOOST_CHECK_EQUAL(get_node(root_group,"/scan_1/title").type(),Type::DATASET);
-  BOOST_CHECK_EQUAL(get_node(root_group,"/scan_1/experiment_identifier").type(),Type::DATASET);
-  BOOST_CHECK_EQUAL(get_node(root_group,"/scan_1/experiment_description").type(),Type::DATASET);
-  BOOST_CHECK_EQUAL(get_node(root_group,"/scan_1/instrument/storage_ring").type(),Type::GROUP);
-  BOOST_CHECK_EQUAL(get_node(root_group,"/scan_1/instrument/storage_ring/name").type(),Type::DATASET);
+  BOOST_TEST(get_node(root_group,"/scan_1").type() == Type::GROUP);
+  BOOST_TEST(get_node(root_group,"/scan_1/title").type() == Type::DATASET);
+  BOOST_TEST(get_node(root_group,"/scan_1/experiment_identifier").type() == Type::DATASET);
+  BOOST_TEST(get_node(root_group,"/scan_1/experiment_description").type() == Type::DATASET);
+  BOOST_TEST(get_node(root_group,"/scan_1/instrument/storage_ring").type() == Type::GROUP);
+  BOOST_TEST(get_node(root_group,"/scan_1/instrument/storage_ring/name").type() == Type::DATASET);
 }
 
 BOOST_AUTO_TEST_CASE(from_simple_structure_with_data)
@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_CASE(from_simple_structure_with_data)
   dataset = get_node(root_group,"/scan_1/experiment_description");
   std::string description;
   dataset.read(description);
-  BOOST_CHECK_EQUAL(description,"Beamtime at PETRA III in March");
+  BOOST_TEST(description == "Beamtime at PETRA III in March");
 }
 
 BOOST_AUTO_TEST_CASE(from_detector_with_transformation)

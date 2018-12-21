@@ -33,26 +33,26 @@ BOOST_AUTO_TEST_SUITE(CreateVersion)
 BOOST_AUTO_TEST_CASE(test_default_construction)
 {
   nexus::Version v;
-  BOOST_CHECK_EQUAL(v.major(),nexus::Version::NumberType(0));
-  BOOST_CHECK_EQUAL(v.minor(),nexus::Version::NumberType(0));
-  BOOST_CHECK_EQUAL(v.patch(),nexus::Version::NumberType(0));
+  BOOST_TEST(v.major() == nexus::Version::NumberType(0));
+  BOOST_TEST(v.minor() == nexus::Version::NumberType(0));
+  BOOST_TEST(v.patch() == nexus::Version::NumberType(0));
 }
 
 BOOST_AUTO_TEST_CASE(test_construction)
 {
   nexus::Version v(10,0,2);
-  BOOST_CHECK_EQUAL(v.major(),nexus::Version::NumberType(10));
-  BOOST_CHECK_EQUAL(v.minor(),nexus::Version::NumberType(0));
-  BOOST_CHECK_EQUAL(v.patch(),nexus::Version::NumberType(2));
+  BOOST_TEST(v.major() == nexus::Version::NumberType(10));
+  BOOST_TEST(v.minor() == nexus::Version::NumberType(0));
+  BOOST_TEST(v.patch() == nexus::Version::NumberType(2));
 }
 
 BOOST_AUTO_TEST_CASE(test_copy_construction)
 {
   nexus::Version v1(3,0,12);
   nexus::Version v2(v1);
-  BOOST_CHECK_EQUAL(v1.major(),v2.major());
-  BOOST_CHECK_EQUAL(v1.minor(),v2.minor());
-  BOOST_CHECK_EQUAL(v1.patch(),v2.patch());
+  BOOST_TEST(v1.major() == v2.major());
+  BOOST_TEST(v1.minor() == v2.minor());
+  BOOST_TEST(v1.patch() == v2.patch());
 }
 
 BOOST_AUTO_TEST_CASE(test_copy_assignment)
@@ -61,9 +61,9 @@ BOOST_AUTO_TEST_CASE(test_copy_assignment)
   nexus::Version v2;
   v2 = v1;
 
-  BOOST_CHECK_EQUAL(v1.major(),v2.major());
-  BOOST_CHECK_EQUAL(v1.minor(),v2.minor());
-  BOOST_CHECK_EQUAL(v1.patch(),v2.patch());
+  BOOST_TEST(v1.major() == v2.major());
+  BOOST_TEST(v1.minor() == v2.minor());
+  BOOST_TEST(v1.patch() == v2.patch());
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -18,7 +18,8 @@
 // ===========================================================================
 //
 //  Created on: Apr 28, 2015
-//      Author: Eugen Wintersberger
+//      Authors: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//               Jan Kotanski <jan.kotanski@desy.de>
 //
 
 
@@ -47,25 +48,25 @@ BOOST_FIXTURE_TEST_SUITE(array_formatter_test,array_formatter_test_fixture)
 
     BOOST_AUTO_TEST_CASE(test_default)
     {
-        BOOST_CHECK_EQUAL(format(input),"+1 +2 +3 +4");
+        BOOST_TEST(format(input) == "+1 +2 +3 +4");
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_costum_sep)
     {
-        BOOST_CHECK_EQUAL(format(input,container_io_config(';')),"+1;+2;+3;+4");
+        BOOST_TEST(format(input,container_io_config(';')) == "+1;+2;+3;+4");
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_costum_start_stop)
     {
-        BOOST_CHECK_EQUAL(format(input,container_io_config('(',')')),"(+1 +2 +3 +4)");
+        BOOST_TEST(format(input,container_io_config('(',')')) == "(+1 +2 +3 +4)");
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_full_costum)
     {
-        BOOST_CHECK_EQUAL(format(input,container_io_config('[',']',';')),"[+1;+2;+3;+4]");
+        BOOST_TEST(format(input,container_io_config('[',']',';')) == "[+1;+2;+3;+4]");
     }
 
 BOOST_AUTO_TEST_SUITE_END()

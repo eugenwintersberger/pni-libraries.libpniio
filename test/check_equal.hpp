@@ -18,7 +18,8 @@
 // ===========================================================================
 //
 //  Created on: Jan 15, 2016
-//      Author: Eugen Wintersberger
+//      Authors: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//               Jan Kotanski <jan.kotanski@desy.de>
 //
 #pragma once
 
@@ -35,7 +36,7 @@ template<
         > 
 void check_equal(const T &a,const T &b)
 {
-    BOOST_CHECK_EQUAL(a,b); 
+    BOOST_TEST(a == b);
 }
 
 //-----------------------------------------------------------------------------

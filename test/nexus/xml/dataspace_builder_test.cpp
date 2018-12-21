@@ -33,16 +33,16 @@ BOOST_AUTO_TEST_CASE(default_constructed)
 {
   xml::DataspaceBuilder builder;
   Simple space = builder.build();
-  BOOST_CHECK_EQUAL(space.size(),1);
+  BOOST_TEST(space.size() == 1);
 }
 
 BOOST_AUTO_TEST_CASE(test_case_1)
 {
   xml::DataspaceBuilder builder(xml::Node::from_file("dimensions/dim1.xml"));
   Simple space = builder.build();
-  BOOST_CHECK_EQUAL(space.size(),55*100);
+  BOOST_TEST(space.size() == 55*100);
   hdf5::Dimensions current = space.current_dimensions();
-  BOOST_CHECK_EQUAL(current.size(),2);
+  BOOST_TEST(current.size() == 2);
 }
 
 BOOST_AUTO_TEST_CASE(test_case_2)

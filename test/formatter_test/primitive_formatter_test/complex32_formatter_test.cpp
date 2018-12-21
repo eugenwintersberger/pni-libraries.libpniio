@@ -18,14 +18,15 @@
 // ===========================================================================
 //
 //  Created on: Feb 11, 2015
-//      Author: Eugen Wintersberger
+//      Authors: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//               Jan Kotanski <jan.kotanski@desy.de>
 //
 
 #include <boost/test/unit_test.hpp>
 #include <pni/core/types.hpp>
 #include <pni/io/formatters/scalar_format.hpp>
 
-using namespace pni::core;
+using namespace pni::core; 
 using namespace pni::io;
 
 BOOST_AUTO_TEST_SUITE(complex32_formatter_test)
@@ -34,22 +35,22 @@ BOOST_AUTO_TEST_SUITE(complex32_formatter_test)
     {
         typedef complex32 input_type;
         string result = format(input_type(1.256987f,3.452907f));
-        BOOST_CHECK_EQUAL(result,"+1.256986976e+00+I3.452907085e+00");
+        BOOST_TEST(result == "+1.256986976e+00+I3.452907085e+00");
 
         result = format(input_type(1.256987f,-3.452907f));
-        BOOST_CHECK_EQUAL(result,"+1.256986976e+00-I3.452907085e+00");
+        BOOST_TEST(result == "+1.256986976e+00-I3.452907085e+00");
 
         result = format(input_type(-1.256987f,-3.452907f));
-        BOOST_CHECK_EQUAL(result,"-1.256986976e+00-I3.452907085e+00");
+        BOOST_TEST(result == "-1.256986976e+00-I3.452907085e+00");
 
         result = format(input_type(-1.256987f,3.452907f));
-        BOOST_CHECK_EQUAL(result,"-1.256986976e+00+I3.452907085e+00");
+        BOOST_TEST(result == "-1.256986976e+00+I3.452907085e+00");
 
         result = format(input_type(0,3.45f));
-        BOOST_CHECK_EQUAL(result,"+0.000000000e+00+I3.450000048e+00");
+        BOOST_TEST(result == "+0.000000000e+00+I3.450000048e+00");
 
         result = format(input_type(0,-3.45f));
-        BOOST_CHECK_EQUAL(result,"+0.000000000e+00-I3.450000048e+00");
+        BOOST_TEST(result == "+0.000000000e+00-I3.450000048e+00");
     }
 
 BOOST_AUTO_TEST_SUITE_END()

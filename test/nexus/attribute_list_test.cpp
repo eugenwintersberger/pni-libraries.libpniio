@@ -34,13 +34,13 @@ BOOST_FIXTURE_TEST_SUITE(AttributeListTest,ContainerTestFixture)
 BOOST_AUTO_TEST_CASE(default_construction)
 {
   nexus::AttributeList list;
-  BOOST_CHECK_EQUAL(list.size(),0);
+  BOOST_TEST(list.size() == 0);
 }
 
 BOOST_AUTO_TEST_CASE(test_from_iterator)
 {
   nexus::AttributeList list(root_group.attributes.begin(),root_group.attributes.end());
-  BOOST_CHECK_EQUAL(list.size(),6);
+  BOOST_TEST(list.size() == 6);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

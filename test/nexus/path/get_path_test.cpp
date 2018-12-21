@@ -46,12 +46,12 @@ BOOST_AUTO_TEST_CASE(test_file1)
 {
   hdf5::node::Group g = hdf5::node::get_node(file1.root(),"/scan_1/instrument/storage_ring");
   nexus::Path nxp = nexus::get_path(g);
-  BOOST_CHECK_EQUAL(nexus::Path::to_string(nxp),"GetPathFixture1.nxs://scan_1:NXentry/instrument:NXinstrument/storage_ring:NXsource");
+  BOOST_TEST(nexus::Path::to_string(nxp) == "GetPathFixture1.nxs://scan_1:NXentry/instrument:NXinstrument/storage_ring:NXsource");
 
   hdf5::node::Dataset d = hdf5::node::get_node(file1.root(),"/scan_1/instrument/storage_ring/distance");
   nxp = nexus::get_path(d);
-  BOOST_CHECK_EQUAL(nexus::Path::to_string(nxp),
-                    "GetPathFixture1.nxs://scan_1:NXentry/instrument:NXinstrument/storage_ring:NXsource/distance");
+  BOOST_TEST(nexus::Path::to_string(nxp) ==
+	     "GetPathFixture1.nxs://scan_1:NXentry/instrument:NXinstrument/storage_ring:NXsource/distance");
 
 }
 
@@ -60,8 +60,8 @@ BOOST_AUTO_TEST_CASE(test_file2)
   hdf5::node::Dataset d = hdf5::node::get_node(file2.root(),"/scan_1/instrument/detector/transformation/gamma");
   hdf5::attribute::Attribute attr = d.attributes["depends_on"];
   nexus::Path nxp = nexus::get_path(attr);
-  BOOST_CHECK_EQUAL(nexus::Path::to_string(nxp),
-                    "GetPathFixture2.nxs://scan_1:NXentry/instrument:NXinstrument/detector:NXdetector/transformation:NXtransformations/gamma@depends_on"
+  BOOST_TEST(nexus::Path::to_string(nxp) ==
+	     "GetPathFixture2.nxs://scan_1:NXentry/instrument:NXinstrument/detector:NXdetector/transformation:NXtransformations/gamma@depends_on"
                     );
 }
 
@@ -69,7 +69,7 @@ BOOST_AUTO_TEST_CASE(test_entry_only)
 {
   hdf5::node::Group entry = hdf5::node::get_node(file1.root(),"scan_1");
   nexus::Path nxp = nexus::get_path(entry);
-  BOOST_CHECK_EQUAL(nexus::Path::to_string(nxp),"GetPathFixture1.nxs://scan_1:NXentry");
+  BOOST_TEST(nexus::Path::to_string(nxp) == "GetPathFixture1.nxs://scan_1:NXentry");
 }
 
 

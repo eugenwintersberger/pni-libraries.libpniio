@@ -74,8 +74,8 @@ BOOST_AUTO_TEST_CASE(test_read_detector_description)
   //
   description_value.erase(std::find(description_value.begin(),description_value.end(),'\0'));
   std::string expected = "Dectris Eiger 4M";
-  BOOST_CHECK_EQUAL(description_value.size(),expected.size());
-  BOOST_CHECK_EQUAL(description_value,expected);
+  BOOST_TEST(description_value.size() == expected.size());
+  BOOST_TEST(description_value == expected);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

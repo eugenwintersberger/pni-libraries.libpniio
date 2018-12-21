@@ -51,9 +51,9 @@ BOOST_FIXTURE_TEST_SUITE(multidim_field_test,MultidimFieldFixture)
         BOOST_CHECK_NO_THROW(root_node  = xml::create_from_file(xml_file_name<T>()));
         BOOST_CHECK_NO_THROW(child_node = xml::get_child_by_name(root_node.get_child("group"),"data"));
         
-        BOOST_CHECK_EQUAL(xml_test::field_test::size(child_node),3);
-        BOOST_CHECK_EQUAL(xml_test::field_test::rank(child_node),1);
-        BOOST_CHECK_EQUAL(xml_test::field_test::type_id(child_node),get_type_id<T>());
+        BOOST_TEST(xml_test::field_test::size(child_node) == 3);
+        BOOST_TEST(xml_test::field_test::rank(child_node) == 1);
+        BOOST_TEST(xml_test::field_test::type_id(child_node) == get_type_id<T>());
        
         array_type data;
         xml_test::field_test::data_from_xml(child_node,data);
@@ -74,9 +74,9 @@ BOOST_FIXTURE_TEST_SUITE(multidim_field_test,MultidimFieldFixture)
         //attach the field to the group
         h5::nxfield field = xml_test::field_test::object_from_xml(nx_parent,child_node);
 
-        BOOST_CHECK_EQUAL(field.size(),3);
-        BOOST_CHECK_EQUAL(field.rank(),1);
-        BOOST_CHECK_EQUAL(field.type_id(),get_type_id<T>());
+        BOOST_TEST(field.size() == 3);
+        BOOST_TEST(field.rank() == 1);
+        BOOST_TEST(field.type_id() == get_type_id<T>());
     }
 
     //-------------------------------------------------------------------------
@@ -89,9 +89,9 @@ BOOST_FIXTURE_TEST_SUITE(multidim_field_test,MultidimFieldFixture)
         //attach the field to the group
         h5::nxfield field = xml_test::field_test::object_from_xml(nx_parent,child_node);
 
-        BOOST_CHECK_EQUAL(field.size(),2048*512);
-        BOOST_CHECK_EQUAL(field.rank(),3);
-        BOOST_CHECK_EQUAL(field.type_id(),get_type_id<T>());
+        BOOST_TEST(field.size() == 2048*512);
+        BOOST_TEST(field.rank() == 3);
+        BOOST_TEST(field.type_id() == get_type_id<T>());
     }
 
     //-------------------------------------------------------------------------
@@ -104,9 +104,9 @@ BOOST_FIXTURE_TEST_SUITE(multidim_field_test,MultidimFieldFixture)
         //attach the field to the group
         h5::nxfield field = xml_test::field_test::object_from_xml(nx_parent,child_node);
 
-        BOOST_CHECK_EQUAL(field.size(),2048);
-        BOOST_CHECK_EQUAL(field.rank(),2);
-        BOOST_CHECK_EQUAL(field.type_id(),get_type_id<T>());
+        BOOST_TEST(field.size() == 2048);
+        BOOST_TEST(field.rank() == 2);
+        BOOST_TEST(field.type_id() == get_type_id<T>());
         
     }
 
@@ -124,9 +124,9 @@ BOOST_FIXTURE_TEST_SUITE(multidim_field_test,MultidimFieldFixture)
         xml_test::field_test::data_to_xml(ref_data::data,field_node);
         child_node = root_node.add_child("group.field",field_node);
 
-        BOOST_CHECK_EQUAL(xml_test::field_test::size(child_node),3);
-        BOOST_CHECK_EQUAL(xml_test::field_test::rank(child_node),1);
-        BOOST_CHECK_EQUAL(xml_test::field_test::type_id(child_node),get_type_id<T>());    
+        BOOST_TEST(xml_test::field_test::size(child_node) == 3);
+        BOOST_TEST(xml_test::field_test::rank(child_node) == 1);
+        BOOST_TEST(xml_test::field_test::type_id(child_node) == get_type_id<T>());
 
     }
 

@@ -18,7 +18,8 @@
 // ===========================================================================
 //
 //  Created on: Feb 11, 2015
-//      Author: Eugen Wintersberger
+//      Authors: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//               Jan Kotanski <jan.kotanski@desy.de>
 //
 
 #include <pni/core/types.hpp>
@@ -37,7 +38,7 @@ BOOST_AUTO_TEST_SUITE(bool_vector_formatter_test)
         typedef std::vector<element_type>  input_type;
         input_type     input ={true,false,false,true} ;
 
-        BOOST_CHECK_EQUAL(format(input),"true false false true");
+        BOOST_TEST(format(input) == "true false false true");
     }
 
 BOOST_AUTO_TEST_SUITE_END()

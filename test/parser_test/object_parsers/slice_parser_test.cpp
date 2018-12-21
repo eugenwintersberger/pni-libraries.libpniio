@@ -43,19 +43,19 @@ BOOST_FIXTURE_TEST_SUITE(slice_parser_test,slice_parser_test_fixture)
         string s3 = "5";
 
         slice s = p(s1);
-        BOOST_CHECK_EQUAL(s.first() , 1);
-        BOOST_CHECK_EQUAL(s.last()  , 10);
-        BOOST_CHECK_EQUAL(s.stride() , 1);
+        BOOST_TEST(s.first() == 1);
+        BOOST_TEST(s.last() == 10);
+        BOOST_TEST(s.stride() == 1);
 
         s = p(s2);
-        BOOST_CHECK_EQUAL(s.first() , 10);
-        BOOST_CHECK_EQUAL(s.last()  , 100);
-        BOOST_CHECK_EQUAL(s.stride() , 2);
+        BOOST_TEST(s.first() == 10);
+        BOOST_TEST(s.last()  == 100);
+        BOOST_TEST(s.stride() == 2);
         
         s = p(s3);
-        BOOST_CHECK_EQUAL(s.first() , 5);
-        BOOST_CHECK_EQUAL(s.last()  , 6);
-        BOOST_CHECK_EQUAL(s.stride() , 1);
+        BOOST_TEST(s.first() == 5);
+        BOOST_TEST(s.last()  == 6);
+        BOOST_TEST(s.stride() == 1);
     }
 
     //-------------------------------------------------------------------------
@@ -65,14 +65,14 @@ BOOST_FIXTURE_TEST_SUITE(slice_parser_test,slice_parser_test_fixture)
         string s2 = ":200:3";
         
         slice s = p(s1);
-        BOOST_CHECK_EQUAL(s.first() , 0);
-        BOOST_CHECK_EQUAL(s.last()  , 100);
-        BOOST_CHECK_EQUAL(s.stride() , 1);
+        BOOST_TEST(s.first() == 0);
+        BOOST_TEST(s.last()  == 100);
+        BOOST_TEST(s.stride() == 1);
 
         s = p(s2);
-        BOOST_CHECK_EQUAL(s.first() , 0);
-        BOOST_CHECK_EQUAL(s.last()  , 200);
-        BOOST_CHECK_EQUAL(s.stride() , 3);
+        BOOST_TEST(s.first() == 0);
+        BOOST_TEST(s.last()  == 200);
+        BOOST_TEST(s.stride() == 3);
     }
 
 BOOST_AUTO_TEST_SUITE_END()
