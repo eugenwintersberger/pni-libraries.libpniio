@@ -1,0 +1,28 @@
+FROM ubuntu:18.04
+
+MAINTAINER DESY, Jan Kotanski <jankotan@gmail.com>
+
+RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get -qq install -y software-properties-common curl
+RUN curl http://repos.pni-hdri.de/debian_repo.pub.gpg | apt-key add -
+RUN add-apt-repository "deb http://repos.pni-hdri.de/apt/debian bionic main" -y
+RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get -qq dist-upgrade
+
+RUN curl http://repos.pni-hdri.de/debian_repo.pub.gpg | apt-key add -
+RUN add-apt-repository "deb http://repos.pni-hdri.de/apt/debian buster main" -y
+RUN apt-get -qq update && apt-get -qq -y dist-upgrade
+
+RUN apt-get -qq update && apt-get -qq -y install cmake ninja-build python-pip g++ doxygen python-sphinx git libboost-all-dev gfortran
+RUN apt-get -qq update && apt-get -qq -y libpnicore1.1.0-dev libpnicore1.1.0 libh5cpp0.1.0-dev libh5cpp0.1.0 libhdf5-dev
+
+RUN apt-get clean
+RUN pip install conan
+RUN pip install gitpython
+
+RUN conan remote remove conan-center
+RUN conan remote add conan-community https://api.bintray.com/conan/conan-community/conan
+RUN conan remote add conan-center https://conan.bintray.com
+RUN conan remote add conan-transit https://conan-transit.bintray.com
+
+RUN conan user
+RUN mkdir /src
+WORKDIR /src

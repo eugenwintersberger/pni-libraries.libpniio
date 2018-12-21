@@ -3,18 +3,21 @@ sudo: required
 dist: trusty
 
 env:
-    - IMAGE=debian_9 BUILDTYPE=Debug
-    - IMAGE=debian_9 BUILDTYPE=Release
-    - IMAGE=docker-debian-8 BUILDTYPE=Debug
-    - IMAGE=docker-debian-8 BUILDTYPE=Release
-#    - IMAGE=docker-ubuntu-17.10 BUILDTYPE=Debug
-#    - IMAGE=docker-ubuntu-17.10 BUILDTYPE=Release
+    - OS=debian9 BUILDTYPE=Debug
+    - OS=debian9 BUILDTYPE=Release
+    - OS=debian8 BUILDTYPE=Debug
+    - OS=debian8 BUILDTYPE=Release
+    - OS=debian10 BUILDTYPE=Debug
+    - OS=debian10 BUILDTYPE=Release
+    - OS=ubuntu18.04 BUILDTYPE=Debug
+    - OS=ubuntu18.04 BUILDTYPE=Release
 
 services:
     - docker
     
 before_script:
-    - docker run --name build -i -d -v"$PWD:/src" eugenwintersberger/$IMAGE:latest
+    - docker build -t build .travis/${OS}
+    - docker run --name build -i -d -v"$PWD:/src" build
     - docker exec -it build ls
     - docker exec -it build bash -c "git submodule init"
     - docker exec -it build bash -c "git submodule update --remote"
