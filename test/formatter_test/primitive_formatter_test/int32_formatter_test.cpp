@@ -33,11 +33,11 @@ BOOST_AUTO_TEST_SUITE(int32_formatter_test)
     BOOST_AUTO_TEST_CASE(test)
     {
         typedef int32 input_type;
-        BOOST_TEST(format(input_type(12)) == "+12");
-        BOOST_TEST(format(input_type(-100)) == "-100");
-        BOOST_TEST(format(input_type(0)) == "+0");
-        BOOST_TEST(format(input_type(2147483647)) == "+2147483647");
-        BOOST_TEST(format(input_type(-2147483648)) == "-2147483648");
+        BOOST_CHECK(format(input_type(12)) == "+12");
+        BOOST_CHECK(format(input_type(-100)) == "-100");
+        BOOST_CHECK(format(input_type(0)) == "+0");
+        BOOST_CHECK(format(input_type(2147483647)) == "+2147483647");
+        BOOST_CHECK(format(input_type(-2147483648)) == "-2147483648");
     }
 
 BOOST_AUTO_TEST_SUITE_END()

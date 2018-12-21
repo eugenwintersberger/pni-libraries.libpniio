@@ -155,22 +155,22 @@ BOOST_AUTO_TEST_SUITE(test_fio_reader)
 BOOST_AUTO_TEST_CASE(test_single_column_file)
 {
 	pni::io::fio_reader reader("scan_mca_00001.fio");
-	BOOST_TEST(reader.nparameters() == 101);
-	BOOST_TEST(reader.parameter<int>("EH1_MOT12") == -6);
+	BOOST_CHECK(reader.nparameters() == 101);
+	BOOST_CHECK(reader.parameter<int>("EH1_MOT12") == -6);
 	BOOST_CHECK_CLOSE(reader.parameter<float>("OH2_400TH"),0.01438125,0.0001);
 
-	BOOST_TEST(reader.ncolumns() == 1);
-	BOOST_TEST(reader.nrecords() == 2048);
+	BOOST_CHECK(reader.ncolumns() == 1);
+	BOOST_CHECK(reader.nrecords() == 2048);
 	BOOST_CHECK(reader.has_column("SCAN_MCA_00001_EXP_MCA01"));
 
 	auto data = reader.column<std::vector<int>>("SCAN_MCA_00001_EXP_MCA01");
-	BOOST_TEST(data.size() == single_column.size());
+	BOOST_CHECK(data.size() == single_column.size());
 	auto data_iter = data.begin();
 	auto ref_iter  = single_column.begin();
 	size_t index=0;
 	for(;data_iter!=data.end();++data_iter,++ref_iter,index++)
 	{
-		BOOST_TEST(*data_iter == *ref_iter);
+		BOOST_CHECK(*data_iter == *ref_iter);
 	}
 
 }
@@ -179,16 +179,16 @@ BOOST_AUTO_TEST_CASE(test_multi_column_file)
 {
 	using container_type = std::vector<double>;
 	pni::io::fio_reader reader("tstfile_00012.fio");
-	BOOST_TEST(reader.nparameters() == 4);
-	BOOST_TEST(reader.parameter<pni::core::string>("sweepMotor") == "eh1b_mot04");
+	BOOST_CHECK(reader.nparameters() == 4);
+	BOOST_CHECK(reader.parameter<pni::core::string>("sweepMotor") == "eh1b_mot04");
 	BOOST_CHECK_CLOSE(reader.parameter<float>("sweepOffset"),0.005,0.0001);
 
-	BOOST_TEST(reader.ncolumns() == 14);
-	BOOST_TEST(reader.nrecords() == 2001);
+	BOOST_CHECK(reader.ncolumns() == 14);
+	BOOST_CHECK(reader.nrecords() == 2001);
 
 	BOOST_CHECK(reader.has_column("tstfile_00012_pos"));
 	auto data = reader.column<container_type>("tstfile_00012_pos");
-	BOOST_TEST(data.size() == tstfile_00012_pos.size());
+	BOOST_CHECK(data.size() == tstfile_00012_pos.size());
 	auto data_iter = data.begin();
 	auto ref_iter  = tstfile_00012_pos.begin();
 	for(;data_iter!=data.end();++data_iter,++ref_iter)
@@ -197,7 +197,7 @@ BOOST_AUTO_TEST_CASE(test_multi_column_file)
 
 	BOOST_CHECK(reader.has_column("tstfile_00012_eh1b_c01"));
 	data = reader.column<container_type>("tstfile_00012_eh1b_c01");
-	BOOST_TEST(data.size() == tstfile_00012_eh1b_c01.size());
+	BOOST_CHECK(data.size() == tstfile_00012_eh1b_c01.size());
 	data_iter = data.begin();
 	ref_iter  = tstfile_00012_eh1b_c01.begin();
 	for(;data_iter!=data.end();++data_iter,++ref_iter)
@@ -205,7 +205,7 @@ BOOST_AUTO_TEST_CASE(test_multi_column_file)
 
 	BOOST_CHECK(reader.has_column("tstfile_00012_eh1b_c02"));
 	data = reader.column<container_type>("tstfile_00012_eh1b_c02");
-	BOOST_TEST(data.size() == tstfile_00012_eh1b_c02.size());
+	BOOST_CHECK(data.size() == tstfile_00012_eh1b_c02.size());
 	data_iter = data.begin();
 	ref_iter  = tstfile_00012_eh1b_c02.begin();
 	for(;data_iter!=data.end();++data_iter,++ref_iter)
@@ -213,7 +213,7 @@ BOOST_AUTO_TEST_CASE(test_multi_column_file)
 
 	BOOST_CHECK(reader.has_column("tstfile_00012_eh1b_c03"));
 	data = reader.column<container_type>("tstfile_00012_eh1b_c03");
-	BOOST_TEST(data.size() == tstfile_00012_eh1b_c03.size());
+	BOOST_CHECK(data.size() == tstfile_00012_eh1b_c03.size());
 	data_iter = data.begin();
 	ref_iter  = tstfile_00012_eh1b_c03.begin();
 	for(;data_iter!=data.end();++data_iter,++ref_iter)
@@ -221,7 +221,7 @@ BOOST_AUTO_TEST_CASE(test_multi_column_file)
 
 	BOOST_CHECK(reader.has_column("tstfile_00012_eh1b_c04"));
 	data = reader.column<container_type>("tstfile_00012_eh1b_c04");
-	BOOST_TEST(data.size() == tstfile_00012_eh1b_c04.size());
+	BOOST_CHECK(data.size() == tstfile_00012_eh1b_c04.size());
 	data_iter = data.begin();
 	ref_iter  = tstfile_00012_eh1b_c04.begin();
 	for(;data_iter!=data.end();++data_iter,++ref_iter)
@@ -229,7 +229,7 @@ BOOST_AUTO_TEST_CASE(test_multi_column_file)
 
 	BOOST_CHECK(reader.has_column("tstfile_00012_eh1b_c05"));
 	data = reader.column<container_type>("tstfile_00012_eh1b_c05");
-	BOOST_TEST(data.size() == tstfile_00012_eh1b_c05.size());
+	BOOST_CHECK(data.size() == tstfile_00012_eh1b_c05.size());
 	data_iter = data.begin();
 	ref_iter  = tstfile_00012_eh1b_c05.begin();
 	for(;data_iter!=data.end();++data_iter,++ref_iter)
@@ -237,7 +237,7 @@ BOOST_AUTO_TEST_CASE(test_multi_column_file)
 
 	BOOST_CHECK(reader.has_column("tstfile_00012_eh1b_c06"));
 	data = reader.column<container_type>("tstfile_00012_eh1b_c06");
-	BOOST_TEST(data.size() == tstfile_00012_eh1b_c06.size());
+	BOOST_CHECK(data.size() == tstfile_00012_eh1b_c06.size());
 	data_iter = data.begin();
 	ref_iter  = tstfile_00012_eh1b_c06.begin();
 	for(;data_iter!=data.end();++data_iter,++ref_iter)
@@ -245,7 +245,7 @@ BOOST_AUTO_TEST_CASE(test_multi_column_file)
 
 	BOOST_CHECK(reader.has_column("tstfile_00012_eh1b_c07"));
 	data = reader.column<container_type>("tstfile_00012_eh1b_c07");
-	BOOST_TEST(data.size() == tstfile_00012_eh1b_c07.size());
+	BOOST_CHECK(data.size() == tstfile_00012_eh1b_c07.size());
 	data_iter = data.begin();
 	ref_iter  = tstfile_00012_eh1b_c07.begin();
 	for(;data_iter!=data.end();++data_iter,++ref_iter)
@@ -253,7 +253,7 @@ BOOST_AUTO_TEST_CASE(test_multi_column_file)
 
 	BOOST_CHECK(reader.has_column("tstfile_00012_eh1b_c08"));
 	data = reader.column<container_type>("tstfile_00012_eh1b_c08");
-	BOOST_TEST(data.size() == tstfile_00012_eh1b_c08.size());
+	BOOST_CHECK(data.size() == tstfile_00012_eh1b_c08.size());
 	data_iter = data.begin();
 	ref_iter  = tstfile_00012_eh1b_c08.begin();
 	for(;data_iter!=data.end();++data_iter,++ref_iter)
@@ -261,7 +261,7 @@ BOOST_AUTO_TEST_CASE(test_multi_column_file)
 
 	BOOST_CHECK(reader.has_column("tstfile_00012_eh1b_c09"));
 	data = reader.column<container_type>("tstfile_00012_eh1b_c09");
-	BOOST_TEST(data.size() == tstfile_00012_eh1b_c09.size());
+	BOOST_CHECK(data.size() == tstfile_00012_eh1b_c09.size());
 	data_iter = data.begin();
 	ref_iter  = tstfile_00012_eh1b_c09.begin();
 	for(;data_iter!=data.end();++data_iter,++ref_iter)
@@ -269,7 +269,7 @@ BOOST_AUTO_TEST_CASE(test_multi_column_file)
 
 	BOOST_CHECK(reader.has_column("tstfile_00012_eh1b_c10"));
 	data = reader.column<container_type>("tstfile_00012_eh1b_c10");
-	BOOST_TEST(data.size() == tstfile_00012_eh1b_c10.size());
+	BOOST_CHECK(data.size() == tstfile_00012_eh1b_c10.size());
 	data_iter = data.begin();
 	ref_iter  = tstfile_00012_eh1b_c10.begin();
 	for(;data_iter!=data.end();++data_iter,++ref_iter)
@@ -277,7 +277,7 @@ BOOST_AUTO_TEST_CASE(test_multi_column_file)
 
 	BOOST_CHECK(reader.has_column("tstfile_00012_eh1b_c32"));
 	data = reader.column<container_type>("tstfile_00012_eh1b_c32");
-	BOOST_TEST(data.size() == tstfile_00012_eh1b_c32.size());
+	BOOST_CHECK(data.size() == tstfile_00012_eh1b_c32.size());
 	data_iter = data.begin();
 	ref_iter  = tstfile_00012_eh1b_c32.begin();
 	for(;data_iter!=data.end();++data_iter,++ref_iter)
@@ -285,7 +285,7 @@ BOOST_AUTO_TEST_CASE(test_multi_column_file)
 
 	BOOST_CHECK(reader.has_column("tstfile_00012_corr"));
 	data = reader.column<container_type>("tstfile_00012_corr");
-	BOOST_TEST(data.size() == tstfile_00012_corr.size());
+	BOOST_CHECK(data.size() == tstfile_00012_corr.size());
 	data_iter = data.begin();
 	ref_iter  = tstfile_00012_corr.begin();
 	for(;data_iter!=data.end();++data_iter,++ref_iter)
@@ -293,7 +293,7 @@ BOOST_AUTO_TEST_CASE(test_multi_column_file)
 
 	BOOST_CHECK(reader.has_column("tstfile_00012_deltaPos"));
 	data = reader.column<container_type>("tstfile_00012_deltaPos");
-	BOOST_TEST(data.size() == tstfile_00012_deltaPos.size());
+	BOOST_CHECK(data.size() == tstfile_00012_deltaPos.size());
 	data_iter = data.begin();
 	ref_iter  = tstfile_00012_deltaPos.begin();
 	for(;data_iter!=data.end();++data_iter,++ref_iter)

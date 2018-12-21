@@ -51,62 +51,62 @@ BOOST_AUTO_TEST_CASE(search_for_entries)
 {
   base = multi_entry.root();
   nexus::PathObjectList result = nexus::get_objects(base,nexus::Path("/:NXentry"));
-  BOOST_TEST(result.size() == 3);
+  BOOST_CHECK(result.size() == 3);
   nexus::GroupList entries = result;
-  BOOST_TEST(entries[0].link().path().name() == "scan_1");
-  BOOST_TEST(entries[1].link().path().name() == "scan_2");
-  BOOST_TEST(entries[2].link().path().name() == "scan_3");
+  BOOST_CHECK(entries[0].link().path().name() == "scan_1");
+  BOOST_CHECK(entries[1].link().path().name() == "scan_2");
+  BOOST_CHECK(entries[2].link().path().name() == "scan_3");
 }
 
 BOOST_AUTO_TEST_CASE(get_unresolvable_link)
 {
   base = multi_entry.root();
   nexus::PathObjectList result = nexus::get_objects(base,nexus::Path("/:NXentry/:NXdata/data"));
-  BOOST_TEST(result.size() == 1);
+  BOOST_CHECK(result.size() == 1);
   nexus::PathObject object = result.front();
   BOOST_CHECK(nexus::is_link(object));
 
   hdf5::node::Link link = static_cast<hdf5::node::Link>(object);
   BOOST_CHECK(!link.is_resolvable());
-  BOOST_TEST(link.type() == hdf5::node::LinkType::EXTERNAL);
+  BOOST_CHECK(link.type() == hdf5::node::LinkType::EXTERNAL);
 }
 
 BOOST_AUTO_TEST_CASE(search_detectors)
 {
   base = multi_detector.root();
   nexus::DatasetList result = nexus::get_objects(base,nexus::Path("/scan_1:NXentry/:NXinstrument/:NXdetector/data"));
-  BOOST_TEST(result.size() == 3);
-  BOOST_TEST(result[0].link().path().parent().name() == "detector_1");
-  BOOST_TEST(result[1].link().path().parent().name() == "detector_2");
-  BOOST_TEST(result[2].link().path().parent().name() == "detector_3");
+  BOOST_CHECK(result.size() == 3);
+  BOOST_CHECK(result[0].link().path().parent().name() == "detector_1");
+  BOOST_CHECK(result[1].link().path().parent().name() == "detector_2");
+  BOOST_CHECK(result[2].link().path().parent().name() == "detector_3");
 }
 
 BOOST_AUTO_TEST_CASE(seach_detector_by_name)
 {
   base = multi_detector.root();
   nexus::DatasetList result = nexus::get_objects(base,nexus::Path("/scan_1/instrument/detector_1/data"));
-  BOOST_TEST(result.size() == 1);
+  BOOST_CHECK(result.size() == 1);
 }
 
 BOOST_AUTO_TEST_CASE(search_entries_relative)
 {
   base = multi_entry.root();
   nexus::PathObjectList result = nexus::get_objects(base,nexus::Path(":NXentry"));
-  BOOST_TEST(result.size() == 3);
+  BOOST_CHECK(result.size() == 3);
   nexus::GroupList entries = result;
-  BOOST_TEST(entries[0].link().path().name() == "scan_1");
-  BOOST_TEST(entries[1].link().path().name() == "scan_2");
-  BOOST_TEST(entries[2].link().path().name() == "scan_3");
+  BOOST_CHECK(entries[0].link().path().name() == "scan_1");
+  BOOST_CHECK(entries[1].link().path().name() == "scan_2");
+  BOOST_CHECK(entries[2].link().path().name() == "scan_3");
 }
 
 BOOST_AUTO_TEST_CASE(search_detectors_relative)
 {
   base = multi_detector.root().nodes["scan_1"];
   nexus::DatasetList result = nexus::get_objects(base,nexus::Path(":NXinstrument/:NXdetector/data"));
-  BOOST_TEST(result.size() == 3);
-  BOOST_TEST(result[0].link().path().parent().name() == "detector_1");
-  BOOST_TEST(result[1].link().path().parent().name() == "detector_2");
-  BOOST_TEST(result[2].link().path().parent().name() == "detector_3");
+  BOOST_CHECK(result.size() == 3);
+  BOOST_CHECK(result[0].link().path().parent().name() == "detector_1");
+  BOOST_CHECK(result[1].link().path().parent().name() == "detector_2");
+  BOOST_CHECK(result[2].link().path().parent().name() == "detector_3");
 
 }
 
@@ -114,10 +114,10 @@ BOOST_AUTO_TEST_CASE(search_detector_attributes_absolute)
 {
   base = multi_detector.root();
   nexus::AttributeList result = nexus::get_objects(base,nexus::Path("/scan_1:NXentry/:NXinstrument/:NXdetector/data@units"));
-  BOOST_TEST(result.size() == 3);
-  BOOST_TEST(result[0].parent_link().path().parent().name() == "detector_1");
-  BOOST_TEST(result[1].parent_link().path().parent().name() == "detector_2");
-  BOOST_TEST(result[2].parent_link().path().parent().name() == "detector_3");
+  BOOST_CHECK(result.size() == 3);
+  BOOST_CHECK(result[0].parent_link().path().parent().name() == "detector_1");
+  BOOST_CHECK(result[1].parent_link().path().parent().name() == "detector_2");
+  BOOST_CHECK(result[2].parent_link().path().parent().name() == "detector_3");
 
 }
 
@@ -125,18 +125,18 @@ BOOST_AUTO_TEST_CASE(search_single_detector_by_name)
 {
   base = multi_detector.root();
   nexus::DatasetList result = nexus::get_objects(base,nexus::Path("/scan_1:NXentry/:NXinstrument/detector_1:NXdetector/data"));
-  BOOST_TEST(result.size() == 1);
-  BOOST_TEST(result[0].link().path().parent().name() == "detector_1");
+  BOOST_CHECK(result.size() == 1);
+  BOOST_CHECK(result[0].link().path().parent().name() == "detector_1");
 }
 
 BOOST_AUTO_TEST_CASE(search_detector_attributes_relative)
 {
   base = multi_detector.root().nodes["scan_1"];
   nexus::AttributeList result = nexus::get_objects(base,nexus::Path(":NXinstrument/:NXdetector/data@units"));
-  BOOST_TEST(result.size() == 3);
-  BOOST_TEST(result[0].parent_link().path().parent().name() == "detector_1");
-  BOOST_TEST(result[1].parent_link().path().parent().name() == "detector_2");
-  BOOST_TEST(result[2].parent_link().path().parent().name() == "detector_3");
+  BOOST_CHECK(result.size() == 3);
+  BOOST_CHECK(result[0].parent_link().path().parent().name() == "detector_1");
+  BOOST_CHECK(result[1].parent_link().path().parent().name() == "detector_2");
+  BOOST_CHECK(result[2].parent_link().path().parent().name() == "detector_3");
 
 }
 
@@ -144,14 +144,14 @@ BOOST_AUTO_TEST_CASE(search_single_attribute)
 {
   base = multi_detector.root();
   nexus::AttributeList result = nexus::get_objects(base,nexus::Path("@NX_class"));
-  BOOST_TEST(result.size() == 1);
+  BOOST_CHECK(result.size() == 1);
 }
 
 BOOST_AUTO_TEST_CASE(search_single_attribute_with_dot)
 {
   base = multi_detector.root();
   nexus::AttributeList result = nexus::get_objects(base,nexus::Path(".@NX_class"));
-  BOOST_TEST(result.size() == 1);
+  BOOST_CHECK(result.size() == 1);
 }
 
 

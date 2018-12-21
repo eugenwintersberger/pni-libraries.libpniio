@@ -63,8 +63,8 @@ BOOST_AUTO_TEST_CASE(test_uint8)
   dtype = hdf5::datatype::create<pni::core::uint8>();
   attribute = create_attribute(dtype);
   dataset = create_dataset(dtype);
-  BOOST_TEST(nexus::get_type_id(attribute) == pni::core::type_id_t::UINT8);
-  BOOST_TEST(nexus::get_type_id(dataset) == pni::core::type_id_t::UINT8);
+  BOOST_CHECK(nexus::get_type_id(attribute) == pni::core::type_id_t::UINT8);
+  BOOST_CHECK(nexus::get_type_id(dataset) == pni::core::type_id_t::UINT8);
 }
 
 BOOST_AUTO_TEST_CASE(test_int8)
@@ -72,8 +72,8 @@ BOOST_AUTO_TEST_CASE(test_int8)
   dtype = hdf5::datatype::create<pni::core::int8>();
   attribute = create_attribute(dtype);
   dataset = create_dataset(dtype);
-  BOOST_TEST(nexus::get_type_id(attribute) == pni::core::type_id_t::INT8);
-  BOOST_TEST(nexus::get_type_id(dataset) == pni::core::type_id_t::INT8);
+  BOOST_CHECK(nexus::get_type_id(attribute) == pni::core::type_id_t::INT8);
+  BOOST_CHECK(nexus::get_type_id(dataset) == pni::core::type_id_t::INT8);
 }
 
 BOOST_AUTO_TEST_CASE(test_uint16)
@@ -81,8 +81,8 @@ BOOST_AUTO_TEST_CASE(test_uint16)
   dtype = hdf5::datatype::create<pni::core::uint16>();
   attribute = create_attribute(dtype);
   dataset = create_dataset(dtype);
-  BOOST_TEST(nexus::get_type_id(attribute) == pni::core::type_id_t::UINT16);
-  BOOST_TEST(nexus::get_type_id(dataset) == pni::core::type_id_t::UINT16);
+  BOOST_CHECK(nexus::get_type_id(attribute) == pni::core::type_id_t::UINT16);
+  BOOST_CHECK(nexus::get_type_id(dataset) == pni::core::type_id_t::UINT16);
 }
 
 BOOST_AUTO_TEST_CASE(test_int16)
@@ -90,8 +90,8 @@ BOOST_AUTO_TEST_CASE(test_int16)
   dtype = hdf5::datatype::create<pni::core::int16>();
   attribute = create_attribute(dtype);
   dataset = create_dataset(dtype);
-  BOOST_TEST(nexus::get_type_id(attribute) == pni::core::type_id_t::INT16);
-  BOOST_TEST(nexus::get_type_id(dataset) == pni::core::type_id_t::INT16);
+  BOOST_CHECK(nexus::get_type_id(attribute) == pni::core::type_id_t::INT16);
+  BOOST_CHECK(nexus::get_type_id(dataset) == pni::core::type_id_t::INT16);
 }
 
 BOOST_AUTO_TEST_CASE(test_uint32)
@@ -99,8 +99,8 @@ BOOST_AUTO_TEST_CASE(test_uint32)
   dtype = hdf5::datatype::create<pni::core::uint32>();
   attribute = create_attribute(dtype);
   dataset = create_dataset(dtype);
-  BOOST_TEST(nexus::get_type_id(attribute) == pni::core::type_id_t::UINT32);
-  BOOST_TEST(nexus::get_type_id(dataset) == pni::core::type_id_t::UINT32);
+  BOOST_CHECK(nexus::get_type_id(attribute) == pni::core::type_id_t::UINT32);
+  BOOST_CHECK(nexus::get_type_id(dataset) == pni::core::type_id_t::UINT32);
 }
 
 BOOST_AUTO_TEST_CASE(test_int32)
@@ -108,8 +108,8 @@ BOOST_AUTO_TEST_CASE(test_int32)
   dtype = hdf5::datatype::create<pni::core::int32>();
   attribute = create_attribute(dtype);
   dataset = create_dataset(dtype);
-  BOOST_TEST(nexus::get_type_id(attribute) == pni::core::type_id_t::INT32);
-  BOOST_TEST(nexus::get_type_id(dataset) == pni::core::type_id_t::INT32);
+  BOOST_CHECK(nexus::get_type_id(attribute) == pni::core::type_id_t::INT32);
+  BOOST_CHECK(nexus::get_type_id(dataset) == pni::core::type_id_t::INT32);
 }
 
 BOOST_AUTO_TEST_CASE(test_uint64)
@@ -117,8 +117,8 @@ BOOST_AUTO_TEST_CASE(test_uint64)
   dtype = hdf5::datatype::create<pni::core::uint64>();
   attribute = create_attribute(dtype);
   dataset = create_dataset(dtype);
-  BOOST_TEST(nexus::get_type_id(attribute) == pni::core::type_id_t::UINT64);
-  BOOST_TEST(nexus::get_type_id(dataset) == pni::core::type_id_t::UINT64);
+  BOOST_CHECK(nexus::get_type_id(attribute) == pni::core::type_id_t::UINT64);
+  BOOST_CHECK(nexus::get_type_id(dataset) == pni::core::type_id_t::UINT64);
 }
 
 BOOST_AUTO_TEST_CASE(test_int64)
@@ -126,8 +126,8 @@ BOOST_AUTO_TEST_CASE(test_int64)
   dtype = hdf5::datatype::create<pni::core::int64>();
   attribute = create_attribute(dtype);
   dataset = create_dataset(dtype);
-  BOOST_TEST(nexus::get_type_id(attribute) == pni::core::type_id_t::INT64);
-  BOOST_TEST(nexus::get_type_id(dataset) == pni::core::type_id_t::INT64);
+  BOOST_CHECK(nexus::get_type_id(attribute) == pni::core::type_id_t::INT64);
+  BOOST_CHECK(nexus::get_type_id(dataset) == pni::core::type_id_t::INT64);
 }
 
 BOOST_AUTO_TEST_CASE(test_float32)
@@ -135,8 +135,8 @@ BOOST_AUTO_TEST_CASE(test_float32)
   dtype = hdf5::datatype::create<pni::core::float32>();
   attribute = create_attribute(dtype);
   dataset = create_dataset(dtype);
-  BOOST_TEST(nexus::get_type_id(attribute) == pni::core::type_id_t::FLOAT32);
-  BOOST_TEST(nexus::get_type_id(dataset) == pni::core::type_id_t::FLOAT32);
+  BOOST_CHECK(nexus::get_type_id(attribute) == pni::core::type_id_t::FLOAT32);
+  BOOST_CHECK(nexus::get_type_id(dataset) == pni::core::type_id_t::FLOAT32);
 }
 
 BOOST_AUTO_TEST_CASE(test_float64)
@@ -144,8 +144,8 @@ BOOST_AUTO_TEST_CASE(test_float64)
   dtype = hdf5::datatype::create<pni::core::float64>();
   attribute = create_attribute(dtype);
   dataset = create_dataset(dtype);
-  BOOST_TEST(nexus::get_type_id(attribute) == pni::core::type_id_t::FLOAT64);
-  BOOST_TEST(nexus::get_type_id(dataset) == pni::core::type_id_t::FLOAT64);
+  BOOST_CHECK(nexus::get_type_id(attribute) == pni::core::type_id_t::FLOAT64);
+  BOOST_CHECK(nexus::get_type_id(dataset) == pni::core::type_id_t::FLOAT64);
 }
 
 #if defined(__GNUG__)  && !defined(__arm__)
@@ -154,8 +154,8 @@ BOOST_AUTO_TEST_CASE(test_float128)
   dtype = hdf5::datatype::create<pni::core::float128>();
   attribute = create_attribute(dtype);
   dataset = create_dataset(dtype);
-  BOOST_TEST(nexus::get_type_id(attribute) == pni::core::type_id_t::FLOAT128);
-  BOOST_TEST(nexus::get_type_id(dataset) == pni::core::type_id_t::FLOAT128);
+  BOOST_CHECK(nexus::get_type_id(attribute) == pni::core::type_id_t::FLOAT128);
+  BOOST_CHECK(nexus::get_type_id(dataset) == pni::core::type_id_t::FLOAT128);
 }
 #endif
 
@@ -164,8 +164,8 @@ BOOST_AUTO_TEST_CASE(test_static_string)
   dtype = hdf5::datatype::String::fixed(10);
   attribute = create_attribute(dtype);
   dataset = create_dataset(dtype);
-  BOOST_TEST(nexus::get_type_id(attribute) == pni::core::type_id_t::STRING);
-  BOOST_TEST(nexus::get_type_id(dataset) == pni::core::type_id_t::STRING);
+  BOOST_CHECK(nexus::get_type_id(attribute) == pni::core::type_id_t::STRING);
+  BOOST_CHECK(nexus::get_type_id(dataset) == pni::core::type_id_t::STRING);
 }
 
 BOOST_AUTO_TEST_CASE(test_variable_string)
@@ -173,8 +173,8 @@ BOOST_AUTO_TEST_CASE(test_variable_string)
   dtype = hdf5::datatype::String::variable();
   attribute = create_attribute(dtype);
   dataset = create_dataset(dtype);
-  BOOST_TEST(nexus::get_type_id(attribute) == pni::core::type_id_t::STRING);
-  BOOST_TEST(nexus::get_type_id(dataset) == pni::core::type_id_t::STRING);
+  BOOST_CHECK(nexus::get_type_id(attribute) == pni::core::type_id_t::STRING);
+  BOOST_CHECK(nexus::get_type_id(dataset) == pni::core::type_id_t::STRING);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

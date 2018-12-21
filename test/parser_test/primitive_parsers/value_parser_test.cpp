@@ -41,7 +41,7 @@ BOOST_FIXTURE_TEST_SUITE(value_parser_test,value_parser_test_fixture)
     {
         result_type v = p("1234");
         type_id_t tid = type_id_t::INT64;
-        BOOST_TEST(v.type_id() == tid);
+        BOOST_CHECK(v.type_id() == tid);
     }
 
     //-------------------------------------------------------------------------
@@ -49,11 +49,11 @@ BOOST_FIXTURE_TEST_SUITE(value_parser_test,value_parser_test_fixture)
     {
         result_type v = p("1.234e+3");
         type_id_t tid = type_id_t::FLOAT64;
-        BOOST_TEST(v.type_id() == tid);
+        BOOST_CHECK(v.type_id() == tid);
         BOOST_CHECK_CLOSE_FRACTION(1.234e+3,v.as<float64>(),1.e-8);
 
         v = p("1.2");
-        BOOST_TEST(v.type_id() == tid);
+        BOOST_CHECK(v.type_id() == tid);
         BOOST_CHECK_CLOSE_FRACTION(1.2,v.as<float64>(),1.e-8);
     }
 
@@ -62,22 +62,22 @@ BOOST_FIXTURE_TEST_SUITE(value_parser_test,value_parser_test_fixture)
     {
         result_type v = p("1.3+I3.4");
         type_id_t tid = type_id_t::COMPLEX64;
-        BOOST_TEST(v.type_id() == tid);
+        BOOST_CHECK(v.type_id() == tid);
         BOOST_CHECK_CLOSE_FRACTION(1.3,v.as<complex64>().real(),1.e-8);
         BOOST_CHECK_CLOSE_FRACTION(3.4,v.as<complex64>().imag(),1.e-8);
 
         v = p("-j3.9");
-        BOOST_TEST(v.type_id() == tid);
+        BOOST_CHECK(v.type_id() == tid);
         BOOST_CHECK_CLOSE_FRACTION(0.0,v.as<complex64>().real(),1.e-8);
         BOOST_CHECK_CLOSE_FRACTION(-3.9,v.as<complex64>().imag(),1.e-8);
 
         v = p("j3.9");
-        BOOST_TEST(v.type_id() == tid);
+        BOOST_CHECK(v.type_id() == tid);
         BOOST_CHECK_CLOSE_FRACTION(0.0,v.as<complex64>().real(),1.e-8);
         BOOST_CHECK_CLOSE_FRACTION(3.9,v.as<complex64>().imag(),1.e-8);
 
         v = p("1.+i4.");
-        BOOST_TEST(v.type_id() == tid);
+        BOOST_CHECK(v.type_id() == tid);
         BOOST_CHECK_CLOSE_FRACTION(1.0,v.as<complex64>().real(),1.e-8);
         BOOST_CHECK_CLOSE_FRACTION(4.0,v.as<complex64>().imag(),1.e-8);
 

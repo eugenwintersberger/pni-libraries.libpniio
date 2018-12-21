@@ -41,9 +41,9 @@ BOOST_AUTO_TEST_CASE(test_read_1)
   read_file("dimensions/dim1.xml");
 
   hdf5::Dimensions shape = xml::Dimensions::object_from_xml(child_node);
-  BOOST_TEST(shape.size() == 2);
-  BOOST_TEST(shape.front() == 55);
-  BOOST_TEST(shape.back() == 100);
+  BOOST_CHECK(shape.size() == 2);
+  BOOST_CHECK(shape.front() == 55);
+  BOOST_CHECK(shape.back() == 100);
 }
 
 //-------------------------------------------------------------------------
@@ -87,7 +87,7 @@ BOOST_AUTO_TEST_CASE(test_read_6)
 {
   read_file("dimensions/dim6.xml");
   auto s = xml::Dimensions::object_from_xml(child_node);
-  BOOST_TEST(s.size() == 0);
+  BOOST_CHECK(s.size() == 0);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

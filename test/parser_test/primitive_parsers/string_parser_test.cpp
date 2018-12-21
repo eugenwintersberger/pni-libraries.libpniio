@@ -37,9 +37,9 @@ BOOST_FIXTURE_TEST_SUITE(string_parser_test,string_parser_test_fixture)
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_regular_value)
     {
-        BOOST_TEST(p("hello world") == "hello world");
-        BOOST_TEST(p(" this is a text") == " this is a text");
-        BOOST_TEST(p("this is more text  ") == "this is more text  ");
+        BOOST_CHECK(p("hello world") == "hello world");
+        BOOST_CHECK(p(" this is a text") == " this is a text");
+        BOOST_CHECK(p("this is more text  ") == "this is more text  ");
     }
 
 BOOST_AUTO_TEST_SUITE_END()

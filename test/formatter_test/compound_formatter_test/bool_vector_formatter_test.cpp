@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_SUITE(bool_vector_formatter_test)
         typedef std::vector<element_type>  input_type;
         input_type     input ={true,false,false,true} ;
 
-        BOOST_TEST(format(input) == "true false false true");
+        BOOST_CHECK(format(input) == "true false false true");
     }
 
 BOOST_AUTO_TEST_SUITE_END()

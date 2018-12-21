@@ -46,26 +46,26 @@ BOOST_FIXTURE_TEST_SUITE(mdarray_formatter_test,mdarray_formatter_test_fixture)
 
     BOOST_AUTO_TEST_CASE(test_default)
     {
-        BOOST_TEST(format(input) == "+1 +2 +3 +4");
+        BOOST_CHECK(format(input) == "+1 +2 +3 +4");
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_costum_sep)
     {
-        BOOST_TEST(format(input,container_io_config(';')) == "+1;+2;+3;+4");
+        BOOST_CHECK(format(input,container_io_config(';')) == "+1;+2;+3;+4");
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_costum_start_stop)
     {
-        BOOST_TEST(format(input,container_io_config('(',')')) == "(+1 +2 +3 +4)");
+        BOOST_CHECK(format(input,container_io_config('(',')')) == "(+1 +2 +3 +4)");
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_full_costum)
     {
 
-        BOOST_TEST(format(input,container_io_config('[',']',';')) == "[+1;+2;+3;+4]");
+        BOOST_CHECK(format(input,container_io_config('[',']',';')) == "[+1;+2;+3;+4]");
     }
 
 BOOST_AUTO_TEST_SUITE_END()

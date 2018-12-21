@@ -38,12 +38,12 @@ BOOST_AUTO_TEST_SUITE(tiff_reader_test)
       tiff_reader reader("idl_file.tif");
       image_info info;
       BOOST_CHECK_NO_THROW(info = reader.info(0));
-      BOOST_TEST(info.nx() == 4);
-      BOOST_TEST(info.ny() == 2);
-      BOOST_TEST(info.bit_per_pixel() == 32);
+      BOOST_CHECK(info.nx() == 4);
+      BOOST_CHECK(info.ny() == 2);
+      BOOST_CHECK(info.bit_per_pixel() == 32);
       
       auto image = reader.image<std::vector<uint32>>(0);
-      BOOST_TEST(image.size() == data.size());
+      BOOST_CHECK(image.size() == data.size());
       BOOST_CHECK_EQUAL_COLLECTIONS(image.begin(),image.end(),
 				    data.begin(),data.end());
     }

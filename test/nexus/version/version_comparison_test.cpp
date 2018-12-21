@@ -31,14 +31,14 @@ BOOST_AUTO_TEST_SUITE(Comparison)
 
 BOOST_AUTO_TEST_CASE(test_equality)
 {
-  BOOST_TEST(nexus::Version(10,23,3) == nexus::Version(10,23,3));
+  BOOST_CHECK(nexus::Version(10,23,3) == nexus::Version(10,23,3));
 }
 
 BOOST_AUTO_TEST_CASE(test_inequality)
 {
-  BOOST_TEST(nexus::Version(10,23,0) != nexus::Version(10,23,1));
-  BOOST_TEST(nexus::Version(10,0,1) != nexus::Version(10,1,1));
-  BOOST_TEST(nexus::Version(0,10,1) != nexus::Version(1,10,1));
+  BOOST_CHECK(nexus::Version(10,23,0) != nexus::Version(10,23,1));
+  BOOST_CHECK(nexus::Version(10,0,1) != nexus::Version(10,1,1));
+  BOOST_CHECK(nexus::Version(0,10,1) != nexus::Version(1,10,1));
 }
 
 BOOST_AUTO_TEST_CASE(test_greater_equal_than)

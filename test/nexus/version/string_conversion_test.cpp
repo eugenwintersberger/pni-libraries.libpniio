@@ -33,33 +33,33 @@ BOOST_AUTO_TEST_SUITE(StringConversion)
 BOOST_AUTO_TEST_CASE(test_from_string)
 {
   nexus::Version v = nexus::Version::from_string("0.10.23");
-  BOOST_TEST(v.major() == nexus::Version::NumberType(0));
-  BOOST_TEST(v.minor() == nexus::Version::NumberType(10));
-  BOOST_TEST(v.patch() == nexus::Version::NumberType(23));
+  BOOST_CHECK(v.major() == nexus::Version::NumberType(0));
+  BOOST_CHECK(v.minor() == nexus::Version::NumberType(10));
+  BOOST_CHECK(v.patch() == nexus::Version::NumberType(23));
 }
 
 BOOST_AUTO_TEST_CASE(test_partial_only_major)
 {
   nexus::Version v;;
   BOOST_CHECK_NO_THROW(v = nexus::Version::from_string("10"));
-  BOOST_TEST(v.major() == nexus::Version::NumberType(10));
-  BOOST_TEST(v.minor() == nexus::Version::NumberType(0));
-  BOOST_TEST(v.patch() == nexus::Version::NumberType(0));
+  BOOST_CHECK(v.major() == nexus::Version::NumberType(10));
+  BOOST_CHECK(v.minor() == nexus::Version::NumberType(0));
+  BOOST_CHECK(v.patch() == nexus::Version::NumberType(0));
 }
 
 BOOST_AUTO_TEST_CASE(test_partial_major_and_minor)
 {
   nexus::Version v;
   BOOST_CHECK_NO_THROW(v = nexus::Version::from_string("10.3"));
-  BOOST_TEST(v.major() == nexus::Version::NumberType(10));
-  BOOST_TEST(v.minor() == nexus::Version::NumberType(3));
-  BOOST_TEST(v.patch() == nexus::Version::NumberType(0));
+  BOOST_CHECK(v.major() == nexus::Version::NumberType(10));
+  BOOST_CHECK(v.minor() == nexus::Version::NumberType(3));
+  BOOST_CHECK(v.patch() == nexus::Version::NumberType(0));
 }
 
 BOOST_AUTO_TEST_CASE(test_to_string)
 {
   nexus::Version v(21,0,2);
-  BOOST_TEST(nexus::Version::to_string(v) == "21.0.2");
+  BOOST_CHECK(nexus::Version::to_string(v) == "21.0.2");
 }
 
 

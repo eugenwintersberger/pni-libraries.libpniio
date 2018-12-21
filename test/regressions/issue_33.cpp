@@ -70,11 +70,11 @@ BOOST_FIXTURE_TEST_SUITE(RegressionIssue33Test,RegressionIssue33)
 BOOST_AUTO_TEST_CASE(test_get_parent)
 {
   hdf5::node::Dataset dataset = root_group.nodes["external_data"];
-  BOOST_TEST(dataset.link().path() == hdf5::Path("/external_data"));
+  BOOST_CHECK(dataset.link().path() == hdf5::Path("/external_data"));
   hdf5::node::LinkTarget target = dataset.link().target();
-  BOOST_TEST(target.file_path() == boost::filesystem::path("RegressionIssue33_data.nxs"));
-  BOOST_TEST(target.object_path() == hdf5::Path("/data"));
-  BOOST_TEST(dataset.link().parent().link().path() == hdf5::Path("/"));
+  BOOST_CHECK(target.file_path() == boost::filesystem::path("RegressionIssue33_data.nxs"));
+  BOOST_CHECK(target.object_path() == hdf5::Path("/data"));
+  BOOST_CHECK(dataset.link().parent().link().path() == hdf5::Path("/"));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

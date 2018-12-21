@@ -37,9 +37,9 @@ BOOST_FIXTURE_TEST_SUITE(int64_parser_test,int64_parser_test_fixture)
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_regular_value)
     {
-        BOOST_TEST(p("12") == 12);
-        BOOST_TEST(p("0") == 0);
-        BOOST_TEST(p("-100") == -100);
+        BOOST_CHECK(p("12") == 12);
+        BOOST_CHECK(p("0") == 0);
+        BOOST_CHECK(p("-100") == -100);
     }
 
     //-------------------------------------------------------------------------

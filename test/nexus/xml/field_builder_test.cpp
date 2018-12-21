@@ -67,40 +67,40 @@ BOOST_AUTO_TEST_CASE(test_scalar_fields)
   using pni::core::type_id_t;
 
   dataset = hdf5::node::get_node(root_group,"/scalar_fields/uint8_field");
-  BOOST_TEST(nexus::get_type_id(dataset) == type_id_t::UINT8);
+  BOOST_CHECK(nexus::get_type_id(dataset) == type_id_t::UINT8);
 
   dataset = hdf5::node::get_node(root_group,"/scalar_fields/uint16_field");
-  BOOST_TEST(nexus::get_type_id(dataset) == type_id_t::UINT16);
+  BOOST_CHECK(nexus::get_type_id(dataset) == type_id_t::UINT16);
 
   dataset = hdf5::node::get_node(root_group,"/scalar_fields/uint32_field");
-  BOOST_TEST(nexus::get_type_id(dataset) == type_id_t::UINT32);
+  BOOST_CHECK(nexus::get_type_id(dataset) == type_id_t::UINT32);
 
   dataset = hdf5::node::get_node(root_group,"/scalar_fields/uint64_field");
-  BOOST_TEST(nexus::get_type_id(dataset) == type_id_t::UINT64);
+  BOOST_CHECK(nexus::get_type_id(dataset) == type_id_t::UINT64);
 
   dataset = hdf5::node::get_node(root_group,"/scalar_fields/int8_field");
-  BOOST_TEST(nexus::get_type_id(dataset) == type_id_t::INT8);
+  BOOST_CHECK(nexus::get_type_id(dataset) == type_id_t::INT8);
 
   dataset = hdf5::node::get_node(root_group,"/scalar_fields/int16_field");
-  BOOST_TEST(nexus::get_type_id(dataset) == type_id_t::INT16);
+  BOOST_CHECK(nexus::get_type_id(dataset) == type_id_t::INT16);
 
   dataset = hdf5::node::get_node(root_group,"/scalar_fields/int32_field");
-  BOOST_TEST(nexus::get_type_id(dataset) == type_id_t::INT32);
+  BOOST_CHECK(nexus::get_type_id(dataset) == type_id_t::INT32);
 
   dataset = hdf5::node::get_node(root_group,"/scalar_fields/int64_field");
-  BOOST_TEST(nexus::get_type_id(dataset) == type_id_t::INT64);
+  BOOST_CHECK(nexus::get_type_id(dataset) == type_id_t::INT64);
 
   dataset = hdf5::node::get_node(root_group,"/scalar_fields/float32_field");
-  BOOST_TEST(nexus::get_type_id(dataset) == type_id_t::FLOAT32);
+  BOOST_CHECK(nexus::get_type_id(dataset) == type_id_t::FLOAT32);
 
   dataset = hdf5::node::get_node(root_group,"/scalar_fields/float64_field");
-  BOOST_TEST(nexus::get_type_id(dataset) == type_id_t::FLOAT64);
+  BOOST_CHECK(nexus::get_type_id(dataset) == type_id_t::FLOAT64);
 
   dataset = hdf5::node::get_node(root_group,"/scalar_fields/float64_field");
-  BOOST_TEST(nexus::get_type_id(dataset) == type_id_t::FLOAT64);
+  BOOST_CHECK(nexus::get_type_id(dataset) == type_id_t::FLOAT64);
 
   dataset = hdf5::node::get_node(root_group,"/scalar_fields/string_field");
-  BOOST_TEST(nexus::get_type_id(dataset) == type_id_t::STRING);
+  BOOST_CHECK(nexus::get_type_id(dataset) == type_id_t::STRING);
 }
 
 BOOST_AUTO_TEST_CASE(test_multidim_fields)
@@ -110,9 +110,9 @@ BOOST_AUTO_TEST_CASE(test_multidim_fields)
 
   dataset = hdf5::node::get_node(root_group,"/multidim_field/data");
   dataspace = dataset.dataspace();
-  BOOST_TEST(dataspace.size() == 0);
-  BOOST_TEST(dataspace.type() == hdf5::dataspace::Type::SIMPLE);
-  BOOST_TEST(dataset.creation_list().layout() == hdf5::property::DatasetLayout::CHUNKED);
+  BOOST_CHECK(dataspace.size() == 0);
+  BOOST_CHECK(dataspace.type() == hdf5::dataspace::Type::SIMPLE);
+  BOOST_CHECK(dataset.creation_list().layout() == hdf5::property::DatasetLayout::CHUNKED);
 }
 
 

@@ -64,37 +64,37 @@ using Element = Path::Element;
 
 BOOST_AUTO_TEST_CASE(test_equality)
 {
-  BOOST_TEST(Element("entry","NXentry") ==
+  BOOST_CHECK(Element("entry","NXentry") ==
 	     Element("entry","NXentry"));
 
-  BOOST_TEST(Element("","NXentry") ==
+  BOOST_CHECK(Element("","NXentry") ==
 	     Element("","NXentry"));
 
-  BOOST_TEST(Element("entry","") ==
+  BOOST_CHECK(Element("entry","") ==
 	     Element("entry",""));
 }
 
 //-------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(test_inequality)
 {
-  BOOST_TEST(Element("entry","NXentry") !=
+  BOOST_CHECK(Element("entry","NXentry") !=
 	     Element("scan_1","NXentry"));
-  BOOST_TEST(Element("entry","NXinstrument") !=
+  BOOST_CHECK(Element("entry","NXinstrument") !=
 	     Element("entry","NXentry"));
 
-  BOOST_TEST(Element("","NXentry") !=
+  BOOST_CHECK(Element("","NXentry") !=
 	     Element("entry","NXentry"));
-  BOOST_TEST(Element("entry","NXentry") !=
+  BOOST_CHECK(Element("entry","NXentry") !=
 	     Element("entry",""));
 
-  BOOST_TEST(Element("entry","NXentry") !=
+  BOOST_CHECK(Element("entry","NXentry") !=
 	     Element("","NXentry"));
-  BOOST_TEST(Element("","NXentry") !=
+  BOOST_CHECK(Element("","NXentry") !=
 	     Element("entry","NXentry"));
 
-  BOOST_TEST(Element("","NXentry") !=
+  BOOST_CHECK(Element("","NXentry") !=
 	     Element("","NXinstrument"));
-  BOOST_TEST(Element("entry","") !=
+  BOOST_CHECK(Element("entry","") !=
 	     Element("scan1",""));
 
 }

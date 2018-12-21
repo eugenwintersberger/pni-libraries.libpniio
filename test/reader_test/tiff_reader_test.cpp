@@ -36,18 +36,18 @@ BOOST_AUTO_TEST_SUITE(tiff_reader_test)
     BOOST_AUTO_TEST_CASE(test_read_header)
     {
         tiff_reader reader("iui8.tiff");
-        BOOST_TEST(reader.nimages() == 1);
+        BOOST_CHECK(reader.nimages() == 1);
 
         image_info info = reader.info(0);
-        BOOST_TEST(info.ny() == 4);
-        BOOST_TEST(info.nx() == 2);
-        BOOST_TEST(info.npixels() == 8);
-        BOOST_TEST(info.bit_per_pixel() == 8);
-        BOOST_TEST(info.nchannels() == 1);
+        BOOST_CHECK(info.ny() == 4);
+        BOOST_CHECK(info.nx() == 2);
+        BOOST_CHECK(info.npixels() == 8);
+        BOOST_CHECK(info.bit_per_pixel() == 8);
+        BOOST_CHECK(info.nchannels() == 1);
 
         image_channel_info cinfo = info.get_channel(0);
-        BOOST_TEST(cinfo.bits() == 8);
-        BOOST_TEST(cinfo.type_id() == type_id_t::UINT8);
+        BOOST_CHECK(cinfo.bits() == 8);
+        BOOST_CHECK(cinfo.type_id() == type_id_t::UINT8);
     }
 
     //-------------------------------------------------------------------------
@@ -55,23 +55,23 @@ BOOST_AUTO_TEST_SUITE(tiff_reader_test)
     {
         std::vector<uint8> data{1,2,3,4,2,4,6,8};
         tiff_reader reader("iui8.tiff");
-        BOOST_TEST(reader.nimages() == 1);
+        BOOST_CHECK(reader.nimages() == 1);
 
         image_info info;
         BOOST_CHECK_NO_THROW(info = reader.info(0));
-        BOOST_TEST(info.nx() == 2);
-        BOOST_TEST(info.ny() == 4);
-        BOOST_TEST(info.npixels() == 8);
-        BOOST_TEST(info.bit_per_pixel() == 8);
-        BOOST_TEST(info.nchannels() == 1);
+        BOOST_CHECK(info.nx() == 2);
+        BOOST_CHECK(info.ny() == 4);
+        BOOST_CHECK(info.npixels() == 8);
+        BOOST_CHECK(info.bit_per_pixel() == 8);
+        BOOST_CHECK(info.nchannels() == 1);
 
         image_channel_info cinfo;
         BOOST_CHECK_NO_THROW(cinfo = info.get_channel(0));
-        BOOST_TEST(cinfo.bits() == 8);
-        BOOST_TEST(cinfo.type_id() == type_id_t::UINT8);
+        BOOST_CHECK(cinfo.bits() == 8);
+        BOOST_CHECK(cinfo.type_id() == type_id_t::UINT8);
         
         auto image = reader.image<std::vector<uint8>>(0);
-        BOOST_TEST(image.size() == data.size());
+        BOOST_CHECK(image.size() == data.size());
         BOOST_CHECK_EQUAL_COLLECTIONS(image.begin(),image.end(),
                                       data.begin(),data.end());
     }
@@ -83,20 +83,20 @@ BOOST_AUTO_TEST_SUITE(tiff_reader_test)
         tiff_reader reader("ii8.tiff");
         image_info info;
         BOOST_CHECK_NO_THROW(info = reader.info(0));
-        BOOST_TEST(info.nx() == 2);
-        BOOST_TEST(info.ny() == 4);
-        BOOST_TEST(info.npixels() == 8);
-        BOOST_TEST(info.bit_per_pixel() == 8);
-        BOOST_TEST(info.nchannels() == 1);
+        BOOST_CHECK(info.nx() == 2);
+        BOOST_CHECK(info.ny() == 4);
+        BOOST_CHECK(info.npixels() == 8);
+        BOOST_CHECK(info.bit_per_pixel() == 8);
+        BOOST_CHECK(info.nchannels() == 1);
 
         image_channel_info cinfo;
         BOOST_CHECK_NO_THROW(cinfo = info.get_channel(0));
-        BOOST_TEST(cinfo.bits() == 8);
-        BOOST_TEST(cinfo.type_id() == type_id_t::INT8);
+        BOOST_CHECK(cinfo.bits() == 8);
+        BOOST_CHECK(cinfo.type_id() == type_id_t::INT8);
         
         
         auto image = reader.image<std::vector<int8>>(0);
-        BOOST_TEST(image.size() == data.size());
+        BOOST_CHECK(image.size() == data.size());
         BOOST_CHECK_EQUAL_COLLECTIONS(image.begin(),image.end(),
                                       data.begin(),data.end());
     }
@@ -108,23 +108,23 @@ BOOST_AUTO_TEST_SUITE(tiff_reader_test)
                                 200,-400,600,-800};
 
         tiff_reader reader("ii32.tiff");
-        BOOST_TEST(reader.nimages() == 1);
+        BOOST_CHECK(reader.nimages() == 1);
         image_info info;
         BOOST_CHECK_NO_THROW(info = reader.info(0));
-        BOOST_TEST(info.nx() == 2);
-        BOOST_TEST(info.ny() == 4);
-        BOOST_TEST(info.npixels() == 8);
-        BOOST_TEST(info.bit_per_pixel() == 32);
-        BOOST_TEST(info.nchannels() == 1);
+        BOOST_CHECK(info.nx() == 2);
+        BOOST_CHECK(info.ny() == 4);
+        BOOST_CHECK(info.npixels() == 8);
+        BOOST_CHECK(info.bit_per_pixel() == 32);
+        BOOST_CHECK(info.nchannels() == 1);
 
         image_channel_info cinfo;
         BOOST_CHECK_NO_THROW(cinfo = info.get_channel(0));
-        BOOST_TEST(cinfo.bits() == 32);
-        BOOST_TEST(cinfo.type_id() == type_id_t::INT32);
+        BOOST_CHECK(cinfo.bits() == 32);
+        BOOST_CHECK(cinfo.type_id() == type_id_t::INT32);
 
         auto image = reader.image<std::vector<int32>>(0);
 
-        BOOST_TEST(image.size() == data.size());
+        BOOST_CHECK(image.size() == data.size());
         BOOST_CHECK_EQUAL_COLLECTIONS(image.begin(),image.end(),
                                       data.begin(),data.end());
     }
@@ -136,22 +136,22 @@ BOOST_AUTO_TEST_SUITE(tiff_reader_test)
                                 200,400,600,800};
 
         tiff_reader reader("ui32.tiff");
-        BOOST_TEST(reader.nimages() == 1);
+        BOOST_CHECK(reader.nimages() == 1);
         image_info info;
         BOOST_CHECK_NO_THROW(info = reader.info(0));
-        BOOST_TEST(info.nx() == 2);
-        BOOST_TEST(info.ny() == 4);
-        BOOST_TEST(info.npixels() == 8);
-        BOOST_TEST(info.bit_per_pixel() == 32);
-        BOOST_TEST(info.nchannels() == 1);
+        BOOST_CHECK(info.nx() == 2);
+        BOOST_CHECK(info.ny() == 4);
+        BOOST_CHECK(info.npixels() == 8);
+        BOOST_CHECK(info.bit_per_pixel() == 32);
+        BOOST_CHECK(info.nchannels() == 1);
 
         image_channel_info cinfo;
         BOOST_CHECK_NO_THROW(cinfo = info.get_channel(0));
-        BOOST_TEST(cinfo.bits() == 32);
-        BOOST_TEST(cinfo.type_id() == type_id_t::UINT32);
+        BOOST_CHECK(cinfo.bits() == 32);
+        BOOST_CHECK(cinfo.type_id() == type_id_t::UINT32);
 
         auto image = reader.image<std::vector<uint32>>(0);
-        BOOST_TEST(image.size() == data.size());
+        BOOST_CHECK(image.size() == data.size());
         BOOST_CHECK_EQUAL_COLLECTIONS(image.begin(),image.end(),
                                       data.begin(),data.end());
     }
@@ -164,7 +164,7 @@ BOOST_AUTO_TEST_SUITE(tiff_reader_test)
         tiff_reader reader("ii32.tiff");
         auto image = reader.image<std::vector<float64>>(0);
 
-        BOOST_TEST(image.size() == data.size());
+        BOOST_CHECK(image.size() == data.size());
         BOOST_CHECK_EQUAL_COLLECTIONS(image.begin(),image.end(),
                                       data.begin(),data.end());
  

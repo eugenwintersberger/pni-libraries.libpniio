@@ -46,16 +46,16 @@ BOOST_FIXTURE_TEST_SUITE(SplitPathTest,SplitPathFixture)
 BOOST_AUTO_TEST_CASE(test_standard)
 {
   BOOST_CHECK_NO_THROW(split_path(p,3,p1,p2));
-  BOOST_TEST(Path::to_string(p1) == "test.nxs://:NXentry/:NXinstrument");
-  BOOST_TEST(Path::to_string(p2) == "detector@NX_class");
+  BOOST_CHECK(Path::to_string(p1) == "test.nxs://:NXentry/:NXinstrument");
+  BOOST_CHECK(Path::to_string(p2) == "detector@NX_class");
 }
 
 //-------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(test_at_root)
 {
   BOOST_CHECK_NO_THROW(split_path(p,0,p1,p2));
-  BOOST_TEST(Path::to_string(p1) == "test.nxs");
-  BOOST_TEST(Path::to_string(p2) == "/:NXentry/:NXinstrument/detector@NX_class");
+  BOOST_CHECK(Path::to_string(p1) == "test.nxs");
+  BOOST_CHECK(Path::to_string(p2) == "/:NXentry/:NXinstrument/detector@NX_class");
 }
 
 //-------------------------------------------------------------------------

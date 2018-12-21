@@ -34,14 +34,14 @@ BOOST_FIXTURE_TEST_SUITE(NodeListTest,ContainerTestFixture)
 BOOST_AUTO_TEST_CASE(default_construction)
 {
   nexus::NodeList list;
-  BOOST_TEST(list.size() == 0);
+  BOOST_CHECK(list.size() == 0);
 }
 
 BOOST_AUTO_TEST_CASE(mixed_nodes)
 {
   hdf5::node::Group base = root_group.nodes["scan_1"];
   nexus::NodeList list(base.nodes.begin(),base.nodes.end());
-  BOOST_TEST(list.size() == 5);
+  BOOST_CHECK(list.size() == 5);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -32,7 +32,7 @@ BOOST_FIXTURE_TEST_SUITE(DatasetListTest,ContainerTestFixture)
 BOOST_AUTO_TEST_CASE(default_construction)
 {
   nexus::DatasetList list;
-  BOOST_TEST(list.size() == 0);
+  BOOST_CHECK(list.size() == 0);
 }
 
 BOOST_AUTO_TEST_CASE(mixed_construction)

@@ -32,19 +32,19 @@ BOOST_AUTO_TEST_SUITE(EqualityTest)
 
 BOOST_AUTO_TEST_CASE(test_equality)
 {
-  BOOST_TEST(Path::from_string("test.nxs://") ==
+  BOOST_CHECK(Path::from_string("test.nxs://") ==
 	     Path::from_string("test.nxs://"));
 
-  BOOST_TEST(Path::from_string("/:NXentry") ==
+  BOOST_CHECK(Path::from_string("/:NXentry") ==
 	     Path::from_string("/:NXentry"));
 
-  BOOST_TEST(Path::from_string("/:NXentry@NX_class") ==
+  BOOST_CHECK(Path::from_string("/:NXentry@NX_class") ==
 	     Path::from_string("/:NXentry@NX_class"));
 
-  BOOST_TEST(Path::from_string(":NXinstrument/:NXdetector/data") ==
+  BOOST_CHECK(Path::from_string(":NXinstrument/:NXdetector/data") ==
 	     Path::from_string(":NXinstrument/:NXdetector/data"));
 
-  BOOST_TEST(Path::from_string(":NXdetector/data@units") ==
+  BOOST_CHECK(Path::from_string(":NXdetector/data@units") ==
 	     Path::from_string(":NXdetector/data@units"));
 }
 
@@ -52,14 +52,14 @@ BOOST_AUTO_TEST_CASE(test_equality)
 BOOST_AUTO_TEST_CASE(test_inequality)
 {
 
-  BOOST_TEST(Path::from_string("test.nxs://") !=
+  BOOST_CHECK(Path::from_string("test.nxs://") !=
 	     Path::from_string("test2.nxs://"));
 
-  BOOST_TEST(Path::from_string("/:NXentry") !=
+  BOOST_CHECK(Path::from_string("/:NXentry") !=
 	     Path::from_string(":NXentry"));
 
 
-  BOOST_TEST(Path::from_string(":NXinstrument/:NXdetector/data") !=
+  BOOST_CHECK(Path::from_string(":NXinstrument/:NXdetector/data") !=
 	     Path::from_string(":NXinstrument/:NXdetector/data@units"));
 
 }
