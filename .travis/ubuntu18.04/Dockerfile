@@ -12,8 +12,8 @@ RUN add-apt-repository "deb http://repos.pni-hdri.de/apt/debian buster main" -y
 RUN apt-get -qq update && apt-get -qq -y dist-upgrade
 
 RUN /bin/bash -c 'echo "Europe/Berlin" > /etc/timezone'
-RUN apt-get -qq update && apt-get -qq -y install cmake ninja-build python-pip g++ doxygen python-sphinx git libboost-all-dev gfortran
-RUN apt-get -qq update && apt-get -qq -y install libpnicore1.1.0-dev libpnicore1.1.0 libh5cpp0.1.0-dev libh5cpp0.1.0 libhdf5-dev
+RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get -qq -y install cmake ninja-build python-pip g++ doxygen python-sphinx git libboost-all-dev gfortran
+RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get -qq -y install libpnicore1.1.0-dev libpnicore1.1.0 libh5cpp0.1.0-dev libh5cpp0.1.0 libhdf5-dev
 
 RUN apt-get clean
 RUN pip install conan
