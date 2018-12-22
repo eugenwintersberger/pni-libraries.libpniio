@@ -40,10 +40,10 @@ BOOST_AUTO_TEST_CASE(test_rank)
 {
   read_file("dimensions/dim1.xml");
 
-  BOOST_TEST(xml::Dimensions::rank(child_node) == 2);
+  BOOST_CHECK(xml::Dimensions::rank(child_node) == 2);
 
   read_file("dimensions/dim6.xml");
-  BOOST_TEST(xml::Dimensions::rank(child_node) == 0);
+  BOOST_CHECK(xml::Dimensions::rank(child_node) == 0);
 }
 
 //-------------------------------------------------------------------------
@@ -51,10 +51,10 @@ BOOST_AUTO_TEST_CASE(test_size)
 {
   read_file("dimensions/dim1.xml");
 
-  BOOST_TEST(xml::Dimensions::size(child_node) == 100*55);
+  BOOST_CHECK(xml::Dimensions::size(child_node) == 100*55);
 
   read_file("dimensions/dim6.xml");
-  BOOST_TEST(xml::Dimensions::size(child_node) == 1);
+  BOOST_CHECK(xml::Dimensions::size(child_node) == 1);
 
 }
 

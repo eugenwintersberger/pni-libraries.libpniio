@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE(test_element_path_only)
   BOOST_CHECK(output.filename().empty());
   BOOST_CHECK(output.attribute().empty());
   BOOST_CHECK(is_absolute(output));
-  BOOST_TEST(output.size() == 4);
+  BOOST_CHECK(output.size() == 4);
 
   input = "entry/:NXinstrument/detector:NXdetector";
   BOOST_CHECK_NO_THROW(output = parsers::parse_path(input));
@@ -51,7 +51,7 @@ BOOST_AUTO_TEST_CASE(test_element_path_only)
   BOOST_CHECK(output.filename().empty());
   BOOST_CHECK(output.attribute().empty());
   BOOST_CHECK(!is_absolute(output));
-  BOOST_TEST(output.size() == 3);
+  BOOST_CHECK(output.size() == 3);
 }
 
 //-------------------------------------------------------------------------
@@ -61,16 +61,16 @@ BOOST_AUTO_TEST_CASE(test_attribute)
   Path output;
 
   BOOST_CHECK_NO_THROW(output = parsers::parse_path(input));
-  BOOST_TEST(output.front().first == "/");
-  BOOST_TEST(output.front().second == "NXroot");
-  BOOST_TEST(output.attribute() == "datx");
-  BOOST_TEST(output.size() == 2);
+  BOOST_CHECK(output.front().first == "/");
+  BOOST_CHECK(output.front().second == "NXroot");
+  BOOST_CHECK(output.attribute() == "datx");
+  BOOST_CHECK(output.size() == 2);
 
   input = "/@name";
   BOOST_CHECK_NO_THROW(output = parsers::parse_path(input));
   BOOST_CHECK(output.filename().empty());
-  BOOST_TEST(output.size() == 1);
-  BOOST_TEST(output.attribute() == "name");
+  BOOST_CHECK(output.size() == 1);
+  BOOST_CHECK(output.attribute() == "name");
 
 }
 

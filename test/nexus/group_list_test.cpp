@@ -34,7 +34,7 @@ BOOST_FIXTURE_TEST_SUITE(GroupListTest,ContainerTestFixture)
 BOOST_AUTO_TEST_CASE(default_construction)
 {
   nexus::GroupList list;
-  BOOST_TEST(list.size() == 0);
+  BOOST_CHECK(list.size() == 0);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE(test_growth)
   for(size_t image_index = 0; image_index < 3000; image_index++)
   {
     image_stack.extent(0,1); // grow by one
-    BOOST_TEST(image_stack.dataspace().size() == ((image_index+1)*(1556*516)));
+    BOOST_CHECK(image_stack.dataspace().size() == ((image_index+1)*(1556*516)));
   }
 }
 

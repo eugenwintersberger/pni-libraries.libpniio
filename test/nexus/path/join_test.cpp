@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE(test_a_empty)
   Path j;
 
   BOOST_CHECK_NO_THROW(j = join(Path(),Path::from_string(b_str)));
-  BOOST_TEST(Path::to_string(j) == b_str);
+  BOOST_CHECK(Path::to_string(j) == b_str);
 }
 
 //-------------------------------------------------------------------------
@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE(test_b_empty)
   string a_str = "filename.nxs://scan_1/:NXinstrument";
   Path j;
   BOOST_CHECK_NO_THROW(j = join(Path::from_string(a_str), Path()));
-  BOOST_TEST(Path::to_string(j) == a_str);
+  BOOST_CHECK(Path::to_string(j) == a_str);
 }
 
 //-------------------------------------------------------------------------
@@ -88,7 +88,7 @@ BOOST_AUTO_TEST_CASE(test_join_simple)
   Path j;
   string expect = "filename.nxs://:NXentry/instrument/:NXdetector";
   BOOST_CHECK_NO_THROW(j = join(a,b));
-  BOOST_TEST(Path::to_string(j) == expect);
+  BOOST_CHECK(Path::to_string(j) == expect);
 }
 
 //-------------------------------------------------------------------------
@@ -99,7 +99,7 @@ BOOST_AUTO_TEST_CASE(test_join_with_attribute)
   Path j;
   string expect = "filename.nxs://:NXentry/instrument/:NXdetector/data@units";
   BOOST_CHECK_NO_THROW(j = join(a,b));
-  BOOST_TEST(Path::to_string(j) == expect);
+  BOOST_CHECK(Path::to_string(j) == expect);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -42,14 +42,14 @@ BOOST_FIXTURE_TEST_SUITE(PushTest,PushTestFixture)
 BOOST_AUTO_TEST_CASE(test_front)
 {
   p.push_front(object_element("","NXentry"));
-  BOOST_TEST(Path::to_string(p) == ":NXentry/:NXinstrument");
+  BOOST_CHECK(Path::to_string(p) == ":NXentry/:NXinstrument");
 }
 
 //-------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(test_back)
 {
   p.push_back(object_element("","NXdetector"));
-  BOOST_TEST(Path::to_string(p) == ":NXinstrument/:NXdetector");
+  BOOST_CHECK(Path::to_string(p) == ":NXinstrument/:NXdetector");
 }
 
 //-------------------------------------------------------------------------
@@ -57,14 +57,14 @@ BOOST_AUTO_TEST_CASE(test_front_back)
 {
   p.push_front(object_element("","NXentry"));
   p.push_back(object_element("","NXdetector"));
-  BOOST_TEST(Path::to_string(p) == ":NXentry/:NXinstrument/:NXdetector");
+  BOOST_CHECK(Path::to_string(p) == ":NXentry/:NXinstrument/:NXdetector");
 }
 
 //-------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(test_root_front)
 {
   p.push_front(object_element("/","NXroot"));
-  BOOST_TEST(Path::to_string(p) == "/:NXinstrument");
+  BOOST_CHECK(Path::to_string(p) == "/:NXinstrument");
 }
 
 //-------------------------------------------------------------------------

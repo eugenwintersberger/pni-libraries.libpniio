@@ -46,12 +46,12 @@ BOOST_FIXTURE_TEST_SUITE(float32_vector_parser_test,float32_vector_parser_test_f
     {
         auto result = p("1.2 3.e+3 -3.4 4.429 -5.34e-3");
 
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
 
         result = p("  1.2  3.e+3    -3.4  4.429   -5.34e-3   ");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
     }
@@ -61,12 +61,12 @@ BOOST_FIXTURE_TEST_SUITE(float32_vector_parser_test,float32_vector_parser_test_f
     {
         p = parser_type(container_io_config('(',')'));
         auto result = p("( 1.2 3.e3 -3.4 4.429  -5.34e-3   )");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
 
         result = p("(1.2 3e+3 -3.4 4.429 -5.34e-3)");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
     }
@@ -76,12 +76,12 @@ BOOST_FIXTURE_TEST_SUITE(float32_vector_parser_test,float32_vector_parser_test_f
     {
         p = parser_type(container_io_config(';'));
         auto result = p("1.2;3.e3;-3.4;4.429;-5.34e-3");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
 
         result = p("  1.2; 3.e+3 ;-3.4   ;  4.429; -5.34e-3  ");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
     }
@@ -91,12 +91,12 @@ BOOST_FIXTURE_TEST_SUITE(float32_vector_parser_test,float32_vector_parser_test_f
     {
         p = parser_type(container_io_config('[',']',','));
         auto result = p("[1.2,3.e+3,-3.4,4.429,-5.34e-3]");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
 
         result = p("[  1.2, 3.e+3,  -3.4  , 4.429,  -5.34e-3  ]");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
     }

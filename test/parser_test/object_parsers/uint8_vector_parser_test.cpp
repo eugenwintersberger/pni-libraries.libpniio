@@ -44,12 +44,12 @@ BOOST_FIXTURE_TEST_SUITE(uint8_vector_parser_test,uint8_vector_parser_test_fixtu
     {
         auto result = p("1 2 3 4 5");
 
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
 
         result = p("  1  2    3  4   5   ");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
     }
@@ -59,12 +59,12 @@ BOOST_FIXTURE_TEST_SUITE(uint8_vector_parser_test,uint8_vector_parser_test_fixtu
     {
         p = parser_type(container_io_config('(',')'));
         auto result = p("( 1 2 3 4  5   )");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
 
         result = p("(1 2 3 4 5)");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
     }
@@ -74,12 +74,12 @@ BOOST_FIXTURE_TEST_SUITE(uint8_vector_parser_test,uint8_vector_parser_test_fixtu
     {
         p = parser_type(container_io_config(';'));
         auto result = p("1;2;3;4;5");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
         
         result = p("  1; 2 ;3   ;  4; 5  ");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
     }
@@ -89,12 +89,12 @@ BOOST_FIXTURE_TEST_SUITE(uint8_vector_parser_test,uint8_vector_parser_test_fixtu
     {
         p = parser_type(container_io_config('[',']',','));
         auto result = p("[1,2,3,4,5]");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
 
         result = p("[  1, 2,  3  , 4,  5  ]");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
     }

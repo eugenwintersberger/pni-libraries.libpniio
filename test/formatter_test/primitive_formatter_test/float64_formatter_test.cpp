@@ -34,10 +34,10 @@ BOOST_AUTO_TEST_SUITE(float64_formatter_test)
     {
         typedef float64 input_type;
         string result = format(input_type(1.2));
-        BOOST_TEST(result == "+1.19999999999999996e+00");
+        BOOST_CHECK(result == "+1.19999999999999996e+00");
 
         result = format(input_type(-1.29387702983e-11));
-        BOOST_TEST(result == "-1.29387702983000004e-11");
+        BOOST_CHECK(result == "-1.29387702983000004e-11");
     }
 
 BOOST_AUTO_TEST_SUITE_END()

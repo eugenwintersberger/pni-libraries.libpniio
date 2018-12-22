@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE(base_class_construction)
   BOOST_CHECK(entry.attributes.exists("NX_class"));
   std::string class_name;
   entry.attributes["NX_class"].read(class_name);
-  BOOST_TEST(class_name == "NXentry");
+  BOOST_CHECK(class_name == "NXentry");
 }
 
 BOOST_AUTO_TEST_CASE(base_class_with_invalid_name)

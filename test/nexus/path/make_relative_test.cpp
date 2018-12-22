@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(test_1)
   Path p2 = Path::from_string("/:NXentry/instrument:NXinstrument");
 
   Path p2r = make_relative(p1,p2);
-  BOOST_TEST(p2r == Path::from_string("instrument:NXinstrument"));
+  BOOST_CHECK(p2r == Path::from_string("instrument:NXinstrument"));
 }
 
 //-------------------------------------------------------------------------
@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE(test_3)
   Path parent = Path::from_string("/:NXentry");
   Path orig   = Path::from_string("/:NXentry");
 
-  BOOST_TEST(Path::to_string(make_relative(parent,orig)) == "");
+  BOOST_CHECK(Path::to_string(make_relative(parent,orig)) == "");
 }
 
 BOOST_AUTO_TEST_CASE(test_4)
@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_CASE(test_4)
   Path parent = Path::from_string("/");
   Path orig = Path::from_string("/@NX_class");
 
-  BOOST_TEST(Path::to_string(make_relative(parent,orig)) == "@NX_class");
+  BOOST_CHECK(Path::to_string(make_relative(parent,orig)) == "@NX_class");
 
 }
 

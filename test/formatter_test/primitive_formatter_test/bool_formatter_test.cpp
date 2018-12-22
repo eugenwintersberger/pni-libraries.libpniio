@@ -33,8 +33,8 @@ BOOST_AUTO_TEST_SUITE(bool_formatter_test)
     //-----------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test)
     {
-        BOOST_TEST(format(bool_t(true)) == "true");
-        BOOST_TEST(format(bool_t(false)) == "false");
+        BOOST_CHECK(format(bool_t(true)) == "true");
+        BOOST_CHECK(format(bool_t(false)) == "false");
     }
 
 BOOST_AUTO_TEST_SUITE_END()

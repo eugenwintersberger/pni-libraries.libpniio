@@ -41,7 +41,7 @@ BOOST_FIXTURE_TEST_SUITE(bool_vector_parser_test,bool_vector_parser_test_fixture
     {
         auto result = p("true false  true    false  false");
 
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         ref = {true,false,true,false,false};
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
@@ -52,7 +52,7 @@ BOOST_FIXTURE_TEST_SUITE(bool_vector_parser_test,bool_vector_parser_test_fixture
     {
         p = parser_type(container_io_config('(',')'));
         auto result = p("( true false false true  true   )");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
 
         ref = {true,false,false,true,true};
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
@@ -65,7 +65,7 @@ BOOST_FIXTURE_TEST_SUITE(bool_vector_parser_test,bool_vector_parser_test_fixture
         p = parser_type(container_io_config(';'));
         auto result = p("true;false ;true; true ; false");
 
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         ref = {true,false,true,true,false};
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
@@ -76,7 +76,7 @@ BOOST_FIXTURE_TEST_SUITE(bool_vector_parser_test,bool_vector_parser_test_fixture
     {
         p = parser_type(container_io_config('[',']',','));
         auto result = p("[true,false ,false, true  ,  true]");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         ref = {true,false,false,true,true};
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());

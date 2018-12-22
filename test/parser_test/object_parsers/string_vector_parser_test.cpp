@@ -41,7 +41,7 @@ BOOST_FIXTURE_TEST_SUITE(string_vector_parser_test,string_vector_parser_test_fix
     BOOST_AUTO_TEST_CASE(test_default)
     {
         auto result = p("hello   this bla test  word");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         ref = {"hello","this","bla","test","word"};
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
@@ -53,7 +53,7 @@ BOOST_FIXTURE_TEST_SUITE(string_vector_parser_test,string_vector_parser_test_fix
         p = parser_type(container_io_config('(',')'));
         auto result = p("(true false    false true true)");
 
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
         ref = {"true","false","false","true","true"};
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
@@ -64,7 +64,7 @@ BOOST_FIXTURE_TEST_SUITE(string_vector_parser_test,string_vector_parser_test_fix
     {
         p = parser_type(container_io_config(';'));
         auto result = p(" true;false ;true; true ; false   ");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
 
         ref = {"true","false","true","true","false"};
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
@@ -76,7 +76,7 @@ BOOST_FIXTURE_TEST_SUITE(string_vector_parser_test,string_vector_parser_test_fix
     {
         p = parser_type(container_io_config('[',']',','));
         auto result = p("[ hello world , this  ,is some, stupid  ,  text!  ]");
-        BOOST_TEST(result.size() == 5);
+        BOOST_CHECK(result.size() == 5);
 
         ref = {"hello world","this","is some","stupid","text!"};
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),

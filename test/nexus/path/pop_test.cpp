@@ -45,8 +45,8 @@ BOOST_AUTO_TEST_CASE(test_front)
 {
   Path::Element e = p.front();
   p.pop_front();
-  BOOST_TEST(p.size() == 2);
-  BOOST_TEST(Path::to_string(p) == ":NXinstrument/:NXdetector");
+  BOOST_CHECK(p.size() == 2);
+  BOOST_CHECK(Path::to_string(p) == ":NXinstrument/:NXdetector");
 }
 
 //-------------------------------------------------------------------------
@@ -54,8 +54,8 @@ BOOST_AUTO_TEST_CASE(test_back)
 {
   Path::Element e = p.back();
   p.pop_back();
-  BOOST_TEST(p.size() == 2);
-  BOOST_TEST(Path::to_string(p) == ":NXentry/:NXinstrument");
+  BOOST_CHECK(p.size() == 2);
+  BOOST_CHECK(Path::to_string(p) == ":NXentry/:NXinstrument");
 }
 
 //-------------------------------------------------------------------------
@@ -63,7 +63,7 @@ BOOST_AUTO_TEST_CASE(test_front_back)
 {
   p.pop_front();
   p.pop_back();
-  BOOST_TEST(Path::to_string(p) == ":NXinstrument");
+  BOOST_CHECK(Path::to_string(p) == ":NXinstrument");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

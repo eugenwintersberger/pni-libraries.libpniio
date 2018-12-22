@@ -34,9 +34,9 @@ BOOST_AUTO_TEST_SUITE(uint8_formatter_test)
     {
         typedef uint8 input_type;
 
-        BOOST_TEST(format(input_type(12)) == "12");
-        BOOST_TEST(format(input_type(0)) == "0");
-        BOOST_TEST(format(input_type(255)) == "255");
+        BOOST_CHECK(format(input_type(12)) == "12");
+        BOOST_CHECK(format(input_type(0)) == "0");
+        BOOST_CHECK(format(input_type(255)) == "255");
     }
 
 BOOST_AUTO_TEST_SUITE_END()

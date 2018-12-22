@@ -34,26 +34,26 @@ BOOST_AUTO_TEST_CASE(from_hdf5_to_nexus_1)
 {
   hdf5::Path h5p = "/entry/instrument/detector/data";
   nexus::Path nxp = h5p;
-  BOOST_TEST(nexus::Path::to_string(nxp) == "/entry/instrument/detector/data");
+  BOOST_CHECK(nexus::Path::to_string(nxp) == "/entry/instrument/detector/data");
   BOOST_CHECK(nexus::is_absolute(nxp));
-  BOOST_TEST(nxp.size() == 5);
+  BOOST_CHECK(nxp.size() == 5);
 }
 
 BOOST_AUTO_TEST_CASE(from_hdf5_to_nexus_2)
 {
   hdf5::Path h5p = "entry/instrument";
   nexus::Path nxp = h5p;
-  BOOST_TEST(nexus::Path::to_string(nxp) == "entry/instrument");
-  BOOST_TEST(nxp.size() == 2);
+  BOOST_CHECK(nexus::Path::to_string(nxp) == "entry/instrument");
+  BOOST_CHECK(nxp.size() == 2);
 }
 
 BOOST_AUTO_TEST_CASE(from_hdf5_to_nexus_3)
 {
   hdf5::Path h5p = "/";
   nexus::Path nxp = h5p;
-  BOOST_TEST(nexus::Path::to_string(nxp) == "/");
+  BOOST_CHECK(nexus::Path::to_string(nxp) == "/");
   BOOST_CHECK(nexus::is_absolute(nxp));
-  BOOST_TEST(nxp.size() == 1);
+  BOOST_CHECK(nxp.size() == 1);
 }
 
 //=============================================================================
@@ -62,8 +62,8 @@ BOOST_AUTO_TEST_CASE(from_nexus_to_hdf5_1)
 {
   nexus::Path nxp = nexus::Path::from_string("/entry:NXentry/instrument:NXinstrument");
   hdf5::Path h5p = nxp;
-  BOOST_TEST(h5p == "/entry/instrument");
-  BOOST_TEST(h5p.size() == 2);
+  BOOST_CHECK(h5p == "/entry/instrument");
+  BOOST_CHECK(h5p.size() == 2);
   BOOST_CHECK(h5p.absolute());
 }
 
@@ -71,8 +71,8 @@ BOOST_AUTO_TEST_CASE(from_nexus_to_hdf5_2)
 {
   nexus::Path nxp = nexus::Path::from_string("entry:NXentry/instrument:NXinstrument/detector:NXdetector");
   hdf5::Path h5p = nxp;
-  BOOST_TEST(h5p == "entry/instrument/detector");
-  BOOST_TEST(h5p.size() == 3);
+  BOOST_CHECK(h5p == "entry/instrument/detector");
+  BOOST_CHECK(h5p.size() == 3);
   BOOST_CHECK(!h5p.absolute());
 }
 
