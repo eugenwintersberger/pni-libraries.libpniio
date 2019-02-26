@@ -4,14 +4,14 @@ dist: xenial
 env:
     - OS=debian9 BUILDTYPE=Debug
     - OS=debian9 BUILDTYPE=Release
-    - OS=debian8 BUILDTYPE=Debug
-    - OS=debian8 BUILDTYPE=Release
     - OS=debian10 BUILDTYPE=Debug
     - OS=debian10 BUILDTYPE=Release
     - OS=ubuntu18.04 BUILDTYPE=Debug
     - OS=ubuntu18.04 BUILDTYPE=Release
     - OS=ubuntu18.10 BUILDTYPE=Debug
     - OS=ubuntu18.10 BUILDTYPE=Release
+    # - OS=debian8 BUILDTYPE=Debug
+    # - OS=debian8 BUILDTYPE=Release
 
 services:
     - docker
