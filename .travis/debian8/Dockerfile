@@ -3,6 +3,7 @@ FROM debian:jessie
 MAINTAINER DESY, Jan Kotanski <jankotan@gmail.com>
 
 RUN /bin/bash -c 'echo "deb http://archive.debian.org/debian jessie-backports main contrib non-free" > /etc/apt/sources.list.d/debian-backports.list'
+RUN echo "Acquire::Check-Valid-Until false;" > /etc/apt/apt.conf
 
 RUN apt-get -qq update && apt-get -qq -y install software-properties-common curl
 
@@ -28,4 +29,3 @@ RUN conan remote add conan-transit https://conan-transit.bintray.com
 RUN conan user
 RUN mkdir /src
 WORKDIR /src
-
