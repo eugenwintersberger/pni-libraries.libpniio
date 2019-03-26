@@ -3,7 +3,9 @@ FROM debian:jessie
 MAINTAINER DESY, Jan Kotanski <jankotan@gmail.com>
 
 RUN /bin/bash -c 'echo "deb http://archive.debian.org/debian jessie-backports main contrib non-free" > /etc/apt/sources.list.d/debian-backports.list'
+
 RUN echo "Acquire::Check-Valid-Until false;" > /etc/apt/apt.conf
+RUN sed -i '/jessie-updates/d' /etc/apt/sources.list
 
 RUN apt-get -qq update && apt-get -qq -y install software-properties-common curl
 
