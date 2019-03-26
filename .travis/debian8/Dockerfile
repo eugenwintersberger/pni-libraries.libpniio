@@ -2,7 +2,7 @@ FROM debian:jessie
 
 MAINTAINER DESY, Jan Kotanski <jankotan@gmail.com>
 
-RUN /bin/bash -c 'echo "deb http://ftp.debian.org/debian jessie-backports main contrib non-free" > /etc/apt/sources.list.d/debian-backports.list'
+RUN /bin/bash -c 'echo "deb http://archive.debian.org/debian jessie-backports main contrib non-free" > /etc/apt/sources.list.d/debian-backports.list'
 
 RUN apt-get -qq update && apt-get -qq -y install software-properties-common curl
 
