@@ -1,15 +1,11 @@
-FROM ubuntu:18.04
+FROM ubuntu:19.10
 
 MAINTAINER DESY, Jan Kotanski <jankotan@gmail.com>
 
 RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get -qq install -y software-properties-common curl
 RUN curl http://repos.pni-hdri.de/debian_repo.pub.gpg | apt-key add -
-RUN add-apt-repository "deb http://repos.pni-hdri.de/apt/debian bionic main" -y
+RUN add-apt-repository "deb http://repos.pni-hdri.de/apt/debian eaon main" -y
 RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get -qq -y dist-upgrade
-
-RUN curl http://repos.pni-hdri.de/debian_repo.pub.gpg | apt-key add -
-RUN add-apt-repository "deb http://repos.pni-hdri.de/apt/debian bionic main" -y
-RUN apt-get -qq update && apt-get -qq -y dist-upgrade
 
 RUN /bin/bash -c 'echo "Europe/Berlin" > /etc/timezone'
 RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get -qq -y install cmake ninja-build python-pip g++ doxygen python-sphinx git libboost-all-dev gfortran
