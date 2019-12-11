@@ -15,6 +15,5 @@ Boost:python=False
 zlib:shared=True
 hdf5:shared=True
 
-
 [imports]
 bin, *.dll -> ./bin
