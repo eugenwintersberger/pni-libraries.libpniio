@@ -1,5 +1,5 @@
 [requires]
-Boost/1.62.0@lasote/stable
+Boost/1.62.0@conan/stable
 hdf5/1.10.1@pni-libraries/testing
 pnicore/master@eugenwintersberger/devel
 h5cpp/master@eugenwintersberger/devel
