@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_SUITE(int64_formatter_test)
         BOOST_CHECK(format(input_type(-100)) == "-100");
         BOOST_CHECK(format(input_type(0)) == "+0");
         BOOST_CHECK(format(input_type(9223372036854775807)) == "+9223372036854775807");
-        BOOST_CHECK(format(input_type(-9223372036854775808)) == "-9223372036854775808");
+        BOOST_CHECK(format(input_type(-9223372036854775807)) == "-9223372036854775807");
     }
 
 BOOST_AUTO_TEST_SUITE_END()

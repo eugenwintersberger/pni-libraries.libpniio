@@ -102,7 +102,7 @@ namespace cbf{
 
         //initializing the container with 0
         std::fill(data.begin(),data.end(),0);
-        typename CTYPE::iterator iter = data.begin();
+        // typename CTYPE::iterator iter = data.begin();
         typename CTYPE::value_type v_old = 0;
 
         for(typename CTYPE::value_type &v: data)

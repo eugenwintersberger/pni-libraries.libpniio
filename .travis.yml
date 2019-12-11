@@ -8,8 +8,10 @@ env:
     - OS=debian10 BUILDTYPE=Release
     - OS=ubuntu18.04 BUILDTYPE=Debug
     - OS=ubuntu18.04 BUILDTYPE=Release
-    - OS=ubuntu18.10 BUILDTYPE=Debug
-    - OS=ubuntu18.10 BUILDTYPE=Release
+    - OS=ubuntu19.10 BUILDTYPE=Debug
+    - OS=ubuntu19.10 BUILDTYPE=Release
+    # - OS=ubuntu18.10 BUILDTYPE=Debug
+    # - OS=ubuntu18.10 BUILDTYPE=Release
     # - OS=debian8 BUILDTYPE=Debug
     # - OS=debian8 BUILDTYPE=Release
 
