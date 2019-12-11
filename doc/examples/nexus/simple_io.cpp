@@ -58,7 +58,7 @@ void read_data(const nexus::Path &path)
 }
 
 //----------------------------------------------------------------------------
-int main(int argc,char **argv)
+int main(int,char **)
 {
     string fname="simple_io.nxs";
 

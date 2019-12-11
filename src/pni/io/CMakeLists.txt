@@ -86,7 +86,9 @@ target_compile_definitions(pniio PRIVATE DLL_BUILD)
 # ============================================================================
 # install the library binaries and targets 
 # ============================================================================
-
+configure_file(pniio.pc.cmake pniio.pc @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pniio.pc"
+        DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}/pkgconfig")
 #
 # export the targets which are latter used by the CMAKE package
 # 

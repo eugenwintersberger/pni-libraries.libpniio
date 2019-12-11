@@ -226,7 +226,7 @@ namespace io{
     }
 
     //-------------------------------------------------------------------------
-    string format(const value_ref &v)
+    string format(const value_ref &)
     {
         return "";
     }

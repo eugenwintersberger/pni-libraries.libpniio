@@ -59,7 +59,7 @@ class TypeTrait<pni::core::mdarray<STORAGE,IMAP,IPA>>
     using Type = pni::core::mdarray<STORAGE,IMAP,IPA>;
     using TypeClass = typename TypeTrait<typename Type::value_type>::TypeClass;
 
-    static TypeClass create(const  Type &v = Type())
+    static TypeClass create(const  Type & = Type())
     {
       return TypeTrait<typename Type::value_type>::create();
     }

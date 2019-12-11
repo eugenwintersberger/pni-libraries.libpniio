@@ -53,7 +53,7 @@ namespace io {
     }
 
     //=========================================================================
-    bool is_complex(const pni::core::string &input)
+    bool is_complex(const pni::core::string &)
     {
         return false;
     }
