@@ -28,7 +28,7 @@ before_script:
     
     
 script:
-    - docker exec -e BUILDTYPE -it build bash -c "cd build && cmake -G Ninja -DWITH_CONAN=OFF -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
+    - docker exec -e BUILDTYPE -it build bash -c "cd build && cmake -G Ninja -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
     - docker exec -e BUILDTYPE -it build bash -c "cd build && cmake --build . --target all --config $BUILDTYPE"
     - docker exec -e BUILDTYPE -it build bash -c "cd build && cmake --build . --target check --config $BUILDTYPE"
     
