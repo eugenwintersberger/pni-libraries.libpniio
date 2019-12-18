@@ -22,3 +22,9 @@ build
 .cccc
 /doc/ug/latexmkrc~
 /doc/ug/libpniio_ug.bib~
+*.gch
+install
+/.cproject
+/.project
+/.settings/
+/.pydevproject
