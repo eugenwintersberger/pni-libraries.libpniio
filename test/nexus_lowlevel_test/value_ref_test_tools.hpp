@@ -20,6 +20,7 @@
 #pragma once
 
 #include <boost/test/unit_test.hpp>
+#include <boost/test/tools/detail/print_helper.hpp>
 #include <pni/core/types.hpp>
 #include <pni/core/type_erasures.hpp>
 #include <iostream>
@@ -27,12 +28,14 @@
 
 namespace boost {
 namespace test_tools {
+namespace tt_detail { 
 
     template<> struct print_log_value<pni::core::value_ref>
     {
         void operator()(std::ostream &stream,const pni::core::value_ref &v);
     };
 
+}
 }
 }
 

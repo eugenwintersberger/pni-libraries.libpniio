@@ -29,7 +29,7 @@ if("${CMAKE_FAMILY_VERSION}" STREQUAL "2.6" OR "${CMAKE_VERSION}" STREQUAL "2.8.
     message(${HDF5_INCLUDE_DIRS})
     include_directories(${HDF5_INCLUDE_DIRS}) 
 else()
-    include(FindHDF5)
+    find_package(HDF5 COMPONENTS C REQUIRED)
 endif()
 
 if(NOT HDF5_FOUND)
@@ -37,6 +37,15 @@ if(NOT HDF5_FOUND)
     message("HDF5 not found:")
     message(FATAL "Please set HDF5_C_INCLUDE_DIRS and HDF5_LIBRARY_DIRS manually!")
 endif()
+
+set(HDF5_LIBRARY_DIRS)
+foreach(HDF5_LIBRARY ${HDF5_LIBRARIES})
+    get_filename_component(LIB_DIR ${HDF5_LIBRARY} DIRECTORY)
+    if(LIB_DIR MATCHES "hdf5")
+        list(APPEND HDF5_LIBRARY_DIRS ${LIB_DIR})
+    endif()
+endforeach()
+list(REMOVE_DUPLICATES HDF5_LIBRARY_DIRS)
 
 #=================================================================================
 if(NOT CMAKE_BUILD_TYPE)
@@ -94,11 +103,16 @@ pkg_search_module(PNICORE_PKG REQUIRED pnicore)
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED OFF)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.41 COMPONENTS program_options system regex 
+find_package(Boost 1.41 COMPONENTS program_options 
+	                           system 
+				   regex 
                                    unit_test_framework)
 
 if(NOT Boost_FOUND)
     message(FATAL_ERROR "Could not find Boost libraries!")
+else()
+    message(STATUS "Found boost verison: ${Boost_VERSION}")
+    add_definitions(-DBOOST_VERSION=${Boost_VERSION})
 endif()
 
 if(PKG_CONFIG_FOUND)

@@ -1,8 +1,8 @@
 %%%describing the usage of the library
 
 In this section we will have a short look on how to make your code working the
-\libpniio. The key to make using \libpniio\ simple is the usage of {\tt
-pkg-config}. The rational behind the design descission to focus on {\tt
+\libpniio. The key to make using \libpniio\ simple is the usage of \texttt{
+pkg-config}. The rational behind the design descission to focus on \texttt{
 pkg-config} as the central element for build systems is simple: it works for
 virtually all build systems. It is even available for Windows (though not very
 often used). 
@@ -12,15 +12,15 @@ often used).
 \begin{minted}{bash}
     $> g++ -std=c++11 -otest test.cpp $(pkg-config --cflags --libs pniio)
 \end{minted}
-There are two important remarks we have to make here. The first is the {\tt
--std=c++11} after {\tt g++}. This tells the compiler to use the new C++11
+There are two important remarks we have to make here. The first is the \texttt{
+-std=c++11} after \texttt{g++}. This tells the compiler to use the new C++11
 standard. This option is absolutely required for the code to build. 
-the {\tt pkg-config} command at the end of the command line includes all the
+the \texttt{pkg-config} command at the end of the command line includes all the
 necessary compiler and linker flags to build and link the code.
 
 \section{From within a Makefile}
 
-{\tt pkg-config} can be used in a Makefile by putting the following at the top
+\texttt{pkg-config} can be used in a Makefile by putting the following at the top
 of your Makefile
 \begin{minted}{make}
 CPPFLAGS=-O2 -g -std=c++11 $(shell pkg-config --cflags pniio)
@@ -29,8 +29,8 @@ LDFLAGS=$(shell pkg-config --libs pniio)
 
 \section{With CMake}
 
-For {\tt cmake} the {\tt FindPkgConfig} module provides access to the
-functionality of {\tt pkg-config}. The following snippet from a {\tt
+For \texttt{cmake} the \texttt{FindPkgConfig} module provides access to the
+functionality of \texttt{pkg-config}. The following snippet from a \texttt{
 CMakeLists.txt} file shows how to use it for \libpniio
 \begin{minted}{cmake}
 #load pkg-config package

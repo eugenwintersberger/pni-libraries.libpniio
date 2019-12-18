@@ -66,6 +66,21 @@ namespace h5{
 
         return !is_vl_string(type);
     }
+
+    //-------------------------------------------------------------------------
+    bool is_ascii_string(const h5datatype &type)
+    {
+        if(!is_string_type(type)) return false;
+
+        H5T_cset_t cset = H5Tget_cset(type.object().id());
+        if(cset == H5T_CSET_ASCII)
+            return true;
+        else if(cset == H5T_CSET_UTF8)
+            return false;
+        else 
+            throw object_error(EXCEPTION_RECORD,
+                    "Cannot retrieve character set for string type!");
+    }
     
      //-------------------------------------------------------------------------
     size_t static_string_size(const h5datatype &type)

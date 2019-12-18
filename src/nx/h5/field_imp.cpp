@@ -179,42 +179,55 @@ namespace h5{
     {
         _throw_if_not_valid(EXCEPTION_RECORD,
                             "Cannot read data from invaliid field!");
+
+        //retrieve the data type of the dataset stored in the file
         h5datatype file_type{object_imp(H5Dget_type(_object.id()))};
-        const h5datatype &memory_type = get_type(tid);
+
+        //create dataspace for data in memory (according to the shape argument)
         h5dataspace memory_space{shape};
 
-        if((tid==type_id_t::STRING) && is_vl_string(file_type))
+        if(tid==type_id_t::STRING) //strings need some special treatment
         {
-            char_ptr_vector_type ptrs(size());
+            
+            //for strings we assume that the file type can be used also for
+            //data in memory
+            h5datatype string_type{object_imp(H5Dget_type(_object.id()))};
 
-            //need here a more general guard for HDF5 objects
-            object_imp xfer_plist(H5Pcreate(H5P_DATASET_XFER));
-            _read_data(memory_type,memory_space,_file_space,xfer_plist,
-                       static_cast<void*>(ptrs.data()));
+            if(is_vl_string(file_type)) //extra work variable length strings
+            {
+                char_ptr_vector_type ptrs(size());
+
+                //need here a more general guard for HDF5 objects
+                object_imp xfer_plist(H5Pcreate(H5P_DATASET_XFER));
+                _read_data(string_type,memory_space,_file_space,xfer_plist,
+                           static_cast<void*>(ptrs.data()));
+
+                copy_from_vector(ptrs,size(),static_cast<string*>(ptr),
+                                 string_formatter_factory::create(file_type));
+                H5Dvlen_reclaim(string_type.object().id(),
+                                memory_space.id(),
+                                xfer_plist.id(),
+                                ptrs.data());
+            }
+            else //deal with a static string length string array 
+            {
+                char_vector_type ptrs(static_string_size(file_type)*size());
+                _read_data(string_type,memory_space,_file_space,
+                           object_imp(H5Pcreate(H5P_DATASET_XFER)),
+                           static_cast<void*>(ptrs.data()));
+                copy_from_vector(ptrs,size(),static_string_size(file_type),
+                                 static_cast<string *>(ptr),
+                                string_formatter_factory::create(file_type));
+            }
        
-            copy_from_vector(ptrs,size(),static_cast<string*>(ptr),
-                             string_formatter_factory::create(file_type));
-            H5Dvlen_reclaim(memory_type.object().id(),
-                            memory_space.id(),
-                            xfer_plist.id(),
-                            ptrs.data());
-        }
-        else if((tid==type_id_t::STRING) && is_static_string(file_type))
-        {
-            char_vector_type ptrs(static_string_size(file_type)*size());
-
-            _read_data(memory_type,memory_space,_file_space,
-                       object_imp(H5Pcreate(H5P_DATASET_XFER)),
-                       static_cast<void*>(ptrs.data()));
-
-            copy_from_vector(ptrs,size(),static_string_size(file_type),
-                             static_cast<string *>(ptr),
-                            string_formatter_factory::create(file_type));
         }
         else
+        {
+            const h5datatype &memory_type = get_type(tid);
             _read_data(memory_type,memory_space,_file_space,
                        object_imp(H5Pcreate(H5P_DATASET_XFER)),
                        ptr);
+        }
     }
 
     //------------------------------------------------------------------------

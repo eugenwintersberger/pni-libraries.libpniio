@@ -23,6 +23,7 @@ using namespace pni::core;
 
 namespace boost {
 namespace test_tools {
+namespace tt_detail {
 
     void print_log_value<value_ref>::operator()(std::ostream &stream,const value_ref &v)
     {
@@ -50,6 +51,7 @@ namespace test_tools {
                                     stream<<"UNKOWN";
         }
     }
+}
 }
 }
 

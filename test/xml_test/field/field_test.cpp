@@ -31,4 +31,4 @@ struct field_test_fixture : base_fixture
     {}
 };
 
-BOOST_GLOBAL_FIXTURE(field_test_fixture)
+BOOST_GLOBAL_FIXTURE(field_test_fixture);

@@ -33,7 +33,7 @@ section.
 
 \subsection{Simple iteration}
 
-The {\tt nxgroup} type provides an STL compliant iterator interface to iterate
+The \texttt{nxgroup} type provides an STL compliant iterator interface to iterate
 over the direct children of a group. In this very simple example we loop over 
 all entries stored in a file
 \begin{cppcode}
@@ -42,7 +42,7 @@ h5::nxgroup root = f.root();
 for(auto entry: root)
     std::cout<<entry.name()<<std::endl;
 \end{cppcode}
-Another interesting example would be to count all instances of {\tt NXdetector} 
+Another interesting example would be to count all instances of \texttt{NXdetector} 
 within an instrument group
 \begin{cppcode}
 #include <pni/core/types.hpp>
