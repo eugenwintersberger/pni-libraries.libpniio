@@ -32,7 +32,7 @@ add_library(pniio SHARED ${SOURCES} $<TARGET_OBJECTS:cbf_objects>
     $<TARGET_OBJECTS:algorithms>
     $<TARGET_OBJECTS:formatter_objects>
     )
-add_dependencies(pniio config.hpp)
+# add_dependencies(pniio config.hpp)
 set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"
                                        SOVERSION "${SO_VERSION}")
 target_link_libraries(pniio 
