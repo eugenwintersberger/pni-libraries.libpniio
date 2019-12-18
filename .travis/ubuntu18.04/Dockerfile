@@ -13,7 +13,7 @@ RUN apt-get -qq update && apt-get -qq -y dist-upgrade
 
 RUN /bin/bash -c 'echo "Europe/Berlin" > /etc/timezone'
 RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get -qq -y install cmake ninja-build python-pip g++ doxygen python-sphinx git libboost-all-dev gfortran
-RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get  -y install libpnicore1.1.0-dev libpnicore1.1.0 libh5cpp0.3.2-dev libh5cpp0.3.2 libhdf5-dev libcppunit-dev
+RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get  -y install libpnicore1.1.0-dev libpnicore1.1.0 libh5cpp0.3.2-dev libh5cpp0.3.2 libhdf5-dev libcppunit-dev libpnicore1.1.0-dev
 
 RUN apt-get clean
 RUN pip install conan
