@@ -122,13 +122,13 @@ namespace xml{
     {
         auto attr = parent.get_child_optional(attribute_path(name));
 
-        return attr;
+        return attr.is_initialized();
     }
 
     //------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const node &n)
     {
-        boost::property_tree::xml_writer_settings<char> settings('\t',1);
+        boost::property_tree::xml_writer_settings<string> settings('\t',1);
 
         boost::property_tree::write_xml(o,n,settings);
         return o;
