@@ -574,9 +574,9 @@ object_path ::= ["/"],object_id,{"/",object_id};
 nexus_path  ::= [file_path,"://"],object_path,["@",nexus_attr];
 \end{verbatim}
 
-The {\tt file\_path} is platform dependent which makes it difficult to determine
+The \texttt{file\_path} is platform dependent which makes it difficult to determine
 which characters would be allowed in a path. Thus we leave this open to and
-separate the file path from everything else by a {\tt ://} string germinal.
-{\tt nexus\_id} describes a repetition of a set of characters allowed in Nexus
+separate the file path from everything else by a \texttt{://} string germinal.
+\texttt{nexus\_id} describes a repetition of a set of characters allowed in Nexus
 names (for groups, fields, attributes, and classes). It is much more restrictive
 as for the filename.

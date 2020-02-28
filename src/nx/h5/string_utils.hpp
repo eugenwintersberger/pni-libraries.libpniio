@@ -111,6 +111,22 @@ namespace h5{
     //! 
     size_t static_string_size(const h5datatype &type);
 
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup nxh5_class
+    //! \brief check if string type is ASCII 
+    //!
+    //! Return true if the datatype represents an ASCII string, false otherwise
+    //!
+    //! \throw object_error if information retrieval fails
+    //! \throw invalid_object_error if the data type is not valid
+    //! \throw type_error if the data type is not supported
+    //! 
+    //! \param type instance of an HDF5 data type
+    //! \return true if the type is an ASCII string type, false otherwise
+    //! 
+    bool is_ascii_string(const h5datatype &type);
+
 
     //------------------------------------------------------------------------
     //!

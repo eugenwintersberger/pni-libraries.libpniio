@@ -26,13 +26,13 @@ managements efforts to keep related information together.
           grow via three points={ one child at (0.5,-0.8) and two children at
           (0.5,-0.8) and (0.5,-1.6)},
           edge from parent path = { (\tikzparentnode.south) |- (\tikzchildnode.west)}]
-        \node[directory node]{{\tt run\_01}}
-        child { node {{\tt ASCII data}}}
-        child { node [directory node] {{\tt images}} 
-            child{ node {{\tt image\_001.tif}}}
-            child{ node {{\tt image\_002.tif}}}
+        \node[directory node]{\texttt{run\_01}}
+        child { node {\texttt{ASCII data}}}
+        child { node [directory node] {\texttt{images}} 
+            child{ node {\texttt{image\_001.tif}}}
+            child{ node {\texttt{image\_002.tif}}}
             child{ node {\dots}}
-            child{ node {{\tt image\_100.tif}}}
+            child{ node {\texttt{image\_100.tif}}}
         }
         child [missing] {}
         child [missing] {}

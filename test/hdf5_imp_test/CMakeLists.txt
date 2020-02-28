@@ -10,7 +10,10 @@ set(SOURCES h5_imp_test_utils.cpp
             h5object_types_test.cpp
             hdf5_utilities_test.cpp
             attribute_utils_test.cpp
+            field_imp_ascii_string_test.cpp
            )
+
+configure_file(ascii_string_test.h5 ascii_string_test.h5 COPYONLY)
 
 
 set_source_files_properties(h5link_test.cpp PROPERTIES 
@@ -20,7 +23,8 @@ set_source_files_properties(h5link_test.cpp PROPERTIES
 add_executable(hdf5_imp_test EXCLUDE_FROM_ALL ${SOURCES} )
 target_link_libraries(hdf5_imp_test pniio ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 add_test(NAME "HDF5:implementation-test" 
-         COMMAND hdf5_imp_test)
+         COMMAND hdf5_imp_test
+         WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/test/hdf5_imp_test")
 
 add_dependencies(check hdf5_imp_test)
 

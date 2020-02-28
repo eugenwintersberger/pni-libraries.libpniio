@@ -14,7 +14,6 @@
 *.deb
 *.pyc
 *.changes
-*.h5
 .sconf_temp
 build.log
 config.log
@@ -22,3 +21,9 @@ build
 .cccc
 /doc/ug/latexmkrc~
 /doc/ug/libpniio_ug.bib~
+*.gch
+install
+/.cproject
+/.project
+/.settings/
+/.pydevproject

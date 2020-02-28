@@ -32,11 +32,15 @@ add_library(pniio SHARED ${SOURCES} $<TARGET_OBJECTS:cbf_objects>
     $<TARGET_OBJECTS:algorithms>
     $<TARGET_OBJECTS:formatter_objects>
     )
-add_dependencies(pniio config.hpp)
+# add_dependencies(pniio config.hpp)
 set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"
                                        SOVERSION "${SO_VERSION}")
-target_link_libraries(pniio hdf5 z boost_date_time 
-                      boost_filesystem ${PNICORE_PKG_LIBRARIES})
+target_link_libraries(pniio 
+                      ${HDF5_LIBRARIES} 
+                      z 
+                      boost_date_time 
+                      boost_filesystem 
+                      ${PNICORE_PKG_LIBRARIES})
 
 #install code
 install(TARGETS pniio LIBRARY DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}")

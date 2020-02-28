@@ -22,7 +22,7 @@
 //
 #pragma once
 
-#include <boost/phoenix/function/function.hpp>
+#include <boost/spirit/include/phoenix.hpp>
 
 namespace pni{
 namespace io{
