@@ -14,6 +14,7 @@ RUN apt-get -qq update && apt-get -qq -y install cmake ninja-build python-pip g+
 RUN apt-get -qq update && apt-get -qq -y install libpnicore1.1.0-dev libpnicore1.1.0 libh5cpp0.3.2-dev libh5cpp0.3.2 libhdf5-dev
 
 RUN apt-get clean
+RUN pip install --upgrade jinja2
 RUN pip install conan
 RUN pip install gitpython
 
