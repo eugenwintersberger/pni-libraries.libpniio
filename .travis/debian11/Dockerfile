@@ -1,19 +1,21 @@
-FROM debian:buster
+FROM debian:bullseye
 
 MAINTAINER DESY, Jan Kotanski <jankotan@gmail.com>
 
-RUN /bin/bash -c 'echo "deb http://ftp.de.debian.org/debian buster main" > /etc/apt/sources.list.d/debian9de.list'
+# RUN /bin/bash -c 'echo "deb http://ftp.de.debian.org/debian bullseye main" > /etc/apt/sources.list.d/debian9de.list'
+RUN apt-get update
+RUN apt-get install -y base-passwd
 RUN apt-get -qq update && apt-get -qq -y install libterm-readline-gnu-perl software-properties-common coreutils gnupg2 procps apt-utils curl apt-transport-https gnupg2 ca-certificates
 RUN curl http://repos.pni-hdri.de/debian_repo.pub.gpg | apt-key add -
-RUN add-apt-repository "deb http://repos.pni-hdri.de/apt/debian buster main" -y
-RUN apt-get -qq update && apt-get -qq -y dist-upgrade
+RUN add-apt-repository "deb http://repos.pni-hdri.de/apt/debian bullseye main" -y
+# RUN apt-get -qq update && apt-get -qq -y dist-upgrade
 
-RUN apt-get -qq update && apt-get -qq -y install cmake ninja-build python-pip g++ doxygen python-sphinx git libboost-all-dev gfortran
+RUN apt-get -qq update && apt-get -qq -y install cmake ninja-build python3-pip g++ doxygen python3-sphinx git libboost-all-dev gfortran
 RUN apt-get -qq update && apt-get -qq -y install libpnicore1.1.0-dev libpnicore1.1.0 libh5cpp0.3.3-dev libh5cpp0.3.3 libhdf5-dev
 
 RUN apt-get clean
-RUN pip install conan
-RUN pip install gitpython
+RUN pip3 install conan
+RUN pip3 install gitpython
 
 RUN conan remote remove conan-center
 RUN conan remote add conan-community https://api.bintray.com/conan/conan-community/conan
