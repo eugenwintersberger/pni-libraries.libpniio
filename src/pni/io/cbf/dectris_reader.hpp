@@ -98,7 +98,8 @@ namespace cbf{
         using namespace pni::core;
         //unsigned long i;
         //size_t ecnt = 0; // element counter
-        CBFT buffer = 0; // single element buffer
+        //?? CBFT buffer = 0; // single element buffer
+        unsigned int  buffer = 0; // single element buffer
 
         //initializing the container with 0
         std::fill(data.begin(),data.end(),0);
@@ -151,7 +152,7 @@ namespace cbf{
                         "Error reading 4byte from the CBF stream!");
             }
 
-            if (((unsigned int) buffer) != 0x800000) 
+            if (((unsigned int) buffer) != 0x80000000)
             {
                 v += (int) buffer;
                 v_old = v;

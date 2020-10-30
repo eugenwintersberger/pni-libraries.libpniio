@@ -230,6 +230,7 @@ namespace io{
                 throw type_error(EXCEPTION_RECORD,"Cannot derive type id!");
 
         }
+	return type_id_t::UINT8;
     }
 
     //=============implementation of constructors and destructor===========
