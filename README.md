@@ -23,7 +23,7 @@ are requiered sdfdsf
 `libpniio` requires certain library dependencies to be installed on the 
 build system
 
-* Boost (>=1.55)
+* Boost (>=1.59)
 * h5cpp (>=0.0.4)
 * pnicore (>=1.1.0)
 
