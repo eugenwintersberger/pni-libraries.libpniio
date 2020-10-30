@@ -21,7 +21,7 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 #include <boost/test/unit_test.hpp>
-#include <boost/test/floating_point_comparison.hpp>
+#include <boost/test/tools/floating_point_comparison.hpp>
 #include <pni/io/fio/fio_reader.hpp>
 #include "tstfile_00012_pos.hpp"
 #include "tstfile_00012_eh1b_c01.hpp"

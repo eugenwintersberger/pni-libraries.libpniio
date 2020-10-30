@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_SUITE(uint64_formatter_test)
         typedef uint64 input_type; 
         BOOST_CHECK(format(input_type(12)) == "12");
         BOOST_CHECK(format(input_type(0)) == "0");
-        BOOST_CHECK(format(input_type(18446744073709551615)) ==
+        BOOST_CHECK(format(input_type(18446744073709551615ull)) ==
 		   "18446744073709551615");
     }
 
