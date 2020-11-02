@@ -429,3 +429,7 @@ epub_exclude_files = ['search.html']
 # If false, no index is generated.
 #
 # epub_use_index = True
+
+# workaround fix for qualifiers error
+cpp_id_attributes = ["PNIIO_EXPORT"]
+# cpp_paren_attributes = []
