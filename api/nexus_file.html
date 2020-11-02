@@ -2,42 +2,29 @@
 
 <!doctype html>
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>File handling functions &#8212; pniio 1.2.5 documentation</title>
-    
+    <title>File handling functions &#8212; pniio 1.2.9 documentation</title>
     <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '1.2.5',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="pniio 1.2.5 documentation" href="../index.html" />
-    <link rel="up" title="NeXus API" href="nexus.html" />
     <link rel="next" title="Factory classes" href="nexus_factories.html" />
     <link rel="prev" title="NeXus API" href="nexus.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
     <![endif]-->
-  </head>
-  <body role="document">
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -50,19 +37,19 @@
         <li class="right" >
           <a href="nexus.html" title="NeXus API"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.9 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nexus.html" accesskey="U">NeXus API</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">File handling functions</a><ul>
-<li><a class="reference internal" href="#nexus-is-nexus-file"><code class="docutils literal"><span class="pre">nexus::is_nexus_file()</span></code></a></li>
-<li><a class="reference internal" href="#nexus-create-file"><code class="docutils literal"><span class="pre">nexus::create_file()</span></code></a></li>
-<li><a class="reference internal" href="#nexus-open-file"><code class="docutils literal"><span class="pre">nexus::open_file()</span></code></a></li>
+<li><a class="reference internal" href="#nexus-is-nexus-file"><code class="docutils literal notranslate"><span class="pre">nexus::is_nexus_file()</span></code></a></li>
+<li><a class="reference internal" href="#nexus-create-file"><code class="docutils literal notranslate"><span class="pre">nexus::create_file()</span></code></a></li>
+<li><a class="reference internal" href="#nexus-open-file"><code class="docutils literal notranslate"><span class="pre">nexus::open_file()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -76,18 +63,20 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/api/nexus_file.txt"
+      <li><a href="../_sources/api/nexus_file.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -101,10 +90,10 @@
   <div class="section" id="file-handling-functions">
 <span id="nexus-api-file"></span><h1>File handling functions<a class="headerlink" href="#file-handling-functions" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="nexus-is-nexus-file">
-<h2><code class="xref cpp cpp-func docutils literal"><span class="pre">nexus::is_nexus_file()</span></code><a class="headerlink" href="#nexus-is-nexus-file" title="Permalink to this headline">¶</a></h2>
+<h2><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::is_nexus_file()</span></code><a class="headerlink" href="#nexus-is-nexus-file" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt>
-<span class="target" id="pniionamespacepni_1_1io_1_1nexus_1af516383c1de843613021c68def6e79d9"></span><code class="descname">PNIIO_EXPORT bool pni::io::nexus::is_nexus_file(const boost::filesystem::path &amp; path)</code></dt>
+<dt id="_CPPv4N3pni2io5nexus13is_nexus_fileERKN5boost10filesystem4pathE">
+<span id="_CPPv3N3pni2io5nexus13is_nexus_fileERKN5boost10filesystem4pathE"></span><span id="_CPPv2N3pni2io5nexus13is_nexus_fileERKN5boost10filesystem4pathE"></span><span id="pni::io::nexus::is_nexus_file__boost::filesystem::pathCR"></span><span class="target" id="namespacepni_1_1io_1_1nexus_1af516383c1de843613021c68def6e79d9"></span>PNIIO_EXPORT bool <code class="descclassname">pni::io::nexus<code class="descclassname">::</code></code><code class="descname">is_nexus_file</code><span class="sig-paren">(</span><em class="property">const</em> boost::filesystem::path &amp;<em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io5nexus13is_nexus_fileERKN5boost10filesystem4pathE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>checks if a file is a NeXus file </p>
 <p>Predicate function checking if the given path references a NeXus file. For this to be true the path has to first refer to an HDF5 file. If this is the case the file will be opened and checked for the attributes required by the NeXus standard.</p>
 <p><dl class="docutils">
@@ -112,7 +101,7 @@
 <dd>true if the reference object is a NeXus file, flase otherwise </dd>
 <dt><strong>Parameters</strong></dt>
 <dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal"><span class="pre">path</span></code>: reference to the path of a particular file system object </li>
+<li><code class="docutils literal notranslate"><span class="pre">path</span></code>: reference to the path of a particular file system object </li>
 </ul>
 </dd>
 </dl>
@@ -121,61 +110,30 @@
 
 </div>
 <div class="section" id="nexus-create-file">
-<h2><code class="xref cpp cpp-func docutils literal"><span class="pre">nexus::create_file()</span></code><a class="headerlink" href="#nexus-create-file" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt>
-<span class="target" id="pniionamespacepni_1_1io_1_1nexus_1acf77d8560e5737789272e3bff91b5641"></span><code class="descname">PNIIO_EXPORT hdf5::file::File pni::io::nexus::create_file(const boost::filesystem::path &amp; path, hdf5::file::AccessFlags flags = hdf5::file::AccessFlags::EXCLUSIVE, const hdf5::property::FileCreationList &amp; fcpl = hdf5::property::FileCreationList(), const hdf5::property::FileAccessList &amp; fapl = hdf5::property::FileAccessList())</code></dt>
-<dd><p>create a new NeXus file </p>
-<p>This function is basically an enhancement of the standard hdf5::file::create function. In addition of creating a new HDF5 file it also adds all the attributes to the root group of the file required by the NeXus standard. The arguments are the same as for hdf5::file::create.</p>
-<p>The only mandatory argument is the path to the new file. By default, an exception will be thrown if the file already exists in order to prohibit the user from accidentally overwriting an existing file. To change this behavior the AccessFlags must be passed as a second argument. References to file creation and file access property lists can be passed as third and fourth argument.</p>
-<p>For more detailed information see the h5cpp documentation.</p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>instance of hdf5::file::File </dd>
-<dt><strong>Exceptions</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal"><span class="pre">std::runtime_error</span></code>: in case of a failure</li>
-</ul>
-</dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal"><span class="pre">path</span></code>: reference to the path ot the new file </li>
-<li><code class="docutils literal"><span class="pre">flags</span></code>: access flags for the new file </li>
-<li><code class="docutils literal"><span class="pre">fcpl</span></code>: reference to a file creation property list </li>
-<li><code class="docutils literal"><span class="pre">fapl</span></code>: reference to a file access property list </li>
-</ul>
-</dd>
-</dl>
+<h2><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::create_file()</span></code><a class="headerlink" href="#nexus-create-file" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>doxygenfunction: Unable to resolve multiple matches for function “pni::io::nexus::create_file” with arguments (const boost::filesystem::path &amp;, hdf5::file::AccessFlags, const hdf5::property::FileCreationList &amp;, const hdf5::property::FileAccessList &amp;) in doxygen xml output for project “pniio” from directory: /home/jkotan/sources/libpniio-build/doc/api/xml.
+Potential matches:
 </p>
-</dd></dl>
-
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">PNIIO_EXPORT</span> <span class="n">hdf5</span><span class="p">::</span><span class="n">file</span><span class="p">::</span><span class="n">File</span> <span class="n">pni</span><span class="p">::</span><span class="n">io</span><span class="p">::</span><span class="n">nexus</span><span class="p">::</span><span class="n">create_file</span><span class="p">(</span><span class="n">const</span> <span class="n">boost</span><span class="p">::</span><span class="n">filesystem</span><span class="p">::</span><span class="n">path</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">hdf5</span><span class="p">::</span><span class="n">file</span><span class="p">::</span><span class="n">AccessFlags</span><span class="p">,</span> <span class="n">const</span> <span class="n">hdf5</span><span class="p">::</span><span class="nb">property</span><span class="p">::</span><span class="n">FileCreationList</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">const</span> <span class="n">hdf5</span><span class="p">::</span><span class="nb">property</span><span class="p">::</span><span class="n">FileAccessList</span><span class="o">&amp;</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">PNIIO_EXPORT</span> <span class="n">hdf5</span><span class="p">::</span><span class="n">file</span><span class="p">::</span><span class="n">File</span> <span class="n">pni</span><span class="p">::</span><span class="n">io</span><span class="p">::</span><span class="n">nexus</span><span class="p">::</span><span class="n">create_file</span><span class="p">(</span><span class="n">const</span> <span class="n">boost</span><span class="p">::</span><span class="n">filesystem</span><span class="p">::</span><span class="n">path</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">hdf5</span><span class="p">::</span><span class="n">file</span><span class="p">::</span><span class="n">AccessFlagsBase</span><span class="p">,</span> <span class="n">const</span> <span class="n">hdf5</span><span class="p">::</span><span class="nb">property</span><span class="p">::</span><span class="n">FileCreationList</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">const</span> <span class="n">hdf5</span><span class="p">::</span><span class="nb">property</span><span class="p">::</span><span class="n">FileAccessList</span><span class="o">&amp;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="nexus-open-file">
-<h2><code class="xref cpp cpp-func docutils literal"><span class="pre">nexus::open_file()</span></code><a class="headerlink" href="#nexus-open-file" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt>
-<span class="target" id="pniionamespacepni_1_1io_1_1nexus_1a753ef2abffdb52b3be3c5cb65db8ea54"></span><code class="descname">PNIIO_EXPORT hdf5::file::File pni::io::nexus::open_file(const boost::filesystem::path &amp; path, hdf5::file::AccessFlags flags = hdf5::file::AccessFlags::READONLY, const hdf5::property::FileAccessList &amp; fapl = hdf5::property::FileAccessList())</code></dt>
-<dd><p>open an existing NeXus file </p>
-<p>Function opening an existing NeXus file. This functions checks whether or not a file is a valid NeXus file. If this is not the case an exception will be thrown. In order to open a file without this check just use the hdf5::file::open function from the h5cpp library.</p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>instance of hdf5::file::File </dd>
-<dt><strong>Exceptions</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal"><span class="pre">std::runtime_error</span></code>: in case of a failure</li>
-</ul>
-</dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal"><span class="pre">path</span></code>: reference to the file&#8217;s path </li>
-<li><code class="docutils literal"><span class="pre">flags</span></code>: access flags for the file </li>
-<li><code class="docutils literal"><span class="pre">fapl</span></code>: reference to the file access property list </li>
-</ul>
-</dd>
-</dl>
+<h2><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::open_file()</span></code><a class="headerlink" href="#nexus-open-file" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>doxygenfunction: Unable to resolve multiple matches for function “pni::io::nexus::open_file” with arguments (const boost::filesystem::path &amp;, hdf5::file::AccessFlags, const hdf5::property::FileAccessList &amp;) in doxygen xml output for project “pniio” from directory: /home/jkotan/sources/libpniio-build/doc/api/xml.
+Potential matches:
 </p>
-</dd></dl>
-
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">PNIIO_EXPORT</span> <span class="n">hdf5</span><span class="p">::</span><span class="n">file</span><span class="p">::</span><span class="n">File</span> <span class="n">pni</span><span class="p">::</span><span class="n">io</span><span class="p">::</span><span class="n">nexus</span><span class="p">::</span><span class="n">open_file</span><span class="p">(</span><span class="n">const</span> <span class="n">boost</span><span class="p">::</span><span class="n">filesystem</span><span class="p">::</span><span class="n">path</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">hdf5</span><span class="p">::</span><span class="n">file</span><span class="p">::</span><span class="n">AccessFlags</span><span class="p">,</span> <span class="n">const</span> <span class="n">hdf5</span><span class="p">::</span><span class="nb">property</span><span class="p">::</span><span class="n">FileAccessList</span><span class="o">&amp;</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">PNIIO_EXPORT</span> <span class="n">hdf5</span><span class="p">::</span><span class="n">file</span><span class="p">::</span><span class="n">File</span> <span class="n">pni</span><span class="p">::</span><span class="n">io</span><span class="p">::</span><span class="n">nexus</span><span class="p">::</span><span class="n">open_file</span><span class="p">(</span><span class="n">const</span> <span class="n">boost</span><span class="p">::</span><span class="n">filesystem</span><span class="p">::</span><span class="n">path</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">hdf5</span><span class="p">::</span><span class="n">file</span><span class="p">::</span><span class="n">AccessFlagsBase</span><span class="p">,</span> <span class="n">const</span> <span class="n">hdf5</span><span class="p">::</span><span class="nb">property</span><span class="p">::</span><span class="n">FileAccessList</span><span class="o">&amp;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
@@ -197,14 +155,14 @@
         <li class="right" >
           <a href="nexus.html" title="NeXus API"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.9 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nexus.html" >NeXus API</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.9.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
     </div>
   </body>
 </html>

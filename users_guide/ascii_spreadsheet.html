@@ -2,42 +2,29 @@
 
 <!doctype html>
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Spreadsheet like ASCII files &#8212; pniio 1.2.5 documentation</title>
-    
+    <title>Spreadsheet like ASCII files &#8212; pniio 1.2.9 documentation</title>
     <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '1.2.5',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="pniio 1.2.5 documentation" href="../index.html" />
-    <link rel="up" title="Reading ASCII data" href="ascii.html" />
     <link rel="next" title="Reading binary image data" href="image.html" />
     <link rel="prev" title="The low-level ASCII interface" href="ascii_lowlevel.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
     <![endif]-->
-  </head>
-  <body role="document">
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -50,7 +37,7 @@
         <li class="right" >
           <a href="ascii_lowlevel.html" title="The low-level ASCII interface"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.9 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="legacy.html" >Legacy formats</a> &#187;</li>
           <li class="nav-item nav-item-3"><a href="ascii.html" accesskey="U">Reading ASCII data</a> &#187;</li> 
@@ -58,7 +45,7 @@
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Spreadsheet like ASCII files</a><ul>
 <li><a class="reference internal" href="#fio-file-support">FIO file support</a><ul>
@@ -79,18 +66,20 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/users_guide/ascii_spreadsheet.txt"
+      <li><a href="../_sources/users_guide/ascii_spreadsheet.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -116,18 +105,18 @@ file name.</p>
 is this the typical way how data is accessed in the field of synchrotron
 research, it has also the advantage that the data type is constant within
 every column and  thus standard containers can be used.</p>
-<p>The <code class="xref cpp cpp-class docutils literal"><span class="pre">spreadsheet_reader</span></code> base class does not support any IO operations
+<p>The <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">spreadsheet_reader</span></code> base class does not support any IO operations
 but provides a rather abstract container interface allowing to iterate over
 each column. However, instead of the concrete column we can access only
-instances of <code class="xref cpp cpp-class docutils literal"><span class="pre">column_info</span></code> from this interface which.</p>
-<p><code class="xref cpp cpp-class docutils literal"><span class="pre">column_info</span></code> provides basic information about each column in the
+instances of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">column_info</span></code> from this interface which.</p>
+<p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">column_info</span></code> provides basic information about each column in the
 spreadsheet, namely</p>
 <ul class="simple">
 <li>the <strong>name</strong> of the column</li>
 <li>the <strong>type id</strong> of the cells elementary data type</li>
 <li>the <strong>shape</strong> which is the dimensionality of each cell.</li>
 </ul>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">print_column_info</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">stream</span><span class="p">,</span><span class="k">const</span> <span class="n">spreadsheet_reader</span> <span class="o">&amp;</span><span class="n">reader</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">print_column_info</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">stream</span><span class="p">,</span><span class="k">const</span> <span class="n">spreadsheet_reader</span> <span class="o">&amp;</span><span class="n">reader</span><span class="p">)</span>
 <span class="p">{</span>
    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="nl">info</span><span class="p">:</span> <span class="n">reader</span><span class="p">)</span>
       <span class="n">stream</span><span class="o">&lt;&lt;</span><span class="n">info</span><span class="p">.</span><span class="n">name</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="s">&quot; has type &quot;</span><span class="o">&lt;&lt;</span><span class="n">info</span><span class="p">.</span><span class="n">type_id</span><span class="p">()</span><span class="o">&lt;&lt;</span> <span class="s">&quot; and shape &quot;</span><span class="o">&lt;&lt;</span><span class="n">info</span><span class="p">.</span><span class="n">shape</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
@@ -141,12 +130,12 @@ spreadsheet, namely</p>
 stored in a single file where the run number is encoded in the name of the file.
 A FIO file can be roughly divided into three sections</p>
 <ul class="simple">
-<li>a <em>comment</em> section (starting with <code class="docutils literal"><span class="pre">%c</span></code>) at the very top of the file</li>
-<li>a <em>parameters</em> section (starting with <code class="docutils literal"><span class="pre">%p</span></code>) storing all kinds of meta-data
+<li>a <em>comment</em> section (starting with <code class="docutils literal notranslate"><span class="pre">%c</span></code>) at the very top of the file</li>
+<li>a <em>parameters</em> section (starting with <code class="docutils literal notranslate"><span class="pre">%p</span></code>) storing all kinds of meta-data
 and data not altered during the run in a key-value kind fashion</li>
-<li>a <em>data</em> section (starting with <code class="docutils literal"><span class="pre">%d</span></code>) with a spreadsheet like layout.</li>
+<li>a <em>data</em> section (starting with <code class="docutils literal notranslate"><span class="pre">%d</span></code>) with a spreadsheet like layout.</li>
 </ul>
-<p>A comment line in FIO starts with a <code class="docutils literal"><span class="pre">!</span></code>. The <em>data</em> section itself has two
+<p>A comment line in FIO starts with a <code class="docutils literal notranslate"><span class="pre">!</span></code>. The <em>data</em> section itself has two
 parts</p>
 <ul class="simple">
 <li>a set of <em>column descriptors</em> associating each column with a name and data
@@ -154,7 +143,7 @@ type</li>
 <li>the data itself.</li>
 </ul>
 <p>The following snippet shows a shortened example for a FIO file.</p>
-<div class="highlight-text"><div class="highlight"><pre><span></span>!
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>!
 ! Comments
 %c
  EXAFS-Scan started at 1-Feb-2003 20:51:31
@@ -190,17 +179,17 @@ type</li>
            4770      5.302732       116.333  -0.008544922   0.001220703 7.20128271484375e+01 -7.24616845703125e+01 4.76995088467423e+03 0.00000000000000e+00             5             3             0      426277.7          2122     -41.66667             0      3.333333             0             2      7.666667      199.3333      962.6667      739.6667      836.6667       3113017
 </pre></div>
 </div>
-<p>In order to read FIO files use the <a class="reference internal" href="../api/ascii_spreadsheet.html#_CPPv2N3pni2io10fio_readerE" title="pni::io::fio_reader"><code class="xref cpp cpp-class docutils literal"><span class="pre">pni::io::fio_reader</span></code></a>.
+<p>In order to read FIO files use the <a class="reference internal" href="../api/ascii_spreadsheet.html#_CPPv4N3pni2io10fio_readerE" title="pni::io::fio_reader"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::io::fio_reader</span></code></a>.
 Opening a FIO file works as with any other reader</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">pni</span><span class="o">::</span><span class="n">io</span><span class="o">::</span><span class="n">fio_reader</span> <span class="n">reader</span><span class="p">(</span><span class="s">&quot;run_000001.fio&quot;</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">pni</span><span class="o">::</span><span class="n">io</span><span class="o">::</span><span class="n">fio_reader</span> <span class="n">reader</span><span class="p">(</span><span class="s">&quot;run_000001.fio&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="section" id="accessing-parameters">
 <h3>Accessing parameters<a class="headerlink" href="#accessing-parameters" title="Permalink to this headline">¶</a></h3>
 <p>Accessing parameters (stored as key value pairs) is done via the
-<code class="xref cpp cpp-func docutils literal"><span class="pre">parameter()</span></code> template member function. Its template parameter determines
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">parameter()</span></code> template member function. Its template parameter determines
 the requested data type for the parameter value</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">pni</span><span class="o">::</span><span class="n">io</span><span class="o">::</span><span class="n">fio_reader</span> <span class="n">reader</span><span class="p">(</span><span class="s">&quot;run_0000001.fio&quot;</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">pni</span><span class="o">::</span><span class="n">io</span><span class="o">::</span><span class="n">fio_reader</span> <span class="n">reader</span><span class="p">(</span><span class="s">&quot;run_0000001.fio&quot;</span><span class="p">);</span>
 
 <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">reader</span><span class="p">.</span><span class="n">parameter</span><span class="o">&lt;</span><span class="n">pni</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">float32</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;IDORIS&quot;</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 </pre></div>
@@ -208,10 +197,10 @@ the requested data type for the parameter value</p>
 </div>
 <div class="section" id="accessing-columns">
 <h3>Accessing columns<a class="headerlink" href="#accessing-columns" title="Permalink to this headline">¶</a></h3>
-<p>Columns are accessed via the <code class="xref cpp cpp-func docutils literal"><span class="pre">column()</span></code> template member function
+<p>Columns are accessed via the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">column()</span></code> template member function
 where the template parameter is typically the container type used to
 store the column data</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">Float64Column</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">pni</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">float64</span><span class="o">&gt;</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">Float64Column</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">pni</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">float64</span><span class="o">&gt;</span><span class="p">;</span>
 
 <span class="n">pni</span><span class="o">::</span><span class="n">io</span><span class="o">::</span><span class="n">fio_reader</span> <span class="n">reader</span><span class="p">(</span><span class="s">&quot;run_0000001.fio&quot;</span><span class="p">);</span>
 
@@ -219,8 +208,8 @@ store the column data</p>
 </pre></div>
 </div>
 <p>the column itself is determined by its name which is passed as the sole
-argument to <code class="xref cpp cpp-func docutils literal"><span class="pre">column()</span></code>.</p>
-<p>For a full reference of the <a class="reference internal" href="../api/ascii_spreadsheet.html#_CPPv2N3pni2io10fio_readerE" title="pni::io::fio_reader"><code class="xref cpp cpp-class docutils literal"><span class="pre">pni::io::fio_reader</span></code></a> see the
+argument to <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">column()</span></code>.</p>
+<p>For a full reference of the <a class="reference internal" href="../api/ascii_spreadsheet.html#_CPPv4N3pni2io10fio_readerE" title="pni::io::fio_reader"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::io::fio_reader</span></code></a> see the
 <a class="reference internal" href="../api/ascii_spreadsheet.html#ascii-spreadsheet-api"><span class="std std-ref">ASCII spreadsheet API</span></a>.</p>
 </div>
 </div>
@@ -244,7 +233,7 @@ argument to <code class="xref cpp cpp-func docutils literal"><span class="pre">c
         <li class="right" >
           <a href="ascii_lowlevel.html" title="The low-level ASCII interface"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.9 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="legacy.html" >Legacy formats</a> &#187;</li>
           <li class="nav-item nav-item-3"><a href="ascii.html" >Reading ASCII data</a> &#187;</li> 
@@ -252,7 +241,7 @@ argument to <code class="xref cpp cpp-func docutils literal"><span class="pre">c
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.9.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
     </div>
   </body>
 </html>

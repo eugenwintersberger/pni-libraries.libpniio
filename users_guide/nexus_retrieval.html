@@ -2,42 +2,29 @@
 
 <!doctype html>
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Retrieving objects &#8212; pniio 1.2.5 documentation</title>
-    
+    <title>Retrieving objects &#8212; pniio 1.2.9 documentation</title>
     <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '1.2.5',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="pniio 1.2.5 documentation" href="../index.html" />
-    <link rel="up" title="NeXus support" href="nexus.html" />
     <link rel="next" title="NeXus path’s: pni::nexus::Path" href="nexus_path.html" />
     <link rel="prev" title="Creating objects" href="nexus_groups.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
     <![endif]-->
-  </head>
-  <body role="document">
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -50,7 +37,7 @@
         <li class="right" >
           <a href="nexus_groups.html" title="Creating objects"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.9 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nexus.html" accesskey="U">NeXus support</a> &#187;</li> 
       </ul>
@@ -62,22 +49,24 @@
                         title="previous chapter">Creating objects</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="nexus_path.html"
-                        title="next chapter">NeXus path&#8217;s: <code class="docutils literal"><span class="pre">pni::nexus::Path</span></code></a></p>
+                        title="next chapter">NeXus path’s: <code class="docutils literal notranslate"><span class="pre">pni::nexus::Path</span></code></a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/users_guide/nexus_retrieval.txt"
+      <li><a href="../_sources/users_guide/nexus_retrieval.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -90,31 +79,31 @@
             
   <div class="section" id="retrieving-objects">
 <h1>Retrieving objects<a class="headerlink" href="#retrieving-objects" title="Permalink to this headline">¶</a></h1>
-<p>Objects (instances of <code class="xref cpp cpp-class docutils literal"><span class="pre">hdf5::node::Node</span></code>) within an HDF5 file are
-addressed by a path (instance of <code class="xref cpp cpp-class docutils literal"><span class="pre">hdf5::Path</span></code>) which is a list
+<p>Objects (instances of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hdf5::node::Node</span></code>) within an HDF5 file are
+addressed by a path (instance of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hdf5::Path</span></code>) which is a list
 of link names one has to follow to ultimately end up at the requested object.</p>
 <p>In the NeXus world, additionally to the name of a link, we also can search
 for objects  by their type or base class. This introduces a new kind of
-path: the <em>NeXus path</em> represented by the <a class="reference internal" href="../api/nexus_path.html#_CPPv2N3pni2io5nexus4PathE" title="pni::io::nexus::Path"><code class="xref cpp cpp-class docutils literal"><span class="pre">pni::io::nexus::Path</span></code></a>.
+path: the <em>NeXus path</em> represented by the <a class="reference internal" href="../api/nexus_path.html#_CPPv4N3pni2io5nexus4PathE" title="pni::io::nexus::Path"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::io::nexus::Path</span></code></a>.
 A NeXus path allows to augument every link name with a particular base class
-type. So for instance, the HDF5 path to the <code class="docutils literal"><span class="pre">data</span></code> field in a detector group
+type. So for instance, the HDF5 path to the <code class="docutils literal notranslate"><span class="pre">data</span></code> field in a detector group
 would read</p>
 <blockquote>
-<div><code class="docutils literal"><span class="pre">/entry/instrument/detector/data</span></code></div></blockquote>
+<div><code class="docutils literal notranslate"><span class="pre">/entry/instrument/detector/data</span></code></div></blockquote>
 <p>the NeXus path would look like this</p>
 <blockquote>
-<div><code class="docutils literal"><span class="pre">/entry:NXentry/instrument:NXinstrument/detector:NXdetector/data</span></code></div></blockquote>
-<p>where the string after the <code class="docutils literal"><span class="pre">:</span></code> denotes the base class type of the particular
-group. Clearly we cannot add a type to a dataset name (like <code class="docutils literal"><span class="pre">data</span></code> here).
+<div><code class="docutils literal notranslate"><span class="pre">/entry:NXentry/instrument:NXinstrument/detector:NXdetector/data</span></code></div></blockquote>
+<p>where the string after the <code class="docutils literal notranslate"><span class="pre">:</span></code> denotes the base class type of the particular
+group. Clearly we cannot add a type to a dataset name (like <code class="docutils literal notranslate"><span class="pre">data</span></code> here).
 In particular, the NeXus standard demands that there is only on instance
-of <code class="docutils literal"><span class="pre">NXinstrument</span></code> in an entry group. Thus, we could reduce the above path to</p>
+of <code class="docutils literal notranslate"><span class="pre">NXinstrument</span></code> in an entry group. Thus, we could reduce the above path to</p>
 <blockquote>
-<div><code class="docutils literal"><span class="pre">/entry:NXentry/:NXinstrument/detector:NXdetector/data</span></code></div></blockquote>
+<div><code class="docutils literal notranslate"><span class="pre">/entry:NXentry/:NXinstrument/detector:NXdetector/data</span></code></div></blockquote>
 <p>and still would be able to uniquely address the requested data field.
 Furthermore, if there is only one detector available we could further reduce
 the path to</p>
 <blockquote>
-<div><code class="docutils literal"><span class="pre">/entry:NXentry/:NXinstrument/:NXdetector/data</span></code></div></blockquote>
+<div><code class="docutils literal notranslate"><span class="pre">/entry:NXentry/:NXinstrument/:NXdetector/data</span></code></div></blockquote>
 <p>The advantage of this path scheme is that the path becomes independent on
 the particular name of, for instance, the detector group. In some sense
 a NeXus path will ask for objects of a particular properties rather than
@@ -126,7 +115,7 @@ tell which detector group should be selected. However, as will be shown later,
 this property of a NeXus path can be exploited to our advantage.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="nexus_path.html">NeXus path&#8217;s: <code class="docutils literal"><span class="pre">pni::nexus::Path</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="nexus_path.html">NeXus path’s: <code class="docutils literal notranslate"><span class="pre">pni::nexus::Path</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="nexus_search.html">Searching for objects</a></li>
 </ul>
 </div>
@@ -150,14 +139,14 @@ this property of a NeXus path can be exploited to our advantage.</p>
         <li class="right" >
           <a href="nexus_groups.html" title="Creating objects"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.9 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nexus.html" >NeXus support</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.9.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
     </div>
   </body>
 </html>

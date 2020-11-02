@@ -2,42 +2,29 @@
 
 <!doctype html>
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>A basic introduction to Nexus &#8212; pniio 1.2.5 documentation</title>
-    
+    <title>A basic introduction to Nexus &#8212; pniio 1.2.9 documentation</title>
     <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '1.2.5',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="pniio 1.2.5 documentation" href="../index.html" />
-    <link rel="up" title="NeXus support" href="nexus.html" />
     <link rel="next" title="Working with files" href="nexus_files.html" />
     <link rel="prev" title="NeXus support" href="nexus.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
     <![endif]-->
-  </head>
-  <body role="document">
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -50,14 +37,14 @@
         <li class="right" >
           <a href="nexus.html" title="NeXus support"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.9 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nexus.html" accesskey="U">NeXus support</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">A basic introduction to Nexus</a><ul>
 <li><a class="reference internal" href="#motivation">Motivation</a></li>
@@ -80,18 +67,20 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/users_guide/nexus_introduction.txt"
+      <li><a href="../_sources/users_guide/nexus_introduction.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -109,7 +98,7 @@
 <p>Today, data recorded during synchrotron experiments is typically stored in
 individual binary image files and/or as flat ASCII files. A typical directory
 structure for an individual run could look like this</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>~/run_001/ user@localhost:$&gt; ls
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~/run_001/ user@localhost:$&gt; ls
 
 run_001.dat
 detector/image_0001.tif
@@ -120,7 +109,7 @@ detector/image_0002.tif
 detector/image_0100.tif
 </pre></div>
 </div>
-<p>The ASCII file <code class="file docutils literal"><span class="pre">run_001.dat</span></code> stores scalar data while the detector data is
+<p>The ASCII file <code class="file docutils literal notranslate"><span class="pre">run_001.dat</span></code> stores scalar data while the detector data is
 stored in a separate directory as image files (here TIFF).
 Such an approach leads to technical and organizational problems</p>
 <ul class="simple">
@@ -141,9 +130,9 @@ organized within a particular format in order to become a valid Nexus file.
 Currently the following physical file formats are supported by the original
 Nexus API</p>
 <ul class="simple">
-<li><em>XML</em> &#8211; only used for file structure validation</li>
-<li><em>HDF4</em> &#8211; for historical reasons, should not be used for new data</li>
-<li><em>HDF5</em> &#8211; the current standard storage backend for Nexus files.</li>
+<li><em>XML</em> – only used for file structure validation</li>
+<li><em>HDF4</em> – for historical reasons, should not be used for new data</li>
+<li><em>HDF5</em> – the current standard storage backend for Nexus files.</li>
 </ul>
 <p>One of the aims of <em>libpniio</em> is to provide an abstraction layer between the
 user and the storage backend. As <em>libpniio</em> currently supports only HDF5 this is
@@ -164,7 +153,7 @@ NeXus file standard.</p>
 <div class="admonition attention">
 <p class="first admonition-title">Attention</p>
 <p class="last">Before you continue reading this documentation you should have a firm
-idea about <em>h5cpp</em>&#8216;s concepts and API. So if you never used <em>h5cpp</em> before
+idea about <em>h5cpp</em>’s concepts and API. So if you never used <em>h5cpp</em> before
 you better go away for a while here and read the <a class="reference external" href="https://ess-dmsc.github.io/h5cpp/index.html">h5cpp documentation</a>.</p>
 </div>
 </div>
@@ -193,24 +182,24 @@ to define the organizational structure of data in a file.</p>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">object</th>
 <th class="head">description</th>
-<th class="head">&nbsp;</th>
+<th class="head">&#160;</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><em>NXgroup</em></td>
 <td>is a container which can hold instances of fields and
 other groups.</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-odd"><td><em>NXfield</em></td>
 <td>stores numerical and other data.</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 <tr class="row-even"><td><em>NXattribute</em></td>
 <td>instances of NXgroup and NXfield can be enhanced with
 attributes which can store additional metadata about an
 object.</td>
-<td>&nbsp;</td>
+<td>&#160;</td>
 </tr>
 </tbody>
 </table>
@@ -236,13 +225,13 @@ HDF5 types</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><em>NXgroup</em></td>
-<td><code class="xref cpp cpp-class docutils literal"><span class="pre">hdf5::node::Group</span></code></td>
+<td><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hdf5::node::Group</span></code></td>
 </tr>
 <tr class="row-odd"><td><em>NXfield</em></td>
-<td><code class="xref cpp cpp-class docutils literal"><span class="pre">hdf5::node::Dataset</span></code></td>
+<td><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hdf5::node::Dataset</span></code></td>
 </tr>
 <tr class="row-even"><td><em>NXattribute</em></td>
-<td><code class="xref cpp cpp-class docutils literal"><span class="pre">hdf5::attribute::Attribute</span></code></td>
+<td><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hdf5::attribute::Attribute</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -284,14 +273,14 @@ collaboration with the scientific community.</p>
         <li class="right" >
           <a href="nexus.html" title="NeXus support"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.9 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nexus.html" >NeXus support</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.9.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
     </div>
   </body>
 </html>

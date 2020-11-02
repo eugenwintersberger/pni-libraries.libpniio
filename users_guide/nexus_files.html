@@ -2,42 +2,29 @@
 
 <!doctype html>
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Working with files &#8212; pniio 1.2.5 documentation</title>
-    
+    <title>Working with files &#8212; pniio 1.2.9 documentation</title>
     <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '1.2.5',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="pniio 1.2.5 documentation" href="../index.html" />
-    <link rel="up" title="NeXus support" href="nexus.html" />
     <link rel="next" title="Creating objects" href="nexus_groups.html" />
     <link rel="prev" title="A basic introduction to Nexus" href="nexus_introduction.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
     <![endif]-->
-  </head>
-  <body role="document">
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -50,14 +37,14 @@
         <li class="right" >
           <a href="nexus_introduction.html" title="A basic introduction to Nexus"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.9 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nexus.html" accesskey="U">NeXus support</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Working with files</a><ul>
 <li><a class="reference internal" href="#creating-single-files">Creating single files</a></li>
@@ -76,18 +63,20 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/users_guide/nexus_files.txt"
+      <li><a href="../_sources/users_guide/nexus_files.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -103,19 +92,19 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The functions presented in this chapter mainly deal with objects of
-type <code class="xref cpp cpp-class docutils literal"><span class="pre">hdf5::file::File</span></code>. For a full list of operations provided
+type <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hdf5::file::File</span></code>. For a full list of operations provided
 by this type consult the <em>h5cpp</em> manual.</p>
 </div>
 <div class="section" id="creating-single-files">
 <h2>Creating single files<a class="headerlink" href="#creating-single-files" title="Permalink to this headline">¶</a></h2>
 <p>In order to create a file <em>libpniio</em> provides some simple wrappers around
-the <code class="xref cpp cpp-func docutils literal"><span class="pre">hdf5::file::create()</span></code> functions provided by <em>h5cpp</em>. These wrappers
+the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hdf5::file::create()</span></code> functions provided by <em>h5cpp</em>. These wrappers
 basically add all the attributes to the root group of an HDF5 file required
 by the NeXus standard.
-In order to create a single file use the <code class="xref cpp cpp-func docutils literal"><span class="pre">nexus::create_file()</span></code>
+In order to create a single file use the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::create_file()</span></code>
 wrapper function which in turn will return an instance of
-<code class="xref cpp cpp-class docutils literal"><span class="pre">hdf5::file::File</span></code></p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;pni/io/nexus.hpp&gt;</span><span class="cp"></span>
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hdf5::file::File</span></code></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;pni/io/nexus.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;h5cpp/hdf5.hpp&gt;</span><span class="cp"></span>
 
 <span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="o">::</span><span class="n">io</span><span class="p">;</span>
@@ -131,13 +120,13 @@ wrapper function which in turn will return an instance of
 </pre></div>
 </div>
 <p>The code should be rather self explaining.  If the file already exists a
-<code class="xref cpp cpp-class docutils literal"><span class="pre">std::runtime_error</span></code> exception is thrown.
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">std::runtime_error</span></code> exception is thrown.
 In order to overwrite an existing file one can use</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">h5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">create_file</span><span class="p">(</span><span class="s">&quot;test.nxs&quot;</span><span class="p">,</span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">AccessFlags</span><span class="o">::</span><span class="n">TRUNCATE</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">h5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">create_file</span><span class="p">(</span><span class="s">&quot;test.nxs&quot;</span><span class="p">,</span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">AccessFlags</span><span class="o">::</span><span class="n">TRUNCATE</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This option should be used with case as all data stored in the original file
-will be lost forever. For more options to <code class="xref cpp cpp-func docutils literal"><span class="pre">create_file()</span></code>
+will be lost forever. For more options to <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">create_file()</span></code>
 check the API documentation and the <em>h5cpp</em> documentation.</p>
 </div>
 <div class="section" id="create-distributed-files">
@@ -150,21 +139,21 @@ group meeting</p>
 </div>
 <div class="section" id="opening-and-closing-files">
 <h2>Opening and closing files<a class="headerlink" href="#opening-and-closing-files" title="Permalink to this headline">¶</a></h2>
-<p>Like for creating files there is a wrapper function <code class="xref cpp cpp-func docutils literal"><span class="pre">nexus::open_file()</span></code>
+<p>Like for creating files there is a wrapper function <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::open_file()</span></code>
 to open a NeXus file.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">f</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">open_file</span><span class="p">(</span><span class="s">&quot;test.nxs&quot;</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">f</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">open_file</span><span class="p">(</span><span class="s">&quot;test.nxs&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>By default files are opened in read-only mode in order to avoid accidental
 data manipulations. To open a file for reading and writing use</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">f</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">open_file</span><span class="p">(</span><span class="s">&quot;test.nxs&quot;</span><span class="p">,</span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">AccessFlags</span><span class="o">::</span><span class="n">READWRITE</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">f</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">open_file</span><span class="p">(</span><span class="s">&quot;test.nxs&quot;</span><span class="p">,</span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">AccessFlags</span><span class="o">::</span><span class="n">READWRITE</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The object returned by <code class="xref cpp cpp-func docutils literal"><span class="pre">nexus::open_file()</span></code> is again an instance
-of <code class="xref cpp cpp-func docutils literal"><span class="pre">hdf5::file::File()</span></code>. The <code class="xref cpp cpp-func docutils literal"><span class="pre">nexus::open_file()</span></code> does
+<p>The object returned by <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::open_file()</span></code> is again an instance
+of <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hdf5::file::File()</span></code>. The <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::open_file()</span></code> does
 not check whether or not is a valid NeXus file. In order to perform that
-check use the <code class="xref cpp cpp-func docutils literal"><span class="pre">is_nexus_file()</span></code></p>
-<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">filesystem</span><span class="o">::</span><span class="n">path</span> <span class="n">file_path</span> <span class="o">=</span> <span class="p">...;</span>
+check use the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">is_nexus_file()</span></code></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">filesystem</span><span class="o">::</span><span class="n">path</span> <span class="n">file_path</span> <span class="o">=</span> <span class="p">...;</span>
 
 <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">nexus</span><span class="o">::</span><span class="n">is_nexus_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">))</span>
 <span class="p">{</span>
@@ -196,14 +185,14 @@ check use the <code class="xref cpp cpp-func docutils literal"><span class="pre"
         <li class="right" >
           <a href="nexus_introduction.html" title="A basic introduction to Nexus"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.9 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nexus.html" >NeXus support</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.9.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
     </div>
   </body>
 </html>
