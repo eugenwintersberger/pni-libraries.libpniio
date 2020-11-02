@@ -152,9 +152,9 @@ namespace cbf{
                         "Error reading 4byte from the CBF stream!");
             }
 
-            if (((unsigned int) buffer) != 0x80000000)
+            if (((uint32_t) buffer) != 0x80000000)
             {
-                v += (int) buffer;
+                v += (int32_t) buffer;
                 v_old = v;
                 continue;
             }
