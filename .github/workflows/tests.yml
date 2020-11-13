@@ -1,0 +1,46 @@
+name: Test Package
+
+on: [push, pull_request]
+
+jobs:
+
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [debian11, debian10, debian9, ubuntu20.10, ubuntu20.04, ubuntu18.04]
+        buildtype: [Debug, Release]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - name: Build the docker
+        env:
+          OS: ${{ matrix.os }}
+        run: docker build -t build .ci/${OS}
+      - name: Run the docker
+        run: docker run --name build -i -d -v"$PWD:/src" build
+      - name: Update git submodules
+        run: bash -c "git submodule init && git submodule update --remote && mkdir build"
+      - name: Run Ninja
+        env:
+          BUILDTYPE: ${{ matrix.buildtype }}
+        run: docker  exec --user root build /bin/bash -c "cd build && cmake -G Ninja -DWITH_CONAN=OFF -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
+      - name: Build all
+        env:
+          BUILDTYPE: ${{ matrix.buildtype }}
+        run: docker  exec --user root build /bin/bash -c "cd build && cmake --build . --target all --config $BUILDTYPE"
+      - name: Build api_doc
+        env:
+          BUILDTYPE: ${{ matrix.buildtype }}
+        run: docker  exec --user root build /bin/bash -c "cd build && cmake --build . --target api_doc --config $BUILDTYPE"
+      - name: Build html
+        env:
+          BUILDTYPE: ${{ matrix.buildtype }}
+        run: docker  exec --user root build /bin/bash -c "cd build && cmake --build . --target html --config $BUILDTYPE"
+      - name: Build check
+        env:
+          BUILDTYPE: ${{ matrix.buildtype }}
+        run: docker  exec --user root build /bin/bash -c "cd build && cmake --build . --target check --config $BUILDTYPE"
+      - name: Stop the docker
+        run: docker container stop build
+
