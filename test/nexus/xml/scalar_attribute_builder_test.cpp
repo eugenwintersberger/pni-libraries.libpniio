@@ -48,6 +48,9 @@ BOOST_AUTO_TEST_CASE(test_uint8_attribute)
   uint8 data;
   attribute.read(data);
   BOOST_CHECK(data == 12);
+  auto dataspace = attribute.dataspace();
+  BOOST_CHECK(dataspace.type() == hdf5::dataspace::Type::SIMPLE);
+  BOOST_CHECK(dataspace.size() == 1);
 
 }
 
@@ -59,6 +62,9 @@ BOOST_AUTO_TEST_CASE(test_int32_attribute)
   int32 data;
   attribute.read(data);
   BOOST_CHECK(data == -12);
+  auto dataspace = attribute.dataspace();
+  BOOST_CHECK(dataspace.type() == hdf5::dataspace::Type::SIMPLE);
+  BOOST_CHECK(dataspace.size() == 1);
 }
 
 BOOST_AUTO_TEST_CASE(test_string_attribute)
@@ -69,6 +75,8 @@ BOOST_AUTO_TEST_CASE(test_string_attribute)
   std::string data;
   attribute.read(data);
   BOOST_CHECK(data == "hello");
+  auto dataspace = attribute.dataspace();
+  BOOST_CHECK(dataspace.type() == hdf5::dataspace::Type::SCALAR);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -14,7 +14,7 @@
     	<field type="float128" name="float128_field"></field>
     	<field type="string" name="string_field">hello</field>
     </group>
-    
+
     <group name="multidim_field">
     	<field type="uint16" name="data" units="cps">
     		<dimensions rank="3">
@@ -23,16 +23,19 @@
     			<dim value="2048" index="3"/>
     		</dimensions>
     	</field>
-    
+
         <field type="float32" name="matrix">
         	<dimensions rank="2">
         		<dim value="2" index="0"/>
         		<dim value="2" index="1"/>
         	</dimensions>
         	1 2 3 4
-        </field>    
+        </field>
+
+        <field type="string" name="string_list">
+                <dimensions rank="1">
+                        <dim value="2" index="0"/>
+                </dimensions>
+        </field>
     </group>
-    
-    
-    
 </group>

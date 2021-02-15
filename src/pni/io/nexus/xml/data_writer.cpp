@@ -42,6 +42,20 @@ void write_string_data(const std::string &data,const OBJ &object)
 }
 
 template<typename OBJ>
+void extend_simple_scalar(const OBJ &){
+}
+
+void extend_simple_scalar(const hdf5::node::Dataset &object){
+  auto dataspace = object.dataspace();
+  if(dataspace.size() == 0){
+    hdf5::Dimensions chunk = object.creation_list().chunk();
+    if(chunk.size() == 1 && chunk[0] == 1){
+      object.extent(0, 1);
+    }
+  }
+}
+
+template<typename OBJ>
 void write_data(const Node &node,const OBJ &object)
 {
   using namespace pni::core;
@@ -49,6 +63,7 @@ void write_data(const Node &node,const OBJ &object)
   std::string data = node.str_data();
 
   if(data.empty()) return;
+  extend_simple_scalar(object);
 
   switch(type_id)
   {

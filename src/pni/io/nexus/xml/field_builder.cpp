@@ -43,6 +43,16 @@ hdf5::dataspace::Simple FieldBuilder::construct_dataspace() const
   return space;
 }
 
+hdf5::dataspace::Simple FieldBuilder::construct_empty_dataspace() const
+{
+  hdf5::dataspace::Simple space({0},{1});
+  hdf5::Dimensions current_dimensions = space.current_dimensions();
+  hdf5::Dimensions max_dimensions(current_dimensions);
+  max_dimensions.front() = H5S_UNLIMITED;
+  space.dimensions(current_dimensions,max_dimensions);
+  return space;
+}
+
 
 FieldBuilder::FieldBuilder(const Node &xml_node):
     ObjectBuilder(xml_node),
@@ -67,10 +77,25 @@ void FieldBuilder::build(const hdf5::node::Node &parent) const
   std::string    field_name  = node().name();
 
   property::LinkCreationList lcpl;
-  hdf5::property::DatasetCreationList dcpl = dcpl_builder_.build();
-  hdf5::dataspace::Simple dataspace = construct_dataspace();
+  hdf5::property::DatasetCreationList dcpl;
   hdf5::datatype::Datatype datatype = datatype_builder_.build();
+  hdf5::dataspace::Dataspace dataspace = hdf5::dataspace::Scalar();
 
+  bool is_string = ((datatype.get_class() == hdf5::datatype::Class::VARLENGTH)
+		    ||
+		    (datatype.get_class() == hdf5::datatype::Class::STRING));
+
+  auto has_dimension_node = node().get_child_optional("dimensions");
+  if( (!is_string) || has_dimension_node)
+  {
+    dcpl = dcpl_builder_.build();
+    if(has_dimension_node){
+      dataspace = construct_dataspace();
+    }
+    else {
+      dataspace = construct_empty_dataspace();
+    }
+  }
   hdf5::node::Dataset dataset(parent,field_name,datatype,dataspace,lcpl,dcpl);
 
   if(node().has_attribute("long_name"))

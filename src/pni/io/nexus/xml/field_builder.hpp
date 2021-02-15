@@ -37,6 +37,7 @@ class PNIIO_EXPORT FieldBuilder : public ObjectBuilder
 {
   private:
     hdf5::dataspace::Simple construct_dataspace() const;
+    hdf5::dataspace::Simple construct_empty_dataspace() const;
 
     DataspaceBuilder dataspace_builder_;
     DatatypeBuilder  datatype_builder_;

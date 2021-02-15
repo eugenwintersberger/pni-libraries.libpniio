@@ -40,7 +40,16 @@ void AttributeBuilder::build(const hdf5::node::Node &parent) const
   std::string attribute_name = node().name();
 
   hdf5::datatype::Datatype type = datatype_builder_.build();
-  hdf5::dataspace::Simple space = dataspace_builder_.build();
+  hdf5::dataspace::Dataspace space = hdf5::dataspace::Scalar();
+
+  bool is_string = ((type.get_class() == hdf5::datatype::Class::VARLENGTH)
+		    ||
+		    (type.get_class() == hdf5::datatype::Class::STRING));
+
+  if( (!is_string) || node().get_child_optional("dimensions"))
+  {
+    space = dataspace_builder_.build();
+  }
 
   hdf5::attribute::Attribute attribute = parent.attributes.create(attribute_name,type,space);
 
