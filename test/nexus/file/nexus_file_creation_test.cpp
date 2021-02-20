@@ -47,14 +47,11 @@ BOOST_AUTO_TEST_CASE(test_creation)
   BOOST_CHECK(root_group.attributes.exists("file_time"));
   BOOST_CHECK(root_group.attributes.exists("file_update_time"));
   BOOST_CHECK(root_group.attributes.exists("file_name"));
-  BOOST_CHECK(root_group.attributes.exists("NeXus_version"));
 
   //check the content of some of the attributes
   std::string attribute_content;
   BOOST_CHECK_NO_THROW(root_group.attributes["NX_class"].read(attribute_content));
   BOOST_CHECK(attribute_content == "NXroot");
-  BOOST_CHECK_NO_THROW(root_group.attributes["NeXus_version"].read(attribute_content));
-  BOOST_CHECK(attribute_content == "4.3.0");
   BOOST_CHECK_NO_THROW(root_group.attributes["file_name"].read(attribute_content));
   BOOST_CHECK(attribute_content == "test_creation.nxs");
 }

@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE(default_construction)
 BOOST_AUTO_TEST_CASE(test_from_iterator)
 {
   nexus::AttributeList list(root_group.attributes.begin(),root_group.attributes.end());
-  BOOST_CHECK(list.size() == 6);
+  BOOST_CHECK(list.size() == 5);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

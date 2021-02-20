@@ -101,13 +101,11 @@ file::File create_file(const filesystem::path &path,
   //
   try
   {
-    write_nexus_file_attribute(root_group,"HDF5_version",hdf5_version);
+    write_nexus_file_attribute(root_group,"HDF5_Version",hdf5_version);
     write_nexus_file_attribute(root_group,"NX_class","NXroot");
     write_nexus_file_attribute(root_group,"file_time",DateTime::get_date_time_str());
     write_nexus_file_attribute(root_group,"file_update_time",DateTime::get_date_time_str());
     write_nexus_file_attribute(root_group,"file_name",path.string());
-    write_nexus_file_attribute(root_group,"NeXus_version","4.3.0");
-
   }
   catch(const std::runtime_error &error)
   {
@@ -140,8 +138,7 @@ bool is_nexus_file(const filesystem::path &path)
   if (!(root_group.attributes.exists("NX_class") &&
         root_group.attributes.exists("file_time") &&
         root_group.attributes.exists("file_update_time") &&
-        root_group.attributes.exists("file_name") &&
-        root_group.attributes.exists("NeXus_version")))
+        root_group.attributes.exists("file_name")))
   {
     return false;
   }
