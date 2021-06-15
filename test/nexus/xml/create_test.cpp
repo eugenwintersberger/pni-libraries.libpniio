@@ -87,4 +87,22 @@ BOOST_AUTO_TEST_CASE(detector_master_data_file)
 
 }
 
+BOOST_AUTO_TEST_CASE(from_detector_link)
+{
+  using hdf5::node::get_node;
+  using hdf5::node::Type;
+  boost::filesystem::path file = "create/detector_link.xml";
+  BOOST_CHECK_NO_THROW(xml::create_from_file(root_group,file));
+
+  BOOST_CHECK(get_node(root_group,"/entry").type() == Type::GROUP);
+  BOOST_CHECK(get_node(root_group,"/entry/string").type() == Type::GROUP);
+  BOOST_CHECK(get_node(root_group,"/entry/string/value").type() == Type::DATASET);
+  BOOST_CHECK(get_node(root_group,"/entry/string/time").type() == Type::DATASET);
+  BOOST_CHECK(get_node(root_group,"/entry/double").type() == Type::GROUP);
+  BOOST_CHECK(get_node(root_group,"/entry/double/value").type() == Type::DATASET);
+  BOOST_CHECK(get_node(root_group,"/entry/double/time").type() == Type::DATASET);
+  BOOST_CHECK(get_node(root_group,"/entry/data").type() == Type::GROUP);
+  BOOST_CHECK(get_node(root_group,"/entry/data/data").type() == Type::DATASET);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
