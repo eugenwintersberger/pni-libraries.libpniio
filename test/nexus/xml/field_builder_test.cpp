@@ -164,6 +164,13 @@ BOOST_AUTO_TEST_CASE(test_multidim_fields)
   BOOST_CHECK(dataspace.type() == hdf5::dataspace::Type::SIMPLE);
   BOOST_CHECK(dataset.creation_list().layout() == hdf5::property::DatasetLayout::CHUNKED);
 
+  // dataset.extent(0,1);
+  auto size = dataset.dataspace().size();
+  hdf5::dataspace::Hyperslab selection{{0},{1},{1},{1}};
+  selection.offset(0, size - 1);
+  std::string value  = "My string";
+  dataset.write(value, selection);
+
   dataset = hdf5::node::get_node(root_group,"/multidim_field/data");
   dataspace = dataset.dataspace();
   BOOST_CHECK(nexus::get_type_id(dataset) == type_id_t::UINT16);
