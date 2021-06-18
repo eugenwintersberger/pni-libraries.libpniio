@@ -105,4 +105,13 @@ BOOST_AUTO_TEST_CASE(from_detector_link)
   BOOST_CHECK(get_node(root_group,"/entry/data/data").type() == Type::DATASET);
 }
 
+BOOST_AUTO_TEST_CASE(from_duplicate_field)
+{
+  using hdf5::node::get_node;
+  using hdf5::node::Type;
+  boost::filesystem::path file = "create/duplicated_field.xml";
+  BOOST_CHECK_THROW(xml::create_from_file(root_group,file), std::runtime_error);
+
+}
+
 BOOST_AUTO_TEST_SUITE_END()
