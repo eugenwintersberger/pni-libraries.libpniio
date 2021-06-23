@@ -114,4 +114,13 @@ BOOST_AUTO_TEST_CASE(from_duplicate_field)
 
 }
 
+BOOST_AUTO_TEST_CASE(from_duplicate_group)
+{
+  using hdf5::node::get_node;
+  using hdf5::node::Type;
+  boost::filesystem::path file = "create/duplicated_group.xml";
+  BOOST_CHECK_THROW(xml::create_from_file(root_group,file), std::runtime_error);
+
+}
+
 BOOST_AUTO_TEST_SUITE_END()

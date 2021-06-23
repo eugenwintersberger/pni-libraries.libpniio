@@ -1,0 +1,4 @@
+<group type="NXentry" name="entry">
+    <group type="NXdata" name="data"/>
+    <group type="NXinstrument" name="data"/>
+</group>
