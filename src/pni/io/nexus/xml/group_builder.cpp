@@ -61,7 +61,7 @@ hdf5::node::Group group_from_node(const hdf5::node::Group &parent,
     }
     catch(const std::bad_cast&){
 	std::stringstream ss;
-	ss << "The '" << parent.name() << "' node is not of the Group type";
+	ss << "The '" << parent.link().path().name() << "' node is not of the Group type";
 	throw std::runtime_error(ss.str());
     }
     //create the group
