@@ -51,6 +51,16 @@ hdf5::node::Group group_from_node(const hdf5::node::Group &parent,
     if(name == "/"  && parent.link().path().is_root())
         return parent;
 
+    try{
+      const hdf5::node::Group & parent_group = dynamic_cast<const hdf5::node::Group &>(parent);
+      if(parent_group.nodes.exists(name)){
+	std::stringstream ss;
+	ss << "Group '" << name << "' already exists";
+	throw std::runtime_error(ss.str());
+      }
+    }
+    catch(const std::bad_cast&){
+    }
     //create the group
     hdf5::node::Group group(parent,name);
 
