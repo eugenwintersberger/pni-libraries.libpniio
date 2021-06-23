@@ -1,0 +1,4 @@
+<group type="NXentry" name="entry">
+    <field type="string" name="string_scalar"/>
+    <field type="string" name="string_scalar"/>
+</group>
