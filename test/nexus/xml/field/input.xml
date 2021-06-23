@@ -37,5 +37,8 @@
                         <dim value="2" index="0"/>
                 </dimensions>
         </field>
+        <field type="string" name="empty_string_list">
+                <dimensions rank="1"/>
+        </field>
     </group>
 </group>

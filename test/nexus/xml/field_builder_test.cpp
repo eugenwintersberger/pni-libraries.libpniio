@@ -164,6 +164,13 @@ BOOST_AUTO_TEST_CASE(test_multidim_fields)
   BOOST_CHECK(dataspace.type() == hdf5::dataspace::Type::SIMPLE);
   BOOST_CHECK(dataset.creation_list().layout() == hdf5::property::DatasetLayout::CHUNKED);
 
+  dataset = hdf5::node::get_node(root_group,"/multidim_field/empty_string_list");
+  dataspace = dataset.dataspace();
+  BOOST_CHECK(nexus::get_type_id(dataset) == type_id_t::STRING);
+  BOOST_CHECK(dataspace.size() == 0);
+  BOOST_CHECK(dataspace.type() == hdf5::dataspace::Type::SIMPLE);
+  BOOST_CHECK(dataset.creation_list().layout() == hdf5::property::DatasetLayout::CHUNKED);
+
   dataset = hdf5::node::get_node(root_group,"/multidim_field/data");
   dataspace = dataset.dataspace();
   BOOST_CHECK(nexus::get_type_id(dataset) == type_id_t::UINT16);
