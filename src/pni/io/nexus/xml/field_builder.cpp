@@ -76,6 +76,20 @@ void FieldBuilder::build(const hdf5::node::Node &parent) const
   //construct the field object
   std::string    field_name  = node().name();
 
+  try{
+    const hdf5::node::Group & parent_group = dynamic_cast<const hdf5::node::Group &>(parent);
+    if(parent_group.nodes.exists(field_name)){
+      std::stringstream ss;
+      ss << "The '" << field_name << "' field at '" << parent.link().path() << "' already exists";
+      throw std::runtime_error(ss.str());
+    }
+  }
+  catch(const std::bad_cast&){
+    std::stringstream ss;
+    ss << "The '" << parent.link().path() << "' node is not of the Group type";
+    throw std::runtime_error(ss.str());
+  }
+
   property::LinkCreationList lcpl;
   hdf5::property::DatasetCreationList dcpl;
   hdf5::datatype::Datatype datatype = datatype_builder_.build();
