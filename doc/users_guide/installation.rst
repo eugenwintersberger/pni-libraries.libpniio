@@ -127,7 +127,7 @@ or
    $ export PNCORE=/opt/pni/lib/cmake/pnicore-1.1.1
    $ cmake -Dh5cpp_DIR=$H5CPP -Dpnicore_DIR=$PNICORE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/pni ../libpniio
 
-if `h5cpp` and `pnicore`are  installed in none standard directories.
+if `h5cpp` and `pnicore` are installed in none standard directories.
 
 A subsequent :command:`make` finally build the library
 
