@@ -24,8 +24,8 @@ add_subdirectory("index_map")
 #
 # build submodule
 #
-set(FILE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/array_selection.cpp 
-            ${CMAKE_CURRENT_SOURCE_DIR}/slice.cpp)
+set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/array_selection.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/slice.cpp)
 
 set(PNIIO_HEADER_FILES ${PNIIO_HEADER_FILES} ${HEADER_FILES} PARENT_SCOPE)
 set(PNIIO_SOURCE_FILES ${PNIIO_SOURCE_FILES} ${SOURCE_FILES} PARENT_SCOPE)
