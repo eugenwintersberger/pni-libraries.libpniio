@@ -15,7 +15,7 @@ an example
 .. code-block:: cpp
 
    #include <h5cpp/hdf5.hpp>
-   #include <pni/io/nexus.hpp>
+   #include <pni/nexus.hpp>
    
    using namespace pni::io;
    

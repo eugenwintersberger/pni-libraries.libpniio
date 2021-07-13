@@ -22,7 +22,7 @@
 //
 #include <boost/test/unit_test.hpp>
 #include <h5cpp/hdf5.hpp>
-#include <pni/io/nexus.hpp>
+#include <pni/nexus.hpp>
 #include <algorithm>
 
 using namespace pni::io;

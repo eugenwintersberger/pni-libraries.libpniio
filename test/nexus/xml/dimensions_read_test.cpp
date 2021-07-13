@@ -21,10 +21,10 @@
 //      Author: Eugen Wintersberger
 //
 #include <boost/test/unit_test.hpp>
-#include <pni/io/nexus/xml/dimensions.hpp>
+#include <pni/nexus/xml/dimensions.hpp>
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
-#include <pni/io/exceptions.hpp>
+#include <pni/exceptions.hpp>
 
 #include "dimensions_fixture.hpp"
 

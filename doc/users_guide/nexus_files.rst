@@ -21,7 +21,7 @@ wrapper function which in turn will return an instance of
 
 .. code-block:: cpp
 
-   #include <pni/io/nexus.hpp>
+   #include <pni/nexus.hpp>
    #include <h5cpp/hdf5.hpp>
    
    using namespace pni::io;

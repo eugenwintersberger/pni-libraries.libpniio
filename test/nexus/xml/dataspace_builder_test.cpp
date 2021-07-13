@@ -21,7 +21,7 @@
 // Created on: Dec 13, 2017
 //
 #include <boost/test/unit_test.hpp>
-#include <pni/io/nexus/xml/dataspace_builder.hpp>
+#include <pni/nexus/xml/dataspace_builder.hpp>
 
 using namespace pni::io::nexus;
 using hdf5::dataspace::Simple;

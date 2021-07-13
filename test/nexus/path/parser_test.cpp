@@ -22,9 +22,9 @@
 //
 
 #include <boost/test/unit_test.hpp>
-#include <pni/io/nexus/path.hpp>
-#include <pni/io/nexus/path/parser.hpp>
-#include <pni/io/exceptions.hpp>
+#include <pni/nexus/path.hpp>
+#include <pni/nexus/path/parser.hpp>
+#include <pni/exceptions.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nexus;

@@ -30,8 +30,8 @@
 #include "scalar_ref_data.hpp"
 #include "../../check_equal.hpp"
 
-#include <pni/io/nx/xml/node.hpp>
-#include <pni/io/nx/algorithms/write.hpp>
+#include <pni/nx/xml/node.hpp>
+#include <pni/nx/algorithms/write.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nx; 

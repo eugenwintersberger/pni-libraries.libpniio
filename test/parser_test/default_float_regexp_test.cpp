@@ -22,7 +22,7 @@
 //
 //
 #include <boost/test/unit_test.hpp>
-#include <pni/io/parsers/parser.hpp>
+#include <pni/parsers/parser.hpp>
 
 using namespace pni::core;
 using namespace pni::io;

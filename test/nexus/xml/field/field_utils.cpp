@@ -22,7 +22,7 @@
 //
 
 #include "field_utils.hpp"
-#include <pni/io/nexus/xml/field_node.hpp>
+#include <pni/nexus/xml/field_node.hpp>
 
 
 

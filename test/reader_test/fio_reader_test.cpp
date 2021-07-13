@@ -22,7 +22,7 @@
 //
 #include <boost/test/unit_test.hpp>
 #include <boost/test/tools/floating_point_comparison.hpp>
-#include <pni/io/fio/fio_reader.hpp>
+#include <pni/fio/fio_reader.hpp>
 #include "tstfile_00012_pos.hpp"
 #include "tstfile_00012_eh1b_c01.hpp"
 #include "tstfile_00012_eh1b_c02.hpp"

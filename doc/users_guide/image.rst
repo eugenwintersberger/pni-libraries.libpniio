@@ -39,13 +39,13 @@ As both have a similar interface only the CBF reader will be discussed
 here. 
 
 In order to use the CBF reader you have to include 
-:file:`pni/io/cbf/cbf_reader.hpp` in your source file (for the TIFF reader 
-use :file:`pni/io/tiff/tiff_reader.hpp`). 
+:file:`pni/cbf/cbf_reader.hpp` in your source file (for the TIFF reader 
+use :file:`pni/tiff/tiff_reader.hpp`). 
 
 .. code-block:: cpp
 
-   #include <pni/io/cbf/cbf_reader.hpp>
-   #include <pni/io/image_info.hpp>
+   #include <pni/cbf/cbf_reader.hpp>
+   #include <pni/image_info.hpp>
    
    pni::io::cbf_reader reader("image_00001.cbf");
    

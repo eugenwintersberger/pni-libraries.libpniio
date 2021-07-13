@@ -1,6 +1,6 @@
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
-#include <pni/io/nexus.hpp>
+#include <pni/nexus.hpp>
 #include <h5cpp/hdf5.hpp>
 #include <algorithm>
 #include <boost/filesystem.hpp>

@@ -12,8 +12,8 @@
 #include<cmath>
 
 
-#include <pni/io/cbf/cbf_reader.hpp>
-#include <pni/io/image_info.hpp>
+#include <pni/cbf/cbf_reader.hpp>
+#include <pni/image_info.hpp>
 #include <pni/core/arrays.hpp>
 #include <pni/core/error.hpp>
 

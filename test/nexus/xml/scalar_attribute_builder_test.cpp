@@ -21,7 +21,7 @@
 // Created on: Dec 14, 2017
 //
 #include <boost/test/unit_test.hpp>
-#include <pni/io/nexus/xml/attribute_builder.hpp>
+#include <pni/nexus/xml/attribute_builder.hpp>
 
 #include "builder_fixture.hpp"
 using namespace pni::core;

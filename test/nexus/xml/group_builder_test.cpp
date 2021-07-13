@@ -21,10 +21,10 @@
 // Created on: Dec 11, 2017
 //
 #include <boost/test/unit_test.hpp>
-#include <pni/io/nexus/xml/node.hpp>
-#include <pni/io/nexus/xml/group_builder.hpp>
-#include <pni/io/nexus/xml/object_builder.hpp>
-#include <pni/io/nexus/predicates.hpp>
+#include <pni/nexus/xml/node.hpp>
+#include <pni/nexus/xml/group_builder.hpp>
+#include <pni/nexus/xml/object_builder.hpp>
+#include <pni/nexus/predicates.hpp>
 #include <h5cpp/hdf5.hpp>
 
 using namespace hdf5;

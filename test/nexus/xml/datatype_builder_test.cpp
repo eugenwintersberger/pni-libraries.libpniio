@@ -21,7 +21,7 @@
 // Created on: Dec 13, 2017
 //
 #include <boost/test/unit_test.hpp>
-#include <pni/io/nexus/xml/datatype_builder.hpp>
+#include <pni/nexus/xml/datatype_builder.hpp>
 #include <pni/core/types.hpp>
 #include <h5cpp/hdf5.hpp>
 

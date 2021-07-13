@@ -22,7 +22,7 @@
 //
 
 #include "container_test_fixture.hpp"
-#include <pni/io/nexus.hpp>
+#include <pni/nexus.hpp>
 
 using namespace pni::io;
 

@@ -1,7 +1,7 @@
 //File: count_entries.cpp
 #include <iostream>
 #include <pni/core/types.hpp>
-#include <pni/io/nexus.hpp>
+#include <pni/nexus.hpp>
 #include <h5cpp/hdf5.hpp>
 
 using namespace pni::core;

@@ -22,7 +22,7 @@
 //               Jan Kotanski <jan.kotanski@desy.de>
 //
 
-#include <pni/io/formatters.hpp>
+#include <pni/formatters.hpp>
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
 #include <boost/test/unit_test.hpp>

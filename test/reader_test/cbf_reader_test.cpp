@@ -22,8 +22,8 @@
 ///
 
 #include <boost/test/unit_test.hpp>
-#include <pni/io/cbf/cbf_reader.hpp>
-#include <pni/io/image_info.hpp>
+#include <pni/cbf/cbf_reader.hpp>
+#include <pni/image_info.hpp>
 
 using namespace pni::core;
 using namespace pni::io;

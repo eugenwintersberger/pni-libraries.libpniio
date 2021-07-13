@@ -22,7 +22,7 @@
 //
 #pragma once
 
-#include <pni/io/parsers.hpp>
+#include <pni/parsers.hpp>
 
 template<typename T>
 struct parser_test_fixture

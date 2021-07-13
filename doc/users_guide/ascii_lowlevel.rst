@@ -16,7 +16,7 @@ all primitive data types provided by *libpnicore* along with instances of
 
 At the heart of the parser API is the :cpp:class:`pni::io::parser` class 
 template. It takes one template parameter which is the primitive or container 
-type to parse. To use the parser API just include :file:`pni/io/parsers.hpp` in 
+type to parse. To use the parser API just include :file:`pni/parsers.hpp` in 
 your source file. 
 
 Parsing primitive scalars
@@ -28,7 +28,7 @@ A very simple example would be something like this
 
    #include <iostream>
    #include <pni/core/types.hpp>
-   #include <pni/io/parsers.hpp>
+   #include <pni/parsers.hpp>
    
    using namespace pni::core;
    
@@ -80,7 +80,7 @@ inhomogeneous types. The following program
    #include <iostream>
    #include <vector>
    #include <pni/core/types.hpp>
-   #include <pni/io/parsers.hpp>
+   #include <pni/parsers.hpp>
    
    using namespace pni::core;
    
@@ -157,7 +157,7 @@ numeric data without loss of precision to a stream.
    
 Formatters are currently implemented as functions returning a string 
 with the formatted output. You can use 
-them after including :file:`pni/io/formatters.hpp` in your source code. 
+them after including :file:`pni/formatters.hpp` in your source code. 
 
 For scalar data their usage is rather simple 
 

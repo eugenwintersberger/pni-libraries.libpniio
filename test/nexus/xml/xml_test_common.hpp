@@ -20,7 +20,7 @@
 #pragma once
 
 #include <fstream>
-#include <pni/io/nexus/xml/node.hpp>
+#include <pni/nexus/xml/node.hpp>
 
 namespace std{
 

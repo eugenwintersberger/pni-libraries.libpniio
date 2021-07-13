@@ -21,7 +21,7 @@
 // Created on: Dec 19, 2017
 //
 #include <boost/test/unit_test.hpp>
-#include <pni/io/nexus.hpp>
+#include <pni/nexus.hpp>
 #include "container_test_fixture.hpp"
 
 using namespace pni::io;

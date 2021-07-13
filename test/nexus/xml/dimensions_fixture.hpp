@@ -22,7 +22,7 @@
 //
 #pragma once
 
-#include <pni/io/nexus/xml/node.hpp>
+#include <pni/nexus/xml/node.hpp>
 #include <boost/filesystem.hpp>
 #include "xml_base_fixture.hpp"
 

@@ -22,7 +22,7 @@
 //
 
 #include <boost/test/unit_test.hpp>
-#include <pni/io/nexus.hpp>
+#include <pni/nexus.hpp>
 
 using namespace hdf5;
 using namespace pni::io;

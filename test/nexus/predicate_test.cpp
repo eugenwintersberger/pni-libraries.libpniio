@@ -21,9 +21,9 @@
 // Created on: Dec 8, 2017
 //
 #include <boost/test/unit_test.hpp>
-#include <pni/io/nexus/predicates.hpp>
-#include <pni/io/nexus/base_class_factory.hpp>
-#include <pni/io/nexus/file.hpp>
+#include <pni/nexus/predicates.hpp>
+#include <pni/nexus/base_class_factory.hpp>
+#include <pni/nexus/file.hpp>
 
 using namespace pni::io;
 using namespace hdf5;

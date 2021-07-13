@@ -22,7 +22,7 @@
 //
 
 #include "thread_writer.hpp"
-#include <pni/io/nexus.hpp>
+#include <pni/nexus.hpp>
 
 using namespace pni::io;
 

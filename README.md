@@ -69,7 +69,7 @@ you use `cmake` for your own build. Consider the following simple example
 program in a file `hello.cpp`
 
 ```cpp
-#include <pni/io/nexus.hpp>
+#include <pni/nexus.hpp>
 
 using namespace pni::io;
 

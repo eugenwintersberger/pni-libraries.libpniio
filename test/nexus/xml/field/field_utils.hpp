@@ -22,7 +22,7 @@
 //
 #pragma once
 
-#include <pni/io/nexus/xml/node.hpp>
+#include <pni/nexus/xml/node.hpp>
 #include <h5cpp/hdf5.hpp>
 #include <pni/core/types.hpp>
 #include <vector>

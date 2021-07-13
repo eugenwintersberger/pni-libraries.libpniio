@@ -23,9 +23,9 @@
 
 #include <pni/core/types.hpp>
 #include <pni/core/type_erasures.hpp>
-#include <pni/io/parsers.hpp>
-#include <pni/io/formatters.hpp>
-#include <pni/io/container_io_config.hpp>
+#include <pni/parsers.hpp>
+#include <pni/formatters.hpp>
+#include <pni/container_io_config.hpp>
 #include <boost/filesystem.hpp>
 #include <iostream>
 #include <fstream>

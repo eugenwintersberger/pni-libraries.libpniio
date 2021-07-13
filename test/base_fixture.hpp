@@ -19,7 +19,7 @@
 #pragma once
 
 #include <pni/core/types.hpp>
-#include <pni/io/nx/nx.hpp>
+#include <pni/nx/nx.hpp>
 #include <vector>
 
 //!

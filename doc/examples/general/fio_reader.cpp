@@ -12,7 +12,7 @@
 #include<cmath>
 
 
-#include <pni/io/fio/fio_reader.hpp>
+#include <pni/fio/fio_reader.hpp>
 #include <pni/core/arrays.hpp>
 
 using namespace pni;

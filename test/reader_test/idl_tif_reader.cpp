@@ -23,8 +23,8 @@
 #include <boost/test/unit_test.hpp>
 #include <vector>
 #include <pni/core/types.hpp>
-#include <pni/io/tiff/tiff_reader.hpp>
-#include <pni/io/image_info.hpp>
+#include <pni/tiff/tiff_reader.hpp>
+#include <pni/image_info.hpp>
 
 using namespace pni::core;
 using namespace pni::io;

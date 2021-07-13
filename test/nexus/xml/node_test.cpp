@@ -21,8 +21,8 @@
 // Created on: Dec 11, 2017
 //
 #include <boost/test/unit_test.hpp>
-#include <pni/io/nexus/xml/node.hpp>
-#include <pni/io/exceptions.hpp>
+#include <pni/nexus/xml/node.hpp>
+#include <pni/exceptions.hpp>
 #include <pni/core/types.hpp>
 #include <pni/core/error.hpp>
 

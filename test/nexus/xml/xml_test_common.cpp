@@ -20,7 +20,7 @@
 
 #include <iostream>
 #include <pni/core/types.hpp>
-#include <pni/io/nexus/xml/node.hpp>
+#include <pni/nexus/xml/node.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
 using namespace pni::io::nexus;

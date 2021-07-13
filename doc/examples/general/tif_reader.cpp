@@ -10,7 +10,7 @@
 #include<iostream>
 #include<typeinfo>
 #include<cmath>
-#include<pni/io/tiff/tiff_reader.hpp>
+#include<pni/tiff/tiff_reader.hpp>
 #include <pni/core/arrays.hpp>
 
 using Float32Frame = pni::core::dynamic_array<pni::core::float32>;

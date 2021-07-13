@@ -24,7 +24,7 @@
 #include <boost/test/unit_test.hpp>
 #include <pni/core/types.hpp>
 #include <pni/core/arrays.hpp>
-#include <pni/io/nexus/path.hpp>
+#include <pni/nexus/path.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nexus;

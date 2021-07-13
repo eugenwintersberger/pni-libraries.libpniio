@@ -22,10 +22,10 @@
 //
 #include <boost/test/unit_test.hpp>
 #include <h5cpp/hdf5.hpp>
-#include <pni/io/nexus/xml/field_builder.hpp>
-#include <pni/io/nexus/xml/node.hpp>
-#include <pni/io/nexus/xml/object_builder.hpp>
-#include <pni/io/nexus/algorithms.hpp>
+#include <pni/nexus/xml/field_builder.hpp>
+#include <pni/nexus/xml/node.hpp>
+#include <pni/nexus/xml/object_builder.hpp>
+#include <pni/nexus/algorithms.hpp>
 
 using namespace pni::io::nexus;
 

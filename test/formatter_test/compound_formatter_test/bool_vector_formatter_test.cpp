@@ -24,7 +24,7 @@
 
 #include <pni/core/types.hpp>
 #include <boost/test/unit_test.hpp>
-#include <pni/io/formatters.hpp>
+#include <pni/formatters.hpp>
 
 using namespace pni::core;
 using namespace pni::io;

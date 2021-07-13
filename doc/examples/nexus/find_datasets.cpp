@@ -21,7 +21,7 @@
 // Created on: Jan 9, 2018
 //
 
-#include <pni/io/nexus.hpp>
+#include <pni/nexus.hpp>
 #include <h5cpp/hdf5.hpp>
 
 using namespace pni::io;
