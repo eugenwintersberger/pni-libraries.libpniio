@@ -80,11 +80,12 @@ set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"
                                        SOVERSION "${SO_VERSION}")
 
 target_link_libraries(pniio                      
-                      ${HDF5_LIBRARIES}
-                      Boost::filesystem
-                      Boost::regex
-                      Boost::date_time
-                      )
+ PUBLIC h5cpp
+ ${HDF5_LIBRARIES}
+ Boost::filesystem
+ Boost::regex
+ Boost::date_time
+ )
 target_compile_definitions(pniio PUBLIC BOOST_ALL_DYN_LINK)
 target_compile_definitions(pniio PRIVATE DLL_BUILD) 
 
