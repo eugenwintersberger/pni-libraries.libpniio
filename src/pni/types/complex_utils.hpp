@@ -44,7 +44,7 @@ namespace core{
     //! \param b 64-Bit complex value
     //! \return true if equal.
     //!
-    PNICORE_EXPORT bool operator==(const complex32 &a,const complex64 &b);
+    PNIIO_EXPORT bool operator==(const complex32 &a,const complex64 &b);
     
     //-------------------------------------------------------------------------
     //!
@@ -58,7 +58,7 @@ namespace core{
     //! \param b 128-Bit complex value
     //! \return true if equal.
     //!
-    PNICORE_EXPORT bool operator==(const complex32 &a,const complex128 &b);
+    PNIIO_EXPORT bool operator==(const complex32 &a,const complex128 &b);
 
     //-------------------------------------------------------------------------
     //!
@@ -72,7 +72,7 @@ namespace core{
     //! \param b 32-Bit complex value
     //! \return true if equal.
     //!
-    PNICORE_EXPORT bool operator==(const complex64 &a,const complex32 &b);
+    PNIIO_EXPORT bool operator==(const complex64 &a,const complex32 &b);
     
     //-------------------------------------------------------------------------
     //!
@@ -86,7 +86,7 @@ namespace core{
     //! \param b 128-Bit complex value
     //! \return true if equal.
     //!
-    PNICORE_EXPORT bool operator==(const complex64 &a,const complex128 &b);
+    PNIIO_EXPORT bool operator==(const complex64 &a,const complex128 &b);
 
     //-------------------------------------------------------------------------
     //!
@@ -100,7 +100,7 @@ namespace core{
     //! \param b 32-Bit complex value
     //! \return true if equal.
     //!
-    PNICORE_EXPORT bool operator==(const complex128 &a,const complex32 &b);
+    PNIIO_EXPORT bool operator==(const complex128 &a,const complex32 &b);
     
     //-------------------------------------------------------------------------
     //!
@@ -114,7 +114,7 @@ namespace core{
     //! \param b 64-Bit complex value
     //! \return true if equal.
     //!
-    PNICORE_EXPORT bool operator==(const complex128 &a,const complex64 &b);
+    PNIIO_EXPORT bool operator==(const complex128 &a,const complex64 &b);
 
     //-------------------------------------------------------------------------
     //!
@@ -129,7 +129,7 @@ namespace core{
     //! \param b 64-Bit complex value
     //! \return true if equal.
     //!
-    PNICORE_EXPORT bool operator!=(const complex32 &a,const complex64 &b);
+    PNIIO_EXPORT bool operator!=(const complex32 &a,const complex64 &b);
     
     //-------------------------------------------------------------------------
     //!
@@ -144,7 +144,7 @@ namespace core{
     //! \param b 128-Bit complex value
     //! \return true if equal.
     //!
-    PNICORE_EXPORT bool operator!=(const complex32 &a,const complex128 &b);
+    PNIIO_EXPORT bool operator!=(const complex32 &a,const complex128 &b);
 
     //-------------------------------------------------------------------------
     //!
@@ -159,7 +159,7 @@ namespace core{
     //! \param b 32-Bit complex value
     //! \return true if equal.
     //!
-    PNICORE_EXPORT bool operator!=(const complex64 &a,const complex32 &b);
+    PNIIO_EXPORT bool operator!=(const complex64 &a,const complex32 &b);
     
     //-------------------------------------------------------------------------
     //!
@@ -174,7 +174,7 @@ namespace core{
     //! \param b 128-Bit complex value
     //! \return true if equal.
     //!
-    PNICORE_EXPORT bool operator!=(const complex64 &a,const complex128 &b);
+    PNIIO_EXPORT bool operator!=(const complex64 &a,const complex128 &b);
 
     //-------------------------------------------------------------------------
     //!
@@ -189,7 +189,7 @@ namespace core{
     //! \param b 32-Bit complex value
     //! \return true if equal.
     //!
-    PNICORE_EXPORT bool operator!=(const complex128 &a,const complex32 &b);
+    PNIIO_EXPORT bool operator!=(const complex128 &a,const complex32 &b);
     
     //-------------------------------------------------------------------------
     //!
@@ -204,7 +204,7 @@ namespace core{
     //! \param b 64-Bit complex value
     //! \return true if equal.
     //!
-    PNICORE_EXPORT bool operator!=(const complex128 &a,const complex64 &b);
+    PNIIO_EXPORT bool operator!=(const complex128 &a,const complex64 &b);
 
 //end of namespace
 }

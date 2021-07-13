@@ -38,7 +38,7 @@ namespace core{
     //! required but not provided (or at the moment not available). 
     //! It thus denotes the absence of type information.
     //!
-    struct PNICORE_EXPORT none {};
+    struct PNIIO_EXPORT none {};
 
     //------------------------------------------------------------------------
     //!
@@ -52,7 +52,7 @@ namespace core{
     //! \param n none instance
     //! \return reference to the output stream
     //!
-    PNICORE_EXPORT std::ostream &operator<<(std::ostream &stream,const none &n);
+    PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,const none &n);
 
     //------------------------------------------------------------------------
     //!
@@ -66,7 +66,7 @@ namespace core{
     //! \param n none instance
     //! \return reference to the input stream
     //!
-    PNICORE_EXPORT std::istream &operator>>(std::istream &stream,none &n);
+    PNIIO_EXPORT std::istream &operator>>(std::istream &stream,none &n);
 
     //------------------------------------------------------------------------
     //!
@@ -79,7 +79,7 @@ namespace core{
     //! \param b instance on the rhs of the operator
     //! \return always true
     //! 
-    PNICORE_EXPORT bool operator==(const none &a,const none &b);
+    PNIIO_EXPORT bool operator==(const none &a,const none &b);
 
     //------------------------------------------------------------------------
     //!
@@ -93,7 +93,7 @@ namespace core{
     //! \param b instnace on the rhs of the operator
     //! \return always false
     //!
-    PNICORE_EXPORT bool operator!=(const none &a,const none &b);
+    PNIIO_EXPORT bool operator!=(const none &a,const none &b);
 
 //end of namespace
 }

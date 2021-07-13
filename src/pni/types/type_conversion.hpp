@@ -51,7 +51,7 @@ namespace core{
     //! \param target_tid ID of the target type
     //! \return true if types are unchecked convertible, false otherwise
     //! 
-    PNICORE_EXPORT 
+    PNIIO_EXPORT 
 	bool is_unchecked_convertible(type_id_t source_tid,type_id_t target_tid);
 
     //------------------------------------------------------------------------
@@ -66,7 +66,7 @@ namespace core{
     //! \param target_tid ID of the target type
     //! \return true if types are checked convertible, false otherwise
     //! 
-	PNICORE_EXPORT
+	PNIIO_EXPORT
     bool is_checked_convertible(type_id_t source_tid,type_id_t target_tid);
 
     //------------------------------------------------------------------------
@@ -81,7 +81,7 @@ namespace core{
     //! \param target_tid ID of the target type
     //! \return true if types are , false otherwise
     //! 
-	PNICORE_EXPORT
+	PNIIO_EXPORT
     bool is_convertible(type_id_t source_tid,type_id_t target_tid);
 
 

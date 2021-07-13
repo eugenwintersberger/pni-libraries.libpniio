@@ -180,7 +180,7 @@ namespace core{
     //! \param tid reference to the TypID 
     //! \return reference to output stream
     //!
-    PNICORE_EXPORT std::ostream &operator<<(std::ostream &o,const type_id_t &tid);
+    PNIIO_EXPORT std::ostream &operator<<(std::ostream &o,const type_id_t &tid);
 
 
     //!

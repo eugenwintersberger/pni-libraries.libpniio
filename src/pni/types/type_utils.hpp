@@ -60,7 +60,7 @@ namespace core{
     //! \param v binary data 
     //! \return type ID for binary 
     //!
-    PNICORE_EXPORT type_id_t get_type_id(const binary &v);
+    PNIIO_EXPORT type_id_t get_type_id(const binary &v);
 
     //-------------------------------------------------------------------------
     //!
@@ -70,7 +70,7 @@ namespace core{
     //! \param v boolean data
     //! \return typeID for bool_t
     //!
-    PNICORE_EXPORT type_id_t get_type_id(const bool_t &v);
+    PNIIO_EXPORT type_id_t get_type_id(const bool_t &v);
 
 
     //-------------------------------------------------------------------------
@@ -84,7 +84,7 @@ namespace core{
     //! \param v string data
     //! \return type ID for string type
     //! 
-    PNICORE_EXPORT type_id_t get_type_id(const string &v);
+    PNIIO_EXPORT type_id_t get_type_id(const string &v);
 
 
     //-------------------------------------------------------------------------
@@ -156,7 +156,7 @@ namespace core{
     //! \param s string representation of the type
     //! \return corresponding type ID
     //!
-    PNICORE_EXPORT type_id_t type_id_from_str(const string &s);
+    PNIIO_EXPORT type_id_t type_id_from_str(const string &s);
 
     //-------------------------------------------------------------------------
     //!
@@ -171,7 +171,7 @@ namespace core{
     //! \param id type ID of the type
     //! \return string representation of the type
     //!
-    PNICORE_EXPORT string str_from_type_id(type_id_t id);
+    PNIIO_EXPORT string str_from_type_id(type_id_t id);
    
 //end of namespace
 }
