@@ -25,8 +25,8 @@
 
 #include <sstream>
 
-#include <pni/core/types.hpp>
-#include <pni/core/error.hpp>
+#include <pni/types.hpp>
+#include <pni/error.hpp>
 #include <vector>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/trim.hpp>

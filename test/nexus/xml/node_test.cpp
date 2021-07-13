@@ -23,8 +23,8 @@
 #include <boost/test/unit_test.hpp>
 #include <pni/nexus/xml/node.hpp>
 #include <pni/exceptions.hpp>
-#include <pni/core/types.hpp>
-#include <pni/core/error.hpp>
+#include <pni/types.hpp>
+#include <pni/error.hpp>
 
 using namespace pni::core;
 using namespace pni::io::nexus;

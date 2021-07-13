@@ -25,8 +25,8 @@
 
 #include <vector>
 #include <boost/current_function.hpp>
-#include <pni/core/types.hpp>
-#include <pni/core/error.hpp>
+#include <pni/types.hpp>
+#include <pni/error.hpp>
 #include <pni/data_reader.hpp>
 #include <pni/column_info.hpp>
 #include <pni/windows.hpp>

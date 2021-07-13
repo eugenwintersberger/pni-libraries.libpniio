@@ -24,7 +24,7 @@
 
 #include <sstream>
 #include <random>
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <random>
 
 using namespace pni::core;

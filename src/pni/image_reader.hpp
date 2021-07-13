@@ -29,7 +29,7 @@
 #include <string>
 #include <vector>
 
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <pni/data_reader.hpp>
 #include <pni/image_info.hpp>
 #include <pni/windows.hpp>

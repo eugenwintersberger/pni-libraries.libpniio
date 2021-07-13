@@ -23,8 +23,8 @@
 
 #include <boost/test/unit_test.hpp>
 #include "../primitive_parsers/parser_test_fixture.hpp"
-#include <pni/core/types.hpp>
-#include <pni/core/arrays/slice.hpp>
+#include <pni/types.hpp>
+#include <pni/arrays/slice.hpp>
 
 using namespace pni::core;
 using namespace pni::io;

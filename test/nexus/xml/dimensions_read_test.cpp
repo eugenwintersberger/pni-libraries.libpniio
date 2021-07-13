@@ -22,8 +22,8 @@
 //
 #include <boost/test/unit_test.hpp>
 #include <pni/nexus/xml/dimensions.hpp>
-#include <pni/core/types.hpp>
-#include <pni/core/error.hpp>
+#include <pni/types.hpp>
+#include <pni/error.hpp>
 #include <pni/exceptions.hpp>
 
 #include "dimensions_fixture.hpp"

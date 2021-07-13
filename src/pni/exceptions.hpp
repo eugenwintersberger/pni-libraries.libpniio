@@ -24,7 +24,7 @@
 #pragma once
 
 #include <iostream>
-#include <pni/core/error.hpp>
+#include <pni/error.hpp>
 
 #include <pni/windows.hpp>
 

@@ -22,7 +22,7 @@
 //
 #pragma once
 
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 
 template<typename T> struct scalar_ref_data
 {

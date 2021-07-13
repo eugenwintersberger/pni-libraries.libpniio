@@ -22,7 +22,7 @@
 //
 
 
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <boost/test/unit_test.hpp>
 #include <pni/formatters/scalar_format.hpp>
 

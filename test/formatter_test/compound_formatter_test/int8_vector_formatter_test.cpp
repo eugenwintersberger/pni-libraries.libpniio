@@ -23,7 +23,7 @@
 //
 
 #include <boost/test/unit_test.hpp>
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <pni/formatters.hpp>
 
 using namespace pni::core;

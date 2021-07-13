@@ -22,7 +22,7 @@
 ///
 #include <boost/test/unit_test.hpp>
 #include <vector>
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <pni/tiff/tiff_reader.hpp>
 #include <pni/image_info.hpp>
 

@@ -25,8 +25,8 @@
 
 #include <pni/cbf/cbf_reader.hpp>
 #include <pni/strutils.hpp>
-#include <pni/core/error.hpp>
-#include <pni/core/types.hpp>
+#include <pni/error.hpp>
+#include <pni/types.hpp>
 
 //need to use regular expressions from boost
 #include<boost/regex.hpp>

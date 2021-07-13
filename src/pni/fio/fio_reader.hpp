@@ -31,7 +31,7 @@
 #include <boost/current_function.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include <pni/core/arrays.hpp>
+#include <pni/arrays.hpp>
 #include <pni/spreadsheet_reader.hpp>
 #include <pni/windows.hpp>
 

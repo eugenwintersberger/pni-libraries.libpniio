@@ -23,7 +23,7 @@
 #include <sstream>
 #include <pni/nexus/path/utils.hpp>
 #include <pni/nexus/path/parser.hpp>
-#include <pni/core/error.hpp>
+#include <pni/error.hpp>
 #include <algorithm>
 
 

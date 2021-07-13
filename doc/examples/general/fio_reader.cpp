@@ -13,7 +13,7 @@
 
 
 #include <pni/fio/fio_reader.hpp>
-#include <pni/core/arrays.hpp>
+#include <pni/arrays.hpp>
 
 using namespace pni;
 

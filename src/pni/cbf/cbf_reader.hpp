@@ -32,7 +32,7 @@
 
 #include<boost/regex.hpp>
 
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 
 #include <pni/image_reader.hpp>
 #include <pni/cbf/dectris_reader.hpp>

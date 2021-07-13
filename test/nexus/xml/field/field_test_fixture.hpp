@@ -22,7 +22,7 @@
 //
 #pragma once
 
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <h5cpp/hdf5.hpp>
 #include <pni/nexus.hpp>
 #include "../xml_base_fixture.hpp"

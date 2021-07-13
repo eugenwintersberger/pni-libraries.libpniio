@@ -25,7 +25,7 @@
 #include <pni/nexus/xml/object_builder.hpp>
 #include <pni/nexus/xml/node.hpp>
 #include <pni/exceptions.hpp>
-#include <pni/core/error.hpp>
+#include <pni/error.hpp>
 
 namespace pni {
 namespace io {

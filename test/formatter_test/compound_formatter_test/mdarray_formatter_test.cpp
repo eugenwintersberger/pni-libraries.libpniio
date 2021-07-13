@@ -23,8 +23,8 @@
 //
 
 #include <pni/formatters.hpp>
-#include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
+#include <pni/types.hpp>
+#include <pni/arrays.hpp>
 #include <boost/test/unit_test.hpp>
 
 using namespace pni::core;

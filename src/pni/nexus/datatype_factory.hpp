@@ -23,7 +23,7 @@
 #pragma once
 
 #include <h5cpp/hdf5.hpp>
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <pni/windows.hpp>
 
 namespace pni {

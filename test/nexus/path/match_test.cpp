@@ -22,7 +22,7 @@
 //
 
 #include <boost/test/unit_test.hpp>
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <pni/nexus/path.hpp>
 
 using namespace pni::core;

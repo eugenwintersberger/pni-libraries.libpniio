@@ -20,8 +20,8 @@
 
 #include <algorithm>
 #include <vector>
-#include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
+#include <pni/types.hpp>
+#include <pni/arrays.hpp>
 #include "uniform_distribution.hpp"
 
 //!

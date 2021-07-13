@@ -30,8 +30,8 @@
 #include <pni/tiff/ifd.hpp>
 #include <pni/image_info.hpp>
 
-#include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
+#include <pni/types.hpp>
+#include <pni/arrays.hpp>
 
 #include <pni/windows.hpp>
 

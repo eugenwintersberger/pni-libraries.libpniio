@@ -22,7 +22,7 @@
 //
 #pragma once
 
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <vector>
 
 template<typename T> struct mdim_ref_data

@@ -23,7 +23,7 @@
 //
 
 
-#include <pni/core/error.hpp>
+#include <pni/error.hpp>
 #include <pni/data_reader.hpp>
 
 

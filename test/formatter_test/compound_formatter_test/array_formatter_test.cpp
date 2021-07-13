@@ -23,8 +23,8 @@
 //
 
 
-#include <pni/core/types.hpp>
-#include <pni/core/type_erasures.hpp>
+#include <pni/types.hpp>
+#include <pni/type_erasures.hpp>
 #include <boost/test/unit_test.hpp>
 #include <pni/formatters.hpp>
 

@@ -26,7 +26,7 @@
 #include <memory>
 #include <iostream>
 #include <fstream>
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <pni/windows.hpp>
 
 

@@ -27,8 +27,8 @@
 #include <vector>
 #include <numeric>
 
-#include <pni/core/types.hpp>
-#include <pni/core/error.hpp>
+#include <pni/types.hpp>
+#include <pni/error.hpp>
 #include <pni/image_channel_info.hpp>
 #include <pni/windows.hpp>
 

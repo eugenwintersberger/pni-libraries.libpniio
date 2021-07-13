@@ -22,7 +22,7 @@
 //
 
 #include <sstream>
-#include <pni/core/error.hpp>
+#include <pni/error.hpp>
 #include <pni/nexus/path/path.hpp>
 #include <pni/nexus/path/parser.hpp>
 #include <pni/nexus/path/utils.hpp>

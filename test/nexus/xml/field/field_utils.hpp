@@ -24,7 +24,7 @@
 
 #include <pni/nexus/xml/node.hpp>
 #include <h5cpp/hdf5.hpp>
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <vector>
 
 using uint8_vector  = std::vector<pni::core::uint8>;

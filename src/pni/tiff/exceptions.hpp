@@ -23,8 +23,8 @@
 //
 
 #pragma once
-#include <pni/core/types.hpp>
-#include <pni/core/error.hpp>
+#include <pni/types.hpp>
+#include <pni/error.hpp>
 #include <pni/windows.hpp>
 
 namespace pni{

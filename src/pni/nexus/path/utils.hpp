@@ -23,7 +23,7 @@
 #pragma once
 
 #include <iostream>
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <pni/nexus/path/path.hpp>
 #include <pni/nexus/path/path_object.hpp>
 #include <pni/windows.hpp>

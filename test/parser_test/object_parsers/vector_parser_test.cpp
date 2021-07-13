@@ -24,7 +24,7 @@
 #include <boost/test/unit_test.hpp>
 #include "../primitive_parsers/parser_test_fixture.hpp"
 #include <pni/parsers.hpp>
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <pni/container_io_config.hpp>
 
 using namespace pni::core;

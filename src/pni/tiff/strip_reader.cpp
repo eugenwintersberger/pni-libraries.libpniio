@@ -22,7 +22,7 @@
 //
 //
 
-#include <pni/core/error.hpp>
+#include <pni/error.hpp>
 #include <pni/tiff/strip_reader.hpp>
 
 using namespace pni::core;

@@ -24,7 +24,7 @@
 
 
 
-#include <pni/core/error.hpp>
+#include <pni/error.hpp>
 #include <pni/tiff/ifd_entry.hpp>
 #include <pni/tiff/standard.hpp>
 

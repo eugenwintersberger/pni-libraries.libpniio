@@ -21,7 +21,7 @@
 //
 #pragma once
 
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/filesystem.hpp>
 #include <pni/windows.hpp>

@@ -24,8 +24,8 @@
 #include <h5cpp/hdf5.hpp>
 #include <pni/nexus/xml/field_builder.hpp>
 #include <pni/nexus/xml/node.hpp>
-#include <pni/core/arrays.hpp>
-#include <pni/core/types.hpp>
+#include <pni/arrays.hpp>
+#include <pni/types.hpp>
 
 namespace pni {
 namespace io {

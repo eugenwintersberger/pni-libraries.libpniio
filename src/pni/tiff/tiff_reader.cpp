@@ -25,8 +25,8 @@
 #include <numeric>
 #include <sstream>
 
-#include <pni/core/error.hpp>
-#include <pni/core/types.hpp>
+#include <pni/error.hpp>
+#include <pni/types.hpp>
 #include <pni/tiff/tiff_reader.hpp>
 
 using namespace pni::core;

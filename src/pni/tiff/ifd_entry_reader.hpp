@@ -27,7 +27,7 @@
 #include<fstream>
 #include<vector>
 
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 
 
 namespace pni{

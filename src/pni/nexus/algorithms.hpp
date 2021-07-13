@@ -24,7 +24,7 @@
 
 #include <pni/nexus/predicates.hpp>
 #include <pni/nexus/containers.hpp>
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <pni/windows.hpp>
 
 namespace pni {

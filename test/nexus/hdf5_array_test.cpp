@@ -22,8 +22,8 @@
 //
 #include <boost/test/unit_test.hpp>
 #include <pni/nexus.hpp>
-#include <pni/core/arrays.hpp>
-#include <pni/core/type_erasures/array.hpp>
+#include <pni/arrays.hpp>
+#include <pni/type_erasures/array.hpp>
 #include "hdf5_support_fixture.hpp"
 
 using namespace pni::io;

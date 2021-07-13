@@ -28,7 +28,7 @@
 #include <fstream>
 #include <iostream>
 
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 
 #include <pni/tiff/ifd_entry.hpp>
 

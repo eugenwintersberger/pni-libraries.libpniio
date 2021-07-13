@@ -18,7 +18,7 @@
 // ===========================================================================
 #pragma once
 
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <pni/nx/nx.hpp>
 #include <vector>
 

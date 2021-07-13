@@ -23,7 +23,7 @@
 //
 
 #include <boost/regex.hpp>
-#include <pni/core/error.hpp>
+#include <pni/error.hpp>
 #include <pni/cbf/dectris_reader.hpp>
 
 

@@ -1,11 +1,11 @@
 # if the required Boost targets do not exist we have to add them
-if((NOT TARGET pnicore_shared))
+# if((NOT TARGET pnicore_shared))
 
-    find_package(pnicore REQUIRED)
-    #
-    # this will also pull in Boost::system and Boost::program_options
-    #
-endif()
+#     find_package(pnicore REQUIRED)
+#     #
+#     # this will also pull in Boost::system and Boost::program_options
+#     #
+# endif()
 
 if((NOT TARGET h5cpp_shared))
     find_package(h5cpp REQUIRED)

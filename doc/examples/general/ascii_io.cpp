@@ -21,8 +21,8 @@
 // Created on: Jan 9, 2018
 //
 
-#include <pni/core/types.hpp>
-#include <pni/core/type_erasures.hpp>
+#include <pni/types.hpp>
+#include <pni/type_erasures.hpp>
 #include <pni/parsers.hpp>
 #include <pni/formatters.hpp>
 #include <pni/container_io_config.hpp>

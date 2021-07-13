@@ -14,8 +14,8 @@
 
 #include <pni/cbf/cbf_reader.hpp>
 #include <pni/image_info.hpp>
-#include <pni/core/arrays.hpp>
-#include <pni/core/error.hpp>
+#include <pni/arrays.hpp>
+#include <pni/error.hpp>
 
 using namespace pni::core;
 using namespace pni::io;

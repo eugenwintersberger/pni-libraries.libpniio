@@ -24,7 +24,7 @@
 #pragma once
 
 #include <boost/test/unit_test.hpp>
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 
 template<typename T>
 using is_float = pni::core::is_float_type<T>;

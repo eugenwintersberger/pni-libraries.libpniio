@@ -22,8 +22,8 @@
 //
 #pragma once
 
-#include <pni/core/arrays.hpp>
-#include <pni/core/types.hpp>
+#include <pni/arrays.hpp>
+#include <pni/types.hpp>
 #include <pni/nexus/xml/node.hpp>
 #include <h5cpp/hdf5.hpp>
 

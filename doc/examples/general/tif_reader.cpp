@@ -11,7 +11,7 @@
 #include<typeinfo>
 #include<cmath>
 #include<pni/tiff/tiff_reader.hpp>
-#include <pni/core/arrays.hpp>
+#include <pni/arrays.hpp>
 
 using Float32Frame = pni::core::dynamic_array<pni::core::float32>;
 

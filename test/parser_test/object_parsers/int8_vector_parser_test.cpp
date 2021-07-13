@@ -23,7 +23,7 @@
 
 #include <boost/test/unit_test.hpp>
 #include <vector>
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <pni/container_io_config.hpp>
 #include "../primitive_parsers/parser_test_fixture.hpp"
 

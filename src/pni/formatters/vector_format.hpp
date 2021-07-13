@@ -23,8 +23,8 @@
 //
 #pragma once
 
-#include <pni/core/types.hpp>
-#include <pni/core/type_erasures.hpp>
+#include <pni/types.hpp>
+#include <pni/type_erasures.hpp>
 #include <vector>
 #include <pni/container_io_config.hpp>
 #include <pni/windows.hpp>

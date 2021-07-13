@@ -19,7 +19,7 @@
 // ===========================================================================
 
 #include <iostream>
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <pni/nexus/xml/node.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 

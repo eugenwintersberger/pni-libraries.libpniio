@@ -24,7 +24,7 @@
 #include <pni/nexus/path/utils.hpp>
 #include <pni/nexus/path/path.hpp>
 #include <pni/nexus/path/make_relative.hpp>
-#include <pni/core/error.hpp>
+#include <pni/error.hpp>
 
 namespace {
 

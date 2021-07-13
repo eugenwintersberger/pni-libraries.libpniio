@@ -24,9 +24,9 @@
 
 #pragma once
 
-#include <pni/core/types.hpp>
-#include <pni/core/type_erasures/value.hpp>
-#include <pni/core/arrays/slice.hpp>
+#include <pni/types.hpp>
+#include <pni/type_erasures/value.hpp>
+#include <pni/arrays/slice.hpp>
 
 #include <pni/exceptions.hpp>
 #include <pni/parsers/conversion_trait.hpp>

@@ -23,10 +23,10 @@
 #pragma once
 
 #include <h5cpp/hdf5.hpp>
-#include <pni/core/types.hpp>
-#include <pni/core/type_erasures.hpp>
-#include <pni/core/type_erasures/array.hpp>
-#include <pni/core/arrays/mdarray.hpp>
+#include <pni/types.hpp>
+#include <pni/type_erasures.hpp>
+#include <pni/type_erasures/array.hpp>
+#include <pni/arrays/mdarray.hpp>
 #include <pni/nexus/datatype_factory.hpp>
 
 

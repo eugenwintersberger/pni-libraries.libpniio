@@ -23,7 +23,7 @@
 #pragma once
 
 #include <utility>
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <list>
 #include <pni/windows.hpp>
 #include <boost/filesystem.hpp>

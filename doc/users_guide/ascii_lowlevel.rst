@@ -27,7 +27,7 @@ A very simple example would be something like this
 .. code-block:: cpp
 
    #include <iostream>
-   #include <pni/core/types.hpp>
+   #include <pni/types.hpp>
    #include <pni/parsers.hpp>
    
    using namespace pni::core;
@@ -79,7 +79,7 @@ inhomogeneous types. The following program
 
    #include <iostream>
    #include <vector>
-   #include <pni/core/types.hpp>
+   #include <pni/types.hpp>
    #include <pni/parsers.hpp>
    
    using namespace pni::core;

@@ -22,7 +22,7 @@
 //
 #pragma once
 
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 #include <boost/mpl/list.hpp>
 
 typedef boost::mpl::list<pni::core::uint8,

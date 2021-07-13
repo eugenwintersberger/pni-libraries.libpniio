@@ -28,8 +28,8 @@
 #include <map>
 #include <boost/current_function.hpp>
 
-#include <pni/core/types.hpp>
-#include <pni/core/error.hpp>
+#include <pni/types.hpp>
+#include <pni/error.hpp>
 #include <pni/tiff/rational.hpp>
 #include <pni/tiff/ifd_entry_reader.hpp>
 
