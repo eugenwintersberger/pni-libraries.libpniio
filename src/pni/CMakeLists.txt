@@ -48,6 +48,12 @@ add_subdirectory("parsers")
 add_subdirectory("formatters")
 add_subdirectory("tiff")
 add_subdirectory("nexus")
+add_subdirectory("types")
+add_subdirectory("error")
+add_subdirectory("utilities")
+add_subdirectory("arrays")
+add_subdirectory("algorithms")
+add_subdirectory("type_erasures")
 
 # ============================================================================
 # assemble list of header and source files used in the build 
