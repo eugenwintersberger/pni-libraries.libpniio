@@ -1,0 +1,9 @@
+
+set(HEADER_FILES  math.hpp)
+
+install(FILES ${HEADER_FILES} 
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/algorithms)
+
+set(PNIIO_HEADER_FILES ${PNIIO_HEADER_FILES} ${HEADER_FILES} PARENT_SCOPE)
+
+add_subdirectory("math")

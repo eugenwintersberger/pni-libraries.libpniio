@@ -6,7 +6,7 @@ set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/exceptions.hpp
                  )
 
 install(FILES ${HEADER_FILES} 
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/types)
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/error)
 
 #
 # build submodule

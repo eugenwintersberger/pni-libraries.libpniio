@@ -15,6 +15,8 @@ set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/column_info.hpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/types.hpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/error.hpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/utilities.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/arrays.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/algorithms.hpp
                  )
 
 set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/column_info.cpp
