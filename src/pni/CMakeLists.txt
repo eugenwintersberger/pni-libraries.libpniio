@@ -17,6 +17,7 @@ set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/column_info.hpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/utilities.hpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/arrays.hpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/algorithms.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/type_erasures.hpp
                  )
 
 set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/column_info.cpp
@@ -79,7 +80,6 @@ set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"
                                        SOVERSION "${SO_VERSION}")
 
 target_link_libraries(pniio                      
-                      PUBLIC pnicore_shared h5cpp
                       ${HDF5_LIBRARIES}
                       Boost::filesystem
                       Boost::regex
