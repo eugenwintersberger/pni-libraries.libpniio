@@ -24,7 +24,7 @@ are requiered sdfdsf
 build system
 
 * Boost (>=1.59)
-* h5cpp (>=0.0.4)
+* [h5cpp](https://github.com/ess-dmsc/h5cpp) (>=0.0.4) -- ATTENTION THIS IS NOT http://h5cpp.org/
 * pnicore (>=1.1.0)
 
 and their transitive dependencies. If all dependencies are available on your
