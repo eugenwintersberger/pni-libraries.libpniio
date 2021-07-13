@@ -1,5 +1,5 @@
 
-set(HEADER_FILES  math.hpp)
+set(HEADER_FILES  ${CMAKE_CURRENT_SOURCE_DIR}/math.hpp)
 
 install(FILES ${HEADER_FILES} 
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pni/algorithms)

@@ -1,7 +1,7 @@
-set(HEADER_FILES container_iterator.hpp
-                 container_utils.hpp
-                 service.hpp
-                 sfinae_macros.hpp
+set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/container_iterator.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/container_utils.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/service.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/sfinae_macros.hpp
                  )
 
 install(FILES ${HEADER_FILES} 

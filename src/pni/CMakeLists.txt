@@ -74,6 +74,10 @@ foreach(SRC ${PNIIO_SOURCE_FILES})
     message(INFO ${SRC})
 endforeach()
 
+foreach(HSRC ${PNIIO_HEADER_FILES})
+    message(INFO ${HSRC})
+endforeach()
+
 add_library(pniio SHARED ${PNIIO_SOURCE_FILES} ${PNIIO_HEADER_FILES})
 
 target_include_directories(pniio

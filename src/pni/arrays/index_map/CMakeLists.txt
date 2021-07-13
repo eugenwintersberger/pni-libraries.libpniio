@@ -1,7 +1,7 @@
-set(HEADER_FILES c_index_map_imp.hpp
-                 index_map.hpp
-                 index_maps.hpp
-                 static_index_map.hpp
+set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/c_index_map_imp.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/index_map.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/index_maps.hpp
+                 ${CMAKE_CURRENT_SOURCE_DIR}/static_index_map.hpp
                  )
 
 install(FILES ${HEADER_FILES} 
