@@ -63,7 +63,7 @@ to update your package list and
 
 .. code-block:: bash
 
-   $ apt-get install libpniio1.3.2 libpniio1.3.2-dev libpniio1.3.2-doc
+   $ apt-get install libpniio2.0.0 libpniio2.0.0-dev libpniio2.0.0-doc
 
 to install the library. Dependencies will be resolved automatically so you can
 start with working right after the installation has finished.
@@ -82,7 +82,6 @@ Requirements
 For a successful build some requirements must be satisfied
 
 * `h5cpp` >= 0.4.1
-* `pnicore` >= 1.1.1
 * `gcc` >= 4.7 -- since version 1.0.0 `libpniio` requires a mostly C++11
    compliant compiler. For the gcc familiy this is 4.7 and upwards
 * `BOOST` >= 4.1
