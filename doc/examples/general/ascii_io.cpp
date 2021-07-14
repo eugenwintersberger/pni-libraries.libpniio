@@ -32,8 +32,8 @@
 
 using namespace pni;
 
-using Record = std::vector<core::value>;
-using RecordParser = io::parser<Record>;
+using Record = std::vector<value>;
+using RecordParser = parser<Record>;
 using Table = std::vector<Record>;
 
 Table read_table(const boost::filesystem::path &file_path)
@@ -71,11 +71,11 @@ int main(int argc,char **argv)
 
   std::cout<<"Got "<<input_records.size()<<" records"<<std::endl;
 
-  io::container_io_config output_config('\t');
+  container_io_config output_config('\t');
   std::for_each(input_records.begin(),input_records.end(),
                 [&output_config](const Record &record)
                 {
-                  std::cout<<io::format(record,output_config)<<std::endl;
+                  std::cout<<format(record,output_config)<<std::endl;
                 });
 
   return 0;
