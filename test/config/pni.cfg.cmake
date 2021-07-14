@@ -1,0 +1,4 @@
+[pninexus]
+
+nthreads = 4
+
