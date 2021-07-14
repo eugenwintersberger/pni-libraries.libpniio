@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2017 DESY
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Created on: Jun 7, 2017
@@ -29,7 +29,7 @@
 namespace pni{
 namespace io {
 
-    bool is_integer(const pni::core::string &input)
+    bool is_integer(const pni::string &input)
     {
         //boost::regex expr(default_int_regexp);
 
@@ -37,7 +37,7 @@ namespace io {
     }
 
     //=========================================================================
-    bool is_float(const pni::core::string &input)
+    bool is_float(const pni::string &input)
     {
         //boost::regex expr(default_float_regexp);
 
@@ -45,7 +45,7 @@ namespace io {
     }
 
     //=========================================================================
-    bool is_boolean(const pni::core::string &input)
+    bool is_boolean(const pni::string &input)
     {
         boost::regex expr("^T(rue|RUE)|true|1|F(alse|ALSE)|false|0$");
 
@@ -53,13 +53,13 @@ namespace io {
     }
 
     //=========================================================================
-    bool is_complex(const pni::core::string &)
+    bool is_complex(const pni::string &)
     {
         return false;
     }
 
     //=========================================================================
-    bool is_slice(const pni::core::string &input)
+    bool is_slice(const pni::string &input)
     {
         boost::regex expr("^\\d+:(\\d*(:\\d+)?)?$");
 

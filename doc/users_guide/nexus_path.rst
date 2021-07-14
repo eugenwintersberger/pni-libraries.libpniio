@@ -9,7 +9,7 @@ to such paths.
 The structure of a Nexus path
 =============================
 
-In comparison to a plain HDF5 path the NeXus path as provided by *libpniio* 
+In comparison to a plain HDF5 path the NeXus path as provided by *libpninexus* 
 has to additional features
 
 * it includes the name of the file and thus could be used by command line 
@@ -17,12 +17,12 @@ has to additional features
 * it is able to address attributes (:cpp:class:`hdf5::Path` can only address
   node objects within a file). 
   
-To describe the anatomy of a NeXus path in *libpniio* we consider the following
+To describe the anatomy of a NeXus path in *libpninexus* we consider the following
 example 
 
    ``/home/user/data/experiment.nxs://run_001:NXentry/:NXinstrument/:NXdetector/data@units``
 
-where we can identify all three sections comprising a *libpniio* NeXus path
+where we can identify all three sections comprising a *libpninexus* NeXus path
 
 * *file section* - ``/home/user/data/experiment.nxs:/``
 * *node section* - ``/run_001:NXentry/:NXinstrument/:NXdetector/data``
@@ -152,12 +152,12 @@ a single rule for paths
    * and, if available, they reference the same attribute.
 
 
-The :cpp:class:`pni::io::nexus::Path` type
+The :cpp:class:`pni::nexus::Path` type
 ==========================================
 
 In C++ a NeXus-path is represented by an instance of 
-:cpp:class:`pni::io::nexus::Path`. 
-:cpp:class:`pni::io::nexus::Path` is an
+:cpp:class:`pni::nexus::Path`. 
+:cpp:class:`pni::nexus::Path` is an
 iterable over the elements of the *object section* of a NeXus-path.  
 The optional *file-* and *attribute-section* can be accessed via getter and 
 setter methods like this
@@ -277,20 +277,20 @@ Like other STL containers :cpp:class:`nexus::Path` also provides the
    
    std::cout<<p<<std::endl; // output: :NXinstrument
 
-:cpp:class:`pni::io::nexus::Path` and :cpp:class:`hdf5::Path`
+:cpp:class:`pni::nexus::Path` and :cpp:class:`hdf5::Path`
 -------------------------------------------------------------
 
 In many cases we may want to construct an HDF5 path from a NeXus path an 
 vica verse. Now, converting from an HDF5 path to a NeXus path is always 
 easy as an HDF5 path is also a valid NeXus path (despite the fact that an 
 HDF5 path cannot address attributes and contains no file information). 
-For this purpose :cpp:class:`pni::io::nexus::Path` has an implicit 
+For this purpose :cpp:class:`pni::nexus::Path` has an implicit 
 conversion constructor for an HDF5 path.
 
 .. code-block:: cpp
 
    hdf5::Path hdf5_path = ...;
-   pni::io::nexus::Path nexus_path = hdf5_path; 
+   pni::nexus::Path nexus_path = hdf5_path; 
    
 The other direction is also possible but only under certain conditions. 
 Unlike a NeXus path an HDF5 path contains only of link names. So conversion from 
@@ -302,7 +302,7 @@ restrictions
 * the NeXus path has an empty *file section* - we cannot reference a file 
   with an HDF5 path. 
   
-:cpp:class:`pni::io::nexus::Path` has an implicit conversion operator to 
+:cpp:class:`pni::nexus::Path` has an implicit conversion operator to 
 an :cpp:class:`hdf5::Path`. Thus we could use for instance a NeXus path 
 in situations where an HDF5 path is expected 
 
@@ -360,7 +360,7 @@ an instance of :cpp:type:`nexus::Path::Element` as its only argument.
 
 
 
-:cpp:class:`pni::io::nexus::Path` utilities
+:cpp:class:`pni::nexus::Path` utilities
 -------------------------------------------
 
 Three inquiry functions exist for :cpp:class:`nexus::Path`. Each of them 

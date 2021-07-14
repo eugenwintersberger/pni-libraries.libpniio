@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2016 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 #pragma once
 
@@ -43,13 +43,13 @@ struct data_policy
     //! 
     //! \tparam T data type of the array elements
     //! \pararm s shape of the array
-    //! \return instance of pni::core::dynamic_array<T> 
+    //! \return instance of pni::dynamic_array<T> 
     //! 
     template<typename T> 
-    static pni::core::dynamic_array<T> 
-    create_array(const pni::core::shape_t &s) 
+    static pni::dynamic_array<T> 
+    create_array(const pni::shape_t &s) 
     {
-        return pni::core::dynamic_array<T>::create(s);
+        return pni::dynamic_array<T>::create(s);
     }
 
     //------------------------------------------------------------------------
@@ -61,11 +61,11 @@ struct data_policy
     //! 
     //! \tparam T data type of the array elements
     //! \param s shape of the array
-    //! \return instance of pni::core::dynamic_array<T> with random data
+    //! \return instance of pni::dynamic_array<T> with random data
     //! 
     template<typename T>
-    static pni::core::dynamic_array<T> 
-    create_random_array(const pni::core::shape_t &s)
+    static pni::dynamic_array<T> 
+    create_random_array(const pni::shape_t &s)
     {
         auto a = create_array<T>(s);
         std::generate(a.begin(),a.end(),uniform_distribution<T>());

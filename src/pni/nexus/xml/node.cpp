@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 // Created on: Jul 11, 2013
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
@@ -35,7 +35,7 @@ namespace io{
 namespace nexus{
 namespace xml{
 
-using namespace pni::core;
+using namespace pni;
 
 Node::Node(const boost::property_tree::ptree &ptree):
     boost::property_tree::ptree(ptree)
@@ -57,24 +57,24 @@ Node Node::from_string(const std::string &s)
   }
   catch(boost::property_tree::ptree_bad_data &)
   {
-    throw pni::io::parser_error(EXCEPTION_RECORD,
+    throw pni::parser_error(EXCEPTION_RECORD,
                                 "A parser error occured due to invalid input data!");
   }
   catch(boost::property_tree::ptree_bad_path &)
   {
-    throw pni::io::parser_error(EXCEPTION_RECORD,
+    throw pni::parser_error(EXCEPTION_RECORD,
                                 "A parser error occured as the requested object could not"
                                 " be resolved!");
   }
   catch(boost::property_tree::ptree_error &)
   {
-    throw pni::io::parser_error(EXCEPTION_RECORD,
+    throw pni::parser_error(EXCEPTION_RECORD,
                                 "A general parser error has occured!");
   }
   catch(...)
   {
     //whatever exception is thrown here is related to parsing
-    throw pni::io::parser_error(EXCEPTION_RECORD,
+    throw pni::parser_error(EXCEPTION_RECORD,
                                 "A unkown fatal error parsing XML string has occured!");
   }
 
@@ -104,7 +104,7 @@ Node Node::from_file(const boost::filesystem::path &path)
   {
     std::stringstream ss;
     ss<<"Error parsing XML file "<<path<<"!";
-    throw pni::io::parser_error(EXCEPTION_RECORD,ss.str());
+    throw pni::parser_error(EXCEPTION_RECORD,ss.str());
   }
 
   return t;

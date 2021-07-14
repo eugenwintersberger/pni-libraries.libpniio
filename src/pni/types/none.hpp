@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpnicore.
+// This file is part of libpninexus.
 //
-// libpnicore is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpnicore is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpnicore.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // ============================================================================
 //
@@ -28,7 +28,6 @@
 #include <pni/windows.hpp>
 
 namespace pni{
-namespace core{
 
     //!
     //! \ingroup type_classes
@@ -38,7 +37,7 @@ namespace core{
     //! required but not provided (or at the moment not available). 
     //! It thus denotes the absence of type information.
     //!
-    struct PNIIO_EXPORT none {};
+    struct PNINEXUS_EXPORT none {};
 
     //------------------------------------------------------------------------
     //!
@@ -52,7 +51,7 @@ namespace core{
     //! \param n none instance
     //! \return reference to the output stream
     //!
-    PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,const none &n);
+    PNINEXUS_EXPORT std::ostream &operator<<(std::ostream &stream,const none &n);
 
     //------------------------------------------------------------------------
     //!
@@ -66,7 +65,7 @@ namespace core{
     //! \param n none instance
     //! \return reference to the input stream
     //!
-    PNIIO_EXPORT std::istream &operator>>(std::istream &stream,none &n);
+    PNINEXUS_EXPORT std::istream &operator>>(std::istream &stream,none &n);
 
     //------------------------------------------------------------------------
     //!
@@ -79,7 +78,7 @@ namespace core{
     //! \param b instance on the rhs of the operator
     //! \return always true
     //! 
-    PNIIO_EXPORT bool operator==(const none &a,const none &b);
+    PNINEXUS_EXPORT bool operator==(const none &a,const none &b);
 
     //------------------------------------------------------------------------
     //!
@@ -93,8 +92,7 @@ namespace core{
     //! \param b instnace on the rhs of the operator
     //! \return always false
     //!
-    PNIIO_EXPORT bool operator!=(const none &a,const none &b);
+    PNINEXUS_EXPORT bool operator!=(const none &a,const none &b);
 
 //end of namespace
-}
 }

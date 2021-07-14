@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpnicore.
+// This file is part of libpninexus.
 //
-// libpnicore is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpnicore is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpnicore.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 //
 // ============================================================================
 //
@@ -32,7 +32,6 @@
 
 
 namespace pni{
-namespace core{
     
     //------------------------------------------------------------------------
     //!
@@ -60,7 +59,7 @@ namespace core{
     //! \param v binary data 
     //! \return type ID for binary 
     //!
-    PNIIO_EXPORT type_id_t get_type_id(const binary &v);
+    PNINEXUS_EXPORT type_id_t get_type_id(const binary &v);
 
     //-------------------------------------------------------------------------
     //!
@@ -70,7 +69,7 @@ namespace core{
     //! \param v boolean data
     //! \return typeID for bool_t
     //!
-    PNIIO_EXPORT type_id_t get_type_id(const bool_t &v);
+    PNINEXUS_EXPORT type_id_t get_type_id(const bool_t &v);
 
 
     //-------------------------------------------------------------------------
@@ -84,7 +83,7 @@ namespace core{
     //! \param v string data
     //! \return type ID for string type
     //! 
-    PNIIO_EXPORT type_id_t get_type_id(const string &v);
+    PNINEXUS_EXPORT type_id_t get_type_id(const string &v);
 
 
     //-------------------------------------------------------------------------
@@ -156,7 +155,7 @@ namespace core{
     //! \param s string representation of the type
     //! \return corresponding type ID
     //!
-    PNIIO_EXPORT type_id_t type_id_from_str(const string &s);
+    PNINEXUS_EXPORT type_id_t type_id_from_str(const string &s);
 
     //-------------------------------------------------------------------------
     //!
@@ -171,8 +170,7 @@ namespace core{
     //! \param id type ID of the type
     //! \return string representation of the type
     //!
-    PNIIO_EXPORT string str_from_type_id(type_id_t id);
+    PNINEXUS_EXPORT string str_from_type_id(type_id_t id);
    
 //end of namespace
-}
 }

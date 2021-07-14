@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Created on: Apr 23, 2012
@@ -43,14 +43,14 @@ namespace io{
     //! concrete reader classes.  Thus all constructors are protected making 
     //! them available only for derived classes.
     //!
-    class PNIIO_EXPORT data_reader
+    class PNINEXUS_EXPORT data_reader
     {
         private:
 #ifdef _MSC_VER
 #pragma warning(disable:4251)
 #endif
             //! name of the file 
-            pni::core::string _fname;           
+            pni::string _fname;           
             //! flag determining how files will be opened
             bool _is_binary;         
             //the stream is accessed via a unique pointer this allows moveing
@@ -74,7 +74,7 @@ namespace io{
             //! \return unique pointer to the input stream
             //!
             std::unique_ptr<std::ifstream> 
-                _open_stream(const pni::core::string &fname) const;
+                _open_stream(const pni::string &fname) const;
 #ifdef _MSC_VER
 #pragma warning(default:4251)
 #endif
@@ -113,7 +113,7 @@ namespace io{
             //! \param fname name of the file
             //! \param binary if true stream will be opened in binary mode
             //!
-            explicit data_reader(const pni::core::string &fname,bool binary=false);
+            explicit data_reader(const pni::string &fname,bool binary=false);
            
             //-----------------------------------------------------------------
             //! move constructor
@@ -144,7 +144,7 @@ namespace io{
             //!
             //! \return name of the file from which to read data
             //!
-            pni::core::string filename() const;
+            pni::string filename() const;
 
             //-------------------------------------------------------------
             //!
@@ -152,7 +152,7 @@ namespace io{
             //!
             //! \param fname name of the file to read data from
             //!
-            void filename(const pni::core::string &fname);
+            void filename(const pni::string &fname);
 
             //-------------------------------------------------------------
             //! close the file

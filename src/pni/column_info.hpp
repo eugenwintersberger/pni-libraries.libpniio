@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Created on: Apr 30, 2012
@@ -41,14 +41,14 @@ namespace io{
     //! column, its TypeID and the shape of each cell. The latter parameter 
     //! allows even the storage of multidimensional data in such a structure.
     //!
-    class PNIIO_EXPORT column_info
+    class PNINEXUS_EXPORT column_info
     {
         private:
 #ifdef _MSC_VER
 #pragma warning(disable:4251)
 #endif
-            pni::core::string _name; //!< name of the columne
-            pni::core::type_id_t _tid;  //!< type ID of column type
+            pni::string _name; //!< name of the columne
+            pni::type_id_t _tid;  //!< type ID of column type
             std::vector<size_t>  _shape; //!< shape of column data
 #ifdef _MSC_VER
 #pragma warning(default:4251)
@@ -79,7 +79,7 @@ namespace io{
             //! \param tid ID of the type stored in the column
             //! \param s shape of the column 
             //!
-            column_info(const pni::core::string &n,pni::core::type_id_t tid,
+            column_info(const pni::string &n,pni::type_id_t tid,
                         const std::vector<size_t> &s);
 
             //-----------------------------------------------------------------
@@ -111,7 +111,7 @@ namespace io{
             //! file (like for FIO). 
             //! \return type id of the column data
             //!
-            pni::core::type_id_t type_id() const { return _tid; }
+            pni::type_id_t type_id() const { return _tid; }
 
             //-----------------------------------------------------------------
             //! 
@@ -120,11 +120,11 @@ namespace io{
             //! Return the name of the column.
             //! \return name 
             //!
-            pni::core::string name() const { return _name; }
+            pni::string name() const { return _name; }
 
     };
 
-    PNIIO_EXPORT std::ostream &operator<<(std::ostream &o,const column_info &ci);
+    PNINEXUS_EXPORT std::ostream &operator<<(std::ostream &o,const column_info &ci);
 
 
 //end of namespace

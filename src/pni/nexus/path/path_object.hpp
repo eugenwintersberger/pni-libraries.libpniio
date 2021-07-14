@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2017 DESY
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
@@ -47,7 +47,7 @@ namespace nexus {
 //! while a common HDF5 path can only address the first two. Thus we
 //! need a special return type for all path operations when
 //! dereferencing objects in an HDF5 tree.
-class PNIIO_EXPORT PathObject
+class PNINEXUS_EXPORT PathObject
 {
   public:
     enum class Type : uint8_t
@@ -166,8 +166,8 @@ class PNIIO_EXPORT PathObject
 };
 
 #ifdef _MSC_VER
-PNIIO_EXPORT bool operator==(const PathObject &a,const PathObject &b);
-PNIIO_EXPORT bool operator<(const PathObject &a,const PathObject &b);
+PNINEXUS_EXPORT bool operator==(const PathObject &a,const PathObject &b);
+PNINEXUS_EXPORT bool operator<(const PathObject &a,const PathObject &b);
 #endif
 
 //!
@@ -177,7 +177,7 @@ PNIIO_EXPORT bool operator<(const PathObject &a,const PathObject &b);
 //! Can be used along with STL algorithms to filter particular
 //! types.
 //!
-class PNIIO_EXPORT PathObjectList : public std::list<PathObject>
+class PNINEXUS_EXPORT PathObjectList : public std::list<PathObject>
 {
   public:
     using std::list<PathObject>::list;
@@ -216,27 +216,27 @@ class PNIIO_EXPORT PathObjectList : public std::list<PathObject>
     operator DatasetList() const;
 };
 
-PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,const PathObject::Type &type);
+PNINEXUS_EXPORT std::ostream &operator<<(std::ostream &stream,const PathObject::Type &type);
 
 //!
 //! @brief return true if object stores a dataset
 //!
-PNIIO_EXPORT bool is_dataset(const PathObject &object) noexcept;
+PNINEXUS_EXPORT bool is_dataset(const PathObject &object) noexcept;
 
 //!
 //! @brief return true if object stores an attribute
 //!
-PNIIO_EXPORT bool is_attribute(const PathObject &object) noexcept;
+PNINEXUS_EXPORT bool is_attribute(const PathObject &object) noexcept;
 
 //!
 //! @brief return true if object stores a group
 //!
-PNIIO_EXPORT bool is_group(const PathObject &object) noexcept;
+PNINEXUS_EXPORT bool is_group(const PathObject &object) noexcept;
 
 //!
 //! @brief return true if object stored is a link
 //!
-PNIIO_EXPORT bool is_link(const PathObject &object) noexcept;
+PNINEXUS_EXPORT bool is_link(const PathObject &object) noexcept;
 
 
 } // namespace nexus

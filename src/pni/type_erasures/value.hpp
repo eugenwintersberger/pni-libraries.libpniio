@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpnicore.
+// This file is part of libpninexus.
 //
-// libpnicore is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpnicore is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpnicore.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 //
 // ============================================================================
 //
@@ -33,7 +33,6 @@
 #include <pni/windows.hpp>
 
 namespace pni{
-namespace core{
 
 
     //forward declaration
@@ -43,7 +42,7 @@ namespace core{
     //! \ingroup type_erasure_classes
     //!\brief type erasure for POD data
     //!
-    class PNIIO_EXPORT value
+    class PNINEXUS_EXPORT value
     {
         private:
             //! internal pointer type 
@@ -113,7 +112,7 @@ namespace core{
             //! 
             //! \brief  template constructor from value
             //!
-            //! This constructor accepts all primitive types from libpnicore.
+            //! This constructor accepts all primitive types from libpninexus.
             //!
             //! \tparam T primitive type
             //! \param v value to store in the type erasure
@@ -260,7 +259,7 @@ namespace core{
     //! \param rv reference to value 
     //! \return type ID of the erased type
     //!
-    PNIIO_EXPORT type_id_t type_id(const value &rv);
+    PNINEXUS_EXPORT type_id_t type_id(const value &rv);
 
     //------------------------------------------------------------------------
     //!
@@ -289,9 +288,8 @@ namespace core{
     //! \param tid type ID of the requested type
     //! \return instance of value holding data of type tid  
     //!
-    PNIIO_EXPORT value make_value(type_id_t tid);
+    PNINEXUS_EXPORT value make_value(type_id_t tid);
 
 //end of namespace
-}
 }
 

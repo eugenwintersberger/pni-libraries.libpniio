@@ -11,7 +11,7 @@ Working with files
 Creating single files
 =====================
 
-In order to create a file *libpniio* provides some simple wrappers around 
+In order to create a file *libpninexus* provides some simple wrappers around 
 the :cpp:func:`hdf5::file::create` functions provided by *h5cpp*. These wrappers
 basically add all the attributes to the root group of an HDF5 file required 
 by the NeXus standard. 
@@ -24,7 +24,7 @@ wrapper function which in turn will return an instance of
    #include <pni/nexus.hpp>
    #include <h5cpp/hdf5.hpp>
    
-   using namespace pni::io;
+   using namespace pni;
    
    int main(int argc,char **argv)
    {
@@ -66,7 +66,7 @@ Create distributed files
    typically to a tape library. However, such libraries typically want to have
    files in a particular size in order to operate with optimal performance. 
    
-   \libpniio\ allows the content of a single file to be distributed over several
+   \libpninexus\ allows the content of a single file to be distributed over several
    files each having the same size. Such a set of files can be created using the 
    \cpp{create\_files} static member function as shown below
    \begin{cppcode}
@@ -75,7 +75,7 @@ Create distributed files
    Aside from its name the arguments of the \cpp{create\_files} function have 
    a slightly different meaning. If a set of files should be produced the file name
    is not a simple string but a \cpp{printf} like format string. This allows the
-   storage backend of \libpniio\ to number each new file as it is created.
+   storage backend of \libpninexus\ to number each new file as it is created.
    The second argument to this function is the size in MByte an individual file can 
    attain before a new one will be created. The above call to \cpp{create\_files}
    would yield the following files

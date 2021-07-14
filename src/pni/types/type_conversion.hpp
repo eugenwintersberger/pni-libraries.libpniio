@@ -3,20 +3,20 @@
 //
 // (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpnicore.
+// This file is part of libpninexus.
 //
-// libpnicore is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpnicore is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpnicore.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // ============================================================================
 //
@@ -37,7 +37,6 @@
 
 
 namespace pni{
-namespace core{
     
     //------------------------------------------------------------------------
     //!
@@ -51,7 +50,7 @@ namespace core{
     //! \param target_tid ID of the target type
     //! \return true if types are unchecked convertible, false otherwise
     //! 
-    PNIIO_EXPORT 
+    PNINEXUS_EXPORT 
 	bool is_unchecked_convertible(type_id_t source_tid,type_id_t target_tid);
 
     //------------------------------------------------------------------------
@@ -66,7 +65,7 @@ namespace core{
     //! \param target_tid ID of the target type
     //! \return true if types are checked convertible, false otherwise
     //! 
-	PNIIO_EXPORT
+	PNINEXUS_EXPORT
     bool is_checked_convertible(type_id_t source_tid,type_id_t target_tid);
 
     //------------------------------------------------------------------------
@@ -81,10 +80,9 @@ namespace core{
     //! \param target_tid ID of the target type
     //! \return true if types are , false otherwise
     //! 
-	PNIIO_EXPORT
+	PNINEXUS_EXPORT
     bool is_convertible(type_id_t source_tid,type_id_t target_tid);
 
 
 //end of namespace
-}
 }

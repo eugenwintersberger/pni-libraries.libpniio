@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Created on: Jun 27, 2013
@@ -44,7 +44,7 @@ namespace nexus{
 //! @param b path as string
 //! @return true if the paths are matching, false otherwise
 //!
-PNIIO_EXPORT bool match(const std::string &a,const std::string &b);
+PNINEXUS_EXPORT bool match(const std::string &a,const std::string &b);
 
 //-------------------------------------------------------------------------
 //!
@@ -57,7 +57,7 @@ PNIIO_EXPORT bool match(const std::string &a,const std::string &b);
 //! @param b reference to second path
 //! @return true if paths are matching, false otherwise
 //!
-PNIIO_EXPORT bool match(const Path &a,const Path &b);
+PNINEXUS_EXPORT bool match(const Path &a,const Path &b);
 
 //-------------------------------------------------------------------------
 //!
@@ -70,7 +70,7 @@ PNIIO_EXPORT bool match(const Path &a,const Path &b);
 //! @param b reference to second path element
 //! @return true if the elements are matching, false otherwise
 //!
-PNIIO_EXPORT bool match(const Path::Element &a,
+PNINEXUS_EXPORT bool match(const Path::Element &a,
                         const Path::Element &b);
 
 
@@ -87,7 +87,7 @@ PNIIO_EXPORT bool match(const Path::Element &a,
 //! @param type the type of the object
 //! @return instance of object element
 //!
-PNIIO_EXPORT Path::Element object_element(const std::string &name,
+PNINEXUS_EXPORT Path::Element object_element(const std::string &name,
                                           const std::string &type);
 
 //------------------------------------------------------------------------
@@ -114,13 +114,13 @@ PNIIO_EXPORT Path::Element object_element(const std::string &name,
 //! // instrument:NXinstrument/data
 //! @endcode
 //!
-//! @throws pni::core::index_error if s exceeds input path size
+//! @throws pni::index_error if s exceeds input path size
 //! @param p original path
 //! @param s index where to split
 //! @param p1 first part of the path
 //! @param p2 second part of the path
 //!
-PNIIO_EXPORT void split_path(const Path &p,size_t s,Path &p1,Path &p2);
+PNINEXUS_EXPORT void split_path(const Path &p,size_t s,Path &p1,Path &p2);
 
 //--------------------------------------------------------------------------
 //!
@@ -130,12 +130,12 @@ PNIIO_EXPORT void split_path(const Path &p,size_t s,Path &p1,Path &p2);
 //! function for traversing through a path. The only portion of a path
 //! which mast not be a group is the last element.
 //!
-//! @throws pni::core::index_error
+//! @throws pni::index_error
 //! @param p reference to the original path
 //! @param gp path with groups
 //! @param op path with final object
 //!
-PNIIO_EXPORT void split_last(const Path &p,Path &gp,Path &op);
+PNINEXUS_EXPORT void split_last(const Path &p,Path &gp,Path &op);
 
 //--------------------------------------------------------------------------
 //!
@@ -145,7 +145,7 @@ PNIIO_EXPORT void split_last(const Path &p,Path &gp,Path &op);
 //!
 //! @param p reference to an instance of nxpath
 //! @return true if path has a file section, false otherwise
-PNIIO_EXPORT bool has_file_section(const Path &p);
+PNINEXUS_EXPORT bool has_file_section(const Path &p);
 
 //------------------------------------------------------------------------
 //!
@@ -155,7 +155,7 @@ PNIIO_EXPORT bool has_file_section(const Path &p);
 //!
 //! @param p reference to an instance of nxpath
 //! @return true if the path has an attribute section, false otherweise.
-PNIIO_EXPORT bool has_attribute_section(const Path &p);
+PNINEXUS_EXPORT bool has_attribute_section(const Path &p);
     
 //------------------------------------------------------------------------
 //!
@@ -169,7 +169,7 @@ PNIIO_EXPORT bool has_attribute_section(const Path &p);
 //! @param e element instance
 //! @return true if root element, false otherwise
 //!
-PNIIO_EXPORT bool is_root_element(const Path::Element &e);
+PNINEXUS_EXPORT bool is_root_element(const Path::Element &e);
 
 //--------------------------------------------------------------------------
 //!
@@ -178,7 +178,7 @@ PNIIO_EXPORT bool is_root_element(const Path::Element &e);
 //! @param p path instance
 //! @return true if path is absolute, false otherwise
 //!
-PNIIO_EXPORT bool is_absolute(const Path &p);
+PNINEXUS_EXPORT bool is_absolute(const Path &p);
 
 //--------------------------------------------------------------------------
 //!
@@ -190,7 +190,7 @@ PNIIO_EXPORT bool is_absolute(const Path &p);
 //! @param e reference to the element
 //! @return true if e has a name, false otherwise
 //!
-PNIIO_EXPORT bool has_name(const Path::Element &e);
+PNINEXUS_EXPORT bool has_name(const Path::Element &e);
 
 //--------------------------------------------------------------------------
 //!
@@ -201,7 +201,7 @@ PNIIO_EXPORT bool has_name(const Path::Element &e);
 //! @param e reference to the element
 //! @return true if e has a class, false otherwise
 //!
-PNIIO_EXPORT bool has_class(const Path::Element &e);
+PNINEXUS_EXPORT bool has_class(const Path::Element &e);
 
 //--------------------------------------------------------------------------
 //!
@@ -218,7 +218,7 @@ PNIIO_EXPORT bool has_class(const Path::Element &e);
 //! @param e reference to the path element
 //! @return true if element is complete, false otherwise
 //!
-PNIIO_EXPORT bool is_complete(const Path::Element &e);
+PNINEXUS_EXPORT bool is_complete(const Path::Element &e);
 
 //--------------------------------------------------------------------------
 //!
@@ -234,7 +234,7 @@ PNIIO_EXPORT bool is_complete(const Path::Element &e);
 //! @param p path to check
 //! @return true if the path is empty
 //!
-PNIIO_EXPORT bool is_empty(const Path &p);
+PNINEXUS_EXPORT bool is_empty(const Path &p);
 
 //--------------------------------------------------------------------------
 //!
@@ -254,7 +254,7 @@ PNIIO_EXPORT bool is_empty(const Path &p);
 //! @param b second path
 //! @return joined path
 //!
-PNIIO_EXPORT Path join(const Path &a,const Path &b);
+PNINEXUS_EXPORT Path join(const Path &a,const Path &b);
 
 //--------------------------------------------------------------------------
 //!
@@ -273,7 +273,7 @@ PNIIO_EXPORT Path join(const Path &a,const Path &b);
 //! @param p reference to the path
 //! @return reference to the advanced original stream
 //!
-PNIIO_EXPORT std::istream &operator>>(std::istream &i,Path &p);
+PNINEXUS_EXPORT std::istream &operator>>(std::istream &i,Path &p);
 
 //--------------------------------------------------------------------------
 //!
@@ -287,7 +287,7 @@ PNIIO_EXPORT std::istream &operator>>(std::istream &i,Path &p);
 //! @param b reference to the element on the right hand-side of the operator
 //! @return true if the elements are equal
 //!
-PNIIO_EXPORT bool operator==(const Path::Element &a,const Path::Element &b);
+PNINEXUS_EXPORT bool operator==(const Path::Element &a,const Path::Element &b);
 
 //--------------------------------------------------------------------------
 //!
@@ -299,7 +299,7 @@ PNIIO_EXPORT bool operator==(const Path::Element &a,const Path::Element &b);
 //! @param b reference to the element on the right hand-side of the operator
 //! @return true if the elements are no equal
 //!
-PNIIO_EXPORT bool operator!=(const Path::Element &a,const Path::Element &b);
+PNINEXUS_EXPORT bool operator!=(const Path::Element &a,const Path::Element &b);
 
 //--------------------------------------------------------------------------
 //!
@@ -313,7 +313,7 @@ PNIIO_EXPORT bool operator!=(const Path::Element &a,const Path::Element &b);
 //! @param rhs reference to the path on the right hand-side
 //! @return true if equal, false otherwise
 //!
-PNIIO_EXPORT bool operator==(const Path &lhs,const Path &rhs);
+PNINEXUS_EXPORT bool operator==(const Path &lhs,const Path &rhs);
 
 //--------------------------------------------------------------------------
 //!
@@ -325,7 +325,7 @@ PNIIO_EXPORT bool operator==(const Path &lhs,const Path &rhs);
 //! @param rhs reference to the path on the right hand-side
 //! @return true if not equal, false otherwise
 //!
-PNIIO_EXPORT bool operator!=(const Path &lhs,const Path &rhs);
+PNINEXUS_EXPORT bool operator!=(const Path &lhs,const Path &rhs);
     
 //------------------------------------------------------------------------
 //!
@@ -338,7 +338,7 @@ PNIIO_EXPORT bool operator!=(const Path &lhs,const Path &rhs);
 //! @param e object element
 //! @return reference to the modified stream
 //!
-PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,
+PNINEXUS_EXPORT std::ostream &operator<<(std::ostream &stream,
                                       const Path::Element &e);
 
 //--------------------------------------------------------------------------
@@ -365,7 +365,7 @@ PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,
 //! @param p reference to the path
 //! @return reference to the output operator
 //!
-PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,const Path &p);
+PNINEXUS_EXPORT std::ostream &operator<<(std::ostream &stream,const Path &p);
 
 //!
 //! @brief return true if a NeXus path is unique
@@ -377,7 +377,7 @@ PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,const Path &p);
 //! @param path reference to the NeXus path
 //! @return true if path is unique, false otherwise.
 //!
-PNIIO_EXPORT bool is_unique(const Path &path);
+PNINEXUS_EXPORT bool is_unique(const Path &path);
 
 //!
 //! @brief get the NeXus path for an HDF5 node
@@ -386,7 +386,7 @@ PNIIO_EXPORT bool is_unique(const Path &path);
 //!
 //! @pre the node must be a valid HDF5 object
 //!
-PNIIO_EXPORT Path get_path(const hdf5::node::Node &node);
+PNINEXUS_EXPORT Path get_path(const hdf5::node::Node &node);
 
 //!
 //! @brief get the NeXus path for an HDF5 attribute
@@ -395,7 +395,7 @@ PNIIO_EXPORT Path get_path(const hdf5::node::Node &node);
 //!
 //! @pre the attribute must be a valid HDF5 object
 //!
-PNIIO_EXPORT Path get_path(const hdf5::attribute::Attribute &attribute);
+PNINEXUS_EXPORT Path get_path(const hdf5::attribute::Attribute &attribute);
 
 //!
 //! @brief get NeXus path for an HDF5 link
@@ -407,7 +407,7 @@ PNIIO_EXPORT Path get_path(const hdf5::attribute::Attribute &attribute);
 //! @param link reference to an HDF5 link
 //! @pre the parent of the link must be valid
 //! @return instance of a NeXus path
-PNIIO_EXPORT Path get_path(const hdf5::node::Link &link);
+PNINEXUS_EXPORT Path get_path(const hdf5::node::Link &link);
 
 
 //!
@@ -433,7 +433,7 @@ PNIIO_EXPORT Path get_path(const hdf5::node::Link &link);
 //!
 //! @return a list of path objects
 //!
-PNIIO_EXPORT PathObjectList get_objects(const hdf5::node::Group &base,
+PNINEXUS_EXPORT PathObjectList get_objects(const hdf5::node::Group &base,
                                         const Path &path);
 
 //end of namespace

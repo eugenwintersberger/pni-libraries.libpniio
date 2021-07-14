@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Created on: Apr 26, 2012
@@ -70,7 +70,7 @@ namespace tiff{
         if(sizeof(ETYPE)*r.size()>4){
             //if the data does not fit into 4 Byte we interpret data as an
             //offset and move the stream pointer to this new position
-            pni::core::int32 offset;
+            pni::int32 offset;
             stream.read((char *)(&offset),4);
             stream.seekg(offset,std::ios::beg);
         }
@@ -93,11 +93,11 @@ namespace tiff{
     //! is provided by this partial specialization of the IFDEntryReader 
     //! template.
     //!
-    template<> class ifd_entry_reader<pni::core::string,pni::core::string>
+    template<> class ifd_entry_reader<pni::string,pni::string>
     {
         public:
             //! read string entry 
-            static void read(std::vector<pni::core::string> &r,std::ifstream &stream);
+            static void read(std::vector<pni::string> &r,std::ifstream &stream);
     };
 
 

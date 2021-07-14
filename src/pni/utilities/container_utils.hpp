@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpnicore.
+// This file is part of libpninexus.
 //
-// libpnicore is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpnicore is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpnicore.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 //
 // ============================================================================
 //
@@ -31,14 +31,13 @@
 #include <pni/utilities/sfinae_macros.hpp>
 
 namespace pni{
-namespace core{
 
 
     //!
     //! \ingroup utility_classes
     //! \brief container utility
     //! 
-    //! STL containers play a crucial role in libpnicore. One problem is that
+    //! STL containers play a crucial role in libpninexus. One problem is that
     //! the creation procedure is slightly different among them. This template
     //! provides static functions with a common signature for the creation of 
     //! different container types.
@@ -449,5 +448,4 @@ namespace core{
 
 
 //end of namespace
-}
 }

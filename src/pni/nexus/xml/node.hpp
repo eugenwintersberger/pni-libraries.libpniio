@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 //************************************************************************
 // Created on: Jul 11, 2013
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
@@ -39,7 +39,7 @@ namespace xml{
 //! This alias creates the new type name node which can be used within
 //! the xml namespace instead of boost::property_tree::ptree;
 //!
-class PNIIO_EXPORT Node : public boost::property_tree::ptree
+class PNINEXUS_EXPORT Node : public boost::property_tree::ptree
 {
   private:
 
@@ -77,7 +77,7 @@ class PNIIO_EXPORT Node : public boost::property_tree::ptree
     //! Reads XML data from a file and returns an XML node refering to the
     //! root element of the XML tree.
     //!
-    //! @throws pni::io::parser_error in case of parsing issues
+    //! @throws pni::parser_error in case of parsing issues
     //! @throws file_error in case of problems opening the file
     //! @param path the path to the file from which to read data
     //! @return node instance
@@ -133,7 +133,7 @@ class PNIIO_EXPORT Node : public boost::property_tree::ptree
 
     template<typename T> T data() const
     {
-      pni::io::parser<T> p;
+      pni::parser<T> p;
 
       return p(str_data());
     }
@@ -150,7 +150,7 @@ class PNIIO_EXPORT Node : public boost::property_tree::ptree
 //! @param n node to write to the output stream
 //! @return modified output stream
 //!
-PNIIO_EXPORT std::ostream &operator<<(std::ostream &o,const Node &n);
+PNINEXUS_EXPORT std::ostream &operator<<(std::ostream &o,const Node &n);
 
 
 //end of namespace

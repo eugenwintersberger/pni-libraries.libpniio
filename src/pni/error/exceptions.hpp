@@ -3,20 +3,20 @@
 //
 // (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpnicore.
+// This file is part of libpninexus.
 //
-// libpnicore is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpnicore is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpnicore.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 //
 // ===========================================================================
 //
@@ -39,7 +39,6 @@
 #include <pni/windows.hpp>
 
 namespace pni{
-namespace core{
 
 //================Macros related to exceptions==================================
 
@@ -48,7 +47,7 @@ namespace core{
 //! \brief macro creating an instance of ExceptionRecord
 //!
 #define EXCEPTION_RECORD\
-    pni::core::exception_record(__FILE__,__LINE__,BOOST_CURRENT_FUNCTION)
+    pni::exception_record(__FILE__,__LINE__,BOOST_CURRENT_FUNCTION)
 
 //! 
 //! \ingroup error_classes
@@ -89,7 +88,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
     \endcode
     */
     //!
-    class PNIIO_EXPORT exception_record
+    class PNINEXUS_EXPORT exception_record
     {
         private:
 #ifdef _MSC_VER
@@ -127,7 +126,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
     //! \ingroup error_classes
     //! \brief error record output operator
     //!
-    PNIIO_EXPORT 
+    PNINEXUS_EXPORT 
     std::ostream & operator<<(std::ostream &o,const exception_record &rec); 
 
     //-------------------------------------------------------------------------
@@ -140,7 +139,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 #ifdef _MSC_VER
 #pragma warning(disable:4275)
 #endif
-    class PNIIO_EXPORT exception:public std::exception
+    class PNINEXUS_EXPORT exception:public std::exception
     {
         private:
 #ifdef _MSC_VER
@@ -296,7 +295,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 
             //-----------------------------------------------------------------
             //! output operator for exceptions
-            friend PNIIO_EXPORT std::ostream &operator<<(std::ostream &, const exception &);
+            friend PNINEXUS_EXPORT std::ostream &operator<<(std::ostream &, const exception &);
             
     };
 #ifdef _MSC_VER
@@ -311,7 +310,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
     //! This exception is typically raised when allocation of memory on the 
     //! heap fails. In other words when a call to new leads to a nullptr.
     //!
-    class PNIIO_EXPORT memory_allocation_error: public exception 
+    class PNINEXUS_EXPORT memory_allocation_error: public exception 
     {
         public:
             //! default constructor
@@ -336,7 +335,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 
             //-----------------------------------------------------------------
             //! output operator
-            friend PNIIO_EXPORT std::ostream &
+            friend PNINEXUS_EXPORT std::ostream &
                 operator<<(std::ostream &o,const memory_allocation_error &e);
     };
 
@@ -348,7 +347,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
     //! This exception is usually thrown if one tries to access not allocated 
     //! memory.
     //!
-    class PNIIO_EXPORT memory_not_allocated_error: public exception
+    class PNINEXUS_EXPORT memory_not_allocated_error: public exception
     {
         public:
             //! default constructor
@@ -375,7 +374,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 
             //----------------------------------------------------------------
             //! output operator
-            friend PNIIO_EXPORT std::ostream &operator<<(std::ostream &o,const
+            friend PNINEXUS_EXPORT std::ostream &operator<<(std::ostream &o,const
                     memory_not_allocated_error &e);
     };
 
@@ -387,7 +386,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
     //!
     //! Raised in cases where the Shape objects of two objects are not equal.
     //!
-    class PNIIO_EXPORT shape_mismatch_error: public exception 
+    class PNINEXUS_EXPORT shape_mismatch_error: public exception 
     {
         public:
             //! default constructor
@@ -414,7 +413,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 
             //----------------------------------------------------------------
             //! output operator
-            friend PNIIO_EXPORT std::ostream &
+            friend PNINEXUS_EXPORT std::ostream &
                 operator<<(std::ostream &o,const shape_mismatch_error &e);
     };
 
@@ -426,7 +425,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
     //! This exception will be raised in cases where buffer sizes do not meet 
     //! the requirements.
     //!
-    class PNIIO_EXPORT size_mismatch_error: public exception 
+    class PNINEXUS_EXPORT size_mismatch_error: public exception 
     {
         public:
             //! default constructor
@@ -452,7 +451,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 
             //----------------------------------------------------------------
             //! output operator
-            friend PNIIO_EXPORT std::ostream &
+            friend PNINEXUS_EXPORT std::ostream &
                 operator<<(std::ostream &o,const size_mismatch_error &e);
     };
 
@@ -464,7 +463,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
     //! Raised if the index passed to a [] operator exceeds the size of the
     //! container it belongs to.
     //!
-    class PNIIO_EXPORT index_error: public exception 
+    class PNINEXUS_EXPORT index_error: public exception 
     {
         public:
             //! default constructor
@@ -489,7 +488,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 
             //----------------------------------------------------------------
             //! output operator
-            friend PNIIO_EXPORT std::ostream &
+            friend PNINEXUS_EXPORT std::ostream &
                 operator<<(std::ostream &o,const index_error &e);
     };
 
@@ -500,7 +499,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
     //!
     //! Raised in cases where a problem with the key of a hash map occurs.
     //!
-    class PNIIO_EXPORT key_error: public exception
+    class PNINEXUS_EXPORT key_error: public exception
     {
         public:
             //! default constructor
@@ -524,7 +523,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 
             //----------------------------------------------------------------
             //! output operator
-            friend PNIIO_EXPORT std::ostream &
+            friend PNINEXUS_EXPORT std::ostream &
                 operator<<(std::ostream &o,const key_error &e);
     };
 
@@ -535,7 +534,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
     //!
     //! Raised typically in cases of problems with files.
     //!
-    class PNIIO_EXPORT file_error: public exception 
+    class PNINEXUS_EXPORT file_error: public exception 
     {
         public:
             //! default constructor
@@ -559,7 +558,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 
             //----------------------------------------------------------------
             //! output operator
-            friend PNIIO_EXPORT std::ostream &
+            friend PNINEXUS_EXPORT std::ostream &
                 operator<<(std::ostream &o,const file_error &e);
 
     };
@@ -571,7 +570,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
     //!
     //! This exception is raised in cases of errors concerning data types.
     //!
-    class PNIIO_EXPORT type_error: public exception 
+    class PNINEXUS_EXPORT type_error: public exception 
     {
         public:
             //! default constructor
@@ -595,7 +594,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 
             //----------------------------------------------------------------
             //! output operator
-            friend PNIIO_EXPORT std::ostream &
+            friend PNINEXUS_EXPORT std::ostream &
                 operator<<(std::ostream &o,const type_error &e);
     };
 
@@ -607,7 +606,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
     //! This exception is raised in cases where a particular variable takes 
     //! an inappropriate value.
     //!
-    class PNIIO_EXPORT value_error: public exception 
+    class PNINEXUS_EXPORT value_error: public exception 
     {
         public:
             //! default constructor
@@ -631,7 +630,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 
             //----------------------------------------------------------------
             //! output operator
-            friend PNIIO_EXPORT std::ostream &
+            friend PNINEXUS_EXPORT std::ostream &
                 operator<<(std::ostream &o,const value_error &e);
     };
 
@@ -643,7 +642,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
     //! This exception is raised in cases where data values exceed the range
     //! spanned by their data type.
     //!
-    class PNIIO_EXPORT range_error: public exception 
+    class PNINEXUS_EXPORT range_error: public exception 
     {
         public:
             //! default constructor
@@ -667,7 +666,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 
             //----------------------------------------------------------------
             //! output operator
-            friend PNIIO_EXPORT std::ostream &
+            friend PNINEXUS_EXPORT std::ostream &
                 operator<<(std::ostream &o,const range_error &e);
     };
 
@@ -680,7 +679,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
     //! as not implemented. Such an approach can be quite useful for debugging
     //! and development.
     //!
-    class PNIIO_EXPORT not_implemented_error:public exception
+    class PNINEXUS_EXPORT not_implemented_error:public exception
     {
         public:
             //! default construtor
@@ -707,7 +706,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 
             //----------------------------------------------------------------
             //! output operator
-            friend PNIIO_EXPORT std::ostream &
+            friend PNINEXUS_EXPORT std::ostream &
                 operator<<(std::ostream &o,const not_implemented_error &e);
     };
 
@@ -719,7 +718,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
     //!
     //! Exception thrown in case of iterator errors.
     //!
-    class PNIIO_EXPORT iterator_error:public exception
+    class PNINEXUS_EXPORT iterator_error:public exception
     {
         public:
             //! default constructor
@@ -744,7 +743,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 
             //-----------------------------------------------------------------
             //! output operator
-            friend PNIIO_EXPORT std::ostream &
+            friend PNINEXUS_EXPORT std::ostream &
                 operator<<(std::ostream &o,const iterator_error &e);
     };
     
@@ -757,7 +756,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
     //! Thrown in cases where a command line argument (do not confuse this 
     //! with an option has an inapropriate value or is missing).
     //!
-    class PNIIO_EXPORT cli_argument_error:public exception
+    class PNINEXUS_EXPORT cli_argument_error:public exception
     {
         public:
             //------------------------------------------------------------------
@@ -781,7 +780,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 
             //------------------------------------------------------------------
             //! output operator
-            friend PNIIO_EXPORT std::ostream &
+            friend PNINEXUS_EXPORT std::ostream &
                 operator<<(std::ostream &o,const cli_argument_error &e);
     };
 
@@ -793,7 +792,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
     //! Exception thrown in cases where a command line option is missing or 
     //! has an inapropriate value.
     //!
-    class PNIIO_EXPORT cli_option_error:public exception
+    class PNINEXUS_EXPORT cli_option_error:public exception
     {
         public:
             //------------------------------------------------------------------
@@ -816,7 +815,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 
             //------------------------------------------------------------------
             //! output operator
-            friend PNIIO_EXPORT std::ostream &
+            friend PNINEXUS_EXPORT std::ostream &
             operator<<(std::ostream &o,const cli_option_error &e);
     };
 
@@ -828,7 +827,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
     //! Thrown in case of a general CLI error not related to arguments or 
     //! options.
     //!
-    class PNIIO_EXPORT cli_error:public exception
+    class PNINEXUS_EXPORT cli_error:public exception
     {
         public:
             //------------------------------------------------------------------
@@ -852,7 +851,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 
             //------------------------------------------------------------------
             //! output operator
-            friend PNIIO_EXPORT std::ostream &operator<<(std::ostream &o,const cli_error &e);
+            friend PNINEXUS_EXPORT std::ostream &operator<<(std::ostream &o,const cli_error &e);
     };
 
     //--------------------------------------------------------------------------
@@ -863,7 +862,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
     //! This is exception is not intended to manage an error at all. It is 
     //! thrown in the case that a user makes a help request from the CLI.
     //!
-    class PNIIO_EXPORT cli_help_request:public exception
+    class PNINEXUS_EXPORT cli_help_request:public exception
     {
         public:
             //------------------------------------------------------------------
@@ -887,8 +886,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 
             //----------------------------------------------------------------
             //! output operator
-            friend PNIIO_EXPORT std::ostream &
+            friend PNINEXUS_EXPORT std::ostream &
             operator<<(std::ostream &o,const cli_help_request &e);
     };
-}
 }

@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 //============================================================================
 //
 // Created on: Apr 30, 2012
@@ -46,19 +46,19 @@ namespace io{
     stored in columns. Thus such files correspond to the family of spreadsheet
     style files. 
     */
-    class PNIIO_EXPORT fio_reader:public spreadsheet_reader
+    class PNINEXUS_EXPORT fio_reader:public spreadsheet_reader
     {
         private:
 #ifdef _MSC_VER
 #pragma warning(disable:4251)
 #endif
-    	    using parameter_map_type = std::map<pni::core::string,pni::core::string>;
-    	    using column_type = std::vector<pni::core::string>;
-    	    using column_map_type = std::map<pni::core::string,column_type>;
+    	    using parameter_map_type = std::map<pni::string,pni::string>;
+    	    using column_type = std::vector<pni::string>;
+    	    using column_map_type = std::map<pni::string,column_type>;
             //! parameter stream positions
-            std::map<pni::core::string,pni::core::string> _param_map;
+            std::map<pni::string,pni::string> _param_map;
             //! column data
-            std::map<pni::core::string,std::vector<pni::core::string>> _columns;
+            std::map<pni::string,std::vector<pni::string>> _columns;
 #ifdef _MSC_VER
 #pragma warning(default:4251)
 #endif
@@ -99,11 +99,11 @@ namespace io{
             \brief type id from type string 
 
             Method converts a FIO type string to a TypeID as provided by
-            libpniio.
+            libpninexus.
             \param tstr type string
             \return TypeID 
             */
-            static pni::core::type_id_t _typestr2id(const pni::core::string &tstr);
+            static pni::type_id_t _typestr2id(const pni::string &tstr);
           
             //------------------------------------------------------------------
             /*! 
@@ -115,7 +115,7 @@ namespace io{
             \param line input line
             \return vector with cell content as strings
             */
-            static std::vector<pni::core::string> _read_data_line(const pni::core::string &line);
+            static std::vector<pni::string> _read_data_line(const pni::string &line);
 
             //-----------------------------------------------------------------
             /*! 
@@ -138,7 +138,7 @@ namespace io{
             \param stream input stream
             \param value string value where to store parameter data
             */
-            void _get_parameter_data(std::ifstream &stream,pni::core::string &value) const;
+            void _get_parameter_data(std::ifstream &stream,pni::string &value) const;
 
             //-------------------------------------------------------------------
             /*! 
@@ -166,7 +166,7 @@ namespace io{
             fio_reader(fio_reader &&r) = default;
 
             //! standard constructor
-            fio_reader(const pni::core::string &n);
+            fio_reader(const pni::string &n);
 
             //! destructor
             ~fio_reader();
@@ -259,7 +259,7 @@ namespace io{
     template<typename CTYPE> 
         void fio_reader::column(const std::string &n,CTYPE &c) const
     {
-        using namespace pni::core;
+        using namespace pni;
         using value_type = typename CTYPE::value_type;
 
         try

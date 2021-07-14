@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Created on: Jun 22, 2011
@@ -42,7 +42,7 @@ namespace tiff {
 
     //! \ingroup image_io_tiff
     //! \brief reader for strip data in a TIFF file
-    class PNIIO_EXPORT strip_reader 
+    class PNINEXUS_EXPORT strip_reader 
     {
         private:
 #ifdef _MSC_VER
@@ -51,7 +51,7 @@ namespace tiff {
             std::vector<size_t> _offsets;   //!< array with the file offsets of the strips
             std::vector<size_t> _byte_cnts; //!< array with byte counts for each strip
             std::vector<size_t> _bits_per_channel; //!< number of bits per channel
-            std::vector<pni::core::type_id_t> _channel_types; //!< type ids of channel data
+            std::vector<pni::type_id_t> _channel_types; //!< type ids of channel data
 #ifdef _MSC_VER
 #pragma warning(default:4251)
 #endif
@@ -106,7 +106,7 @@ namespace tiff {
             strip_reader(const std::vector<size_t> &offsets,
                          const std::vector<size_t> &byte_counts,
                          const std::vector<size_t> &bits_per_channel,
-                         const std::vector<pni::core::type_id_t> &channel_types);
+                         const std::vector<pni::type_id_t> &channel_types);
 
             //------------------------------------------------------------------
             //! destructor
@@ -154,7 +154,7 @@ namespace tiff {
             template<typename CTYPE> 
                 void read(size_t c,std::ifstream &stream,CTYPE &data) 
             {
-                using namespace pni::core;
+                using namespace pni;
                 //first we need to determine the datatype of the
 
                 if(this->_channel_types[c] == type_id_t::UINT8)

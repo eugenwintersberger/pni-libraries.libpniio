@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2017 DESY
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
@@ -35,7 +35,7 @@ namespace nexus {
 //!
 //! This is the base class for all predicates related to HDF5 Node instances.
 //!
-class PNIIO_EXPORT NodePredicate
+class PNINEXUS_EXPORT NodePredicate
 {
   public:
     //!
@@ -76,7 +76,7 @@ class PNIIO_EXPORT NodePredicate
 //!              IsBaseClass("NXdetector"));
 //! \endcode
 //!
-class PNIIO_EXPORT IsBaseClass : public NodePredicate
+class PNINEXUS_EXPORT IsBaseClass : public NodePredicate
 {
   private:
     std::string class_name_;
@@ -129,7 +129,7 @@ class PNIIO_EXPORT IsBaseClass : public NodePredicate
 //!
 //! Child class of IsBaseClass that matches an NXtransformation.
 //!
-class PNIIO_EXPORT IsTransformation : public IsBaseClass
+class PNINEXUS_EXPORT IsTransformation : public IsBaseClass
 {
   public:
     IsTransformation();
@@ -142,7 +142,7 @@ class PNIIO_EXPORT IsTransformation : public IsBaseClass
 //!
 //! Child class of IsBaseClass that matches an NXentry
 //!
-class PNIIO_EXPORT IsEntry : public IsBaseClass
+class PNINEXUS_EXPORT IsEntry : public IsBaseClass
 {
   public:
     IsEntry();
@@ -154,7 +154,7 @@ class PNIIO_EXPORT IsEntry : public IsBaseClass
 //!
 //! Child class of IsBaseClass that matches NXsubentry
 //!
-class PNIIO_EXPORT IsSubentry : public IsBaseClass
+class PNINEXUS_EXPORT IsSubentry : public IsBaseClass
 {
   public:
     IsSubentry();
@@ -166,7 +166,7 @@ class PNIIO_EXPORT IsSubentry : public IsBaseClass
 //!
 //! Child class of IsBaseClass that matches NXdetector
 //!
-class PNIIO_EXPORT IsDetector : public IsBaseClass
+class PNINEXUS_EXPORT IsDetector : public IsBaseClass
 {
   public:
     IsDetector();
@@ -178,7 +178,7 @@ class PNIIO_EXPORT IsDetector : public IsBaseClass
 //!
 //! Child class of IsBaseClass that matches NXinstrument
 //!
-class PNIIO_EXPORT IsInstrument : public IsBaseClass
+class PNINEXUS_EXPORT IsInstrument : public IsBaseClass
 {
   public:
     IsInstrument();
@@ -190,7 +190,7 @@ class PNIIO_EXPORT IsInstrument : public IsBaseClass
 //!
 //! Child class of IsBaseClass that matches NXsample
 //!
-class PNIIO_EXPORT IsSample : public IsBaseClass
+class PNINEXUS_EXPORT IsSample : public IsBaseClass
 {
   public:
     IsSample();
@@ -202,7 +202,7 @@ class PNIIO_EXPORT IsSample : public IsBaseClass
 //!
 //! Child class of IsBaseClass that matches NXdata
 //!
-class PNIIO_EXPORT IsData : public IsBaseClass
+class PNINEXUS_EXPORT IsData : public IsBaseClass
 {
   public:
     IsData();
@@ -217,7 +217,7 @@ class PNIIO_EXPORT IsData : public IsBaseClass
 //! <a href="http://download.nexusformat.org/doc/html/datarules.html?highlight=valid%20name">
 //! here</a>.
 //!
-class PNIIO_EXPORT IsValidNeXusName
+class PNINEXUS_EXPORT IsValidNeXusName
 {
   private:
     boost::regex name_regex_;

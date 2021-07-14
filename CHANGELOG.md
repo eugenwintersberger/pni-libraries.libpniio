@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 2.0.0 - 2021-07-05
+- merge pniio and pnicore to pninexus
+- move 'pni/core/' and 'pni/io/' to 'pni'
+- truncate ::io and ::core namespaces
+
 ## 1.3.2 - 2021-07-05
 - creating string arrays with an empty dimension fixed ([#132](https://github.com/pni-libraries/libpniio/pull/132))
 - checks if field/group exist ([#133](https://github.com/pni-libraries/libpniio/pull/133))

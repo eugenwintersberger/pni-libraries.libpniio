@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Created on: Apr 30, 2012
@@ -41,7 +41,7 @@ namespace io{
 //! like data files. Most of the ASCII formats written following this
 //! storage convention.
 //!
-class PNIIO_EXPORT spreadsheet_reader:public data_reader
+class PNINEXUS_EXPORT spreadsheet_reader:public data_reader
 {
   private:
 #ifdef _MSC_VER
@@ -64,7 +64,7 @@ class PNIIO_EXPORT spreadsheet_reader:public data_reader
     spreadsheet_reader(spreadsheet_reader &&o);
 
     //! standard constructor
-    spreadsheet_reader(const pni::core::string &n);
+    spreadsheet_reader(const pni::string &n);
 
     //==================protected member functions======================
     //!
@@ -100,7 +100,7 @@ class PNIIO_EXPORT spreadsheet_reader:public data_reader
     //! @param n name of the column
     //! @return column_info instance for this column
     //!
-    virtual column_info _get_column(const pni::core::string &n) const;
+    virtual column_info _get_column(const pni::string &n) const;
 
     //-----------------------------------------------------------------
     //!
@@ -200,7 +200,7 @@ class PNIIO_EXPORT spreadsheet_reader:public data_reader
     //! @param name of the column
     //! @return true if column exists, false otherwise
     //!
-    bool has_column(const pni::core::string &name) const;
+    bool has_column(const pni::string &name) const;
 
     //-----------------------------------------------------------------
     //!
@@ -211,7 +211,7 @@ class PNIIO_EXPORT spreadsheet_reader:public data_reader
     //! @param name name of the column
     //! @return numeric index
     //!
-    size_t column_index(const pni::core::string &name) const;
+    size_t column_index(const pni::string &name) const;
 
 };
 

@@ -2,13 +2,13 @@
 Creating objects
 ================
 
-*libpniio* provides some convenience approaches for creating objects. 
+*libpninexus* provides some convenience approaches for creating objects. 
 This incudes
 
 * group (base class) creation
 * field (dataset) creation. 
 
-*libpniio* provides no special means to handle attributes, instead use 
+*libpninexus* provides no special means to handle attributes, instead use 
 the facilities provided by *h5cpp*.
 
 Creating base classes
@@ -25,7 +25,7 @@ taken
 3. create a string attribute attached to this group storing the name of the 
    particular base class the group should represent. 
    
-To make this easier *libpniio* provides the :cpp:class:`BaseClassFactory` 
+To make this easier *libpninexus* provides the :cpp:class:`BaseClassFactory` 
 factory class with a static :cpp:func:`create` member function which 
 carries out all these tasks 
 
@@ -44,7 +44,7 @@ as it will be shown later, but there are limitations (as will be shown later).
 Creating fields
 ===============
 
-Similar as for base classes *libpniio* provides a factory class to create 
+Similar as for base classes *libpninexus* provides a factory class to create 
 fields: :cpp:class:`nexus::FieldFactory` in order to create HDF5 datasets. 
 :cpp:class:`nexus::FieldFactory` provides two static member functions capable 
 of creating chunked and contiguous HDF5 datasets. 

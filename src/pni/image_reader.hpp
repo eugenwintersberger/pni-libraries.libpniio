@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Created on: Apr 23, 2012
@@ -51,7 +51,7 @@ namespace io{
     //! assignment operators are thus protected making them only available 
     //! to derived classes.
     //!
-    class PNIIO_EXPORT image_reader:public data_reader
+    class PNINEXUS_EXPORT image_reader:public data_reader
     {
         protected:
             //===================constructors and destructor===================
@@ -62,7 +62,7 @@ namespace io{
             //! move constructor
             image_reader(image_reader &&r);
             //! standard constructor taking the filename as string object
-            explicit image_reader(const pni::core::string &fname,
+            explicit image_reader(const pni::string &fname,
                                   bool binary=false);
             
             //==================assignment operators===========================
@@ -121,7 +121,7 @@ namespace io{
             //!
             template<typename ATYPE> ATYPE image(size_t,size_t) 
             {
-                using namespace pni::core;
+                using namespace pni;
                 throw not_implemented_error(EXCEPTION_RECORD,
                         "Method not implemented!");
 
@@ -147,7 +147,7 @@ namespace io{
             template<typename ATYPE> 
                 void image(ATYPE &,size_t,size_t) 
             {
-                using namespace pni::core;
+                using namespace pni;
                 throw not_implemented_error(EXCEPTION_RECORD,
                         "Method not implemented!");
             }

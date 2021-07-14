@@ -13,7 +13,7 @@
 #include<pni/tiff/tiff_reader.hpp>
 #include <pni/arrays.hpp>
 
-using Float32Frame = pni::core::dynamic_array<pni::core::float32>;
+using Float32Frame = pni::dynamic_array<pni::float32>;
 
 int main(int argc,char **argv){
 
@@ -24,12 +24,12 @@ int main(int argc,char **argv){
 
     //open file for reading
     std::string filename(argv[1]);
-    pni::io::tiff_reader reader(filename);
+    pni::tiff_reader reader(filename);
     std::cout<<reader.info(0)<<std::endl;
     
     
     auto buffer = reader.image<Float32Frame::storage_type>(0);
-    pni::core::shape_t image_shape{reader.info(0).nx(),reader.info(0).ny()};
+    pni::shape_t image_shape{reader.info(0).nx(),reader.info(0).ny()};
     auto array = Float32Frame::create(image_shape,buffer);
 
     return 0;

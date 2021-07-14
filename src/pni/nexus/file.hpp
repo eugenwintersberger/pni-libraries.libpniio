@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2017 DESY
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
@@ -42,7 +42,7 @@ namespace nexus {
 //! @param path reference to the path of a particular file system object
 //! @return true if the reference object is a NeXus file, flase otherwise
 //!
-PNIIO_EXPORT bool is_nexus_file(const boost::filesystem::path &path);
+PNINEXUS_EXPORT bool is_nexus_file(const boost::filesystem::path &path);
 
 //!
 //! @brief create a new NeXus file
@@ -68,13 +68,13 @@ PNIIO_EXPORT bool is_nexus_file(const boost::filesystem::path &path);
 //! @param fapl  reference to a file access property list
 //! @return instance of hdf5::file::File
 //!
-PNIIO_EXPORT
+PNINEXUS_EXPORT
 hdf5::file::File create_file(const boost::filesystem::path &path,
                              hdf5::file::AccessFlags flags = hdf5::file::AccessFlags::EXCLUSIVE,
                              const hdf5::property::FileCreationList &fcpl = hdf5::property::FileCreationList(),
                              const hdf5::property::FileAccessList &fapl = hdf5::property::FileAccessList());
 
-PNIIO_EXPORT
+PNINEXUS_EXPORT
 hdf5::file::File create_file(const boost::filesystem::path &path,
                              hdf5::file::AccessFlagsBase flags,
                              const hdf5::property::FileCreationList &fcpl = hdf5::property::FileCreationList(),
@@ -95,12 +95,12 @@ hdf5::file::File create_file(const boost::filesystem::path &path,
 //! @param fapl  reference to the file access property list
 //! @return instance of hdf5::file::File
 //!
-PNIIO_EXPORT
+PNINEXUS_EXPORT
 hdf5::file::File open_file(const boost::filesystem::path &path,
                       hdf5::file::AccessFlags flags = hdf5::file::AccessFlags::READONLY,
                       const hdf5::property::FileAccessList &fapl = hdf5::property::FileAccessList());
 
-PNIIO_EXPORT
+PNINEXUS_EXPORT
 hdf5::file::File open_file(const boost::filesystem::path &path,
                       hdf5::file::AccessFlagsBase flags,
                       const hdf5::property::FileAccessList &fapl = hdf5::property::FileAccessList());

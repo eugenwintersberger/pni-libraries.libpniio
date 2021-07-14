@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2015 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 //************************************************************************
 // Created on: Apr 22, 2015
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
@@ -37,10 +37,10 @@ namespace xml{
     //!
     //! This class provides a static method to create a link described by 
     //! XML. There is no method to generate a link from an existing NeXus 
-    //! object as this is beyond the scope of libpniio's XML stack.
+    //! object as this is beyond the scope of libpninexus's XML stack.
     //! 
    
-    class PNIIO_EXPORT link
+    class PNINEXUS_EXPORT link
     {
         private:
             //!
@@ -53,7 +53,7 @@ namespace xml{
             //! 
             //! \param link_node the XML node describing the link
             //! \return string with the name of the link
-            static pni::core::string get_link_name(const node &link_node);
+            static pni::string get_link_name(const node &link_node);
             
             //-----------------------------------------------------------------
             //!
@@ -66,7 +66,7 @@ namespace xml{
             //!
             //! \param link_node XML node describing the link
             //! \return string with the path to the link target
-            static pni::core::string get_link_target(const node &link_node);
+            static pni::string get_link_target(const node &link_node);
             
         public:
         
@@ -115,14 +115,14 @@ namespace xml{
                                const node &link_node)
     {
         //will throw key error if name attribute does not exist
-        pni::core::string link_name = get_link_name(link_node);
+        pni::string link_name = get_link_name(link_node);
         //will thorw key_error if target attribute does not exist
-        pni::core::string link_target = get_link_target(link_node);
+        pni::string link_target = get_link_target(link_node);
         
         //will throw type_error if the parent is not a group
         GTYPE parent_group = as_group(parent);
         
-        pni::io::nx::link(link_target,parent_group,link_name);
+        pni::nx::link(link_target,parent_group,link_name);
     }            
     
  

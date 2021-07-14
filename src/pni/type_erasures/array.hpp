@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpnicore.
+// This file is part of libpninexus.
 //
-// libpnicore is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpnicore is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpnicore.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 //
 // ============================================================================
 //
@@ -34,14 +34,13 @@
 
 
 namespace pni{
-namespace core{
 
     //!
     //! \ingroup type_erasure_classes
     //! \brief type erasure array types
     //!
     //! This type erasure can hold all kind of array types provides by 
-    //! libpnicore.  It takes entire ownership over the array it holds.
+    //! libpninexus.  It takes entire ownership over the array it holds.
     //! The construction is fairly easy
     /*!
     \code 
@@ -63,14 +62,14 @@ namespace core{
     //! decoupled.  Changing a value in a will not influence the original 
     //! instance data. 
     //!
-    //! Like any other array in libpnicore an instance of array can be 
+    //! Like any other array in libpninexus an instance of array can be 
     //! considered as a one dimensional container providing linear access to 
     //! the data stored in it by means of iterators, the [] operator, and the 
     //! at() method. Like standard C++ container only the latter method 
     //! ensures index checking.  See code examples at the various member 
     //! functions for more detail about the methods.
     //!
-    class PNIIO_EXPORT array //the type erasure
+    class PNINEXUS_EXPORT array //the type erasure
     {
         private:
             //! local pointer type used to hold the array
@@ -395,9 +394,8 @@ namespace core{
     //! \param a reference to the array 
     //! \return the type ID 
     //! 
-    PNIIO_EXPORT type_id_t type_id(const array &a);
+    PNINEXUS_EXPORT type_id_t type_id(const array &a);
 
 //end of namespace
-}
 }
         

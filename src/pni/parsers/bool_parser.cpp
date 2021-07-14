@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2017 DESY
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Created on: Jun 7, 2017
@@ -27,22 +27,22 @@
 namespace pni{
 namespace io {
 
-    parser<pni::core::bool_t>::parser():
+    parser<pni::bool_t>::parser():
         _true_regex("^T(rue|RUE)|true|1$"),
         _false_regex("^F(alse|ALSE)|false|0$")
     {}
 
 
-    parser<pni::core::bool_t>::parser(const pni::core::string &true_regex,
-                                      const pni::core::string &false_regex):
+    parser<pni::bool_t>::parser(const pni::string &true_regex,
+                                      const pni::string &false_regex):
         _true_regex(true_regex),
         _false_regex(false_regex)
     {}
 
-    parser<pni::core::bool_t>::result_type
-    parser<pni::core::bool_t>::operator()(const pni::core::string &input) const
+    parser<pni::bool_t>::result_type
+    parser<pni::bool_t>::operator()(const pni::string &input) const
     {
-        using namespace pni::core;
+        using namespace pni;
 
         if(boost::regex_match(input,_true_regex))
             return true;

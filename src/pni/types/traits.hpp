@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2014 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpnicore.
+// This file is part of libpninexus.
 //
-// libpnicore is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpnicore is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpnicore.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 //
 // ============================================================================
 //
@@ -29,7 +29,6 @@
 #include <pni/windows.hpp>
 
 namespace pni{
-namespace core{
 
     //------------------------------------------------------------------------
     //!
@@ -120,7 +119,7 @@ namespace core{
     //! \brief check primitive type
     //!
     //! Set the value member to true if T belongs to the primitive types 
-    //! provided by libpnicore. For all other types value will be false. 
+    //! provided by libpninexus. For all other types value will be false. 
     //!
     //! \tparam T type to check
     //!
@@ -142,7 +141,7 @@ namespace core{
     //! \param tid type ID of the type to check
     //! \return true if tid refers to a numeric type, false otherwise
     //!
-    PNIIO_EXPORT bool is_numeric(type_id_t tid);
+    PNINEXUS_EXPORT bool is_numeric(type_id_t tid);
 
     //------------------------------------------------------------------------
     //!
@@ -155,7 +154,7 @@ namespace core{
     //! \param tid type ID of the type to check
     //! \return true if tid refers to an integer type, false otherwise
     //!
-    PNIIO_EXPORT bool is_integer(type_id_t tid);
+    PNINEXUS_EXPORT bool is_integer(type_id_t tid);
 
     //------------------------------------------------------------------------
     //! 
@@ -168,7 +167,7 @@ namespace core{
     //! \param tid type ID of the type to check
     //! \return true if tid refers to a complex type, false otherwise
     //! 
-    PNIIO_EXPORT bool is_complex(type_id_t tid);
+    PNINEXUS_EXPORT bool is_complex(type_id_t tid);
 
     //------------------------------------------------------------------------
     //!
@@ -181,8 +180,7 @@ namespace core{
     //! \param tid id of the type to check
     //! \return true if tid refers to a float type, false otherwise
     //!
-    PNIIO_EXPORT bool is_float(type_id_t tid);
+    PNINEXUS_EXPORT bool is_float(type_id_t tid);
     
 //end of namespace
-}
 }

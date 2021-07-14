@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Created on: Apr 23, 2012
@@ -40,7 +40,7 @@ namespace io{
 //!
 //! ImageInfo holds basic information about a particular image.
 //!
-class PNIIO_EXPORT image_info
+class PNINEXUS_EXPORT image_info
 {
   private:
     //! number of pixels in x-direction
@@ -156,7 +156,7 @@ class PNIIO_EXPORT image_info
     //! Return a vector with the different types per channel.
     //! @return vector with data types for each channel
     //!
-    std::vector<pni::core::type_id_t> types_per_channel() const;
+    std::vector<pni::type_id_t> types_per_channel() const;
 
     //-----------------------------------------------------------------
     //!
@@ -199,7 +199,7 @@ class PNIIO_EXPORT image_info
 //! @param i reference to an instance of ImageInfo
 //! @return reference to the output stream
 //!
-PNIIO_EXPORT std::ostream &operator<<(std::ostream &o,const image_info &i);
+PNINEXUS_EXPORT std::ostream &operator<<(std::ostream &o,const image_info &i);
 
 
 

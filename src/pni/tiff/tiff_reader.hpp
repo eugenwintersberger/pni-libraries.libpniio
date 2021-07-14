@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Created on: Jun 15, 2011
@@ -47,7 +47,7 @@ namespace io{
     //! supported.  The copy constructor and the copy assignment operator 
     //! are deleted to prevent copy construction of this object. 
     //!
-    class PNIIO_EXPORT tiff_reader:public image_reader 
+    class PNINEXUS_EXPORT tiff_reader:public image_reader 
     {
         private:
             bool _little_endian;  //!< true if data is stored as little endian
@@ -100,7 +100,7 @@ namespace io{
             //! \param stream input stream from which to read data
             //! \return IFD offset
             //!
-            static pni::core::uint32 _read_ifd_offset(std::ifstream &stream);
+            static pni::uint32 _read_ifd_offset(std::ifstream &stream);
 
             //-----------------------------------------------------------------
             //!
@@ -159,7 +159,7 @@ namespace io{
             //! \param sf sample format
             //! \return TypeID of the corresponding type
             //!
-            static pni::core::type_id_t _get_type_id(size_t bps,size_t sf);
+            static pni::type_id_t _get_type_id(size_t bps,size_t sf);
            
             //-----------------------------------------------------------------
             //!
@@ -199,7 +199,7 @@ namespace io{
 
             //-----------------------------------------------------------------
             //! standard constructor
-            explicit tiff_reader(const pni::core::string &fname);
+            explicit tiff_reader(const pni::string &fname);
 
             //-----------------------------------------------------------------
             //! copy constructor is deleted 
@@ -258,7 +258,7 @@ namespace io{
             //!
             template<typename CTYPE> CTYPE image(size_t i,size_t c=0) 
             {
-                using namespace pni::core;
+                using namespace pni;
                 image_info info = this->info(i);
                 CTYPE data;
                 try { data = CTYPE(info.npixels()); }
@@ -294,7 +294,7 @@ namespace io{
             template<typename CTYPE> 
             void image(CTYPE &data,size_t i,size_t c=0) 
             {
-                using namespace pni::core;
+                using namespace pni;
                 image_info info = this->info(i);
                 if(data.size() != info.npixels())
                 {
@@ -310,7 +310,7 @@ namespace io{
           
             //-----------------------------------------------------------------
             //! output operator of an TIFFReader object
-            friend PNIIO_EXPORT std::ostream &operator<<(std::ostream &o,
+            friend PNINEXUS_EXPORT std::ostream &operator<<(std::ostream &o,
                                                          const tiff_reader &r);
 
     };

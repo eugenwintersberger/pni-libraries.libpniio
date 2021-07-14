@@ -19,7 +19,7 @@ add_executable(environment_test EXCLUDE_FROM_ALL environment_test.cpp)
 
 
 add_executable(parser_complex_test EXCLUDE_FROM_ALL parser_complex_test.cpp)
-target_link_libraries(parser_complex_test pniio)
+target_link_libraries(parser_complex_test pninexus)
 
 
 add_subdirectory(parser_test)

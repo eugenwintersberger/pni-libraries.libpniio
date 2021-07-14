@@ -1,11 +1,4 @@
 # if the required Boost targets do not exist we have to add them
-# if((NOT TARGET pnicore_shared))
-
-#     find_package(pnicore REQUIRED)
-#     #
-#     # this will also pull in Boost::system and Boost::program_options
-#     #
-# endif()
 
 if((NOT TARGET h5cpp_shared))
     find_package(h5cpp REQUIRED)
@@ -34,4 +27,4 @@ endif()
 
 
 link_directories(${Boost_LIBRARY_DIRS})
-include(${CMAKE_CURRENT_LIST_DIR}/pniio_targets.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/pninexus_targets.cmake)

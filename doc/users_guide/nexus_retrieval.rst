@@ -8,7 +8,7 @@ of link names one has to follow to ultimately end up at the requested object.
 
 In the NeXus world, additionally to the name of a link, we also can search 
 for objects  by their type or base class. This introduces a new kind of 
-path: the *NeXus path* represented by the :cpp:class:`pni::io::nexus::Path`. 
+path: the *NeXus path* represented by the :cpp:class:`pni::nexus::Path`. 
 A NeXus path allows to augument every link name with a particular base class 
 type. So for instance, the HDF5 path to the ``data`` field in a detector group 
 would read 

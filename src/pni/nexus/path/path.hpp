@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Created on: Feb 11, 2013
@@ -60,11 +60,11 @@ namespace nexus{
 //! object. However, a path with a filename part is always absolute (for
 //! obvious reasons).
 //!
-class PNIIO_EXPORT Path
+class PNINEXUS_EXPORT Path
 {
   public:
     //! object element (groupname:class)
-    using Element = std::pair<pni::core::string,pni::core::string>;
+    using Element = std::pair<pni::string,pni::string>;
     //! a list of subsequent objects
     using ElementList =  std::list<Element>;
     //! iterator over elements
@@ -77,9 +77,9 @@ class PNIIO_EXPORT Path
 #pragma warning(disable: 4251)
 #endif
     //! name of the file
-    pni::core::string _file_name;
+    pni::string _file_name;
     //! name of an attribute
-    pni::core::string _attribute_name;
+    pni::string _attribute_name;
     //! list of groups
     ElementList _elements;
 #ifdef _MSC_VER
@@ -102,7 +102,7 @@ class PNIIO_EXPORT Path
     //!
     Path(const boost::filesystem::path &file,
          const ElementList &groups,
-         const pni::core::string &attr);
+         const pni::string &attr);
 
     //!
     //! @brief constructor

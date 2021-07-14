@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2013 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 // Created on: Jun 26, 2013
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
@@ -32,9 +32,9 @@ namespace io{
 namespace nexus{
 
 void throw_if_empty(const Path::Element &e,
-                    const pni::core::exception_record &r)
+                    const pni::exception_record &r)
 {
-  using namespace pni::core;
+  using namespace pni;
   if(e.first.empty()&&e.second.empty())
     throw value_error(r,"Both name and type are empty!");
 }
@@ -42,7 +42,7 @@ void throw_if_empty(const Path::Element &e,
 //--------------------------------------------------------------------------
 Path::Element object_element(const std::string &name,const std::string &type)
 {
-  using namespace pni::core;
+  using namespace pni;
   Path::Element e = Path::Element{name,type};
   throw_if_empty(e,EXCEPTION_RECORD);
 
@@ -52,7 +52,7 @@ Path::Element object_element(const std::string &name,const std::string &type)
 //--------------------------------------------------------------------------
 void split_path(const Path &p,size_t s,Path &p1,Path &p2)
 {
-  using namespace pni::core;
+  using namespace pni;
   if(s>=p.size())
   {
     std::stringstream ss;
@@ -96,7 +96,7 @@ bool has_attribute_section(const Path &p)
 //-------------------------------------------------------------------------
 bool is_root_element(const Path::Element &e)
 {
-  using namespace pni::core;
+  using namespace pni;
   throw_if_empty(e,EXCEPTION_RECORD);
 
   return (has_name(e) && (e.first=="/") &&
@@ -124,7 +124,7 @@ bool has_class(const Path::Element &e)
 //--------------------------------------------------------------------------
 bool is_complete(const Path::Element &e)
 {
-  using namespace pni::core;
+  using namespace pni;
   throw_if_empty(e,EXCEPTION_RECORD);
 
   return has_name(e)&&has_class(e);
@@ -141,7 +141,7 @@ bool is_empty(const Path &p)
 //--------------------------------------------------------------------------
 Path join(const Path &a,const Path &b)
 {
-  using namespace pni::core;
+  using namespace pni;
   if(is_empty(a) && is_empty(b)) return Path();
 
   if(is_empty(a)) return b;
@@ -172,7 +172,7 @@ Path join(const Path &a,const Path &b)
 //--------------------------------------------------------------------------
 std::istream &operator>>(std::istream &i,Path &p)
 {
-  pni::core::string buffer;
+  pni::string buffer;
   i>>buffer;
   p = Path::from_string(buffer);
   return i;

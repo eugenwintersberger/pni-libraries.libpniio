@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2015 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 // Created on: Sep 12, 2015
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
@@ -28,28 +28,28 @@
 
 namespace {
 
-  void verify_input_paths(const pni::io::nexus::Path &parent_path,
-                          const pni::io::nexus::Path &orig_path)
+  void verify_input_paths(const pni::nexus::Path &parent_path,
+                          const pni::nexus::Path &orig_path)
   {
     std::stringstream error_message;
 
     if(!is_absolute(parent_path))
     {
-      error_message<<"Error in pni::io::nexus::make_relative: ";
+      error_message<<"Error in pni::nexus::make_relative: ";
       error_message<<"parent_path ["<<parent_path<<"] is not absolute";
       throw std::runtime_error(error_message.str());
     }
 
     if(!is_absolute(orig_path))
     {
-      error_message<<"Error in pni::io::nexus::make_relative: ";
+      error_message<<"Error in pni::nexus::make_relative: ";
       error_message<<"orig_path ["<<orig_path<<"] must be absolute";
       throw std::runtime_error(error_message.str());
     }
 
     if(parent_path.size()>orig_path.size())
     {
-      error_message<<"Error in pni::io::nexus::make_relative: ";
+      error_message<<"Error in pni::nexus::make_relative: ";
       error_message<<"parent_path ["<<parent_path
                    <<"] is longer than orig_path ["<<orig_path<<"]!";
       throw std::runtime_error(error_message.str());
@@ -66,7 +66,7 @@ namespace nexus{
 
 Path make_relative(const Path &parent_path,const Path &orig_path)
 {
-  using namespace pni::core;
+  using namespace pni;
 
   //
   // check if the paths satisfy the requirements

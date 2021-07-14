@@ -17,10 +17,10 @@
 #include <pni/arrays.hpp>
 #include <pni/error.hpp>
 
-using namespace pni::core;
-using namespace pni::io;
+using namespace pni;
+using namespace pni;
 
-using Float32Frame = pni::core::dynamic_array<pni::core::float32>;
+using Float32Frame = pni::dynamic_array<pni::float32>;
 
 int main(int argc,char **argv){
 
@@ -33,8 +33,8 @@ int main(int argc,char **argv){
   std::string file_name(argv[1]);
 
 
-  pni::io::cbf_reader reader(file_name);
-  pni::io::image_info info = reader.info(0);
+  pni::cbf_reader reader(file_name);
+  pni::image_info info = reader.info(0);
   std::cout<<info<<std::endl;
 
   Float32Frame::storage_type buffer;
@@ -42,17 +42,17 @@ int main(int argc,char **argv){
   {
     buffer = reader.image<Float32Frame::storage_type>(0);
   }
-  catch(pni::core::file_error &error)
+  catch(pni::file_error &error)
   {
     std::cout<<error<<std::endl;
     return -1;
   }
-  catch(pni::core::memory_allocation_error &error)
+  catch(pni::memory_allocation_error &error)
   {
     std::cerr<<error<<std::endl;
     return -1;
   }
-  auto a = Float32Frame::create(pni::core::shape_t{info.nx(),info.ny()},buffer);
+  auto a = Float32Frame::create(pni::shape_t{info.nx(),info.ny()},buffer);
 
   reader.close();
 

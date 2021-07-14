@@ -1,9 +1,9 @@
 ====================================
-A general introduction to *libpniio*
+A general introduction to *libpninexus*
 ====================================
 
 
-*libpniio* is the IO library within the PNI library stack. More precisely it is
+*libpninexus* is the IO library within the PNI library stack. More precisely it is
 responsible for file IO. Although several legacy formats are supported the
 library mainly deals with Nexus files providing functions and objects to deal
 with these kind of files. 
@@ -16,7 +16,7 @@ should be written as Nexus files.
 Chapter :ref:`Using the library <nexus_quickstart>` gives a quick overview over Nexus and
 provides a kind of quick start tutorial how to use the library. 
 In the ongoing chapters present more detailed information about how to work with
-Nexus files with \libpniio.
+Nexus files with \libpninexus.
 
 
 

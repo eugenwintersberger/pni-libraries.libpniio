@@ -3,20 +3,20 @@
 //
 // (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 // Created on: Apr 19, 2011
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
@@ -44,7 +44,7 @@ cbf_reader::cbf_reader():image_reader()
 
 //---------------------------------------------------------------------
 //implementation of the standard constructor
-cbf_reader::cbf_reader(const pni::core::string &fname):
+cbf_reader::cbf_reader(const pni::string &fname):
             image_reader(fname,true)
 {
   //here the file is immediately opened  - we have to parse the
@@ -92,7 +92,7 @@ cbf_reader::~cbf_reader()
 //===============implemenetation of private methods====================
 void cbf_reader::_parse_file()
 {
-  using namespace pni::core;
+  using namespace pni;
   char linebuffer[1024];
   std::ifstream &_istream = _get_stream();
 

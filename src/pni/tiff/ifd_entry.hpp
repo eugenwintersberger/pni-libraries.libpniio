@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Created on: Apr 24, 2012
@@ -70,7 +70,7 @@ namespace tiff{
     class ifd_entry
     {
         private:
-            pni::core::uint16 _tag;            //!< ID of the entry
+            pni::uint16 _tag;            //!< ID of the entry
             ifd_entry_type_id _tid;   //!< type id of the entry
             size_t _size;          //!< number of elements of the entry
             std::streampos _data;  //!< marks data position
@@ -102,7 +102,7 @@ namespace tiff{
             //! \param r vector where to store data
             //! \param stream input stream from which to read
             //!
-            void _read_entry_data(std::vector<pni::core::string> &r,
+            void _read_entry_data(std::vector<pni::string> &r,
                                   std::ifstream &stream);
             
         public:
@@ -129,7 +129,7 @@ namespace tiff{
             //! \param size number of elements stored in this entry
             //! \param data starting position of data in the stream
             //!
-            ifd_entry(pni::core::uint16 tag,ifd_entry_type_id tid,size_t size,
+            ifd_entry(pni::uint16 tag,ifd_entry_type_id tid,size_t size,
                       std::streampos data);
 
             //-----------------------------------------------------------------
@@ -171,7 +171,7 @@ namespace tiff{
             //! Returns the name of the entry as a string.
             //! \return name as string
             //!
-            pni::core::string name() const;
+            pni::string name() const;
 
             //-----------------------------------------------------------------
             //!
@@ -180,7 +180,7 @@ namespace tiff{
             //! Returns the TypeID of the entries type. 
             //! \return type ID of entry
             //!
-            pni::core::type_id_t type_id() const;
+            pni::type_id_t type_id() const;
 
             //-----------------------------------------------------------------
             //!
@@ -208,7 +208,7 @@ namespace tiff{
     //==============implementation of public template methods===================
     template<typename T> std::vector<T> ifd_entry::value(std::ifstream &stream)
     {
-        using namespace pni::core;
+        using namespace pni;
 
         //create a vector of appropriate length
         std::vector<T> result(this->size());
@@ -248,7 +248,7 @@ namespace tiff{
     template<typename T> void ifd_entry:: 
         _read_entry_data(std::vector<T> &r,std::ifstream &stream)
     {
-        using namespace pni::core;
+        using namespace pni;
 
         if(this->_tid == ifd_entry_type_id::BYTE) 
             ifd_entry_reader<T,uint8>::read(r,stream);

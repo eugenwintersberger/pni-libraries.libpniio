@@ -2,21 +2,21 @@
 Factory classes
 ===============
 
-:cpp:class:`pni::io::BaseClassFactory`
+:cpp:class:`pni::BaseClassFactory`
 ======================================
 
-.. doxygenclass:: pni::io::nexus::BaseClassFactory
+.. doxygenclass:: pni::nexus::BaseClassFactory
    :members:
    
    
-:cpp:class:`pni::io::FieldFactory`
+:cpp:class:`pni::FieldFactory`
 ==================================
 
-.. doxygenclass:: pni::io::nexus::FieldFactory
+.. doxygenclass:: pni::nexus::FieldFactory
    :members:
    
-:cpp:class:`pni::io::DatatypeFactory`
+:cpp:class:`pni::DatatypeFactory`
 =====================================
 
-.. doxygenclass:: pni::io::nexus::DatatypeFactory
+.. doxygenclass:: pni::nexus::DatatypeFactory
    :members:

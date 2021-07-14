@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2017 DESY
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
@@ -35,7 +35,7 @@ template<typename ITERT>
 NodeList search_(ITERT begin,ITERT end,
                                  const NodePredicate &predicate)
 {
-  pni::io::nexus::NodeList result;
+  pni::nexus::NodeList result;
   std::copy_if(begin,end,std::back_inserter(result),std::cref(predicate));
   return result;
 }
@@ -61,10 +61,10 @@ NodeList search(const hdf5::node::Group &base,
   }
 }
 
-pni::core::type_id_t get_type_id(const hdf5::datatype::Datatype &datatype)
+pni::type_id_t get_type_id(const hdf5::datatype::Datatype &datatype)
 {
   using hdf5::datatype::create;
-  using namespace pni::core;
+  using namespace pni;
   if(datatype == create<uint8>())
     return type_id_t::UINT8;
   else if(datatype==create<int8>())
@@ -93,12 +93,12 @@ pni::core::type_id_t get_type_id(const hdf5::datatype::Datatype &datatype)
     return type_id_t::NONE;
 }
 
-pni::core::type_id_t get_type_id(const hdf5::node::Dataset &dataset)
+pni::type_id_t get_type_id(const hdf5::node::Dataset &dataset)
 {
   return get_type_id(dataset.datatype());
 }
 
-pni::core::type_id_t get_type_id(const hdf5::attribute::Attribute &attribute)
+pni::type_id_t get_type_id(const hdf5::attribute::Attribute &attribute)
 {
   return get_type_id(attribute.datatype());
 }

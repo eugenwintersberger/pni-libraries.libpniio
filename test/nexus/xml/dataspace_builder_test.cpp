@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2017 DESY
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
@@ -23,7 +23,7 @@
 #include <boost/test/unit_test.hpp>
 #include <pni/nexus/xml/dataspace_builder.hpp>
 
-using namespace pni::io::nexus;
+using namespace pni::nexus;
 using hdf5::dataspace::Simple;
 
 
@@ -54,19 +54,19 @@ BOOST_AUTO_TEST_CASE(test_case_2)
 BOOST_AUTO_TEST_CASE(test_case_3)
 {
   xml::DataspaceBuilder builder(xml::Node::from_file("dimensions/dim3.xml"));
-  BOOST_CHECK_THROW(builder.build(),pni::core::key_error);
+  BOOST_CHECK_THROW(builder.build(),pni::key_error);
 }
 
 BOOST_AUTO_TEST_CASE(test_case_4)
 {
   xml::DataspaceBuilder builder(xml::Node::from_file("dimensions/dim4.xml"));
-  BOOST_CHECK_THROW(builder.build(),pni::core::key_error);
+  BOOST_CHECK_THROW(builder.build(),pni::key_error);
 }
 
 BOOST_AUTO_TEST_CASE(test_case_5)
 {
   xml::DataspaceBuilder builder(xml::Node::from_file("dimensions/dim5.xml"));
-  BOOST_CHECK_THROW(builder.build(),pni::core::key_error);
+  BOOST_CHECK_THROW(builder.build(),pni::key_error);
 }
 
 BOOST_AUTO_TEST_CASE(test_case_6)

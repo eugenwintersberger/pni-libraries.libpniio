@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2015 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Created on: Jan 30, 2015
@@ -88,12 +88,12 @@ namespace io{
     //! In this special case uint16 is used for parsing the data.
     //!
     template<>
-    struct conversion_trait<pni::core::uint8>
+    struct conversion_trait<pni::uint8>
     {
         //! the type requested by the user
-        typedef pni::core::uint8  result_type;
+        typedef pni::uint8  result_type;
         //! the type to read
-        typedef pni::core::uint16 read_type;
+        typedef pni::uint16 read_type;
 
         //------------------------------------------------------------------
         //!
@@ -110,7 +110,7 @@ namespace io{
         //!
         static result_type convert(read_type &&v)
         {
-            return pni::core::convert<result_type>(v);
+            return pni::convert<result_type>(v);
         }
 
         //------------------------------------------------------------------
@@ -128,7 +128,7 @@ namespace io{
         //!
         static result_type convert(const read_type &v)
         {
-            return pni::core::convert<result_type>(v);
+            return pni::convert<result_type>(v);
         }
     };
 
@@ -141,12 +141,12 @@ namespace io{
     //! In this special case int16 is used for parsing the data.
     //!
     template<>
-    struct conversion_trait<pni::core::int8>
+    struct conversion_trait<pni::int8>
     {
         //! the type requested by the user
-        typedef pni::core::int8  result_type;
+        typedef pni::int8  result_type;
         //! the type used for reading
-        typedef pni::core::int16 read_type;
+        typedef pni::int16 read_type;
 
         //------------------------------------------------------------------
         //!
@@ -163,7 +163,7 @@ namespace io{
         //!
         static result_type convert(read_type &&v)
         {
-            return pni::core::convert<result_type>(v);
+            return pni::convert<result_type>(v);
         }
 
         //------------------------------------------------------------------
@@ -181,7 +181,7 @@ namespace io{
         //!
         static result_type convert(const read_type &v)
         {
-            return pni::core::convert<result_type>(v);
+            return pni::convert<result_type>(v);
         }
     };
 

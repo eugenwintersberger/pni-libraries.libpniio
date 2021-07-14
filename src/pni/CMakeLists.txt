@@ -32,8 +32,8 @@ set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/column_info.cpp
 # ============================================================================
 # setting up the global lists for source and header files
 # ============================================================================                
-set(PNIIO_HEADER_FILES )
-set(PNIIO_SOURCE_FILES )
+set(PNINEXUS_HEADER_FILES )
+set(PNINEXUS_SOURCE_FILES )
                  
 # ============================================================================
 # install header files
@@ -59,57 +59,57 @@ add_subdirectory("type_erasures")
 # assemble list of header and source files used in the build 
 # ============================================================================
 
-set(PNIIO_HEADER_FILES ${PNIIO_HEADER_FILES} ${HEADER_FILES})
-set(PNIIO_SOURCE_FILES ${PNIIO_SOURCE_FILES} ${SOURCE_FILES})
+set(PNINEXUS_HEADER_FILES ${PNINEXUS_HEADER_FILES} ${HEADER_FILES})
+set(PNINEXUS_SOURCE_FILES ${PNINEXUS_SOURCE_FILES} ${SOURCE_FILES})
 
 # ============================================================================
 # adding header files to the doxygen build dependencies
 # ============================================================================
-add_doxygen_source_deps(${PNIIO_HEADER_FILES})
+add_doxygen_source_deps(${PNINEXUS_HEADER_FILES})
 
 # ============================================================================
 # building the library
 # ============================================================================ 
-foreach(SRC ${PNIIO_SOURCE_FILES})
+foreach(SRC ${PNINEXUS_SOURCE_FILES})
     message(INFO ${SRC})
 endforeach()
 
-foreach(HSRC ${PNIIO_HEADER_FILES})
+foreach(HSRC ${PNINEXUS_HEADER_FILES})
     message(INFO ${HSRC})
 endforeach()
 
-add_library(pniio SHARED ${PNIIO_SOURCE_FILES} ${PNIIO_HEADER_FILES})
+add_library(pninexus SHARED ${PNINEXUS_SOURCE_FILES} ${PNINEXUS_HEADER_FILES})
 
-target_include_directories(pniio
+target_include_directories(pninexus
 PRIVATE ${PROJECT_SOURCE_DIR}/src
 INTERFACE
 $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src>
 $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
-#add_dependencies(pniio config.hpp)
-set_target_properties(pniio PROPERTIES VERSION "${LIBRARY_VERSION}"
+#add_dependencies(pninexus config.hpp)
+set_target_properties(pninexus PROPERTIES VERSION "${LIBRARY_VERSION}"
                                        SOVERSION "${SO_VERSION}")
 
-target_link_libraries(pniio                      
+target_link_libraries(pninexus                      
  PUBLIC h5cpp
  ${HDF5_LIBRARIES}
  Boost::filesystem
  Boost::regex
  Boost::date_time
  )
-target_compile_definitions(pniio PUBLIC BOOST_ALL_DYN_LINK)
-target_compile_definitions(pniio PRIVATE DLL_BUILD) 
+target_compile_definitions(pninexus PUBLIC BOOST_ALL_DYN_LINK)
+target_compile_definitions(pninexus PRIVATE DLL_BUILD) 
 
 # ============================================================================
 # install the library binaries and targets 
 # ============================================================================
-configure_file(pniio.pc.cmake pniio.pc @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pniio.pc"
+configure_file(pninexus.pc.cmake pninexus.pc @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pninexus.pc"
         DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}/pkgconfig")
 #
 # export the targets which are latter used by the CMAKE package
 # 
-install(TARGETS pniio
-        EXPORT pniio_targets
+install(TARGETS pninexus
+        EXPORT pninexus_targets
         LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
@@ -119,6 +119,6 @@ install(TARGETS pniio
 #
 # install the binaries
 #
-install(EXPORT pniio_targets
+install(EXPORT pninexus_targets
         DESTINATION ${CMAKE_INSTALL_PACKAGEDIR}
         COMPONENT development)

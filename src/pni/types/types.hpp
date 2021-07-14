@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpnicore.
+// This file is part of libpninexus.
 //
-// libpnicore is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpnicore is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpnicore.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 //
 // ===========================================================================
 //
@@ -41,7 +41,6 @@ typedef SSIZE_T ssize_t;
 #include <pni/types/none.hpp>
 
 namespace pni{
-namespace core{
 
     /*! \addtogroup type_classes
       @{
@@ -82,7 +81,7 @@ namespace core{
     //! \ingroup type_classes
     //! \brief integer types vector
     //!
-    //! An MPL vector with all integer types supported by libpnicore
+    //! An MPL vector with all integer types supported by libpninexus
     //!
     typedef boost::mpl::vector<uint8,int8,
                                uint16,int16,
@@ -94,7 +93,7 @@ namespace core{
     //! \ingroup type_classes
     //! \brief floating point types vector
     //!
-    //! An MPL vector with all floating point types supported by libpnicore
+    //! An MPL vector with all floating point types supported by libpninexus
     //!
     typedef boost::mpl::vector<float32,
                                float64,
@@ -105,7 +104,7 @@ namespace core{
     //! \ingroup type_classes
     //! \brief complex types vector
     //!
-    //! An MPL vector with all complex number types supported by libpnicore.
+    //! An MPL vector with all complex number types supported by libpninexus.
     //!
     typedef boost::mpl::vector<complex32,
                                complex64,
@@ -116,7 +115,7 @@ namespace core{
     //! \ingroup type_classes
     //! \brief non numeric types vector
     //!
-    //! An MPL vector with all numeric types supported by libpnicore.
+    //! An MPL vector with all numeric types supported by libpninexus.
     //!
     typedef boost::mpl::joint_view<
         boost::mpl::joint_view<integer_types,float_types>::type,
@@ -180,7 +179,7 @@ namespace core{
     //! \param tid reference to the TypID 
     //! \return reference to output stream
     //!
-    PNIIO_EXPORT std::ostream &operator<<(std::ostream &o,const type_id_t &tid);
+    PNINEXUS_EXPORT std::ostream &operator<<(std::ostream &o,const type_id_t &tid);
 
 
     //!
@@ -297,5 +296,4 @@ namespace core{
     typedef std::vector<size_t> shape_type;
 
 //end of namespace
-}
 }

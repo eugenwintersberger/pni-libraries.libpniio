@@ -2,8 +2,8 @@
 #include <pni/parsers.hpp>
 #include <iostream>
 
-using namespace pni::core;
-using namespace pni::io;
+using namespace pni;
+using namespace pni;
 
 int main()
 {

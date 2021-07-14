@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpnicore.
+// This file is part of libpninexus.
 //
-// libpnicore is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpnicore is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpnicore.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // ============================================================================
 //
@@ -32,7 +32,6 @@
 #include <pni/windows.hpp>
 
 namespace pni{
-namespace core{
 
 
     //! 
@@ -65,7 +64,7 @@ namespace core{
     //! array //! this must be modified to (1,i,j) which is the major purpose 
     //! of this type.
     //!
-    class PNIIO_EXPORT array_selection
+    class PNINEXUS_EXPORT array_selection
     {
         private:
             //! private index type
@@ -168,7 +167,7 @@ namespace core{
             //! static creation function
             template<typename CTYPE,
                      typename = typename std::enable_if<
-                     std::is_same<typename CTYPE::value_type,pni::core::slice>::value
+                     std::is_same<typename CTYPE::value_type,pni::slice>::value
                      >::type
                     >
             static array_selection create(const CTYPE &s)
@@ -183,7 +182,7 @@ namespace core{
                 {
                     offset[index] = sl.first();
                     stride[index] = sl.stride();
-                    shape[index]  = pni::core::size(sl);
+                    shape[index]  = pni::size(sl);
                     index++;
                 }
 
@@ -565,5 +564,4 @@ namespace core{
     
 
 //end of namespace
-}
 }

@@ -4,7 +4,7 @@ XML support
 
 NeXus files can grow quite complex it would be rather tedious to express
 the structure of such a file entirely in code. 
-*libpniio* provides a way to create NeXus structures from XML. Like HDF5, 
+*libpninexus* provides a way to create NeXus structures from XML. Like HDF5, 
 XML structures data in a tree like hierarchy, making it the perfekt ASCII 
 representation for a NeXus file. 
 
@@ -71,7 +71,7 @@ Code which uses this setup could look like this
    
 
 
-It should be mentioned that currently *libpniio* does not use a validating 
+It should be mentioned that currently *libpninexus* does not use a validating 
 parser which makes error detection rather difficult. 
 
 

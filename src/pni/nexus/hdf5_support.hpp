@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2017 DESY
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
@@ -37,14 +37,14 @@
 namespace hdf5 {
 namespace datatype {
 
-template<> class TypeTrait<pni::core::array>
+template<> class TypeTrait<pni::array>
 {
   public:
     using TypeClass = Datatype;
 
-    static TypeClass create(const pni::core::array &v)
+    static TypeClass create(const pni::array &v)
     {
-      return pni::io::nexus::DatatypeFactory::create(v.type_id());
+      return pni::nexus::DatatypeFactory::create(v.type_id());
     }
 };
 
@@ -53,10 +53,10 @@ template<
          typename IMAP,
          typename IPA
         >
-class TypeTrait<pni::core::mdarray<STORAGE,IMAP,IPA>>
+class TypeTrait<pni::mdarray<STORAGE,IMAP,IPA>>
 {
   public:
-    using Type = pni::core::mdarray<STORAGE,IMAP,IPA>;
+    using Type = pni::mdarray<STORAGE,IMAP,IPA>;
     using TypeClass = typename TypeTrait<typename Type::value_type>::TypeClass;
 
     static TypeClass create(const  Type & = Type())
@@ -73,23 +73,23 @@ class TypeTrait<pni::core::mdarray<STORAGE,IMAP,IPA>>
 namespace hdf5 {
 namespace dataspace {
 
-template<> class TypeTrait<pni::core::array>
+template<> class TypeTrait<pni::array>
 {
   public:
     using DataspaceType = Simple;
 
-    static DataspaceType create(const pni::core::array &a)
+    static DataspaceType create(const pni::array &a)
     {
       auto shape = a.shape<hdf5::Dimensions>();
       return Simple(shape);
     }
 
-    static void *ptr(pni::core::array &a)
+    static void *ptr(pni::array &a)
     {
       return a.data();
     }
 
-    static const void *cptr(const pni::core::array &a)
+    static const void *cptr(const pni::array &a)
     {
       return a.data();
     }
@@ -101,10 +101,10 @@ template<
          typename IMAP,
          typename IPA
         >
-class TypeTrait<pni::core::mdarray<STORAGE,IMAP,IPA>>
+class TypeTrait<pni::mdarray<STORAGE,IMAP,IPA>>
 {
   public:
-    using ArrayType = pni::core::mdarray<STORAGE,IMAP,IPA>;
+    using ArrayType = pni::mdarray<STORAGE,IMAP,IPA>;
     using DataspaceType = Simple;
 
     static DataspaceType create(const ArrayType &a)
@@ -130,11 +130,11 @@ class TypeTrait<pni::core::mdarray<STORAGE,IMAP,IPA>>
 namespace hdf5 {
 
 template<>
-class VarLengthStringTrait<pni::core::dynamic_array<std::string>>
+class VarLengthStringTrait<pni::dynamic_array<std::string>>
 {
   public:
     using BufferType = VarLengthStringBuffer<char>;
-    using DataType   = pni::core::dynamic_array<std::string>;
+    using DataType   = pni::dynamic_array<std::string>;
 
     static BufferType to_buffer(const DataType &data)
     {

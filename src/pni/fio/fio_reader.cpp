@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 // 
 // Created on: Apr 30, 2012
@@ -41,7 +41,7 @@ namespace io{
     //======================private member functions===========================
 void fio_reader::_parse_file(std::ifstream &stream)
 {
-  pni::core::string line_buffer;
+  pni::string line_buffer;
   boost::smatch match;
 
   //
@@ -72,7 +72,7 @@ void fio_reader::_parse_file(std::ifstream &stream)
 //-------------------------------------------------------------------------
 void fio_reader::_parse_parameters(std::ifstream &stream)
 {
-  pni::core::string param_name,param_value,line_buffer;
+  pni::string param_name,param_value,line_buffer;
   boost::smatch match;
   //clear the parameter map
   _param_map.clear();
@@ -85,8 +85,8 @@ void fio_reader::_parse_parameters(std::ifstream &stream)
 
     if(boost::regex_match(line_buffer,match,key_value_re))
     {
-      pni::core::string key = match.str("KEY");
-      pni::core::string value = match.str("VALUE");
+      pni::string key = match.str("KEY");
+      pni::string value = match.str("VALUE");
       boost::trim(key);
       boost::trim(value);
 
@@ -100,14 +100,14 @@ void fio_reader::_parse_parameters(std::ifstream &stream)
 }
 
 //-------------------------------------------------------------------------
-std::vector<pni::core::string> fio_reader::_read_data_line(const pni::core::string &line)
+std::vector<pni::string> fio_reader::_read_data_line(const pni::string &line)
 {
   boost::regex dcol("[+-]?\\d+\\.?\\d*e?[+-]?\\d*");
-  std::vector<pni::core::string> record;
+  std::vector<pni::string> record;
 
-  boost::match_results<pni::core::string::const_iterator> imatch;
-  pni::core::string::const_iterator start = line.begin();
-  pni::core::string::const_iterator end   = line.end();
+  boost::match_results<pni::string::const_iterator> imatch;
+  pni::string::const_iterator start = line.begin();
+  pni::string::const_iterator end   = line.end();
   while(boost::regex_search(start,end,imatch,dcol,boost::match_default))
   {
     record.push_back(imatch.str());
@@ -123,8 +123,8 @@ void fio_reader::_parse_data(std::ifstream &stream)
   boost::smatch match;
   size_t nr = 0; //number of records
 
-  pni::core::string line_buffer;
-  std::map<int,pni::core::string> index_name_map;
+  pni::string line_buffer;
+  std::map<int,pni::string> index_name_map;
 
   while(!stream.eof())
   {
@@ -132,7 +132,7 @@ void fio_reader::_parse_data(std::ifstream &stream)
 
     if(boost::regex_match(line_buffer,match,col_descriptor_re))
     {
-      pni::core::string cname = match.str("NAME"),
+      pni::string cname = match.str("NAME"),
           ctype = match.str("TYPE");
       boost::trim(cname);
       boost::trim(ctype);
@@ -164,7 +164,7 @@ void fio_reader::_parse_data(std::ifstream &stream)
 
 //-------------------------------------------------------------------------
 void fio_reader::_get_parameter_data(std::ifstream &stream,
-                                     pni::core::string &value)
+                                     pni::string &value)
 const
 {
   char buffer;
@@ -179,14 +179,14 @@ const
 }
 
 //=================implementation of static private methods================
-pni::core::type_id_t fio_reader::_typestr2id(const pni::core::string &tstr)
+pni::type_id_t fio_reader::_typestr2id(const pni::string &tstr)
 {
   if(tstr == "FLOAT")
-    return pni::core::type_id_t::FLOAT32;
+    return pni::type_id_t::FLOAT32;
   else if(tstr == "DOUBLE")
-    return pni::core::type_id_t::FLOAT64;
+    return pni::type_id_t::FLOAT64;
   else
-    return pni::core::type_id_t::NONE;
+    return pni::type_id_t::NONE;
 }
 
 //=======================constructors and destructor=======================
@@ -199,7 +199,7 @@ fio_reader::fio_reader():
 
 //-------------------------------------------------------------------------
 //standard constructor implementation
-fio_reader::fio_reader(const pni::core::string &n):
+fio_reader::fio_reader(const pni::string &n):
             spreadsheet_reader(n),
             _param_map(),
             _columns()
@@ -221,9 +221,9 @@ size_t fio_reader::nparameters() const
     
 //-------------------------------------------------------------------------
 //implementation of parameter names
-std::vector<pni::core::string> fio_reader::parameter_names() const
+std::vector<pni::string> fio_reader::parameter_names() const
 {
-  std::vector<pni::core::string> pnames;
+  std::vector<pni::string> pnames;
   std::transform(_param_map.begin(),_param_map.end(),
                  std::back_inserter(pnames),
                  [](const parameter_map_type::value_type &pair){return pair.first;});

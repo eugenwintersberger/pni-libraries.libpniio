@@ -1,14 +1,14 @@
 //!
 //! (c) Copyright 2011 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //!
-//! This file is part of libpnicore.
+//! This file is part of libpninexus.
 //!
-//! libpnicore is free software: you can redistribute it and/or modify
+//! libpninexus is free software: you can redistribute it and/or modify
 //! it under the terms of the GNU General Public License as published by
 //! the Free Software Foundation, either version 2 of the License, or
 //! (at your option) any later version.
 //!
-//! libpnicore is distributed in the hope that it will be useful,
+//! libpninexus is distributed in the hope that it will be useful,
 //! but WITHOUT ANY WARRANTY; without even the implied warranty of
 //! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //! GNU General Public License for more details.
@@ -26,7 +26,6 @@
 #include <pni/error/exception_utils.hpp>
 
 namespace pni{
-namespace core{
 
     //------------------------------------------------------------------------
     bool check_index_in_dim(size_t index,size_t dimsize)
@@ -47,5 +46,4 @@ namespace core{
     }
 
 //end of namespace
-}
 }

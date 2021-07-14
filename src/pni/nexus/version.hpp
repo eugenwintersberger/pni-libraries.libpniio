@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2017 DESY
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
@@ -36,7 +36,7 @@ namespace nexus {
 //!
 //! Describes a version number.
 //!
-class PNIIO_EXPORT Version
+class PNINEXUS_EXPORT Version
 {
   public:
     //!
@@ -126,7 +126,7 @@ class PNIIO_EXPORT Version
 //! @return modified version of std::ostream
 //! @sa Version::to_string
 //!
-PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,const Version &version);
+PNINEXUS_EXPORT std::ostream &operator<<(std::ostream &stream,const Version &version);
 
 //!
 //! @brief input stream operator
@@ -140,7 +140,7 @@ PNIIO_EXPORT std::ostream &operator<<(std::ostream &stream,const Version &versio
 //! @return modified input stream
 //! @sa Version::from_string
 //!
-PNIIO_EXPORT std::istream &operator>>(std::istream &stream,Version &version);
+PNINEXUS_EXPORT std::istream &operator>>(std::istream &stream,Version &version);
 
 //!
 //! @brief checks two version for equality
@@ -152,7 +152,7 @@ PNIIO_EXPORT std::istream &operator>>(std::istream &stream,Version &version);
 //! @param rhs reference to the right hand side version
 //! @return true if versions are equal, false otherwise
 //!
-PNIIO_EXPORT bool operator==(const Version &lhs,const Version &rhs);
+PNINEXUS_EXPORT bool operator==(const Version &lhs,const Version &rhs);
 
 //!
 //! @brief checks if two versions are not equal
@@ -162,7 +162,7 @@ PNIIO_EXPORT bool operator==(const Version &lhs,const Version &rhs);
 //! @param rhs reference to the right hand side version
 //! @return true if versions are not equal, false otherwise
 //!
-PNIIO_EXPORT bool operator!=(const Version &lhs,const Version &rhs);
+PNINEXUS_EXPORT bool operator!=(const Version &lhs,const Version &rhs);
 
 //!
 //! @brief checks if the left version is smaller or equal to the right
@@ -170,7 +170,7 @@ PNIIO_EXPORT bool operator!=(const Version &lhs,const Version &rhs);
 //! @param lhs reference to the left hand side version
 //! @param rhs reference to the right hand side version
 //!
-PNIIO_EXPORT bool operator<=(const Version &lhs,const Version &rhs);
+PNINEXUS_EXPORT bool operator<=(const Version &lhs,const Version &rhs);
 
 //!
 //! @brief checks if the left version is strictly small than the right
@@ -179,7 +179,7 @@ PNIIO_EXPORT bool operator<=(const Version &lhs,const Version &rhs);
 //! @param lhs reference to the left hand side version
 //! @param rhs reference to the right hand side version
 //!
-PNIIO_EXPORT bool operator<(const Version &lhs,const Version &rhs);
+PNINEXUS_EXPORT bool operator<(const Version &lhs,const Version &rhs);
 
 //!
 //! @brief checks if the left version is bigger or equal than the right
@@ -188,7 +188,7 @@ PNIIO_EXPORT bool operator<(const Version &lhs,const Version &rhs);
 //! @param lhs reference to the left hand side version
 //! @param rhs reference to the right hand side version
 //!
-PNIIO_EXPORT bool operator>=(const Version &lhs,const Version &rhs);
+PNINEXUS_EXPORT bool operator>=(const Version &lhs,const Version &rhs);
 
 //!
 //! @brief checks if the left version is strictly bigger than the right
@@ -197,7 +197,7 @@ PNIIO_EXPORT bool operator>=(const Version &lhs,const Version &rhs);
 //! @param lhs reference to the left hand side version
 //! @param rhs reference to the right hand side version
 //!
-PNIIO_EXPORT bool operator>(const Version &lhs,const Version &rhs);
+PNINEXUS_EXPORT bool operator>(const Version &lhs,const Version &rhs);
 
 
 

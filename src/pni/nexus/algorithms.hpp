@@ -1,20 +1,20 @@
 //
 // (c) Copyright 2017 DESY
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
@@ -39,7 +39,7 @@ namespace nexus {
 //! @param recursive if true perform a recursive search
 //! @return an instance of NodeList with all nodes satisfying the predicate
 //!
-PNIIO_EXPORT NodeList search(const hdf5::node::Group &base,
+PNINEXUS_EXPORT NodeList search(const hdf5::node::Group &base,
                              const NodePredicate &predicate,
                              bool recursive=false);
 
@@ -52,7 +52,7 @@ PNIIO_EXPORT NodeList search(const hdf5::node::Group &base,
 //! @param dataset reference to the dataset
 //! @return type_id_t enumeration
 //!
-PNIIO_EXPORT pni::core::type_id_t get_type_id(const hdf5::node::Dataset &dataset);
+PNINEXUS_EXPORT pni::type_id_t get_type_id(const hdf5::node::Dataset &dataset);
 
 //!
 //! @brief return the type_id of an attribute
@@ -63,7 +63,7 @@ PNIIO_EXPORT pni::core::type_id_t get_type_id(const hdf5::node::Dataset &dataset
 //! @param attribute reference to the attribute
 //! @return type_id_t enumeration
 //!
-PNIIO_EXPORT pni::core::type_id_t get_type_id(const hdf5::attribute::Attribute &attribute);
+PNINEXUS_EXPORT pni::type_id_t get_type_id(const hdf5::attribute::Attribute &attribute);
 
 //!
 //! @brief get the current dimensions of an attribute
@@ -75,7 +75,7 @@ PNIIO_EXPORT pni::core::type_id_t get_type_id(const hdf5::attribute::Attribute &
 //! @param attribute reference to the attribute
 //! @return instance of hdf5::Dimensions with the current dimensions
 //!
-PNIIO_EXPORT hdf5::Dimensions get_dimensions(const hdf5::attribute::Attribute &attribute);
+PNINEXUS_EXPORT hdf5::Dimensions get_dimensions(const hdf5::attribute::Attribute &attribute);
 
 //!
 //! @brief get the current dimensions of a dataset
@@ -87,7 +87,7 @@ PNIIO_EXPORT hdf5::Dimensions get_dimensions(const hdf5::attribute::Attribute &a
 //! @param dataset reference to the dataset
 //! @return instance of hdf5::Dimensions with the current dimensions
 //!
-PNIIO_EXPORT hdf5::Dimensions get_dimensions(const hdf5::node::Dataset &dataset);
+PNINEXUS_EXPORT hdf5::Dimensions get_dimensions(const hdf5::node::Dataset &dataset);
 
 
 } // namespace nexus
