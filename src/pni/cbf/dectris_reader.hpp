@@ -34,7 +34,6 @@
 
 
 namespace pni{
-namespace io{
 namespace cbf{
     
     //!
@@ -164,6 +163,5 @@ namespace cbf{
     }
 
 //end of namespace
-}
 }
 }

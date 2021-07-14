@@ -32,7 +32,6 @@
 #include <pni/windows.hpp>
 
 namespace pni{
-namespace io{
 
 //!
 //! @brief base class for spreadsheet reader
@@ -217,6 +216,5 @@ class PNINEXUS_EXPORT spreadsheet_reader:public data_reader
 
 
 //end of namespace
-}
 }
 

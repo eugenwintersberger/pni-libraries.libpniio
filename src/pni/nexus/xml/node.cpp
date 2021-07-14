@@ -31,7 +31,6 @@
 #include <pni/nexus/xml/node.hpp>
 
 namespace pni{
-namespace io{
 namespace nexus{
 namespace xml{
 
@@ -199,5 +198,4 @@ void Node::data(const std::string &cdata)
 //end of namespace
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

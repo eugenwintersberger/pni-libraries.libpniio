@@ -24,7 +24,6 @@
 #include <pni/exceptions.hpp>
 
 namespace pni{
-namespace io{
     
     using namespace pni;
     //--------------------------------------------------------------------------
@@ -115,6 +114,5 @@ namespace io{
     }
 
 //end of namespace
-}
 }
 

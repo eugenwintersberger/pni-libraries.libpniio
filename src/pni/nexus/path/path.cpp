@@ -29,7 +29,6 @@
 
 
 namespace pni{
-namespace io{
 namespace nexus{
 
 //-------------------------------------------------------------------------
@@ -222,5 +221,4 @@ Path::ConstElementIterator Path::end() const
 
 //end of namespace
 } // namespace nexus
-} // namespace io
 } // namespace pni

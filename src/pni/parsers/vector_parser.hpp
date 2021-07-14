@@ -43,7 +43,6 @@
 
 
 namespace pni{
-namespace io{
 
 //------------------------------------------------------------------------
 //!
@@ -135,5 +134,4 @@ class parser<std::vector<T>>
 };
 
 //end of namespace
-}
 }

@@ -27,7 +27,6 @@
 #include <algorithm>
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 Path::Element get_group_element(const hdf5::node::Group &group)
@@ -118,5 +117,4 @@ Path get_path(const hdf5::attribute::Attribute &attribute)
 }
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

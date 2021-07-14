@@ -25,7 +25,6 @@
 #include <pni/parsers/value_parser.hpp>
 
 namespace pni{
-namespace io{
 
     parser<pni::value>::result_type
     parser<pni::value>::operator()(const pni::string &input) const
@@ -45,5 +44,4 @@ namespace io{
             throw parser_error(EXCEPTION_RECORD,ss.str());
         }
     }
-}
 }

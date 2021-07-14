@@ -30,7 +30,6 @@
 
 
 namespace pni{
-namespace io{
 namespace nexus{
 
 
@@ -438,5 +437,4 @@ PNINEXUS_EXPORT PathObjectList get_objects(const hdf5::node::Group &base,
 
 //end of namespace
 } // namespace nexus
-} // namespace io
 } // namespace pni

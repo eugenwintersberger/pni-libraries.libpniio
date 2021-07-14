@@ -37,7 +37,6 @@
 #include <pni/windows.hpp>
 
 namespace pni{
-namespace io{
 
     static const boost::regex default_int_regexp("^[+-]?\\d+$") ;
     static const boost::regex default_float_regexp("^[+-]?\\d+\\.(\\d+)?([Ee][+-]?\\d+)?$");
@@ -133,5 +132,4 @@ namespace io{
     };
 
 //end of namespace
-}
 }

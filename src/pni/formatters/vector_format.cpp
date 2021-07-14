@@ -25,7 +25,6 @@
 #include <pni/formatters/vector_format.hpp>
 
 namespace pni{
-namespace io{
 
     using namespace pni;
 
@@ -48,5 +47,4 @@ namespace io{
 
         return output;
     }
-}
 }

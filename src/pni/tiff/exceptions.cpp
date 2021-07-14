@@ -25,7 +25,6 @@
 #include <pni/tiff/exceptions.hpp>
 
 namespace pni{
-namespace io{
 namespace tiff{
 
     //implementation of the output operator
@@ -35,7 +34,6 @@ namespace tiff{
     }
 
 //end of namespace
-}
 }
 }
 

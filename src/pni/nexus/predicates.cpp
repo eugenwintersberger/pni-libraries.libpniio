@@ -25,7 +25,6 @@
 #include <boost/regex.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 NodePredicate::~NodePredicate()
@@ -98,5 +97,4 @@ bool IsValidNeXusName::operator()(const std::string &name) const
 
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

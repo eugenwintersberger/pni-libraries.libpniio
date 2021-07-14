@@ -26,7 +26,6 @@
 
 
 namespace pni {
-namespace io {
 namespace nexus {
 namespace xml {
 
@@ -57,5 +56,4 @@ hdf5::dataspace::Simple DataspaceBuilder::build() const
 
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

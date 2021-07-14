@@ -26,7 +26,6 @@
 
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 //!
@@ -44,5 +43,4 @@ class ObjectBuilder
 
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

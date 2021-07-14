@@ -27,7 +27,6 @@
 #include <boost/regex.hpp>
 
 namespace pni{
-namespace io {
 
     bool is_integer(const pni::string &input)
     {
@@ -66,5 +65,4 @@ namespace io {
         return boost::regex_match(input,expr);
     }
 
-}
 }

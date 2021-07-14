@@ -24,12 +24,10 @@
 #include <pni/parsers/string_parser.hpp>
 
 namespace pni{
-namespace io{
 
     parser<pni::string>::result_type
     parser<pni::string>::operator()(const pni::string &input) const
     {
         return input;
     }
-}
 }

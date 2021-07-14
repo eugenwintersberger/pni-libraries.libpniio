@@ -24,7 +24,6 @@
 #include <pni/parsers.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 namespace xml {
 
@@ -106,5 +105,4 @@ void DataWriter::write(const hdf5::attribute::Attribute &attribute) const
 
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

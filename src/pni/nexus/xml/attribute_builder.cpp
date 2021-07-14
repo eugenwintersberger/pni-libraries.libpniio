@@ -24,7 +24,6 @@
 #include <pni/nexus/xml/attribute_builder.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 namespace xml {
 
@@ -59,5 +58,4 @@ void AttributeBuilder::build(const hdf5::node::Node &parent) const
 
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

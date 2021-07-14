@@ -28,7 +28,6 @@
 #include <memory>
 
 namespace pni {
-namespace io {
 namespace nexus {
 namespace xml {
 
@@ -52,5 +51,4 @@ class PNINEXUS_EXPORT ObjectBuilder : public pni::nexus::ObjectBuilder
 
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

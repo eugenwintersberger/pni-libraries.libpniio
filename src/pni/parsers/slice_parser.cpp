@@ -24,7 +24,6 @@
 #include <pni/parsers/slice_parser.hpp>
 
 namespace pni {
-namespace io {
 
     parser<pni::slice>::parser():
         _regexpr("^(?<START>\\d+)?(:(?<STOP>\\d*)(:(?<STRIDE>\\d+))?)?$")
@@ -66,5 +65,4 @@ namespace io {
         return pni::slice();
     }
 
-}
 }

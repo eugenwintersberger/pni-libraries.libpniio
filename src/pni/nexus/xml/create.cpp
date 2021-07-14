@@ -27,7 +27,6 @@
 #include <pni/nexus/xml/node.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 namespace xml {
 
@@ -49,5 +48,4 @@ void create_from_string(const hdf5::node::Node &parent,const std::string &xml_da
 
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

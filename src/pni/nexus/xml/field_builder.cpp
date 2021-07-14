@@ -28,7 +28,6 @@
 #include <pni/types.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 namespace xml {
 
@@ -135,5 +134,4 @@ void FieldBuilder::build(const hdf5::node::Node &parent) const
 
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

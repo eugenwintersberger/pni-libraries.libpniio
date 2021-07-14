@@ -28,7 +28,6 @@
 #include <pni/windows.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 class PathObjectList;
@@ -117,5 +116,4 @@ class PNINEXUS_EXPORT AttributeList : public std::vector<hdf5::attribute::Attrib
 };
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

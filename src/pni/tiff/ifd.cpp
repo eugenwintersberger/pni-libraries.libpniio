@@ -29,7 +29,6 @@ using namespace pni;
 
 
 namespace pni{
-namespace io{
 namespace tiff{
 
     //================implementation of constructors and destructor============ 
@@ -114,6 +113,5 @@ namespace tiff{
 
 
 //end of namespace
-}
 }
 }

@@ -27,7 +27,6 @@
 
 
 namespace pni{
-namespace io{
 namespace nexus{
 
 //add here an additional namespace to avoid namespace polution from the boost
@@ -50,5 +49,4 @@ PNINEXUS_EXPORT Path parse_path(const pni::string &input);
 } // namespace parsers
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

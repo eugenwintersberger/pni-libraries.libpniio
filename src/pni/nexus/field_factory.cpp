@@ -25,7 +25,6 @@
 #include <pni/nexus/predicates.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 hdf5::node::Dataset FieldFactory::create(const hdf5::node::Group &parent,
@@ -75,5 +74,4 @@ hdf5::node::Dataset FieldFactory::create(const hdf5::node::Group &parent,
 
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

@@ -28,7 +28,6 @@
 
 
 namespace pni{
-namespace io{
 namespace nexus{
 
 void throw_if_empty(const Path::Element &e,
@@ -329,5 +328,4 @@ bool is_unique(const Path &path)
 }
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

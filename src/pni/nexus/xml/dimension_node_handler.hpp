@@ -27,7 +27,6 @@
 #include <pni/nexus/xml/node.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 namespace xml {
 
@@ -50,5 +49,4 @@ class DimensionNodeHandler
 
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

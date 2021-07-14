@@ -25,7 +25,6 @@
 #include <pni/parsers/parser.hpp>
 
 namespace pni{
-namespace io{
 
 
 //!
@@ -80,5 +79,4 @@ class parser<std::complex<T>>
       }
     }
 };
-}
 }

@@ -33,7 +33,6 @@
 
 
 namespace pni{
-namespace io{
 
 //================implementation of constructors and destructor========
 //implementation of the default constructor
@@ -132,6 +131,5 @@ void cbf_reader::_parse_file()
 
 
 //end of namespace
-}
 }
 

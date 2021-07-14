@@ -29,7 +29,6 @@
 static const boost::regex version_regexp("(?<MAJOR>\\d+)((\\.(?<MINOR>\\d+))(\\.(?<PATCH>\\d+))?)?");
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 Version::Version() noexcept:
@@ -189,5 +188,4 @@ std::istream &operator>>(std::istream &stream,Version &v)
 }
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

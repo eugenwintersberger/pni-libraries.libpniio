@@ -23,7 +23,6 @@
 #pragma once
 
 namespace pni{
-namespace io{ 
 namespace cbf{
 
     //!
@@ -39,6 +38,5 @@ namespace cbf{
     enum class vendor_id { DECTRIS };
 
 //end of namespace
-}
 }
 }

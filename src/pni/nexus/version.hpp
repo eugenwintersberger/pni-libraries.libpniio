@@ -28,7 +28,6 @@
 #include <pni/windows.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 //!
@@ -203,5 +202,4 @@ PNINEXUS_EXPORT bool operator>(const Version &lhs,const Version &rhs);
 
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

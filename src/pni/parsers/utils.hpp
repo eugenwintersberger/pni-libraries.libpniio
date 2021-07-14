@@ -26,7 +26,6 @@
 #include <pni/types.hpp>
 
 namespace pni {
-namespace io {
 
     //!
     //! \ingroup parser_classes
@@ -92,5 +91,4 @@ namespace io {
     //! \param input input string to check
     //! \return true if slice, false otherwise
     bool is_slice(const pni::string &input);
-}
 }

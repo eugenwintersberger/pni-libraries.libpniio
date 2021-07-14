@@ -26,7 +26,6 @@
 #include <algorithm>
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 bool is_resolvable(const hdf5::node::Link &link)
@@ -136,5 +135,4 @@ PathObjectList get_objects(const hdf5::node::Group &base,const Path &path)
 }
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

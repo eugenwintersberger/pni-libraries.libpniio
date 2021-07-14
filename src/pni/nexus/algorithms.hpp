@@ -28,7 +28,6 @@
 #include <pni/windows.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 //!
@@ -91,5 +90,4 @@ PNINEXUS_EXPORT hdf5::Dimensions get_dimensions(const hdf5::node::Dataset &datas
 
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

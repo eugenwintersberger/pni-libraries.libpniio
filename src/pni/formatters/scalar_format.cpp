@@ -26,7 +26,6 @@
 #include <boost/format.hpp>
 
 namespace pni{
-namespace io{
     using namespace pni;
 
 #define SCALAR_FORMAT_FUNCTION(type) \
@@ -232,5 +231,4 @@ namespace io{
     }
 
 //end of namespace
-}
 }

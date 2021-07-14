@@ -28,7 +28,6 @@
 
 
 namespace pni{
-namespace io{
 namespace cbf{
 
     //==================implementation of static memeber functions=========
@@ -146,6 +145,5 @@ namespace cbf{
     }
 
 //end of namespace
-}
 }
 }

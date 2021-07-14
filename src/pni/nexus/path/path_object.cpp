@@ -25,7 +25,6 @@
 #include <pni/nexus/path/path_object.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 PathObject::PathObject():
@@ -276,5 +275,4 @@ bool is_link(const PathObject &object) noexcept
 }
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

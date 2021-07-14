@@ -27,7 +27,6 @@
 #include <pni/nexus/xml/link_builder.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 namespace xml {
 
@@ -50,5 +49,4 @@ ObjectBuilder::UniquePointer BuilderFactory::create(const Node::value_type &elem
 
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

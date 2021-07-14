@@ -25,7 +25,6 @@
 #include <pni/parsers/parser.hpp>
 
 namespace pni{
-namespace io{
 
     //!
     //! \ingroup parser_classes
@@ -43,5 +42,4 @@ namespace io{
 
             result_type operator()(const pni::string &data) const;
     };
-}
 }

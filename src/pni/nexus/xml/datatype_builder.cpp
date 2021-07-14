@@ -26,7 +26,6 @@
 #include <stdexcept>
 
 namespace pni {
-namespace io {
 namespace nexus {
 namespace xml {
 
@@ -54,5 +53,4 @@ hdf5::datatype::Datatype DatatypeBuilder::build() const
 
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

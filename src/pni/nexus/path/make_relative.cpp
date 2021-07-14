@@ -59,7 +59,6 @@ namespace {
 }
 
 namespace pni{
-namespace io{
 namespace nexus{
 
 
@@ -99,5 +98,4 @@ Path make_relative(const Path &parent_path,const Path &orig_path)
 
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

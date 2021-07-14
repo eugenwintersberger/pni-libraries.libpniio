@@ -26,7 +26,6 @@
 #include <stdexcept>
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 hdf5::datatype::Datatype DatatypeFactory::create(pni::type_id_t tid)
@@ -58,5 +57,4 @@ hdf5::datatype::Datatype DatatypeFactory::create(pni::type_id_t tid)
 
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

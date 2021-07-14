@@ -24,7 +24,6 @@
 #include <pni/nexus/xml/dimension_node_handler.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 namespace xml {
 
@@ -84,5 +83,4 @@ IndexValue DimensionNodeHandler::index_value_from_node(const Node &dim_node)
 
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

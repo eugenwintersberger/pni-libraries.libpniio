@@ -27,7 +27,6 @@
 #include <pni/windows.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 //!
@@ -72,5 +71,4 @@ class PNINEXUS_EXPORT DateTime
 
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

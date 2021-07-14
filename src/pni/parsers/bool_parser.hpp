@@ -25,7 +25,6 @@
 #include <pni/parsers/parser.hpp>
 
 namespace pni{
-namespace io{
 
 //!
 //! @brief parser specialization for bool values
@@ -75,5 +74,4 @@ class PNINEXUS_EXPORT parser<pni::bool_t>
 
 };
 
-}
 }

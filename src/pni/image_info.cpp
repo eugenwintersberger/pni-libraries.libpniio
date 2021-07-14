@@ -27,7 +27,6 @@
 #include <pni/image_info.hpp>
 
 namespace pni{
-namespace io{
     
 using namespace pni;
 
@@ -95,5 +94,4 @@ std::ostream &operator<<(std::ostream &o,const image_info &i)
 
 
 //end of namespace
-}
 }

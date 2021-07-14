@@ -25,7 +25,5 @@
 #include <pni/parsers/parser.hpp>
 
 namespace pni{
-namespace io {
 
-}
 }

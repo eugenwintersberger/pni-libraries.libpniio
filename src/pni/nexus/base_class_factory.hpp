@@ -26,7 +26,6 @@
 #include <pni/windows.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 //!
@@ -64,5 +63,4 @@ class PNINEXUS_EXPORT BaseClassFactory
 };
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

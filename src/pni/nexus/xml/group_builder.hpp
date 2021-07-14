@@ -25,7 +25,6 @@
 #include <pni/nexus/xml/object_builder.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 namespace xml {
 
@@ -42,5 +41,4 @@ class PNINEXUS_EXPORT GroupBuilder : public ObjectBuilder
 
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

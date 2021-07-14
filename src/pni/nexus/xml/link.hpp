@@ -27,7 +27,6 @@
 #include <pni/windows.hpp>
 
 namespace pni{
-namespace io{
 namespace nx{
 namespace xml{
     
@@ -127,7 +126,6 @@ namespace xml{
     
  
 //end of namespace
-}
 }
 }
 }

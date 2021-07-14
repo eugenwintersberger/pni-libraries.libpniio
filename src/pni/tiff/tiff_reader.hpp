@@ -36,7 +36,6 @@
 
 
 namespace pni{
-namespace io{    
 
     //! 
     //! \ingroup image_io_tiff
@@ -330,5 +329,4 @@ namespace io{
         
     }
 //end of namespace
-}
 }

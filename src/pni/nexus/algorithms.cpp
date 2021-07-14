@@ -28,7 +28,6 @@
 
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 template<typename ITERT>
@@ -127,5 +126,4 @@ hdf5::Dimensions get_dimensions(const hdf5::node::Dataset &dataset)
 
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

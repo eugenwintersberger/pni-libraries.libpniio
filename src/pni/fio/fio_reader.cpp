@@ -36,7 +36,6 @@ static const boost::regex data_record_re("^(?:\\s+[+-\\.0-9eE]+)+\\s*");
 static const boost::regex data_cell_re("[+-\\.0-9eE]+");
 
 namespace pni{
-namespace io{
 
     //======================private member functions===========================
 void fio_reader::_parse_file(std::ifstream &stream)
@@ -234,5 +233,4 @@ std::vector<pni::string> fio_reader::parameter_names() const
 
 
 //end of namespace
-}
 }

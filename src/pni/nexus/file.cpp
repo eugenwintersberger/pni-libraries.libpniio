@@ -54,7 +54,6 @@ void write_nexus_file_attribute(const node::Group &root_group,
 // Official functions exported to the ABI of the library
 //
 namespace pni {
-namespace io {
 namespace nexus {
 
 
@@ -174,6 +173,5 @@ file::File open_file(const filesystem::path &path,
 }
 
 
-}
 }
 }

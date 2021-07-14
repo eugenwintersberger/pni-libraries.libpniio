@@ -31,7 +31,6 @@
 
 
 namespace pni{
-namespace io{
 namespace tiff{
 
     //!
@@ -103,7 +102,6 @@ namespace tiff{
 
 
 //end of namespace 
-}
 }
 }
 

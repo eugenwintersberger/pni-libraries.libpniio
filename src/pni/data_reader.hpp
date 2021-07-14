@@ -31,7 +31,6 @@
 
 
 namespace pni{
-namespace io{
         
     //! 
     //! \ingroup general_io
@@ -170,5 +169,4 @@ namespace io{
     };
 
 //end of namespace
-}
 }

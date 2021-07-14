@@ -29,7 +29,6 @@
 #include <pni/nexus/xml/data_writer.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 namespace xml {
 
@@ -49,5 +48,4 @@ class AttributeBuilder : public ObjectBuilder
 
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

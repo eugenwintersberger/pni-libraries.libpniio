@@ -28,7 +28,6 @@
 #include <pni/windows.hpp>
 
 namespace pni{
-namespace io{
 namespace nexus{
 
 //!
@@ -66,5 +65,4 @@ PNINEXUS_EXPORT Path make_relative(const Path &parent_path,const Path &orig_path
 
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

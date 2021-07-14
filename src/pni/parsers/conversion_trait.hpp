@@ -29,7 +29,6 @@
 
 
 namespace pni{
-namespace io{
 
     //!
     //! \ingroup parser_internal_classes
@@ -186,5 +185,4 @@ namespace io{
     };
 
 //end of namespace
-}
 }

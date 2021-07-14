@@ -32,7 +32,6 @@ using namespace pni;
 
 
 namespace pni{
-namespace io{
 namespace tiff{
     //================manage enum types if the compiler does not do it=========
 #ifdef ENUMBUG
@@ -224,6 +223,5 @@ namespace tiff{
     }
 
 //end of namespace
-}
 }
 }

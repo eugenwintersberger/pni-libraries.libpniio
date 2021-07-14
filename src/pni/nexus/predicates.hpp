@@ -27,7 +27,6 @@
 #include <boost/regex.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 //!
@@ -229,5 +228,4 @@ class PNINEXUS_EXPORT IsValidNeXusName
 
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

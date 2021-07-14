@@ -26,7 +26,6 @@
 #include <boost/date_time/c_local_time_adjustor.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 //---------------------------------------------------------------------
@@ -81,5 +80,4 @@ std::string DateTime::get_date_time_str(const time_t &t)
 
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

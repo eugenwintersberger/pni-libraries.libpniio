@@ -23,7 +23,6 @@
 #include <pni/nexus/object_builder.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 ObjectBuilder::~ObjectBuilder()
@@ -33,5 +32,4 @@ ObjectBuilder::~ObjectBuilder()
 
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

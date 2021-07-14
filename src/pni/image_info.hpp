@@ -33,7 +33,6 @@
 #include <pni/windows.hpp>
 
 namespace pni{
-namespace io{
        
 //!
 //! @brief image information type
@@ -205,5 +204,4 @@ PNINEXUS_EXPORT std::ostream &operator<<(std::ostream &o,const image_info &i);
 
 
 //end of namespace
-}
 }

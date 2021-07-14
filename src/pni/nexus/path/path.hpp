@@ -30,7 +30,6 @@
 #include <h5cpp/hdf5.hpp>
 
 namespace pni{
-namespace io{
 namespace nexus{
         
 //!
@@ -288,5 +287,4 @@ class PNINEXUS_EXPORT Path
 
 //end of namespace
 } // namespace nexus
-} // namespace io
 } // namespace pni

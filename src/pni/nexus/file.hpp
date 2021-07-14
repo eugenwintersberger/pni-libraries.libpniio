@@ -28,7 +28,6 @@
 #include <pni/windows.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 //!
@@ -106,5 +105,4 @@ hdf5::file::File open_file(const boost::filesystem::path &path,
                       const hdf5::property::FileAccessList &fapl = hdf5::property::FileAccessList());
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

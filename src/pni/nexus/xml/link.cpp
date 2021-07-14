@@ -24,7 +24,6 @@
 #include <pni/nx/xml/link.hpp>
 
 namespace pni{
-namespace io{
 namespace nx{
 namespace xml{
     
@@ -50,7 +49,6 @@ namespace xml{
     }
  
 //end of namespace
-}
 }
 }
 }

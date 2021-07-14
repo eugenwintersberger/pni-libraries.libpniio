@@ -32,7 +32,6 @@
 using namespace pni;
 
 namespace pni{
-namespace io{
 
     //============implementation of private methods============================
     //implementation of _set_endianess
@@ -347,5 +346,4 @@ namespace io{
 
 
 //end of namespace
-}
 }

@@ -25,7 +25,6 @@
 #include <pni/image_reader.hpp>
 
 namespace pni{
-namespace io{
 
     //================implementation of constructors===========================
     //implementation of the default constructor
@@ -58,5 +57,4 @@ namespace io{
     }
 
 //end of namespace
-}
 }

@@ -29,7 +29,6 @@
 
 
 namespace pni{
-namespace io{
 
     //!
     //! \ingroup formatter_classes
@@ -77,5 +76,4 @@ namespace io{
     pni::string PNINEXUS_EXPORT format(const pni::value &v);
     pni::string PNINEXUS_EXPORT format(const pni::value_ref &v);
 
-}
 }

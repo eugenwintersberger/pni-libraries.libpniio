@@ -25,7 +25,6 @@
 #include <pni/tiff/ifd_entry_reader.hpp>
 
 namespace pni{
-namespace io{
 namespace tiff{
 
     void
@@ -77,6 +76,5 @@ namespace tiff{
 
 
 //end of namespace
-}
 }
 }

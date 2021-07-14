@@ -27,7 +27,6 @@
 #include <pni/container_io_config.hpp>
 
 namespace pni{
-namespace io{
        
     container_io_config::container_io_config():
         _start(),
@@ -76,5 +75,4 @@ namespace io{
 
 
 //end of namespace
-}
 }

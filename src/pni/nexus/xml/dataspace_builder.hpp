@@ -27,7 +27,6 @@
 #include <pni/windows.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 namespace xml {
 
@@ -47,5 +46,4 @@ class PNINEXUS_EXPORT DataspaceBuilder
 
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

@@ -26,7 +26,6 @@
 #include <pni/nexus/path/path_object.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 GroupList::GroupList(const NodeList &nodes)
@@ -41,5 +40,4 @@ DatasetList::DatasetList(const NodeList &nodes)
 
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

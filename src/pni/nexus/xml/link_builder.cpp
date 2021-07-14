@@ -25,7 +25,6 @@
 #include <pni/nexus/path/path.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 namespace xml {
 
@@ -60,5 +59,4 @@ void LinkBuilder::build(const hdf5::node::Node &parent) const
 
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

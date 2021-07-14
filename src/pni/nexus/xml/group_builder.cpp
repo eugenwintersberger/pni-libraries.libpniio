@@ -28,7 +28,6 @@
 #include <pni/error.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 namespace xml {
 
@@ -97,5 +96,4 @@ void GroupBuilder::build(const hdf5::node::Node &parent) const
 
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

@@ -32,7 +32,6 @@
 
 
 namespace pni{
-namespace io{
 
     template<typename T>
     pni::string format(const std::vector<T> &v,
@@ -90,5 +89,4 @@ namespace io{
     pni::string PNINEXUS_EXPORT format(const pni::array &v,
                              const container_io_config &config=container_io_config());
 
-}
 }

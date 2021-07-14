@@ -40,7 +40,6 @@
 #include <pni/windows.hpp>
 
 namespace pni{
-namespace io{
 
 
 //!
@@ -247,6 +246,5 @@ void cbf_reader::image(CTYPE &data,size_t i,size_t c)
 
 }
 //end of namespace
-}
 }
 

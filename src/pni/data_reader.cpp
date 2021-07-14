@@ -28,7 +28,6 @@
 
 
 namespace pni{
-namespace io{
 
     using namespace pni;
     //================implementation of private methods=========================
@@ -125,5 +124,4 @@ namespace io{
     }
 
 //end of namespace
-}
 }

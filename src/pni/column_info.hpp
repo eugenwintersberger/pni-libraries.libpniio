@@ -30,7 +30,6 @@
 #include <pni/windows.hpp>
 
 namespace pni{
-namespace io{
 
     //! 
     //! \ingroup ascii_io
@@ -128,6 +127,5 @@ namespace io{
 
 
 //end of namespace
-}
 }
 

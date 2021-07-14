@@ -34,7 +34,6 @@
 #include <pni/tiff/ifd_entry_reader.hpp>
 
 namespace pni{
-namespace io{
 namespace tiff{
    
     //possible data values of an IFD entry according to the TIFF standard
@@ -278,7 +277,6 @@ namespace tiff{
 
 
 //end of namespace
-}
 }
 }
 

@@ -30,7 +30,6 @@
 #include <pni/nexus/containers.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 
 //!
@@ -240,5 +239,4 @@ PNINEXUS_EXPORT bool is_link(const PathObject &object) noexcept;
 
 
 } // namespace nexus
-} // namespace io
 } // namespace pni

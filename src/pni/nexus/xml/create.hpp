@@ -28,7 +28,6 @@
 
 
 namespace pni {
-namespace io {
 namespace nexus {
 namespace xml {
 
@@ -58,5 +57,4 @@ PNINEXUS_EXPORT void create_from_string(const hdf5::node::Node &parent,const std
 
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

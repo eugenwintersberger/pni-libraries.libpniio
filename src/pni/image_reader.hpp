@@ -35,7 +35,6 @@
 #include <pni/windows.hpp>
 
 namespace pni{
-namespace io{
 
     //! 
     //! \ingroup image_io
@@ -156,5 +155,4 @@ namespace io{
 
 
 //end of namepsace
-}
 }

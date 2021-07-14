@@ -25,7 +25,6 @@
 #include <pni/column_info.hpp>
 
 namespace pni{
-namespace io{
 
     //==================implementation of constructors and destructor==========
     //implementation of the  default constructor
@@ -111,5 +110,4 @@ namespace io{
     }
 
 //end of namespace
-}
 }

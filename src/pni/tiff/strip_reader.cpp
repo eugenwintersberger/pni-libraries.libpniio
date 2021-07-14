@@ -28,7 +28,6 @@
 using namespace pni;
 
 namespace pni {
-namespace io {
 namespace tiff {
     //======================implementation of constructors and destructor======
     //implementation of the default constructor
@@ -128,6 +127,5 @@ namespace tiff {
 
 
 //end of namespace
-}
 }
 }

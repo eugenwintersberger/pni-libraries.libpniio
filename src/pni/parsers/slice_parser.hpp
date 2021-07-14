@@ -25,7 +25,6 @@
 #include <pni/parsers/parser.hpp>
 
 namespace pni{
-namespace io{
 
     template<>
     class PNINEXUS_EXPORT parser<pni::slice>
@@ -42,5 +41,4 @@ namespace io{
 
         result_type operator()(const pni::string &input) const;
     };
-}
 }

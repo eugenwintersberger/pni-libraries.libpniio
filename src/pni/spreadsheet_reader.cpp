@@ -25,7 +25,6 @@
 #include <pni/spreadsheet_reader.hpp>
 
 namespace pni{
-namespace io{
 
 //========implementation of private member functions===========================
 void spreadsheet_reader::_append_column(const column_info &i)
@@ -135,5 +134,4 @@ bool spreadsheet_reader::has_column(const pni::string &name) const
     }
 
 //end of namespace
-}
 }

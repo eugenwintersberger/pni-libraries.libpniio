@@ -29,7 +29,6 @@
 #include <pni/windows.hpp>
 
 namespace pni{
-namespace io{   
 
     //! 
     //! \ingroup io_error_classes
@@ -183,5 +182,4 @@ namespace io{
 
 
 //end of namespace
-}
 }

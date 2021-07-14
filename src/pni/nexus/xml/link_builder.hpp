@@ -27,7 +27,6 @@
 #include <h5cpp/hdf5.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 namespace xml {
 
@@ -43,5 +42,4 @@ class PNINEXUS_EXPORT LinkBuilder : public ObjectBuilder
 
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

@@ -25,7 +25,6 @@
 #include <pni/parsers.hpp>
 
 namespace pni {
-namespace io {
 namespace nexus {
 namespace xml {
 
@@ -102,5 +101,4 @@ hdf5::property::DatasetCreationList DatasetCreationListBuilder::build() const
 
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

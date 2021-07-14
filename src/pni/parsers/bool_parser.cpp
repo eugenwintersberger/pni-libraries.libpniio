@@ -25,7 +25,6 @@
 #include <pni/parsers/bool_parser.hpp>
 
 namespace pni{
-namespace io {
 
     parser<pni::bool_t>::parser():
         _true_regex("^T(rue|RUE)|true|1$"),
@@ -56,5 +55,4 @@ namespace io {
         }
     }
 
-}
 }

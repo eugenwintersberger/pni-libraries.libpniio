@@ -28,7 +28,6 @@
 #include <pni/parsers.hpp>
 
 namespace pni{
-namespace io{
 namespace nexus{
 namespace xml{    
 
@@ -156,5 +155,4 @@ PNINEXUS_EXPORT std::ostream &operator<<(std::ostream &o,const Node &n);
 //end of namespace
 } // namespace xml
 } // namespace nexus
-} // namespace io
 } // namespace pni

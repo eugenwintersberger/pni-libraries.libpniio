@@ -30,7 +30,6 @@
 #include <algorithm>
 
 namespace pni{
-namespace io{
 namespace nexus{
 namespace parsers{
 
@@ -152,5 +151,4 @@ Path parse_path(const std::string &input)
 //end of namespace
 } // namespace parsers
 } // namespace nexus
-} // namespace io
 } // namespace pni
