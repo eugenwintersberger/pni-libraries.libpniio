@@ -23,9 +23,8 @@ are requiered sdfdsf
 `libpniio` requires certain library dependencies to be installed on the
 build system
 
-* Boost (>=1.59)
-* [h5cpp](https://github.com/ess-dmsc/h5cpp) (>=0.0.4) -- from https://ess-dmsc.github.io/h5cpp/ (not http://h5cpp.org/)
-* pnicore (>=1.1.0)
+* Boost (>=1.60)
+* [h5cpp](https://github.com/ess-dmsc/h5cpp) (>=0.0.4) -- from https://ess-dmsc.github.io/h5cpp/
 
 and their transitive dependencies. If all dependencies are available on your
 system you can clone this repository and configure the build
