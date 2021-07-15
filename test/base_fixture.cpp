@@ -21,7 +21,6 @@
 #include "base_fixture.hpp"
 
 using namespace pni;
-using namespace pni::nx;
 
 //-----------------------------------------------------------------------------
 base_fixture::base_fixture(const string &fname,bool open_existing):
@@ -30,9 +29,11 @@ base_fixture::base_fixture(const string &fname,bool open_existing):
     root()
 {
     if(open_existing)
-        file = h5::nxfile::open_file(filename,false);
+      file = hdf5::file::open(filename,
+			      hdf5::file::AccessFlags::READONLY);
     else
-        file = h5::nxfile::create_file(filename,true);
+      file = nexus::create_file(filename,
+				hdf5::file::AccessFlags::TRUNCATE);
 
     root = file.root();
 

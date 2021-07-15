@@ -19,7 +19,8 @@
 #pragma once
 
 #include <pni/types.hpp>
-#include <pni/nx/nx.hpp>
+#include <h5cpp/hdf5.hpp>
+#include <pni/nexus.hpp>
 #include <vector>
 
 //!
@@ -32,8 +33,8 @@
 struct base_fixture
 {
     pni::string filename;    //!< name of the file created
-    pni::nx::h5::nxfile file;  //!< file instancen
-    pni::nx::h5::nxgroup root; //!< root group instance
+    hdf5::file::File file;   //!< file instancen
+    hdf5::node::Group root;  //!< root group instance
 
     //!
     //! \brief constructor

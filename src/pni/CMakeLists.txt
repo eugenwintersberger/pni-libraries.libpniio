@@ -18,6 +18,7 @@ set(HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/column_info.hpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/arrays.hpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/algorithms.hpp
                  ${CMAKE_CURRENT_SOURCE_DIR}/type_erasures.hpp
+                 # ${CMAKE_CURRENT_SOURCE_DIR}/configuration.hpp
                  )
 
 set(SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/column_info.cpp
@@ -54,6 +55,7 @@ add_subdirectory("utilities")
 add_subdirectory("arrays")
 add_subdirectory("algorithms")
 add_subdirectory("type_erasures")
+# add_subdirectory("configuration")
 
 # ============================================================================
 # assemble list of header and source files used in the build 
