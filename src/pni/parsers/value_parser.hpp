@@ -43,7 +43,7 @@ namespace pni{
     //! * and strings
     //!
     template<>
-    class PNINEXUS_EXPORT parser<pni::value>
+    class PNINEXUS_EXPORT parser< pni::value >
     {
     private:
         //!

@@ -44,9 +44,9 @@ Modification functions
 Comparison
 ~~~~~~~~~~
 
-.. doxygenfunction:: pni::nexus::operator==(const Path &lhs,const Path &rhs)
+.. doxygenfunction:: pni::nexus::operator==(const Path&,const Path&)
 
-.. doxygenfunction:: pni::nexus::match(const Path &, const Path &)
+.. doxygenfunction:: pni::nexus::match(const Path&,const Path&)
 
 NeXus path objects
 ==================
@@ -75,9 +75,9 @@ Related functions
 Searching with Paths
 ====================
 
-.. doxygenfunction:: pni::nexus::get_path(const hdf5::attribute::Attribute &)
+.. doxygenfunction:: pni::nexus::get_path(const hdf5::attribute::Attribute&)
 
-.. doxygenfunction:: pni::nexus::get_path(const hdf5::node::Node &)
+.. doxygenfunction:: pni::nexus::get_path(const hdf5::node::Node&)
 
 .. doxygenfunction:: pni::nexus::get_objects
 

@@ -10,3 +10,4 @@ API documentation
    ascii.rst
    image.rst
    nexus.rst
+   core.rst

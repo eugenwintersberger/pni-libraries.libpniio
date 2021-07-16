@@ -73,11 +73,11 @@ predicates can be used to retrieve any node from a NeXus tree.
 Utilities
 =========
 
-.. doxygenfunction:: pni::nexus::get_type_id(const hdf5::attribute::Attribute &)
+.. doxygenfunction:: pni::nexus::get_type_id(const hdf5::attribute::Attribute&)
 
-.. doxygenfunction:: pni::nexus::get_type_id(const hdf5::node::Dataset &)
+.. doxygenfunction:: pni::nexus::get_type_id(const hdf5::node::Dataset&)
 
-.. doxygenfunction:: pni::nexus::get_dimensions(const hdf5::attribute::Attribute &)
+.. doxygenfunction:: pni::nexus::get_dimensions(const hdf5::attribute::Attribute&)
 
-.. doxygenfunction:: pni::nexus::get_dimensions(const hdf5::node::Dataset &)
+.. doxygenfunction:: pni::nexus::get_dimensions(const hdf5::node::Dataset&)
 

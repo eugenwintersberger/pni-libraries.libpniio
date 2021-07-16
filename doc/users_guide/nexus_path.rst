@@ -379,7 +379,7 @@ instance of :cpp:class:`nexus::Path`
 | :cpp:func:`has_attribute_section` | returns *true* if the path has a     |
 |                                   | non-empty attribute section          |
 +-----------------------------------+--------------------------------------+
-| :cpp:func:`is_empty               | returns *true* if a path has neither |
+| :cpp:func:`is_empty`              | returns *true* if a path has neither |
 |                                   | a *file section*, an                 |
 |                                   | *attribute section*, and an          |
 |                                   | *object section*. This situation     |
