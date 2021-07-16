@@ -156,14 +156,14 @@ type ID.  In cases where the type ID is given and a classification of the type
 has to be made four functions are provided where each takes a type ID as its
 single most argument
 
-=================================  ======================================================
-function                           description
-=================================  ======================================================
-:cpp:func:`is_integer(type_id_t)`  returns true if the type ID refers to an integer type 
-:cpp:func:`is_float(type_id_t)`    returns true if the type ID refers to a float type 
-:cpp:func:`is_complex(type_id_t)`  returns true if the type ID refers to a complex type 
-:cpp:func:`is_numeric(type_id_t)`  returns true if the type ID refers to a numeric type 
-=================================  ======================================================
+==================================  ======================================================
+function                            description
+==================================  ======================================================
+:cpp:func:`is_integer` (type_id_t)  returns true if the type ID refers to an integer type 
+:cpp:func:`is_float` (type_id_t)    returns true if the type ID refers to a float type 
+:cpp:func:`is_complex` (type_id_t)  returns true if the type ID refers to a complex type 
+:cpp:func:`is_numeric` (type_id_t)  returns true if the type ID refers to a numeric type 
+==================================  ======================================================
 
 Another important scenario is the situation where a user uses the string
 representation to tell a program with which type it should work.  In such a
@@ -221,8 +221,8 @@ instruct the compiler to use the \texttt{pni} namespace by default. In
 line $12$ a vector type with binary elements is defined and an instance of this
 type is allocated in line $24$.  In line $27$ data is read from the input file
 and stored in the vector. Now, it is clear from here that a vector of type
-:cpp:type:`char` would have perfectly served the same purpose. The major
-difference is that unlike :cpp:type:`char` :cpp:type:`binary` has absolutely no
+:cpp:type:`char_t` would have perfectly served the same purpose. The major
+difference is that unlike :cpp:type:`char_t` :cpp:type:`binary` has absolutely no
 semantics. In practice there is nothing much you can do without it rather than
 store it back to another stream as it is done in line $33$.
 
@@ -252,7 +252,7 @@ the most common STL implementation :cpp:class:`std::vector` is considered an
 array of individual bits. Meaning that every byte in the vector is storing a
 total of *8* :cpp:type:`bool_t` values. Consequently we cannot obtain an address
 for a particular bit but only for the byte where it is stored.  Hence
-:cpp:class:`std::vector<bool>` does not provide the :cpp:func:`data` method
+:cpp:class:`std::vector<bool_t>` does not provide the :cpp:func:`data` method
 which is required for storage containers used with the :cpp:class:`mdarray`
 templates (see :ref:`arrays`). 
 

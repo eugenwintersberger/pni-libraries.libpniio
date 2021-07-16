@@ -11,8 +11,6 @@ Type erasures
 Functions
 ---------
 
-.. doxygenfunction:: pni::make_value
-
 .. doxygenfunction:: pni::make_value(type_id_t)
 
 .. doxygenfunction:: pni::type_id(const value&)

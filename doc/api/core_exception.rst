@@ -3,7 +3,7 @@ Exceptions
 ==========
 
 :cpp:class:`pni::exception_record`
-========================================
+==================================
 
 .. doxygenclass:: pni::exception_record
    :members:
@@ -11,7 +11,7 @@ Exceptions
 .. doxygenfunction:: operator<<(std::ostream&,const exception_record&)
    
 :cpp:class:`pni::exception`
-=================================
+===========================
 
 .. doxygenclass:: pni::exception
    :members:

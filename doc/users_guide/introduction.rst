@@ -1,6 +1,6 @@
-====================================
+=======================================
 A general introduction to *libpninexus*
-====================================
+=======================================
 
 
 *libpninexus* is the IO library within the PNI library stack. More precisely it is

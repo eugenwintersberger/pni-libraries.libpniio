@@ -303,7 +303,6 @@ PNINEXUS_EXPORT bool operator!=(const Path::Element &a,const Path::Element &b);
 //--------------------------------------------------------------------------
 //!
 //! @brief equality operator for two path objects
-//! @relates Path
 //!
 //! Compare to path objects. They are considered equal if both paths
 //! contain the same components.
@@ -329,7 +328,6 @@ PNINEXUS_EXPORT bool operator!=(const Path &lhs,const Path &rhs);
 //------------------------------------------------------------------------
 //!
 //! @brief output operator for single elements
-//! @relates Path::Element
 //!
 //! Write a single object element to an output stream.
 //!

@@ -9,8 +9,8 @@ optimizations.In addition they help to avoid virtual functions in classes and
 thus increase performance by avoiding call indirection through the virtual
 functions table. However, there are two major obstacles with templates
 
-* template expansion virtually always leas to code generation and this could lead to large 
-binaries which might be a problem on small hardware architectures
+* template expansion virtually always leas to code generation and this could lead to large binaries which might be a problem on small hardware architectures
+
 * template libraries and the applications which are using them are harder to maintain. 
 
 The last point may requires a bit of explanation. The reason why system
@@ -328,12 +328,12 @@ forward iteration is implemented. In addition there is now :cpp:class:`array_ref
 type erasure which only keeps a reference to an instance of :cpp:class:`mdarray`. 
 
 The iterators themselves have a subtle speciality. They do not provide a
-:cpp:func:`->` operator. This has a rather simple reason. While all other interators
+`->` operator. This has a rather simple reason. While all other interators
 return a pointer to a particular data element in a container the :cpp:class:`array`
 iterators cannot do this (they do no hold any type information). Instead they
 return an instance of :cpp:class:`value` for constant or :cpp:class:`value_ref` for
-read/write iterators. In order to keep the semantics of the :cpp:func:`->` operator we
-would have to return :cpp:type:`*value` or :cpp:type:`*value_ref` from the :cpp:func:`->`
+read/write iterators. In order to keep the semantics of the `->` operator we
+would have to return `*value` or `*value_ref` from the `->`
 operator. However, this is not possible as these objects are just temporaries
 and would be destroyed once the operator function has returned. 
 However, this is only a small inconvenience as it has no influence on the 
@@ -368,7 +368,7 @@ values (for instance float to integer) or do inappropriate type conversions (for
 instance convert everything to the complex type) which may add rounding errors. 
 
 There are several ways how to approach this problem. The most straight forward
-one would be to create a :cpp:type:`struct` with an integer, a float, and a complex
+one would be to create a `struct` with an integer, a float, and a complex
 element. However, this approach is rather static. If a column will be added or
 removed or only the order of the columns is changed we have to alter the code. 
 
