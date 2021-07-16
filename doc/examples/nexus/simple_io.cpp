@@ -7,7 +7,6 @@
 
 
 using namespace pni;
-using namespace pni;
 
 
 void write_data(const boost::filesystem::path &file_path,size_t np,size_t nx,size_t ny)

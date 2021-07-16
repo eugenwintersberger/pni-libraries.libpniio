@@ -25,7 +25,6 @@
 #include <pni/types.hpp>
 
 using namespace pni;
-using namespace pni;
 
 struct FieldFactoryTestFixture
 {

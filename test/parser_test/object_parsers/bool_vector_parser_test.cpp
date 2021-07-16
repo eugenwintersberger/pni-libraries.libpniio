@@ -27,7 +27,6 @@
 #include "../primitive_parsers/parser_test_fixture.hpp"
 
 using namespace pni;
-using namespace pni;
 
 struct bool_vector_parser_test_fixture : parser_test_fixture<std::vector<bool_t>>
 {

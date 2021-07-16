@@ -5,7 +5,6 @@
 #include <h5cpp/hdf5.hpp>
 
 using namespace pni;
-using namespace pni;
 
 static const string scan_struct = 
 "<group name=\"instrument\" type=\"NXinstrument\">"

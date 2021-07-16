@@ -28,7 +28,6 @@
 #include <pni/image_info.hpp>
 
 using namespace pni;
-using namespace pni;
 
 BOOST_AUTO_TEST_SUITE(tiff_reader_test)
 

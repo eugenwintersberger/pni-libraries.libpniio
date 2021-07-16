@@ -27,7 +27,6 @@
 #include <pni/formatters.hpp>
 
 using namespace pni;
-using namespace pni;
 
 BOOST_AUTO_TEST_SUITE(bool_vector_formatter_test)
 

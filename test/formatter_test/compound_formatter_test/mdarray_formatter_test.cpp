@@ -28,7 +28,6 @@
 #include <boost/test/unit_test.hpp>
 
 using namespace pni;
-using namespace pni;
 
 struct mdarray_formatter_test_fixture
 {

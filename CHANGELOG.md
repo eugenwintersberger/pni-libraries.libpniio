@@ -4,6 +4,7 @@
 - merge pniio and pnicore to pninexus
 - move 'pni/core/' and 'pni/io/' to 'pni'
 - move pni::io and pni::core to pni namespace
+- change char * parameter types to std::string
 
 ## 1.3.2 - 2021-07-05
 - creating string arrays with an empty dimension fixed ([#132](https://github.com/pni-libraries/libpniio/pull/132))

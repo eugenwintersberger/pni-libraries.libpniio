@@ -4,7 +4,6 @@
 
 
 using namespace pni;
-using namespace pni;
 
 static const string file_struct = 
 "<group name=\"/\" type=\"NXroot\">"

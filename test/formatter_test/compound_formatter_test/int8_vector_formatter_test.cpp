@@ -27,7 +27,6 @@
 #include <pni/formatters.hpp>
 
 using namespace pni;
-using namespace pni;
 
 
 struct int8_vector_formatter_fixture

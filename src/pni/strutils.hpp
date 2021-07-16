@@ -13,7 +13,7 @@
 //! \param begrem string with signs to remove from the beginning
 //! \param endrem string with signs to remove from the end of the string
 //! \return new string with stripped content
-std::string strip(std::string &s,const char *begrem ="\n ",const char *endrem =" \n");
+std::string strip(std::string &s,const std::string& begrem=std::string("\n "),const std::string& endrem=std::string(" \n"));
 
 //! split into key value pairs
 
@@ -22,5 +22,5 @@ std::string strip(std::string &s,const char *begrem ="\n ",const char *endrem ="
 //! \param del delimiter string
 //! \param key reference to the key
 //! \param value reference to the value portion of the original string
-int get_key_value(std::string &s,const char *del,std::string &key,std::string &value);
+int get_key_value(std::string &s,const std::string &del,std::string &key,std::string &value);
 

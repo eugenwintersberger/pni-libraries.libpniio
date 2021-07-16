@@ -27,7 +27,6 @@
 #include "parser_test_fixture.hpp"
 
 using namespace pni;
-using namespace pni;
 
 struct uint8_parser_test_fixture : parser_test_fixture<uint8>
 {};

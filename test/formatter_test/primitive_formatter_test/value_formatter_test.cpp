@@ -27,7 +27,6 @@
 #include <pni/formatters/scalar_format.hpp>
 
 using namespace pni;
-using namespace pni;
 
 BOOST_AUTO_TEST_SUITE(value_formatter_test)
     typedef value input_type;

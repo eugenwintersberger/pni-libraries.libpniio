@@ -26,7 +26,6 @@
 #include <pni/formatters/scalar_format.hpp>
 
 using namespace pni;
-using namespace pni;
 
 BOOST_AUTO_TEST_SUITE(int16_formatter_test)
 

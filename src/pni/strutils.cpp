@@ -9,7 +9,7 @@
 
 #include <pni/strutils.hpp>
 
-std::string strip(std::string &s,const char *begrem,const char *endrem){
+std::string strip(std::string &s, const std::string& begrem, const std::string& endrem){
     size_t start,stop;
 
     start = s.find_first_not_of(begrem);
@@ -21,7 +21,7 @@ std::string strip(std::string &s,const char *begrem,const char *endrem){
     return s.substr(start,(stop-start));
 }
 
-int get_key_value(std::string &s,const char *del,std::string &key,std::string &value){
+int get_key_value(std::string &s,const std::string& del, std::string &key,std::string &value){
     size_t start;
 
     start = s.find_first_of(del);

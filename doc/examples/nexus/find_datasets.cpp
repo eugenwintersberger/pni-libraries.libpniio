@@ -25,7 +25,6 @@
 #include <h5cpp/hdf5.hpp>
 
 using namespace pni;
-using namespace pni;
 
 class IsDataset : public nexus::NodePredicate
 {

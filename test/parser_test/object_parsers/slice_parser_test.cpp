@@ -27,7 +27,6 @@
 #include <pni/arrays/slice.hpp>
 
 using namespace pni;
-using namespace pni;
 
 struct slice_parser_test_fixture : parser_test_fixture<slice>
 {

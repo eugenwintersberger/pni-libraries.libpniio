@@ -29,7 +29,6 @@
 #include <pni/formatters.hpp>
 
 using namespace pni;
-using namespace pni;
 
 struct array_formatter_test_fixture
 {

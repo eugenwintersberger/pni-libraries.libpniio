@@ -25,7 +25,6 @@
 #include <pni/parsers/parser.hpp>
 
 using namespace pni;
-using namespace pni;
 
 BOOST_AUTO_TEST_SUITE(default_float_regexp_test)
 

@@ -27,7 +27,6 @@
 #include "parser_test_fixture.hpp"
 
 using namespace pni;
-using namespace pni;
 
 #define NUM_RES 1.e-8
 

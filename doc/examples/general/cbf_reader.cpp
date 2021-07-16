@@ -18,7 +18,6 @@
 #include <pni/error.hpp>
 
 using namespace pni;
-using namespace pni;
 
 using Float32Frame = pni::dynamic_array<pni::float32>;
 

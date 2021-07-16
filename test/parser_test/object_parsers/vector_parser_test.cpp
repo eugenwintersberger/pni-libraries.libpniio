@@ -28,7 +28,6 @@
 #include <pni/container_io_config.hpp>
 
 using namespace pni;
-using namespace pni;
 
 struct vector_parser_test_fixture : parser_test_fixture<std::vector<uint8>>
 {};
