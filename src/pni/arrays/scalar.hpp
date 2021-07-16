@@ -140,7 +140,10 @@ namespace pni {
             //! \param i linear index of the value
             //! \return value of the scalar
             //!
-            T operator[](size_t i) const { return this->_data[0]; }
+            T operator[](size_t i) const {
+	      (void)i;  // UNUSED
+	      return this->_data[0];
+	    }
 
             //-----------------------------------------------------------------
             //!
@@ -153,7 +156,10 @@ namespace pni {
             //! \param i index
             //! \return reference to the scalar data
             //!
-            T &operator[](size_t i) { return this->_data[0]; }
+            T &operator[](size_t i) {
+	      (void)i;  // UNUSED
+	      return this->_data[0];
+	    }
 
             //-----------------------------------------------------------------
             //! 
@@ -165,7 +171,10 @@ namespace pni {
             //! \param i index
             //! \return data value
             //!
-            T at(size_t i) const { return this->_data[0]; }
+            T at(size_t i) const {
+	      (void)i;  // UNUSED
+	      return this->_data[0];
+	    }
 
             //-----------------------------------------------------------------
             //! 
@@ -177,7 +186,10 @@ namespace pni {
             //! \param i index
             //! \return reference to data
             //!
-            T &at(size_t i) { return this->_data[0]; }
+            T &at(size_t i) {
+	      (void)i;  // UNUSED
+	      return this->_data[0];
+	    }
 
             //-----------------------------------------------------------------
             //! 
