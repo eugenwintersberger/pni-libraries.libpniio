@@ -309,7 +309,7 @@ namespace pni{
           
             //-----------------------------------------------------------------
             //! output operator of an TIFFReader object
-            friend PNINEXUS_EXPORT friend std::ostream &operator<<(std::ostream &o,
+            friend PNINEXUS_EXPORT std::ostream &operator<<(std::ostream &o,
                                                          const tiff_reader &r);
 
     };
