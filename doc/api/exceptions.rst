@@ -2,10 +2,10 @@
 Exception classes
 =================
 
-:cpp:class:`pni_error`
+:cpp:class:`pni::io_error`
 ==============================
 
-.. doxygenclass:: pni_error
+.. doxygenclass:: pni::io_error
    :members:
 
 :cpp:class:`pni::link_error`

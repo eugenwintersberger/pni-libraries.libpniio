@@ -19,7 +19,9 @@
 // ============================================================================
 //
 // Created on: Jun 9, 2011
-//     Author: Eugen Wintersberger
+//     Authors:
+//             Eugen Wintersberger
+//             Jan Kotanski
 //
 //
 #pragma once
@@ -138,7 +140,7 @@ namespace pni {
             //! \param i linear index of the value
             //! \return value of the scalar
             //!
-            T operator[](size_t) const { return this->_data[0]; }
+            T operator[](size_t i) const { return this->_data[0]; }
 
             //-----------------------------------------------------------------
             //!
@@ -151,7 +153,7 @@ namespace pni {
             //! \param i index
             //! \return reference to the scalar data
             //!
-            T &operator[](size_t) { return this->_data[0]; }
+            T &operator[](size_t i) { return this->_data[0]; }
 
             //-----------------------------------------------------------------
             //! 
@@ -163,7 +165,7 @@ namespace pni {
             //! \param i index
             //! \return data value
             //!
-            T at(size_t) const { return this->_data[0]; }
+            T at(size_t i) const { return this->_data[0]; }
 
             //-----------------------------------------------------------------
             //! 
@@ -175,7 +177,7 @@ namespace pni {
             //! \param i index
             //! \return reference to data
             //!
-            T &at(size_t) { return this->_data[0]; }
+            T &at(size_t i) { return this->_data[0]; }
 
             //-----------------------------------------------------------------
             //! 
@@ -185,7 +187,7 @@ namespace pni {
             //! \param i index
             //! \param v value
             //!
-            void insert(size_t,const T &v) { this->_data[0] = v; }
+            void insert(size_t i,const T &v) { this->_data[0] = v; }
             
             //-----------------------------------------------------------------
             //! 
@@ -210,7 +212,7 @@ namespace pni {
             //! \return reference to data
             //!
             template<typename ...ITYPES> 
-            T &operator()(ITYPES ...)
+            T &operator()(ITYPES ... indices)
             {
                 return this->_data[0];
             }
@@ -227,7 +229,7 @@ namespace pni {
             //! \return data value
             //!
             template<typename ...ITYPES> 
-            T operator()(ITYPES ...) const
+            T operator()(ITYPES ... indices) const
             {
                 return this->_data[0];
             }

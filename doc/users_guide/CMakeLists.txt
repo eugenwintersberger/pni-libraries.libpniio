@@ -15,7 +15,12 @@ set(RST_SOURCES index.rst
                 ascii_lowlevel.rst
                 ascii.rst
                 ascii_spreadsheet.rst
-                image.rst)
+                image.rst
+		core.rst
+		core_types.rst
+		core_arrays.rst
+		core_type_erasures.rst
+		)
 
 foreach(RST_SOURCE ${RST_SOURCES})
     configure_file(${RST_SOURCE} ${RST_SOURCE} COPYONLY)

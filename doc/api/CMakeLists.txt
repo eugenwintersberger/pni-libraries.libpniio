@@ -31,7 +31,12 @@ set(RST_FILES index.rst
               ascii.rst
               ascii_parsers.rst
               ascii_spreadsheet.rst
-              image.rst)
+              image.rst
+	      core.rst
+              core_type.rst
+              core_exception.rst
+              core_type_erasure.rst
+              core_mdarray.rst)
 
 foreach(RST_FILE ${RST_FILES})
     configure_file(${RST_FILE} ${RST_FILE} COPYONLY)

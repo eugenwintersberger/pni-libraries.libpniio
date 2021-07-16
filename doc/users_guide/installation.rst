@@ -123,10 +123,9 @@ or
 .. code-block:: bash
 
    $ export H5CPP=/opt/pni/lib/cmake/h5cpp-0.4.1
-   $ export PNCORE=/opt/pni/lib/cmake/pnicore-1.1.1
-   $ cmake -Dh5cpp_DIR=$H5CPP -Dpnicore_DIR=$PNICORE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/pni ../libpninexus
+   $ cmake -Dh5cpp_DIR=$H5CPP -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/pni ../libpninexus
 
-if `h5cpp` and `pnicore` are installed in none standard directories.
+if `h5cpp` is installed in the non-standard directory.
 
 A subsequent :command:`make` finally build the library
 

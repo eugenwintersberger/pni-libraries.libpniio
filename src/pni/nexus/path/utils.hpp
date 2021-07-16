@@ -337,8 +337,7 @@ PNINEXUS_EXPORT bool operator!=(const Path &lhs,const Path &rhs);
 //! @param e object element
 //! @return reference to the modified stream
 //!
-PNINEXUS_EXPORT std::ostream &operator<<(std::ostream &stream,
-                                      const Path::Element &e);
+PNINEXUS_EXPORT std::ostream &operator<<(std::ostream &stream,const Path::Element &e);
 
 //--------------------------------------------------------------------------
 //!
