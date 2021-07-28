@@ -53,7 +53,6 @@ namespace tiff{
             //! done by the calling function or method.
             //! \param r number of elements to read
             //! \param stream input stream from which to read data
-            //! \return vector of RTYPE values holding the result
             //!
             static void read(std::vector<RTYPE> &r,std::ifstream &stream);
     };
