@@ -12,7 +12,7 @@ include
   
 and many more. Of course it would be possible to simply use the iterator 
 interface provided by *h5cpp* along with STL algorithms to do the job and 
-there is nothing wrong in doing so. However, *libpniio* provides some 
+there is nothing wrong in doing so. However, *libpninexus* provides some 
 convenience functions and classes to make the task easier.  
   
 Search with path
@@ -25,7 +25,7 @@ of :cpp:class:`PathObjectList` which is a list of :cpp:class:`PathObject`.
 The latter one is a wrapper class which can store all three types of 
 HDF5 objects a NeXus path can reference: groups, datasets and attributes. 
 Luckily there is an implicit conversion operator which allows the conversion 
-of :cpp:class:`PathObjectList` to any other list type provided by *libpniio* 
+of :cpp:class:`PathObjectList` to any other list type provided by *libpninexus* 
 relevant to NeXus files 
 
 .. code-block:: cpp
@@ -99,7 +99,7 @@ with this predicate the search would simply be
    nexus::DatasetList datasets_1d = nexus::search(entry,Is1dDataset(),true);
    
    
-Because looking for base classes is such a common taks *libpniio* provides 
+Because looking for base classes is such a common taks *libpninexus* provides 
 a set of predefined predicates dedicated to this purpose.  
 The fundamental predicate type to look for base classes is 
 :cpp:class:`nexus::IsBaseClass`. 

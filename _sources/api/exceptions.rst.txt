@@ -2,32 +2,32 @@
 Exception classes
 =================
 
-:cpp:class:`pni::io::io_error`
+:cpp:class:`pni::io_error`
 ==============================
 
-.. doxygenclass:: pni::io::io_error
+.. doxygenclass:: pni::io_error
    :members:
 
-:cpp:class:`pni::io::link_error`
+:cpp:class:`pni::link_error`
 ================================
    
-.. doxygenclass:: pni::io::link_error
+.. doxygenclass:: pni::link_error
    :members:
 
-:cpp:class:`pni::io::object_error`
+:cpp:class:`pni::object_error`
 ==================================
    
-.. doxygenclass:: pni::io::object_error
+.. doxygenclass:: pni::object_error
    :members:
 
-:cpp:class:`pni::io::parser_error`
+:cpp:class:`pni::parser_error`
 ==================================
    
-.. doxygenclass:: pni::io::parser_error
+.. doxygenclass:: pni::parser_error
    :members:
 
-:cpp:class:`pni::io::invalid_object_error`
+:cpp:class:`pni::invalid_object_error`
 ==========================================
    
-.. doxygenclass:: pni::io::invalid_object_error
+.. doxygenclass:: pni::invalid_object_error
    :members:

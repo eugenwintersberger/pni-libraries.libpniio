@@ -46,9 +46,9 @@ Nexus API
 * *HDF4* -- for historical reasons, should not be used for new data
 * *HDF5* -- the current standard storage backend for Nexus files. 
 
-One of the aims of *libpniio* is to provide an abstraction layer between the
-user and the storage backend. As *libpniio* currently supports only HDF5 this is
-rather artificial. However, *libpniio* provides the architecture to include
+One of the aims of *libpninexus* is to provide an abstraction layer between the
+user and the storage backend. As *libpninexus* currently supports only HDF5 this is
+rather artificial. However, *libpninexus* provides the architecture to include
 other file formats to be used with NeXus too. 
 There has been a lot of confusion what physical file format NeXus files are.
 Many users think that NeXus has its own physical file format. This is in fact
@@ -57,11 +57,11 @@ clear once and for all
 
 .. attention::
 
-   **Every NeXus file written by libpniio is also a valid HDF5 file!**
+   **Every NeXus file written by libpninexus is also a valid HDF5 file!**
 
-To access NeXus files *libpniio* uses the *h5cpp* C++ wrapper to HDF5. 
+To access NeXus files *libpninexus* uses the *h5cpp* C++ wrapper to HDF5. 
 Actually most of the work with NeXus files can be done directly with 
-*h5cpp*, *libpniio* only adds additional functionality specific to the 
+*h5cpp*, *libpninexus* only adds additional functionality specific to the 
 NeXus file standard.
 
 .. attention::
@@ -115,7 +115,7 @@ metadata to a group or field. It is thus not wise to make too extensive use of
 attributes as a Nexus user as it my cause name clashes with future attributes
 defined by the NIAC.
 
-The focus of *libpniio* is this first layer of the NeXus hierarchy. *libpniio*
+The focus of *libpninexus* is this first layer of the NeXus hierarchy. *libpninexus*
 uses HDF5 to store NeXus files. In particular the C++ wrapper *h5cpp* is 
 used. There is a simple mapping between these basic Layer 1 types and native 
 HDF5 types 

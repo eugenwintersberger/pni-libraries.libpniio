@@ -12,7 +12,7 @@ file name.
    :align: center
    :width: 65%
    
-   Hierarchy of reader classes in *libpniio*.
+   Hierarchy of reader classes in *libpninexus*.
    
 Spreadsheet readers favor column based over record based access. Not only 
 is this the typical way how data is accessed in the field of synchrotron 
@@ -100,12 +100,12 @@ The following snippet shows a shortened example for a FIO file.
               4765       5.31495      116.1377  -0.008544922  -0.003662109 7.19854394531250e+01 -7.24616918945313e+01 4.76495268584383e+03 0.00000000000000e+00             5             3             0      426298.3      2096.333     -38.66667             0     0.3333333             0      2.333333      2.666667      156.6667           962      722.3333           835       3107535 
               4770      5.302732       116.333  -0.008544922   0.001220703 7.20128271484375e+01 -7.24616845703125e+01 4.76995088467423e+03 0.00000000000000e+00             5             3             0      426277.7          2122     -41.66667             0      3.333333             0             2      7.666667      199.3333      962.6667      739.6667      836.6667       3113017
             
-In order to read FIO files use the :cpp:class:`pni::io::fio_reader`. 
+In order to read FIO files use the :cpp:class:`pni::fio_reader`. 
 Opening a FIO file works as with any other reader 
 
 .. code-block:: cpp
 
-   pni::io::fio_reader reader("run_000001.fio");
+   pni::fio_reader reader("run_000001.fio");
    
 Accessing parameters
 --------------------
@@ -116,9 +116,9 @@ the requested data type for the parameter value
 
 .. code-block:: cpp
 
-   pni::io::fio_reader reader("run_0000001.fio");
+   pni::fio_reader reader("run_0000001.fio");
    
-   std::cout<<reader.parameter<pni::core::float32>("IDORIS")<<std::endl;
+   std::cout<<reader.parameter<pni::float32>("IDORIS")<<std::endl;
    
 Accessing columns
 -----------------
@@ -129,16 +129,16 @@ store the column data
 
 .. code-block:: cpp
 
-   using Float64Column = std::vector<pni::core::float64>;
+   using Float64Column = std::vector<pni::float64>;
    
-   pni::io::fio_reader reader("run_0000001.fio");
+   pni::fio_reader reader("run_0000001.fio");
    
    auto column = reader.column<Float64Column>("OMEGA");
    
 the column itself is determined by its name which is passed as the sole 
 argument to :cpp:func:`column`.
 
-For a full reference of the :cpp:class:`pni::io::fio_reader` see the 
+For a full reference of the :cpp:class:`pni::fio_reader` see the 
 :ref:`ascii-spreadsheet-api`.
 
 

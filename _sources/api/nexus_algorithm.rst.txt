@@ -4,7 +4,7 @@
 Algorithms
 ==========
 
-*libpniio*'s provides an extensive set algorithms related to NeXus. In 
+*libpninexus*'s provides an extensive set algorithms related to NeXus. In 
 particulare related to searching for particular base classes. 
 
 
@@ -13,16 +13,16 @@ particulare related to searching for particular base classes.
 Containers
 ==========
 
-.. doxygenclass:: pni::io::nexus::GroupList
+.. doxygenclass:: pni::nexus::GroupList
    :members:
    
-.. doxygenclass:: pni::io::nexus::DatasetList
+.. doxygenclass:: pni::nexus::DatasetList
    :members:
    
-.. doxygenclass:: pni::io::nexus::NodeList
+.. doxygenclass:: pni::nexus::NodeList
    :members:
    
-.. doxygenclass:: pni::io::nexus::AttributeList
+.. doxygenclass:: pni::nexus::AttributeList
    :members: 
 
 .. _nexus-api-predicates:
@@ -30,34 +30,34 @@ Containers
 Predicates
 ==========
 
-.. doxygenclass:: pni::io::nexus::NodePredicate
+.. doxygenclass:: pni::nexus::NodePredicate
    :members:
    
-.. doxygenclass:: pni::io::nexus::IsBaseClass
+.. doxygenclass:: pni::nexus::IsBaseClass
    :members:
    
-.. doxygenclass:: pni::io::nexus::IsData
+.. doxygenclass:: pni::nexus::IsData
    :members:
    
-.. doxygenclass:: pni::io::nexus::IsDetector
+.. doxygenclass:: pni::nexus::IsDetector
    :members:
    
-.. doxygenclass:: pni::io::nexus::IsEntry
+.. doxygenclass:: pni::nexus::IsEntry
    :members:
    
-.. doxygenclass:: pni::io::nexus::IsInstrument
+.. doxygenclass:: pni::nexus::IsInstrument
    :members:
    
-.. doxygenclass:: pni::io::nexus::IsSample
+.. doxygenclass:: pni::nexus::IsSample
    :members:
    
-.. doxygenclass:: pni::io::nexus::IsSubentry
+.. doxygenclass:: pni::nexus::IsSubentry
    :members:
    
-.. doxygenclass:: pni::io::nexus::IsTransformation
+.. doxygenclass:: pni::nexus::IsTransformation
    :members:
    
-.. doxygenclass:: pni::io::nexus::IsValidNeXusName
+.. doxygenclass:: pni::nexus::IsValidNeXusName
    :members:
    
 .. _nexus-api-searching:
@@ -68,16 +68,16 @@ Searching
 There is a single search function which, in connection with the above 
 predicates can be used to retrieve any node from a NeXus tree.
 
-.. doxygenfunction:: pni::io::nexus::search
+.. doxygenfunction:: pni::nexus::search
 
 Utilities
 =========
 
-.. doxygenfunction:: pni::io::nexus::get_type_id(const hdf5::attribute::Attribute &)
+.. doxygenfunction:: pni::nexus::get_type_id(const hdf5::attribute::Attribute&)
 
-.. doxygenfunction:: pni::io::nexus::get_type_id(const hdf5::node::Dataset &)
+.. doxygenfunction:: pni::nexus::get_type_id(const hdf5::node::Dataset&)
 
-.. doxygenfunction:: pni::io::nexus::get_dimensions(const hdf5::attribute::Attribute &)
+.. doxygenfunction:: pni::nexus::get_dimensions(const hdf5::attribute::Attribute&)
 
-.. doxygenfunction:: pni::io::nexus::get_dimensions(const hdf5::node::Dataset &)
+.. doxygenfunction:: pni::nexus::get_dimensions(const hdf5::node::Dataset&)
 

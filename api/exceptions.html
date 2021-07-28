@@ -2,27 +2,27 @@
 
 <!doctype html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Exception classes &#8212; pniio 1.3.2 documentation</title>
-    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Exception classes &#8212; pninexus 2.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="ASCII IO API" href="ascii.html" />
     <link rel="prev" title="API documentation" href="index.html" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <!--[if lt IE 9]>
-    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <script src="_static/css3-mediaqueries.js"></script>
     <![endif]-->
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -37,20 +37,236 @@
         <li class="right" >
           <a href="index.html" title="API documentation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.3.2 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">API documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">pninexus 2.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">API documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Exception classes</a></li> 
       </ul>
-    </div>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="exception-classes">
+<h1>Exception classes<a class="headerlink" href="#exception-classes" title="Permalink to this headline">¶</a></h1>
+<section id="pni-io-error">
+<h2><a class="reference internal" href="#_CPPv4N3pni8io_errorE" title="pni::io_error"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::io_error</span></code></a><a class="headerlink" href="#pni-io-error" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni8io_errorE">
+<span id="_CPPv3N3pni8io_errorE"></span><span id="_CPPv2N3pni8io_errorE"></span><span id="pni::io_error"></span><span class="target" id="classpni_1_1io__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">io_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="core_exception.html#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni8io_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>general IO error </p>
+<p>This exception is thrown in all situations where IO operations fail. This includes reading and writing of payload- or meta-data. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni8io_error8io_errorEv">
+<span id="_CPPv3N3pni8io_error8io_errorEv"></span><span id="_CPPv2N3pni8io_error8io_errorEv"></span><span id="pni::io_error::io_error"></span><span class="target" id="classpni_1_1io__error_1a88f2a4b4ed574241abfb6d49a1324556"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">io_error</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8io_error8io_errorEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>default constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni8io_error8io_errorERKN3pni16exception_recordERKN3pni6stringE">
+<span id="_CPPv3N3pni8io_error8io_errorERKN3pni16exception_recordERKN3pni6stringE"></span><span id="_CPPv2N3pni8io_error8io_errorERKN3pni16exception_recordERKN3pni6stringE"></span><span id="pni::io_error::io_error__pni::exception_recordCR.pni::stringCR"></span><span class="target" id="classpni_1_1io__error_1a0a1487682dbe61a3abc347a4cb28b8f4"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">io_error</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="core_exception.html#_CPPv4N3pni16exception_recordE" title="pni::exception_record"><span class="n"><span class="pre">exception_record</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">i</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">d</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8io_error8io_errorERKN3pni16exception_recordERKN3pni6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni8io_errorD0Ev">
+<span id="_CPPv3N3pni8io_errorD0Ev"></span><span id="_CPPv2N3pni8io_errorD0Ev"></span><span id="pni::io_error::~io_error"></span><span class="target" id="classpni_1_1io__error_1a210551470211dd9ba01eaf62cdf8dec5"></span><span class="sig-name descname"><span class="n"><span class="pre">~io_error</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8io_errorD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>destructor </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni8io_errorlsERNSt7ostreamERK8io_error">
+<span id="_CPPv3N3pni8io_errorlsERNSt7ostreamERK8io_error"></span><span id="_CPPv2N3pni8io_errorlsERNSt7ostreamERK8io_error"></span><span id="pni::io_error::lshift-operator__osR.io_errorCR"></span><span class="target" id="classpni_1_1io__error_1ab98b57f7dae80fbceb61fab8e9c636a2"></span><span class="pre">friend</span><span class="w"> </span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="k"><span class="pre">friend</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&lt;&lt;</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">o</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni8io_errorE" title="pni::io_error"><span class="n"><span class="pre">io_error</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">e</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8io_errorlsERNSt7ostreamERK8io_error" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>output operator </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+<section id="pni-link-error">
+<h2><a class="reference internal" href="#_CPPv4N3pni10link_errorE" title="pni::link_error"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::link_error</span></code></a><a class="headerlink" href="#pni-link-error" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni10link_errorE">
+<span id="_CPPv3N3pni10link_errorE"></span><span id="_CPPv2N3pni10link_errorE"></span><span id="pni::link_error"></span><span class="target" id="classpni_1_1link__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">link_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="core_exception.html#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni10link_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>link error </p>
+<p>Exception is thrown when link operations fails. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni10link_error10link_errorEv">
+<span id="_CPPv3N3pni10link_error10link_errorEv"></span><span id="_CPPv2N3pni10link_error10link_errorEv"></span><span id="pni::link_error::link_error"></span><span class="target" id="classpni_1_1link__error_1ae984ff12af624340db72abf8e76577eb"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">link_error</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10link_error10link_errorEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>default constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni10link_error10link_errorERKN3pni16exception_recordERKN3pni6stringE">
+<span id="_CPPv3N3pni10link_error10link_errorERKN3pni16exception_recordERKN3pni6stringE"></span><span id="_CPPv2N3pni10link_error10link_errorERKN3pni16exception_recordERKN3pni6stringE"></span><span id="pni::link_error::link_error__pni::exception_recordCR.pni::stringCR"></span><span class="target" id="classpni_1_1link__error_1a16fb11e6c0d6f27989ec3c0542a6a1f9"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">link_error</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="core_exception.html#_CPPv4N3pni16exception_recordE" title="pni::exception_record"><span class="n"><span class="pre">exception_record</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">i</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">d</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10link_error10link_errorERKN3pni16exception_recordERKN3pni6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni10link_errorD0Ev">
+<span id="_CPPv3N3pni10link_errorD0Ev"></span><span id="_CPPv2N3pni10link_errorD0Ev"></span><span id="pni::link_error::~link_error"></span><span class="target" id="classpni_1_1link__error_1afdfaf0372fd77c80d25e046f88bc7448"></span><span class="sig-name descname"><span class="n"><span class="pre">~link_error</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10link_errorD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>destructor </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni10link_errorlsERNSt7ostreamERK10link_error">
+<span id="_CPPv3N3pni10link_errorlsERNSt7ostreamERK10link_error"></span><span id="_CPPv2N3pni10link_errorlsERNSt7ostreamERK10link_error"></span><span id="pni::link_error::lshift-operator__osR.link_errorCR"></span><span class="target" id="classpni_1_1link__error_1a0312671192539efd31e24f21ee41340a"></span><span class="pre">friend</span><span class="w"> </span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="k"><span class="pre">friend</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&lt;&lt;</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">o</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni10link_errorE" title="pni::link_error"><span class="n"><span class="pre">link_error</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">e</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10link_errorlsERNSt7ostreamERK10link_error" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>output operator </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+<section id="pni-object-error">
+<h2><a class="reference internal" href="#_CPPv4N3pni12object_errorE" title="pni::object_error"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::object_error</span></code></a><a class="headerlink" href="#pni-object-error" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni12object_errorE">
+<span id="_CPPv3N3pni12object_errorE"></span><span id="_CPPv2N3pni12object_errorE"></span><span id="pni::object_error"></span><span class="target" id="classpni_1_1object__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">object_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="core_exception.html#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni12object_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>general error on IO objects </p>
+<p>Used for general errors on IO objects. This includes the failure to create or close an object. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni12object_error12object_errorEv">
+<span id="_CPPv3N3pni12object_error12object_errorEv"></span><span id="_CPPv2N3pni12object_error12object_errorEv"></span><span id="pni::object_error::object_error"></span><span class="target" id="classpni_1_1object__error_1ab0ea01a8d042e59dc6e2941d2161e850"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">object_error</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni12object_error12object_errorEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>default constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni12object_error12object_errorERKN3pni16exception_recordERKN3pni6stringE">
+<span id="_CPPv3N3pni12object_error12object_errorERKN3pni16exception_recordERKN3pni6stringE"></span><span id="_CPPv2N3pni12object_error12object_errorERKN3pni16exception_recordERKN3pni6stringE"></span><span id="pni::object_error::object_error__pni::exception_recordCR.pni::stringCR"></span><span class="target" id="classpni_1_1object__error_1a42a727903451b30074c4fa6d66e74b5c"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">object_error</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="core_exception.html#_CPPv4N3pni16exception_recordE" title="pni::exception_record"><span class="n"><span class="pre">exception_record</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">i</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">d</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni12object_error12object_errorERKN3pni16exception_recordERKN3pni6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni12object_errorD0Ev">
+<span id="_CPPv3N3pni12object_errorD0Ev"></span><span id="_CPPv2N3pni12object_errorD0Ev"></span><span id="pni::object_error::~object_error"></span><span class="target" id="classpni_1_1object__error_1a9a8490624ef8949d2ec7f50cd2a569e3"></span><span class="sig-name descname"><span class="n"><span class="pre">~object_error</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni12object_errorD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>destructor </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni12object_errorlsERNSt7ostreamERK12object_error">
+<span id="_CPPv3N3pni12object_errorlsERNSt7ostreamERK12object_error"></span><span id="_CPPv2N3pni12object_errorlsERNSt7ostreamERK12object_error"></span><span id="pni::object_error::lshift-operator__osR.object_errorCR"></span><span class="target" id="classpni_1_1object__error_1ad47046b73ede76e801d1395fdd10105c"></span><span class="pre">friend</span><span class="w"> </span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="k"><span class="pre">friend</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&lt;&lt;</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">o</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni12object_errorE" title="pni::object_error"><span class="n"><span class="pre">object_error</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">e</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni12object_errorlsERNSt7ostreamERK12object_error" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>output operator </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+<section id="pni-parser-error">
+<h2><a class="reference internal" href="#_CPPv4N3pni12parser_errorE" title="pni::parser_error"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::parser_error</span></code></a><a class="headerlink" href="#pni-parser-error" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni12parser_errorE">
+<span id="_CPPv3N3pni12parser_errorE"></span><span id="_CPPv2N3pni12parser_errorE"></span><span id="pni::parser_error"></span><span class="target" id="classpni_1_1parser__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">parser_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="core_exception.html#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni12parser_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>general parser related error </p>
+<p>Raised in case of a general parser error. This exception can be expected to be thrown by all functions and methods that are somehow related to parsing strings. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni12parser_error12parser_errorEv">
+<span id="_CPPv3N3pni12parser_error12parser_errorEv"></span><span id="_CPPv2N3pni12parser_error12parser_errorEv"></span><span id="pni::parser_error::parser_error"></span><span class="target" id="classpni_1_1parser__error_1a908ec96af46ab4573137337f7e9acd73"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parser_error</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni12parser_error12parser_errorEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>default constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni12parser_error12parser_errorERKN3pni16exception_recordERKN3pni6stringE">
+<span id="_CPPv3N3pni12parser_error12parser_errorERKN3pni16exception_recordERKN3pni6stringE"></span><span id="_CPPv2N3pni12parser_error12parser_errorERKN3pni16exception_recordERKN3pni6stringE"></span><span id="pni::parser_error::parser_error__pni::exception_recordCR.pni::stringCR"></span><span class="target" id="classpni_1_1parser__error_1a06ea66e7ae49f6b49d3c8744385535b0"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parser_error</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="core_exception.html#_CPPv4N3pni16exception_recordE" title="pni::exception_record"><span class="n"><span class="pre">exception_record</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">i</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">d</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni12parser_error12parser_errorERKN3pni16exception_recordERKN3pni6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni12parser_errorD0Ev">
+<span id="_CPPv3N3pni12parser_errorD0Ev"></span><span id="_CPPv2N3pni12parser_errorD0Ev"></span><span id="pni::parser_error::~parser_error"></span><span class="target" id="classpni_1_1parser__error_1ad76e7eb79b20c6f36b16baa455669880"></span><span class="sig-name descname"><span class="n"><span class="pre">~parser_error</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni12parser_errorD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>destructor </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni12parser_errorlsERNSt7ostreamERK12parser_error">
+<span id="_CPPv3N3pni12parser_errorlsERNSt7ostreamERK12parser_error"></span><span id="_CPPv2N3pni12parser_errorlsERNSt7ostreamERK12parser_error"></span><span id="pni::parser_error::lshift-operator__osR.parser_errorCR"></span><span class="target" id="classpni_1_1parser__error_1a9c7801deb03b83116a0f74a69c634785"></span><span class="pre">friend</span><span class="w"> </span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="k"><span class="pre">friend</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&lt;&lt;</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">o</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni12parser_errorE" title="pni::parser_error"><span class="n"><span class="pre">parser_error</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">e</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni12parser_errorlsERNSt7ostreamERK12parser_error" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>output operator </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+<section id="pni-invalid-object-error">
+<h2><a class="reference internal" href="#_CPPv4N3pni20invalid_object_errorE" title="pni::invalid_object_error"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::invalid_object_error</span></code></a><a class="headerlink" href="#pni-invalid-object-error" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni20invalid_object_errorE">
+<span id="_CPPv3N3pni20invalid_object_errorE"></span><span id="_CPPv2N3pni20invalid_object_errorE"></span><span id="pni::invalid_object_error"></span><span class="target" id="classpni_1_1invalid__object__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">invalid_object_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="core_exception.html#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni20invalid_object_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>unexpected invalid object </p>
+<p>Raised in cases where an object is unexpectedly in an invalid state. An object uses this exception in cases where the user makes a request on a feature not availabel as the object is in an invalid state. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni20invalid_object_error20invalid_object_errorEv">
+<span id="_CPPv3N3pni20invalid_object_error20invalid_object_errorEv"></span><span id="_CPPv2N3pni20invalid_object_error20invalid_object_errorEv"></span><span id="pni::invalid_object_error::invalid_object_error"></span><span class="target" id="classpni_1_1invalid__object__error_1a769ec103b1072be01e07fab9687dd57a"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">invalid_object_error</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni20invalid_object_error20invalid_object_errorEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>default constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni20invalid_object_error20invalid_object_errorERKN3pni16exception_recordERKN3pni6stringE">
+<span id="_CPPv3N3pni20invalid_object_error20invalid_object_errorERKN3pni16exception_recordERKN3pni6stringE"></span><span id="_CPPv2N3pni20invalid_object_error20invalid_object_errorERKN3pni16exception_recordERKN3pni6stringE"></span><span id="pni::invalid_object_error::invalid_object_error__pni::exception_recordCR.pni::stringCR"></span><span class="target" id="classpni_1_1invalid__object__error_1aa220c4e894296969c7b0b8036424e816"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">invalid_object_error</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="core_exception.html#_CPPv4N3pni16exception_recordE" title="pni::exception_record"><span class="n"><span class="pre">exception_record</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">i</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">d</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni20invalid_object_error20invalid_object_errorERKN3pni16exception_recordERKN3pni6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni20invalid_object_errorD0Ev">
+<span id="_CPPv3N3pni20invalid_object_errorD0Ev"></span><span id="_CPPv2N3pni20invalid_object_errorD0Ev"></span><span id="pni::invalid_object_error::~invalid_object_error"></span><span class="target" id="classpni_1_1invalid__object__error_1af6440e2215289aff624d7b4a93ea415f"></span><span class="sig-name descname"><span class="n"><span class="pre">~invalid_object_error</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni20invalid_object_errorD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>destructor </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni20invalid_object_errorlsERNSt7ostreamERK20invalid_object_error">
+<span id="_CPPv3N3pni20invalid_object_errorlsERNSt7ostreamERK20invalid_object_error"></span><span id="_CPPv2N3pni20invalid_object_errorlsERNSt7ostreamERK20invalid_object_error"></span><span id="pni::invalid_object_error::lshift-operator__osR.invalid_object_errorCR"></span><span class="target" id="classpni_1_1invalid__object__error_1a880386449df627c95944178d8a0efe73"></span><span class="pre">friend</span><span class="w"> </span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="k"><span class="pre">friend</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&lt;&lt;</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">o</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni20invalid_object_errorE" title="pni::invalid_object_error"><span class="n"><span class="pre">invalid_object_error</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">e</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni20invalid_object_errorlsERNSt7ostreamERK20invalid_object_error" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>output operator </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Exception classes</a><ul>
-<li><a class="reference internal" href="#pni-io-io-error"><code class="docutils literal notranslate"><span class="pre">pni::io::io_error</span></code></a></li>
-<li><a class="reference internal" href="#pni-io-link-error"><code class="docutils literal notranslate"><span class="pre">pni::io::link_error</span></code></a></li>
-<li><a class="reference internal" href="#pni-io-object-error"><code class="docutils literal notranslate"><span class="pre">pni::io::object_error</span></code></a></li>
-<li><a class="reference internal" href="#pni-io-parser-error"><code class="docutils literal notranslate"><span class="pre">pni::io::parser_error</span></code></a></li>
-<li><a class="reference internal" href="#pni-io-invalid-object-error"><code class="docutils literal notranslate"><span class="pre">pni::io::invalid_object_error</span></code></a></li>
+<li><a class="reference internal" href="#pni-io-error"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::io_error</span></code></a></li>
+<li><a class="reference internal" href="#pni-link-error"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::link_error</span></code></a></li>
+<li><a class="reference internal" href="#pni-object-error"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::object_error</span></code></a></li>
+<li><a class="reference internal" href="#pni-parser-error"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::parser_error</span></code></a></li>
+<li><a class="reference internal" href="#pni-invalid-object-error"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::invalid_object_error</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -69,231 +285,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
-  <div class="section" id="exception-classes">
-<h1>Exception classes<a class="headerlink" href="#exception-classes" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="pni-io-io-error">
-<h2><a class="reference internal" href="#_CPPv4N3pni2io8io_errorE" title="pni::io::io_error"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::io::io_error</span></code></a><a class="headerlink" href="#pni-io-io-error" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="_CPPv4N3pni2io8io_errorE">
-<span id="_CPPv3N3pni2io8io_errorE"></span><span id="_CPPv2N3pni2io8io_errorE"></span><span id="pni::io::io_error"></span><span class="target" id="classpni_1_1io_1_1io__error"></span><em class="property">class </em><code class="descname">io_error</code> : <em class="property">public</em> exception<a class="headerlink" href="#_CPPv4N3pni2io8io_errorE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>general IO error </p>
-<p>This exception is thrown in all situations where IO operations fail. This includes reading and writing of payload- or meta-data. </p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
-<dl class="function">
-<dt id="_CPPv4N3pni2io8io_error8io_errorEv">
-<span id="_CPPv3N3pni2io8io_error8io_errorEv"></span><span id="_CPPv2N3pni2io8io_error8io_errorEv"></span><span id="pni::io::io_error::io_error"></span><span class="target" id="classpni_1_1io_1_1io__error_1af2471a17e1a3e5ca80b8ed4a07c1496c"></span><code class="descname">io_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io8io_error8io_errorEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>default constructor </p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4N3pni2io8io_error8io_errorERKN3pni4core16exception_recordERKN3pni4core6stringE">
-<span id="_CPPv3N3pni2io8io_error8io_errorERKN3pni4core16exception_recordERKN3pni4core6stringE"></span><span id="_CPPv2N3pni2io8io_error8io_errorERKN3pni4core16exception_recordERKN3pni4core6stringE"></span><span id="pni::io::io_error::io_error__pni::core::exception_recordCR.pni::core::stringCR"></span><span class="target" id="classpni_1_1io_1_1io__error_1a0447fcff7347711d488aea623d152e24"></span><code class="descname">io_error</code><span class="sig-paren">(</span><em class="property">const</em> pni::core::exception_record &amp;<em>i</em>, <em class="property">const</em> pni::core::string &amp;<em>d</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io8io_error8io_errorERKN3pni4core16exception_recordERKN3pni4core6stringE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>constructor </p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4N3pni2io8io_errorD0Ev">
-<span id="_CPPv3N3pni2io8io_errorD0Ev"></span><span id="_CPPv2N3pni2io8io_errorD0Ev"></span><span id="pni::io::io_error::~io_error"></span><span class="target" id="classpni_1_1io_1_1io__error_1abdc65cd5b9234795548ed972736d06e6"></span><code class="descname">~io_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io8io_errorD0Ev" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>destructor </p>
-</dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Friends</p>
-<dl class="function">
-<dt id="_CPPv4lsRNSt7ostreamERK8io_error">
-<span id="_CPPv3lsRNSt7ostreamERK8io_error"></span><span id="_CPPv2lsRNSt7ostreamERK8io_error"></span><span id="lshift-operator__osR.io_errorCR"></span><span class="target" id="classpni_1_1io_1_1io__error_1a4309308009a851c0188b2d8d46083861"></span>PNIIO_EXPORT std::ostream &amp;<code class="descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream &amp;<em>o</em>, <em class="property">const</em> io_error &amp;<em>e</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4lsRNSt7ostreamERK8io_error" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>output operator </p>
-</dd></dl>
-
-</div>
-</dd></dl>
-
-</div>
-<div class="section" id="pni-io-link-error">
-<h2><a class="reference internal" href="#_CPPv4N3pni2io10link_errorE" title="pni::io::link_error"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::io::link_error</span></code></a><a class="headerlink" href="#pni-io-link-error" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="_CPPv4N3pni2io10link_errorE">
-<span id="_CPPv3N3pni2io10link_errorE"></span><span id="_CPPv2N3pni2io10link_errorE"></span><span id="pni::io::link_error"></span><span class="target" id="classpni_1_1io_1_1link__error"></span><em class="property">class </em><code class="descname">link_error</code> : <em class="property">public</em> exception<a class="headerlink" href="#_CPPv4N3pni2io10link_errorE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>link error </p>
-<p>Exception is thrown when link operations fails. </p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
-<dl class="function">
-<dt id="_CPPv4N3pni2io10link_error10link_errorEv">
-<span id="_CPPv3N3pni2io10link_error10link_errorEv"></span><span id="_CPPv2N3pni2io10link_error10link_errorEv"></span><span id="pni::io::link_error::link_error"></span><span class="target" id="classpni_1_1io_1_1link__error_1a3e79e2f682c4a7c3d2aebd97c76fb329"></span><code class="descname">link_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io10link_error10link_errorEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>default constructor </p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4N3pni2io10link_error10link_errorERKN3pni4core16exception_recordERKN3pni4core6stringE">
-<span id="_CPPv3N3pni2io10link_error10link_errorERKN3pni4core16exception_recordERKN3pni4core6stringE"></span><span id="_CPPv2N3pni2io10link_error10link_errorERKN3pni4core16exception_recordERKN3pni4core6stringE"></span><span id="pni::io::link_error::link_error__pni::core::exception_recordCR.pni::core::stringCR"></span><span class="target" id="classpni_1_1io_1_1link__error_1ac60f3c5a98586ae2329267ad9d80b3f1"></span><code class="descname">link_error</code><span class="sig-paren">(</span><em class="property">const</em> pni::core::exception_record &amp;<em>i</em>, <em class="property">const</em> pni::core::string &amp;<em>d</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io10link_error10link_errorERKN3pni4core16exception_recordERKN3pni4core6stringE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>constructor </p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4N3pni2io10link_errorD0Ev">
-<span id="_CPPv3N3pni2io10link_errorD0Ev"></span><span id="_CPPv2N3pni2io10link_errorD0Ev"></span><span id="pni::io::link_error::~link_error"></span><span class="target" id="classpni_1_1io_1_1link__error_1abe7379f91ef17f344971a6b666e37b10"></span><code class="descname">~link_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io10link_errorD0Ev" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>destructor </p>
-</dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Friends</p>
-<dl class="function">
-<dt id="_CPPv4lsRNSt7ostreamERK10link_error">
-<span id="_CPPv3lsRNSt7ostreamERK10link_error"></span><span id="_CPPv2lsRNSt7ostreamERK10link_error"></span><span id="lshift-operator__osR.link_errorCR"></span><span class="target" id="classpni_1_1io_1_1link__error_1a135a55d359c42f079e380c68575a713d"></span>PNIIO_EXPORT std::ostream &amp;<code class="descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream &amp;<em>o</em>, <em class="property">const</em> link_error &amp;<em>e</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4lsRNSt7ostreamERK10link_error" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>output operator </p>
-</dd></dl>
-
-</div>
-</dd></dl>
-
-</div>
-<div class="section" id="pni-io-object-error">
-<h2><a class="reference internal" href="#_CPPv4N3pni2io12object_errorE" title="pni::io::object_error"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::io::object_error</span></code></a><a class="headerlink" href="#pni-io-object-error" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="_CPPv4N3pni2io12object_errorE">
-<span id="_CPPv3N3pni2io12object_errorE"></span><span id="_CPPv2N3pni2io12object_errorE"></span><span id="pni::io::object_error"></span><span class="target" id="classpni_1_1io_1_1object__error"></span><em class="property">class </em><code class="descname">object_error</code> : <em class="property">public</em> exception<a class="headerlink" href="#_CPPv4N3pni2io12object_errorE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>general error on IO objects </p>
-<p>Used for general errors on IO objects. This includes the failure to create or close an object. </p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
-<dl class="function">
-<dt id="_CPPv4N3pni2io12object_error12object_errorEv">
-<span id="_CPPv3N3pni2io12object_error12object_errorEv"></span><span id="_CPPv2N3pni2io12object_error12object_errorEv"></span><span id="pni::io::object_error::object_error"></span><span class="target" id="classpni_1_1io_1_1object__error_1ab0ae9840a372a36d3ab9d8684d8d85b6"></span><code class="descname">object_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io12object_error12object_errorEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>default constructor </p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4N3pni2io12object_error12object_errorERKN3pni4core16exception_recordERKN3pni4core6stringE">
-<span id="_CPPv3N3pni2io12object_error12object_errorERKN3pni4core16exception_recordERKN3pni4core6stringE"></span><span id="_CPPv2N3pni2io12object_error12object_errorERKN3pni4core16exception_recordERKN3pni4core6stringE"></span><span id="pni::io::object_error::object_error__pni::core::exception_recordCR.pni::core::stringCR"></span><span class="target" id="classpni_1_1io_1_1object__error_1a3a6d015270d4a01d0a5015f096f776c1"></span><code class="descname">object_error</code><span class="sig-paren">(</span><em class="property">const</em> pni::core::exception_record &amp;<em>i</em>, <em class="property">const</em> pni::core::string &amp;<em>d</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io12object_error12object_errorERKN3pni4core16exception_recordERKN3pni4core6stringE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>constructor </p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4N3pni2io12object_errorD0Ev">
-<span id="_CPPv3N3pni2io12object_errorD0Ev"></span><span id="_CPPv2N3pni2io12object_errorD0Ev"></span><span id="pni::io::object_error::~object_error"></span><span class="target" id="classpni_1_1io_1_1object__error_1aa3829e3e0bff1497b1593f16e665e806"></span><code class="descname">~object_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io12object_errorD0Ev" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>destructor </p>
-</dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Friends</p>
-<dl class="function">
-<dt id="_CPPv4lsRNSt7ostreamERK12object_error">
-<span id="_CPPv3lsRNSt7ostreamERK12object_error"></span><span id="_CPPv2lsRNSt7ostreamERK12object_error"></span><span id="lshift-operator__osR.object_errorCR"></span><span class="target" id="classpni_1_1io_1_1object__error_1a65c9fee722b8d9f4dcd6ecf408e3c3f1"></span>PNIIO_EXPORT std::ostream &amp;<code class="descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream &amp;<em>o</em>, <em class="property">const</em> object_error &amp;<em>e</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4lsRNSt7ostreamERK12object_error" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>output operator </p>
-</dd></dl>
-
-</div>
-</dd></dl>
-
-</div>
-<div class="section" id="pni-io-parser-error">
-<h2><a class="reference internal" href="#_CPPv4N3pni2io12parser_errorE" title="pni::io::parser_error"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::io::parser_error</span></code></a><a class="headerlink" href="#pni-io-parser-error" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="_CPPv4N3pni2io12parser_errorE">
-<span id="_CPPv3N3pni2io12parser_errorE"></span><span id="_CPPv2N3pni2io12parser_errorE"></span><span id="pni::io::parser_error"></span><span class="target" id="classpni_1_1io_1_1parser__error"></span><em class="property">class </em><code class="descname">parser_error</code> : <em class="property">public</em> exception<a class="headerlink" href="#_CPPv4N3pni2io12parser_errorE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>general parser related error </p>
-<p>Raised in case of a general parser error. This exception can be expected to be thrown by all functions and methods that are somehow related to parsing strings. </p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
-<dl class="function">
-<dt id="_CPPv4N3pni2io12parser_error12parser_errorEv">
-<span id="_CPPv3N3pni2io12parser_error12parser_errorEv"></span><span id="_CPPv2N3pni2io12parser_error12parser_errorEv"></span><span id="pni::io::parser_error::parser_error"></span><span class="target" id="classpni_1_1io_1_1parser__error_1a001c33260856c032f79ad7200c6b3ca9"></span><code class="descname">parser_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io12parser_error12parser_errorEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>default constructor </p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4N3pni2io12parser_error12parser_errorERKN3pni4core16exception_recordERKN3pni4core6stringE">
-<span id="_CPPv3N3pni2io12parser_error12parser_errorERKN3pni4core16exception_recordERKN3pni4core6stringE"></span><span id="_CPPv2N3pni2io12parser_error12parser_errorERKN3pni4core16exception_recordERKN3pni4core6stringE"></span><span id="pni::io::parser_error::parser_error__pni::core::exception_recordCR.pni::core::stringCR"></span><span class="target" id="classpni_1_1io_1_1parser__error_1a78494141a23b9569092b712bab97a5e1"></span><code class="descname">parser_error</code><span class="sig-paren">(</span><em class="property">const</em> pni::core::exception_record &amp;<em>i</em>, <em class="property">const</em> pni::core::string &amp;<em>d</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io12parser_error12parser_errorERKN3pni4core16exception_recordERKN3pni4core6stringE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>constructor </p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4N3pni2io12parser_errorD0Ev">
-<span id="_CPPv3N3pni2io12parser_errorD0Ev"></span><span id="_CPPv2N3pni2io12parser_errorD0Ev"></span><span id="pni::io::parser_error::~parser_error"></span><span class="target" id="classpni_1_1io_1_1parser__error_1aa74166c5d7851bac02ad92938c3e4381"></span><code class="descname">~parser_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io12parser_errorD0Ev" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>destructor </p>
-</dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Friends</p>
-<dl class="function">
-<dt id="_CPPv4lsRNSt7ostreamERK12parser_error">
-<span id="_CPPv3lsRNSt7ostreamERK12parser_error"></span><span id="_CPPv2lsRNSt7ostreamERK12parser_error"></span><span id="lshift-operator__osR.parser_errorCR"></span><span class="target" id="classpni_1_1io_1_1parser__error_1a4e5eb205e8f644c4482409627dfac901"></span>PNIIO_EXPORT std::ostream &amp;<code class="descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream &amp;<em>o</em>, <em class="property">const</em> parser_error &amp;<em>e</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4lsRNSt7ostreamERK12parser_error" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>output operator </p>
-</dd></dl>
-
-</div>
-</dd></dl>
-
-</div>
-<div class="section" id="pni-io-invalid-object-error">
-<h2><a class="reference internal" href="#_CPPv4N3pni2io20invalid_object_errorE" title="pni::io::invalid_object_error"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::io::invalid_object_error</span></code></a><a class="headerlink" href="#pni-io-invalid-object-error" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="_CPPv4N3pni2io20invalid_object_errorE">
-<span id="_CPPv3N3pni2io20invalid_object_errorE"></span><span id="_CPPv2N3pni2io20invalid_object_errorE"></span><span id="pni::io::invalid_object_error"></span><span class="target" id="classpni_1_1io_1_1invalid__object__error"></span><em class="property">class </em><code class="descname">invalid_object_error</code> : <em class="property">public</em> exception<a class="headerlink" href="#_CPPv4N3pni2io20invalid_object_errorE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>unexpected invalid object </p>
-<p>Raised in cases where an object is unexpectedly in an invalid state. An object uses this exception in cases where the user makes a request on a feature not availabel as the object is in an invalid state. </p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
-<dl class="function">
-<dt id="_CPPv4N3pni2io20invalid_object_error20invalid_object_errorEv">
-<span id="_CPPv3N3pni2io20invalid_object_error20invalid_object_errorEv"></span><span id="_CPPv2N3pni2io20invalid_object_error20invalid_object_errorEv"></span><span id="pni::io::invalid_object_error::invalid_object_error"></span><span class="target" id="classpni_1_1io_1_1invalid__object__error_1a7c81532af10a7af2891927cc96e72a61"></span><code class="descname">invalid_object_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io20invalid_object_error20invalid_object_errorEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>default constructor </p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4N3pni2io20invalid_object_error20invalid_object_errorERKN3pni4core16exception_recordERKN3pni4core6stringE">
-<span id="_CPPv3N3pni2io20invalid_object_error20invalid_object_errorERKN3pni4core16exception_recordERKN3pni4core6stringE"></span><span id="_CPPv2N3pni2io20invalid_object_error20invalid_object_errorERKN3pni4core16exception_recordERKN3pni4core6stringE"></span><span id="pni::io::invalid_object_error::invalid_object_error__pni::core::exception_recordCR.pni::core::stringCR"></span><span class="target" id="classpni_1_1io_1_1invalid__object__error_1ab62714d0141cf4b0dab171ac7ba8e793"></span><code class="descname">invalid_object_error</code><span class="sig-paren">(</span><em class="property">const</em> pni::core::exception_record &amp;<em>i</em>, <em class="property">const</em> pni::core::string &amp;<em>d</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io20invalid_object_error20invalid_object_errorERKN3pni4core16exception_recordERKN3pni4core6stringE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>constructor </p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4N3pni2io20invalid_object_errorD0Ev">
-<span id="_CPPv3N3pni2io20invalid_object_errorD0Ev"></span><span id="_CPPv2N3pni2io20invalid_object_errorD0Ev"></span><span id="pni::io::invalid_object_error::~invalid_object_error"></span><span class="target" id="classpni_1_1io_1_1invalid__object__error_1aafaf59c254dc347e15dd1bf99977bff8"></span><code class="descname">~invalid_object_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io20invalid_object_errorD0Ev" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>destructor </p>
-</dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Friends</p>
-<dl class="function">
-<dt id="_CPPv4lsRNSt7ostreamERK20invalid_object_error">
-<span id="_CPPv3lsRNSt7ostreamERK20invalid_object_error"></span><span id="_CPPv2lsRNSt7ostreamERK20invalid_object_error"></span><span id="lshift-operator__osR.invalid_object_errorCR"></span><span class="target" id="classpni_1_1io_1_1invalid__object__error_1a1e3dd101c0d4415999bc8e0b3da82f02"></span>PNIIO_EXPORT std::ostream &amp;<code class="descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream &amp;<em>o</em>, <em class="property">const</em> invalid_object_error &amp;<em>e</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4lsRNSt7ostreamERK20invalid_object_error" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>output operator </p>
-</dd></dl>
-
-</div>
-</dd></dl>
-
-</div>
-</div>
-
-
-          </div>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -310,13 +310,14 @@
         <li class="right" >
           <a href="index.html" title="API documentation"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.3.2 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">pninexus 2.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Exception classes</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
     </div>
   </body>
 </html>

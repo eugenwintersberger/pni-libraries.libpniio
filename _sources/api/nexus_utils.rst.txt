@@ -1,18 +1,18 @@
 
-.. _nexus-api-utils
+.. _nexus-api-utils:
 
 =============================
 Utility functions and classes
 =============================
 
-:cpp:class:`pni::io::nexus::Version`
+:cpp:class:`pni::nexus::Version`
 ====================================
 
-.. doxygenclass:: pni::io::nexus::Version
+.. doxygenclass:: pni::nexus::Version
    :members:
    
-:cpp:class:`pni::io::nexus::DateTime`
+:cpp:class:`pni::nexus::DateTime`
 =====================================
 
-.. doxygenclass:: pni::io::nexus::DateTime
+.. doxygenclass:: pni::nexus::DateTime
    :members:

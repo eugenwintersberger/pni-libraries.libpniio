@@ -2,30 +2,30 @@
 ASCII parsers
 =============
 
-The basic template for all parsers is :cpp:class:`pni::io::parser`
+The basic template for all parsers is :cpp:class:`pni::parser`
 
-.. doxygenclass:: pni::io::parser
+.. doxygenclass:: pni::parser
    :members:
    
    
 Parser specializations
 ======================
 
-.. doxygenclass:: pni::io::parser< pni::core::value >
+.. doxygenclass:: pni::parser< pni::value >
    :members:
    
-.. doxygenclass:: pni::io::parser< pni::core::bool_t >
+.. doxygenclass:: pni::parser< pni::bool_t >
    :members:
    
-.. doxygenclass:: pni::io::parser< pni::core::slice >
+.. doxygenclass:: pni::parser< pni::slice >
    :members:
    
-.. doxygenclass:: pni::io::parser< pni::core::string >
+.. doxygenclass:: pni::parser< pni::string >
    :members: 
    
-.. doxygenclass:: pni::io::parser< std::vector< T > >
+.. doxygenclass:: pni::parser< std::vector< T > >
    :members:
    
-.. doxygenclass:: pni::io::parser< std::complex< T > >
+.. doxygenclass:: pni::parser< std::complex< T > >
    :members: 
    
