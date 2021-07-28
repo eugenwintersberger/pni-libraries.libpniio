@@ -1,14 +1,14 @@
 //
 // (c) Copyright 2016 DESY, Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -20,8 +20,7 @@
 
 #include "base_fixture.hpp"
 
-using namespace pni::core;
-using namespace pni::io::nx;
+using namespace pni;
 
 //-----------------------------------------------------------------------------
 base_fixture::base_fixture(const string &fname,bool open_existing):
@@ -30,9 +29,11 @@ base_fixture::base_fixture(const string &fname,bool open_existing):
     root()
 {
     if(open_existing)
-        file = h5::nxfile::open_file(filename,false);
+      file = hdf5::file::open(filename,
+			      hdf5::file::AccessFlags::READONLY);
     else
-        file = h5::nxfile::create_file(filename,true);
+      file = nexus::create_file(filename,
+				hdf5::file::AccessFlags::TRUNCATE);
 
     root = file.root();
 

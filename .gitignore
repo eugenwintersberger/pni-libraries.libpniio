@@ -20,7 +20,7 @@ config.log
 build
 .cccc
 /doc/ug/latexmkrc~
-/doc/ug/libpniio_ug.bib~
+/doc/ug/libpninexus_ug.bib~
 *.gch
 install
 /.cproject

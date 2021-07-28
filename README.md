@@ -1,7 +1,7 @@
- # libpniio
+ # libpninexus
 
 
-`libpniio` provides the IO functionality among the PNI libraries. Currently this
+`libpninexus` provides the IO functionality among the PNI libraries. Currently this
 is restricted to file IO. The library supports
 
 * simple ASCII io with formatters and parsers
@@ -12,7 +12,7 @@ is restricted to file IO. The library supports
 
 ## Installation
 
-In order to install `libpniio` on a Linux system the following software packages
+In order to install `libpninexus` on a Linux system the following software packages
 are requiered sdfdsf
 
 * a C++11 compatiable compiler (gcc >= 4.9, msvc >= 2014)
@@ -20,22 +20,21 @@ are requiered sdfdsf
 * doxygen in order to build the documentation
 * sphinx to build the users guide
 
-`libpniio` requires certain library dependencies to be installed on the
+`libpninexus` requires certain library dependencies to be installed on the
 build system
 
-* Boost (>=1.59)
-* [h5cpp](https://github.com/ess-dmsc/h5cpp) (>=0.0.4) -- from https://ess-dmsc.github.io/h5cpp/ (not http://h5cpp.org/)
-* pnicore (>=1.1.0)
+* Boost (>=1.60)
+* [h5cpp](https://github.com/ess-dmsc/h5cpp) (>=0.4.0) -- from https://ess-dmsc.github.io/h5cpp/
 
 and their transitive dependencies. If all dependencies are available on your
 system you can clone this repository and configure the build
 
 ```bash
-$ git clone https://github.com/pni-libraries/libpniio.git
-$ cd libpniio
+$ git clone https://github.com/pni-libraries/libpninexus.git
+$ cd libpninexus
 $ mkdir build
 $ cd build
-$ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/pniio ../
+$ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/pninexus ../
 ```
 
 with `CMAKE_INSTALL_PREFIX` we tell the system where to install the library
@@ -69,9 +68,9 @@ you use `cmake` for your own build. Consider the following simple example
 program in a file `hello.cpp`
 
 ```cpp
-#include <pni/io/nexus.hpp>
+#include <pni/nexus.hpp>
 
-using namespace pni::io;
+using namespace pni;
 
 int main()
 {
@@ -88,13 +87,13 @@ When using `cmake` for the build the `CMakeLists.txt` file look like this
 cmake_minimum_required(VERSION 3.5.0)
 project(hello LANGUAGES C CXX VERSION 0.0.1 )
 
-find_package(pniio REQUIRED)
+find_package(pninexus REQUIRED)
 
 add_executable(hello hello.cpp)
-target_link_libraries(hello pniio)
+target_link_libraries(hello pninexus)
 ```
 
 More information can be found at [online documentation](https://pni-libraries.github.io/libpniio/index.html).
 
-Changes for a specific version of libpnicore can be found
+Changes for a specific version of libpninexus can be found
 at [CHANGELOG](https://github.com/pni-libraries/libpniio/blob/develop/CHANGELOG.md).

@@ -10,3 +10,4 @@ Users guide
    usage
    legacy
    nexus
+   core

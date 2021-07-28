@@ -1,13 +1,12 @@
-#include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
-#include <pni/io/nexus.hpp>
+#include <pni/types.hpp>
+#include <pni/arrays.hpp>
+#include <pni/nexus.hpp>
 #include <h5cpp/hdf5.hpp>
 #include <algorithm>
 #include <boost/filesystem.hpp>
 
 
-using namespace pni::core;
-using namespace pni::io;
+using namespace pni;
 
 
 void write_data(const boost::filesystem::path &file_path,size_t np,size_t nx,size_t ny)

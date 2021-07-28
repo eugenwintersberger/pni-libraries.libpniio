@@ -11,12 +11,12 @@ Parsers
 =======
 
 The major job of this interface is to provided save number parsing. It supports 
-all primitive data types provided by *libpnicore* along with instances of 
+all primitive data types provided by *libpninexus* along with instances of 
 :cpp:class:`std::vector` of such types.
 
-At the heart of the parser API is the :cpp:class:`pni::io::parser` class 
+At the heart of the parser API is the :cpp:class:`pni::parser` class 
 template. It takes one template parameter which is the primitive or container 
-type to parse. To use the parser API just include :file:`pni/io/parsers.hpp` in 
+type to parse. To use the parser API just include :file:`pni/parsers.hpp` in 
 your source file. 
 
 Parsing primitive scalars
@@ -27,12 +27,12 @@ A very simple example would be something like this
 .. code-block:: cpp
 
    #include <iostream>
-   #include <pni/core/types.hpp>
-   #include <pni/io/parsers.hpp>
+   #include <pni/types.hpp>
+   #include <pni/parsers.hpp>
    
-   using namespace pni::core;
+   using namespace pni;
    
-   using Float64Parser = pni::io::parser<float64>;
+   using Float64Parser = pni::parser<float64>;
    
    int main(int argc,char **argv)
    {
@@ -49,22 +49,22 @@ When used with scalar values the parser template provides only a default
 constructor. No additional information is required to configure the 
 parser code. 
 
-Besides primitive types the :cpp:class:`pni::io::parser` template can also be 
-used with the :cpp:class:`pni::core::value` type erasure. In this case the 
+Besides primitive types the :cpp:class:`pni::parser` template can also be 
+used with the :cpp:class:`pni::value` type erasure. In this case the 
 resulting parser matches either a 
 
-* :cpp:type:`pni::core::int64`
-* or a :cpp:type:`pni::core::float64`
-* or a :cpp:type:`pni::core::complex64` type.
+* :cpp:type:`pni::int64`
+* or a :cpp:type:`pni::float64`
+* or a :cpp:type:`pni::complex64` type.
 
 
 Parsing a vector of primitives
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Besides single scalars the :cpp:class:`pni::io::parser` template can also be 
+Besides single scalars the :cpp:class:`pni::parser` template can also be 
 used with :cpp:class:`std::vector` based containers where the element type 
 should be one of the primitive types or a value. 
-For this purpose a specialization of the :cpp:class:`pni::io::parser` template 
+For this purpose a specialization of the :cpp:class:`pni::parser` template 
 of the form
 
 .. code-block:: cpp
@@ -72,20 +72,20 @@ of the form
    template<typename T> class parser<std::vector<T>> {...};
 
 is provided. A particularly interesting choice as an element is the 
-:cpp:class:`pni::core::value` type erasure as it allows to parse a series of 
+:cpp:class:`pni::value` type erasure as it allows to parse a series of 
 inhomogeneous types. The following program
 
 .. code-block:: cpp
 
    #include <iostream>
    #include <vector>
-   #include <pni/core/types.hpp>
-   #include <pni/io/parsers.hpp>
+   #include <pni/types.hpp>
+   #include <pni/parsers.hpp>
    
-   using namespace pni::core;
+   using namespace pni;
    
    using Record       = std::vector<value>;
-   using RecordParser = pni::io::parser<Record>;
+   using RecordParser = pni::parser<Record>;
    
    int main(int argc,char **argv)
    {
@@ -105,7 +105,7 @@ would produce this output
    INT64
    COMPLEX64
 
-When using the default constructor of the :cpp:class:`pni::io::parser` 
+When using the default constructor of the :cpp:class:`pni::parser` 
 template with a container type the individual elements are considered to be 
 separated by at least one blank. There are three more constructors 
 allowing you to customize the behavior for the container parser. 
@@ -152,19 +152,19 @@ numeric data without loss of precision to a stream.
    and thus loss of precision can occur which sometimes can lead to hard 
    to recognize and thus difficult to debug bugs. 
    
-   Thus, the formatter functions provided by *libpniio* usually write numeric
+   Thus, the formatter functions provided by *libpninexus* usually write numeric
    data with the maximum precision to avoid such issues. 
    
 Formatters are currently implemented as functions returning a string 
 with the formatted output. You can use 
-them after including :file:`pni/io/formatters.hpp` in your source code. 
+them after including :file:`pni/formatters.hpp` in your source code. 
 
 For scalar data their usage is rather simple 
 
 .. code-block:: cpp
 
    uint8 number = ...;
-   std::cout<<pni::io::format(number)<<std::endl; 
+   std::cout<<pni::format(number)<<std::endl; 
    
 The format function takes care that the number if converted to a string 
 without loss of precision. 
@@ -172,7 +172,7 @@ without loss of precision.
 As for parsers, there are also overloaded formatters for containers like 
 :cpp:class:`std::vector`. In this case the :cpp:func:`format` function 
 takes an optional second argument which is a reference to 
-:cpp:class:`pni::io::container_io_config`. This class controls how such 
+:cpp:class:`pni::container_io_config`. This class controls how such 
 container data is written to disk. 
 Taking the record example from the above parser section we could do 
 something like this 
@@ -180,10 +180,10 @@ something like this
 .. code-block:: cpp
 
    //using a ; as a separator between record elements 
-   pni::io::container_io_config config(';'); 
+   pni::container_io_config config(';'); 
    
    Record record = ...;
-   std::cout<<pni::io::format(record,config)<<std::endl;
+   std::cout<<pni::format(record,config)<<std::endl;
    
  
 

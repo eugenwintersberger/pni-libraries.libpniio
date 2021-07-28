@@ -5,35 +5,35 @@ Image reader API
 Utility classes
 ===============
 
-:cpp:class:`pni::io::image_info`
+:cpp:class:`pni::image_info`
 --------------------------------
    
-.. doxygenclass:: pni::io::image_info
+.. doxygenclass:: pni::image_info
    :members:
 
-:cpp:class:`pni::io::image_channel_info`
+:cpp:class:`pni::image_channel_info`
 ----------------------------------------
    
-.. doxygenclass:: pni::io::image_channel_info
+.. doxygenclass:: pni::image_channel_info
    :members:
 
 Reader classes
 ==============
 
-:cpp:class:`pni::io::image_reader`
+:cpp:class:`pni::image_reader`
 ----------------------------------
 
-.. doxygenclass:: pni::io::image_reader 
+.. doxygenclass:: pni::image_reader 
    :members:
    
-:cpp:class:`pni::io::tiff_reader`
+:cpp:class:`pni::tiff_reader`
 ---------------------------------
 
-.. doxygenclass:: pni::io::tiff_reader
+.. doxygenclass:: pni::tiff_reader
    :members:
    
-:cpp:class:`pni::io::cbf_reader`
+:cpp:class:`pni::cbf_reader`
 --------------------------------
 
-.. doxygenclass:: pni::io::cbf_reader
+.. doxygenclass:: pni::cbf_reader
    :members:

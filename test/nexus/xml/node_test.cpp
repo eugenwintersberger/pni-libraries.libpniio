@@ -1,33 +1,33 @@
 //
 // (c) Copyright 2017 DESY
 //
-// This file is part of libpniio.
+// This file is part of libpninexus.
 //
-// libpniio is free software: you can redistribute it and/or modify
+// libpninexus is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// libpniio is distributed in the hope that it will be useful,
+// libpninexus is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with libpniio.  If not, see <http://www.gnu.org/licenses/>.
+// along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 // Created on: Dec 11, 2017
 //
 #include <boost/test/unit_test.hpp>
-#include <pni/io/nexus/xml/node.hpp>
-#include <pni/io/exceptions.hpp>
-#include <pni/core/types.hpp>
-#include <pni/core/error.hpp>
+#include <pni/nexus/xml/node.hpp>
+#include <pni/exceptions.hpp>
+#include <pni/types.hpp>
+#include <pni/error.hpp>
 
-using namespace pni::core;
-using namespace pni::io::nexus;
+using namespace pni;
+using namespace pni::nexus;
 
 static const string node_from_string_str =
                                     "<node>\n<group> </group>\n<group>"
@@ -57,11 +57,11 @@ BOOST_AUTO_TEST_CASE(test_from_file)
   BOOST_CHECK(n.size() == 1);
 
   //has to fail because file does not exist
-  BOOST_CHECK_THROW(xml::Node::from_file("bla.xml"), pni::core::file_error);
+  BOOST_CHECK_THROW(xml::Node::from_file("bla.xml"), pni::file_error);
 
   //not a well formed XML file
   BOOST_CHECK_THROW(xml::Node::from_file("node/node_from_bad_file.xml"),
-                    pni::io::parser_error);
+                    pni::parser_error);
 
 
 }
@@ -75,7 +75,7 @@ BOOST_AUTO_TEST_CASE(test_from_string)
   BOOST_CHECK(n.size() == 1);
 
   BOOST_CHECK_THROW(xml::Node::from_string(node_from_bad_str),
-                    pni::io::parser_error);
+                    pni::parser_error);
 }
 
 

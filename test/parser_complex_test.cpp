@@ -1,9 +1,8 @@
-#include <pni/core/types.hpp>
-#include <pni/io/parsers.hpp>
+#include <pni/types.hpp>
+#include <pni/parsers.hpp>
 #include <iostream>
 
-using namespace pni::core;
-using namespace pni::io;
+using namespace pni;
 
 int main()
 {

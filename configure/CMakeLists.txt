@@ -2,7 +2,6 @@ include(CheckCXXCompilerFlag)
 include(CheckCXXSourceCompiles)
 include(FindPkgConfig)
 
-include("configure/FindPniCore.cmake")
 include("configure/ConfigureHDF5.cmake")
 include("configure/BoostConfig.cmake")
 

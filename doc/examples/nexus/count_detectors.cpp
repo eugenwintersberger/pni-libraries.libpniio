@@ -1,9 +1,8 @@
-#include <pni/core/types.hpp>
-#include <pni/io/nexus.hpp>
+#include <pni/types.hpp>
+#include <pni/nexus.hpp>
 #include <h5cpp/hdf5.hpp>
 
-using namespace pni::core;
-using namespace pni::io;
+using namespace pni;
 
 static const string file_struct = 
 "<group name=\"/\" type=\"NXroot\">"

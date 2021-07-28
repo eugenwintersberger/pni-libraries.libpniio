@@ -1,6 +1,6 @@
-/pniiotest
+/pninexustest
 testrun.log
 mem_check
-pniiobm
+pninexusbm
 *.nx
-pniiotest.xml
+pninexustest.xml
