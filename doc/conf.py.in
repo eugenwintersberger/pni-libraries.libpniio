@@ -36,8 +36,8 @@ extensions = [
     'breathe'
 ]
 
-breathe_projects = {"pninexus":"@CMAKE_CURRENT_BINARY_DIR@/api/xml"}
-breathe_default_project = "pninexus"
+breathe_projects = {"libpninexus":"@CMAKE_CURRENT_BINARY_DIR@/api/xml"}
+breathe_default_project = "libpninexus"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -56,7 +56,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'pninexus'
+project = u'libpninexus'
 copyright = u'2018, Eugen Wintersberger'
 author = u'Eugen Wintersberger'
 
