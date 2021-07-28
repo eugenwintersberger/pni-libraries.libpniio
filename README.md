@@ -93,7 +93,7 @@ add_executable(hello hello.cpp)
 target_link_libraries(hello pninexus)
 ```
 
-More information can be found at [online documentation](https://pni-libraries.github.io/libpniio/index.html).
+More information can be found at [online documentation](https://pni-libraries.github.io/libpninexus/index.html).
 
 Changes for a specific version of libpninexus can be found
-at [CHANGELOG](https://github.com/pni-libraries/libpniio/blob/develop/CHANGELOG.md).
+at [CHANGELOG](https://github.com/pni-libraries/libpninexus/blob/develop/CHANGELOG.md).

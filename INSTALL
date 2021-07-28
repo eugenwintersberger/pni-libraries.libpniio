@@ -26,7 +26,7 @@ Library dependencies:
 The sources for a stable release can be obtained from the release site of
 libpninexus's GitHub repository 
 
-https://github.com/pni-libraries/libpniio/releases
+https://github.com/pni-libraries/libpninexus/releases
 
 Click on the .zip or .tar.gz button below the release of your choice to download
 the release tarball. 
@@ -34,7 +34,7 @@ the release tarball.
 It you want to work with the current development branch checkout the libpninexus's 
 git repository from GitHub with 
 
-git clone https://github.com/pni-libraries/libpniio.git libpninexus
+git clone https://github.com/pni-libraries/libpninexus.git libpninexus
 
 You will find the current development version on the HEAD of the master branch. 
 
