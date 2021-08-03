@@ -74,7 +74,7 @@ using namespace pni;
 
 int main()
 {
-    hdf5::file::File file = nexus::create("hello.nxs",hdf5::file::AccessFlags::TRUNCATE);
+    hdf5::file::File file = nexus::create_file("hello.nxs",hdf5::file::AccessFlags::TRUNCATE);
 
     return 0;
 }
