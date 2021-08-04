@@ -101,6 +101,14 @@ target_link_libraries(pninexus
 target_compile_definitions(pninexus PUBLIC BOOST_ALL_DYN_LINK)
 target_compile_definitions(pninexus PRIVATE DLL_BUILD) 
 
+if ((NOT DEFINED HDF5_LIBRARY_DIRS) OR
+    (NOT HDF5_LIBRARY_DIRS) OR
+    ("${HDF5_LIBRARY_DIRS}" STREQUAL ""))
+  list(GET HDF5_LIBRARIES 0 TEMP_HDF5_LIB)
+  get_filename_component(HDF5_LIBRARY_DIRS ${TEMP_HDF5_LIB} DIRECTORY)
+  unset(TEMP_HDF5_LIB)
+endif()
+
 # ============================================================================
 # install the library binaries and targets 
 # ============================================================================
