@@ -4,8 +4,9 @@ includedir = ${prefix}/include
 libdir = ${prefix}/@CMAKE_INSTALL_LIBDIR@
 
 Name: @CMAKE_PROJECT_NAME@
-Description: PNI IO library
+Description: PNI NeXus library
 Version: @LIBRARY_VERSION@
 Cflags: -I${includedir} -I@HDF5_INCLUDE_DIRS@
 Requires: h5cpp
-Libs: -L${libdir} -L@HDF5_LIBRARY_DIRS@ -lpninexus -lhdf5 -lz -lboost_filesystem
+Libs: -L${libdir} -lpninexus
+Libs.private:  -L@HDF5_LIBRARY_DIRS@ -lhdf5 -lhdf5_hl -lz -lboost_filesystem
