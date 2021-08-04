@@ -153,10 +153,10 @@ provided by the array templates. As shown in <code class="file docutils literal 
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_create.cpp</span></code></span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos">28</span><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
-<span class="linenos">29</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/types.hpp&gt;</span><span class="cp"></span>
-<span class="linenos">30</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/arrays.hpp&gt;</span><span class="cp"></span>
+<span class="linenos">29</span><span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="linenos">30</span><span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
 <span class="linenos">31</span>
-<span class="linenos">32</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="o">::</span><span class="nn">core</span><span class="p">;</span>
+<span class="linenos">32</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="p">;</span>
 <span class="linenos">33</span>
 <span class="linenos">34</span><span class="c1">//some usefull type definitions</span>
 <span class="linenos">35</span><span class="k">typedef</span> <span class="n">dynamic_array</span><span class="o">&lt;</span><span class="n">float64</span><span class="o">&gt;</span> <span class="n">darray_type</span><span class="p">;</span>
@@ -213,10 +213,10 @@ properties. In the next example we do exactly this</p>
 <div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_inquery.cpp</span></code> for full code</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos">28</span><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
-<span class="linenos">29</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/types.hpp&gt;</span><span class="cp"></span>
-<span class="linenos">30</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/arrays.hpp&gt;</span><span class="cp"></span>
+<span class="linenos">29</span><span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="linenos">30</span><span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
 <span class="linenos">31</span>
-<span class="linenos">32</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="o">::</span><span class="nn">core</span><span class="p">;</span>
+<span class="linenos">32</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="p">;</span>
 <span class="linenos">33</span>
 <span class="linenos">34</span><span class="c1">//some usefull type definitions</span>
 <span class="linenos">35</span><span class="k">typedef</span> <span class="n">dynamic_array</span><span class="o">&lt;</span><span class="n">float64</span><span class="o">&gt;</span> <span class="n">darray_type</span><span class="p">;</span>
@@ -273,10 +273,10 @@ elements in an array</p>
 <div class="literal-block-wrapper docutils container" id="id3">
 <div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_linear_access.cpp</span></code> for full code</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos">28</span><span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp"></span>
-<span class="linenos">29</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/types.hpp&gt;</span><span class="cp"></span>
-<span class="linenos">30</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/arrays.hpp&gt;</span><span class="cp"></span>
+<span class="linenos">29</span><span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="linenos">30</span><span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
 <span class="linenos">31</span>
-<span class="linenos">32</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="o">::</span><span class="nn">core</span><span class="p">;</span>
+<span class="linenos">32</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="p">;</span>
 <span class="linenos">33</span>
 <span class="linenos">34</span><span class="k">typedef</span> <span class="n">uint16</span>                          <span class="n">channel_type</span><span class="p">;</span>
 <span class="linenos">35</span><span class="k">typedef</span> <span class="n">fixed_dim_array</span><span class="o">&lt;</span><span class="n">channel_type</span><span class="p">,</span><span class="mi">1</span><span class="o">&gt;</span> <span class="n">mca_type</span><span class="p">;</span>
@@ -318,10 +318,10 @@ algorithms as demonstrated in the next example</p>
 <div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_stl.cpp</span></code> for full code</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos">28</span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
 <span class="linenos">29</span><span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp"></span>
-<span class="linenos">30</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/types.hpp&gt;</span><span class="cp"></span>
-<span class="linenos">31</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/arrays.hpp&gt;</span><span class="cp"></span>
+<span class="linenos">30</span><span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="linenos">31</span><span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
 <span class="linenos">32</span>
-<span class="linenos">33</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="o">::</span><span class="nn">core</span><span class="p">;</span>
+<span class="linenos">33</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="p">;</span>
 <span class="linenos">34</span>
 <span class="linenos">35</span><span class="k">typedef</span> <span class="n">uint16</span>                        <span class="n">pixel_type</span><span class="p">;</span>
 <span class="linenos">36</span><span class="k">typedef</span> <span class="n">fixed_dim_array</span><span class="o">&lt;</span><span class="n">pixel_type</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span> <span class="n">image_type</span><span class="p">;</span>
@@ -370,10 +370,10 @@ region of the image data as defined in the last example</p>
 <div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_multiindex.cpp</span></code> for full code</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos">28</span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
 <span class="linenos">29</span><span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp"></span>
-<span class="linenos">30</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/types.hpp&gt;</span><span class="cp"></span>
-<span class="linenos">31</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/arrays.hpp&gt;</span><span class="cp"></span>
+<span class="linenos">30</span><span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="linenos">31</span><span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
 <span class="linenos">32</span>
-<span class="linenos">33</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="o">::</span><span class="nn">core</span><span class="p">;</span>
+<span class="linenos">33</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="p">;</span>
 <span class="linenos">34</span>
 <span class="linenos">35</span><span class="k">typedef</span> <span class="n">uint16</span>                        <span class="n">pixel_type</span><span class="p">;</span>
 <span class="linenos">36</span><span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span>          <span class="n">index_type</span><span class="p">;</span>
@@ -435,10 +435,10 @@ pretty much the same as in python. Lets have a look on the following example</p>
 <div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_view.cpp</span></code> for full code</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos">28</span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
 <span class="linenos">29</span><span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp"></span>
-<span class="linenos">30</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/types.hpp&gt;</span><span class="cp"></span>
-<span class="linenos">31</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/arrays.hpp&gt;</span><span class="cp"></span>
+<span class="linenos">30</span><span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="linenos">31</span><span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
 <span class="linenos">32</span>
-<span class="linenos">33</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="o">::</span><span class="nn">core</span><span class="p">;</span>
+<span class="linenos">33</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="p">;</span>
 <span class="linenos">34</span>
 <span class="linenos">35</span><span class="k">typedef</span> <span class="n">uint16</span>                        <span class="n">pixel_type</span><span class="p">;</span>
 <span class="linenos">36</span><span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span>          <span class="n">index_type</span><span class="p">;</span>
@@ -489,10 +489,10 @@ shown in the next example</p>
 <div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_view_container.cpp</span></code> for full code</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos">28</span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
 <span class="linenos">29</span><span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp"></span>
-<span class="linenos">30</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/types.hpp&gt;</span><span class="cp"></span>
-<span class="linenos">31</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/arrays.hpp&gt;</span><span class="cp"></span>
+<span class="linenos">30</span><span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="linenos">31</span><span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
 <span class="linenos">32</span>
-<span class="linenos">33</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="o">::</span><span class="nn">core</span><span class="p">;</span>
+<span class="linenos">33</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="p">;</span>
 <span class="linenos">34</span>
 <span class="linenos">35</span><span class="k">typedef</span> <span class="n">uint16</span>                        <span class="n">pixel_type</span><span class="p">;</span>
 <span class="linenos">36</span><span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span>          <span class="n">index_type</span><span class="p">;</span>
@@ -558,10 +558,10 @@ transparent to the user. Just use the arithmetic expressions as you are used to<
 <div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_arithmetic1.cpp</span></code></span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos">28</span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
 <span class="linenos">29</span><span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp"></span>
-<span class="linenos">30</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/types.hpp&gt;</span><span class="cp"></span>
-<span class="linenos">31</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/arrays.hpp&gt;</span><span class="cp"></span>
+<span class="linenos">30</span><span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="linenos">31</span><span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
 <span class="linenos">32</span>
-<span class="linenos">33</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="o">::</span><span class="nn">core</span><span class="p">;</span>
+<span class="linenos">33</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="p">;</span>
 <span class="linenos">34</span>
 <span class="linenos">35</span><span class="k">typedef</span> <span class="n">float64</span>                        <span class="n">number_type</span><span class="p">;</span>
 <span class="linenos">36</span><span class="k">typedef</span> <span class="n">fixed_dim_array</span><span class="o">&lt;</span><span class="n">number_type</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span> <span class="n">image_type</span><span class="p">;</span>
@@ -590,10 +590,10 @@ shows</p>
 <div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_arithmetic2.cpp</span></code> for full code</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos">28</span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
 <span class="linenos">29</span><span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp"></span>
-<span class="linenos">30</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/types.hpp&gt;</span><span class="cp"></span>
-<span class="linenos">31</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/arrays.hpp&gt;</span><span class="cp"></span>
+<span class="linenos">30</span><span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="linenos">31</span><span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
 <span class="linenos">32</span>
-<span class="linenos">33</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="o">::</span><span class="nn">core</span><span class="p">;</span>
+<span class="linenos">33</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="p">;</span>
 <span class="linenos">34</span>
 <span class="linenos">35</span><span class="k">typedef</span> <span class="n">float64</span>                        <span class="n">number_type</span><span class="p">;</span>
 <span class="linenos">36</span><span class="k">typedef</span> <span class="n">fixed_dim_array</span><span class="o">&lt;</span><span class="n">number_type</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span> <span class="n">stack_type</span><span class="p">;</span>
@@ -637,10 +637,10 @@ first start with the header</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 28</span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 <span class="linenos"> 29</span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
 <span class="linenos"> 30</span><span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp"></span>
-<span class="linenos"> 31</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/types.hpp&gt;</span><span class="cp"></span>
-<span class="linenos"> 32</span><span class="cp">#include</span> <span class="cpf">&lt;pni/core/arrays.hpp&gt;</span><span class="cp"></span>
+<span class="linenos"> 31</span><span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="linenos"> 32</span><span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
 <span class="linenos"> 33</span>
-<span class="linenos"> 34</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="o">::</span><span class="nn">core</span><span class="p">;</span>
+<span class="linenos"> 34</span><span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="p">;</span>
 <span class="linenos"> 35</span>
 <span class="linenos"> 36</span><span class="c1">// define the matrix and  vector types</span>
 <span class="linenos"> 37</span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="p">,</span><span class="kt">size_t</span> <span class="n">N</span><span class="o">&gt;</span> <span class="k">using</span> <span class="n">matrix_temp</span> <span class="o">=</span> <span class="n">static_array</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="o">&gt;</span><span class="p">;</span>
