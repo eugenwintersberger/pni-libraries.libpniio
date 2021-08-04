@@ -26,10 +26,10 @@
 // Linear data access
 //-----------------------------------------------------------------------------
 #include <random>
-#include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
+#include <pni/types.hpp>
+#include <pni/arrays.hpp>
 
-using namespace pni::core;
+using namespace pni;
 
 typedef uint16                          channel_type;
 typedef fixed_dim_array<channel_type,1> mca_type;

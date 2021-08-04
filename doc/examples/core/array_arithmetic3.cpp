@@ -28,10 +28,10 @@
 #include <iostream>
 #include <algorithm>
 #include <random>
-#include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
+#include <pni/types.hpp>
+#include <pni/arrays.hpp>
 
-using namespace pni::core;
+using namespace pni;
 
 // define the matrix and  vector types
 template<typename T,size_t N> using matrix_temp = static_array<T,N,N>;

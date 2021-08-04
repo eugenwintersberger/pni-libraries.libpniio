@@ -27,10 +27,10 @@
 //-----------------------------------------------------------------------------
 #include <algorithm>
 #include <random>
-#include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
+#include <pni/types.hpp>
+#include <pni/arrays.hpp>
 
-using namespace pni::core;
+using namespace pni;
 
 typedef float64                        number_type;
 typedef fixed_dim_array<number_type,2> image_type;

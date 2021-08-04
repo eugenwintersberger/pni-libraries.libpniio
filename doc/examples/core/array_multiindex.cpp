@@ -27,10 +27,10 @@
 //-----------------------------------------------------------------------------
 #include <algorithm>
 #include <random>
-#include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
+#include <pni/types.hpp>
+#include <pni/arrays.hpp>
 
-using namespace pni::core;
+using namespace pni;
 
 typedef uint16                        pixel_type;
 typedef std::array<size_t,2>          index_type;

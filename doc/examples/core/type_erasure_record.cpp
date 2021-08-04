@@ -26,12 +26,12 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
-#include <pni/core/types.hpp>
-#include <pni/core/type_erasures.hpp>
+#include <pni/types.hpp>
+#include <pni/type_erasures.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
 
-using namespace pni::core;
+using namespace pni;
 using namespace boost::spirit;
 
 typedef int32                    int_type;
@@ -65,9 +65,9 @@ struct complex_parser : public qi::grammar<ITERT,complex_type()>
 // parse a single value
 //----------------------------------------------------------------------------
 template<typename ITERT>
-struct value_parser : public qi::grammar<ITERT,pni::core::value()>
+struct value_parser : public qi::grammar<ITERT,pni::value()>
 {
-    qi::rule<ITERT,pni::core::value()> value_rule;
+    qi::rule<ITERT,pni::value()> value_rule;
 
     complex_parser<ITERT> complex_;
 
@@ -83,11 +83,11 @@ struct value_parser : public qi::grammar<ITERT,pni::core::value()>
 
         value_rule = (
                      (int_ >> !(char_('.')|char_('e')))[_val =
-                     construct<pni::core::value>(_1)]
+                     construct<pni::value>(_1)]
                      || 
-                     double_[_val = construct<pni::core::value>(_1)]
+                     double_[_val = construct<pni::value>(_1)]
                      ||
-                     complex_[_val = construct<pni::core::value>(_1)]
+                     complex_[_val = construct<pni::value>(_1)]
                      );
     }
 };

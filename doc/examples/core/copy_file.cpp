@@ -28,9 +28,9 @@
 
 #include <vector>
 #include <fstream>
-#include <pni/core/types.hpp>
+#include <pni/types.hpp>
 
-using namespace pni::core;
+using namespace pni;
 
 typedef std::vector<binary> binary_vector;
 
