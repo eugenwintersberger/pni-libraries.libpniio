@@ -28,7 +28,6 @@
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 #include <boost/test/unit_test.hpp>
-#include <boost/bind.hpp>
 #ifdef __GNUG__
 #pragma GCC diagnostic pop
 #endif
