@@ -5,9 +5,9 @@ Using selections and numerics
 
 #include <iostream>
 #include <vector>
-#include <pni/core/arrays.hpp>
+#include <pni/arrays.hpp>
 
-using namespace pni::core;
+using namespace pni;
 
 typedef dynamic_array<float32>  frame_type;
 typedef static_array<float32,3> vector_type;

@@ -26,10 +26,10 @@
 // basic array inquery 
 //-----------------------------------------------------------------------------
 #include <vector>
-#include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
+#include <pni/types.hpp>
+#include <pni/arrays.hpp>
 
-using namespace pni::core;
+using namespace pni;
 
 //some usefull type definitions
 typedef dynamic_array<float64> darray_type;

@@ -24,10 +24,10 @@
 
 //-----------------------------------------------------------------------------
 #include <iostream>
-#include <pni/core/types.hpp>
-#include <pni/core/type_erasures.hpp>
+#include <pni/types.hpp>
+#include <pni/type_erasures.hpp>
 
-using namespace pni::core;
+using namespace pni;
 
 int main(int ,char **)
 {

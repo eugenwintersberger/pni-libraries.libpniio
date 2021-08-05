@@ -29,7 +29,7 @@ extern "C"
 {
 #include <cblas.h>
 }
-using namespace pni::core;
+using namespace pni;
 
 namespace blas = pni::blas;
 

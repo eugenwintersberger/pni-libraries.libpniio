@@ -4,10 +4,10 @@ Data access with DArray
 */
 
 #include <vector>
-#include <pni/core/types.hpp>
-#include <pni/core/arrays.hpp>
+#include <pni/types.hpp>
+#include <pni/arrays.hpp>
 
-using namespace pni::core;
+using namespace pni;
 
 //some usefull type definitions
 typedef std::vector<size_t> index_t;      //index type
