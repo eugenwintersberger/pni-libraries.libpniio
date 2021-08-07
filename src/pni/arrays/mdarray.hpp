@@ -98,15 +98,15 @@ namespace pni {
             //! type ID of the element type
             static constexpr type_id_t type_id = type_id_map<value_type>::type_id;
         private:
-            //! Index map of the array 
-            IMAP _imap;  
             //! instance of STORAGE
-            STORAGE _data;  
+            STORAGE _data;
+            //! Index map of the array
+            IMAP _imap;
         public:
 
             //=================constructors and destructor=====================
             //! default constructor
-            mdarray():_imap(),_data() {}
+            mdarray():_data(),_imap() {}
 
             //-----------------------------------------------------------------
             //!
@@ -117,8 +117,8 @@ namespace pni {
             //! \param s array storage
             //!
             explicit mdarray(const map_type &map,const storage_type &s):
-                _imap(map),
-                _data(s)
+                _data(s),
+                _imap(map)
             {}
 
             //-----------------------------------------------------------------
@@ -132,8 +132,8 @@ namespace pni {
             //! \param s rvalue reference to the storage
             //!
             explicit mdarray(map_type &&map,storage_type &&s):
-                _imap(std::move(map)),
-                _data(std::move(s))
+                _data(std::move(s)),
+                _imap(std::move(map))
             {}
 
             //-----------------------------------------------------------------
@@ -149,8 +149,8 @@ namespace pni {
             //!
             template<typename ATYPE>
             explicit mdarray(const array_view<ATYPE> &view):
-                _imap(map_utils<map_type>::create(view.template shape<shape_t>())),
-                _data(container_utils<storage_type>::create(view.size()))
+                _data(container_utils<storage_type>::create(view.size())),
+                _imap(map_utils<map_type>::create(view.template shape<shape_t>()))
             {
                 std::copy(view.begin(),view.end(),_data.begin());
             }
@@ -169,8 +169,8 @@ namespace pni {
             //!
             template<typename ...MDARGS>
             explicit mdarray(const mdarray<MDARGS...> &array):
-                _imap(map_utils<map_type>::create(array.template shape<shape_t>())),
-                _data(container_utils<storage_type>::create(array.size()))
+                _data(container_utils<storage_type>::create(array.size())),
+                _imap(map_utils<map_type>::create(array.template shape<shape_t>()))
             {
                 //copy data
                 for(size_t i=0;i<array.size();++i) (*this)[i] = array[i];
