@@ -87,7 +87,7 @@ VERBATIM_HEADERS       = YES
 # configuration options related to the alphabetical class index
 #---------------------------------------------------------------------------
 ALPHABETICAL_INDEX     = YES
-COLS_IN_ALPHA_INDEX    = 5
+# COLS_IN_ALPHA_INDEX    = 5
 IGNORE_PREFIX          =
  
 #---------------------------------------------------------------------------
@@ -130,7 +130,7 @@ TAGFILES               =
 GENERATE_TAGFILE       =
 ALLEXTERNALS           = NO
 EXTERNAL_GROUPS        = YES
-PERL_PATH              = /usr/bin/perl
+# PERL_PATH              = /usr/bin/perl
             
 #---------------------------------------------------------------------------
 # Configuration options related to the dot tool
@@ -186,7 +186,7 @@ FORMULA_FONTSIZE       = 10
 FORMULA_TRANSPARENT    = YES
 SERVER_BASED_SEARCH    = NO
 LATEX_SOURCE_CODE      = NO
-MSCGEN_PATH            =
+# MSCGEN_PATH            =
 DOT_NUM_THREADS        = 0
 DOT_FONTSIZE           = 10
 DOT_FONTPATH           =
